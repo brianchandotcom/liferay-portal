@@ -79,12 +79,11 @@ public class FragmentEntryLocalServiceImpl
 
 	@Override
 	public FragmentEntry addFragmentEntry(
-			String externalReferenceCode, long userId, long groupId,
-			long fragmentCollectionId, String fragmentEntryKey, String name,
-			String css, String html, String js, boolean cacheable,
-			String configuration, String icon, long previewFileEntryId,
-			boolean readOnly, int type, String typeOptions, int status,
-			ServiceContext serviceContext)
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, String css, String html,
+			String js, boolean cacheable, String configuration, String icon,
+			long previewFileEntryId, boolean readOnly, int type,
+			String typeOptions, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Fragment entry
@@ -118,7 +117,6 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry draftFragmentEntry = create();
 
 		draftFragmentEntry.setUuid(serviceContext.getUuid());
-		draftFragmentEntry.setExternalReferenceCode(externalReferenceCode);
 		draftFragmentEntry.setGroupId(groupId);
 		draftFragmentEntry.setCompanyId(companyId);
 		draftFragmentEntry.setUserId(user.getUserId());
@@ -193,7 +191,7 @@ public class FragmentEntryLocalServiceImpl
 
 		if (publishedFragmentEntry != null) {
 			copyPublishedFragmentEntry = addFragmentEntry(
-				null, userId, groupId, fragmentCollectionId, null, name,
+				userId, groupId, fragmentCollectionId, null, name,
 				publishedFragmentEntry.getCss(),
 				publishedFragmentEntry.getHtml(),
 				publishedFragmentEntry.getJs(),
@@ -220,7 +218,7 @@ public class FragmentEntryLocalServiceImpl
 			(copyPublishedFragmentEntry == null)) {
 
 			targetDraftFragmentEntry = addFragmentEntry(
-				null, userId, groupId, fragmentCollectionId, null, name,
+				userId, groupId, fragmentCollectionId, null, name,
 				draftFragmentEntry.getCss(), draftFragmentEntry.getHtml(),
 				draftFragmentEntry.getJs(), draftFragmentEntry.isCacheable(),
 				draftFragmentEntry.getConfiguration(),

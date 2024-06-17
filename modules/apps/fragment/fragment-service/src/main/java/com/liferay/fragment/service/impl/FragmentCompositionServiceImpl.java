@@ -38,10 +38,10 @@ public class FragmentCompositionServiceImpl
 
 	@Override
 	public FragmentComposition addFragmentComposition(
-			String externalReferenceCode, long groupId,
-			long fragmentCollectionId, String fragmentCompositionKey,
-			String name, String description, String data,
-			long previewFileEntryId, int status, ServiceContext serviceContext)
+			long groupId, long fragmentCollectionId,
+			String fragmentCompositionKey, String name, String description,
+			String data, long previewFileEntryId, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -49,9 +49,9 @@ public class FragmentCompositionServiceImpl
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentCompositionLocalService.addFragmentComposition(
-			externalReferenceCode, getUserId(), groupId, fragmentCollectionId,
-			fragmentCompositionKey, name, description, data, previewFileEntryId,
-			status, serviceContext);
+			getUserId(), groupId, fragmentCollectionId, fragmentCompositionKey,
+			name, description, data, previewFileEntryId, status,
+			serviceContext);
 	}
 
 	@Override

@@ -38,7 +38,9 @@ page import="com.liferay.commerce.product.constants.CPAttachmentFileEntryConstan
 page import="com.liferay.commerce.product.constants.CPConstants" %><%@
 page import="com.liferay.commerce.product.constants.CPInstanceConstants" %><%@
 page import="com.liferay.commerce.product.constants.CPMeasurementUnitConstants" %><%@
-page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
+page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@ page
+	import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
+	taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.constants.CommerceProductFDSNames" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext" %><%@

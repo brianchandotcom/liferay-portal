@@ -4016,8 +4016,8 @@ public class DataFactory {
 					StringPool.BLANK,
 					_readFile(
 						"fragment_component" +
-							"/fragment_component_paragraph_title_edit" +
-								"Value.json"),
+							"/fragment_component_paragraph_title_editValue." +
+								"json"),
 					paragraphRenderNamespace, 0,
 					_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
 			originalFragmentEntryLinkModels.add(
@@ -4030,8 +4030,8 @@ public class DataFactory {
 					StringPool.BLANK,
 					_readFile(
 						"fragment_component" +
-							"/fragment_component_paragraph_content_edit" +
-								"Value.json"),
+							"/fragment_component_paragraph_content_editValue." +
+								"json"),
 					paragraphRenderNamespace, 1,
 					_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
 			originalFragmentEntryLinkModels.add(
@@ -4047,11 +4047,10 @@ public class DataFactory {
 							"/fragment_component_image_editValue.json"),
 					imageRenderNamespace, 0,
 					_FRAGMENT_COMPONENT_RENDER_KEY_IMAGE));
-
 		}
 
-		List<FragmentEntryLinkModel> fragmentEntryLinkModels =
-			new ArrayList<>(originalFragmentEntryLinkModels);
+		List<FragmentEntryLinkModel> fragmentEntryLinkModels = new ArrayList<>(
+			originalFragmentEntryLinkModels);
 
 		for (FragmentEntryLinkModel originalFragmentEntryLinkModel :
 				originalFragmentEntryLinkModels) {

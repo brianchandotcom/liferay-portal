@@ -6,6 +6,7 @@
 package com.liferay.push.notifications.sender.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -14,6 +15,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.push.notifications.exception.PushNotificationsException;
@@ -23,6 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -286,21 +291,32 @@ public class FirebasePushNotificationsSenderTest {
 		expectedException.expect(PushNotificationsException.class);
 		expectedException.expectMessage("Unable to remove notification group");
 
-		try {
-			_pushNotificationsSender.send(destinationTokens, jsonObject);
-		}
-		finally {
-			_verifyAccessTokenRequest();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.push.notifications.sender.firebase.internal." +
+					"FirebasePushNotificationsSender",
+				LoggerTestUtil.ERROR)) {
 
-			String groupName = _verifyCreateGroupRequest(
-				accessToken, destinationTokens);
+			try {
+				_pushNotificationsSender.send(destinationTokens, jsonObject);
+			}
+			finally {
+				_verifyAccessTokenRequest();
 
-			_verifySendNotificationRequest(
-				accessToken,
-				_getExpectedNotificationJSONObject(groupId, jsonObject));
+				String groupName = _verifyCreateGroupRequest(
+					accessToken, destinationTokens);
 
-			_verifyRemoveGroupRequest(
-				accessToken, destinationTokens, groupId, groupName);
+				_verifySendNotificationRequest(
+					accessToken,
+					_getExpectedNotificationJSONObject(groupId, jsonObject));
+
+				_verifyRemoveGroupRequest(
+					accessToken, destinationTokens, groupId, groupName);
+
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertEquals(
+					logEntries.toString(), 0, logEntries.size());
+			}
 		}
 	}
 
@@ -326,21 +342,41 @@ public class FirebasePushNotificationsSenderTest {
 
 		JSONObject jsonObject = _getRandomNotificationJSONObject();
 
-		try {
-			_pushNotificationsSender.send(destinationTokens, jsonObject);
-		}
-		finally {
-			_verifyAccessTokenRequest();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.push.notifications.sender.firebase.internal." +
+					"FirebasePushNotificationsSender",
+				LoggerTestUtil.ERROR)) {
 
-			String groupName = _verifyCreateGroupRequest(
-				accessToken, destinationTokens);
+			try {
+				_pushNotificationsSender.send(destinationTokens, jsonObject);
+			}
+			finally {
+				_verifyAccessTokenRequest();
 
-			_verifySendNotificationRequest(
-				accessToken,
-				_getExpectedNotificationJSONObject(groupId, jsonObject));
+				String groupName = _verifyCreateGroupRequest(
+					accessToken, destinationTokens);
 
-			_verifyRemoveGroupRequest(
-				accessToken, destinationTokens, groupId, groupName);
+				_verifySendNotificationRequest(
+					accessToken,
+					_getExpectedNotificationJSONObject(groupId, jsonObject));
+
+				_verifyRemoveGroupRequest(
+					accessToken, destinationTokens, groupId, groupName);
+
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertEquals(
+					logEntries.toString(), 1, logEntries.size());
+
+				LogEntry logEntry = logEntries.get(0);
+
+				Assert.assertEquals(
+					StringBundler.concat(
+						"Unable to remove notification group with ",
+						"notification_key: ", groupId,
+						" and notification_key_name: ", groupName),
+					logEntry.getMessage());
+			}
 		}
 	}
 

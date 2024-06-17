@@ -545,24 +545,28 @@ public abstract class BaseWorkspaceGitRepository
 
 			gitHubDevGitRemotes.remove(randomGitRemote);
 
-			RemoteGitBranch remoteGitBranch =
-				gitWorkingDirectory.getRemoteGitBranch(
-					getGitHubDevBranchName(), randomGitRemote);
-
-			if (remoteGitBranch == null) {
-				continue;
-			}
-
-			String remoteGitBranchSHA = remoteGitBranch.getSHA();
+			String remoteGitBranchSHA;
 
 			try {
+				RemoteGitBranch remoteGitBranch =
+					gitWorkingDirectory.getRemoteGitBranch(
+						getGitHubDevBranchName(), randomGitRemote);
+
+				if (remoteGitBranch == null) {
+					continue;
+				}
+
+				remoteGitBranchSHA = remoteGitBranch.getSHA();
+
 				gitWorkingDirectory.fetch(remoteGitBranch);
 			}
 			catch (Exception exception) {
 				continue;
 			}
 
-			if (!gitWorkingDirectory.localSHAExists(remoteGitBranchSHA)) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(remoteGitBranchSHA) ||
+				!gitWorkingDirectory.localSHAExists(remoteGitBranchSHA)) {
+
 				continue;
 			}
 

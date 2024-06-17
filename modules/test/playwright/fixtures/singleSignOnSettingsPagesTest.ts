@@ -5,19 +5,19 @@
 
 import {test} from '@playwright/test';
 
-import { InstanceSettingsPage } from '../pages/configuration-admin-web/InstanceSettingsPage';
-import { SingleSignOnSettingsPage } from '../pages/portal-settings-authentication-openid-connect-web/SingleSignOnSettingsPage';
+import {InstanceSettingsPage} from '../pages/configuration-admin-web/InstanceSettingsPage';
+import {SingleSignOnSettingsPage} from '../pages/portal-settings-authentication-openid-connect-web/SingleSignOnSettingsPage';
 
 const instanceSettingsPagesTest = test.extend<{
-    instanceSettingsPage: InstanceSettingsPage;
-    singleSignOnSettingsPage: SingleSignOnSettingsPage;
+	instanceSettingsPage: InstanceSettingsPage;
+	singleSignOnSettingsPage: SingleSignOnSettingsPage;
 }>({
-    instanceSettingsPage: async ({page}, use) => {
-        await use(new InstanceSettingsPage(page));
-    },
-    singleSignOnSettingsPage: async ({page}, use) => {
-        await use(new SingleSignOnSettingsPage(page));
-    }
+	instanceSettingsPage: async ({page}, use) => {
+		await use(new InstanceSettingsPage(page));
+	},
+	singleSignOnSettingsPage: async ({page}, use) => {
+		await use(new SingleSignOnSettingsPage(page));
+	},
 });
 
 export {instanceSettingsPagesTest};

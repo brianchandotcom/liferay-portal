@@ -3,14 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { Locator, Page } from '@playwright/test';
-
-import { InstanceSettingsPage } from '../configuration-admin-web/InstanceSettingsPage';
+import {Locator, Page} from '@playwright/test';
 
 import getRandomString from '../../utils/getRandomString';
-
-import { waitForSuccessAlert } from '../../utils/waitForSuccessAlert';
-
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
 export class SingleSignOnSettingsPage {
 	readonly page: Page;
@@ -28,15 +25,26 @@ export class SingleSignOnSettingsPage {
 	constructor(page: Page) {
 		this.page = page;
 		this.instanceSettingsPage = new InstanceSettingsPage(page);
-		this.openIdConnectMenuItem = page.getByRole('menuitem', { name: 'OpenID Connect', exact: true });
+		this.openIdConnectMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'OpenID Connect',
+		});
 		this.enabledCheckbox = page.getByText(' Enabled ');
-		this.saveButton = page.getByRole('button', { name: 'Save' });
-		this.openIDConnectProviderConnection = page.getByRole('menuitem', { name: 'OpenID Connect Provider Connection' });
-		this.addButton = page.getByRole('link', { name: 'Add' });
+		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.openIDConnectProviderConnection = page.getByRole('menuitem', {
+			name: 'OpenID Connect Provider Connection',
+		});
+		this.addButton = page.getByRole('link', {name: 'Add'});
 		this.providerNameField = page.getByLabel('Provider Name');
-		this.discoveryEndpointField = page.getByLabel('Discovery Endpoint', { exact: true });
-		this.openIDConnectClientIDField = page.getByLabel('OpenID Connect Client ID');
-		this.openIDConnectClientSecret = page.getByLabel('OpenID Connect Client Secret');
+		this.discoveryEndpointField = page.getByLabel('Discovery Endpoint', {
+			exact: true,
+		});
+		this.openIDConnectClientIDField = page.getByLabel(
+			'OpenID Connect Client ID'
+		);
+		this.openIDConnectClientSecret = page.getByLabel(
+			'OpenID Connect Client Secret'
+		);
 	}
 
 	async goto() {
@@ -64,7 +72,10 @@ export class SingleSignOnSettingsPage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async AddOpenIDConnectProviderConnectionConfiguration(providerName: string, openIdProvider: string) {
+	async AddOpenIDConnectProviderConnectionConfiguration(
+		providerName: string,
+		openIdProvider: string
+	) {
 		await this.clickOpenIDConnectProviderConnectionMenuItem();
 		await this.addButton.click();
 		await this.providerNameField.fill(providerName);
@@ -75,10 +86,15 @@ export class SingleSignOnSettingsPage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async removeOpenIDConnectProviderConnectionConfiguration(providerName: string) {
+	async removeOpenIDConnectProviderConnectionConfiguration(
+		providerName: string
+	) {
 		await this.clickOpenIDConnectProviderConnectionMenuItem();
 		await this.page.waitForLoadState('networkidle');
-		await this.page.getByRole('row', { name: providerName + ' Actions' }).getByTitle('Actions').click();
+		await this.page
+			.getByRole('row', {name: providerName + ' Actions'})
+			.getByTitle('Actions')
+			.click();
 		await this.page.getByText('Delete').click();
 		await waitForSuccessAlert(this.page);
 	}

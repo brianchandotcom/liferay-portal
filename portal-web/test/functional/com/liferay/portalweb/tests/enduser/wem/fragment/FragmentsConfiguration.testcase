@@ -294,7 +294,7 @@ element.textContent = 'Fragment Example';''';
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
-				imageFileName = "Document_2");
+				imageFileName = "document_2");
 
 			PageEditor.publish();
 		}

@@ -23,7 +23,7 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test('LPD-23780 Commerce Classic Header taglib fragments are correctly displayed', async ({
+test('LPD-23780 Commerce Classic Header main fragment is correctly displayed', async ({
 	apiHelpers,
 	page,
 }) => {
@@ -66,4 +66,10 @@ test('LPD-23780 Commerce Classic Header taglib fragments are correctly displayed
 	await expect(commerceHeaderTagFragments.locator('.cart-root')).toHaveClass(
 		/sticky-top/
 	);
+
+	const commerceHeaderSearchPortlet = page.locator(
+		'#commerce-header-search .portlet-search-bar'
+	);
+
+	await expect(commerceHeaderSearchPortlet).toBeVisible();
 });

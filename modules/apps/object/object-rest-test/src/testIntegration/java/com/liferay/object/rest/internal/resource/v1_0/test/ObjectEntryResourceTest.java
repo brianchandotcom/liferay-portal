@@ -6111,6 +6111,16 @@ public class ObjectEntryResourceTest {
 			Http.Method.GET);
 
 		Assert.assertFalse(jsonObject.has(_OBJECT_FIELD_NAME_TEXT));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/", externalReferenceCode,
+				"?fields=", _OBJECT_FIELD_NAME_TEXT),
+			Http.Method.GET);
+
+		Assert.assertFalse(jsonObject.has(_OBJECT_FIELD_NAME_TEXT));
 	}
 
 	@Test

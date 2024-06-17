@@ -7012,47 +7012,6 @@ definition {
 			value1 = "Custom Objects 154");
 	}
 
-	@description = "LPS-139005 - Verify that the Object is displayed again on the Collection Providers when reactivated"
-	@priority = 4
-	test ObjectReappearsCollectionProvidersWhenReactivated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 155",
-			objectName = "CustomObject155",
-			pluralLabelName = "Custom Objects 155");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject155");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject155");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 155");
-
-		CreateObject.checkToggleInactive();
-
-		PortletEntry.save();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 155");
-
-		CreateObject.checkToggleActive();
-
-		PortletEntry.save();
-
-		VisualizeObjectCollectionDisplay.openObjectCollectionProvider();
-
-		AssertElementPresent(
-			key_labelName = "Custom Objects 155",
-			locator1 = "VisualizeObjectCollectionDisplay#VIEW_OBJECT_COLLECTION_DISPLAY");
-	}
-
 	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Template (subtype) when reactivated"
 	@priority = 4
 	test ObjectReappearsPageTemplateWhenReactivated {

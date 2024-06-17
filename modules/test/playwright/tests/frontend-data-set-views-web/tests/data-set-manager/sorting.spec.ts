@@ -42,10 +42,7 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 });
 
 test.describe('Sorting in Data Set Manager', () => {
-	test('In the New Sort modal, the Order Type input only appears when default is checked @LPD-19465', async ({
-		page,
-		sortingPage,
-	}) => {
+	test.beforeEach(async ({sortingPage}) => {
 		await test.step('Navigate to Sorting section', async () => {
 			await sortingPage.goto({
 				dataSetLabel,
@@ -55,7 +52,12 @@ test.describe('Sorting in Data Set Manager', () => {
 		await test.step('Open new sort modal', async () => {
 			await sortingPage.openAddSortingModal();
 		});
+	});
 
+	test('In the New Sort modal, the Order Type input only appears when default is checked @LPD-19465', async ({
+		page,
+		sortingPage,
+	}) => {
 		await test.step('Order Type input only appears when default is checked', async () => {
 			await expect(page.getByLabel('Order Type')).not.toBeVisible();
 
@@ -69,16 +71,6 @@ test.describe('Sorting in Data Set Manager', () => {
 		page,
 		sortingPage,
 	}) => {
-		await test.step('Navigate to Sorting section', async () => {
-			await sortingPage.goto({
-				dataSetLabel,
-			});
-		});
-
-		await test.step('Open new sort modal', async () => {
-			await sortingPage.openAddSortingModal();
-		});
-
 		await test.step('Input values', async () => {
 			await page.getByLabel('Label').fill('Date Modified');
 			await page.getByLabel('Sort By').selectOption('dateModified');

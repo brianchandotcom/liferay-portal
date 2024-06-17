@@ -5,7 +5,7 @@
 
 type Props = {
 	id: string;
-	objectId: string;
+	objectId?: string;
 	pageElements?: PageElement[];
 };
 
@@ -14,6 +14,14 @@ export default function getFormContainerDefinition({
 	objectId,
 	pageElements,
 }: Props): PageElement {
+	if (!objectId) {
+		return {
+			definition: {},
+			id,
+			type: 'Form',
+		};
+	}
+
 	return {
 		definition: {
 			formConfig: {

@@ -22,5 +22,5 @@
 		"format": "node-scripts format",
 		"start": "liferay-npm-scripts webpack --env=development"
 	},
-	"version": "4.0.43"
+	"version": "4.0.44"
 }

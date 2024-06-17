@@ -667,7 +667,6 @@ prefixUrlTest(
 		await friendlyUrlInstanceSettingsPage.resetSeparator(
 			'Web Content URL Separator'
 		);
-
 		expect(
 			await page.request.get(
 				'/group' + site.friendlyUrlPath + '/w/' + articleTitle

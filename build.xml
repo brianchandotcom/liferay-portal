@@ -1363,6 +1363,9 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 	</target>
 
 	<target name="update-portal-osgi-configuration-properties">
+		<property name="instance.settings.schema.json.file" value="src/main/resources/schemas/client-extension-type-instance-settings.schema.json" />
+		<property name="workspace.module.dir" value="${project.dir}/modules/sdk/gradle-plugins-workspace" />
+
 		<exec dir="${project.dir}" executable="git" outputproperty="configuration.java.files">
 			<arg line="ls-files --full-name -- ':(glob)**/apps/**/configuration/**/*Configuration.java' ':!:**/*-test/**'" />
 		</exec>
@@ -1379,11 +1382,15 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			newenvironment="true"
 		>
 			<arg value="configuration.java.files=${configuration.java.files}" />
-			<arg value="json.schema.output.file=${project.dir}/modules/sdk/gradle-plugins-workspace/src/main/resources/schemas/client-extension-type-instance-settings.schema.json" />
+			<arg value="json.schema.output.file=${workspace.module.dir}/${instance.settings.schema.json.file}" />
 			<arg value="language.properties.file=${project.dir}/${language.properties.file}" />
 			<arg value="properties.output.file=${project.dir}/portal-impl/src/portal-osgi-configuration.properties" />
 			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
 		</java>
+
+		<gradle-execute dir="${workspace.module.dir}" task="formatSource">
+			<arg value="-Psource.files=${instance.settings.schema.json.file}" />
+		</gradle-execute>
 	</target>
 
 	<target name="validate-xml">

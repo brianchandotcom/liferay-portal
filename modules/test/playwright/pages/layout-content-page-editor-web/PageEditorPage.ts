@@ -478,6 +478,30 @@ export class PageEditorPage {
 		);
 	}
 
+	async mapFormFragment(fragmentId: string, type: string, fields: string[]) {
+		const fragment = this.getFragment(fragmentId);
+
+		await fragment.getByLabel('Content Type').selectOption(type);
+
+		const fieldsModal = this.page.frameLocator(
+			'iframe[title="Manage Form Fields"]'
+		);
+
+		for (const field of fields) {
+			await fieldsModal
+				.getByRole('row', {name: field})
+				.getByRole('checkbox')
+				.check();
+		}
+
+		await this.page.locator('.modal-footer').getByText('Save').click();
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:Your form has been successfully loaded.'
+		);
+	}
+
 	async openExperienceSelector() {
 		const isOpen = await this.experienceSelector.evaluate(
 			(element) => element.getAttribute('aria-expanded') === 'true'

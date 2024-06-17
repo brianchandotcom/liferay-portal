@@ -295,6 +295,10 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			if (valueJSONArray == null) {
 				Object skuOptionValueKey = jsonObject.get("skuOptionValueKey");
 
+				if (skuOptionValueKey == null) {
+					continue;
+				}
+
 				if (JSONUtil.isJSONArray(skuOptionValueKey.toString())) {
 					valueJSONArray = (JSONArray)skuOptionValueKey;
 				}

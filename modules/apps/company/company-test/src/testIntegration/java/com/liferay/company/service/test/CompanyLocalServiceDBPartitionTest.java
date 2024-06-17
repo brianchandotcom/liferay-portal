@@ -387,7 +387,7 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertFalse(
 				ArrayUtil.contains(_getCompanyIdsBySQL(), toCompanyId));
 
-			_checkPartitionNonexists(toCompanyId);
+			_checkPartitionDoesNotExist(toCompanyId);
 		}
 		finally {
 			companyLocalService.deleteCompany(company);
@@ -434,7 +434,7 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertFalse(
 				ArrayUtil.contains(_getCompanyIdsBySQL(), toCompanyId));
 
-			_checkPartitionNonexists(toCompanyId);
+			_checkPartitionDoesNotExist(toCompanyId);
 		}
 		finally {
 			companyLocalService.deleteCompany(company);
@@ -589,7 +589,7 @@ public class CompanyLocalServiceDBPartitionTest
 		_virtualHostLocalService.getVirtualHost(virtualHostname);
 	}
 
-	private void _checkPartitionNonexists(long companyId) throws SQLException {
+	private void _checkPartitionDoesNotExist(long companyId) throws SQLException {
 		List<String> partitionNames = new ArrayList<>();
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();

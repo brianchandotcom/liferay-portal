@@ -12,6 +12,8 @@ import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -164,6 +166,33 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 		}
 	}
 
+	private Map<Locale, String> _getValueMap(
+			long cpDefinitionSpecificationOptionValueId,
+			ActionRequest actionRequest)
+		throws Exception {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				_cpDefinitionSpecificationOptionValueService.
+					getCPDefinitionSpecificationOptionValue(
+						cpDefinitionSpecificationOptionValueId);
+
+		CPSpecificationOption cpSpecificationOption =
+			cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
+
+		if (cpSpecificationOption.getListTypeDefinitionId() == 0) {
+			return _localization.getLocalizationMap(actionRequest, "value");
+		}
+
+		String value = ParamUtil.getString(actionRequest, "value");
+
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.getListTypeEntry(
+				cpSpecificationOption.getListTypeDefinitionId(), value);
+
+		return listTypeEntry.getNameMap();
+	}
+
 	private CPDefinitionSpecificationOptionValue
 			_updateCPDefinitionSpecificationOptionValue(
 				ActionRequest actionRequest)
@@ -176,8 +205,8 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 			actionRequest, "CPOptionCategoryId");
 		String key = ParamUtil.getString(actionRequest, "key");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
-		Map<Locale, String> valueMap = _localization.getLocalizationMap(
-			actionRequest, "value");
+		Map<Locale, String> valueMap = _getValueMap(
+			cpDefinitionSpecificationOptionValueId, actionRequest);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionSpecificationOptionValue.class.getName(),
@@ -195,6 +224,9 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 
 	@Reference
 	private CPSpecificationOptionService _cpSpecificationOptionService;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private Localization _localization;

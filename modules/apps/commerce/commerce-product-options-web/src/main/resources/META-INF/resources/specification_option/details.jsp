@@ -63,18 +63,23 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 		elementClasses="mt-4"
 		title='<%= LanguageUtil.get(request, "picklist") %>'
 	>
-		<frontend-data-set:headless-display
+		<frontend-data-set:classic-display
 			additionalProps='<%=
 				HashMapBuilder.<String, Object>put(
-					"specificationId", cpSpecificationOption.getCPSpecificationOptionId()
+					"specificationId", (cpSpecificationOption == null) ? 0 : cpSpecificationOption.getCPSpecificationOptionId()
 				).build()
 			%>'
-			apiURL='<%= "/o/headless-commerce-admin-catalog/v1.0/specifications/" + cpSpecificationOption.getCPSpecificationOptionId() + "/list-type-definitions" %>'
+			contextParams='<%=
+				HashMapBuilder.put(
+					"specificationId", (cpSpecificationOption == null) ? "0" : String.valueOf(cpSpecificationOption.getCPSpecificationOptionId())
+				).build()
+			%>'
 			creationMenu="<%= cpSpecificationOptionDisplayContext.getCreationMenu(cpSpecificationOption) %>"
-			fdsActionDropdownItems="<%= cpSpecificationOptionDisplayContext.getFDSActionDropdownItems() %>"
+			dataProviderKey="<%= CommerceSpecificationOptionFDSNames.LIST_TYPE_DEFINITIONS %>"
 			id="<%= CommerceSpecificationOptionFDSNames.LIST_TYPE_DEFINITIONS %>"
 			itemsPerPage="<%= 10 %>"
 			propsTransformer="{CPSpecificationOptionListTypeDefinitionPropsTransformer} from commerce-product-options-web"
+			style="stacked"
 		/>
 	</commerce-ui:panel>
 

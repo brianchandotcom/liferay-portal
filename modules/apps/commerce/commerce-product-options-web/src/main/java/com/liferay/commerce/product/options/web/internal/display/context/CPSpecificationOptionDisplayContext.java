@@ -12,10 +12,8 @@ import com.liferay.commerce.product.options.web.internal.portlet.action.helper.A
 import com.liferay.commerce.product.options.web.internal.util.CPOptionsPortletUtil;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
-import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
-import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -23,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -34,10 +31,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -99,6 +94,10 @@ public class CPSpecificationOptionDisplayContext
 	public CreationMenu getCreationMenu(
 		CPSpecificationOption cpSpecificationOption) {
 
+		if (cpSpecificationOption == null) {
+			return null;
+		}
+
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
@@ -135,30 +134,6 @@ public class CPSpecificationOptionDisplayContext
 					).build());
 			}
 		).build();
-	}
-
-	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		return Arrays.asList(
-			new FDSActionDropdownItem(
-				PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
-						cpRequestHelper.getRenderRequest(),
-						ObjectPortletKeys.LIST_TYPE_DEFINITIONS,
-						PortletRequest.RENDER_PHASE)
-				).setMVCRenderCommandName(
-					"/list_type_definitions/edit_list_type_definition"
-				).setParameter(
-					"listTypeDefinitionId", "{id}"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				"pencil", "edit",
-				LanguageUtil.get(cpRequestHelper.getRequest(), "edit"), "get",
-				null, "sidePanel"),
-			new FDSActionDropdownItem(
-				null, "trash", "removePicklistRelation",
-				LanguageUtil.get(cpRequestHelper.getRequest(), "remove"), null,
-				null, null));
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels() {

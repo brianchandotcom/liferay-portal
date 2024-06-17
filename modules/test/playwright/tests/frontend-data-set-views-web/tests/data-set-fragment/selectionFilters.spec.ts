@@ -14,15 +14,14 @@ import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelp
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {picklistApiHelpersTest} from '../../fixtures/picklistApiHelpersTest';
 
-const PICKLIST_VALUE_KEY = 'sampleValue';
-const PICKLIST_VALUE_NAME = 'Sample Value';
-
+const picklistBooleanOption = 'Boolean';
+const picklistDefaultOption = 'Default';
 
 let dataSetERC: string;
 let dataSetLabel: string;
 let picklistName: string;
 
-export const fragmentTest = mergeTests(
+export const test = mergeTests(
 	apiHelpersTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
@@ -34,7 +33,7 @@ export const fragmentTest = mergeTests(
 	picklistApiHelpersTest
 );
 
-fragmentTest.beforeEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
+test.beforeEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 	dataSetERC = getRandomString();
 	dataSetLabel = getRandomString();
 	picklistName = getRandomString();
@@ -44,25 +43,35 @@ fragmentTest.beforeEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) =
 		label: dataSetLabel,
 	});
 
-	await picklistApiHelpers.createPicklist({
-		name: picklistName,
+	await test.step('Create and populate a picklist', async () => {
+		await picklistApiHelpers.createPicklist({
+			name: picklistName,
+		});
+
+		await picklistApiHelpers.editPicklist({
+			key: picklistBooleanOption.toLocaleLowerCase(),
+			name: picklistName,
+			value: picklistBooleanOption,
+		});
+
+		await picklistApiHelpers.editPicklist({
+			key: picklistDefaultOption.toLocaleLowerCase(),
+			name: picklistName,
+			value: picklistDefaultOption,
+		});
 	});
 
-	await picklistApiHelpers.editPicklist({
-		key: PICKLIST_VALUE_KEY,
-		name: picklistName,
-		value: PICKLIST_VALUE_NAME,
-	});
+
 });
 
-fragmentTest.afterEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
+test.afterEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 
 	await picklistApiHelpers.deletePicklist(picklistName);
 });
 
-fragmentTest.describe('Filters in Data Set fragment', () => {
-	fragmentTest(
+test.describe('Filters in Data Set fragment', () => {
+	test(
 		'Selection filter is displayed in fragment, and applied to data @LPD-10754',
 		async ({
 			dataSetManagerApiHelpers,
@@ -71,24 +80,8 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 			picklistApiHelpers,
 		}) => {
 			const filterLabel = getRandomString();
-			const picklistBooleanOption = 'Boolean';
-			const picklistDefaultOption = 'Default';
 
-			await fragmentTest.step('Populate a picklist', async () => {
-				await picklistApiHelpers.editPicklist({
-					key: picklistBooleanOption.toLocaleLowerCase(),
-					name: picklistName,
-					value: picklistBooleanOption,
-				});
-
-				await picklistApiHelpers.editPicklist({
-					key: picklistDefaultOption.toLocaleLowerCase(),
-					name: picklistName,
-					value: picklistDefaultOption,
-				});
-			});
-
-			await fragmentTest.step(
+			await test.step(
 				'Add a field, so FDS has something to show',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetField({
@@ -106,7 +99,7 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Create a new selection filter',
 				async () => {
 					const picklist =
@@ -125,14 +118,14 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step('Configure Data Set fragment', async () => {
+			await test.step('Configure Data Set fragment', async () => {
 				await fdsFragmentPage.configureDataSetFragment({
 					dataSetLabel,
 					layout,
 				});
 			});
 
-			await fragmentTest.step(
+			await test.step(
 				'Check current items in the Frontend Data Set',
 				async () => {
 					await expect(
@@ -143,7 +136,7 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step(
+			await test.step(
 				'Filters are available in the fragment',
 				async () => {
 					await expect(
@@ -154,13 +147,13 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 				}
 			);
 
-			await fragmentTest.step('Open filters component', async () => {
+			await test.step('Open filters component', async () => {
 				await fdsFragmentPage.page
 					.getByRole('button', {name: 'Filter'})
 					.click();
 			});
 
-			await fragmentTest.step('Select filter', async () => {
+			await test.step('Select filter', async () => {
 				await expect(
 					fdsFragmentPage.page.getByRole('menuitem', {
 						name: filterLabel,
@@ -192,7 +185,7 @@ fragmentTest.describe('Filters in Data Set fragment', () => {
 				await fdsFragmentPage.page.keyboard.press('Escape');
 			});
 
-			await fragmentTest.step('Check that the filter works', async () => {
+			await test.step('Check that the filter works', async () => {
 				await fdsFragmentPage.page
 					.locator('.filter-resume')
 					.waitFor({state: 'visible'});

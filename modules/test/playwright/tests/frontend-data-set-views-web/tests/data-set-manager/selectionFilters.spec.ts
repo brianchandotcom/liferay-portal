@@ -34,7 +34,7 @@ let dataSetERC: string;
 let dataSetLabel: string;
 let picklistName: string;
 
-test.beforeEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
+test.beforeEach(async ({dataSetManagerApiHelpers, filtersPage, picklistApiHelpers}) => {
 	dataSetERC = getRandomString();
 	dataSetLabel = getRandomString();
 	picklistName = getRandomString();
@@ -53,6 +53,12 @@ test.beforeEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 		name: picklistName,
 		value: PICKLIST_VALUE_NAME,
 	});
+
+	await test.step('Navigate to the Filters tab', async () => {
+		await filtersPage.goto({
+			dataSetLabel,
+		});
+	});
 });
 
 test.afterEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
@@ -63,12 +69,6 @@ test.afterEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 
 test.describe('Filters in Data Set Manager', () => {
 	test('Can create a selection filter', async ({filtersPage, page}) => {
-		await test.step('Navigate to the Filters tab', async () => {
-			await filtersPage.goto({
-				dataSetLabel,
-			});
-		});
-
 		await test.step('Create a selection filter from picklist source', async () => {
 			await filtersPage.createSelectionFilterPicklist({
 				filterBy: 'externalReferenceCode',
@@ -95,12 +95,6 @@ test.describe('Filters in Data Set Manager', () => {
 		filtersPage,
 		page,
 	}) => {
-		await test.step('Navigate to the Filters tab', async () => {
-			await filtersPage.goto({
-				dataSetLabel,
-			});
-		});
-
 		await test.step('Create a selection filter from API Headless source', async () => {
 			await filtersPage.createSelectionFilterApiHeadless({
 				filterBy: 'externalReferenceCode',

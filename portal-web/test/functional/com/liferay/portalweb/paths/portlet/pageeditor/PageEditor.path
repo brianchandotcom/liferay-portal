@@ -659,7 +659,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_CENTER_TEXT</td>
-	<td>//div[contains(@class,'text-center')]//span[@class='text-truncate']</td>
+	<td>//div[contains(@class,'text-center')]//div[@class='c-empty-state-title']</td>
 	<td></td>
 </tr>
 <tr>

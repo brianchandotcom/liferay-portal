@@ -3906,21 +3906,11 @@ public class DefaultObjectEntryManagerImplTest
 					"textObjectFieldName"
 				).build()));
 
-		ObjectRelationship objectRelationship1 =
-			_objectRelationshipLocalService.addObjectRelationship(
-				null, adminUser.getUserId(),
-				_objectDefinition3.getObjectDefinitionId(),
-				objectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-
 		ObjectDefinition accountEntryObjectDefinition =
 			objectDefinitionLocalService.fetchObjectDefinition(
 				companyId, "AccountEntry");
 
-		ObjectRelationship objectRelationship2 =
+		ObjectRelationship objectRelationship1 =
 			_objectRelationshipLocalService.addObjectRelationship(
 				null, adminUser.getUserId(),
 				accountEntryObjectDefinition.getObjectDefinitionId(),
@@ -3931,7 +3921,7 @@ public class DefaultObjectEntryManagerImplTest
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 		objectDefinition.setAccountEntryRestrictedObjectFieldId(
-			objectRelationship2.getObjectFieldId2());
+			objectRelationship1.getObjectFieldId2());
 
 		objectDefinition.setAccountEntryRestricted(true);
 
@@ -3963,6 +3953,16 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectEntry objectEntry1 = _addObjectEntry(accountEntry1);
 
+		ObjectRelationship objectRelationship2 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, adminUser.getUserId(),
+				_objectDefinition3.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
 		ObjectEntry objectEntry2 = _defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, objectDefinition,
 			new ObjectEntry() {
@@ -3976,7 +3976,7 @@ public class DefaultObjectEntryManagerImplTest
 						() -> {
 							ObjectField objectField =
 								_objectFieldLocalService.getObjectField(
-									objectRelationship1.getObjectFieldId2());
+									objectRelationship2.getObjectFieldId2());
 
 							return objectField.getName();
 						},

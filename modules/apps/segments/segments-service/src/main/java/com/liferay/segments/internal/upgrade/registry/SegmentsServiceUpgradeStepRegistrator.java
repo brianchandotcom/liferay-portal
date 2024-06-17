@@ -15,6 +15,7 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.segments.internal.upgrade.v2_0_0.SchemaUpgradeProcess;
 import com.liferay.segments.internal.upgrade.v2_0_0.SegmentsExperienceUpgradeProcess;
 import com.liferay.segments.internal.upgrade.v2_8_1.SegmentsExperimentUpgradeProcess;
+import com.liferay.segments.internal.upgrade.v3_1_1.SegmentsEntryUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -108,6 +109,8 @@ public class SegmentsServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register("3.1.0", "3.1.1", new SegmentsEntryUpgradeProcess());
 	}
 
 	@Reference

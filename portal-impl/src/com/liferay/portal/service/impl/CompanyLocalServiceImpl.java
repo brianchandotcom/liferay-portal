@@ -491,30 +491,17 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				"Database partitioning must be enabled");
 		}
 
-		if (Validator.isNull(name)) {
-			throw new IllegalArgumentException("Name must not be null");
-		}
-
-		if (Validator.isNull(virtualHostname)) {
-			throw new IllegalArgumentException(
-				"Virtual hostname must not be null");
-		}
-
-		if (Validator.isNull(webId)) {
-			throw new IllegalArgumentException("Web ID must not be null");
-		}
-
-		if (fromCompanyId == PortalInstancePool.getDefaultCompanyId()) {
-			throw new IllegalArgumentException(
-				"Company ID " + fromCompanyId + " is the default company ID");
-		}
-
 		Company fromCompany = companyPersistence.findByPrimaryKey(
 			fromCompanyId);
 
 		if (fromCompany == null) {
 			throw new IllegalArgumentException(
 				"Company ID " + fromCompanyId + " does not exist");
+		}
+
+		if (fromCompanyId == PortalInstancePool.getDefaultCompanyId()) {
+			throw new IllegalArgumentException(
+				"Company ID " + fromCompanyId + " is the default company ID");
 		}
 
 		if (toCompanyId == null) {
@@ -526,6 +513,19 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			throw new IllegalArgumentException(
 				"Company ID " + toCompanyId + " already exists");
+		}
+
+		if (Validator.isNull(name)) {
+			throw new IllegalArgumentException("Name must not be null");
+		}
+
+		if (Validator.isNull(virtualHostname)) {
+			throw new IllegalArgumentException(
+				"Virtual hostname must not be null");
+		}
+
+		if (Validator.isNull(webId)) {
+			throw new IllegalArgumentException("Web ID must not be null");
 		}
 
 		validateName(toCompanyId, name);

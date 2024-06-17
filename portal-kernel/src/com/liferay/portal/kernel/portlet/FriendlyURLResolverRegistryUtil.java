@@ -27,10 +27,12 @@ public class FriendlyURLResolverRegistryUtil {
 	public static FriendlyURLResolver getFriendlyURLResolver(
 		String urlSeparator) {
 
-		for (FriendlyURLResolver friendlyURLResolver :
-				_serviceTrackerMap.values()) {
+		for (String key : _serviceTrackerMap.keySet()) {
+			FriendlyURLResolver friendlyURLResolver =
+				_serviceTrackerMap.getService(key);
 
-			if (Objects.equals(
+			if ((friendlyURLResolver != null) &&
+				Objects.equals(
 					friendlyURLResolver.getURLSeparator(), urlSeparator)) {
 
 				return friendlyURLResolver;
@@ -44,10 +46,12 @@ public class FriendlyURLResolverRegistryUtil {
 		getFriendlyURLResolverByDefaultURLSeparator(
 			String defaultURLSeparator) {
 
-		for (FriendlyURLResolver friendlyURLResolver :
-				_serviceTrackerMap.values()) {
+		for (String key : _serviceTrackerMap.keySet()) {
+			FriendlyURLResolver friendlyURLResolver =
+				_serviceTrackerMap.getService(key);
 
-			if (Objects.equals(
+			if ((friendlyURLResolver != null) &&
+				Objects.equals(
 					friendlyURLResolver.getDefaultURLSeparator(),
 					defaultURLSeparator)) {
 
@@ -61,14 +65,26 @@ public class FriendlyURLResolverRegistryUtil {
 	public static Collection<FriendlyURLResolver>
 		getFriendlyURLResolversAsCollection() {
 
-		return _serviceTrackerMap.values();
+		List<FriendlyURLResolver> friendlyURLResolvers = new ArrayList<>();
+
+		for (String key : _serviceTrackerMap.keySet()) {
+			FriendlyURLResolver friendlyURLResolver =
+				_serviceTrackerMap.getService(key);
+
+			if (friendlyURLResolver != null) {
+				friendlyURLResolvers.add(friendlyURLResolver);
+			}
+		}
+
+		return friendlyURLResolvers;
 	}
 
 	public static String[] getURLSeparators() {
 		List<String> urlSeparators = new ArrayList<>();
 
-		for (FriendlyURLResolver friendlyURLResolver :
-				_serviceTrackerMap.values()) {
+		for (String key : _serviceTrackerMap.keySet()) {
+			FriendlyURLResolver friendlyURLResolver =
+				_serviceTrackerMap.getService(key);
 
 			if (friendlyURLResolver != null) {
 				urlSeparators.add(friendlyURLResolver.getURLSeparator());

@@ -247,6 +247,21 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		ddmTemplateLocalService.deleteTemplate(templateId);
 	}
 
+	@Override
+	public DDMTemplate deleteTemplate(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		DDMTemplate ddmTemplate = ddmTemplatePersistence.findByERC_G(
+			externalReferenceCode, groupId);
+
+		_ddmTemplateModelResourcePermission.check(
+			getPermissionChecker(), ddmTemplate.getTemplateId(),
+			ActionKeys.DELETE);
+
+		return ddmTemplateLocalService.deleteTemplate(ddmTemplate);
+	}
+
 	/**
 	 * Returns the template matching the group and template key.
 	 *
@@ -339,6 +354,21 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 		DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
 			groupId, classNameId, templateKey, includeAncestorTemplates);
+
+		_ddmTemplateModelResourcePermission.check(
+			getPermissionChecker(), ddmTemplate, ActionKeys.VIEW);
+
+		return ddmTemplate;
+	}
+
+	@Override
+	public DDMTemplate getTemplateByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		DDMTemplate ddmTemplate =
+			ddmTemplateLocalService.getDDMTemplateByExternalReferenceCode(
+				externalReferenceCode, groupId);
 
 		_ddmTemplateModelResourcePermission.check(
 			getPermissionChecker(), ddmTemplate, ActionKeys.VIEW);

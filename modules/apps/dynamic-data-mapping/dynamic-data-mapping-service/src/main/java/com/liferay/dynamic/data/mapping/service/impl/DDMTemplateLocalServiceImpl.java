@@ -471,6 +471,16 @@ public class DDMTemplateLocalServiceImpl
 		ddmTemplateLocalService.deleteTemplate(template);
 	}
 
+	@Override
+	public DDMTemplate deleteTemplate(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return ddmTemplateLocalService.deleteTemplate(
+			getDDMTemplateByExternalReferenceCode(
+				externalReferenceCode, groupId));
+	}
+
 	/**
 	 * Deletes all the templates of the group.
 	 *

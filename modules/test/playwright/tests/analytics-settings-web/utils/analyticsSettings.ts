@@ -76,14 +76,14 @@ export async function navigateToSitePage(page, siteName, pageName) {
 }
 
 export async function syncAllContacts(page) {
-	const wizard = page.getByTestId('VIEW_WIZARD_MODE');
+	const wizard = page.locator('[data-testid="VIEW_WIZARD_MODE"]');
 
 	await expect(wizard.getByText('Sync People')).toBeVisible({
 		timeout: 100 * 1000,
 	});
 
-	const syncContactsButton = page.getByTestId(
-		'sync-all-contacts-and-accounts__false'
+	const syncContactsButton = page.locator(
+		'[data-testid="sync-all-contacts-and-accounts__false"]'
 	);
 
 	if (await syncContactsButton.isVisible()) {
@@ -120,7 +120,7 @@ export async function syncSite(page, propertyName) {
 		timeout: 100 * 1000,
 	});
 
-	const wizard = page.getByTestId('VIEW_WIZARD_MODE');
+	const wizard = page.locator('[data-testid="VIEW_WIZARD_MODE"]');
 
 	await expect(wizard.getByText('Available Properties')).toBeVisible({
 		timeout: 100 * 1000,

@@ -192,7 +192,7 @@ public class FirebasePushNotificationsSenderTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Unable to send notification with notification_key: ",
+					"Unable to send notification with token: ",
 					destinationToken, " and reason: REASON"),
 				logEntry.getMessage());
 		}
@@ -373,8 +373,8 @@ public class FirebasePushNotificationsSenderTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Unable to send notification with notification_key: ",
-					groupId, " and reason: REASON"),
+					"Unable to send notification with token: ", groupId,
+					" and reason: REASON"),
 				logEntry.getMessage());
 
 			logEntry = logEntries.get(1);

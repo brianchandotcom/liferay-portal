@@ -71,14 +71,14 @@ public class FirebasePushNotificationsSender
 			DeviceGroup deviceGroup = _createDeviceGroup(accessToken, tokens);
 
 			try {
-				_send(accessToken, deviceGroup.getId(), payloadJSONObject);
+				_send(accessToken, payloadJSONObject, deviceGroup.getId());
 			}
 			finally {
 				_removeDeviceGroup(accessToken, deviceGroup, tokens);
 			}
 		}
 		else {
-			_send(accessToken, tokens.get(0), payloadJSONObject);
+			_send(accessToken, payloadJSONObject, tokens.get(0));
 		}
 	}
 
@@ -346,8 +346,7 @@ public class FirebasePushNotificationsSender
 	}
 
 	private void _send(
-			String accessToken, String notificationKey,
-			JSONObject payloadJSONObject)
+			String accessToken, JSONObject payloadJSONObject, String token)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
@@ -364,7 +363,7 @@ public class FirebasePushNotificationsSender
 				).put(
 					"data", _buildMessagePayload(payloadJSONObject)
 				).put(
-					"token", notificationKey
+					"token", token
 				)
 			).toString(),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
@@ -386,8 +385,8 @@ public class FirebasePushNotificationsSender
 		if (optionsResponse.getResponseCode() != _OK_CODE) {
 			_log.error(
 				StringBundler.concat(
-					"Unable to send notification with notification_key: ",
-					notificationKey, " and reason: ", responseString));
+					"Unable to send notification with token: ", token,
+					" and reason: ", responseString));
 
 			throw new PushNotificationsException(
 				"Unable to send the push notification");

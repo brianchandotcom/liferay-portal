@@ -3014,10 +3014,10 @@
     source-map "^0.7.3"
     webpack "^5.11.1"
 
-"@liferay/npm-scripts@51.0.2":
-  version "51.0.2"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-51.0.2.tgz#adfc5242d32e57fff9370c39c164f1f5a60d6d6e"
-  integrity sha512-RZ2+anOfiIsp9N2mJKlHUYUgndky0SrUR6M6tnLH8PBF8KOtTq/OmWOQISTod/EGSGnagdhMvY118g0fR4hwOA==
+"@liferay/npm-scripts@51.1.0":
+  version "51.1.0"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-51.1.0.tgz#75cabdb31fc0c5d354de6342862ff805c14e6d7e"
+  integrity sha512-ngT/vfXk303tNZFN4IqPqSSd7gdVKIIdbusiSy4zt7wM5LZNQRwVNNHVkjRqlFaXAC+wgxmrFv27S3ovgVVvSg==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"

@@ -1,0 +1,32 @@
+{
+	"@generated": "4e37e54a86b1ab0cf1bc53da2a9b670da521909b",
+	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"checkJs": false,
+		"composite": true,
+		"emitDeclarationOnly": true,
+		"jsx": "react",
+		"module": "es6",
+		"moduleResolution": "node",
+		"sourceMap": false,
+		"strict": true,
+		"target": "es2020",
+		"declarationDir": "../../../../../../../../.tsc/types",
+		"paths": {
+		},
+		"rootDir": "../../../../../../../..",
+		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/document-library-opener-google-drive-web.tsbuildinfo",
+		"typeRoots": [
+			"../../../../../../../../node_modules/@types"
+		]
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"../../../../../../../../global.d.ts"
+	],
+	"references": [
+	]
+}

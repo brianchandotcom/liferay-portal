@@ -5,14 +5,12 @@
 	navigationJSONObject = jsonFactoryUtil.createJSONObject(navigation.getData())
 
 	childrenJSONArray = navigationJSONObject.getJSONArray("children")
-
-	childrenArrayLength = childrenJSONArray.length()
 />
 
 <div>
-	<#if childrenArrayLength gt 0>
+	<#if childrenJSONArray.length() gt 0>
 		<ul class="m-0 p-2">
-			<#list 0..childrenArrayLength-1 as i>
+			<#list 0..childrenJSONArray.length()-1 as i>
 				<#assign child = childrenJSONArray.getJSONObject(i) />
 
 				<#if i = 0>

@@ -26,35 +26,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-165295. The page creator cannot access to disabled area via keyboard."
-	@priority = 3
-	test CannotAccessToDisabledAreaViaKeyboard {
-		task ("Given a page creator has a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
-		task ("When the page creator accesses to the page editor") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-		}
-
-		task ("Then the page creator cannot access to the disabled area via keyboard") {
-			AssertAttributeValue(
-				locator1 = "//header[contains(@class,'disabled-area')]//div[contains(@class,'navbar-top')]",
-				value1 = "inert",
-				value2 = "");
-
-			AssertAttributeValue(
-				locator1 = "//header[contains(@class,'disabled-area')]//div[contains(@class,'navbar-expand')]",
-				value1 = "inert",
-				value2 = "");
-		}
-	}
-
 	@description = "This is a test for LPS-85145. The focus should go to the Product Menu when open it."
 	@priority = 3
 	test FocusOnProductMenuWhenOpenIt {

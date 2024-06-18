@@ -157,3 +157,24 @@ test('focus order is correct', async ({
 
 	await expect(generalTab).toBeFocused();
 });
+
+test('check that it cannot be accessed by keyboard in disabled areas', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	for (const item of await page
+		.locator('.page-editor__disabled-area .navbar-classic')
+		.all()) {
+		await expect(item).toHaveAttribute('inert', '');
+		await expect(item).toHaveAttribute('aria-hidden', 'true');
+	}
+});

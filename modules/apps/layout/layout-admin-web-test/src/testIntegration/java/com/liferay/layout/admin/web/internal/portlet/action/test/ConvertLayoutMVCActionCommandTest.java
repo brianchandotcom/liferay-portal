@@ -8,6 +8,7 @@ package com.liferay.layout.admin.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
@@ -135,6 +136,82 @@ public class ConvertLayoutMVCActionCommandTest {
 			new MockLiferayPortletActionResponse());
 
 		_validateLayoutConversion(originalLayout);
+	}
+
+	@Test
+	public void testTypeSettingsFromWidgetPagesAreRemovedWhenConvertingToContentLayout()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(),
+			UnicodePropertiesBuilder.put(
+				LayoutConstants.CUSTOMIZABLE_LAYOUT, "true"
+			).put(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column"
+			).put(
+				"column-1-customizable", "false"
+			).put(
+				"column-2-customizable", "false"
+			).buildString());
+
+		UnicodeProperties typeSettingsPropertiesUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		Assert.assertTrue(
+			typeSettingsPropertiesUnicodeProperties.containsKey(
+				LayoutConstants.CUSTOMIZABLE_LAYOUT));
+		Assert.assertTrue(
+			typeSettingsPropertiesUnicodeProperties.containsKey(
+				"column-1-customizable"));
+		Assert.assertTrue(
+			typeSettingsPropertiesUnicodeProperties.containsKey(
+				"column-2-customizable"));
+		Assert.assertTrue(
+			typeSettingsPropertiesUnicodeProperties.containsKey(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+
+		_mvcActionCommand.processAction(
+			_getMockLiferayPortletActionRequest(layout.getPlid()),
+			new MockLiferayPortletActionResponse());
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		Layout convertedLayout = _layoutLocalService.getLayout(
+			layout.getPlid());
+
+		UnicodeProperties convertedTypeSettingsPropertiesUnicodeProperties =
+			convertedLayout.getTypeSettingsProperties();
+
+		Assert.assertFalse(
+			convertedTypeSettingsPropertiesUnicodeProperties.containsKey(
+				LayoutConstants.CUSTOMIZABLE_LAYOUT));
+		Assert.assertFalse(
+			convertedTypeSettingsPropertiesUnicodeProperties.containsKey(
+				"column-1-customizable"));
+		Assert.assertFalse(
+			convertedTypeSettingsPropertiesUnicodeProperties.containsKey(
+				"column-2-customizable"));
+		Assert.assertFalse(
+			convertedTypeSettingsPropertiesUnicodeProperties.containsKey(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+
+		Layout darftLayout = convertedLayout.fetchDraftLayout();
+
+		UnicodeProperties draftTypeSettingsPropertiesUnicodeProperties =
+			darftLayout.getTypeSettingsProperties();
+
+		Assert.assertFalse(
+			draftTypeSettingsPropertiesUnicodeProperties.containsKey(
+				LayoutConstants.CUSTOMIZABLE_LAYOUT));
+		Assert.assertFalse(
+			draftTypeSettingsPropertiesUnicodeProperties.containsKey(
+				"column-1-customizable"));
+		Assert.assertFalse(
+			draftTypeSettingsPropertiesUnicodeProperties.containsKey(
+				"column-2-customizable"));
+		Assert.assertFalse(
+			draftTypeSettingsPropertiesUnicodeProperties.containsKey(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
 	}
 
 	private void _assertTypeSettingsProperties(

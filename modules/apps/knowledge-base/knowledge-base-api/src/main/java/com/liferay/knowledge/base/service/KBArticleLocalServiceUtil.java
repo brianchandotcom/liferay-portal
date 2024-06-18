@@ -630,6 +630,13 @@ public class KBArticleLocalServiceUtil {
 		return getService().getLatestKBArticle(resourcePrimKey, status);
 	}
 
+	public static KBArticle getLatestKBArticle(
+			long resourcePrimKey, int[] statuses)
+		throws PortalException {
+
+		return getService().getLatestKBArticle(resourcePrimKey, statuses);
+	}
+
 	public static KBArticle getLatestKBArticleByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws PortalException {

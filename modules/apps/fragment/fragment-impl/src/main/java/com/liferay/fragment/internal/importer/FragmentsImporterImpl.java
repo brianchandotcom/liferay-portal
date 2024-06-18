@@ -344,9 +344,9 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		try {
 			if (fragmentEntry == null) {
 				fragmentEntry = _fragmentEntryService.addFragmentEntry(
-					groupId, fragmentCollectionId, fragmentEntryKey, name, css,
-					html, js, cacheable, configuration, icon, 0, readOnly, type,
-					typeOptions, status,
+					null, groupId, fragmentCollectionId, fragmentEntryKey, name,
+					css, html, js, cacheable, configuration, icon, 0, readOnly,
+					type, typeOptions, status,
 					ServiceContextThreadLocal.getServiceContext());
 
 				_fragmentEntryLocalService.updateFragmentEntry(
@@ -361,7 +361,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 						fragmentsImportStrategy)) {
 
 				fragmentEntry = _fragmentEntryService.addFragmentEntry(
-					groupId, fragmentCollectionId,
+					null, groupId, fragmentCollectionId,
 					_fragmentEntryLocalService.generateFragmentEntryKey(
 						groupId, fragmentEntryKey),
 					_fragmentEntryLocalService.getUniqueFragmentEntryName(
@@ -929,8 +929,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				if (fragmentComposition == null) {
 					fragmentComposition =
 						_fragmentCompositionService.addFragmentComposition(
-							groupId, fragmentCollectionId, entry.getKey(), name,
-							description, definitionData, 0L,
+							null, groupId, fragmentCollectionId, entry.getKey(),
+							name, description, definitionData, 0L,
 							WorkflowConstants.STATUS_APPROVED,
 							ServiceContextThreadLocal.getServiceContext());
 				}
@@ -940,7 +940,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 					fragmentComposition =
 						_fragmentCompositionService.addFragmentComposition(
-							groupId, fragmentCollectionId,
+							null, groupId, fragmentCollectionId,
 							_fragmentCompositionLocalService.
 								generateFragmentCompositionKey(
 									groupId, entry.getKey()),

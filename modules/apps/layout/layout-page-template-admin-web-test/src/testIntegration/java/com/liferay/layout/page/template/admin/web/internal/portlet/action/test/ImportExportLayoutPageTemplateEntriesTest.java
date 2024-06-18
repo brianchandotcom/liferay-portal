@@ -1367,7 +1367,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 				StringPool.BLANK, serviceContext);
 
 		return _fragmentEntryLocalService.addFragmentEntry(
-			TestPropsValues.getUserId(), groupId,
+			null, TestPropsValues.getUserId(), groupId,
 			fragmentCollection.getFragmentCollectionId(), key, name,
 			StringPool.BLANK, html, StringPool.BLANK, false, StringPool.BLANK,
 			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,

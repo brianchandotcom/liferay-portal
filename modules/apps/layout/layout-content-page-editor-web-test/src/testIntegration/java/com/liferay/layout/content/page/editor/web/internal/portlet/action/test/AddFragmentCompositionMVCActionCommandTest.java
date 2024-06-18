@@ -235,7 +235,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
 				"example-fragment-entry-key", RandomTestUtil.randomString(),
 				StringPool.BLANK, html, StringPool.BLANK, false,

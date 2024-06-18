@@ -160,6 +160,15 @@ public class FragmentEntryLocalServiceWrapper
 		return _fragmentEntryLocalService.deleteFragmentEntry(fragmentEntryId);
 	}
 
+	@Override
+	public FragmentEntry deleteFragmentEntry(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentEntryLocalService.deleteFragmentEntry(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

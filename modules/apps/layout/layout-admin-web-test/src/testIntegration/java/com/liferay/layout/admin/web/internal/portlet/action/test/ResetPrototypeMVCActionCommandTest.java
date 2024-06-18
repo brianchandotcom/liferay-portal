@@ -176,7 +176,8 @@ public class ResetPrototypeMVCActionCommandTest {
 				_serviceContext);
 
 		return _fragmentEntryLocalService.addFragmentEntry(
-			TestPropsValues.getUserId(), _layoutSetPrototypeGroup.getGroupId(),
+			null, TestPropsValues.getUserId(),
+			_layoutSetPrototypeGroup.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), null,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			"Fragment Entry HTML", StringPool.BLANK, false, null, null, 0,

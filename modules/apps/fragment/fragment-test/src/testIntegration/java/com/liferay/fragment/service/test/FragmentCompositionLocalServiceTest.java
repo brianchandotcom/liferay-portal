@@ -63,7 +63,7 @@ public class FragmentCompositionLocalServiceTest {
 	@Test(expected = FragmentCompositionNameException.class)
 	public void testFragmentCompositionNameRequired() throws Exception {
 		_fragmentCompositionLocalService.addFragmentComposition(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_fragmentCollection.getFragmentCollectionId(),
 			StringUtil.randomId(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, 0, WorkflowConstants.STATUS_APPROVED,
@@ -85,7 +85,7 @@ public class FragmentCompositionLocalServiceTest {
 
 		FragmentComposition fragmentComposition =
 			_fragmentCompositionLocalService.addFragmentComposition(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				fragmentCompositionKey, name, description, data,
 				previewFileEntryId, status, serviceContext);

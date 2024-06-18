@@ -378,7 +378,7 @@ public class LayoutLocalServiceTest {
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
 				"fragment-entry-key", RandomTestUtil.randomString(),
 				StringPool.BLANK, "<div>" + keyword + "</div>",

@@ -1193,10 +1193,10 @@ public class EditableFragmentEntryProcessorTest {
 				StringPool.BLANK, serviceContext);
 
 		return _fragmentEntryService.addFragmentEntry(
-			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"fragment-entry", "Fragment Entry", null,
-			_readFileToString(htmlFile), null, false, null, null, 0, false,
-			FragmentConstants.TYPE_SECTION, null,
+			null, _group.getGroupId(),
+			fragmentCollection.getFragmentCollectionId(), "fragment-entry",
+			"Fragment Entry", null, _readFileToString(htmlFile), null, false,
+			null, null, 0, false, FragmentConstants.TYPE_SECTION, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 

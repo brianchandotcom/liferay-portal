@@ -98,7 +98,7 @@
 																	},
 																	"url": {
 																		"value_i18n": {
-																			"en_US": "/documents/d/liferay-learn/education_courses_blue-svg?imagePreview=1"
+																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/education_courses_blue.svg$]"
 																		}
 																	}
 																},
@@ -369,7 +369,7 @@
 													},
 													"url": {
 														"value_i18n": {
-															"en_US": "/documents/d/liferay-learn/waves-svg?imagePreview=1"
+															"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/vectors/waves.svg$]"
 														}
 													}
 												},
@@ -466,7 +466,7 @@
 					},
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\n.course-bottom-nav:hover {\n border: 2px solid  white;\n cursor: pointer;\n outline: 2px solid #6399FF;\n}\n  \n  .course-bottom-nav {\n    background-image: url('/documents/d/liferay-learn/waves_sm-svg?imagePreview=1');\n    background-repeat: no-repeat;\n    background-position: calc(100% + 60px) center;\n    background-size: 220px 220px;\n  }\n}",
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n.course-bottom-nav:hover {\n border: 2px solid  white;\n cursor: pointer;\n outline: 2px solid #6399FF;\n}\n  \n  .course-bottom-nav {\n    background-image: url('[$DOCUMENT_URL:/site-initializer/documents/group/vectors/waves_sm.svg$]');\n    background-repeat: no-repeat;\n    background-position: calc(100% + 60px) center;\n    background-size: 220px 220px;\n  }\n}",
 							"indexed": true,
 							"layout": {
 								"widthType": "Fixed"

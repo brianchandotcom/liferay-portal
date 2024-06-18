@@ -50,13 +50,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.push.notifications.sender.firebase.internal.configuration.FirebasePushNotificationsSenderConfiguration",
-	property = "platform=" + FirebasePushNotificationsSender.PLATFORM,
-	service = PushNotificationsSender.class
+	property = "platform=firebase", service = PushNotificationsSender.class
 )
 public class FirebasePushNotificationsSender
 	implements PushNotificationsSender {
-
-	public static final String PLATFORM = "firebase";
 
 	@Override
 	public void send(List<String> tokens, JSONObject payloadJSONObject)

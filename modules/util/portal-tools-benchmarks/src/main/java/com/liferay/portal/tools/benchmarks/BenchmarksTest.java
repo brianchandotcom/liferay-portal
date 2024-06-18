@@ -46,7 +46,7 @@ public class BenchmarksTest {
 				"dontTrackOpenResources=true&holdResultsOpenOverStatementClose",
 				"=true&serverTimezone=GMT&useFastDateParsing=false&",
 				"useUnicode=true"));
-		_jdbcUsername = System.getProperty(
+		_jdbcUserName = System.getProperty(
 			"benchmarks.test.jdbc.username", StringPool.BLANK);
 		_runCount = GetterUtil.getInteger(
 			System.getProperty("benchmarks.test.run.count", "1"));
@@ -68,7 +68,7 @@ public class BenchmarksTest {
 		sb.append("\n\tJDBC URL: ");
 		sb.append(_jdbcURL);
 		sb.append("\n\tJDBC user name: ");
-		sb.append(_jdbcUsername);
+		sb.append(_jdbcUserName);
 		sb.append("\n\tRun count: ");
 		sb.append(_runCount);
 		sb.append("\n\tThread count: ");
@@ -181,7 +181,7 @@ public class BenchmarksTest {
 		List<String[]> data = new ArrayList<>();
 
 		try (Connection connection = DriverManager.getConnection(
-				_jdbcURL, _jdbcUsername, _jdbcPassword);
+				_jdbcURL, _jdbcUserName, _jdbcPassword);
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				sql);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -202,7 +202,7 @@ public class BenchmarksTest {
 	private final String _jdbcDriverClassName;
 	private final String _jdbcPassword;
 	private final String _jdbcURL;
-	private final String _jdbcUsername;
+	private final String _jdbcUserName;
 	private final int _runCount;
 	private final boolean _skipWarmUp;
 	private final int _threadCount;

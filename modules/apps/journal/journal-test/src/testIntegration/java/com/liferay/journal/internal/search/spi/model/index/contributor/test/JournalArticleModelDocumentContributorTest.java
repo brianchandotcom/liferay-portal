@@ -89,7 +89,7 @@ public class JournalArticleModelDocumentContributorTest {
 
 		for (String languageId : _journalArticle.getAvailableLanguageIds()) {
 			Assert.assertEquals(
-				_getLegacyContent(languageId),
+				_getDDMIndexerContent(languageId),
 				document.get(
 					LocaleUtil.fromLanguageId(languageId), Field.CONTENT));
 		}
@@ -117,7 +117,7 @@ public class JournalArticleModelDocumentContributorTest {
 		return documentImpl;
 	}
 
-	private String _getLegacyContent(String languageId) throws Exception {
+	private String _getDDMIndexerContent(String languageId) throws Exception {
 		com.liferay.portal.kernel.xml.Document document =
 			_journalArticle.getDocument();
 

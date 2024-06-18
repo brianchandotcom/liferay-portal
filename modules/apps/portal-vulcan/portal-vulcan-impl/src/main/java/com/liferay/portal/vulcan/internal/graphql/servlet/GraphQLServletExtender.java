@@ -2371,12 +2371,7 @@ public class GraphQLServletExtender {
 					continue;
 				}
 
-				 if (_isStatusException(graphQLError)) {
-					processedErrors.add(
-						_getExtendedGraphQLError(
-							graphQLError, Response.Status.BAD_REQUEST));
-				}
-				 else if (_isForbiddenException(graphQLError)) {
+				if (_isForbiddenException(graphQLError)) {
 					processedErrors.add(
 						_getExtendedGraphQLError(
 							graphQLError, Response.Status.FORBIDDEN));
@@ -2386,16 +2381,18 @@ public class GraphQLServletExtender {
 						_getExtendedGraphQLError(
 							graphQLError, Response.Status.NOT_FOUND));
 				}
-				else if (!_isClientErrorException(graphQLError)) {
+				else if (_isClientErrorException(graphQLError) ||
+						 _isStatusException(graphQLError)) {
+
 					processedErrors.add(
 						_getExtendedGraphQLError(
-							graphQLError,
-							Response.Status.INTERNAL_SERVER_ERROR));
+							graphQLError, Response.Status.BAD_REQUEST));
 				}
 				else {
 					processedErrors.add(
 						_getExtendedGraphQLError(
-							graphQLError, Response.Status.BAD_REQUEST));
+							graphQLError,
+							Response.Status.INTERNAL_SERVER_ERROR));
 				}
 			}
 

@@ -29,6 +29,8 @@ export default function objectSF(config, level = 0) {
 		);
 	}
 	else if (config && typeof config === 'object') {
+		sortObjectKeys(config);
+
 		const entries = Object.entries(config)
 			.map(([key, value]) => {
 				if (value === undefined) {
@@ -52,4 +54,24 @@ export default function objectSF(config, level = 0) {
 	else {
 		return `${indent}${JSON.stringify(config)}`;
 	}
+}
+
+function sortObjectKeys(object) {
+	const objectCopy = {...object};
+
+	const sortedKeys = Object.keys(object).sort();
+
+	sortedKeys.forEach((key) => {
+		delete object[key];
+	});
+
+	sortedKeys.forEach((key) => {
+		object[key] = objectCopy[key];
+	});
+
+	sortedKeys.forEach((key) => {
+		if (typeof object[key] === 'object') {
+			sortObjectKeys(object[key]);
+		}
+	});
 }

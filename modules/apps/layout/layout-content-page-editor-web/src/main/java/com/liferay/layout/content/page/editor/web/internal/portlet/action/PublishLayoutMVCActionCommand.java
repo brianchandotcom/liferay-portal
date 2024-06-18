@@ -11,6 +11,7 @@ import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.sites.kernel.util.Sites;
 
 import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -94,6 +97,25 @@ public class PublishLayoutMVCActionCommand
 		MultiSessionMessages.add(actionRequest, "layoutPublished");
 	}
 
+	private void _cleanWidgetPagesTypeSettings(
+		UnicodeProperties typeSettingsUnicodeProperties) {
+
+		typeSettingsUnicodeProperties.remove(
+			LayoutConstants.CUSTOMIZABLE_LAYOUT);
+		typeSettingsUnicodeProperties.remove(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
+
+		Set<Map.Entry<String, String>> entrySet =
+			typeSettingsUnicodeProperties.entrySet();
+
+		entrySet.removeIf(
+			entry -> {
+				String key = entry.getKey();
+
+				return key.startsWith("column-");
+			});
+	}
+
 	private void _publishLayout(
 			Layout draftLayout, Layout layout, ServiceContext serviceContext,
 			long userId)
@@ -139,6 +161,8 @@ public class PublishLayoutMVCActionCommand
 			typeSettingsUnicodeProperties.put(
 				LayoutTypeSettingsConstants.KEY_PUBLISHED,
 				Boolean.TRUE.toString());
+
+			_cleanWidgetPagesTypeSettings(typeSettingsUnicodeProperties);
 
 			draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
@@ -195,6 +219,8 @@ public class PublishLayoutMVCActionCommand
 							Sites.LAST_MERGE_TIME));
 				}
 			}
+
+			_cleanWidgetPagesTypeSettings(updatedTypeSettingsUnicodeProperties);
 
 			layout.setType(draftLayout.getType());
 			layout.setLayoutPrototypeUuid(null);

@@ -11,8 +11,13 @@ import hashPathForVariable from './util/hashPathForVariable.mjs';
 
 export default async function writeMainBridge(
 	projectDescription,
+	projectEntryPoints,
 	projectWebContextPath
 ) {
+	if (!projectEntryPoints.main) {
+		return;
+	}
+
 	const {name, version} = projectDescription;
 
 	//

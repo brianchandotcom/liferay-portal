@@ -70,14 +70,26 @@ export default async function main() {
 
 		// AMD bridging
 
-		writeMainBridge(projectDescription, projectWebContextPath),
+		writeMainBridge(
+			projectDescription,
+			projectEntryPoints,
+			projectWebContextPath
+		),
 		writeExportBridges(
 			projectDescription,
 			projectExports,
 			projectWebContextPath
 		),
-		writeManifestJson(projectDescription, projectExports),
-		writePackageJson(projectDescription),
+		writeManifestJson(
+			projectDescription,
+			projectEntryPoints,
+			projectExports
+		),
+		writePackageJson(
+			projectDescription,
+			projectEntryPoints,
+			projectExports
+		),
 
 		// CSS processing
 

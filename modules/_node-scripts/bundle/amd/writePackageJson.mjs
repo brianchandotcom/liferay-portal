@@ -8,7 +8,15 @@ import path from 'path';
 
 import {BUILD_RESOURCES_PATH} from '../../util/constants.mjs';
 
-export default async function writePackageJson(projectDescription) {
+export default async function writePackageJson(
+	projectDescription,
+	projectEntryPoints,
+	projectExports
+) {
+	if (!projectEntryPoints.main && !projectExports.length) {
+		return;
+	}
+
 	const filePath = path.join(BUILD_RESOURCES_PATH, 'package.json');
 
 	const {name, version} = projectDescription;

@@ -277,14 +277,14 @@ export default function ({
 								{contributor.label}
 							</ClayList.Header>
 
-							{contributor.value.map((className) => (
+							{contributor.value.map((className, index) => (
 								<ClayList.Item
 									active={selected.includes(className)}
 									data-testid={
 										TEST_IDS.CLAUSE_CONTRIBUTORS_SIDEBAR_LIST_ITEM
 									}
 									flex
-									key={className}
+									key={`${className}-${index}`}
 								>
 									<ClayList.ItemField>
 										<ClayCheckbox

@@ -25,45 +25,6 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that users can edit a scheduled article."
-	@priority = 5
-	test CanEditScheduledArticle {
-		KBArticle.updateCheckInterval(fieldValue = 1);
-
-		JSONKnowledgeBase.addkBArticle(
-			displayDate = "true",
-			groupName = "Guest",
-			increaseMinutes = 5,
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		var tooltipMessageDate = DateUtil.getDateOffsetByMinutes(5, "MMMM d");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.editScheduledDate(
-			increaseMinutes = 1,
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			tooltipMessageDate = ${tooltipMessageDate});
-
-		KBArticle.viewCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbStatus = "Scheduled");
-
-		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
-
-		Pause(value1 = 120000);
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.viewCP(
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			kbStatus = "Approved");
-	}
-
 	@description = "This test ensures that users can add an article with an invalid scheduled date."
 	@priority = 4
 	test CannotAddArticleWithInvalidScheduledDate {

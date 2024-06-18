@@ -1625,6 +1625,66 @@ public class KBArticleLocalServiceTest {
 			null, _serviceContext);
 	}
 
+	@FeatureFlags("LPS-188058")
+	@Test
+	public void testUpdateKBArticleDisplayDateUpdatesStatusToApproved()
+		throws Exception {
+
+		Date displayDate = new Date(
+			System.currentTimeMillis() + (2 * Time.DAY));
+
+		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			displayDate, null, null, null, _serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, kbArticle.getStatus());
+
+		displayDate = new Date(System.currentTimeMillis() - (2 * Time.DAY));
+
+		kbArticle = _kbArticleLocalService.updateKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, displayDate, null, null,
+			null, null, _serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, kbArticle.getStatus());
+	}
+
+	@FeatureFlags("LPS-188058")
+	@Test
+	public void testUpdateKBArticleDisplayDateUpdatesStatusToScheduled()
+		throws Exception {
+
+		Date displayDate = new Date(
+			System.currentTimeMillis() - (2 * Time.DAY));
+
+		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			displayDate, null, null, null, _serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, kbArticle.getStatus());
+
+		displayDate = new Date(System.currentTimeMillis() + (2 * Time.DAY));
+
+		kbArticle = _kbArticleLocalService.updateKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, displayDate, null, null,
+			null, null, _serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, kbArticle.getStatus());
+	}
+
 	@Test
 	public void testUpdateKBArticleExpirationDateUpdatesStatus()
 		throws Exception {

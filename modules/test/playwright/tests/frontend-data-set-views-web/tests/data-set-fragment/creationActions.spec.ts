@@ -41,9 +41,9 @@ test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 
 	await test.step('Create table field', async () => {
 		await dataSetManagerApiHelpers.createDataSetField({
+			dataSetERC,
 			label_i18n: {en_US: 'Id'},
 			name: 'id',
-			r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 			type: 'string',
 		});
 	});
@@ -86,9 +86,8 @@ test.describe('Creation Actions in Data Set fragment', () => {
 
 			await test.step('Create Creation Action', async () => {
 				await dataSetManagerApiHelpers.createDataSetCreationAction({
+					dataSetERC,
 					label_i18n: {en_US: actionLabel},
-					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
-						dataSetERC,
 				});
 			});
 
@@ -141,17 +140,15 @@ test.describe('Creation Actions in Data Set fragment', () => {
 
 			await test.step('Create Creation Actions', async () => {
 				await dataSetManagerApiHelpers.createDataSetCreationAction({
+					dataSetERC,
 					label_i18n: {en_US: firstActionLabel},
-					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
-						dataSetERC,
 					title_i18n: {en_US: 'Modal title'},
 					type: 'modal',
 				});
 
 				await dataSetManagerApiHelpers.createDataSetCreationAction({
+					dataSetERC,
 					label_i18n: {en_US: secondActionLabel},
-					r_fdsViewFDSCreationActionRelationship_c_fdsViewERC:
-						dataSetERC,
 				});
 			});
 

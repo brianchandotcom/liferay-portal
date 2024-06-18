@@ -51,46 +51,42 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 
 			await test.step('Create table fields', async () => {
 				await dataSetManagerApiHelpers.createDataSetField({
+					dataSetERC,
 					label_i18n: {en_US: 'Label'},
 					name: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 					type: 'string',
 				});
 				await dataSetManagerApiHelpers.createDataSetField({
+					dataSetERC,
 					label_i18n: {en_US: 'Id'},
 					name: `${SAMPLE_SCALAR_FIELD}`,
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 					type: 'string',
 				});
 			});
 
 			await test.step('Create cards section fields', async () => {
 				await dataSetManagerApiHelpers.createDataSetCardsSection({
+					dataSetERC,
 					fieldName: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
 					name: 'title',
-					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-						dataSetERC,
 				});
 				await dataSetManagerApiHelpers.createDataSetCardsSection({
+					dataSetERC,
 					fieldName: `${SAMPLE_SCALAR_FIELD}`,
 					name: 'description',
-					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-						dataSetERC,
 				});
 			});
 
 			await test.step('Create list section fields', async () => {
 				await dataSetManagerApiHelpers.createDataSetListSection({
+					dataSetERC,
 					fieldName: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
 					name: 'title',
-					r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
-						dataSetERC,
 				});
 				await dataSetManagerApiHelpers.createDataSetListSection({
+					dataSetERC,
 					fieldName: `${SAMPLE_SCALAR_FIELD}`,
 					name: 'description',
-					r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
-						dataSetERC,
 				});
 			});
 
@@ -207,12 +203,12 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 
 			await test.step('Create table fields', async () => {
 				await dataSetManagerApiHelpers.createDataSetField({
+					dataSetERC,
 					extraBodyParams: {
 						keywords: SAMPLE_SCALAR_ARRAY_CONTENT,
 					},
 					label_i18n: {en_US: SAMPLE_SCALAR_ARRAY_FIELD},
 					name: SAMPLE_SCALAR_ARRAY_FIELD,
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 					type: 'array',
 				});
 			});

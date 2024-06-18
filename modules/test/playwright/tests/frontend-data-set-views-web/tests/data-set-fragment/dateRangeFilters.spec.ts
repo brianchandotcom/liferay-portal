@@ -65,10 +65,10 @@ test(
 
 		await test.step('Create a new date-time filter', async () => {
 			await dataSetManagerApiHelpers.createDataSetDateFilter({
+				dataSetERC,
 				fieldName: DATE_FIELD_NAME,
 				from: '2020-01-01',
 				label_i18n: {en_US: filterLabel},
-				r_fdsViewFDSDateFilterRelationship_c_fdsViewERC: dataSetERC,
 				to: '3020-01-02',
 				type: 'date-time',
 			});
@@ -78,9 +78,9 @@ test(
 			'Add a field, so FDS has something to show',
 			async () => {
 				await dataSetManagerApiHelpers.createDataSetField({
+					dataSetERC,
 					label_i18n: {en_US: fieldLabel},
 					name: 'rendererType',
-					r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 					type: 'string',
 				});
 			}

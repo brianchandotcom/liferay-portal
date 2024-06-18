@@ -46,18 +46,18 @@ test.describe('Sorting Dropdown in Data Set Fragment', () => {
 		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
 			await test.step('Create sorting', async () => {
 				await dataSetManagerApiHelpers.createDataSetSort({
+					dataSetERC,
 					defaultValue: true,
 					fieldName: 'id',
 					label_i18n: {en_US: 'ID'},
 					orderType: 'asc',
-					r_fdsViewFDSSortRelationship_c_fdsViewERC: dataSetERC,
 				});
 
 				await dataSetManagerApiHelpers.createDataSetSort({
+					dataSetERC,
 					defaultValue: false,
 					fieldName: 'name',
 					label_i18n: {en_US: 'Name'},
-					r_fdsViewFDSSortRelationship_c_fdsViewERC: dataSetERC,
 				});
 			});
 
@@ -65,19 +65,19 @@ test.describe('Sorting Dropdown in Data Set Fragment', () => {
 				'Add fields, so data is displayed',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetField({
+						dataSetERC,
 						label_i18n: {
 							en_US: 'ID',
 						},
 						name: 'id',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 						sortable: true,
 						type: 'string',
 					});
 
 					await dataSetManagerApiHelpers.createDataSetField({
+						dataSetERC,
 						label_i18n: {en_US: 'Name'},
 						name: 'name',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 						sortable: true,
 						type: 'string',
 					});

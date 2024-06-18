@@ -85,15 +85,15 @@ test.describe('Filters in Data Set fragment', () => {
 				'Add a field, so FDS has something to show',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetField({
+						dataSetERC,
 						label_i18n: {en_US: 'Renderer'},
 						name: 'renderer',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 					});
 
 					await dataSetManagerApiHelpers.createDataSetField({
+						dataSetERC,
 						label_i18n: {en_US: 'Sortable'},
 						name: 'sortable',
-						r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 						renderer: 'boolean',
 					});
 				}
@@ -107,10 +107,9 @@ test.describe('Filters in Data Set fragment', () => {
 
 					await dataSetManagerApiHelpers.createDataSetSelectionFilter(
 						{
+							dataSetERC,
 							fieldName: 'renderer',
 							label_i18n: {en_US: filterLabel},
-							r_fdsViewFDSDynamicFilterRelationship_c_fdsViewERC:
-								dataSetERC,
 							source: picklist.externalReferenceCode,
 							sourceType: 'PICKLIST',
 						}

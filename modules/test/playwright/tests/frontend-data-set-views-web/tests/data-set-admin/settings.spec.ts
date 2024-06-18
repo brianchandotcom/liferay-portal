@@ -89,8 +89,7 @@ test.describe('Data Set Settings', () => {
 		}) => {
 			await test.step('Assign a field to a Card title section', async () => {
 				await dataSetManagerApiHelpers.createDataSetCardsSection({
-					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-						settingsDataSetERC,
+					dataSetERC: settingsDataSetERC,
 				});
 
 				await page.reload();
@@ -112,12 +111,10 @@ test.describe('Data Set Settings', () => {
 		}) => {
 			await test.step('Assign a field to title section for Cards and List', async () => {
 				await dataSetManagerApiHelpers.createDataSetCardsSection({
-					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-						settingsDataSetERC,
+					dataSetERC: settingsDataSetERC,
 				});
 				await dataSetManagerApiHelpers.createDataSetListSection({
-					r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
-						settingsDataSetERC,
+					dataSetERC: settingsDataSetERC,
 				});
 
 				await page.reload();

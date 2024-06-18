@@ -11,7 +11,6 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
-import {DEFAULT_LABEL} from "../../utils/constants";
 
 let settingsDataSetERC: string;
 let dataSetLabel: string;
@@ -87,8 +86,7 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 				'Assign a field to a Card title section',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetCardsSection({
-						r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-							settingsDataSetERC,
+						dataSetERC: settingsDataSetERC,
 					});
 				}
 			);
@@ -106,12 +104,10 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 				'Assign a field to a Card and List title sections',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetCardsSection({
-						r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-							settingsDataSetERC,
+						dataSetERC: settingsDataSetERC,
 					});
 					await dataSetManagerApiHelpers.createDataSetListSection({
-						r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
-							settingsDataSetERC,
+						dataSetERC: settingsDataSetERC,
 					});
 				}
 			);
@@ -138,12 +134,10 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 				'Assign a field to a Card and List title sections',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetCardsSection({
-						r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-							settingsDataSetERC,
+						dataSetERC: settingsDataSetERC,
 					});
 					await dataSetManagerApiHelpers.createDataSetListSection({
-						r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
-							settingsDataSetERC,
+						dataSetERC: settingsDataSetERC,
 					});
 				}
 			);
@@ -191,12 +185,10 @@ test.describe('Data Set Default Visualization Mode in fragment', () => {
 				'Assign a field to a Card and List title sections',
 				async () => {
 					await dataSetManagerApiHelpers.createDataSetCardsSection({
-						r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-							settingsDataSetERC,
+						dataSetERC: settingsDataSetERC,
 					});
 					await dataSetManagerApiHelpers.createDataSetListSection({
-						r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
-							settingsDataSetERC,
+						dataSetERC: settingsDataSetERC,
 					});
 				}
 			);

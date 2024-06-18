@@ -38,15 +38,15 @@ test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 
 	await test.step('Create table fields', async () => {
 		await dataSetManagerApiHelpers.createDataSetField({
+			dataSetERC,
 			label_i18n: {en_US: 'Label'},
 			name: 'id',
-			r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 			type: 'string',
 		});
 		await dataSetManagerApiHelpers.createDataSetField({
+			dataSetERC,
 			label_i18n: {en_US: 'Id'},
 			name: 'label',
-			r_fdsViewFDSFieldRelationship_c_fdsViewERC: dataSetERC,
 			type: 'string',
 		});
 	});

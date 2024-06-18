@@ -62,8 +62,7 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-												},
+												"fragmentLink": {},
 												"text": {
 													"value_i18n": {
 														"en_US": "Course"
@@ -84,8 +83,7 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-html"
 									},
-									"fragmentConfig": {
-									},
+									"fragmentConfig": {},
 									"fragmentFields": [
 										{
 											"id": "element-html",
@@ -120,7 +118,7 @@
 				"definition": {
 					"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\n}",
 					"customCSSViewports": [
-						{	
+						{
 							"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\nflex-wrap: wrap;\n}",
 							"id": "landscapeMobile"
 						}
@@ -172,15 +170,13 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-html"
 									},
-									"fragmentConfig": {
-									},
+									"fragmentConfig": {},
 									"fragmentFields": [
 										{
 											"id": "element-html",
 											"value": {
 												"html": {
-													"value_i18n": {
-													}
+													"value_i18n": {}
 												}
 											}
 										}
@@ -195,8 +191,7 @@
 					{
 						"definition": {
 							"indexed": true,
-							"layout": {
-							},
+							"layout": {},
 							"name": "Main Content Container"
 						},
 						"pageElements": [
@@ -221,8 +216,7 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {
-											},
+											"fragmentConfig": {},
 											"fragmentFields": [
 												{
 													"id": "element-html",
@@ -276,8 +270,7 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {
-											},
+											"fragmentConfig": {},
 											"fragmentFields": [
 												{
 													"id": "element-html",

@@ -112,34 +112,29 @@ public class FirebasePushNotificationsSenderTest {
 
 		_verifyAccessTokenRequest();
 
-		String groupName = _verifyCreateGroupRequest(
-			accessToken, destinationTokens);
-
 		_verifyGroupRequestInteractions(accessToken, true, true);
 
 		_verifySendNotificationRequest(
 			accessToken, _getExpectedEmptyNotificationJSONObject(groupId));
 
 		_verifyRemoveGroupRequest(
-			accessToken, destinationTokens, groupId, groupName);
+			accessToken, destinationTokens, groupId,
+			_verifyCreateGroupRequest(accessToken, destinationTokens));
 	}
 
 	@Test
 	public void testSendErrorWhenGettingToken() throws Exception {
 		_saveConfiguration();
 
-		String accessToken = _mockAccessTokenRequest(false);
-
-		String destinationToken = RandomTestUtil.randomString();
-
 		AssertUtils.assertFailure(
 			PushNotificationsException.class, "Unable to get the access token",
 			() -> _pushNotificationsDeviceLocalService.sendPushNotification(
-				PLATFORM, Arrays.asList(destinationToken),
+				PLATFORM, Arrays.asList(RandomTestUtil.randomString()),
 				_getRandomNotificationJSONObject()));
 
 		_verifyAccessTokenRequest();
-		_verifyGroupRequestInteractions(accessToken, false, false);
+		_verifyGroupRequestInteractions(
+			_mockAccessTokenRequest(false), false, false);
 	}
 
 	@Test
@@ -171,8 +166,6 @@ public class FirebasePushNotificationsSenderTest {
 		_saveConfiguration();
 
 		String accessToken = _mockAccessTokenRequest(true);
-
-		String destinationToken = RandomTestUtil.randomString();
 
 		_mockSendNotificationRequest(accessToken, false);
 
@@ -240,9 +233,6 @@ public class FirebasePushNotificationsSenderTest {
 
 		_verifyAccessTokenRequest();
 
-		String groupName = _verifyCreateGroupRequest(
-			accessToken, destinationTokens);
-
 		_verifyGroupRequestInteractions(accessToken, true, true);
 
 		_verifySendNotificationRequest(
@@ -250,7 +240,8 @@ public class FirebasePushNotificationsSenderTest {
 			_getExpectedNotificationJSONObject(groupId, jsonObject));
 
 		_verifyRemoveGroupRequest(
-			accessToken, destinationTokens, groupId, groupName);
+			accessToken, destinationTokens, groupId,
+			_verifyCreateGroupRequest(accessToken, destinationTokens));
 	}
 
 	@Test
@@ -261,9 +252,8 @@ public class FirebasePushNotificationsSenderTest {
 
 		String accessToken = _mockAccessTokenRequest(true);
 
-		String groupId = RandomTestUtil.randomString();
-
-		_mockGroupRequest(accessToken, false, groupId, true);
+		_mockGroupRequest(
+			accessToken, false, RandomTestUtil.randomString(), true);
 
 		List<String> destinationTokens = Arrays.asList(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
@@ -309,12 +299,12 @@ public class FirebasePushNotificationsSenderTest {
 
 			_verifyAccessTokenRequest();
 
-			String groupName = _verifyCreateGroupRequest(
-				accessToken, destinationTokens);
-
 			_verifySendNotificationRequest(
 				accessToken,
 				_getExpectedNotificationJSONObject(groupId, jsonObject));
+
+			String groupName = _verifyCreateGroupRequest(
+				accessToken, destinationTokens);
 
 			_verifyRemoveGroupRequest(
 				accessToken, destinationTokens, groupId, groupName);

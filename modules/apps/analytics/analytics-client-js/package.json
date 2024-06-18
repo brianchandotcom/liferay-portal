@@ -15,7 +15,9 @@
 	"devDependencies": {
 		"browserslist-config-clay-components": "^2.0.3",
 		"fetch-mock": "^5.13.1",
-		"isomorphic-fetch": "^2.2.1"
+		"isomorphic-fetch": "^2.2.1",
+		"webpack": "5.89.0",
+		"webpack-dev-server": "3.11.3"
 	},
 	"homepage": "https://github.com/liferay/com-liferay-analytics#readme",
 	"jest": {
@@ -38,10 +40,10 @@
 		"url": "git+https://github.com/liferay/com-liferay-analytics.git"
 	},
 	"scripts": {
-		"build": "liferay-npm-scripts webpack",
+		"build": "webpack",
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format",
-		"start": "liferay-npm-scripts webpack --watch",
+		"start": "webpack serve",
 		"test": "node-scripts test"
 	},
 	"version": "1.0.0"

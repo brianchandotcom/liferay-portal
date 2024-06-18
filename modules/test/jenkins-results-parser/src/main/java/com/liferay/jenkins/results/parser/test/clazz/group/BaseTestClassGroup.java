@@ -74,6 +74,10 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 		return null;
 	}
 
+	protected void removeTestClass(TestClass testClass) {
+		testClasses.remove(testClass);
+	}
+
 	protected final List<TestClass> testClasses = new ArrayList<>();
 
 }

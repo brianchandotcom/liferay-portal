@@ -58,6 +58,40 @@ public class JSUnitModulesBatchTestClassGroup
 	}
 
 	@Override
+	protected void setAxisTestClassGroups() {
+		super.setAxisTestClassGroups();
+
+		TestClass faroTestClass = null;
+		AxisTestClassGroup originalAxisTestClassGroup = null;
+
+		axisTestClassGroupLoop:
+		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+			for (TestClass testClass : axisTestClassGroup.getTestClasses()) {
+				String testClassName = testClass.getName();
+
+				if (testClassName.contains("modules/dxp/apps/osb/osb-faro")) {
+					faroTestClass = testClass;
+
+					originalAxisTestClassGroup = axisTestClassGroup;
+
+					break axisTestClassGroupLoop;
+				}
+			}
+		}
+
+		if (faroTestClass != null) {
+			originalAxisTestClassGroup.removeTestClass(faroTestClass);
+
+			AxisTestClassGroup faroAxisTestClassGroup =
+				TestClassGroupFactory.newAxisTestClassGroup(this);
+
+			faroAxisTestClassGroup.addTestClass(faroTestClass);
+
+			axisTestClassGroups.add(faroAxisTestClassGroup);
+		}
+	}
+
+	@Override
 	protected void setTestClasses() throws IOException {
 		List<File> moduleDirs = new ArrayList<>();
 

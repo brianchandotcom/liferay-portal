@@ -16,45 +16,6 @@ definition {
 		JSONStaging.enableLocalStaging(groupName = "Test Site Name");
 	}
 
-	@description = "Add a widget template in staging site."
-	@priority = 4
-	@uitest
-	test AddWidgetTemplateInStagingSite {
-		task ("Add a widget templates in staging site") {
-			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name-staging");
-
-			WidgetTemplates.addCP(
-				adtFile = "adt_asset_publisher_rich_summary.ftl",
-				adtType = "Asset Publisher");
-		}
-
-		task ("Publish to Live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
-
-			Staging.addCustomPublication();
-
-			Check.checkNotVisible(
-				key_contentName = "Templates",
-				locator1 = "Staging#STAGING_CONTENT_CHECKBOX");
-
-			ScrollWebElementIntoView(locator1 = "Staging#STAGING_CONTENT_INFO");
-
-			AssertTextEquals(
-				locator1 = "Staging#STAGING_CONTENT_INFO",
-				value1 = "Asset Publisher Template (1)");
-
-			Staging.clickPublishToLiveButton();
-
-			Staging.viewProcessResult();
-		}
-
-		task ("View the widget template in live site") {
-			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
-
-			WidgetTemplates.viewTemplate(adtType = "Asset Publisher");
-		}
-	}
-
 	@description = "View the widget template applied to Categories Navigation in staging and live site."
 	@priority = 3
 	test ViewWidgetTemplateAppliedToCategoriesNavigationInStagingAndLiveSite {

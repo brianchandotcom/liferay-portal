@@ -1128,18 +1128,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layoutPersistence.fetchByUUID_G_P(uuid, groupId, privateLayout);
 	}
 
-	@Override
-	public List<Layout> getLayouts(Set<Serializable> primaryKeys) {
-		Map<Serializable, Layout> layoutsMap =
-			layoutPersistence.fetchByPrimaryKeys(primaryKeys);
-
-		if (layoutsMap.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		return new ArrayList<>(layoutsMap.values());
-	}
-
 	/**
 	 * Returns all the layouts that match the type and belong to the group,
 	 * including the ones marked as System.
@@ -1955,6 +1943,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		return layouts;
+	}
+
+	@Override
+	public List<Layout> getLayouts(Set<Serializable> primaryKeys) {
+		Map<Serializable, Layout> layoutsMap =
+			layoutPersistence.fetchByPrimaryKeys(primaryKeys);
+
+		if (layoutsMap.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		return new ArrayList<>(layoutsMap.values());
 	}
 
 	@Override

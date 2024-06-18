@@ -138,7 +138,7 @@ public class KBArticleStagedModelDataHandler
 				KBArticle parentKBArticle =
 					_kbArticleLocalService.getLatestKBArticle(
 						kbArticle.getParentResourcePrimKey(),
-						WorkflowConstants.STATUS_APPROVED);
+						getExportableStatuses());
 
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, kbArticle, parentKBArticle,

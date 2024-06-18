@@ -6,7 +6,6 @@
 package com.liferay.expando.util;
 
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.portal.kernel.test.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -115,32 +114,37 @@ public class ExpandoConverterUtilTest {
 			nondefaultLocale = LocaleUtil.GERMANY;
 		}
 
-		Assert.assertEquals(
-			"hello",
-			ExpandoConverterUtil.getStringFromAttribute(
-				ExpandoColumnConstants.STRING_LOCALIZED,
-				HashMapBuilder.put(
-					defaultLocale, "hello"
-				).put(
-					nondefaultLocale, RandomTestUtil.randomString()
-				).build()));
+		String str = ExpandoConverterUtil.getStringFromAttribute(
+			ExpandoColumnConstants.STRING_LOCALIZED,
+			HashMapBuilder.put(
+				defaultLocale, "used"
+			).put(
+				nondefaultLocale, "notUsed"
+			).build());
+
+		Assert.assertEquals("used", str);
 	}
 
 	@Test
 	public void testGetStringLocalizedAttributeFromStringArray() {
-		String[] stringArray = {"hello", RandomTestUtil.randomString()};
+		String[] stringArray = {"used", "notUsed"};
 
 		Serializable attribute =
 			ExpandoConverterUtil.getAttributeFromStringArray(
 				ExpandoColumnConstants.STRING_LOCALIZED, stringArray);
 
-		Assert.assertTrue(attribute instanceof HashMap);
+		Class<?> attributeClass = attribute.getClass();
 
-		Map<Locale, String> map = (HashMap<Locale, String>)attribute;
+		Assert.assertTrue(
+			"Localized String attribute was converted to " +
+				attributeClass.getSimpleName() + " instead of HashMap.",
+			attribute instanceof HashMap);
 
-		Assert.assertEquals(map.toString(), 1, map.size());
+		Map<Locale, String> localizations = (HashMap<Locale, String>)attribute;
 
-		Assert.assertEquals("hello", map.get(LocaleUtil.getDefault()));
+		Assert.assertEquals(localizations.toString(), 1, localizations.size());
+
+		Assert.assertEquals("used", localizations.get(LocaleUtil.getDefault()));
 	}
 
 }

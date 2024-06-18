@@ -222,6 +222,49 @@ autoSaveAsDraftTest(
 	}
 );
 
+baseTest(
+	'LPD-15248 Move folder to another folder via management toolbar',
+	async ({apiHelpers, journalPage, page, site}) => {
+		const childFolder = await apiHelpers.jsonWebServicesJournal.addFolder({
+			groupId: site.id,
+		});
+
+		const parentFolder = await apiHelpers.jsonWebServicesJournal.addFolder({
+			groupId: site.id,
+		});
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await page.getByLabel(`${childFolder.name}`).check();
+
+		await page.getByRole('button', {name: 'Move'}).click();
+
+		await page.getByRole('button', {name: 'Select'}).click();
+
+		await page
+			.frameLocator('iframe[title="Select Folder"]')
+			.getByRole('button')
+			.click();
+
+		await page
+			.frameLocator('iframe[title="Select Folder"]')
+			.getByText(`${parentFolder.name}`)
+			.click();
+
+		await page.getByRole('button', {name: 'Move'}).click();
+
+		await expect(
+			page.getByText('Success:Your request completed successfully.')
+		).toBeVisible();
+
+		await expect(page.getByText(`${childFolder.name}`)).toBeHidden();
+
+		await page.getByRole('link', {name: `${parentFolder.name}`}).click();
+
+		await expect(page.getByText(`${childFolder.name}`)).toBeVisible();
+	}
+);
+
 keepTitlesUntranslated(
 	'LPD-20723: Clay link is translating asset titles/names by default in vertical card',
 	async ({apiHelpers, journalPage, page, site}) => {

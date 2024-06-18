@@ -8,7 +8,7 @@ import {mergeTests} from '@playwright/test';
 import {FDSFragmentPage} from '../pages/FDSFragmentPage';
 import {
 	dataSetManagerSetupTest
-} from "../../data-set-manager/fixtures/dataSetManagerSetupTest";
+} from "../../data-set-admin/fixtures/dataSetManagerSetupTest";
 
 // ensures data-set-fragment tests can run before data-set-admin tests
 const test = mergeTests(dataSetManagerSetupTest);

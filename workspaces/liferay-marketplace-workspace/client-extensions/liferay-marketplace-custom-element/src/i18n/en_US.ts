@@ -291,6 +291,7 @@ export default {
 	'review-the-new-publisher-info-and-the-liferay-marketplace-terms-before-proceeding':
 		'Review the new publisher info and the Liferay Marketplace terms before proceeding',
 	'save-as-a-draft-exit': 'Save as a draft & exit',
+	'save-as-draft': 'Save as Draft',
 	'search': 'Search',
 	'select-a-file': 'Select a file',
 	'select-a-local-file-to-upload': 'Select a local file to upload',

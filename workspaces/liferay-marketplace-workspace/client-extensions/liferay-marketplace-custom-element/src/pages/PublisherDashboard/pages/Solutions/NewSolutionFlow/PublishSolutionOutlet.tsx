@@ -17,6 +17,7 @@ import {useMemo} from 'react';
 import AppToolbar from '../../../../../components/AppToolBar/AppToolBar';
 import Modal from '../../../../../components/Modal';
 import {useSolutionContext} from '../../../../../context/SolutionContext';
+import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import usePublishSolutionHeader from '../../../hooks/usePublishSolutionHeader';
 import usePublishSolutionNavigation from '../../../hooks/usePublishSolutionNavigation';
@@ -58,6 +59,9 @@ const PublishSolutionOutlet = () => {
 
 	const isDisabled = parsedSchema ? !parsedSchema.success : false;
 
+	const isDraft = (status?: number) =>
+		status === PRODUCT_WORKFLOW_STATUS_CODE.DRAFT;
+
 	return (
 		<>
 			<AppToolbar
@@ -65,7 +69,15 @@ const PublishSolutionOutlet = () => {
 				accountName={account?.name as string}
 				appImage={context.profile.file?.preview}
 				appName={context.profile.name}
-				display={{preview: true, saveAsDraft: true}}
+				display={{
+					preview: true,
+					saveAsDraft:
+						!context._product ||
+						isDraft(context._product.productStatus),
+					submit:
+						!!context._product &&
+						!isDraft(context._product.productStatus),
+				}}
 				exitProps={{
 					onClick: () => {
 						onOpenChange(true);
@@ -79,6 +91,9 @@ const PublishSolutionOutlet = () => {
 				saveAsDraftProps={{
 					disabled: isDisabled,
 					onClick: onSaveAsDraft,
+				}}
+				submitProps={{
+					onClick: onSave,
 				}}
 			/>
 

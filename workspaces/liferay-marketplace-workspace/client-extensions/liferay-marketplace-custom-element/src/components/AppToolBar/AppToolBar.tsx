@@ -21,7 +21,7 @@ type AppToolbarProps = {
 	accountName: string;
 	appImage?: string;
 	appName?: string;
-	display?: {preview?: boolean; saveAsDraft?: boolean};
+	display?: {preview?: boolean; saveAsDraft?: boolean; submit?: boolean};
 	exitHref?: string;
 	exitProps?: ComponentProps<typeof Link>;
 	previewProps?: Omit<
@@ -29,6 +29,7 @@ type AppToolbarProps = {
 		'aria-label' | 'symbol'
 	>;
 	saveAsDraftProps?: ComponentProps<typeof ClayButton>;
+	submitProps?: ComponentProps<typeof ClayButton>;
 };
 
 const AppToolbar: React.FC<AppToolbarProps> = ({
@@ -36,10 +37,11 @@ const AppToolbar: React.FC<AppToolbarProps> = ({
 	accountName,
 	appImage,
 	appName,
-	display = {preview: false, saveAsDraft: false},
+	display = {preview: false, saveAsDraft: false, submit: false},
 	exitHref,
 	exitProps,
 	saveAsDraftProps,
+	submitProps,
 }) => (
 	<div className="new-app-tool-bar-container">
 		<ClayManagementToolbar.ItemList expand>
@@ -115,7 +117,18 @@ const AppToolbar: React.FC<AppToolbarProps> = ({
 						size="xs"
 						{...saveAsDraftProps}
 					>
-						Save as Draft
+						{i18n.translate('save-as-draft')}
+					</ClayButton>
+				)}
+
+				{display.submit && (
+					<ClayButton
+						className="text-dark"
+						displayType="secondary"
+						size="xs"
+						{...submitProps}
+					>
+						{i18n.translate('submit')}
 					</ClayButton>
 				)}
 			</div>

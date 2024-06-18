@@ -519,6 +519,14 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CaptchaUtil.serveImage(resourceRequest, resourceResponse);
 	}
 
+	public void method(String searchEngineId) {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setSearchEngineId("test123");
+		indexableActionableDynamicQuery.setSearchEngineId(searchEngineId);
+	}
+
 	public void method(
 		String searchEngineId, long companyId, Collection<Document> documents,
 		boolean commitImmediately) {

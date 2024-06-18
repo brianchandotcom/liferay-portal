@@ -545,7 +545,7 @@ public abstract class BaseWorkspaceGitRepository
 
 			gitHubDevGitRemotes.remove(randomGitRemote);
 
-			String remoteGitBranchSHA;
+			String remoteGitBranchSHA = null;
 
 			try {
 				RemoteGitBranch remoteGitBranch =

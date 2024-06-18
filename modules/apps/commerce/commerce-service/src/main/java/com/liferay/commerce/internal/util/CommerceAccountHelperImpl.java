@@ -35,6 +35,9 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -527,12 +530,13 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 		User currentUser = _userLocalService.fetchUser(userId);
 
-		Role administratorRole = _roleLocalService.getRole(
-			commerceChannel.getCompanyId(), RoleConstants.ADMINISTRATOR);
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
 		if ((currentUser != null) &&
-			_roleLocalService.hasUserRole(
-				currentUser.getUserId(), administratorRole.getRoleId())) {
+			permissionChecker.hasPermission(
+				null, AccountEntry.class.getName(),
+				commerceChannel.getCompanyId(), ActionKeys.VIEW)) {
 
 			accountEntries = _accountEntryLocalService.getAccountEntries(
 				commerceChannel.getCompanyId(),

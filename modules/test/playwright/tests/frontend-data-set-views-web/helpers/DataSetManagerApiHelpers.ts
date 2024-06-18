@@ -275,6 +275,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		const data = {
 			default: defaultValue,
 			fieldName,
+			label: label_i18n[Object.keys(label_i18n)[0]],
 			label_i18n,
 			orderType,
 			r_fdsViewFDSSortRelationship_c_fdsViewERC,

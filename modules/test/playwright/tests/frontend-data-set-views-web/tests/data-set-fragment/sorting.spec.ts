@@ -14,7 +14,10 @@ import {featureFlagsTest} from "../../../../fixtures/featureFlagsTest";
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
-	fdsFragmentPageTest,
+	featureFlagsTest({
+		'LPD-19465' : true,
+		'LPS-178052': true,
+	}),
 	isolatedLayoutTest({publish: false}),
 	loginTest(),
 	fdsFragmentPageTest,

@@ -34,7 +34,7 @@ export class FDSFragmentPage {
 		this.fdsListWrapper = page.locator('.list-sheet');
 		this.fdsPaginationWrapper = page.locator('.data-set-pagination-wrapper');
 		this.fdsPaginationResults = page.locator('.pagination-results');
-		this.fdsTableWrapper = page.getByTestId('visualization-mode-table');
+		this.fdsTableWrapper = page.locator('.dnd-table');
 		this.fragmentWidgetSearchInput = page.getByLabel(
 			'Search Fragments and Widgets'
 		);

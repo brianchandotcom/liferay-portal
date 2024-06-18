@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -65,7 +64,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-@FeatureFlags("LPD-25680")
 @RunWith(Arquillian.class)
 public class FileSizeContentDashboardItemFilterProviderTest {
 

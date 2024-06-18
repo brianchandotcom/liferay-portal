@@ -140,3 +140,87 @@ test('Add a page based on custom master.', async ({
 		).toBe('rgb(231, 231, 237)');
 	});
 });
+
+test('Fragments hidden in master pages are hidden in pages that use it and visibility can not be changed.', async ({
+	masterPagesPage,
+	page,
+	pageEditorPage,
+	pagesAdminPage,
+	site,
+}) => {
+	const masterName = 'New Master Page';
+	let buttonId;
+	let headerId;
+
+	await test.step('Create and publish new custom master page with one fragment hidden', async () => {
+		await masterPagesPage.goto(site.friendlyUrlPath);
+
+		await masterPagesPage.createNewMaster(masterName);
+
+		await masterPagesPage.editMaster(masterName);
+
+		await pageEditorPage.addFragment('Basic Components', 'Button');
+
+		const topperButton = await page.locator(
+			'.page-editor__topper[data-name="Button"]'
+		);
+
+		buttonId = await topperButton.evaluate((element) =>
+			Array.from(element.classList)
+				.find((cssClass) =>
+					cssClass.includes('lfr-layout-structure-item')
+				)
+				.replace('lfr-layout-structure-item-topper-', '')
+		);
+
+		await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+		const topperHeader = await page.locator(
+			'.page-editor__topper[data-name="Heading"]'
+		);
+
+		headerId = await topperHeader.evaluate((element) =>
+			Array.from(element.classList)
+				.find((cssClass) =>
+					cssClass.includes('lfr-layout-structure-item')
+				)
+				.replace('lfr-layout-structure-item-topper-', '')
+		);
+
+		await pageEditorPage.hideFragment(headerId);
+
+		expect(await pageEditorPage.getFragmentStyle(headerId, 'display')).toBe(
+			'none'
+		);
+
+		await pageEditorPage.publishPage();
+	});
+
+	await test.step('Create and publish new page based on master page and check that the fragment is still hidden', async () => {
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		const pageName = `Page ${masterName}`;
+
+		await pagesAdminPage.createNewPage(pageName, masterName);
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		await pagesAdminPage.editPage(pageName);
+
+		const buttonFragment = await pageEditorPage.getFragment(buttonId);
+
+		expect(
+			await pageEditorPage.getElementStyle(buttonFragment, 'display')
+		).toBe('block');
+
+		await expect(buttonFragment.getAttribute('inert')).toBeDefined();
+
+		const headerFragment = await pageEditorPage.getFragment(headerId);
+
+		expect(
+			await pageEditorPage.getElementStyle(headerFragment, 'display')
+		).toBe('none');
+
+		await expect(headerFragment.getAttribute('inert')).toBeDefined();
+	});
+});

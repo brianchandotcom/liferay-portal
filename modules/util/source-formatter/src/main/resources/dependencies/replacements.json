@@ -1,6 +1,14 @@
 [
 	{
 		"classNames": [
+			"Product"
+		],
+		"from": "getConfiguration",
+		"issueKey": "LPD-7749",
+		"to": "getProductConfiguration"
+	},
+	{
+		"classNames": [
 			"CommerceCatalogLocalService",
 			"CommerceCatalogLocalServiceUtil"
 		],

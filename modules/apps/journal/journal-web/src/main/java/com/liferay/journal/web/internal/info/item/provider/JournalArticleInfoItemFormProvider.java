@@ -56,9 +56,9 @@ public class JournalArticleInfoItemFormProvider
 		try {
 			return _getInfoForm(
 				StringPool.BLANK,
-				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+				assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName()),
-				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+				displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName(), StringPool.BLANK,
 					JournalArticle.class.getSimpleName(), 0));
 		}
@@ -76,11 +76,11 @@ public class JournalArticleInfoItemFormProvider
 		try {
 			return _getInfoForm(
 				String.valueOf(ddmStructureId),
-				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-					_assetEntryLocalService.getEntry(
+				assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+					assetEntryLocalService.getEntry(
 						JournalArticle.class.getName(),
 						article.getResourcePrimKey())),
-				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+				displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName(),
 					String.valueOf(ddmStructureId),
 					JournalArticle.class.getSimpleName(), 0));
@@ -105,13 +105,48 @@ public class JournalArticleInfoItemFormProvider
 
 		return _getInfoForm(
 			formVariationKey,
-			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+			assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				JournalArticle.class.getName(),
 				GetterUtil.getLong(formVariationKey), groupId),
-			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+			displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 				JournalArticle.class.getName(), formVariationKey,
 				JournalArticle.class.getSimpleName(), groupId));
 	}
+
+	@Reference
+	protected AssetEntryInfoItemFieldSetProvider
+		assetEntryInfoItemFieldSetProvider;
+
+	@Reference
+	protected AssetEntryLocalService assetEntryLocalService;
+
+	@Reference
+	protected DDMStructureInfoItemFieldSetProvider
+		ddmStructureInfoItemFieldSetProvider;
+
+	@Reference
+	protected DDMStructureLocalService ddmStructureLocalService;
+
+	@Reference
+	protected DDMTemplateInfoItemFieldSetProvider
+		ddmTemplateInfoItemFieldSetProvider;
+
+	@Reference
+	protected DisplayPageInfoItemFieldSetProvider
+		displayPageInfoItemFieldSetProvider;
+
+	@Reference
+	protected ExpandoInfoItemFieldSetProvider expandoInfoItemFieldSetProvider;
+
+	@Reference
+	protected InfoItemFieldReaderFieldSetProvider
+		infoItemFieldReaderFieldSetProvider;
+
+	@Reference
+	protected Language language;
+
+	@Reference
+	protected TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider;
 
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {
 		return InfoFieldSet.builder(
@@ -162,33 +197,33 @@ public class JournalArticleInfoItemFormProvider
 
 					if (ddmStructureId != 0) {
 						unsafeConsumer.accept(
-							_ddmStructureInfoItemFieldSetProvider.
+							ddmStructureInfoItemFieldSetProvider.
 								getInfoItemFieldSet(
 									ddmStructureId,
 									_getStructureFieldSetNameInfoLocalizedValue(
 										ddmStructureId)));
 
 						unsafeConsumer.accept(
-							_ddmTemplateInfoItemFieldSetProvider.
+							ddmTemplateInfoItemFieldSetProvider.
 								getInfoItemFieldSet(ddmStructureId));
 					}
 				}
 			).infoFieldSetEntry(
-				_templateInfoItemFieldSetProvider.getInfoFieldSet(
+				templateInfoItemFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName(), formVariationKey)
 			).infoFieldSetEntry(
 				displayPageInfoFieldSet
 			).infoFieldSetEntry(
 				_getFeaturedImageInfoFieldSet()
 			).infoFieldSetEntry(
-				_expandoInfoItemFieldSetProvider.getInfoFieldSet(
+				expandoInfoItemFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName())
 			).infoFieldSetEntry(
 				assetEntryInfoFieldSet
 			).infoFieldSetEntry(
 				_getScheduleInfoFieldSet()
 			).infoFieldSetEntry(
-				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
+				infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName())
 			).labelInfoLocalizedValue(
 				new ModelResourceLocalizedValue(JournalArticle.class.getName())
@@ -221,14 +256,14 @@ public class JournalArticleInfoItemFormProvider
 
 		try {
 			DDMStructure ddmStructure =
-				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
+				ddmStructureLocalService.getDDMStructure(ddmStructureId);
 
 			Map<Locale, String> nameMap = new HashMap<>(
 				ddmStructure.getNameMap());
 
 			nameMap.replaceAll(
 				(locale, name) -> StringBundler.concat(
-					_language.get(locale, "content"), StringPool.SPACE,
+					language.get(locale, "content"), StringPool.SPACE,
 					StringPool.OPEN_PARENTHESIS, name,
 					StringPool.CLOSE_PARENTHESIS));
 
@@ -246,40 +281,5 @@ public class JournalArticleInfoItemFormProvider
 			throw new RuntimeException("Unexpected exception", portalException);
 		}
 	}
-
-	@Reference
-	private AssetEntryInfoItemFieldSetProvider
-		_assetEntryInfoItemFieldSetProvider;
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private DDMStructureInfoItemFieldSetProvider
-		_ddmStructureInfoItemFieldSetProvider;
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private DDMTemplateInfoItemFieldSetProvider
-		_ddmTemplateInfoItemFieldSetProvider;
-
-	@Reference
-	private DisplayPageInfoItemFieldSetProvider
-		_displayPageInfoItemFieldSetProvider;
-
-	@Reference
-	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;
-
-	@Reference
-	private InfoItemFieldReaderFieldSetProvider
-		_infoItemFieldReaderFieldSetProvider;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;
 
 }

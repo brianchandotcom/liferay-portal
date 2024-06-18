@@ -59,10 +59,10 @@ public class FileEntryInfoItemFormProvider
 	public InfoForm getInfoForm() {
 		try {
 			return _getInfoForm(
-				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+				assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 					DLFileEntryConstants.getClassName()),
 				0,
-				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+				displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 					FileEntry.class.getName(), StringPool.BLANK,
 					FileEntry.class.getSimpleName(), 0),
 				0);
@@ -82,7 +82,7 @@ public class FileEntryInfoItemFormProvider
 
 			fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 
-			DDMStructure ddmStructure = _fetchDDMStructure(fileEntryTypeId);
+			DDMStructure ddmStructure = fetchDDMStructure(fileEntryTypeId);
 
 			if (ddmStructure != null) {
 				ddmStructureId = ddmStructure.getStructureId();
@@ -91,12 +91,12 @@ public class FileEntryInfoItemFormProvider
 
 		try {
 			return _getInfoForm(
-				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-					_assetEntryLocalService.getEntry(
+				assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+					assetEntryLocalService.getEntry(
 						DLFileEntryConstants.getClassName(),
 						fileEntry.getFileEntryId())),
 				ddmStructureId,
-				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+				displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 					FileEntry.class.getName(), String.valueOf(fileEntryTypeId),
 					FileEntry.class.getSimpleName(), 0),
 				fileEntryTypeId);
@@ -118,7 +118,7 @@ public class FileEntryInfoItemFormProvider
 
 		long ddmStructureId = 0;
 
-		DDMStructure ddmStructure = _fetchDDMStructure(
+		DDMStructure ddmStructure = fetchDDMStructure(
 			GetterUtil.getLong(formVariationKey));
 
 		if (ddmStructure != null) {
@@ -126,19 +126,19 @@ public class FileEntryInfoItemFormProvider
 		}
 
 		return _getInfoForm(
-			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+			assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				DLFileEntryConstants.getClassName(),
 				GetterUtil.getLong(formVariationKey), groupId),
 			ddmStructureId,
-			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+			displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 				FileEntry.class.getName(), String.valueOf(ddmStructureId),
 				FileEntry.class.getSimpleName(), groupId),
 			GetterUtil.getLong(formVariationKey));
 	}
 
-	private DDMStructure _fetchDDMStructure(long fileEntryTypeId) {
+	protected DDMStructure fetchDDMStructure(long fileEntryTypeId) {
 		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeLocalService.fetchDLFileEntryType(fileEntryTypeId);
+			dlFileEntryTypeLocalService.fetchDLFileEntryType(fileEntryTypeId);
 
 		if ((dlFileEntryType == null) ||
 			(dlFileEntryType.getDataDefinitionId() == 0)) {
@@ -146,9 +146,43 @@ public class FileEntryInfoItemFormProvider
 			return null;
 		}
 
-		return _ddmStructureLocalService.fetchStructure(
+		return ddmStructureLocalService.fetchStructure(
 			dlFileEntryType.getDataDefinitionId());
 	}
+
+	@Reference
+	protected AssetEntryInfoItemFieldSetProvider
+		assetEntryInfoItemFieldSetProvider;
+
+	@Reference
+	protected AssetEntryLocalService assetEntryLocalService;
+
+	@Reference
+	protected DDMStructureInfoItemFieldSetProvider
+		ddmStructureInfoItemFieldSetProvider;
+
+	@Reference
+	protected DDMStructureLocalService ddmStructureLocalService;
+
+	@Reference
+	protected DisplayPageInfoItemFieldSetProvider
+		displayPageInfoItemFieldSetProvider;
+
+	@Reference
+	protected DLFileEntryTypeLocalService dlFileEntryTypeLocalService;
+
+	@Reference
+	protected DLFileEntryTypeService dlFileEntryTypeService;
+
+	@Reference
+	protected ExpandoInfoItemFieldSetProvider expandoInfoItemFieldSetProvider;
+
+	@Reference
+	protected InfoItemFieldReaderFieldSetProvider
+		infoItemFieldReaderFieldSetProvider;
+
+	@Reference
+	protected TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider;
 
 	private InfoFieldSet _getBasicInformationFieldSet() {
 		return InfoFieldSet.builder(
@@ -178,7 +212,7 @@ public class FileEntryInfoItemFormProvider
 		throws NoSuchStructureException {
 
 		InfoFieldSet infoFieldSet =
-			_ddmStructureInfoItemFieldSetProvider.getInfoItemFieldSet(
+			ddmStructureInfoItemFieldSetProvider.getInfoItemFieldSet(
 				ddmStructureId,
 				_getStructureFieldSetNameInfoLocalizedValue(ddmStructureId));
 
@@ -240,15 +274,15 @@ public class FileEntryInfoItemFormProvider
 			).infoFieldSetEntry(
 				displayPageInfoFieldSet
 			).infoFieldSetEntry(
-				_expandoInfoItemFieldSetProvider.getInfoFieldSet(
+				expandoInfoItemFieldSetProvider.getInfoFieldSet(
 					DLFileEntryConstants.getClassName())
 			).infoFieldSetEntry(
-				_templateInfoItemFieldSetProvider.getInfoFieldSet(
+				templateInfoItemFieldSetProvider.getInfoFieldSet(
 					FileEntry.class.getName(), String.valueOf(fileEntryTypeId))
 			).infoFieldSetEntry(
 				assetEntryInfoFieldSet
 			).infoFieldSetEntry(
-				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
+				infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 					FileEntry.class.getName())
 			).labelInfoLocalizedValue(
 				new ModelResourceLocalizedValue(FileEntry.class.getName())
@@ -268,7 +302,7 @@ public class FileEntryInfoItemFormProvider
 		try {
 			List<DDMStructure> ddmStructures =
 				DLFileEntryTypeUtil.getDDMStructures(
-					_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId));
+					dlFileEntryTypeService.getFileEntryType(fileEntryTypeId));
 
 			List<InfoFieldSet> infoFieldSets = new ArrayList<>(
 				ddmStructures.size());
@@ -279,7 +313,7 @@ public class FileEntryInfoItemFormProvider
 				}
 
 				infoFieldSets.add(
-					_ddmStructureInfoItemFieldSetProvider.getInfoItemFieldSet(
+					ddmStructureInfoItemFieldSetProvider.getInfoItemFieldSet(
 						ddmStructure.getStructureId()));
 			}
 
@@ -300,7 +334,7 @@ public class FileEntryInfoItemFormProvider
 
 		try {
 			DDMStructure ddmStructure =
-				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
+				ddmStructureLocalService.getDDMStructure(ddmStructureId);
 
 			return InfoLocalizedValue.<String>builder(
 			).defaultLocale(
@@ -319,39 +353,5 @@ public class FileEntryInfoItemFormProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntryInfoItemFormProvider.class);
-
-	@Reference
-	private AssetEntryInfoItemFieldSetProvider
-		_assetEntryInfoItemFieldSetProvider;
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private DDMStructureInfoItemFieldSetProvider
-		_ddmStructureInfoItemFieldSetProvider;
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private DisplayPageInfoItemFieldSetProvider
-		_displayPageInfoItemFieldSetProvider;
-
-	@Reference
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
-	@Reference
-	private DLFileEntryTypeService _dlFileEntryTypeService;
-
-	@Reference
-	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;
-
-	@Reference
-	private InfoItemFieldReaderFieldSetProvider
-		_infoItemFieldReaderFieldSetProvider;
-
-	@Reference
-	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;
 
 }

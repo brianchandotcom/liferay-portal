@@ -130,16 +130,6 @@ public class CommerceOrderItemsNotificationTermEvaluator
 		return writer.toString();
 	}
 
-	private long _getCommerceOrderItemCPDefinitionId(
-		CommerceOrderItem commerceOrderItem) {
-
-		if (!commerceOrderItem.hasParentCommerceOrderItem()) {
-			return commerceOrderItem.getCPDefinitionId();
-		}
-
-		return commerceOrderItem.getParentCommerceOrderItemCPDefinitionId();
-	}
-
 	private Map<String, Object> _getOrderItem(
 			CommerceOrderItem commerceOrderItem,
 			CommerceCurrency commerceCurrency, Locale locale)
@@ -179,9 +169,18 @@ public class CommerceOrderItemsNotificationTermEvaluator
 				StringJoiner stringJoiner = new StringJoiner(
 					StringPool.COMMA_AND_SPACE);
 
+				long commerceOrderItemCPDefinitionId =
+					commerceOrderItem.
+						getParentCommerceOrderItemCPDefinitionId();
+
+				if (!commerceOrderItem.hasParentCommerceOrderItem()) {
+					commerceOrderItemCPDefinitionId =
+						commerceOrderItem.getCPDefinitionId();
+				}
+
 				List<KeyValuePair> commerceOptionValueKeyValuePairs =
 					_cpInstanceHelper.getKeyValuePairs(
-						_getCommerceOrderItemCPDefinitionId(commerceOrderItem),
+						commerceOrderItemCPDefinitionId,
 						commerceOrderItem.getJson(), locale);
 
 				for (KeyValuePair keyValuePair :

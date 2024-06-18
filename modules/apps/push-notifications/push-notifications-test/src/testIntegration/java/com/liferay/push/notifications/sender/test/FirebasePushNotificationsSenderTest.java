@@ -176,12 +176,34 @@ public class FirebasePushNotificationsSenderTest {
 
 		_mockSendNotificationRequest(accessToken, false);
 
-		AssertUtils.assertFailure(
-			PushNotificationsException.class,
-			"Unable to send the push notification",
-			() -> _pushNotificationsDeviceLocalService.sendPushNotification(
-				PLATFORM, Arrays.asList(destinationToken),
-				_getRandomNotificationJSONObject()));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.push.notifications.sender.firebase.internal." +
+					"FirebasePushNotificationsSender",
+				LoggerTestUtil.ERROR)) {
+
+			String destinationToken = RandomTestUtil.randomString();
+
+			AssertUtils.assertFailure(
+				PushNotificationsException.class,
+				"Unable to send the push notification",
+				() -> _pushNotificationsDeviceLocalService.sendPushNotification(
+					PLATFORM, Arrays.asList(destinationToken),
+					_getExpectedNotificationJSONObject(
+						destinationToken, _getRandomNotificationJSONObject())));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Unable to send notification with notification_key: ",
+					destinationToken, " and reason: REASON"),
+				logEntry.getMessage());
+		}
+
 		_verifyAccessTokenRequest();
 		_verifyGroupRequestInteractions(accessToken, false, false);
 	}
@@ -355,9 +377,17 @@ public class FirebasePushNotificationsSenderTest {
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
 
 			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Unable to send notification with notification_key: ",
+					groupId, " and reason: REASON"),
+				logEntry.getMessage());
+
+			logEntry = logEntries.get(1);
 
 			Assert.assertEquals(
 				StringBundler.concat(
@@ -588,7 +618,7 @@ public class FirebasePushNotificationsSenderTest {
 		).respond(
 			HttpResponse.response(
 			).withBody(
-				"OK"
+				"REASON"
 			).withStatusCode(
 				_getCode(success)
 			)

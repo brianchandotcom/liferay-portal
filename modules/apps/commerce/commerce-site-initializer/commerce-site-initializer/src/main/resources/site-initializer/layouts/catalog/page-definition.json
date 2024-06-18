@@ -4,7 +4,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "commerce-master"
+			"key": "liferay-commerce-master"
 		}
 	},
 	"version": 1.1

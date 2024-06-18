@@ -86,33 +86,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-166296. The sidebar buttons should be on focus after close the panel."
-	@priority = 3
-	test FocusOnSidebarButtonAfterClosePanel {
-		task ("Given a page creator accesses the Browser panel of content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.gotoTab(tabName = "Browser");
-		}
-
-		task ("When the page creator closes the panel") {
-			Click(
-				key_text = "times",
-				locator1 = "Icon#ANY");
-		}
-
-		task ("Then the browser button should be on focus") {
-			AssertElementFocused(locator1 = "//div[contains(@class,'page-editor__sidebar__buttons')]//*[@*='Browser']");
-		}
-	}
-
 	@description = "This is a test for LPS-165278. The page creator could see hovered status when navigate through treeview nodes via keyboard."
 	@priority = 3
 	test NavigateThroughTreeviewNodesViaKeyboard {

@@ -147,6 +147,16 @@ test('checks sidebar accessibility', async ({
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
+	// Check where the focus goes when the sidebar is closed
+
+	await page.getByRole('button', {name: 'Close'}).press('Enter');
+
+	await expect(
+		page.getByLabel('Fragments and Widgets', {exact: true})
+	).toBeFocused();
+
+	// Check with axe
+
 	await checkAccessibility({
 		page,
 		selectors: ['.page-editor__sidebar'],

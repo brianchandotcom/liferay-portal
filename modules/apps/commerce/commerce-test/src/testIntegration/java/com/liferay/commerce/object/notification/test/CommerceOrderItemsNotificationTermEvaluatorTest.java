@@ -67,13 +67,13 @@ public class CommerceOrderItemsNotificationTermEvaluatorTest {
 
 		_company = CompanyLocalServiceUtil.getCompany(group.getCompanyId());
 
-		_user = UserTestUtil.addUser(_company);
-
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			group.getCompanyId());
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			group.getGroupId(), _commerceCurrency.getCode());
+
+		_user = UserTestUtil.addUser(_company);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			group.getGroupId());

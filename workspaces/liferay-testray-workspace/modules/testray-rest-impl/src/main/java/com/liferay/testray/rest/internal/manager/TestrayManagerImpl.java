@@ -778,19 +778,58 @@ public class TestrayManagerImpl implements TestrayManager {
 			"Component#", testrayComponentName, "#ProjectId#",
 			testrayProjectId);
 
-		long testrayComponentId = _getObjectEntryId(
-			companyId,
-			StringBundler.concat(
-				"projectId eq '", testrayProjectId, "' and name eq '",
-				testrayComponentName, "'"),
-			objectEntryIdsKey, "Component", testrayCache, userId);
+		Long objectEntryId = testrayCache.getObjectEntryId(objectEntryIdsKey);
 
-		if (testrayComponentId != 0) {
+		Map<String, Serializable> values = null;
+
+		if (objectEntryId == null) {
+			List<Map<String, Serializable>> valuesList = _getValuesList(
+				companyId,
+				StringBundler.concat(
+					"projectId eq '", testrayProjectId, "' and name eq '",
+					testrayComponentName, "'"),
+				"Component", testrayCache, userId);
+
+			if (ListUtil.isNotEmpty(valuesList)) {
+				values = valuesList.get(0);
+
+				objectEntryId = GetterUtil.getLong(values.get("objectEntryId"));
+			}
+		}
+
+		if (objectEntryId == null) {
+			ObjectEntry objectEntry = _addObjectEntry(
+				"Component", serviceContext, testrayCache, userId,
+				HashMapBuilder.<String, Serializable>put(
+					"name", testrayComponentName
+				).put(
+					"r_projectToComponents_c_projectId", testrayProjectId
+				).put(
+					"r_teamToComponents_c_teamId", testrayTeamId
+				).build());
+
+			long testrayComponentId = objectEntry.getObjectEntryId();
+
+			testrayCache.addObjectEntryId(
+				objectEntryIdsKey, testrayComponentId);
+
 			return testrayComponentId;
 		}
 
-		ObjectEntry objectEntry = _addObjectEntry(
-			"Component", serviceContext, testrayCache, userId,
+		if (values == null) {
+			values = _objectEntryLocalService.getValues(objectEntryId);
+		}
+
+		long currentTestrayTeamId = GetterUtil.getLong(
+			values.get("r_teamToComponents_c_teamId"));
+
+		if (testrayTeamId == currentTestrayTeamId) {
+			return objectEntryId;
+		}
+
+		_updateObjectEntry(
+			GetterUtil.getLong(values.get("objectEntryId")), serviceContext,
+			userId,
 			HashMapBuilder.<String, Serializable>put(
 				"name", testrayComponentName
 			).put(
@@ -799,11 +838,7 @@ public class TestrayManagerImpl implements TestrayManager {
 				"r_teamToComponents_c_teamId", testrayTeamId
 			).build());
 
-		testrayComponentId = objectEntry.getObjectEntryId();
-
-		testrayCache.addObjectEntryId(objectEntryIdsKey, testrayComponentId);
-
-		return testrayComponentId;
+		return objectEntryId;
 	}
 
 	private long _getTestrayFactorCategoryId(

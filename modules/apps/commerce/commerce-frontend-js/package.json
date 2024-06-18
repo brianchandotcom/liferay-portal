@@ -57,9 +57,9 @@
 	"scripts": {
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
-		"coverage": "liferay-npm-scripts test --coverage --silent --verbose",
+		"coverage": "node-scripts test --coverage --silent --verbose",
 		"format": "liferay-npm-scripts format",
-		"test": "liferay-npm-scripts test"
+		"test": "node-scripts test"
 	},
 	"version": "4.0.115"
 }

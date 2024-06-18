@@ -59,7 +59,7 @@
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format",
-		"test": "RTL_SKIP_AUTO_CLEANUP=true liferay-npm-scripts test"
+		"test": "RTL_SKIP_AUTO_CLEANUP=true node-scripts test"
 	},
 	"version": "3.0.83"
 }

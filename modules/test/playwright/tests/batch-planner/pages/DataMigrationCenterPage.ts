@@ -24,7 +24,7 @@ export class DataMigrationCenterPage {
 	readonly fileSelector: Locator;
 	readonly nextButton: Locator;
 	readonly scopeSelector: Locator;
-	readonly startImportButton: Locator;
+	readonly startImportButton: () => Promise<Locator>;
 	readonly updateStrategySelector: Locator;
 
 	constructor(page: Page) {
@@ -52,8 +52,17 @@ export class DataMigrationCenterPage {
 		);
 		this.nextButton = page.getByRole('button', {name: 'Next'});
 		this.scopeSelector = page.getByLabel('Scope');
-		this.startImportButton = page.getByTestId('start-import');
 		this.updateStrategySelector = page.getByLabel('Update Strategy');
+		this.startImportButton = async (): Promise<Locator> => {
+			await this.page.waitForSelector(
+				'button[data-testid="start-import"]'
+			);
+			const button = this.page.locator(
+				'button[data-testid="start-import"]'
+			);
+
+			return button;
+		};
 	}
 
 	async goto() {
@@ -90,7 +99,7 @@ export class DataMigrationCenterPage {
 		}
 
 		await this.nextButton.click();
-		await this.startImportButton.click();
+		(await this.startImportButton()).click();
 	}
 
 	async selectEntityType(entityTypeName: string) {

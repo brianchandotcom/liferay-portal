@@ -92,10 +92,6 @@ public class GroupSelectorTag extends IncludeTag {
 	private List<Group> _getGroups(HttpServletRequest httpServletRequest) {
 		String groupType = _getGroupType(httpServletRequest);
 
-		GroupItemSelectorProvider groupItemSelectorProvider =
-			GroupItemSelectorProviderRegistryUtil.getGroupItemSelectorProvider(
-				groupType);
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -123,6 +119,16 @@ public class GroupSelectorTag extends IncludeTag {
 			return _groups;
 		}
 
+		GroupItemSelectorProvider groupItemSelectorProvider =
+			GroupItemSelectorProviderRegistryUtil.getGroupItemSelectorProvider(
+				groupType);
+
+		if (groupItemSelectorProvider == null) {
+			_groups = Collections.emptyList();
+
+			return _groups;
+		}
+
 		int cur = ParamUtil.getInteger(
 			httpServletRequest, SearchContainer.DEFAULT_CUR_PARAM,
 			SearchContainer.DEFAULT_CUR);
@@ -132,12 +138,6 @@ public class GroupSelectorTag extends IncludeTag {
 
 		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
 			cur, delta);
-
-		if (groupItemSelectorProvider == null) {
-			_groups = Collections.emptyList();
-
-			return _groups;
-		}
 
 		List<Group> groups = groupItemSelectorProvider.getGroups(
 			group.getCompanyId(), group.getGroupId(),

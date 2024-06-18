@@ -138,6 +138,16 @@ public class FragmentCompositionLocalServiceImpl
 	}
 
 	@Override
+	public FragmentComposition deleteFragmentComposition(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return fragmentCompositionLocalService.deleteFragmentComposition(
+			getFragmentCompositionByExternalReferenceCode(
+				externalReferenceCode, groupId));
+	}
+
+	@Override
 	public FragmentComposition fetchFragmentComposition(
 		long fragmentCompositionId) {
 

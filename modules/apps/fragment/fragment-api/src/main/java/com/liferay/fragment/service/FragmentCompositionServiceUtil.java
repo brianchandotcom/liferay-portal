@@ -32,15 +32,17 @@ public class FragmentCompositionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentCompositionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static FragmentComposition addFragmentComposition(
-			long groupId, long fragmentCollectionId,
-			String fragmentCompositionKey, String name, String description,
-			String data, long previewFileEntryId, int status,
+			String externalReferenceCode, long groupId,
+			long fragmentCollectionId, String fragmentCompositionKey,
+			String name, String description, String data,
+			long previewFileEntryId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFragmentComposition(
-			groupId, fragmentCollectionId, fragmentCompositionKey, name,
-			description, data, previewFileEntryId, status, serviceContext);
+			externalReferenceCode, groupId, fragmentCollectionId,
+			fragmentCompositionKey, name, description, data, previewFileEntryId,
+			status, serviceContext);
 	}
 
 	public static FragmentComposition deleteFragmentComposition(
@@ -48,6 +50,14 @@ public class FragmentCompositionServiceUtil {
 		throws PortalException {
 
 		return getService().deleteFragmentComposition(fragmentCompositionId);
+	}
+
+	public static FragmentComposition deleteFragmentComposition(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteFragmentComposition(
+			externalReferenceCode, groupId);
 	}
 
 	public static FragmentComposition fetchFragmentComposition(
@@ -61,6 +71,15 @@ public class FragmentCompositionServiceUtil {
 
 		return getService().fetchFragmentComposition(
 			groupId, fragmentCompositionKey);
+	}
+
+	public static FragmentComposition
+			getFragmentCompositionByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getFragmentCompositionByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	public static List<FragmentComposition> getFragmentCompositions(

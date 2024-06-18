@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.service.persistence.impl;
 
+import com.liferay.fragment.exception.DuplicateFragmentCompositionExternalReferenceCodeException;
 import com.liferay.fragment.exception.NoSuchCompositionException;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentCompositionTable;
@@ -26,13 +27,19 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -5296,6 +5303,274 @@ public class FragmentCompositionPersistenceImpl
 	private static final String _FINDER_COLUMN_G_FCI_LIKEN_S_STATUS_2 =
 		"fragmentComposition.status = ?";
 
+	private FinderPath _finderPathFetchByERC_G;
+	private FinderPath _finderPathCountByERC_G;
+
+	/**
+	 * Returns the fragment composition where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchCompositionException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching fragment composition
+	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
+	 */
+	@Override
+	public FragmentComposition findByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchCompositionException {
+
+		FragmentComposition fragmentComposition = fetchByERC_G(
+			externalReferenceCode, groupId);
+
+		if (fragmentComposition == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", groupId=");
+			sb.append(groupId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCompositionException(sb.toString());
+		}
+
+		return fragmentComposition;
+	}
+
+	/**
+	 * Returns the fragment composition where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
+	 */
+	@Override
+	public FragmentComposition fetchByERC_G(
+		String externalReferenceCode, long groupId) {
+
+		return fetchByERC_G(externalReferenceCode, groupId, true);
+	}
+
+	/**
+	 * Returns the fragment composition where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
+	 */
+	@Override
+	public FragmentComposition fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					FragmentComposition.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {externalReferenceCode, groupId};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByERC_G, finderArgs, this);
+			}
+
+			if (result instanceof FragmentComposition) {
+				FragmentComposition fragmentComposition =
+					(FragmentComposition)result;
+
+				if (!Objects.equals(
+						externalReferenceCode,
+						fragmentComposition.getExternalReferenceCode()) ||
+					(groupId != fragmentComposition.getGroupId())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_SELECT_FRAGMENTCOMPOSITION_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(groupId);
+
+					List<FragmentComposition> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByERC_G, finderArgs, list);
+						}
+					}
+					else {
+						FragmentComposition fragmentComposition = list.get(0);
+
+						result = fragmentComposition;
+
+						cacheResult(fragmentComposition);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (FragmentComposition)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the fragment composition where externalReferenceCode = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the fragment composition that was removed
+	 */
+	@Override
+	public FragmentComposition removeByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchCompositionException {
+
+		FragmentComposition fragmentComposition = findByERC_G(
+			externalReferenceCode, groupId);
+
+		return remove(fragmentComposition);
+	}
+
+	/**
+	 * Returns the number of fragment compositions where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the number of matching fragment compositions
+	 */
+	@Override
+	public int countByERC_G(String externalReferenceCode, long groupId) {
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					FragmentComposition.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			FinderPath finderPath = _finderPathCountByERC_G;
+
+			Object[] finderArgs = new Object[] {externalReferenceCode, groupId};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_FRAGMENTCOMPOSITION_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(groupId);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2 =
+		"fragmentComposition.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3 =
+		"(fragmentComposition.externalReferenceCode IS NULL OR fragmentComposition.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_GROUPID_2 =
+		"fragmentComposition.groupId = ?";
+
 	public FragmentCompositionPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -5340,6 +5615,14 @@ public class FragmentCompositionPersistenceImpl
 				new Object[] {
 					fragmentComposition.getGroupId(),
 					fragmentComposition.getFragmentCompositionKey()
+				},
+				fragmentComposition);
+
+			finderCache.putResult(
+				_finderPathFetchByERC_G,
+				new Object[] {
+					fragmentComposition.getExternalReferenceCode(),
+					fragmentComposition.getGroupId()
 				},
 				fragmentComposition);
 		}
@@ -5447,6 +5730,16 @@ public class FragmentCompositionPersistenceImpl
 				_finderPathCountByG_FCK, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByG_FCK, args, fragmentCompositionModelImpl);
+
+			args = new Object[] {
+				fragmentCompositionModelImpl.getExternalReferenceCode(),
+				fragmentCompositionModelImpl.getGroupId()
+			};
+
+			finderCache.putResult(
+				_finderPathCountByERC_G, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByERC_G, args, fragmentCompositionModelImpl);
 		}
 	}
 
@@ -5593,6 +5886,72 @@ public class FragmentCompositionPersistenceImpl
 			String uuid = PortalUUIDUtil.generate();
 
 			fragmentComposition.setUuid(uuid);
+		}
+
+		if (Validator.isNull(fragmentComposition.getExternalReferenceCode())) {
+			fragmentComposition.setExternalReferenceCode(
+				fragmentComposition.getUuid());
+		}
+		else {
+			if (!Objects.equals(
+					fragmentCompositionModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					fragmentComposition.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = fragmentComposition.getCompanyId();
+
+					long groupId = fragmentComposition.getGroupId();
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = fragmentComposition.getPrimaryKey();
+					}
+
+					try {
+						fragmentComposition.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								FragmentComposition.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								fragmentComposition.getExternalReferenceCode(),
+								null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			FragmentComposition ercFragmentComposition = fetchByERC_G(
+				fragmentComposition.getExternalReferenceCode(),
+				fragmentComposition.getGroupId());
+
+			if (isNew) {
+				if (ercFragmentComposition != null) {
+					throw new DuplicateFragmentCompositionExternalReferenceCodeException(
+						"Duplicate fragment composition with external reference code " +
+							fragmentComposition.getExternalReferenceCode() +
+								" and group " +
+									fragmentComposition.getGroupId());
+				}
+			}
+			else {
+				if ((ercFragmentComposition != null) &&
+					(fragmentComposition.getFragmentCompositionId() !=
+						ercFragmentComposition.getFragmentCompositionId())) {
+
+					throw new DuplicateFragmentCompositionExternalReferenceCodeException(
+						"Duplicate fragment composition with external reference code " +
+							fragmentComposition.getExternalReferenceCode() +
+								" and group " +
+									fragmentComposition.getGroupId());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -6146,6 +6505,7 @@ public class FragmentCompositionPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("externalReferenceCode");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
@@ -6178,6 +6538,9 @@ public class FragmentCompositionPersistenceImpl
 
 		_uniqueIndexColumnNames.add(
 			new String[] {"groupId", "fragmentCompositionKey"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"externalReferenceCode", "groupId"});
 	}
 
 	/**
@@ -6374,6 +6737,16 @@ public class FragmentCompositionPersistenceImpl
 			},
 			new String[] {"groupId", "fragmentCollectionId", "name", "status"},
 			false);
+
+		_finderPathFetchByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, true);
+
+		_finderPathCountByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, false);
 
 		FragmentCompositionUtil.setPersistence(this);
 	}

@@ -54,15 +54,17 @@ public class FragmentCompositionLocalServiceUtil {
 	}
 
 	public static FragmentComposition addFragmentComposition(
-			long userId, long groupId, long fragmentCollectionId,
-			String fragmentCompositionKey, String name, String description,
-			String data, long previewFileEntryId, int status,
+			String externalReferenceCode, long userId, long groupId,
+			long fragmentCollectionId, String fragmentCompositionKey,
+			String name, String description, String data,
+			long previewFileEntryId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFragmentComposition(
-			userId, groupId, fragmentCollectionId, fragmentCompositionKey, name,
-			description, data, previewFileEntryId, status, serviceContext);
+			externalReferenceCode, userId, groupId, fragmentCollectionId,
+			fragmentCompositionKey, name, description, data, previewFileEntryId,
+			status, serviceContext);
 	}
 
 	/**
@@ -121,6 +123,14 @@ public class FragmentCompositionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteFragmentComposition(fragmentCompositionId);
+	}
+
+	public static FragmentComposition deleteFragmentComposition(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteFragmentComposition(
+			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -231,6 +241,14 @@ public class FragmentCompositionLocalServiceUtil {
 			groupId, fragmentCompositionKey);
 	}
 
+	public static FragmentComposition
+		fetchFragmentCompositionByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		return getService().fetchFragmentCompositionByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the fragment composition matching the UUID and group.
 	 *
@@ -277,6 +295,15 @@ public class FragmentCompositionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getFragmentComposition(fragmentCompositionId);
+	}
+
+	public static FragmentComposition
+			getFragmentCompositionByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getFragmentCompositionByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

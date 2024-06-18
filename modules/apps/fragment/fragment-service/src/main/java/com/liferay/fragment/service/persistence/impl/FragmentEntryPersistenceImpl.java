@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.service.persistence.impl;
 
+import com.liferay.fragment.exception.DuplicateFragmentEntryExternalReferenceCodeException;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryTable;
@@ -26,13 +27,19 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -15052,6 +15059,906 @@ public class FragmentEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_G_FCI_T_S_HEAD_HEAD_2 =
 		"fragmentEntry.head = ?";
 
+	private FinderPath _finderPathWithPaginationFindByERC_G;
+	private FinderPath _finderPathWithoutPaginationFindByERC_G;
+	private FinderPath _finderPathCountByERC_G;
+
+	/**
+	 * Returns all the fragment entries where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching fragment entries
+	 */
+	@Override
+	public List<FragmentEntry> findByERC_G(
+		String externalReferenceCode, long groupId) {
+
+		return findByERC_G(
+			externalReferenceCode, groupId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the fragment entries where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of fragment entries
+	 * @param end the upper bound of the range of fragment entries (not inclusive)
+	 * @return the range of matching fragment entries
+	 */
+	@Override
+	public List<FragmentEntry> findByERC_G(
+		String externalReferenceCode, long groupId, int start, int end) {
+
+		return findByERC_G(externalReferenceCode, groupId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment entries where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of fragment entries
+	 * @param end the upper bound of the range of fragment entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment entries
+	 */
+	@Override
+	public List<FragmentEntry> findByERC_G(
+		String externalReferenceCode, long groupId, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+
+		return findByERC_G(
+			externalReferenceCode, groupId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment entries where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of fragment entries
+	 * @param end the upper bound of the range of fragment entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching fragment entries
+	 */
+	@Override
+	public List<FragmentEntry> findByERC_G(
+		String externalReferenceCode, long groupId, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					FragmentEntry.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
+
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByERC_G;
+					finderArgs = new Object[] {externalReferenceCode, groupId};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByERC_G;
+				finderArgs = new Object[] {
+					externalReferenceCode, groupId, start, end,
+					orderByComparator
+				};
+			}
+
+			List<FragmentEntry> list = null;
+
+			if (useFinderCache) {
+				list = (List<FragmentEntry>)finderCache.getResult(
+					finderPath, finderArgs, this);
+
+				if ((list != null) && !list.isEmpty()) {
+					for (FragmentEntry fragmentEntry : list) {
+						if (!externalReferenceCode.equals(
+								fragmentEntry.getExternalReferenceCode()) ||
+							(groupId != fragmentEntry.getGroupId())) {
+
+							list = null;
+
+							break;
+						}
+					}
+				}
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						4 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(4);
+				}
+
+				sb.append(_SQL_SELECT_FRAGMENTENTRY_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(FragmentEntryModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(groupId);
+
+					list = (List<FragmentEntry>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Returns the first fragment entry in the ordered set where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment entry
+	 * @throws NoSuchEntryException if a matching fragment entry could not be found
+	 */
+	@Override
+	public FragmentEntry findByERC_G_First(
+			String externalReferenceCode, long groupId,
+			OrderByComparator<FragmentEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		FragmentEntry fragmentEntry = fetchByERC_G_First(
+			externalReferenceCode, groupId, orderByComparator);
+
+		if (fragmentEntry != null) {
+			return fragmentEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("externalReferenceCode=");
+		sb.append(externalReferenceCode);
+
+		sb.append(", groupId=");
+		sb.append(groupId);
+
+		sb.append("}");
+
+		throw new NoSuchEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first fragment entry in the ordered set where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
+	 */
+	@Override
+	public FragmentEntry fetchByERC_G_First(
+		String externalReferenceCode, long groupId,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+
+		List<FragmentEntry> list = findByERC_G(
+			externalReferenceCode, groupId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last fragment entry in the ordered set where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment entry
+	 * @throws NoSuchEntryException if a matching fragment entry could not be found
+	 */
+	@Override
+	public FragmentEntry findByERC_G_Last(
+			String externalReferenceCode, long groupId,
+			OrderByComparator<FragmentEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		FragmentEntry fragmentEntry = fetchByERC_G_Last(
+			externalReferenceCode, groupId, orderByComparator);
+
+		if (fragmentEntry != null) {
+			return fragmentEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("externalReferenceCode=");
+		sb.append(externalReferenceCode);
+
+		sb.append(", groupId=");
+		sb.append(groupId);
+
+		sb.append("}");
+
+		throw new NoSuchEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last fragment entry in the ordered set where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
+	 */
+	@Override
+	public FragmentEntry fetchByERC_G_Last(
+		String externalReferenceCode, long groupId,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+
+		int count = countByERC_G(externalReferenceCode, groupId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<FragmentEntry> list = findByERC_G(
+			externalReferenceCode, groupId, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the fragment entries before and after the current fragment entry in the ordered set where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param fragmentEntryId the primary key of the current fragment entry
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next fragment entry
+	 * @throws NoSuchEntryException if a fragment entry with the primary key could not be found
+	 */
+	@Override
+	public FragmentEntry[] findByERC_G_PrevAndNext(
+			long fragmentEntryId, String externalReferenceCode, long groupId,
+			OrderByComparator<FragmentEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		FragmentEntry fragmentEntry = findByPrimaryKey(fragmentEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			FragmentEntry[] array = new FragmentEntryImpl[3];
+
+			array[0] = getByERC_G_PrevAndNext(
+				session, fragmentEntry, externalReferenceCode, groupId,
+				orderByComparator, true);
+
+			array[1] = fragmentEntry;
+
+			array[2] = getByERC_G_PrevAndNext(
+				session, fragmentEntry, externalReferenceCode, groupId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected FragmentEntry getByERC_G_PrevAndNext(
+		Session session, FragmentEntry fragmentEntry,
+		String externalReferenceCode, long groupId,
+		OrderByComparator<FragmentEntry> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_FRAGMENTENTRY_WHERE);
+
+		boolean bindExternalReferenceCode = false;
+
+		if (externalReferenceCode.isEmpty()) {
+			sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
+		}
+		else {
+			bindExternalReferenceCode = true;
+
+			sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(FragmentEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindExternalReferenceCode) {
+			queryPos.add(externalReferenceCode);
+		}
+
+		queryPos.add(groupId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						fragmentEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<FragmentEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the fragment entries where externalReferenceCode = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 */
+	@Override
+	public void removeByERC_G(String externalReferenceCode, long groupId) {
+		for (FragmentEntry fragmentEntry :
+				findByERC_G(
+					externalReferenceCode, groupId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(fragmentEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of fragment entries where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the number of matching fragment entries
+	 */
+	@Override
+	public int countByERC_G(String externalReferenceCode, long groupId) {
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					FragmentEntry.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			FinderPath finderPath = _finderPathCountByERC_G;
+
+			Object[] finderArgs = new Object[] {externalReferenceCode, groupId};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_FRAGMENTENTRY_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(groupId);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2 =
+		"fragmentEntry.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3 =
+		"(fragmentEntry.externalReferenceCode IS NULL OR fragmentEntry.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_GROUPID_2 =
+		"fragmentEntry.groupId = ?";
+
+	private FinderPath _finderPathFetchByERC_G_Head;
+	private FinderPath _finderPathCountByERC_G_Head;
+
+	/**
+	 * Returns the fragment entry where externalReferenceCode = &#63; and groupId = &#63; and head = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @return the matching fragment entry
+	 * @throws NoSuchEntryException if a matching fragment entry could not be found
+	 */
+	@Override
+	public FragmentEntry findByERC_G_Head(
+			String externalReferenceCode, long groupId, boolean head)
+		throws NoSuchEntryException {
+
+		FragmentEntry fragmentEntry = fetchByERC_G_Head(
+			externalReferenceCode, groupId, head);
+
+		if (fragmentEntry == null) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", groupId=");
+			sb.append(groupId);
+
+			sb.append(", head=");
+			sb.append(head);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchEntryException(sb.toString());
+		}
+
+		return fragmentEntry;
+	}
+
+	/**
+	 * Returns the fragment entry where externalReferenceCode = &#63; and groupId = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
+	 */
+	@Override
+	public FragmentEntry fetchByERC_G_Head(
+		String externalReferenceCode, long groupId, boolean head) {
+
+		return fetchByERC_G_Head(externalReferenceCode, groupId, head, true);
+	}
+
+	/**
+	 * Returns the fragment entry where externalReferenceCode = &#63; and groupId = &#63; and head = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
+	 */
+	@Override
+	public FragmentEntry fetchByERC_G_Head(
+		String externalReferenceCode, long groupId, boolean head,
+		boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					FragmentEntry.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					externalReferenceCode, groupId, head
+				};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByERC_G_Head, finderArgs, this);
+			}
+
+			if (result instanceof FragmentEntry) {
+				FragmentEntry fragmentEntry = (FragmentEntry)result;
+
+				if (!Objects.equals(
+						externalReferenceCode,
+						fragmentEntry.getExternalReferenceCode()) ||
+					(groupId != fragmentEntry.getGroupId()) ||
+					(head != fragmentEntry.isHead())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append(_SQL_SELECT_FRAGMENTENTRY_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(
+						_FINDER_COLUMN_ERC_G_HEAD_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(
+						_FINDER_COLUMN_ERC_G_HEAD_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_G_HEAD_GROUPID_2);
+
+				sb.append(_FINDER_COLUMN_ERC_G_HEAD_HEAD_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(groupId);
+
+					queryPos.add(head);
+
+					List<FragmentEntry> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByERC_G_Head, finderArgs, list);
+						}
+					}
+					else {
+						FragmentEntry fragmentEntry = list.get(0);
+
+						result = fragmentEntry;
+
+						cacheResult(fragmentEntry);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (FragmentEntry)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the fragment entry where externalReferenceCode = &#63; and groupId = &#63; and head = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @return the fragment entry that was removed
+	 */
+	@Override
+	public FragmentEntry removeByERC_G_Head(
+			String externalReferenceCode, long groupId, boolean head)
+		throws NoSuchEntryException {
+
+		FragmentEntry fragmentEntry = findByERC_G_Head(
+			externalReferenceCode, groupId, head);
+
+		return remove(fragmentEntry);
+	}
+
+	/**
+	 * Returns the number of fragment entries where externalReferenceCode = &#63; and groupId = &#63; and head = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param head the head
+	 * @return the number of matching fragment entries
+	 */
+	@Override
+	public int countByERC_G_Head(
+		String externalReferenceCode, long groupId, boolean head) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					FragmentEntry.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			FinderPath finderPath = _finderPathCountByERC_G_Head;
+
+			Object[] finderArgs = new Object[] {
+				externalReferenceCode, groupId, head
+			};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_COUNT_FRAGMENTENTRY_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(
+						_FINDER_COLUMN_ERC_G_HEAD_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(
+						_FINDER_COLUMN_ERC_G_HEAD_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_G_HEAD_GROUPID_2);
+
+				sb.append(_FINDER_COLUMN_ERC_G_HEAD_HEAD_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(groupId);
+
+					queryPos.add(head);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String
+		_FINDER_COLUMN_ERC_G_HEAD_EXTERNALREFERENCECODE_2 =
+			"fragmentEntry.externalReferenceCode = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_ERC_G_HEAD_EXTERNALREFERENCECODE_3 =
+			"(fragmentEntry.externalReferenceCode IS NULL OR fragmentEntry.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_HEAD_GROUPID_2 =
+		"fragmentEntry.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_HEAD_HEAD_2 =
+		"fragmentEntry.head = ?";
+
 	private FinderPath _finderPathFetchByHeadId;
 	private FinderPath _finderPathCountByHeadId;
 
@@ -15305,6 +16212,14 @@ public class FragmentEntryPersistenceImpl
 				fragmentEntry);
 
 			finderCache.putResult(
+				_finderPathFetchByERC_G_Head,
+				new Object[] {
+					fragmentEntry.getExternalReferenceCode(),
+					fragmentEntry.getGroupId(), fragmentEntry.isHead()
+				},
+				fragmentEntry);
+
+			finderCache.putResult(
 				_finderPathFetchByHeadId,
 				new Object[] {fragmentEntry.getHeadId()}, fragmentEntry);
 		}
@@ -15411,6 +16326,17 @@ public class FragmentEntryPersistenceImpl
 				_finderPathCountByG_FEK_Head, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByG_FEK_Head, args, fragmentEntryModelImpl);
+
+			args = new Object[] {
+				fragmentEntryModelImpl.getExternalReferenceCode(),
+				fragmentEntryModelImpl.getGroupId(),
+				fragmentEntryModelImpl.isHead()
+			};
+
+			finderCache.putResult(
+				_finderPathCountByERC_G_Head, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByERC_G_Head, args, fragmentEntryModelImpl);
 
 			args = new Object[] {fragmentEntryModelImpl.getHeadId()};
 
@@ -15558,6 +16484,69 @@ public class FragmentEntryPersistenceImpl
 			String uuid = PortalUUIDUtil.generate();
 
 			fragmentEntry.setUuid(uuid);
+		}
+
+		if (Validator.isNull(fragmentEntry.getExternalReferenceCode())) {
+			fragmentEntry.setExternalReferenceCode(fragmentEntry.getUuid());
+		}
+		else {
+			if (!Objects.equals(
+					fragmentEntryModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					fragmentEntry.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = fragmentEntry.getCompanyId();
+
+					long groupId = fragmentEntry.getGroupId();
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = fragmentEntry.getPrimaryKey();
+					}
+
+					try {
+						fragmentEntry.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								FragmentEntry.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								fragmentEntry.getExternalReferenceCode(),
+								null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			FragmentEntry ercFragmentEntry = fetchByERC_G_Head(
+				fragmentEntry.getExternalReferenceCode(),
+				fragmentEntry.getGroupId(), fragmentEntry.isHead());
+
+			if (isNew) {
+				if (ercFragmentEntry != null) {
+					throw new DuplicateFragmentEntryExternalReferenceCodeException(
+						"Duplicate fragment entry with external reference code " +
+							fragmentEntry.getExternalReferenceCode() +
+								" and group " + fragmentEntry.getGroupId());
+				}
+			}
+			else {
+				if ((ercFragmentEntry != null) &&
+					(fragmentEntry.getFragmentEntryId() !=
+						ercFragmentEntry.getFragmentEntryId())) {
+
+					throw new DuplicateFragmentEntryExternalReferenceCodeException(
+						"Duplicate fragment entry with external reference code " +
+							fragmentEntry.getExternalReferenceCode() +
+								" and group " + fragmentEntry.getGroupId());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -16102,6 +17091,7 @@ public class FragmentEntryPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("externalReferenceCode");
 		ctStrictColumnNames.add("headId");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
@@ -16143,6 +17133,9 @@ public class FragmentEntryPersistenceImpl
 
 		_uniqueIndexColumnNames.add(
 			new String[] {"groupId", "fragmentEntryKey", "head"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"externalReferenceCode", "groupId", "head"});
 
 		_uniqueIndexColumnNames.add(new String[] {"headId"});
 	}
@@ -16734,6 +17727,41 @@ public class FragmentEntryPersistenceImpl
 				"groupId", "fragmentCollectionId", "type_", "status", "head"
 			},
 			false);
+
+		_finderPathWithPaginationFindByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByERC_G",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"externalReferenceCode", "groupId"}, true);
+
+		_finderPathWithoutPaginationFindByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, true);
+
+		_finderPathCountByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, false);
+
+		_finderPathFetchByERC_G_Head = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_Head",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			},
+			new String[] {"externalReferenceCode", "groupId", "head"}, true);
+
+		_finderPathCountByERC_G_Head = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G_Head",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			},
+			new String[] {"externalReferenceCode", "groupId", "head"}, false);
 
 		_finderPathFetchByHeadId = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",

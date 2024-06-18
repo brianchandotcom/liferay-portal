@@ -123,6 +123,9 @@ public class FragmentEntryVersionPersistenceTest {
 
 		newFragmentEntryVersion.setUuid(RandomTestUtil.randomString());
 
+		newFragmentEntryVersion.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newFragmentEntryVersion.setFragmentEntryId(RandomTestUtil.nextLong());
 
 		newFragmentEntryVersion.setGroupId(RandomTestUtil.nextLong());
@@ -199,6 +202,9 @@ public class FragmentEntryVersionPersistenceTest {
 		Assert.assertEquals(
 			existingFragmentEntryVersion.getUuid(),
 			newFragmentEntryVersion.getUuid());
+		Assert.assertEquals(
+			existingFragmentEntryVersion.getExternalReferenceCode(),
+			newFragmentEntryVersion.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingFragmentEntryVersion.getFragmentEntryId(),
 			newFragmentEntryVersion.getFragmentEntryId());
@@ -561,13 +567,13 @@ public class FragmentEntryVersionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"FragmentEntryVersion", "mvccVersion", true, "ctCollectionId", true,
 			"fragmentEntryVersionId", true, "version", true, "uuid", true,
-			"fragmentEntryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "fragmentCollectionId", true,
-			"fragmentEntryKey", true, "name", true, "cacheable", true, "icon",
-			true, "previewFileEntryId", true, "readOnly", true, "type", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"externalReferenceCode", true, "fragmentEntryId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "fragmentCollectionId",
+			true, "fragmentEntryKey", true, "name", true, "cacheable", true,
+			"icon", true, "previewFileEntryId", true, "readOnly", true, "type",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -890,6 +896,9 @@ public class FragmentEntryVersionPersistenceTest {
 		fragmentEntryVersion.setVersion(RandomTestUtil.nextInt());
 
 		fragmentEntryVersion.setUuid(RandomTestUtil.randomString());
+
+		fragmentEntryVersion.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		fragmentEntryVersion.setFragmentEntryId(RandomTestUtil.nextLong());
 

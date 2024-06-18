@@ -30,6 +30,10 @@ public class FragmentEntryTable extends BaseTable<FragmentEntryTable> {
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<FragmentEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<FragmentEntryTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryTable, Long> headId = createColumn(
 		"headId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryTable, Boolean> head = createColumn(

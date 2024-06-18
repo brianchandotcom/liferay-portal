@@ -942,6 +942,8 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 		draftFragmentEntry.setCtCollectionId(
 			publishedFragmentEntry.getCtCollectionId());
 		draftFragmentEntry.setUuid(publishedFragmentEntry.getUuid());
+		draftFragmentEntry.setExternalReferenceCode(
+			publishedFragmentEntry.getExternalReferenceCode());
 		draftFragmentEntry.setHeadId(publishedFragmentEntry.getPrimaryKey());
 		draftFragmentEntry.setGroupId(publishedFragmentEntry.getGroupId());
 		draftFragmentEntry.setCompanyId(publishedFragmentEntry.getCompanyId());

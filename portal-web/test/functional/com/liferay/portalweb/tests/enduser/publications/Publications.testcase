@@ -1409,14 +1409,14 @@ definition {
 			value1 = "Descripción");
 
 		AssertTextEquals.assertPartialText(
-			key_tableItem = "Última modificacion",
+			key_tableItem = "Última modificación",
 			locator1 = "Publications#PUBLICATION_TABLE_ITEM",
-			value1 = "Última modificacion");
+			value1 = "Última modificación");
 
 		AssertTextEquals.assertPartialText(
-			key_tableItem = "Última modificacion",
+			key_tableItem = "Última modificación",
 			locator1 = "Publications#PUBLICATION_TABLE_ITEM",
-			value1 = "Última modificacion");
+			value1 = "Última modificación");
 
 		AssertTextEquals.assertPartialText(
 			key_tableItem = "Fecha de creación",

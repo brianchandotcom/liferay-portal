@@ -56,8 +56,6 @@ public class BuildDatabaseUtil {
 				BuildDatabase buildDatabase = _buildDatabases.get(buildDir);
 
 				if (buildDatabase != null) {
-					buildDatabase.readBuildDatabaseFile();
-
 					return buildDatabase;
 				}
 

@@ -37,6 +37,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmententry/add-fragment-entry \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode='' \
 				-d groupId=${groupId} \
 				-d fragmentCollectionId=${collectionId} \
 				-d fragmentEntryKey= \

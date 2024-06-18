@@ -134,26 +134,6 @@ public class CommerceOrderItemsNotificationTermEvaluator
 		return commerceOrderItem.getParentCommerceOrderItemCPDefinitionId();
 	}
 
-	private String _getOptions(
-			CommerceOrderItem commerceOrderItem,
-			CPInstanceHelper cpInstanceHelper, Locale locale)
-		throws PortalException {
-
-		StringJoiner stringJoiner = new StringJoiner(
-			StringPool.COMMA_AND_SPACE);
-
-		List<KeyValuePair> commerceOptionValueKeyValuePairs =
-			cpInstanceHelper.getKeyValuePairs(
-				_getCommerceOrderItemCPDefinitionId(commerceOrderItem),
-				commerceOrderItem.getJson(), locale);
-
-		for (KeyValuePair keyValuePair : commerceOptionValueKeyValuePairs) {
-			stringJoiner.add(keyValuePair.getValue());
-		}
-
-		return stringJoiner.toString();
-	}
-
 	private Map<String, Object> _getOrderItem(
 			CommerceOrderItem commerceOrderItem,
 			CommerceCurrency commerceCurrency, Locale locale)
@@ -188,10 +168,55 @@ public class CommerceOrderItemsNotificationTermEvaluator
 		).put(
 			"name", commerceOrderItem.getName(locale)
 		).put(
-			"options", _getOptions(commerceOrderItem, _cpInstanceHelper, locale)
+			"options",
+			() -> {
+				StringJoiner stringJoiner = new StringJoiner(
+					StringPool.COMMA_AND_SPACE);
+
+				List<KeyValuePair> commerceOptionValueKeyValuePairs =
+					_cpInstanceHelper.getKeyValuePairs(
+						_getCommerceOrderItemCPDefinitionId(commerceOrderItem),
+						commerceOrderItem.getJson(), locale);
+
+				for (KeyValuePair keyValuePair :
+						commerceOptionValueKeyValuePairs) {
+
+					stringJoiner.add(keyValuePair.getValue());
+				}
+
+				return stringJoiner.toString();
+			}
 		).put(
 			"originalPrice",
-			_getOriginalPrice(commerceOrderItem, commerceCurrency, locale)
+			() -> {
+				BigDecimal discountAmount =
+					commerceOrderItem.getDiscountAmount();
+				BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
+				BigDecimal promoPrice = commerceOrderItem.getPromoPrice();
+
+				if (discountAmount.compareTo(new BigDecimal(0)) > 0) {
+					CommerceMoney originalPriceCommerceMoney =
+						_commerceMoneyFactory.create(
+							commerceCurrency,
+							finalPrice.add(
+								discountAmount.multiply(
+									commerceOrderItem.getQuantity())));
+
+					return originalPriceCommerceMoney.format(locale);
+				}
+				else if (promoPrice.compareTo(new BigDecimal(0)) > 0) {
+					CommerceMoney originalPriceCommerceMoney =
+						_commerceMoneyFactory.create(
+							commerceCurrency,
+							finalPrice.add(
+								promoPrice.multiply(
+									commerceOrderItem.getQuantity())));
+
+					return originalPriceCommerceMoney.format(locale);
+				}
+
+				return StringPool.BLANK;
+			}
 		).put(
 			"qty",
 			_commerceOrderItemQuantityFormatter.format(
@@ -224,38 +249,6 @@ public class CommerceOrderItemsNotificationTermEvaluator
 		}
 
 		return orderItems;
-	}
-
-	private String _getOriginalPrice(
-			CommerceOrderItem commerceOrderItem,
-			CommerceCurrency commerceCurrency, Locale locale)
-		throws PortalException {
-
-		BigDecimal discountAmount = commerceOrderItem.getDiscountAmount();
-		BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
-		BigDecimal promoPrice = commerceOrderItem.getPromoPrice();
-
-		if (discountAmount.compareTo(new BigDecimal(0)) > 0) {
-			CommerceMoney originalPriceCommerceMoney =
-				_commerceMoneyFactory.create(
-					commerceCurrency,
-					finalPrice.add(
-						discountAmount.multiply(
-							commerceOrderItem.getQuantity())));
-
-			return originalPriceCommerceMoney.format(locale);
-		}
-		else if (promoPrice.compareTo(new BigDecimal(0)) > 0) {
-			CommerceMoney originalPriceCommerceMoney =
-				_commerceMoneyFactory.create(
-					commerceCurrency,
-					finalPrice.add(
-						promoPrice.multiply(commerceOrderItem.getQuantity())));
-
-			return originalPriceCommerceMoney.format(locale);
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private final CommerceMoneyFactory _commerceMoneyFactory;

@@ -9,13 +9,15 @@ import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
-import {fdsFragmentPageTest} from '../data-set-fragment/fixtures/fdsFragmentPageTest';
+import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import {featureFlagsTest} from "../../../../fixtures/featureFlagsTest";
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	fdsFragmentPageTest,
 	isolatedLayoutTest({publish: false}),
-	loginTest()
+	loginTest(),
+	fdsFragmentPageTest,
 );
 
 let dataSetERC: string;

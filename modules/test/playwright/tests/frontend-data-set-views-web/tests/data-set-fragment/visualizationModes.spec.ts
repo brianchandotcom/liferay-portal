@@ -14,11 +14,11 @@ import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
-	fdsFragmentPageTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
 	loginTest(),
+	fdsFragmentPageTest,
 	isolatedLayoutTest({publish: false})
 );
 

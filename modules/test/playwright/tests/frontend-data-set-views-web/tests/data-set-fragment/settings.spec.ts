@@ -21,9 +21,9 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
-	fdsFragmentPageTest,
 	isolatedLayoutTest({publish: false}),
-	loginTest()
+	loginTest(),
+	fdsFragmentPageTest
 );
 
 test.beforeEach(async ({dataSetManagerApiHelpers}) => {

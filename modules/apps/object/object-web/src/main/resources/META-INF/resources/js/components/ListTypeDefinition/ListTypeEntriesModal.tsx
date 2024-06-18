@@ -242,6 +242,7 @@ function ListTypeEntriesModal() {
 				<Input
 					disabled={modalType === 'edit'}
 					error={errors.name}
+					id="listTypeEntriesModalKeyInputField"
 					label={Liferay.Language.get('key')}
 					name="name"
 					onChange={({target}) => handleKeyChange(target.value)}

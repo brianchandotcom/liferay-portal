@@ -353,7 +353,9 @@ export class PageEditorPage {
 
 		await this.page.keyboard.type(value);
 
-		await this.page.locator('header.page-editor__disabled-area').click();
+		await this.page
+			.locator(`.page-editor__sidebar div[data-item-id='${fragmentId}']`)
+			.click();
 
 		await this.waitForChangesSaved();
 	}

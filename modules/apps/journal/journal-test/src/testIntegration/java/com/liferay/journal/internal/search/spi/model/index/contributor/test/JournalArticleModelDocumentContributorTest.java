@@ -109,14 +109,6 @@ public class JournalArticleModelDocumentContributorTest {
 			document.get("defaultLanguageId"));
 	}
 
-	private Document _getDocument() {
-		DocumentImpl documentImpl = new DocumentImpl();
-
-		_modelDocumentContributor.contribute(documentImpl, _journalArticle);
-
-		return documentImpl;
-	}
-
 	private String _getDDMIndexerContent(String languageId) throws Exception {
 		com.liferay.portal.kernel.xml.Document document =
 			_journalArticle.getDocument();
@@ -128,6 +120,14 @@ public class JournalArticleModelDocumentContributorTest {
 				_journalConverter.getDDMFields(
 					_journalArticle.getDDMStructure(), document.asXML())),
 			LocaleUtil.fromLanguageId(languageId));
+	}
+
+	private Document _getDocument() {
+		DocumentImpl documentImpl = new DocumentImpl();
+
+		_modelDocumentContributor.contribute(documentImpl, _journalArticle);
+
+		return documentImpl;
 	}
 
 	@Inject

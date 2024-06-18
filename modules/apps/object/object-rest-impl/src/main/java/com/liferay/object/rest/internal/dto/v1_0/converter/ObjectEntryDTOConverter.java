@@ -251,9 +251,10 @@ public class ObjectEntryDTOConverter
 	}
 
 	private void _addManyToOneObjectRelationshipNames(
-		Map<String, Object> map, ObjectField objectField,
-		String objectFieldName, ObjectRelationship objectRelationship,
-		long primaryKey, Map<String, Serializable> values) {
+		ObjectField objectField, String objectFieldName,
+		ObjectRelationship objectRelationship, long primaryKey,
+		Map<String, UnsafeSupplier<Object, Exception>> unsafeSuppliers,
+		Map<String, Serializable> values) {
 
 		String objectRelationshipERCObjectFieldName =
 			ObjectFieldSettingUtil.getValue(
@@ -264,29 +265,22 @@ public class ObjectEntryDTOConverter
 		String relatedObjectEntryERC = GetterUtil.getString(
 			values.get(objectRelationshipERCObjectFieldName));
 
-		UnsafeSupplier<Object, Exception> relatedObjectEntryERCUnsafeSupplier =
-			() -> relatedObjectEntryERC;
-
-		if (map.get(objectRelationship.getName()) == null) {
-			map.put(
+		if (unsafeSuppliers.get(objectRelationship.getName()) == null) {
+			unsafeSuppliers.put(
 				objectRelationship.getName() + "ERC",
-				relatedObjectEntryERCUnsafeSupplier);
+				() -> relatedObjectEntryERC);
 		}
 
-		UnsafeSupplier<Object, Exception> primaryKeyUnsafeSupplier =
-			() -> primaryKey;
+		unsafeSuppliers.put(objectFieldName, () -> primaryKey);
 
-		map.put(objectFieldName, primaryKeyUnsafeSupplier);
-
-		map.put(
-			objectRelationshipERCObjectFieldName,
-			relatedObjectEntryERCUnsafeSupplier);
+		unsafeSuppliers.put(
+			objectRelationshipERCObjectFieldName, () -> relatedObjectEntryERC);
 	}
 
 	private void _addManyToOneRelatedObjectEntries(
-			DTOConverterContext dtoConverterContext, Map<String, Object> map,
-			String objectFieldName, ObjectRelationship objectRelationship,
-			long primaryKey)
+			DTOConverterContext dtoConverterContext, String objectFieldName,
+			ObjectRelationship objectRelationship, long primaryKey,
+			Map<String, UnsafeSupplier<Object, Exception>> unsafeSuppliers)
 		throws Exception {
 
 		String relatedObjectDefinitionName = StringUtil.replaceLast(
@@ -407,19 +401,18 @@ public class ObjectEntryDTOConverter
 
 			String nestedFieldName = entry.getKey();
 
-			UnsafeSupplier<Object, Exception> unsafeSupplier = entry::getValue;
-
 			if (StringUtil.equals(
 					nestedFieldName, objectRelationship.getName())) {
 
-				map.put(objectRelationship.getName(), unsafeSupplier);
+				unsafeSuppliers.put(
+					objectRelationship.getName(), entry::getValue);
 			}
 
 			if (nestedFieldName.contains(relatedObjectDefinitionName) ||
 				StringUtil.equals(
 					nestedFieldName, objectRelationship.getName())) {
 
-				map.put(manyToOneRelationshipName, unsafeSupplier);
+				unsafeSuppliers.put(manyToOneRelationshipName, entry::getValue);
 			}
 		}
 	}
@@ -789,7 +782,8 @@ public class ObjectEntryDTOConverter
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
-		Map<String, Object> map = new HashMap<>();
+		Map<String, UnsafeSupplier<Object, Exception>> unsafeSuppliers =
+			new HashMap<>();
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
@@ -813,10 +807,8 @@ public class ObjectEntryDTOConverter
 				Map<String, Serializable> objectField_i18n =
 					(Map<String, Serializable>)values.get(i18nObjectFieldName);
 
-				UnsafeSupplier<Object, Exception>
-					objectField_i18nUnsafeSupplier = () -> objectField_i18n;
-
-				map.put(i18nObjectFieldName, objectField_i18nUnsafeSupplier);
+				unsafeSuppliers.put(
+					i18nObjectFieldName, () -> objectField_i18n);
 
 				if ((dtoConverterContext.getLocale() != null) &&
 					(objectField_i18n != null)) {
@@ -837,12 +829,11 @@ public class ObjectEntryDTOConverter
 					continue;
 				}
 
-				UnsafeSupplier<Object, Exception> unsafeSupplier =
+				unsafeSuppliers.put(
+					objectFieldName,
 					() -> _getAttachmentField(
 						objectDefinition, objectEntry, objectField, fileEntryId,
-						objectFieldName);
-
-				map.put(objectFieldName, unsafeSupplier);
+						objectFieldName));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_DATE) ||
@@ -855,10 +846,9 @@ public class ObjectEntryDTOConverter
 					continue;
 				}
 
-				UnsafeSupplier<Object, Exception> unsafeSupplier =
-					() -> _getDateTimeField(objectField, timestamp);
-
-				map.put(objectFieldName, unsafeSupplier);
+				unsafeSuppliers.put(
+					objectFieldName,
+					() -> _getDateTimeField(objectField, timestamp));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.
@@ -870,16 +860,15 @@ public class ObjectEntryDTOConverter
 
 				Serializable finalSerializable = serializable;
 
-				UnsafeSupplier<Object, Exception> unsafeSupplier =
+				unsafeSuppliers.put(
+					objectFieldName,
 					() -> TransformUtil.transformToList(
 						StringUtil.split(
 							(String)finalSerializable,
 							StringPool.COMMA_AND_SPACE),
 						key -> _getListEntry(
 							dtoConverterContext, key,
-							objectField.getListTypeDefinitionId()));
-
-				map.put(objectFieldName, unsafeSupplier);
+							objectField.getListTypeDefinitionId())));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
@@ -890,26 +879,22 @@ public class ObjectEntryDTOConverter
 
 				Serializable finalSerializable = serializable;
 
-				UnsafeSupplier<Object, Exception> unsafeSupplier =
+				unsafeSuppliers.put(
+					objectFieldName,
 					() -> _getListEntry(
 						dtoConverterContext, (String)finalSerializable,
-						objectField.getListTypeDefinitionId());
-
-				map.put(objectFieldName, unsafeSupplier);
+						objectField.getListTypeDefinitionId()));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
 				Serializable finalSerializable = serializable;
 
-				UnsafeSupplier<Object, Exception> richTextUnsafeSupplier =
-					() -> finalSerializable;
-				UnsafeSupplier<Object, Exception> rawTextUnsafeSupplier =
+				unsafeSuppliers.put(objectFieldName, () -> finalSerializable);
+				unsafeSuppliers.put(
+					objectFieldName + "RawText",
 					() -> HtmlParserUtil.extractText(
-						GetterUtil.getString(finalSerializable));
-
-				map.put(objectFieldName, richTextUnsafeSupplier);
-				map.put(objectFieldName + "RawText", rawTextUnsafeSupplier);
+						GetterUtil.getString(finalSerializable)));
 			}
 			else if (Objects.equals(
 						objectField.getRelationshipType(),
@@ -924,21 +909,18 @@ public class ObjectEntryDTOConverter
 
 				if (primaryKey > 0) {
 					_addManyToOneRelatedObjectEntries(
-						dtoConverterContext, map, objectFieldName,
-						objectRelationship, primaryKey);
+						dtoConverterContext, objectFieldName,
+						objectRelationship, primaryKey, unsafeSuppliers);
 				}
 
 				_addManyToOneObjectRelationshipNames(
-					map, objectField, objectFieldName, objectRelationship,
-					primaryKey, values);
+					objectField, objectFieldName, objectRelationship,
+					primaryKey, unsafeSuppliers, values);
 			}
 			else {
 				Serializable finalSerializable = serializable;
 
-				UnsafeSupplier<Object, Exception> unsafeSupplier =
-					() -> finalSerializable;
-
-				map.put(objectFieldName, unsafeSupplier);
+				unsafeSuppliers.put(objectFieldName, () -> finalSerializable);
 			}
 		}
 
@@ -950,10 +932,10 @@ public class ObjectEntryDTOConverter
 				objectEntry.getObjectEntryId());
 
 		if (nestedFieldsRelatedProperties != null) {
-			map.putAll(nestedFieldsRelatedProperties);
+			unsafeSuppliers.putAll(nestedFieldsRelatedProperties);
 		}
 
-		return map;
+		return (Map<String, Object>)(Map)unsafeSuppliers;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

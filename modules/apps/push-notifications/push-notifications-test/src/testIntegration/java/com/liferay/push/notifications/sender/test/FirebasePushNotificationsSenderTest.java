@@ -11,6 +11,7 @@ import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -32,7 +33,6 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import org.mockserver.integration.ClientAndServer;
@@ -132,18 +132,14 @@ public class FirebasePushNotificationsSenderTest {
 
 		String destinationToken = RandomTestUtil.randomString();
 
-		expectedException.expect(PushNotificationsException.class);
-		expectedException.expectMessage("Unable to get the access token");
-
-		try {
-			_pushNotificationsDeviceLocalService.sendPushNotification(
+		AssertUtils.assertFailure(
+			PushNotificationsException.class, "Unable to get the access token",
+			() -> _pushNotificationsDeviceLocalService.sendPushNotification(
 				PLATFORM, Arrays.asList(destinationToken),
-				_getRandomNotificationJSONObject());
-		}
-		finally {
-			_verifyAccessTokenRequest();
-			_verifyGroupRequestInteractions(accessToken, false, false);
-		}
+				_getRandomNotificationJSONObject()));
+
+		_verifyAccessTokenRequest();
+		_verifyGroupRequestInteractions(accessToken, false, false);
 	}
 
 	@Test
@@ -180,29 +176,24 @@ public class FirebasePushNotificationsSenderTest {
 
 		_mockSendNotificationRequest(accessToken, false);
 
-		expectedException.expect(PushNotificationsException.class);
-		expectedException.expectMessage("Unable to send the push notification");
-
-		try {
-			_pushNotificationsDeviceLocalService.sendPushNotification(
+		AssertUtils.assertFailure(
+			PushNotificationsException.class,
+			"Unable to send the push notification",
+			() -> _pushNotificationsDeviceLocalService.sendPushNotification(
 				PLATFORM, Arrays.asList(destinationToken),
-				_getRandomNotificationJSONObject());
-		}
-		finally {
-			_verifyAccessTokenRequest();
-			_verifyGroupRequestInteractions(accessToken, false, false);
-		}
+				_getRandomNotificationJSONObject()));
+		_verifyAccessTokenRequest();
+		_verifyGroupRequestInteractions(accessToken, false, false);
 	}
 
 	@Test
-	public void testSendWithoutConfiguration() throws Exception {
-		expectedException.expect(PushNotificationsException.class);
-		expectedException.expectMessage(
-			"Firebase push notifications sender is not configured properly");
-
-		_pushNotificationsDeviceLocalService.sendPushNotification(
-			PLATFORM, Arrays.asList(RandomTestUtil.randomString()),
-			JSONFactoryUtil.createJSONObject());
+	public void testSendWithoutConfiguration() {
+		AssertUtils.assertFailure(
+			PushNotificationsException.class,
+			"Firebase push notifications sender is not configured properly",
+			() -> _pushNotificationsDeviceLocalService.sendPushNotification(
+				PLATFORM, Arrays.asList(RandomTestUtil.randomString()),
+				JSONFactoryUtil.createJSONObject()));
 	}
 
 	@Test
@@ -255,20 +246,16 @@ public class FirebasePushNotificationsSenderTest {
 		List<String> destinationTokens = Arrays.asList(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
-		expectedException.expect(PushNotificationsException.class);
-		expectedException.expectMessage(
-			"Unable to create a notification group");
-
-		try {
-			_pushNotificationsDeviceLocalService.sendPushNotification(
+		AssertUtils.assertFailure(
+			PushNotificationsException.class,
+			"Unable to create a notification group",
+			() -> _pushNotificationsDeviceLocalService.sendPushNotification(
 				PLATFORM, destinationTokens,
-				_getRandomNotificationJSONObject());
-		}
-		finally {
-			_verifyAccessTokenRequest();
-			_verifyCreateGroupRequest(accessToken, destinationTokens);
-			_verifyGroupRequestInteractions(accessToken, true, false);
-		}
+				_getRandomNotificationJSONObject()));
+
+		_verifyAccessTokenRequest();
+		_verifyCreateGroupRequest(accessToken, destinationTokens);
+		_verifyGroupRequestInteractions(accessToken, true, false);
 	}
 
 	@Test
@@ -342,9 +329,6 @@ public class FirebasePushNotificationsSenderTest {
 		List<String> destinationTokens = Arrays.asList(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
-		expectedException.expect(PushNotificationsException.class);
-		expectedException.expectMessage("Unable to send the push notification");
-
 		JSONObject jsonObject = _getRandomNotificationJSONObject();
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -352,42 +336,37 @@ public class FirebasePushNotificationsSenderTest {
 					"FirebasePushNotificationsSender",
 				LoggerTestUtil.ERROR)) {
 
-			try {
-				_pushNotificationsDeviceLocalService.sendPushNotification(
-					PLATFORM, destinationTokens, jsonObject);
-			}
-			finally {
-				_verifyAccessTokenRequest();
+			AssertUtils.assertFailure(
+				PushNotificationsException.class,
+				"Unable to send the push notification",
+				() -> _pushNotificationsDeviceLocalService.sendPushNotification(
+					PLATFORM, destinationTokens, jsonObject));
+			_verifyAccessTokenRequest();
 
-				String groupName = _verifyCreateGroupRequest(
-					accessToken, destinationTokens);
+			String groupName = _verifyCreateGroupRequest(
+				accessToken, destinationTokens);
 
-				_verifySendNotificationRequest(
-					accessToken,
-					_getExpectedNotificationJSONObject(groupId, jsonObject));
+			_verifySendNotificationRequest(
+				accessToken,
+				_getExpectedNotificationJSONObject(groupId, jsonObject));
 
-				_verifyRemoveGroupRequest(
-					accessToken, destinationTokens, groupId, groupName);
+			_verifyRemoveGroupRequest(
+				accessToken, destinationTokens, groupId, groupName);
 
-				List<LogEntry> logEntries = logCapture.getLogEntries();
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-				Assert.assertEquals(
-					logEntries.toString(), 1, logEntries.size());
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
-				LogEntry logEntry = logEntries.get(0);
+			LogEntry logEntry = logEntries.get(0);
 
-				Assert.assertEquals(
-					StringBundler.concat(
-						"Unable to remove notification group with ",
-						"notification_key: ", groupId,
-						" and notification_key_name: ", groupName),
-					logEntry.getMessage());
-			}
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Unable to remove notification group with ",
+					"notification_key: ", groupId,
+					" and notification_key_name: ", groupName),
+				logEntry.getMessage());
 		}
 	}
-
-	@Rule
-	public ExpectedException expectedException = ExpectedException.none();
 
 	private int _getCode(boolean success) {
 		if (success) {

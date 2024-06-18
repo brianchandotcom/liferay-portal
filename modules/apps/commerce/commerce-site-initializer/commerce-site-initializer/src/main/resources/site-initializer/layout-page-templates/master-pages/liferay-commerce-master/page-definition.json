@@ -36,7 +36,6 @@
 									],
 									"indexed": true
 								},
-								"id": "fece6db8-a262-b27f-4ce6-48f49c9bdb30",
 								"type": "Fragment"
 							},
 							{
@@ -51,6 +50,50 @@
 									],
 									"indexed": true
 								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "header-nav",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentFields": [],
+									"indexed": true
+								},
+								"pageElements": [
+									{
+										"definition": {},
+										"pageElements": [
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
+															},
+															"fragmentConfig": {
+																"displayStyle": "horizontal",
+																"selectedItemColor": "",
+																"sublevels": "-1",
+																"hoveredItemColor": ""
+															},
+															"fragmentFields": [],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
 								"type": "Fragment"
 							}
 						],

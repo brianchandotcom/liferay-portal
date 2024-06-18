@@ -227,7 +227,7 @@
 																	},
 																	"url": {
 																		"value_i18n": {
-																			"en_US": "/documents/d/liferay-learn/education_courses-svg?imagePreview=1"
+																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/education_courses.svg$]"
 																		}
 																	}
 																},
@@ -1354,7 +1354,7 @@
 																	},
 																	"url": {
 																		"value_i18n": {
-																			"en_US": "/documents/d/liferay-learn/education_paths-svg?imagePreview=1"
+																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/education_paths.svg$]"
 																		}
 																	}
 																},
@@ -2355,7 +2355,7 @@
 																	},
 																	"url": {
 																		"value_i18n": {
-																			"en_US": "/documents/d/liferay-learn/education_certification-svg?imagePreview=1"
+																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/education_vertification.svg$]"
 																		}
 																	}
 																},

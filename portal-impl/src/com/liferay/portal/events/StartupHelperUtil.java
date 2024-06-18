@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,7 +63,7 @@ public class StartupHelperUtil {
 			ReflectionUtil.throwException(exception);
 		}
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try {
 			ResourceActionsUtil.populateModelResources(
 				StartupHelperUtil.class.getClassLoader(),
 				PropsValues.RESOURCE_ACTIONS_CONFIGS);

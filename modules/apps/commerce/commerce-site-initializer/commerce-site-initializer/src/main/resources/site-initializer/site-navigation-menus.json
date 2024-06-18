@@ -1,0 +1,44 @@
+[
+	{
+		"addNewPages": "Yes",
+		"menuItems": [
+			{
+				"friendlyURL": "/account-management",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/catalog",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"menuItems": [
+					{
+						"friendlyURL": "/pending-orders",
+						"name_i18n": {
+							"en_US": "Pending Orders"
+						},
+						"privateLayout": false,
+						"type": "layout"
+					},
+					{
+						"friendlyURL": "/placed-orders",
+						"name_i18n": {
+							"en_US": "Placed Orders"
+						},
+						"privateLayout": false,
+						"type": "layout"
+					}
+				],
+				"name_i18n": {
+					"en_US": "Orders"
+				},
+				"privateLayout": false,
+				"title": "Orders",
+				"type": "node"
+			}
+		],
+		"name": "Commerce Classic Primary Navigation"
+	}
+]

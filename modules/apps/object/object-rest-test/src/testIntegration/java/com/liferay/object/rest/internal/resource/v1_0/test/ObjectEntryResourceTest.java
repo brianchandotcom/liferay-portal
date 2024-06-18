@@ -4573,7 +4573,8 @@ public class ObjectEntryResourceTest {
 
 	@Test
 	public void testFilterByUnknownObjectField() throws Exception {
-		String filterString = RandomTestUtil.randomString() + " eq 'value'";
+		String filterString =
+			"x" + RandomTestUtil.randomString() + " eq 'value'";
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,

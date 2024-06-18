@@ -265,13 +265,6 @@ public class FirebasePushNotificationsSender
 		}
 	}
 
-	private String _getProjectId() {
-		ServiceAccountCredentials serviceAccountCredentials =
-			(ServiceAccountCredentials)_googleCredentials;
-
-		return serviceAccountCredentials.getProjectId();
-	}
-
 	private void _initGoogleCloudServices() throws PortalException {
 		_firebaseCloudMessagingURL =
 			_firebasePushNotificationsSenderConfiguration.
@@ -374,10 +367,15 @@ public class FirebasePushNotificationsSender
 				)
 			).toString(),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+
+		ServiceAccountCredentials serviceAccountCredentials =
+			(ServiceAccountCredentials)_googleCredentials;
+
 		options.setLocation(
 			StringBundler.concat(
-				_firebaseCloudMessagingURL, "/v1/projects/", _getProjectId(),
-				"/messages:send"));
+				_firebaseCloudMessagingURL, "/v1/projects/",
+				serviceAccountCredentials.getProjectId(), "/messages:send"));
+
 		options.setPost(true);
 
 		_http.URLtoString(options);

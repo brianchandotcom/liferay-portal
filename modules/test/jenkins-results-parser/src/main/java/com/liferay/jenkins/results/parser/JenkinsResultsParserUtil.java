@@ -1428,7 +1428,7 @@ public class JenkinsResultsParserUtil {
 				properties.load(
 					new StringReader(
 						toString(
-							getLocalURL(url), false, 0, null, null, 0,
+							getLocalURL(url), false, 3, null, null, 30,
 							_MILLIS_TIMEOUT_DEFAULT, null, true)));
 			}
 

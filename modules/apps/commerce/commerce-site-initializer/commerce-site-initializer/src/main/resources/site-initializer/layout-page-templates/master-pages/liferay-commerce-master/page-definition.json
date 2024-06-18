@@ -102,10 +102,11 @@
 					{
 						"definition": {
 							"cssClasses": [
+								"commerce-main-body",
 								"flex-fill"
 							],
 							"htmlProperties": {
-								"htmlTag": "Section"
+								"htmlTag": "Main"
 							},
 							"indexed": true,
 							"layout": {
@@ -128,7 +129,7 @@
 						"definition": {
 							"fragment": {
 								"key": "footer",
-								"siteKey": "comm"
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 							},

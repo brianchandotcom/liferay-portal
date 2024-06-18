@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="Fieldset" index-type="" instance-id="kMFiEHdX" name="Fieldset" type="fieldset">
+		<dynamic-element field-reference="Text1" index-type="keyword" instance-id="MHMLbPs1" name="Text1" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[text1one]]></dynamic-content>
+			<dynamic-content language-id="es_ES"><![CDATA[text1uno]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Text2" index-type="text" instance-id="o6SlNMBY" name="Text2" type="image">
+			<dynamic-content language-id="en_US"><![CDATA[text2one]]></dynamic-content>
+			<dynamic-content language-id="es_ES"><![CDATA[text2uno]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element field-reference="Fieldset" index-type="" instance-id="usr27yce" name="Fieldset" type="fieldset">
+		<dynamic-element field-reference="Text1" index-type="keyword" instance-id="pqm3qtun" name="Text1" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[text1two]]></dynamic-content>
+			<dynamic-content language-id="es_ES"><![CDATA[text1dos]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Text2" index-type="text" instance-id="0ivmgk92" name="Text2" type="image">
+			<dynamic-content language-id="en_US"><![CDATA[text2two]]></dynamic-content>
+			<dynamic-content language-id="es_ES"><![CDATA[text2dos]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element field-reference="Fieldset" index-type="" instance-id="q11s20o9" name="Fieldset" type="fieldset">
+		<dynamic-element field-reference="Text1" index-type="keyword" instance-id="dfyfb9ca" name="Text1" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[text1three]]></dynamic-content>
+			<dynamic-content language-id="es_ES"><![CDATA[text1tres]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="Text2" index-type="text" instance-id="efwxpmpb" name="Text2" type="image">
+			<dynamic-content language-id="en_US"><![CDATA[text2three]]></dynamic-content>
+			<dynamic-content language-id="es_ES"><![CDATA[text2tres]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+</root>

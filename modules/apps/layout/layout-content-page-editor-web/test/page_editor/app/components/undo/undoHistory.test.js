@@ -124,8 +124,8 @@ describe('UndoHistory', () => {
 
 		const undoHistory = mockState.undoHistory;
 
-		for (let i = 0; i < undoHistory.length; i++) {
-			const undoItem = undoHistory[i];
+		for (let j = 0; j < undoHistory.length; j++) {
+			const undoItem = undoHistory[j];
 
 			const button = getByText(undoItem.itemName);
 
@@ -134,7 +134,7 @@ describe('UndoHistory', () => {
 
 				expect(multipleUndo).toBeCalledWith(
 					expect.objectContaining({
-						numberOfActions: i,
+						numberOfActions: j,
 						type: UNDO_TYPES.undo,
 					})
 				);

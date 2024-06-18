@@ -173,14 +173,14 @@ describe('Walkthrough', () => {
 		expect(errorSpy).toHaveBeenCalledTimes(1);
 	});
 
-	it(`when 'darkbg' is set to false adds a 'lfr-walkthrough-element-shadow' to the nodeToHighlight'`, () => {
+	it(`when 'darkbg' is set to false adds a 'lfr-walkthrough-element-shadow' to the nodeToHighlight'`, async () => {
 		const {getByLabelText} = renderWalkthrough(BOX_SHADOW_ELEMENT_MOCK);
 
 		const hotspot = getByLabelText('start-the-walkthrough');
 
 		userEvents.click(hotspot);
 
-		const elementToBeHighlighted = screen.getByTestId(
+		const elementToBeHighlighted = await screen.findByTestId(
 			'external-react-tree-button'
 		);
 

@@ -48,7 +48,9 @@ describe('deepFreeze()', () => {
 		});
 
 		it('prevents properties from being added', () => {
-			value.extra = 'added';
+			expect(() => {
+				value.extra = 'added';
+			}).toThrow(TypeError);
 
 			expect(value).toEqual({
 				hello: true,
@@ -57,7 +59,9 @@ describe('deepFreeze()', () => {
 		});
 
 		it('prevents properties from being mutated', () => {
-			value.hello = false;
+			expect(() => {
+				value.hello = false;
+			}).toThrow(TypeError);
 
 			expect(value).toEqual({
 				hello: true,

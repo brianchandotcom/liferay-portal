@@ -135,7 +135,7 @@ test.describe('Creation Actions in Data Set fragment', () => {
 
 	test(
 		'Show the Creation Actions menu if more than one Creation Action is defined',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
+		async ({dataSetManagerApiHelpers, fdsFragmentPage, page, layout}) => {
 			const firstActionLabel = 'Custom Creation Action';
 			const secondActionLabel = 'Another Creation Action';
 
@@ -173,7 +173,7 @@ test.describe('Creation Actions in Data Set fragment', () => {
 						.isVisible();
 
 					const button =
-						await fdsFragmentPage.creationMenuButton.first();
+						fdsFragmentPage.creationMenuButton.first();
 
 					const dropdownId = await button.evaluate((node) =>
 						node.getAttribute('aria-controls')

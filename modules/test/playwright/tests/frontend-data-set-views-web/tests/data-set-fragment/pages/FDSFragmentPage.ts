@@ -26,7 +26,7 @@ export class FDSFragmentPage {
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
-		this.creationMenuButton = page.getByTestId('fdsCreationActionButton');
+		this.creationMenuButton = page.getByRole('button', {name: 'New'});
 		this.emptyStateTitle = page.getByText('No Results Found');
 		this.fdsActiveViewSelector = page.getByLabel('Show View Options');
 		this.fdsCardsWrapper = page.getByTestId('visualization-mode-cards');

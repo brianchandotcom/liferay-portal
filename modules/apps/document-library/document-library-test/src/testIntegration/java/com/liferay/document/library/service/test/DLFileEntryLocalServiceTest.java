@@ -804,29 +804,6 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteFileVersionThatIsExpired() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		DLFileEntry dlFileEntry = addDLFileEntryWithStatus(
-			serviceContext, WorkflowConstants.STATUS_APPROVED);
-
-		dlFileEntry = updateDLFileEntryWithStatus(
-			dlFileEntry, new ByteArrayInputStream(new byte[0]), new HashMap<>(),
-			serviceContext, WorkflowConstants.STATUS_EXPIRED);
-
-		DLFileVersion lastDLFileVersion = dlFileEntry.getLatestFileVersion(true);
-
-		DLFileEntryLocalServiceUtil.deleteFileVersion(
-			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
-			lastDLFileVersion.getVersion());
-
-		Assert.assertEquals(
-			1, dlFileEntry.getFileVersionsCount(WorkflowConstants.STATUS_ANY));
-	}
-
-	@Test
 	public void testDeleteFileEntries() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -872,6 +849,30 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteFileVersionThatIsExpired() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLFileEntry dlFileEntry = addDLFileEntryWithStatus(
+			serviceContext, WorkflowConstants.STATUS_APPROVED);
+
+		dlFileEntry = updateDLFileEntryWithStatus(
+			dlFileEntry, new ByteArrayInputStream(new byte[0]), new HashMap<>(),
+			serviceContext, WorkflowConstants.STATUS_EXPIRED);
+
+		DLFileVersion lastDLFileVersion = dlFileEntry.getLatestFileVersion(
+			true);
+
+		DLFileEntryLocalServiceUtil.deleteFileVersion(
+			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
+			lastDLFileVersion.getVersion());
+
+		Assert.assertEquals(
+			1, dlFileEntry.getFileVersionsCount(WorkflowConstants.STATUS_ANY));
+	}
+
+	@Test
 	public void testDeleteFileVersionThatIsScheduled() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -884,7 +885,8 @@ public class DLFileEntryLocalServiceTest {
 			dlFileEntry, new ByteArrayInputStream(new byte[0]), new HashMap<>(),
 			serviceContext, WorkflowConstants.STATUS_SCHEDULED);
 
-		DLFileVersion lastDLFileVersion = dlFileEntry.getLatestFileVersion(true);
+		DLFileVersion lastDLFileVersion = dlFileEntry.getLatestFileVersion(
+			true);
 
 		DLFileEntryLocalServiceUtil.deleteFileVersion(
 			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),

@@ -120,7 +120,6 @@ import graphql.kickstart.execution.GraphQLObjectMapper;
 import graphql.kickstart.execution.GraphQLQueryInvoker;
 import graphql.kickstart.execution.config.DefaultExecutionStrategyProvider;
 import graphql.kickstart.execution.config.ExecutionStrategyProvider;
-import graphql.kickstart.execution.error.GenericGraphQLError;
 import graphql.kickstart.execution.error.GraphQLErrorHandler;
 import graphql.kickstart.servlet.GraphQLConfiguration;
 import graphql.kickstart.servlet.GraphQLHttpServlet;
@@ -2509,9 +2508,7 @@ public class GraphQLServletExtender {
 		}
 
 		private boolean _isStatusException(GraphQLError graphQLError) {
-			if (graphQLError instanceof GenericGraphQLError ||
-				graphQLError instanceof QueryDepthLimitExceededException) {
-
+			if (!(graphQLError instanceof ExceptionWhileDataFetching)) {
 				return false;
 			}
 

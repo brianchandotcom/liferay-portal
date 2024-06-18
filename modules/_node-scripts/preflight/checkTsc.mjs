@@ -11,9 +11,12 @@ import {getRootDir} from '../util/constants.mjs';
 
 export async function checkTsc() {
 	console.log('📜 Generating tsconfig files...');
+
 	await generateTscConfig();
 
 	const rootDir = await getRootDir();
+
+	console.log('🕵️ Checking modified typescript files...');
 
 	let commitHash = 'master';
 

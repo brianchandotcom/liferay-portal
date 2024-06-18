@@ -7,7 +7,6 @@ package com.liferay.portal.scheduler.quartz.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.scheduler.quartz.internal.upgrade.schema.SchemaCreationUpgradeStep;
 import com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_1.QuartzUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -23,11 +22,6 @@ public class QuartzServiceUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.registerInitialization();
-
-		registry.registerReleaseCreationUpgradeSteps(
-			new SchemaCreationUpgradeStep());
-
 		registry.register(
 			"0.0.1", "1.0.0",
 			new com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_0.

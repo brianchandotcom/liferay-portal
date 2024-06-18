@@ -22,8 +22,6 @@ public class ConfigurationPersistenceUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.registerInitialization();
-
 		registry.register(
 			"0.0.1", "0.0.2",
 			UpgradeProcessFactory.alterColumnType(

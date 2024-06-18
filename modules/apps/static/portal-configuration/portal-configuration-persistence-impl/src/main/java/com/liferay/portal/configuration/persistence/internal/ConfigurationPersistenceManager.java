@@ -13,7 +13,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.ConfigurationOverridePropertiesUtil;
 import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThreadLocal;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
-import com.liferay.portal.configuration.persistence.internal.upgrade.schema.SchemaCreationUpgradeStep;
+import com.liferay.portal.configuration.persistence.internal.upgrade.schema.ConfigurationSchemaCreator;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
@@ -327,8 +327,11 @@ public class ConfigurationPersistenceManager
 	}
 
 	private void _createConfigurationTable() {
+		ConfigurationSchemaCreator configurationSchemaCreator =
+			new ConfigurationSchemaCreator();
+
 		try {
-			_schemaCreationUpgradeStep.upgrade();
+			configurationSchemaCreator.create(_bundleContext.getBundle());
 		}
 		catch (Exception exception) {
 			ReflectionUtil.throwException(exception);
@@ -620,9 +623,6 @@ public class ConfigurationPersistenceManager
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationPersistenceManager.class);
-
-	private static final SchemaCreationUpgradeStep _schemaCreationUpgradeStep =
-		new SchemaCreationUpgradeStep();
 
 	private final BundleContext _bundleContext;
 	private final DataSource _dataSource;

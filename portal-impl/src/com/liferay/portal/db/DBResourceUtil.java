@@ -14,9 +14,6 @@ import java.io.InputStream;
 
 import java.net.URL;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.osgi.framework.Bundle;
 
 /**
@@ -48,14 +45,6 @@ public class DBResourceUtil {
 			"/com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
 	}
 
-	public static List<String> getSQLTemplates() {
-		return _sqlTemplates;
-	}
-
-	public static void registerSQLTemplate(String sqlTemplate) {
-		_sqlTemplates.add(sqlTemplate);
-	}
-
 	private static String _read(Bundle bundle, String path) {
 		URL resource = bundle.getResource(path);
 
@@ -78,7 +67,5 @@ public class DBResourceUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DBResourceUtil.class);
-
-	private static final List<String> _sqlTemplates = new ArrayList<>();
 
 }

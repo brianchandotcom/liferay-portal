@@ -5,8 +5,9 @@
 		<suppress checks="UnprocessedExceptionCheck" files="portal-configuration-metatype-api/src/main/java/com/liferay/portal/configuration/metatype/bnd/util/ConfigurableUtil\.java" />
 	</checkstyle>
 	<source-check>
+		<suppress checks="BNDSchemaVersionCheck" files="portal-configuration-persistence-impl/bnd\.bnd" />
 		<suppress checks="JavaAnnotationDefaultAttributeCheck" files="portal-configuration-metatype-api/src/test/java/com/liferay/portal/configuration/metatype/bnd/util/ConfigurableUtilTest\.java" />
 		<suppress checks="JavaModuleInternalImportsCheck" files="portal-configuration-persistence-api/src/main/java/com/liferay/portal/configuration/persistence/ConfigurationOverridePropertiesUtil\.java" />
-		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-configuration-persistence-impl/src/main/java/com/liferay/portal/configuration/persistence/internal/upgrade/schema/SchemaCreationUpgradeStep\.java" />
+		<suppress checks="JavaUpgradeVersionCheck" files="portal-configuration-persistence-impl/src/main/java/com/liferay/portal/configuration/persistence/internal/upgrade/registry/ConfigurationPersistenceUpgradeStepRegistrator\.java" />
 	</source-check>
 </suppressions>

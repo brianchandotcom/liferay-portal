@@ -538,34 +538,4 @@ definition {
 			StringUtil.assertEquals("Test Page Name - ${randomSiteName} - ${defaultSiteName} (Editing)", ${editModeTitle});
 		}
 	}
-
-	@description = "This is a test for LPS-165291. The aria-selected of unselected tab should be false on the Fragments and Widgets panel."
-	@priority = 3
-	test ViewStateOfUnselectedTabOnFragmentsAndWidgetsPanel {
-		task ("Given a page creator has a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
-		task ("When the page creator accesses to the Fragments and Widgets panel") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-		}
-
-		task ("Then the page creator sees the aria-selected of Widgets tab is false") {
-			AssertElementNotPresent(
-				key_tab = "Widgets",
-				locator1 = "NavTab#ACTIVE_TAB_LINK");
-
-			AssertAttributeValue(
-				key_tab = "Widgets",
-				locator1 = "NavTab#TAB_LINK",
-				value1 = "aria-selected",
-				value2 = "false");
-		}
-	}
-
 }

@@ -4,6 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+import {checkAccessibility} from '@liferay/layout-js-components-web';
 import {act, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -79,6 +80,12 @@ describe('PageDesignOptionsSidebar', () => {
 		renderComponent();
 
 		expect(screen.getByText('page-design-options')).toBeInTheDocument();
+	});
+
+	it('checks panel accessibility', async () => {
+		const {container} = renderComponent();
+
+		await checkAccessibility({context: container});
 	});
 
 	it('calls changeMasterLayout when a master layout is selected', async () => {

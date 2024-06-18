@@ -367,34 +367,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-165288. The Page Design Options panel should have correct accessibility."
-	@priority = 3
-	test ViewAccessibilityOfPageDesignOptionsPanel {
-		task ("Given a page creator has a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
-		task ("When the page creator accesses to the Page Design Options panel") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.gotoTab(tabName = "Page Design Options");
-		}
-
-		task ("Then the Page Design Options panel should have correct accessibility") {
-			AssertElementPresent(locator1 = "//h2[normalize-space(text())='Page Design Options']");
-
-			AssertAttributeValue(
-				locator1 = "PageEditor#MORE_LINK",
-				value1 = "title",
-				value2 = "More Page Design Options");
-		}
-	}
-
 	@description = "This is a test for LPS-182022. The Page In Use should comply with the WCAG 2.1 AA standard."
 	@priority = 4
 	test ViewAccessibilityOfPageInUse {

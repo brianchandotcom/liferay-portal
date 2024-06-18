@@ -608,6 +608,20 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
+	async hideFragment(fragmentId: string, isDesktop = true) {
+		await this.selectFragment(fragmentId, isDesktop);
+
+		await this.page
+			.locator('.page-editor__topper__item')
+			.getByRole('button', {name: 'Options'})
+			.click();
+
+		await this.page
+			.locator('.dropdown-menu.show')
+			.getByText('Hide Fragment')
+			.click();
+	}
+
 	async selectFragment(fragmentId: string, isDesktop = true) {
 		if (await this.isActive(fragmentId, isDesktop)) {
 			return;

@@ -139,6 +139,10 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		indexer.getClassNames();
 	}
 
+	public void method(Layout layout, String friendlyURL) {
+		LayoutFriendlyURLComposite(layout, friendlyURL);
+	}
+
 	public void method(long commerceOrderId) {
 		CommerceOrderItemLocalServiceUtil.deleteCommerceOrderItems(commerceOrderId);
 		_commerceOrderItemLocalService.deleteCommerceOrderItems(123);

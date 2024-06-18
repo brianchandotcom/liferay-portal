@@ -152,6 +152,10 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		List<Indexer<?>> indexers = portlet.getIndexerInstances();
 	}
 
+	public void method(Layout layout, String friendlyURL) {
+		LayoutFriendlyURLComposite(layout, friendlyURL, false);
+	}
+
 	public void method(long commerceOrderId) {
 		CommerceOrderItemLocalServiceUtil.deleteCommerceOrderItems(0, commerceOrderId);
 		_commerceOrderItemLocalService.deleteCommerceOrderItems(123);

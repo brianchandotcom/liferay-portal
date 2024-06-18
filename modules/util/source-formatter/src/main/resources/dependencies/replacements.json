@@ -32,6 +32,14 @@
 	},
 	{
 		"classNames": [
+			"IndexableActionableDynamicQuery"
+		],
+		"from": "setSearchEngineId(String paramName)",
+		"issueKey": "LPD-8002",
+		"to": ""
+	},
+	{
+		"classNames": [
 			"IndexWriterHelperUtil"
 		],
 		"from": "updateDocument(String paramName, long paramName, Collection<Document> paramName, boolean paramName)",

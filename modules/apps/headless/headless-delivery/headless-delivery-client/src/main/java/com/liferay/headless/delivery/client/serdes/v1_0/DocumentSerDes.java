@@ -182,6 +182,21 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
+		if (document.getDateExpired() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateExpired\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(document.getDateExpired()));
+
+			sb.append("\"");
+		}
+
 		if (document.getDateModified() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -193,6 +208,21 @@ public class DocumentSerDes {
 
 			sb.append(
 				liferayToJSONDateFormat.format(document.getDateModified()));
+
+			sb.append("\"");
+		}
+
+		if (document.getDatePublished() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"datePublished\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(document.getDatePublished()));
 
 			sb.append("\"");
 		}
@@ -563,6 +593,15 @@ public class DocumentSerDes {
 				liferayToJSONDateFormat.format(document.getDateCreated()));
 		}
 
+		if (document.getDateExpired() == null) {
+			map.put("dateExpired", null);
+		}
+		else {
+			map.put(
+				"dateExpired",
+				liferayToJSONDateFormat.format(document.getDateExpired()));
+		}
+
 		if (document.getDateModified() == null) {
 			map.put("dateModified", null);
 		}
@@ -570,6 +609,15 @@ public class DocumentSerDes {
 			map.put(
 				"dateModified",
 				liferayToJSONDateFormat.format(document.getDateModified()));
+		}
+
+		if (document.getDatePublished() == null) {
+			map.put("datePublished", null);
+		}
+		else {
+			map.put(
+				"datePublished",
+				liferayToJSONDateFormat.format(document.getDatePublished()));
 		}
 
 		if (document.getDescription() == null) {
@@ -767,7 +815,13 @@ public class DocumentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "dateExpired")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "datePublished")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
@@ -914,9 +968,21 @@ public class DocumentSerDes {
 						toDate((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "dateExpired")) {
+				if (jsonParserFieldValue != null) {
+					document.setDateExpired(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				if (jsonParserFieldValue != null) {
 					document.setDateModified(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "datePublished")) {
+				if (jsonParserFieldValue != null) {
+					document.setDatePublished(
 						toDate((String)jsonParserFieldValue));
 				}
 			}

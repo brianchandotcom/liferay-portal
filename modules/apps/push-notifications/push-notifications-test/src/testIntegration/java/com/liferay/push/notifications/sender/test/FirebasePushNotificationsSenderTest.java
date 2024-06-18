@@ -290,36 +290,38 @@ public class FirebasePushNotificationsSenderTest {
 
 		JSONObject jsonObject = _getRandomNotificationJSONObject();
 
-		expectedException.expect(PushNotificationsException.class);
-		expectedException.expectMessage("Unable to remove notification group");
-
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.push.notifications.sender.firebase.internal." +
 					"FirebasePushNotificationsSender",
 				LoggerTestUtil.ERROR)) {
 
-			try {
-				_pushNotificationsDeviceLocalService.sendPushNotification(
-					PLATFORM, destinationTokens, jsonObject);
-			}
-			finally {
-				_verifyAccessTokenRequest();
+			_pushNotificationsDeviceLocalService.sendPushNotification(
+				PLATFORM, destinationTokens, jsonObject);
 
-				String groupName = _verifyCreateGroupRequest(
-					accessToken, destinationTokens);
+			_verifyAccessTokenRequest();
 
-				_verifySendNotificationRequest(
-					accessToken,
-					_getExpectedNotificationJSONObject(groupId, jsonObject));
+			String groupName = _verifyCreateGroupRequest(
+				accessToken, destinationTokens);
 
-				_verifyRemoveGroupRequest(
-					accessToken, destinationTokens, groupId, groupName);
+			_verifySendNotificationRequest(
+				accessToken,
+				_getExpectedNotificationJSONObject(groupId, jsonObject));
 
-				List<LogEntry> logEntries = logCapture.getLogEntries();
+			_verifyRemoveGroupRequest(
+				accessToken, destinationTokens, groupId, groupName);
 
-				Assert.assertEquals(
-					logEntries.toString(), 0, logEntries.size());
-			}
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Unable to remove notification group with ",
+					"notification_key: ", groupId,
+					" and notification_key_name: ", groupName),
+				logEntry.getMessage());
 		}
 	}
 
@@ -793,6 +795,7 @@ public class FirebasePushNotificationsSenderTest {
 	private ClientAndServer _clientAndServer;
 
 	@Inject
-	private PushNotificationsDeviceLocalService _pushNotificationsDeviceLocalService;
+	private PushNotificationsDeviceLocalService
+		_pushNotificationsDeviceLocalService;
 
 }

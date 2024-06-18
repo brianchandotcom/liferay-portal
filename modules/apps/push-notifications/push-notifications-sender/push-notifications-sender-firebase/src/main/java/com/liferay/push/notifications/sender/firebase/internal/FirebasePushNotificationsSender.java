@@ -73,17 +73,13 @@ public class FirebasePushNotificationsSender
 		if (tokens.size() > 1) {
 			DeviceGroup deviceGroup = _createDeviceGroup(accessToken, tokens);
 
-			boolean success = false;
-
 			try {
 				_send(
 					accessToken,
 					_buildMessage(deviceGroup.getId(), payloadJSONObject));
-
-				success = true;
 			}
 			finally {
-				_removeDeviceGroup(accessToken, deviceGroup, success, tokens);
+				_removeDeviceGroup(accessToken, deviceGroup, tokens);
 			}
 		}
 		else {
@@ -330,8 +326,7 @@ public class FirebasePushNotificationsSender
 	}
 
 	private void _removeDeviceGroup(
-			String authorizationToken, DeviceGroup deviceGroup,
-			boolean throwException, List<String> tokens)
+			String authorizationToken, DeviceGroup deviceGroup, List<String> tokens)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
@@ -363,16 +358,11 @@ public class FirebasePushNotificationsSender
 		Http.Response optionsResponse = options.getResponse();
 
 		if (optionsResponse.getResponseCode() != _OK_CODE) {
-			String errorMessage = StringBundler.concat(
-				"Unable to remove notification group with notification_key: ",
-				deviceGroup.getId(), " and notification_key_name: ",
-				deviceGroup.getName());
-
-			if (throwException) {
-				throw new PushNotificationsException(errorMessage);
-			}
-
-			_log.error(errorMessage);
+			_log.error(
+				StringBundler.concat(
+					"Unable to remove notification group with ",
+					"notification_key: ", deviceGroup.getId(),
+					" and notification_key_name: ", deviceGroup.getName()));
 		}
 	}
 

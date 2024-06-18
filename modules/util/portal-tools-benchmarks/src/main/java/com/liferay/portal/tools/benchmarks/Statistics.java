@@ -24,8 +24,6 @@ public class Statistics {
 
 	public Statistics(int runCount) {
 		_runCount = runCount;
-
-		_startTime = System.currentTimeMillis();
 	}
 
 	public void addResults(List<ObjectValuePair<String, Long>> results) {
@@ -93,7 +91,7 @@ public class Statistics {
 	private final Map<String, AtomicLong> _durationSumsMap =
 		new ConcurrentHashMap<>();
 	private final int _runCount;
-	private final long _startTime;
+	private final long _startTime = System.currentTimeMillis();
 	private final Queue<String> _testStepNames = new ConcurrentLinkedQueue<>();
 
 }

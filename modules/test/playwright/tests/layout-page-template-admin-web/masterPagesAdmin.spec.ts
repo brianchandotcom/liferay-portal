@@ -71,6 +71,7 @@ test('Add a page based on custom master.', async ({
 				'Fragments and widgets for pages based on this master will be placed here.'
 			)
 		).toBeVisible();
+
 		await expect(
 			page.getByText('Configure Allowed Fragments')
 		).toBeVisible();
@@ -93,9 +94,11 @@ test('Add a page based on custom master.', async ({
 				.replace('lfr-layout-structure-item-topper-', '')
 		);
 
+		const fragmentButton = await pageEditorPage.getFragment(buttonId);
+
 		expect(
 			await pageEditorPage.getElementStyle(
-				topper.locator(`.lfr-layout-structure-item-${buttonId}`),
+				fragmentButton,
 				'background-color'
 			)
 		).toBe('rgba(0, 0, 0, 0)');
@@ -110,7 +113,7 @@ test('Add a page based on custom master.', async ({
 
 		expect(
 			await pageEditorPage.getElementStyle(
-				topper.locator(`.lfr-layout-structure-item-${buttonId}`),
+				fragmentButton,
 				'background-color'
 			)
 		).toBe('rgb(231, 231, 237)');
@@ -131,12 +134,13 @@ test('Add a page based on custom master.', async ({
 
 		await pagesAdminPage.editPage(pageName);
 
-		const buttonItem = await page.locator(
-			`.page-editor__fragment-content--master.lfr-layout-structure-item-${buttonId}`
-		);
+		const fragmentButton = await pageEditorPage.getFragment(buttonId);
 
 		expect(
-			await pageEditorPage.getElementStyle(buttonItem, 'background-color')
+			await pageEditorPage.getElementStyle(
+				fragmentButton,
+				'background-color'
+			)
 		).toBe('rgb(231, 231, 237)');
 	});
 });

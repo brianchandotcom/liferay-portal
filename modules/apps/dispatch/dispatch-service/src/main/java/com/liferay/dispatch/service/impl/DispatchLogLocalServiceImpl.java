@@ -9,10 +9,12 @@ import com.liferay.dispatch.exception.DispatchLogStartDateException;
 import com.liferay.dispatch.exception.DispatchLogStatusException;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
+import com.liferay.dispatch.model.DispatchLogTable;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.model.impl.DispatchLogModelImpl;
 import com.liferay.dispatch.service.base.DispatchLogLocalServiceBaseImpl;
 import com.liferay.dispatch.service.persistence.DispatchTriggerPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -88,7 +90,14 @@ public class DispatchLogLocalServiceImpl
 
 	@Override
 	public void deleteDispatchLogs(long dispatchTriggerId) {
-		dispatchLogPersistence.removeByDispatchTriggerId(dispatchTriggerId);
+		runSQL(
+			StringBundler.concat(
+				"delete from ", DispatchLogTable.INSTANCE.getTableName(),
+				" where ",
+				DispatchLogTable.INSTANCE.dispatchTriggerId.getName(), " = ",
+				dispatchTriggerId));
+
+		dispatchLogPersistence.clearCache();
 	}
 
 	@Override

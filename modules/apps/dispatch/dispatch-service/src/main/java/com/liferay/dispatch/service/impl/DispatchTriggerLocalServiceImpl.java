@@ -14,10 +14,9 @@ import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.internal.helper.DispatchTriggerHelper;
-import com.liferay.dispatch.model.DispatchLogTable;
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.base.DispatchTriggerLocalServiceBaseImpl;
-import com.liferay.dispatch.service.persistence.DispatchLogPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -119,7 +118,8 @@ public class DispatchTriggerLocalServiceImpl
 			return dispatchTrigger;
 		}
 
-		_deleteDispatchLogs(dispatchTrigger.getDispatchTriggerId());
+		_dispatchLogLocalService.deleteDispatchLogs(
+			dispatchTrigger.getDispatchTriggerId());
 
 		dispatchTriggerPersistence.remove(dispatchTrigger);
 
@@ -353,17 +353,6 @@ public class DispatchTriggerLocalServiceImpl
 		return dispatchTriggerPersistence.update(dispatchTrigger);
 	}
 
-	private void _deleteDispatchLogs(long dispatchTriggerId) {
-		runSQL(
-			StringBundler.concat(
-				"delete from ", DispatchLogTable.INSTANCE.getTableName(),
-				" where ",
-				DispatchLogTable.INSTANCE.dispatchTriggerId.getName(), " = ",
-				dispatchTriggerId));
-
-		_dispatchLogPersistence.clearCache();
-	}
-
 	private Date _getUTCDate(Date date, String timeZoneId) {
 		TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
 
@@ -411,7 +400,7 @@ public class DispatchTriggerLocalServiceImpl
 		DispatchTriggerLocalServiceImpl.class);
 
 	@Reference
-	private DispatchLogPersistence _dispatchLogPersistence;
+	private DispatchLogLocalService _dispatchLogLocalService;
 
 	@Reference
 	private DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;

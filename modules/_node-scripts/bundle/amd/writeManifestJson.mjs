@@ -13,8 +13,13 @@ import splitProjectExport from './util/splitProjectExport.mjs';
 
 export default async function writeManifestJson(
 	projectDescription,
+	projectEntryPoints,
 	projectExports
 ) {
+	if (!projectEntryPoints.main && !projectExports.length) {
+		return;
+	}
+
 	const filePath = path.join(BUILD_RESOURCES_PATH, 'manifest.json');
 
 	const manifest = {

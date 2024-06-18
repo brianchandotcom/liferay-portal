@@ -105,7 +105,7 @@ public class AnalyticsRenderFragmentLayoutPostDynamicInclude
 		try {
 			StringBundler sb = new StringBundler(9);
 
-			sb.append("Analytics.track(\"");
+			sb.append("window.onload = function() {Analytics.track(\"");
 
 			InfoItemClassDetails infoItemClassDetails =
 				new InfoItemClassDetails(
@@ -126,7 +126,7 @@ public class AnalyticsRenderFragmentLayoutPostDynamicInclude
 			sb.append(layoutDisplayPageObjectProvider.getTitle(locale));
 			sb.append("', 'type': '");
 			sb.append(label);
-			sb.append("'});");
+			sb.append("'})};");
 
 			Writer writer = pageContext.getOut();
 

@@ -104,6 +104,10 @@ export class JournalPage {
 		await this.assertPermissions(permissions);
 	}
 
+	async assertTitle(title: string) {
+		await expect(this.page.locator(`a[title='${title}']`)).toBeVisible();
+	}
+
 	async assertPermissions(
 		permissions: {enabled: boolean; locator: string}[]
 	) {

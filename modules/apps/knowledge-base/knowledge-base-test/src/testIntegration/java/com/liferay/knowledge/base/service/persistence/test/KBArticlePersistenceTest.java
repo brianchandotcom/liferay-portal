@@ -363,7 +363,7 @@ public class KBArticlePersistenceTest {
 	public void testCountByR_SArrayable() throws Exception {
 		_persistence.countByR_S(
 			new long[] {RandomTestUtil.nextLong(), 0L},
-			RandomTestUtil.nextInt());
+			new int[] {RandomTestUtil.nextInt(), 0});
 	}
 
 	@Test

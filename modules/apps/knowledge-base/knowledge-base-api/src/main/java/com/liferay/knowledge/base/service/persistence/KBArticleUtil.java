@@ -1755,61 +1755,62 @@ public class KBArticleUtil {
 	}
 
 	/**
-	 * Returns all the kb articles where resourcePrimKey = any &#63; and status = &#63;.
+	 * Returns all the kb articles where resourcePrimKey = any &#63; and status = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param resourcePrimKeys the resource prim keys
-	 * @param status the status
+	 * @param statuses the statuses
 	 * @return the matching kb articles
 	 */
 	public static List<KBArticle> findByR_S(
-		long[] resourcePrimKeys, int status) {
+		long[] resourcePrimKeys, int[] statuses) {
 
-		return getPersistence().findByR_S(resourcePrimKeys, status);
+		return getPersistence().findByR_S(resourcePrimKeys, statuses);
 	}
 
 	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = any &#63; and status = &#63;.
+	 * Returns a range of all the kb articles where resourcePrimKey = any &#63; and status = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param resourcePrimKeys the resource prim keys
-	 * @param status the status
+	 * @param statuses the statuses
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_S(
-		long[] resourcePrimKeys, int status, int start, int end) {
+		long[] resourcePrimKeys, int[] statuses, int start, int end) {
 
-		return getPersistence().findByR_S(resourcePrimKeys, status, start, end);
+		return getPersistence().findByR_S(
+			resourcePrimKeys, statuses, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = any &#63; and status = &#63;.
+	 * Returns an ordered range of all the kb articles where resourcePrimKey = any &#63; and status = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param resourcePrimKeys the resource prim keys
-	 * @param status the status
+	 * @param statuses the statuses
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_S(
-		long[] resourcePrimKeys, int status, int start, int end,
+		long[] resourcePrimKeys, int[] statuses, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return getPersistence().findByR_S(
-			resourcePrimKeys, status, start, end, orderByComparator);
+			resourcePrimKeys, statuses, start, end, orderByComparator);
 	}
 
 	/**
@@ -1820,7 +1821,7 @@ public class KBArticleUtil {
 	 * </p>
 	 *
 	 * @param resourcePrimKeys the resource prim keys
-	 * @param status the status
+	 * @param statuses the statuses
 	 * @param start the lower bound of the range of kb articles
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1828,12 +1829,12 @@ public class KBArticleUtil {
 	 * @return the ordered range of matching kb articles
 	 */
 	public static List<KBArticle> findByR_S(
-		long[] resourcePrimKeys, int status, int start, int end,
+		long[] resourcePrimKeys, int[] statuses, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
 
 		return getPersistence().findByR_S(
-			resourcePrimKeys, status, start, end, orderByComparator,
+			resourcePrimKeys, statuses, start, end, orderByComparator,
 			useFinderCache);
 	}
 
@@ -1859,14 +1860,14 @@ public class KBArticleUtil {
 	}
 
 	/**
-	 * Returns the number of kb articles where resourcePrimKey = any &#63; and status = &#63;.
+	 * Returns the number of kb articles where resourcePrimKey = any &#63; and status = any &#63;.
 	 *
 	 * @param resourcePrimKeys the resource prim keys
-	 * @param status the status
+	 * @param statuses the statuses
 	 * @return the number of matching kb articles
 	 */
-	public static int countByR_S(long[] resourcePrimKeys, int status) {
-		return getPersistence().countByR_S(resourcePrimKeys, status);
+	public static int countByR_S(long[] resourcePrimKeys, int[] statuses) {
+		return getPersistence().countByR_S(resourcePrimKeys, statuses);
 	}
 
 	/**

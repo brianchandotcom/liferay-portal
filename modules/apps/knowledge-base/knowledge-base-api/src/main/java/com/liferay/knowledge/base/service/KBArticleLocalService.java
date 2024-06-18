@@ -485,6 +485,10 @@ public interface KBArticleLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBArticle getLatestKBArticle(long resourcePrimKey, int[] statuses)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle getLatestKBArticleByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws PortalException;

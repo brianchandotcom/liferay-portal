@@ -379,11 +379,16 @@ public class FirebasePushNotificationsSender
 
 		options.setPost(true);
 
-		_http.URLtoString(options);
+		String responseString = _http.URLtoString(options);
 
 		Http.Response optionsResponse = options.getResponse();
 
 		if (optionsResponse.getResponseCode() != _OK_CODE) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to send notification with notification_key: ",
+					notificationKey, " and reason: ", responseString));
+
 			throw new PushNotificationsException(
 				"Unable to send the push notification");
 		}

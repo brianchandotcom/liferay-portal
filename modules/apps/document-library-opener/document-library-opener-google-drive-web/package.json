@@ -1,0 +1,10 @@
+{
+	"name": "@liferay/document-library-opener-google-drive-web",
+	"private": true,
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
+	},
+	"version": "3.0.48"
+}

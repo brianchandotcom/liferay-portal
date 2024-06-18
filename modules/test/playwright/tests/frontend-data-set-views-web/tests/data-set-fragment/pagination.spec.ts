@@ -61,9 +61,11 @@ test.describe(
 	() => {
 		const assertPaginationValues = async (fdsFragmentPage, itemsPerPage, deltas) => {
 			const paginatorWrapper =
-				await fdsFragmentPage.fdsTableWrapper.locator(
+				await fdsFragmentPage.fdsPaginationWrapper.locator(
 					'.pagination-bar'
 				);
+
+			await paginatorWrapper.scrollIntoViewIfNeeded();
 
 			await expect(paginatorWrapper).toBeInViewport();
 
@@ -115,16 +117,8 @@ test.describe(
 			await test.step(
 				'Frontend Data Set Table is in the page',
 				async () => {
-					await fdsFragmentPage.fdsTableWrapper.waitFor({
-						state: 'visible',
-					});
-
-					await expect(
-						fdsFragmentPage.fdsTableWrapper
-					).toBeInViewport();
-
 					expect(
-						await fdsFragmentPage
+						await fdsFragmentPage.page
 							.locator('.dnd-thead > div')
 							.first()
 							.locator('.dnd-th')
@@ -160,13 +154,26 @@ test.describe(
 		test(
 			'FDS uses custom pagination configuration after creating a Data Set',
 			async ({
+				dataSetManagerApiHelpers,
 				fdsFragmentPage,
 				layout,
 			}) => {
+				await test.step(
+					'Update Data Set pagination configuration',
+					async () => {
+						await dataSetManagerApiHelpers.updateDataSet({
+							defaultItemsPerPage: 10,
+							erc: dataSetERC,
+							label: dataSetLabel,
+							listOfItemsPerPage: '5, 10, 15',
+						});
+					}
+				);
+
 				await configureDataSet(fdsFragmentPage, layout);
 
 				await test.step(
-					'Check that the FDS Table pagination uses default configuration values',
+					'Check that the FDS Table pagination uses custom configuration values',
 					async () => {
 						await assertPaginationValues(fdsFragmentPage, '10 Items', [
 							'5 Items',

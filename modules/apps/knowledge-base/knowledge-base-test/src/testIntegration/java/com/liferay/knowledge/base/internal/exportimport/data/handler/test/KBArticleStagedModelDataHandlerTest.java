@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +77,54 @@ public class KBArticleStagedModelDataHandlerTest
 			0L,
 			(long)ReflectionTestUtil.getFieldValue(
 				exportedKBArticle, "_classNameId"));
+	}
+
+	@FeatureFlags("LPS-188058")
+	@Test
+	public void testExportImportScheduledKBArticleCanBePublished()
+		throws Exception {
+
+		initExport();
+
+		KBArticle kbArticle = _addKBArticle(
+			new Date(System.currentTimeMillis() + Time.DAY),
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ClassNameLocalServiceUtil.getClassNameId(
+				KBFolderConstants.getClassName()),
+			_createServiceContext(stagingGroup));
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, kbArticle);
+
+		initImport();
+
+		KBArticle exportedKBArticle = (KBArticle)readExportedStagedModel(
+			kbArticle);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedKBArticle);
+
+		KBArticle importedKBArticle = (KBArticle)getStagedModel(
+			kbArticle.getUuid(), liveGroup);
+
+		Assert.assertEquals(
+			kbArticle.getExternalReferenceCode(),
+			importedKBArticle.getExternalReferenceCode());
+		Assert.assertEquals(
+			kbArticle.isScheduled(), importedKBArticle.isScheduled());
+
+		importedKBArticle.setDisplayDate(
+			new Date(System.currentTimeMillis() - (Time.MINUTE * 10)));
+
+		importedKBArticle = _kbArticleLocalService.updateKBArticle(
+			importedKBArticle);
+
+		_kbArticleLocalService.checkKBArticles(liveGroup.getCompanyId());
+
+		importedKBArticle = _kbArticleLocalService.fetchKBArticle(
+			importedKBArticle.getKbArticleId());
+
+		Assert.assertFalse(importedKBArticle.isScheduled());
 	}
 
 	@Test
@@ -166,16 +217,26 @@ public class KBArticleStagedModelDataHandlerTest
 	}
 
 	private KBArticle _addKBArticle(
-			long parentResourcePrimKey, long parentResourceClassNameId,
-			ServiceContext serviceContext)
+			Date displayDate, long parentResourcePrimKey,
+			long parentResourceClassNameId, ServiceContext serviceContext)
 		throws Exception {
 
 		return _kbArticleLocalService.addKBArticle(
 			null, serviceContext.getUserId(), parentResourceClassNameId,
 			parentResourcePrimKey, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, RandomTestUtil.nextDate(),
-			null, null, null, serviceContext);
+			StringUtil.randomString(), null, null, displayDate, null, null,
+			null, serviceContext);
+	}
+
+	private KBArticle _addKBArticle(
+			long parentResourcePrimKey, long parentResourceClassNameId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _addKBArticle(
+			RandomTestUtil.nextDate(), parentResourcePrimKey,
+			parentResourceClassNameId, serviceContext);
 	}
 
 	private ServiceContext _createServiceContext(Group group) throws Exception {

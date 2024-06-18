@@ -3,12 +3,15 @@
 		"pageElements": [
 			{
 				"definition": {
-					"cssClasses": ["learn-banner"],
+					"cssClasses": [
+						"learn-banner"
+					],
 					"fragmentStyle": {
 						"height": "418px"
 					},
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Header Container"
 				},
 				"id": "fccaad64-c60d-6236-a403-19da7772f69f",
@@ -48,7 +51,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Liferay Education"
@@ -79,7 +83,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Become a Liferay master with guided content created by Liferay experts."
@@ -98,7 +103,9 @@
 							},
 							{
 								"definition": {
-									"cssClasses": ["learn-search"],
+									"cssClasses": [
+										"learn-search"
+									],
 									"fragmentStyle": {
 										"marginLeft": "auto",
 										"marginRight": "auto",
@@ -123,7 +130,9 @@
 			},
 			{
 				"definition": {
-					"cssClasses": ["learn-education"],
+					"cssClasses": [
+						"learn-education"
+					],
 					"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\n\n\n  \n  .learn-education-section .btn::after {\n  content: '';\n  display: inline-block;\n  width: 14px;\n  height: 14px;\n  margin-bottom: 2px;\n  margin-left: 4px; \n  background-image: url(\"data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cmask id='mask0_2278_4993' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='1' y='4' width='13' height='8'%3E%3Cpath d='M11.243 10.9895L13.4805 8.75201C13.818 8.38013 13.8305 7.72388 13.4805 7.32076L11.243 5.08326C10.193 4.15201 8.90234 5.57701 9.81172 6.51451L10.3336 7.03638H2.74609C1.41797 7.03638 1.41797 9.03638 2.74609 9.03638H10.3336L9.81172 9.55826C8.87734 10.552 10.2773 11.9176 11.243 10.9895Z' fill='%236B6C7E'/%3E%3C/mask%3E%3Cg mask='url(%23mask0_2278_4993)'%3E%3Crect width='16' height='16' fill='%230B5FFF'/%3E%3C/g%3E%3C/svg%3E\");\n  background-size: cover;\n  vertical-align: middle;  \n  }\n}",
 					"fragmentStyle": {
 						"marginTop": "-6rem",
@@ -143,17 +152,25 @@
 				"pageElements": [
 					{
 						"definition": {
-							"cssClasses": ["learn-education-section"],
-							"fragmentStyle": {"marginBottom": "6"},
+							"cssClasses": [
+								"learn-education-section"
+							],
+							"fragmentStyle": {
+								"marginBottom": "6"
+							},
 							"indexed": true,
-							"layout": {"marginBottom": 6},
+							"layout": {
+								"marginBottom": 6
+							},
 							"name": "Courses"
 						},
 						"id": "80e89db9-7460-9981-d4d3-c0730027de1f",
 						"pageElements": [
 							{
 								"definition": {
-									"cssClasses": ["section-header"],
+									"cssClasses": [
+										"section-header"
+									],
 									"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground: linear-gradient(\n\t\t\t\t91.07deg,\n\t\t\t\t#001742 0%,\n\t\t\t\t#0011a8 24.6%,\n\t\t\t\t#0b5fff 49%,\n\t\t\t\t#0b5fff 74.5%,\n\t\t\t\t#0b5fff 100%\n\t\t\t),\n\t\t\tradial-gradient(\n\t\t\t\t26.56% 43.82% at 0% 0%,\n\t\t\t\t#00256b 20.83%,\n\t\t\t\trgba(0, 37, 107, 0) 100%\n\t\t\t),\n\t\t\tradial-gradient(\n\t\t\t\t14.55% 34.6% at 100% 34.6%,\n\t\t\t\trgba(55, 124, 255, 0.68) 0%,\n\t\t\t\trgba(55, 124, 255, 0) 100%\n\t\t\t);\n}",
 									"fragmentStyle": {
 										"borderRadius": "borderRadiusLg",
@@ -214,7 +231,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -229,7 +247,8 @@
 											{
 												"definition": {
 													"indexed": true,
-													"layout": {}
+													"layout": {
+													}
 												},
 												"id": "292b5081-1c24-30f2-8b4d-4ba980e4eeee",
 												"pageElements": [
@@ -247,7 +266,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Courses"
@@ -280,7 +300,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Learn at your own pace with with self-directed courses that guide you through specific topics in-depth."
@@ -310,9 +331,9 @@
 												"key": "BASIC_COMPONENT-button"
 											},
 											"fragmentConfig": {
+												"buttonSize": "sm",
 												"buttonType": "outline-primary",
-												"type": "link",
-												"buttonSize": "sm"
+												"type": "link"
 											},
 											"fragmentFields": [
 												{
@@ -366,11 +387,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -387,11 +410,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -439,7 +464,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Text container"
 														},
 														"id": "750fcb15-004f-505c-d01c-f160e27a0068",
@@ -458,7 +484,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Building Enterprise Websites with Liferay"
@@ -492,7 +519,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Use Liferay DXP's low-code and user-friend tools to build an engaging and scalable enterprise website. Bridge theory and practice by crafting a marketing website for a fictional company.&nbsp;&nbsp;"
@@ -541,7 +569,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "15 hours"
@@ -583,7 +612,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Practitioner +2"
@@ -625,7 +655,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Beginner"
@@ -669,11 +700,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -721,7 +754,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Text container"
 														},
 														"id": "50f5d6ef-f39c-1527-e939-e69e506c5a4d",
@@ -740,7 +774,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Level 1 for Business Sales&nbsp; &nbsp; &nbsp;&nbsp;"
@@ -775,7 +810,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Learn how to succeed in the sales process, from generating prospects to closing deals and working with Liferay’s contracts."
@@ -824,7 +860,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "5 hours"
@@ -866,7 +903,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Business Sales"
@@ -908,7 +946,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Intermediate"
@@ -952,11 +991,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -1004,7 +1045,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Text container"
 														},
 														"id": "1beb1724-bdee-5ba9-3f90-ac5b00e0b355",
@@ -1023,7 +1065,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Level 0 for Partner and Internal"
@@ -1057,7 +1100,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Receive an introduction to Liferay the company, its products, and how to compete in the competitive landscape."
@@ -1106,7 +1150,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "2 hours"
@@ -1148,7 +1193,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Partner &amp; Internal"
@@ -1190,7 +1236,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Beginner"
@@ -1232,17 +1279,25 @@
 					},
 					{
 						"definition": {
-							"cssClasses": ["learn-education-section"],
-							"fragmentStyle": {"marginBottom": "6"},
+							"cssClasses": [
+								"learn-education-section"
+							],
+							"fragmentStyle": {
+								"marginBottom": "6"
+							},
 							"indexed": true,
-							"layout": {"marginBottom": 6},
+							"layout": {
+								"marginBottom": 6
+							},
 							"name": "Learning Paths"
 						},
 						"id": "41510273-600c-335c-bebc-2f698aff727d",
 						"pageElements": [
 							{
 								"definition": {
-									"cssClasses": ["section-header"],
+									"cssClasses": [
+										"section-header"
+									],
 									"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground: linear-gradient(\n\t\t\t\t91.07deg,\n\t\t\t\t#001742 0%,\n\t\t\t\t#0011a8 24.6%,\n\t\t\t\t#0b5fff 49%,\n\t\t\t\t#0b5fff 74.5%,\n\t\t\t\t#0b5fff 100%\n\t\t\t),\n\t\t\tradial-gradient(\n\t\t\t\t26.56% 43.82% at 0% 0%,\n\t\t\t\t#00256b 20.83%,\n\t\t\t\trgba(0, 37, 107, 0) 100%\n\t\t\t),\n\t\t\tradial-gradient(\n\t\t\t\t14.55% 34.6% at 100% 34.6%,\n\t\t\t\trgba(55, 124, 255, 0.68) 0%,\n\t\t\t\trgba(55, 124, 255, 0) 100%\n\t\t\t);\n}",
 									"fragmentStyle": {
 										"borderRadius": "borderRadiusLg",
@@ -1303,7 +1358,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -1318,7 +1374,8 @@
 											{
 												"definition": {
 													"indexed": true,
-													"layout": {}
+													"layout": {
+													}
 												},
 												"id": "849e72d0-cccd-9c27-a456-bc7e8dd45639",
 												"pageElements": [
@@ -1336,7 +1393,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Learning Paths"
@@ -1370,7 +1428,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Take a structured learning path tailored to your role and experience level, ensuring you gain the Liferay skills you need."
@@ -1400,9 +1459,9 @@
 												"key": "BASIC_COMPONENT-button"
 											},
 											"fragmentConfig": {
+												"buttonSize": "sm",
 												"buttonType": "outline-primary",
-												"type": "link",
-												"buttonSize": "sm"
+												"type": "link"
 											},
 											"fragmentFields": [
 												{
@@ -1456,11 +1515,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -1477,11 +1538,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -1529,7 +1592,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Text container"
 														},
 														"id": "720d55ec-0430-b866-3d2d-eac1c5efe3b5",
@@ -1548,7 +1612,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Selling Liferay Basics"
@@ -1583,7 +1648,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Receive an introduction to Liferay the company, its products, and how to compete in the competitive landscape."
@@ -1632,7 +1698,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "2 hours"
@@ -1674,7 +1741,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Internal Employees +1"
@@ -1718,11 +1786,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -1770,7 +1840,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Text container"
 														},
 														"id": "3c53f50f-bf9a-6d11-57a8-65dcc5b70668",
@@ -1789,7 +1860,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Business Sales"
@@ -1824,7 +1896,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Learn how to succeed in the sales process, from generating prospects to closing deals and working with Liferay’s contracts."
@@ -1873,7 +1946,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "5 hours"
@@ -1915,7 +1989,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Business Sales +2"
@@ -1959,11 +2034,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -2011,7 +2088,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Text container"
 														},
 														"id": "c3d0dbdc-e59f-53c6-1ad5-156613a597d3",
@@ -2030,7 +2108,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Technical Sales"
@@ -2065,7 +2144,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Craft compelling 30-minute Liferay demos tailored to client needs. This course equips Sales Engineers to conduct impactful demos, showcase Liferay's potential, and discuss successful deployments."
@@ -2114,7 +2194,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "5 hours"
@@ -2156,7 +2237,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Technical Sales +2"
@@ -2198,17 +2280,25 @@
 					},
 					{
 						"definition": {
-							"cssClasses": ["learn-education-section"],
-							"fragmentStyle": {"marginBottom": "6"},
+							"cssClasses": [
+								"learn-education-section"
+							],
+							"fragmentStyle": {
+								"marginBottom": "6"
+							},
 							"indexed": true,
-							"layout": {"marginBottom": 6},
+							"layout": {
+								"marginBottom": 6
+							},
 							"name": "Certifications"
 						},
 						"id": "c5998671-af9d-02bd-093a-74d5c8a61453",
 						"pageElements": [
 							{
 								"definition": {
-									"cssClasses": ["section-header"],
+									"cssClasses": [
+										"section-header"
+									],
 									"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground: linear-gradient(\n\t\t\t\t91.07deg,\n\t\t\t\t#001742 0%,\n\t\t\t\t#0011a8 24.6%,\n\t\t\t\t#0b5fff 49%,\n\t\t\t\t#0b5fff 74.5%,\n\t\t\t\t#0b5fff 100%\n\t\t\t),\n\t\t\tradial-gradient(\n\t\t\t\t26.56% 43.82% at 0% 0%,\n\t\t\t\t#00256b 20.83%,\n\t\t\t\trgba(0, 37, 107, 0) 100%\n\t\t\t),\n\t\t\tradial-gradient(\n\t\t\t\t14.55% 34.6% at 100% 34.6%,\n\t\t\t\trgba(55, 124, 255, 0.68) 0%,\n\t\t\t\trgba(55, 124, 255, 0) 100%\n\t\t\t);\n}",
 									"fragmentStyle": {
 										"borderRadius": "borderRadiusLg",
@@ -2269,7 +2359,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -2284,7 +2375,8 @@
 											{
 												"definition": {
 													"indexed": true,
-													"layout": {}
+													"layout": {
+													}
 												},
 												"id": "8ca6d65b-9d4b-754b-8a87-6e6e68b7708d",
 												"pageElements": [
@@ -2302,7 +2394,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Certifications"
@@ -2335,7 +2428,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Validate your expertise and showcase your skills with official Liferay certifications. Explore available certifications and find out how to earn them."
@@ -2365,9 +2459,9 @@
 												"key": "BASIC_COMPONENT-button"
 											},
 											"fragmentConfig": {
+												"buttonSize": "sm",
 												"buttonType": "outline-primary",
-												"type": "link",
-												"buttonSize": "sm"
+												"type": "link"
 											},
 											"fragmentFields": [
 												{
@@ -2421,11 +2515,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -2442,11 +2538,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -2504,7 +2602,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Certification Title"
@@ -2538,7 +2637,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Description of the Certification"
@@ -2559,7 +2659,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {}
+															"layout": {
+															}
 														},
 														"id": "a815accb-31fc-543c-8e68-ad2546212245",
 														"pageElements": [
@@ -2590,7 +2691,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Practioner"
@@ -2637,11 +2739,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -2699,7 +2803,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Certification Title"
@@ -2733,7 +2838,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Description of the Certification"
@@ -2754,7 +2860,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {}
+															"layout": {
+															}
 														},
 														"id": "2716d083-16b8-35eb-8870-0eb4d811395a",
 														"pageElements": [
@@ -2785,7 +2892,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Practioner"
@@ -2832,11 +2940,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -2894,7 +3004,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Certification Title"
@@ -2928,7 +3039,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Description of the Certification"
@@ -2949,7 +3061,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {}
+															"layout": {
+															}
 														},
 														"id": "7989e14e-db15-7a33-9a7c-23a9e01484a8",
 														"pageElements": [
@@ -2980,7 +3093,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Practioner"

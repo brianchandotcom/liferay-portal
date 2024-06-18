@@ -509,6 +509,10 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		portletDisplay.getPortletInstanceConfiguration(null);
 	}
 
+	public void method(Product product) {
+		product.getConfiguration();
+	}
+
 	public void method(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 

@@ -50,6 +50,8 @@ public interface Build {
 
 	public String getBranchName();
 
+	public BuildDatabase getBuildDatabase();
+
 	public String getBuildDescription();
 
 	public String getBuildDirPath();

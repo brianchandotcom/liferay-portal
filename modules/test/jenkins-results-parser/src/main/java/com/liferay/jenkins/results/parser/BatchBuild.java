@@ -290,7 +290,7 @@ public class BatchBuild extends BaseParentBuild {
 
 	@Override
 	public void saveBuildURLInBuildDatabase() {
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(this);
+		BuildDatabase buildDatabase = getBuildDatabase();
 
 		buildDatabase.putProperty(
 			BUILD_URLS_PROPERTIES_KEY, getBatchName(), getBuildURL());

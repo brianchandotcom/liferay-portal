@@ -90,8 +90,7 @@ public class PoshiAxisBuild extends AxisBuild {
 			return poshiTestNames;
 		}
 
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(
-			getTopLevelBuild());
+		BuildDatabase buildDatabase = getBuildDatabase();
 
 		Properties startProperties = buildDatabase.getProperties(
 			getJobVariant() + "/start.properties");

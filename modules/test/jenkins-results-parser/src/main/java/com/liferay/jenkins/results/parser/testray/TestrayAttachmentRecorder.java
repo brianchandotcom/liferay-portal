@@ -8,7 +8,6 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildDatabase;
-import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
 import com.liferay.jenkins.results.parser.BuildReportFactory;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.DownstreamBuild;
@@ -89,7 +88,7 @@ public class TestrayAttachmentRecorder {
 
 		_build = build;
 
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(build);
+		BuildDatabase buildDatabase = build.getBuildDatabase();
 
 		String jobVariant = build.getParameterValue("JOB_VARIANT");
 

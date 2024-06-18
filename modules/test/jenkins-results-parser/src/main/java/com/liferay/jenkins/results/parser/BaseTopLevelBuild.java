@@ -869,7 +869,7 @@ public abstract class BaseTopLevelBuild
 			return;
 		}
 
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(this);
+		BuildDatabase buildDatabase = getBuildDatabase();
 
 		Properties properties = buildDatabase.getProperties(
 			BUILD_URLS_PROPERTIES_KEY);
@@ -2122,15 +2122,11 @@ public abstract class BaseTopLevelBuild
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(this);
+		BuildDatabase buildDatabase = getBuildDatabase();
 
 		try {
-			JSONObject buildDatabaseJSONObject = new JSONObject(
-				JenkinsResultsParserUtil.read(
-					buildDatabase.getBuildDatabaseFile()));
-
 			writeArchiveFile(
-				buildDatabaseJSONObject.toString(4),
+				String.valueOf(buildDatabase.getJSONObject()),
 				getArchivePath() + "/" + urlSuffix);
 		}
 		catch (IOException ioException) {

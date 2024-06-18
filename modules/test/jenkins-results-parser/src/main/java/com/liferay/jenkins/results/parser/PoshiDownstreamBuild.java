@@ -82,8 +82,7 @@ public class PoshiDownstreamBuild extends DownstreamBuild {
 	}
 
 	private List<String> _getPoshiTestNames() {
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(
-			getTopLevelBuild());
+		BuildDatabase buildDatabase = getBuildDatabase();
 
 		Properties startProperties = buildDatabase.getProperties(
 			getJobVariant() + "/start.properties");

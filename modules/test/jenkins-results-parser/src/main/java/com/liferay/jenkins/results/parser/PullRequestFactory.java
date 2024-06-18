@@ -49,7 +49,7 @@ public class PullRequestFactory {
 		BuildDatabase buildDatabase = null;
 
 		if (build != null) {
-			buildDatabase = BuildDatabaseUtil.getBuildDatabase(build);
+			buildDatabase = build.getBuildDatabase();
 
 			if (buildDatabase.hasPullRequest(gitHubURL)) {
 				pullRequest = buildDatabase.getPullRequest(gitHubURL);

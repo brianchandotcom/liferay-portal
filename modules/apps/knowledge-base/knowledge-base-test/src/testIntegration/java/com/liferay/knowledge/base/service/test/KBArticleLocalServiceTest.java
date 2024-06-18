@@ -1627,6 +1627,40 @@ public class KBArticleLocalServiceTest {
 
 	@FeatureFlags("LPS-188058")
 	@Test
+	public void testUpdateKBArticleDisplayDateOnDraftArticleUpdatesStatusToScheduled()
+		throws Exception {
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		Date displayDate = new Date(
+			System.currentTimeMillis() - (2 * Time.DAY));
+
+		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			displayDate, null, null, null, _serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, kbArticle.getStatus());
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		displayDate = new Date(System.currentTimeMillis() + (2 * Time.DAY));
+
+		kbArticle = _kbArticleLocalService.updateKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, displayDate, null, null,
+			null, null, _serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, kbArticle.getStatus());
+	}
+
+	@FeatureFlags("LPS-188058")
+	@Test
 	public void testUpdateKBArticleDisplayDateUpdatesStatusToApproved()
 		throws Exception {
 

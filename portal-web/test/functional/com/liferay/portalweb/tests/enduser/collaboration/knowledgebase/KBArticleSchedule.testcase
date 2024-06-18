@@ -37,42 +37,6 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
-	@description = "This test ensures that users can publish a draft article with a scheduled date."
-	@priority = 4
-	test CanScheduleDraftArticle {
-		KBArticle.updateCheckInterval(fieldValue = 1);
-
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title",
-			workflowAction = "DRAFT");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.editScheduledDate(
-			editDraftArticle = "true",
-			increaseMinutes = 1,
-			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleTitle = "Knowledge Base Article Title");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		LexiconList.viewListEntryLabel(
-			listEntry = "Knowledge Base Article Title",
-			listEntryLabel = "Scheduled");
-
-		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
-
-		Pause(value1 = 120000);
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		LexiconList.viewListEntryLabel(
-			listEntry = "Knowledge Base Article Title",
-			listEntryLabel = "Approved");
-	}
-
 	@description = "This test ensures that the expired article can be published again when the date reaches a new scheduled date."
 	@priority = 4
 	test ExpiredArticleCanBePublishedWithNewScheduledDate {

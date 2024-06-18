@@ -641,7 +641,7 @@
 															{
 																"definition": {
 																	"cssClasses": [
-																		"card-tag__expertise"
+																		"card-tag__expertise-beginner"
 																	],
 																	"fragment": {
 																		"key": "dialect-text",
@@ -932,7 +932,7 @@
 															{
 																"definition": {
 																	"cssClasses": [
-																		"card-tag__expertise"
+																		"card-tag__expertise-intermediate"
 																	],
 																	"fragment": {
 																		"key": "dialect-text",
@@ -1222,7 +1222,7 @@
 															{
 																"definition": {
 																	"cssClasses": [
-																		"card-tag__expertise"
+																		"card-tag__expertise-beginner"
 																	],
 																	"fragment": {
 																		"key": "dialect-text",

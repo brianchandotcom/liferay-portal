@@ -30,6 +30,8 @@ public interface BuildDatabase {
 
 	public Job getJob(String key);
 
+	public JSONObject getJSONObject();
+
 	public Properties getProperties(String key);
 
 	public Properties getProperties(String key, Pattern pattern);

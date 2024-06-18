@@ -4,3 +4,8 @@ Bundle-Version: 6.0.3
 Export-Package: com.liferay.support.tomcat.util.scan
 Include-Resource: classes
 -include ../common.bnd
+-removeheaders:\
+	Bnd-LastModified,\
+	DSTAMP,\
+	TODAY,\
+	TSTAMP

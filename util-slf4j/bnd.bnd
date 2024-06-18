@@ -8,3 +8,8 @@ Import-Package:\
 	*;resolution:=optional
 Include-Resource: classes
 -include ../common.bnd
+-removeheaders:\
+	Bnd-LastModified,\
+	DSTAMP,\
+	TODAY,\
+	TSTAMP

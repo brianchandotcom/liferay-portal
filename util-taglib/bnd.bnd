@@ -80,3 +80,8 @@ Provide-Capability:\
 		uri="http://liferay.com/tld/util";\
 		version:Version="${Bundle-Version}"
 -include ../common.bnd
+-removeheaders:\
+	Bnd-LastModified,\
+	DSTAMP,\
+	TODAY,\
+	TSTAMP

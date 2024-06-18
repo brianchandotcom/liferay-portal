@@ -5627,14 +5627,18 @@ public class ObjectEntryResourceTest {
 				).build(),
 				_TAG_1);
 
-			HTTPTestUtil.invokeToJSONObject(
+			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null,
 				StringBundler.concat(
 					_objectDefinition1.getRESTContextPath(),
 					"/by-external-reference-code/",
 					_objectEntry1.getExternalReferenceCode(), "?fields=",
-					_OBJECT_FIELD_NAME_BOOLEAN),
+					_OBJECT_FIELD_NAME_BOOLEAN, ",", _OBJECT_FIELD_NAME_TEXT),
 				Http.Method.GET);
+
+			Assert.assertTrue(jsonObject.has(_OBJECT_FIELD_NAME_BOOLEAN));
+			Assert.assertFalse(jsonObject.has(_OBJECT_FIELD_NAME_DATE));
+			Assert.assertFalse(jsonObject.has(_OBJECT_FIELD_NAME_TEXT));
 
 			Assert.assertEquals(
 				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed once",
@@ -5643,12 +5647,16 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_DATE + " should not have been computed", 0,
 				dateObjectFieldAtomicInteger.getAndSet(0));
 
-			HTTPTestUtil.invokeToJSONObject(
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null,
 				_objectDefinition1.getRESTContextPath() +
 					"/by-external-reference-code/" +
 						_objectEntry1.getExternalReferenceCode(),
 				Http.Method.GET);
+
+			Assert.assertTrue(jsonObject.has(_OBJECT_FIELD_NAME_BOOLEAN));
+			Assert.assertTrue(jsonObject.has(_OBJECT_FIELD_NAME_DATE));
+			Assert.assertFalse(jsonObject.has(_OBJECT_FIELD_NAME_TEXT));
 
 			Assert.assertEquals(
 				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed once",
@@ -6092,37 +6100,6 @@ public class ObjectEntryResourceTest {
 
 		_listTypeDefinitionLocalService.deleteListTypeDefinition(
 			listTypeDefinition);
-	}
-
-	@Test
-	public void testGetObjectEntryWithEmptyField() throws Exception {
-		String externalReferenceCode = RandomTestUtil.randomString();
-
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-			).put(
-				"externalReferenceCode", externalReferenceCode
-			).toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			_objectDefinition1.getRESTContextPath() +
-				"/by-external-reference-code/" + externalReferenceCode,
-			Http.Method.GET);
-
-		Assert.assertFalse(jsonObject.has(_OBJECT_FIELD_NAME_TEXT));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(),
-				"/by-external-reference-code/", externalReferenceCode,
-				"?fields=", _OBJECT_FIELD_NAME_TEXT),
-			Http.Method.GET);
-
-		Assert.assertFalse(jsonObject.has(_OBJECT_FIELD_NAME_TEXT));
 	}
 
 	@Test

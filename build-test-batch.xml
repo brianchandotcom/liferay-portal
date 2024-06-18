@@ -6266,9 +6266,15 @@ information. Make sure to commit in all format-javadoc results.
 	<target name="js-unit-jdk8">
 		<run-batch-test>
 			<test-action>
-				<gradle-execute dir="modules" task="packageRunTest">
-					<arg value="--continue" />
-				</gradle-execute>
+				<for delimiter=" " list="${modules.test.class.group}" param="modules.test.class" trim="true">
+					<sequential>
+						<echo>Executing Gradle tasks: @{modules.test.class}.</echo>
+
+						<gradle-execute dir="modules" task="@{modules.test.class}">
+							<arg value="--continue" />
+						</gradle-execute>
+					</sequential>
+				</for>
 
 				<replace
 					dir="modules"

@@ -6,7 +6,7 @@
 const buildFolder = `${__dirname}/build`;
 const buildName = 'analytics-all-min.js';
 
-module.exports = {
+let config = {
 	entry: [
 		'core-js/fn/array/includes',
 		'core-js/fn/object/assign',
@@ -38,3 +38,26 @@ module.exports = {
 		path: buildFolder,
 	},
 };
+
+if (process.env['NODE_ENV'] === 'development') {
+	config = {
+		...config,
+		devtool: 'inline-source-map',
+		mode: 'development',
+		optimization: {
+			minimize: false,
+		},
+	};
+}
+
+if (process.env['npm_lifecycle_event'] === 'start') {
+	config = {
+		...config,
+		devServer: {
+			contentBase: config.output.path,
+			port: 8081,
+		},
+	};
+}
+
+module.exports = config;

@@ -1,6 +1,6 @@
 #commerce-footer {
-	background-color: #f1f2f5;
-	border-top: 1px solid #e7e7ed;
+	background-color: var(--gray-200);
+	border-top: 1px solid var(--gray-300);
 }
 
 #commerce-footer .commerce-footer-social {

@@ -1,3 +1,8 @@
+#commerce-header-main {
+	background-color: var(--white);
+	border-bottom: 1px solid var(--gray-300);
+}
+
 #commerce-header-main .cart-root .mini-cart {
 	height: 35px;
 	transition:

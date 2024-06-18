@@ -1,3 +1,8 @@
+#commerce-header-user {
+	background-color: var(--white);
+	border-bottom: 1px solid var(--gray-300);
+}
+
 .currency-selector-container .dropdown-menu-content.dropdown-menu,
 .language-selector-container .dropdown-menu-content.dropdown-menu {
 	max-height: fit-content;

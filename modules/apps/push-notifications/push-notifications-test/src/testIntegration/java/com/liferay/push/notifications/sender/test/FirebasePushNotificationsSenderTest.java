@@ -66,7 +66,7 @@ public class FirebasePushNotificationsSenderTest {
 	public void tearDown() throws Exception {
 		_clientAndServer.stop();
 
-		_deleteConfiguration();
+		ConfigurationTestUtil.deleteConfiguration(_PID);
 	}
 
 	@Test
@@ -389,10 +389,6 @@ public class FirebasePushNotificationsSenderTest {
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
-	private void _deleteConfiguration() throws Exception {
-		ConfigurationTestUtil.deleteConfiguration(_PID);
-	}
-
 	private int _getCode(boolean success) {
 		if (success) {
 			return 200;
@@ -620,10 +616,6 @@ public class FirebasePushNotificationsSenderTest {
 		);
 	}
 
-	private String _readFileToString(String s) throws Exception {
-		return new String(FileUtil.getBytes(getClass(), s));
-	}
-
 	private void _saveConfiguration() throws Exception {
 		ConfigurationTestUtil.saveConfiguration(
 			_PID,
@@ -635,7 +627,10 @@ public class FirebasePushNotificationsSenderTest {
 			).put(
 				"serviceAccountKey",
 				StringUtil.replace(
-					_readFileToString("dependencies/service-account-key.json"),
+					new String(
+						FileUtil.getBytes(
+							getClass(),
+							"dependencies/service-account-key.json")),
 					new String[] {"${URL}", "${PROJECT_ID}"},
 					new String[] {
 						"http://localhost:" + _clientAndServer.getPort(),

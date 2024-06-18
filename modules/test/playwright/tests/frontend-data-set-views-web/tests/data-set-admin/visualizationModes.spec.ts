@@ -9,9 +9,9 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
+import saveFromModal from '../../utils/saveFromModal';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
-import saveFromModal from '../../utils/saveFromModal';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -42,23 +42,24 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	});
 });
 
-const clickActionInRow = async ({actionName, rowName, visualizationModesPage}) => {
+const clickActionInRow = async ({
+	actionName,
+	rowName,
+	visualizationModesPage,
+}) => {
 	await visualizationModesPage
 		.getRowByText(rowName)
 		.locator('.actions-cell button')
 		.click();
 
-	const actionButton = visualizationModesPage.page.getByRole(
-		'menuitem',
-		{
-			name: actionName,
-		}
-	);
+	const actionButton = visualizationModesPage.page.getByRole('menuitem', {
+		name: actionName,
+	});
 
 	await expect(actionButton).toBeInViewport();
 
 	await actionButton.click();
-}
+};
 
 test.describe('Visualization Modes in Data Set Manager', () => {
 	test('Configure cards visualization mode @LPD-10735', async ({
@@ -319,7 +320,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await clickActionInRow({
 				actionName: 'Edit',
 				rowName: SAMPLE_SCALAR_FIELD,
-				visualizationModesPage
+				visualizationModesPage,
 			});
 
 			const sortableInput =
@@ -349,7 +350,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await clickActionInRow({
 				actionName: 'Edit',
 				rowName: `${SAMPLE_OBJECT_FIELD}.*`,
-				visualizationModesPage
+				visualizationModesPage,
 			});
 
 			const sortableLabel =
@@ -653,7 +654,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await clickActionInRow({
 				actionName: 'Edit',
 				rowName: SAMPLE_SCALAR_FIELD,
-				visualizationModesPage
+				visualizationModesPage,
 			});
 
 			const labelInput = visualizationModesPage.page.getByLabel('Label');
@@ -682,7 +683,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await clickActionInRow({
 				actionName: 'Delete',
 				rowName: SAMPLE_SCALAR_FIELD,
-				visualizationModesPage
+				visualizationModesPage,
 			});
 
 			await visualizationModesPage.cancelAddFieldsModal();

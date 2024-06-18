@@ -51,11 +51,8 @@ test.beforeEach(async ({dataSetManagerApiHelpers, paginationPage}) => {
 	});
 
 	await test.step('Check default items per page has a default value', async () => {
-		await expect(paginationPage.defaultItemsPerPageInput).toHaveValue(
-			'20'
-		);
+		await expect(paginationPage.defaultItemsPerPageInput).toHaveValue('20');
 	});
-
 });
 
 test.afterEach(async ({dataSetManagerApiHelpers}) => {

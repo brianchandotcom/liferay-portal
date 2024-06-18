@@ -54,202 +54,177 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 });
 
 test.describe('Creation Actions in Data Set fragment', () => {
-	test(
-		'Creation Action button does not appear if no creation action is defined',
-		async ({fdsFragmentPage, layout}) => {
+	test('Creation Action button does not appear if no creation action is defined', async ({
+		fdsFragmentPage,
+		layout,
+	}) => {
+		await test.step('Configure Data Set in the page', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
 
-			await test.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
+		await test.step('Check that the Creation Action button is not present', async () => {
+			await expect(fdsFragmentPage.creationMenuButton).not.toBeVisible();
+		});
+	});
 
-			await test.step(
-				'Check that the Creation Action button is not present',
-				async () => {
-					await expect(
-						fdsFragmentPage.creationMenuButton
-					).not.toBeVisible();
-				}
-			);
-		}
-	);
+	test('Show a simple button if only one Creation Action is defined', async ({
+		dataSetManagerApiHelpers,
+		fdsFragmentPage,
+		layout,
+		page,
+	}) => {
+		const actionLabel = 'Custom Creation Action';
 
-	test(
-		'Show a simple button if only one Creation Action is defined',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			const actionLabel = 'Custom Creation Action';
+		await test.step('Create Creation Action', async () => {
+			await dataSetManagerApiHelpers.createDataSetCreationAction({
+				dataSetERC,
+				label_i18n: {en_US: actionLabel},
+			});
+		});
 
-			await test.step('Create Creation Action', async () => {
-				await dataSetManagerApiHelpers.createDataSetCreationAction({
-					dataSetERC,
-					label_i18n: {en_US: actionLabel},
-				});
+		await test.step('Configure Data Set in the page', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step('Check that the Creation Action button is present', async () => {
+			await expect(
+				fdsFragmentPage.page
+					.getByRole('button', {
+						name: actionLabel,
+					})
+					.first()
+			).toBeVisible();
+		});
+
+		await test.step('Check that the Creation Action works', async () => {
+			await fdsFragmentPage.page
+				.getByRole('button', {
+					name: actionLabel,
+				})
+				.first()
+				.click();
+
+			await expect(page.getByText('Welcome to Liferay')).toBeVisible();
+		});
+	});
+
+	test('Show the Creation Actions menu if more than one Creation Action is defined', async ({
+		dataSetManagerApiHelpers,
+		fdsFragmentPage,
+		layout,
+	}) => {
+		const firstActionLabel = 'Custom Creation Action';
+		const secondActionLabel = 'Another Creation Action';
+
+		await test.step('Create Creation Actions', async () => {
+			await dataSetManagerApiHelpers.createDataSetCreationAction({
+				dataSetERC,
+				label_i18n: {en_US: firstActionLabel},
+				title_i18n: {en_US: 'Modal title'},
+				type: 'modal',
 			});
 
-			await test.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
-
-			await test.step(
-				'Check that the Creation Action button is present',
-				async () => {
-					await expect(
-						fdsFragmentPage.page
-							.getByRole('button', {
-								name: actionLabel,
-							})
-							.first()
-					).toBeVisible();
-				}
-			);
-
-			await test.step(
-				'Check that the Creation Action works',
-				async () => {
-					await fdsFragmentPage.page
-						.getByRole('button', {
-							name: actionLabel,
-						})
-						.first()
-						.click();
-
-					await expect(
-						page.getByText('Welcome to Liferay')
-					).toBeVisible();
-				}
-			);
-		}
-	);
-
-	test(
-		'Show the Creation Actions menu if more than one Creation Action is defined',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, page, layout}) => {
-			const firstActionLabel = 'Custom Creation Action';
-			const secondActionLabel = 'Another Creation Action';
-
-			await test.step('Create Creation Actions', async () => {
-				await dataSetManagerApiHelpers.createDataSetCreationAction({
-					dataSetERC,
-					label_i18n: {en_US: firstActionLabel},
-					title_i18n: {en_US: 'Modal title'},
-					type: 'modal',
-				});
-
-				await dataSetManagerApiHelpers.createDataSetCreationAction({
-					dataSetERC,
-					label_i18n: {en_US: secondActionLabel},
-				});
+			await dataSetManagerApiHelpers.createDataSetCreationAction({
+				dataSetERC,
+				label_i18n: {en_US: secondActionLabel},
 			});
+		});
 
-			await test.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
+		await test.step('Configure Data Set in the page', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
 
-			const actionDropdownMenuId = await test.step(
-				'Check that the Creation Action menu is present',
-				async () => {
-					await fdsFragmentPage.creationMenuButton
-						.first()
-						.isVisible();
+		const actionDropdownMenuId =
+			await test.step('Check that the Creation Action menu is present', async () => {
+				await fdsFragmentPage.creationMenuButton.first().isVisible();
 
-					const button =
-						fdsFragmentPage.creationMenuButton.first();
+				const button = fdsFragmentPage.creationMenuButton.first();
 
-					const dropdownId = await button.evaluate((node) =>
-						node.getAttribute('aria-controls')
-					);
+				const dropdownId = await button.evaluate((node) =>
+					node.getAttribute('aria-controls')
+				);
 
-					await button.click();
-
-					await fdsFragmentPage.page
-						.locator(`#${dropdownId}`)
-						.filter({has: fdsFragmentPage.page.getByRole('menu')})
-						.waitFor();
-
-					await expect(
-						fdsFragmentPage.page
-							.locator(`#${dropdownId}`)
-							.getByRole('menuitem')
-					).toHaveCount(2);
-
-					await expect(
-						fdsFragmentPage.page
-							.locator(`#${dropdownId}`)
-							.getByRole('menuitem', {
-								exact: true,
-								name: firstActionLabel,
-							})
-					).toBeVisible();
-
-					await expect(
-						fdsFragmentPage.page
-							.locator(`#${dropdownId}`)
-							.getByRole('menuitem', {
-								exact: true,
-								name: secondActionLabel,
-							})
-					).toBeVisible();
-
-					await fdsFragmentPage.page.keyboard.press('Escape');
-
-					return dropdownId;
-				}
-			);
-
-			await test.step('Creation Action of type "modal" opens a modal', async () => {
-				await fdsFragmentPage.creationMenuButton.first().click();
+				await button.click();
 
 				await fdsFragmentPage.page
-					.locator(`#${actionDropdownMenuId}`)
-					.getByRole('menuitem', {
-						exact: true,
-						name: firstActionLabel,
-					})
-					.click();
-
-				await fdsFragmentPage.page.getByRole('dialog').waitFor();
-
-				const dialog = await fdsFragmentPage.page.getByRole('dialog');
-
-				await expect(dialog).toBeInViewport();
-
-				await dialog.getByRole('button', {name: 'close'}).click();
-
-				await expect(dialog).not.toBeInViewport();
-			});
-
-			await test.step('Creation Action of type "link" is actionable', async () => {
-				await fdsFragmentPage.creationMenuButton.first().click();
-
-				await fdsFragmentPage.page
-					.locator(`#${actionDropdownMenuId}`)
-					.getByRole('menuitem', {
-						exact: true,
-						name: secondActionLabel,
-					})
-					.click();
+					.locator(`#${dropdownId}`)
+					.filter({has: fdsFragmentPage.page.getByRole('menu')})
+					.waitFor();
 
 				await expect(
-					fdsFragmentPage.page.getByText('Welcome to Liferay')
+					fdsFragmentPage.page
+						.locator(`#${dropdownId}`)
+						.getByRole('menuitem')
+				).toHaveCount(2);
+
+				await expect(
+					fdsFragmentPage.page
+						.locator(`#${dropdownId}`)
+						.getByRole('menuitem', {
+							exact: true,
+							name: firstActionLabel,
+						})
 				).toBeVisible();
+
+				await expect(
+					fdsFragmentPage.page
+						.locator(`#${dropdownId}`)
+						.getByRole('menuitem', {
+							exact: true,
+							name: secondActionLabel,
+						})
+				).toBeVisible();
+
+				await fdsFragmentPage.page.keyboard.press('Escape');
+
+				return dropdownId;
 			});
-		}
-	);
+
+		await test.step('Creation Action of type "modal" opens a modal', async () => {
+			await fdsFragmentPage.creationMenuButton.first().click();
+
+			await fdsFragmentPage.page
+				.locator(`#${actionDropdownMenuId}`)
+				.getByRole('menuitem', {
+					exact: true,
+					name: firstActionLabel,
+				})
+				.click();
+
+			await fdsFragmentPage.page.getByRole('dialog').waitFor();
+
+			const dialog = await fdsFragmentPage.page.getByRole('dialog');
+
+			await expect(dialog).toBeInViewport();
+
+			await dialog.getByRole('button', {name: 'close'}).click();
+
+			await expect(dialog).not.toBeInViewport();
+		});
+
+		await test.step('Creation Action of type "link" is actionable', async () => {
+			await fdsFragmentPage.creationMenuButton.first().click();
+
+			await fdsFragmentPage.page
+				.locator(`#${actionDropdownMenuId}`)
+				.getByRole('menuitem', {
+					exact: true,
+					name: secondActionLabel,
+				})
+				.click();
+
+			await expect(
+				fdsFragmentPage.page.getByText('Welcome to Liferay')
+			).toBeVisible();
+		});
+	});
 });

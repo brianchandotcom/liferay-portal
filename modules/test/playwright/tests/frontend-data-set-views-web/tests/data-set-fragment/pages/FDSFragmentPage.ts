@@ -32,7 +32,9 @@ export class FDSFragmentPage {
 		this.fdsActiveViewSelector = page.getByLabel('Show View Options');
 		this.fdsCardsWrapper = page.locator('.cards-container');
 		this.fdsListWrapper = page.locator('.list-sheet');
-		this.fdsPaginationWrapper = page.locator('.data-set-pagination-wrapper');
+		this.fdsPaginationWrapper = page.locator(
+			'.data-set-pagination-wrapper'
+		);
 		this.fdsPaginationResults = page.locator('.pagination-results');
 		this.fdsTableWrapper = page.locator('.dnd-table');
 		this.fragmentWidgetSearchInput = page.getByLabel(

@@ -9,9 +9,9 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
+import saveFromModal from '../../utils/saveFromModal';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
 import {sortingPageTest} from './fixtures/sortingPageTest';
-import saveFromModal from '../../utils/saveFromModal';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -56,7 +56,6 @@ test.describe('Sorting in Data Set Manager', () => {
 
 	test('In the New Sort modal, the Order Type input only appears when default is checked @LPD-19465', async ({
 		page,
-		sortingPage,
 	}) => {
 		await test.step('Order Type input only appears when default is checked', async () => {
 			await expect(page.getByLabel('Order Type')).not.toBeVisible();

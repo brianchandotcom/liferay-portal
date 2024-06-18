@@ -56,133 +56,106 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 });
 
-test.describe(
-	'Data Set Pagination configuration in the fragment',
-	() => {
-		const assertPaginationValues = async (fdsFragmentPage, itemsPerPage, deltas) => {
-			const paginatorWrapper =
-				await fdsFragmentPage.fdsPaginationWrapper.locator(
-					'.pagination-bar'
-				);
-
-			await paginatorWrapper.scrollIntoViewIfNeeded();
-
-			await expect(paginatorWrapper).toBeInViewport();
-
-			const itemsPerPageButton =
-				paginatorWrapper.getByLabel('Items Per Page');
-
-			await expect(itemsPerPageButton).toContainText(
-				itemsPerPage
+test.describe('Data Set Pagination configuration in the fragment', () => {
+	const assertPaginationValues = async (
+		fdsFragmentPage,
+		itemsPerPage,
+		deltas
+	) => {
+		const paginatorWrapper =
+			await fdsFragmentPage.fdsPaginationWrapper.locator(
+				'.pagination-bar'
 			);
 
-			await itemsPerPageButton.click();
+		await paginatorWrapper.scrollIntoViewIfNeeded();
 
-			// NOTE: strange behaviour. aria-controls is added after clicking the itemsPerPageButton
+		await expect(paginatorWrapper).toBeInViewport();
 
-			const dropdownId = await itemsPerPageButton.evaluate(
-				(node) => node.getAttribute('aria-controls')
-			);
+		const itemsPerPageButton =
+			paginatorWrapper.getByLabel('Items Per Page');
 
-			await fdsFragmentPage.page
-				.locator(`#${dropdownId}`)
-				.waitFor();
+		await expect(itemsPerPageButton).toContainText(itemsPerPage);
 
-			await expect(
-				fdsFragmentPage.page
-					.locator(`#${dropdownId}`)
-					.getByRole('option')
-			).toHaveCount(deltas.length);
+		await itemsPerPageButton.click();
 
-			const paginationOptions = await fdsFragmentPage.page
-				.locator(`#${dropdownId}`)
-				.getByRole('option')
-				.allInnerTexts();
+		// NOTE: strange behaviour. aria-controls is added after clicking the itemsPerPageButton
 
-			expect(paginationOptions).toEqual(deltas);
-
-		}
-
-		const configureDataSet = async (fdsFragmentPage, layout) => {
-			await test.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
-
-			await test.step(
-				'Frontend Data Set Table is in the page',
-				async () => {
-					expect(
-						await fdsFragmentPage.page
-							.locator('.dnd-thead > div')
-							.first()
-							.locator('.dnd-th')
-							.allInnerTexts()
-					).toEqual(['Label', 'Id', '']);
-				}
-			);
-		}
-
-		test(
-			'FDS uses default pagination configuration after creating a Data Set',
-			async ({
-				fdsFragmentPage,
-				layout,
-			}) => {
-				await configureDataSet(fdsFragmentPage, layout);
-
-				await test.step(
-					'Check that the FDS Table pagination uses default configuration values',
-					async () => {
-						await assertPaginationValues(fdsFragmentPage, '20 Items', [
-							'4 Items',
-							'8 Items',
-							'20 Items',
-							'40 Items',
-							'60 Items',
-						]);
-					}
-				);
-			}
+		const dropdownId = await itemsPerPageButton.evaluate((node) =>
+			node.getAttribute('aria-controls')
 		);
 
-		test(
-			'FDS uses custom pagination configuration after creating a Data Set',
-			async ({
-				dataSetManagerApiHelpers,
-				fdsFragmentPage,
+		await fdsFragmentPage.page.locator(`#${dropdownId}`).waitFor();
+
+		await expect(
+			fdsFragmentPage.page.locator(`#${dropdownId}`).getByRole('option')
+		).toHaveCount(deltas.length);
+
+		const paginationOptions = await fdsFragmentPage.page
+			.locator(`#${dropdownId}`)
+			.getByRole('option')
+			.allInnerTexts();
+
+		expect(paginationOptions).toEqual(deltas);
+	};
+
+	const configureDataSet = async (fdsFragmentPage, layout) => {
+		await test.step('Configure Data Set in the page', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
 				layout,
-			}) => {
-				await test.step(
-					'Update Data Set pagination configuration',
-					async () => {
-						await dataSetManagerApiHelpers.updateDataSet({
-							defaultItemsPerPage: 10,
-							erc: dataSetERC,
-							label: dataSetLabel,
-							listOfItemsPerPage: '5, 10, 15',
-						});
-					}
-				);
+			});
+		});
 
-				await configureDataSet(fdsFragmentPage, layout);
+		await test.step('Frontend Data Set Table is in the page', async () => {
+			expect(
+				await fdsFragmentPage.page
+					.locator('.dnd-thead > div')
+					.first()
+					.locator('.dnd-th')
+					.allInnerTexts()
+			).toEqual(['Label', 'Id', '']);
+		});
+	};
 
-				await test.step(
-					'Check that the FDS Table pagination uses custom configuration values',
-					async () => {
-						await assertPaginationValues(fdsFragmentPage, '10 Items', [
-							'5 Items',
-							'10 Items',
-							'15 Items',
-						]);
-					}
-				);
-			}
-		);
-	}
-);
+	test('FDS uses default pagination configuration after creating a Data Set', async ({
+		fdsFragmentPage,
+		layout,
+	}) => {
+		await configureDataSet(fdsFragmentPage, layout);
+
+		await test.step('Check that the FDS Table pagination uses default configuration values', async () => {
+			await assertPaginationValues(fdsFragmentPage, '20 Items', [
+				'4 Items',
+				'8 Items',
+				'20 Items',
+				'40 Items',
+				'60 Items',
+			]);
+		});
+	});
+
+	test('FDS uses custom pagination configuration after creating a Data Set', async ({
+		dataSetManagerApiHelpers,
+		fdsFragmentPage,
+		layout,
+	}) => {
+		await test.step('Update Data Set pagination configuration', async () => {
+			await dataSetManagerApiHelpers.updateDataSet({
+				defaultItemsPerPage: 10,
+				erc: dataSetERC,
+				label: dataSetLabel,
+				listOfItemsPerPage: '5, 10, 15',
+			});
+		});
+
+		await configureDataSet(fdsFragmentPage, layout);
+
+		await test.step('Check that the FDS Table pagination uses custom configuration values', async () => {
+			await assertPaginationValues(fdsFragmentPage, '10 Items', [
+				'5 Items',
+				'10 Items',
+				'15 Items',
+			]);
+		});
+	});
+});

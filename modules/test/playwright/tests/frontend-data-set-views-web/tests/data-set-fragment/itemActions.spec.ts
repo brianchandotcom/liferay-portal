@@ -48,40 +48,33 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 });
 
 test.describe('Empty Item Actions in Data Set fragment', () => {
-	test(
-		'Item Action button does not appear if there is no item action',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout}) => {
-			await test.step('Create table field', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
-					dataSetERC,
-					label_i18n: {en_US: 'Id'},
-					name: 'id',
-					type: 'string',
-				});
+	test('Item Action button does not appear if there is no item action', async ({
+		dataSetManagerApiHelpers,
+		fdsFragmentPage,
+		layout,
+	}) => {
+		await test.step('Create table field', async () => {
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC,
+				label_i18n: {en_US: 'Id'},
+				name: 'id',
+				type: 'string',
 			});
+		});
 
-			await test.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
+		await test.step('Configure Data Set in the page', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
 
-			await test.step(
-				'Check that the Item Action button is not present',
-				async () => {
-					await expect(
-						fdsFragmentPage.page
-							.getByLabel(LINK_ITEM_ACTION_NAME)
-							.first()
-					).not.toBeVisible();
-				}
-			);
-		}
-	);
+		await test.step('Check that the Item Action button is not present', async () => {
+			await expect(
+				fdsFragmentPage.page.getByLabel(LINK_ITEM_ACTION_NAME).first()
+			).not.toBeVisible();
+		});
+	});
 });
 
 test.describe('Item Actions in Data Set fragment', () => {
@@ -102,475 +95,438 @@ test.describe('Item Actions in Data Set fragment', () => {
 		});
 	});
 
-	test(
-		'Link Item Action (single action) is shown in the fragment',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			await test.step('Create Item Action', async () => {
-				await dataSetManagerApiHelpers.createDataSetItemAction({
-					confirmationMessage_i18n: {
-						en_US: LINK_ITEM_ACTION_CONFIRMATION_MESSAGE,
-					},
-					dataSetERC,
-					label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
-					type: 'link',
+	test('Link Item Action (single action) is shown in the fragment', async ({
+		dataSetManagerApiHelpers,
+		fdsFragmentPage,
+		layout,
+		page,
+	}) => {
+		await test.step('Create Item Action', async () => {
+			await dataSetManagerApiHelpers.createDataSetItemAction({
+				confirmationMessage_i18n: {
+					en_US: LINK_ITEM_ACTION_CONFIRMATION_MESSAGE,
+				},
+				dataSetERC,
+				label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
+				type: 'link',
+			});
+		});
+
+		await test.step('Configure Data Set in the page', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step('Check that the Item Action button is present', async () => {
+			await expect(
+				fdsFragmentPage.page.getByLabel(LINK_ITEM_ACTION_NAME).first()
+			).toBeVisible();
+		});
+
+		await test.step('Check that the Item Action works', async () => {
+			const dialogPromise = page
+				.waitForEvent('dialog')
+				.then(async (dialog) => {
+					await dialog.accept();
+
+					return dialog.message();
 				});
+
+			await fdsFragmentPage.page
+				.getByLabel(LINK_ITEM_ACTION_NAME)
+				.first()
+				.click();
+
+			const confirmationMessage = await dialogPromise;
+
+			expect(confirmationMessage).toBe(
+				LINK_ITEM_ACTION_CONFIRMATION_MESSAGE
+			);
+
+			await expect(page.getByText('Welcome to Liferay')).toBeVisible();
+		});
+	});
+
+	test('Link, Modal and Side Panel Item Actions (multiple actions) are shown in fragment', async ({
+		dataSetManagerApiHelpers,
+		fdsFragmentPage,
+		layout,
+		page,
+	}) => {
+		const MODAL_ITEM_ACTION_NAME = 'Modal item action';
+		const MODAL_ITEM_ACTION_TITLE = 'Modal title';
+		const SIDE_PANEL_ITEM_ACTION_NAME = 'SidePanel item action';
+		const SIDE_PANEL_ITEM_ACTION_URL = liferayConfig.environment.baseUrl;
+
+		await test.step('Create Item Actions', async () => {
+			await dataSetManagerApiHelpers.createDataSetItemAction({
+				dataSetERC,
+				label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
+				type: 'link',
 			});
 
-			await test.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
-
-			await test.step(
-				'Check that the Item Action button is present',
-				async () => {
-					await expect(
-						fdsFragmentPage.page
-							.getByLabel(LINK_ITEM_ACTION_NAME)
-							.first()
-					).toBeVisible();
-				}
-			);
-
-			await test.step(
-				'Check that the Item Action works',
-				async () => {
-					const dialogPromise = page
-						.waitForEvent('dialog')
-						.then(async (dialog) => {
-							await dialog.accept();
-
-							return dialog.message();
-						});
-
-					await fdsFragmentPage.page
-						.getByLabel(LINK_ITEM_ACTION_NAME)
-						.first()
-						.click();
-
-					const confirmationMessage = await dialogPromise;
-
-					expect(confirmationMessage).toBe(
-						LINK_ITEM_ACTION_CONFIRMATION_MESSAGE
-					);
-
-					await expect(
-						page.getByText('Welcome to Liferay')
-					).toBeVisible();
-				}
-			);
-		}
-	);
-
-	test(
-		'Link, Modal and Side Panel Item Actions (multiple actions) are shown in fragment',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			const MODAL_ITEM_ACTION_NAME = 'Modal item action';
-			const MODAL_ITEM_ACTION_TITLE = 'Modal title';
-			const SIDE_PANEL_ITEM_ACTION_NAME = 'SidePanel item action';
-			const SIDE_PANEL_ITEM_ACTION_URL =
-				liferayConfig.environment.baseUrl;
-
-			await test.step('Create Item Actions', async () => {
-				await dataSetManagerApiHelpers.createDataSetItemAction({
-					dataSetERC,
-					label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
-					type: 'link',
-				});
-
-				await dataSetManagerApiHelpers.createDataSetItemAction({
-					dataSetERC,
-					label_i18n: {en_US: MODAL_ITEM_ACTION_NAME},
-					modalSize: 'sm',
-					title_i18n: {en_US: MODAL_ITEM_ACTION_TITLE},
-					type: 'modal',
-					url: liferayConfig.environment.baseUrl,
-				});
-
-				await dataSetManagerApiHelpers.createDataSetItemAction({
-					dataSetERC,
-					label_i18n: {en_US: SIDE_PANEL_ITEM_ACTION_NAME},
-					modalSize: 'sm',
-					title_i18n: {en_US: SIDE_PANEL_ITEM_ACTION_NAME},
-					type: 'sidePanel',
-					url: liferayConfig.environment.baseUrl,
-				});
+			await dataSetManagerApiHelpers.createDataSetItemAction({
+				dataSetERC,
+				label_i18n: {en_US: MODAL_ITEM_ACTION_NAME},
+				modalSize: 'sm',
+				title_i18n: {en_US: MODAL_ITEM_ACTION_TITLE},
+				type: 'modal',
+				url: liferayConfig.environment.baseUrl,
 			});
 
-			await test.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
+			await dataSetManagerApiHelpers.createDataSetItemAction({
+				dataSetERC,
+				label_i18n: {en_US: SIDE_PANEL_ITEM_ACTION_NAME},
+				modalSize: 'sm',
+				title_i18n: {en_US: SIDE_PANEL_ITEM_ACTION_NAME},
+				type: 'sidePanel',
+				url: liferayConfig.environment.baseUrl,
+			});
+		});
 
-			const datasetRow = await test.step(
-				'Check that the Item Actions dropdown is present in table row',
-				async () => {
-					const tableRow = await page
-						.locator('.dnd-td.item-actions')
-						.first();
+		await test.step('Configure Data Set in the page', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
 
-					await expect(
-						tableRow.getByRole('button', {
-							exact: true,
-							name: 'Actions',
-						})
-					).toBeVisible;
+		const datasetRow =
+			await test.step('Check that the Item Actions dropdown is present in table row', async () => {
+				const tableRow = await page
+					.locator('.dnd-td.item-actions')
+					.first();
 
-					const button = await tableRow.getByRole('button', {
+				await expect(
+					tableRow.getByRole('button', {
 						exact: true,
 						name: 'Actions',
-					});
-					const dropdownId = await button.evaluate((node) =>
-						node.getAttribute('aria-controls')
-					);
+					})
+				).toBeVisible;
 
-					await button.click();
-
-					await page
-						.locator(`#${dropdownId}`)
-						.filter({has: page.getByRole('menu')})
-						.waitFor();
-
-					await expect(
-						page.locator(`#${dropdownId}`).getByRole('menuitem')
-					).toHaveCount(3);
-
-					await page.keyboard.press('Escape');
-
-					return tableRow;
-				}
-			);
-
-			await test.step(
-				'Click the modal item action opens a modal window',
-				async () => {
-					const button = await datasetRow.getByRole('button', {
-						exact: true,
-						name: 'Actions',
-					});
-
-					const dropdownId = await button.evaluate((node) =>
-						node.getAttribute('aria-controls')
-					);
-
-					await button.click();
-
-					await page
-						.locator(`#${dropdownId}`)
-						.filter({has: page.getByRole('menu')})
-						.waitFor();
-
-					await page
-						.locator(`#${dropdownId}`)
-						.getByRole('menuitem', {
-							exact: true,
-							name: MODAL_ITEM_ACTION_NAME,
-						})
-						.click();
-
-					await page.getByRole('dialog').waitFor();
-
-					const dialog = page.getByRole('dialog');
-
-					await expect(dialog.getByRole('heading')).toHaveText(
-						MODAL_ITEM_ACTION_TITLE
-					);
-
-					await dialog.getByRole('button', {name: 'close'}).click();
-
-					await expect(dialog).not.toBeInViewport();
-				}
-			);
-
-			await test.step(
-				'Click the side panel item action opens a side panel',
-				async () => {
-					const button = await datasetRow.getByRole('button', {
-						exact: true,
-						name: 'Actions',
-					});
-
-					const dropdownId = await button.evaluate((node) =>
-						node.getAttribute('aria-controls')
-					);
-
-					await button.click();
-
-					await page
-						.locator(`#${dropdownId}`)
-						.filter({has: page.getByRole('menu')})
-						.waitFor();
-
-					await page
-						.locator(`#${dropdownId}`)
-						.getByRole('menuitem', {
-							exact: true,
-							name: SIDE_PANEL_ITEM_ACTION_NAME,
-						})
-						.click();
-
-					await page.getByRole('tabpanel').waitFor();
-
-					const sidePanel = await page.getByRole('tabpanel');
-
-					const iframeElement = await sidePanel
-						.locator('iframe')
-						.elementHandle();
-
-					const frame = await iframeElement.contentFrame();
-
-					await frame.waitForURL(
-						new RegExp(`.*${SIDE_PANEL_ITEM_ACTION_URL}`, 'i')
-					);
-
-					await page.keyboard.press('Escape');
-
-					await expect(sidePanel).not.toBeInViewport();
-				}
-			);
-		}
-	);
-
-	test(
-		'Async and Headless Item Actions (multiple actions) are shown in fragment',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			const ASYNC_ITEM_ACTION_NAME = 'Async item action';
-			const ASYNC_ITEM_ACTION_METHOD = 'DELETE';
-			const ASYNC_ITEM_ACTION_URL =
-				'/o/data-set-manager/table-sections/{id}';
-			const HEADLESS_ITEM_ACTION_NAME = 'Headless item action';
-			const HEADLESS_ITEM_ACTION_PERMISSION_KEY = 'delete';
-			const NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME =
-				'Useless Headless Item Action';
-
-			await test.step('Create Item Actions', async () => {
-				await dataSetManagerApiHelpers.createDataSetItemAction({
-					dataSetERC,
-					label_i18n: {en_US: HEADLESS_ITEM_ACTION_NAME},
-					permissionKey: HEADLESS_ITEM_ACTION_PERMISSION_KEY,
-					type: 'headless',
+				const button = await tableRow.getByRole('button', {
+					exact: true,
+					name: 'Actions',
 				});
+				const dropdownId = await button.evaluate((node) =>
+					node.getAttribute('aria-controls')
+				);
 
-				await dataSetManagerApiHelpers.createDataSetItemAction({
-					dataSetERC,
-					label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
-					method: ASYNC_ITEM_ACTION_METHOD,
-					type: 'async',
-					url: ASYNC_ITEM_ACTION_URL,
-				});
+				await button.click();
 
-				await dataSetManagerApiHelpers.createDataSetItemAction({
-					dataSetERC,
-					label_i18n: {
-						en_US: NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME,
-					},
-					permissionKey: 'remove',
-					type: 'headless',
-				});
+				await page
+					.locator(`#${dropdownId}`)
+					.filter({has: page.getByRole('menu')})
+					.waitFor();
+
+				await expect(
+					page.locator(`#${dropdownId}`).getByRole('menuitem')
+				).toHaveCount(3);
+
+				await page.keyboard.press('Escape');
+
+				return tableRow;
 			});
 
-			await test.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
-
-			const datasetRow = await test.step(
-				'Checkt that the Item Actions dropdown (only 2 items) is present in table row',
-				async () => {
-					const tableRow = await page
-						.locator('.dnd-td.item-actions')
-						.first();
-
-					await expect(
-						tableRow.getByRole('button', {
-							exact: true,
-							name: 'Actions',
-						})
-					).toBeVisible;
-
-					const button = await tableRow.getByRole('button', {
-						exact: true,
-						name: 'Actions',
-					});
-					const dropdownId = await button.evaluate((node) =>
-						node.getAttribute('aria-controls')
-					);
-
-					await button.click();
-
-					await page
-						.locator(`#${dropdownId}`)
-						.filter({has: page.getByRole('menu')})
-						.waitFor();
-
-					await expect(
-						page.locator(`#${dropdownId}`).getByRole('menuitem')
-					).toHaveCount(2);
-
-					await expect(
-						page.locator(`#${dropdownId}`).getByRole('menuitem', {
-							name: NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME,
-						})
-					).not.toBeVisible();
-
-					await page.keyboard.press('Escape');
-
-					return tableRow;
-				}
-			);
-
-			await test.step(
-				'Click in the headless item action executes the action',
-				async () => {
-					const button = await datasetRow.getByRole('button', {
-						exact: true,
-						name: 'Actions',
-					});
-
-					const dropdownId = await button.evaluate((node) =>
-						node.getAttribute('aria-controls')
-					);
-
-					await button.click();
-
-					await page
-						.locator(`#${dropdownId}`)
-						.filter({has: page.getByRole('menu')})
-						.waitFor();
-
-					await page
-						.locator(`#${dropdownId}`)
-						.getByRole('menuitem', {
-							exact: true,
-							name: HEADLESS_ITEM_ACTION_NAME,
-						})
-						.click();
-
-					await page.getByRole('alert').waitFor();
-
-					const alert = await page.getByRole('alert').first();
-
-					await expect(alert).toHaveText(
-						'Success:Your request completed successfully.'
-					);
-				}
-			);
-
-			await test.step(
-				'Click in the async item action executes the action',
-				async () => {
-					const nextTableRow = await page
-						.locator('.dnd-td.item-actions')
-						.first();
-
-					const button = await nextTableRow.getByRole('button', {
-						exact: true,
-						name: 'Actions',
-					});
-
-					const dropdownId = await button.evaluate((node) =>
-						node.getAttribute('aria-controls')
-					);
-
-					await button.click();
-
-					await page
-						.locator(`#${dropdownId}`)
-						.filter({has: page.getByRole('menu')})
-						.waitFor();
-
-					await page
-						.locator(`#${dropdownId}`)
-						.getByRole('menuitem', {
-							exact: true,
-							name: ASYNC_ITEM_ACTION_NAME,
-						})
-						.click();
-
-					await page.getByRole('alert').waitFor();
-
-					const alert = await page.getByRole('alert').first();
-
-					await expect(alert).toHaveText(
-						'Success:Your request completed successfully.'
-					);
-				}
-			);
-		}
-	);
-
-	test(
-		'Async Item Action shows an error toast in the fragment when a failure occurs',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			const ASYNC_ITEM_ACTION_NAME = 'Async item action';
-			const ASYNC_ITEM_ACTION_METHOD = 'DELETE';
-			const ASYNC_ITEM_ACTION_WRONG_URL =
-				'/o/data-set-manager/table-sections/{foo}';
-
-			await test.step('Create Item Actions', async () => {
-				await dataSetManagerApiHelpers.createDataSetItemAction({
-					dataSetERC,
-					label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
-					method: ASYNC_ITEM_ACTION_METHOD,
-					type: 'async',
-					url: ASYNC_ITEM_ACTION_WRONG_URL,
-				});
+		await test.step('Click the modal item action opens a modal window', async () => {
+			const button = await datasetRow.getByRole('button', {
+				exact: true,
+				name: 'Actions',
 			});
 
-			await test.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
+			const dropdownId = await button.evaluate((node) =>
+				node.getAttribute('aria-controls')
 			);
 
-			const datasetRow = await test.step(
-				'Checkt that the Item Actions is present in table row',
-				async () => {
-					const tableRow = await page
-						.locator('.dnd-td.item-actions')
-						.first();
+			await button.click();
 
-					await expect(tableRow.getByRole('button')).toBeVisible();
+			await page
+				.locator(`#${dropdownId}`)
+				.filter({has: page.getByRole('menu')})
+				.waitFor();
 
-					return tableRow;
-				}
+			await page
+				.locator(`#${dropdownId}`)
+				.getByRole('menuitem', {
+					exact: true,
+					name: MODAL_ITEM_ACTION_NAME,
+				})
+				.click();
+
+			await page.getByRole('dialog').waitFor();
+
+			const dialog = page.getByRole('dialog');
+
+			await expect(dialog.getByRole('heading')).toHaveText(
+				MODAL_ITEM_ACTION_TITLE
 			);
 
-			await test.step(
-				'Click in the async Item Action shows an error toast.',
-				async () => {
-					await datasetRow
-						.getByRole('button', {name: ASYNC_ITEM_ACTION_NAME})
-						.click();
+			await dialog.getByRole('button', {name: 'close'}).click();
 
-					await page.getByRole('alert').waitFor();
+			await expect(dialog).not.toBeInViewport();
+		});
 
-					const alert = await page.getByRole('alert').first();
+		await test.step('Click the side panel item action opens a side panel', async () => {
+			const button = await datasetRow.getByRole('button', {
+				exact: true,
+				name: 'Actions',
+			});
 
-					await expect(alert).toHaveText(
-						'Error:An unexpected error occurred.'
-					);
-				}
+			const dropdownId = await button.evaluate((node) =>
+				node.getAttribute('aria-controls')
 			);
-		}
-	);
+
+			await button.click();
+
+			await page
+				.locator(`#${dropdownId}`)
+				.filter({has: page.getByRole('menu')})
+				.waitFor();
+
+			await page
+				.locator(`#${dropdownId}`)
+				.getByRole('menuitem', {
+					exact: true,
+					name: SIDE_PANEL_ITEM_ACTION_NAME,
+				})
+				.click();
+
+			await page.getByRole('tabpanel').waitFor();
+
+			const sidePanel = await page.getByRole('tabpanel');
+
+			const iframeElement = await sidePanel
+				.locator('iframe')
+				.elementHandle();
+
+			const frame = await iframeElement.contentFrame();
+
+			await frame.waitForURL(
+				new RegExp(`.*${SIDE_PANEL_ITEM_ACTION_URL}`, 'i')
+			);
+
+			await page.keyboard.press('Escape');
+
+			await expect(sidePanel).not.toBeInViewport();
+		});
+	});
+
+	test('Async and Headless Item Actions (multiple actions) are shown in fragment', async ({
+		dataSetManagerApiHelpers,
+		fdsFragmentPage,
+		layout,
+		page,
+	}) => {
+		const ASYNC_ITEM_ACTION_NAME = 'Async item action';
+		const ASYNC_ITEM_ACTION_METHOD = 'DELETE';
+		const ASYNC_ITEM_ACTION_URL = '/o/data-set-manager/table-sections/{id}';
+		const HEADLESS_ITEM_ACTION_NAME = 'Headless item action';
+		const HEADLESS_ITEM_ACTION_PERMISSION_KEY = 'delete';
+		const NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME =
+			'Useless Headless Item Action';
+
+		await test.step('Create Item Actions', async () => {
+			await dataSetManagerApiHelpers.createDataSetItemAction({
+				dataSetERC,
+				label_i18n: {en_US: HEADLESS_ITEM_ACTION_NAME},
+				permissionKey: HEADLESS_ITEM_ACTION_PERMISSION_KEY,
+				type: 'headless',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetItemAction({
+				dataSetERC,
+				label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
+				method: ASYNC_ITEM_ACTION_METHOD,
+				type: 'async',
+				url: ASYNC_ITEM_ACTION_URL,
+			});
+
+			await dataSetManagerApiHelpers.createDataSetItemAction({
+				dataSetERC,
+				label_i18n: {
+					en_US: NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME,
+				},
+				permissionKey: 'remove',
+				type: 'headless',
+			});
+		});
+
+		await test.step('Configure Data Set in the page', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		const datasetRow =
+			await test.step('Checkt that the Item Actions dropdown (only 2 items) is present in table row', async () => {
+				const tableRow = await page
+					.locator('.dnd-td.item-actions')
+					.first();
+
+				await expect(
+					tableRow.getByRole('button', {
+						exact: true,
+						name: 'Actions',
+					})
+				).toBeVisible;
+
+				const button = await tableRow.getByRole('button', {
+					exact: true,
+					name: 'Actions',
+				});
+				const dropdownId = await button.evaluate((node) =>
+					node.getAttribute('aria-controls')
+				);
+
+				await button.click();
+
+				await page
+					.locator(`#${dropdownId}`)
+					.filter({has: page.getByRole('menu')})
+					.waitFor();
+
+				await expect(
+					page.locator(`#${dropdownId}`).getByRole('menuitem')
+				).toHaveCount(2);
+
+				await expect(
+					page.locator(`#${dropdownId}`).getByRole('menuitem', {
+						name: NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME,
+					})
+				).not.toBeVisible();
+
+				await page.keyboard.press('Escape');
+
+				return tableRow;
+			});
+
+		await test.step('Click in the headless item action executes the action', async () => {
+			const button = await datasetRow.getByRole('button', {
+				exact: true,
+				name: 'Actions',
+			});
+
+			const dropdownId = await button.evaluate((node) =>
+				node.getAttribute('aria-controls')
+			);
+
+			await button.click();
+
+			await page
+				.locator(`#${dropdownId}`)
+				.filter({has: page.getByRole('menu')})
+				.waitFor();
+
+			await page
+				.locator(`#${dropdownId}`)
+				.getByRole('menuitem', {
+					exact: true,
+					name: HEADLESS_ITEM_ACTION_NAME,
+				})
+				.click();
+
+			await page.getByRole('alert').waitFor();
+
+			const alert = await page.getByRole('alert').first();
+
+			await expect(alert).toHaveText(
+				'Success:Your request completed successfully.'
+			);
+		});
+
+		await test.step('Click in the async item action executes the action', async () => {
+			const nextTableRow = await page
+				.locator('.dnd-td.item-actions')
+				.first();
+
+			const button = await nextTableRow.getByRole('button', {
+				exact: true,
+				name: 'Actions',
+			});
+
+			const dropdownId = await button.evaluate((node) =>
+				node.getAttribute('aria-controls')
+			);
+
+			await button.click();
+
+			await page
+				.locator(`#${dropdownId}`)
+				.filter({has: page.getByRole('menu')})
+				.waitFor();
+
+			await page
+				.locator(`#${dropdownId}`)
+				.getByRole('menuitem', {
+					exact: true,
+					name: ASYNC_ITEM_ACTION_NAME,
+				})
+				.click();
+
+			await page.getByRole('alert').waitFor();
+
+			const alert = await page.getByRole('alert').first();
+
+			await expect(alert).toHaveText(
+				'Success:Your request completed successfully.'
+			);
+		});
+	});
+
+	test('Async Item Action shows an error toast in the fragment when a failure occurs', async ({
+		dataSetManagerApiHelpers,
+		fdsFragmentPage,
+		layout,
+		page,
+	}) => {
+		const ASYNC_ITEM_ACTION_NAME = 'Async item action';
+		const ASYNC_ITEM_ACTION_METHOD = 'DELETE';
+		const ASYNC_ITEM_ACTION_WRONG_URL =
+			'/o/data-set-manager/table-sections/{foo}';
+
+		await test.step('Create Item Actions', async () => {
+			await dataSetManagerApiHelpers.createDataSetItemAction({
+				dataSetERC,
+				label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
+				method: ASYNC_ITEM_ACTION_METHOD,
+				type: 'async',
+				url: ASYNC_ITEM_ACTION_WRONG_URL,
+			});
+		});
+
+		await test.step('Configure Data Set in the page', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		const datasetRow =
+			await test.step('Checkt that the Item Actions is present in table row', async () => {
+				const tableRow = await page
+					.locator('.dnd-td.item-actions')
+					.first();
+
+				await expect(tableRow.getByRole('button')).toBeVisible();
+
+				return tableRow;
+			});
+
+		await test.step('Click in the async Item Action shows an error toast.', async () => {
+			await datasetRow
+				.getByRole('button', {name: ASYNC_ITEM_ACTION_NAME})
+				.click();
+
+			await page.getByRole('alert').waitFor();
+
+			const alert = await page.getByRole('alert').first();
+
+			await expect(alert).toHaveText(
+				'Error:An unexpected error occurred.'
+			);
+		});
+	});
 });

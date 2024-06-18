@@ -9,9 +9,9 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
+import {picklistApiHelpersTest} from '../../fixtures/picklistApiHelpersTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
-import {picklistApiHelpersTest} from '../../fixtures/picklistApiHelpersTest';
 
 const SELECTION_PICKLIST_FILTER_NAME = 'Selection Picklist filter';
 const SELECTION_API_HEADLESS_FILTER_NAME = 'Selection API Headless filter';
@@ -34,32 +34,34 @@ let dataSetERC: string;
 let dataSetLabel: string;
 let picklistName: string;
 
-test.beforeEach(async ({dataSetManagerApiHelpers, filtersPage, picklistApiHelpers}) => {
-	dataSetERC = getRandomString();
-	dataSetLabel = getRandomString();
-	picklistName = getRandomString();
+test.beforeEach(
+	async ({dataSetManagerApiHelpers, filtersPage, picklistApiHelpers}) => {
+		dataSetERC = getRandomString();
+		dataSetLabel = getRandomString();
+		picklistName = getRandomString();
 
-	await dataSetManagerApiHelpers.createDataSet({
-		erc: dataSetERC,
-		label: dataSetLabel,
-	});
-
-	await picklistApiHelpers.createPicklist({
-		name: picklistName,
-	});
-
-	await picklistApiHelpers.editPicklist({
-		key: PICKLIST_VALUE_KEY,
-		name: picklistName,
-		value: PICKLIST_VALUE_NAME,
-	});
-
-	await test.step('Navigate to the Filters tab', async () => {
-		await filtersPage.goto({
-			dataSetLabel,
+		await dataSetManagerApiHelpers.createDataSet({
+			erc: dataSetERC,
+			label: dataSetLabel,
 		});
-	});
-});
+
+		await picklistApiHelpers.createPicklist({
+			name: picklistName,
+		});
+
+		await picklistApiHelpers.editPicklist({
+			key: PICKLIST_VALUE_KEY,
+			name: picklistName,
+			value: PICKLIST_VALUE_NAME,
+		});
+
+		await test.step('Navigate to the Filters tab', async () => {
+			await filtersPage.goto({
+				dataSetLabel,
+			});
+		});
+	}
+);
 
 test.afterEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});

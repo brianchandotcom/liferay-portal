@@ -42,215 +42,184 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 });
 
 test.describe('Visualization Modes in Data Set fragment', () => {
-	test(
-		'Show mapped fields in the fragment',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			const SAMPLE_SCALAR_FIELD = 'id';
-			const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
-			const SAMPLE_OBJECT_CHILD_FIELD = 'label';
+	test('Show mapped fields in the fragment', async ({
+		dataSetManagerApiHelpers,
+		fdsFragmentPage,
+		layout,
+		page,
+	}) => {
+		const SAMPLE_SCALAR_FIELD = 'id';
+		const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
+		const SAMPLE_OBJECT_CHILD_FIELD = 'label';
 
-			await test.step('Create table fields', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
-					dataSetERC,
-					label_i18n: {en_US: 'Label'},
-					name: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
-					type: 'string',
-				});
-				await dataSetManagerApiHelpers.createDataSetField({
-					dataSetERC,
-					label_i18n: {en_US: 'Id'},
-					name: `${SAMPLE_SCALAR_FIELD}`,
-					type: 'string',
-				});
+		await test.step('Create table fields', async () => {
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC,
+				label_i18n: {en_US: 'Label'},
+				name: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
+				type: 'string',
+			});
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC,
+				label_i18n: {en_US: 'Id'},
+				name: `${SAMPLE_SCALAR_FIELD}`,
+				type: 'string',
+			});
+		});
+
+		await test.step('Create cards section fields', async () => {
+			await dataSetManagerApiHelpers.createDataSetCardsSection({
+				dataSetERC,
+				fieldName: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
+				name: 'title',
+			});
+			await dataSetManagerApiHelpers.createDataSetCardsSection({
+				dataSetERC,
+				fieldName: `${SAMPLE_SCALAR_FIELD}`,
+				name: 'description',
+			});
+		});
+
+		await test.step('Create list section fields', async () => {
+			await dataSetManagerApiHelpers.createDataSetListSection({
+				dataSetERC,
+				fieldName: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
+				name: 'title',
+			});
+			await dataSetManagerApiHelpers.createDataSetListSection({
+				dataSetERC,
+				fieldName: `${SAMPLE_SCALAR_FIELD}`,
+				name: 'description',
+			});
+		});
+
+		await test.step('Configure Data Set in the page', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step('Check Data Set Cards are present', async () => {
+			await fdsFragmentPage.fdsCardsWrapper.waitFor({
+				state: 'visible',
 			});
 
-			await test.step('Create cards section fields', async () => {
-				await dataSetManagerApiHelpers.createDataSetCardsSection({
-					dataSetERC,
-					fieldName: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
-					name: 'title',
-				});
-				await dataSetManagerApiHelpers.createDataSetCardsSection({
-					dataSetERC,
-					fieldName: `${SAMPLE_SCALAR_FIELD}`,
-					name: 'description',
-				});
+			await expect(fdsFragmentPage.fdsCardsWrapper).toBeInViewport();
+
+			await fdsFragmentPage.page.locator('.card').first().waitFor();
+
+			const firstCard = fdsFragmentPage.page.locator('.card').first();
+
+			await expect(firstCard.locator('.card-title')).toContainText(
+				dataSetLabel
+			);
+
+			await expect(firstCard.locator('.card-subtitle')).not.toBeEmpty();
+		});
+
+		await test.step('Change visualization mode to List', async () => {
+			await fdsFragmentPage.changeVisualizationMode('List');
+		});
+
+		await test.step('Check Data Set List is present', async () => {
+			await fdsFragmentPage.fdsListWrapper.waitFor({
+				state: 'visible',
 			});
 
-			await test.step('Create list section fields', async () => {
-				await dataSetManagerApiHelpers.createDataSetListSection({
-					dataSetERC,
-					fieldName: `${SAMPLE_OBJECT_FIELD}.${SAMPLE_OBJECT_CHILD_FIELD}`,
-					name: 'title',
-				});
-				await dataSetManagerApiHelpers.createDataSetListSection({
-					dataSetERC,
-					fieldName: `${SAMPLE_SCALAR_FIELD}`,
-					name: 'description',
-				});
+			await expect(fdsFragmentPage.fdsListWrapper).toBeInViewport();
+
+			await fdsFragmentPage.page
+				.locator('.list-group-item')
+				.first()
+				.waitFor();
+
+			const firstListItem = fdsFragmentPage.page
+				.locator('.list-group-item')
+				.first();
+
+			await expect(
+				firstListItem.locator('.list-group-title')
+			).toContainText(dataSetLabel);
+
+			await expect(
+				firstListItem.locator('.list-group-text')
+			).not.toBeEmpty();
+		});
+
+		await test.step('Change visualization mode to Table', async () => {
+			await fdsFragmentPage.changeVisualizationMode('Table');
+		});
+
+		await test.step('Data Set Table is in the page', async () => {
+			await fdsFragmentPage.fdsTableWrapper.waitFor({
+				state: 'visible',
 			});
 
-			await test.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
+			await expect(
+				await fdsFragmentPage.fdsTableWrapper
+			).toBeInViewport();
 
-			await test.step(
-				'Check Data Set Cards are present',
-				async () => {
-					await fdsFragmentPage.fdsCardsWrapper.waitFor({
-						state: 'visible',
-					});
+			expect(
+				await page
+					.locator('.dnd-thead > div')
+					.first()
+					.locator('.dnd-th')
+					.allInnerTexts()
+			).toEqual(['Label', 'Id', '']);
+		});
+	});
 
-					await expect(
-						fdsFragmentPage.fdsCardsWrapper
-					).toBeInViewport();
+	test('Show mapped scalar array field in the fragment @LPD-11769', async ({
+		dataSetManagerApiHelpers,
+		fdsFragmentPage,
+		layout,
+		page,
+	}) => {
+		const SAMPLE_SCALAR_ARRAY_FIELD = 'keywords';
+		const SAMPLE_SCALAR_ARRAY_CONTENT = ['one', 'two', 'three'];
 
-					await fdsFragmentPage.page
-						.locator('.card')
-						.first()
-						.waitFor();
+		await test.step('Create table fields', async () => {
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC,
+				extraBodyParams: {
+					keywords: SAMPLE_SCALAR_ARRAY_CONTENT,
+				},
+				label_i18n: {en_US: SAMPLE_SCALAR_ARRAY_FIELD},
+				name: SAMPLE_SCALAR_ARRAY_FIELD,
+				type: 'array',
+			});
+		});
 
-					const firstCard = fdsFragmentPage.page
-						.locator('.card')
-						.first();
+		await test.step('Configure Data Set in the page', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
 
-					await expect(firstCard.locator('.card-title')).toContainText(
-						dataSetLabel
-					);
-
-					await expect(firstCard.locator('.card-subtitle')).not.toBeEmpty();
-				}
-			);
-
-			await test.step(
-				'Change visualization mode to List',
-				async () => {
-					await fdsFragmentPage.changeVisualizationMode('List');
-				}
-			);
-
-			await test.step(
-				'Check Data Set List is present',
-				async () => {
-					await fdsFragmentPage.fdsListWrapper.waitFor({
-						state: 'visible',
-					});
-
-					await expect(
-						fdsFragmentPage.fdsListWrapper
-					).toBeInViewport();
-
-					await fdsFragmentPage.page
-						.locator('.list-group-item')
-						.first()
-						.waitFor();
-
-					const firstListItem = fdsFragmentPage.page
-						.locator('.list-group-item')
-						.first();
-
-					await expect(
-						firstListItem.locator('.list-group-title')
-					).toContainText(dataSetLabel);
-
-					await expect(
-						firstListItem.locator('.list-group-text')
-					).not.toBeEmpty();
-				}
-			);
-
-			await test.step(
-				'Change visualization mode to Table',
-				async () => {
-					await fdsFragmentPage.changeVisualizationMode('Table');
-				}
-			);
-
-			await test.step(
-				'Data Set Table is in the page',
-				async () => {
-					await fdsFragmentPage.fdsTableWrapper.waitFor({
-						state: 'visible',
-					});
-
-					await expect(
-						await fdsFragmentPage.fdsTableWrapper
-					).toBeInViewport();
-
-					expect(
-						await page
-							.locator('.dnd-thead > div')
-							.first()
-							.locator('.dnd-th')
-							.allInnerTexts()
-					).toEqual(['Label', 'Id', '']);
-				}
-			);
-		}
-	);
-
-	test(
-		'Show mapped scalar array field in the fragment @LPD-11769',
-		async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
-			const SAMPLE_SCALAR_ARRAY_FIELD = 'keywords';
-			const SAMPLE_SCALAR_ARRAY_CONTENT = ['one', 'two', 'three'];
-
-			await test.step('Create table fields', async () => {
-				await dataSetManagerApiHelpers.createDataSetField({
-					dataSetERC,
-					extraBodyParams: {
-						keywords: SAMPLE_SCALAR_ARRAY_CONTENT,
-					},
-					label_i18n: {en_US: SAMPLE_SCALAR_ARRAY_FIELD},
-					name: SAMPLE_SCALAR_ARRAY_FIELD,
-					type: 'array',
-				});
+		await test.step('Data Set Table is in the page', async () => {
+			await fdsFragmentPage.fdsTableWrapper.waitFor({
+				state: 'visible',
 			});
 
-			await test.step(
-				'Configure Data Set in the page',
-				async () => {
-					await fdsFragmentPage.configureDataSetFragment({
-						dataSetLabel,
-						layout,
-					});
-				}
-			);
+			await expect(fdsFragmentPage.fdsTableWrapper).toBeInViewport();
 
-			await test.step(
-				'Data Set Table is in the page',
-				async () => {
-					await fdsFragmentPage.fdsTableWrapper.waitFor({
-						state: 'visible',
-					});
+			expect(
+				await page
+					.locator('.dnd-thead > div')
+					.first()
+					.locator('.dnd-th')
+					.allInnerTexts()
+			).toEqual([SAMPLE_SCALAR_ARRAY_FIELD, '']);
 
-					await expect(
-						fdsFragmentPage.fdsTableWrapper
-					).toBeInViewport();
-
-					expect(
-						await page
-							.locator('.dnd-thead > div')
-							.first()
-							.locator('.dnd-th')
-							.allInnerTexts()
-					).toEqual([SAMPLE_SCALAR_ARRAY_FIELD, '']);
-
-					expect(
-						await page
-							.locator('.dnd-tbody > div')
-							.first()
-							.locator('.dnd-td')
-							.allInnerTexts()
-					).toEqual(['one, two, three', '']);
-				}
-			);
-		}
-	);
+			expect(
+				await page
+					.locator('.dnd-tbody > div')
+					.first()
+					.locator('.dnd-td')
+					.allInnerTexts()
+			).toEqual(['one, two, three', '']);
+		});
+	});
 });

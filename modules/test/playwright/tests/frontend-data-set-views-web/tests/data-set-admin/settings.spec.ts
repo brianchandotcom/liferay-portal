@@ -51,7 +51,7 @@ const navigateToSettings = async ({settingsPage}) => {
 			settingsPage.defaultVisualizationModeLabel
 		).toBeInViewport();
 	});
-}
+};
 
 test.describe('Data Set Settings', () => {
 	test.describe('Default Visualization Mode', () => {

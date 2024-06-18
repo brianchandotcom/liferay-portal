@@ -10,9 +10,11 @@ import {
 	CREATION_ACTION_DATA_SET_RELATIONSHIP,
 	DATE_FILTER_DATA_SET_RELATIONSHIP,
 	DEFAULT_LABEL,
-	ITEM_ACTION_DATA_SET_RELATIONSHIP, LIST_SECTION_DATA_SET_RELATIONSHIP,
-	SELECTION_FILTER_DATA_SET_RELATIONSHIP, SORT_DATA_SET_RELATIONSHIP,
-	TABLE_SECTION_DATA_SET_RELATIONSHIP
+	ITEM_ACTION_DATA_SET_RELATIONSHIP,
+	LIST_SECTION_DATA_SET_RELATIONSHIP,
+	SELECTION_FILTER_DATA_SET_RELATIONSHIP,
+	SORT_DATA_SET_RELATIONSHIP,
+	TABLE_SECTION_DATA_SET_RELATIONSHIP,
 } from '../utils/constants';
 import {
 	AsyncActionMethod,
@@ -73,9 +75,9 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		const url = `${this.baseUrl}data-set-manager/cards-sections`;
 
 		const data = {
+			[CARDS_SECTION_DATA_SET_RELATIONSHIP]: dataSetERC,
 			fieldName,
 			name,
-			[CARDS_SECTION_DATA_SET_RELATIONSHIP]: dataSetERC
 		};
 
 		return this.post(url, {data});
@@ -103,11 +105,11 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		const endpointUrl = `${this.baseUrl}data-set-manager/actions`;
 
 		const data = {
+			[CREATION_ACTION_DATA_SET_RELATIONSHIP]: dataSetERC,
 			icon,
 			label_i18n,
 			modalSize,
 			permissionKey,
-			[CREATION_ACTION_DATA_SET_RELATIONSHIP]: dataSetERC,
 			title_i18n,
 			type,
 			url,
@@ -138,9 +140,9 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		const url = `${this.baseUrl}data-set-manager/table-sections`;
 
 		const data = {
+			[TABLE_SECTION_DATA_SET_RELATIONSHIP]: dataSetERC,
 			label_i18n,
 			name,
-			[TABLE_SECTION_DATA_SET_RELATIONSHIP]: dataSetERC,
 			renderer,
 			rendererType,
 			sortable,
@@ -159,7 +161,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		to = '',
 		type,
 	}: {
-		dataSetERC?: string,
+		dataSetERC?: string;
 		fieldName: string;
 		from?: string;
 		label_i18n?: {[key: string]: string};
@@ -169,10 +171,10 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		const url = `${this.baseUrl}data-set-manager/date-filters`;
 
 		const data = {
+			[DATE_FILTER_DATA_SET_RELATIONSHIP]: dataSetERC,
 			fieldName,
 			from,
 			label_i18n,
-			[DATE_FILTER_DATA_SET_RELATIONSHIP]: dataSetERC,
 			to,
 			type,
 		};
@@ -190,7 +192,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		source,
 		sourceType,
 	}: {
-		dataSetERC?: string,
+		dataSetERC?: string;
 		fieldName: string;
 		include?: boolean;
 		label_i18n?: {[key: string]: string};
@@ -202,12 +204,12 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		const url = `${this.baseUrl}data-set-manager/selection-filters`;
 
 		const data = {
+			[SELECTION_FILTER_DATA_SET_RELATIONSHIP]: dataSetERC,
 			fieldName,
 			include,
 			label_i18n,
 			multiple,
 			preselectedValues,
-			[SELECTION_FILTER_DATA_SET_RELATIONSHIP]: dataSetERC,
 			source,
 			sourceType,
 		};
@@ -247,6 +249,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		const endpointUrl = `${this.baseUrl}data-set-manager/actions`;
 
 		const data = {
+			[ITEM_ACTION_DATA_SET_RELATIONSHIP]: dataSetERC,
 			confirmationMessage_i18n,
 			confirmationMessageType,
 			errorMessage_i18n,
@@ -255,7 +258,6 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			method,
 			modalSize,
 			permissionKey,
-			[ITEM_ACTION_DATA_SET_RELATIONSHIP]: dataSetERC,
 			successMessage_i18n,
 			title_i18n,
 			type,
@@ -272,7 +274,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		label_i18n = {en_US: 'Date Created'},
 		orderType = 'asc',
 	}: {
-		dataSetERC?: string,
+		dataSetERC?: string;
 		defaultValue?: boolean;
 		fieldName?: string;
 		label_i18n?: {[key: string]: string};
@@ -281,12 +283,12 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		const url = `${this.baseUrl}data-set-manager/sorts`;
 
 		const data = {
+			[SORT_DATA_SET_RELATIONSHIP]: dataSetERC,
 			default: defaultValue,
 			fieldName,
 			label: label_i18n[Object.keys(label_i18n)[0]],
 			label_i18n,
 			orderType,
-			[SORT_DATA_SET_RELATIONSHIP]: dataSetERC,
 		};
 
 		return this.post(url, {data});
@@ -297,7 +299,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		fieldName = 'name',
 		name = 'title',
 	}: {
-		dataSetERC?: string,
+		dataSetERC?: string;
 		fieldName?: string;
 		name?: string;
 		r_fdsViewFDSListSectionRelationship_c_fdsViewERC?: string;
@@ -305,9 +307,9 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		const url = `${this.baseUrl}data-set-manager/list-sections`;
 
 		const data = {
+			[LIST_SECTION_DATA_SET_RELATIONSHIP]: dataSetERC,
 			fieldName,
 			name,
-			[LIST_SECTION_DATA_SET_RELATIONSHIP]: dataSetERC,
 		};
 
 		return this.post(url, {data});

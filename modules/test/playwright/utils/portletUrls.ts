@@ -43,6 +43,7 @@ export const PORTLET_URLS = {
 	selectSites: '/~/control_panel/manage/-/sites/sites/select_site',
 	siteSettings: '/~/control_panel/manage/-/site/settings',
 	styleBooks: '/~/control_panel/manage/-/style_books/style_books',
+	tagsAdmin: '/~/control_panel/manage/-/tags_admin/tags',
 	utilityPages:
 		'/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=utility-pages',
 	wikiAdmin:

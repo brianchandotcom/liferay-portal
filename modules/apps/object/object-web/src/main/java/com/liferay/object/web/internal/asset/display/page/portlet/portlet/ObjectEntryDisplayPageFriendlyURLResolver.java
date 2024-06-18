@@ -7,6 +7,7 @@ package com.liferay.object.web.internal.asset.display.page.portlet.portlet;
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
@@ -31,7 +32,7 @@ public class ObjectEntryDisplayPageFriendlyURLResolver
 
 	@Override
 	public boolean isURLSeparatorConfigurable() {
-		return true;
+		return FeatureFlagManagerUtil.isEnabled("LPS-203351");
 	}
 
 }

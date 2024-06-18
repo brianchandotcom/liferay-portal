@@ -38,7 +38,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -213,9 +212,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public String getURLSeparator() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-203351") ||
-			!isURLSeparatorConfigurable()) {
-
+		if (!isURLSeparatorConfigurable()) {
 			return getDefaultURLSeparator();
 		}
 

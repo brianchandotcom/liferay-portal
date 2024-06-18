@@ -7,6 +7,7 @@ package com.liferay.document.library.web.internal.asset.display.contributor.port
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
@@ -31,7 +32,7 @@ public class DLFileEntryAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public boolean isURLSeparatorConfigurable() {
-		return true;
+		return FeatureFlagManagerUtil.isEnabled("LPS-203351");
 	}
 
 }

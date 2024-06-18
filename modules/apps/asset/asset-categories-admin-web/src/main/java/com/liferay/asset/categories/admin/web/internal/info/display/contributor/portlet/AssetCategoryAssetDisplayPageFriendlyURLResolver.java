@@ -7,6 +7,7 @@ package com.liferay.asset.categories.admin.web.internal.info.display.contributor
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
@@ -31,7 +32,7 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public boolean isURLSeparatorConfigurable() {
-		return true;
+		return FeatureFlagManagerUtil.isEnabled("LPS-203351");
 	}
 
 }

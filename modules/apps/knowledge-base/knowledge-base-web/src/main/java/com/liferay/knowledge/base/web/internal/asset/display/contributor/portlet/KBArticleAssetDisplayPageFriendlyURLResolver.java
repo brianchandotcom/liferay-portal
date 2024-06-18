@@ -9,6 +9,7 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 
@@ -34,7 +35,7 @@ public class KBArticleAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public boolean isURLSeparatorConfigurable() {
-		return true;
+		return FeatureFlagManagerUtil.isEnabled("LPS-203351");
 	}
 
 	@Override

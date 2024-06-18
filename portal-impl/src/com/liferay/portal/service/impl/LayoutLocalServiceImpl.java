@@ -110,6 +110,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -127,6 +128,7 @@ import java.io.Serializable;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -1946,9 +1948,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<Layout> getLayouts(Set<Serializable> primaryKeys) {
+	public List<Layout> getLayouts(Collection<Serializable> primaryKeys) {
 		Map<Serializable, Layout> layoutsMap =
-			layoutPersistence.fetchByPrimaryKeys(primaryKeys);
+			layoutPersistence.fetchByPrimaryKeys(
+				SetUtil.fromCollection(primaryKeys));
 
 		if (layoutsMap.isEmpty()) {
 			return Collections.emptyList();

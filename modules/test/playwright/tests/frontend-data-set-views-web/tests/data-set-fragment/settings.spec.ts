@@ -11,6 +11,7 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import {DEFAULT_LABEL} from "../../utils/constants";
 
 let settingsDataSetERC: string;
 let dataSetLabel: string;
@@ -32,6 +33,8 @@ test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.createDataSet({
 		erc: settingsDataSetERC,
 		label: dataSetLabel,
+		restApplication: '/data-set-manager/cards-sections',
+		restSchema: 'FDSCardsSection',
 	});
 });
 
@@ -51,13 +54,11 @@ const configureDataset = async ({fdsFragmentPage, layout}) => {
 	);
 }
 
-const assertVisualizationMode = async({page, testId, locator}) => {
+const assertVisualizationMode = async({page, locator}) => {
 	await test.step(
 		'Check Data Set is present',
 		async () => {
-			await page
-				.getByTestId(testId)
-				.waitFor({state: 'visible'});
+			await expect(locator).toBeVisible();
 
 			await expect(locator).toBeInViewport();
 		}
@@ -67,7 +68,6 @@ const assertVisualizationMode = async({page, testId, locator}) => {
 const assertCardsVisualizationMode = async({fdsFragmentPage, page}) => {
 	await assertVisualizationMode({
 		page,
-		testId: 'visualization-mode-cards',
 		locator: fdsFragmentPage.fdsCardsWrapper
 	});
 }
@@ -75,7 +75,6 @@ const assertCardsVisualizationMode = async({fdsFragmentPage, page}) => {
 const assertListVisualizationMode = async({fdsFragmentPage, page}) => {
 	await assertVisualizationMode({
 		page,
-		testId: 'visualization-mode-list',
 		locator: fdsFragmentPage.fdsListWrapper
 	});
 }

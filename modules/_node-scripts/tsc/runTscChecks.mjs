@@ -16,6 +16,7 @@ import {
 import fileExists from '../util/fileExists.mjs';
 import getFileProjectDir from '../util/getFileProjectDir.mjs';
 import getGitModifiedFiles from '../util/getGitModifiedFiles.mjs';
+import runConcurrentTasks from '../util/runConcurrentTasks.mjs';
 
 export default async function runTscChecks(modifiedSince) {
 	const cwd = path.resolve('.');
@@ -45,37 +46,25 @@ export default async function runTscChecks(modifiedSince) {
 			console.log(`ℹ️ Going to check ${projectDirs.length} projects`);
 		}
 
-		const projectGroups = [[]];
+		const tscResults = await runConcurrentTasks(
+			projectDirs.map((projectDir) => async () => {
+				if (
+					!(await fileExists(
+						path.join(projectDir, SRC_TSCONFIG_PATH)
+					))
+				) {
+					return;
+				}
 
-		for (const projectDir of projectDirs) {
-			if (!(await fileExists(path.join(projectDir, SRC_TSCONFIG_PATH)))) {
-				continue;
-			}
+				console.log(
+					`🕵️ Checking ${path.relative(rootDir, projectDir)}`
+				);
 
-			let group = projectGroups[projectGroups.length - 1];
+				return await runTsc(projectDir);
+			})
+		);
 
-			if (group.length === cpuCount) {
-				group = [];
-
-				projectGroups.push(group);
-			}
-
-			group.push(projectDir);
-		}
-
-		for (const projectGroup of projectGroups) {
-			const all = await Promise.all(
-				projectGroup.map((projectDir) => {
-					console.log(
-						`🕵️ Checking ${path.relative(rootDir, projectDir)}`
-					);
-
-					return runTsc(projectDir);
-				})
-			);
-
-			results.push(...all);
-		}
+		results.push(...tscResults);
 	}
 	else {
 		if (modifiedSince) {

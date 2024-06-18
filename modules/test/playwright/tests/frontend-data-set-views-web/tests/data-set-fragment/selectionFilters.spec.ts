@@ -128,8 +128,12 @@ test.describe('Filters in Data Set fragment', () => {
 			await test.step(
 				'Check current items in the Frontend Data Set',
 				async () => {
+					await
+						fdsFragmentPage.fdsPaginationResults
+							.scrollIntoViewIfNeeded();
+
 					await expect(
-						fdsFragmentPage.page.getByText(
+						fdsFragmentPage.fdsPaginationResults.getByText(
 							'Showing 1 to 2 of 2 entries.'
 						)
 					).toBeVisible();

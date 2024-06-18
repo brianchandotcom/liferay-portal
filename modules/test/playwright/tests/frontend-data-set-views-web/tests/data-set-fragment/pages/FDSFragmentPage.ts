@@ -17,6 +17,7 @@ export class FDSFragmentPage {
 	readonly fdsActiveViewSelector: Locator;
 	readonly fdsCardsWrapper: Locator;
 	readonly fdsListWrapper: Locator;
+	readonly fdsPaginationResults: Locator;
 	readonly fdsPaginationWrapper: Locator;
 	readonly fdsTableWrapper: Locator;
 	readonly fragmentWidgetSearchInput: Locator;
@@ -32,6 +33,7 @@ export class FDSFragmentPage {
 		this.fdsCardsWrapper = page.getByTestId('visualization-mode-cards');
 		this.fdsListWrapper = page.getByTestId('visualization-mode-list');
 		this.fdsPaginationWrapper = page.locator('.data-set-pagination-wrapper');
+		this.fdsPaginationResults = page.locator('.pagination-results');
 		this.fdsTableWrapper = page.getByTestId('visualization-mode-table');
 		this.fragmentWidgetSearchInput = page.getByLabel(
 			'Search Fragments and Widgets'

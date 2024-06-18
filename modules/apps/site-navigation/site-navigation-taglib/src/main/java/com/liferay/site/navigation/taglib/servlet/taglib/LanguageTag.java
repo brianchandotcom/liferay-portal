@@ -56,6 +56,10 @@ public class LanguageTag extends IncludeTag {
 		return _ddmTemplateKey;
 	}
 
+	public String getFormAction() {
+		return _formAction;
+	}
+
 	public String getFormName() {
 		return _formName;
 	}
@@ -136,6 +140,55 @@ public class LanguageTag extends IncludeTag {
 		_languageIds = null;
 		_name = "languageId";
 		_useNamespace = true;
+	}
+
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
+
+	@Override
+	protected int processStartTag() throws Exception {
+		String formAction = _getFormAction();
+		String namespace = _getNamespacedName();
+
+		List<LanguageEntry> languageEntries = _getLanguageEntries(
+			_getLocales(), _displayCurrentLocale, formAction, namespace);
+
+		if (!languageEntries.isEmpty()) {
+			JspWriter jspWriter = pageContext.getOut();
+
+			jspWriter.write(
+				PortletDisplayTemplateManagerUtil.renderDDMTemplate(
+					PortalUtil.getClassNameId(LanguageEntry.class),
+					HashMapBuilder.<String, Object>put(
+						"formAction", formAction
+					).put(
+						"formName", _getFormAction()
+					).put(
+						"languageId",
+						() -> {
+							HttpServletRequest httpServletRequest =
+								getRequest();
+
+							ThemeDisplay themeDisplay =
+								(ThemeDisplay)httpServletRequest.getAttribute(
+									WebKeys.THEME_DISPLAY);
+
+							return GetterUtil.getString(
+								_languageId, themeDisplay.getLanguageId());
+						}
+					).put(
+						"name", _name
+					).put(
+						"namespace", namespace
+					).build(),
+					_ddmTemplateKey, languageEntries, _getDisplayStyleGroupId(),
+					getRequest(),
+					(HttpServletResponse)pageContext.getResponse(), true));
+		}
+
+		return SKIP_BODY;
 	}
 
 	private long _getDisplayStyleGroupId() {
@@ -292,55 +345,6 @@ public class LanguageTag extends IncludeTag {
 		}
 
 		return name;
-	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
-	protected int processStartTag() throws Exception {
-		String formAction = _getFormAction();
-		String namespace = _getNamespacedName();
-
-		List<LanguageEntry> languageEntries = _getLanguageEntries(
-			_getLocales(), _displayCurrentLocale, formAction, namespace);
-
-		if (!languageEntries.isEmpty()) {
-			JspWriter jspWriter = pageContext.getOut();
-
-			jspWriter.write(
-				PortletDisplayTemplateManagerUtil.renderDDMTemplate(
-					PortalUtil.getClassNameId(LanguageEntry.class),
-					HashMapBuilder.<String, Object>put(
-						"formAction", formAction
-					).put(
-						"formName", _getFormAction()
-					).put(
-						"languageId",
-						() -> {
-							HttpServletRequest httpServletRequest =
-								getRequest();
-
-							ThemeDisplay themeDisplay =
-								(ThemeDisplay)httpServletRequest.getAttribute(
-									WebKeys.THEME_DISPLAY);
-
-							return GetterUtil.getString(
-								_languageId, themeDisplay.getLanguageId());
-						}
-					).put(
-						"name", _name
-					).put(
-						"namespace", namespace
-					).build(),
-					_ddmTemplateKey, languageEntries, _getDisplayStyleGroupId(),
-					getRequest(),
-					(HttpServletResponse)pageContext.getResponse(), true));
-		}
-
-		return SKIP_BODY;
 	}
 
 	private static final String _PAGE = "/language/page.jsp";

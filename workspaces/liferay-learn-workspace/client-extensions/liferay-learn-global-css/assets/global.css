@@ -882,9 +882,35 @@ pre[class*='language-'] {
 		width: 16px;
 	}
 
-	.card-tag__expertise p::before {
+	.card-tag__expertise-beginner p::before {
 		/* stylelint-disable-next-line function-url-quotes */
 		background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeT0iNy45OTgwNSIgd2lkdGg9IjQiIGhlaWdodD0iNiIgcng9IjEiIGZpbGw9IiMxQzM2NjciLz4KPHJlY3Qgb3BhY2l0eT0iMC41IiB4PSI2IiB5PSI0Ljk5ODA1IiB3aWR0aD0iNCIgaGVpZ2h0PSI5IiByeD0iMSIgZmlsbD0iIzFDMzY2NyIvPgo8cmVjdCBvcGFjaXR5PSIwLjUiIHg9IjEyIiB5PSIxLjk5ODA1IiB3aWR0aD0iNCIgaGVpZ2h0PSIxMiIgcng9IjEiIGZpbGw9IiMxQzM2NjciLz4KPC9zdmc+Cg==');
+		background-size: cover;
+		content: '';
+		display: inline-block;
+		height: 16px;
+		margin-bottom: 4px;
+		margin-right: 4px;
+		vertical-align: middle;
+		width: 16px;
+	}
+
+	.card-tag__expertise-intermediate p::before {
+		/* stylelint-disable-next-line function-url-quotes */
+		background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.7'%3E%3Crect y='7.99805' width='4' height='6' rx='1' fill='%231C3667'/%3E%3Crect x='6' y='4.99805' width='4' height='9' rx='1' fill='%231C3667'/%3E%3Crect opacity='0.5' x='12' y='1.99805' width='4' height='12' rx='1' fill='%231C3667'/%3E%3C/g%3E%3C/svg%3E");
+		background-size: cover;
+		content: '';
+		display: inline-block;
+		height: 16px;
+		margin-bottom: 4px;
+		margin-right: 4px;
+		vertical-align: middle;
+		width: 16px;
+	}
+
+	.card-tag__expertise-expert p::before {
+		/* stylelint-disable-next-line function-url-quotes */
+		background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.7'%3E%3Crect y='7.99805' width='4' height='6' rx='1' fill='%231C3667'/%3E%3Crect x='6' y='4.99805' width='4' height='9' rx='1' fill='%231C3667'/%3E%3Crect x='12' y='1.99805' width='4' height='12' rx='1' fill='%231C3667'/%3E%3C/g%3E%3C/svg%3E%0A");
 		background-size: cover;
 		content: '';
 		display: inline-block;

@@ -10,7 +10,11 @@ import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.item.selector.taglib.internal.util.GroupItemSelectorProviderRegistryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -101,6 +105,19 @@ public class GroupSelectorTag extends IncludeTag {
 		if (_isScopeGroupType(httpServletRequest) && groupType.equals("site")) {
 			_groups = new ArrayList<>();
 
+			if (!group.isCompany()) {
+				try {
+					_groups.add(
+						GroupLocalServiceUtil.getCompanyGroup(
+							group.getCompanyId()));
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+				}
+			}
+
 			_groups.add(group);
 
 			return _groups;
@@ -138,8 +155,19 @@ public class GroupSelectorTag extends IncludeTag {
 	}
 
 	private int _getGroupsCount(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = _getGroup(themeDisplay);
+
 		if (_isScopeGroupType(httpServletRequest)) {
-			_groupsCount = 1;
+			if (group.isCompany()) {
+				_groupsCount = 1;
+			}
+			else {
+				_groupsCount = 2;
+			}
 
 			return _groupsCount;
 		}
@@ -153,12 +181,6 @@ public class GroupSelectorTag extends IncludeTag {
 
 			return _groupsCount;
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Group group = _getGroup(themeDisplay);
 
 		_groupsCount = groupSelectorProvider.getGroupsCount(
 			group.getCompanyId(), group.getGroupId(),
@@ -197,6 +219,9 @@ public class GroupSelectorTag extends IncludeTag {
 
 		return _scopeGroupType;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GroupSelectorTag.class);
 
 	private List<Group> _groups;
 	private int _groupsCount = -1;

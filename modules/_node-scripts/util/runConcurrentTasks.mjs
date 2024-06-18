@@ -5,9 +5,11 @@
 
 import os from 'os';
 
+export const MAX_CONCURRENT_TASKS = os.cpus().length;
+
 export default async function runConcurrentTasks(
 	tasks,
-	maxConcurrent = os.cpus().length
+	maxConcurrent = MAX_CONCURRENT_TASKS
 ) {
 	const results = [];
 	const runningTasks = new Set();

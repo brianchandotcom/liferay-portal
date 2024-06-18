@@ -29,7 +29,7 @@
 	"scripts": {
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format",
-		"types": "liferay-npm-scripts types"
+		"test": "node-scripts test"
 	},
 	"workspaces": {
 		"packages": [

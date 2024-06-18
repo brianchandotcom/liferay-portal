@@ -32,8 +32,8 @@
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format",
-		"test": "liferay-npm-scripts test",
-		"watch": "liferay-npm-scripts webpack --watch"
+		"watch": "liferay-npm-scripts webpack --watch",
+		"test": "node-scripts test"
 	},
 	"version": "5.0.110"
 }

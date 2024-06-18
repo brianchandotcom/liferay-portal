@@ -1,0 +1,7 @@
+/**
+ * All .css files are resolved to this mock file to allow Jest to test
+ * components that make use of `import` statements to load CSS files. Outside of
+ * tests, these get transformed by the liferay-npm-bundler into JS modules. In
+ * the Jest context, the bundler is not involved, so we turn those imports into
+ * side-effectless no-ops.
+ */

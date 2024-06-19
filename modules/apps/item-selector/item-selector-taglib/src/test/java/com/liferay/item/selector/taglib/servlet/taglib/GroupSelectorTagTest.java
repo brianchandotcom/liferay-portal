@@ -94,6 +94,11 @@ public class GroupSelectorTagTest {
 	private void _testSetAttributes(
 		List<Group> expectedGroups, long expectedGroupsCount, Group group) {
 
+		GroupSelectorTag groupSelectorTag = new GroupSelectorTag();
+
+		HttpServletRequest httpServletRequest =
+			new TestMockHttpServletRequest();
+
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
@@ -102,12 +107,7 @@ public class GroupSelectorTagTest {
 			group
 		);
 
-		HttpServletRequest httpServletRequest =
-			new TestMockHttpServletRequest();
-
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		GroupSelectorTag groupSelectorTag = new GroupSelectorTag();
 
 		groupSelectorTag.setAttributes(httpServletRequest);
 

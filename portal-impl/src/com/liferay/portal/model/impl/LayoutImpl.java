@@ -628,6 +628,13 @@ public class LayoutImpl extends LayoutBaseImpl {
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(getPlid());
 
 		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
+			if (LanguageUtil.isAvailableLocale(
+					layoutFriendlyURL.getGroupId(),
+					layoutFriendlyURL.getLanguageId())) {
+
+				continue;
+			}
+
 			friendlyURLMap.put(
 				LocaleUtil.fromLanguageId(layoutFriendlyURL.getLanguageId()),
 				layoutFriendlyURL.getFriendlyURL());

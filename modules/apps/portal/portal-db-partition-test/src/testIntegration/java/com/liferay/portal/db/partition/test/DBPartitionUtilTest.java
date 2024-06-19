@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.sql.Connection;
@@ -41,6 +44,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
+
+import javax.sql.DataSource;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -163,6 +168,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 				createAndPopulateTable(
 					testObjectTableNamePrefix + COMPANY_IDS[0]);
+
+				_populateResourcePermissionTable();
 			}
 
 			Assert.assertTrue(
@@ -204,6 +211,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					toTableName, _getCount(COMPANY_IDS[0], fromTableName),
 					_getCount(companyId, toTableName));
 			}
+
+			_testResourcePermissionTableCopy(companyId);
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -532,6 +541,37 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		return viewNames.size();
 	}
 
+	private void _populateResourcePermissionTable() throws Exception {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		DataSource dataSource = InfrastructureUtil.getDataSource();
+
+		try (Connection connection = dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"insert into ResourcePermission (mvccVersion, ",
+					"ctCollectionId, resourcePermissionId, companyId, name, ",
+					"scope, primKey, primKeyId, roleId, ownerId, actionIds, ",
+					"viewActionId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+					"?)"))) {
+
+			preparedStatement.setLong(1, 0);
+			preparedStatement.setLong(2, 0);
+			preparedStatement.setLong(3, 1);
+			preparedStatement.setLong(4, companyId);
+			preparedStatement.setString(5, Role.class.getName());
+			preparedStatement.setInt(6, ResourceConstants.SCOPE_COMPANY);
+			preparedStatement.setLong(7, companyId);
+			preparedStatement.setLong(8, companyId);
+			preparedStatement.setLong(9, 1);
+			preparedStatement.setInt(10, 0);
+			preparedStatement.setInt(11, 1);
+			preparedStatement.setInt(12, 1);
+
+			preparedStatement.executeUpdate();
+		}
+	}
+
 	private void _scheduleJob(long companyId, String jobName) throws Exception {
 		Trigger trigger = _triggerFactory.createTrigger(
 			StringBundler.concat(jobName, StringPool.AT, companyId),
@@ -540,6 +580,28 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		_schedulerEngine.schedule(
 			trigger, StringPool.BLANK, _JOB_GROUP_NAME, new Message(),
 			StorageType.PERSISTED);
+	}
+
+	private void _testResourcePermissionTableCopy(long companyId)
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(companyId);
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select primKey, primKeyId from ResourcePermission");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.isBeforeFirst());
+
+			while (resultSet.next()) {
+				long primKey = resultSet.getLong("primKey");
+				long primKeyId = resultSet.getLong("primKeyId");
+
+				Assert.assertEquals(companyId, primKey);
+
+				Assert.assertEquals(companyId, primKeyId);
+			}
+		}
 	}
 
 	private static final String _JOB_GROUP_NAME = "liferay/test";

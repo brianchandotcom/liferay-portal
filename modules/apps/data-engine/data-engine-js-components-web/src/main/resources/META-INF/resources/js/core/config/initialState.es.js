@@ -22,6 +22,11 @@ export const INITIAL_STATE = {
 	defaultLanguageId: themeDisplay.getDefaultLanguageId(),
 	editingLanguageId: themeDisplay.getDefaultLanguageId(),
 	focusedField: {},
+	history: {
+		currentStep: -1,
+		edited: false,
+		steps: [],
+	},
 	pages: INITIAL_PAGES,
 	rules: [],
 };

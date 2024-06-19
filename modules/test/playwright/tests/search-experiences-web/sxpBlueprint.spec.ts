@@ -134,7 +134,7 @@ test.describe('Saved blueprint maintains accurate clause contributors', () => {
 		});
 	});
 
-	test('Saving "Customize - All" clause contributors persists @LPD-22974', async ({
+	test('Saving "Customize - All Enabled" clause contributors persists @LPD-22974', async ({
 		editSXPBlueprintPage,
 		sxpBlueprintsAndElementsViewPage,
 	}) => {
@@ -175,8 +175,23 @@ test.describe('Saved blueprint maintains accurate clause contributors', () => {
 				value: true,
 			});
 		});
+	});
+
+	test('Saving "Customize - All Disabled" clause contributors is set to "Disable All" @LPD-22974', async ({
+		editSXPBlueprintPage,
+		sxpBlueprintsAndElementsViewPage,
+	}) => {
+		await test.step('Set clause contributors to "Customize"', async () => {
+			await editSXPBlueprintPage.goToQuerySettingsMenuItem();
+
+			await editSXPBlueprintPage.selectQuerySettingsRadioProperty(
+				'Customize'
+			);
+		});
 
 		await test.step('Disable all contributors', async () => {
+			await editSXPBlueprintPage.openClauseContributorsSidebar();
+
 			await editSXPBlueprintPage.selectClauseContributors({
 				labels: ['*'],
 				value: false,
@@ -185,7 +200,7 @@ test.describe('Saved blueprint maintains accurate clause contributors', () => {
 			await editSXPBlueprintPage.saveBlueprint();
 		});
 
-		await test.step('Check that all disabled customized clause contributors persists', async () => {
+		await test.step('Check that all disabled customized clause contributors persists as "Disable All"', async () => {
 			await sxpBlueprintsAndElementsViewPage.selectTableLink(
 				sxpBlueprint.title
 			);
@@ -193,15 +208,8 @@ test.describe('Saved blueprint maintains accurate clause contributors', () => {
 			await editSXPBlueprintPage.goToQuerySettingsMenuItem();
 
 			await editSXPBlueprintPage.assertQuerySettingsRadioPropertySelection(
-				'Customize'
+				'Disable All'
 			);
-
-			await editSXPBlueprintPage.openClauseContributorsSidebar();
-
-			await editSXPBlueprintPage.assertClauseContributorSelection({
-				labels: ['*'],
-				value: false,
-			});
 		});
 	});
 

@@ -872,6 +872,107 @@ public class ObjectDefinitionGraphQLTest {
 								new GraphQLField(_objectFieldName))))),
 				"JSONArray/errors", "Object/0"),
 			JSONCompareMode.LENIENT);
+
+		String pkName = StringUtil.removeFirst(
+			_draftAllowedObjectDefinition.getPKObjectFieldName(), "c_");
+
+		jsonObject = JSONUtil.getValueAsJSONObject(
+			_invoke(
+				new GraphQLField(
+					"mutation",
+					new GraphQLField(
+						"c",
+						new GraphQLField(
+							"create" + _draftAllowedObjectDefinitionName,
+							HashMapBuilder.<String, Object>put(
+								_draftAllowedObjectDefinitionName,
+								StringBundler.concat(
+									"{", _objectFieldName, ": \"", value,
+									"\", statusCode:",
+									WorkflowConstants.STATUS_DRAFT, "}")
+							).build(),
+							new GraphQLField(pkName),
+							new GraphQLField("status"),
+							new GraphQLField("statusCode"))))),
+			"JSONObject/data", "JSONObject/c",
+			"JSONObject/create" + _draftAllowedObjectDefinitionName);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "draft"
+			).put(
+				"statusCode", WorkflowConstants.STATUS_DRAFT
+			).toString(),
+			jsonObject.toString(), JSONCompareMode.LENIENT);
+
+		objectEntryId = jsonObject.getLong(pkName);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "approved"
+			).put(
+				"statusCode", WorkflowConstants.STATUS_APPROVED
+			).toString(),
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"mutation",
+						new GraphQLField(
+							"c",
+							new GraphQLField(
+								"update" + _draftAllowedObjectDefinitionName,
+								HashMapBuilder.<String, Object>put(
+									_draftAllowedObjectDefinitionName,
+									StringBundler.concat(
+										"{", _objectFieldName, ": \"", value,
+										"\", statusCode: ",
+										WorkflowConstants.STATUS_APPROVED, "}")
+								).put(
+									pkName, String.valueOf(objectEntryId)
+								).build(),
+								new GraphQLField(pkName),
+								new GraphQLField("status"),
+								new GraphQLField("statusCode"))))),
+				"JSONObject/data", "JSONObject/c",
+				"JSONObject/update" + _draftAllowedObjectDefinitionName),
+			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"extensions",
+				JSONUtil.put(
+					"classification", "DataFetchingException"
+				).put(
+					"code", "Bad Request"
+				).put(
+					"exception", JSONUtil.put("errno", 400)
+				)
+			).put(
+				"message",
+				"Exception while fetching data (/c/update" +
+					_draftAllowedObjectDefinitionName +
+						") : Draft status is not allowed"
+			).toString(),
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"mutation",
+						new GraphQLField(
+							"c",
+							new GraphQLField(
+								"update" + _draftAllowedObjectDefinitionName,
+								HashMapBuilder.<String, Object>put(
+									_draftAllowedObjectDefinitionName,
+									StringBundler.concat(
+										"{", _objectFieldName, ": \"", value,
+										"\", statusCode: ",
+										WorkflowConstants.STATUS_DRAFT, "}")
+								).put(
+									pkName, String.valueOf(objectEntryId)
+								).build(),
+								new GraphQLField(pkName))))),
+				"JSONArray/errors", "Object/0"),
+			JSONCompareMode.LENIENT);
 	}
 
 	private void _addListTypeEntry(

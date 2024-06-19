@@ -7,6 +7,8 @@ package com.liferay.company.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.db.partition.db.DBPartitionDB;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
@@ -16,6 +18,7 @@ import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
@@ -45,6 +49,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.apache.felix.cm.PersistenceManager;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -52,6 +58,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.BundleListener;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -323,6 +332,52 @@ public class CompanyLocalServiceDBPartitionTest
 				removeDBPartitions(new long[] {company.getCompanyId()});
 			}
 			else {
+				companyLocalService.deleteCompany(company);
+			}
+		}
+	}
+
+	@Test
+	public void testConfigurationCache() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		try {
+			String pid;
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(
+						company.getCompanyId())) {
+
+				pid = ConfigurationTestUtil.createFactoryConfiguration(
+					CompanyLocalServiceDBPartitionTest.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"companyId", company.getCompanyId()
+					).put(
+						"test", RandomTestUtil.randomString()
+					).build());
+			}
+
+			Assert.assertNotNull(_configurationAdmin.getConfiguration(pid));
+
+			Assert.assertTrue(_persistenceManager.exists(pid));
+
+			companyLocalService.deleteCompany(company);
+
+			company = null;
+
+			BundleListener configurationManager = ReflectionTestUtil.invoke(
+				_configurationAdmin, "getConfigurationManager", new Class<?>[0],
+				null);
+
+			Assert.assertNull(
+				ReflectionTestUtil.invoke(
+					configurationManager, "getConfiguration",
+					new Class<?>[] {String.class}, pid));
+
+			Assert.assertFalse(_persistenceManager.exists(pid));
+		}
+		finally {
+			if (company != null) {
 				companyLocalService.deleteCompany(company);
 			}
 		}
@@ -717,5 +772,11 @@ public class CompanyLocalServiceDBPartitionTest
 
 	@DeleteAfterTestRun
 	private Company _company2;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
+
+	@Inject
+	private PersistenceManager _persistenceManager;
 
 }

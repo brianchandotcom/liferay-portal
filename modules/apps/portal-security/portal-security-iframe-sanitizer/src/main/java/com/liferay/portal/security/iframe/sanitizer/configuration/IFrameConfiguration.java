@@ -12,7 +12,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Roberto Díaz
  */
-@ExtendedObjectClassDefinition(category = "security-tools")
+@ExtendedObjectClassDefinition(
+	category = "security-tools",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
 	id = "com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration",
 	localization = "content/Language", name = "iframe-configuration-name"

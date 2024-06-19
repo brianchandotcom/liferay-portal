@@ -114,8 +114,6 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
-import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;

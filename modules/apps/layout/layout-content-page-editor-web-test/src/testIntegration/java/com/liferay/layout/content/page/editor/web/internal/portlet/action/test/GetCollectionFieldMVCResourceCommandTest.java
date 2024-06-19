@@ -77,8 +77,6 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
-import java.io.InputStream;
-
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;

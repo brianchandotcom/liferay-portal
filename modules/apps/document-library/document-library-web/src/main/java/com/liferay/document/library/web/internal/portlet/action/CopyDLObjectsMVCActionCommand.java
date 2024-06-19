@@ -28,11 +28,13 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.FileItem;
@@ -188,13 +190,13 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 		long sourceRepositoryId = ParamUtil.getLong(
 			actionRequest, "sourceRepositoryId");
 
-		Group group = _groupLocalService.getGroup(destinationRepositoryId);
+		Group group = _getRepositoryGroup(destinationRepositoryId);
 
 		long[] groupIds =
 			_siteConnectedGroupGroupProvider.
 				getCurrentAndAncestorSiteAndDepotGroupIds(group.getGroupId());
 
-		Group sourceGroup = _groupLocalService.getGroup(sourceRepositoryId);
+		Group sourceGroup = _getRepositoryGroup(sourceRepositoryId);
 
 		_checkDestinationGroup(group, groupIds, sourceGroup.getGroupId());
 
@@ -320,6 +322,19 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 		return dlObjectIds.length - errorMessages.size();
 	}
 
+	private Group _getRepositoryGroup(long repositoryId) throws Exception {
+		Group group = _groupLocalService.fetchGroup(repositoryId);
+
+		if (group != null) {
+			return group;
+		}
+
+		Repository repository = _repositoryLocalService.getRepository(
+			repositoryId);
+
+		return _groupLocalService.getGroup(repository.getGroupId());
+	}
+
 	private String _getUploadExceptionErrorMessage(
 		UploadException uploadException, ThemeDisplay themeDisplay) {
 
@@ -384,6 +399,9 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private RepositoryLocalService _repositoryLocalService;
 
 	@Reference
 	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;

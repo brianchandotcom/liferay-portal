@@ -619,10 +619,12 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				}
 
 				String listTypeDefinitionERC = null;
+				String sourceType = null;
 
 				if (FeatureFlagManagerUtil.isEnabled("LPD-10754")) {
 					listTypeDefinitionERC = MapUtil.getString(
 						properties, "source");
+					sourceType = MapUtil.getString(properties, "sourceType");
 				}
 				else {
 					listTypeDefinitionERC = MapUtil.getString(
@@ -630,6 +632,52 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				}
 
 				if (Validator.isNotNull(listTypeDefinitionERC)) {
+					JSONObject selectionFilterJSONObject = JSONUtil.put(
+						"autocompleteEnabled", true
+					).put(
+						"entityFieldType", FDSEntityFieldTypes.STRING
+					).put(
+						"id", properties.get("fieldName")
+					).put(
+						"label", _getValue("label", "fieldName", properties)
+					).put(
+						"multiple", properties.get("multiple")
+					).put(
+						"type", "selection"
+					);
+
+					if (Validator.isNotNull(sourceType) &&
+						Objects.equals(sourceType, "API_HEADLESS")) {
+
+						return selectionFilterJSONObject.put(
+							"apiURL", "/o" + properties.get("source")
+						).put(
+							"itemKey", properties.get("itemKey")
+						).put(
+							"itemLabel", properties.get("itemLabel")
+						).put(
+							"preloadedData",
+							() -> {
+								JSONArray selectedItemsJSONArray =
+									_jsonFactory.createJSONArray(
+										MapUtil.getString(
+											properties, "preselectedValues"));
+
+								if (JSONUtil.isEmpty(selectedItemsJSONArray)) {
+									return null;
+								}
+
+								return JSONUtil.put(
+									"exclude",
+									() -> Boolean.FALSE.equals(
+										(Boolean)properties.get("include"))
+								).put(
+									"selectedItems", selectedItemsJSONArray
+								);
+							}
+						);
+					}
+
 					ThemeDisplay themeDisplay =
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
@@ -644,13 +692,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 						_listTypeEntryLocalService.getListTypeEntries(
 							listTypeDefinition.getListTypeDefinitionId());
 
-					return JSONUtil.put(
-						"autocompleteEnabled", true
-					).put(
-						"entityFieldType", FDSEntityFieldTypes.STRING
-					).put(
-						"id", properties.get("fieldName")
-					).put(
+					return selectionFilterJSONObject.put(
 						"items",
 						JSONUtil.toJSONArray(
 							listTypeEntries,
@@ -662,10 +704,6 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 							).put(
 								"value", listTypeEntry.getKey()
 							))
-					).put(
-						"label", _getValue("label", "fieldName", properties)
-					).put(
-						"multiple", properties.get("multiple")
 					).put(
 						"preloadedData",
 						() -> {
@@ -687,8 +725,6 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 								"selectedItems", selectedItemsJSONArray
 							);
 						}
-					).put(
-						"type", "selection"
 					);
 				}
 

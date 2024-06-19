@@ -440,7 +440,7 @@ gradle.beforeProject {
 				rtlExcludedPathRegexps = [".+"]
 			}
 
-			if (project.name.endsWith("-api") || project.name.endsWith("-impl")) {
+			if (project.path.startsWith(":core:petra:") || project.name.endsWith("-api") || project.name.endsWith("-impl")) {
 				buildCSS {
 					enabled = false
 				}

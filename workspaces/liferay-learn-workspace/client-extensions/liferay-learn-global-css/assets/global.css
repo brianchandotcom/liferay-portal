@@ -228,7 +228,7 @@ pre[class*='language-'] {
 	align-items: center;
 	background-color: var(--color-action-primary-default, #0b5fff);
 	border-radius: 10px;
-	color: var(--color-neutral-0, #ffffff);
+	color: var(--color-neutral-0, #fff);
 	justify-content: space-between;
 	padding: 12px;
 
@@ -269,7 +269,7 @@ pre[class*='language-'] {
 	height: 40px;
 	justify-content: space-between;
 	margin-top: 1rem;
-	
+
 	.menu-previous-lesson {
 		gap: 0.5rem;
 		padding: 8px 16px;

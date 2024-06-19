@@ -10,26 +10,45 @@ import {execa} from 'execa';
 const jsGlobs = '**/*.{js,jsx,mjs,ts,tsx}';
 const cssGlobs = '**/*.{css,scss}';
 
-const options = {stderr: process.stdout, stdout: process.stdout};
+const options = {
+	all: true,
+	reject: false,
+};
 
 switch (process.argv[2]) {
 	case 'checkFormat': {
-		await execa(options)`prettier ${jsGlobs} ${cssGlobs} --check`;
+		console.log('Running prettier...');
+
+		const result = await execa({
+			all: true,
+			reject: false,
+		})`prettier ${jsGlobs} ${cssGlobs} --check`;
+
+		if (result.failed) {
+			throw new Error(result.all);
+		}
 
 		console.log('Running eslint and stylelint...');
 
 		const [eslintResult, stylelintResult] = await Promise.all([
-			execa`eslint ${jsGlobs}`,
-			execa`stylelint ${cssGlobs}`,
+			execa(options)`eslint ${jsGlobs}`,
+			execa(options)`stylelint ${cssGlobs}`,
 		]);
 
-		console.log(eslintResult.stdout);
-		console.log(stylelintResult.stdout);
+		if (eslintResult.failed) {
+			throw new Error(eslintResult.all);
+		}
+
+		if (stylelintResult.failed) {
+			throw new Error(stylelintResult.all);
+		}
 
 		break;
 	}
 	case 'format': {
-		await execa(options)`prettier ${jsGlobs} ${cssGlobs} --write`;
+		await execa({
+			stdio: 'inherit',
+		})`prettier ${jsGlobs} ${cssGlobs} --write`;
 
 		console.log('Running eslint and stylelint...');
 

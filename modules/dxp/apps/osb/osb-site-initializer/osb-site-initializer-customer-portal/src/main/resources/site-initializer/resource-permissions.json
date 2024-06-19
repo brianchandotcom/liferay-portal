@@ -10,11 +10,144 @@
 	},
 	{
 		"actionIds": [
+			"ADD_CATEGORY",
+			"ADD_VOCABULARY",
+			"PERMISSIONS"
+		],
+		"resourceName": "com.liferay.asset.categories",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_CATEGORY",
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.asset.kernel.model.AssetCategory",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.asset.kernel.model.AssetVocabulary",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"MANAGE_TAG",
+			"PERMISSIONS",
+			"SUBSCRIBE"
+		],
+		"resourceName": "com.liferay.asset.tags",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
 			"VIEW_COMMERCE_ORDERS",
 			"VIEW_OPEN_COMMERCE_ORDERS"
 		],
 		"resourceName": "com.liferay.commerce.order",
 		"roleName": "Account Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"resourceName": "com.liferay.depot.model.DepotEntry",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_DOCUMENT",
+			"ADD_DOCUMENT_TYPE",
+			"ADD_FOLDER",
+			"ADD_REPOSITORY",
+			"ADD_SHORTCUT",
+			"ADD_STRUCTURE",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.document.library",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_DISCUSSION",
+			"DELETE",
+			"DELETE_DISCUSSION",
+			"DOWNLOAD",
+			"OVERRIDE_CHECKOUT",
+			"PERMISSIONS",
+			"UPDATE",
+			"UPDATE_DISCUSSION",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntry",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntryMetadata-com.liferay.dynamic.data.mapping.model.DDMStructure",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntryType",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileShortcut",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS",
+			"ADD_DOCUMENT",
+			"ADD_SHORTCUT",
+			"ADD_SUBFOLDER",
+			"DELETE",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
+		"roleName": "Site Content Reviewer",
 		"scope": "3"
 	},
 	{
@@ -25,6 +158,62 @@
 		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
 		"roleName": "User",
 		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_ARTICLE",
+			"ADD_FEED",
+			"ADD_FOLDER",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.journal",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_DISCUSSION",
+			"DELETE",
+			"DELETE_DISCUSSION",
+			"EXPIRE",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"UPDATE_DISCUSSION",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.journal.model.JournalArticle",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.journal.model.JournalFeed",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS",
+			"ADD_ARTICLE",
+			"ADD_SUBFOLDER",
+			"DELETE",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.journal.model.JournalFolder",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
 	},
 	{
 		"actionIds": [
@@ -341,10 +530,83 @@
 	},
 	{
 		"actionIds": [
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"resourceName": "com.liferay.portal.kernel.model.Group",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
 			"MANAGE_ACCOUNTS"
 		],
 		"resourceName": "com.liferay.portal.kernel.model.Organization",
 		"roleName": "Organization User",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"CONFIGURATION",
+			"PERMISSIONS",
+			"PREFERENCES",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_document_library_web_portlet_DLAdminPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"CONFIGURATION",
+			"PERMISSIONS",
+			"PREFERENCES",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_document_library_web_portlet_DLPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"CONFIGURATION",
+			"PERMISSIONS",
+			"PREFERENCES",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_journal_web_portlet_JournalPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"CONFIGURATION",
+			"PERMISSIONS",
+			"PREFERENCES",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_template_web_internal_portlet_TemplatePortlet",
+		"roleName": "Site Content Reviewer",
 		"scope": "3"
 	}
 ]

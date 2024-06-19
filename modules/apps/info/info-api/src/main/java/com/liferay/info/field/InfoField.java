@@ -48,7 +48,8 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 			Objects.equals(
 				_builder._labelInfoLocalizedValue,
 				infoField._builder._labelInfoLocalizedValue) &&
-			Objects.equals(_builder._name, infoField._builder._name)) {
+			Objects.equals(_builder._name, infoField._builder._name) &&
+			Objects.equals(_builder._uniqueId, infoField._builder._uniqueId)) {
 
 			return true;
 		}

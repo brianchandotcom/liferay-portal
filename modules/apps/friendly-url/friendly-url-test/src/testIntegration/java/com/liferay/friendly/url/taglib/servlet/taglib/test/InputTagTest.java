@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -140,6 +142,55 @@ public class InputTagTest {
 		}
 	}
 
+	@Test
+	public void testInputTagLocaleRemovedFromSiteSettings() throws Exception {
+		Map<Locale, String> friendlyURLMap = _layout.getFriendlyURLMap();
+
+		Assert.assertNotNull(friendlyURLMap.remove(LocaleUtil.SPAIN));
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_group.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty(
+			"inheritLocales", Boolean.FALSE.toString());
+
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			_group.getCompanyId());
+
+		String languageIds = portletPreferences.getValue(
+			PropsKeys.LOCALES, StringPool.BLANK);
+
+		String languageId = LocaleUtil.toLanguageId(LocaleUtil.SPAIN);
+
+		Assert.assertTrue(
+			StringUtil.contains(languageIds, languageId, StringPool.BLANK));
+
+		typeSettingsUnicodeProperties.setProperty(
+			PropsKeys.LOCALES,
+			com.liferay.petra.string.StringUtil.merge(
+				ArrayUtil.remove(
+					StringUtil.split(languageIds, StringPool.COMMA),
+					languageId),
+				StringPool.COMMA));
+
+		_group = _groupLocalService.updateGroup(
+			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
+
+		typeSettingsUnicodeProperties = _group.getTypeSettingsProperties();
+
+		Assert.assertEquals(
+			Boolean.FALSE.toString(),
+			typeSettingsUnicodeProperties.getProperty("inheritLocales", null));
+
+		Assert.assertFalse(
+			StringUtil.contains(
+				typeSettingsUnicodeProperties.getProperty(
+					PropsKeys.LOCALES, languageId),
+				languageId, StringPool.BLANK));
+
+		_assertInputTag(friendlyURLMap);
+	}
+
 	private void _assertInputTag(Map<Locale, String> expectedFriendlyURLMap)
 		throws Exception {
 
@@ -182,6 +233,9 @@ public class InputTagTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	private Layout _layout;
 	private Locale _locale;

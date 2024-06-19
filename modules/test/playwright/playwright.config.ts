@@ -15,7 +15,7 @@ import {config as blogsWebConfig} from './tests/blogs-web/config';
 import {config as changeTrackingWebConfig} from './tests/change-tracking-web/config';
 import {config as clientExtensionWebConfig} from './tests/client-extension-web/config';
 import {config as commerceConfig} from './tests/commerce/config';
-import {config as contentDashboardConfig} from './tests/content-dashboard-web/config';
+import {config as contentDashboardWebConfig} from './tests/content-dashboard-web/config';
 import {config as cookiesBannerWebConfig} from './tests/cookies-banner-web/config';
 import {config as dispatchWebConfig} from './tests/dispatch-web/config';
 import {config as documentLibraryWebConfig} from './tests/document-library-web/config';
@@ -32,26 +32,26 @@ import {config as journalWebConfig} from './tests/journal-web/config';
 import {config as knowledgeBaseWebConfig} from './tests/knowledge-base-web/config';
 import {config as layoutAdminWebConfig} from './tests/layout-admin-web/config';
 import {config as layoutContentPageEditorWebConfig} from './tests/layout-content-page-editor-web/config';
-import {config as layoutPageTemplateAdminWeb} from './tests/layout-page-template-admin-web/config';
+import {config as layoutPageTemplateAdminWebConfig} from './tests/layout-page-template-admin-web/config';
 import {config as layoutSetPrototypeWebConfig} from './tests/layout-set-prototype-web/config';
-import {config as lockedItemsConfig} from './tests/locked-items-web/config';
+import {config as lockedItemsWebConfig} from './tests/locked-items-web/config';
 import {config as loginWebConfig} from './tests/login-web/config';
-import {config as messageBoardsConfig} from './tests/message-boards-web/config';
+import {config as messageBoardsWebConfig} from './tests/message-boards-web/config';
 import {config as notificationWebConfig} from './tests/notification-web/config';
 import {config as objectWebConfig} from './tests/object-web/config';
 import {config as osbFaroWebConfig} from './tests/osb-faro-web/config';
 import {config as portalDefaultPermissionsWebConfig} from './tests/portal-default-permissions-web/config';
 import {config as portalSearchAdminWebConfig} from './tests/portal-search-admin-web/config';
 import {config as portalSearchWebConfig} from './tests/portal-search-web/config';
-import {config as portalSecurityScriptManagementWeb} from './tests/portal-security-script-management-web/config';
+import {config as portalSecurityScriptManagementWebConfig} from './tests/portal-security-script-management-web/config';
 import {config as portalWorkflowKaleoDesignerWebConfig} from './tests/portal-workflow-kaleo-designer-web/config';
 import {config as portletConfigurationWebConfig} from './tests/portlet-configuration-web/config';
 import {config as productNavigationUserPersonalBarWebConfig} from './tests/product-navigation-user-personal-bar-web/config';
 import {config as questionsWebConfig} from './tests/questions-web/config';
 import {config as rolesAdminWebConfig} from './tests/roles-admin-web/config';
-import {config as siteAdminConfig} from './tests/site-admin-web/config';
+import {config as siteAdminWebConfig} from './tests/site-admin-web/config';
 import {config as stableConfig} from './tests/stable/config';
-import {config as stylebookConfig} from './tests/style-book-web/config';
+import {config as stylebookWebConfig} from './tests/style-book-web/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
 import {config as wikiWebConfig} from './tests/wiki-web/config';
 import {config as marketplaceConfig} from './tests/workspaces/liferay-workspace-marketplace/config';
@@ -74,7 +74,7 @@ export default defineConfig({
 		changeTrackingWebConfig,
 		clientExtensionWebConfig,
 		commerceConfig,
-		contentDashboardConfig,
+		contentDashboardWebConfig,
 		dispatchWebConfig,
 		documentLibraryWebConfig,
 		dynamicDataMappingFormWebConfig,
@@ -91,26 +91,26 @@ export default defineConfig({
 		layoutAdminWebConfig,
 		layoutContentPageEditorWebConfig,
 		layoutSetPrototypeWebConfig,
-		layoutPageTemplateAdminWeb,
-		lockedItemsConfig,
+		layoutPageTemplateAdminWebConfig,
+		lockedItemsWebConfig,
 		loginWebConfig,
 		marketplaceConfig,
-		messageBoardsConfig,
+		messageBoardsWebConfig,
 		notificationWebConfig,
 		objectWebConfig,
 		osbFaroWebConfig,
 		portalDefaultPermissionsWebConfig,
 		portalSearchAdminWebConfig,
 		portalSearchWebConfig,
-		portalSecurityScriptManagementWeb,
+		portalSecurityScriptManagementWebConfig,
 		portalWorkflowKaleoDesignerWebConfig,
 		portletConfigurationWebConfig,
 		productNavigationUserPersonalBarWebConfig,
 		questionsWebConfig,
 		rolesAdminWebConfig,
-		siteAdminConfig,
+		siteAdminWebConfig,
 		stableConfig,
-		stylebookConfig,
+		stylebookWebConfig,
 		usersAdminWebConfig,
 		wikiWebConfig,
 		...setupProjects,

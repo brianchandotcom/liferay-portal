@@ -72,19 +72,26 @@ const Profile = () => {
 	};
 
 	const handleLogoUpload = (files: FileList) => {
-		const file = files[0];
+		const _file = files[0];
 
 		const newUploadedFile: UploadedFile = {
 			changed: true,
 			error: false,
-			file,
-			fileName: file.name,
+			file: _file,
+			fileName: _file.name,
 			id: getRandomID(),
-			preview: URL.createObjectURL(file),
+			preview: URL.createObjectURL(_file),
 			progress: 0,
-			readableSize: filesize(file.size),
+			readableSize: filesize(_file.size),
 			uploaded: true,
 		};
+
+		if (file) {
+			dispatch({
+				payload: file.id,
+				type: SolutionTypes.SET_DELETE_IMAGE,
+			});
+		}
 
 		dispatch({
 			payload: {

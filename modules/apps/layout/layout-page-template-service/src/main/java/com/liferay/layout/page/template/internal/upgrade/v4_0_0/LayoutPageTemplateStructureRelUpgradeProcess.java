@@ -50,7 +50,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 		return JSONFactoryUtil.createJSONObject();
 	}
 
-	private String _getPaginatiopnType(
+	private String _getPaginationType(
 		CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem,
 		JSONObject itemsJSONObject) {
 
@@ -81,7 +81,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 
 				collectionStyledLayoutStructureItem.setDisplayAllItems(false);
 
-				String paginationType = _getPaginatiopnType(
+				String paginationType = _getPaginationType(
 					collectionStyledLayoutStructureItem, itemsJSONObject);
 
 				if (CollectionPaginationUtil.isPaginationEnabled(

@@ -287,11 +287,10 @@
 
 					if (
 						imagePathPrefix &&
-						!imagePath.startsWith('data:image/')
+						!imagePath.startsWith('data:image/') &&
+						!/^https?:\/\//gi.test(imagePath)
 					) {
-						if (!/^https?:\/\//gi.test(imagePath)) {
-							imagePath = imagePathPrefix + imagePath;
-						}
+						imagePath = imagePathPrefix + imagePath;
 					}
 
 					const image = document.createElement('img');

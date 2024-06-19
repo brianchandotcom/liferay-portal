@@ -6,17 +6,17 @@
 		"baseUrl": ".",
 		"checkJs": false,
 		"composite": true,
+		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
 		"module": "es6",
 		"moduleResolution": "node",
-		"sourceMap": false,
-		"strict": true,
-		"target": "es2020",
-		"declarationDir": "../../../../../../../../.tsc/types",
 		"paths": {
 		},
 		"rootDir": "../../../../../../../..",
+		"sourceMap": false,
+		"strict": true,
+		"target": "es2020",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/document-library-opener-google-drive-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

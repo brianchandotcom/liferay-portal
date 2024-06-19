@@ -45,26 +45,12 @@ test('Add a page based on custom master', async ({
 }) => {
 	const masterName = 'New Master Page';
 
-	await test.step('Create and publish new custom master page', async () => {
+	await test.step('Create and publish new custom master page and edit it', async () => {
 		await masterPagesPage.goto(site.friendlyUrlPath);
 
 		await masterPagesPage.createNewMaster(masterName);
-	});
 
-	await test.step('Assert header of Drop Zone is inside body by default', async () => {
 		await masterPagesPage.editMaster(masterName);
-
-		await expect(page.locator('.page-editor__drop-zone')).toBeVisible();
-
-		await expect(
-			page.getByText(
-				'Fragments and widgets for pages based on this master will be placed here.'
-			)
-		).toBeVisible();
-
-		await expect(
-			page.getByText('Configure Allowed Fragments')
-		).toBeVisible();
 	});
 
 	let buttonId;

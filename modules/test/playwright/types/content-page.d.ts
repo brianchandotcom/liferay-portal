@@ -74,6 +74,7 @@ type PageElement = {
 		numberOfItems?: number;
 		size?: number;
 		widgetInstance?: {
+			widgetConfig?: Record<string, any>;
 			widgetName: string;
 		};
 	};

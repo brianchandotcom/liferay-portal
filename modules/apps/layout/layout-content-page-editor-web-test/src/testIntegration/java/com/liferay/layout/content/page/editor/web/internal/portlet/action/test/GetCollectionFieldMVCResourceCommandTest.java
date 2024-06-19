@@ -381,7 +381,6 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			"classNameId",
 			String.valueOf(
 				_portal.getClassNameId(JournalArticle.class.getName())));
-
 		mockHttpServletRequest.setParameter(
 			"classPK", String.valueOf(journalArticle.getResourcePrimKey()));
 
@@ -655,10 +654,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
-
-		return StringUtil.read(inputStream);
+		return StringUtil.read(
+			clazz.getResourceAsStream("dependencies/" + fileName));
 	}
 
 	@Inject(filter = "ddm.form.deserializer.type=json")

@@ -621,6 +621,8 @@ export class PageEditorPage {
 			.locator('.dropdown-menu.show')
 			.getByText('Hide Fragment')
 			.click();
+
+		await this.waitForChangesSaved();
 	}
 
 	async selectFragment(fragmentId: string, isDesktop = true) {

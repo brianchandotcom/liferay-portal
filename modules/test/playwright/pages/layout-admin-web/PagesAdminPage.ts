@@ -180,14 +180,10 @@ export class PagesAdminPage {
 	}
 
 	async editPage(name: string) {
-		await this.page
-			.locator('.miller-columns-item')
-			.getByRole('link', {name})
-			.click();
+		await this.clickOnAction('Edit', name);
 
 		await this.page
-			.locator('.management-bar')
-			.getByRole('button', {name: 'Publish'})
+			.getByText('Select a Page Element', {exact: true})
 			.waitFor();
 	}
 

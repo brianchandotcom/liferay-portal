@@ -117,8 +117,7 @@ public class NotificationsRestController extends BaseRestController {
 							notificationRequestItem.getEventCode(), "REFUND")) {
 
 					if (notificationRequestItem.isSuccess()) {
-						paymentId = _getPaymentId(
-							notificationRequestItem);
+						paymentId = _getPaymentId(notificationRequestItem);
 						paymentStatus = "17";
 					}
 					else {
@@ -148,41 +147,6 @@ public class NotificationsRestController extends BaseRestController {
 		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 
-	private boolean _hasAuthentication(
-		String authorization, JSONObject adyenWebhookJSONObject) {
-
-		if (StringUtils.isBlank(authorization) &&
-			!StringUtils.contains(authorization, "Basic")) {
-
-			return false;
-		}
-
-		String[] authorizationParts = new String(
-			Base64.getDecoder(
-			).decode(
-				authorization.substring(
-					"Basic".length()
-				).trim()
-			),
-			StandardCharsets.UTF_8
-		).split(
-			":", 2
-		);
-
-		String webhookPassword = authorizationParts[1];
-		String webhookUserName = authorizationParts[0];
-
-		if (webhookPassword.equals(
-				adyenWebhookJSONObject.getString("webhookPassword")) &&
-			webhookUserName.equals(
-				adyenWebhookJSONObject.getString("webhookUsername"))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private JSONObject _get(String authorization, String path) {
 		Mono<String> response = getWebClient(
 		).get(
@@ -200,6 +164,28 @@ public class NotificationsRestController extends BaseRestController {
 		response.subscribe();
 
 		return new JSONObject(Objects.requireNonNull(response.block()));
+	}
+
+	private String _getExternalReferenceCode(
+		NotificationRequestItem notificationRequestItem) {
+
+		if (StringUtils.equalsAny(
+				notificationRequestItem.getEventCode(), "AUTHORISATION",
+				"CAPTURE")) {
+
+			Map<String, String> additionalData =
+				notificationRequestItem.getAdditionalData();
+
+			return additionalData.get("paymentLinkId");
+		}
+
+		if (StringUtils.equals(
+				notificationRequestItem.getEventCode(), "REFUND")) {
+
+			return notificationRequestItem.getOriginalReference();
+		}
+
+		return null;
 	}
 
 	private String _getPaymentId(
@@ -237,26 +223,39 @@ public class NotificationsRestController extends BaseRestController {
 		return null;
 	}
 
-	private String _getExternalReferenceCode(
-		NotificationRequestItem notificationRequestItem) {
+	private boolean _hasAuthentication(
+		String authorization, JSONObject adyenWebhookJSONObject) {
 
-		if (StringUtils.equalsAny(
-				notificationRequestItem.getEventCode(), "AUTHORISATION",
-				"CAPTURE")) {
+		if (StringUtils.isBlank(authorization) &&
+			!StringUtils.contains(authorization, "Basic")) {
 
-			Map<String, String> additionalData =
-				notificationRequestItem.getAdditionalData();
-
-			return additionalData.get("paymentLinkId");
+			return false;
 		}
 
-		if (StringUtils.equals(
-				notificationRequestItem.getEventCode(), "REFUND")) {
+		String[] authorizationParts = new String(
+			Base64.getDecoder(
+			).decode(
+				authorization.substring(
+					"Basic".length()
+				).trim()
+			),
+			StandardCharsets.UTF_8
+		).split(
+			":", 2
+		);
 
-			return notificationRequestItem.getOriginalReference();
+		String webhookPassword = authorizationParts[1];
+		String webhookUserName = authorizationParts[0];
+
+		if (webhookPassword.equals(
+				adyenWebhookJSONObject.getString("webhookPassword")) &&
+			webhookUserName.equals(
+				adyenWebhookJSONObject.getString("webhookUsername"))) {
+
+			return true;
 		}
 
-		return null;
+		return false;
 	}
 
 	private void _patch(String authorization, String body, String path) {
@@ -297,8 +296,7 @@ public class NotificationsRestController extends BaseRestController {
 			).put(
 				"paymentStatus", paymentStatus
 			).toString(),
-			"/o/headless-commerce-admin-payment/v1.0/payments/" +
-				paymentId);
+			"/o/headless-commerce-admin-payment/v1.0/payments/" + paymentId);
 	}
 
 	private static final Log _log = LogFactory.getLog(

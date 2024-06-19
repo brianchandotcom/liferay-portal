@@ -104,14 +104,17 @@
 	videoUrl
 >
 	<#if videoUrl?has_content>
-		<#assign youtubeVideoId = videoUrl?split("=") />
-		<#if youtubeVideoId[1]?has_content>
+		<#assign videoUrlSplited = videoUrl?split("v=")[1] />
+
+		<#if videoUrlSplited?has_content>
+		<#assign youtubeVideoId = videoUrlSplited?split("&")[0] />
+
 			<a href="${videoUrl}" target="_blank">
 				<div class="align-items-center d-flex justify-content-center position-relative video-preview">
 					<img
 						class="video-thumbnail"
 						aria-label="video-thumbnail"
-						src="https://img.youtube.com/vi/${youtubeVideoId[1]}/0.jpg" />
+						src="https://img.youtube.com/vi/${youtubeVideoId}/0.jpg" />
 
 					<div class="position-absolute video-thumbnail-play-symbol">
 						<@clay["icon"] symbol="video" />

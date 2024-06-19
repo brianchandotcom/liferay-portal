@@ -1627,6 +1627,53 @@ public class KBArticleLocalServiceTest {
 
 	@FeatureFlags("LPS-188058")
 	@Test
+	public void testUpdateKBArticleDisplayDateExpiredArticleCanBePublished()
+		throws Exception {
+
+		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			new Date(), null, null, null, _serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, kbArticle.getStatus());
+
+		kbArticle = _kbArticleLocalService.expireKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(), _serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, kbArticle.getStatus());
+
+		Date displayDate = new Date(System.currentTimeMillis() + Time.DAY);
+
+		kbArticle = _kbArticleLocalService.updateKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, displayDate, null, null,
+			null, null, _serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, kbArticle.getStatus());
+
+		displayDate = new Date(System.currentTimeMillis() - Time.DAY);
+
+		kbArticle.setDisplayDate(displayDate);
+
+		kbArticle = _kbArticleLocalService.updateKBArticle(kbArticle);
+
+		_kbArticleLocalService.checkKBArticles(_group.getCompanyId());
+
+		kbArticle = _kbArticleLocalService.fetchKBArticle(
+			kbArticle.getKbArticleId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, kbArticle.getStatus());
+	}
+
+	@FeatureFlags("LPS-188058")
+	@Test
 	public void testUpdateKBArticleDisplayDateOnDraftArticleUpdatesStatusToScheduled()
 		throws Exception {
 

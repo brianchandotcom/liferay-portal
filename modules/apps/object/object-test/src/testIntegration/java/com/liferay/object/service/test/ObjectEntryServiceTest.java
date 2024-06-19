@@ -321,7 +321,7 @@ public class ObjectEntryServiceTest {
 			});
 
 		// User can add an object entry to descendant object definitions
-		// with the update permission.
+		// with the update permission
 
 		_setUser(_adminUser);
 
@@ -382,7 +382,7 @@ public class ObjectEntryServiceTest {
 		}
 
 		// User cannot add an object entry to a root object definition
-		// with the update permission.
+		// with the update permission
 
 		AssertUtils.assertFailure(
 			PortalException.class,
@@ -501,7 +501,7 @@ public class ObjectEntryServiceTest {
 					objectEntry.getObjectEntryId())));
 
 		// User can delete an object entry of a descendant object definition
-		// with the update permission.
+		// with the update permission
 
 		_setUser(_adminUser);
 
@@ -539,7 +539,7 @@ public class ObjectEntryServiceTest {
 		long rootObjectEntryId = objectEntryRootNode.getPrimaryKey();
 
 		// User cannot delete an object entry of a root object definition
-		// with the update permission.
+		// with the update permission
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
@@ -689,7 +689,7 @@ public class ObjectEntryServiceTest {
 					objectEntry.getObjectEntryId())));
 
 		// User can view an object entry of a descendant object definition
-		// with the update permission.
+		// with the update permission
 
 		_setUser(_adminUser);
 
@@ -719,7 +719,7 @@ public class ObjectEntryServiceTest {
 		long rootObjectEntryId = objectEntryRootNode.getPrimaryKey();
 
 		// User cannot view an object entry of a root object definition
-		// with the update permission.
+		// with the update permission
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,

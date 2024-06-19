@@ -248,7 +248,7 @@ public class JournalArticleItemSelectorViewDisplayContextTest {
 		);
 
 		JournalArticleItemSelectorViewDisplayContext
-			journalArticleItemSelectorView =
+			journalArticleItemSelectorViewDisplayContext =
 				new JournalArticleItemSelectorViewDisplayContext(
 					_httpServletRequest,
 					Mockito.mock(InfoItemItemSelectorCriterion.class),
@@ -261,7 +261,7 @@ public class JournalArticleItemSelectorViewDisplayContextTest {
 					Mockito.mock(StagingGroupHelper.class));
 
 		SearchContainer<?> searchContainer =
-			journalArticleItemSelectorView.getSearchContainer();
+			journalArticleItemSelectorViewDisplayContext.getSearchContainer();
 
 		Assert.assertNotNull(searchContainer);
 

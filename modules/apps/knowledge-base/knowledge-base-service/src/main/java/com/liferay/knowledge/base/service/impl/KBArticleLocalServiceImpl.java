@@ -111,6 +111,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -502,8 +503,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 			// Attachments
 
-			_portletFileRepository.deletePortletFolder(
-				kbArticle.getAttachmentsFolderId());
+			if (!GroupThreadLocal.isDeleteInProcess()) {
+				_portletFileRepository.deletePortletFolder(
+					kbArticle.getAttachmentsFolderId());
+			}
 
 			// Subscriptions
 

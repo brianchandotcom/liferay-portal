@@ -88,6 +88,7 @@ export class PagesAdminPage {
 			.getByText('Success:The page was updated successfully.')
 			.waitFor({state: 'visible'});
 	}
+
 	async checkIfWebContentAddedToHome(
 		siteName: string,
 		webContentBody: string
@@ -164,13 +165,13 @@ export class PagesAdminPage {
 		await loadingAnimation.waitFor();
 		await loadingAnimation.waitFor({state: 'hidden'});
 
-		const frameLocator = await this.page.frameLocator(
+		const modalFrame = await this.page.frameLocator(
 			'iframe[title="Add Page"]'
 		);
-		const inputName = await frameLocator.getByPlaceholder('Add Page Name');
+		const inputName = await modalFrame.getByPlaceholder('Add Page Name');
 		await inputName.fill(name);
 
-		await frameLocator.getByRole('button', {name: 'Add'}).click();
+		await modalFrame.getByRole('button', {name: 'Add'}).click();
 
 		await this.pageEditorPage.publishPage();
 	}

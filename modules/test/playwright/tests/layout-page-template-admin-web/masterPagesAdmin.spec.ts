@@ -19,7 +19,7 @@ export const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('Validate if the Blank page template can not be edited and deleted.', async ({
+test('Validate if the Blank page template can not be edited and deleted', async ({
 	masterPagesPage,
 	site,
 }) => {
@@ -36,7 +36,7 @@ test('Validate if the Blank page template can not be edited and deleted.', async
 	).not.toBeVisible();
 });
 
-test('Add a page based on custom master.', async ({
+test('Add a page based on custom master', async ({
 	masterPagesPage,
 	page,
 	pageEditorPage,
@@ -145,7 +145,7 @@ test('Add a page based on custom master.', async ({
 	});
 });
 
-test('Fragments hidden in master pages are hidden in pages that use it and visibility can not be changed.', async ({
+test('Fragments hidden in master pages are hidden in pages that use it and visibility can not be changed', async ({
 	masterPagesPage,
 	page,
 	pageEditorPage,

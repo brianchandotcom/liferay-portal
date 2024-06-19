@@ -133,6 +133,7 @@ export class PageEditorPage {
 			const valueButton = await this.page.getByTitle(value, {
 				exact: true,
 			});
+
 			await valueButton.click();
 		}
 		else {

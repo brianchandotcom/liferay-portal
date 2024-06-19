@@ -70,7 +70,7 @@ public class NotificationsRestController extends BaseRestController {
 					"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
 						externalReferenceCode);
 
-				if (!_checkAuthentication(
+				if (!_hasAuthentication(
 						headers.get("authorization"), adyenWebhookJSONObject)) {
 
 					return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -94,9 +94,9 @@ public class NotificationsRestController extends BaseRestController {
 						"CAPTURE")) {
 
 					if (notificationRequestItem.isSuccess()) {
-						paymentStatus = "0";
 						commercePaymentEntryId =
 							notificationRequestItem.getMerchantReference();
+						paymentStatus = "0";
 					}
 					else {
 						errorMessages = notificationRequestItem.getReason();
@@ -117,10 +117,9 @@ public class NotificationsRestController extends BaseRestController {
 							notificationRequestItem.getEventCode(), "REFUND")) {
 
 					if (notificationRequestItem.isSuccess()) {
-						paymentStatus = "17";
-
 						commercePaymentEntryId = _getCommercePaymentEntryId(
 							notificationRequestItem);
+						paymentStatus = "17";
 					}
 					else {
 						errorMessages = notificationRequestItem.getReason();
@@ -129,7 +128,7 @@ public class NotificationsRestController extends BaseRestController {
 
 				if (StringUtils.isNotBlank(commercePaymentEntryId)) {
 					_updatePayment(
-						json, commercePaymentEntryId, errorMessages,
+						commercePaymentEntryId, errorMessages, json,
 						paymentStatus);
 
 					delete(
@@ -150,7 +149,7 @@ public class NotificationsRestController extends BaseRestController {
 		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 
-	private boolean _checkAuthentication(
+	private boolean _hasAuthentication(
 		String authorization, JSONObject adyenWebhookJSONObject) {
 
 		if (StringUtils.isBlank(authorization) &&
@@ -159,7 +158,7 @@ public class NotificationsRestController extends BaseRestController {
 			return false;
 		}
 
-		final String[] credentials = new String(
+		String[] authorizationParts = new String(
 			Base64.getDecoder(
 			).decode(
 				authorization.substring(
@@ -171,8 +170,8 @@ public class NotificationsRestController extends BaseRestController {
 			":", 2
 		);
 
-		String webhookPassword = credentials[1];
-		String webhookUserName = credentials[0];
+		String webhookPassword = authorizationParts[1];
+		String webhookUserName = authorizationParts[0];
 
 		if (webhookPassword.equals(
 				adyenWebhookJSONObject.getString("webhookPassword")) &&
@@ -220,21 +219,19 @@ public class NotificationsRestController extends BaseRestController {
 				notificationRequestItem.getMerchantReference()
 			).toString());
 
-		JSONArray itemsjsonArray = paymentsJSONObject.getJSONArray("items");
+		JSONArray itemsJSONArray = paymentsJSONObject.getJSONArray("items");
 
-		String paymentPspReference =
-			notificationRequestItem.getOriginalReference();
-		String pspReference = notificationRequestItem.getPspReference();
+		for (int i = 0; i < itemsJSONArray.length(); i++) {
+			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
-		for (int i = 0; i < itemsjsonArray.length(); i++) {
-			JSONObject itemjsonObject = itemsjsonArray.getJSONObject(i);
+			String payload = itemJSONObject.getString("payload");
 
-			String payload = itemjsonObject.getString("payload");
+			if (StringUtils.contains(
+					payload, notificationRequestItem.getOriginalReference()) &&
+				StringUtils.contains(
+					payload, notificationRequestItem.getPspReference())) {
 
-			if (StringUtils.contains(payload, paymentPspReference) &&
-				StringUtils.contains(payload, pspReference)) {
-
-				return String.valueOf(itemjsonObject.getInt("id"));
+				return String.valueOf(itemJSONObject.getInt("id"));
 			}
 		}
 
@@ -244,8 +241,6 @@ public class NotificationsRestController extends BaseRestController {
 	private String _getExternalReferenceCode(
 		NotificationRequestItem notificationRequestItem) {
 
-		String externalReferenceCode;
-
 		if (StringUtils.equalsAny(
 				notificationRequestItem.getEventCode(), "AUTHORISATION",
 				"CAPTURE")) {
@@ -253,19 +248,16 @@ public class NotificationsRestController extends BaseRestController {
 			Map<String, String> additionalData =
 				notificationRequestItem.getAdditionalData();
 
-			externalReferenceCode = additionalData.get("paymentLinkId");
-		}
-		else if (StringUtils.equals(
-					notificationRequestItem.getEventCode(), "REFUND")) {
-
-			externalReferenceCode =
-				notificationRequestItem.getOriginalReference();
-		}
-		else {
-			externalReferenceCode = null;
+			return additionalData.get("paymentLinkId");
 		}
 
-		return externalReferenceCode;
+		if (StringUtils.equals(
+				notificationRequestItem.getEventCode(), "REFUND")) {
+
+			return notificationRequestItem.getOriginalReference();
+		}
+
+		return null;
 	}
 
 	private void _patch(String authorization, String body, String path) {
@@ -286,7 +278,7 @@ public class NotificationsRestController extends BaseRestController {
 	}
 
 	private void _updatePayment(
-		String json, String commercePaymentEntryId, String errorMessages,
+		String commercePaymentEntryId, String errorMessages, String json,
 		String paymentStatus) {
 
 		_patch(

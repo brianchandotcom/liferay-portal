@@ -12,7 +12,7 @@
 	},
 	"id": "__PROJECT_ID__",
 	"kind": "CronJob",
-	"memory": 1024,
+	"memory": 512,
 	"scale": 1,
-	"schedule": "0 20 * * *"
+	"schedule": "* */8 * * *"
 }

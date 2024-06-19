@@ -29,7 +29,7 @@
 	"loadBalancer": {
 		"targetPort": 58081
 	},
-	"memory": 512,
+	"memory": 1024,
 	"readinessProbe": {
 		"httpGet": {
 			"path": "/ready",

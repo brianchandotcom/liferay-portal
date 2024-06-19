@@ -440,7 +440,16 @@ gradle.beforeProject {
 				rtlExcludedPathRegexps = [".+"]
 			}
 
-			if (FileUtil.exists(project, "package.json")) {
+			if (project.name.endsWith("-api") || project.name.endsWith("-impl")) {
+				buildCSS {
+					enabled = false
+				}
+
+				copyCSS {
+					enabled = false
+				}
+			}
+			else if (FileUtil.exists(project, "package.json")) {
 				JsonSlurper jsonSlurper = new JsonSlurper()
 
 				File packageJSONFile = project.file("package.json")
@@ -459,7 +468,7 @@ gradle.beforeProject {
 					}
 				}
 
-				if (packageJSONFile.text.contains("liferay-npm-scripts build") || liferayESModule || project.name.endsWith("-api") || project.name.endsWith("-impl")) {
+				if (packageJSONFile.text.contains("liferay-npm-scripts build") || liferayESModule) {
 					buildCSS {
 						enabled = false
 					}

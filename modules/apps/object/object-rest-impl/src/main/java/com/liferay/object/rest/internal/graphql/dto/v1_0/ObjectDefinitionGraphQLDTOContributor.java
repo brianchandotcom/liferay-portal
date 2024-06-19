@@ -524,6 +524,22 @@ public class ObjectDefinitionGraphQLDTOContributor
 		}
 
 		objectEntry.setId(() -> (Long)map.get(getIdName()));
+		objectEntry.setStatus(
+			() -> {
+				if (map.get("statusCode") == null) {
+					return null;
+				}
+
+				int statusCode = (int)map.get("statusCode");
+
+				return new Status() {
+					{
+						setCode(() -> statusCode);
+						setLabel(
+							() -> WorkflowConstants.getStatusLabel(statusCode));
+					}
+				};
+			});
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
@@ -533,18 +549,6 @@ public class ObjectDefinitionGraphQLDTOContributor
 			}
 
 			properties.put(entry.getKey(), entry.getValue());
-		}
-
-		if (map.get("statusCode") != null) {
-			objectEntry.setStatus(
-				() -> new Status() {
-					{
-						setCode(() -> (int)map.get("statusCode"));
-						setLabel(
-							() -> WorkflowConstants.getStatusLabel(
-								(int)map.get("statusCode")));
-					}
-				});
 		}
 
 		return objectEntry;

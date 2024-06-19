@@ -69,6 +69,18 @@
 		"to": ""
 	},
 	{
+		"classNames": [
+			"Http",
+			"HttpUtil"
+		],
+		"from": "regex:(http|_http|HttpUtil)\\.(addParameter|decodePath|decodeURL|encodeParameters|encodePath|fixPath|getCompleteURL|getDomain|getIpAddress|getParameter|getParameterMap|getPath|getProtocol|getQueryString|getRequestURL|getURI|hasDomain|hasProtocol|isForwarded|isSecure|normalizePath|parameterMapFromString|protocolize|removeDomain|removeParameter|removePathParameters|removeProtocol|sanitizeHeader|setParameter|shortenURL)",
+		"issueKey": "LPD-8040",
+		"newImports": [
+			"com.liferay.portal.kernel.util.HttpComponentsUtil"
+		],
+		"to": "HttpComponentsUtil.$2"
+	},
+	{
 		"from": "new AssetListEntryCreateDateComparator()",
 		"issueKey": "LPD-26157",
 		"skipParametersValidation": true,
@@ -648,7 +660,7 @@
 		"to": "fetchByExternalReferenceCode(param#1#, param#0#)"
 	},
 	{
-		"from": "AssetCategory::getLeftCategoryId",
+		"from": "regex:AssetCategory::getLeftCategoryId",
 		"issueKey": "LPS-196624",
 		"to": "AssetCategory::getCategoryId"
 	},

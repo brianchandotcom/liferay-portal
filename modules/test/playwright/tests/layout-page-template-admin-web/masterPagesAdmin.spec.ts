@@ -49,16 +49,6 @@ test('Add a page based on custom master', async ({
 		await masterPagesPage.goto(site.friendlyUrlPath);
 
 		await masterPagesPage.createNewMaster(masterName);
-
-		const templateCard = masterPagesPage.getMasterCard(masterName);
-
-		await expect(templateCard).toBeVisible();
-
-		await expect(templateCard.getByLabel('More actions')).toBeVisible();
-
-		await expect(
-			templateCard.locator('.custom-control.custom-checkbox')
-		).toBeVisible();
 	});
 
 	await test.step('Assert header of Drop Zone is inside body by default', async () => {

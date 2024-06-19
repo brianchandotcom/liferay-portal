@@ -35,6 +35,12 @@ export class MasterPagesPage {
 		await this.page.getByRole('button', {name: 'Save'}).click();
 
 		await this.pageEditorPage.publishPage();
+
+		const templateCard = this.getMasterCard(name);
+
+		await templateCard.getByLabel('More actions').waitFor();
+
+		await templateCard.locator('.custom-control.custom-checkbox').waitFor();
 	}
 
 	async editMaster(name: string) {

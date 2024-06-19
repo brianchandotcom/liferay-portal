@@ -17,7 +17,7 @@ export const products = {
 		cloudCompatible: true,
 		compatibleOfferings: ['Self-Hosted', 'Self-Managed', 'Fully-Managed'],
 		description: 'My free cloud app',
-		dxpVersions: ['Liferay Portal 7.4 GA109'],
+		dxpVersions: ['7.3'],
 		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),
 		name: 'Cloud App - Free',
 		resourceRequirements: {
@@ -36,7 +36,7 @@ export const products = {
 		cloudCompatible: true,
 		compatibleOfferings: ['Self-Hosted', 'Self-Managed', 'Fully-Managed'],
 		description: 'My paid cloud app',
-		dxpVersions: ['Liferay Portal 7.4 GA109'],
+		dxpVersions: ['7.3'],
 		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),
 		name: 'Cloud App - Paid',
 		price: {
@@ -60,7 +60,7 @@ export const products = {
 		cloudCompatible: false,
 		compatibleOfferings: ['Self-Hosted'],
 		description: 'My free dxp app',
-		dxpVersions: ['Liferay Portal 7.4 GA110', 'Liferay Portal 7.4 GA109'],
+		dxpVersions: ['7.3', '7.4'],
 		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),
 		name: 'DXP App - Free',
 		tags: ['Client Extension Type'],

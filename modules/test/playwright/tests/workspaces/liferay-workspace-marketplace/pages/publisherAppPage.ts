@@ -187,7 +187,7 @@ export class PublisherAppPage {
 			.waitFor({state: 'visible'});
 
 		for (const dxpVersion of this.publishProductPayload.dxpVersions) {
-			await this.page.getByLabel(dxpVersion).click();
+			await this.page.getByText(dxpVersion, {exact: true}).click();
 		}
 
 		await this.confirmButton.click();

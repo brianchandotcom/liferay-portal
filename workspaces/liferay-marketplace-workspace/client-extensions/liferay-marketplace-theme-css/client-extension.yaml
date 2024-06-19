@@ -1,8 +1,0 @@
-assemble:
-    - from: src/fonts
-      into: static/fonts
-liferay-marketplace-theme-css:
-    clayURL: css/clay.css
-    mainURL: css/main.css
-    name: Liferay Marketplace Theme CSS
-    type: themeCSS

@@ -1395,10 +1395,8 @@ public class RenderLayoutStructureTagTest {
 	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
-
-		return StringUtil.read(inputStream);
+		return StringUtil.read(
+			clazz.getResourceAsStream("dependencies/" + fileName));
 	}
 
 	private static final int _COUNT_FRAGMENT_ENTRY_LINKS = 5;

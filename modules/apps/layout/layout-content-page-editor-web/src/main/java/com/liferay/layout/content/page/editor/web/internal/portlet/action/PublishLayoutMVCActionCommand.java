@@ -97,7 +97,7 @@ public class PublishLayoutMVCActionCommand
 		MultiSessionMessages.add(actionRequest, "layoutPublished");
 	}
 
-	private void _cleanWidgetPagesTypeSettings(
+	private void _cleanWidgetLayoutTypeSettings(
 		UnicodeProperties typeSettingsUnicodeProperties) {
 
 		typeSettingsUnicodeProperties.remove(
@@ -162,7 +162,7 @@ public class PublishLayoutMVCActionCommand
 				LayoutTypeSettingsConstants.KEY_PUBLISHED,
 				Boolean.TRUE.toString());
 
-			_cleanWidgetPagesTypeSettings(typeSettingsUnicodeProperties);
+			_cleanWidgetLayoutTypeSettings(typeSettingsUnicodeProperties);
 
 			draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
@@ -220,7 +220,8 @@ public class PublishLayoutMVCActionCommand
 				}
 			}
 
-			_cleanWidgetPagesTypeSettings(updatedTypeSettingsUnicodeProperties);
+			_cleanWidgetLayoutTypeSettings(
+				updatedTypeSettingsUnicodeProperties);
 
 			layout.setType(draftLayout.getType());
 			layout.setLayoutPrototypeUuid(null);

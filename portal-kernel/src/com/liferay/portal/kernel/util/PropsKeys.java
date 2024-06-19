@@ -121,6 +121,9 @@ public interface PropsKeys {
 	public static final String ADMIN_SYNC_DEFAULT_ASSOCIATIONS =
 		"admin.sync.default.associations";
 
+	public static final String ANALYTICS_CLOUD_CLIENT_JS_VERSION =
+		"analytics.cloud.client.js.version";
+
 	public static final String ANNOUNCEMENTS_EMAIL_BODY =
 		"announcements.email.body";
 

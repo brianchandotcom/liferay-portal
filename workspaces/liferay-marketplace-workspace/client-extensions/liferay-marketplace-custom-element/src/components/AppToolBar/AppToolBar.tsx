@@ -12,7 +12,6 @@ import './AppToolbar.scss';
 
 import ClayIcon from '@clayui/icon';
 import {ComponentProps} from 'react';
-import {Link} from 'react-router-dom';
 
 import i18n from '../../i18n';
 
@@ -23,7 +22,7 @@ type AppToolbarProps = {
 	appName?: string;
 	display?: {preview?: boolean; saveAsDraft?: boolean; submit?: boolean};
 	exitHref?: string;
-	exitProps?: ComponentProps<typeof Link>;
+	exitProps?: ComponentProps<typeof ClayButton>;
 	previewProps?: Omit<
 		ComponentProps<typeof ClayButtonWithIcon>,
 		'aria-label' | 'symbol'
@@ -38,7 +37,6 @@ const AppToolbar: React.FC<AppToolbarProps> = ({
 	appImage,
 	appName,
 	display = {preview: false, saveAsDraft: false, submit: false},
-	exitHref,
 	exitProps,
 	saveAsDraftProps,
 	submitProps,
@@ -102,13 +100,13 @@ const AppToolbar: React.FC<AppToolbarProps> = ({
 
 		<ClayManagementToolbar.ItemList>
 			<div className="align-items-center d-flex flex-row gap-3 justify-content-between mkt-gap-1">
-				<Link
+				<ClayButton
 					className="new-app-tool-bar-button-text text-dark"
-					to={exitHref as string}
+					displayType="unstyled"
 					{...exitProps}
 				>
 					{i18n.translate('exit')}
-				</Link>
+				</ClayButton>
 
 				{display.saveAsDraft && (
 					<ClayButton

@@ -62,6 +62,9 @@ const PublishSolutionOutlet = () => {
 	const isDraft = (status?: number) =>
 		status === PRODUCT_WORKFLOW_STATUS_CODE.DRAFT;
 
+	const isSaveAsDraft =
+		!context._product || isDraft(context._product.productStatus);
+
 	return (
 		<>
 			<AppToolbar
@@ -71,18 +74,15 @@ const PublishSolutionOutlet = () => {
 				appName={context.profile.name}
 				display={{
 					preview: true,
-					saveAsDraft:
-						!context._product ||
-						isDraft(context._product.productStatus),
+					saveAsDraft: isSaveAsDraft,
 					submit:
 						!!context._product &&
 						!isDraft(context._product.productStatus),
 				}}
 				exitProps={{
 					onClick: () => {
-						onOpenChange(true);
+						isSaveAsDraft ? onOpenChange(true) : onExit();
 					},
-					to: undefined as any,
 				}}
 				previewProps={{
 					disabled: false,

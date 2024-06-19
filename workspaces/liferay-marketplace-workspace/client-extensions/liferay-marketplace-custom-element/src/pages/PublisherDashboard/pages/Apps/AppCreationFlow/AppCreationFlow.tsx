@@ -18,6 +18,9 @@ import {ReviewAndSubmitAppPage} from './ReviewAndSubmitAppPage/ReviewAndSubmitAp
 import {CustomizeAppStorefrontPage} from './StorefrontPage/CustomizeAppStorefrontPage';
 
 import './AppCreationFlow.scss';
+
+import {useNavigate} from 'react-router-dom';
+
 import AppToolbar from '../../../../../components/AppToolBar/AppToolBar';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 import {Liferay} from '../../../../../liferay/liferay';
@@ -40,6 +43,8 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 		useState(initialFLowListItems);
 	const [currentFlow, setCurrentFlow] = useState('create');
 	const {data: account} = useAccount();
+
+	const navigate = useNavigate();
 
 	const setAppFlowListState = ({
 		checkedItems,
@@ -79,7 +84,9 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 				accountName={account?.name as string}
 				appImage={appLogo?.preview}
 				appName={appName}
-				exitHref="../"
+				exitProps={{
+					onClick: () => navigate('../'),
+				}}
 			/>
 
 			<div className="app-creation-flow-body">

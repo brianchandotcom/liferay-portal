@@ -159,6 +159,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
+import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Feature;
 
@@ -5557,8 +5558,8 @@ public class ObjectEntryResourceTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		AtomicInteger booleanObjectFieldAtomicInteger = new AtomicInteger();
-		AtomicInteger dateObjectFieldAtomicInteger = new AtomicInteger();
+		AtomicInteger atomicInteger1 = new AtomicInteger();
+		AtomicInteger atomicInteger2 = new AtomicInteger();
 
 		ServiceRegistration<Feature> serviceRegistration =
 			bundleContext.registerService(
@@ -5581,8 +5582,7 @@ public class ObjectEntryResourceTest {
 
 								UnsafeSupplier<Object, Exception>
 									unsafeSupplier1 = () -> {
-										booleanObjectFieldAtomicInteger.
-											incrementAndGet();
+										atomicInteger1.incrementAndGet();
 
 										return RandomTestUtil.randomBoolean();
 									};
@@ -5593,8 +5593,7 @@ public class ObjectEntryResourceTest {
 
 								UnsafeSupplier<Object, Exception>
 									unsafeSupplier2 = () -> {
-										dateObjectFieldAtomicInteger.
-											incrementAndGet();
+										atomicInteger2.incrementAndGet();
 
 										return _dateFormat.format(
 											RandomTestUtil.nextDate());
@@ -5602,7 +5601,10 @@ public class ObjectEntryResourceTest {
 
 								properties.put(
 									_OBJECT_FIELD_NAME_DATE, unsafeSupplier2);
-							});
+
+								objectEntry.setProperties(properties);
+							},
+						Priorities.USER + 999);
 
 					return false;
 				},
@@ -5642,10 +5644,10 @@ public class ObjectEntryResourceTest {
 
 			Assert.assertEquals(
 				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed once",
-				1, booleanObjectFieldAtomicInteger.getAndSet(0));
+				1, atomicInteger1.getAndSet(0));
 			Assert.assertEquals(
 				_OBJECT_FIELD_NAME_DATE + " should not have been computed", 0,
-				dateObjectFieldAtomicInteger.getAndSet(0));
+				atomicInteger2.getAndSet(0));
 
 			jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -5660,10 +5662,10 @@ public class ObjectEntryResourceTest {
 
 			Assert.assertEquals(
 				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed once",
-				1, booleanObjectFieldAtomicInteger.getAndSet(0));
+				1, atomicInteger1.getAndSet(0));
 			Assert.assertEquals(
 				_OBJECT_FIELD_NAME_DATE + " should have been computed once", 1,
-				dateObjectFieldAtomicInteger.getAndSet(0));
+				atomicInteger2.getAndSet(0));
 		}
 		finally {
 			serviceRegistration.unregister();

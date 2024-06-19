@@ -285,7 +285,10 @@
 					let imagePath = r[1];
 					const imagePathPrefix = options ? options.imagePrefix : '';
 
-					if (imagePathPrefix) {
+					if (
+						imagePathPrefix &&
+						!imagePath.startsWith('data:image/')
+					) {
 						if (!/^https?:\/\//gi.test(imagePath)) {
 							imagePath = imagePathPrefix + imagePath;
 						}

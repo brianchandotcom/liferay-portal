@@ -1,5 +1,5 @@
 {
-	"@generated": "f183bd9d959b8c88abc59206f33c1546d9218cb1",
+	"@generated": "961351e8aeaab5cce1eef4d696cd9a3be5c36560",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -20,6 +20,9 @@
 			],
 			"@liferay/template-web": [
 				"../../../../../../../template/template-web/src/main/resources/META-INF/resources/js/index.js"
+			],
+			"data-engine-js-components-web": [
+				"../../../../../../../data-engine/data-engine-js-components-web/src/main/resources/META-INF/resources/js/index.d.ts"
 			],
 			"frontend-js-components-web": [
 				"../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
@@ -51,6 +54,9 @@
 		},
 		{
 			"path": "../../../../../../../template/template-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../../data-engine/data-engine-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"

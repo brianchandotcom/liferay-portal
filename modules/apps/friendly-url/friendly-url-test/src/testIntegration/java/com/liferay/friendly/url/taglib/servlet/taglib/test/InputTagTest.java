@@ -17,17 +17,24 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -79,6 +86,58 @@ public class InputTagTest {
 	@Test
 	public void testInputTag() throws Exception {
 		_assertInputTag(_layout.getFriendlyURLMap());
+	}
+
+	@Test
+	public void testInputTagLocaleRemovedFromCompanySettings()
+		throws Exception {
+
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			_group.getCompanyId());
+
+		String originalLanguageIds = portletPreferences.getValue(
+			PropsKeys.LOCALES, StringPool.BLANK);
+
+		try {
+			Map<Locale, String> friendlyURLMap = _layout.getFriendlyURLMap();
+
+			Assert.assertNotNull(friendlyURLMap.remove(LocaleUtil.SPAIN));
+
+			String languageId = LocaleUtil.toLanguageId(LocaleUtil.SPAIN);
+
+			Assert.assertTrue(
+				StringUtil.contains(
+					originalLanguageIds, languageId, StringPool.BLANK));
+
+			_companyLocalService.updatePreferences(
+				_group.getCompanyId(),
+				UnicodePropertiesBuilder.put(
+					PropsKeys.LOCALES,
+					com.liferay.petra.string.StringUtil.merge(
+						ArrayUtil.remove(
+							StringUtil.split(
+								originalLanguageIds, StringPool.COMMA),
+							languageId),
+						StringPool.COMMA)
+				).build());
+
+			portletPreferences = PrefsPropsUtil.getPreferences(
+				_group.getCompanyId());
+
+			Assert.assertFalse(
+				StringUtil.contains(
+					portletPreferences.getValue(PropsKeys.LOCALES, languageId),
+					languageId, StringPool.BLANK));
+
+			_assertInputTag(friendlyURLMap);
+		}
+		finally {
+			_companyLocalService.updatePreferences(
+				_group.getCompanyId(),
+				UnicodePropertiesBuilder.put(
+					PropsKeys.LOCALES, originalLanguageIds
+				).build());
+		}
 	}
 
 	private void _assertInputTag(Map<Locale, String> expectedFriendlyURLMap)

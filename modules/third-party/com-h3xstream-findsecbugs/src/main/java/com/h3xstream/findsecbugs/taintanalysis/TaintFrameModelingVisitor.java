@@ -276,6 +276,14 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
             Taint staticTaint = taintConfig.getStaticFieldTaint(fieldSig, null);
             Taint t = getFrame().getTopValue();
             t = Taint.merge(t, staticTaint);
+
+            // we are escaping a method context into a global class context
+            // method parameters and variables make no sense there
+            // 1. clear any method parameters
+            t.clearParameters();
+            // 2. clear method variable indexes
+            t.invalidateVariableIndex();
+
             taintConfig.putStaticFieldTaint(fieldSig, t);
         } catch (DataflowAnalysisException e) {
         }
@@ -435,6 +443,14 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
         }
     }
 
+    @Override
+    public void visitINVOKEDYNAMIC(INVOKEDYNAMIC obj) {
+        if(FindSecBugsGlobalConfig.getInstance().isWorkaroundVisitInvokeDynamic()) {
+            visitInvoke(obj);
+        } else {
+            handleNormalInstruction(obj);
+        }
+    }
     @Override
     public void visitANEWARRAY(ANEWARRAY obj) {
         try {
@@ -636,7 +652,7 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
                 }
             }
 
-        } catch (Exception e) {
+        } catch (RuntimeException | DataflowAnalysisException e) {
             String className = ClassName.toSlashedClassName(obj.getReferenceType(cpg).toString());
             String methodName = obj.getMethodName(cpg);
             String signature = obj.getSignature(cpg);

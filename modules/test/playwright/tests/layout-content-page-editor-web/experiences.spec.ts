@@ -198,9 +198,13 @@ test('styles changes affect to current experience only', async ({
 
 	await pageEditorPage.changeFragmentSpacing(headingId, 'Margin Top', '2');
 
-	expect(await pageEditorPage.getFragmentStyle(headingId, 'marginTop')).toBe(
-		'8px'
-	);
+	expect(
+		await pageEditorPage.getFragmentStyle({
+			fragmentId: headingId,
+			isTopperStyle: true,
+			style: 'marginTop',
+		})
+	).toBe('8px');
 
 	// Create new experience and change margin top again
 
@@ -213,17 +217,25 @@ test('styles changes affect to current experience only', async ({
 		'px'
 	);
 
-	expect(await pageEditorPage.getFragmentStyle(headingId, 'marginTop')).toBe(
-		'5px'
-	);
+	expect(
+		await pageEditorPage.getFragmentStyle({
+			fragmentId: headingId,
+			isTopperStyle: true,
+			style: 'marginTop',
+		})
+	).toBe('5px');
 
 	// Change to Default experience again and check previous margin
 
 	await pageEditorPage.switchExperience('Default');
 
-	expect(await pageEditorPage.getFragmentStyle(headingId, 'marginTop')).toBe(
-		'8px'
-	);
+	expect(
+		await pageEditorPage.getFragmentStyle({
+			fragmentId: headingId,
+			isTopperStyle: true,
+			style: 'marginTop',
+		})
+	).toBe('8px');
 });
 
 test('allows duplicating an experience', async ({

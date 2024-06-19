@@ -465,14 +465,22 @@ export class PageEditorPage {
 		return fragmentId;
 	}
 
-	async getFragmentStyle(
-		fragmentId: string,
-		style: string,
-		isDesktop = true
-	) {
-		const topper = this.getTopper(fragmentId, isDesktop);
+	async getFragmentStyle({
+		fragmentId,
+		isDesktop = true,
+		isTopperStyle = false,
+		style,
+	}: {
+		fragmentId: string;
+		isDesktop?: boolean;
+		isTopperStyle?: boolean;
+		style: string;
+	}) {
+		const element = isTopperStyle
+			? this.getTopper(fragmentId, isDesktop)
+			: this.getFragment(fragmentId, isDesktop);
 
-		const styles = await topper.evaluate((element) =>
+		const styles = await element.evaluate((element) =>
 			window.getComputedStyle(element)
 		);
 

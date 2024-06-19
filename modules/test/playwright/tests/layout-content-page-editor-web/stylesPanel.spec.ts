@@ -94,24 +94,36 @@ test('allows changing and resetting spacing', async ({
 		'5',
 		'px'
 	);
-	expect(await pageEditorPage.getFragmentStyle(headingId, 'marginTop')).toBe(
-		'5px'
-	);
+	expect(
+		await pageEditorPage.getFragmentStyle({
+			fragmentId: headingId,
+			isTopperStyle: true,
+			style: 'marginTop',
+		})
+	).toBe('5px');
 
 	// Change Margin Top with token value and check change is applied
 
 	await pageEditorPage.changeFragmentSpacing(headingId, 'Margin Top', '2');
-	expect(await pageEditorPage.getFragmentStyle(headingId, 'marginTop')).toBe(
-		'8px'
-	);
+	expect(
+		await pageEditorPage.getFragmentStyle({
+			fragmentId: headingId,
+			isTopperStyle: true,
+			style: 'marginTop',
+		})
+	).toBe('8px');
 
 	// Reset to initial value and check change is applied
 
 	await pageEditorPage.resetSpacing(headingId, 'Margin Top');
 
-	expect(await pageEditorPage.getFragmentStyle(headingId, 'marginTop')).toBe(
-		'0px'
-	);
+	expect(
+		await pageEditorPage.getFragmentStyle({
+			fragmentId: headingId,
+			isTopperStyle: true,
+			style: 'marginTop',
+		})
+	).toBe('0px');
 });
 
 test('renders all selectors with correct default values', async ({

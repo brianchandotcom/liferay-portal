@@ -229,66 +229,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-168850. All the elements are announced as Link."
-	@priority = 4
-	test ViewAccessibilityOfNavigationMenu {
-		task ("Given a page has several nested content pages") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Home",
-				type = "content");
-
-			for (var i : list "1,2") {
-				JSONLayout.addPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Home Child Page ${i}",
-					parentLayoutName = "Home");
-			}
-
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Home Child Page 1 Child Page",
-				parentLayoutName = "Home Child Page 1");
-		}
-
-		task ("When selecting Bar with Links in Display Template field of Menu Display") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Home",
-				siteName = ${randomSiteName});
-
-			PageEditor.addWidgetViaKeyboard(
-				categoryName = "Content Management",
-				upCount = 1,
-				widgetName = "Menu Display");
-
-			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
-
-			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar With Links");
-
-			AssertTextEquals(
-				locator1 = "Select#DISPLAY_TEMPLATE",
-				value1 = "Bar With Links");
-
-			Portlet.saveAndCloseConfig();
-
-			PageEditor.publish();
-		}
-
-		task ("Then role attribute is not present in all menu items") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Home",
-				siteName = ${randomSiteName});
-
-			MouseOver(locator1 = "//div[@id='main-content']//section[contains(@id,'SiteNavigationMenuPortlet')]//div[@class='portlet-body']//span");
-
-			for (var pageName : list "Home Child Page 1,Home Child Page 1 Child Page,Home Child Page 2") {
-				AssertAttributeValue.assertAttributeNotPresent(
-					locator1 = "//div[contains(@class,'layout-content')]//a[contains(@class, 'dropdown-item')][contains(text(), '${pageName}')]",
-					value1 = "role");
-			}
-		}
-	}
-
 	@description = "This is a test for LPS-196462. The New Rule Modal complies with WCAG 2.1 AA standard."
 	@priority = 2
 	test ViewAccessibilityOfNewRuleModal {

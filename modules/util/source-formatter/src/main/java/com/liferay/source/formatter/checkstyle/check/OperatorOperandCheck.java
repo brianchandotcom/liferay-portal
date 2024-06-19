@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import java.util.List;
-
 /**
  * @author Hugo Huijser
  */
@@ -94,12 +92,25 @@ public class OperatorOperandCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
-			detailAST, true, TokenTypes.METHOD_CALL);
+		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
-		if (!methodCallDetailASTList.isEmpty()) {
-			detailAST = methodCallDetailASTList.get(
-				methodCallDetailASTList.size() - 1);
+		while (true) {
+			if ((firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) &&
+				(firstChildDetailAST.getType() != TokenTypes.DOT)) {
+
+				break;
+			}
+
+			firstChildDetailAST = firstChildDetailAST.getFirstChild();
+		}
+
+		DetailAST parentDetailAST = firstChildDetailAST.getParent();
+
+		if (parentDetailAST.getType() == TokenTypes.DOT) {
+			detailAST = parentDetailAST.getParent();
+		}
+		else {
+			detailAST = parentDetailAST;
 		}
 
 		if (isAtLineEnd(detailAST, getLine(detailAST.getLineNo() - 1))) {
@@ -110,7 +121,7 @@ public class OperatorOperandCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST firstChildDetailAST = detailAST.getFirstChild();
+		firstChildDetailAST = detailAST.getFirstChild();
 
 		if ((firstChildDetailAST.getType() == TokenTypes.DOT) &&
 			isAtLineEnd(

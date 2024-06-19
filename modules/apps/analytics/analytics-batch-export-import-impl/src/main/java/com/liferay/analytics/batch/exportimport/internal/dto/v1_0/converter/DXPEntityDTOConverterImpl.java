@@ -198,7 +198,8 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 	}
 
 	private Field[] _getExpandoColumnFields(
-		String className, String dataType, ExpandoColumn expandoColumn) {
+		String className, String dataType, String displayType,
+		ExpandoColumn expandoColumn) {
 
 		List<Field> fields = new ArrayList<Field>() {
 			{
@@ -223,6 +224,13 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 						{
 							setName(() -> "dataType");
 							setValue(() -> dataType);
+						}
+					});
+				add(
+					new Field() {
+						{
+							setName(() -> "displayType");
+							setValue(() -> displayType);
 						}
 					});
 				add(
@@ -329,7 +337,12 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				dataType = ExpandoColumnConstants.DATA_TYPE_TEXT;
 			}
 
-			return _getExpandoColumnFields(className, dataType, expandoColumn);
+			return _getExpandoColumnFields(
+				className, dataType,
+				ExpandoColumnConstants.getDefaultDisplayTypeProperty(
+					expandoColumn.getType(),
+					expandoColumn.getTypeSettingsProperties()),
+				expandoColumn);
 		}
 
 		List<Field> fields = new ArrayList<>();

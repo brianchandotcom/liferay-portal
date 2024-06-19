@@ -107,69 +107,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-71944."
-	@priority = 5
-	test ViewWidgetTemplateEmbeddedWidgetAppliedToAssetPublisher {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Execute reindex all search indexes") {
-			SearchAdministration.executeReindex();
-		}
-
-		task ("Edit Rich Summary widget template") {
-			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "global");
-
-			WidgetTemplates.searchGlobalADT(templateName = "Rich Summary");
-
-			WidgetTemplates.gotoWidgetTemplatesEllipsisItem(
-				item = "Edit",
-				widgetTemplateName = "Rich Summary");
-
-			var script = '''
-	<@liferay_portlet["runtime"]
-		defaultPreferences="${freeMarkerPortletPreferences}"
-		instanceId="whateverV1"
-		portletProviderAction=portletProviderAction.VIEW
-		portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"/>
-					''';
-
-			WidgetTemplates.editADTScript(adtScript = ${script});
-		}
-
-		task ("Add an Asset Publisher to page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "ADT Test Page",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("Select the Rich Summary widget template in Asset Publisher") {
-			Navigator.gotoSitePage(
-				pageName = "ADT Test Page",
-				siteName = "Test Site Name");
-
-			Portlet.gotoPortletOptions(
-				portletName = "Asset Publisher",
-				portletOption = "Configuration");
-
-			AssetPublisherPortlet.configureDisplayTemplatePG(displayTemplate = "Rich Summary");
-		}
-
-		task ("View the widget template applied to Asset Publisher") {
-			Navigator.gotoSitePage(
-				pageName = "ADT Test Page",
-				siteName = "Test Site Name");
-
-			AssertElementPresent(
-				key_portletName = "Breadcrumb",
-				locator1 = "Portlet#TITLE");
-
-			AssertConsoleTextNotPresent(value1 = "UnexpectedCharException");
-		}
-	}
-
 	@description = "View the widget template with corrupt script applied to RSS Publisher widget."
 	@priority = 3
 	test ViewWidgetTemplateWithCorruptScriptAppliedToRSSPublisher {

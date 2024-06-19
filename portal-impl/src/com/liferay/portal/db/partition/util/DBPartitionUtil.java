@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -441,12 +442,24 @@ public class DBPartitionUtil {
 								"companyId = ", fromCompanyId));
 					}
 
-					if (fromTableName.equals("Group_")) {
+					if (StringUtil.equalsIgnoreCase(fromTableName, "Group_")) {
 						statement.executeUpdate(
 							StringBundler.concat(
 								"update ", partitionTableName, " set classPK ",
 								"= ", toCompanyId, " where classPK = ",
 								fromCompanyId));
+					}
+
+					if (StringUtil.equalsIgnoreCase(
+							fromTableName, "ResourcePermission")) {
+
+						statement.executeUpdate(
+							StringBundler.concat(
+								"update ", partitionTableName, " set primKey ",
+								"= ", toCompanyId, ", primKeyId = ",
+								toCompanyId, " where primKey = ", fromCompanyId,
+								" and scope = ",
+								ResourceConstants.SCOPE_COMPANY));
 					}
 				}
 			}

@@ -452,6 +452,14 @@ public class TranslationToXHTMLTest {
 	}
 
 	@Test
+	public void testParseImageTagInBase64Format() throws Exception {
+		Assert.assertEquals(
+			"<p><img src=\"data:image/jpeg;base64\" alt=\"alternative " +
+				"text\"/> </p>",
+			translate("image-6.creole"));
+	}
+
+	@Test
 	public void testParseLinkEmpty() throws Exception {
 		Assert.assertEquals("<p></p>", translate("link-8.creole"));
 	}

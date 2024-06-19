@@ -103,6 +103,9 @@ public class TrialRestController extends BaseRestController {
 
 		Order order = orderResource.getOrder(orderId);
 
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
+
 		UserAccountResource userAccountResource = _getUserAccountResource();
 
 		UserAccount userAccount =
@@ -116,15 +119,21 @@ public class TrialRestController extends BaseRestController {
 			).put(
 				"%TRIAL_END_DATE%",
 				ZonedDateTime.parse(
-					order.getCustomFields(
-					).get(
-						"trial-end-date"
-					).toString()
+					customFields.get("trial-end-date")
 				).format(
 					DateTimeFormatter.ofPattern(
 						"MMMM d, yyyy", LocaleUtil.ENGLISH)
 				)
 			).build());
+
+		customFields.put(
+			"trial-notify-end-date",
+			ZonedDateTime.now(
+			).format(
+				DateTimeFormatter.ISO_INSTANT
+			));
+
+		_updateOrder(customFields, orderId, order.getOrderStatus());
 	}
 
 	@PostMapping("provisioning")

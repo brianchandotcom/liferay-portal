@@ -22,6 +22,9 @@ definition {
 		else if (${itemType} == "Object") {
 			var value = "com.liferay.object.model.ObjectEntry";
 		}
+		else if (${itemType} == "RSS Publisher") {
+			var value = "com.liferay.rss.web.internal.util.RSSFeed";
+		}
 		else if (${itemType} == "Search Results Template") {
 			var value = "com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext";
 		}

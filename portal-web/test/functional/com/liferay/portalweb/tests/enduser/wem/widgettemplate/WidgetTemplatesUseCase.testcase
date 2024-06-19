@@ -23,58 +23,23 @@ definition {
 			layoutTemplate = "1 Column");
 	}
 
-	@description = "View the widget template based on script file applied to RSS Publisher widget."
-	@priority = 3
-	test ViewWidgetTemplateBasedOnScriptFileAppliedToRSSPublisher {
-		task ("Add a RSS Publisher to page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "ADT Test Page",
-				widgetName = "RSS Publisher");
-		}
-
-		task ("Add a RSS Feed") {
-			Navigator.gotoSitePage(
-				pageName = "ADT Test Page",
-				siteName = "Test Site Name");
-
-			RSSPortlet.addFeed(
-				feedRowIndexNumber = 0,
-				feedTitle = "Technology",
-				feedType = "file",
-				feedURLLink = "Technology.xml");
-		}
-
-		task ("Add a widget template based on script file for RSS Publisher") {
-			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
-
-			WidgetTemplates.addCP(
-				adtFile = "adt_rss_navigation.ftl",
-				adtType = "RSS Publisher");
-		}
-
-		task ("Select the widget template") {
-			Navigator.gotoSitePage(
-				pageName = "ADT Test Page",
-				siteName = "Test Site Name");
-
-			WidgetTemplates.selectPortletADT(templateName = "RSS Publisher Test ADT");
-		}
-
-		task ("View the widget template applied to RSS Publisher") {
-			Navigator.gotoSitePage(
-				pageName = "ADT Test Page",
-				siteName = "Test Site Name");
-
-			RSSPortlet.viewNavigationDisplayFeedTitle(
-				feedTitle = "Technology",
-				navigationNullAdt = "true");
-		}
-	}
-
-	@description = "View the widget template with corrupt script applied to RSS Publisher widget."
+	@description = "View the widget template based on script file applied and with corrupt script applied to RSS Publisher widget."
 	@priority = 3
 	test ViewWidgetTemplateWithCorruptScriptAppliedToRSSPublisher {
+		task ("Add a widget template for RSS Publisher") {
+			JSONDDMtemplate.addWidgetTemplate(
+				groupName = "Test Site Name",
+				itemType = "RSS Publisher",
+				name = "RSS Publisher Navigation",
+				script = "<#if entries?has_content><#list entries as curEntry>${htmlUtil.escape(curEntry.getTitle())}</#list></#if>");
+
+			JSONDDMtemplate.addWidgetTemplate(
+				groupName = "Test Site Name",
+				itemType = "RSS Publisher",
+				name = "RSS Publisher Navigation Corrupt",
+				script = "<#if entries?has_content><#list rssFeedEntries as rssFeedEntry>${rssFeedEntry.getSanitizedContent()}");
+		}
+
 		task ("Add a RSS Publisher to page") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
@@ -94,20 +59,26 @@ definition {
 				feedURLLink = "rss2.0.xml");
 		}
 
-		task ("Add a widget template for RSS Publisher") {
-			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
-
-			WidgetTemplates.addCP(
-				adtFile = "adt_rss_navigation_corrupt.ftl",
-				adtType = "RSS Publisher");
-		}
-
 		task ("Select the widget template in RSS Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "ADT Test Page",
 				siteName = "Test Site Name");
 
-			WidgetTemplates.selectPortletADT(templateName = "RSS Publisher Test ADT");
+			WidgetTemplates.selectPortletADT(templateName = "RSS Publisher Navigation");
+		}
+
+		task ("View the widget template applied to RSS Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "ADT Test Page",
+				siteName = "Test Site Name");
+
+			AssertTextPresent(
+				locator1 = "//div[@class='portlet-body']",
+				value1 = "Latimes");
+		}
+
+		task ("Select the widget template in RSS Publisher") {
+			WidgetTemplates.selectPortletADT(templateName = "RSS Publisher Navigation Corrupt");
 		}
 
 		task ("View the widget template with corrupt script applied to RSS Publisher widget") {

@@ -6,8 +6,10 @@
 package com.liferay.info.collection.provider.item.selector.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
+import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 import javax.portlet.RenderRequest;
 
@@ -39,6 +41,16 @@ public class RepeatableFieldInfoCollectionProviderVerticalCard
 	@Override
 	public String getInputValue() {
 		return null;
+	}
+
+	@Override
+	public String getSubtitle() {
+		if (_infoFieldSetEntry instanceof InfoFieldSet) {
+			return LanguageUtil.get(
+				themeDisplay.getLocale(), "repeatable-fieldset");
+		}
+
+		return LanguageUtil.get(themeDisplay.getLocale(), "repeatable-field");
 	}
 
 	@Override

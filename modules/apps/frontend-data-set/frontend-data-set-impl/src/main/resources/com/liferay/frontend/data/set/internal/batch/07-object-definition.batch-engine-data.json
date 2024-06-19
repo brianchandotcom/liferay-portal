@@ -1,0 +1,259 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPS-164563",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"enableLocalization": true,
+			"externalReferenceCode": "L_DATA_SET_SELECTION_FILTER",
+			"label": {
+				"en_US": "Data Set Selection Filter"
+			},
+			"modifiable": true,
+			"name": "DataSetSelectionFilter",
+			"objectActions": [
+			],
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "FIELD_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Field Name"
+					},
+					"localized": false,
+					"name": "fieldName",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "INCLUDE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Include"
+					},
+					"localized": false,
+					"name": "include",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Boolean",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "ITEM_KEY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Item Key"
+					},
+					"localized": false,
+					"name": "itemKey",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "ITEM_LABEL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Item Label"
+					},
+					"localized": false,
+					"name": "itemLabel",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "LABEL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Label"
+					},
+					"localized": true,
+					"name": "label",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "MULTIPLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Multiple"
+					},
+					"localized": false,
+					"name": "multiple",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Boolean",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "PRESELECTED_VALUES",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Preselected Values"
+					},
+					"localized": false,
+					"name": "preselectedValues",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "REST_APPLICATION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "REST Application"
+					},
+					"localized": false,
+					"name": "restApplication",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "REST_ENDPOINT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "REST Endpoint"
+					},
+					"localized": false,
+					"name": "restEndpoint",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "REST_SCHEMA",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "REST Schema"
+					},
+					"localized": false,
+					"name": "restSchema",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "SOURCE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Source"
+					},
+					"localized": false,
+					"name": "source",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "SOURCE_TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Source Type"
+					},
+					"localized": false,
+					"name": "sourceType",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "default",
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Data Set Selection Filters"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 2
+			},
+			"system": true
+		}
+	]
+}

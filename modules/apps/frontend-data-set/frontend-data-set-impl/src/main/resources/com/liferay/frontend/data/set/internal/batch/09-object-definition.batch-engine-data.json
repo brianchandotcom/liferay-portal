@@ -1,0 +1,449 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPS-164563",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "L_DATA_SET",
+			"label": {
+				"en_US": "Data Set"
+			},
+			"modifiable": true,
+			"name": "DataSet",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "CREATION_ACTIONS_ORDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Creation Actions Order"
+					},
+					"localized": false,
+					"name": "creationActionsOrder",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "DEFAULT_ITEMS_PER_PAGE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Default Items per Page"
+					},
+					"localized": false,
+					"name": "defaultItemsPerPage",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "Integer",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "DEFAULT_VISUALIZATION_MODE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Default Visualization Mode"
+					},
+					"localized": false,
+					"name": "defaultVisualizationMode",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "DESCRIPTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Description"
+					},
+					"localized": false,
+					"name": "description",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "FILTERS_ORDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Filters Order"
+					},
+					"localized": false,
+					"name": "filtersOrder",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "ITEM_ACTIONS_ORDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Item Actions Order"
+					},
+					"localized": false,
+					"name": "itemActionsOrder",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "LABEL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Name"
+					},
+					"localized": false,
+					"name": "label",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "LIST_OF_ITEMS_PER_PAGE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "List of Items per Page"
+					},
+					"localized": false,
+					"name": "listOfItemsPerPage",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "REST_APPLICATION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "REST Application"
+					},
+					"localized": false,
+					"name": "restApplication",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "REST_ENDPOINT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "REST Endpoint"
+					},
+					"localized": false,
+					"name": "restEndpoint",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "REST_SCHEMA",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "REST Schema"
+					},
+					"localized": false,
+					"name": "restSchema",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "SORTS_ORDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Sorts Order"
+					},
+					"localized": false,
+					"name": "sortsOrder",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "TABLE_SECTIONS_ORDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Table Sections Order"
+					},
+					"localized": false,
+					"name": "tableSectionsOrder",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Clob",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "default",
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"edge": false,
+					"externalReferenceCode": "L_DATA_SET_TO_L_DATA_SET_CARDS_SECTIONS",
+					"label": {
+						"en_US": "Data Set to Data Set Cards Sections"
+					},
+					"name": "dataSetToDataSetCardsSections",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_CARDS_SECTION",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "DataSetCardsSection",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"edge": false,
+					"externalReferenceCode": "L_DATA_SET_TO_L_DATA_SET_CLIENT_EXTENSION_FILTERS",
+					"label": {
+						"en_US": "Data Set to Data Set Client Extension Filters"
+					},
+					"name": "dataSetToDataSetClientExtensionFilters",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_CLIENT_EXTENSION_FILTER",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "DataSetClientExtensionFilter",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"edge": false,
+					"externalReferenceCode": "L_DATA_SET_TO_L_DATA_SET_CREATION_ACTIONS",
+					"label": {
+						"en_US": "Data Set to Data Set Creation Actions"
+					},
+					"name": "dataSetToDataSetCreationActions",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_ACTION",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "DataSetAction",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"edge": false,
+					"externalReferenceCode": "L_DATA_SET_TO_L_DATA_SET_DATE_FILTERS",
+					"label": {
+						"en_US": "Data Set to Data Set Date Filters"
+					},
+					"name": "dataSetToDataSetDateFilters",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_DATE_FILTER",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "DataSetDateFilter",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_DATA_SET_TO_L_DATA_SET_ITEM_ACTIONS",
+					"label": {
+						"en_US": "Data Set to Data Set Item Actions"
+					},
+					"name": "dataSetToDataSetItemActions",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_ACTION",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "DataSetAction",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"edge": false,
+					"externalReferenceCode": "L_DATA_SET_TO_L_DATA_SET_LIST_SECTIONS",
+					"label": {
+						"en_US": "Data Set to Data Set List Sections"
+					},
+					"name": "dataSetToDataSetListSections",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_LIST_SECTION",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "DataSetListSection",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"edge": false,
+					"externalReferenceCode": "L_DATA_SET_TO_L_DATA_SET_SELECTION_FILTERS",
+					"label": {
+						"en_US": "Data Set to Data Set Selection Filters"
+					},
+					"name": "dataSetToDataSetSelectionFilters",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_SELECTION_FILTER",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "DataSetSelectionFilter",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"edge": false,
+					"externalReferenceCode": "L_DATA_SET_TO_DATA_SET_SORTS",
+					"label": {
+						"en_US": "Data Set to Data Set Sorts"
+					},
+					"name": "dataSetToDataSetSorts",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_SORT",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "DataSetSort",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"edge": false,
+					"externalReferenceCode": "L_DATA_SET_TO_L_DATA_SET_TABLE_SECTIONS",
+					"label": {
+						"en_US": "Data Set to Data Set Table Sections"
+					},
+					"name": "dataSetToDataSetTableSections",
+					"objectDefinitionExternalReferenceCode1": "L_DATA_SET",
+					"objectDefinitionExternalReferenceCode2": "L_DATA_SET_TABLE_SECTION",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "DataSetTableSection",
+					"objectDefinitionSystem2": true,
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				}
+			],
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Data Sets"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 2
+			},
+			"system": true,
+			"titleObjectFieldName": "name"
+		}
+	]
+}

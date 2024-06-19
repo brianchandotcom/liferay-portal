@@ -9,6 +9,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
+import getRandomString from '../../utils/getRandomString';
 import {masterPagesTest} from './fixtures/masterPagesTest';
 
 export const test = mergeTests(
@@ -42,7 +43,7 @@ test('Add a page based on custom master', async ({
 	pagesAdminPage,
 	site,
 }) => {
-	const masterName = 'New Master Page';
+	const masterName = getRandomString();
 
 	let buttonId: string;
 
@@ -84,7 +85,7 @@ test('Add a page based on custom master', async ({
 		await pageEditorPage.publishPage();
 	});
 
-	const pageName = `Page ${masterName}`;
+	const pageName = getRandomString();
 
 	await test.step('Assert custom masters as an option when add a new page', async () => {
 		await pagesAdminPage.goto(site.friendlyUrlPath);
@@ -112,7 +113,7 @@ test('Fragments hidden in master pages are hidden in pages that use it and visib
 	pagesAdminPage,
 	site,
 }) => {
-	const masterName = 'New Master Page';
+	const masterName = getRandomString();
 
 	let buttonId: string;
 	let buttonFragment: Locator;
@@ -143,7 +144,7 @@ test('Fragments hidden in master pages are hidden in pages that use it and visib
 	await test.step('Create and publish new page based on master page and check that the fragment is still hidden', async () => {
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
-		const pageName = `Page ${masterName}`;
+		const pageName = getRandomString();
 
 		await pagesAdminPage.createNewPage(pageName, masterName);
 

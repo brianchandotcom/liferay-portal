@@ -154,23 +154,17 @@ public class ExpandoValueLocalServiceTest {
 		ExpandoTestUtil.addColumn(
 			_expandoTable, "Test Column One",
 			ExpandoColumnConstants.STRING_LOCALIZED);
-
 		ExpandoTestUtil.addColumn(
 			_expandoTable, "Test Column Two",
 			ExpandoColumnConstants.STRING_LOCALIZED);
-
 		ExpandoTestUtil.addColumn(
 			_expandoTable, "Test Column Three",
 			ExpandoColumnConstants.STRING_LOCALIZED);
 
-		Serializable dataMapOne = HashMapBuilder.put(
+		Serializable data = HashMapBuilder.put(
 			_enLocale, "one"
 		).put(
 			_ptLocale, "um"
-		).build();
-
-		Serializable dataMapTwo = HashMapBuilder.put(
-			_enLocale, "two"
 		).build();
 
 		long classPK = _counterLocalService.increment();
@@ -178,19 +172,21 @@ public class ExpandoValueLocalServiceTest {
 		ExpandoTestUtil.addValues(
 			_expandoTable, classPK,
 			new HashMapBuilder<>().<String, Serializable>put(
-				"Test Column One", dataMapOne
+				"Test Column One", data
 			).put(
-				"Test Column Two", dataMapTwo
+				"Test Column Two",
+				HashMapBuilder.put(
+					_enLocale, "two"
+				).build()
 			).put(
 				"Test Column Three", new HashMap<Locale, String>()
 			).build());
 
 		Assert.assertEquals(
-			dataMapOne,
+			data,
 			_expandoValueLocalService.getData(
 				_expandoTable.getCompanyId(), _expandoTable.getClassName(),
 				_expandoTable.getName(), "Test Column One", classPK));
-
 		Assert.assertEquals(
 			HashMapBuilder.put(
 				_enLocale, "two"
@@ -198,7 +194,6 @@ public class ExpandoValueLocalServiceTest {
 			_expandoValueLocalService.getData(
 				_expandoTable.getCompanyId(), _expandoTable.getClassName(),
 				_expandoTable.getName(), "Test Column Two", classPK));
-
 		Assert.assertEquals(
 			new HashMap<Locale, String>(),
 			_expandoValueLocalService.getData(

@@ -317,50 +317,6 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
-	public void readBuildDatabaseFile() {
-		synchronized (_buildDatabaseFile) {
-			if (_buildDatabaseFile.exists()) {
-				try {
-					_jsonObject = new JSONObject(
-						JenkinsResultsParserUtil.read(_buildDatabaseFile));
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
-			}
-			else {
-				_jsonObject = new JSONObject();
-			}
-
-			if (!_jsonObject.has("builds")) {
-				_jsonObject.put("builds", new JSONObject());
-			}
-
-			if (!_jsonObject.has("jobs")) {
-				_jsonObject.put("jobs", new JSONObject());
-			}
-
-			if (!_jsonObject.has("properties")) {
-				_jsonObject.put("properties", new JSONObject());
-			}
-
-			if (!_jsonObject.has("pull_requests")) {
-				_jsonObject.put("pull_requests", new JSONObject());
-			}
-
-			if (!_jsonObject.has("workspace_git_repositories")) {
-				_jsonObject.put("workspace_git_repositories", new JSONObject());
-			}
-
-			if (!_jsonObject.has("workspaces")) {
-				_jsonObject.put("workspaces", new JSONObject());
-			}
-
-			_writeJSONObjectFile();
-		}
-	}
-
-	@Override
 	public void writeFilteredPropertiesToFile(
 		String destFilePath, Pattern pattern, String key) {
 
@@ -452,7 +408,52 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		_buildDatabaseFile = new File(
 			baseDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
 
-		readBuildDatabaseFile();
+		_readBuildDatabaseFile();
+	}
+
+	private void _readBuildDatabaseFile() {
+		synchronized (_buildDatabaseFile) {
+			_readCount++;
+
+			if (_buildDatabaseFile.exists()) {
+				try {
+					_jsonObject = new JSONObject(
+						JenkinsResultsParserUtil.read(_buildDatabaseFile));
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
+			else {
+				_jsonObject = new JSONObject();
+			}
+
+			if (!_jsonObject.has("builds")) {
+				_jsonObject.put("builds", new JSONObject());
+			}
+
+			if (!_jsonObject.has("jobs")) {
+				_jsonObject.put("jobs", new JSONObject());
+			}
+
+			if (!_jsonObject.has("properties")) {
+				_jsonObject.put("properties", new JSONObject());
+			}
+
+			if (!_jsonObject.has("pull_requests")) {
+				_jsonObject.put("pull_requests", new JSONObject());
+			}
+
+			if (!_jsonObject.has("workspace_git_repositories")) {
+				_jsonObject.put("workspace_git_repositories", new JSONObject());
+			}
+
+			if (!_jsonObject.has("workspaces")) {
+				_jsonObject.put("workspaces", new JSONObject());
+			}
+
+			_writeJSONObjectFile();
+		}
 	}
 
 	private JSONArray _toJSONArray(Properties properties) {

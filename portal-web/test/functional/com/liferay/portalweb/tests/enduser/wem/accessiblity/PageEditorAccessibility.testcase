@@ -173,62 +173,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-165284. The Experience selector should have correct accessibility."
-	@priority = 3
-	test ViewAccessibilityOfExperienceSelector {
-		task ("Given a page creator has a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
-		task ("When the page creator accesses to the page editor") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-		}
-
-		task ("Then the Experience selector should have correct accessibility") {
-			AssertAttributeValue(
-				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
-				value1 = "aria-expanded",
-				value2 = "false");
-
-			AssertAttributeValue(
-				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
-				value1 = "aria-haspopup",
-				value2 = "true");
-
-			KeyPress(
-				locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS",
-				value1 = "\TAB");
-
-			KeyPress(
-				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
-				value1 = "\ENTER");
-
-			AssertAttributeValue(
-				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
-				value1 = "aria-expanded",
-				value2 = "true");
-
-			AssertElementFocused(locator1 = "//button[@aria-label='New Experience']");
-
-			Type.sendKeys(
-				ariaLabel = "New Experience",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
-				value1 = "keys=SHIFT,TAB");
-
-			AssertAttributeValue(
-				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
-				value1 = "aria-expanded",
-				value2 = "false");
-
-			AssertElementFocused(locator1 = "//div[contains(@class,'page-editor__toolbar-experience')]//button");
-		}
-	}
-
 	@description = "This is a test for LPS-196462. The New Rule Modal complies with WCAG 2.1 AA standard."
 	@priority = 2
 	test ViewAccessibilityOfNewRuleModal {

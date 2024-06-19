@@ -45,6 +45,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 		HtmlUtil.extractText(null);
 
+		_http.hasProxyConfig();
 		_http.addParameter(null, null, null);
 		_http.decodePath(null);
 		_http.decodeURL(null);
@@ -76,6 +77,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		_http.setParameter(null, null, null);
 		_http.shortenURL(null);
 
+		HttpUtil.hasProxyConfig();
 		HttpUtil.addParameter(null, null, null);
 		HttpUtil.decodePath(null);
 		HttpUtil.decodeURL(null);

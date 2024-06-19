@@ -222,6 +222,54 @@ autoSaveAsDraftTest(
 	}
 );
 
+baseTest(
+	'LPD-19384: Select articles to move across multiple pages',
+	async ({apiHelpers, journalPage, page, site}) => {
+		const contentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		for (let i = 0; i < 10; i++) {
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: contentStructureId,
+				groupId: site.id,
+			});
+		}
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await page.getByLabel('Items per Page').click();
+
+		await page.getByRole('link', {name: '4 Entries per Page'}).click();
+
+		await page.getByTestId('row').nth(0).getByRole('checkbox').check();
+		await page.getByTestId('row').nth(1).getByRole('checkbox').check();
+
+		await page.getByRole('link', {name: 'Page 2'}).click();
+
+		await expect(
+			page.getByText('Showing 5 to 8 of 10 entries.')
+		).toBeVisible();
+
+		await page.getByTestId('row').nth(0).getByRole('checkbox').check();
+		await page.getByTestId('row').nth(1).getByRole('checkbox').check();
+
+		await page.getByRole('link', {name: 'Page 3'}).click();
+
+		await expect(
+			page.getByText('Showing 9 to 10 of 10 entries.')
+		).toBeVisible();
+
+		await page.getByTestId('row').nth(0).getByRole('checkbox').check();
+		await page.getByTestId('row').nth(1).getByRole('checkbox').check();
+
+		await page.getByRole('button', {name: 'Move'}).click();
+
+		await expect(
+			page.getByText('6 web content instances are ready to be moved.')
+		).toBeVisible();
+	}
+);
+
 keepTitlesUntranslated(
 	'LPD-20723: Clay link is translating asset titles/names by default in vertical card',
 	async ({apiHelpers, journalPage, page, site}) => {

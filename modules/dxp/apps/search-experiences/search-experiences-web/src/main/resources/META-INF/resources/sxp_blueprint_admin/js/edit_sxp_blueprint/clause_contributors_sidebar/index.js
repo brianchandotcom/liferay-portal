@@ -160,6 +160,7 @@ export default function ({
 
 	const _handleEnableClauseContributors = (classNames) => {
 		onFrameworkConfigChange({
+			clauseContributorsExcludes: [],
 			clauseContributorsIncludes: removeDuplicates([
 				...frameworkConfig.clauseContributorsIncludes,
 				...classNames,
@@ -169,6 +170,17 @@ export default function ({
 
 	const _handleDisableClauseContributors = (classNames) => {
 		onFrameworkConfigChange({
+
+			// When clauseContributorsIncludes is empty, set
+			// clauseContributorsExcludes to ['*'] since it
+			// would essentially be like 'Disable All'.
+
+			clauseContributorsExcludes:
+				frameworkConfig.clauseContributorsIncludes.some(
+					(clause) => !classNames.includes(clause)
+				)
+					? []
+					: ['*'],
 			clauseContributorsIncludes:
 				frameworkConfig.clauseContributorsIncludes.filter(
 					(clause) => !classNames.includes(clause)

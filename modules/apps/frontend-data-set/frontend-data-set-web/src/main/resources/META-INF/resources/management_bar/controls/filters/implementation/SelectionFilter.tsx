@@ -336,7 +336,7 @@ function SelectionFilter({
 		actionType === 'delete' ||
 		(!selectedData && selectedItems.length) ||
 		(selectedData &&
-			isValuesArrayChanged(selectedData.selectedItems, selectedItems)) ||
+			isValuesArrayChanged(selectedData?.selectedItems, selectedItems)) ||
 		(selectedData &&
 			selectedItems.length &&
 			selectedData.exclude !== exclude)

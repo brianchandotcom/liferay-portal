@@ -56,8 +56,16 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 			Set<String> keys = jsonObject.keySet();
 
+			boolean skipValidation = false;
+
+			if (jsonObject.getBoolean("skipParametersValidation") ||
+				from.startsWith("regex:")) {
+
+				skipValidation = true;
+			}
+
 			if ((from.contains(StringPool.OPEN_PARENTHESIS) &&
-				 !jsonObject.getBoolean("skipParametersValidation")) ||
+				 !skipValidation) ||
 				!keys.contains("to")) {
 
 				expectedMessages.add(_getMessage(jsonObject));
@@ -202,8 +210,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 		String regex = StringBundler.concat("\\b", from, "\\b");
 
-		if (from.contains("::")) {
-			return Pattern.compile(regex);
+		if (from.startsWith("regex:")) {
+			return Pattern.compile(from.replaceFirst("regex:", ""));
 		}
 		else if (regex.contains(StringPool.SLASH)) {
 			return Pattern.compile(
@@ -432,7 +440,10 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				String from = jsonObject.getString("from");
 				String to = jsonObject.getString("to");
 
-				if (from.contains(StringPool.OPEN_PARENTHESIS)) {
+				if (from.startsWith("regex:")) {
+					newContent = newContent.replaceAll(pattern.toString(), to);
+				}
+				else if (from.contains(StringPool.OPEN_PARENTHESIS)) {
 					newContent = _formatMethodCall(
 						fileName, from, javaContent, jsonObject, matcher,
 						newContent, to);

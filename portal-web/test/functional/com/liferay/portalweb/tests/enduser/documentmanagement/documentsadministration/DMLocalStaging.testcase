@@ -1392,7 +1392,7 @@ definition {
 	@description = "This test covers LPS-154415. It checks that an external video displays properly in the Media Gallery widget after the friendlyURL has been edited and published on a site."
 	@priority = 4
 	test CanViewExternalVideoInMGAfterFriendlyURLIsUpdated {
-		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration");
+		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration");
 
 		SystemSettings.configureSystemSetting(
 			enableSetting = "false",
@@ -1489,7 +1489,7 @@ definition {
 	@description = "This test covers LPS-154396."
 	@priority = 4
 	test CanViewExternalVideoInMGAfterPublish {
-		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration");
+		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration");
 
 		SystemSettings.configureSystemSetting(
 			enableSetting = "false",
@@ -1538,7 +1538,7 @@ definition {
 	@description = "This test covers LPS-154417. It checks that an external video with a custom friendlyURL added to the Web content field displays properly after its friendlyURL is edited and published on a site"
 	@priority = 4
 	test CanViewExternalVideotInWCAfterFriendlyURLIsUpdated {
-		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration");
+		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration");
 
 		SystemSettings.configureSystemSetting(
 			enableSetting = "false",

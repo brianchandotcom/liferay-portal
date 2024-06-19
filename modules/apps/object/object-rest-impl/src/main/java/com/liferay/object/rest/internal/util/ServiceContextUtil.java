@@ -9,13 +9,27 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.Locale;
 
 /**
  * @author Sergio Jiménez del Coso
  */
 public class ServiceContextUtil {
+
+	public static ServiceContext createServiceContext(
+		Locale locale, ObjectEntry objectEntry, long userId) {
+
+		ServiceContext serviceContext = createServiceContext(
+			objectEntry, userId);
+
+		serviceContext.setLanguageId(LocaleUtil.toLanguageId(locale));
+
+		return serviceContext;
+	}
 
 	public static ServiceContext createServiceContext(
 		ObjectEntry objectEntry, long userId) {

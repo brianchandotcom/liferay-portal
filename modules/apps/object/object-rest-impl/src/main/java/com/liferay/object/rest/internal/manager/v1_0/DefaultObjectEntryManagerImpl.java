@@ -142,7 +142,8 @@ public class DefaultObjectEntryManagerImpl
 		validateReadOnlyObjectFields(null, objectDefinition, objectEntry);
 
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			objectEntry, dtoConverterContext.getUserId());
+			dtoConverterContext.getLocale(), objectEntry,
+			dtoConverterContext.getUserId());
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.addObjectEntry(
@@ -795,7 +796,8 @@ public class DefaultObjectEntryManagerImpl
 			objectDefinition, objectEntry);
 
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			objectEntry, dtoConverterContext.getUserId());
+			dtoConverterContext.getLocale(), objectEntry,
+			dtoConverterContext.getUserId());
 
 		serviceBuilderObjectEntry = _objectEntryService.updateObjectEntry(
 			objectEntryId,
@@ -825,7 +827,8 @@ public class DefaultObjectEntryManagerImpl
 			externalReferenceCode, objectDefinition, objectEntry);
 
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			objectEntry, dtoConverterContext.getUserId());
+			dtoConverterContext.getLocale(), objectEntry,
+			dtoConverterContext.getUserId());
 
 		serviceContext.setCompanyId(companyId);
 

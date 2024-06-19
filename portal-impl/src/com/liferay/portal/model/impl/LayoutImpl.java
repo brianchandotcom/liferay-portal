@@ -636,7 +636,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 			}
 
 			friendlyURLMap.put(
-				LocaleUtil.fromLanguageId(layoutFriendlyURL.getLanguageId()),
+				LocaleUtil.fromLanguageId(
+					layoutFriendlyURL.getLanguageId(), false),
 				layoutFriendlyURL.getFriendlyURL());
 		}
 

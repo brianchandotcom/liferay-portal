@@ -14,7 +14,7 @@ if (!themeDisplay.isSignedIn()) {
 	signInMessage.textContent = 'to save your progress';
 
 	const signInContainer = document.querySelector('.signin-container');
-	
+
 	signInContainer.appendChild(signInLink);
 	signInContainer.appendChild(signInMessage);
 }

@@ -139,7 +139,7 @@ public class ConvertLayoutMVCActionCommandTest {
 	}
 
 	@Test
-	public void testTypeSettingsFromWidgetPagesAreRemovedWhenConvertingToContentLayout()
+	public void testConvertWidgetLayoutToContentLayoutWithTypeSettings()
 		throws Exception {
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
@@ -162,13 +162,13 @@ public class ConvertLayoutMVCActionCommandTest {
 				LayoutConstants.CUSTOMIZABLE_LAYOUT));
 		Assert.assertTrue(
 			typeSettingsPropertiesUnicodeProperties.containsKey(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+		Assert.assertTrue(
+			typeSettingsPropertiesUnicodeProperties.containsKey(
 				"column-1-customizable"));
 		Assert.assertTrue(
 			typeSettingsPropertiesUnicodeProperties.containsKey(
 				"column-2-customizable"));
-		Assert.assertTrue(
-			typeSettingsPropertiesUnicodeProperties.containsKey(
-				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
 
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(layout.getPlid()),
@@ -187,13 +187,13 @@ public class ConvertLayoutMVCActionCommandTest {
 				LayoutConstants.CUSTOMIZABLE_LAYOUT));
 		Assert.assertFalse(
 			convertedTypeSettingsPropertiesUnicodeProperties.containsKey(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+		Assert.assertFalse(
+			convertedTypeSettingsPropertiesUnicodeProperties.containsKey(
 				"column-1-customizable"));
 		Assert.assertFalse(
 			convertedTypeSettingsPropertiesUnicodeProperties.containsKey(
 				"column-2-customizable"));
-		Assert.assertFalse(
-			convertedTypeSettingsPropertiesUnicodeProperties.containsKey(
-				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
 
 		Layout darftLayout = convertedLayout.fetchDraftLayout();
 
@@ -205,13 +205,13 @@ public class ConvertLayoutMVCActionCommandTest {
 				LayoutConstants.CUSTOMIZABLE_LAYOUT));
 		Assert.assertFalse(
 			draftTypeSettingsPropertiesUnicodeProperties.containsKey(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
+		Assert.assertFalse(
+			draftTypeSettingsPropertiesUnicodeProperties.containsKey(
 				"column-1-customizable"));
 		Assert.assertFalse(
 			draftTypeSettingsPropertiesUnicodeProperties.containsKey(
 				"column-2-customizable"));
-		Assert.assertFalse(
-			draftTypeSettingsPropertiesUnicodeProperties.containsKey(
-				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID));
 	}
 
 	private void _assertTypeSettingsProperties(

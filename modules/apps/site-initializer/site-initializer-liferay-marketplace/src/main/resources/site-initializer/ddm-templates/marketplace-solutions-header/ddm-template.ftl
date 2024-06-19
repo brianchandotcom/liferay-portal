@@ -105,23 +105,24 @@
 
 			<div>
 				<#if headerVideoUrl?has_content>
-					<#assign videoThumbnail = headerVideoUrl?split("=") />
+					<#assign
+						videoThumbnail = headerVideoUrl?split("v=")[1]
+						youtubeVideoId = videoThumbnail?split("&")[0]
+					/>
 
 					<a href=" ${headerVideoUrl}" target="_blank">
 						<div class="align-items-center d-flex justify-content-center position-relative video-preview">
 							<img
 								class="video-thumbnail"
 								aria-label="video-thumbnail"
-								src="https://img.youtube.com/vi/${videoThumbnail[1]}/0.jpg" />
+								src="https://img.youtube.com/vi/${youtubeVideoId}/0.jpg" />
 
 							<div class="position-absolute video-thumbnail-play-symbol">
 								<@clay["icon"] symbol="video" />
 							</div>
 						</div>
 					</a>
-				</#if>
-
-				<#if solutionHeaderImages?has_content>
+				<#elseif solutionHeaderImages?has_content>
 					<div id="headerCarousel" class="carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">
 							<#list solutionHeaderImages as image>

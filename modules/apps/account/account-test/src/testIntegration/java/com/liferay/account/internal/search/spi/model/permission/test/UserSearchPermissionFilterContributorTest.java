@@ -12,6 +12,7 @@ import com.liferay.account.service.test.util.AccountEntryArgs;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -91,6 +93,54 @@ public class UserSearchPermissionFilterContributorTest {
 		Assert.assertEquals(
 			1,
 			_performUserSearchCount(accountEntry.getAccountEntryId(), userA));
+	}
+
+	@Test
+	public void testWhenHasOrganizationManageSuborganizationPermissionSearch()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Organization suborganization = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		User suborganizationUser = _addOrganizationUser(suborganization);
+
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			AccountEntryArgs.withOrganizations(suborganization),
+			AccountEntryArgs.withUsers(suborganizationUser));
+
+		User organizationUser = _addOrganizationUser(organization);
+
+		Assert.assertEquals(
+			0,
+			_performUserSearchCount(
+				accountEntry.getAccountEntryId(), organizationUser));
+
+		Role organizationRole = RoleTestUtil.addRole(
+			RoleConstants.TYPE_ORGANIZATION);
+
+		RoleTestUtil.addResourcePermission(
+			organizationRole, AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			AccountActionKeys.VIEW_USERS);
+
+		RoleTestUtil.addResourcePermission(
+			organizationRole, Organization.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS);
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			organizationUser.getUserId(), organization.getGroupId(),
+			organizationRole.getRoleId());
+
+		Assert.assertEquals(
+			1,
+			_performUserSearchCount(
+				accountEntry.getAccountEntryId(), organizationUser));
 	}
 
 	private User _addOrganizationUser(Organization organization)

@@ -11,6 +11,7 @@ import {ApiHelpers} from './ApiHelpers';
 interface createSitePageProps {
 	pageDefinition?: PageDefinition;
 	pagePermissions?: PagePermission[];
+	parentSitePage?: {friendlyUrlPath: string};
 	siteId: string;
 	title: string;
 }
@@ -65,12 +66,13 @@ export class HeadlessDeliveryApiHelper {
 	async createSitePage({
 		pageDefinition,
 		pagePermissions,
+		parentSitePage,
 		siteId,
 		title,
 	}: createSitePageProps): Promise<Layout> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/site-pages`,
-			{data: {pageDefinition, pagePermissions, title}}
+			{data: {pageDefinition, pagePermissions, parentSitePage, title}}
 		);
 	}
 

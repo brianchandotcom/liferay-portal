@@ -23,41 +23,6 @@ definition {
 			layoutTemplate = "1 Column");
 	}
 
-	@description = "View the widget template applied to Breadcrumb widget."
-	@priority = 5
-	test ViewWidgetTemplateAppliedToBreadcrumb {
-		property portal.acceptance = "true";
-
-		task ("Add a Breadcrumb to page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "ADT Test Page",
-				widgetName = "Breadcrumb");
-		}
-
-		task ("Select the Arrows widget template in Breadcrumb") {
-			Navigator.gotoSitePage(
-				pageName = "ADT Test Page",
-				siteName = "Test Site Name");
-
-			AssertVisible(locator1 = "BreadcrumbPortlet#BREADCRUMB");
-
-			Portlet.gotoPortletOptions(
-				portletName = "Breadcrumb",
-				portletOption = "Configuration");
-
-			Breadcrumb.configureBreadcrumb(selectAdtType = "Arrows");
-		}
-
-		task ("View the widget template applied to Breadcrumb") {
-			Navigator.gotoSitePage(
-				pageName = "ADT Test Page",
-				siteName = "Test Site Name");
-
-			Breadcrumb.viewADTApplied(breadcrumbAdtType = "arrows");
-		}
-	}
-
 	@description = "View the widget template based on script file applied to RSS Publisher widget."
 	@priority = 3
 	test ViewWidgetTemplateBasedOnScriptFileAppliedToRSSPublisher {

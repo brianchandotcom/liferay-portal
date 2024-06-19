@@ -4,9 +4,12 @@
  */
 
 import type {ApiHelpers} from '../../../helpers/ApiHelpers';
-import type {postCategoryProps} from '../../../helpers/HeadlessAdminTaxonomyApiHelper';
+import type {postTaxonomyVocabularyTaxonomyCategoryProps} from '../../../helpers/HeadlessAdminTaxonomyApiHelper';
 
-export type TCategory = Omit<postCategoryProps, 'vocabularyId'>;
+export type TCategory = Omit<
+	postTaxonomyVocabularyTaxonomyCategoryProps,
+	'vocabularyId'
+>;
 
 export async function createCategories({
 	apiHelpers,

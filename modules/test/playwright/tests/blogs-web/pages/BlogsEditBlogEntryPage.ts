@@ -8,10 +8,10 @@ import {Locator, Page} from '@playwright/test';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {BlogsPage} from './BlogsPage';
 
-import type {postCategoryProps} from '../../../helpers/HeadlessAdminTaxonomyApiHelper';
+import type {postTaxonomyVocabularyTaxonomyCategoryProps} from '../../../helpers/HeadlessAdminTaxonomyApiHelper';
 
 type editBlogEntryAddfriendlyUrlType = {
-	categories: Pick<postCategoryProps, 'name'>[];
+	categories: Pick<postTaxonomyVocabularyTaxonomyCategoryProps, 'name'>[];
 	vocabularyName: string;
 };
 

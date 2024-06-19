@@ -1501,6 +1501,19 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Layout> getLayouts(Collection<Serializable> primaryKeys) {
+		Map<Serializable, Layout> layoutsMap =
+			layoutPersistence.fetchByPrimaryKeys(
+				SetUtil.fromCollection(primaryKeys));
+
+		if (layoutsMap.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		return new ArrayList<>(layoutsMap.values());
+	}
+
+	@Override
 	public List<Layout> getLayouts(long companyId) {
 		return layoutPersistence.findByCompanyId(companyId);
 	}
@@ -1945,19 +1958,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		return layouts;
-	}
-
-	@Override
-	public List<Layout> getLayouts(Collection<Serializable> primaryKeys) {
-		Map<Serializable, Layout> layoutsMap =
-			layoutPersistence.fetchByPrimaryKeys(
-				SetUtil.fromCollection(primaryKeys));
-
-		if (layoutsMap.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		return new ArrayList<>(layoutsMap.values());
 	}
 
 	@Override

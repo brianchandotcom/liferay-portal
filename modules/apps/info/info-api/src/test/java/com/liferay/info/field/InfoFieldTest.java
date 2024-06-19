@@ -26,12 +26,14 @@ public class InfoFieldTest {
 
 	@Test
 	public void testEquals() {
+		String uniqueId = RandomTestUtil.randomString();
+
 		Assert.assertEquals(
 			InfoField.builder(
 			).infoFieldType(
 				TextInfoFieldType.INSTANCE
 			).uniqueId(
-				"uniquedId"
+				uniqueId
 			).name(
 				"text"
 			).build(),
@@ -39,7 +41,7 @@ public class InfoFieldTest {
 			).infoFieldType(
 				TextInfoFieldType.INSTANCE
 			).uniqueId(
-				"uniquedId"
+				uniqueId
 			).name(
 				"text"
 			).build());

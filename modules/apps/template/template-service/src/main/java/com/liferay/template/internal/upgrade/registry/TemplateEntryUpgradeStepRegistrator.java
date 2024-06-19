@@ -5,10 +5,13 @@
 
 package com.liferay.template.internal.upgrade.registry;
 
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.template.internal.upgrade.registry.v1_2_0.PortletPreferenceValuesUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -31,6 +34,13 @@ public class TemplateEntryUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"1.1.0", "1.2.0",
+			new PortletPreferenceValuesUpgradeProcess(_groupLocalService));
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

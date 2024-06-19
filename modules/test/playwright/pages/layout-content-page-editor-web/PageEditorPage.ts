@@ -73,6 +73,32 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
+	async addRuleAction() {
+		await this.page.getByLabel('Select Action').press('Enter');
+		await this.page.keyboard.press('Tab');
+		await this.page.keyboard.press('Enter');
+		await this.page.keyboard.press('Tab');
+		await this.page.keyboard.press('Enter');
+		await this.page.keyboard.press('Tab');
+		await this.page
+			.getByRole('button', {name: 'Add Action'})
+			.press('Enter');
+	}
+
+	async addRuleCondition() {
+		await this.page
+			.getByLabel('Select Item for the Condition')
+			.press('Enter');
+		await this.page.keyboard.press('Tab');
+		await this.page.keyboard.press('Enter');
+		await this.page.keyboard.press('Tab');
+		await this.page.keyboard.press('Enter');
+		await this.page.keyboard.press('Tab');
+		await this.page
+			.getByRole('button', {name: 'Add Condition'})
+			.press('Enter');
+	}
+
 	async addWidget(category: string, name: string) {
 		await this.goToSidebarTab('Fragments and Widgets');
 

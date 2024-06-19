@@ -252,12 +252,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 					PortletURLBuilder.create(
 						getPortletURL()
 					).setParameter(
-						"groupType", "site"
-					).setParameter(
-						"scopeGroupType",
-						ParamUtil.getBoolean(
-							_httpServletRequest, "scopeGroupType")
-					).setParameter(
 						"showGroupSelector", true
 					).buildString());
 			}
@@ -312,6 +306,11 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				_portal.getLiferayPortletResponse(_portletResponse))
 		).setParameter(
 			"displayStyle", getDisplayStyle()
+		).setParameter(
+			"groupType", "site"
+		).setParameter(
+			"scopeGroupType",
+			ParamUtil.getBoolean(_httpServletRequest, "scopeGroupType")
 		).setParameter(
 			"selectedTab", _getTitle(_httpServletRequest.getLocale())
 		).buildPortletURL();

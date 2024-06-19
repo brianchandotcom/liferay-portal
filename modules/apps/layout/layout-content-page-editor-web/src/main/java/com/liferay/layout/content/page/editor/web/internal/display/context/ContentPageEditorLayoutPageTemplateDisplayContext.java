@@ -214,10 +214,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		repeatableFieldInfoCollectionProviderItemSelectorCriterion.
 			setDesiredItemSelectorReturnTypes(
 				new InfoListProviderItemSelectorReturnType());
-
 		repeatableFieldInfoCollectionProviderItemSelectorCriterion.setItemType(
 			layoutPageTemplateEntry.getClassName());
-
 		repeatableFieldInfoCollectionProviderItemSelectorCriterion.
 			setItemSubtype(
 				String.valueOf(layoutPageTemplateEntry.getClassTypeId()));

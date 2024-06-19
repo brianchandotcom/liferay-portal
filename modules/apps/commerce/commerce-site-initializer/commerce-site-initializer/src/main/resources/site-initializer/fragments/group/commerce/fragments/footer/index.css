@@ -3,10 +3,10 @@
 	border-top: 1px solid var(--gray-300);
 }
 
-#commerce-footer .commerce-footer-social {
+#commerce-footer-social {
 	gap: 3px;
 }
 
-#commerce-footer .commerce-footer-legal .btn:not(:first-child) {
+#commerce-footer-legal .btn:not(:first-child) {
 	border-left: 2px solid var(--gray-300);
 }

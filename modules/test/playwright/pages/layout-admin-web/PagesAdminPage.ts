@@ -157,7 +157,10 @@ export class PagesAdminPage {
 			.getByText('Page', {exact: true})
 			.click();
 
-		await this.getTemplateCard(template).click();
+		await this.page
+			.locator('.card-page-item')
+			.filter({hasText: template})
+			.click();
 
 		const loadingAnimation = this.page.locator(
 			'.modal-body-iframe .loading-animation'
@@ -186,10 +189,6 @@ export class PagesAdminPage {
 			.locator('.management-bar')
 			.getByRole('button', {name: 'Publish'})
 			.waitFor();
-	}
-
-	getTemplateCard(name: string) {
-		return this.page.locator('.card-page-item').filter({hasText: name});
 	}
 
 	async gotoPagesConfiguration() {

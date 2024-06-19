@@ -1,9 +1,8 @@
 {
-	"main": "svg4everybody.js",
 	"name": "frontend-js-svg4everybody-web",
 	"private": true,
 	"scripts": {
-		"build": "node-scripts build",
+		"build": "node-scripts build:custom",
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format"
 	},

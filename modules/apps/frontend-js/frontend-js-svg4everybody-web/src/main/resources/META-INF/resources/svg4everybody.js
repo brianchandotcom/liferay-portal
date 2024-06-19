@@ -1,5 +1,7 @@
 /*! svg4everybody v2.1.9 | github.com/jonathantneal/svg4everybody */
 
+const LEGACY_SUPPORT = false;
+
 function embed(parent, svg, target, use) {
 	// if the target exists
 	if (target) {
@@ -84,7 +86,7 @@ function loadreadystatechange(xhr, use) {
 	xhr.onreadystatechange();
 }
 
-module.exports = function svg4everybody(rawopts) {
+window.svg4everybody = function svg4everybody(rawopts) {
 	var opts = Object(rawopts);
 
 	// create legacy support variables

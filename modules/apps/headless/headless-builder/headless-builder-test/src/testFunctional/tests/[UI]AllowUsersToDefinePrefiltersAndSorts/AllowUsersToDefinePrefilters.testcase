@@ -176,9 +176,22 @@ definition {
 				fieldName = "filter",
 				name = "testendpoint",
 				title = "My-app");
+
+			WaitForElementPresent(
+				locator1 = "Message#UNIQUE_SUCCESS",
+				value1 = "Success:The filter was deleted.");
+
+			WaitForElementNotPresent(
+				locator1 = "Message#UNIQUE_SUCCESS",
+				value1 = "Success:The filter was deleted.");
 		}
 
 		task ("Then Student entries 'aabc', 'abc', 'bbbabc', 'zzzz' are listed in the endpoint response") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
+
 			APIApplicationEndpoint.assertCorrectItemInResponse(
 				baseURL = "my-app",
 				expectedValue = "aabc,abc,bbbabc,zzzz",

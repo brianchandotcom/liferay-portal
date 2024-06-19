@@ -48,6 +48,8 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		IFrame.selectCategoryFrame();
+
 		PortletEntry.inputName(name = ${categoryName});
 
 		IFrame.selectTopFrame();

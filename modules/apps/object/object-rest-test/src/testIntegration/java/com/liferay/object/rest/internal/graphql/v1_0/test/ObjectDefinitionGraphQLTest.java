@@ -61,6 +61,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
 /**
  * @author Javier Gamarra
  */
@@ -80,6 +83,16 @@ public class ObjectDefinitionGraphQLTest {
 
 		_listFieldName = StringUtil.randomId();
 
+		_draftAllowedObjectDefinition = _addObjectDefinition(true);
+
+		_draftAllowedObjectDefinitionName =
+			_draftAllowedObjectDefinition.getShortName();
+
+		_draftAllowedObjectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				_draftAllowedObjectDefinition.getObjectDefinitionId());
+
 		ListTypeDefinition listTypeDefinition =
 			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
@@ -93,7 +106,7 @@ public class ObjectDefinitionGraphQLTest {
 
 		_addListTypeEntry(listTypeDefinition, _listFieldValueKey);
 
-		_parentObjectDefinition = _addObjectDefinition();
+		_parentObjectDefinition = _addObjectDefinition(false);
 
 		ObjectFieldUtil.addCustomObjectField(
 			new PicklistObjectFieldBuilder(
@@ -117,7 +130,7 @@ public class ObjectDefinitionGraphQLTest {
 		_parentObjectDefinitionPrimaryKeyName = StringUtil.removeFirst(
 			_parentObjectDefinition.getPKObjectFieldName(), "c_");
 
-		ObjectDefinition childObjectDefinition = _addObjectDefinition();
+		ObjectDefinition childObjectDefinition = _addObjectDefinition(false);
 
 		_childObjectDefinitionName = childObjectDefinition.getShortName();
 
@@ -222,10 +235,24 @@ public class ObjectDefinitionGraphQLTest {
 					"Object/code"));
 		}
 
-		// insert draft with enableObjectEntryDraft disabled
+		// Status DRAFT
 
-		Assert.assertEquals(
-			"Bad Request",
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"extensions",
+				JSONUtil.put(
+					"classification", "DataFetchingException"
+				).put(
+					"code", "Bad Request"
+				).put(
+					"exception", JSONUtil.put("errno", 400)
+				)
+			).put(
+				"message",
+				"Exception while fetching data (/c/create" +
+					_parentObjectDefinitionName +
+						") : Draft status is not allowed"
+			).toString(),
 			JSONUtil.getValueAsString(
 				_invoke(
 					new GraphQLField(
@@ -238,27 +265,22 @@ public class ObjectDefinitionGraphQLTest {
 									_parentObjectDefinitionName,
 									StringBundler.concat(
 										"{", _objectFieldName, ": \"",
-										RandomTestUtil.randomString(), "\", ",
-										_listFieldName, ": {key: \"",
-										_listFieldValueKey, "\"}",
-										", statusCode:",
+										RandomTestUtil.randomString(),
+										"\", statusCode: ",
 										WorkflowConstants.STATUS_DRAFT, "}")
 								).build(),
-								new GraphQLField(_objectFieldName),
-								new GraphQLField(_listFieldName + " {key}"))))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+								new GraphQLField(_objectFieldName))))),
+				"JSONArray/errors", "Object/0"),
+			JSONCompareMode.LENIENT);
 
-		_parentObjectDefinition.setEnableObjectEntryDraft(true);
-
-		_parentObjectDefinition =
-			_objectDefinitionLocalService.updateObjectDefinition(
-				_parentObjectDefinition);
-
-		value = RandomTestUtil.randomString();
-
-		Assert.assertEquals(
-			WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_DRAFT),
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_objectFieldName, value
+			).put(
+				"status", "draft"
+			).put(
+				"statusCode", WorkflowConstants.STATUS_DRAFT
+			).toString(),
 			JSONUtil.getValueAsString(
 				_invoke(
 					new GraphQLField(
@@ -266,22 +288,20 @@ public class ObjectDefinitionGraphQLTest {
 						new GraphQLField(
 							"c",
 							new GraphQLField(
-								"create" + _parentObjectDefinitionName,
+								"create" + _draftAllowedObjectDefinitionName,
 								HashMapBuilder.<String, Object>put(
-									_parentObjectDefinitionName,
+									_draftAllowedObjectDefinitionName,
 									StringBundler.concat(
 										"{", _objectFieldName, ": \"", value,
-										"\", ", _listFieldName, ": {key: \"",
-										_listFieldValueKey, "\"}",
-										", statusCode:",
+										"\", statusCode:",
 										WorkflowConstants.STATUS_DRAFT, "}")
 								).build(),
-								new GraphQLField("status"),
 								new GraphQLField(_objectFieldName),
-								new GraphQLField(_listFieldName + " {key}"))))),
+								new GraphQLField("status"),
+								new GraphQLField("statusCode"))))),
 				"JSONObject/data", "JSONObject/c",
-				"JSONObject/create" + _parentObjectDefinitionName,
-				"Object/status"));
+				"JSONObject/create" + _draftAllowedObjectDefinitionName),
+			JSONCompareMode.STRICT);
 	}
 
 	@Test
@@ -813,16 +833,24 @@ public class ObjectDefinitionGraphQLTest {
 				"JSONObject/update" + _parentObjectDefinitionName,
 				"Object/" + _objectFieldName));
 
-		_parentObjectDefinition.setEnableObjectEntryDraft(true);
+		// Status DRAFT
 
-		_parentObjectDefinition =
-			_objectDefinitionLocalService.updateObjectDefinition(
-				_parentObjectDefinition);
-
-		value = RandomTestUtil.randomString();
-
-		Assert.assertEquals(
-			"Bad Request",
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"extensions",
+				JSONUtil.put(
+					"classification", "DataFetchingException"
+				).put(
+					"code", "Bad Request"
+				).put(
+					"exception", JSONUtil.put("errno", 400)
+				)
+			).put(
+				"message",
+				"Exception while fetching data (/c/update" +
+					_parentObjectDefinitionName +
+						") : Draft status is not allowed"
+			).toString(),
 			JSONUtil.getValueAsString(
 				_invoke(
 					new GraphQLField(
@@ -841,10 +869,9 @@ public class ObjectDefinitionGraphQLTest {
 									_parentObjectDefinitionPrimaryKeyName,
 									String.valueOf(objectEntryId)
 								).build(),
-								new GraphQLField(_objectFieldName),
-								new GraphQLField(_listFieldName + " {key}"))))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+								new GraphQLField(_objectFieldName))))),
+				"JSONArray/errors", "Object/0"),
+			JSONCompareMode.LENIENT);
 	}
 
 	private void _addListTypeEntry(
@@ -857,10 +884,14 @@ public class ObjectDefinitionGraphQLTest {
 			LocalizedMapUtil.getLocalizedMap(key));
 	}
 
-	private ObjectDefinition _addObjectDefinition() throws Exception {
+	private ObjectDefinition _addObjectDefinition(
+			boolean enableObjectEntryDraft)
+		throws Exception {
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, false, true, false, false,
+				TestPropsValues.getUserId(), 0, false, true, false,
+				enableObjectEntryDraft,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -920,6 +951,11 @@ public class ObjectDefinitionGraphQLTest {
 
 	private String _childObjectDefinitionName;
 	private ObjectEntry _childObjectEntry;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _draftAllowedObjectDefinition;
+
+	private String _draftAllowedObjectDefinitionName;
 	private String _listFieldName;
 	private String _listFieldValueKey;
 

@@ -487,14 +487,6 @@ export class PageEditorPage {
 		return styles[style];
 	}
 
-	async getElementStyle(item: Locator, style: string) {
-		return await item.evaluate(
-			(element, style) =>
-				window.getComputedStyle(element).getPropertyValue(style),
-			style
-		);
-	}
-
 	async goToConfigurationTab(tab: ConfigurationTab) {
 		await this.page.getByRole('tab', {exact: true, name: tab}).click();
 	}

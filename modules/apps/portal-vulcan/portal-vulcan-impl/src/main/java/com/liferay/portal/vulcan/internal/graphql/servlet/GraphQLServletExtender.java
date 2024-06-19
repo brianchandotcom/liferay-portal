@@ -2418,9 +2418,8 @@ public class GraphQLServletExtender {
 			).build();
 		}
 
-		private Throwable _getThrowable(GraphQLError graphQLError) {
-			ExceptionWhileDataFetching exceptionWhileDataFetching =
-				(ExceptionWhileDataFetching)graphQLError;
+		private Throwable _getThrowable(
+			ExceptionWhileDataFetching exceptionWhileDataFetching) {
 
 			Throwable throwable = exceptionWhileDataFetching.getException();
 
@@ -2460,7 +2459,8 @@ public class GraphQLServletExtender {
 				return false;
 			}
 
-			Throwable throwable = _getThrowable(graphQLError);
+			Throwable throwable = _getThrowable(
+				(ExceptionWhileDataFetching)graphQLError);
 
 			if (throwable instanceof ForbiddenException ||
 				throwable instanceof SecurityException) {
@@ -2476,7 +2476,8 @@ public class GraphQLServletExtender {
 				return false;
 			}
 
-			Throwable throwable = _getThrowable(graphQLError);
+			Throwable throwable = _getThrowable(
+				(ExceptionWhileDataFetching)graphQLError);
 
 			if (throwable instanceof NoSuchModelException ||
 				throwable instanceof NotFoundException ||
@@ -2513,7 +2514,9 @@ public class GraphQLServletExtender {
 			}
 
 			if (StringUtil.endsWith(
-					ClassUtil.getClassName(_getThrowable(graphQLError)),
+					ClassUtil.getClassName(
+						_getThrowable(
+							(ExceptionWhileDataFetching)graphQLError)),
 					"StatusException")) {
 
 				return true;

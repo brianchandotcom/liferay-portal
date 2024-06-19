@@ -60,10 +60,10 @@ public class RefundRestController extends BaseRestController {
 				NotificationRequest.fromJson(
 					commercePaymentEntryJSONObject.getString("payload"));
 
-			List<NotificationRequestItem> notificationItems =
+			List<NotificationRequestItem> notificationRequestItems =
 				notificationRequest.getNotificationItems();
 
-			if (notificationItems.isEmpty()) {
+			if (notificationRequestItems.isEmpty()) {
 				return new ResponseEntity<>(
 					new JSONObject(
 					).put(
@@ -77,7 +77,7 @@ public class RefundRestController extends BaseRestController {
 			}
 
 			NotificationRequestItem notificationRequestItem =
-				notificationItems.get(0);
+				notificationRequestItems.get(0);
 
 			JSONObject typeSettingsJSONObject = jsonObject.getJSONObject(
 				"typeSettings");

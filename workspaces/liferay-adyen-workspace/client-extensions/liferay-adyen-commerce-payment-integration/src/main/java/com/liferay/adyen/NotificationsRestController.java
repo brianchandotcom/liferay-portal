@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -54,12 +53,12 @@ public class NotificationsRestController extends BaseRestController {
 			NotificationRequest notificationRequest =
 				NotificationRequest.fromJson(json);
 
-			List<NotificationRequestItem> notificationItems =
+			List<NotificationRequestItem> notificationRequestItems =
 				notificationRequest.getNotificationItems();
 
-			if (!CollectionUtils.isEmpty(notificationItems)) {
+			if (!notificationRequestItems.isEmpty()) {
 				NotificationRequestItem notificationRequestItem =
-					notificationItems.get(0);
+					notificationRequestItems.get(0);
 
 				String externalReferenceCode = _getExternalReferenceCode(
 					notificationRequestItem);

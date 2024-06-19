@@ -8532,15 +8532,11 @@ information. Make sure to commit in all build services results.
 				</exec>
 
 				<if>
-					<and>
-						<or>
-							<contains string="${git.diff}" substring="modules${file.separator}util${file.separator}source-formatter" />
-							<contains string="${git.diff}" substring="source-formatter.properties" />
-						</or>
-						<not>
-							<matches pattern="release-((\d{4})\.q([1-4])|(7\.[0-4]\.[0-9]?[0-9]\.\d+))" string="${liferay.portal.branch}" />
-						</not>
-					</and>
+					<or>
+						<contains string="${git.diff}" substring="modules${file.separator}util${file.separator}source-formatter" />
+						<contains string="${git.diff}" substring="source-formatter.properties" />
+						<matches pattern="release-((\d{4})\.q([1-4])|(7\.[0-4]\.[0-9]?[0-9]\.\d+))" string="${liferay.portal.branch}" />
+					</or>
 					<then>
 						<antcall target="compile" />
 
@@ -8552,7 +8548,20 @@ information. Make sure to commit in all build services results.
 								<gradle-execute dir="modules/util/source-formatter" task="deploy" />
 							</then>
 						</if>
+					</then>
+					<else>
+						<antcall target="setup-sdk" />
 
+						<antcall target="setup-yarn" />
+					</else>
+				</if>
+
+				<if>
+					<or>
+						<contains string="${git.diff}" substring="modules${file.separator}util${file.separator}source-formatter" />
+						<contains string="${git.diff}" substring="source-formatter.properties" />
+					</or>
+					<then>
 						<ant dir="portal-impl" target="format-source-all">
 							<property name="source.auto.fix" value="false" />
 							<property name="source.fail.on.auto.fix" value="true" />
@@ -8563,10 +8572,6 @@ information. Make sure to commit in all build services results.
 						</ant>
 					</then>
 					<else>
-						<antcall target="setup-sdk" />
-
-						<antcall target="setup-yarn" />
-
 						<ant dir="portal-impl" target="format-source-current-branch">
 							<property name="check.vulnerabilities" value="true" />
 							<property name="source.auto.fix" value="false" />

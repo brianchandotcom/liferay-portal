@@ -1,5 +1,6 @@
 :root {
 	--commerce-header-user-height: 34px;
+	--local-control-menu-height: 0px;
 }
 
 .commerce-main {
@@ -7,7 +8,15 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	min-height: calc(100vh - var(--control-menu-height));
+	min-height: calc(100vh - var(--control-menu-height, 0px));
 	overflow-x: hidden;
 	position: relative;
+}
+
+.signed-out .commerce-main {
+	min-height: 100vh;
+}
+
+.commerce-main-body {
+
 }

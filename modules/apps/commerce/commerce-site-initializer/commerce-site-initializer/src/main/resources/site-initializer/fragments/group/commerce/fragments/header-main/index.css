@@ -16,7 +16,7 @@
 #commerce-header-main .cart-root .mini-cart.is-open {
 	height: calc(
 		100vh - var(--control-menu-height, 0px) - var(--commerce-header-user-height) -
-			10px
+		10px
 	);
 }
 
@@ -75,8 +75,8 @@
 }
 
 #commerce-header-main
-	.account-selector-root
-	.btn-account-selector
-	.sticker-user-icon {
+.account-selector-root
+.btn-account-selector
+.sticker-user-icon {
 	border-radius: var(--border-radius);
 }

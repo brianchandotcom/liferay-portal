@@ -58,17 +58,20 @@
 										"key": "header-nav",
 										"siteKey": "[$GROUP_KEY$]"
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"indexed": true
 								},
 								"pageElements": [
 									{
-										"definition": {},
+										"definition": {
+										},
 										"pageElements": [
 											{
 												"definition": {
 													"indexed": true,
-													"layout": {}
+													"layout": {
+													}
 												},
 												"pageElements": [
 													{
@@ -78,11 +81,12 @@
 															},
 															"fragmentConfig": {
 																"displayStyle": "horizontal",
+																"hoveredItemColor": "",
 																"selectedItemColor": "",
-																"sublevels": "-1",
-																"hoveredItemColor": ""
+																"sublevels": "-1"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -103,13 +107,15 @@
 						"definition": {
 							"cssClasses": [
 								"commerce-main-body",
-								"flex-fill"
+								"flex-fill",
+								"pb-5"
 							],
 							"htmlProperties": {
 								"htmlTag": "Main"
 							},
 							"indexed": true,
 							"layout": {
+								"widthType": "Fixed"
 							}
 						},
 						"pageElements": [
@@ -127,20 +133,213 @@
 					},
 					{
 						"definition": {
-							"fragment": {
-								"key": "footer",
-								"siteKey": "[$GROUP_KEY$]"
+							"htmlProperties": {
+								"htmlTag": "Footer"
 							},
-							"fragmentConfig": {
-							},
-							"fragmentFields": [
-							],
-							"fragmentStyle": {
-								"width": "100vw"
-							},
-							"indexed": true
+							"indexed": true,
+							"layout": {
+							}
 						},
-						"type": "Fragment"
+						"id": "5844652d-be2f-1117-5393-227a8ebf1cc5",
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "footer",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "legalLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "contactUsLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "commerce-site-footer-logo",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "socialFacebookLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "copyrightLink",
+											"value": {
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "socialYoutube",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "privacyPolicyLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "socialInstagramLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "socialXLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "socialX",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "socialFacebook",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "socialInstagram",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "socialYoutubeLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "socialLinkedinLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "socialLinkedin",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"id": "ed49f66d-e226-5620-88bb-515594ec6f4f",
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
 					}
 				],
 				"type": "Section"

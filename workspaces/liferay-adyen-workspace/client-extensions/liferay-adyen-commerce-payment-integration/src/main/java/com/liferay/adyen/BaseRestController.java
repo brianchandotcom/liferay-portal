@@ -10,7 +10,10 @@ import org.apache.commons.logging.Log;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Raymond Augé
@@ -19,6 +22,17 @@ import org.springframework.security.oauth2.jwt.Jwt;
  * @author Crescenzo Rega
  */
 public abstract class BaseRestController {
+
+	protected WebClient getWebClient() {
+		return WebClient.builder(
+		).baseUrl(
+			lxcDXPServerProtocol + "://" + lxcDXPMainDomain
+		).defaultHeader(
+			HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
+		).defaultHeader(
+			HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
+		).build();
+	}
 
 	protected void log(Jwt jwt, Log log, String json) {
 		if (log.isInfoEnabled()) {

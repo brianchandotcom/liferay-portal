@@ -29,7 +29,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +36,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import reactor.core.publisher.Mono;
 
@@ -189,7 +187,7 @@ public class WebhookRestController extends BaseRestController {
 	}
 
 	private void _delete(String authorization, String path) {
-		_getWebClient(
+		getWebClient(
 		).delete(
 		).uri(
 			uriBuilder -> uriBuilder.path(
@@ -204,7 +202,7 @@ public class WebhookRestController extends BaseRestController {
 	}
 
 	private JSONObject _get(String authorization, String path) {
-		Mono<String> response = _getWebClient(
+		Mono<String> response = getWebClient(
 		).get(
 		).uri(
 			uriBuilder -> uriBuilder.path(
@@ -286,19 +284,8 @@ public class WebhookRestController extends BaseRestController {
 		return externalReferenceCode;
 	}
 
-	private WebClient _getWebClient() {
-		return WebClient.builder(
-		).baseUrl(
-			lxcDXPServerProtocol + "://" + lxcDXPMainDomain
-		).defaultHeader(
-			HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
-		).defaultHeader(
-			HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-		).build();
-	}
-
 	private void _patch(String authorization, String body, String path) {
-		_getWebClient(
+		getWebClient(
 		).patch(
 		).uri(
 			uriBuilder -> uriBuilder.path(

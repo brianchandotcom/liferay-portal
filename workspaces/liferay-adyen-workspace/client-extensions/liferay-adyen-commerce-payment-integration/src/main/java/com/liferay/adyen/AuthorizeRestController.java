@@ -19,7 +19,6 @@ import org.json.JSONObject;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Crescenzo Rega
@@ -107,7 +105,7 @@ public class AuthorizeRestController extends BaseRestController {
 	}
 
 	private void _delete(String authorization, String path) {
-		_getWebClient(
+		getWebClient(
 		).delete(
 		).uri(
 			uriBuilder -> uriBuilder.path(
@@ -119,17 +117,6 @@ public class AuthorizeRestController extends BaseRestController {
 		).bodyToMono(
 			String.class
 		).subscribe();
-	}
-
-	private WebClient _getWebClient() {
-		return WebClient.builder(
-		).baseUrl(
-			lxcDXPServerProtocol + "://" + lxcDXPMainDomain
-		).defaultHeader(
-			HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
-		).defaultHeader(
-			HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-		).build();
 	}
 
 	private static final Log _log = LogFactory.getLog(

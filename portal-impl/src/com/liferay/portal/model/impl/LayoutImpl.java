@@ -628,7 +628,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(getPlid());
 
 		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
-			if (LanguageUtil.isAvailableLocale(
+			if (!LanguageUtil.isAvailableLocale(
 					layoutFriendlyURL.getGroupId(),
 					layoutFriendlyURL.getLanguageId())) {
 

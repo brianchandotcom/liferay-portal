@@ -795,25 +795,24 @@ public class TestrayManagerImpl implements TestrayManager {
 
 				objectEntryId = GetterUtil.getLong(values.get("objectEntryId"));
 			}
-		}
+			else {
+				ObjectEntry objectEntry = _addObjectEntry(
+					"Component", serviceContext, testrayCache, userId,
+					HashMapBuilder.<String, Serializable>put(
+						"name", testrayComponentName
+					).put(
+						"r_projectToComponents_c_projectId", testrayProjectId
+					).put(
+						"r_teamToComponents_c_teamId", testrayTeamId
+					).build());
 
-		if (objectEntryId == null) {
-			ObjectEntry objectEntry = _addObjectEntry(
-				"Component", serviceContext, testrayCache, userId,
-				HashMapBuilder.<String, Serializable>put(
-					"name", testrayComponentName
-				).put(
-					"r_projectToComponents_c_projectId", testrayProjectId
-				).put(
-					"r_teamToComponents_c_teamId", testrayTeamId
-				).build());
+				long testrayComponentId = objectEntry.getObjectEntryId();
 
-			long testrayComponentId = objectEntry.getObjectEntryId();
+				testrayCache.addObjectEntryId(
+					objectEntryIdsKey, testrayComponentId);
 
-			testrayCache.addObjectEntryId(
-				objectEntryIdsKey, testrayComponentId);
-
-			return testrayComponentId;
+				return testrayComponentId;
+			}
 		}
 
 		if (values == null) {

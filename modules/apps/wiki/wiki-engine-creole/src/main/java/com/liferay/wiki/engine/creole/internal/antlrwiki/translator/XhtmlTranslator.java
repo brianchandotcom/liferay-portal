@@ -100,7 +100,12 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 		append(" src=\"");
 
-		if (imageNode.isAbsoluteLink()) {
+		if (imageNode.isAbsoluteLink() ||
+			imageNode.getLink(
+			).startsWith(
+				"data:image/"
+			)) {
+
 			append(HtmlUtil.escapeAttribute(imageNode.getLink()));
 		}
 		else {

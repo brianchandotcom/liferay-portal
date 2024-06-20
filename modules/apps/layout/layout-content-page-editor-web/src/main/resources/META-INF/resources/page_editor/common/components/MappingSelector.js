@@ -49,10 +49,33 @@ const UNMAPPED_OPTION = {
 	value: 'unmapped',
 };
 
-function filterFields(initialFields, fieldType, filterLinkTypes, relationship) {
-	const fields = relationship
-		? initialFields.filter((fieldSet) => fieldSet.name === relationship)
-		: initialFields;
+function filterFields(
+	initialFields,
+	fieldType,
+	filterLinkTypes,
+	selectedRelationship,
+	relationships
+) {
+	let fields = initialFields;
+
+	if (selectedRelationship) {
+		fields = initialFields.filter(
+			(fieldSet) => fieldSet.name === selectedRelationship
+		);
+	}
+
+	if (
+		Liferay.FeatureFlags['LPD-20213'] &&
+		relationships &&
+		!selectedRelationship
+	) {
+		fields = fields.filter(
+			(fieldSet) =>
+				!relationships
+					.map((relationship) => relationship.name)
+					.includes(fieldSet.name)
+		);
+	}
 
 	return fields.reduce((acc, fieldSet) => {
 		const newFields = fieldSet.fields.filter((field) => {
@@ -443,7 +466,8 @@ function MappingSelector({
 					fields,
 					fieldType,
 					filterLinkTypes,
-					selectedRelationship
+					selectedRelationship,
+					relationships
 				)
 			);
 		}
@@ -461,6 +485,7 @@ function MappingSelector({
 		filterLinkTypes,
 		pageContents,
 		mappingFields,
+		relationships,
 		selectedItem,
 		selectedMappingTypes,
 		selectedRelationship,

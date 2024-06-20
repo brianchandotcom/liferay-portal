@@ -106,6 +106,33 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 	}
 
 	@Test
+	public void testUpgradeWithNumberOfItemsPerPage() throws Exception {
+		int numberOfItems = RandomTestUtil.randomInt();
+		int numberOfItemsPerPage = RandomTestUtil.randomInt();
+
+		_assertUpgradeWithItemConfig(
+			HashMapBuilder.<String, Object>put(
+				"displayAllItems", false
+			).put(
+				"numberOfItemsPerPage", numberOfItemsPerPage
+			).put(
+				"numberOfPages",
+				(int)Math.ceil(numberOfItems / (double)numberOfItemsPerPage)
+			).put(
+				"paginationType",
+				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"numberOfItems", numberOfItems
+			).put(
+				"numberOfItemsPerPage", numberOfItemsPerPage
+			).put(
+				"paginationType",
+				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC
+			).build());
+	}
+
+	@Test
 	public void testUpgradeWithNumericPaginationType() throws Exception {
 		_assertUpgradeWithItemConfig(
 			HashMapBuilder.<String, Object>put(

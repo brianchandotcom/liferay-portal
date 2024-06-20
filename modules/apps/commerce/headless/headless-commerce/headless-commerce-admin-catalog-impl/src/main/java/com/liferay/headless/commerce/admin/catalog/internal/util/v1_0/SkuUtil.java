@@ -406,7 +406,7 @@ public class SkuUtil {
 		CommercePriceEntry commercePriceEntry =
 			commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid(), StringPool.BLANK);
+				cpInstance.getCPInstanceUuid(), unitOfMeasureKey);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 

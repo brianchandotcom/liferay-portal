@@ -38,6 +38,7 @@ import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -306,7 +307,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			(BigDecimal)GetterUtil.get(sku.getPrice(), cpInstance.getPrice()),
 			(BigDecimal)GetterUtil.get(
 				sku.getPromoPrice(), cpInstance.getPromoPrice()),
-			serviceContext);
+			StringPool.BLANK, serviceContext);
 
 		_updateNestedResources(sku, cpInstance, serviceContext);
 
@@ -684,7 +685,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			(BigDecimal)GetterUtil.get(sku.getPrice(), cpInstance.getPrice()),
 			(BigDecimal)GetterUtil.get(
 				sku.getPromoPrice(), cpInstance.getPromoPrice()),
-			serviceContext);
+			StringPool.BLANK, serviceContext);
 
 		_updateNestedResources(sku, cpInstance, serviceContext);
 

@@ -26,14 +26,10 @@ public class DBSchemaToFilesProcessor {
 		).process();
 
 		FileUtil.write(
-			new File(path, "indexes" + _DEFAULT_EXTENSION),
-			_sqlRecorder.getIndexesSQL());
+			new File(path, "indexes.sql"), _sqlRecorder.getIndexesSQL());
 		FileUtil.write(
-			new File(path, "tables" + _DEFAULT_EXTENSION),
-			_sqlRecorder.getTablesSQL());
+			new File(path, "tables.sql"), _sqlRecorder.getTablesSQL());
 	}
-
-	private static final String _DEFAULT_EXTENSION = ".sql";
 
 	private final DBType _dbType;
 	private final SQLRecorder _sqlRecorder = new SQLRecorder();

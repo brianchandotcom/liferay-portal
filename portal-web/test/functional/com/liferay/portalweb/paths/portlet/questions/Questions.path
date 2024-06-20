@@ -167,7 +167,7 @@
 </tr>
 <tr>
 	<td>QUESTIONS_DEFAULT_SUBSCRIPTION_TOPICS</td>
-	<td>//div[contains(@class,'questions-container')]/div[contains(.,'Topics')]/div[contains(@class,'c-empty-state')]//span/span[contains(.,'There are no results.')]</td>
+	<td>//div[contains(@class,'questions-container')]/div[contains(.,'Topics')]/div[contains(@class,'c-empty-state')]//div/span[contains(.,'There are no results.')]</td>
 	<td></td>
 </tr>
 <tr>

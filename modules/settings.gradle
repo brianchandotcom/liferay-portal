@@ -29,7 +29,7 @@ if (Boolean.getBoolean("gradle.develocity.enabled")) {
 				allowUntrustedServer = true
 				path = "/cache/"
 
-				if (System.getProperty("gradle.develocity.push.enabled")) {
+				if (Boolean.getBoolean("gradle.develocity.push.enabled")) {
 					push = true
 				}
 

@@ -13,6 +13,7 @@ import {PlacedOrdersPage} from '../pages/commerce/commerce-order-content-web/pla
 import {SpecificationFacetsPage} from '../pages/commerce/commerce-product-content-search-web/specificationFacetsPage';
 import {ProductDetailsPage} from '../pages/commerce/commerce-product-content-web/productDetailsPage';
 import {AttachmentsPage} from '../pages/commerce/commerce-product-definitions-web/attachmentsPage';
+import {CommerceProductSpecificationsPage} from '../pages/commerce/commerce-product-options-web/commerceProductSpecificationsPage';
 import {CommerceThemeMiniumCatalogPage} from '../pages/commerce/commerce-theme-minium/commerceThemeMiniumCatalogPage';
 import {CommerceThemeMiniumPage} from '../pages/commerce/commerce-theme-minium/commerceThemeMiniumPage';
 import {CommerceAccountManagementPage} from '../pages/commerce/commerceAccountManagementPage';
@@ -57,6 +58,7 @@ const commercePagesTest = test.extend<{
 	commerceLayoutsPage: CommerceLayoutsPage;
 	commerceMiniCartPage: CommerceMiniCartPage;
 	commercePaymentsPage: CommercePaymentsPage;
+	commerceProductSpecificationsPage: CommerceProductSpecificationsPage;
 	commerceThemeMiniumCatalogPage: CommerceThemeMiniumCatalogPage;
 	commerceThemeMiniumPage: CommerceThemeMiniumPage;
 	pendingOrdersPage: PendingOrdersPage;
@@ -130,8 +132,14 @@ const commercePagesTest = test.extend<{
 	commercePaymentsPage: async ({page}, use) => {
 		await use(new CommercePaymentsPage(page));
 	},
+	commerceProductSpecificationsPage: async ({page}, use) => {
+		await use(new CommerceProductSpecificationsPage(page));
+	},
 	commerceThemeMiniumCatalogPage: async ({page}, use) => {
 		await use(new CommerceThemeMiniumCatalogPage(page));
+	},
+	commerceThemeMiniumPage: async ({page}, use) => {
+		await use(new CommerceThemeMiniumPage(page));
 	},
 	commerceThemeMiniumPage: async ({page}, use) => {
 		await use(new CommerceThemeMiniumPage(page));

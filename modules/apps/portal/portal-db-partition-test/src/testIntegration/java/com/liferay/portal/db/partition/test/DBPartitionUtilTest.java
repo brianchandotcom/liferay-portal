@@ -212,7 +212,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					_getCount(companyId, toTableName));
 			}
 
-			_testResourcePermissionTableCopy(companyId);
+			_assertResourcePermissionTable(companyId);
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -441,6 +441,27 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		Assert.assertEquals(_JOBS_COUNT, _getJobsCount(defaultPartitionName));
 	}
 
+	private void _assertResourcePermissionTable(long companyId)
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(companyId);
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select primKey, primKeyId from ResourcePermission");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.isBeforeFirst());
+
+			while (resultSet.next()) {
+				long primKey = resultSet.getLong("primKey");
+				long primKeyId = resultSet.getLong("primKeyId");
+
+				Assert.assertEquals(companyId, primKey);
+				Assert.assertEquals(companyId, primKeyId);
+			}
+		}
+	}
+
 	private int _getCount(long companyId, String tableName) throws Exception {
 		String whereClause = StringPool.BLANK;
 
@@ -580,28 +601,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		_schedulerEngine.schedule(
 			trigger, StringPool.BLANK, _JOB_GROUP_NAME, new Message(),
 			StorageType.PERSISTED);
-	}
-
-	private void _testResourcePermissionTableCopy(long companyId)
-		throws Exception {
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId);
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select primKey, primKeyId from ResourcePermission");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			Assert.assertTrue(resultSet.isBeforeFirst());
-
-			while (resultSet.next()) {
-				long primKey = resultSet.getLong("primKey");
-				long primKeyId = resultSet.getLong("primKeyId");
-
-				Assert.assertEquals(companyId, primKey);
-
-				Assert.assertEquals(companyId, primKeyId);
-			}
-		}
 	}
 
 	private static final String _JOB_GROUP_NAME = "liferay/test";

@@ -228,6 +228,65 @@ autoSaveAsDraftTest(
 	}
 );
 
+autoSaveAsDraftTest(
+	'LPD-26863: Undo/Redo buttons work with content field',
+	async ({apiHelpers, journalEditArticlePage, page, site}) => {
+		const localizableFieldName = 'Text56789';
+		const structureName = 'Structure undo/redo';
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{name: localizableFieldName, repeatable: false}],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		const changesSavedIndicator = await page.locator(
+			'#_com_liferay_journal_web_portlet_JournalPortlet_changesSavedIndicator'
+		);
+		const redoButton = await page.getByTitle('Redo', {exact: true});
+		const title = getRandomString();
+		const undoButton = await page.getByTitle('Undo', {exact: true});
+
+		const localizableField = await page.getByRole('textbox', {
+			name: localizableFieldName,
+		});
+		const titlePlaceholder = await page.getByPlaceholder(
+			'Untitled ' + structureName
+		);
+
+		await titlePlaceholder.click();
+
+		await page.waitForTimeout(200);
+
+		await titlePlaceholder.fill(title);
+
+		await expect(changesSavedIndicator).toBeVisible();
+
+		await page.locator('body').click();
+
+		await fillAndClickOutside(page, localizableField, title);
+
+		await expect(changesSavedIndicator).toBeVisible();
+
+		await undoButton.click();
+
+		await expect(localizableField).toHaveValue('');
+
+		await redoButton.click();
+
+		await expect(redoButton).toBeDisabled();
+
+		await expect(localizableField).toHaveValue(title);
+	}
+);
+
 baseTest(
 	'LPD-15248 Move folder to another folder via management toolbar',
 	async ({apiHelpers, journalPage, page, site}) => {

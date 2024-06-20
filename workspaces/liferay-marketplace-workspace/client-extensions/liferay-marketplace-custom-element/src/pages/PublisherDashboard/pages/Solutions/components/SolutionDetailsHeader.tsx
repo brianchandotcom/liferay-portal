@@ -42,6 +42,10 @@ const SolutionsDetailsHeader = ({product}: {product?: Product}) => {
 				</ClayButton>
 
 				<ClayButton
+					disabled={
+						product.productStatus ===
+						PRODUCT_WORKFLOW_STATUS_CODE.PENDING
+					}
 					displayType="secondary"
 					onClick={() =>
 						navigate(`../${product.productId}/publisher/profile`)

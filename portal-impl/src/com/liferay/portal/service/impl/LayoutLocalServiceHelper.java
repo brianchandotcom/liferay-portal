@@ -527,11 +527,11 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 		for (String languageId : PropsValues.LOCALES) {
 			languageId = StringUtil.toLowerCase(languageId);
 
+			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
+
 			String i18nPathLanguageId =
 				StringPool.SLASH +
-					PortalUtil.getI18nPathLanguageId(
-						LocaleUtil.fromLanguageId(languageId, false),
-						languageId);
+					PortalUtil.getI18nPathLanguageId(locale, languageId);
 
 			String underlineI18nPathLanguageId = StringUtil.replace(
 				i18nPathLanguageId, CharPool.DASH, CharPool.UNDERLINE);

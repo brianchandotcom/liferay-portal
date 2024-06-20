@@ -1627,7 +1627,7 @@ public class KBArticleLocalServiceTest {
 
 	@FeatureFlags("LPS-188058")
 	@Test
-	public void testUpdateKBArticleDisplayDateExpiredArticleCanBePublished()
+	public void testUpdateKBArticleDisplayDateExpiredKBArticleCanBePublished()
 		throws Exception {
 
 		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
@@ -1674,7 +1674,7 @@ public class KBArticleLocalServiceTest {
 
 	@FeatureFlags("LPS-188058")
 	@Test
-	public void testUpdateKBArticleDisplayDateOnDraftArticleUpdatesStatusToScheduled()
+	public void testUpdateKBArticleDisplayDateOnDraftKBArticleUpdatesStatusToScheduled()
 		throws Exception {
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
@@ -1708,7 +1708,7 @@ public class KBArticleLocalServiceTest {
 
 	@FeatureFlags("LPS-188058")
 	@Test
-	public void testUpdateKBArticleDisplayDateUpdatesStatusToApproved()
+	public void testUpdateKBArticleDisplayDateUpdatesKBArticleStatusToApproved()
 		throws Exception {
 
 		Date displayDate = new Date(
@@ -1738,7 +1738,7 @@ public class KBArticleLocalServiceTest {
 
 	@FeatureFlags("LPS-188058")
 	@Test
-	public void testUpdateKBArticleDisplayDateUpdatesStatusToScheduled()
+	public void testUpdateKBArticleDisplayDateUpdatesKBArticleStatusToScheduled()
 		throws Exception {
 
 		Date displayDate = new Date(

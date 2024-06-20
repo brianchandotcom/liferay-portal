@@ -5,6 +5,7 @@
 
 package com.liferay.portal.db.partition.internal.component.enabler;
 
+import com.liferay.portal.db.partition.internal.operation.DBPartitionCopyVirtualInstanceOperation;
 import com.liferay.portal.db.partition.internal.operation.DBPartitionExtractVirtualInstanceOperation;
 import com.liferay.portal.db.partition.internal.operation.DBPartitionInsertVirtualInstanceOperation;
 import com.liferay.portal.kernel.db.partition.DBPartition;
@@ -22,6 +23,8 @@ public class DBPartitionComponentEnabler {
 	@Activate
 	protected void activate(ComponentContext componentContext) {
 		if (DBPartition.isPartitionEnabled()) {
+			componentContext.enableComponent(
+				DBPartitionCopyVirtualInstanceOperation.class.getName());
 			componentContext.enableComponent(
 				DBPartitionExtractVirtualInstanceOperation.class.getName());
 			componentContext.enableComponent(

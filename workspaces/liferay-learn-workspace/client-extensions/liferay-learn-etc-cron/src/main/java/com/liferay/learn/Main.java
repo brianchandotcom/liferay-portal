@@ -771,10 +771,10 @@ public class Main {
 		Path docsPath = Paths.get(_docsDirName);
 		Path filePath = Paths.get(file.toURI());
 
+		Path relativePath = docsPath.relativize(filePath);
+
 		String urlString =
-			"/w/" +
-				FilenameUtils.removeExtension(
-					String.valueOf(docsPath.relativize(filePath)));
+			"/w/" + FilenameUtils.removeExtension(String.valueOf(relativePath));
 
 		urlString =
 			urlString.substring(0, urlString.indexOf("/latest/")) +

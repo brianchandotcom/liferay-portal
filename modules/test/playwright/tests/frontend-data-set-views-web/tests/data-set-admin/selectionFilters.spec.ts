@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {picklistApiHelpersTest} from '../../fixtures/picklistApiHelpersTest';
@@ -120,6 +121,90 @@ test.describe('Filters in Data Set Manager', () => {
 					name: SELECTION_API_HEADLESS_FILTER_NAME,
 				})
 			).toBeVisible();
+		});
+	});
+
+	test('Preselected filter values are checked in the multiSelect', async ({
+		filtersPage,
+		page,
+		picklistApiHelpers,
+	}) => {
+		await test.step('Navigate to the Filters tab', async () => {
+			await filtersPage.goto({
+				dataSetLabel,
+			});
+		});
+
+		await test.step('Create a selection filter', async () => {
+			await filtersPage.createSelectionFilterPicklist({
+				filterBy: 'externalReferenceCode',
+				filterMode: 'Include',
+				name: 'Selection Filter',
+				preselectedValues: [PICKLIST_VALUE_NAME],
+				selectionType: 'Single',
+				source: picklistName,
+				sourceType: 'Object Picklist',
+			});
+		});
+
+		await test.step('Open the edit filter modal', async () => {
+			await filtersPage.goto({
+				dataSetLabel,
+			});
+
+			const filterActionsButton = page
+				.getByRole('cell', {name: 'Actions'})
+				.getByRole('button');
+
+			await expect(filterActionsButton).toBeVisible();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Edit'}),
+				trigger: filterActionsButton,
+			});
+
+			const dialogFilterSourceSubtitle = page.getByRole('heading', {
+				name: 'Filter Source',
+			});
+
+			await expect(dialogFilterSourceSubtitle).toBeVisible();
+
+			const dialogFilterOptionsSubtitle = page.getByRole('heading', {
+				name: 'Filter Options',
+			});
+
+			await expect(dialogFilterOptionsSubtitle).toBeVisible();
+		});
+
+		await test.step('Check that the preselected value is checked', async () => {
+			const picklist = await picklistApiHelpers.getPicklist(picklistName);
+
+			const preselectedValuesMultiSelect = page.locator(
+				'.form-control.form-control-tag-group.input-group'
+			);
+
+			await expect(preselectedValuesMultiSelect).toBeVisible();
+
+			await expect(preselectedValuesMultiSelect).toContainText(
+				picklist.listTypeEntries[0].name
+			);
+
+			const preselectedValueOption = page.getByRole('option', {
+				name: 'Sample Value',
+			});
+
+			await clickAndExpectToBeVisible({
+				target: preselectedValueOption,
+				trigger: preselectedValuesMultiSelect,
+			});
+
+			const preselectedValueOptionCheckbox =
+				preselectedValueOption.locator(
+					'.custom-control-input.invisible'
+				);
+
+			await expect(preselectedValueOptionCheckbox).toBeChecked();
 		});
 	});
 });

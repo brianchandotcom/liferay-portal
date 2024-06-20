@@ -3,15 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.mail.messaging;
+package com.liferay.mail.messaging.internal;
 
-import com.liferay.mail.internal.MailEngine;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.security.auth.EmailAddressGenerator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
@@ -27,11 +28,17 @@ import java.util.Set;
 
 import javax.mail.internet.InternetAddress;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
  * @author Zsolt Balogh
  */
+@Component(
+	property = "destination.name=" + DestinationNames.MAIL,
+	service = MessageListener.class
+)
 public class MailMessageListener extends BaseMessageListener {
 
 	protected void doMailMessage(MailMessage mailMessage) throws Exception {

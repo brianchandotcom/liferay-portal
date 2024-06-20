@@ -231,10 +231,12 @@ journalEditArticleDisplayContext.setViewAttributes();
 									type="submit"
 								/>
 
-								<react:component
-									module="{SaveButtons} from journal-web"
-									props="<%= journalEditArticleDisplayContext.getSaveButtonsContext() %>"
-								/>
+								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-15596") %>'>
+									<react:component
+										module="{SaveButtons} from journal-web"
+										props="<%= journalEditArticleDisplayContext.getSaveButtonsContext() %>"
+									/>
+								</c:if>
 							</div>
 						</c:if>
 

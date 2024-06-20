@@ -65,7 +65,7 @@ const autoSaveAsDraftTest = mergeTests(
 	baseTest,
 	featureFlagsTest({
 		'LPD-11228': true,
-		'LPS-141392': true,
+		'LPD-15596': true,
 	})
 );
 
@@ -78,7 +78,12 @@ const prefixUrlTest = mergeTests(
 	})
 );
 
-const scheduleTest = mergeTests(baseTest);
+const scheduleTest = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPD-15596': true,
+	})
+);
 
 const translationTest = mergeTests(
 	baseTest,

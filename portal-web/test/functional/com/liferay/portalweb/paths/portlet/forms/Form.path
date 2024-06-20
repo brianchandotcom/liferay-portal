@@ -210,7 +210,7 @@
 </tr>
 <tr>
 	<td>PAGINATION_NUMBER</td>
-	<td>//h5[contains(@class,'pagination') and contains(text(),'${key_pagination}')]</td>
+	<td>//div[contains(@class,'pagination') and contains(text(),'${key_pagination}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -718,7 +718,7 @@
 </tr>
 <tr>
 	<td>PAGE_PAGINATION</td>
-	<td>//input[contains(@class,'page-header-title') and @value='${key_fieldName}']/../../../h5[contains(.,'${key_pagination}')]</td>
+	<td>//input[contains(@class,'page-header-title') and @value='${key_fieldName}']/../../../div[contains(@class,'h5') and contains(.,'${key_pagination}')]</td>
 	<td></td>
 </tr>
 

@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>REVIEW_VARIANTS_ANALYTICS_CLOUD</td>
-	<td>//div[@class='analytics-variant-card-table']//tr[${key_index}]//*[contains(@class,'table-cell-expanded') and h5[contains(text(),'${name}')]]</td>
+	<td>//div[@class='analytics-variant-card-table']//tr[${key_index}]//*[contains(@class,'table-cell-expanded') and div[contains(@class,'h5') and contains(text(),'${name}')]]</td>
 	<td></td>
 </tr>
 <tr>

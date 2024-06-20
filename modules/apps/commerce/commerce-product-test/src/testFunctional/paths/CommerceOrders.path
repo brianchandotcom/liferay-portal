@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ORDER_DETAILS_BILLING_ADDRESS</td>
-	<td>//h5[contains(.,'Billing Address')]/../../div</td>
+	<td>//div[contains(@class,'h5') and contains(.,'Billing Address')]/../../div</td>
 	<td></td>
 </tr>
 <tr>
@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PRINTED_NOTE</td>
-	<td>//h5[contains(.,'Printed Note')]/../../div</td>
+	<td>//div[contains(@class,'h5') and contains(.,'Printed Note')]/../../div</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,12 +62,12 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PURCHASE_ORDER_NUMBER</td>
-	<td>//h5[contains(.,'Purchase Order Number')]/../../div</td>
+	<td>//div[contains(@class,'h5') and contains(.,'Purchase Order Number')]/../../div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_REQUESTED_DELIVERY_DATE</td>
-	<td>//h5[contains(.,'Requested Delivery Date')]/../../div</td>
+	<td>//div[contains(@class,'h5') and contains(.,'Requested Delivery Date')]/../../div</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,22 +92,22 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_SHIPPING_ADDRESS</td>
-	<td>//h5[contains(.,'Shipping Address')]/../../div[contains(.,'${key_addressInfo}')]</td>
+	<td>//div[contains(@class,'h5') and contains(.,'Shipping Address')]/../../div[contains(.,'${key_addressInfo}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PAYMENT_TERMS</td>
-	<td>//h5[contains(.,'Payment Terms')]/../../div[contains(.,'${key_paymentTerm}')]</td>
+	<td>//div[contains(@class,'h5') and contains(.,'Payment Terms')]/../../div[contains(.,'${key_paymentTerm}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_ORDER_TYPE</td>
-	<td>//h5[contains(.,'Order Type')]/../../div[contains(.,'${key_orderType}')]</td>
+	<td>//div[contains(@class,'h5') and contains(.,'Order Type')]/../../div[contains(.,'${key_orderType}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_DETAILS_DELIVERY_TERMS</td>
-	<td>//h5[contains(.,'Delivery Terms')]/../../div[contains(.,'${key_deliveryTerm}')] | //div[contains(@class,'title') and contains(.,'Delivery Terms')]/../../div[contains(.,'${key_deliveryTerm}')]</td>
+	<td>//div[contains(@class,'h5') and contains(.,'Delivery Terms')]/../../div[contains(.,'${key_deliveryTerm}')] | //div[contains(@class,'title') and contains(.,'Delivery Terms')]/../../div[contains(.,'${key_deliveryTerm}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -167,7 +167,7 @@
 </tr>
 <tr>
 	<td>ORDER_SHIPMENTS_ESTIMATED_DATE</td>
-	<td>//h5[contains(.,'${key_estimatedDate}')]/../../div</td>
+	<td>//div[contains(@class,'h5') and contains(.,'${key_estimatedDate}')]/../../div</td>
 	<td></td>
 </tr>
 <tr>
@@ -257,12 +257,12 @@
 </tr>
 <tr>
 	<td>ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON</td>
-	<td>//h5[contains(text(), "${key_titleName}")]//following-sibling::a[contains(text(), "${key_buttonName}")]</td>
+	<td>//div[contains(@class,'h5') and contains(text(), "${key_titleName}")]//following-sibling::a[contains(text(), "${key_buttonName}")]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORDER_GENERAL_DETAILS_DESCRIPTION</td>
-	<td>//h5[contains(text(), "${key_titleName}")]//..//following-sibling::div[@class="description"]</td>
+	<td>//div[contains(@class,'h5') and contains(text(), "${key_titleName}")]//..//following-sibling::div[@class="description"]</td>
 	<td></td>
 </tr>
 <tr>
@@ -277,12 +277,12 @@
 </tr>
 <tr>
 	<td>EDIT_SHIPMENT_DETAILS</td>
-	<td>//h5[contains(.,'${key_text}')]/..//a[text()='Edit']</td>
+	<td>//div[contains(@class,'h5') and contains(.,'${key_text}')]/..//a[text()='Edit']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SHIPMENT_CARRIER_DETAILS</td>
-	<td>//h5//..//following-sibling::div[@class="description"]/div/span[(normalize-space(text())='${key_detail}')]//../b</td>
+	<td>//div[contains(@class,'h5')]//..//following-sibling::div[@class="description"]/div/span[(normalize-space(text())='${key_detail}')]//../b</td>
 	<td></td>
 </tr>
 <tr>

@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>BROWSE_FILES</td>
-	<td>//h5[contains(., '${title}')]//..//..//input[@type='file']</td>
+	<td>//div[contains(@class,'h5') and contains(., '${title}')]//..//..//input[@type='file']</td>
 	<td></td>
 </tr>
 <tr>

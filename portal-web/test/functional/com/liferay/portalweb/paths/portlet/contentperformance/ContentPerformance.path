@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>CONTENT_PERFORMANCE_TRAFFIC</td>
-	<td>//h5[contains(@class,'mt-3 sheet-subtitle') and contains(text(),'Traffic Channels')]</td>
+	<td>//div[contains(@class,'sheet-subtitle') and contains(text(),'Traffic Channels')]</td>
 	<td></td>
 </tr>
 <tr>

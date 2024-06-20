@@ -14,11 +14,10 @@ import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -51,7 +50,6 @@ public class UnlockLayoutsSessionActionTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-		_user = UserTestUtil.addUser();
 	}
 
 	@Test
@@ -60,7 +58,7 @@ public class UnlockLayoutsSessionActionTest {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		_layoutLockManager.getLock(draftLayout, _user.getUserId());
+		_layoutLockManager.getLock(draftLayout, TestPropsValues.getUserId());
 
 		Lock lock = _lockManager.fetchLock(
 			Layout.class.getName(), draftLayout.getPlid());
@@ -70,11 +68,13 @@ public class UnlockLayoutsSessionActionTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setAttribute(WebKeys.USER, _user);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.USER, TestPropsValues.getUser());
 
 		MockHttpSession mockHttpSession = new MockHttpSession();
 
-		mockHttpSession.setAttribute(WebKeys.USER_ID, _user.getUserId());
+		mockHttpSession.setAttribute(
+			WebKeys.USER_ID, TestPropsValues.getUserId());
 
 		_lifecycleAction.processLifecycleEvent(
 			new LifecycleEvent(
@@ -100,8 +100,5 @@ public class UnlockLayoutsSessionActionTest {
 
 	@Inject
 	private LockManager _lockManager;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 }

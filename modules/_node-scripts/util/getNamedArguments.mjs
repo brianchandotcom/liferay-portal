@@ -10,8 +10,19 @@ export default function getNamedArguments(argumentNames) {
 
 	while (argv.length) {
 		for (const [argName, argSwitch] of Object.entries(argumentNames)) {
-			if (argv[0].startsWith(`${argSwitch}=`)) {
-				namedArgs[argName] = argv[0].substring(argSwitch.length + 1);
+			if (argv[0].startsWith(argSwitch)) {
+
+				// Default value to true if flag exists
+
+				let value = true;
+
+				// If flag has an '=' always use the value after
+
+				if (argv[0].includes('=')) {
+					value = argv[0].split('=')[1];
+				}
+
+				namedArgs[argName] = value || true;
 
 				break;
 			}

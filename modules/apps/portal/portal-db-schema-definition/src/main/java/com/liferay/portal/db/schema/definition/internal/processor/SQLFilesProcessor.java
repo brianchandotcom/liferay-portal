@@ -85,7 +85,7 @@ public class SQLFilesProcessor {
 			}
 		}
 
-		throw new IllegalArgumentException("Illegal database type " + dbType);
+		throw new IllegalArgumentException("Database type " + dbType);
 	}
 
 	private final DB _db;

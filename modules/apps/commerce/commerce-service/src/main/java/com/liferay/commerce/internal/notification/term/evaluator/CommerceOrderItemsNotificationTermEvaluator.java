@@ -154,10 +154,12 @@ public class CommerceOrderItemsNotificationTermEvaluator
 				Company company = _companyLocalService.getCompany(
 					user.getCompanyId());
 
-				return company.getPortalURL(0) +
+				String cpInstanceThumbnailSrc =
 					_cpInstanceHelper.getCPInstanceThumbnailSrc(
 						AccountConstants.ACCOUNT_ENTRY_ID_ADMIN,
 						commerceOrderItem.getCPInstanceId());
+
+				return company.getPortalURL(0) + cpInstanceThumbnailSrc;
 			}
 		).put(
 			"name", commerceOrderItem.getName(locale)

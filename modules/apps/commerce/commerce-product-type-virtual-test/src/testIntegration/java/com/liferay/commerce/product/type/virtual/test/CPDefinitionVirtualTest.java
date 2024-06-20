@@ -177,30 +177,32 @@ public class CPDefinitionVirtualTest {
 			dlFileEntry2.getFileEntryId(), cpdVirtualSettingFileEntry2.getUrl(),
 			cpdVirtualSettingFileEntry2.getVersion());
 
+		DLFileEntry dlFileEntry3 = DLFileEntryLocalServiceUtil.fetchDLFileEntry(
+			dlFileEntry1.getFileEntryId());
+
 		Assert.assertTrue(
-			"The DLFileEntry did not get deleted",
-			DLFileEntryLocalServiceUtil.fetchDLFileEntry(
-				dlFileEntry1.getFileEntryId()) == null);
+			"The DLFileEntry did not get deleted", dlFileEntry3 == null);
 
 		CPDefinition cpDefinition3 = CPTestUtil.addCPDefinition(
 			_commerceCatalog.getGroupId(), VirtualCPTypeConstants.NAME);
 
-		DLFileEntry dlFileEntry3 = DLTestUtil.addDLFileEntry(
+		DLFileEntry dlFileEntry4 = DLTestUtil.addDLFileEntry(
 			dlFolder.getFolderId());
 
 		VirtualCPTypeTestUtil.addCPDefinitionVirtualSetting(
 			_commerceCatalog.getGroupId(), cpDefinition3.getModelClassName(),
-			cpDefinition3.getCPDefinitionId(), dlFileEntry3.getFileEntryId(), 1,
+			cpDefinition3.getCPDefinitionId(), dlFileEntry4.getFileEntryId(), 1,
 			0, 0, 0);
 
 		VirtualCPTypeTestUtil.deleteCPDefinitionVirtualSetting(
 			cpDefinition3.getModelClassName(),
 			cpDefinition3.getCPDefinitionId());
 
+		DLFileEntry dlFileEntry5 = DLFileEntryLocalServiceUtil.fetchDLFileEntry(
+			dlFileEntry1.getFileEntryId());
+
 		Assert.assertTrue(
-			"The DLFileEntry did not get deleted",
-			DLFileEntryLocalServiceUtil.fetchDLFileEntry(
-				dlFileEntry1.getFileEntryId()) == null);
+			"The DLFileEntry did not get deleted", dlFileEntry5 == null);
 	}
 
 	@Test

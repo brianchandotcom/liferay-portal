@@ -53,6 +53,38 @@ const test = mergeTests(
 
 const testWithIsolatedSite = mergeTests(test, isolatedSiteTest);
 
+const configureFilter = async (page, option: 'category' | 'keywords') => {
+	await page.getByLabel('Select', {exact: true}).click();
+
+	await page.getByLabel(ANIMALS_COLLECTION_NAME).check();
+
+	await page.getByLabel('Filter', {exact: true}).selectOption(option);
+
+	if (option === 'category') {
+		await page.getByLabel('Select Source').click();
+
+		await page
+			.frameLocator('iframe[title="Select"]')
+			.getByRole('link', {name: ANIMALS_COLLECTION_NAME})
+			.click();
+
+		await expect(
+			page
+				.frameLocator('iframe[title="Select"]')
+				.getByRole('button', {name: 'Select This Level'})
+		).toBeEnabled();
+
+		await page
+			.frameLocator('iframe[title="Select"]')
+			.getByRole('button', {name: 'Select This Level'})
+			.click();
+
+		await expect(page.getByLabel('Source', {exact: true})).toHaveValue(
+			ANIMALS_COLLECTION_NAME
+		);
+	}
+};
+
 const selectFilter = async (page, categories) => {
 	await page.getByRole('button', {name: 'Select'}).click();
 
@@ -123,33 +155,7 @@ test('filters a web content collection by single and multiple categories', async
 
 	// Set Filter configuration for categories
 
-	await page.getByLabel('Select', {exact: true}).click();
-
-	await page.getByLabel(ANIMALS_COLLECTION_NAME).check();
-
-	await page.getByLabel('Filter', {exact: true}).selectOption('category');
-
-	await page.getByLabel('Select Source').click();
-
-	await page
-		.frameLocator('iframe[title="Select"]')
-		.getByRole('link', {name: ANIMALS_COLLECTION_NAME})
-		.click();
-
-	await expect(
-		page
-			.frameLocator('iframe[title="Select"]')
-			.getByRole('button', {name: 'Select This Level'})
-	).toBeEnabled();
-
-	await page
-		.frameLocator('iframe[title="Select"]')
-		.getByRole('button', {name: 'Select This Level'})
-		.click();
-
-	await expect(
-		page.getByLabel('Target Collection').getByLabel('Select')
-	).toHaveText(ANIMALS_COLLECTION_NAME);
+	await configureFilter(page, 'category');
 
 	// Check the option to show the label with the selected vocabulary
 
@@ -368,23 +374,7 @@ test('enables search field in dropdown list of Collection Filter', async ({
 
 	// Set Filter configuration for categories
 
-	await page.getByLabel('Select', {exact: true}).click();
-
-	await page.getByLabel(ANIMALS_COLLECTION_NAME).check();
-
-	await page.getByLabel('Filter', {exact: true}).selectOption('category');
-
-	await page.getByLabel('Select Source').click();
-
-	await page
-		.frameLocator('iframe[title="Select"]')
-		.getByRole('link', {name: ANIMALS_COLLECTION_NAME})
-		.click();
-
-	await page
-		.frameLocator('iframe[title="Select"]')
-		.getByRole('button', {name: 'Select This Level'})
-		.click();
+	await configureFilter(page, 'category');
 
 	await page.getByLabel('Include Search Field').check();
 
@@ -471,21 +461,13 @@ test('filters the collection content by keywords using two filters', async ({
 
 	await pageEditorPage.selectFragment(firstCollectionFilterId);
 
-	await page.getByLabel('Select', {exact: true}).click();
-
-	await page.getByLabel(ANIMALS_COLLECTION_NAME).check();
-
-	await page.getByLabel('Filter', {exact: true}).selectOption('keywords');
+	await configureFilter(page, 'keywords');
 
 	// Configure the second filter by keywords
 
 	await pageEditorPage.selectFragment(secondCollectionFilterId);
 
-	await page.getByLabel('Select', {exact: true}).click();
-
-	await page.getByLabel(ANIMALS_COLLECTION_NAME).check();
-
-	await page.getByLabel('Filter', {exact: true}).selectOption('keywords');
+	await configureFilter(page, 'keywords');
 
 	// Publish the page
 

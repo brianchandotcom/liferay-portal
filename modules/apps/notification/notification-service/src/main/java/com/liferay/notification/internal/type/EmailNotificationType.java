@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -247,6 +248,13 @@ public class EmailNotificationType extends BaseNotificationType {
 		siteDefaultLocale = portal.getSiteDefaultLocale(groupId);
 
 		userLocale = user.getLocale();
+
+		if (user.isGuestUser() &&
+			notificationContext.isUsePreferredLanguageForGuests()) {
+
+			userLocale = LocaleUtil.fromLanguageId(
+				notificationContext.getPreferredLanguageId());
+		}
 
 		NotificationTemplate notificationTemplate =
 			notificationContext.getNotificationTemplate();

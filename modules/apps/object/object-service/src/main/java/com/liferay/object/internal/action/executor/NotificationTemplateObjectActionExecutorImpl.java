@@ -84,6 +84,10 @@ public class NotificationTemplateObjectActionExecutorImpl
 					StringPool.BLANK : objectDefinition.getPortletId()
 			).preferredLanguageId(
 				payloadJSONObject.getString("preferredLanguageId")
+			).usePreferredLanguageForGuests(
+				GetterUtil.getBoolean(
+					parametersUnicodeProperties.get(
+						"usePreferredLanguageForGuests"))
 			).build());
 	}
 

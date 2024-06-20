@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.schema.definition.internal.configuration.DBSchemaDefinitionExporterConfiguration;
 import com.liferay.portal.db.schema.definition.internal.processor.SQLFilesProcessor;
-import com.liferay.portal.db.schema.definition.internal.sql.SQLRecorder;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -90,23 +89,20 @@ public class DBSchemaDefinitionExporter {
 						DBSchemaDefinitionExporterConfiguration.class,
 						properties);
 
-			SQLRecorder sqlRecorder = new SQLRecorder();
-
-			new SQLFilesProcessor(
+			SQLFilesProcessor sqlFilesProcessor = new SQLFilesProcessor(
 				DBType.valueOf(
 					StringUtil.toUpperCase(
 						dbSchemaDefinitionExporterConfiguration.
-							databaseType())),
-				sqlRecorder
-			).process();
+							databaseType())));
 
 			File file = new File(
 				dbSchemaDefinitionExporterConfiguration.path());
 
 			FileUtil.write(
-				new File(file, "indexes.sql"), sqlRecorder.getIndexesSQL());
+				new File(file, "indexes.sql"),
+				sqlFilesProcessor.getIndexesSQL());
 			FileUtil.write(
-				new File(file, "tables.sql"), sqlRecorder.getTablesSQL());
+				new File(file, "tables.sql"), sqlFilesProcessor.getTablesSQL());
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

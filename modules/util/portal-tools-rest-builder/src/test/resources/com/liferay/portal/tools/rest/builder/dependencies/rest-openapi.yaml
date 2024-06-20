@@ -1,5 +1,26 @@
 components:
     schemas:
+        BaseSchema:
+            properties:
+                name:
+                    type: string
+                type:
+                    enum:
+                        - ChildSchema1
+                        - ChildSchema2
+                    type: string
+            type: object
+        ChildSchema1:
+            allOf:
+                - $ref: "#/components/schemas/BaseSchema"
+            type: object
+        ChildSchema2:
+            allOf:
+                - $ref: "#/components/schemas/BaseSchema"
+                - properties:
+                      name:
+                          type: string
+            type: object
         Document:
             description:
                 "https://www.schema.org/Document"
@@ -48,6 +69,16 @@ components:
                     type: string
                 subFolders:
                     $ref: "#/components/schemas/Folder"
+            type: object
+        PolymorphicSchema:
+            discriminator:
+                mapping:
+                    ChildSchema1: "#/components/schemas/ChildSchema1"
+                    ChildSchema2: "#/components/schemas/ChildSchema2"
+                propertyName: type
+            oneOf:
+                - $ref: "#/components/schemas/ChildSchema1"
+                - $ref: "#/components/schemas/ChildSchema2"
             type: object
         Test:
             description:
@@ -113,6 +144,22 @@ info:
     version: "1.0.0"
 openapi: "3.0.1"
 paths:
+    "/polymorphic-schemas":
+        get:
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PolymorphicSchema"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PolymorphicSchema"
+                                type: array
+            tags: ["PolymorphicSchema"]
     /document/{documentId}:
         get:
             operationId: getDocumentForcePredictableOperationIdTest

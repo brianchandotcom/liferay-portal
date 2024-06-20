@@ -21,6 +21,10 @@ import FrontendDataSetContext, {
 } from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
+
+// @ts-ignore
+
+import persistVisibleFieldNames from '../../thunks/persistVisibleFieldNames';
 import {
 	ILocalizedItemDetails,
 	getLocalizedValue,
@@ -90,7 +94,10 @@ export function ClayTable({
 	selectedItemsValue,
 	selectionType,
 }: Props) {
-	const {itemsChanges, updateItem} = useContext(FrontendDataSetContext);
+	const {appURL, id, itemsChanges, portletId, updateItem} = useContext(
+		FrontendDataSetContext
+	);
+	const [{visibleFieldNames}, viewsDispatch] = useContext(ViewsContext);
 	const [sort, setSort] = useState<Sorting | null>(null);
 
 	const filteredItems = useMemo(() => {
@@ -135,7 +142,7 @@ export function ClayTable({
 					'manage-columns-visibility'
 				),
 				columnsVisibilityDescription: Liferay.Language.get(
-					'least-one-column-must-remain-visible'
+					'at-least-one-column-must-remain-visible'
 				),
 				columnsVisibilityHeader:
 					Liferay.Language.get('columns-visibility'),
@@ -145,7 +152,18 @@ export function ClayTable({
 			}}
 			nestedKey={nestedItemsReferenceKey}
 			onSortChange={setSort}
+			onVisibleColumnsChange={(columns) => {
+				viewsDispatch(
+					persistVisibleFieldNames({
+						appURL,
+						id,
+						portletId,
+						visibleFieldNames: Object.fromEntries(columns),
+					})
+				);
+			}}
 			sort={sort}
+			visibleColumns={new Map(Object.entries(visibleFieldNames))}
 		>
 			<Head
 				items={selectable ? [{fieldName: 'select'}, ...fields] : fields}

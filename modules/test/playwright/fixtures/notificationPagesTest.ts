@@ -8,11 +8,13 @@ import {test} from '@playwright/test';
 import {EmailNotificationTemplatePage} from '../pages/notification-web/EmailNotificationTemplatePage';
 import {NotificationTemplatesPage} from '../pages/notification-web/NotificationTemplatesPage';
 import {QueuePage} from '../pages/notification-web/QueuePage';
+import {UserPersonalBarPage} from '../pages/product-navigation-user-personal-bar-web/UserPersonalBarPage';
 
 const notificationPagesTest = test.extend<{
 	emailNotificationTemplatePage: EmailNotificationTemplatePage;
 	notificationTemplatesPage: NotificationTemplatesPage;
 	queuePage: QueuePage;
+	userPersonalBarPage: UserPersonalBarPage;
 }>({
 	emailNotificationTemplatePage: async ({page}, use) => {
 		await use(new EmailNotificationTemplatePage(page));
@@ -22,6 +24,9 @@ const notificationPagesTest = test.extend<{
 	},
 	queuePage: async ({page}, use) => {
 		await use(new QueuePage(page));
+	},
+	userPersonalBarPage: async ({page}, use) => {
+		await use(new UserPersonalBarPage(page));
 	},
 });
 

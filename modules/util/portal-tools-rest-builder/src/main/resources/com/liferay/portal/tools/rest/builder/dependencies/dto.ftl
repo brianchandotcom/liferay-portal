@@ -40,6 +40,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -137,7 +138,6 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 	<#list properties?keys as propertyName>
 		<#assign
-			capitalizedPropertyName = propertyName?cap_first
 			propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)
 			propertyType = properties[propertyName]
 			sizeParameters = []
@@ -188,6 +188,8 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			@Valid
 		</#if>
 
+		<#assign capitalizedPropertyName = propertyName?cap_first />
+
 		<#if enumSchemas?keys?seq_contains(propertyType)>
 			<#assign capitalizedPropertyName = propertyType />
 
@@ -198,29 +200,26 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			<#assign jsonMapPropertyNames = jsonMapPropertyNames + [propertyName] />
 
 			public ${propertyType} get${capitalizedPropertyName}() {
+				if (${propertyName} == null) {
+					return null;
+				}
 
-				Set<Map.Entry<String, Object>> entrySet = ${propertyName}.entrySet();
-				Iterator<Map.Entry<String, Object>> iterator = entrySet.iterator();
+				${propertyName}.replaceAll(
+					(key, value) -> {
+						if (!(value instanceof UnsafeSupplier<?, ?>)) {
+							return value;
+						}
 
-				while (iterator.hasNext()) {
-					Map.Entry<String, Object> entry = iterator.next();
-					Object value = entry.getValue();
-
-					if (value instanceof UnsafeSupplier<?, ?>) {
 						try {
-							UnsafeSupplier unsafeSupplier = (UnsafeSupplier<?, ?>) value;
-							value = unsafeSupplier.get();
-						} catch (Throwable throwable) {
+							UnsafeSupplier<?, ?> unsafeSupplier = (UnsafeSupplier<?, ?>)value;
+
+							return unsafeSupplier.get();
+						}
+						catch (Throwable throwable) {
 							throw new RuntimeException(throwable);
 						}
 					}
-
-					if (value == null) {
-						iterator.remove();
-					} else {
-						${propertyName}.put(entry.getKey(), value);
-					}
-				}
+				);
 
 				return ${propertyName};
 			}
@@ -250,9 +249,28 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		</#if>
 
 		public void set${capitalizedPropertyName}(${propertyType} ${propertyName}) {
-			this.${propertyName} = ${propertyName};
+			<#if propertySchema.jsonMap>
+				if (${propertyName} == null) {
+					this.${propertyName} = null;
 
-			<#if !propertySchema.jsonMap>
+					return;
+				}
+
+				${propertyType} ${propertyName}Map = new HashMap<>(${propertyName});
+
+				${propertyName}Map.replaceAll(
+					(key, value) -> {
+						if (!(value instanceof UnsafeSupplier<?, ?>)) {
+							return value;
+						}
+
+						return new CachedUnsafeSupplier((UnsafeSupplier<?, ?>)value);
+					});
+
+				this.${propertyName} = Collections.synchronizedMap(${propertyName}Map);
+			<#else>
+				this.${propertyName} = ${propertyName};
+
 				_${propertyName}Supplier = null;
 			</#if>
 		}
@@ -260,8 +278,14 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		@JsonIgnore
 		public void set${capitalizedPropertyName}(UnsafeSupplier<${propertyType}, Exception> ${propertyName}UnsafeSupplier) {
 			<#if propertySchema.jsonMap>
+				if (${propertyName}UnsafeSupplier == null) {
+					set${capitalizedPropertyName}((${propertyType}) null);
+
+					return;
+				}
+
 				try {
-					${propertyName} = ${propertyName}UnsafeSupplier.get();
+					set${capitalizedPropertyName}(${propertyName}UnsafeSupplier.get());
 				}
 				catch (RuntimeException runtimeException) {
 					throw runtimeException;
@@ -324,7 +348,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 		<#if propertySchema.jsonMap>
 			@JsonAnyGetter
-			protected ${propertyType} ${propertyName} = new HashMap<>();
+			protected ${propertyType} ${propertyName} = Collections.synchronizedMap(new HashMap<>());
 		<#else>
 			protected ${propertyType} ${propertyName};
 
@@ -376,28 +400,42 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 							return value;
 						}
 
-						UnsafeSupplier<?, ?> unsafeSupplier =
-							(UnsafeSupplier<?, ?>)value;
+						UnsafeSupplier<?, ?> unsafeSupplier = (UnsafeSupplier<?, ?>)value;
 
 						try {
-							value = unsafeSupplier.get();
-
-							if (value == null){
-								${propertyName}.remove(propertyName);
-							} else {
-								${propertyName}.put(propertyName, value);
-							}
+							return unsafeSupplier.get();
 						}
-						catch (Throwable e) {
-							throw new RuntimeException(e);
+						catch (Throwable throwable) {
+							throw new RuntimeException(throwable);
 						}
-
-						return value;
 					}
 				</#list>
 			}
 
 			return null;
+		}
+
+		private final class CachedUnsafeSupplier<T, E extends Throwable> implements UnsafeSupplier<T, E> {
+			public CachedUnsafeSupplier(UnsafeSupplier<T, E> unsafeSupplier) {
+				_unsafeSupplier = unsafeSupplier;
+			}
+
+			public T get() throws E {
+				if (_set) {
+					return _value;
+				}
+
+				synchronized (_unsafeSupplier) {
+					_value = _unsafeSupplier.get();
+					_set = true;
+				}
+
+				return _value;
+			}
+
+			private boolean _set;
+			private final UnsafeSupplier<T, E> _unsafeSupplier;
+			private T _value;
 		}
 	</#if>
 

@@ -28,25 +28,6 @@ public class SQLRecorder {
 		}
 	}
 
-	public void recordSQL(String sql) {
-		if (sql == null) {
-			return;
-		}
-
-		sql += StringPool.NEW_LINE;
-
-		String lowerCaseSQL = StringUtil.toLowerCase(sql);
-
-		if (lowerCaseSQL.contains("create index") ||
-			lowerCaseSQL.contains("create unique index")) {
-
-			_indexesSB.append(sql);
-		}
-		else {
-			_tablesSB.append(sql);
-		}
-	}
-
 	public void recordTablesSQL(String sql) {
 		if (sql != null) {
 			_tablesSB.append(sql);

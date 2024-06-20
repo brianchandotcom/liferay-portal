@@ -435,7 +435,7 @@ const Table = ({
 				)}
 			>
 				<ClayTable
-					fields={visibleFields}
+					fields={schema.fields as any}
 					inlineAddingSettings={inlineAddingSettings}
 					itemInlineChanges={itemsChanges}
 					items={items}

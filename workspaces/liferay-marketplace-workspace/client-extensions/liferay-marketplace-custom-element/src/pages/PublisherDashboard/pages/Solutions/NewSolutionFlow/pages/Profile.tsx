@@ -86,7 +86,7 @@ const Profile = () => {
 			uploaded: true,
 		};
 
-		if (file) {
+		if (file?.id) {
 			dispatch({
 				payload: file.id,
 				type: SolutionTypes.SET_DELETE_IMAGE,

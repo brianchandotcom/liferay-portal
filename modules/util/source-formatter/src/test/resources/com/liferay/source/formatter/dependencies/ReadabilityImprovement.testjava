@@ -10,9 +10,18 @@ package com.liferay.source.formatter.dependencies;
  */
 public class ReadabilityImprovement {
 
-	public void method(String value) {
+	public void method1(String value) {
 		return value.substring(
 			0, 1
 		).toUpperCase() + value.substring(1);
 	}
+
+	public void method2(
+		String pathContext, ThemeDisplay themeDisplay, String virtualHostname) {
+
+		return getPortalURL(
+			virtualHostname, themeDisplay.getServerPort(),
+			themeDisplay.isSecure()) + pathContext;
+	}
+
 }

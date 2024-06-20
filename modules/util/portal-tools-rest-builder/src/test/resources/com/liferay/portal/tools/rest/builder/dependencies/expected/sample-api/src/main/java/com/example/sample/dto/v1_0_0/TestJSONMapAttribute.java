@@ -22,6 +22,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -140,36 +141,49 @@ public class TestJSONMapAttribute implements Serializable {
 	@Schema
 	@Valid
 	public Map<String, Object> getProperties1() {
-		Set<Map.Entry<String, Object>> entrySet = properties1.entrySet();
-		Iterator<Map.Entry<String, Object>> iterator = entrySet.iterator();
+		if (properties1 == null) {
+			return null;
+		}
 
-		while (iterator.hasNext()) {
-			Map.Entry<String, Object> entry = iterator.next();
-			Object value = entry.getValue();
+		properties1.replaceAll(
+			(key, value) -> {
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
+				}
 
-			if (value instanceof UnsafeSupplier<?, ?>) {
 				try {
-					UnsafeSupplier unsafeSupplier = (UnsafeSupplier<?, ?>)value;
-					value = unsafeSupplier.get();
+					UnsafeSupplier<?, ?> unsafeSupplier =
+						(UnsafeSupplier<?, ?>)value;
+
+					return unsafeSupplier.get();
 				}
 				catch (Throwable throwable) {
 					throw new RuntimeException(throwable);
 				}
-			}
-
-			if (value == null) {
-				iterator.remove();
-			}
-			else {
-				properties1.put(entry.getKey(), value);
-			}
-		}
+			});
 
 		return properties1;
 	}
 
 	public void setProperties1(Map<String, Object> properties1) {
-		this.properties1 = properties1;
+		if (properties1 == null) {
+			this.properties1 = null;
+
+			return;
+		}
+
+		Map<String, Object> properties1Map = new HashMap<>(properties1);
+
+		properties1Map.replaceAll(
+			(key, value) -> {
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
+				}
+
+				return new CachedUnsafeSupplier((UnsafeSupplier<?, ?>)value);
+			});
+
+		this.properties1 = Collections.synchronizedMap(properties1Map);
 	}
 
 	@JsonIgnore
@@ -177,8 +191,14 @@ public class TestJSONMapAttribute implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			properties1UnsafeSupplier) {
 
+		if (properties1UnsafeSupplier == null) {
+			setProperties1((Map<String, Object>)null);
+
+			return;
+		}
+
 		try {
-			properties1 = properties1UnsafeSupplier.get();
+			setProperties1(properties1UnsafeSupplier.get());
 		}
 		catch (RuntimeException runtimeException) {
 			throw runtimeException;
@@ -192,41 +212,55 @@ public class TestJSONMapAttribute implements Serializable {
 	@JsonAnyGetter
 	@JsonAnySetter
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> properties1 = new HashMap<>();
+	protected Map<String, Object> properties1 = Collections.synchronizedMap(
+		new HashMap<>());
 
 	@Schema
 	@Valid
 	public Map<String, Object> getProperties2() {
-		Set<Map.Entry<String, Object>> entrySet = properties2.entrySet();
-		Iterator<Map.Entry<String, Object>> iterator = entrySet.iterator();
+		if (properties2 == null) {
+			return null;
+		}
 
-		while (iterator.hasNext()) {
-			Map.Entry<String, Object> entry = iterator.next();
-			Object value = entry.getValue();
+		properties2.replaceAll(
+			(key, value) -> {
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
+				}
 
-			if (value instanceof UnsafeSupplier<?, ?>) {
 				try {
-					UnsafeSupplier unsafeSupplier = (UnsafeSupplier<?, ?>)value;
-					value = unsafeSupplier.get();
+					UnsafeSupplier<?, ?> unsafeSupplier =
+						(UnsafeSupplier<?, ?>)value;
+
+					return unsafeSupplier.get();
 				}
 				catch (Throwable throwable) {
 					throw new RuntimeException(throwable);
 				}
-			}
-
-			if (value == null) {
-				iterator.remove();
-			}
-			else {
-				properties2.put(entry.getKey(), value);
-			}
-		}
+			});
 
 		return properties2;
 	}
 
 	public void setProperties2(Map<String, Object> properties2) {
-		this.properties2 = properties2;
+		if (properties2 == null) {
+			this.properties2 = null;
+
+			return;
+		}
+
+		Map<String, Object> properties2Map = new HashMap<>(properties2);
+
+		properties2Map.replaceAll(
+			(key, value) -> {
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
+				}
+
+				return new CachedUnsafeSupplier((UnsafeSupplier<?, ?>)value);
+			});
+
+		this.properties2 = Collections.synchronizedMap(properties2Map);
 	}
 
 	@JsonIgnore
@@ -234,8 +268,14 @@ public class TestJSONMapAttribute implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			properties2UnsafeSupplier) {
 
+		if (properties2UnsafeSupplier == null) {
+			setProperties2((Map<String, Object>)null);
+
+			return;
+		}
+
 		try {
-			properties2 = properties2UnsafeSupplier.get();
+			setProperties2(properties2UnsafeSupplier.get());
 		}
 		catch (RuntimeException runtimeException) {
 			throw runtimeException;
@@ -249,7 +289,8 @@ public class TestJSONMapAttribute implements Serializable {
 	@JsonAnyGetter
 	@JsonAnySetter
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> properties2 = new HashMap<>();
+	protected Map<String, Object> properties2 = Collections.synchronizedMap(
+		new HashMap<>());
 
 	@Override
 	public boolean equals(Object object) {
@@ -286,20 +327,11 @@ public class TestJSONMapAttribute implements Serializable {
 					(UnsafeSupplier<?, ?>)value;
 
 				try {
-					value = unsafeSupplier.get();
-
-					if (value == null) {
-						properties1.remove(propertyName);
-					}
-					else {
-						properties1.put(propertyName, value);
-					}
+					return unsafeSupplier.get();
 				}
-				catch (Throwable e) {
-					throw new RuntimeException(e);
+				catch (Throwable throwable) {
+					throw new RuntimeException(throwable);
 				}
-
-				return value;
 			}
 
 			if (properties2.containsKey(propertyName)) {
@@ -313,24 +345,41 @@ public class TestJSONMapAttribute implements Serializable {
 					(UnsafeSupplier<?, ?>)value;
 
 				try {
-					value = unsafeSupplier.get();
-
-					if (value == null) {
-						properties2.remove(propertyName);
-					}
-					else {
-						properties2.put(propertyName, value);
-					}
+					return unsafeSupplier.get();
 				}
-				catch (Throwable e) {
-					throw new RuntimeException(e);
+				catch (Throwable throwable) {
+					throw new RuntimeException(throwable);
 				}
-
-				return value;
 			}
 		}
 
 		return null;
+	}
+
+	private final class CachedUnsafeSupplier<T, E extends Throwable>
+		implements UnsafeSupplier<T, E> {
+
+		public CachedUnsafeSupplier(UnsafeSupplier<T, E> unsafeSupplier) {
+			_unsafeSupplier = unsafeSupplier;
+		}
+
+		public T get() throws E {
+			if (_set) {
+				return _value;
+			}
+
+			synchronized (_unsafeSupplier) {
+				_value = _unsafeSupplier.get();
+				_set = true;
+			}
+
+			return _value;
+		}
+
+		private boolean _set;
+		private final UnsafeSupplier<T, E> _unsafeSupplier;
+		private T _value;
+
 	}
 
 	@Override

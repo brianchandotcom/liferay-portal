@@ -117,7 +117,9 @@ test.describe('Manage object entries through page templates', () => {
 		}
 
 		await viewObjectEntriesPage.goto(objectDefinition2.id);
-		await viewObjectEntriesPage.clickAddObjectEntry();
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition2.label['en_US']
+		);
 		await page.getByPlaceholder('Search', {exact: true}).click();
 
 		objectEntries.forEach((objectEntryId) => {
@@ -342,7 +344,9 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		await viewObjectEntriesPage.goto(objectDefinition.id);
 
-		await viewObjectEntriesPage.clickAddObjectEntry();
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
 		for (const objectField of objectFields) {
 			switch (objectField.businessType) {
@@ -498,7 +502,9 @@ test.describe('Manage object entries through View Object Entries', () => {
 		);
 
 		await viewObjectEntriesPage.goto(objectDefinition2.id);
-		await viewObjectEntriesPage.clickAddObjectEntry();
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition2.label['en_US']
+		);
 
 		await page.getByPlaceholder('Search', {exact: true}).fill('t 1');
 		await expect(page.getByRole('menuitem', {name: 'test1'})).toBeVisible();

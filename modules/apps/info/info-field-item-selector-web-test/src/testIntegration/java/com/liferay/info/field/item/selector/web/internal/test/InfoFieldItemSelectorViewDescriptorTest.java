@@ -20,10 +20,12 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
@@ -115,9 +117,10 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 					ObjectFieldConstants.DB_TYPE_STRING, "myText", "myText",
 					false)));
 
-		ObjectRelationshipTestUtil.addObjectRelationship(
-			_objectRelationshipLocalService, _objectDefinition2,
-			_objectDefinition1);
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, _objectDefinition2,
+				_objectDefinition1);
 
 		ItemSelectorViewDescriptor<Object> itemSelectorViewDescriptor =
 			_getItemSelectorViewDescriptor(new MockHttpServletRequest());
@@ -139,6 +142,22 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 		Assert.assertEquals(
 			resultRowSplitterEntries.toString(), 2,
 			resultRowSplitterEntries.size());
+
+		ResultRowSplitterEntry resultRowSplitterEntry1 =
+			resultRowSplitterEntries.get(0);
+
+		Assert.assertEquals(
+			_objectDefinition1.getLabel(LocaleUtil.getSiteDefault()),
+			resultRowSplitterEntry1.getTitle());
+
+		ResultRowSplitterEntry resultRowSplitterEntry2 =
+			resultRowSplitterEntries.get(1);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				objectRelationship.getLabel(LocaleUtil.getSiteDefault()), " (",
+				_objectDefinition2.getLabel(LocaleUtil.getSiteDefault()), ")"),
+			resultRowSplitterEntry2.getTitle());
 	}
 
 	@Test

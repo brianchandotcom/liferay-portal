@@ -1,0 +1,24 @@
+{
+	"description": "",
+	"editorType": "richText",
+	"externalReferenceCode": "DEAL-REGISTRATION-SUBMISSION-SUCCESS-TEMPLATE",
+	"name": "Deal Registration Submission Success Template",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "partner-portal-admin@liferay.com",
+			"fromName": {
+				"en-US": "Partner Portal"
+			},
+			"to": {
+				"en-US": "[%LEADNOTIFICATION_PRIMARYPROSPECTEMAILADDRESS%]"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "Thank you! Your Deal Registration for [%LEADNOTIFICATION_PROSPECTACCOUNTNAME%] Has been Successfully Submitted"
+	},
+	"type": "email"
+}

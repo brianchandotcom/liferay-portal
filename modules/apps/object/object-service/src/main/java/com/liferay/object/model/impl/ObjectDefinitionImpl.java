@@ -129,9 +129,9 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 						getName());
 			}
 
-			return "/c/" +
-				TextFormatter.formatPlural(
-					StringUtil.toLowerCase(getShortName()));
+			String lowerCaseShortName = StringUtil.toLowerCase(getShortName());
+
+			return "/c/" + TextFormatter.formatPlural(lowerCaseShortName);
 		}
 
 		ObjectDefinition rootObjectDefinition =
@@ -149,9 +149,10 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 					getModifiableSystemObjectDefinitionRESTContextPath(
 						getName());
 
-			return rootRESTContextPath +
-				restContextPath.substring(
-					restContextPath.lastIndexOf(StringPool.SLASH));
+			restContextPath = restContextPath.substring(
+				restContextPath.lastIndexOf(StringPool.SLASH));
+
+			return rootRESTContextPath + restContextPath;
 		}
 
 		return StringBundler.concat(

@@ -35,6 +35,7 @@ public class LayoutServiceWrapper
 	 * etc.
 	 * </p>
 	 *
+	 * @param externalReferenceCode the layout external reference code
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param parentLayoutId the layout ID of the parent layout (optionally
@@ -70,8 +71,8 @@ public class LayoutServiceWrapper
 	 */
 	@Override
 	public Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			long classNameId, long classPK,
+			String externalReferenceCode, long groupId, boolean privateLayout,
+			long parentLayoutId, long classNameId, long classPK,
 			java.util.Map<java.util.Locale, String> localeNamesMap,
 			java.util.Map<java.util.Locale, String> localeTitlesMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
@@ -83,10 +84,10 @@ public class LayoutServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutService.addLayout(
-			groupId, privateLayout, parentLayoutId, classNameId, classPK,
-			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
-			robotsMap, type, typeSettings, hidden, system, friendlyURLMap,
-			masterLayoutPlid, serviceContext);
+			externalReferenceCode, groupId, privateLayout, parentLayoutId,
+			classNameId, classPK, localeNamesMap, localeTitlesMap,
+			descriptionMap, keywordsMap, robotsMap, type, typeSettings, hidden,
+			system, friendlyURLMap, masterLayoutPlid, serviceContext);
 	}
 
 	/**
@@ -99,6 +100,7 @@ public class LayoutServiceWrapper
 	 * etc.
 	 * </p>
 	 *
+	 * @param externalReferenceCode the layout external reference code
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param parentLayoutId the layout ID of the parent layout (optionally
@@ -131,7 +133,8 @@ public class LayoutServiceWrapper
 	 */
 	@Override
 	public Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
+			String externalReferenceCode, long groupId, boolean privateLayout,
+			long parentLayoutId,
 			java.util.Map<java.util.Locale, String> localeNamesMap,
 			java.util.Map<java.util.Locale, String> localeTitlesMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
@@ -143,10 +146,10 @@ public class LayoutServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutService.addLayout(
-			groupId, privateLayout, parentLayoutId, localeNamesMap,
-			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, friendlyURLMap, masterLayoutPlid,
-			serviceContext);
+			externalReferenceCode, groupId, privateLayout, parentLayoutId,
+			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
+			robotsMap, type, typeSettings, hidden, friendlyURLMap,
+			masterLayoutPlid, serviceContext);
 	}
 
 	/**
@@ -159,6 +162,7 @@ public class LayoutServiceWrapper
 	 * etc.
 	 * </p>
 	 *
+	 * @param externalReferenceCode the layout external reference code
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param parentLayoutId the layout ID of the parent layout (optionally
@@ -190,7 +194,8 @@ public class LayoutServiceWrapper
 	 */
 	@Override
 	public Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
+			String externalReferenceCode, long groupId, boolean privateLayout,
+			long parentLayoutId,
 			java.util.Map<java.util.Locale, String> localeNamesMap,
 			java.util.Map<java.util.Locale, String> localeTitlesMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
@@ -202,9 +207,10 @@ public class LayoutServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutService.addLayout(
-			groupId, privateLayout, parentLayoutId, localeNamesMap,
-			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, friendlyURLMap, serviceContext);
+			externalReferenceCode, groupId, privateLayout, parentLayoutId,
+			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
+			robotsMap, type, typeSettings, hidden, friendlyURLMap,
+			serviceContext);
 	}
 
 	/**
@@ -218,6 +224,7 @@ public class LayoutServiceWrapper
 	 * etc.
 	 * </p>
 	 *
+	 * @param externalReferenceCode the layout external reference code
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param parentLayoutId the layout ID of the parent layout (optionally
@@ -244,14 +251,15 @@ public class LayoutServiceWrapper
 	 */
 	@Override
 	public Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			String name, String title, String description, String type,
-			boolean hidden, String friendlyURL, ServiceContext serviceContext)
+			String externalReferenceCode, long groupId, boolean privateLayout,
+			long parentLayoutId, String name, String title, String description,
+			String type, boolean hidden, String friendlyURL,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutService.addLayout(
-			groupId, privateLayout, parentLayoutId, name, title, description,
-			type, hidden, friendlyURL, serviceContext);
+			externalReferenceCode, groupId, privateLayout, parentLayoutId, name,
+			title, description, type, hidden, friendlyURL, serviceContext);
 	}
 
 	@Override
@@ -311,6 +319,21 @@ public class LayoutServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_layoutService.deleteLayout(plid, serviceContext);
+	}
+
+	/**
+	 * Deletes the layout with the external reference code, also deleting the layout's child
+	 * layouts, and associated resources.
+	 *
+	 * @param externalReferenceCode the external reference code of the layout
+	 * @param groupId the primary key of the group
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public void deleteLayout(String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_layoutService.deleteLayout(externalReferenceCode, groupId);
 	}
 
 	@Override
@@ -413,6 +436,23 @@ public class LayoutServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutService.getDefaultPlid(groupId, scopeGroupId, portletId);
+	}
+
+	/**
+	 * Returns the layout matching the external reference code and group.
+	 *
+	 * @param externalReferenceCode the layout external reference code
+	 * @param groupId the primary key of the group
+	 * @return the matching layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public Layout getLayoutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutService.getLayoutByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

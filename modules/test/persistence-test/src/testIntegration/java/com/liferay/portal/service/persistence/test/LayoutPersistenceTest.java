@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.DuplicateLayoutExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
@@ -124,6 +125,8 @@ public class LayoutPersistenceTest {
 
 		newLayout.setUuid(RandomTestUtil.randomString());
 
+		newLayout.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newLayout.setGroupId(RandomTestUtil.nextLong());
 
 		newLayout.setCompanyId(RandomTestUtil.nextLong());
@@ -212,6 +215,9 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(
 			existingLayout.getCtCollectionId(), newLayout.getCtCollectionId());
 		Assert.assertEquals(existingLayout.getUuid(), newLayout.getUuid());
+		Assert.assertEquals(
+			existingLayout.getExternalReferenceCode(),
+			newLayout.getExternalReferenceCode());
 		Assert.assertEquals(existingLayout.getPlid(), newLayout.getPlid());
 		Assert.assertEquals(
 			existingLayout.getGroupId(), newLayout.getGroupId());
@@ -294,6 +300,25 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingLayout.getStatusDate()),
 			Time.getShortTimestamp(newLayout.getStatusDate()));
+	}
+
+	@Test(expected = DuplicateLayoutExternalReferenceCodeException.class)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		Layout layout = addLayout();
+
+		Layout newLayout = addLayout();
+
+		newLayout.setGroupId(layout.getGroupId());
+
+		newLayout = _persistence.update(newLayout);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newLayout);
+
+		newLayout.setExternalReferenceCode(layout.getExternalReferenceCode());
+
+		_persistence.update(newLayout);
 	}
 
 	@Test
@@ -555,6 +580,15 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_G("null", 0L);
+
+		_persistence.countByERC_G((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Layout newLayout = addLayout();
 
@@ -604,15 +638,15 @@ public class LayoutPersistenceTest {
 	protected OrderByComparator<Layout> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"Layout", "mvccVersion", true, "ctCollectionId", true, "uuid", true,
-			"plid", true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"parentPlid", true, "privateLayout", true, "layoutId", true,
-			"parentLayoutId", true, "classNameId", true, "classPK", true,
-			"name", true, "keywords", true, "robots", true, "type", true,
-			"hidden", true, "system", true, "friendlyURL", true, "iconImageId",
-			true, "themeId", true, "colorSchemeId", true, "styleBookEntryId",
-			true, "priority", true, "faviconFileEntryId", true,
-			"masterLayoutPlid", true, "layoutPrototypeUuid", true,
+			"externalReferenceCode", true, "plid", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "parentPlid", true, "privateLayout",
+			true, "layoutId", true, "parentLayoutId", true, "classNameId", true,
+			"classPK", true, "name", true, "keywords", true, "robots", true,
+			"type", true, "hidden", true, "system", true, "friendlyURL", true,
+			"iconImageId", true, "themeId", true, "colorSchemeId", true,
+			"styleBookEntryId", true, "priority", true, "faviconFileEntryId",
+			true, "masterLayoutPlid", true, "layoutPrototypeUuid", true,
 			"layoutPrototypeLinkEnabled", true, "sourcePrototypeLayoutUuid",
 			true, "publishDate", true, "lastPublishDate", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate",
@@ -959,6 +993,17 @@ public class LayoutPersistenceTest {
 			ReflectionTestUtil.invoke(
 				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
 				"sourcePrototypeLayoutUuid"));
+
+		Assert.assertEquals(
+			layout.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(layout.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"groupId"));
 	}
 
 	protected Layout addLayout() throws Exception {
@@ -971,6 +1016,8 @@ public class LayoutPersistenceTest {
 		layout.setCtCollectionId(RandomTestUtil.nextLong());
 
 		layout.setUuid(RandomTestUtil.randomString());
+
+		layout.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		layout.setGroupId(RandomTestUtil.nextLong());
 

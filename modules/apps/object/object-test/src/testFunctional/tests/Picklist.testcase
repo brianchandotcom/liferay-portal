@@ -231,7 +231,7 @@ definition {
 		Picklist.clickSaveButton();
 
 		Picklist.assertPicklistItem(
-			picklistItemKey = "picklistItemNameTest",
+			picklistItemKey = "PicklistItemNameTest",
 			picklistItemName = "Picklist Item Name Test");
 	}
 
@@ -576,11 +576,11 @@ definition {
 			picklistName = "Picklist Test");
 
 		Picklist.optionsPicklistItem(
-			itemKey = "itemTest",
+			itemKey = "ItemTest",
 			menuItem = "View");
 
 		Picklist.assertItemNameAndItemKeyOnModal(
-			itemKey = "itemTest",
+			itemKey = "ItemTest",
 			itemName = "Item Test");
 
 		Picklist.assertPicklistItemByLanguage(

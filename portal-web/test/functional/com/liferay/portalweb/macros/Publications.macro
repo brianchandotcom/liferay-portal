@@ -466,11 +466,11 @@ definition {
 		var publishTimeHours = Time.getUTCHours();
 		var publishTimeMinutes = Time.getUTCMinutes();
 
-		if (${utcMinutes} == 58) {
+		if (${publishTimeMinutes} == 58) {
 			var publishTimeHours = ${publishTimeHours} + 1;
 			var publishTimeMinutes = 00;
 		}
-		else if (${utcMinutes} == 59) {
+		else if (${publishTimeMinutes} == 59) {
 			var publishTimeHours = ${publishTimeHours} + 1;
 			var publishTimeMinutes = 01;
 		}

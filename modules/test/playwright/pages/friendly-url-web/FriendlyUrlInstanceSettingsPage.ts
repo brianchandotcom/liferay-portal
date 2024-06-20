@@ -27,14 +27,14 @@ export class FriendlyUrlInstanceSettingsPage {
 	}
 
 	async modifySeparator(testId: string, value: string) {
-		await this.page.locator(`[data-testid='${testId}']`).click();
-		await this.page.locator(`[data-testid='${testId}']`).fill(value);
+		await this.page.getByTestId(testId).click();
+		await this.page.getByTestId(testId).fill(value);
 		await this.saveButton.click();
 		await waitForSuccessAlert(this.page);
 	}
 
 	async resetSeparator(testId: string) {
-		await this.page.locator(`[data-testid='${testId}']`).click();
+		await this.page.getByTestId(testId).click();
 		await this.page.getByRole('button', {name: 'Save'}).click();
 		await waitForSuccessAlert(this.page);
 	}

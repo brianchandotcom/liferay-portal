@@ -81,9 +81,11 @@ public class LoginActionTest {
 
 	@Test
 	public void testNormalStateWhenLoginFromAnUtilityPage() throws Exception {
+		long groupId = _group.getGroupId();
+
 		try (GroupConfigurationTemporarySwapper configurationTemporarySwapper =
 				new GroupConfigurationTemporarySwapper(
-					_group.getGroupId(),
+					groupId,
 					"com.liferay.login.web.internal.configuration." +
 						"AuthLoginConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
@@ -92,15 +94,15 @@ public class LoginActionTest {
 
 			System.out.println(
 				"promptEnabled: " +
-					AuthLoginGroupSettingsUtil.isPromptEnabled(
-						_group.getGroupId()));
+					AuthLoginGroupSettingsUtil.isPromptEnabled(groupId));
+
 			UserTestUtil.setUser(TestPropsValues.getUser());
 
 			SiteInitializer siteInitializer =
 				_siteInitializerRegistry.getSiteInitializer(
 					"com.liferay.site.initializer.welcome");
 
-			siteInitializer.initialize(_group.getGroupId());
+			siteInitializer.initialize(groupId);
 
 			Layout layout = _addTypeContentLayout(true);
 

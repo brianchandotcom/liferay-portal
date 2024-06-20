@@ -122,7 +122,7 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
 	@Test
 	public void testExecuteStatsClusterRequestWithNodeId() {
-		_testExecuteStatsClusterRequest(new String[] {"liferay"});
+		_testExecuteStatsClusterRequest(new String[] {"liferay_sidecar"});
 	}
 
 	protected static SearchEngineAdapter createSearchEngineAdapter(

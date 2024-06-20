@@ -73,7 +73,7 @@ public class StatsClusterRequestExecutorTest {
 		Assert.assertNotEquals(0, statsClusterResponse.getUsedSpaceInBytes());
 	}
 
-	private static final String _NODE_ID = "liferay";
+	private static final String _NODE_ID = "liferay_sidecar";
 
 	private ElasticsearchConnectionFixture _elasticsearchConnectionFixture;
 

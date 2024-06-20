@@ -99,8 +99,8 @@ public class Sidecar {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Sidecar Elasticsearch ", _getNodeVersion(), " node named ",
-					_getNodeName(), " started at ", address));
+					"Sidecar Elasticsearch ", _getNodeVersion(),
+					StringPool.SPACE, _getNodeName(), " started at ", address));
 		}
 
 		_address = address;
@@ -457,7 +457,7 @@ public class Sidecar {
 			return nodeName;
 		}
 
-		return "liferay";
+		return "liferay_sidecar";
 	}
 
 	private String _getNodeVersion() {

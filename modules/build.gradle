@@ -92,36 +92,6 @@ if (FileUtil.exists(rootProject, "private/yarn.lock")) {
 	}
 }
 
-File workspacesYarnLockFile = new File(rootDir.parentFile, "workspaces/yarn.lock")
-
-if (workspacesYarnLockFile.exists()) {
-	task portalWorkspacesYarnCheckFormat(type: PackageRunTask)
-	task portalWorkspacesYarnFormat(type: PackageRunTask)
-	task portalWorkspacesYarnInstall(type: ExecutePackageManagerTask)
-
-	portalWorkspacesYarnCheckFormat {
-		dependsOn portalWorkspacesYarnInstall
-
-		scriptName = "checkFormat"
-		workingDir = new File(rootDir.parentFile, "workspaces")
-	}
-
-	portalWorkspacesYarnFormat {
-		dependsOn portalWorkspacesYarnInstall
-
-		scriptName = "format"
-		workingDir = new File(rootDir.parentFile, "workspaces")
-	}
-
-	portalWorkspacesYarnInstall {
-		args "install", "--frozen-lockfile", "--ignore-engines"
-		workingDir = new File(rootDir.parentFile, "workspaces")
-	}
-
-	portalYarnCheckFormat.finalizedBy portalWorkspacesYarnCheckFormat
-	portalYarnFormat.finalizedBy portalWorkspacesYarnFormat
-}
-
 buildDir = new File(rootDir.parentFile, "build")
 
 for (String gradleVersion in ["8.5"]) {

@@ -1,14 +1,13 @@
 [
 	{
 		"active": true,
-		"conditionExpression": "leadStatusDetail == 'Prospect'",
 		"externalReferenceCode": "NOTIFICATION-TEMPLATE-DEAL-REGISTRATION-SUBMISSION-SUCCESS",
 		"label": {
 			"en_US": "Notification Template Deal Registration Submission Success"
 		},
 		"name": "notificationTemplateDealRegistrationSubmissionSuccess",
 		"objectActionExecutorKey": "notification",
-		"objectActionTriggerKey": "onAfterUpdate",
+		"objectActionTriggerKey": "onAfterAdd",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:LeadNotification$]"
 	}
 ]

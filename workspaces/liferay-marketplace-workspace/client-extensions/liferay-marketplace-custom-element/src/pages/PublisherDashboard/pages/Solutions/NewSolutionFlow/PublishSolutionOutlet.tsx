@@ -46,6 +46,7 @@ const PublishSolutionOutlet = () => {
 	);
 
 	const {observer, onOpenChange, open} = useModal();
+	const onExitModal = useModal();
 
 	const parsedSchema = useMemo(() => {
 		const parseSchema = activeRoute?.parseSchema;
@@ -81,7 +82,9 @@ const PublishSolutionOutlet = () => {
 				}}
 				exitProps={{
 					onClick: () => {
-						isSaveAsDraft ? onOpenChange(true) : onExit();
+						isSaveAsDraft
+							? onOpenChange(true)
+							: onExitModal.onOpenChange(true);
 					},
 				}}
 				previewProps={{
@@ -169,6 +172,32 @@ const PublishSolutionOutlet = () => {
 					)}
 				</p>
 			</Modal>
+
+			{onExitModal.open && (
+				<Modal
+					last={
+						<>
+							<ClayButton
+								className="btn btn-primary ml-2"
+								displayType="primary"
+								onClick={onExit}
+							>
+								{i18n.translate('exit')}
+							</ClayButton>
+						</>
+					}
+					observer={onExitModal.observer}
+					size={'md' as any}
+					title="Exit from creating a solution"
+					visible={onExitModal.open}
+				>
+					<p>
+						{i18n.translate(
+							'all-progress-and-information-related-to-the-creation-of-the-solution-will-be-lost-do-you-still-want-to-exit'
+						)}
+					</p>
+				</Modal>
+			)}
 		</>
 	);
 };

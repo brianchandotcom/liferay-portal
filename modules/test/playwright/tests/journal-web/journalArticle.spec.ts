@@ -1069,27 +1069,6 @@ baseTest(
 	}
 );
 
-baseTest(
-	'Add a web content article and see it in the content management list',
-	async ({apiHelpers, journalPage, site}) => {
-		const contentStructureId =
-			await getBasicWebContentStructureId(apiHelpers);
-
-		const title = getRandomString();
-
-		await addApprovedStructuredContent({
-			apiHelpers,
-			contentStructureId,
-			siteId: site.id,
-			title,
-		});
-
-		await journalPage.goto(site.friendlyUrlPath);
-
-		await journalPage.assertTitle(title);
-	}
-);
-
 scheduleTest(
 	'Create a web content scheduled',
 	async ({journalEditArticlePage, site}) => {

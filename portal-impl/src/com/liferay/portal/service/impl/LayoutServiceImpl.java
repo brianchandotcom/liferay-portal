@@ -428,6 +428,27 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		layoutLocalService.deleteLayout(plid, serviceContext);
 	}
 
+	/**
+	 * Deletes the layout with the external reference code, also deleting the layout's child
+	 * layouts, and associated resources.
+	 *
+	 * @param  externalReferenceCode the external reference code of the layout
+	 * @param  groupId the primary key of the group
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public void deleteLayout(String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		Layout layout = getLayoutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.DELETE);
+
+		layoutLocalService.deleteLayout(layout);
+	}
+
 	@Override
 	public void deleteTempFileEntry(
 			long groupId, String folderName, String fileName)
@@ -681,6 +702,28 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 
 		return plid;
+	}
+
+	/**
+	 * Returns the layout matching the external reference code and group.
+	 *
+	 * @param  externalReferenceCode the layout external reference code
+	 * @param  groupId the primary key of the group
+	 * @return the matching layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public Layout getLayoutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		Layout layout = layoutLocalService.fetchLayoutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.VIEW);
+
+		return layout;
 	}
 
 	/**

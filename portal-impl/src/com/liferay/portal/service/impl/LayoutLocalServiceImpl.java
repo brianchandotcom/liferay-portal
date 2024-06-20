@@ -1025,6 +1025,22 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Deletes the layout with the external reference code, also deleting the layout's child
+	 * layouts, and associated resources.
+	 *
+	 * @param  externalReferenceCode the external reference code of the layout
+	 * @param  groupId the primary key of the group
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public void deleteLayout(String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		layoutLocalService.deleteLayout(
+			getLayoutByExternalReferenceCode(externalReferenceCode, groupId));
+	}
+
+	/**
 	 * Deletes the group's private or non-private layouts, also deleting the
 	 * layouts' child layouts, and associated resources.
 	 *
@@ -1409,6 +1425,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		return layout;
+	}
+
+	@Override
+	public Layout getLayoutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return layoutPersistence.findByERC_G(externalReferenceCode, groupId);
 	}
 
 	@Override

@@ -14,7 +14,7 @@ import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
 import {switchChannel} from './utils/channel';
 import {changeEventDisplayName} from './utils/definitions';
-import {navigateTo, navigateToACPage} from './utils/navigation';
+import {navigateTo, navigateToACWorkspace} from './utils/navigation';
 import {
 	addSegmentField,
 	createDynamicSegment,
@@ -76,7 +76,7 @@ test('check if updated custom event displayName is shown on segment criteria car
 	});
 
 	await test.step('Go to Analytics Cloud and Switch the property', async () => {
-		await navigateToACPage(page);
+		await navigateToACWorkspace({page});
 		await switchChannel({
 			channelName,
 			page,

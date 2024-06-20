@@ -20,17 +20,17 @@ import {
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import {createChannel, switchChannel} from './utils/channel';
+import {createIndividuals} from './utils/individuals';
 import {
 	navigateTo,
-	navigateToACWorkspace,
 	navigateToACSitesPageViaURL,
+	navigateToACWorkspace,
 } from './utils/navigation';
 import {
 	changeTimeFilterTo,
 	viewNameListIsNotPresent,
 	viewNameListIsPresent,
 } from './utils/utils';
-import {createIndividuals} from './utils/individuals';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -263,7 +263,7 @@ test('shows outside pages in path analysis', async ({apiHelpers, page}) => {
 	});
 
 	await test.step('Go to Analytics Cloud and Switch the property', async () => {
-		await navigateToACPage(page);
+		await navigateToACWorkspace({page});
 		await switchChannel({
 			channelName,
 			page,
@@ -370,7 +370,7 @@ test('shows tracked pages in path analysis', async ({apiHelpers, page}) => {
 	});
 
 	await test.step('Go to Analytics Cloud and Switch the property', async () => {
-		await navigateToACPage(page);
+		await navigateToACWorkspace({page});
 		await switchChannel({
 			channelName,
 			page,

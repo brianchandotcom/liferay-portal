@@ -17,12 +17,18 @@ export async function navigateTo({
 	await page.getByRole('link', {name: pageName}).first().click();
 }
 
-export async function navigateToACPage(page: Page) {
+export async function navigateToACWorkspace({
+	page,
+	workspaceName = 'FARO-DEV-liferay Liferay Demo Enterprise Plan',
+}: {
+	page: Page;
+	workspaceName?: string;
+}) {
 	await page.goto(faroConfig.environment.baseUrl);
 
 	await page
 		.getByRole('link', {
-			name: 'FARO-DEV-liferay Liferay Demo Enterprise Plan',
+			name: workspaceName,
 		})
 		.click();
 }

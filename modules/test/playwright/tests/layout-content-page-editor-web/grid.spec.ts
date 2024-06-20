@@ -26,6 +26,55 @@ const test = mergeTests(
 	wemSiteTest
 );
 
+test('grid background image can be customized', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	wemSite,
+}) => {
+
+	// Create a grid
+
+	const gridId = getRandomString();
+
+	const grid = getGridDefinition({
+		columns: [{pageElements: [], size: 4}, {size: 4}, {size: 4}],
+		id: gridId,
+	});
+
+	// Create page and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([grid]),
+		siteId: wemSite.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+
+	// Select background image
+
+	await pageEditorPage.selectFragment(gridId);
+
+	await pageEditorPage.goToConfigurationTab('Styles');
+
+	await page.getByLabel('Select Image').click();
+
+	const card = await page
+		.frameLocator('iframe[title="Select"]')
+		.locator('[data-title="echo-logo.png"]');
+
+	await card.click({trial: true});
+
+	await card.click();
+
+	expect(
+		await pageEditorPage
+			.getFragment(gridId)
+			.evaluate((element) => getComputedStyle(element).background)
+	).toEqual(expect.stringContaining('echo-logo-png'));
+});
+
 test('grid content is also duplicated', async ({
 	apiHelpers,
 	page,

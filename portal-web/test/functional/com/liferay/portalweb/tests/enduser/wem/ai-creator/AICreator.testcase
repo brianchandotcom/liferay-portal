@@ -127,7 +127,7 @@ definition {
 				checkboxName = "Enable ChatGPT to Create Content",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
-			Alert.viewInfoMessageSpecific(infoMessage = "To enable OpenAI in this site, it must also be enabled from instance settings.");
+			Alert.viewInfoMessageSpecific(infoMessage = "To enable ChatGPT for this site, first enable it for your instance.");
 		}
 	}
 

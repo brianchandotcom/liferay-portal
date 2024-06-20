@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>CARD_INFO</td>
-	<td>//div[contains(@class, 'card-subscription')]//h5[(text()='${cardName}')]//..//p[(text()='${date}')]//..//span[(text()='${status}')]</td>
+	<td>//div[contains(@class, 'card-subscription')]//div[(text()='${cardName}')]//..//p[(text()='${date}')]//..//span[(text()='${status}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>REQUEST_COLUMNS</td>
-	<td>//div[contains(@class,'lfr-layout-structure')]//h5[contains(@class,'component-text')][contains(text(),'${key_columns}')]</td>
+	<td>//div[contains(@class,'lfr-layout-structure')]//div[contains(@class,'component-text')][contains(text(),'${key_columns}')]</td>
 	<td></td>
 </tr>
 <tr>

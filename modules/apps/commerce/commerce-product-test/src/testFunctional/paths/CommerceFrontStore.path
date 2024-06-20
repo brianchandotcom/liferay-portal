@@ -182,7 +182,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_ATTACHMENTS_BUTTON</td>
-	<td>//li[contains(@class,'list-group-item')]//h5[text()='${key_entryName}']/ancestor::li//a[contains(text(),'${key_button}')]</td>
+	<td>//li[contains(@class,'list-group-item')]//div[contains(@class,'h5') and text()='${key_entryName}']/ancestor::li//a[contains(text(),'${key_button}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -197,12 +197,12 @@
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_ATTACHMENTS_ICON_DEFAULT</td>
-	<td>//h5[text()='${key_entryName}']/../..//*[name()='svg'][contains(@class,'icon-document-default')]</td>
+	<td>//div[contains(@class,'h5') and text()='${key_entryName}']/../..//*[name()='svg'][contains(@class,'icon-document-default')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_ATTACHMENTS_NAME</td>
-	<td>//li[contains(@class,'list-group-item')]//h5[text()='${key_entryName}']</td>
+	<td>//li[contains(@class,'list-group-item')]//div[contains(@class,'h5') and text()='${key_entryName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -212,17 +212,17 @@
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_GROUPED_PRODUCT_NAME</td>
-	<td>//div[contains(@class,'grouped-products-container')]//h5[normalize-space(text())='${key_productName}']</td>
+	<td>//div[contains(@class,'grouped-products-container')]//div[contains(@class,'h5') and normalize-space(text())='${key_productName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_GROUPED_PRODUCT_IMAGE</td>
-	<td>//div[contains(@class,'grouped-products-container')]//h5[normalize-space(text())='${key_productName}']/../..//img[contains(@src,'${key_productImage}')]</td>
+	<td>//div[contains(@class,'grouped-products-container')]//div[contains(@class,'h5') and normalize-space(text())='${key_productName}']/../..//img[contains(@src,'${key_productImage}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_GROUPED_PRODUCT_SHORT_DESCRIPTION</td>
-	<td>//div[contains(@class,'grouped-products-container')]//h5[normalize-space(text())='${key_productName}']/following::p[normalize-space(text())='${key_productShortDescription}']</td>
+	<td>//div[contains(@class,'grouped-products-container')]//div[contains(@class,'h5') and normalize-space(text())='${key_productName}']/following::p[normalize-space(text())='${key_productShortDescription}']</td>
 	<td></td>
 </tr>
 <tr>

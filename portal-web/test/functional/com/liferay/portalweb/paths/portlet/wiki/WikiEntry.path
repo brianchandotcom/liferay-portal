@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ATTACHMENTS_LABEL</td>
-	<td>//div[contains(@class,'page-attachments')]/h5[contains(.,'Attachments')]</td>
+	<td>//div[contains(@class,'page-attachments')]/div[contains(.,'Attachments')]</td>
 	<td></td>
 </tr>
 <tr>

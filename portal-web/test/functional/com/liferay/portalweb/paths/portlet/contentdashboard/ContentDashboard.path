@@ -297,7 +297,7 @@
 </tr>
 <tr>
 	<td>URL_LABEL</td>
-	<td>//*[contains(@class, 'sidebar-section') and descendant::input]//h5[normalize-space(text())='${key_fieldLabel}']</td>
+	<td>//*[contains(@class, 'sidebar-section') and descendant::input]//div[contains(@class,'h5') and normalize-space(text())='${key_fieldLabel}']</td>
 	<td></td>
 </tr>
 <tr>

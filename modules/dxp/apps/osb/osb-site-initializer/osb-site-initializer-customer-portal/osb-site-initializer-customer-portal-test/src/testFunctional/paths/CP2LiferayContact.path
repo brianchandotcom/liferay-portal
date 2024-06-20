@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>CONTACT_NAME</td>
-	<td>//h5[contains(text(),'${title}')]</td>
+	<td>//div[contains(@class,'h5') and contains(text(),'${title}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>NUMBER_PROJECTS</td>
-	<td>//h5[contains(text(),'${number}')]</td>
+	<td>//div[contains(@class,'h5') and contains(text(),'${number}')]</td>
 	<td></td>
 </tr>
 <tr>

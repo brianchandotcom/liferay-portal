@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>TITLE</td>
-	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//h5</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//div[contains(@class,'h5')]</td>
 	<td></td>
 </tr>
 <tr>

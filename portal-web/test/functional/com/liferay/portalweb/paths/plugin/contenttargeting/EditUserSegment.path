@@ -30,7 +30,7 @@
 
 <tr>
 	<td>USER_SEGMENT_RULES_RULE</td>
-	<td>//li//div/h5[contains(.,'${key_userSegmentRule}')]</td>
+	<td>//li//div/div[contains(@class,'h5') and contains(.,'${key_userSegmentRule}')]</td>
 	<td></td>
 </tr>
 <tr>

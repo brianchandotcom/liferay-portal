@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>PAYMENT_METHOD</td>
-	<td>//h5[contains(text(),'Payment Method')]</td>
+	<td>//div[contains(@class,'h5') and contains(text(),'Payment Method')]</td>
 	<td></td>
 </tr>
 <tr>

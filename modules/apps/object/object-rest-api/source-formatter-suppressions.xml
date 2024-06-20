@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="MapBuilderCheck" files="src/test/java/com/liferay/object/rest/dto/v1_0/ObjectEntryTest\.java" />
+	</checkstyle>
+</suppressions>

@@ -18,7 +18,7 @@ export class ObjectFieldsPage {
 	readonly objectFieldOptionsDropdown: Locator;
 
 	constructor(page: Page) {
-		this.addObjectFieldButton = page.getByTestId('fdsCreationActionButton');
+		this.addObjectFieldButton = page.getByLabel('Add Object Field');
 		this.deleteObjectFieldOption = page.getByRole('menuitem', {
 			name: 'Delete',
 		});

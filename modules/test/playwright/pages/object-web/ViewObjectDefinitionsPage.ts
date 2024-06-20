@@ -33,9 +33,8 @@ export class ViewObjectDefinitionsPage {
 		this.confirmObjectFolderNameInput = page.locator(
 			'input[placeholder="Confirm Folder Name"]'
 		);
-		this.createObjectDefinitionButton = page.getByTestId(
-			'fdsCreationActionButton'
-		);
+		this.createObjectDefinitionButton =
+			page.getByLabel('Create New Object');
 		this.createObjectFolderButton = page.getByRole('button', {
 			name: 'Create Folder',
 		});

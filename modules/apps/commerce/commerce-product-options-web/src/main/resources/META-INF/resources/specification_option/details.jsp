@@ -54,7 +54,7 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 
 		<aui:input name="priority" />
 
-		<aui:input name="listTypeDefinitionId" type="hidden" value="<%= cpSpecificationOption.getListTypeDefinitionId() %>" />
+		<aui:input name="listTypeDefinitionId" type="hidden" value="<%= (cpSpecificationOption == null) ? 0 : cpSpecificationOption.getListTypeDefinitionId() %>" />
 	</aui:fieldset>
 </commerce-ui:panel>
 
@@ -75,7 +75,6 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 			id="<%= CommerceSpecificationOptionFDSNames.LIST_TYPE_DEFINITIONS %>"
 			itemsPerPage="<%= 10 %>"
 			propsTransformer="{CPSpecificationOptionListTypeDefinitionPropsTransformer} from commerce-product-options-web"
-			style="stacked"
 		/>
 	</commerce-ui:panel>
 

@@ -12,14 +12,18 @@ export class FormBuilderPage {
 	readonly formTitle: Locator;
 	readonly page: Page;
 	readonly previewButton: Locator;
+	readonly publishButton: Locator;
 	readonly newFormHeading: Locator;
+	readonly newPageButton: Locator;
 
 	constructor(page: Page) {
 		this.formTitle = page.getByPlaceholder('Untitled Form');
 		this.formPage = new FormsPage(page);
 		this.page = page;
 		this.previewButton = page.getByRole('button', {name: 'Preview'});
+		this.publishButton = page.getByRole('button', {name: 'Publish'});
 		this.newFormHeading = page.getByRole('heading', {name: 'New Form'});
+		this.newPageButton = page.getByRole('button', {name: 'New Page'});
 	}
 
 	async clickPreviewButton() {

@@ -450,15 +450,10 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				"select primKey, primKeyId from ResourcePermission");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			Assert.assertTrue(resultSet.isBeforeFirst());
+			Assert.assertTrue(resultSet.next());
 
-			while (resultSet.next()) {
-				long primKey = resultSet.getLong("primKey");
-				long primKeyId = resultSet.getLong("primKeyId");
-
-				Assert.assertEquals(companyId, primKey);
-				Assert.assertEquals(companyId, primKeyId);
-			}
+			Assert.assertEquals(companyId, resultSet.getLong("primKey"));
+			Assert.assertEquals(companyId, resultSet.getLong("primKeyId"));
 		}
 	}
 

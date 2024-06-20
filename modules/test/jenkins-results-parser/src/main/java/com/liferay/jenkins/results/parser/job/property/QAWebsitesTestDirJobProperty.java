@@ -27,6 +27,16 @@ public class QAWebsitesTestDirJobProperty extends BaseTestDirJobProperty {
 			testSuiteName, testBatchName);
 	}
 
+	protected QAWebsitesTestDirJobProperty(
+		Job job, Type type, File testBaseDir, String basePropertyName,
+		boolean useBasePropertyName, String testSuiteName, String testBatchName,
+		String ruleName) {
+
+		super(
+			job, type, testBaseDir, basePropertyName, useBasePropertyName,
+			testSuiteName, testBatchName, ruleName);
+	}
+
 	@Override
 	protected List<File> getJobPropertiesFiles() {
 		return Arrays.asList(

@@ -607,6 +607,15 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			basePropertyName, testSuiteName, testBatchName, null, type, true);
 	}
 
+	protected JobProperty getJobProperty(
+		String basePropertyName, String testSuiteName, String testBatchName,
+		String ruleName, File testBaseDir, JobProperty.Type type) {
+
+		return _getJobProperty(
+			basePropertyName, testSuiteName, testBatchName, ruleName,
+			testBaseDir, type, true);
+	}
+
 	protected List<PathMatcher> getPathMatchers(
 		List<JobProperty> jobProperties) {
 
@@ -1007,6 +1016,20 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		return JobPropertyFactory.newJobProperty(
 			basePropertyName, testSuiteName, testBatchName, getJob(),
+			testBaseDir, type, useBasePropertyName);
+	}
+
+	private JobProperty _getJobProperty(
+		String basePropertyName, String testSuiteName, String testBatchName,
+		String ruleName, File testBaseDir, JobProperty.Type type,
+		boolean useBasePropertyName) {
+
+		if (testBatchName == null) {
+			testBatchName = getBatchName();
+		}
+
+		return JobPropertyFactory.newJobProperty(
+			basePropertyName, testSuiteName, testBatchName, ruleName, getJob(),
 			testBaseDir, type, useBasePropertyName);
 	}
 

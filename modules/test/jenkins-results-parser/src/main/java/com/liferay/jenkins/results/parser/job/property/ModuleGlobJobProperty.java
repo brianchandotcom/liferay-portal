@@ -27,6 +27,16 @@ public class ModuleGlobJobProperty extends BaseGlobJobProperty {
 			testSuiteName, testBatchName);
 	}
 
+	protected ModuleGlobJobProperty(
+		Job job, Type type, File testBaseDir, String basePropertyName,
+		boolean useBasePropertyName, String testSuiteName, String testBatchName,
+		String ruleName) {
+
+		super(
+			job, type, testBaseDir, basePropertyName, useBasePropertyName,
+			testSuiteName, testBatchName, ruleName);
+	}
+
 	@Override
 	protected List<File> getJobPropertiesFiles() {
 		File propertiesFile = new File(getTestBaseDir(), "test.properties");

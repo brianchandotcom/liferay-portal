@@ -92,6 +92,13 @@ public abstract class BaseJobProperty implements JobProperty {
 
 	@Override
 	public String toString() {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_ruleName)) {
+			return JenkinsResultsParserUtil.join(
+				"_", _job.getJobName(), _basePropertyName,
+				String.valueOf(_type), String.valueOf(_useBasePropertyName),
+				_testSuiteName, _testBatchName, _ruleName);
+		}
+
 		return JenkinsResultsParserUtil.join(
 			"_", _job.getJobName(), _basePropertyName, String.valueOf(_type),
 			String.valueOf(_useBasePropertyName), _testSuiteName,
@@ -142,6 +149,29 @@ public abstract class BaseJobProperty implements JobProperty {
 
 		_testSuiteName = testSuiteName;
 		_testBatchName = testBatchName;
+
+		_ruleName = null;
+	}
+
+	protected BaseJobProperty(
+		Job job, Type type, String basePropertyName,
+		boolean useBasePropertyName, String testSuiteName, String testBatchName,
+		String ruleName) {
+
+		_job = job;
+		_type = type;
+		_basePropertyName = basePropertyName;
+		_useBasePropertyName = useBasePropertyName;
+
+		if ((testSuiteName == null) && (job instanceof TestSuiteJob)) {
+			TestSuiteJob testSuiteJob = (TestSuiteJob)job;
+
+			testSuiteName = testSuiteJob.getTestSuiteName();
+		}
+
+		_testSuiteName = testSuiteName;
+		_testBatchName = testBatchName;
+		_ruleName = ruleName;
 	}
 
 	protected List<File> getJobPropertiesFiles() {
@@ -212,6 +242,10 @@ public abstract class BaseJobProperty implements JobProperty {
 		jobPropertyOptions.add(_testSuiteName);
 		jobPropertyOptions.add(_testBatchName);
 
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_ruleName)) {
+			jobPropertyOptions.add(_ruleName);
+		}
+
 		jobPropertyOptions.removeAll(Collections.singleton(null));
 
 		return jobPropertyOptions.toArray(new String[0]);
@@ -222,6 +256,7 @@ public abstract class BaseJobProperty implements JobProperty {
 	private String _name;
 	private File _propertiesFile;
 	private boolean _readJobProperties;
+	private final String _ruleName;
 	private final String _testBatchName;
 	private final String _testSuiteName;
 	private final Type _type;

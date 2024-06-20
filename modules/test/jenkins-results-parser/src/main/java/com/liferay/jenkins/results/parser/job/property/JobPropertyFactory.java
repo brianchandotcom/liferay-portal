@@ -136,6 +136,112 @@ public class JobPropertyFactory {
 		return _jobProperties.get(key);
 	}
 
+	public static JobProperty newJobProperty(
+		String basePropertyName, String testSuiteName, String testBatchName,
+		String ruleName, Job job, File testBaseDir, JobProperty.Type type,
+		boolean useBasePropertyName) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(basePropertyName);
+		sb.append("_");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName) &&
+			(job instanceof TestSuiteJob)) {
+
+			TestSuiteJob testSuiteJob = (TestSuiteJob)job;
+
+			testSuiteName = testSuiteJob.getTestSuiteName();
+		}
+
+		sb.append(testSuiteName);
+		sb.append("_");
+		sb.append(testBatchName);
+		sb.append("_");
+		sb.append(ruleName);
+		sb.append("_");
+		sb.append(job.getJobName());
+
+		if (testBaseDir != null) {
+			sb.append("_");
+			sb.append(JenkinsResultsParserUtil.getCanonicalPath(testBaseDir));
+		}
+
+		if (type == null) {
+			if (testBaseDir != null) {
+				type = JobProperty.Type.DEFAULT_TEST_DIR;
+			}
+			else {
+				type = JobProperty.Type.DEFAULT;
+			}
+		}
+
+		sb.append("_");
+		sb.append(type);
+		sb.append("_");
+		sb.append(useBasePropertyName);
+
+		String key = sb.toString();
+
+		JobProperty jobProperty = _jobProperties.get(key);
+
+		if (jobProperty != null) {
+			return jobProperty;
+		}
+
+		if (type == JobProperty.Type.DEFAULT_TEST_DIR) {
+			jobProperty = new DefaultTestDirProperty(
+				job, type, testBaseDir, basePropertyName, useBasePropertyName,
+				testSuiteName, testBatchName, ruleName);
+		}
+		else if ((type == JobProperty.Type.EXCLUDE_GLOB) ||
+				 (type == JobProperty.Type.FILTER_GLOB) ||
+				 (type == JobProperty.Type.INCLUDE_GLOB)) {
+
+			if (testBatchName.equals("modules-integration-analytics-cloud") &&
+				(testBaseDir == null)) {
+
+				testBaseDir = new File(
+					"/opt/dev/projects/github/com-liferay-osb-asah-private");
+			}
+
+			jobProperty = new DefaultGlobJobProperty(
+				job, type, testBaseDir, basePropertyName, useBasePropertyName,
+				testSuiteName, testBatchName, ruleName);
+		}
+		else if ((type == JobProperty.Type.MODULE_EXCLUDE_GLOB) ||
+				 (type == JobProperty.Type.MODULE_INCLUDE_GLOB)) {
+
+			jobProperty = new ModuleGlobJobProperty(
+				job, type, testBaseDir, basePropertyName, useBasePropertyName,
+				testSuiteName, testBatchName, ruleName);
+		}
+		else if (type == JobProperty.Type.MODULE_TEST_DIR) {
+			jobProperty = new ModuleTestDirJobProperty(
+				job, type, testBaseDir, basePropertyName, useBasePropertyName,
+				testSuiteName, testBatchName, ruleName);
+		}
+		else if (type == JobProperty.Type.PLUGIN_TEST_DIR) {
+			jobProperty = new PluginTestDirProperty(
+				job, type, testBaseDir, basePropertyName, useBasePropertyName,
+				testSuiteName, testBatchName, ruleName);
+		}
+		else if (type == JobProperty.Type.QA_WEBSITES_TEST_DIR) {
+			jobProperty = new QAWebsitesTestDirJobProperty(
+				job, type, testBaseDir, basePropertyName, useBasePropertyName,
+				testSuiteName, testBatchName, ruleName);
+		}
+		else {
+			jobProperty = new DefaultJobProperty(
+				job, type, basePropertyName, useBasePropertyName, testSuiteName,
+				testBatchName, ruleName);
+		}
+
+		_jobProperties.put(key, jobProperty);
+
+		return _jobProperties.get(key);
+	}
+
 	private static final Map<String, JobProperty> _jobProperties =
 		new HashMap<>();
 

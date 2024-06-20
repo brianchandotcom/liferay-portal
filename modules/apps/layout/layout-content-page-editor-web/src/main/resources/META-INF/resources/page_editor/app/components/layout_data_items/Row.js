@@ -56,6 +56,7 @@ const Row = React.forwardRef(({children, className, item}, ref) => {
 				getLayoutDataItemCssClasses(item),
 				getLayoutDataItemUniqueClassName(item.itemId)
 			)}
+			style={style}
 		>
 			<ClayLayout.Row
 				className={classNames(
@@ -71,7 +72,6 @@ const Row = React.forwardRef(({children, className, item}, ref) => {
 				)}
 				id={elementId}
 				ref={ref}
-				style={style}
 			>
 				{backgroundImageValue.mediaQueries ? (
 					<style>{backgroundImageValue.mediaQueries}</style>

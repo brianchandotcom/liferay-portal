@@ -8,8 +8,6 @@ package com.liferay.layout.locked.layouts.web.internal.events.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.LifecycleEvent;
 import com.liferay.portal.kernel.lock.Lock;
@@ -23,7 +21,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -31,17 +28,12 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 
-import java.util.Objects;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -68,63 +60,7 @@ public class UnlockLayoutsSessionActionTest {
 
 	@Test
 	public void testProcessLifecycleEvent() throws Exception {
-		testProcessLifecycleEvent(
-			getLifecycleAction(
-				"com.liferay.layout.locked.layouts.web.internal.events." +
-					"UnlockLayoutsSessionAction",
-				PropsKeys.SERVLET_SESSION_DESTROY_EVENTS));
-	}
-
-	protected LifecycleAction getLifecycleAction(String className, String key) {
-		Bundle bundle = FrameworkUtil.getBundle(
-			UnlockLayoutsSessionActionTest.class);
-
-		ServiceTrackerList<LifecycleAction> lifecycleActions =
-			ServiceTrackerListFactory.open(
-				bundle.getBundleContext(), LifecycleAction.class,
-				"(key=" + key + ")");
-
-		for (LifecycleAction lifecycleAction : lifecycleActions) {
-			Class<?> clazz = lifecycleAction.getClass();
-
-			if (Objects.equals(clazz.getName(), className)) {
-				return lifecycleAction;
-			}
-		}
-
-		throw new AssertionError("Lifecycle action is not registered");
-	}
-
-	protected void testProcessLifecycleEvent(LifecycleAction lifecycleAction)
-		throws Exception {
-
-		Layout draftLayout = _getDraftLayout();
-
-		_lockLayout(draftLayout, _user);
-
-		Lock lock = _lockManager.fetchLock(
-			Layout.class.getName(), draftLayout.getPlid());
-
-		Assert.assertNotNull(lock);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(WebKeys.USER, _user);
-
-		MockHttpSession mockHttpSession = new MockHttpSession();
-
-		mockHttpSession.setAttribute(WebKeys.USER_ID, _user.getUserId());
-
-		lifecycleAction.processLifecycleEvent(
-			new LifecycleEvent(
-				null, mockHttpServletRequest, new MockHttpServletResponse(),
-				mockHttpSession));
-
-		lock = _lockManager.fetchLock(
-			Layout.class.getName(), draftLayout.getPlid());
-
-		Assert.assertNull(lock);
+		_testProcessLifecycleEvent();
 	}
 
 	private Layout _getDraftLayout() throws Exception {
@@ -150,6 +86,36 @@ public class UnlockLayoutsSessionActionTest {
 		_layoutLockManager.getLock(mockActionRequest);
 	}
 
+	private void _testProcessLifecycleEvent() throws Exception {
+		Layout draftLayout = _getDraftLayout();
+
+		_lockLayout(draftLayout, _user);
+
+		Lock lock = _lockManager.fetchLock(
+			Layout.class.getName(), draftLayout.getPlid());
+
+		Assert.assertNotNull(lock);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.USER, _user);
+
+		MockHttpSession mockHttpSession = new MockHttpSession();
+
+		mockHttpSession.setAttribute(WebKeys.USER_ID, _user.getUserId());
+
+		_lifecycleAction.processLifecycleEvent(
+			new LifecycleEvent(
+				null, mockHttpServletRequest, new MockHttpServletResponse(),
+				mockHttpSession));
+
+		lock = _lockManager.fetchLock(
+			Layout.class.getName(), draftLayout.getPlid());
+
+		Assert.assertNull(lock);
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -158,6 +124,11 @@ public class UnlockLayoutsSessionActionTest {
 
 	@Inject
 	private LayoutLockManager _layoutLockManager;
+
+	@Inject(
+		filter = "component.name=com.liferay.layout.locked.layouts.web.internal.events.UnlockLayoutsSessionAction"
+	)
+	private LifecycleAction _lifecycleAction;
 
 	@Inject
 	private LockManager _lockManager;

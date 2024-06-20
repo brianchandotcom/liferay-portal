@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
@@ -29,7 +27,6 @@ import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.sql.Connection;
@@ -44,8 +41,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
-
-import javax.sql.DataSource;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -169,7 +164,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				createAndPopulateTable(
 					testObjectTableNamePrefix + COMPANY_IDS[0]);
 
-				_populateResourcePermissionTable();
+				_populateResourcePermissionTable(COMPANY_IDS[0]);
 			}
 
 			Assert.assertTrue(
@@ -557,32 +552,17 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		return viewNames.size();
 	}
 
-	private void _populateResourcePermissionTable() throws Exception {
-		long companyId = CompanyThreadLocal.getCompanyId();
+	private void _populateResourcePermissionTable(Long companyId)
+		throws Exception {
 
-		DataSource dataSource = InfrastructureUtil.getDataSource();
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"insert into ResourcePermission (resourcePermissionId, " +
+					"scope, primKey, primKeyId) values (?, ?, ?, ?)")) {
 
-		try (Connection connection = dataSource.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"insert into ResourcePermission (mvccVersion, ",
-					"ctCollectionId, resourcePermissionId, companyId, name, ",
-					"scope, primKey, primKeyId, roleId, ownerId, actionIds, ",
-					"viewActionId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
-					"?)"))) {
-
-			preparedStatement.setLong(1, 0);
-			preparedStatement.setLong(2, 0);
-			preparedStatement.setLong(3, 1);
+			preparedStatement.setLong(1, 1);
+			preparedStatement.setLong(2, 1);
+			preparedStatement.setString(3, companyId.toString());
 			preparedStatement.setLong(4, companyId);
-			preparedStatement.setString(5, Role.class.getName());
-			preparedStatement.setInt(6, ResourceConstants.SCOPE_COMPANY);
-			preparedStatement.setLong(7, companyId);
-			preparedStatement.setLong(8, companyId);
-			preparedStatement.setLong(9, 1);
-			preparedStatement.setInt(10, 0);
-			preparedStatement.setInt(11, 1);
-			preparedStatement.setInt(12, 1);
 
 			preparedStatement.executeUpdate();
 		}

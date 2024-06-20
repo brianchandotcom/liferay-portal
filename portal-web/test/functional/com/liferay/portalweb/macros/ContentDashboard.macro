@@ -77,7 +77,7 @@ definition {
 	macro clearFilters() {
 		Click(
 			key_text = "Clear",
-			locator1 = "Link#ANY");
+			locator1 = "Button#ANY");
 	}
 
 	@summary = "Default summary"

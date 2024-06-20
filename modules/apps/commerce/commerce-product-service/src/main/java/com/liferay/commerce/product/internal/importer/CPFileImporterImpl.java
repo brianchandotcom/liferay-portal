@@ -429,7 +429,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		friendlyURL = CharPool.SLASH + friendlyURL;
 
 		Layout layout = _layoutLocalService.addLayout(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			privateLayout, parentLayoutId, name, name, StringPool.BLANK,
 			layoutType, hidden, friendlyURL, serviceContext);
 

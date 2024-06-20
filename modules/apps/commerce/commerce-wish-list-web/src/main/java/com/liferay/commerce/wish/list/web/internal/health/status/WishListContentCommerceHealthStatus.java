@@ -66,9 +66,10 @@ public class WishListContentCommerceHealthStatus
 			Layout.class.getName(), httpServletRequest);
 
 		Layout layout = _layoutService.addLayout(
-			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			"Wish List", "Wish List", null, LayoutConstants.TYPE_PORTLET, true,
-			"/wishlist", serviceContext);
+			null, groupId, privateLayout,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Wish List", "Wish List",
+			null, LayoutConstants.TYPE_PORTLET, true, "/wishlist",
+			serviceContext);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

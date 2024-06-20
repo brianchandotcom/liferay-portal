@@ -107,7 +107,7 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			UniqueStringRandomizerBumper.INSTANCE);
 
 		layout = LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), group.getGroupId(), false,
+			null, TestPropsValues.getUserId(), group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null, null,
 			"full_page_application", false,
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name),

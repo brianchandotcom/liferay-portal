@@ -107,7 +107,7 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 			contextHttpServletRequest);
 
 		Layout layout = _layoutLocalService.addLayout(
-			contextUser.getUserId(), siteId, false,
+			null, contextUser.getUserId(), siteId, false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			_portal.getClassNameId(PageDefinition.class), 0, nameMap, nameMap,
 			Collections.emptyMap(), Collections.emptyMap(),

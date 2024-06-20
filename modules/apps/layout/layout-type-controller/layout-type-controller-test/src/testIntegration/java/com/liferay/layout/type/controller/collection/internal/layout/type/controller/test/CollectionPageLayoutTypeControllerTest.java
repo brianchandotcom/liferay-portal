@@ -125,7 +125,7 @@ public class CollectionPageLayoutTypeControllerTest {
 
 	private Layout _addTypeCollectionLayout() throws Exception {
 		return _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			LayoutConstants.TYPE_COLLECTION, false, StringPool.BLANK,

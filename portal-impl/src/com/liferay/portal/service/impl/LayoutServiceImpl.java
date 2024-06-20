@@ -155,10 +155,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 
 		Layout layout = layoutLocalService.addLayout(
-			getUserId(), groupId, privateLayout, parentLayoutId, classNameId,
-			classPK, localeNamesMap, localeTitlesMap, descriptionMap,
-			keywordsMap, robotsMap, type, typeSettings, hidden, system,
-			friendlyURLMap, masterLayoutPlid, serviceContext);
+			externalReferenceCode, getUserId(), groupId, privateLayout,
+			parentLayoutId, classNameId, classPK, localeNamesMap,
+			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
+			typeSettings, hidden, system, friendlyURLMap, masterLayoutPlid,
+			serviceContext);
 
 		checkLayoutTypeSettings(layout, StringPool.BLANK, typeSettings);
 
@@ -218,10 +219,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException {
 
 		return addLayout(
-			groupId, privateLayout, parentLayoutId, 0, 0, localeNamesMap,
-			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, false, friendlyURLMap, masterLayoutPlid,
-			serviceContext);
+			externalReferenceCode, groupId, privateLayout, parentLayoutId, 0, 0,
+			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
+			robotsMap, type, typeSettings, hidden, false, friendlyURLMap,
+			masterLayoutPlid, serviceContext);
 	}
 
 	/**
@@ -276,9 +277,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException {
 
 		return addLayout(
-			groupId, privateLayout, parentLayoutId, 0, 0, localeNamesMap,
-			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, false, friendlyURLMap, 0, serviceContext);
+			externalReferenceCode, groupId, privateLayout, parentLayoutId, 0, 0,
+			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
+			robotsMap, type, typeSettings, hidden, false, friendlyURLMap, 0,
+			serviceContext);
 	}
 
 	/**
@@ -338,8 +340,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 
 		return layoutLocalService.addLayout(
-			getUserId(), groupId, privateLayout, parentLayoutId, name, title,
-			description, type, hidden, friendlyURL, serviceContext);
+			externalReferenceCode, getUserId(), groupId, privateLayout,
+			parentLayoutId, name, title, description, type, hidden, friendlyURL,
+			serviceContext);
 	}
 
 	@Override

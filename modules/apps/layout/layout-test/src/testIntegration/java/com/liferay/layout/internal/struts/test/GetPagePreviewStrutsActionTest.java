@@ -148,8 +148,8 @@ public class GetPagePreviewStrutsActionTest {
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), group.getGroupId(), privateLayout,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			StringPool.BLANK, type, false, privateLayout, StringPool.BLANK,
 			serviceContext);

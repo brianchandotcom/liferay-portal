@@ -135,8 +135,8 @@ public class LayoutTypeContentPerformanceTest {
 
 		for (int i = 0; i < 5; i++) {
 			layout = _layoutLocalService.addLayout(
-				TestPropsValues.getUserId(), _group.getGroupId(), false, 0,
-				_portal.getClassNameId(LayoutPageTemplateEntry.class),
+				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
+				0, _portal.getClassNameId(LayoutPageTemplateEntry.class),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				HashMapBuilder.put(
 					siteDefaultLocale, "name_" + i

@@ -131,7 +131,7 @@ public class PortalImplGetLayoutActualURLTest
 		throws Exception {
 
 		return layoutLocalService.addLayout(
-			_serviceContext.getUserId(), group.getGroupId(), false,
+			null, _serviceContext.getUserId(), group.getGroupId(), false,
 			parentLayoutId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), type,
 			false, StringPool.BLANK, _serviceContext);

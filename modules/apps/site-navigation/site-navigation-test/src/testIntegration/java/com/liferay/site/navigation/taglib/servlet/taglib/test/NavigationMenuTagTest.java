@@ -129,7 +129,7 @@ public class NavigationMenuTagTest {
 		throws Exception {
 
 		Layout contentLayout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 			parentLayoutId, RandomTestUtil.randomString(), StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
 			StringPool.BLANK,

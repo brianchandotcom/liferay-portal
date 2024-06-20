@@ -113,7 +113,7 @@ public class ExecuteInfoItemActionStrutsActionTest {
 			RandomTestUtil.randomString());
 		_fileName = _file.createTempFileName("action-executed-", "txt");
 		_layout = _layoutLocalService.addLayout(
-			_user.getUserId(), _group.getGroupId(), false,
+			null, _user.getUserId(), _group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),

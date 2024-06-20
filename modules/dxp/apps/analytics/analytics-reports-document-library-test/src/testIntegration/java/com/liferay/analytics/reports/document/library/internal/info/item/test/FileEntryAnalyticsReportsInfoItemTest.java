@@ -156,7 +156,7 @@ public class FileEntryAnalyticsReportsInfoItemTest {
 					TestPropsValues.getCompanyId()));
 
 			Layout layout = _layoutLocalService.addLayout(
-				user.getUserId(), _group.getGroupId(), false,
+				null, user.getUserId(), _group.getGroupId(), false,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,

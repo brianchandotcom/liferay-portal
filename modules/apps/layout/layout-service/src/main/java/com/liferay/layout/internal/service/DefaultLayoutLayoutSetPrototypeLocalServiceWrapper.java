@@ -46,7 +46,7 @@ public class DefaultLayoutLayoutSetPrototypeLocalServiceWrapper
 				serviceContext.getAttribute("addDefaultLayout"), true)) {
 
 			Layout defaultLayout = _layoutLocalService.addLayout(
-				userId, layoutSetPrototype.getGroupId(), true,
+				null, userId, layoutSetPrototype.getGroupId(), true,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home", null, null,
 				LayoutConstants.TYPE_CONTENT, false, "/home", serviceContext);
 

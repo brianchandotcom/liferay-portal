@@ -445,7 +445,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			serviceContext.setModifiedDate(date);
 
 			addLayout(
-				userId, groupId, privateLayout, parentLayoutId,
+				null, userId, groupId, privateLayout, parentLayoutId,
 				_classNameLocalService.getClassNameId(Layout.class),
 				layout.getPlid(), nameMap, titleMap, descriptionMap,
 				keywordsMap, robotsMap, type, typeSettings, true, true,
@@ -517,9 +517,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException {
 
 		return addLayout(
-			userId, groupId, privateLayout, parentLayoutId, 0, 0, nameMap,
-			titleMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, system, friendlyURLMap, 0, serviceContext);
+			externalReferenceCode, userId, groupId, privateLayout,
+			parentLayoutId, 0, 0, nameMap, titleMap, descriptionMap,
+			keywordsMap, robotsMap, type, typeSettings, hidden, system,
+			friendlyURLMap, 0, serviceContext);
 	}
 
 	/**
@@ -582,9 +583,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException {
 
 		return addLayout(
-			userId, groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-			descriptionMap, keywordsMap, robotsMap, type, typeSettings, hidden,
-			false, friendlyURLMap, serviceContext);
+			externalReferenceCode, userId, groupId, privateLayout,
+			parentLayoutId, nameMap, titleMap, descriptionMap, keywordsMap,
+			robotsMap, type, typeSettings, hidden, false, friendlyURLMap,
+			serviceContext);
 	}
 
 	/**
@@ -753,13 +755,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		sourceUnicodeProperties.putAll(typeSettingsUnicodeProperties);
 
 		Layout targetLayout = layoutLocalService.addLayout(
-			userId, groupId, privateLayout, sourceLayout.getParentLayoutId(),
-			sourceLayout.getClassNameId(), sourceLayout.getClassPK(), nameMap,
-			sourceLayout.getTitleMap(), sourceLayout.getDescriptionMap(),
-			sourceLayout.getKeywordsMap(), sourceLayout.getRobotsMap(),
-			sourceLayout.getType(), sourceUnicodeProperties.toString(), hidden,
-			system, new HashMap<>(), sourceLayout.getMasterLayoutPlid(),
-			serviceContext);
+			null, userId, groupId, privateLayout,
+			sourceLayout.getParentLayoutId(), sourceLayout.getClassNameId(),
+			sourceLayout.getClassPK(), nameMap, sourceLayout.getTitleMap(),
+			sourceLayout.getDescriptionMap(), sourceLayout.getKeywordsMap(),
+			sourceLayout.getRobotsMap(), sourceLayout.getType(),
+			sourceUnicodeProperties.toString(), hidden, system, new HashMap<>(),
+			sourceLayout.getMasterLayoutPlid(), serviceContext);
 
 		if (copyPermissions) {
 			_resourceLocalService.deleteResource(

@@ -10,6 +10,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/layout/add-layout \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode='' \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout} \
 				-d parentLayoutId=${parentLayoutId} \

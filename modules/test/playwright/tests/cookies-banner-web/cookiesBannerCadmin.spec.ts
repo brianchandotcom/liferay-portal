@@ -16,10 +16,7 @@ export const test = mergeTests(
 	systemSettingsPageTest
 );
 
-test('LPD-25440 Cookie Banner Cadmin', async ({
-	page,
-	systemSettingsPage,
-}) => {
+test('LPD-25440 Cookie Banner Cadmin', async ({page, systemSettingsPage}) => {
 	await test.step('Enable Third Party Cookies', async () => {
 		await systemSettingsPage.goToSystemSetting(
 			'Cookies',

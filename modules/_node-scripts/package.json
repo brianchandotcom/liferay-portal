@@ -16,7 +16,7 @@
 		"minimist": "^1.2.8",
 		"prettier": "^3.2.5",
 		"resolve": "^1.19.0",
-		"sass": "1.77.4",
+		"sass": "1.77.5",
 		"stylelint": "13.2.0",
 		"tar": "^7.2.0",
 		"typescript": "^5.4.5",

@@ -12,7 +12,6 @@
 
 	<!-- Messaging -->
 
-	<bean class="com.liferay.mail.messaging.MailMessageListener" id="messageListener.mail" />
 	<bean class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" id="messagingConfigurator.mail">
 		<property name="destinationConfigurations">
 			<util:set>
@@ -23,15 +22,6 @@
 					</constructor-arg>
 				</bean>
 			</util:set>
-		</property>
-		<property name="messageListeners">
-			<map key-type="java.lang.String" value-type="java.util.List">
-				<entry key="liferay/mail">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.mail" />
-					</list>
-				</entry>
-			</map>
 		</property>
 	</bean>
 </beans>

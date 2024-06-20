@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "DEAL-REGISTRATION-SUBMISSION-REJECTED-TEMPLATE",
-	"name": "Deal Registration Submission Rejected Template",
+	"externalReferenceCode": "DEAL-REJECTED-TEMPLATE",
+	"name": "Deal Rejected Template",
 	"recipientType": "email",
 	"recipients": [
 		{

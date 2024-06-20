@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "DEAL-REGISTRATION-SUBMISSION-SUCCESS-TEMPLATE",
-	"name": "Deal Registration Submission Success Template",
+	"externalReferenceCode": "DEAL-SUBMISSION-TEMPLATE",
+	"name": "Deal Submission Template",
 	"recipientType": "email",
 	"recipients": [
 		{

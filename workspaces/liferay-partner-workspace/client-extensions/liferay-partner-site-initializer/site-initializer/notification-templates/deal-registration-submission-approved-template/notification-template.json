@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "DEAL-REGISTRATION-SUBMISSION-APPROVED-TEMPLATE",
-	"name": "Deal Registration Submission Approved Template",
+	"externalReferenceCode": "DEAL-APPROVED-TEMPLATE",
+	"name": "Deal Approved Template",
 	"recipientType": "email",
 	"recipients": [
 		{

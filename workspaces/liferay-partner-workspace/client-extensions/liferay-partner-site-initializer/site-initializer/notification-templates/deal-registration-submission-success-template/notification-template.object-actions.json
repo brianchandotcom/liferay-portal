@@ -1,11 +1,11 @@
 [
 	{
 		"active": true,
-		"externalReferenceCode": "NOTIFICATION-TEMPLATE-DEAL-REGISTRATION-SUBMISSION-SUCCESS",
+		"externalReferenceCode": "NOTIFICATION-TEMPLATE-DEAL-SUBMISSION",
 		"label": {
-			"en_US": "Notification Template Deal Registration Submission Success"
+			"en_US": "Notification Template Deal Submission"
 		},
-		"name": "notificationTemplateDealRegistrationSubmissionSuccess",
+		"name": "notificationTemplateDealSubmission",
 		"objectActionExecutorKey": "notification",
 		"objectActionTriggerKey": "onAfterAdd",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:LeadNotification$]"

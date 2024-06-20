@@ -468,11 +468,11 @@ definition {
 
 		if (${publishTimeMinutes} == 58) {
 			var publishTimeHours = ${publishTimeHours} + 1;
-			var publishTimeMinutes = 00;
+			var publishTimeMinutes = 0;
 		}
 		else if (${publishTimeMinutes} == 59) {
 			var publishTimeHours = ${publishTimeHours} + 1;
-			var publishTimeMinutes = 01;
+			var publishTimeMinutes = 1;
 		}
 		else {
 			var publishTimeMinutes = ${publishTimeMinutes} + 2;

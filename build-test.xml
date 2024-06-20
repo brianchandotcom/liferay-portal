@@ -4133,6 +4133,64 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-selenium-object-storage-sugarcrm-properties">
+		<sequential>
+			<if>
+				<isset property="object.storage.sugarcrm.access.token.url" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						object.storage.sugarcrm.access.token.url=${object.storage.sugarcrm.access.token.url}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="object.storage.sugarcrm.base.url" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						object.storage.sugarcrm.base.url=${object.storage.sugarcrm.base.url}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="object.storage.sugarcrm.client.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						object.storage.sugarcrm.client.id=${object.storage.sugarcrm.client.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="object.storage.sugarcrm.grant.type" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						object.storage.sugarcrm.grant.type=${object.storage.sugarcrm.grant.type}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="object.storage.sugarcrm.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						object.storage.sugarcrm.password=${object.storage.sugarcrm.password}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="object.storage.sugarcrm.username" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						object.storage.sugarcrm.username=${object.storage.sugarcrm.username}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-selenium-onedrive-properties">
 		<sequential>
 			<if>
@@ -12679,6 +12737,62 @@ captcha.enforce.disabled=true</echo>
 		</if>
 	</target>
 
+	<target name="prepare-portal-test-object-storage-sugarcrm-properties">
+		<if>
+			<isset property="object.storage.sugarcrm.access.token.url" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
+					object.storage.sugarcrm.access.token.url=${object.storage.sugarcrm.access.token.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="object.storage.sugarcrm.base.url" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
+					object.storage.sugarcrm.base.url=${object.storage.sugarcrm.base.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="object.storage.sugarcrm.client.id" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
+					object.storage.sugarcrm.client.id=${object.storage.sugarcrm.client.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="object.storage.sugarcrm.grant.type" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
+					object.storage.sugarcrm.grant.type=${object.storage.sugarcrm.grant.type}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="object.storage.sugarcrm.password" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
+					object.storage.sugarcrm.password=${object.storage.sugarcrm.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="object.storage.sugarcrm.username" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
+					object.storage.sugarcrm.username=${object.storage.sugarcrm.username}
+				</echo>
+			</then>
+		</if>
+	</target>
+
 	<target name="prepare-portlet-ext-properties">
 		<for list="${test.case.available.property.names}" param="test.case.available.property.name">
 			<sequential>
@@ -13024,6 +13138,60 @@ captcha.enforce.disabled=true</echo>
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					object.storage.salesforce.username=${object.storage.salesforce.username}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="object.storage.sugarcrm.access.token.url" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					object.storage.sugarcrm.access.token.url=${object.storage.sugarcrm.access.token.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="object.storage.sugarcrm.base.url" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					object.storage.sugarcrm.base.url=${object.storage.sugarcrm.base.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="object.storage.sugarcrm.client.id" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					object.storage.sugarcrm.client.id=${object.storage.sugarcrm.client.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="object.storage.sugarcrm.grant.type" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					object.storage.sugarcrm.grant.type=${object.storage.sugarcrm.grant.type}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="object.storage.sugarcrm.password" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					object.storage.sugarcrm.password=${object.storage.sugarcrm.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="object.storage.sugarcrm.username" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					object.storage.sugarcrm.username=${object.storage.sugarcrm.username}
 				</echo>
 			</then>
 		</if>
@@ -13381,6 +13549,7 @@ captcha.enforce.disabled=true</echo>
 		<prepare-selenium-google-cloud-translation-properties />
 		<prepare-selenium-google-properties />
 		<prepare-selenium-object-storage-salesforce-properties />
+		<prepare-selenium-object-storage-sugarcrm-properties />
 		<prepare-selenium-onedrive-properties />
 		<prepare-selenium-openid-properties />
 		<prepare-selenium-recaptcha-properties />

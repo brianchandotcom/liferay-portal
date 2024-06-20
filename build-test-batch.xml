@@ -2418,6 +2418,8 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							<antcall target="prepare-portal-test-object-storage-salesforce-properties" />
 
+							<antcall target="prepare-portal-test-object-storage-sugarcrm-properties" />
+
 							<ant dir="portal-test" inheritAll="false" target="deploy" />
 
 							<setup-test-batch-testable-tomcat test.portal.bundle.version="@{test.portal.bundle.version}" />

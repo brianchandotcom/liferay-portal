@@ -10,21 +10,13 @@ import classNames from 'classnames';
 import {format, getYear, isBefore, isEqual} from 'date-fns';
 import React, {useEffect, useState} from 'react';
 
-import {IDateFilter, IField, IFilter} from '../../../utils/types';
+import {IDateFilter, IField} from '../../../utils/types';
+import {IFilterModal} from '../Filters';
 import Configuration from './Configuration';
 import Footer from './Footer';
 
 function Header() {
 	return <>{Liferay.Language.get('new-date-range-filter')}</>;
-}
-
-interface IBodyProps {
-	closeModal: Function;
-	fieldNames?: string[];
-	fields: IField[];
-	filter?: IFilter;
-	namespace: string;
-	onSave: Function;
 }
 
 function Body({
@@ -34,7 +26,7 @@ function Body({
 	filter,
 	namespace,
 	onSave,
-}: IBodyProps) {
+}: IFilterModal) {
 	const [fieldInUseValidationError, setFieldInUseValidationError] =
 		useState<boolean>(false);
 	const [fieldValidationError, setFieldValidationError] =
@@ -43,9 +35,8 @@ function Body({
 
 	const [saveButtonDisabled, setSaveButtonDisabled] =
 		useState<boolean>(false);
-	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
-		fdsFilterLabelTranslations
+		filter?.label_i18n ?? {}
 	);
 
 	const inUseFields: (string | undefined)[] = fields.map((item) =>

@@ -99,6 +99,10 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	}
 
 	protected void runQueued() {
+		if (isBuildQueued()) {
+			return;
+		}
+
 		if (isBuildRunning()) {
 			_build.setStatus("running");
 
@@ -113,9 +117,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 			return;
 		}
 
-		if (!isBuildQueued()) {
-			_build.setStatus("missing");
-		}
+		_build.setStatus("missing");
 	}
 
 	protected void runReporting() {

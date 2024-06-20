@@ -361,18 +361,6 @@ public abstract class BaseBuild implements Build {
 			return new JSONObject(archiveFileContent);
 		}
 
-		Invocation currentInvocation = getCurrentInvocation();
-
-		if (currentInvocation != null) {
-			String currentBuildURL = currentInvocation.getBuildURL();
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(currentBuildURL)) {
-				return null;
-			}
-
-			return JenkinsAPIUtil.getAPIJSONObject(currentBuildURL, tree);
-		}
-
 		String buildURL = getBuildURL();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(buildURL)) {

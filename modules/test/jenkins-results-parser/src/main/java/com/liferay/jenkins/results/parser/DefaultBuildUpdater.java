@@ -224,6 +224,17 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 			}
 
 			if (_matchesBuildParameters(_getBuildParameters(buildJSONObject))) {
+				Build.Invocation previousInvocation =
+					build.getPreviousInvocation();
+
+				if ((previousInvocation != null) &&
+					Objects.equals(
+						previousInvocation.getBuildURL(),
+						buildJSONObject.optString("url"))) {
+
+					continue;
+				}
+
 				return buildJSONObject;
 			}
 		}

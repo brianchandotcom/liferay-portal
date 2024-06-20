@@ -1068,12 +1068,13 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			searchPage.getItems());
 
 		Assert.assertFalse(searchResults.isEmpty());
-		Assert.assertTrue(
-			ListUtil.count(
-				searchResults,
-				searchResult -> Objects.equals(
-					searchResult.getTitle(), _getUserHighlightedFullName())) >=
-						1);
+
+		int count = ListUtil.count(
+			searchResults,
+			searchResult -> Objects.equals(
+				searchResult.getTitle(), _getUserHighlightedFullName()));
+
+		Assert.assertTrue(count >= 1);
 	}
 
 	private void _testPostSearchPageWithKeywords() throws Exception {
@@ -1147,11 +1148,14 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			searchPage.getItems());
 
 		Assert.assertFalse(searchResults.isEmpty());
-		Assert.assertTrue(
-			ListUtil.count(
-				searchResults,
-				searchResult -> Objects.equals(
-					searchResult.getTitle(), _user.getFullName())) >= 1);
+
+		int count = ListUtil.count(
+			searchResults,
+			searchResult -> Objects.equals(
+				searchResult.getTitle(), _user.getFullName()));
+
+		Assert.assertTrue(count >= 1);
+
 		Assert.assertEquals(
 			0,
 			ListUtil.count(

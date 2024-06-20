@@ -42,17 +42,16 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 });
 
 test.describe('Sorting in Data Set Manager', () => {
-	test.beforeEach(async ({sortingPage}) => {
+	test('Save and cancel buttons are not present @LPD-9468', async ({
+		page,
+		sortingPage,
+	}) => {
 		await test.step('Navigate to Sorting section', async () => {
 			await sortingPage.goto({
 				dataSetLabel,
 			});
 		});
-	});
 
-	test('Save and cancel buttons are not present @LPD-9468', async ({
-		page,
-	}) => {
 		await test.step('Check that save and cancel buttons are not present', async () => {
 			await expect(
 				page.getByRole('button', {name: 'Save'})
@@ -140,6 +139,12 @@ test.describe('Sorting in Data Set Manager', () => {
 		page,
 		sortingPage,
 	}) => {
+		await test.step('Navigate to Sorting section', async () => {
+			await sortingPage.goto({
+				dataSetLabel,
+			});
+		});
+
 		await test.step('Open new sort modal', async () => {
 			await sortingPage.openAddSortingModal();
 		});
@@ -157,6 +162,12 @@ test.describe('Sorting in Data Set Manager', () => {
 		page,
 		sortingPage,
 	}) => {
+		await test.step('Navigate to Sorting section', async () => {
+			await sortingPage.goto({
+				dataSetLabel,
+			});
+		});
+
 		await test.step('Open new sort modal', async () => {
 			await sortingPage.openAddSortingModal();
 		});
@@ -228,6 +239,109 @@ test.describe('Sorting in Data Set Manager', () => {
 				page.getByText('Date Created').first()
 			).not.toBeVisible();
 		});
+	});
+
+	test('Sorting label in the table is not blank after changing default site language @LPD-25464', async ({
+		page,
+		sortingPage,
+	}) => {
+		let spanishLanguage = false;
+
+		try {
+			await test.step('Navigate to Instance Settings Localization', async () => {
+				await page
+					.getByLabel('Open Applications MenuCtrl+Alt+A')
+					.click();
+
+				await page.getByRole('tab', {name: 'Control Panel'}).click();
+
+				await page
+					.getByRole('menuitem', {name: 'Instance Settings'})
+					.click();
+
+				await page.getByRole('link', {name: 'Localization'}).click();
+			});
+
+			await test.step('Change default site language to Spanish', async () => {
+				await page.getByLabel('Default Language').selectOption('es_ES');
+
+				await page.getByRole('button', {name: 'Save'}).click();
+
+				await expect(
+					page.getByText(
+						'Success:Your request completed successfully.'
+					)
+				).toBeVisible();
+
+				spanishLanguage = true;
+
+				// Reload page for language changes to take affect.
+				// Otherwise the Label language selector will still default to
+				// en_US.
+
+				await page.reload();
+			});
+
+			await test.step('Navigate to Sorting section', async () => {
+				await sortingPage.goto({
+					dataSetLabel,
+				});
+			});
+
+			await test.step('Open new sort modal', async () => {
+				await sortingPage.openAddSortingModal();
+			});
+
+			await test.step('Input values', async () => {
+				await page.getByLabel('Label').fill('Nombre');
+				await page.getByLabel('Sort By').selectOption('name');
+			});
+
+			await test.step('Save changes', async () => {
+				await saveFromModal({
+					page,
+				});
+			});
+
+			await test.step('Label in the table is not blank', async () => {
+				await expect(page.getByText('Nombre').first()).toBeVisible();
+			});
+		}
+		finally {
+			if (spanishLanguage) {
+				await test.step('Navigate to Instance Settings Localization', async () => {
+					await page
+						.getByLabel('Open Applications MenuCtrl+Alt+A')
+						.click();
+
+					await page
+						.getByRole('tab', {name: 'Control Panel'})
+						.click();
+
+					await page
+						.getByRole('menuitem', {name: 'Instance Settings'})
+						.click();
+
+					await page
+						.getByRole('link', {name: 'Localization'})
+						.click();
+				});
+
+				await test.step('Change default site language back to English', async () => {
+					await page
+						.getByLabel('Default Language')
+						.selectOption('en_US');
+
+					await page.getByRole('button', {name: 'Save'}).click();
+
+					await expect(
+						page.getByText(
+							'Success:Your request completed successfully.'
+						)
+					).toBeVisible();
+				});
+			}
+		}
 	});
 });
 

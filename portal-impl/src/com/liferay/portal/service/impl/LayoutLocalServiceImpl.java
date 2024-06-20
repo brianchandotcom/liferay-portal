@@ -289,6 +289,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.setUuid(uuid);
 		}
 
+		layout.setExternalReferenceCode(externalReferenceCode);
 		layout.setGroupId(groupId);
 		layout.setCompanyId(user.getCompanyId());
 		layout.setUserId(user.getUserId());

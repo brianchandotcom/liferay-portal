@@ -9,19 +9,4 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
 >
 	<bean class="com.liferay.mail.service.impl.MailServiceImpl" id="com.liferay.mail.kernel.service.MailService" />
-
-	<!-- Messaging -->
-
-	<bean class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" id="messagingConfigurator.mail">
-		<property name="destinationConfigurations">
-			<util:set>
-				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">
-					<constructor-arg name="destinationName" value="liferay/mail" />
-					<constructor-arg name="destinationType">
-						<util:constant static-field="com.liferay.portal.kernel.messaging.DestinationConfiguration.DESTINATION_TYPE_PARALLEL" />
-					</constructor-arg>
-				</bean>
-			</util:set>
-		</property>
-	</bean>
 </beans>

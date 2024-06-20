@@ -1404,15 +1404,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 		classNameIds.forEach(
 			classNameId -> classNameIdStrings.add(classNameId.toString()));
 
+		String assetRendererFactoryName = _getAssetRendererFactoryName(
+			unicodePropertiesJSONObject.getString("classNameIds"));
+
 		Map<String, String> map = HashMapBuilder.put(
 			"anyAssetType",
 			String.valueOf(
 				_portal.getClassNameId(
 					unicodePropertiesJSONObject.getString("classNameIds")))
 		).put(
-			"anyClassType" +
-				_getAssetRendererFactoryName(
-					unicodePropertiesJSONObject.getString("classNameIds")),
+			"anyClassType" + assetRendererFactoryName,
 			assetListJSONObject.getString("assetEntrySubtypeId")
 		).put(
 			"classNameIds", StringUtil.merge(classNameIdStrings, ",")

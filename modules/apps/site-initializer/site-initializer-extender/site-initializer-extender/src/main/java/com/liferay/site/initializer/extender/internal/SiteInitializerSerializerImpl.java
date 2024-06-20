@@ -574,6 +574,10 @@ public class SiteInitializerSerializerImpl
 					"state", objectField.isState()
 				);
 			});
+
+		String name = StringUtil.removeSubstring(
+			objectDefinition.getName(), "C_");
+
 		JSONArray objectRelationshipsJSONArray = JSONUtil.toJSONArray(
 			_objectRelationshipLocalService.getObjectRelationships(
 				objectDefinition.getObjectDefinitionId()),
@@ -594,9 +598,7 @@ public class SiteInitializerSerializerImpl
 					"name", objectRelationship.getName()
 				).put(
 					"objectDefinitionId1",
-					"[$OBJECT_DEFINITION_ID:" +
-						StringUtil.removeSubstring(
-							objectDefinition.getName(), "C_") + "$]"
+					"[$OBJECT_DEFINITION_ID:" + name + "$]"
 				).put(
 					"objectDefinitionId2",
 					"[$OBJECT_DEFINITION_ID:" + objectDefinition2Name + "$]"
@@ -614,8 +616,7 @@ public class SiteInitializerSerializerImpl
 				"label",
 				JSONUtil.put("en_US", objectDefinition.getLabel(LocaleUtil.US))
 			).put(
-				"name",
-				StringUtil.removeSubstring(objectDefinition.getName(), "C_")
+				"name", name
 			).put(
 				"objectFields", objectFieldsJSONArray
 			).put(

@@ -140,7 +140,6 @@
 							"layout": {
 							}
 						},
-						"id": "5844652d-be2f-1117-5393-227a8ebf1cc5",
 						"pageElements": [
 							{
 								"definition": {
@@ -335,7 +334,6 @@
 									],
 									"indexed": true
 								},
-								"id": "ed49f66d-e226-5620-88bb-515594ec6f4f",
 								"type": "Fragment"
 							}
 						],

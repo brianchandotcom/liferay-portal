@@ -65,6 +65,9 @@ public class UnlockLayoutsSessionActionTest {
 
 		Assert.assertNotNull(lock);
 
+		Assert.assertEquals(
+			String.valueOf(TestPropsValues.getUserId()), lock.getOwner());
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 

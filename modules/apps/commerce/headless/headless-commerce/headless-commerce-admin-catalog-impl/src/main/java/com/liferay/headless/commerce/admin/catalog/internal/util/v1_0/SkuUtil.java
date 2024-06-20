@@ -246,7 +246,7 @@ public class SkuUtil {
 			CommercePriceEntryLocalService commercePriceEntryLocalService,
 			CommercePriceListLocalService commercePriceListLocalService,
 			ConfigurationProvider configurationProvider, CPInstance cpInstance,
-			BigDecimal price, BigDecimal promoPrice,
+			BigDecimal price, BigDecimal promoPrice, String unitOfMeasureKey,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -257,11 +257,11 @@ public class SkuUtil {
 			_updateCommercePriceEntry(
 				commercePriceEntryLocalService, commercePriceListLocalService,
 				cpInstance, CommercePriceListConstants.TYPE_PRICE_LIST, price,
-				serviceContext);
+				unitOfMeasureKey, serviceContext);
 			_updateCommercePriceEntry(
 				commercePriceEntryLocalService, commercePriceListLocalService,
 				cpInstance, CommercePriceListConstants.TYPE_PROMOTION,
-				promoPrice, serviceContext);
+				promoPrice, unitOfMeasureKey, serviceContext);
 		}
 	}
 
@@ -396,7 +396,7 @@ public class SkuUtil {
 			CommercePriceEntryLocalService commercePriceEntryLocalService,
 			CommercePriceListLocalService commercePriceListLocalService,
 			CPInstance cpInstance, String type, BigDecimal price,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws Exception {
 
 		CommercePriceList commercePriceList =
@@ -417,14 +417,14 @@ public class SkuUtil {
 				null, cpDefinition.getCProductId(),
 				cpInstance.getCPInstanceUuid(),
 				commercePriceList.getCommercePriceListId(), price, false, null,
-				null, serviceContext);
+				unitOfMeasureKey, serviceContext);
 		}
 		else {
 			commercePriceEntryLocalService.updatePricingInfo(
 				commercePriceEntry.getCommercePriceEntryId(),
 				commercePriceEntry.isBulkPricing(), price,
-				commercePriceEntry.isPriceOnApplication(), null, null,
-				serviceContext);
+				commercePriceEntry.isPriceOnApplication(), null,
+				unitOfMeasureKey, serviceContext);
 		}
 	}
 

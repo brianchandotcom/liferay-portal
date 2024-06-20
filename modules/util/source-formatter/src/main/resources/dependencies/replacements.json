@@ -660,7 +660,7 @@
 		"to": "fetchByExternalReferenceCode(param#1#, param#0#)"
 	},
 	{
-		"from": "regex:AssetCategory::getLeftCategoryId",
+		"from": "AssetCategory::getLeftCategoryId",
 		"issueKey": "LPS-196624",
 		"to": "AssetCategory::getCategoryId"
 	},

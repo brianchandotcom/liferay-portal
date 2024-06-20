@@ -8,7 +8,7 @@
 		},
 		"name": "notificationTemplateDealRegistrationSubmissionApproved",
 		"objectActionExecutorKey": "notification",
-		"objectActionTriggerKey": "onAfterAdd",
+		"objectActionTriggerKey": "onAfterUpdate",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:LeadNotification$]"
 	}
 ]

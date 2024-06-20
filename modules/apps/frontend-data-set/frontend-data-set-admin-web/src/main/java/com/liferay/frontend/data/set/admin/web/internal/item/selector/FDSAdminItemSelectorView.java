@@ -44,6 +44,10 @@ public class FDSAdminItemSelectorView
 
 	@Override
 	public String getClassName() {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
+			return "DataSet";
+		}
+
 		return "FDSView";
 	}
 
@@ -65,7 +69,7 @@ public class FDSAdminItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _language.get(locale, "data-set-views");
+		return _language.get(locale, "data-sets");
 	}
 
 	@Override

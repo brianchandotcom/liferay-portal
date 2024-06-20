@@ -102,6 +102,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.text.SimpleDateFormat;
@@ -421,6 +422,135 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			StringBundler.concat(
 				user1.getEmailAddress(), StringPool.COMMA,
 				user2.getEmailAddress()));
+	}
+
+	@FeatureFlags({"LPD-11165", "LPD-21580"})
+	@Test
+	public void testSendNotificationWithPreferredLocaleForGuestUsers()
+		throws Exception {
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		resourcePermissionLocalService.addResourcePermission(
+			guestUser.getCompanyId(), childObjectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(guestUser.getCompanyId()), role.getRoleId(),
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
+		resourcePermissionLocalService.addResourcePermission(
+			guestUser.getCompanyId(), parentObjectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(guestUser.getCompanyId()), role.getRoleId(),
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		String body = RandomTestUtil.randomString();
+		String fromName = RandomTestUtil.randomString();
+		String subject = RandomTestUtil.randomString();
+
+		NotificationTemplate notificationTemplate =
+			notificationTemplateLocalService.addNotificationTemplate(
+				NotificationTemplateUtil.createNotificationContext(
+					TestPropsValues.getUser(), 0,
+					LocalizationUtil.updateLocalization(
+						LocalizedMapUtil.getLocalizedMap(
+							HashMapBuilder.put(
+								LanguageUtil.getLanguageId(LocaleUtil.FRANCE),
+								body
+							).put(
+								LanguageUtil.getLanguageId(LocaleUtil.US),
+								RandomTestUtil.randomString()
+							).build()),
+						null, "Body",
+						LanguageUtil.getLanguageId(LocaleUtil.US)),
+					RandomTestUtil.randomString(),
+					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
+					Arrays.asList(
+						createNotificationRecipientSetting(
+							NotificationRecipientSettingConstants.NAME_FROM,
+							"[%CURRENT_USER_EMAIL_ADDRESS%]"),
+						createNotificationRecipientSetting(
+							NotificationRecipientSettingConstants.
+								NAME_FROM_NAME,
+							HashMapBuilder.put(
+								LocaleUtil.FRANCE, fromName
+							).put(
+								LocaleUtil.US, RandomTestUtil.randomString()
+							).build()),
+						createNotificationRecipientSetting(
+							NotificationRecipientSettingConstants.NAME_TO,
+							HashMapBuilder.put(
+								LocaleUtil.FRANCE, user1.getEmailAddress()
+							).put(
+								LocaleUtil.US, user2.getEmailAddress()
+							).build()),
+						createNotificationRecipientSetting(
+							NotificationRecipientSettingConstants.NAME_TO_TYPE,
+							NotificationRecipientConstants.TYPE_EMAIL),
+						createNotificationRecipientSetting(
+							NotificationRecipientSettingConstants.
+								NAME_USE_PREFERRED_LOCALE_FOR_GUEST_USERS,
+							StringPool.TRUE)),
+					LocalizationUtil.updateLocalization(
+						HashMapBuilder.put(
+							LocaleUtil.FRANCE, subject
+						).put(
+							LocaleUtil.US, RandomTestUtil.randomString()
+						).build(),
+						null, "Subject", "en_US"),
+					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(guestUser));
+			PrincipalThreadLocal.setName(guestUser.getUserId());
+
+			executeNotificationObjectAction(
+				new DefaultDTOConverterContext(
+					false, Collections.emptyMap(),
+					BaseNotificationTypeTest.dtoConverterRegistry, null,
+					LocaleUtil.fromLanguageId("fr_FR"), null, guestUser),
+				0, notificationTemplate);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 1,
+			notificationQueueEntries.size());
+
+		NotificationQueueEntry notificationQueueEntry =
+			notificationQueueEntries.get(0);
+
+		Assert.assertEquals(body, notificationQueueEntry.getBody());
+		Assert.assertEquals(subject, notificationQueueEntry.getSubject());
+
+		Map<String, Object> notificationRecipientSettingsMap =
+			NotificationRecipientSettingUtil.
+				getNotificationRecipientSettingsMap(notificationQueueEntry);
+
+		Assert.assertEquals(
+			fromName,
+			notificationRecipientSettingsMap.get(
+				NotificationRecipientSettingConstants.NAME_FROM_NAME));
+		Assert.assertEquals(
+			user1.getEmailAddress(),
+			notificationRecipientSettingsMap.get(
+				NotificationRecipientSettingConstants.NAME_TO));
+
+		notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+			notificationQueueEntry);
 	}
 
 	@FeatureFlags("LPD-11165")

@@ -10,8 +10,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -127,6 +130,32 @@ public class IFrameSanitizerImplTest {
 	}
 
 	@Test
+	public void testSanitizeHTMLWithIFrameScopedByCompany() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		try {
+			_updateCompanyConfiguration(
+				company.getCompanyId(), false, false, "");
+
+			Assert.assertEquals(
+				_BASIC_HTML_CONTENT + _EXPECTED_IFRAME_TAG,
+				_sanitize(
+					_companyId, _BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+					ContentTypes.TEXT_HTML));
+
+			Assert.assertEquals(
+				_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+				_sanitize(
+					company.getCompanyId(),
+					_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+					ContentTypes.TEXT_HTML));
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
+	}
+
+	@Test
 	public void testSanitizeHTMLWithInvalidContentType() throws Exception {
 		_updateCompanyConfiguration(_companyId, true, false, "");
 
@@ -229,6 +258,9 @@ public class IFrameSanitizerImplTest {
 	private static ConfigurationAdmin _configurationAdmin;
 
 	private long _companyId;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private ConfigurationProvider _configurationProvider;

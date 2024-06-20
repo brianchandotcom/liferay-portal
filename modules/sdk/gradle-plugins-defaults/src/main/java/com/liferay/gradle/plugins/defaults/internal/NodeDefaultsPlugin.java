@@ -191,11 +191,12 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 							GradlePluginsDefaultsUtil.
 								SNAPSHOT_VERSION_SUFFIX)) {
 
+						int snapshotVersionSuffixLength =
+							GradlePluginsDefaultsUtil.SNAPSHOT_VERSION_SUFFIX.
+								length();
+
 						version = version.substring(
-							0,
-							version.length() -
-								GradlePluginsDefaultsUtil.
-									SNAPSHOT_VERSION_SUFFIX.length());
+							0, version.length() - snapshotVersionSuffixLength);
 
 						version += "-alpha." + System.currentTimeMillis();
 					}

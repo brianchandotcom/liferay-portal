@@ -4,16 +4,20 @@
  */
 
 import preflight from '../preflight/index.mjs';
+import getNamedArguments from '../util/getNamedArguments.mjs';
 import format from './format.mjs';
 
 export default async function main() {
-	const fix = process.argv[3] !== '--check';
+	const {all, check} = getNamedArguments({
+		all: '--all',
+		check: '--check',
+	});
 
-	if (!fix) {
+	if (check) {
 		console.log('Running preflight...');
 		await preflight();
 	}
 
 	console.log('Running format...');
-	await format(fix);
+	await format(!check, {allFiles: all});
 }

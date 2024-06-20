@@ -13,5 +13,5 @@ export default async function main() {
 		process.exit(2);
 	}
 
-	await format(true, filePath);
+	await format(true, {filePath});
 }

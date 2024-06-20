@@ -26,9 +26,23 @@ export default async function filterChangedFiles(files) {
 	const upstream =
 		process.env.LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME || 'master';
 
-	if (upstream === undefined) {
+	const {stdout: currentBranch} = await $`git rev-parse --abbrev-ref HEAD`;
+
+	const atSameBranch = currentBranch === upstream;
+
+	if (upstream === undefined || atSameBranch) {
+		if (atSameBranch) {
+			console.log(
+				`You are already on '${currentBranch}' branch. Skipping diff filter.`
+			);
+		}
+
 		return files;
 	}
+
+	console.log(
+		`Only running against files changed between '${upstream}' and '${currentBranch}' branches. Use flag '--all' to run against all files.`
+	);
 
 	const {stdout: topLevel} = await $`git rev-parse --show-toplevel`;
 

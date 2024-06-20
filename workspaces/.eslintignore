@@ -7,3 +7,6 @@ tmp/**
 types/**/*.d.ts
 yarn-*.js
 zippableResources/**
+
+# Ignore until we can bump eslint to v8 for top-level await
+liferay-sample-workspace/client-extensions/liferay-sample-etc-node/util/configTreePath.js

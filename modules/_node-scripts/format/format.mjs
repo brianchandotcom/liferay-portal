@@ -33,7 +33,7 @@ async function getFilesToCheck(rootDir) {
 	const prettierIgnores = await readIgnoreFile(prettierIgnoreFilePath);
 	const gitIgnores = await readIgnoreFile(gitIgnoreFilePath);
 
-	return await fg(
+	const files = await fg(
 		[
 			'**/*.',
 			'*.{graphql,js,mjs,scss,ts,tsx}',
@@ -66,11 +66,16 @@ async function getFilesToCheck(rootDir) {
 			}),
 		}
 	);
+
+	return files.map((filepath) => path.join(rootDir, filepath));
 }
 
 const FALLBACK_FILE_PATH = '__fallback__.js';
 
-export default async function format(fix, filePath = undefined) {
+export default async function format(
+	fix,
+	{allFiles, filePath} = {allFiles: false, filePath: undefined}
+) {
 	const rootDir = await getRootDir();
 	const workspacesDir = path.join(rootDir, '..', 'workspaces');
 	const playwrightDir = path.join(rootDir, 'test', 'playwright');
@@ -85,7 +90,15 @@ export default async function format(fix, filePath = undefined) {
 				])
 			).flat();
 
-	filepaths = await filterChangedFiles(filepaths);
+	if (!allFiles) {
+		filepaths = await filterChangedFiles(filepaths);
+	}
+
+	if (!filepaths.length) {
+		console.log('No files to format');
+
+		return;
+	}
 
 	console.log(`Formatting ${filepaths.length} files`);
 
@@ -99,6 +112,7 @@ export default async function format(fix, filePath = undefined) {
 		baseConfig: eslintConfig,
 		fix: true,
 		ignorePath: path.join(rootDir, ESLINT_IGNORE_FILE),
+		resolvePluginsRelativeTo: rootDir,
 	});
 
 	const badFiles = [];

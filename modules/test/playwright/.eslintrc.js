@@ -21,6 +21,7 @@ const config = {
 	plugins: ['@liferay'],
 	root: true,
 	rules: {
+		'@liferay/portal/no-global-fetch': 'off',
 		'notice/notice': [
 			'error',
 			{

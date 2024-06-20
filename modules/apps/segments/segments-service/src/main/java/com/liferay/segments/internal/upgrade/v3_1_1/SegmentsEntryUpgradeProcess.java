@@ -22,15 +22,16 @@ public class SegmentsEntryUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select groupId, segmentsEntryId, criteria from ",
-					"SegmentsEntry where criteria like '%deviceBrand%' or ",
-					"criteria like '%deviceModel%' or criteria like ",
-					"'%deviceScreenResolutionHeight%' or criteria like ",
-					"'%deviceScreenResolutionWidth%'"))) {
+					"select ctCollectionId, groupId, segmentsEntryId, ",
+					"criteria from SegmentsEntry where criteria like ",
+					"'%deviceBrand%' or criteria like '%deviceModel%' or ",
+					"criteria like '%deviceScreenResolutionHeight%' or ",
+					"criteria like '%deviceScreenResolutionWidth%'"))) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
 					_inactivateSegmentsEntry(
+						resultSet.getLong("ctCollectionId"),
 						resultSet.getLong("groupId"),
 						resultSet.getLong("segmentsEntryId"),
 						resultSet.getString("criteria"));
@@ -40,14 +41,16 @@ public class SegmentsEntryUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _inactivateSegmentsEntry(
-		long groupId, long segmentsEntryId, String criteria) {
+		long ctCollectionId, long groupId, long segmentsEntryId,
+		String criteria) {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update SegmentsEntry set active_ = ? where segmentsEntryId " +
-					"= ?")) {
+				"update SegmentsEntry set active_ = ? where ctCollectionId = " +
+					"? and segmentsEntryId = ?")) {
 
 			preparedStatement.setBoolean(1, false);
-			preparedStatement.setLong(2, segmentsEntryId);
+			preparedStatement.setLong(2, ctCollectionId);
+			preparedStatement.setLong(3, segmentsEntryId);
 
 			preparedStatement.executeUpdate();
 

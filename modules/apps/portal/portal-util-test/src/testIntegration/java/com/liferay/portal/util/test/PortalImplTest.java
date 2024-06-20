@@ -66,8 +66,8 @@ public class PortalImplTest {
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), themeDisplay.getScopeGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			null, TestPropsValues.getUserId(), themeDisplay.getScopeGroupId(),
+			false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false, "/abc/w/def",
 			ServiceContextTestUtil.getServiceContext(

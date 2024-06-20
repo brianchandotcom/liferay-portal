@@ -98,7 +98,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 		serviceContext.setUserId(group.getCreatorUserId());
 
 		layoutLocalService.addLayout(
-			group.getCreatorUserId(), group.getGroupId(), false,
+			null, group.getCreatorUserId(), group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			layoutPrototype.getNameMap(), baseLayout.getTitleMap(),
 			layoutPrototype.getDescriptionMap(), baseLayout.getKeywordsMap(),

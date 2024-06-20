@@ -437,8 +437,8 @@ public class ExportImportPerformanceTest {
 	private void _addLayouts() throws Exception {
 		for (int i = 0; i < _layoutsCount; i++) {
 			Layout layout = _layoutLocalService.addLayout(
-				TestPropsValues.getUserId(), _group.getGroupId(), false, 0, 0,
-				0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
+				0, 0, 0,
 				HashMapBuilder.put(
 					LocaleUtil.US, "Layout_" + i
 				).build(),

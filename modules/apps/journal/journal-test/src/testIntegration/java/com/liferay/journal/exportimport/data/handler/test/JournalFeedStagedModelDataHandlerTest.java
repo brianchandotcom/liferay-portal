@@ -75,7 +75,7 @@ public class JournalFeedStagedModelDataHandlerTest
 		serviceContext.setUuid(_layout.getUuid());
 
 		LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), liveGroup.getGroupId(),
+			null, TestPropsValues.getUserId(), liveGroup.getGroupId(),
 			_layout.isPrivateLayout(), _layout.getParentLayoutId(),
 			_layout.getName(), _layout.getTitle(), _layout.getDescription(),
 			_layout.getType(), _layout.isHidden(), _layout.getFriendlyURL(),

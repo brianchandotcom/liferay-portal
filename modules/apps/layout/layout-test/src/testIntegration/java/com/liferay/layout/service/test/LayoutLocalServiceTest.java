@@ -156,7 +156,7 @@ public class LayoutLocalServiceTest {
 			_serviceContext);
 
 		Layout layout2 = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "friendly url 1", null,
 			RandomTestUtil.randomString(), LayoutConstants.TYPE_PORTLET, false,
 			false, null, _serviceContext);
@@ -188,7 +188,7 @@ public class LayoutLocalServiceTest {
 				publishedLayout.getTypeSettingsProperties();
 
 			draftLayout = _layoutLocalService.addLayout(
-				publishedLayout.getUserId(), publishedLayout.getGroupId(),
+				null, publishedLayout.getUserId(), publishedLayout.getGroupId(),
 				publishedLayout.isPrivateLayout(),
 				publishedLayout.getParentLayoutId(),
 				_portal.getClassNameId(Layout.class), publishedLayout.getPlid(),
@@ -213,7 +213,7 @@ public class LayoutLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		Layout widgetLayout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), true,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			LayoutConstants.TYPE_PORTLET, false, false, null, serviceContext);

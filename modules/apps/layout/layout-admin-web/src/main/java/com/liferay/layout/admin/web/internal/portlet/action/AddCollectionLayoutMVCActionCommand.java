@@ -138,8 +138,8 @@ public class AddCollectionLayoutMVCActionCommand
 			Layout.class.getName(), actionRequest);
 
 		Layout layout = _layoutService.addLayout(
-			groupId, privateLayout, parentLayoutId, nameMap, new HashMap<>(),
-			new HashMap<>(), new HashMap<>(), new HashMap<>(),
+			null, groupId, privateLayout, parentLayoutId, nameMap,
+			new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
 			LayoutConstants.TYPE_COLLECTION,
 			typeSettingsUnicodeProperties.toString(), false, new HashMap<>(),
 			masterLayoutPlid, serviceContext);

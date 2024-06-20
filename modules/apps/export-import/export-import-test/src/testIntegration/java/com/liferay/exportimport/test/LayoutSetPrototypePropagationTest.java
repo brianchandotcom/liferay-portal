@@ -1164,7 +1164,7 @@ public class LayoutSetPrototypePropagationTest
 
 	private Layout _addLayout(long groupId) throws Exception {
 		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), groupId, true,
+			null, TestPropsValues.getUserId(), groupId, true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), null, null,
 			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,

@@ -185,7 +185,7 @@ public class ExportImportLocalServiceTest {
 		throws Exception {
 
 		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), group.getGroupId(), false,
+			null, TestPropsValues.getUserId(), group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			HashMapBuilder.put(
 				_portal.getSiteDefaultLocale(group.getGroupId()), name

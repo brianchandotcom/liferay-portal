@@ -105,8 +105,9 @@ public class ResetPrototypeMVCActionCommandTest {
 	@Test
 	public void testResetLayoutPrototype() throws Exception {
 		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _layoutSetPrototypeGroup.getGroupId(),
-			true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			null, TestPropsValues.getUserId(),
+			_layoutSetPrototypeGroup.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), null, null,
 			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,
 			_serviceContext);

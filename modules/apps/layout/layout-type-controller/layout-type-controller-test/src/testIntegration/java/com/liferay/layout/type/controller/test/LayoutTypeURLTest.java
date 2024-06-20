@@ -68,9 +68,9 @@ public class LayoutTypeURLTest {
 		ThemeDisplay themeDisplay = _initThemeDisplay();
 
 		Layout layoutURLType = LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(), false,
-			_publicLayout.getLayoutId(), "Link", "Link", "Test invalid URL",
-			LayoutConstants.TYPE_URL, false, null,
+			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			false, _publicLayout.getLayoutId(), "Link", "Link",
+			"Test invalid URL", LayoutConstants.TYPE_URL, false, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		MockHttpServletRequest mockHttpServletRequest =

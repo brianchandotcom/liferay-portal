@@ -159,7 +159,7 @@ public class PersonalApplicationURLUtil {
 					group.getCtCollectionId())) {
 
 			Layout layout = LayoutLocalServiceUtil.addLayout(
-				userId, group.getGroupId(), privateLayout,
+				null, userId, group.getGroupId(), privateLayout,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 				PropsValues.CONTROL_PANEL_LAYOUT_NAME, StringPool.BLANK,
 				StringPool.BLANK, LayoutConstants.TYPE_PORTLET, true, true,

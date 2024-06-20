@@ -99,7 +99,7 @@ public class SetupWizardSampleDataUtil {
 			organization.getGroupId(), "/main");
 
 		Layout extranetLayout = LayoutLocalServiceUtil.addLayout(
-			guestUser.getUserId(), organization.getGroupId(), false,
+			null, guestUser.getUserId(), organization.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			company.getLegalName() + " Extranet", null, null,
 			LayoutConstants.TYPE_PORTLET, false, "/extranet",
@@ -110,7 +110,7 @@ public class SetupWizardSampleDataUtil {
 			extranetLayout.getTypeSettings());
 
 		Layout intranetLayout = LayoutLocalServiceUtil.addLayout(
-			guestUser.getUserId(), organization.getGroupId(), true,
+			null, guestUser.getUserId(), organization.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			company.getLegalName() + " Intranet", null, null,
 			LayoutConstants.TYPE_PORTLET, false, "/intranet",

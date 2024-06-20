@@ -99,7 +99,7 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 		serviceContext.setUserId(guestUserId);
 
 		Layout layout = _layoutLocalService.addLayout(
-			guestUserId, groupId, true,
+			null, guestUserId, groupId, true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Shared",
 			StringPool.BLANK, StringPool.BLANK,
 			DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE, true, "/shared",
@@ -127,7 +127,7 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 		serviceContext.setUserId(guestUserId);
 
 		return _layoutLocalService.addLayout(
-			guestUserId, groupId, false,
+			null, guestUserId, groupId, false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Shared",
 			StringPool.BLANK, StringPool.BLANK,
 			DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE, true, "/shared",

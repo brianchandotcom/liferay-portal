@@ -277,7 +277,7 @@ public class PublishLayoutMVCActionCommandTest {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			Layout originalLayout = _layoutLocalService.addLayout(
-				user.getUserId(), _group.getGroupId(), false,
+				null, user.getUserId(), _group.getGroupId(), false,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,

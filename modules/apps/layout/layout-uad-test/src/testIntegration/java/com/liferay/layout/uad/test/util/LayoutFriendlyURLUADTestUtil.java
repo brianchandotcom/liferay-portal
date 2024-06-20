@@ -40,7 +40,7 @@ public class LayoutFriendlyURLUADTestUtil {
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
 
 		Layout layout = layoutLocalService.addLayout(
-			userId, TestPropsValues.getGroupId(), false,
+			null, userId, TestPropsValues.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LayoutConstants.TYPE_PORTLET, false, friendlyURL,

@@ -2328,10 +2328,6 @@ public class ObjectActionLocalServiceTest {
 			objectActionTriggerKey,
 			payloadJSONObject.getString("objectActionTriggerKey"));
 		Assert.assertEquals(
-			status,
-			JSONUtil.getValue(
-				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
-		Assert.assertEquals(
 			birthday,
 			JSONUtil.getValue(
 				payloadJSONObject,
@@ -2353,6 +2349,10 @@ public class ObjectActionLocalServiceTest {
 			JSONUtil.getValue(
 				payloadJSONObject, "JSONObject/objectEntry",
 				"JSONObject/values", "Object/lastName"));
+		Assert.assertEquals(
+			status,
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
 
 		if (StringUtil.equals(
 				objectActionTriggerKey,

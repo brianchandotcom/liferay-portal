@@ -186,6 +186,8 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		dataSetERC = DEFAULT_DATA_SET_ERC,
 		fieldName,
 		include = true,
+		itemKey,
+		itemLabel,
 		label_i18n,
 		multiple = false,
 		preselectedValues = '[]',
@@ -195,6 +197,8 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		dataSetERC?: string;
 		fieldName: string;
 		include?: boolean;
+		itemKey?: string;
+		itemLabel?: string;
 		label_i18n?: {[key: string]: string};
 		multiple?: boolean;
 		preselectedValues?: string;
@@ -207,6 +211,8 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			[SELECTION_FILTER_DATA_SET_RELATIONSHIP]: dataSetERC,
 			fieldName,
 			include,
+			itemKey,
+			itemLabel,
 			label_i18n,
 			multiple,
 			preselectedValues,

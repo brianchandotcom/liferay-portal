@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {searchTableRowByValue} from './UsersAndOrganizationsPage';
 
 export class EditUserPage {
+	readonly confirmButton: Locator;
+	readonly emailAddressInput: Locator;
 	readonly generateWebDAVPasswordButton: Locator;
 	readonly membershipsAccountsTableRow: (
 		colPosition: number,
@@ -18,7 +20,10 @@ export class EditUserPage {
 	readonly membershipsLink: Locator;
 	readonly organizationsLink: Locator;
 	readonly page: Page;
+	readonly passwordConfirmationFrame: FrameLocator;
 	readonly passwordLink: Locator;
+	readonly saveButton: Locator;
+	readonly screenNameInput: Locator;
 	readonly selectOrganizationButton: Locator;
 	readonly selectOrganizationsTable: Locator;
 	readonly selectOrganizationsTableRow: (
@@ -27,8 +32,10 @@ export class EditUserPage {
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly webDAVPasswordLabel: Locator;
+	readonly yourPasswordInput: Locator;
 
 	constructor(page: Page) {
+		this.emailAddressInput = page.getByLabel('Email Address');
 		this.generateWebDAVPasswordButton = page.getByTestId(
 			'generateWebDAVPasswordButton'
 		);
@@ -55,14 +62,17 @@ export class EditUserPage {
 			exact: true,
 			name: 'Organizations',
 		});
+		this.page = page;
+		this.passwordConfirmationFrame = page.frameLocator(
+			'iframe[title="Confirm Password"]'
+		);
 		this.passwordLink = page.getByRole('link', {
 			exact: true,
 			name: 'Password',
 		});
-		this.page = page;
-		this.webDAVPasswordLabel = page.locator(
-			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_webDAVPassword'
-		);
+		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.screenNameInput = page.getByLabel('Screen Name');
+
 		this.selectOrganizationButton = page.locator(
 			'#_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_selectOrganizationLink'
 		);
@@ -85,5 +95,14 @@ export class EditUserPage {
 				strictEqual
 			);
 		};
+		this.webDAVPasswordLabel = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_webDAVPassword'
+		);
+		this.confirmButton = this.passwordConfirmationFrame.getByRole(
+			'button',
+			{name: 'Confirm'}
+		);
+		this.yourPasswordInput =
+			this.passwordConfirmationFrame.getByLabel('Your Password');
 	}
 }

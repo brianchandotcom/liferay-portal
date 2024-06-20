@@ -6,11 +6,14 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
+import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	dataApiHelpersTest,
 	loginTest(),
 	usersAndOrganizationsPagesTest
 );
@@ -97,4 +100,38 @@ test('LPD-15423 check WebDAV password is generated', async ({
 	await editUserPage.generateWebDAVPasswordButton.click();
 
 	await expect(editUserPage.webDAVPasswordLabel).toBeVisible();
+});
+
+test('LPD-28908 update user information', async ({
+	apiHelpers,
+	editUserPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	await page.goto('/');
+
+	await usersAndOrganizationsPage.goToUsers();
+	await (
+		await usersAndOrganizationsPage.usersTableRowLink(user.alternateName)
+	).click();
+
+	await editUserPage.screenNameInput.fill('User' + getRandomInt());
+	await editUserPage.emailAddressInput.fill(
+		'User' + getRandomInt() + '@liferay.com'
+	);
+	await editUserPage.saveButton.click();
+	await editUserPage.yourPasswordInput.fill('test');
+	await editUserPage.confirmButton.click();
+
+	await expect(
+		page
+			.getByText('Success:Your request completed successfully.')
+			.or(
+				page.getByText(
+					'Success:Your email verification code has been sent'
+				)
+			)
+	).toBeVisible();
 });

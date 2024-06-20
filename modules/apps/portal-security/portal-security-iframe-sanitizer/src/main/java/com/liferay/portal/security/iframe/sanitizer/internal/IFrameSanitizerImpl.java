@@ -7,12 +7,12 @@ package com.liferay.portal.security.iframe.sanitizer.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration;
+import com.liferay.portal.security.iframe.sanitizer.internal.configuration.helper.IFrameConfigurationHelper;
 
 import java.util.Map;
 
@@ -21,9 +21,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -40,8 +39,11 @@ public class IFrameSanitizerImpl implements Sanitizer {
 		long classPK, String contentType, String[] modes, String content,
 		Map<String, Object> options) {
 
-		if (!_iFrameConfiguration.enabled() || Validator.isNull(content) ||
-			Validator.isNull(contentType) ||
+		IFrameConfiguration companyIFrameConfiguration =
+			_iFrameConfigurationHelper.getCompanyIFrameConfiguration(companyId);
+
+		if (!companyIFrameConfiguration.enabled() ||
+			Validator.isNull(content) || Validator.isNull(contentType) ||
 			!contentType.equals(ContentTypes.TEXT_HTML)) {
 
 			return content;
@@ -50,14 +52,14 @@ public class IFrameSanitizerImpl implements Sanitizer {
 		Document document = _getDocument(content);
 
 		for (Element iFrameElement : document.getElementsByTag("iframe")) {
-			if (_iFrameConfiguration.removeIFrameTags()) {
+			if (companyIFrameConfiguration.removeIFrameTags()) {
 				iFrameElement.remove();
 			}
 			else {
 				iFrameElement.attr(
 					"sandbox",
 					StringUtil.merge(
-						_iFrameConfiguration.sandboxAttributeValues(),
+						companyIFrameConfiguration.sandboxAttributeValues(),
 						StringPool.SPACE));
 			}
 		}
@@ -73,13 +75,6 @@ public class IFrameSanitizerImpl implements Sanitizer {
 		return sb.toString();
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_iFrameConfiguration = ConfigurableUtil.createConfigurable(
-			IFrameConfiguration.class, properties);
-	}
-
 	private Document _getDocument(String content) {
 		Document document = Jsoup.parseBodyFragment(content);
 
@@ -93,6 +88,7 @@ public class IFrameSanitizerImpl implements Sanitizer {
 		return document;
 	}
 
-	private volatile IFrameConfiguration _iFrameConfiguration;
+	@Reference
+	private IFrameConfigurationHelper _iFrameConfigurationHelper;
 
 }

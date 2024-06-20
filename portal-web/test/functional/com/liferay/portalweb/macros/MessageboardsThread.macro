@@ -2179,7 +2179,7 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = ${threadSubject});
 
 		AssertTextEquals(
-			locator1 = "Message#WORKFLOW_STATUS",
+			locator1 = "Message#RECYCLE_BIN_WORKFLOW_STATUS",
 			value1 = "In Recycle Bin");
 
 		AssertTextEquals(

@@ -416,6 +416,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECYCLE_BIN_WORKFLOW_STATUS</td>
+	<td>//span[contains(@class,'label-info')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REQUIRED_INFO</td>
 	<td>//div[contains(@class,'required') and contains(@role,'alert')]</td>
 	<td></td>

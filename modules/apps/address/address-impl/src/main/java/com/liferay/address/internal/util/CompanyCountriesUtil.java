@@ -188,15 +188,16 @@ public class CompanyCountriesUtil {
 						", regionId, languageId, title) VALUES (0, 0, ?, ?, ",
 						"?, ?, ?)"))) {
 
+			int length = regionsJSONArray.length();
+
 			long startRegionId =
-				counterLocalService.increment(
-					Region.class.getName(), regionsJSONArray.length()) -
-						regionsJSONArray.length();
+				counterLocalService.increment(Region.class.getName(), length) -
+					length;
 
 			List<RegionLocalizationData> regionLocalizationDataList =
 				new ArrayList<>();
 
-			for (int i = 0; i < regionsJSONArray.length(); i++) {
+			for (int i = 0; i < length; i++) {
 				JSONObject regionJSONObject = regionsJSONArray.getJSONObject(i);
 
 				long regionId = startRegionId + i + 1;
@@ -231,11 +232,12 @@ public class CompanyCountriesUtil {
 				}
 			}
 
+			long regionLocalizationId = counterLocalService.increment(
+				RegionLocalization.class.getName(),
+				regionLocalizationDataList.size());
+
 			long startRegionLocalizationId =
-				counterLocalService.increment(
-					RegionLocalization.class.getName(),
-					regionLocalizationDataList.size()) -
-						regionLocalizationDataList.size();
+				regionLocalizationId - regionLocalizationDataList.size();
 
 			for (RegionLocalizationData regionLocalizationData :
 					regionLocalizationDataList) {

@@ -514,11 +514,14 @@ public class JournalManagementToolbarDisplayContext
 					).buildString());
 
 				labelItem.setCloseable(true);
+
+				String statusLabel = LanguageUtil.get(
+					httpServletRequest,
+					WorkflowConstants.getStatusLabel(status));
+
 				labelItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "status") + ": " +
-						LanguageUtil.get(
-							httpServletRequest,
-							WorkflowConstants.getStatusLabel(status)));
+						statusLabel);
 			}
 		).add(
 			_journalDisplayContext::isTypeVersions,

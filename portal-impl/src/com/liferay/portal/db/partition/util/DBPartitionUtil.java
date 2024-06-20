@@ -456,9 +456,9 @@ public class DBPartitionUtil {
 						statement.executeUpdate(
 							StringBundler.concat(
 								"update ", partitionTableName, " set primKey ",
-								"= ", toCompanyId, ", primKeyId = ",
-								toCompanyId, " where primKey = ", fromCompanyId,
-								" and scope = ",
+								"= '", toCompanyId, "', primKeyId = ",
+								toCompanyId, " where primKey = '",
+								fromCompanyId, "' and scope = ",
 								ResourceConstants.SCOPE_COMPANY));
 					}
 				}

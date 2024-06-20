@@ -15,7 +15,8 @@
 		"ts-node": "^10.9.2",
 		"zip-a-folder": "^3.1.6"
 	},
-	"keywords": [],
+	"keywords": [
+	],
 	"license": "ISC",
 	"main": "index.js",
 	"name": "@liferay/playwright",

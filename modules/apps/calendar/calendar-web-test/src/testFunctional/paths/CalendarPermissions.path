@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_SEARCH_CLEAR</td>
-	<td>//a[contains(text(),'Clear')]</td>
+	<td>//button[contains(text(),'Clear')]</td>
 	<td></td>
 </tr>
 <tr>

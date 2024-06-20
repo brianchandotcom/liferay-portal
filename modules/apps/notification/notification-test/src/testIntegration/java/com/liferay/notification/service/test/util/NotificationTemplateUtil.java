@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Murilo Stodolni
@@ -144,14 +146,21 @@ public class NotificationTemplateUtil {
 	}
 
 	public static NotificationRecipientSetting
-		createNotificationRecipientSetting(String name, String value) {
+		createNotificationRecipientSetting(String name, Object value) {
 
 		NotificationRecipientSetting notificationRecipientSetting =
 			NotificationRecipientSettingLocalServiceUtil.
 				createNotificationRecipientSetting(RandomTestUtil.randomInt());
 
 		notificationRecipientSetting.setName(name);
-		notificationRecipientSetting.setValue(value);
+
+		if (value instanceof String) {
+			notificationRecipientSetting.setValue(String.valueOf(value));
+		}
+		else {
+			notificationRecipientSetting.setValueMap(
+				(Map<Locale, String>)value);
+		}
 
 		return notificationRecipientSetting;
 	}

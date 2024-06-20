@@ -23,7 +23,29 @@ const FUZZY_OPTIONS = {
 	pre: '<strong>',
 };
 
-const OBJECT_RELATIONSHIP = {
+const OBJECT_RELATIONSHIP_NEW = {
+	DATA_SET_CARDS_SECTION: 'dataSetCardsSections',
+	DATA_SET_CARDS_SECTION_ERC: 'r_dataSetCardsSections_c_dataSetERC',
+	DATA_SET_CLIENT_EXTENSION_FILTER: 'dataSetClientExtensionFilters',
+	DATA_SET_CLIENT_EXTENSION_FILTER_ID:
+		'r_dataSetClientExtensionFilter_c_dataSetId',
+	DATA_SET_CREATION_ACTION: 'dataSetCreationActions',
+	DATA_SET_CREATION_ACTION_ID: 'r_dataSetCreationActions_c_dataSetId',
+	DATA_SET_DATE_FILTER: 'dataSetDateFilters',
+	DATA_SET_DATE_FILTER_ID: 'r_dataSetDateFilters_c_dataSetId',
+	DATA_SET_ITEM_ACTION: 'dataSetItemActions',
+	DATA_SET_ITEM_ACTION_ID: 'r_dataSetItemActions_c_dataSetId',
+	DATA_SET_LIST_SECTION: 'dataSetListSections',
+	DATA_SET_LIST_SECTION_ERC: 'r_dataSetListSections_c_dataSetERC',
+	DATA_SET_SELECTION_FILTER: 'dataSetSelectionFilters',
+	DATA_SET_SELECTION_FILTER_ID: 'r_dataSetSelectionFilters_c_dataSetId',
+	DATA_SET_SORT: 'dataSetSorts',
+	DATA_SET_SORT_ID: 'r_dataSetSorts_c_dataSetId',
+	DATA_SET_TABLE_SECTION: 'dataSetTableSections',
+	DATA_SET_TABLE_SECTION_ID: 'r_dataSetTableSections_c_dataSetId',
+} as const;
+
+const OBJECT_RELATIONSHIP_LEGACY = {
 	DATA_SET_CARDS_SECTION: 'fdsViewFDSCardsSectionRelationship',
 	DATA_SET_CARDS_SECTION_ERC:
 		'r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC',
@@ -50,6 +72,10 @@ const OBJECT_RELATIONSHIP = {
 	FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship',
 	FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId',
 } as const;
+
+const OBJECT_RELATIONSHIP = Liferay.FeatureFlags['LPD-15729']
+	? OBJECT_RELATIONSHIP_NEW
+	: OBJECT_RELATIONSHIP_LEGACY;
 
 const FDS_DEFAULT_PROPS = {
 	pagination: {
@@ -88,5 +114,7 @@ export {
 	FDS_DEFAULT_PROPS,
 	FUZZY_OPTIONS,
 	OBJECT_RELATIONSHIP,
+	OBJECT_RELATIONSHIP_LEGACY,
+	OBJECT_RELATIONSHIP_NEW,
 	ALLOWED_ENDPOINTS_PARAMETERS,
 };

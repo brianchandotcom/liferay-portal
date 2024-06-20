@@ -18,19 +18,30 @@ import {IDataSet} from '../../DataSets';
 import {FDSViewType} from '../../FDSViews';
 import OrderableTable from '../../components/OrderableTable';
 import RequiredMark from '../../components/RequiredMark';
-import {API_URL, OBJECT_RELATIONSHIP} from '../../utils/constants';
+import {
+	API_URL,
+	OBJECT_RELATIONSHIP,
+	OBJECT_RELATIONSHIP_LEGACY,
+	OBJECT_RELATIONSHIP_NEW,
+} from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import sortItems from '../../utils/sortItems';
 import {IField, IOrderable} from '../../utils/types';
 import {IDataSetSectionProps} from '../DataSet';
 
+const SORTS_ORDER_OBJECT_FIELD_NAME = Liferay.FeatureFlags['LPD-15729']
+	? 'sortsOrder'
+	: 'fdsSortsOrder';
+
 interface IContentRendererProps {
-	item: IFDSSort;
+	item: ISort;
 	query: string;
 }
 
-interface IFDSSort extends IOrderable {
+interface ISort extends IOrderable {
+	[OBJECT_RELATIONSHIP_LEGACY.DATA_SET_SORT]?: any;
+	[OBJECT_RELATIONSHIP_NEW.DATA_SET_SORT]?: any;
 	default: boolean;
 	externalReferenceCode: string;
 	fieldName: string;
@@ -73,7 +84,7 @@ const AddFDSSortModalContent = ({
 	dataSet: IDataSet | FDSViewType;
 	fields: IField[];
 	namespace: string;
-	onSave: (newSort: IFDSSort) => void;
+	onSave: (newSort: ISort) => void;
 }) => {
 	const [labelI18n, setLabelI18n] = useState<
 		Liferay.Language.LocalizedValue<string>
@@ -251,7 +262,7 @@ const AddFDSSortModalContent = ({
 
 interface IEditFDSSortModalContentProps {
 	closeModal: Function;
-	fdsSort: IFDSSort;
+	fdsSort: ISort;
 	fields: IField[];
 	namespace: string;
 	onSave: Function;
@@ -444,7 +455,7 @@ const Sorting = ({
 	namespace,
 }: IDataSetSectionProps) => {
 	const fields = fieldTreeItems.filter((field) => field.sortable);
-	const [fdsSorts, setFDSSorts] = useState<Array<IFDSSort>>([]);
+	const [fdsSorts, setFDSSorts] = useState<Array<ISort>>([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -455,17 +466,15 @@ const Sorting = ({
 
 			const responseJSON = await response.json();
 
-			const storedFDSSorts: IFDSSort[] = responseJSON.items;
+			const storedFDSSorts: ISort[] = responseJSON.items;
 
 			setFDSSorts(
 				sortItems(
 					storedFDSSorts,
-
-					// @ts-ignore
-
-					storedFDSSorts?.[0]?.[OBJECT_RELATIONSHIP.DATA_SET_SORT]
-						?.fdsSortsOrder as string
-				) as IFDSSort[]
+					storedFDSSorts?.[0]?.[OBJECT_RELATIONSHIP.DATA_SET_SORT]?.[
+						SORTS_ORDER_OBJECT_FIELD_NAME
+					] as string
+				) as ISort[]
 			);
 
 			setLoading(false);
@@ -487,7 +496,7 @@ const Sorting = ({
 			),
 		});
 
-	const handleDelete = ({item}: {item: IFDSSort}) => {
+	const handleDelete = ({item}: {item: ISort}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this-sorting?-fragments-using-it-will-be-affected'
@@ -525,7 +534,7 @@ const Sorting = ({
 
 						setFDSSorts(
 							fdsSorts?.filter(
-								(fdsSort: IFDSSort) => fdsSort.id !== item.id
+								(fdsSort: ISort) => fdsSort.id !== item.id
 							) || []
 						);
 					},
@@ -536,7 +545,7 @@ const Sorting = ({
 		});
 	};
 
-	const handleEdit = ({item}: {item: IFDSSort}) => {
+	const handleEdit = ({item}: {item: ISort}) => {
 		openModal({
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
 				<EditFDSSortModalContent
@@ -544,7 +553,7 @@ const Sorting = ({
 					fdsSort={item}
 					fields={fields}
 					namespace={namespace}
-					onSave={({editedFDSSort}: {editedFDSSort: IFDSSort}) => {
+					onSave={({editedFDSSort}: {editedFDSSort: ISort}) => {
 						setFDSSorts(
 							fdsSorts?.map((fdsSort) => {
 								if (fdsSort.id === editedFDSSort.id) {
@@ -560,16 +569,12 @@ const Sorting = ({
 		});
 	};
 
-	const updateFDSSortsOrder = async ({
-		fdsSortsOrder,
-	}: {
-		fdsSortsOrder: string;
-	}) => {
+	const updateSortsOrder = async ({sortsOrder}: {sortsOrder: string}) => {
 		const response = await fetch(
 			`${API_URL.DATA_SETS}/by-external-reference-code/${dataSet.externalReferenceCode}`,
 			{
 				body: JSON.stringify({
-					fdsSortsOrder,
+					[SORTS_ORDER_OBJECT_FIELD_NAME]: sortsOrder,
 				}),
 				headers: {
 					'Accept': 'application/json',
@@ -587,14 +592,15 @@ const Sorting = ({
 
 		const responseJSON = await response.json();
 
-		const storedFDSSortsOrder = responseJSON?.fdsSortsOrder;
+		const storedFDSSortsOrder =
+			responseJSON?.[SORTS_ORDER_OBJECT_FIELD_NAME];
 
 		if (
 			fdsSorts &&
 			storedFDSSortsOrder &&
-			storedFDSSortsOrder === fdsSortsOrder
+			storedFDSSortsOrder === sortsOrder
 		) {
-			setFDSSorts(sortItems(fdsSorts, storedFDSSortsOrder) as IFDSSort[]);
+			setFDSSorts(sortItems(fdsSorts, storedFDSSortsOrder) as ISort[]);
 
 			openDefaultSuccessToast();
 		}
@@ -663,7 +669,7 @@ const Sorting = ({
 							'no-sorting-created-yet'
 						)}
 						onOrderChange={({order}: {order: string}) => {
-							updateFDSSortsOrder({fdsSortsOrder: order});
+							updateSortsOrder({sortsOrder: order});
 						}}
 						title={Liferay.Language.get('sorting')}
 					/>

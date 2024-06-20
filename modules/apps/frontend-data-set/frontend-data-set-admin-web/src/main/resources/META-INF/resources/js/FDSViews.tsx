@@ -20,7 +20,7 @@ import RequiredMark from './components/RequiredMark';
 import {
 	API_URL,
 	FDS_DEFAULT_PROPS,
-	OBJECT_RELATIONSHIP,
+	OBJECT_RELATIONSHIP_LEGACY,
 } from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
@@ -29,7 +29,7 @@ const LIST_OF_ITEMS_PER_PAGE = '4, 8, 20, 40, 60';
 const DEFAULT_ITEMS_PER_PAGE = 20;
 
 type FDSViewType = {
-	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: FDSEntryType;
+	[OBJECT_RELATIONSHIP_LEGACY.FDS_ENTRY_FDS_VIEW]: FDSEntryType;
 	defaultItemsPerPage: number;
 	defaultVisualizationMode: string;
 	description: string;
@@ -320,7 +320,7 @@ const FDSViews = ({
 		<div className="fds-views">
 			<FrontendDataSet
 				{...FDS_DEFAULT_PROPS}
-				apiURL={`${API_URL.DATA_SETS}/?filter=(${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW_ID} eq '${fdsEntryId}')`}
+				apiURL={`${API_URL.DATA_SETS}/?filter=(${OBJECT_RELATIONSHIP_LEGACY.FDS_ENTRY_FDS_VIEW_ID} eq '${fdsEntryId}')`}
 				creationMenu={creationMenu}
 				emptyState={{
 					description: Liferay.Language.get(

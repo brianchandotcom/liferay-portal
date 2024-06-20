@@ -15,7 +15,7 @@ import React, {useRef, useState} from 'react';
 import {IDataSet} from '../../DataSets';
 import {FDSViewType} from '../../FDSViews';
 import RequiredMark from '../../components/RequiredMark';
-import {API_URL, OBJECT_RELATIONSHIP} from '../../utils/constants';
+import {API_URL, OBJECT_RELATIONSHIP_LEGACY} from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {IDataSetSectionProps} from '../DataSet';
@@ -81,7 +81,7 @@ const Details = ({
 	]
 		? (dataSet as unknown as IDataSet)
 		: (dataSet as unknown as FDSViewType)[
-				OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW
+				OBJECT_RELATIONSHIP_LEGACY.FDS_ENTRY_FDS_VIEW
 			];
 
 	return (

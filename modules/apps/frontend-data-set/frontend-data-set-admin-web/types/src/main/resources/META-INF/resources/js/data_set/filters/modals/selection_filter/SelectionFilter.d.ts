@@ -5,17 +5,8 @@
 
 /// <reference types="react" />
 
-import {IField, IFilter} from '../../../../utils/types';
+import {IFilterModal} from '../../Filters';
 declare function Header(): JSX.Element;
-interface IBodyProps {
-	closeModal: Function;
-	fieldNames?: string[];
-	fields: IField[];
-	filter?: IFilter;
-	namespace: string;
-	onSave: Function;
-	restApplications: string[];
-}
 declare function Body({
 	closeModal,
 	fieldNames,
@@ -24,7 +15,7 @@ declare function Body({
 	namespace,
 	onSave,
 	restApplications,
-}: IBodyProps): JSX.Element;
+}: IFilterModal): JSX.Element;
 declare const _default: {
 	Body: typeof Body;
 	Header: typeof Header;

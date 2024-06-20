@@ -25,10 +25,10 @@ import openDefaultFailureToast from '../../../../utils/openDefaultFailureToast';
 import {
 	ESelectionFilterSourceType,
 	IField,
-	IFilter,
 	IPickList,
 	ISelectionFilter,
 } from '../../../../utils/types';
+import {IFilterModal} from '../../Filters';
 import Configuration from '../Configuration';
 import Footer from '../Footer';
 import ApiRestApplication from './source_type/ApiRestApplication';
@@ -38,16 +38,6 @@ function Header() {
 	return <>{Liferay.Language.get('new-selection-filter')}</>;
 }
 
-interface IBodyProps {
-	closeModal: Function;
-	fieldNames?: string[];
-	fields: IField[];
-	filter?: IFilter;
-	namespace: string;
-	onSave: Function;
-	restApplications: string[];
-}
-
 function Body({
 	closeModal,
 	fieldNames,
@@ -55,8 +45,8 @@ function Body({
 	filter,
 	namespace,
 	onSave,
-	restApplications,
-}: IBodyProps) {
+	restApplications = [],
+}: IFilterModal) {
 	const [fieldInUseValidationError, setFieldInUseValidationError] =
 		useState<boolean>(false);
 	const [fieldValidationError, setFieldValidationError] =
@@ -97,9 +87,8 @@ function Body({
 	const [sourceType, setSourceType] = useState<
 		ESelectionFilterSourceType | undefined
 	>();
-	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
-		fdsFilterLabelTranslations
+		filter?.label_i18n ?? {}
 	);
 	const [selectedRESTApplication, setSelectedRESTApplication] = useState<
 		string | null

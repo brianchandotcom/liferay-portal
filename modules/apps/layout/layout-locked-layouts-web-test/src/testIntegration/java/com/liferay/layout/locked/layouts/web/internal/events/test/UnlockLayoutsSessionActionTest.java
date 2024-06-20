@@ -15,18 +15,14 @@ import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,36 +56,11 @@ public class UnlockLayoutsSessionActionTest {
 
 	@Test
 	public void testProcessLifecycleEvent() throws Exception {
-		_testProcessLifecycleEvent();
-	}
-
-	private Layout _getDraftLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		draftLayout.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		return _layoutLocalService.updateLayout(draftLayout);
-	}
-
-	private void _lockLayout(Layout layout, User user) throws Exception {
-		MockActionRequest mockActionRequest = new MockActionRequest();
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setLayout(layout);
-		themeDisplay.setUser(user);
-
-		mockActionRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		_layoutLockManager.getLock(mockActionRequest);
-	}
-
-	private void _testProcessLifecycleEvent() throws Exception {
-		Layout draftLayout = _getDraftLayout();
-
-		_lockLayout(draftLayout, _user);
+		_layoutLockManager.getLock(draftLayout, _user.getUserId());
 
 		Lock lock = _lockManager.fetchLock(
 			Layout.class.getName(), draftLayout.getPlid());
@@ -118,9 +89,6 @@ public class UnlockLayoutsSessionActionTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutLockManager _layoutLockManager;

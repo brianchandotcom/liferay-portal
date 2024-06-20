@@ -13,7 +13,7 @@ import path from 'path';
  * it is set, filter the `files` list to contain only files changed with respect
  * to that branch (usually "master", but may also be "master-private").
  *
- * If the variable is not set, the `files` list is return unchanged.
+ * If the variable is not set, the we default to 'master'
  *
  * One important exception to the above: if the top-level `package.json`
  * changes (which happens rarely), this may indicate a change of the
@@ -23,15 +23,14 @@ import path from 'path';
  * @param {Array<string>} files List of files relative to the current directory.
  */
 export default async function filterChangedFiles(files) {
-	const upstream = process.env.LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME;
+	const upstream =
+		process.env.LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME || 'master';
 
 	if (upstream === undefined) {
 		return files;
 	}
 
 	const {stdout: topLevel} = await $`git rev-parse --show-toplevel`;
-
-	const {stdout: prefix} = await $`git rev-parse --show-prefix`;
 
 	const {stdout: mergeBase} = await $`git merge-base HEAD ${upstream}`;
 
@@ -48,10 +47,6 @@ export default async function filterChangedFiles(files) {
 	);
 
 	return files.filter((file) => {
-		const absolute = path.normalize(
-			path.join(topLevel, prefix.trim() || '.', file)
-		);
-
-		return set.has(absolute);
+		return set.has(file);
 	});
 }

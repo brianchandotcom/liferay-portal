@@ -49,10 +49,10 @@ public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 			return;
 		}
 
+		int size = auditMessages.size();
+
 		long startAuditEventId =
-			counterLocalService.increment(
-				Counter.class.getName(), auditMessages.size()) -
-					auditMessages.size();
+			counterLocalService.increment(Counter.class.getName(), size) - size;
 
 		for (AuditMessage auditMessage : auditMessages) {
 			auditEventPersistence.update(

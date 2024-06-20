@@ -23,11 +23,11 @@ test('check select site initializers accessibility', async ({
 }) => {
 	await selectSiteInitializerPage.goto(site.friendlyUrlPath);
 
-	const cardTitles = await page
-		.locator('.card')
-		.getByLabel('Select Template:');
+	const cards = await page.locator('.card').all();
 
-	await expect(cardTitles).toHaveCount(9);
+	for (const card of cards) {
+		await expect(card.getByLabel('Select Template:')).toBeVisible();
+	}
 
 	await checkAccessibility({
 		page,

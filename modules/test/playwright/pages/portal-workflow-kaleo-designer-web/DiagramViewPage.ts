@@ -9,6 +9,7 @@ export class DiagramViewPage {
 	readonly backButton: Locator;
 	readonly diagramArea: Locator;
 	readonly diagramNodes: Locator;
+	readonly publishWorkflowDefinitionButton: Locator;
 	readonly saveWorkflowDefinitionButton: Locator;
 	readonly sourceViewButton: Locator;
 
@@ -16,6 +17,9 @@ export class DiagramViewPage {
 		this.backButton = page.getByRole('link', {name: 'Back'});
 		this.diagramArea = page.locator('.react-flow');
 		this.diagramNodes = page.locator('.react-flow__node');
+		this.publishWorkflowDefinitionButton = page.getByRole('button', {
+			name: 'Publish',
+		});
 		this.saveWorkflowDefinitionButton = page.getByRole('button', {
 			name: 'Save',
 		});

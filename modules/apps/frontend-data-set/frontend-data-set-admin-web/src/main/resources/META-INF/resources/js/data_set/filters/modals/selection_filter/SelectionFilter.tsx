@@ -312,13 +312,13 @@ function Body({
 								.filter((item: any) => {
 									return fuzzy.match(
 										preselectedValueInput,
-										item[selectedItemLabel]
+										String(item[selectedItemLabel])
 									);
 								})
 								.map((item: any) => {
 									return {
-										label: item[selectedItemLabel],
-										value: item[selectedItemKey],
+										label: String(item[selectedItemLabel]),
+										value: String(item[selectedItemKey]),
 									};
 								})
 				);
@@ -615,8 +615,14 @@ function Body({
 												selectedRESTEndpoint,
 												selectedRESTSchema,
 											}) => {
+												const restApplication =
+													selectedRESTApplication!.replace(
+														'/v1.0',
+														''
+													);
+
 												setSelectedRESTApplication(
-													selectedRESTApplication
+													restApplication
 												);
 												if (selectedRESTApplication) {
 													setRequiredRESTApplicationValidationError(

@@ -413,8 +413,6 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 	private void _readBuildDatabaseFile() {
 		synchronized (_buildDatabaseFile) {
-			_readCount++;
-
 			if (_buildDatabaseFile.exists()) {
 				try {
 					_jsonObject = new JSONObject(

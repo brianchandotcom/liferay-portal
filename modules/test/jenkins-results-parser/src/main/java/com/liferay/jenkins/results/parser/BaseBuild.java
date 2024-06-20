@@ -270,7 +270,7 @@ public abstract class BaseBuild implements Build {
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		if (topLevelBuild != null) {
+		if ((topLevelBuild != null) && (topLevelBuild != this)) {
 			_buildDatabase = topLevelBuild.getBuildDatabase();
 		}
 		else {

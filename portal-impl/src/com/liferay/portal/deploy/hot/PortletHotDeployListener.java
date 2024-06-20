@@ -6,7 +6,9 @@
 package com.liferay.portal.deploy.hot;
 
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -51,8 +54,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
@@ -70,6 +75,7 @@ import javax.portlet.filter.ResourceFilter;
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
 
 /**
@@ -109,27 +115,78 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 	protected void checkResourceBundles(
 		ClassLoader classLoader, Portlet portlet) {
 
-		if (Validator.isNull(portlet.getResourceBundle())) {
+		String resourceBundle = portlet.getResourceBundle();
+
+		if (Validator.isNull(resourceBundle)) {
 			return;
 		}
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		ResourceBundleLoader resourceBundleLoader =
-			new ClassResourceBundleLoader(
-				portlet.getResourceBundle(), classLoader);
+			new ClassResourceBundleLoader(resourceBundle, classLoader);
 
 		_resourceBundleLoaderServiceRegistrations.put(
 			portlet.getPortletId(),
 			bundleContext.registerService(
 				ResourceBundleLoader.class, resourceBundleLoader,
 				HashMapDictionaryBuilder.<String, Object>put(
-					"resource.bundle.base.name", portlet.getResourceBundle()
+					"resource.bundle.base.name", resourceBundle
 				).put(
 					"service.ranking", Integer.MIN_VALUE
 				).put(
 					"servlet.context.name", portlet.getContextName()
 				).build()));
+
+		PortletApp portletApp = portlet.getPortletApp();
+
+		ServletContext servletContext = portletApp.getServletContext();
+
+		String path = resourceBundle;
+
+		int index = resourceBundle.lastIndexOf(StringPool.PERIOD);
+
+		if (index > 0) {
+			path = resourceBundle.substring(0, index);
+		}
+
+		Set<String> resourcePaths = servletContext.getResourcePaths(
+			"/WEB-INF/classes/" +
+				StringUtil.replace(path, CharPool.PERIOD, CharPool.SLASH));
+
+		if (resourcePaths == null) {
+			return;
+		}
+
+		Set<ServiceRegistration<ResourceBundle>> serviceRegistrations =
+			new HashSet<>();
+
+		for (String resourcePath : resourcePaths) {
+			String languageId = StringPool.BLANK;
+
+			index = resourcePath.indexOf(
+				StringPool.UNDERLINE, resourcePath.length());
+
+			if (index > -1) {
+				languageId = resourcePath.substring(
+					index + 1, resourcePath.length() - ".properties".length());
+			}
+
+			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
+
+			serviceRegistrations.add(
+				bundleContext.registerService(
+					ResourceBundle.class,
+					resourceBundleLoader.loadResourceBundle(locale),
+					HashMapDictionaryBuilder.<String, Object>put(
+						Constants.SERVICE_RANKING, Integer.MIN_VALUE
+					).put(
+						"language.id", languageId
+					).build()));
+		}
+
+		_resourceBundleServiceRegistrations.put(
+			portlet.getContextName(), serviceRegistrations);
 	}
 
 	protected void doInvokeDeploy(HotDeployEvent hotDeployEvent)
@@ -514,6 +571,19 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		if (resourceBundleLoaderServiceRegistration != null) {
 			resourceBundleLoaderServiceRegistration.unregister();
 		}
+
+		Set<ServiceRegistration<ResourceBundle>>
+			resourceBundleServiceRegistrations =
+				_resourceBundleServiceRegistrations.remove(
+					portlet.getPortletId());
+
+		if (resourceBundleServiceRegistrations != null) {
+			for (ServiceRegistration<ResourceBundle> serviceRegistration :
+					resourceBundleServiceRegistrations) {
+
+				serviceRegistration.unregister();
+			}
+		}
 	}
 
 	private String[] _processPortletProperties(ClassLoader classLoader) {
@@ -549,5 +619,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 	private final Map<String, ServiceRegistration<ResourceBundleLoader>>
 		_resourceBundleLoaderServiceRegistrations = new HashMap<>();
+	private final Map<String, Set<ServiceRegistration<ResourceBundle>>>
+		_resourceBundleServiceRegistrations = new HashMap<>();
 
 }

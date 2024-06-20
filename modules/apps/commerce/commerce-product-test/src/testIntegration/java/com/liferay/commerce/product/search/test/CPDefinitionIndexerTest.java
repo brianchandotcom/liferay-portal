@@ -10,8 +10,15 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
+import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -20,16 +27,23 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.search.test.util.HitsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -56,6 +70,33 @@ public class CPDefinitionIndexerTest {
 		_group = GroupTestUtil.addGroup();
 
 		_indexer = _indexerRegistry.getIndexer(CPDefinition.class);
+	}
+
+	@Test
+	public void testGetCPDefinitionCPInstanceExpandoAttributes()
+		throws Exception {
+
+		CommerceCatalog catalog =
+			_commerceCatalogLocalService.addCommerceCatalog(
+				null, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocaleUtil.US.getDisplayLanguage(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
+			catalog.getGroupId());
+
+		String expectedValue =
+			RandomTestUtil.randomString() + cpInstance.getCPInstanceId();
+
+		_setUp(expectedValue, cpInstance);
+
+		Document document = _indexer.getDocument(cpInstance.getCPDefinition());
+
+		Assert.assertEquals(
+			expectedValue,
+			document.get(
+				"expando__keyword__custom_fields__" + _EXPANDO_COLUMN));
 	}
 
 	@Test
@@ -97,6 +138,54 @@ public class CPDefinitionIndexerTest {
 		Assert.assertEquals("test", summary.getContent());
 	}
 
+	private void _setUp(String expandoValue, CPInstance cpInstance)
+		throws Exception {
+
+		ExpandoTable expandoTable = ExpandoTableLocalServiceUtil.fetchTable(
+			_group.getCompanyId(),
+			ClassNameLocalServiceUtil.getClassNameId(CPInstance.class),
+			"CUSTOM_FIELDS");
+
+		if (expandoTable == null) {
+			expandoTable = ExpandoTableLocalServiceUtil.addTable(
+				_group.getCompanyId(),
+				ClassNameLocalServiceUtil.getClassNameId(CPInstance.class),
+				"CUSTOM_FIELDS");
+
+			_expandoTables.add(expandoTable);
+		}
+
+		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+			expandoTable, _EXPANDO_COLUMN, ExpandoColumnConstants.STRING);
+
+		_expandoColumns.add(expandoColumn);
+
+		UnicodeProperties unicodeProperties =
+			expandoColumn.getTypeSettingsProperties();
+
+		unicodeProperties.setProperty(
+			ExpandoColumnConstants.INDEX_TYPE,
+			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
+
+		expandoColumn.setTypeSettingsProperties(unicodeProperties);
+
+		ExpandoColumnLocalServiceUtil.updateExpandoColumn(expandoColumn);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setExpandoBridgeAttributes(
+			Collections.singletonMap(_EXPANDO_COLUMN, expandoValue));
+
+		cpInstance.setExpandoBridgeAttributes(serviceContext);
+
+		cpInstance = _cpInstanceLocalService.updateCPInstance(cpInstance);
+
+		_indexer.reindex(cpInstance.getCPDefinition());
+	}
+
+	private static final String _EXPANDO_COLUMN = "expandoColumn";
+
 	private static Indexer<CPDefinition> _indexer;
 
 	@Inject
@@ -107,6 +196,15 @@ public class CPDefinitionIndexerTest {
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Inject
+	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@DeleteAfterTestRun
+	private List<ExpandoColumn> _expandoColumns = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private List<ExpandoTable> _expandoTables = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private Group _group;

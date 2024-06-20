@@ -57,7 +57,6 @@ dependencies {
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")
 	compileOnly project(":apps:product-navigation:product-navigation-product-menu-api")
-	compileOnly project(":apps:release-feature-flag:release-feature-flag-api")
 	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:site-navigation:site-navigation-api")
 	compileOnly project(":apps:site-navigation:site-navigation-taglib")

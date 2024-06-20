@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.release.feature.flag.ReleaseFeatureFlag;
-import com.liferay.release.feature.flag.ReleaseFeatureFlagManagerUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -113,20 +111,11 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, companyId, groupId, privateLayout,
 			typeSettingsUnicodeProperties);
 
-		Group group = _groupLocalService.getGroup(groupId);
-
-		if (ReleaseFeatureFlagManagerUtil.isEnabled(
-				ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS) &&
-			group.isLayoutSetPrototype()) {
-
-			_updateLookAndFeel(
-				actionRequest, companyId, groupId, false,
-				typeSettingsUnicodeProperties);
-		}
-
 		if (privateLayout) {
 			return;
 		}
+
+		Group group = _groupLocalService.getGroup(groupId);
 
 		if (!group.hasPrivateLayouts()) {
 			_updateLookAndFeel(

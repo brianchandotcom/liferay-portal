@@ -886,19 +886,20 @@ public class LayoutImportController implements ImportController {
 			layoutSetPrototypeUuid = GetterUtil.getString(
 				headerElement.attributeValue("type-uuid"));
 
-			LayoutSet publicLayoutSet = _layoutSetLocalService.fetchLayoutSet(
-				group.getGroupId(), false);
-
-			if (publicLayoutSet != null) {
-				publicLayoutSet.setThemeId(
-					GetterUtil.getString(
-						headerElement.attributeValue("theme-id")));
-
-				_layoutSetLocalService.updateLayoutSet(publicLayoutSet);
-			}
-
 			if (ReleaseFeatureFlagManagerUtil.isEnabled(
 					ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS)) {
+
+				LayoutSet publicLayoutSet =
+					_layoutSetLocalService.fetchLayoutSet(
+						group.getGroupId(), false);
+
+				if (publicLayoutSet != null) {
+					publicLayoutSet.setThemeId(
+						GetterUtil.getString(
+							headerElement.attributeValue("theme-id")));
+
+					_layoutSetLocalService.updateLayoutSet(publicLayoutSet);
+				}
 
 				LayoutSet privateLayoutSet =
 					_layoutSetLocalService.fetchLayoutSet(
@@ -910,6 +911,22 @@ public class LayoutImportController implements ImportController {
 							headerElement.attributeValue("theme-id")));
 
 					_layoutSetLocalService.updateLayoutSet(privateLayoutSet);
+				}
+			}
+			else {
+				boolean privateLayout = MapUtil.getBoolean(
+					portletDataContext.getParameterMap(),
+					PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT);
+
+				LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
+					group.getGroupId(), privateLayout);
+
+				if (layoutSet != null) {
+					layoutSet.setThemeId(
+						GetterUtil.getString(
+							headerElement.attributeValue("theme-id")));
+
+					_layoutSetLocalService.updateLayoutSet(layoutSet);
 				}
 			}
 		}

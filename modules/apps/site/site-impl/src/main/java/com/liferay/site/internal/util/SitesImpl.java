@@ -1159,6 +1159,10 @@ public class SitesImpl implements Sites {
 				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
 			});
 
+		parameterMap.put(
+			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
+			new String[] {String.valueOf(layoutSet.isPrivateLayout())});
+
 		User user = _userLocalService.getDefaultUser(layoutSet.getCompanyId());
 
 		List<Layout> layoutSetPrototypeLayouts = _layoutLocalService.getLayouts(

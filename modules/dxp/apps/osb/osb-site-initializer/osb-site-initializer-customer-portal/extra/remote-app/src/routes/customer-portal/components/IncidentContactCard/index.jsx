@@ -68,7 +68,7 @@ const IncidentContactCard = ({
 	};
 
 	const isLXCEnvironment = accountSubscriptionGroupsNames?.includes(
-		'Liferay Experience Cloud'
+		'Liferay SaaS'
 	);
 
 	useEffect(() => {

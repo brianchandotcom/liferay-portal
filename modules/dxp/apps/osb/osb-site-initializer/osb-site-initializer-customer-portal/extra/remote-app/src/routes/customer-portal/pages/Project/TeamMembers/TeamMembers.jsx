@@ -16,9 +16,9 @@ import ManageProductUsers from './components/ManageProductUsers/ManageProductUse
 import TeamMembersTable from './components/TeamMembersTable/TeamMembersTable';
 
 const targetProducts = [
-	'Liferay Experience Cloud',
 	'Analytics Cloud',
-	'LXC - SM',
+	'Liferay PaaS',
+	'Liferay SaaS'
 ];
 
 const TeamMembers = () => {

@@ -14,10 +14,10 @@ export default async function main() {
 	});
 
 	if (check) {
-		console.log('Running preflight...');
+		console.log('🛫 Running preflight...');
 		await preflight();
 	}
 
-	console.log('Running format...');
+	console.log('📝 Running format...');
 	await format(!check, {allFiles: all});
 }

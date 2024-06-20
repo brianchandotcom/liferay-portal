@@ -33,7 +33,7 @@ export default async function filterChangedFiles(files) {
 	if (upstream === undefined || atSameBranch) {
 		if (atSameBranch) {
 			console.log(
-				`You are already on '${currentBranch}' branch. Skipping diff filter.`
+				`⚠️ You are already on '${currentBranch}' branch. Skipping diff filter.`
 			);
 		}
 
@@ -41,7 +41,7 @@ export default async function filterChangedFiles(files) {
 	}
 
 	console.log(
-		`Only running against files changed between '${upstream}' and '${currentBranch}' branches. Use flag '--all' to run against all files.`
+		`ℹ️ Only running against files changed between '${upstream}' and '${currentBranch}' branches. Use flag '--all' to run against all files.`
 	);
 
 	const {stdout: topLevel} = await $`git rev-parse --show-toplevel`;

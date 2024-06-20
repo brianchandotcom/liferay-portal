@@ -29,9 +29,11 @@ async function getFilesToCheck(rootDir) {
 	const prettierIgnoreFilePath = path.join(rootDir, PRETTIER_IGNORE_FILE);
 	const gitIgnoreFilePath = path.join(rootDir, GIT_IGNORE_FILE);
 
-	const eslintIgnores = await readIgnoreFile(eslintIgnoreFilePath);
-	const prettierIgnores = await readIgnoreFile(prettierIgnoreFilePath);
-	const gitIgnores = await readIgnoreFile(gitIgnoreFilePath);
+	const [eslintIgnores, prettierIgnores, gitIgnores] = await Promise.all([
+		readIgnoreFile(eslintIgnoreFilePath),
+		readIgnoreFile(prettierIgnoreFilePath),
+		readIgnoreFile(gitIgnoreFilePath),
+	]);
 
 	const files = await fg(
 		[
@@ -95,12 +97,12 @@ export default async function format(
 	}
 
 	if (!filepaths.length) {
-		console.log('No files to format');
+		console.log('ℹ️ No files to format');
 
 		return;
 	}
 
-	console.log(`Formatting ${filepaths.length} files`);
+	console.log(`📝 Formatting ${filepaths.length} files`);
 
 	const [eslintConfig, prettierConfig, stylelintConfig] = await Promise.all([
 		getEslintConfig(rootDir),
@@ -263,7 +265,7 @@ export default async function format(
 		catch (error) {
 
 			// eslint-disable-next-line no-console
-			console.log(`${filepath}: ${error}`);
+			console.log(`🚨 ${filepath}: ${error}`);
 		}
 
 		if (transformedContent !== source) {

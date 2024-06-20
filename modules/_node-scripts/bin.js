@@ -32,7 +32,7 @@ const COMMANDS = {
 	'format': {
 		description:
 			'formats source files or optionally only checks with "--check" flag.',
-		parameters: '[--all, --check]',
+		parameters: '[--all] [--check]',
 		script: './format/index.mjs',
 	},
 	'format:file': {

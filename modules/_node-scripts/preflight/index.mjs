@@ -23,7 +23,7 @@ export default async function preflight() {
 	const errors = results.flat();
 
 	if (errors.length) {
-		console.log('Preflight check failed:');
+		console.log('❌ Preflight check failed:');
 
 		console.log(...errors);
 

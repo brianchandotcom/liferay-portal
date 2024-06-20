@@ -192,11 +192,13 @@ public class PunchOutSessionResourceImpl
 				String punchOutStartURL = _getPunchOutStartURL(
 					commerceChannel.getGroupId());
 
+				String url = URLEncoder.encode(
+					Base64.encodeToURL(punchOutAccessToken.getToken()),
+					"UTF-8");
+
 				punchOutStartURL +=
 					StringPool.QUESTION + _PUNCH_OUT_ACCESS_TOKEN_PARAMETER +
-						URLEncoder.encode(
-							Base64.encodeToURL(punchOutAccessToken.getToken()),
-							"UTF-8");
+						url;
 
 				return punchOutStartURL;
 			});

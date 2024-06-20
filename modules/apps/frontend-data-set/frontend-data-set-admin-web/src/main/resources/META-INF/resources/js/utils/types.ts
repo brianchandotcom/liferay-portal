@@ -96,7 +96,7 @@ export interface ISelectionFilter extends IFilter {
 	itemKey: string;
 	itemLabel: string;
 	multiple: boolean;
-	preselectedValues: string;
+	preselectedValues: any;
 	restApplication: string;
 	restEndpoint: string;
 	restSchema: string;

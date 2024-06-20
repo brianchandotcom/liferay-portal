@@ -126,7 +126,7 @@ function Body({
 		multiple || (!multiple && !(preselectedValues.length > 1));
 
 	async function getAPIValues(source: string) {
-		const response = await fetch(`/o${source}`);
+		const response = await fetch(`${source}`);
 
 		if (!response.ok) {
 			openDefaultFailureToast();
@@ -250,7 +250,10 @@ function Body({
 						itemKey: selectedItemKey,
 						itemLabel: selectedItemLabel,
 						preselectedValues: JSON.stringify(
-							preselectedValues.map((item: any) => item.value)
+							preselectedValues.map((item: any) => ({
+								label: item.label,
+								value: item.value,
+							}))
 						),
 						restApplication: selectedRESTApplication,
 						restEndpoint: selectedRESTEndpoint,
@@ -295,18 +298,23 @@ function Body({
 	};
 
 	useEffect(() => {
-		if (source && sourceType === ESelectionFilterSourceType.API_HEADLESS) {
+		const isValidSource =
+			sourceType === ESelectionFilterSourceType.API_HEADLESS &&
+			source &&
+			!(source as string).match(/\{[A-Za-z0-9]+\}/g);
+
+		if (isValidSource && selectedItemKey && selectedItemLabel) {
 			getAPIValues(source as string).then((apiValues) => {
 				setFilteredSourceItems(
 					!apiValues.items.length
 						? []
 						: apiValues.items
-								.filter((item: any) =>
-									fuzzy.match(
+								.filter((item: any) => {
+									return fuzzy.match(
 										preselectedValueInput,
 										item[selectedItemLabel]
-									)
-								)
+									);
+								})
 								.map((item: any) => {
 									return {
 										label: item[selectedItemLabel],
@@ -378,12 +386,16 @@ function Body({
 				source &&
 				sourceType === ESelectionFilterSourceType.API_HEADLESS
 			) {
+				const filterPreselectedValues = JSON.parse(
+					(filter as ISelectionFilter).preselectedValues || '[]'
+				);
+
 				validSavedPreselectedValues = filteredSourceItems.filter(
 					(item) =>
-						JSON.parse(
-							(filter as ISelectionFilter).preselectedValues ||
-								'[]'
-						).includes(item.value)
+						filterPreselectedValues.find(
+							(filterValue: {label: string; value: string}) =>
+								filterValue.value === item.value
+						)
 				);
 			}
 
@@ -425,6 +437,16 @@ function Body({
 			);
 		}
 	}, [preselectedValueInput, source, sourceType]);
+
+	useEffect(() => {
+		if (selectedRESTApplication && selectedRESTEndpoint) {
+			setSource(
+				`/o${selectedRESTApplication.replace('v1.0/', '')}${selectedRESTEndpoint}`
+			);
+
+			setSourceValidationError(false);
+		}
+	}, [selectedRESTApplication, selectedRESTEndpoint]);
 
 	if (
 		!Liferay.FeatureFlags['LPD-10754'] &&
@@ -593,39 +615,32 @@ function Body({
 												selectedRESTEndpoint,
 												selectedRESTSchema,
 											}) => {
-												let apiSource;
-
-												if (
-													selectedRESTApplication &&
-													selectedRESTEndpoint
-												) {
-													apiSource = `${selectedRESTApplication}${selectedRESTEndpoint}`;
-													setSource(apiSource);
-													setSourceValidationError(
+												setSelectedRESTApplication(
+													selectedRESTApplication
+												);
+												if (selectedRESTApplication) {
+													setRequiredRESTApplicationValidationError(
 														false
 													);
 												}
 
-												setSelectedRESTApplication(
-													selectedRESTApplication
-												);
-												setRequiredRESTApplicationValidationError(
-													!selectedRESTApplication
-												);
-
 												setSelectedRESTEndpoint(
 													selectedRESTEndpoint
 												);
-												setRESTEndpointValidationError(
-													!selectedRESTEndpoint
-												);
+												if (selectedRESTEndpoint) {
+													setRESTEndpointValidationError(
+														false
+													);
+												}
 
 												setSelectedRESTSchema(
 													selectedRESTSchema
 												);
-												setRESTSchemaValidationError(
-													!selectedRESTSchema
-												);
+												if (selectedRESTSchema) {
+													setRESTSchemaValidationError(
+														false
+													);
+												}
 
 												setSelectedItemKey(
 													selectedItemKey
@@ -716,12 +731,8 @@ function Body({
 															ESelectionFilterSourceType.API_HEADLESS
 														) {
 															valueItem = {
-																label: item[
-																	selectedItemLabel
-																],
-																value: item[
-																	selectedItemKey
-																],
+																label: item.label,
+																value: item.value,
 															};
 														}
 

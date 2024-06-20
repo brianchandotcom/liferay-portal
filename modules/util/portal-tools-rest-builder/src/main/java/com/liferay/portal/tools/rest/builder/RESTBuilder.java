@@ -432,7 +432,7 @@ public class RESTBuilder {
 				description, clientMessage, clientVersion, "'.");
 		}
 
-		String formattedDescription = _formatDescrition(
+		String formattedDescription = _formatDescription(
 			StringPool.FOUR_SPACES + StringPool.FOUR_SPACES,
 			"\"" + description + "\"");
 
@@ -1708,37 +1708,39 @@ public class RESTBuilder {
 		return yamlString;
 	}
 
-	private String _formatDescrition(String indent, String descriton) {
-		if (Validator.isNull(descriton)) {
+	private String _formatDescription(String indent, String description) {
+		if (Validator.isNull(description)) {
 			return StringPool.BLANK;
 		}
 
-		if ((indent.length() + descriton.length()) <=
+		if ((indent.length() + description.length()) <=
 				_DESCRIPTION_MAX_LINE_LENGTH) {
 
-			return indent + descriton;
+			return indent + description;
 		}
 
-		descriton = indent + descriton;
+		description = indent + description;
 
-		int x = descriton.indexOf(CharPool.SPACE, indent.length());
+		int x = description.indexOf(CharPool.SPACE, indent.length());
 
 		if (x == -1) {
-			return descriton;
+			return description;
 		}
 
 		if (x > _DESCRIPTION_MAX_LINE_LENGTH) {
-			String s = descriton.substring(x + 1);
+			String s = description.substring(x + 1);
 
-			return descriton.substring(0, x) + "\n" +
-				_formatDescrition(indent, s);
+			return description.substring(0, x) + "\n" +
+				_formatDescription(indent, s);
 		}
 
-		x = descriton.lastIndexOf(CharPool.SPACE, _DESCRIPTION_MAX_LINE_LENGTH);
+		x = description.lastIndexOf(
+			CharPool.SPACE, _DESCRIPTION_MAX_LINE_LENGTH);
 
-		String s = descriton.substring(x + 1);
+		String s = description.substring(x + 1);
 
-		return descriton.substring(0, x) + "\n" + _formatDescrition(indent, s);
+		return description.substring(0, x) + "\n" +
+			_formatDescription(indent, s);
 	}
 
 	private String _getClientMavenGroupId(String apiPackagePath) {

@@ -3971,7 +3971,7 @@ public class ObjectEntryLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		AssertUtils.assertFailure(
-			ObjectEntryStatusException.class, null,
+			ObjectEntryStatusException.class, "Draft status is not allowed.",
 			() -> _objectEntryLocalService.updateObjectEntry(
 				TestPropsValues.getUserId(), objectEntryId1, values2,
 				serviceContext));
@@ -3995,7 +3995,7 @@ public class ObjectEntryLocalServiceTest {
 		long objectEntryId2 = objectEntry.getObjectEntryId();
 
 		AssertUtils.assertFailure(
-			ObjectEntryStatusException.class, null,
+			ObjectEntryStatusException.class, "Draft status is not allowed.",
 			() -> _objectEntryLocalService.updateObjectEntry(
 				TestPropsValues.getUserId(), objectEntryId2, values2,
 				serviceContext));

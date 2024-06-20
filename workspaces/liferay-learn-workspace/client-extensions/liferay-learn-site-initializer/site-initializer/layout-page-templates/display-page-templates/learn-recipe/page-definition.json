@@ -508,7 +508,7 @@
 										"pageElements": [
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\n.tag-container {\n    background: var(--color-neutral-0, #fff);\n    border: 1px solid var(--color-brand-primary, #0b5fff);\n    border-radius: var(--border-radius-lg);\n    gap: 0.25rem;\n    padding: 0.25rem 0.75rem;\n}\n  \n \n  .learn-recipe-category-title {\n    color: var(--color-neutral-10, #282934);\n    font-size: 0.875rem;\n    font-style: normal;\n    font-weight: 600;\n    line-height: 1rem;\n  }\n  \n  .deploymentapproach-tag, .applicableversions-tag {\n    display: none !important;\n  }\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n  .deployment-approach-tag, .applicable-versions-tag {\n    display: none !important;\n  }\n  \n  .label {\n    background: var(--color-neutral-0, #fff);\n    border: 1px solid var(--color-brand-primary, #0b5fff);\n    border-radius: var(--border-radius-lg);\n    gap: 0.25rem;\n    padding: 0.25rem 0.75rem;\n   }\n \n  .learn-recipe-category-title {\n    color: var(--color-neutral-10, #282934);\n    font-size: 0.875rem;\n    font-style: normal;\n    font-weight: 600;\n    line-height: 1rem;\n  }\n}",
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
@@ -995,7 +995,7 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\n  .capability-tag, .feature-tag, .applicableversions-tag {\n     display: none !important;\n  }\n  \n  .label {\n    background-color: #E6EBF5;\n    color: #1C3667;\n    font-family: \"Source Sans 3\";\n    font-weight: 400;\n    font-size: 11px;\n    border-style: none;\n    padding: 0px 8px;\n  }\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n  .capability-tag, .feature-tag, .applicable-versions-tag, .learn-recipe-category-title  {\n     display: none !important;\n  }\n  \n  .label {\n    background-color: #E6EBF5;\n    color: #1C3667;\n    font-family: \"Source Sans 3\";\n    font-weight: 400;\n    font-size: 11px;\n    border-style: none;\n    padding: 0px 8px;\n  }\n}",
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
@@ -1055,7 +1055,7 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\n  .capability-tag, .feature-tag {\n     display: none !important;\n  }\n  \n  .label {\n    background-color: #E6EBF5;\n    color: #1C3667;\n    font-family: \"Source Sans 3\";\n    font-weight: 400;\n    font-size: 11px;\n    border-style: none;\n    padding: 0px 8px;\n  }\n  \n  .deploymentapproach-tag {\n     display: none !important;\n  }\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n  .capability-tag, .deployment-approach-tag, .feature-tag, .learn-recipe-category-title {\n     display: none !important;\n  }\n  \n  .label {\n    background-color: #E6EBF5;\n    color: #1C3667;\n    font-family: \"Source Sans 3\";\n    font-weight: 400;\n    font-size: 11px;\n    border-style: none;\n    padding: 0px 8px;\n  }\n}",
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},

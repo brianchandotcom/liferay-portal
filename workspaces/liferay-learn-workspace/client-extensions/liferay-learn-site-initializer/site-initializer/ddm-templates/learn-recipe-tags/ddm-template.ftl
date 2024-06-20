@@ -37,13 +37,12 @@
 
 <div class="learn-recipe-categories-tags">
 	<#list taxonomyVocabularies as vocabulary>
-		<#if vocabulary = "Capability" || vocabulary = "Feature">
+	  <#assign
+		formattedVocabulary = (vocabulary?lower_case?replace(" ", "-"))
+		searchTerm = paramUtil.get(request, "highlight", "defaultValue")!
+		/>
 
-			<#assign
-				formattedVocabulary = (vocabulary?lower_case?replace(" ", ""))
-				searchTerm = paramUtil.get(request, "highlight", "defaultValue")!
-			/>
-
+		<#if vocabulary = "Capability" || vocabulary = "Feature" || vocabulary="Deployment Approach" || vocabulary="Applicable Versions">
 			<div class="align-items-baseline ${formattedVocabulary}-tag d-flex mt-2">
 				<div class="learn-recipe-category-title mr-2">
 					${vocabulary}:
@@ -51,25 +50,8 @@
 				<#list taxonomyCategoriesMap[vocabulary]?sort_by("categoryName") as taxonomyCategory>
 					<div class="learn-recipe-category-tag mr-2">
 						<a
-							class="label tag-container"
-							href="/search?q=${searchTerm}&${formattedVocabulary}=${taxonomyCategory.categoryId}"
-						>
-							<span>${taxonomyCategory.categoryName}</span>
-						</a>
-					</div>
-				</#list>
-			</div>
-		</#if>
-
-		<#if vocabulary="Deployment Approach" || vocabulary="Applicable Versions">
-			<#assign formattedVocabulary = (vocabulary?lower_case?replace(" ", "")) />
-
-			<div class="align-items-baseline ${formattedVocabulary}-tag d-flex mt-2">
-				<#list taxonomyCategoriesMap[vocabulary]?sort_by("categoryName") as taxonomyCategory>
-					<div class="learn-recipe-category-tag mr-2">
-						<a
 							class="label"
-							href="/search?q=${searchTerm}&deployment-approach=${taxonomyCategory.categoryId}"
+							href="/search?q=${searchTerm}&${formattedVocabulary}=${taxonomyCategory.categoryId}"
 						>
 							<span>${taxonomyCategory.categoryName}</span>
 						</a>

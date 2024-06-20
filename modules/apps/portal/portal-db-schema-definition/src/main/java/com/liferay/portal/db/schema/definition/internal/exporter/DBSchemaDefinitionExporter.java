@@ -9,7 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.schema.definition.internal.configuration.DBSchemaDefinitionExporterConfiguration;
-import com.liferay.portal.db.schema.definition.internal.processor.DBSchemaToSQLProcessor;
+import com.liferay.portal.db.schema.definition.internal.processor.SQLFilesProcessor;
 import com.liferay.portal.db.schema.definition.internal.sql.SQLRecorder;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
@@ -45,7 +45,7 @@ public class DBSchemaDefinitionExporter {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_generateSchema(properties);
+		_exportDBSchemaDefinition(properties);
 	}
 
 	private void _deleteConfiguration(String pid) {
@@ -78,9 +78,9 @@ public class DBSchemaDefinitionExporter {
 		}
 	}
 
-	private void _generateSchema(Map<String, Object> properties) {
+	private void _exportDBSchemaDefinition(Map<String, Object> properties) {
 		if (_log.isInfoEnabled()) {
-			_log.info("Starting schema generation");
+			_log.info("Database schema definition export started");
 		}
 
 		try {
@@ -92,7 +92,7 @@ public class DBSchemaDefinitionExporter {
 
 			SQLRecorder sqlRecorder = new SQLRecorder();
 
-			new DBSchemaToSQLProcessor(
+			new SQLFilesProcessor(
 				DBType.valueOf(
 					StringUtil.toUpperCase(
 						dbSchemaDefinitionExporterConfiguration.
@@ -112,11 +112,12 @@ public class DBSchemaDefinitionExporter {
 				sqlRecorder.getTablesSQL());
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Schema generation finished");
+				_log.info("Database schema definition export finished");
 			}
 		}
 		catch (Exception exception) {
-			_log.error("Unable to perform schema generation", exception);
+			_log.error(
+				"Unable to export database schema definition", exception);
 		}
 		finally {
 			_deleteConfiguration((String)properties.get("service.pid"));

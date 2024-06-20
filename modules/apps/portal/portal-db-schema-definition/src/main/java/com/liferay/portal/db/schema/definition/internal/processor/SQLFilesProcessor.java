@@ -22,9 +22,9 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class DBSchemaToSQLProcessor {
+public class SQLFilesProcessor {
 
-	public DBSchemaToSQLProcessor(DBType dbType, SQLRecorder sqlRecorder) {
+	public SQLFilesProcessor(DBType dbType, SQLRecorder sqlRecorder) {
 		_sqlRecorder = sqlRecorder;
 
 		_db = _getDB(dbType);

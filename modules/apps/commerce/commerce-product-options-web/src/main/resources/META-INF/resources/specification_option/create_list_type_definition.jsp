@@ -29,6 +29,6 @@ long cpSpecificationOptionId = ParamUtil.getLong(request, "cpSpecificationOption
 				"namespace", liferayPortletResponse.getNamespace()
 			).build()
 		%>'
-		module="{CreateOrAssignCPSpecificationOptionPickList} from commerce-product-options-web"
+		module="{CreateOrAssignCPSpecificationOptionListTypeDefinition} from commerce-product-options-web"
 	/>
 </commerce-ui:modal-content>

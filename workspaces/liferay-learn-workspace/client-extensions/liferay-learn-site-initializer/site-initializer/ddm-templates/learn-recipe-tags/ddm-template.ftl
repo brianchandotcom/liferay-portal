@@ -61,14 +61,14 @@
 			</div>
 		</#if>
 
-		<#if vocabulary = "Deployment Approach">
+		<#if vocabulary="Deployment Approach" || vocabulary="Applicable Versions">
 			<#assign formattedVocabulary = (vocabulary?lower_case?replace(" ", "")) />
 
 			<div class="align-items-baseline ${formattedVocabulary}-tag d-flex mt-2">
 				<#list taxonomyCategoriesMap[vocabulary]?sort_by("categoryName") as taxonomyCategory>
 					<div class="learn-recipe-category-tag mr-2">
 						<a
-							class="label tag-container"
+							class="label"
 							href="/search?q=${searchTerm}&deployment-approach=${taxonomyCategory.categoryId}"
 						>
 							<span>${taxonomyCategory.categoryName}</span>

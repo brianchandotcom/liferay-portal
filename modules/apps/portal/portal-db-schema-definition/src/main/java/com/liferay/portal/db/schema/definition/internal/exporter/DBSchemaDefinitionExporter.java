@@ -9,12 +9,16 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.schema.definition.internal.configuration.DBSchemaDefinitionExporterConfiguration;
-import com.liferay.portal.db.schema.definition.internal.processor.DBSchemaToFilesProcessor;
+import com.liferay.portal.db.schema.definition.internal.processor.DBSchemaToSQLProcessor;
+import com.liferay.portal.db.schema.definition.internal.sql.SQLRecorder;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.io.File;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -86,13 +90,26 @@ public class DBSchemaDefinitionExporter {
 						DBSchemaDefinitionExporterConfiguration.class,
 						properties);
 
-			new DBSchemaToFilesProcessor(
+			SQLRecorder sqlRecorder = new SQLRecorder();
+
+			new DBSchemaToSQLProcessor(
 				DBType.valueOf(
 					StringUtil.toUpperCase(
-						dbSchemaDefinitionExporterConfiguration.databaseType()))
-			).processTo(
-				dbSchemaDefinitionExporterConfiguration.path()
-			);
+						dbSchemaDefinitionExporterConfiguration.
+							databaseType())),
+				sqlRecorder
+			).process();
+
+			FileUtil.write(
+				new File(
+					dbSchemaDefinitionExporterConfiguration.path(),
+					"indexes.sql"),
+				sqlRecorder.getIndexesSQL());
+			FileUtil.write(
+				new File(
+					dbSchemaDefinitionExporterConfiguration.path(),
+					"tables.sql"),
+				sqlRecorder.getTablesSQL());
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Schema generation finished");

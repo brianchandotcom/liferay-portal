@@ -146,6 +146,7 @@ export default function ({
 						},
 					},
 				],
+				iframeBodyCssClass: '',
 				displayType: 'primary',
 				height: '70vh',
 				id: 'cookiesBannerConfiguration',

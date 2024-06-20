@@ -46,10 +46,8 @@ function Configuration({
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
 		fields.find((item) => item.name === filter?.fieldName)
 	);
-	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
-
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
-		fdsFilterLabelTranslations
+		filter?.label_i18n ?? {}
 	);
 
 	const inUseFields: (string | undefined)[] = fields.map((item) =>
@@ -69,7 +67,7 @@ function Configuration({
 			<ClayDropDown
 				closeOnClick
 				menuElementAttrs={{
-					className: 'fds-field-name-dropdown-menu',
+					className: 'field-name-dropdown-menu',
 				}}
 				trigger={
 					<ClayButton

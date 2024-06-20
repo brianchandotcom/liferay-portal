@@ -298,7 +298,7 @@ const NewDataSetModalContent = ({
 	const RestApplicationDropdown = () => (
 		<ClayDropDown
 			menuElementAttrs={{
-				className: 'fds-entries-dropdown-menu',
+				className: 'rest-selection-dropdown-menu',
 			}}
 			trigger={
 				<ClayButton
@@ -334,7 +334,7 @@ const NewDataSetModalContent = ({
 	const RestSchemaDropdown = () => (
 		<ClayDropDown
 			menuElementAttrs={{
-				className: 'fds-entries-dropdown-menu',
+				className: 'rest-selection-dropdown-menu',
 			}}
 			trigger={
 				<ClayButton
@@ -371,7 +371,7 @@ const NewDataSetModalContent = ({
 	const RestEndpointDropdown = () => (
 		<ClayDropDown
 			menuElementAttrs={{
-				className: 'fds-entries-dropdown-menu',
+				className: 'rest-selection-dropdown-menu',
 			}}
 			trigger={
 				<ClayButton

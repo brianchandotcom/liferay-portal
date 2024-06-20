@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {OBJECT_RELATIONSHIP_LEGACY, OBJECT_RELATIONSHIP_NEW} from './constants';
+
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
 export enum EFilterType {
@@ -54,7 +56,9 @@ export interface IField {
 	visible?: boolean;
 }
 
-export interface IFDSField extends IOrderable {
+export interface ITableSection extends IOrderable {
+	[OBJECT_RELATIONSHIP_LEGACY.DATA_SET_TABLE_SECTION]?: any;
+	[OBJECT_RELATIONSHIP_NEW.DATA_SET_TABLE_SECTION]?: any;
 	contextPath: string;
 	externalReferenceCode: string;
 	label: string;
@@ -83,7 +87,7 @@ export interface IFilter extends IOrderable {
 }
 
 export interface IClientExtensionFilter extends IFilter {
-	fdsFilterClientExtensionERC: string;
+	clientExtensionERC: string;
 }
 
 export interface IDateFilter extends IFilter {

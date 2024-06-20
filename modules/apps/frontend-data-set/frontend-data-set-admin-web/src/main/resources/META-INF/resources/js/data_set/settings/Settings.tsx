@@ -68,9 +68,9 @@ const Settings = ({
 		const responseJSON = await response.json();
 
 		const {
-			fdsViewFDSCardsSectionRelationship: cards,
-			fdsViewFDSFieldRelationship: table,
-			fdsViewFDSListSectionRelationship: list,
+			[OBJECT_RELATIONSHIP.DATA_SET_CARDS_SECTION]: cards,
+			[OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTION]: list,
+			[OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTION]: table,
 		} = responseJSON;
 
 		const activeViews: Array<TVisualizationMode> = [];

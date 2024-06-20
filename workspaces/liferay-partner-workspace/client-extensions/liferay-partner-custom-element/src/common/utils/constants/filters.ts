@@ -44,23 +44,28 @@ const mdfClaimOpenListStatus = [
 
 const mdfClaimCompletedListStatus = ['Canceled', 'Rejected', 'Claim Paid'];
 
-const stageList = [
+const renewalsList = [
+	'Closed Lost',
+	'Closed Won',
+	'Committed',
+	'Confirmation',
+	'Justification / Solution Review',
+	'Legal Review / Purchasing',
+	'Pending',
+	'Solution Validation',
+];
+
+const opportunityList = [
 	'Closed Lost',
 	'Closed Won',
 	'Committed',
 	'Confirmation',
 	'Disqualified',
-	'GTM / Partnership Plan Validation',
-	'Justification / Due Diligence',
 	'Justification / Solution Review',
-	'Legal Review',
 	'Legal Review / Purchasing',
-	'Marketing Qualified',
 	'Pending',
 	'Qualified Meeting',
 	'Rejected',
-	'Rolled into Opportunity',
-	'Sales Accepted Opportunity',
 	'Solution Validation',
 ];
 
@@ -125,7 +130,7 @@ export const Filters = {
 	OPPORTUNITY_LISTING: {
 		closed: `${fiscalYearFilterCloseDate} and (stage eq 'Closed Lost' or stage eq 'Closed Won' or stage eq 'Disqualified' or stage eq 'Rejected') and ((type eq 'New Business' or type eq 'New Project Existing Business') or (type eq 'Existing Business' and hasRenewal eq false))`,
 		open: `stage ne 'Closed Lost' and stage ne 'Closed Won' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity' and ((type eq 'New Business' or type eq 'New Project Existing Business') or (type eq 'Existing Business' and hasRenewal eq false))`,
-		opportunityListStage: stageList,
+		opportunityListStage: opportunityList,
 	},
 	RENEWAL_DASHBOARD: {
 		renewals: `stage ne 'Closed Won' and stage ne 'Closed Lost' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity' and type eq 'Existing Business' and closeDate le ${thirtyDaysFromToday}`,
@@ -133,7 +138,7 @@ export const Filters = {
 	RENEWAL_LISTING: {
 		closed: `${fiscalYearFilterCloseDate} and (stage eq 'Closed Lost' or stage eq 'Closed Won') and type eq 'Existing Business' and hasRenewal eq true`,
 		open: `stage ne 'Closed Lost' and stage ne 'Closed Won' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity' and type eq 'Existing Business' and hasRenewal eq true`,
-		renewalsListStage: stageList,
+		renewalsListStage: renewalsList,
 	},
 	REVENUE_DASHBOARD: {
 		opportunities: `${fiscalYearFilterCloseDate} and stage eq 'Closed Won'`,

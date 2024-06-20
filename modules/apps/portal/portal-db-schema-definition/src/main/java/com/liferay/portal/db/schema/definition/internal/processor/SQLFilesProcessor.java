@@ -5,8 +5,8 @@
 
 package com.liferay.portal.db.schema.definition.internal.processor;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.DBResourceUtil;
-import com.liferay.portal.db.schema.definition.internal.sql.SQLRecorder;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactory;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -24,15 +24,32 @@ import org.osgi.framework.ServiceReference;
  */
 public class SQLFilesProcessor {
 
-	public SQLFilesProcessor(DBType dbType, SQLRecorder sqlRecorder) {
-		_sqlRecorder = sqlRecorder;
-
+	public SQLFilesProcessor(DBType dbType) throws Exception {
 		_db = _getDB(dbType);
+
+		_generatePortalSQL();
+
+		_generateModulesSQL();
 	}
 
-	public void process() throws Exception {
-		_generatePortalSQL();
-		_generateModulesSQL();
+	public String getIndexesSQL() {
+		return _indexesSQLSB.toString();
+	}
+
+	public String getTablesSQL() {
+		return _tablesSQLSB.toString();
+	}
+
+	private void _appendSQL(String indexesSQL, String tablesSQL)
+		throws Exception {
+
+		if (indexesSQL != null) {
+			_indexesSQLSB.append(_db.buildSQL(indexesSQL));
+		}
+
+		if (tablesSQL != null) {
+			_tablesSQLSB.append(_db.buildSQL(tablesSQL));
+		}
 	}
 
 	private void _generateModulesSQL() throws Exception {
@@ -44,22 +61,18 @@ public class SQLFilesProcessor {
 		for (ServiceReference<SchemaCreator> serviceReference :
 				serviceReferences) {
 
-			_sqlRecorder.recordIndexesSQL(
-				_db.buildSQL(
-					DBResourceUtil.getModuleIndexesSQL(
-						serviceReference.getBundle())));
-			_sqlRecorder.recordTablesSQL(
-				_db.buildSQL(
-					DBResourceUtil.getModuleTablesSQL(
-						serviceReference.getBundle())));
+			_appendSQL(
+				DBResourceUtil.getModuleIndexesSQL(
+					serviceReference.getBundle()),
+				DBResourceUtil.getModuleTablesSQL(
+					serviceReference.getBundle()));
 		}
 	}
 
 	private void _generatePortalSQL() throws Exception {
-		_sqlRecorder.recordIndexesSQL(
-			_db.buildSQL(DBResourceUtil.getPortalIndexesSQL()));
-		_sqlRecorder.recordTablesSQL(
-			_db.buildSQL(DBResourceUtil.getPortalTablesSQL()));
+		_appendSQL(
+			DBResourceUtil.getPortalIndexesSQL(),
+			DBResourceUtil.getPortalTablesSQL());
 	}
 
 	private DB _getDB(DBType dbType) {
@@ -76,6 +89,7 @@ public class SQLFilesProcessor {
 	}
 
 	private final DB _db;
-	private final SQLRecorder _sqlRecorder;
+	private final StringBundler _indexesSQLSB = new StringBundler();
+	private final StringBundler _tablesSQLSB = new StringBundler();
 
 }

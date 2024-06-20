@@ -29,17 +29,19 @@ async function getFilesToCheck(rootDir) {
 	const prettierIgnoreFilePath = path.join(rootDir, PRETTIER_IGNORE_FILE);
 	const gitIgnoreFilePath = path.join(rootDir, GIT_IGNORE_FILE);
 
-	const eslintIgnores = readIgnoreFile(eslintIgnoreFilePath);
-	const prettierIgnores = readIgnoreFile(prettierIgnoreFilePath);
-	const gitIgnores = readIgnoreFile(gitIgnoreFilePath);
+	const eslintIgnores = await readIgnoreFile(eslintIgnoreFilePath);
+	const prettierIgnores = await readIgnoreFile(prettierIgnoreFilePath);
+	const gitIgnores = await readIgnoreFile(gitIgnoreFilePath);
 
 	return await fg(
 		[
+			'**/*.',
 			'*.{graphql,js,mjs,scss,ts,tsx}',
 			'**/*.{graphql,js,mjs,scss,ts,tsx}',
 			'**/src/**/*.{jsp,jspf}',
 		],
 		{
+			cwd: rootDir,
 			dot: true,
 			ignore: [
 				'**/src/test/**',
@@ -70,8 +72,18 @@ const FALLBACK_FILE_PATH = '__fallback__.js';
 
 export default async function format(fix, filePath = undefined) {
 	const rootDir = await getRootDir();
+	const workspacesDir = path.join(rootDir, '..', 'workspaces');
+	const playwrightDir = path.join(rootDir, 'test', 'playwright');
 
-	let filepaths = filePath ? [filePath] : await getFilesToCheck(rootDir);
+	let filepaths = filePath
+		? [filePath]
+		: (
+				await Promise.all([
+					getFilesToCheck(rootDir),
+					getFilesToCheck(workspacesDir),
+					getFilesToCheck(playwrightDir),
+				])
+			).flat();
 
 	filepaths = await filterChangedFiles(filepaths);
 

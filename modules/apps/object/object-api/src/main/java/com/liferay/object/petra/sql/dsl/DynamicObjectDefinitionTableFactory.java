@@ -25,7 +25,7 @@ public class DynamicObjectDefinitionTableFactory {
 			objectDefinition.getDBTableName());
 	}
 
-	public static DynamicObjectDefinitionTable createExtensionTable(
+	public static DynamicObjectDefinitionTable createExtension(
 		ObjectDefinition objectDefinition,
 		ObjectFieldLocalService objectFieldLocalService) {
 

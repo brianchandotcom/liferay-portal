@@ -1503,7 +1503,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (objectDefinition.isUnmodifiableSystemObject()) {
 			_createTable(
-				DynamicObjectDefinitionTableFactory.createExtensionTable(
+				DynamicObjectDefinitionTableFactory.createExtension(
 					objectDefinition, _objectFieldLocalService));
 		}
 
@@ -1844,7 +1844,7 @@ public class ObjectDefinitionLocalServiceImpl
 			DynamicObjectDefinitionTableFactory.create(
 				objectDefinition, _objectFieldLocalService));
 		_createTable(
-			DynamicObjectDefinitionTableFactory.createExtensionTable(
+			DynamicObjectDefinitionTableFactory.createExtension(
 				objectDefinition, _objectFieldLocalService));
 
 		for (ObjectRelationship objectRelationship :

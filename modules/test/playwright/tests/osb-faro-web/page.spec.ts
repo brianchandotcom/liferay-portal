@@ -27,9 +27,7 @@ import {
 	navigateToACWorkspace,
 } from './utils/navigation';
 import {
-	changeTimeFilterTo,
-	viewNameListIsNotPresent,
-	viewNameListIsPresent,
+	changeTimeFilterTo, expectNotToBeVisible, expectToBeVisible,
 } from './utils/utils';
 
 export const test = mergeTests(
@@ -196,7 +194,7 @@ test('shows individuals who viewed a page less than 24 hours ago', async ({
 	});
 
 	await test.step('Check that User3 User3 is appearing in the list', async () => {
-		await viewNameListIsPresent({
+		await expectToBeVisible({
 			itemNames: individualPresentIn30Days,
 			page,
 		});
@@ -210,7 +208,7 @@ test('shows individuals who viewed a page less than 24 hours ago', async ({
 	});
 
 	await test.step('Check that User1 User1 and User2 User2 are appearing in the list', async () => {
-		await viewNameListIsPresent({
+		await expectToBeVisible({
 			itemNames: individualsPresentIn24Hours,
 			page,
 		});

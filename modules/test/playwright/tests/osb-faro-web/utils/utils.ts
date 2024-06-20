@@ -53,7 +53,7 @@ export async function viewNameListIsNotPresent({
 	}
 }
 
-export async function viewNameListIsPresent({
+export async function expectToBeVisible({
 	itemNames,
 	page,
 }: {

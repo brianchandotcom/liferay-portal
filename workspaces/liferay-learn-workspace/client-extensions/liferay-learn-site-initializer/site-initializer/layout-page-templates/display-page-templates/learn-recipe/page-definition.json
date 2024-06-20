@@ -4,9 +4,7 @@
 		"pageElements": [
 			{
 				"definition": {
-					"cssClasses": [
-						"learn-recipe-container"
-					],
+					"cssClasses": ["learn-recipe-container"],
 					"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\n}",
 					"fragmentStyle": {
 						"maxWidth": "100%",
@@ -50,8 +48,7 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-html"
 									},
-									"fragmentConfig": {
-									},
+									"fragmentConfig": {},
 									"fragmentFields": [
 										{
 											"id": "element-html",
@@ -74,9 +71,7 @@
 							},
 							{
 								"definition": {
-									"cssClasses": [
-										"recipe-feedback"
-									],
+									"cssClasses": ["recipe-feedback"],
 									"customCSS": ".[$FRAGMENT_CLASS$] {\n\tdisplay: flex;\n\ttext-wrap: nowrap;\n}",
 									"fragment": {
 										"key": "BASIC_COMPONENT-button"
@@ -120,9 +115,7 @@
 					},
 					{
 						"definition": {
-							"cssClasses": [
-								"recipe-main"
-							],
+							"cssClasses": ["recipe-main"],
 							"fragmentStyle": {
 								"width": "100%"
 							},
@@ -137,9 +130,7 @@
 						"pageElements": [
 							{
 								"definition": {
-									"cssClasses": [
-										"recipe-content"
-									],
+									"cssClasses": ["recipe-content"],
 									"fragmentStyle": {
 										"marginRight": "4"
 									},
@@ -251,8 +242,7 @@
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-html"
 																	},
-																	"fragmentConfig": {
-																	},
+																	"fragmentConfig": {},
 																	"fragmentFields": [
 																		{
 																			"id": "element-html",
@@ -287,8 +277,7 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {
-													},
+													"fragmentConfig": {},
 													"fragmentFields": [
 														{
 															"id": "element-html",
@@ -331,8 +320,7 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "While we make every effort to ensure this Recipe is accurate, it may not always reflect the most recent updates or official guidelines. We appreciate your understanding and encourage you to reach out with any feedback or concerns."
@@ -358,8 +346,7 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {
-											},
+											"fragmentConfig": {},
 											"fragmentFields": [
 												{
 													"id": "element-html",
@@ -447,8 +434,7 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Was this article helpful ?"
@@ -472,10 +458,8 @@
 															"fragment": {
 																"key": "com.liferay.fragment.internal.renderer.ContentRatingsFragmentRenderer"
 															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															],
+															"fragmentConfig": {},
+															"fragmentFields": [],
 															"fragmentStyle": {
 																"textColor": ""
 															},
@@ -499,8 +483,7 @@
 												"bottomSpacing": "1",
 												"separatorColor": ""
 											},
-											"fragmentFields": [
-											],
+											"fragmentFields": [],
 											"fragmentStyle": {
 												"marginBottom": "2rem",
 												"marginTop": "5",
@@ -533,8 +516,7 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {
-													},
+													"fragmentConfig": {},
 													"fragmentFields": [
 														{
 															"id": "element-html",
@@ -563,21 +545,16 @@
 							},
 							{
 								"definition": {
-									"cssClasses": [
-										"recipe-sidemenu"
-									],
+									"cssClasses": ["recipe-sidemenu"],
 									"indexed": true,
-									"layout": {
-									},
+									"layout": {},
 									"name": "Side Menu Container"
 								},
 								"id": "63cb77fe-c96e-ac6c-d113-ff836a96f808",
 								"pageElements": [
 									{
 										"definition": {
-											"cssClasses": [
-												"sidemenu-header"
-											],
+											"cssClasses": ["sidemenu-header"],
 											"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground: linear-gradient(123.06deg, #1514A4 0%, #00C2FB 173.41%);\njustify-content: space-between;\ncolor: white;\n}",
 											"fragmentStyle": {
 												"backgroundColor": "",
@@ -629,8 +606,7 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Recipe"
@@ -679,8 +655,7 @@
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-html"
 																	},
-																	"fragmentConfig": {
-																	},
+																	"fragmentConfig": {},
 																	"fragmentFields": [
 																		{
 																			"id": "element-html",
@@ -721,8 +696,7 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "minutes"
@@ -747,9 +721,7 @@
 									},
 									{
 										"definition": {
-											"cssClasses": [
-												"page-nav-menu"
-											],
+											"cssClasses": ["page-nav-menu"],
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
 												"borderRadius": "borderRadiusLg",
@@ -1012,8 +984,7 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Deployment Approach"
@@ -1033,12 +1004,11 @@
 											},
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\n  .capability-tag, .feature-tag {\n     display: none !important;\n  }\n  \n  .label {\n    background-color: #E6EBF5;\n    color: #1C3667;\n    font-family: \"Source Sans 3\";\n    font-weight: 400;\n    font-size: 11px;\n    border-style: none;\n  }\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n  .capability-tag, .feature-tag, .applicableversions-tag {\n     display: none !important;\n  }\n  \n  .label {\n    background-color: #E6EBF5;\n    color: #1C3667;\n    font-family: \"Source Sans 3\";\n    font-weight: 400;\n    font-size: 11px;\n    border-style: none;\n    padding: 0px 8px;\n  }\n}",
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {
-													},
+													"fragmentConfig": {},
 													"fragmentFields": [
 														{
 															"id": "element-html",
@@ -1062,14 +1032,73 @@
 											{
 												"definition": {
 													"fragment": {
+														"key": "dialect-text",
+														"siteKey": "Liferay Learn"
+													},
+													"fragmentConfig": {
+														"textType": "text-paragraph",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Applicable Versions"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "2",
+														"marginTop": "3"
+													},
+													"indexed": true
+												},
+												"id": "f27561e4-dba2-77c6-0b63-741fa1941beb",
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n  .capability-tag, .feature-tag {\n     display: none !important;\n  }\n  \n  .label {\n    background-color: #E6EBF5;\n    color: #1C3667;\n    font-family: \"Source Sans 3\";\n    font-weight: 400;\n    font-size: 11px;\n    border-style: none;\n    padding: 0px 8px;\n  }\n  \n  .deploymentapproach-tag {\n     display: none !important;\n  }\n}",
+													"fragment": {
+														"key": "BASIC_COMPONENT-html"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
+														{
+															"id": "element-html",
+															"value": {
+																"html": {
+																	"mapping": {
+																		"fieldKey": "_ddmTemplate_LEARN_RECIPE_TAGS",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"id": "5be3f11f-3d12-6560-1d58-607bea375462",
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
 														"key": "BASIC_COMPONENT-separator"
 													},
 													"fragmentConfig": {
-														"bottomSpacing": "1",
-														"separatorColor": ""
+														"separatorColor": "",
+														"bottomSpacing": "1"
 													},
-													"fragmentFields": [
-													],
+													"fragmentFields": [],
 													"fragmentStyle": {
 														"marginBottom": "3",
 														"marginTop": "3"
@@ -1107,8 +1136,7 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Was this article helpful ?"
@@ -1132,10 +1160,8 @@
 															"fragment": {
 																"key": "com.liferay.fragment.internal.renderer.ContentRatingsFragmentRenderer"
 															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															],
+															"fragmentConfig": {},
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"id": "05cfbbf7-12fe-a8f7-a498-09d639f7a2af",

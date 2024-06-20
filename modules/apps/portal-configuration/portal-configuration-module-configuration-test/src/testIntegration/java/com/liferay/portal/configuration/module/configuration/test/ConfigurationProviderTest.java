@@ -139,6 +139,16 @@ public class ConfigurationProviderTest {
 			_properties, _configuration.getProperties(),
 			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
 			companyId);
+
+		_configurationProvider.saveCompanyConfiguration(
+			companyId, _PID, _properties);
+
+		_configuration = _getFactoryConfiguration(_PID);
+
+		assertFactoryPropertyValues(
+			_properties, _configuration.getProperties(),
+			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+			companyId);
 	}
 
 	@Test

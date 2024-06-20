@@ -192,7 +192,8 @@ public class AnalyticsRenderFragmentLayoutPostDynamicIncludeTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"<script type=\"text/javascript\">\n", "Analytics.track(\"",
+				"<script type=\"text/javascript\">\n",
+				"window.onload = function() {Analytics.track(\"",
 				"model.resource.", MockObject.class.getCanonicalName(),
 				" Viewed\", {'classPK': ",
 				mockObjectLayoutDisplayPageObjectProvider.getClassPK(),
@@ -201,7 +202,7 @@ public class AnalyticsRenderFragmentLayoutPostDynamicIncludeTest {
 					LocaleUtil.getSiteDefault()),
 				"', 'type': 'model.resource.",
 				MockObject.class.getCanonicalName(),
-				"'});\n\n</script><script>\n\n</script>"),
+				"'})};\n\n</script><script>\n\n</script>"),
 			mockHttpServletResponse.getContentAsString());
 	}
 

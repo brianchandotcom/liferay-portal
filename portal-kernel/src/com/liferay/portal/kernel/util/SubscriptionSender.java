@@ -266,6 +266,8 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	public ServiceContext getServiceContext() {
+		serviceContext.setCompanyId(CompanyThreadLocal.getNonsystemCompanyId());
+
 		return serviceContext;
 	}
 

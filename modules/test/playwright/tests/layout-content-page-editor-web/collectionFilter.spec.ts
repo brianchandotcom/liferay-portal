@@ -136,15 +136,20 @@ test('filters a web content collection by single and multiple categories', async
 		.getByRole('link', {name: ANIMALS_COLLECTION_NAME})
 		.click();
 
+	await expect(
+		page
+			.frameLocator('iframe[title="Select"]')
+			.getByRole('button', {name: 'Select This Level'})
+	).toBeEnabled();
+
 	await page
 		.frameLocator('iframe[title="Select"]')
 		.getByRole('button', {name: 'Select This Level'})
 		.click();
 
-	await page
-		.locator('.modal-title')
-		.getByText('Select')
-		.waitFor({state: 'hidden'});
+	await expect(
+		page.getByLabel('Target Collection').getByLabel('Select')
+	).toHaveText(ANIMALS_COLLECTION_NAME);
 
 	// Check the option to show the label with the selected vocabulary
 

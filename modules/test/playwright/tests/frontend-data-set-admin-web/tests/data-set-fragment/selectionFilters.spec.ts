@@ -294,7 +294,7 @@ test.describe('Selection filters in Data Set fragment', () => {
 				itemLabel: 'type',
 				label_i18n: {en_US: filterLabel},
 				multiple: true,
-				source: `/${apiHeadlessURL}`,
+				source: `/o/${apiHeadlessURL}`,
 				sourceType: 'API_HEADLESS',
 			});
 		});

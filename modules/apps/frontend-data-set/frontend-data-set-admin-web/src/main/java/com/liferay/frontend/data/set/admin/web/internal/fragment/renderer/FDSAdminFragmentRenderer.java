@@ -650,7 +650,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 						Objects.equals(sourceType, "API_HEADLESS")) {
 
 						return selectionFilterJSONObject.put(
-							"apiURL", "/o" + properties.get("source")
+							"apiURL", properties.get("source")
 						).put(
 							"itemKey", properties.get("itemKey")
 						).put(

@@ -60,11 +60,11 @@ public class TestrayBuildAutofillResourceImpl
 
 		Map<Long, List<Map<String, Serializable>>>
 			testrayCaseResultsGroupedByTestrayCase1 =
-				_getTestrayCaseResultsGroupedByTestrayCase(
+				_getTestrayCaseResultsByTestrayBuildGroupedByTestrayCase(
 					objectDefinition, testrayBuildId1);
 		Map<Long, List<Map<String, Serializable>>>
 			testrayCaseResultsGroupedByTestrayCase2 =
-				_getTestrayCaseResultsGroupedByTestrayCase(
+				_getTestrayCaseResultsByTestrayBuildGroupedByTestrayCase(
 					objectDefinition, testrayBuildId2);
 
 		for (Map.Entry<Long, List<Map<String, Serializable>>> entry :
@@ -167,7 +167,7 @@ public class TestrayBuildAutofillResourceImpl
 	}
 
 	private Map<Long, List<Map<String, Serializable>>>
-			_getTestrayCaseResultsGroupedByTestrayCase(
+			_getTestrayCaseResultsByTestrayBuildGroupedByTestrayCase(
 				ObjectDefinition objectDefinition, long testrayBuildId1)
 		throws Exception {
 

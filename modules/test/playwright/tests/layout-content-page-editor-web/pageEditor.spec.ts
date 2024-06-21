@@ -34,14 +34,17 @@ test('Only published fragments are shown in the Fragments Sidebar', async ({
 	site,
 }) => {
 	await fragmentsPage.goto(site.friendlyUrlPath);
+
 	const setName = getRandomString();
 	await fragmentsPage.createFragmentSet(setName);
 
 	await fragmentsPage.goto(site.friendlyUrlPath);
-	const fragmentName = getRandomString();
-	await fragmentsPage.createFragment(setName, fragmentName);
+
+	const unpublishedFragmentName = getRandomString();
+	await fragmentsPage.createFragment(setName, unpublishedFragmentName);
 
 	await fragmentsPage.goto(site.friendlyUrlPath);
+
 	const publishedFragmentName = getRandomString();
 	await fragmentsPage.createFragment(setName, publishedFragmentName);
 	await fragmentEditorPage.publish();
@@ -54,6 +57,7 @@ test('Only published fragments are shown in the Fragments Sidebar', async ({
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 	await pageEditorPage.goToSidebarTab('Fragments and Widgets');
+
 	const header = page.getByRole('menuitem', {
 		exact: true,
 		name: setName,
@@ -62,11 +66,12 @@ test('Only published fragments are shown in the Fragments Sidebar', async ({
 	const isOpen = await header.evaluate(
 		(element) => element.getAttribute('aria-expanded') === 'true'
 	);
+
 	if (!isOpen) {
 		await header.click();
 	}
 
 	await expect(page.getByText(publishedFragmentName)).toBeVisible();
 
-	await expect(page.getByText(fragmentName)).not.toBeVisible();
+	await expect(page.getByText(unpublishedFragmentName)).not.toBeVisible();
 });

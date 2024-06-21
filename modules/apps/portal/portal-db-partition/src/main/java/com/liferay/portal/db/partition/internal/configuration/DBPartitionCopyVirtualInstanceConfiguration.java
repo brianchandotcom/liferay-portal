@@ -31,13 +31,13 @@ public interface DBPartitionCopyVirtualInstanceConfiguration {
 	)
 	public long destinationPartitionCompanyId();
 
-	@Meta.AD(name = "name", required = false)
+	@Meta.AD(name = "name", required = true)
 	public String name();
 
-	@Meta.AD(name = "virtual-hostname", required = false)
+	@Meta.AD(name = "virtual-hostname", required = true)
 	public String virtualHostname();
 
-	@Meta.AD(name = "web-id", required = false)
+	@Meta.AD(name = "web-id", required = true)
 	public String webId();
 
 }

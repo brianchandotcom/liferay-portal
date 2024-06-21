@@ -67,8 +67,8 @@ public class DBPartitionCopyVirtualInstanceOperation
 						PortalInstancePool.getDefaultCompanyId()) {
 
 					_log.error(
-						"Company ID " + sourceCompanyId +
-							" is the default company ID");
+						"Virtual instance with company ID " + sourceCompanyId +
+							" is the default company");
 
 					return null;
 				}

@@ -1,53 +1,24 @@
 {
 	"pageElement": {
+		"id": "5bdb21ce-4426-7b26-a914-40efeee3ef2c",
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentSettings": {
-						"unallowedFragments": [
-						]
-					}
-				},
-				"id": "90e7fe59-693d-015f-83c7-98695e2c964b",
-				"type": "DropZone"
-			},
-			{
-				"definition": {
-					"indexed": true,
-					"layout": {
-					}
-				},
-				"id": "eaf014fb-3449-4fb4-f57b-4d9235de85bd",
-				"pageElements": [
-					{
-						"definition": {
-							"fragmentStyle": {
-								"textAlign": "center"
-							},
-							"widgetInstance": {
-								"widgetConfig": {
-								},
-								"widgetName": "com_liferay_login_web_portlet_CreateAccountPortlet"
-							}
+					"widgetInstance": {
+						"widgetConfig": {
 						},
-						"id": "5621cd99-6acf-14ea-0920-7bb8d783c9de",
-						"type": "Widget"
+						"widgetName": "com_liferay_login_web_portlet_CreateAccountPortlet"
 					}
-				],
-				"type": "Section"
+				},
+				"id": "bc955877-da3f-49b0-6a40-d2932cd4ba23",
+				"type": "Widget"
 			}
 		],
 		"type": "Root"
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"themeName": "Classic",
-		"themeSettings": {
-			"lfr-theme:regular:show-footer": "false",
-			"lfr-theme:regular:show-header": "false",
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:wrap-widget-page-content": "false"
-		}
+		"themeName": "Classic"
 	},
 	"version": 1.1
 }

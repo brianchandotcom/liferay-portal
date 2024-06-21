@@ -91,19 +91,7 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 </c:if>
 
 <c:if test="<%= cpSpecificationOption == null %>">
-	<aui:script sandbox="<%= true %>">
-		var form = document.getElementById('<portlet:namespace />fm');
-
-		var keyInput = form.querySelector('#<portlet:namespace />key');
-		var titleInput = form.querySelector('#<portlet:namespace />title');
-
-		var handleOnTitleInput = function () {
-			keyInput.value = titleInput.value;
-		};
-
-		titleInput.addEventListener(
-			'input',
-			Liferay.Util.debounce(handleOnTitleInput, 200)
-		);
-	</aui:script>
+	<liferay-frontend:component
+		module="{CPSpecificationOptionDetails} from commerce-product-options-web"
+	/>
 </c:if>

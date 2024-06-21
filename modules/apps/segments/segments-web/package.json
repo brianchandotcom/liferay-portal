@@ -12,6 +12,7 @@
 		"@clayui/layout": "3.111.0",
 		"@clayui/link": "3.111.0",
 		"@clayui/loading-indicator": "3.111.0",
+		"@clayui/localized-input": "3.116.0",
 		"@clayui/panel": "3.116.0",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/layout-js-components-web": "*",

@@ -203,6 +203,16 @@ public class FunctionActionExecutorImplTest {
 			Mockito.eq(userId)
 		);
 
+		functionActionExecutorImpl.launch(new JSONObjectImpl(), null);
+
+		Mockito.verify(
+			portalCatapult, Mockito.times(2)
+		).launch(
+			Mockito.anyLong(), Mockito.eq(Http.Method.POST),
+			Mockito.anyString(), Mockito.any(), Mockito.anyString(),
+			Mockito.eq(userId)
+		);
+
 		userId = RandomTestUtil.randomLong();
 
 		functionActionExecutorImpl.launch(
@@ -310,4 +320,5 @@ public class FunctionActionExecutorImplTest {
 		_serviceTrackerMap = Mockito.mock(ServiceTrackerMap.class);
 	private final WorkflowHandler<?> _workflowHandler = Mockito.mock(
 		WorkflowHandler.class);
+
 }

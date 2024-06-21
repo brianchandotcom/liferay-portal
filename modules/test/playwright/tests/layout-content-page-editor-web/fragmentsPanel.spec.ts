@@ -58,18 +58,12 @@ test('Only published fragments are shown in the Fragments Sidebar', async ({
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 	await pageEditorPage.goToSidebarTab('Fragments and Widgets');
 
-	const header = page.getByRole('menuitem', {
-		exact: true,
-		name: setName,
-	});
-
-	const isOpen = await header.evaluate(
-		(element) => element.getAttribute('aria-expanded') === 'true'
-	);
-
-	if (!isOpen) {
-		await header.click();
-	}
+	await page
+		.getByRole('menuitem', {
+			exact: true,
+			name: setName,
+		})
+		.click();
 
 	await expect(page.getByText(publishedFragmentName)).toBeVisible();
 

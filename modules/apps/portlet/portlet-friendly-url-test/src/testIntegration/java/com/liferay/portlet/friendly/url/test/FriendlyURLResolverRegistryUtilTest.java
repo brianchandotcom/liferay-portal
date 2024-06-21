@@ -16,7 +16,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -113,31 +115,54 @@ public class FriendlyURLResolverRegistryUtilTest {
 
 	@Test
 	public void testGetFriendlyURLResolverWithLowerServiceRanking() {
-		FriendlyURLResolver sampleFriendlyURLResolver =
-			new SampleFriendlyURLResolver();
-
 		FriendlyURLResolver defaultCanonicalURLSeparatorFriendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
 				_CANONICAL_URL_SEPARATOR);
 
-		ServiceRegistration<FriendlyURLResolver> serviceRegistration =
+		List<ServiceRegistration<FriendlyURLResolver>> list = new ArrayList<>();
+
+		FriendlyURLResolver sampleFriendlyURLResolver1 =
+			new SampleFriendlyURLResolver();
+
+		list.add(
 			_bundleContext.registerService(
-				FriendlyURLResolver.class, sampleFriendlyURLResolver,
-				MapUtil.singletonDictionary("service.ranking", -1000));
+				FriendlyURLResolver.class, sampleFriendlyURLResolver1,
+				MapUtil.singletonDictionary("service.ranking", 1000)));
 
 		try {
 			FriendlyURLResolver friendlyURLResolver =
 				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
 					_CANONICAL_URL_SEPARATOR);
 
-			Assert.assertEquals(
+			Assert.assertNotEquals(
 				defaultCanonicalURLSeparatorFriendlyURLResolver,
 				friendlyURLResolver);
+			Assert.assertEquals(
+				sampleFriendlyURLResolver1, friendlyURLResolver);
+
+			FriendlyURLResolver sampleFriendlyURLResolver2 =
+				new SampleFriendlyURLResolver();
+
+			list.add(
+				_bundleContext.registerService(
+					FriendlyURLResolver.class, sampleFriendlyURLResolver2,
+					MapUtil.singletonDictionary("service.ranking", 500)));
+
+			friendlyURLResolver =
+				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+					_CANONICAL_URL_SEPARATOR);
+
+			Assert.assertEquals(
+				sampleFriendlyURLResolver1, friendlyURLResolver);
 			Assert.assertNotEquals(
-				sampleFriendlyURLResolver, friendlyURLResolver);
+				sampleFriendlyURLResolver2, friendlyURLResolver);
 		}
 		finally {
-			serviceRegistration.unregister();
+			for (ServiceRegistration<FriendlyURLResolver> serviceRegistration :
+					list) {
+
+				serviceRegistration.unregister();
+			}
 		}
 	}
 

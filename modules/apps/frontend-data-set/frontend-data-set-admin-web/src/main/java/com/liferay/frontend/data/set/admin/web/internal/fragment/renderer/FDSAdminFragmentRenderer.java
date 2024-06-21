@@ -58,7 +58,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 
 import java.util.Calendar;
 import java.util.Collection;
@@ -393,16 +393,14 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				}));
 	}
 
-	private JSONObject _getDateJSONObject(Object object) {
-		if (object == null) {
+	private JSONObject _getDateJSONObject(String isoDate) {
+		if (isoDate == null) {
 			return null;
 		}
 
 		Calendar calendar = Calendar.getInstance();
 
-		Timestamp timestamp = (Timestamp)object;
-
-		calendar.setTime(new Date(timestamp.getTime()));
+		calendar.setTime(Date.from(Instant.parse(isoDate)));
 
 		return JSONUtil.put(
 			"day", calendar.get(Calendar.DATE)
@@ -584,9 +582,9 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					Objects.equals(type, "date-time")) {
 
 					JSONObject fromJSONObject = _getDateJSONObject(
-						properties.get("from"));
+						String.valueOf(properties.get("from")));
 					JSONObject toJSONObject = _getDateJSONObject(
-						properties.get("to"));
+						String.valueOf(properties.get("to")));
 
 					boolean hasPreloadedData =
 						(fromJSONObject != null) || (toJSONObject != null);

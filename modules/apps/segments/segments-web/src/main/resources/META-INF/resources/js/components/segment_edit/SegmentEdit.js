@@ -7,6 +7,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
+import ClayLocalizedInput from '@clayui/localized-input';
 import classNames from 'classnames';
 import {FieldArray, withFormik} from 'formik';
 import {
@@ -32,7 +33,6 @@ import ContributorInputs from '../criteria_builder/ContributorInputs.es';
 import ContributorsBuilder from '../criteria_builder/ContributorsBuilder';
 import KeyboardMovementManager from '../keyboard_movement/KeyboardMovementManager';
 import KeyboardMovementPreview from '../keyboard_movement/KeyboardMovementPreview';
-import LocalizedInput from '../title_editor/LocalizedInput';
 
 function SegmentEdit({
 	availableLocales,
@@ -71,6 +71,15 @@ function SegmentEdit({
 		membersCountLoading: false,
 		validTitle: !!values.name[defaultLanguageId],
 	});
+
+	const [selectedLocale, setSelectedLocale] = useState({
+		label: standardizeLocaleKey(defaultLanguageId),
+		symbol: standardizeLocaleKey(defaultLanguageId).toLowerCase(),
+	});
+
+	const [translations, setTranslations] = useState(
+		formatLocales(values.name, standardizeLocaleKey)
+	);
 
 	const fetchMembersCount = () => {
 		const formElement = document.getElementById(formId);
@@ -115,12 +124,21 @@ function SegmentEdit({
 		});
 	};
 
-	const handleLocalizedInputChange = (event, newValues, invalid) => {
-		setFieldValue('name', newValues);
+	const handleLocalizedInputChange = (translations) => {
+		setFieldValue('name', formatLocales(translations, normalizeLocaleKey));
 
 		setData((prevState) => {
-			return {...prevState, hasChanged: true, validTitle: !invalid};
+			const validTitle =
+				!!translations[standardizeLocaleKey(defaultLanguageId)];
+
+			return {
+				...prevState,
+				hasChanged: true,
+				validTitle,
+			};
 		});
+
+		setTranslations(translations);
 	};
 
 	const handleQueryChange = (criteriaChange, index) => {
@@ -385,17 +403,34 @@ function SegmentEdit({
 								render={renderLocalizedInputs}
 							/>
 
-							<LocalizedInput
-								availableLanguages={availableLocales}
-								defaultLang={defaultLanguageId}
-								initialLanguageId={defaultLanguageId}
-								initialOpen={false}
-								initialValues={values.name}
-								onChange={handleLocalizedInputChange}
-								placeholder={placeholder}
-								portletNamespace={portletNamespace}
-								readOnly={!data.editing}
-							/>
+							<div className="clay-localized-input">
+								<ClayLocalizedInput
+									label=""
+									locales={Object.keys(availableLocales)
+										.sort((languageId) =>
+											languageId === defaultLanguageId
+												? -1
+												: 1
+										)
+										.map((initLabel) => {
+											const label =
+												standardizeLocaleKey(initLabel);
+
+											return {
+												label,
+												symbol: label.toLowerCase(),
+											};
+										})}
+									onSelectedLocaleChange={setSelectedLocale}
+									onTranslationsChange={
+										handleLocalizedInputChange
+									}
+									placeholder={placeholder}
+									readOnly={!data.editing}
+									selectedLocale={selectedLocale}
+									translations={translations}
+								/>
+							</div>
 						</div>
 
 						{hasUpdatePermission && (
@@ -406,7 +441,7 @@ function SegmentEdit({
 											className="text-capitalize"
 											displayType="secondary"
 											onClick={handleCancelButton}
-											small
+											size="sm"
 										>
 											{Liferay.Language.get('cancel')}
 										</ClayButton>
@@ -420,7 +455,7 @@ function SegmentEdit({
 											onClick={(event) =>
 												handleValidate(event)
 											}
-											small={true}
+											size="sm"
 											type="submit"
 										>
 											{Liferay.Language.get('save')}
@@ -430,10 +465,10 @@ function SegmentEdit({
 									<div className="btn-group-item">
 										<ClayButtonWithIcon
 											aria-label={editButtonTitle}
-											borderless={true}
+											borderless
 											displayType="secondary"
 											onClick={handleCriteriaEdit}
-											outline={true}
+											outline
 											role="tab"
 											size="sm"
 											symbol="cog"
@@ -552,6 +587,24 @@ function queryHasEmptyValues(contributors) {
 	);
 
 	return checkForEmptyValuesInItems(items);
+}
+
+function standardizeLocaleKey(key) {
+	return key.replace(/_/g, '-');
+}
+
+function normalizeLocaleKey(key) {
+	return key.replace(/-/g, '_');
+}
+
+function formatLocales(locales, fnFormat) {
+	return Object.keys(locales).reduce((acc, cur) => {
+		const label = fnFormat(cur);
+
+		acc[label] = locales[cur];
+
+		return acc;
+	}, {});
 }
 
 export default withFormik({

@@ -124,7 +124,7 @@ public class FirebasePushNotificationsSenderTest {
 		_saveConfiguration();
 
 		AssertUtils.assertFailure(
-			PushNotificationsException.class, "Unable get the access token",
+			PushNotificationsException.class, "Unable to get access token",
 			() -> _pushNotificationsDeviceLocalService.sendPushNotification(
 				_PLATFORM, Arrays.asList(RandomTestUtil.randomString()),
 				_getRandomNotificationJSONObject()));
@@ -257,7 +257,7 @@ public class FirebasePushNotificationsSenderTest {
 
 		AssertUtils.assertFailure(
 			PushNotificationsException.class,
-			"Unable to create a notification group",
+			"Unable to create notification group",
 			() -> _pushNotificationsDeviceLocalService.sendPushNotification(
 				_PLATFORM, destinationTokens,
 				_getRandomNotificationJSONObject()));
@@ -314,9 +314,8 @@ public class FirebasePushNotificationsSenderTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Unable to remove notification group with ",
-					"notification_key: ", groupId,
-					" and notification_key_name: ", groupName),
+					"Unable to remove notification group with ID ", groupId,
+					" and name ", groupName),
 				logEntry.getMessage());
 		}
 	}
@@ -347,7 +346,7 @@ public class FirebasePushNotificationsSenderTest {
 
 			AssertUtils.assertFailure(
 				PushNotificationsException.class,
-				"Unable to send the push notification",
+				"Unable to send push notification",
 				() -> _pushNotificationsDeviceLocalService.sendPushNotification(
 					_PLATFORM, destinationTokens, jsonObject));
 			_verifyAccessTokenRequest();
@@ -370,7 +369,7 @@ public class FirebasePushNotificationsSenderTest {
 
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Unable send notification with token ", groupId,
+					"Unable to send notification with token ", groupId,
 					" and reason REASON"),
 				logEntry.getMessage());
 

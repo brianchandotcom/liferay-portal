@@ -83,19 +83,18 @@ public class TestrayBuildAutofillResourceImpl
 			for (Map<String, Serializable> testrayCaseResult1 :
 					testrayCaseResults1) {
 
-				for (Map<String, Serializable> testrayCaseResultObjectEntry2 :
+				for (Map<String, Serializable> testrayCaseResult2 :
 						testrayCaseResults2) {
 
 					if (!Objects.equals(
 							String.valueOf(testrayCaseResult1.get("errors")),
-							String.valueOf(
-								testrayCaseResultObjectEntry2.get("errors")))) {
+							String.valueOf(testrayCaseResult2.get("errors")))) {
 
 						continue;
 					}
 
 					ObjectEntry objectEntry = _autofillTestrayCaseResult(
-						testrayCaseResult1, testrayCaseResultObjectEntry2);
+						testrayCaseResult1, testrayCaseResult2);
 
 					if (objectEntry != null) {
 						caseAmount++;

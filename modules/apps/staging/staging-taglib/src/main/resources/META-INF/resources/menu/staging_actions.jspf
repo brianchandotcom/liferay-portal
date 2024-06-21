@@ -270,7 +270,7 @@
 								destroyOnHide: true,
 							},
 							dialogIframe: {
-								bodyCssClass: 'dialog-with-footer',
+								bodyCssClass: 'cadmin dialog-with-footer',
 							},
 							id: '<portlet:namespace />publishLatestChangesDialog',
 							title: '<%= UnicodeFormatter.toString(publishMessage) %>',

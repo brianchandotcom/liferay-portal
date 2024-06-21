@@ -3,19 +3,27 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Page, expect} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 export class BlogsPage {
+	readonly deleteAllBlogEntriesButton: Locator;
 	readonly page: Page;
 	readonly permissionsFrameLocator: FrameLocator;
+	readonly selectAllBlogEntriesCheckBox: Locator;
 
 	constructor(page: Page) {
+		this.deleteAllBlogEntriesButton = page.getByRole('button', {
+			name: 'Delete',
+		});
 		this.page = page;
 		this.permissionsFrameLocator = page.frameLocator(
 			'iframe[title="Permissions"]'
+		);
+		this.selectAllBlogEntriesCheckBox = page.getByLabel(
+			'Select All Items on the Page'
 		);
 	}
 
@@ -77,5 +85,10 @@ export class BlogsPage {
 		await this.permissionsFrameLocator
 			.getByRole('button', {name: 'Cancel'})
 			.click();
+	}
+
+	async deleteAllBlogEntries() {
+		await this.selectAllBlogEntriesCheckBox.check();
+		await this.deleteAllBlogEntriesButton.click();
 	}
 }

@@ -73,6 +73,7 @@ test.describe('Test for Organization Account visibility depending on Permissions
 					scope: 1,
 				},
 			],
+			roleType: 'organization',
 		});
 
 		await apiHelpers.headlessAdminUser.assignUserToOrganizationRole(
@@ -110,7 +111,10 @@ test.describe('Test for Organization Account visibility depending on Permissions
 		await accountsPage.newButton.click();
 
 		await expect(
-			page.getByText(organization2.name, {exact: true})
+			accountsPage.organizationAssignmentFrame.getByText(
+				organization2.name,
+				{exact: true}
+			)
 		).toHaveCount(0);
 	});
 
@@ -138,6 +142,7 @@ test.describe('Test for Organization Account visibility depending on Permissions
 		});
 
 		const role = await apiHelpers.headlessAdminUser.postRole({
+			roleType: 'organization',
 			name: getRandomString(),
 			rolePermissions: [
 				{
@@ -204,10 +209,16 @@ test.describe('Test for Organization Account visibility depending on Permissions
 		await accountsPage.newButton.click();
 
 		await expect(
-			page.getByText(organization1.name, {exact: true})
+			accountsPage.organizationAssignmentFrame.getByText(
+				organization1.name,
+				{exact: true}
+			)
 		).toBeVisible();
 		await expect(
-			page.getByText(organization2.name, {exact: true})
+			accountsPage.organizationAssignmentFrame.getByText(
+				organization2.name,
+				{exact: true}
+			)
 		).toBeVisible();
 	});
 
@@ -233,6 +244,7 @@ test.describe('Test for Organization Account visibility depending on Permissions
 		});
 
 		const role = await apiHelpers.headlessAdminUser.postRole({
+			roleType: 'organization',
 			name: getRandomString(),
 			rolePermissions: [
 				{

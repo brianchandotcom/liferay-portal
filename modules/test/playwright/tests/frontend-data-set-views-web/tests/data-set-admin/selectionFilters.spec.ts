@@ -129,12 +129,6 @@ test.describe('Filters in Data Set Manager', () => {
 		page,
 		picklistApiHelpers,
 	}) => {
-		await test.step('Navigate to the Filters tab', async () => {
-			await filtersPage.goto({
-				dataSetLabel,
-			});
-		});
-
 		await test.step('Create a selection filter', async () => {
 			await filtersPage.createSelectionFilterPicklist({
 				filterBy: 'externalReferenceCode',

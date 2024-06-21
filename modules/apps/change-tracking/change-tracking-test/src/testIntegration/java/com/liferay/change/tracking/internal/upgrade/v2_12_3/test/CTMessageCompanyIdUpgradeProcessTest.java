@@ -68,12 +68,7 @@ public class CTMessageCompanyIdUpgradeProcessTest {
 
 		message.put("companyId", companyId);
 
-		message.setPayload(
-			JSONUtil.put(
-				"companyId", companyId
-			).put(
-				"testKey", "testValue"
-			));
+		message.setPayload(JSONUtil.put("testKey", "testValue"));
 
 		String messageContent = JSONFactoryUtil.serialize(message);
 

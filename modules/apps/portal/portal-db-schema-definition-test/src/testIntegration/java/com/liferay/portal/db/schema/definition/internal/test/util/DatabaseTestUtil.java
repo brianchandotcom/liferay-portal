@@ -161,7 +161,7 @@ public class DatabaseTestUtil {
 			DBManagerUtil.getDBType(), targetDataSource);
 
 		try (Connection connection = targetDataSource.getConnection()) {
-			db.runSQLTemplateString(connection, FileUtil.read(file), true);
+			db.runSQLTemplate(connection, FileUtil.read(file), true);
 		}
 	}
 

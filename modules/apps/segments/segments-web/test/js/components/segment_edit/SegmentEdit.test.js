@@ -180,13 +180,13 @@ describe('SegmentEdit', () => {
 
 		const hasUpdatePermission = true;
 
-		const {getByTestId, getByText} = _renderSegmentEditComponent({
+		const {getByPlaceholderText, getByText} = _renderSegmentEditComponent({
 			contributors: CONTRIBUTORS,
 			hasUpdatePermission,
 			propertyGroups: PROPERTY_GROUPS_BASIC,
 		});
 
-		const localizedInput = getByTestId('localized-main-input');
+		const localizedInput = getByPlaceholderText('untitled-segment');
 		const cancelButton = getByText('cancel');
 
 		fireEvent.change(localizedInput, {target: {value: 'A'}});

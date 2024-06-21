@@ -23,14 +23,10 @@ import java.util.Properties;
  */
 public class RelevantRule {
 
-	public RelevantRule(
-		String filePath, String name, Properties properties, String suiteName) {
-
+	public RelevantRule(String filePath, String name, Properties properties) {
 		_filePath = filePath;
 		_name = name;
 		_properties = properties;
-
-		_testSuiteName = suiteName;
 	}
 
 	public String getFilePath() {
@@ -117,7 +113,10 @@ public class RelevantRule {
 	}
 
 	public String getTestSuiteName() {
-		return _testSuiteName;
+		RelevantRuleEngine relevantRuleEngine =
+			RelevantRuleEngine.getInstance();
+
+		return relevantRuleEngine.getTestSuiteName();
 	}
 
 	public boolean matches(File modifiedFile) {
@@ -138,6 +137,5 @@ public class RelevantRule {
 	private final String _name;
 	private final Properties _properties;
 	private List<TestBatch> _testBatches;
-	private final String _testSuiteName;
 
 }

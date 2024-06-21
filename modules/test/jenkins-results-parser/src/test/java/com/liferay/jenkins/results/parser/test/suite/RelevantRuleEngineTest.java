@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -27,7 +28,7 @@ public class RelevantRuleEngineTest {
 
 	@Test
 	public void testModifiedFileForPlaywrightBatch() {
-		RelevantRuleEngine relevantRuleEngine = new RelevantRuleEngine(
+		RelevantRuleEngine relevantRuleEngine = RelevantRuleEngine.getInstance(
 			_baseDir);
 
 		List<RelevantRule> relevantRules =
@@ -72,7 +73,7 @@ public class RelevantRuleEngineTest {
 
 	@Test
 	public void testModifiedFileInBaseDir() {
-		RelevantRuleEngine relevantRuleEngine = new RelevantRuleEngine(
+		RelevantRuleEngine relevantRuleEngine = RelevantRuleEngine.getInstance(
 			_baseDir);
 
 		List<RelevantRule> relevantRules =
@@ -94,7 +95,7 @@ public class RelevantRuleEngineTest {
 
 	@Test
 	public void testModifiedFileInBaseDirAndModule1Dir() {
-		RelevantRuleEngine relevantRuleEngine = new RelevantRuleEngine(
+		RelevantRuleEngine relevantRuleEngine = RelevantRuleEngine.getInstance(
 			_baseDir);
 
 		List<RelevantRule> relevantRules =
@@ -121,7 +122,7 @@ public class RelevantRuleEngineTest {
 
 	@Test
 	public void testModifiedFileInBaseDirAndModule2Dir() {
-		RelevantRuleEngine relevantRuleEngine = new RelevantRuleEngine(
+		RelevantRuleEngine relevantRuleEngine = RelevantRuleEngine.getInstance(
 			_baseDir);
 
 		List<RelevantRule> relevantRules =

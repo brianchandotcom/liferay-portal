@@ -20,7 +20,7 @@ public class RelevantTestSuite {
 	public RelevantTestSuite(File baseDir, List<File> modifiedFiles) {
 		_modifiedFiles = modifiedFiles;
 
-		_relevantRuleEngine = new RelevantRuleEngine(baseDir);
+		_relevantRuleEngine = RelevantRuleEngine.getInstance(baseDir);
 	}
 
 	public List<TestBatch> getTestBatches() {

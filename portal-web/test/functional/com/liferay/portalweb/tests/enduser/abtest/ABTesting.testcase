@@ -350,6 +350,8 @@ definition {
 			ABTest.selectGoal(key_goal = "Click");
 
 			Click(locator1 = "Modal#SAVE_BUTTON");
+
+			WaitForElementNotPresent(locator1 = "Modal#MODAL_CONTENT");
 		}
 
 		task ("Assert the changes have been applied") {

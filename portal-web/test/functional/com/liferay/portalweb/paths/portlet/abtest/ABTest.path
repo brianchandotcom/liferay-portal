@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>AB_TEST_TITLE_DXP</td>
-	<td>//*[@class= 'mb-0 text-dark text-truncate' and contains(text(),'${key_title}')]</td>
+	<td>//*[contains(@class, 'text-truncate') and contains(text(),'${key_title}')]</td>
 	<td></td>
 </tr>
 <tr>

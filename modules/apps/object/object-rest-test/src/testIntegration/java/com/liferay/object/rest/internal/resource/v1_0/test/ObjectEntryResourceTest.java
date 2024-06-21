@@ -126,6 +126,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.portal.test.log.LogCapture;
@@ -153,10 +154,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 import javax.ws.rs.Priorities;
@@ -5554,12 +5555,27 @@ public class ObjectEntryResourceTest {
 
 	@Test
 	public void testGetObjectEntryUnsafeSuppliers() throws Exception {
+		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_BOOLEAN, RandomTestUtil.randomBoolean()
+			).put(
+				_OBJECT_FIELD_NAME_DATE,
+				_dateFormat.format(RandomTestUtil.nextDate())
+			).build());
+
+		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition2, _OBJECT_FIELD_NAME_TEXT,
+			RandomTestUtil.randomString());
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
 		Bundle bundle = FrameworkUtil.getBundle(ObjectEntryResourceTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		AtomicInteger atomicInteger1 = new AtomicInteger();
-		AtomicInteger atomicInteger2 = new AtomicInteger();
+		Map<String, Long> invocations = new HashMap<>();
 
 		ServiceRegistration<Feature> serviceRegistration =
 			bundleContext.registerService(
@@ -5577,32 +5593,8 @@ public class ObjectEntryResourceTest {
 												containerResponseContext.
 													getEntity();
 
-								Map<String, Object> properties =
-									objectEntry.getProperties();
-
-								UnsafeSupplier<Object, Exception>
-									unsafeSupplier1 = () -> {
-										atomicInteger1.incrementAndGet();
-
-										return RandomTestUtil.randomBoolean();
-									};
-
-								properties.put(
-									_OBJECT_FIELD_NAME_BOOLEAN,
-									unsafeSupplier1);
-
-								UnsafeSupplier<Object, Exception>
-									unsafeSupplier2 = () -> {
-										atomicInteger2.incrementAndGet();
-
-										return _dateFormat.format(
-											RandomTestUtil.nextDate());
-									};
-
-								properties.put(
-									_OBJECT_FIELD_NAME_DATE, unsafeSupplier2);
-
-								objectEntry.setProperties(properties);
+								_registerUnsafeSupplierInvocations(
+									invocations, objectEntry, null);
 							},
 						Priorities.USER + 999);
 
@@ -5619,16 +5611,6 @@ public class ObjectEntryResourceTest {
 				).build());
 
 		try {
-			_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-				_objectDefinition1,
-				HashMapBuilder.<String, Serializable>put(
-					_OBJECT_FIELD_NAME_BOOLEAN, RandomTestUtil.randomBoolean()
-				).put(
-					_OBJECT_FIELD_NAME_DATE,
-					_dateFormat.format(RandomTestUtil.nextDate())
-				).build(),
-				_TAG_1);
-
 			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null,
 				StringBundler.concat(
@@ -5641,13 +5623,16 @@ public class ObjectEntryResourceTest {
 			Assert.assertTrue(jsonObject.has(_OBJECT_FIELD_NAME_BOOLEAN));
 			Assert.assertFalse(jsonObject.has(_OBJECT_FIELD_NAME_DATE));
 			Assert.assertFalse(jsonObject.has(_OBJECT_FIELD_NAME_TEXT));
+			Assert.assertFalse(jsonObject.has(_objectRelationship1.getName()));
 
-			Assert.assertEquals(
-				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed once",
-				1, atomicInteger1.getAndSet(0));
-			Assert.assertEquals(
-				_OBJECT_FIELD_NAME_DATE + " should not have been computed", 0,
-				atomicInteger2.getAndSet(0));
+			_assertInvocations(invocations, true, _OBJECT_FIELD_NAME_BOOLEAN);
+			_assertInvocations(invocations, false, _OBJECT_FIELD_NAME_DATE);
+			_assertInvocations(invocations, true, _OBJECT_FIELD_NAME_TEXT);
+			_assertInvocations(
+				invocations, false, _objectRelationship1.getName());
+			_assertInvocations(
+				invocations, false,
+				_objectRelationship1.getName() + "." + _OBJECT_FIELD_NAME_TEXT);
 
 			jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -5659,13 +5644,76 @@ public class ObjectEntryResourceTest {
 			Assert.assertTrue(jsonObject.has(_OBJECT_FIELD_NAME_BOOLEAN));
 			Assert.assertTrue(jsonObject.has(_OBJECT_FIELD_NAME_DATE));
 			Assert.assertFalse(jsonObject.has(_OBJECT_FIELD_NAME_TEXT));
+			Assert.assertFalse(jsonObject.has(_objectRelationship1.getName()));
 
-			Assert.assertEquals(
-				_OBJECT_FIELD_NAME_BOOLEAN + " should have been computed once",
-				1, atomicInteger1.getAndSet(0));
-			Assert.assertEquals(
-				_OBJECT_FIELD_NAME_DATE + " should have been computed once", 1,
-				atomicInteger2.getAndSet(0));
+			_assertInvocations(invocations, true, _OBJECT_FIELD_NAME_BOOLEAN);
+			_assertInvocations(invocations, true, _OBJECT_FIELD_NAME_DATE);
+			_assertInvocations(invocations, true, _OBJECT_FIELD_NAME_TEXT);
+			_assertInvocations(
+				invocations, false, _objectRelationship1.getName());
+			_assertInvocations(
+				invocations, false,
+				_objectRelationship1.getName() + "." + _OBJECT_FIELD_NAME_TEXT);
+
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/",
+					_objectEntry1.getExternalReferenceCode(), "?nestedFields=",
+					_objectRelationship1.getName()),
+				Http.Method.GET);
+
+			Assert.assertTrue(jsonObject.has(_OBJECT_FIELD_NAME_BOOLEAN));
+			Assert.assertTrue(jsonObject.has(_OBJECT_FIELD_NAME_DATE));
+			Assert.assertFalse(jsonObject.has(_OBJECT_FIELD_NAME_TEXT));
+			Assert.assertTrue(jsonObject.has(_objectRelationship1.getName()));
+			Assert.assertFalse(
+				Validator.isNull(
+					JSONUtil.getValueAsString(
+						jsonObject,
+						"JSONArray/" + _objectRelationship1.getName(),
+						"Object/0", "Object/" + _OBJECT_FIELD_NAME_TEXT)));
+
+			_assertInvocations(invocations, true, _OBJECT_FIELD_NAME_BOOLEAN);
+			_assertInvocations(invocations, true, _OBJECT_FIELD_NAME_DATE);
+			_assertInvocations(invocations, true, _OBJECT_FIELD_NAME_TEXT);
+			_assertInvocations(
+				invocations, true, _objectRelationship1.getName());
+			_assertInvocations(
+				invocations, true,
+				_objectRelationship1.getName() + "." + _OBJECT_FIELD_NAME_TEXT);
+
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/",
+					_objectEntry1.getExternalReferenceCode(), "?nestedFields=",
+					_objectRelationship1.getName(), "&restrictFields=",
+					_objectRelationship1.getName(), ".",
+					_OBJECT_FIELD_NAME_TEXT),
+				Http.Method.GET);
+
+			Assert.assertTrue(jsonObject.has(_OBJECT_FIELD_NAME_BOOLEAN));
+			Assert.assertTrue(jsonObject.has(_OBJECT_FIELD_NAME_DATE));
+			Assert.assertFalse(jsonObject.has(_OBJECT_FIELD_NAME_TEXT));
+			Assert.assertTrue(jsonObject.has(_objectRelationship1.getName()));
+			Assert.assertTrue(
+				Validator.isNull(
+					JSONUtil.getValueAsString(
+						jsonObject,
+						"JSONArray/" + _objectRelationship1.getName(),
+						"Object/0", "Object/" + _OBJECT_FIELD_NAME_TEXT)));
+
+			_assertInvocations(invocations, true, _OBJECT_FIELD_NAME_BOOLEAN);
+			_assertInvocations(invocations, true, _OBJECT_FIELD_NAME_DATE);
+			_assertInvocations(invocations, true, _OBJECT_FIELD_NAME_TEXT);
+			_assertInvocations(
+				invocations, true, _objectRelationship1.getName());
+			_assertInvocations(
+				invocations, false,
+				_objectRelationship1.getName() + "." + _OBJECT_FIELD_NAME_TEXT);
 		}
 		finally {
 			serviceRegistration.unregister();
@@ -11219,6 +11267,23 @@ public class ObjectEntryResourceTest {
 			String.valueOf(itemJSONObject.get(expectedObjectFieldName)));
 	}
 
+	private void _assertInvocations(
+		Map<String, Long> invocations, boolean invoked, String name) {
+
+		if (invoked) {
+			Assert.assertEquals(
+				name + " should have been computed once", 1,
+				(long)invocations.getOrDefault(name, 1L));
+
+			invocations.put(name, 0L);
+		}
+		else {
+			Assert.assertEquals(
+				name + " should not have been computed", 0,
+				(long)invocations.getOrDefault(name, 0L));
+		}
+	}
+
 	private void _assertItem(
 		int index, JSONObject jsonObject, String objectFieldName,
 		Object value) {
@@ -11623,6 +11688,42 @@ public class ObjectEntryResourceTest {
 					taxonomyCategories, TaxonomyCategory::getId, String.class)
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+	}
+
+	private void _registerUnsafeSupplierInvocations(
+		Map<String, Long> invocations,
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry,
+		String relationshipName) {
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		properties.replaceAll(
+			(name, value) -> (UnsafeSupplier<Object, Exception>)() -> {
+				String key = name;
+
+				if (relationshipName != null) {
+					key = relationshipName + "." + name;
+				}
+
+				invocations.compute(
+					key,
+					(__, invocation) -> GetterUtil.get(invocation, 0L) + 1);
+
+				if (StringUtil.equals(name, _objectRelationship1.getName())) {
+					com.liferay.object.rest.dto.v1_0.ObjectEntry[]
+						objectEntries =
+							(com.liferay.object.rest.dto.v1_0.ObjectEntry[])
+								value;
+
+					_registerUnsafeSupplierInvocations(
+						invocations, objectEntries[0],
+						_objectRelationship1.getName());
+				}
+
+				return value;
+			});
+
+		objectEntry.setProperties(properties);
 	}
 
 	private void _testFilterObjectEntriesByRelatedSystemObjectEntriesFields(

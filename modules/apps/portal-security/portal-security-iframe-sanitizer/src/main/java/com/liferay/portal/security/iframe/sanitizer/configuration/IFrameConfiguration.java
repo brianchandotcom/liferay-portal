@@ -31,4 +31,10 @@ public interface IFrameConfiguration {
 	@Meta.AD(deflt = "", name = "sandbox-attribute-values", required = false)
 	public String[] sandboxAttributeValues();
 
+	@Meta.AD(
+		deflt = "com.liferay.fragment.model.FragmentEntry|com.liferay.journal.model.JournalArticle",
+		name = "whitelist", required = false
+	)
+	public String[] whitelist();
+
 }

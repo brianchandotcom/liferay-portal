@@ -10,22 +10,22 @@ import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 export class WorkflowTasksPage {
+	readonly assignedToMyRolesLink: Locator;
 	readonly page: Page;
 
-	readonly assignedToMyRolesLink: Locator;
-
 	constructor(page: Page) {
-		this.page = page;
-
 		this.assignedToMyRolesLink = page.getByRole('link', {
 			name: 'Assigned to my roles',
 		});
+		this.page = page;
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.myWorkflowTasks}`
 		);
+
+		await this.page.waitForLoadState();
 	}
 
 	async goToAssignedToMyRoles(siteUrl?: Site['friendlyUrlPath']) {

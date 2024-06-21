@@ -53,18 +53,19 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
+
+		_siteNavigationMenu =
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				"Primary Menu", SiteNavigationConstants.TYPE_PRIMARY, true,
+				_serviceContext);
 	}
 
 	@Test
 	public void testAddToAutoMenuFalseToMenu() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		_siteNavigationMenuLocalService.addSiteNavigationMenu(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), "Auto Menu",
-			SiteNavigationConstants.TYPE_DEFAULT, true, serviceContext);
-
 		_layoutService.addLayout(
 			_group.getGroupId(), false, 0,
 			HashMapBuilder.put(
@@ -75,7 +76,7 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 			UnicodePropertiesBuilder.put(
 				"addToAutoMenus", Boolean.FALSE.toString()
 			).buildString(),
-			false, new HashMap<>(), serviceContext);
+			false, new HashMap<>(), _serviceContext);
 
 		Assert.assertEquals(
 			0,
@@ -85,15 +86,6 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 
 	@Test
 	public void testAddToAutoMenuFalseToPrimaryMenu() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		_siteNavigationMenuLocalService.addSiteNavigationMenu(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			"Primary Menu", SiteNavigationConstants.TYPE_PRIMARY, true,
-			serviceContext);
-
 		_layoutService.addLayout(
 			_group.getGroupId(), false, 0,
 			HashMapBuilder.put(
@@ -104,7 +96,7 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 			UnicodePropertiesBuilder.put(
 				"addToAutoMenus", Boolean.FALSE.toString()
 			).buildString(),
-			false, new HashMap<>(), serviceContext);
+			false, new HashMap<>(), _serviceContext);
 
 		Assert.assertEquals(
 			0,
@@ -114,21 +106,11 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 
 	@Test
 	public void testAddToAutoMenuTrueToMenu() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		SiteNavigationMenu autoSiteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				"Auto Menu", SiteNavigationConstants.TYPE_DEFAULT, true,
-				serviceContext);
-
-		SiteNavigationMenu primarySiteNavigationMenu =
-			_siteNavigationMenuLocalService.addSiteNavigationMenu(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				"Primary Menu", SiteNavigationConstants.TYPE_PRIMARY, true,
-				serviceContext);
+				_serviceContext);
 
 		_layoutService.addLayout(
 			_group.getGroupId(), false, 0,
@@ -142,10 +124,10 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 				StringUtil.merge(
 					new long[] {
 						autoSiteNavigationMenu.getSiteNavigationMenuId(),
-						primarySiteNavigationMenu.getSiteNavigationMenuId()
+						_siteNavigationMenu.getSiteNavigationMenuId()
 					})
 			).buildString(),
-			false, new HashMap<>(), serviceContext);
+			false, new HashMap<>(), _serviceContext);
 
 		Assert.assertEquals(
 			2,
@@ -155,16 +137,6 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 
 	@Test
 	public void testAddToAutoMenuTrueToPrimaryMenu() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.addSiteNavigationMenu(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				"Primary Menu", SiteNavigationConstants.TYPE_PRIMARY, true,
-				serviceContext);
-
 		_layoutService.addLayout(
 			_group.getGroupId(), false, 0,
 			HashMapBuilder.put(
@@ -175,9 +147,9 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 			UnicodePropertiesBuilder.put(
 				"siteNavigationMenuId",
 				StringUtil.merge(
-					new long[] {siteNavigationMenu.getSiteNavigationMenuId()})
+					new long[] {_siteNavigationMenu.getSiteNavigationMenuId()})
 			).buildString(),
-			false, new HashMap<>(), serviceContext);
+			false, new HashMap<>(), _serviceContext);
 
 		Assert.assertEquals(
 			1,
@@ -190,6 +162,9 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 
 	@Inject
 	private LayoutService _layoutService;
+
+	private ServiceContext _serviceContext;
+	private SiteNavigationMenu _siteNavigationMenu;
 
 	@Inject
 	private SiteNavigationMenuItemLocalService

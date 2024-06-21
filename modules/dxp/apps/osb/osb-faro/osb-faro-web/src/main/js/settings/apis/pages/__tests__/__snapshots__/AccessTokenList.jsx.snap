@@ -144,9 +144,11 @@ exports[`AccessTokenList should render 1`] = `
               >
                 Token Information
               </div>
-              <h5>
+              <div
+                class="h5"
+              >
                 Root Endpoint:
-              </h5>
+              </div>
               <span
                 class="text-secondary"
               >

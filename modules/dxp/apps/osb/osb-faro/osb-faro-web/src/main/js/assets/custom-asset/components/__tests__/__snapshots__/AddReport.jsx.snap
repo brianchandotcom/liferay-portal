@@ -8,11 +8,11 @@ exports[`AddReport should render a form AddReport 1`] = `
     <div
       class="card-header"
     >
-      <h5
+      <div
         class="card-title"
       >
         Add Report
-      </h5>
+      </div>
     </div>
     <div
       class="card-body"

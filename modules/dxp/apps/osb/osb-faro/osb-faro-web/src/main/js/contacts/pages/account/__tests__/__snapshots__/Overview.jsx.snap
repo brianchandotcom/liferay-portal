@@ -14,11 +14,11 @@ exports[`AccountOverview should render 1`] = `
         <div
           class="card-header"
         >
-          <h5
+          <div
             class="card-title"
           >
             Account Activities
-          </h5>
+          </div>
         </div>
         <div
           class="card-body"
@@ -97,11 +97,11 @@ exports[`AccountOverview should render 1`] = `
         <div
           class="card-header"
         >
-          <h5
+          <div
             class="card-title"
           >
             Account Interest Topics
-          </h5>
+          </div>
         </div>
         <div
           class="table-responsive table-root flex-grow-1"
@@ -219,11 +219,11 @@ exports[`AccountOverview should render 1`] = `
         <div
           class="card-header"
         >
-          <h5
+          <div
             class="card-title"
           >
             Associated Segments
-          </h5>
+          </div>
         </div>
         <div
           class="card-body"
@@ -339,11 +339,11 @@ exports[`AccountOverview should render 1`] = `
         <div
           class="card-header"
         >
-          <h5
+          <div
             class="card-title"
           >
             Account Firmographics
-          </h5>
+          </div>
         </div>
         <div
           class="card-body"
@@ -450,11 +450,11 @@ exports[`AccountOverview should render 1`] = `
         <div
           class="card-header"
         >
-          <h5
+          <div
             class="card-title"
           >
             Contact Information
-          </h5>
+          </div>
         </div>
         <div
           class="card-body"
@@ -521,11 +521,11 @@ exports[`AccountOverview should render 1`] = `
         <div
           class="card-header"
         >
-          <h5
+          <div
             class="card-title"
           >
             Known Individuals
-          </h5>
+          </div>
         </div>
         <div
           class="table-responsive table-root flex-grow-1"

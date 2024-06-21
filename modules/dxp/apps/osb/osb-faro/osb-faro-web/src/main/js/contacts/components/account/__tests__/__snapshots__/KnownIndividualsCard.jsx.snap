@@ -8,11 +8,11 @@ exports[`KnownIndividualsCard should render 1`] = `
     <div
       class="card-header"
     >
-      <h5
+      <div
         class="card-title"
       >
         Known Individuals
-      </h5>
+      </div>
     </div>
     <div
       class="table-responsive table-root flex-grow-1"
@@ -156,11 +156,11 @@ exports[`KnownIndividualsCard should render w/ NoResultsDisplay 1`] = `
     <div
       class="card-header"
     >
-      <h5
+      <div
         class="card-title"
       >
         Known Individuals
-      </h5>
+      </div>
     </div>
     <div
       class="no-results-root flex-grow-1"

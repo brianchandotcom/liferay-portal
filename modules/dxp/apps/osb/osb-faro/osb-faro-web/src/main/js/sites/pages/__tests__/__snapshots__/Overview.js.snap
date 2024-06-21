@@ -21,11 +21,11 @@ exports[`Sites Dashboard Overview render 1`] = `
           <div
             class="card-header align-items-center d-flex justify-content-between"
           >
-            <h5
+            <div
               class="card-title"
             >
               Test Channel Activities
-            </h5>
+            </div>
             <div
               class="d-flex"
             >
@@ -88,11 +88,11 @@ exports[`Sites Dashboard Overview render 1`] = `
           <div
             class="card-header align-items-center d-flex justify-content-between"
           >
-            <h5
+            <div
               class="card-title"
             >
               Top Pages
-            </h5>
+            </div>
             <div
               class="d-flex"
             >
@@ -192,11 +192,11 @@ exports[`Sites Dashboard Overview render 1`] = `
           <div
             class="card-header align-items-center d-flex justify-content-between"
           >
-            <h5
+            <div
               class="card-title"
             >
               Acquisitions
-            </h5>
+            </div>
             <div
               class="d-flex"
             >
@@ -284,11 +284,11 @@ exports[`Sites Dashboard Overview render 1`] = `
           <div
             class="card-header align-items-center d-flex justify-content-between"
           >
-            <h5
+            <div
               class="card-title"
             >
               Visitors by Day and Time
-            </h5>
+            </div>
             <div
               class="d-flex"
             >
@@ -318,11 +318,11 @@ exports[`Sites Dashboard Overview render 1`] = `
           <div
             class="card-header align-items-center d-flex justify-content-between"
           >
-            <h5
+            <div
               class="card-title"
             >
               Search Terms
-            </h5>
+            </div>
             <div
               class="d-flex"
             >
@@ -374,11 +374,11 @@ exports[`Sites Dashboard Overview render 1`] = `
           <div
             class="card-header align-items-center d-flex justify-content-between"
           >
-            <h5
+            <div
               class="card-title"
             >
               Interests
-            </h5>
+            </div>
             <div
               class="d-flex"
             >
@@ -455,11 +455,11 @@ exports[`Sites Dashboard Overview render 1`] = `
           <div
             class="card-header align-items-center d-flex justify-content-between"
           >
-            <h5
+            <div
               class="card-title"
             >
               Sessions by Location
-            </h5>
+            </div>
             <div
               class="d-flex"
             >
@@ -490,11 +490,11 @@ exports[`Sites Dashboard Overview render 1`] = `
           <div
             class="card-header align-items-center d-flex justify-content-between"
           >
-            <h5
+            <div
               class="card-title"
             >
               Session Technology
-            </h5>
+            </div>
             <div
               class="d-flex"
             >
@@ -530,11 +530,11 @@ exports[`Sites Dashboard Overview render 1`] = `
             class="card-header"
             data-aria-hidden="true"
           >
-            <h5
+            <div
               class="card-title"
             >
               Cohort Analysis
-            </h5>
+            </div>
           </div>
           <div
             class="card-body"

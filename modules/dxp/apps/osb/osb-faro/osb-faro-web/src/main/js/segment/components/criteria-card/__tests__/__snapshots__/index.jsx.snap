@@ -8,11 +8,11 @@ exports[`CriteriaCard should render 1`] = `
     <div
       class="card-header"
     >
-      <h5
+      <div
         class="card-title"
       >
         Segment Criteria
-      </h5>
+      </div>
     </div>
     <div
       class="card-body"

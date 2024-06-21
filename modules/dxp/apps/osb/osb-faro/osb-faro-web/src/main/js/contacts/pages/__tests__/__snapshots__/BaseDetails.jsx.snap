@@ -8,11 +8,11 @@ exports[`BaseDetails should render 1`] = `
     <div
       class="card-header"
     >
-      <h5
+      <div
         class="card-title"
       >
         Properties
-      </h5>
+      </div>
       <div
         class="secondary-info"
       >

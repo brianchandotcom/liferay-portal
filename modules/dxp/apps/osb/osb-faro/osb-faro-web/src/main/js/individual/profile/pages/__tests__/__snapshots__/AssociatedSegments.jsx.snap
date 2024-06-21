@@ -8,11 +8,11 @@ exports[`IndividualAssociatedSegments should render 1`] = `
     <div
       class="card-header"
     >
-      <h5
+      <div
         class="card-title"
       >
         Associated Segments
-      </h5>
+      </div>
       <div
         class="secondary-info"
       >

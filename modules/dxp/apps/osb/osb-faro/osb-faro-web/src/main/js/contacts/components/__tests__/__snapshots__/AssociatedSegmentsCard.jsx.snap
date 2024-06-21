@@ -9,11 +9,11 @@ exports[`AssociatedSegmentsCard should render 1`] = `
     <div
       class="card-header"
     >
-      <h5
+      <div
         class="card-title"
       >
         Associated Segments
-      </h5>
+      </div>
     </div>
     <div
       class="card-body"
@@ -172,11 +172,11 @@ exports[`AssociatedSegmentsCard should render with an no results display 1`] = `
     <div
       class="card-header"
     >
-      <h5
+      <div
         class="card-title"
       >
         Associated Segments
-      </h5>
+      </div>
     </div>
     <div
       class="card-body"

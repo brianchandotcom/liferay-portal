@@ -10,11 +10,11 @@ exports[`BlogMetricCard should render 1`] = `
     <div
       class="card-header align-items-center d-flex justify-content-between"
     >
-      <h5
+      <div
         class="card-title"
       >
         Visitors Behavior
-      </h5>
+      </div>
       <div
         class="d-flex"
       >

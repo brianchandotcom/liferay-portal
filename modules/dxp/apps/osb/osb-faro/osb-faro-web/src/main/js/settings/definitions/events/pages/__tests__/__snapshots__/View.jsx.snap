@@ -93,11 +93,11 @@ exports[`Event View page should render 1`] = `
         <div
           class="card-header"
         >
-          <h5
+          <div
             class="card-title"
           >
             Send This Event
-          </h5>
+          </div>
         </div>
         <div
           class="card-body"

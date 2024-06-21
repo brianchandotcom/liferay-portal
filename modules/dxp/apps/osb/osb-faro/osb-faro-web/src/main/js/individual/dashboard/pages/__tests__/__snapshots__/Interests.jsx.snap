@@ -17,11 +17,11 @@ exports[`Individuals Dashboard Individuals Interests renders 1`] = `
           <div
             class="card-header align-items-center d-flex justify-content-between"
           >
-            <h5
+            <div
               class="card-title"
             >
               Interest Topics
-            </h5>
+            </div>
           </div>
           <div
             class="d-flex flex-column flex-grow-1 justify-content-between"

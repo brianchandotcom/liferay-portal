@@ -1,0 +1,12 @@
+if (Boolean.getBoolean("gradle.develocity.enabled")) {
+	dependencies {
+		classpath group: "com.gradle", name: "common-custom-user-data-gradle-plugin", version: "2.0.1"
+		classpath group: "com.gradle", name: "develocity-gradle-plugin", version: "3.17.4"
+	}
+
+	repositories {
+		maven {
+			url System.properties["repository.url"] ?: "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}

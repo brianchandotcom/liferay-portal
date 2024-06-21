@@ -1,0 +1,45 @@
+if (Boolean.getBoolean("gradle.develocity.enabled")) {
+	apply plugin: "com.gradle.common-custom-user-data-gradle-plugin"
+	apply plugin: "com.gradle.develocity"
+
+	if (Boolean.getBoolean("gradle.develocity.build.cache.enabled")) {
+		buildCache {
+			remote(develocity.buildCache) {
+				allowUntrustedServer = true
+				path = "/cache/"
+
+				if (Boolean.getBoolean("gradle.develocity.push.enabled")) {
+					push = true
+				}
+
+				server = System.getProperty("gradle.develocity.server.url") ?: null
+			}
+		}
+	}
+
+	develocity {
+		if (System.getProperty("gradle.develocity.access.key")) {
+			accessKey = System.getProperty("gradle.develocity.access.key")
+		}
+
+		buildScan {
+			allowUntrustedServer = true
+			server = System.getProperty("gradle.develocity.server.url") ?: null
+
+			if (System.getProperty("gradle.develocity.tag")) {
+				tag System.getProperty("gradle.develocity.tag")
+			}
+
+			if (System.getenv("GITHUB_SENDER_BRANCH_SHA")) {
+				tag System.getenv("GITHUB_SENDER_BRANCH_SHA")
+			}
+
+			termsOfUseAgree = "yes"
+			termsOfUseUrl = "https://gradle.com/terms-of-service"
+
+			if (System.getenv("JENKINS_URL") == null) {
+				uploadInBackground = true
+			}
+		}
+	}
+}

@@ -200,18 +200,31 @@ export function FormInputGeneralPanel({item}) {
 	const state = useSelector((state) => state);
 
 	const filterFields = useCallback(
-		(initialFields, relationship) => {
+		(initialFields, selectedRelationship, relationships) => {
 			if (!initialFields || !allowedInputTypes || isSpecialInput) {
 				return [];
 			}
 
-			const fields = relationship
-				? initialFields.filter(
-						(fieldSet) => fieldSet.name === relationship
-					)
-				: initialFields;
+			let fields = initialFields;
 
-			let nextFields = fields;
+			if (selectedRelationship) {
+				fields = initialFields.filter(
+					(fieldSet) => fieldSet.name === selectedRelationship
+				);
+			}
+
+			if (
+				Liferay.FeatureFlags['LPD-20213'] &&
+				relationships &&
+				!selectedRelationship
+			) {
+				fields = fields.filter(
+					(fieldSet) =>
+						!relationships
+							.map((relationship) => relationship.name)
+							.includes(fieldSet.name)
+				);
+			}
 
 			const selectedFields = (() => {
 				const selectedFields = [];
@@ -248,7 +261,7 @@ export function FormInputGeneralPanel({item}) {
 				return selectedFields;
 			})();
 
-			nextFields = nextFields
+			fields = fields
 				.map((fieldset) => ({
 					...fieldset,
 					fields: fieldset.fields
@@ -265,7 +278,7 @@ export function FormInputGeneralPanel({item}) {
 				}))
 				.filter((fieldset) => fieldset.fields.length);
 
-			return nextFields;
+			return fields;
 		},
 		[allowedInputTypes, formId, isSpecialInput, item.itemId, state]
 	);
@@ -345,7 +358,7 @@ export function FormInputGeneralPanel({item}) {
 								form={{
 									classNameId,
 									classTypeId,
-									fields: filterFields(formFields),
+									fields: formFields,
 								}}
 								item={item}
 								onValueSelect={handleValueSelect}
@@ -412,24 +425,32 @@ function FormInputMappingOptions({
 
 	const [fields, setFields] = useState(formFields);
 
-	const [relationship, setRelationship] = useState(
+	const [selectedRelationship, setSelectedRelationship] = useState(
 		getMappedRelationship(configurationValues.inputFieldId)
 	);
 
 	const [sourceType, setSourceType] = useState(
-		relationship ? SOURCE_TYPES.relationship : SOURCE_TYPES.mainObject
+		selectedRelationship
+			? SOURCE_TYPES.relationship
+			: SOURCE_TYPES.mainObject
 	);
 
 	useEffect(() => {
-		if (sourceType === SOURCE_TYPES.mainObject) {
-			setFields(formFields);
+		if (sourceType === SOURCE_TYPES.relationship && !selectedRelationship) {
+			setFields([]);
 		}
-		else if (sourceType === SOURCE_TYPES.relationship) {
+		else {
 			setFields(
-				relationship ? filterFields(formFields, relationship) : []
+				filterFields(formFields, selectedRelationship, relationships)
 			);
 		}
-	}, [filterFields, formFields, relationship, sourceType]);
+	}, [
+		filterFields,
+		formFields,
+		relationships,
+		selectedRelationship,
+		sourceType,
+	]);
 
 	if (!classNameId || !classTypeId) {
 		return null;
@@ -453,7 +474,7 @@ function FormInputMappingOptions({
 							id={sourceSelectId}
 							onChange={(event) => {
 								setSourceType(event.target.value);
-								setRelationship(null);
+								setSelectedRelationship(null);
 								onValueSelect(FIELD_ID_CONFIGURATION_KEY, null);
 							}}
 							options={[
@@ -483,7 +504,7 @@ function FormInputMappingOptions({
 								className="pr-4 text-truncate"
 								id={relationshipSelectId}
 								onChange={(event) => {
-									setRelationship(event.target.value);
+									setSelectedRelationship(event.target.value);
 
 									onValueSelect(
 										FIELD_ID_CONFIGURATION_KEY,
@@ -499,7 +520,7 @@ function FormInputMappingOptions({
 										})
 									),
 								]}
-								value={relationship}
+								value={selectedRelationship}
 							/>
 						</ClayForm.Group>
 					) : null}
@@ -538,9 +559,10 @@ function FormInputMappingOptions({
 								{Liferay.Language.get('content-type')}:
 							</span>
 
-							{relationship
+							{selectedRelationship
 								? relationships.find(
-										({name}) => name === relationship
+										({name}) =>
+											name === selectedRelationship
 									).label
 								: type}
 						</p>
@@ -556,7 +578,8 @@ function FormInputMappingOptions({
 						</p>
 					)}
 				</>
-			) : sourceType === SOURCE_TYPES.mainObject || relationship ? (
+			) : sourceType === SOURCE_TYPES.mainObject ||
+			  selectedRelationship ? (
 				<ClayAlert displayType="info">
 					{Liferay.Language.get(
 						'there-are-no-suitable-fields-in-the-item-to-be-mapped-to-the-fragment'

@@ -279,25 +279,13 @@ test('modifies inline text on all collection items', async ({
 
 	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
 
-	// Go to Page Contents panel and edit inline text
+	// Fill new content
 
-	await pageEditorPage.goToSidebarTab('Page Content');
-
-	await page.getByLabel('Edit Text Heading Example').click();
-
-	const editable = pageEditorPage.getEditable(headingId, 'element-text');
-
-	await editable.locator('.cke_editable_inline').waitFor();
-
-	// Clear current content and fill with new one
-
-	await page.keyboard.press('Control+KeyA');
-	await page.keyboard.press('Backspace');
-
-	await page.keyboard.type('New Content');
-	await page.locator('body').click();
-
-	await pageEditorPage.waitForChangesSaved();
+	await pageEditorPage.editEditableText(
+		headingId,
+		'element-text',
+		'New Content'
+	);
 
 	// Check that the inline text changes in all items of the collection
 

@@ -355,7 +355,8 @@ export class PageEditorPage {
 		await this.page.keyboard.type(value);
 
 		await this.page
-			.locator(`.page-editor__sidebar div[data-item-id='${fragmentId}']`)
+			.getByLabel('Configuration Panel')
+			.getByRole('heading', {name: editableId})
 			.click();
 
 		await this.waitForChangesSaved();

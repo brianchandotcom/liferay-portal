@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 
 const test = mergeTests(
@@ -43,9 +44,11 @@ test('checks the correct label for restricted page in the page heading', async (
 
 	// Go to the view mode and check the restricted page label
 
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+	await page.goto(
+		`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+	);
 
-	const header = await page.getByRole('heading', {name: pageName});
+	const header = page.getByRole('heading', {name: pageName});
 
 	await header.waitFor({state: 'visible'});
 

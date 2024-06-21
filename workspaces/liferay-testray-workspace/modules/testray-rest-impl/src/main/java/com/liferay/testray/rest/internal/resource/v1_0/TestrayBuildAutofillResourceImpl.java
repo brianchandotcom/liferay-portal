@@ -173,7 +173,7 @@ public class TestrayBuildAutofillResourceImpl
 		Map<Long, List<Map<String, Serializable>>>
 			testrayCaseResultsGroupedByTestrayCase = new HashMap<>();
 
-		for (Map<String, Serializable> objectEntry :
+		for (Map<String, Serializable> values :
 				_objectEntryLocalService.getValuesList(
 					0, contextCompany.getCompanyId(), contextUser.getUserId(),
 					objectDefinition.getObjectDefinitionId(),
@@ -182,7 +182,7 @@ public class TestrayBuildAutofillResourceImpl
 						objectDefinition),
 					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
-			long testrayCaseId = (Long)objectEntry.get(
+			long testrayCaseId = (Long)values.get(
 				"r_caseToCaseResult_c_caseId");
 
 			List<Map<String, Serializable>> testrayCaseResults =
@@ -195,7 +195,7 @@ public class TestrayBuildAutofillResourceImpl
 					testrayCaseId, testrayCaseResults);
 			}
 
-			testrayCaseResults.add(objectEntry);
+			testrayCaseResults.add(values);
 		}
 
 		return testrayCaseResultsGroupedByTestrayCase;

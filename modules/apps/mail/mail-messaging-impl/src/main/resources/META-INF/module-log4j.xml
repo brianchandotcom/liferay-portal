@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="WARN" name="com.liferay.mail.messaging" />
+		<Logger level="ERROR" name="com.liferay.mail.messaging.internal.MailEngine" />
+	</Loggers>
+</Configuration>

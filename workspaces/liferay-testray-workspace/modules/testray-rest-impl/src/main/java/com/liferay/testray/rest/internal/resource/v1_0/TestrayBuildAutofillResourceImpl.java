@@ -131,8 +131,8 @@ public class TestrayBuildAutofillResourceImpl
 			((Long)testrayCaseResult2.get("r_userToCaseResults_userId") <= 0) &&
 			Validator.isNull(testrayCaseResult2.get("issues"))) {
 
-			targetTestrayCaseResult = testrayCaseResult2;
 			sourceTestrayCaseResult = testrayCaseResult1;
+			targetTestrayCaseResult = testrayCaseResult2;
 		}
 		else if (((Long)testrayCaseResult1.get("r_userToCaseResults_userId") <=
 					0) &&
@@ -141,8 +141,8 @@ public class TestrayBuildAutofillResourceImpl
 					 0) &&
 				 Validator.isNotNull(testrayCaseResult2.get("issues"))) {
 
-			targetTestrayCaseResult = testrayCaseResult1;
 			sourceTestrayCaseResult = testrayCaseResult2;
+			targetTestrayCaseResult = testrayCaseResult1;
 		}
 
 		if (targetTestrayCaseResult == null) {

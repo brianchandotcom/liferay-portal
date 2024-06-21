@@ -29,7 +29,8 @@ public class ObjectEntryUtil {
 	public static JSONObject getPayloadJSONObject(
 		DTOConverterRegistry dtoConverterRegistry, JSONFactory jsonFactory,
 		String objectActionTriggerKey, ObjectDefinition objectDefinition,
-		ObjectEntry objectEntry, ObjectEntry originalObjectEntry, User user) {
+		ObjectEntry objectEntry, ObjectEntry originalObjectEntry,
+		String preferredLanguageId, User user) {
 
 		return JSONUtil.put(
 			"classPK", objectEntry.getObjectEntryId()
@@ -73,6 +74,8 @@ public class ObjectEntryUtil {
 					dtoConverterRegistry, jsonFactory, originalObjectEntry,
 					user);
 			}
+		).put(
+			"preferredLanguageId", preferredLanguageId
 		);
 	}
 

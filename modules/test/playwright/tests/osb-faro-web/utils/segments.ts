@@ -6,20 +6,20 @@
 import {Page} from '@playwright/test';
 
 export async function addSegmentField({
+	criterionName,
+	criterionType,
 	page,
-	segmentCriterion,
-	segmentType,
 }: {
+	criterionName: string;
+	criterionType?: string;
 	page: Page;
-	segmentCriterion?: string;
-	segmentType: string;
 }) {
 	await page.locator('button.dropdown-toggle.btn-outline-secondary').click();
-	await page.getByRole('menuitem', {name: segmentType}).click();
+	await page.getByRole('menuitem', {name: criterionType}).click();
 
 	await dragAndDropCriteriaItem({
 		page,
-		segmentField: segmentCriterion,
+		segmentField: criterionName,
 	});
 }
 

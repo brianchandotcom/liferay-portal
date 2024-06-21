@@ -134,9 +134,9 @@ test('check if updated custom event displayName is shown on segment criteria car
 
 	await test.step('Add the custom event criteria to the segment', async () => {
 		await addSegmentField({
+			criterionName: newCustomEventName,
+			criterionType: 'Events',
 			page,
-			segmentCriterion: newCustomEventName,
-			segmentType: 'Events',
 		});
 	});
 

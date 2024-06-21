@@ -507,13 +507,7 @@ export class PageEditorPage {
 	}
 
 	async isActive(fragmentId: string, isDesktop = true) {
-		const topper = isDesktop
-			? this.page.locator(
-					`.lfr-layout-structure-item-topper-${fragmentId}`
-				)
-			: this.page
-					.frameLocator('.page-editor__global-context-iframe')
-					.locator(`.lfr-layout-structure-item-topper-${fragmentId}`);
+		const topper = this.getTopper(fragmentId, isDesktop);
 
 		return await topper.evaluate((element) =>
 			element.classList.contains('active')
@@ -760,30 +754,32 @@ export class PageEditorPage {
 
 	getFragment(fragmentId: string, isDesktop = true) {
 		if (isDesktop) {
-			return this.page.locator(
-				`.lfr-layout-structure-item-${fragmentId}`
-			);
+			return this.page
+				.locator(`.lfr-layout-structure-item-${fragmentId}`)
+				.first();
 		}
 		else {
 			return this.page
 				.frameLocator('.page-editor__global-context-iframe')
-				.locator(`.lfr-layout-structure-item-${fragmentId}`);
+				.locator(`.lfr-layout-structure-item-${fragmentId}`)
+				.first();
 		}
 	}
 
 	getEditable(fragmentId: string, editableId: string, isDesktop = true) {
-		return this.getFragment(fragmentId, isDesktop).locator(
-			`[data-lfr-editable-id="${editableId}"]`
-		);
+		return this.getFragment(fragmentId, isDesktop)
+			.locator(`[data-lfr-editable-id="${editableId}"]`)
+			.first();
 	}
 
 	getTopper(fragmentId: string, isDesktop = true) {
 		return isDesktop
-			? this.page.locator(
-					`.lfr-layout-structure-item-topper-${fragmentId}`
-				)
+			? this.page
+					.locator(`.lfr-layout-structure-item-topper-${fragmentId}`)
+					.first()
 			: this.page
 					.frameLocator('.page-editor__global-context-iframe')
-					.locator(`.lfr-layout-structure-item-topper-${fragmentId}`);
+					.locator(`.lfr-layout-structure-item-topper-${fragmentId}`)
+					.first();
 	}
 }

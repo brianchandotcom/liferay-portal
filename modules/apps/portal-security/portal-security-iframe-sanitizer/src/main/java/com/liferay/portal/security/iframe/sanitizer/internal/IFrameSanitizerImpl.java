@@ -15,6 +15,7 @@ import com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfigur
 import com.liferay.portal.security.iframe.sanitizer.internal.configuration.helper.IFrameConfigurationHelper;
 
 import java.util.Map;
+import java.util.Set;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -44,7 +45,10 @@ public class IFrameSanitizerImpl implements Sanitizer {
 
 		if (!companyIFrameConfiguration.enabled() ||
 			Validator.isNull(content) || Validator.isNull(contentType) ||
-			!contentType.equals(ContentTypes.TEXT_HTML)) {
+			!contentType.equals(ContentTypes.TEXT_HTML) ||
+			_isWhitelisted(
+				className, classPK,
+				_iFrameConfigurationHelper.getCompanyWhitelist(companyId))) {
 
 			return content;
 		}
@@ -86,6 +90,22 @@ public class IFrameSanitizerImpl implements Sanitizer {
 			});
 
 		return document;
+	}
+
+	private boolean _isWhitelisted(
+		String className, long classPK, Set<String> whitelist) {
+
+		String classNameAndClassPK = className + StringPool.POUND + classPK;
+
+		for (String whitelistItem : whitelist) {
+			if (whitelistItem.equals(StringPool.STAR) ||
+				classNameAndClassPK.startsWith(whitelistItem)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Reference

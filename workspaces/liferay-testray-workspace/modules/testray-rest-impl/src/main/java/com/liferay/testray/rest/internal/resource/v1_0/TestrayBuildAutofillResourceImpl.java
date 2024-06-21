@@ -6,14 +6,21 @@
 package com.liferay.testray.rest.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.rest.filter.factory.FilterFactory;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.testray.rest.dto.v1_0.TestrayBuildAutofill;
 import com.liferay.testray.rest.internal.util.TestrayUtil;
 import com.liferay.testray.rest.resource.v1_0.TestrayBuildAutofillResource;
@@ -21,8 +28,10 @@ import com.liferay.testray.rest.resource.v1_0.TestrayBuildAutofillResource;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,53 +52,61 @@ public class TestrayBuildAutofillResourceImpl
 			Long testrayBuildId1, Long testrayBuildId2)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(24);
+		int caseAmount = 0;
 
-		sb.append("select cr1.c_caseResultId_ as c_caseResultId_1,");
-		sb.append("cr1.dueStatus_ as dueStatus_1, cr1.errors_ as errors_1,");
-		sb.append("cr1.issues_ as issues_1, cr1.r_userToCaseResults_userId ");
-		sb.append("as r_userToCaseResults_userId_1,");
-		sb.append("cr2.c_caseResultId_ as c_caseResultId_2,");
-		sb.append("cr2.dueStatus_ as dueStatus_2, cr2.errors_ as errors_2,");
-		sb.append("cr2.issues_ as issues_2, cr2.r_userToCaseResults_userId ");
-		sb.append("as r_userToCaseResults_userId_2 from ");
-		sb.append("O_[%COMPANY_ID%]_Build b1, O_[%COMPANY_ID%]_Build b2, ");
-		sb.append("O_[%COMPANY_ID%]_CaseResult cr1, ");
-		sb.append("O_[%COMPANY_ID%]_CaseResult cr2, O_[%COMPANY_ID%]_Case ");
-		sb.append("c1, O_[%COMPANY_ID%]_Case c2 where b1.c_buildId_ = ");
-		sb.append("cr1.r_buildToCaseResult_c_buildId and c1.c_caseId_ = ");
-		sb.append("cr1.r_caseToCaseResult_c_caseId and b1.c_buildId_ = ? and ");
-		sb.append("b2.c_buildId_ = ? and b2.c_buildId_ = ");
-		sb.append("cr2.r_buildToCaseResult_c_buildId and c2.c_caseId_ = ");
-		sb.append("cr2.r_caseToCaseResult_c_caseId and c1.c_caseId_ = ");
-		sb.append("c2.c_caseId_ and cr1.errors_ = cr2.errors_ and ( ");
-		sb.append("((cr1.issues_ != '') and (cr2.issues_ = '')) or ");
-		sb.append("((cr1.r_userToCaseResults_userId != 0) and ");
-		sb.append("(cr2.r_userToCaseResults_userId = 0)) or ((cr1.issues_ = ");
-		sb.append("'') and (cr2.issues_ != '')) or ");
-		sb.append("((cr1.r_userToCaseResults_userId = 0) and ");
-		sb.append("(cr2.r_userToCaseResults_userId != 0)))");
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				contextCompany.getCompanyId(), "C_CaseResult");
 
-		String sql = sb.toString();
+		Map<Long, List<Map<String, Serializable>>>
+			testrayCaseResultsGroupedByTestrayCase1 =
+				_getTestrayCaseResultsGroupedByTestrayCase(
+					objectDefinition, testrayBuildId1);
+		Map<Long, List<Map<String, Serializable>>>
+			testrayCaseResultsGroupedByTestrayCase2 =
+				_getTestrayCaseResultsGroupedByTestrayCase(
+					objectDefinition, testrayBuildId2);
 
-		List<Object> params = new ArrayList<>();
+		for (Map.Entry<Long, List<Map<String, Serializable>>> entry :
+				testrayCaseResultsGroupedByTestrayCase1.entrySet()) {
 
-		params.add(testrayBuildId1);
-		params.add(testrayBuildId2);
+			List<Map<String, Serializable>> testrayCaseResults2 =
+				testrayCaseResultsGroupedByTestrayCase2.get(entry.getKey());
 
-		List<Map<String, Object>> values = TestrayUtil.executeQuery(
-			StringUtil.replace(
-				sql, "[%COMPANY_ID%]",
-				String.valueOf(contextCompany.getCompanyId())),
-			params);
+			if (testrayCaseResults2 == null) {
+				continue;
+			}
 
-		for (Map<String, Object> map : values) {
-			_autofillTestrayCaseResult(map);
+			List<Map<String, Serializable>> testrayCaseResults1 =
+				entry.getValue();
+
+			for (Map<String, Serializable> testrayCaseResult1 :
+					testrayCaseResults1) {
+
+				for (Map<String, Serializable> testrayCaseResultObjectEntry2 :
+						testrayCaseResults2) {
+
+					if (!Objects.equals(
+							String.valueOf(testrayCaseResult1.get("errors")),
+							String.valueOf(
+								testrayCaseResultObjectEntry2.get("errors")))) {
+
+						continue;
+					}
+
+					ObjectEntry objectEntry = _autofillTestrayCaseResult(
+						testrayCaseResult1, testrayCaseResultObjectEntry2);
+
+					if (objectEntry != null) {
+						caseAmount++;
+					}
+				}
+			}
 		}
 
 		TestrayBuildAutofill testrayBuildAutofill = new TestrayBuildAutofill();
 
-		testrayBuildAutofill.setCaseAmount(values.size());
+		testrayBuildAutofill.setCaseAmount(caseAmount);
 
 		JSONObject jsonObject = _getTestrayRunIdsJSONObject(
 			testrayBuildId1, testrayBuildId2);
@@ -102,44 +119,87 @@ public class TestrayBuildAutofillResourceImpl
 		return testrayBuildAutofill;
 	}
 
-	private void _autofillTestrayCaseResult(Map<String, Object> map)
+	private ObjectEntry _autofillTestrayCaseResult(
+			Map<String, Serializable> testrayCaseResult1,
+			Map<String, Serializable> testrayCaseResult2)
 		throws Exception {
 
-		int sourceCaseResultIndex = 1;
-		int targetCaseResultIndex = 2;
+		Map<String, Serializable> targetTestrayCaseResult = null;
+		Map<String, Serializable> sourceTestrayCaseResult = null;
 
-		if ((GetterUtil.getString(map.get("issues_1")) == null) ||
-			(GetterUtil.getLong(map.get("r_userToCaseResults_userId_1")) ==
-				0)) {
+		if (((Long)testrayCaseResult1.get("r_userToCaseResults_userId") > 0) &&
+			Validator.isNotNull(testrayCaseResult1.get("issues")) &&
+			((Long)testrayCaseResult2.get("r_userToCaseResults_userId") <= 0) &&
+			Validator.isNull(testrayCaseResult2.get("issues"))) {
 
-			sourceCaseResultIndex = 2;
-			targetCaseResultIndex = 1;
+			targetTestrayCaseResult = testrayCaseResult2;
+			sourceTestrayCaseResult = testrayCaseResult1;
+		}
+		else if (((Long)testrayCaseResult1.get("r_userToCaseResults_userId") <=
+					0) &&
+				 Validator.isNull(testrayCaseResult1.get("issues")) &&
+				 ((Long)testrayCaseResult1.get("r_userToCaseResults_userId") >
+					 0) &&
+				 Validator.isNotNull(testrayCaseResult2.get("issues"))) {
+
+			targetTestrayCaseResult = testrayCaseResult1;
+			sourceTestrayCaseResult = testrayCaseResult2;
 		}
 
-		ObjectEntry targetObjectEntry = _objectEntryLocalService.getObjectEntry(
-			GetterUtil.getLong(
-				map.get("c_caseResultId_" + targetCaseResultIndex)));
+		if (targetTestrayCaseResult == null) {
+			return null;
+		}
 
-		Map<String, Serializable> values = targetObjectEntry.getValues();
+		Map<String, Serializable> testrayCaseResult3 = targetTestrayCaseResult;
 
-		values.put(
-			"dueStatus",
-			GetterUtil.getString(
-				map.get("dueStatus_" + sourceCaseResultIndex)));
-		values.put(
-			"issues",
-			GetterUtil.getString(map.get("issues_" + sourceCaseResultIndex)));
-		values.put(
+		testrayCaseResult3.put(
+			"dueStatus", sourceTestrayCaseResult.get("dueStatus"));
+		testrayCaseResult3.put(
 			"r_userToCaseResults_userId",
-			GetterUtil.getLong(
-				map.get(
-					"r_userToCaseResults_userId_" + sourceCaseResultIndex)));
+			sourceTestrayCaseResult.get("r_userToCaseResults_userId"));
+		testrayCaseResult3.put(
+			"issues", String.valueOf(sourceTestrayCaseResult.get("issues")));
 
-		_objectEntryLocalService.updateObjectEntry(
+		return _objectEntryLocalService.updateObjectEntry(
 			contextUser.getUserId(),
-			GetterUtil.getLong(
-				map.get("c_caseResultId_" + targetCaseResultIndex)),
-			values, _serviceContextHelper.getServiceContext());
+			GetterUtil.getLong(testrayCaseResult3.get("c_caseResultId")),
+			testrayCaseResult3, _serviceContextHelper.getServiceContext());
+	}
+
+	private Map<Long, List<Map<String, Serializable>>>
+			_getTestrayCaseResultsGroupedByTestrayCase(
+				ObjectDefinition objectDefinition, long testrayBuildId1)
+		throws Exception {
+
+		Map<Long, List<Map<String, Serializable>>>
+			testrayCaseResultsGroupedByTestrayCase = new HashMap<>();
+
+		for (Map<String, Serializable> objectEntry :
+				_objectEntryLocalService.getValuesList(
+					0, contextCompany.getCompanyId(), contextUser.getUserId(),
+					objectDefinition.getObjectDefinitionId(),
+					_filterFactory.create(
+						"buildId eq '" + testrayBuildId1 + "' and errors ne ''",
+						objectDefinition),
+					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			long testrayCaseId = (Long)objectEntry.get(
+				"r_caseToCaseResult_c_caseId");
+
+			List<Map<String, Serializable>> testrayCaseResults =
+				testrayCaseResultsGroupedByTestrayCase.get(testrayCaseId);
+
+			if (testrayCaseResults == null) {
+				testrayCaseResults = new ArrayList<>();
+
+				testrayCaseResultsGroupedByTestrayCase.put(
+					testrayCaseId, testrayCaseResults);
+			}
+
+			testrayCaseResults.add(objectEntry);
+		}
+
+		return testrayCaseResultsGroupedByTestrayCase;
 	}
 
 	private JSONObject _getTestrayRunIdsJSONObject(
@@ -192,8 +252,16 @@ public class TestrayBuildAutofillResourceImpl
 		return jsonObject;
 	}
 
+	@Reference(
+		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
+	)
+	private FilterFactory<Predicate> _filterFactory;
+
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

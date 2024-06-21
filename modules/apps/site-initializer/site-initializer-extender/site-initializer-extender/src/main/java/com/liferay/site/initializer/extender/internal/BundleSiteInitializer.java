@@ -1421,6 +1421,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"groupIds", String.valueOf(serviceContext.getScopeGroupId())
 		).build();
 
+		Object[] filterByObjects = JSONUtil.toObjectArray(
+			unicodePropertiesJSONObject.getJSONArray("filterBy"));
+
+		for (Object filterByObject : filterByObjects) {
+			JSONObject filterByJSONObject = (JSONObject)filterByObject;
+
+			map.put(
+				filterByJSONObject.getString("key"),
+				filterByJSONObject.getString("value"));
+		}
+
 		Object[] orderByObjects = JSONUtil.toObjectArray(
 			unicodePropertiesJSONObject.getJSONArray("orderBy"));
 

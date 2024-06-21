@@ -6,6 +6,7 @@
 package com.liferay.portal.db.schema.definition.internal.processor;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactory;
@@ -28,17 +29,21 @@ public class SQLFilesProcessor {
 	public SQLFilesProcessor(DBType dbType) throws Exception {
 		_db = _getDB(dbType);
 
+		_objectsSQLHelper = new ObjectsSQLHelper(_db);
+
 		_generatePortalSQL();
 
 		_generateModulesSQL();
 	}
 
 	public String getIndexesSQL() {
-		return _indexesSQLSB.toString();
+		return _indexesSQLSB.toString() + StringPool.NEW_LINE +
+			_objectsSQLHelper.getIndexesSQL();
 	}
 
 	public String getTablesSQL() {
-		return _tablesSQLSB.toString();
+		return _tablesSQLSB.toString() + StringPool.NEW_LINE +
+			_objectsSQLHelper.getTablesSQL();
 	}
 
 	private void _appendSQL(String indexesSQL, String tablesSQL)
@@ -91,6 +96,7 @@ public class SQLFilesProcessor {
 
 	private final DB _db;
 	private final StringBundler _indexesSQLSB = new StringBundler();
+	private final ObjectsSQLHelper _objectsSQLHelper;
 	private final StringBundler _tablesSQLSB = new StringBundler();
 
 }

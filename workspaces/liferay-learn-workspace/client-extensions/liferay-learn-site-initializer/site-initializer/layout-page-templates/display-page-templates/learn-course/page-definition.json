@@ -116,7 +116,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/education_courses_blue-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/education_courses_blue.svg$]"
 																				}
 																			}
 																		},
@@ -398,7 +398,7 @@
 														"fragmentImage": {
 															"url": {
 																"value_i18n": {
-																	"en_US": "/documents/d/liferay-learn/waves-svg?imagePreview=1"
+																	"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/vectors/waves.svg$]"
 																}
 															}
 														},
@@ -555,7 +555,7 @@
 							},
 							{
 								"definition": {
-									"customCSS": ".[$FRAGMENT_CLASS$] .course-nav-bottom__banner {\n    background-image: url(/documents/d/liferay-learn/waves_sm-svg);\n    background-repeat: no-repeat;\n    background-position: calc(100% + 60px) center;\n    background-size: 220px 220px;\n  }\n\n",
+									"customCSS": ".[$FRAGMENT_CLASS$] .course-nav-bottom__banner {\n    background-image: url('[$DOCUMENT_URL:/site-initializer/documents/group/vectors/waves_sm.svg$]');\n    background-repeat: no-repeat;\n    background-position: calc(100% + 60px) center;\n    background-size: 220px 220px;\n  }\n\n",
 									"fragmentStyle": {
 										"backgroundColor": "colorNeutral1",
 										"borderRadius": "borderRadiusLg",

@@ -23,11 +23,11 @@ exports[`Individuals Dashboard Distribution renders 1`] = `
               <div
                 class="card-header"
               >
-                <h5
+                <div
                   class="card-title"
                 >
                   Distribution by attribute
-                </h5>
+                </div>
                 <span
                   class="description-secondary"
                 >

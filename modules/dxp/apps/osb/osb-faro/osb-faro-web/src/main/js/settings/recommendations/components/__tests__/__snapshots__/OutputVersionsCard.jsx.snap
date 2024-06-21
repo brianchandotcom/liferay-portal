@@ -8,11 +8,11 @@ exports[`OutputVersionsCard should render 1`] = `
     <div
       class="card-header d-flex justify-content-between"
     >
-      <h5
+      <div
         class="card-title"
       >
         Output Versions
-      </h5>
+      </div>
       <div
         class="training-frequency"
       >

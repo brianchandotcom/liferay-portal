@@ -69,11 +69,11 @@ exports[`Search should render 1`] = `
         <div
           class="card-header mb-1"
         >
-          <h5
+          <div
             class="card-title"
           >
             Query String
-          </h5>
+          </div>
         </div>
         <div
           class="card-body"

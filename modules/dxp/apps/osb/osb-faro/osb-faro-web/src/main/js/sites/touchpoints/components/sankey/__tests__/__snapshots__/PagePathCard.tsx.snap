@@ -9,11 +9,11 @@ exports[`PagePathCard should render 1`] = `
     <div
       class="card-header"
     >
-      <h5
+      <div
         class="card-title"
       >
         Path Analysis
-      </h5>
+      </div>
     </div>
     <div>
       <div

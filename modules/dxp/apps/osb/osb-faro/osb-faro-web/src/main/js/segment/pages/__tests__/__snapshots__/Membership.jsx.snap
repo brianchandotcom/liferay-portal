@@ -8,11 +8,11 @@ exports[`Membership should render 1`] = `
     <div
       class="card-header"
     >
-      <h5
+      <div
         class="card-title"
       >
         Segment Membership
-      </h5>
+      </div>
     </div>
     <div
       class="card-body segment-growth-root no-padding"

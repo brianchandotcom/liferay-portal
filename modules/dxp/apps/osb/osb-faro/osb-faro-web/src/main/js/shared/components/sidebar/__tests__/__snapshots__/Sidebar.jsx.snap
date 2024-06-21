@@ -61,11 +61,11 @@ exports[`Sidebar should render 1`] = `
       <div
         class="section"
       >
-        <h5
-          class="section-title"
+        <div
+          class="h5 section-title"
         >
           Touchpoints
-        </h5>
+        </div>
         <ul
           class="nav-list"
         >
@@ -164,11 +164,11 @@ exports[`Sidebar should render 1`] = `
       <div
         class="section"
       >
-        <h5
-          class="section-title"
+        <div
+          class="h5 section-title"
         >
           People
-        </h5>
+        </div>
         <ul
           class="nav-list"
         >
@@ -237,11 +237,11 @@ exports[`Sidebar should render 1`] = `
       <div
         class="section"
       >
-        <h5
-          class="section-title"
+        <div
+          class="h5 section-title"
         >
           Optimize
-        </h5>
+        </div>
         <ul
           class="nav-list"
         >

@@ -9,11 +9,11 @@ exports[`CompositionCard should render 1`] = `
     <div
       class="card-header"
     >
-      <h5
+      <div
         class="card-title"
       >
         Segment Composition
-      </h5>
+      </div>
     </div>
     <div
       class="card-body"

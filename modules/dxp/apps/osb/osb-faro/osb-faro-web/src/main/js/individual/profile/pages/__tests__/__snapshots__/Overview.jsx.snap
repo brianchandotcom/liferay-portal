@@ -14,11 +14,11 @@ exports[`IndividualOverview should render 1`] = `
         <div
           class="card-header align-items-center d-flex justify-content-between"
         >
-          <h5
+          <div
             class="card-title"
           >
             Individual Events
-          </h5>
+          </div>
           <div
             class="d-flex"
           />
@@ -546,11 +546,11 @@ Chrome"
         <div
           class="card-header"
         >
-          <h5
+          <div
             class="card-title"
           >
             Current Interests
-          </h5>
+          </div>
         </div>
         <ul
           class="list-group list-group-root results-container no-border show-quick-actions-on-hover"
@@ -596,11 +596,11 @@ Chrome"
         <div
           class="card-header"
         >
-          <h5
+          <div
             class="card-title"
           >
             Associated Segments
-          </h5>
+          </div>
         </div>
         <div
           class="card-body"

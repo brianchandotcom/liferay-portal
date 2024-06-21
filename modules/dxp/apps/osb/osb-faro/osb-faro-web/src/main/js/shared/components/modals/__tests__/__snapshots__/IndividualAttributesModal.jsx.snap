@@ -36,9 +36,11 @@ exports[`IndividualAttributesModal should render 1`] = `
       <div
         class="modal-body"
       >
-        <h5>
+        <div
+          class="h5"
+        >
           Data Sources
-        </h5>
+        </div>
         <div
           class="table-responsive table-root flex-grow-1"
         >

@@ -90,11 +90,11 @@ exports[`View should render 1`] = `
             <div
               class="card-header d-flex justify-content-between"
             >
-              <h5
+              <div
                 class="card-title"
               >
                 Output Versions
-              </h5>
+              </div>
               <div
                 class="training-frequency"
               >
@@ -122,11 +122,11 @@ exports[`View should render 1`] = `
             <div
               class="card-header"
             >
-              <h5
+              <div
                 class="card-title"
               >
                 Training Items
-              </h5>
+              </div>
             </div>
             <div
               class="card-body"

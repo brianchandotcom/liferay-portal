@@ -10,11 +10,11 @@ exports[`InterestsCard renders 1`] = `
     <div
       class="card-header"
     >
-      <h5
+      <div
         class="card-title"
       >
         Top Interests as of Yesterday
-      </h5>
+      </div>
     </div>
     <div
       class="table-responsive table-root flex-grow-1"
@@ -387,11 +387,11 @@ exports[`InterestsCard renders with empty data 1`] = `
     <div
       class="card-header"
     >
-      <h5
+      <div
         class="card-title"
       >
         Top Interests as of Yesterday
-      </h5>
+      </div>
     </div>
     <div
       class="no-results-root flex-grow-1"

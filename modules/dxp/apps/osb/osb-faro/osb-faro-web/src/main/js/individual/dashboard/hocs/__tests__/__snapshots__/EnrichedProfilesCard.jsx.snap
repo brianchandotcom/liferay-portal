@@ -9,11 +9,11 @@ exports[`EnrichedProfilesCard should render 1`] = `
     <div
       class="card-header d-flex justify-content-between"
     >
-      <h5
+      <div
         class="card-title"
       >
         Enriched Profiles
-      </h5>
+      </div>
       <span
         class="info-popover-root"
       >

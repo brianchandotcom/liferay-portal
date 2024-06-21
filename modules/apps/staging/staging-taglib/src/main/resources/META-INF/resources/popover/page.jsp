@@ -8,22 +8,11 @@
 <%@ include file="/popover/init.jsp" %>
 
 <c:if test="<%= Validator.isNotNull(text) %>">
-	<span class="staging-taglib-popover" id="<%= domId %>">
-		<span class="staging-taglib-popover-icon-holder">
-			<clay:icon
-				symbol="question-circle-full"
-			/>
-		</span>
-
-		<div class="bs-popover-right popover">
-			<div class="arrow"></div>
-			<div class="inline-scroller">
-				<div class="popover-header"><%= title %></div>
-				<div class="popover-body">
-					<p><%= text %></p>
-				</div>
-			</div>
-		</div>
+	<span aria-label="<%= text %>" class="lfr-portal-tooltip" tabindex="0" title="<%= text %>">
+		<clay:icon
+			aria-label="<%= text %>"
+			symbol="question-circle-full"
+		/>
 	</span>
 
 	<aui:script use="aui-base">

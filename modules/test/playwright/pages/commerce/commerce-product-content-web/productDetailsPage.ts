@@ -51,6 +51,7 @@ export class ProductDetailsPage {
 		price: string,
 		container?: Locator | Page
 	) => Promise<Locator>;
+	readonly productNameHeading: (productName: string) => Promise<Locator>;
 	readonly promoPriceField: (
 		promoPrice: string,
 		container?: Locator | Page
@@ -69,7 +70,9 @@ export class ProductDetailsPage {
 	readonly waitForEditScuccessMessage: Locator;
 
 	constructor(page: Page) {
-		this.addToCartButton = page.getByRole('button', {exact: true, name: 'Add to Cart'}).first();
+		this.addToCartButton = page
+			.getByRole('button', {exact: true, name: 'Add to Cart'})
+			.first();
 		this.addSpecification = page
 			.getByTestId('management-toolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
@@ -142,6 +145,9 @@ export class ProductDetailsPage {
 		this.priceContainer = page.locator('div.price-container');
 		this.priceField = async (price: string, container = this.page) => {
 			return container.getByText(price);
+		};
+		this.productNameHeading = async (productName) => {
+			return page.getByRole('heading', {name: productName});
 		};
 		this.promoPriceField = async (
 			promoPrice: string,

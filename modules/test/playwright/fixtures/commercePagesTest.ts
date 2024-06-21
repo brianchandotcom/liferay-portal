@@ -30,12 +30,13 @@ import {CommerceAdminProductDetailsPage} from '../pages/commerce/commerceAdminPr
 import {CommerceAdminProductDetailsProductOptionsPage} from '../pages/commerce/commerceAdminProductDetailsProductOptionsPage';
 import {CommerceAdminProductDetailsProductRelationsPage} from '../pages/commerce/commerceAdminProductDetailsProductRelationsPage';
 import {CommerceAdminProductPage} from '../pages/commerce/commerceAdminProductPage';
+import {CommerceCatalogPage} from '../pages/commerce/commerceCatalogPage';
 import {CommerceCatalogSystemSettingsPage} from '../pages/commerce/commerceCatalogSystemSettingsPage';
 import {CommerceChannelDefaultsPage} from '../pages/commerce/commerceChannelDefaultsPage';
+import {CommerceInstanceSettingsPage} from '../pages/commerce/commerceInstanceSettingsPage';
 import {CommerceLayoutsPage} from '../pages/commerce/commerceLayoutsPage';
 import {CommerceMiniCartPage} from '../pages/commerce/commerceMiniCartPage';
 import {CommercePaymentsPage} from '../pages/commerce/commercePaymentsPage';
-import {CommerceInstanceSettingsPage} from "../pages/commerce/commerceInstanceSettingsPage";
 
 const commercePagesTest = test.extend<{
 	attachmentsPage: AttachmentsPage;
@@ -55,6 +56,7 @@ const commercePagesTest = test.extend<{
 	commerceAdminProductPage: CommerceAdminProductPage;
 	commerceCartPage: CommerceCartPage;
 	commerceCartSummaryPage: CommerceCartSummaryPage;
+	commerceCatalogPage: CommerceCatalogPage;
 	commerceCatalogSystemSettingsPage: CommerceCatalogSystemSettingsPage;
 	commerceChannelDefaultsPage: CommerceChannelDefaultsPage;
 	commerceInstanceSettingsPage: CommerceInstanceSettingsPage;
@@ -120,6 +122,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceCartSummaryPage: async ({page}, use) => {
 		await use(new CommerceCartSummaryPage(page));
+	},
+	commerceCatalogPage: async ({page}, use) => {
+		await use(new CommerceCatalogPage(page));
 	},
 	commerceCatalogSystemSettingsPage: async ({page}, use) => {
 		await use(new CommerceCatalogSystemSettingsPage(page));

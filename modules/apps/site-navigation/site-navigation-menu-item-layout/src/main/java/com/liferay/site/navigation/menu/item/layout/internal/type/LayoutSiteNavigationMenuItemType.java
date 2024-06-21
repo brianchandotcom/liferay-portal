@@ -541,8 +541,19 @@ public class LayoutSiteNavigationMenuItemType
 		boolean privateLayout = GetterUtil.getBoolean(
 			typeSettingsUnicodeProperties.get("privateLayout"));
 
-		return _layoutLocalService.fetchLayoutByUuidAndGroupId(
+		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
+
+		if ((layout == null) && _log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"No layout found for site navigation menu item ",
+					siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+					" with layoutUuid ", layoutUuid, " and privateLayout ",
+					privateLayout));
+		}
+
+		return layout;
 	}
 
 	private Layout _getLayout(

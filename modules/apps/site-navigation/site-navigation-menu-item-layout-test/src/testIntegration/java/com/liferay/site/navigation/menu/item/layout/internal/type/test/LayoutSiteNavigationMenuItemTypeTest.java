@@ -9,7 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.service.LayoutServiceUtil;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -20,12 +20,13 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
-import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
-import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.util.HashMap;
 
@@ -60,11 +61,11 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
+		_siteNavigationMenuLocalService.addSiteNavigationMenu(
 			null, TestPropsValues.getUserId(), _group.getGroupId(), "Auto Menu",
 			SiteNavigationConstants.TYPE_DEFAULT, true, serviceContext);
 
-		LayoutServiceUtil.addLayout(
+		_layoutService.addLayout(
 			_group.getGroupId(), false, 0,
 			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(), "welcome"
@@ -78,7 +79,7 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 
 		Assert.assertEquals(
 			0,
-			SiteNavigationMenuItemLocalServiceUtil.
+			_siteNavigationMenuItemLocalService.
 				getSiteNavigationMenuItemsCount());
 	}
 
@@ -88,12 +89,12 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
+		_siteNavigationMenuLocalService.addSiteNavigationMenu(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			"Primary Menu", SiteNavigationConstants.TYPE_PRIMARY, true,
 			serviceContext);
 
-		LayoutServiceUtil.addLayout(
+		_layoutService.addLayout(
 			_group.getGroupId(), false, 0,
 			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(), "welcome"
@@ -107,7 +108,7 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 
 		Assert.assertEquals(
 			0,
-			SiteNavigationMenuItemLocalServiceUtil.
+			_siteNavigationMenuItemLocalService.
 				getSiteNavigationMenuItemsCount());
 	}
 
@@ -118,18 +119,18 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		SiteNavigationMenu autoSiteNavigationMenu =
-			SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				"Auto Menu", SiteNavigationConstants.TYPE_DEFAULT, true,
 				serviceContext);
 
 		SiteNavigationMenu primarySiteNavigationMenu =
-			SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				"Primary Menu", SiteNavigationConstants.TYPE_PRIMARY, true,
 				serviceContext);
 
-		LayoutServiceUtil.addLayout(
+		_layoutService.addLayout(
 			_group.getGroupId(), false, 0,
 			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(), "welcome"
@@ -148,7 +149,7 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 
 		Assert.assertEquals(
 			2,
-			SiteNavigationMenuItemLocalServiceUtil.
+			_siteNavigationMenuItemLocalService.
 				getSiteNavigationMenuItemsCount());
 	}
 
@@ -159,12 +160,12 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		SiteNavigationMenu siteNavigationMenu =
-			SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				"Primary Menu", SiteNavigationConstants.TYPE_PRIMARY, true,
 				serviceContext);
 
-		LayoutServiceUtil.addLayout(
+		_layoutService.addLayout(
 			_group.getGroupId(), false, 0,
 			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(), "welcome"
@@ -180,11 +181,21 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 
 		Assert.assertEquals(
 			1,
-			SiteNavigationMenuItemLocalServiceUtil.
+			_siteNavigationMenuItemLocalService.
 				getSiteNavigationMenuItemsCount());
 	}
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private LayoutService _layoutService;
+
+	@Inject
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
+
+	@Inject
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 }

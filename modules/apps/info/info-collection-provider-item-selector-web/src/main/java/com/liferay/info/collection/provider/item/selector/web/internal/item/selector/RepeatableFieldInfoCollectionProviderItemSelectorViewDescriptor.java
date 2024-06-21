@@ -87,7 +87,7 @@ public class RepeatableFieldInfoCollectionProviderItemSelectorViewDescriptor
 		SearchContainer<InfoFieldSetEntry> searchContainer =
 			new SearchContainer<>(
 				portletRequest, _portletURL, null,
-				"there-are-no-repeatable-field-collection-providers");
+				"there-are-no-repeatable-fields-collection-providers");
 
 		searchContainer.setResultsAndTotal(_getRepeatableInfoFieldSetEntries());
 

@@ -55,7 +55,7 @@ public class RepeatableFieldInfoCollectionProviderItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _language.get(locale, "repeatable-field-collection-providers");
+		return _language.get(locale, "repeatable-fields-collection-providers");
 	}
 
 	@Override

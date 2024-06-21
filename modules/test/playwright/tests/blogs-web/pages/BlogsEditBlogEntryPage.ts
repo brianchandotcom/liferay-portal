@@ -21,6 +21,7 @@ export class BlogsEditBlogEntryPage {
 	readonly blogsPage: BlogsPage;
 	readonly publishButton: Locator;
 	readonly contentEditor: Locator;
+	readonly submitToWorkflowButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -30,6 +31,9 @@ export class BlogsEditBlogEntryPage {
 			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_contentEditor.cke_editable'
 		);
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
+		this.submitToWorkflowButton = page.getByRole('button', {
+			name: 'Submit for Workflow',
+		});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -72,11 +76,13 @@ export class BlogsEditBlogEntryPage {
 		content,
 		friendlyUrl,
 		publish = true,
+		submitToWorkflow,
 		title,
 	}: {
 		content: string;
 		friendlyUrl?: editBlogEntryAddfriendlyUrlType;
 		publish?: boolean;
+		submitToWorkflow?: boolean;
 		title: string;
 	}) {
 		await this.page.getByPlaceholder('Title *').fill(title);
@@ -92,13 +98,21 @@ export class BlogsEditBlogEntryPage {
 			});
 		}
 
-		if (publish) {
+		if (submitToWorkflow) {
+			await this.submitBlogEntryToWorkflow();
+		}
+		else if (publish) {
 			await this.publishBlogEntry();
 		}
 	}
 
 	async publishBlogEntry() {
 		await this.publishButton.click();
+		await waitForSuccessAlert(this.page);
+	}
+
+	async submitBlogEntryToWorkflow() {
+		await this.submitToWorkflowButton.click();
 		await waitForSuccessAlert(this.page);
 	}
 }

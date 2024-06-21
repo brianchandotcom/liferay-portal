@@ -36,11 +36,16 @@ public class DCLSingleton<T> {
 
 		synchronized (this) {
 			if (_singleton == null) {
-				_singleton = supplier.get();
+				singleton = supplier.get();
+
+				_singleton = singleton;
+			}
+			else {
+				singleton = _singleton;
 			}
 		}
 
-		return _singleton;
+		return singleton;
 	}
 
 	private volatile T _singleton;

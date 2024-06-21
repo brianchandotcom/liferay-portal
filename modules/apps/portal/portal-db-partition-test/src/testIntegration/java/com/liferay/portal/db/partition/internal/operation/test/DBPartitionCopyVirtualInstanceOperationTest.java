@@ -37,8 +37,9 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 				StringBundler.concat(
 					"name=T\"testName\"\nvirtualHostname=",
 					"T\"testVirtualHostname\"\nwebId=",
-					"T\"testWebId\"\nsourceCompanyId=L\"", COMPANY_IDS[0],
-					"\"\ndestinationCompanyId=L\"", COMPANY_IDS[1], "\"\n"));
+					"T\"testWebId\"\nsourcePartitionCompanyId=L\"",
+					COMPANY_IDS[0], "\"\ndestinationPartitionCompanyId=L\"",
+					COMPANY_IDS[1], "\"\n"));
 
 			assertLog(
 				logCapture,

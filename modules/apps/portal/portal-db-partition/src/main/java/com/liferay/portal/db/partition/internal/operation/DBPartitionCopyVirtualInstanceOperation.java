@@ -49,47 +49,51 @@ public class DBPartitionCopyVirtualInstanceOperation
 							DBPartitionCopyVirtualInstanceConfiguration.class,
 							properties);
 
-				long sourceCompanyId =
+				long sourcePartitionCompanyId =
 					dBPartitionCopyVirtualInstanceConfiguration.
-						sourceCompanyId();
+						sourcePartitionCompanyId();
 
-				if (_companyLocalService.fetchCompany(sourceCompanyId) ==
-						null) {
+				Company sourcePartitionCompany =
+					_companyLocalService.fetchCompany(sourcePartitionCompanyId);
 
+				if (sourcePartitionCompany == null) {
 					_log.error(
-						"Virtual instance with company ID " + sourceCompanyId +
-							" does not exist");
+						"Virtual instance with company ID " +
+							sourcePartitionCompanyId + " does not exist");
 
 					return null;
 				}
 
-				if (sourceCompanyId ==
+				if (sourcePartitionCompanyId ==
 						PortalInstancePool.getDefaultCompanyId()) {
 
 					_log.error(
-						"Virtual instance with company ID " + sourceCompanyId +
-							" is the default company");
+						"Virtual instance with company ID " +
+							sourcePartitionCompanyId +
+								" is the default company");
 
 					return null;
 				}
 
-				long destinationCompanyId =
+				long destinationPartitionCompanyId =
 					dBPartitionCopyVirtualInstanceConfiguration.
-						destinationCompanyId();
+						destinationPartitionCompanyId();
 
-				if (_companyLocalService.fetchCompany(destinationCompanyId) !=
-						null) {
+				Company destinationPartitionCompany =
+					_companyLocalService.fetchCompany(
+						destinationPartitionCompanyId);
 
+				if (destinationPartitionCompany != null) {
 					_log.error(
 						StringBundler.concat(
 							"Virtual instance with company ID ",
-							destinationCompanyId, " already exists"));
+							destinationPartitionCompanyId, " already exists"));
 
 					return null;
 				}
 
 				Company company = _companyLocalService.copyDBPartitionCompany(
-					sourceCompanyId, destinationCompanyId,
+					sourcePartitionCompanyId, destinationPartitionCompanyId,
 					dBPartitionCopyVirtualInstanceConfiguration.name(),
 					dBPartitionCopyVirtualInstanceConfiguration.
 						virtualHostname(),

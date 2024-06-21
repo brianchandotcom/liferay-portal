@@ -31,12 +31,13 @@ public interface DBPartitionCopyVirtualInstanceConfiguration {
 	@Meta.AD(name = "web-id", required = false)
 	public String webId();
 
-	@Meta.AD(name = "source-company-id", type = Meta.Type.Long)
-	public long sourceCompanyId();
+	@Meta.AD(name = "source-partition-company-id", type = Meta.Type.Long)
+	public long sourcePartitionCompanyId();
 
 	@Meta.AD(
-		name = "destination-company-id", required = false, type = Meta.Type.Long
+		name = "destination-partition-company-id", required = false,
+		type = Meta.Type.Long
 	)
-	public long destinationCompanyId();
+	public long destinationPartitionCompanyId();
 
 }

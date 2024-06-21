@@ -15,8 +15,8 @@ import {NotificationSectionPage} from '../pages/portal-workflow-kaleo-designer-w
 import {ProcessBuilderPage} from '../pages/portal-workflow-kaleo-designer-web/ProcessBuilderPage';
 import {SourceViewPage} from '../pages/portal-workflow-kaleo-designer-web/SourceViewPage';
 import {TimerPage} from '../pages/portal-workflow-kaleo-designer-web/TimerPage';
-import {WorkflowTasksPage} from '../tests/portal-workflow-task-web/pages/WorkflowTasksPage';
-import {WorkflowPage} from '../tests/portal-workflow-web/pages/WorkflowPage';
+import {WorkflowTasksPage} from '../pages/portal-workflow-task-web/WorkflowTasksPage';
+import {WorkflowPage} from '../pages/portal-workflow-web/WorkflowPage';
 
 const workflowPagesTest = test.extend<{
 	actionPage: ActionPage;

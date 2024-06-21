@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -137,28 +138,30 @@ public class FunctionActionExecutorImpl
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			executionContext.getKaleoTaskInstanceToken();
 
-		long workflowTaskId =
-			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId();
+		if (kaleoTaskInstanceToken != null) {
+			long workflowTaskId =
+				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId();
 
-		payloadJSONObject.put(
-			"nextTransitionNames",
-			_workflowTaskManager.getNextTransitionNames(
-				kaleoAction.getUserId(), workflowTaskId)
-		).put(
-			"transitionURL",
-			"/o/headless-admin-workflow/v1.0/workflow-tasks/" + workflowTaskId +
-				"/change-transition"
-		).put(
-			"workflowTaskId", workflowTaskId
-		);
+			payloadJSONObject.put(
+				"nextTransitionNames",
+				_workflowTaskManager.getNextTransitionNames(
+					kaleoAction.getUserId(), workflowTaskId)
+			).put(
+				"transitionURL",
+				"/o/headless-admin-workflow/v1.0/workflow-tasks/" +
+					workflowTaskId + "/change-transition"
+			).put(
+				"workflowTaskId", workflowTaskId
+			);
+
+			JSONObject kaleoTaskInstanceTokenJSONObject =
+				payloadJSONObject.getJSONObject("kaleoTaskInstanceToken");
+
+			kaleoTaskInstanceTokenJSONObject.remove("workflowContext");
+		}
 
 		payloadJSONObject.remove("serviceContext");
 		payloadJSONObject.remove("workflowContext");
-
-		JSONObject kaleoTaskInstanceTokenJSONObject =
-			payloadJSONObject.getJSONObject("kaleoTaskInstanceToken");
-
-		kaleoTaskInstanceTokenJSONObject.remove("workflowContext");
 
 		List<WorkflowTaskAssignee> workflowTaskAssignees =
 			(List<WorkflowTaskAssignee>)inputObjects.get(
@@ -181,17 +184,19 @@ public class FunctionActionExecutorImpl
 			List<WorkflowTaskAssignee> workflowTaskAssignees)
 		throws Exception {
 
-		WorkflowTaskAssignee workflowTaskAssignee = workflowTaskAssignees.get(
-			0);
+		long userId = _userLocalService.getUserIdByScreenName(
+			_companyId, "default-service-account");
 
-		long userId = workflowTaskAssignee.getAssigneeClassPK();
+		if (ListUtil.isNotEmpty(workflowTaskAssignees)) {
+			WorkflowTaskAssignee workflowTaskAssignee =
+				workflowTaskAssignees.get(0);
 
-		if (!Objects.equals(
-				workflowTaskAssignee.getAssigneeClassName(),
-				User.class.getName())) {
+			if (Objects.equals(
+					workflowTaskAssignee.getAssigneeClassName(),
+					User.class.getName())) {
 
-			userId = _userLocalService.getUserIdByScreenName(
-				_companyId, "default-service-account");
+				userId = workflowTaskAssignee.getAssigneeClassPK();
+			}
 		}
 
 		_portalCatapult.launch(

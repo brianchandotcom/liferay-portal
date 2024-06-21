@@ -119,7 +119,9 @@ const TokenList: React.FC<
 							{Liferay.Language.get('token-information')}
 						</div>
 
-						<div className="h5">{Liferay.Language.get('root-endpoint')}</div>
+						<div className='h5'>
+							{Liferay.Language.get('root-endpoint')}
+						</div>
 
 						<span className='text-secondary'>
 							{window.location.origin + ApisPath}

@@ -31,7 +31,8 @@ const COMMANDS = {
 	},
 	'format': {
 		description:
-			'formats source files or optionally only checks with "--check" flag.',
+			'formats source files or optionally only checks with "--check" flag (when run from ' +
+			'modules it also runs check:preflight)',
 		parameters: '[--all] [--check]',
 		script: './format/index.mjs',
 	},

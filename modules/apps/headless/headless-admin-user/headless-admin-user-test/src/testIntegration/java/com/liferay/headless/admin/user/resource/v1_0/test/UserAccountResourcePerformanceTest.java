@@ -7,7 +7,6 @@ package com.liferay.headless.admin.user.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.http.HttpInvoker;
-import com.liferay.mail.messaging.MailMessageListener;
 import com.liferay.oauth.client.LocalOAuthClient;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
@@ -200,7 +199,8 @@ public class UserAccountResourcePerformanceTest {
 		}
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				MailMessageListener.class.getName(), LoggerTestUtil.OFF)) {
+				"com.liferay.mail.messaging.internal.MailMessageListener",
+				LoggerTestUtil.OFF)) {
 
 			long startTime = System.currentTimeMillis();
 
@@ -239,7 +239,8 @@ public class UserAccountResourcePerformanceTest {
 		List<String> jsons = _createJSONs(usersCount);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				MailMessageListener.class.getName(), LoggerTestUtil.OFF)) {
+				"com.liferay.mail.messaging.internal.MailMessageListener",
+				LoggerTestUtil.OFF)) {
 
 			long startTime = System.currentTimeMillis();
 

@@ -85,10 +85,12 @@ export default function SearchResults({
 
 	const updateQuery = useCallback(
 		(event: {term: string}) => {
-			setLoading(true);
-			setQuery(event.term);
+			if (event.term === '' || event.term.length > 1) {
+				setLoading(true);
+				setQuery(event.term);
 
-			debounce(() => search(event.term), 500)();
+				debounce(() => search(event.term), 500)();
+			}
 		},
 		[search]
 	);

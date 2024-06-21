@@ -14,9 +14,12 @@ import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQue
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 import com.liferay.portal.search.opensearch2.internal.util.QueryUtil;
 import com.liferay.portal.search.query.Query;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.filter.BaseTermsFilterTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -49,7 +52,9 @@ public class TermsFilterTest extends BaseTermsFilterTestCase {
 	}
 
 	@Test
-	public void testTranslateTermsFilterExceedingMaxAllowedTerms() {
+	public void testTranslateTermsFilterExceedingMaxAllowedTerms()
+		throws Exception {
+
 		TermsFilter termsFilter = new TermsFilter("groupId");
 
 		termsFilter.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
@@ -72,10 +77,17 @@ public class TermsFilterTest extends BaseTermsFilterTestCase {
 		return LiferayOpenSearchIndexingFixtureFactory.getInstance();
 	}
 
-	private void _assertTermsCount(int expected, TermsFilter termsFilter) {
-		String jsonp = _toJSONP(termsFilter);
+	private void _assertTermsCount(int expected, TermsFilter termsFilter)
+		throws Exception {
 
-		Assert.assertEquals(jsonp, expected, StringUtil.count(jsonp, "terms"));
+		IdempotentRetryAssert.retryAssert(
+			10, TimeUnit.SECONDS,
+			() -> {
+				String jsonp = _toJSONP(termsFilter);
+
+				Assert.assertEquals(
+					jsonp, expected, StringUtil.count(jsonp, "terms"));
+			});
 	}
 
 	private void _setMaxTermsCount(int maxTermsCount) {

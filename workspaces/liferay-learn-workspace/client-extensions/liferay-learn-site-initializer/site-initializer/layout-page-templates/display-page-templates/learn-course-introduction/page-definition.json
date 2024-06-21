@@ -3,6 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
+					"cssClasses": [
+						"learn-education"
+					],
 					"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\n}",
 					"customCSSViewports": [
 						{
@@ -240,6 +243,9 @@
 																	}
 																}
 															],
+															"fragmentStyle": {
+																"textColor": "#1C3667"
+															},
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -312,22 +318,17 @@
 																"card-tag__expertise"
 															],
 															"fragment": {
-																"key": "dialect-text",
-																"siteKey": "Liferay Learn"
+																"key": "BASIC_COMPONENT-html"
 															},
 															"fragmentConfig": {
-																"textType": "text-paragraph",
-																"truncateText": false
 															},
 															"fragmentFields": [
 																{
-																	"id": "element-text",
+																	"id": "element-html",
 																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
+																		"html": {
 																			"mapping": {
-																				"fieldKey": "DDMStructure_selectExpertise",
+																				"fieldKey": "_ddmTemplate_LEARN_COURSE_EXPERTISE",
 																				"itemReference": {
 																					"contextSource": "DisplayPageItem"
 																				}
@@ -336,6 +337,9 @@
 																	}
 																}
 															],
+															"fragmentStyle": {
+																"textColor": "#1C3667"
+															},
 															"indexed": true
 														},
 														"type": "Fragment"

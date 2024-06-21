@@ -78,6 +78,10 @@ public class NotificationContext {
 		return _portletId;
 	}
 
+	public String getPreferredLanguageId() {
+		return _preferredLanguageId;
+	}
+
 	public Locale getSiteDefaultLocale() {
 		return _siteDefaultLocale;
 	}
@@ -96,6 +100,10 @@ public class NotificationContext {
 
 	public Locale getUserLocale() {
 		return _userLocale;
+	}
+
+	public boolean isUsePreferredLanguageForGuests() {
+		return _usePreferredLanguageForGuests;
 	}
 
 	public void setAttachmentObjectFieldIds(
@@ -156,6 +164,10 @@ public class NotificationContext {
 		_portletId = portletId;
 	}
 
+	public void setPreferredLanguageId(String preferredLanguageId) {
+		_preferredLanguageId = preferredLanguageId;
+	}
+
 	public void setSiteDefaultLocale(Locale siteDefaultLocale) {
 		_siteDefaultLocale = siteDefaultLocale;
 	}
@@ -166,6 +178,12 @@ public class NotificationContext {
 
 	public void setType(String type) {
 		_type = type;
+	}
+
+	public void setUsePreferredLanguageForGuests(
+		boolean usePreferredLanguageForGuests) {
+
+		_usePreferredLanguageForGuests = usePreferredLanguageForGuests;
 	}
 
 	public void setUserId(long userId) {
@@ -188,9 +206,11 @@ public class NotificationContext {
 	private List<NotificationRecipientSetting> _notificationRecipientSettings;
 	private NotificationTemplate _notificationTemplate;
 	private String _portletId;
+	private String _preferredLanguageId;
 	private Locale _siteDefaultLocale;
 	private Map<String, Object> _termValues;
 	private String _type;
+	private boolean _usePreferredLanguageForGuests;
 	private long _userId;
 	private Locale _userLocale;
 

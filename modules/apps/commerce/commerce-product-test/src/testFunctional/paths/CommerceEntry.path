@@ -572,7 +572,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_STATUS</td>
-	<td>//span[@class='workflow-status']//*[contains(.,'${key_status}')]</td>
+	<td>//span[@class='workflow-status']//*[contains(.,'${key_status}')] | //span[@class='label label-info']//*[contains(.,'${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>

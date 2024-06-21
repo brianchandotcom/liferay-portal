@@ -7,6 +7,7 @@ package com.liferay.object.definition.util;
 
 import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -112,26 +113,88 @@ public class ObjectDefinitionUtil {
 		).put(
 			"CommerceReturnItem", "/commerce-return-items"
 		).put(
-			"FDSAction", "/data-set-manager/actions"
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
+					return "DataSetAction";
+				}
+
+				return "FDSAction";
+			},
+			"/data-set-manager/actions"
 		).put(
-			"FDSCardsSection", "/data-set-manager/cards-sections"
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
+					return "DataSetCardsSection";
+				}
+
+				return "FDSCardsSection";
+			},
+			"/data-set-manager/cards-sections"
 		).put(
-			"FDSClientExtensionFilter",
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
+					return "DataSetClientExtensionFilter";
+				}
+
+				return "FDSClientExtensionFilter";
+			},
 			"/data-set-manager/client-extension-filters"
 		).put(
-			"FDSDateFilter", "/data-set-manager/date-filters"
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
+					return "DataSetDateFilter";
+				}
+
+				return "FDSDateFilter";
+			},
+			"/data-set-manager/date-filters"
 		).put(
-			"FDSDynamicFilter", "/data-set-manager/selection-filters"
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
+					return "DataSetSelectionFilter";
+				}
+
+				return "FDSDynamicFilter";
+			},
+			"/data-set-manager/selection-filters"
 		).put(
 			"FDSEntry", "/data-set-manager/entries"
 		).put(
-			"FDSField", "/data-set-manager/table-sections"
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
+					return "DataSetTableSection";
+				}
+
+				return "FDSField";
+			},
+			"/data-set-manager/table-sections"
 		).put(
-			"FDSListSection", "/data-set-manager/list-sections"
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
+					return "DataSetListSection";
+				}
+
+				return "FDSListSection";
+			},
+			"/data-set-manager/list-sections"
 		).put(
-			"FDSSort", "/data-set-manager/sorts"
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
+					return "DataSetSort";
+				}
+
+				return "FDSSort";
+			},
+			"/data-set-manager/sorts"
 		).put(
-			"FDSView", "/data-set-manager/data-sets"
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled("LPD-15729")) {
+					return "DataSet";
+				}
+
+				return "FDSView";
+			},
+			"/data-set-manager/data-sets"
 		).put(
 			"FunctionalCookieEntry", "/functional-cookies-entries"
 		).put(
@@ -141,6 +204,7 @@ public class ObjectDefinitionUtil {
 		).put(
 			"PersonalizationCookieEntry", "/personalization-cookies-entries"
 		).build();
+
 	private static final Map<String, String>
 		_allowedUnmodifiableSystemObjectDefinitionNames = HashMapBuilder.put(
 			"AccountEntry", "L_ACCOUNT"

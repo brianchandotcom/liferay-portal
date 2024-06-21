@@ -55,7 +55,9 @@ export class AccountsPage {
 		this.accountGroupsTab = page.getByRole('link', {
 			name: 'Account Groups',
 		});
-		this.newButton = page.getByTestId('creationMenuNewButton');
+		this.newButton = page
+			.getByTestId('creationMenuNewButton')
+			.getByText('New');
 		this.organizationAssignmentFrame = page.frameLocator(
 			'iframe[id="modalIframe"]'
 		);

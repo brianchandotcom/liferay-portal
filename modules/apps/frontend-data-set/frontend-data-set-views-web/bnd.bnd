@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Frontend Data Set Views Web
-Bundle-SymbolicName: com.liferay.frontend.data.set.views.web
-Bundle-Version: 1.0.25
-Web-ContextPath: /frontend-data-set-views-web

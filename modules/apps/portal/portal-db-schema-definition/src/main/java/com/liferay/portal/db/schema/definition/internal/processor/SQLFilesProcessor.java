@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactory;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.release.SchemaCreator;
 
 import java.util.Collection;
@@ -43,11 +44,11 @@ public class SQLFilesProcessor {
 	private void _appendSQL(String indexesSQL, String tablesSQL)
 		throws Exception {
 
-		if (indexesSQL != null) {
+		if (Validator.isNotNull(indexesSQL)) {
 			_indexesSQLSB.append(_db.buildSQL(indexesSQL));
 		}
 
-		if (tablesSQL != null) {
+		if (Validator.isNotNull(tablesSQL)) {
 			_tablesSQLSB.append(_db.buildSQL(tablesSQL));
 		}
 	}

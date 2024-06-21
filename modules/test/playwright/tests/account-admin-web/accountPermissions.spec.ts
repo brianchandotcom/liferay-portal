@@ -142,7 +142,6 @@ test.describe('Test for Organization Account visibility depending on Permissions
 		});
 
 		const role = await apiHelpers.headlessAdminUser.postRole({
-			roleType: 'organization',
 			name: getRandomString(),
 			rolePermissions: [
 				{
@@ -172,6 +171,7 @@ test.describe('Test for Organization Account visibility depending on Permissions
 					scope: 1,
 				},
 			],
+			roleType: 'organization',
 		});
 
 		await apiHelpers.headlessAdminUser.assignUserToOrganizationRole(
@@ -244,7 +244,6 @@ test.describe('Test for Organization Account visibility depending on Permissions
 		});
 
 		const role = await apiHelpers.headlessAdminUser.postRole({
-			roleType: 'organization',
 			name: getRandomString(),
 			rolePermissions: [
 				{
@@ -273,6 +272,7 @@ test.describe('Test for Organization Account visibility depending on Permissions
 					scope: 1,
 				},
 			],
+			roleType: 'organization',
 		});
 
 		await apiHelpers.headlessAdminUser.assignUserToOrganizationRole(

@@ -249,6 +249,14 @@ const filterSchema = {
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
 				name: 'testrayTeamIds',
+				resource: ({buildId}) => {
+					const filter = `${SearchBuilder.eq(
+						'teamToComponents/componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
+						buildId as string
+					)}`;
+
+					return `/teams?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
+				},
 				type: 'multiselect',
 			}),
 		] as RendererFields[],
@@ -269,6 +277,14 @@ const filterSchema = {
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
 				name: 'testrayTeamIds',
+				resource: ({buildId}) => {
+					const filter = `${SearchBuilder.eq(
+						'teamToComponents/componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
+						buildId as string
+					)}`;
+
+					return `/teams?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
+				},
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.run, {
@@ -300,10 +316,26 @@ const filterSchema = {
 			}),
 			overrides(baseFilters.team, {
 				name: 'componentToCaseResult/r_teamToComponents_c_teamId',
+				resource: ({buildId}) => {
+					const filter = `${SearchBuilder.eq(
+						'teamToComponents/componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
+						buildId as string
+					)}`;
+
+					return `/teams?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
+				},
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.component, {
 				name: 'componentToCaseResult/id',
+				resource: ({buildId}) => {
+					const filter = `${SearchBuilder.eq(
+						'componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
+						buildId as string
+					)}`;
+
+					return `/components?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
+				},
 				type: 'multiselect',
 			}),
 			{
@@ -458,6 +490,14 @@ const filterSchema = {
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
 				name: 'testrayTeamIds',
+				resource: ({buildId}) => {
+					const filter = `${SearchBuilder.eq(
+						'teamToComponents/componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
+						buildId as string
+					)}`;
+
+					return `/teams?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
+				},
 				type: 'multiselect',
 			}),
 		] as RendererFields[],
@@ -477,6 +517,14 @@ const filterSchema = {
 			overrides(baseFilters.team, {
 				isCustomFilter: true,
 				name: 'testrayTeamIds',
+				resource: ({buildId}) => {
+					const filter = `${SearchBuilder.eq(
+						'teamToComponents/componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
+						buildId as string
+					)}`;
+
+					return `/teams?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
+				},
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.run, {

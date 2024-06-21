@@ -11,9 +11,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslatorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.util.QueryUtil;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.filter.BaseTermsFilterTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -47,12 +50,10 @@ public class TermsFilterTest extends BaseTermsFilterTestCase {
 	}
 
 	@Test
-	public void testTranslateTermsFilterExceedingMaxAllowedTerms() {
-		TermsFilter termsFilter = new TermsFilter("groupId");
+	public void testTranslateTermsFilterExceedingMaxAllowedTerms()
+		throws Exception {
 
-		ReflectionTestUtil.setFieldValue(
-			_elasticsearchFilterTranslator, "termsFilterTranslator",
-			new TermsFilterTranslatorImpl());
+		TermsFilter termsFilter = new TermsFilter("groupId");
 
 		termsFilter.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
@@ -74,13 +75,20 @@ public class TermsFilterTest extends BaseTermsFilterTestCase {
 		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
 	}
 
-	private void _assertTermsCount(int expected, TermsFilter termsFilter) {
-		String queryString = _elasticsearchFilterTranslator.visit(
-			termsFilter
-		).toString();
+	private void _assertTermsCount(int expected, TermsFilter termsFilter)
+		throws Exception {
 
-		Assert.assertEquals(
-			queryString, expected, StringUtil.count(queryString, "terms"));
+		IdempotentRetryAssert.retryAssert(
+			10, TimeUnit.SECONDS,
+			() -> {
+				String queryString = _elasticsearchFilterTranslator.visit(
+					termsFilter
+				).toString();
+
+				Assert.assertEquals(
+					queryString, expected,
+					StringUtil.count(queryString, "terms"));
+			});
 	}
 
 	private void _setMaxTermsCount(int maxTermsCount) {

@@ -149,20 +149,18 @@ public class TestrayBuildAutofillResourceImpl
 			return null;
 		}
 
-		Map<String, Serializable> testrayCaseResult3 = targetTestrayCaseResult;
-
-		testrayCaseResult3.put(
+		targetTestrayCaseResult.put(
 			"dueStatus", sourceTestrayCaseResult.get("dueStatus"));
-		testrayCaseResult3.put(
+		targetTestrayCaseResult.put(
 			"r_userToCaseResults_userId",
 			sourceTestrayCaseResult.get("r_userToCaseResults_userId"));
-		testrayCaseResult3.put(
+		targetTestrayCaseResult.put(
 			"issues", String.valueOf(sourceTestrayCaseResult.get("issues")));
 
 		return _objectEntryLocalService.updateObjectEntry(
 			contextUser.getUserId(),
-			GetterUtil.getLong(testrayCaseResult3.get("c_caseResultId")),
-			testrayCaseResult3, _serviceContextHelper.getServiceContext());
+			GetterUtil.getLong(targetTestrayCaseResult.get("c_caseResultId")),
+			targetTestrayCaseResult, _serviceContextHelper.getServiceContext());
 	}
 
 	private Map<Long, List<Map<String, Serializable>>>

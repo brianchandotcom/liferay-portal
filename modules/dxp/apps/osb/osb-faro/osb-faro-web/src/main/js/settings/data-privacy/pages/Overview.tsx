@@ -105,7 +105,7 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 							)}
 						</p>
 
-						<div className="h5">
+						<div className='h5'>
 							{sub(
 								Liferay.Language.get(
 									'you-will-permanently-lose-analytics-data-that-has-been-recorded-over-x-ago.-you-will-not-be-able-to-undo-this-operation'

@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,11 +23,6 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public abstract class BaseBuildDatabase implements BuildDatabase {
-
-	@Override
-	public File getBuildDatabaseFile() {
-		return _buildDatabaseFile;
-	}
 
 	@Override
 	public JSONObject getBuildDataJSONObject(String key) {
@@ -270,6 +266,10 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 			properties.setProperty(propertyName, propertyValue);
 
 			putProperties(key, properties);
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Added ", propertyName, "=", propertyValue, " to ", key));
 		}
 	}
 
@@ -313,6 +313,53 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 				key, workspaceGitRepository.getJSONObject());
 
 			_writeJSONObjectFile();
+		}
+	}
+
+	@Override
+	public FilePropagator rsyncBuildDatabaseFile(
+		List<String> distNodes, String distPath, String preDistCommand,
+		String postDistCommand, int threadCount) {
+
+		if (!JenkinsResultsParserUtil.isCINode()) {
+			return null;
+		}
+
+		synchronized (_buildDatabaseFile) {
+			File tempBuildDatabaseFile = new File(
+				JenkinsResultsParserUtil.combine(
+					System.getProperty("java.io.tmpdir"), "/",
+					String.valueOf(_buildDatabaseFile.hashCode()), "/",
+					_buildDatabaseFile.getName()));
+
+			try {
+				JenkinsResultsParserUtil.copy(
+					_buildDatabaseFile, tempBuildDatabaseFile);
+
+				String srcPath = JenkinsResultsParserUtil.combine(
+					JenkinsResultsParserUtil.getHostName(
+						System.getenv("HOSTNAME")),
+					":", tempBuildDatabaseFile.getParent());
+
+				FilePropagator filePropagator = new FilePropagator(
+					new String[] {tempBuildDatabaseFile.getName()}, srcPath,
+					distPath, distNodes);
+
+				filePropagator.setPreDistCommand(preDistCommand);
+				filePropagator.setPostDistCommand(postDistCommand);
+
+				filePropagator.start(threadCount);
+
+				return filePropagator;
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+			finally {
+				if (tempBuildDatabaseFile.exists()) {
+					JenkinsResultsParserUtil.delete(tempBuildDatabaseFile);
+				}
+			}
 		}
 	}
 

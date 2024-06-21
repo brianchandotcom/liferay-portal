@@ -9,6 +9,7 @@ import java.io.File;
 
 import java.net.URL;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -21,8 +22,6 @@ import org.json.JSONObject;
 public interface BuildDatabase {
 
 	public static final String FILE_NAME_BUILD_DATABASE = "build-database.json";
-
-	public File getBuildDatabaseFile();
 
 	public JSONObject getBuildDataJSONObject(String key);
 
@@ -71,6 +70,10 @@ public interface BuildDatabase {
 
 	public void putWorkspaceGitRepository(
 		String key, WorkspaceGitRepository workspaceGitRepository);
+
+	public FilePropagator rsyncBuildDatabaseFile(
+		List<String> distNodes, String distPath, String preDistCommand,
+		String postDistCommand, int threadCount);
 
 	public void writeFilteredPropertiesToFile(
 		String destFilePath, Pattern pattern, String key);

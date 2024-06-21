@@ -99,14 +99,9 @@ public class FriendlyURLResolverRegistryUtilTest {
 				MapUtil.singletonDictionary("service.ranking", 1000));
 
 		try {
-			FriendlyURLResolver friendlyURLResolver =
-				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-					_CANONICAL_URL_SEPARATOR);
-
-			Assert.assertNotEquals(
-				defaultCanonicalURLSeparatorFriendlyURLResolver,
-				friendlyURLResolver);
-			Assert.assertEquals(sampleFriendlyURLResolver, friendlyURLResolver);
+			_assertFriendlyURLResolver(
+				sampleFriendlyURLResolver,
+				defaultCanonicalURLSeparatorFriendlyURLResolver);
 		}
 		finally {
 			serviceRegistration.unregister();
@@ -130,15 +125,9 @@ public class FriendlyURLResolverRegistryUtilTest {
 				MapUtil.singletonDictionary("service.ranking", 1000)));
 
 		try {
-			FriendlyURLResolver friendlyURLResolver =
-				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-					_CANONICAL_URL_SEPARATOR);
-
-			Assert.assertNotEquals(
-				defaultCanonicalURLSeparatorFriendlyURLResolver,
-				friendlyURLResolver);
-			Assert.assertEquals(
-				sampleFriendlyURLResolver1, friendlyURLResolver);
+			_assertFriendlyURLResolver(
+				sampleFriendlyURLResolver1,
+				defaultCanonicalURLSeparatorFriendlyURLResolver);
 
 			FriendlyURLResolver sampleFriendlyURLResolver2 =
 				new SampleFriendlyURLResolver();
@@ -148,14 +137,8 @@ public class FriendlyURLResolverRegistryUtilTest {
 					FriendlyURLResolver.class, sampleFriendlyURLResolver2,
 					MapUtil.singletonDictionary("service.ranking", 500)));
 
-			friendlyURLResolver =
-				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-					_CANONICAL_URL_SEPARATOR);
-
-			Assert.assertEquals(
-				sampleFriendlyURLResolver1, friendlyURLResolver);
-			Assert.assertNotEquals(
-				sampleFriendlyURLResolver2, friendlyURLResolver);
+			_assertFriendlyURLResolver(
+				sampleFriendlyURLResolver1, sampleFriendlyURLResolver2);
 		}
 		finally {
 			for (ServiceRegistration<FriendlyURLResolver> serviceRegistration :
@@ -233,6 +216,20 @@ public class FriendlyURLResolverRegistryUtilTest {
 
 				return null;
 			});
+	}
+
+	private void _assertFriendlyURLResolver(
+		FriendlyURLResolver expectedFriendlyURLResolver,
+		FriendlyURLResolver notExpectedFriendlyURLResolver) {
+
+		FriendlyURLResolver curFriendlyURLResolver =
+			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+				_CANONICAL_URL_SEPARATOR);
+
+		Assert.assertEquals(
+			expectedFriendlyURLResolver, curFriendlyURLResolver);
+		Assert.assertNotEquals(
+			notExpectedFriendlyURLResolver, curFriendlyURLResolver);
 	}
 
 	private void _assertGetFriendlyURLResolvers() {

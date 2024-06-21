@@ -5,14 +5,20 @@
 
 package com.liferay.portal.security.iframe.sanitizer.internal.configuration.helper;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration;
 
+import java.util.Collections;
 import java.util.Dictionary;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
@@ -39,6 +45,10 @@ public class IFrameConfigurationHelper {
 			companyId, _defaultIFrameConfiguration);
 	}
 
+	public Set<String> getCompanyWhitelist(long companyId) {
+		return _companyWhitelist.getOrDefault(companyId, _defaultWhitelist);
+	}
+
 	@Activate
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
@@ -63,12 +73,60 @@ public class IFrameConfigurationHelper {
 	protected void modified(Map<String, Object> properties) {
 		_defaultIFrameConfiguration = ConfigurableUtil.createConfigurable(
 			IFrameConfiguration.class, properties);
+
+		_defaultWhitelist = SetUtil.fromArray(
+			_defaultIFrameConfiguration.whitelist());
+	}
+
+	private Set<String> _getWhitelist(long companyId) {
+		IFrameConfiguration iFrameConfiguration = getCompanyIFrameConfiguration(
+			companyId);
+
+		if (iFrameConfiguration == null) {
+			return Collections.emptySet();
+		}
+
+		Set<String> whitelist = SetUtil.fromArray(
+			iFrameConfiguration.whitelist());
+
+		if (SetUtil.isEmpty(whitelist)) {
+			return Collections.emptySet();
+		}
+
+		for (String whitelistItem : whitelist) {
+			whitelistItem = whitelistItem.trim();
+
+			if (!whitelistItem.isEmpty()) {
+				whitelistItem = _stripTrailingStar(whitelistItem);
+
+				whitelist.add(whitelistItem);
+			}
+		}
+
+		return whitelist;
+	}
+
+	private String _stripTrailingStar(String item) {
+		if (item.equals(StringPool.STAR)) {
+			return item;
+		}
+
+		char c = item.charAt(item.length() - 1);
+
+		if (c == CharPool.STAR) {
+			return item.substring(0, item.length() - 1);
+		}
+
+		return item;
 	}
 
 	private final Map<Long, IFrameConfiguration> _companyConfigurationBeans =
 		new ConcurrentHashMap<>();
 	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
+	private final Map<Long, Set<String>> _companyWhitelist =
+		new ConcurrentHashMap<>();
 	private volatile IFrameConfiguration _defaultIFrameConfiguration;
+	private volatile Set<String> _defaultWhitelist = new HashSet<>();
 	private ServiceRegistration<ManagedServiceFactory> _serviceRegistration;
 
 	private class IFrameConfigurationManagedServiceFactory
@@ -100,6 +158,7 @@ public class IFrameConfigurationHelper {
 					ConfigurableUtil.createConfigurable(
 						IFrameConfiguration.class, dictionary));
 				_companyIds.put(pid, companyId);
+				_companyWhitelist.put(companyId, _getWhitelist(companyId));
 			}
 		}
 
@@ -108,6 +167,7 @@ public class IFrameConfigurationHelper {
 
 			if (companyId != null) {
 				_companyConfigurationBeans.remove(companyId);
+				_companyWhitelist.remove(companyId);
 			}
 		}
 

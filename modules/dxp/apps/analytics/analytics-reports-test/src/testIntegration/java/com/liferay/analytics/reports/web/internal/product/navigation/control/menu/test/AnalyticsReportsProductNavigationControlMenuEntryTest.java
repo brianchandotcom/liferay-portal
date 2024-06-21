@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -216,7 +218,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 		portletPreferences.setCompanyId(TestPropsValues.getCompanyId());
 		portletPreferences.setOwnerId(TestPropsValues.getUserId());
 
-		long plid = 123L;
+		long plid = _layout.getPlid();
 
 		portletPreferences.setPlid(plid);
 
@@ -228,6 +230,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 			_portletPreferencesLocalService.addPortletPreferences(
 				portletPreferences);
 
+		_user = UserTestUtil.addUser();
+
 		PermissionThreadLocal.setPermissionChecker(
 			_mockPermissionChecker(
 				ActionKeys.UPDATE, true, "com.liferay.blogs.model.BlogsEntry"));
@@ -235,7 +239,19 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			(MockHttpServletRequest)_getHttpServletRequest();
 
+		mockHttpServletRequest.setAttribute(
+			AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE,
+			new InfoItemReference(Layout.class.getName(), plid));
+
 		mockHttpServletRequest.setParameter("p_l_id", String.valueOf(plid));
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)mockHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setPlid(plid);
+		themeDisplay.setSignedIn(true);
+		themeDisplay.setUser(_user);
 
 		Assert.assertTrue(
 			_productNavigationControlMenuEntry.isShow(mockHttpServletRequest));
@@ -269,6 +285,16 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 		String actionKey, boolean hasPermission, String resourceName) {
 
 		return new SimplePermissionChecker() {
+
+			@Override
+			public long getOwnerRoleId() {
+				return 0;
+			}
+
+			@Override
+			public User getUser() {
+				return _user;
+			}
 
 			@Override
 			public boolean hasPermission(
@@ -306,6 +332,9 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 	)
 	private ProductNavigationControlMenuEntry
 		_productNavigationControlMenuEntry;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 	private class HidePanelPortalPreferencesWrapper
 		extends PortalPreferencesImpl {

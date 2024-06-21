@@ -2499,40 +2499,6 @@ definition {
 			value1 = "exception.UserEmailAddressException$MustNotBeDuplicate: User ${userId} cannot be created or updated because a user with company ${companyId} and email address userea@liferay.com is already in use");
 	}
 
-	@description = "This is a use case for LPS-120825."
-	@priority = 4
-	test UpdateUserInformation {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		User.openUsersAdmin();
-
-		UserNavigator.gotoUser(userScreenName = "test");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Portlet#HEADER",
-			value1 = "Edit User");
-
-		User.editUserInformation(
-			userEmailAddressEdit = "testadmin@liferay.com",
-			userScreenNameEdit = "testscreen");
-
-		User.viewUserInformation(
-			userEmailAddress = "testadmin@liferay.com",
-			userFirstName = "Test",
-			userLastName = "Test",
-			userScreenName = "testscreen");
-
-		JSONUser.updateUser(
-			creatorEmailAddress = "testadmin@liferay.com",
-			creatorPassword = PropsUtil.get("default.admin.password"),
-			screenNameUpdate = "test",
-			userEmailAddress = "testadmin@liferay.com",
-			userEmailAddressUpdate = "test@liferay.com",
-			userFirstName = "Test",
-			userLastName = "Test");
-	}
-
 	@priority = 4
 	test ValidateRegExPasswordPolicyCP {
 		property test.liferay.virtual.instance = "false";

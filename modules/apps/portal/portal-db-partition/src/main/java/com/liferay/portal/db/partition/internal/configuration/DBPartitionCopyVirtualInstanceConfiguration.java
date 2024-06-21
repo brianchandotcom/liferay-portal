@@ -22,15 +22,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DBPartitionCopyVirtualInstanceConfiguration {
 
-	@Meta.AD(name = "name", required = false)
-	public String name();
-
-	@Meta.AD(name = "virtual-hostname", required = false)
-	public String virtualHostname();
-
-	@Meta.AD(name = "web-id", required = false)
-	public String webId();
-
 	@Meta.AD(name = "source-partition-company-id", type = Meta.Type.Long)
 	public long sourcePartitionCompanyId();
 
@@ -39,5 +30,14 @@ public interface DBPartitionCopyVirtualInstanceConfiguration {
 		type = Meta.Type.Long
 	)
 	public long destinationPartitionCompanyId();
+
+	@Meta.AD(name = "name", required = false)
+	public String name();
+
+	@Meta.AD(name = "virtual-hostname", required = false)
+	public String virtualHostname();
+
+	@Meta.AD(name = "web-id", required = false)
+	public String webId();
 
 }

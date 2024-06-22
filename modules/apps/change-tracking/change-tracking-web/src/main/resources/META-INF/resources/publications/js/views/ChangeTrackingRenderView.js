@@ -1480,7 +1480,6 @@ export default function ChangeTrackingRenderView({
 							setState((prevState) => ({
 								...prevState,
 								contentType: CONTENT_TYPE_WORKFLOW,
-								view: VIEW_UNIFIED,
 							}))
 						}
 					>

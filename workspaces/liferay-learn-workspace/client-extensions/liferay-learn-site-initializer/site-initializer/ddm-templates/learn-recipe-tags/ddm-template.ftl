@@ -42,7 +42,7 @@
 			searchTerm = paramUtil.get(request, "highlight", "defaultValue")!
 			/>
 
-			<#if vocabulary = "Capability" || vocabulary = "Feature" || vocabulary="Deployment Approach" || vocabulary="Applicable Versions">
+			<#if vocabulary="Applicable Versions" || vocabulary = "Capability" || vocabulary="Deployment Approach" || vocabulary = "Feature">
 				<div class="align-items-baseline ${formattedVocabulary}-tag d-flex mt-2">
 					<div class="learn-recipe-category-title mr-2">
 						${vocabulary}:

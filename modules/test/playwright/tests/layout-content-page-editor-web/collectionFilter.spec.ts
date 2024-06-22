@@ -13,6 +13,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {wemSiteTest} from '../../fixtures/wemSiteTest';
 import {ANIMALS_COLLECTION_NAME} from '../../setup/wem-site/constants';
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import getRandomString from '../../utils/getRandomString';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
@@ -74,10 +75,12 @@ const configureFilter = async (page, option: 'category' | 'keywords') => {
 				.getByRole('button', {name: 'Select This Level'})
 		).toBeEnabled();
 
-		await page
-			.frameLocator('iframe[title="Select"]')
-			.getByRole('button', {name: 'Select This Level'})
-			.click();
+		await clickAndExpectToBeHidden({
+			target: page.locator('.modal-dialog'),
+			trigger: page
+				.frameLocator('iframe[title="Select"]')
+				.getByRole('button', {name: 'Select This Level'}),
+		});
 
 		await expect(page.getByLabel('Source', {exact: true})).toHaveValue(
 			ANIMALS_COLLECTION_NAME

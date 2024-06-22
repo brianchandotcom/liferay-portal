@@ -45,7 +45,7 @@ test('checks the correct label for restricted page in the page heading', async (
 	// Go to the view mode and check the restricted page label
 
 	await page.goto(
-		`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		`${liferayConfig.environment.baseUrl}/en/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 	);
 
 	const header = page.getByRole('heading', {name: pageName});

@@ -33,18 +33,18 @@ test('Create Basic MDF Request', async ({
 				activityName: 'Test Activity',
 				claimPercent: 0.5,
 				endDate: moment().add(2, 'days').format('YYYY-MM-DD'),
-				typeOfActivity:
-					MDFRequestTypeOfActivity.MISCELLANEOUS_MARKETING,
-				tactic: MDFRequestActivityTactics.OTHER,
-				startDate: moment().add(1, 'days').format('YYYY-MM-DD'),
-				leadGenerated: false,
-				marketingActivity: 'Marketing Description',
 				expenses: [
 					{
 						type: MDFRequestActivityBudgetExpense.BROADCAST_ADVERTISING,
 						value: 1000,
 					},
 				],
+				leadGenerated: false,
+				marketingActivity: 'Marketing Description',
+				startDate: moment().add(1, 'days').format('YYYY-MM-DD'),
+				tactic: MDFRequestActivityTactics.OTHER,
+				typeOfActivity:
+					MDFRequestTypeOfActivity.MISCELLANEOUS_MARKETING,
 			},
 		],
 		goals: {

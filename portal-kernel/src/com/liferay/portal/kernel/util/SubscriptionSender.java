@@ -1023,6 +1023,13 @@ public class SubscriptionSender implements Serializable {
 
 	protected String body;
 	protected boolean bulk;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	protected long companyId;
+
 	protected long creatorUserId;
 	protected long currentUserId;
 	protected List<FileAttachment> fileAttachments = new ArrayList<>();

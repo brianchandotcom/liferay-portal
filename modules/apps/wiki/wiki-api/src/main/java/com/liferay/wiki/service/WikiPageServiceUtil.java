@@ -189,7 +189,7 @@ public class WikiPageServiceUtil {
 	 * reference code
 	 *
 	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the wiki page external reference code
+	 * @param externalReferenceCode the wiki page's external reference code
 	 * @return the latest matching wiki page, or <code>null</code> if no
 	 matching wiki page could be found
 	 */
@@ -225,7 +225,7 @@ public class WikiPageServiceUtil {
 	 * reference code
 	 *
 	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the wiki page external reference code
+	 * @param externalReferenceCode the wiki page's external reference code
 	 * @return the latest matching wiki page
 	 * @throws PortalException if a portal exception occurred
 	 */

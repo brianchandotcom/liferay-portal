@@ -54,7 +54,7 @@ public interface DDMTemplateService extends BaseService {
 	/**
 	 * Adds a template.
 	 *
-	 * @param externalReferenceCode the template external reference code
+	 * @param externalReferenceCode the template's external reference code
 	 * @param groupId the primary key of the group
 	 * @param classNameId the primary key of the class name for template's
 	 related model
@@ -86,7 +86,7 @@ public interface DDMTemplateService extends BaseService {
 	/**
 	 * Adds a template with additional parameters.
 	 *
-	 * @param externalReferenceCode the template external reference code
+	 * @param externalReferenceCode the template's external reference code
 	 * @param groupId the primary key of the group
 	 * @param classNameId the primary key of the class name for template's
 	 related model

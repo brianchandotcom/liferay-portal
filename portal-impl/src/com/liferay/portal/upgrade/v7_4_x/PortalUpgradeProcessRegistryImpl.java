@@ -410,15 +410,7 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(31, 1, 1), new UpgradePortletPreferencesCompanyId());
 
 		upgradeVersionTreeMap.put(
-			new Version(31, 2, 0),
-			new BaseExternalReferenceCodeUpgradeProcess() {
-
-				@Override
-				protected String[][] getTableAndPrimaryKeyColumnNames() {
-					return new String[][] {{"Layout", "plid"}};
-				}
-
-			});
+			new Version(31, 2, 0), new UpgradeLayoutExternalReferenceCode());
 	}
 
 }

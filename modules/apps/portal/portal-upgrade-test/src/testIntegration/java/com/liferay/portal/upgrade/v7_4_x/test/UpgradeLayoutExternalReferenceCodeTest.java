@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.internal.upgrade.v1_5_0.test;
+package com.liferay.portal.upgrade.v7_4_x.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
@@ -23,12 +23,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+import com.liferay.portal.upgrade.v7_4_x.UpgradeLayoutExternalReferenceCode;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -43,7 +41,7 @@ import org.junit.runner.RunWith;
  * @author Rubén Pulido
  */
 @RunWith(Arquillian.class)
-public class LayoutUpgradeProcessTest {
+public class UpgradeLayoutExternalReferenceCodeTest {
 
 	@ClassRule
 	@Rule
@@ -128,11 +126,8 @@ public class LayoutUpgradeProcessTest {
 	}
 
 	private void _runUpgrade() throws Exception {
-		UpgradeProcess[] upgradeProcesses = UpgradeTestUtil.getUpgradeSteps(
-			_upgradeStepRegistrator, new Version(1, 5, 0));
-
 		UpgradeProcess upgradeProcess =
-			upgradeProcesses[upgradeProcesses.length - 1];
+			new UpgradeLayoutExternalReferenceCode();
 
 		upgradeProcess.upgrade();
 
@@ -148,11 +143,6 @@ public class LayoutUpgradeProcessTest {
 	}
 
 	private static DB _db;
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@DeleteAfterTestRun
 	private Group _group;

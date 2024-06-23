@@ -56,6 +56,7 @@ InstanceofOrderCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Check the 
 JSONBatchEngineDataFileCheck | .ipynb, .json or .npmbridgerc | Remove elements in `*.batch-engine-data.json` files. |
 JSONPageFileCheck | .ipynb, .json or .npmbridgerc | Sorts by `roleName` in `page.json` files. |
 JSONPortletResponseUtilCheck | .java | Checks if `JSONPortletResponseUtil.writeJSON ` should come before method calling `hideDefaultSuccessMessage`. |
+JSONReplacementsFileCheck | .ipynb, .json or .npmbridgerc | Sorts by `issueKey`, `from` and `to` in `replacements.json` file. |
 JSONResourcePermissionsFileCheck | .ipynb, .json or .npmbridgerc | Sorts by `resourceName` and `roleName` in `resource-permissions.json` files. |
 JSONStylingCheck | .ipynb, .json or .npmbridgerc | Applies rules to enforce consistency in code style. |
 [JSONUtilCheck](check/json_util_check.markdown#jsonutilcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for utilization of class `JSONUtil`. |

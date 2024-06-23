@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.LayoutBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
-import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.Portal;
@@ -102,17 +101,6 @@ public class LayoutServiceUpgradeStepRegistrator
 			"1.4.2", "1.4.3",
 			new com.liferay.layout.internal.upgrade.v1_4_3.
 				LayoutClassedModelUsageUpgradeProcess(_classNameLocalService));
-
-		registry.register(
-			"1.4.3", "1.5.0",
-			new BaseExternalReferenceCodeUpgradeProcess() {
-
-				@Override
-				protected String[][] getTableAndPrimaryKeyColumnNames() {
-					return new String[][] {{"Layout", "plid"}};
-				}
-
-			});
 	}
 
 	@Reference

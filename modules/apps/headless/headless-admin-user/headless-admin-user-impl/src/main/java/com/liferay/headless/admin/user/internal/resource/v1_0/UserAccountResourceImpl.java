@@ -1523,16 +1523,17 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
-				Integer userStatus = status;
+				Integer searchContextStatus = status;
 
-				if ((userStatus == null) && (filter != null) &&
+				if ((searchContextStatus == null) && (filter != null) &&
 					StringUtil.containsIgnoreCase(
 						filter.toString(), "field=status", StringPool.BLANK)) {
 
-					userStatus = WorkflowConstants.STATUS_ANY;
+					searchContextStatus = WorkflowConstants.STATUS_ANY;
 				}
 
-				searchContext.setAttribute(Field.STATUS, userStatus);
+				searchContext.setAttribute(Field.STATUS, searchContextStatus);
+
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
 			sorts,

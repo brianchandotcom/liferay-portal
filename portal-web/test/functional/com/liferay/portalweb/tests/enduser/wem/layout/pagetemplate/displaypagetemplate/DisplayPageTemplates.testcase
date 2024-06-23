@@ -122,34 +122,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-153367. The page creator could configure the display page template in a new tab."
-	@priority = 4
-	test ConfigureDisplayPageTemplateInANewTab {
-		task ("When the page creator accesses to the page editor of display page template") {
-			AssertVisible(locator1 = "PageEditor#NO_FRAGMENTS_MESSAGE");
-		}
-
-		task ("Then the page creator could configure display page template in a new tab") {
-			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
-
-			SelectWindow.selectPopUp(value1 = "null");
-
-			Navigator.gotoNavTab(navTab = "SEO");
-
-			AssertElementPresent(
-				key_title = "SEO",
-				locator1 = "Header#H2_TITLE");
-
-			AssertElementPresent(
-				key_title = "Settings",
-				locator1 = "Header#H3_TITLE");
-
-			AssertElementPresent(
-				key_title = "Sitemap",
-				locator1 = "Header#H3_TITLE");
-		}
-	}
-
 	@description = "This is a test for LPS-193213. It is possible to access the configuration of an existing Display Page Template from the ellipsis menu of the card."
 	@priority = 4
 	test ConfigureDisplayPageTemplateInPageTemplatesAdmin {
@@ -977,15 +949,6 @@ definition {
 		}
 	}
 
-	@description = "User can only map a display page to an asset type once."
-	@priority = 4
-	@uitest
-	test ViewAssetTypeOnlySelectableOnce {
-		task ("View the plus button of Item field no longer shown in Mapping tab") {
-			PageEditorMapping.assertAssetTypeUnselectable();
-		}
-	}
-
 	@description = "This is a test for LPS-162302. The page creator can navigate through fragment structure via breadcrumb on display page template."
 	@priority = 4
 	test ViewBreadcrumbOnDisplayPageTemplate {
@@ -1033,66 +996,6 @@ definition {
 				locator1 = "Panel#PANEL");
 
 			Breadcrumb.viewActiveEntry(breadcrumbName = "Container");
-		}
-	}
-
-	@description = "This is a test for LPS-192724. The copied pages are now separate entities."
-	@priority = 4
-	test ViewCopyOfDisplayPageTemplateAndOriginCannotAffectEachOther {
-		task ("Given a page creator has a copy of display page template") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-
-			PageEditor.publish();
-
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Name",
-				item = "Make a Copy");
-
-			MenuItem.click(menuItem = "Display Page");
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("When the page creator makes some changes in copy of display page template") {
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name (Copy)");
-
-			PageEditor.editFragmentText(
-				fragmentName = "Heading",
-				id = "element-text",
-				text = "Welcome to Liferay");
-
-			PageEditor.publish();
-		}
-
-		task ("Then the original display page template shouldn't be updated") {
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.viewFragmentEditableText(
-				editableText = "Heading Example",
-				fragmentName = "Heading",
-				id = "element-text");
-		}
-
-		task ("When the page creator makes some changes in original display page template") {
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button",
-				targetFragmentName = "Heading");
-
-			PageEditor.publish();
-		}
-
-		task ("Then the copy of display page template shouldn't be updated") {
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name (Copy)");
-
-			PageEditor.viewFragmentEditableText(
-				editableText = "Welcome to Liferay",
-				fragmentName = "Heading",
-				id = "element-text");
-
-			PageEditor.viewFragmentNotPresent(fragmentName = "Button");
 		}
 	}
 

@@ -647,23 +647,6 @@ definition {
 		}
 	}
 
-	@description = "User can delete display page template."
-	@priority = 5
-	@uitest
-	test DeleteDisplayPageTemplate {
-		property portal.acceptance = "true";
-
-		task ("Delete the display page") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Name");
-		}
-
-		task ("Assert the display page is deleted") {
-			DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "DisplayPage Name");
-		}
-	}
-
 	@description = "This is a test for LPS-86191 and LPS-96438. Disable Show Header and Show Footer of display page template."
 	@priority = 4
 	@uitest

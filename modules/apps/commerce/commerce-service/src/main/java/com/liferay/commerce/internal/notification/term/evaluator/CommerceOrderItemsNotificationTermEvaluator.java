@@ -9,10 +9,14 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
+import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.price.CommerceOrderItemPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -54,21 +58,25 @@ public class CommerceOrderItemsNotificationTermEvaluator
 	implements NotificationTermEvaluator {
 
 	public CommerceOrderItemsNotificationTermEvaluator(
+		CommerceMediaResolver commerceMediaResolver,
 		CommerceMoneyFactory commerceMoneyFactory,
 		CommerceOrderItemQuantityFormatter commerceOrderItemQuantityFormatter,
 		CommerceOrderLocalService commerceOrderLocalService,
 		CommerceOrderPriceCalculation commerceOrderPriceCalculation,
 		CompanyLocalService companyLocalService,
+		CPDefinitionLocalService cpDefinitionLocalService,
 		CPInstanceUnitOfMeasureLocalService cpInstanceUnitOfMeasureLocalService,
 		CPInstanceHelper cpInstanceHelper, Language language,
 		ObjectDefinition objectDefinition, UserLocalService userLocalService) {
 
+		_commerceMediaResolver = commerceMediaResolver;
 		_commerceMoneyFactory = commerceMoneyFactory;
 		_commerceOrderItemQuantityFormatter =
 			commerceOrderItemQuantityFormatter;
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderPriceCalculation = commerceOrderPriceCalculation;
 		_companyLocalService = companyLocalService;
+		_cpDefinitionLocalService = cpDefinitionLocalService;
 		_cpInstanceUnitOfMeasureLocalService =
 			cpInstanceUnitOfMeasureLocalService;
 		_cpInstanceHelper = cpInstanceHelper;
@@ -110,13 +118,16 @@ public class CommerceOrderItemsNotificationTermEvaluator
 
 		Locale locale = user.getLocale();
 
+		Company company = _companyLocalService.getCompany(user.getCompanyId());
+
 		template.put(
 			"orderItems",
 			TransformUtil.transform(
 				commerceOrder.getCommerceOrderItems(),
 				commerceOrderItem -> _getOrderItem(
 					commerceOrderItem, commerceOrder.getCommerceCurrency(),
-					locale)));
+					locale, company.getPortalURL(commerceOrder.getGroupId()))));
+
 		template.put("optionLabel", _language.get(locale, "option"));
 		template.put("qtyLabel", _language.get(locale, "qty"));
 		template.put("skuLabel", _language.get(locale, "sku"));
@@ -130,7 +141,7 @@ public class CommerceOrderItemsNotificationTermEvaluator
 
 	private Map<String, Object> _getOrderItem(
 			CommerceOrderItem commerceOrderItem,
-			CommerceCurrency commerceCurrency, Locale locale)
+			CommerceCurrency commerceCurrency, Locale locale, String portalURL)
 		throws PortalException {
 
 		return HashMapBuilder.<String, Object>put(
@@ -148,18 +159,32 @@ public class CommerceOrderItemsNotificationTermEvaluator
 		).put(
 			"imageURL",
 			() -> {
-				User user = _userLocalService.getUser(
-					commerceOrderItem.getUserId());
+				CPAttachmentFileEntry cpAttachmentFileEntry =
+					_cpDefinitionLocalService.
+						getDefaultImageCPAttachmentFileEntry(
+							commerceOrderItem.getCPDefinitionId());
 
-				Company company = _companyLocalService.getCompany(
-					user.getCompanyId());
+				long cpAttachmentFileEntryId = 0;
 
-				String cpInstanceThumbnailSrc =
-					_cpInstanceHelper.getCPInstanceThumbnailSrc(
-						AccountConstants.ACCOUNT_ENTRY_ID_ADMIN,
-						commerceOrderItem.getCPInstanceId());
+				if (cpAttachmentFileEntry != null) {
+					cpAttachmentFileEntryId =
+						cpAttachmentFileEntry.getCPAttachmentFileEntryId();
+				}
 
-				return company.getPortalURL(0) + cpInstanceThumbnailSrc;
+				if (cpAttachmentFileEntryId == 0) {
+					CPDefinition cpDefinition =
+						commerceOrderItem.getCPDefinition();
+
+					return portalURL +
+						_commerceMediaResolver.getDefaultURL(
+							cpDefinition.getGroupId());
+				}
+
+				String imageURL = _commerceMediaResolver.getURL(
+					AccountConstants.ACCOUNT_ENTRY_ID_GUEST,
+					cpAttachmentFileEntryId, false, false, false);
+
+				return portalURL + imageURL;
 			}
 		).put(
 			"name", commerceOrderItem.getName(locale)
@@ -238,12 +263,14 @@ public class CommerceOrderItemsNotificationTermEvaluator
 		).build();
 	}
 
+	private final CommerceMediaResolver _commerceMediaResolver;
 	private final CommerceMoneyFactory _commerceMoneyFactory;
 	private final CommerceOrderItemQuantityFormatter
 		_commerceOrderItemQuantityFormatter;
 	private final CommerceOrderLocalService _commerceOrderLocalService;
 	private final CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 	private final CompanyLocalService _companyLocalService;
+	private final CPDefinitionLocalService _cpDefinitionLocalService;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPInstanceUnitOfMeasureLocalService
 		_cpInstanceUnitOfMeasureLocalService;

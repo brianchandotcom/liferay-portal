@@ -3,11 +3,11 @@
 	${dataFactory.toInsertSQL(dataFactory.newCTEntryModel(ctCollectionId, ctCollectionResourcePermissionModel, dataFactory.ctChangeTypeAddition))}
 </#list>
 
-<#list dataFactory.getSequence(dataFactory.maxPublicationJournalArticlePageCount) as publicationJournalArticlePageCount>
+<#list dataFactory.getSequence(dataFactory.maxCTJournalArticlePageCount) as ctJournalArticlePageCount>
 	<#assign
-		portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_TEST_" + publicationJournalArticlePageCount + "_"
+		portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_TEST_" + ctJournalArticlePageCount + "_"
 
-		ctCollectionLayoutModel = dataFactory.newCTCollectionLayoutModel(ctCollectionId, publicationGroupId, publicationGroupId + "_ct_journal_article_" + publicationJournalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
+		ctCollectionLayoutModel = dataFactory.newCTCollectionLayoutModel(ctCollectionId, publicationGroupId, publicationGroupId + "_ct_journal_article_" + ctJournalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
 	/>
 
 	${csvFileWriter.write("layout", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + ctCollectionLayoutModel.friendlyURL + "\n")}

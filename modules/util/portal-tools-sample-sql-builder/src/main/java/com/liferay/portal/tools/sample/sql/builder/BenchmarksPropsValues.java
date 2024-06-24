@@ -170,6 +170,11 @@ public class BenchmarksPropsValues {
 			PropertiesHolder._get(
 				BenchmarksPropsKeys.MAX_CT_JOURNAL_ARTICLE_COUNT));
 
+	public static final int MAX_CT_JOURNAL_ARTICLE_PAGE_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.MAX_CT_JOURNAL_ARTICLE_PAGE_COUNT));
+
 	public static final int MAX_DDL_CUSTOM_FIELD_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_DDL_CUSTOM_FIELD_COUNT));
 
@@ -226,12 +231,6 @@ public class BenchmarksPropsValues {
 
 	public static final int MAX_MB_THREAD_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_MB_THREAD_COUNT));
-
-	public static final int MAX_PUBLICATION_JOURNAL_ARTICLE_PAGE_COUNT =
-		GetterUtil.getInteger(
-			PropertiesHolder._get(
-				BenchmarksPropsKeys.
-					MAX_PUBLICATION_JOURNAL_ARTICLE_PAGE_COUNT));
 
 	public static final int MAX_PUBLICATION_JOURNAL_ARTICLE_SIZE =
 		GetterUtil.getInteger(

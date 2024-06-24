@@ -1588,7 +1588,7 @@ public class LayoutsAdminDisplayContext {
 
 		try {
 			layoutFullURL = HttpComponentsUtil.addParameters(
-				layoutFullURL, "p_l_back_url", _getBackURL(),
+				layoutFullURL, "p_l_back_url", _getBackURL(layout),
 				"p_l_back_url_title",
 				LanguageUtil.get(httpServletRequest, "pages"));
 		}

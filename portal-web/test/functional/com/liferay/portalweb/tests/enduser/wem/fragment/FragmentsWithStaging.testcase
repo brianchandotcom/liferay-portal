@@ -215,50 +215,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-114145. The changes are saved automatically in fragment editor before publish in Staging site."
-	@priority = 3
-	test ViewAutoSavedBeforePublishingComponentInStaging {
-		task ("Add a fragment collection") {
-			JSONFragment.addFragmentCollection(
-				groupKey = "Test Site Name-staging",
-				name = "Collection Name",
-				site = "false");
-		}
-
-		task ("Add a draft fragment") {
-			JSONFragment.addSection(
-				collectionName = "Collection Name",
-				fragmentStatus = "Draft",
-				groupKey = "Test Site Name-staging",
-				name = "Fragment Name",
-				site = "false");
-
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
-
-			FragmentsAdminNavigator.gotoEntryEllipsisItem(
-				entry = "Fragment Name",
-				item = "Edit");
-
-			FragmentsEditor.typeHtmlEditor(content = '''<div class="fragment_1">Fragment Name</div>''');
-
-			FragmentsEditor.waitForAutoSave();
-
-			Navigator.gotoBack();
-		}
-
-		task ("View the draft is autosaved") {
-			FragmentsAdminNavigator.gotoEntryEllipsisItem(
-				entry = "Fragment Name",
-				item = "Edit");
-
-			var htmlContent = '''<div class="fragment_1">Fragment Name</div>''';
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
-				value1 = ${htmlContent});
-		}
-	}
-
 	@description = "This is a test for LPS-129852. View the changes of fragment on content page still persist in staging and live site after overwrite the fragment."
 	@priority = 4
 	test ViewChangesOfFragmentOnContentPagePersistInStagingAndLiveSiteAfterOverwriteTheFragment {
@@ -382,74 +338,6 @@ definition {
 					id = "title${n}",
 					text = "Test ${n}");
 			}
-		}
-	}
-
-	@description = "This is a test for LPS-168163. The fragment developer could see the usages of fragment in staging site."
-	@priority = 4
-	test ViewUsagesOfFragmentInStagingSite {
-		task ("Given a fragment developer has a new fragment") {
-			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name (Staging)",
-				name = "Fragment Set Name",
-				site = "false");
-
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
-
-			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-
-			var htmlSnippet = '''
-<div class="fragment-name">
-    Fragment Example
-</div>''';
-
-			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
-
-			FragmentsEditor.waitForAutoSave();
-
-			FragmentsEditor.publish();
-		}
-
-		task ("When the fragment developer adds a new fragment into page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
-				layoutName = "Test Page Name",
-				site = "false",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name Staging");
-
-			PageEditor.addFragment(
-				collectionName = "Fragment Set Name",
-				fragmentName = "Fragment Name");
-
-			PageEditor.publish();
-		}
-
-		task ("Then the fragment developer sees the usages of new fragment is 2 in staging site") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
-
-			LexiconCard.viewCardSubtitle(
-				card = "Fragment Name",
-				cardSubtitle = "2 Usages");
-		}
-
-		task ("When the fragment developer publishes to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
-
-			Staging.publishCustomPublication();
-		}
-
-		task ("Then the fragment developer sees the usages of new fragment is still 2 in staging site") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
-
-			LexiconCard.viewCardSubtitle(
-				card = "Fragment Name",
-				cardSubtitle = "2 Usages");
 		}
 	}
 

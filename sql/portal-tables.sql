@@ -1156,7 +1156,7 @@ create table RememberMeToken (
 	companyId LONG,
 	userId LONG,
 	createDate DATE null,
-	token VARCHAR(75) null,
+	token VARCHAR(255) null,
 	expirationDate DATE null
 );
 

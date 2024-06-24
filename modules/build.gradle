@@ -412,7 +412,7 @@ gradle.beforeProject {
 				rtlExcludedPathRegexps = [".+"]
 			}
 
-			if (project.path.startsWith(":core:petra:") || project.name.endsWith("-api") || project.name.endsWith("-impl")) {
+			if (!project.path.startsWith(":sdk:") && !project.path.startsWith(":test:") && !project.path.startsWith(":util:") && !project.path.contains("-theme-")) {
 				buildCSS {
 					enabled = false
 				}

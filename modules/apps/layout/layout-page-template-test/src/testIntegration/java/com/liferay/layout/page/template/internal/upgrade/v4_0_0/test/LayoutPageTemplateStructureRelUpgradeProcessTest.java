@@ -69,7 +69,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 	@Test
 	public void testUpgrade() throws Exception {
 
-		// test upgrade with numberOfItemsPerPage
+		// Upgrade with "numberOfItemsPerPage"
 
 		int numberOfItems = RandomTestUtil.randomInt();
 		int numberOfItemsPerPage = RandomTestUtil.randomInt();
@@ -95,7 +95,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC
 			).build());
 
-		// test upgrade with paginationType none
+		// Upgrade with "paginationType" "none"
 
 		_assertUpgradeWithItemConfig(
 			HashMapBuilder.<String, Object>put(
@@ -107,7 +107,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 				"paginationType", CollectionPaginationUtil.PAGINATION_TYPE_NONE
 			).build());
 
-		// test upgrade with paginationType null
+		// Upgrade with "paginationType" null
 
 		_assertUpgradeWithItemConfig(
 			HashMapBuilder.<String, Object>put(
@@ -119,7 +119,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 				"paginationType", StringPool.BLANK
 			).build());
 
-		// test upgrade with paginationType numeric
+		// Upgrade with "paginationType" numeric
 
 		_assertUpgradeWithItemConfig(
 			HashMapBuilder.<String, Object>put(
@@ -133,7 +133,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC
 			).build());
 
-		// test upgrade with paginationType random
+		// Upgrade with "paginationType" random
 
 		_assertUpgradeWithItemConfig(
 			HashMapBuilder.<String, Object>put(
@@ -145,7 +145,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 				"paginationType", RandomTestUtil.randomString()
 			).build());
 
-		// test upgrade with paginationType regular
+		// Upgrade with "paginationType" regular
 
 		_assertUpgradeWithItemConfig(
 			HashMapBuilder.<String, Object>put(
@@ -159,7 +159,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 				CollectionPaginationUtil.PAGINATION_TYPE_REGULAR
 			).build());
 
-		// test upgrade with paginationType simple
+		// Upgrade with "paginationType" simple
 
 		_assertUpgradeWithItemConfig(
 			HashMapBuilder.<String, Object>put(
@@ -173,7 +173,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 				CollectionPaginationUtil.PAGINATION_TYPE_SIMPLE
 			).build());
 
-		// test upgrade with showAllItems enabled
+		// Upgrade with "showAllItems" enabled
 
 		_assertUpgradeWithItemConfig(
 			HashMapBuilder.<String, Object>put(
@@ -191,7 +191,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 				"showAllItems", true
 			).build());
 
-		// test upgrade with showAllItems disabled
+		// Upgrade with "showAllItems" disabled
 
 		_assertUpgradeWithItemConfig(
 			HashMapBuilder.<String, Object>put(

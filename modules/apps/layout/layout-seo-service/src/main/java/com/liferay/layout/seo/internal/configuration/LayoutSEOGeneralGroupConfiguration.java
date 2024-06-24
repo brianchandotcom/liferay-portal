@@ -20,6 +20,18 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface LayoutSEOGeneralGroupConfiguration {
 
+	@Meta.AD(
+		deflt = "true", name = "include-the-instance-name-in-the-html-title",
+		required = false
+	)
+	public boolean includeInstanceName();
+
+	@Meta.AD(
+		deflt = "true", name = "include-the-site-name-in-the-html-title",
+		required = false
+	)
+	public boolean includeSiteName();
+
 	@Meta.AD(deflt = "false", required = false)
 	public boolean showOnlyLayoutTitle();
 

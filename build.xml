@@ -289,7 +289,7 @@ message.
 		<setup-sdk />
 
 		<setup-libs />
-		<setup-binary-sass />
+		<setup-sass-compiler />
 		<setup-yarn />
 
 		<gradle-execute dir="modules/core" task="deploy">
@@ -990,10 +990,6 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<ant dir="util-taglib" inheritAll="false" target="restore-latest-artifact-version" />
 	</target>
 
-	<target name="setup-binary-sass">
-		<setup-binary-sass />
-	</target>
-
 	<target name="setup-libs">
 		<setup-libs />
 	</target>
@@ -1074,6 +1070,10 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 				<ant dir="portal-kernel" inheritAll="false" target="replace-release-info-tokens" />
 			</then>
 		</if>
+	</target>
+
+	<target name="setup-sass-compiler">
+		<setup-sass-compiler />
 	</target>
 
 	<target name="setup-sdk">

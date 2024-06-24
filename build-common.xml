@@ -1684,22 +1684,30 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 		</sequential>
 	</macrodef>
 
-	<macrodef name="setup-binary-sass">
+	<macrodef name="setup-libs">
+		<sequential>
+			<gradle-execute task="setUpLibs">
+				<arg value="--build-file=${project.dir}/modules/util.gradle" />
+			</gradle-execute>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-sass-compiler">
 		<sequential>
 			<if>
 				<os family="mac" />
 				<then>
 					<mirrors-get
-						dest="${sass.binary.dir}"
-						src="${sass.binary.mac.url}"
+						dest="${sass.compiler.dir}"
+						src="${sass.compiler.mac.url}"
 					/>
 				</then>
 				<elseif>
 					<os family="unix" />
 					<then>
 						<mirrors-get
-							dest="${sass.binary.dir}"
-							src="${sass.binary.linux.url}"
+							dest="${sass.compiler.dir}"
+							src="${sass.compiler.linux.url}"
 						/>
 					</then>
 				</elseif>
@@ -1707,20 +1715,12 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 					<os family="windows" />
 					<then>
 						<mirrors-get
-							dest="${sass.binary.dir}"
-							src="${sass.binary.windows.url}"
+							dest="${sass.compiler.dir}"
+							src="${sass.compiler.windows.url}"
 						/>
 					</then>
 				</elseif>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="setup-libs">
-		<sequential>
-			<gradle-execute task="setUpLibs">
-				<arg value="--build-file=${project.dir}/modules/util.gradle" />
-			</gradle-execute>
 		</sequential>
 	</macrodef>
 

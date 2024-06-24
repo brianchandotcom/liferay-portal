@@ -29,7 +29,7 @@
 	"scripts": {
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format",
-		"test": "node-scripts test"
+		"test:all": "node-scripts test"
 	},
 	"workspaces": {
 		"packages": [

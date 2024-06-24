@@ -168,6 +168,14 @@ public class SampleSQLBuilderTest {
 		properties.put(
 			BenchmarksPropsKeys.MAX_PUBLICATION_CONTENT_LAYOUT_COUNT, "10");
 		properties.put(BenchmarksPropsKeys.MAX_PUBLICATION_COUNT, "1");
+		properties.put(
+			BenchmarksPropsKeys.MAX_PUBLICATION_JOURNAL_ARTICLE_COUNT, "1");
+		properties.put(
+			BenchmarksPropsKeys.MAX_PUBLICATION_JOURNAL_ARTICLE_PAGE_COUNT,
+			"1");
+		properties.put(
+			BenchmarksPropsKeys.MAX_PUBLICATION_JOURNAL_ARTICLE_VERSION_COUNT,
+			"1");
 		properties.put(BenchmarksPropsKeys.MAX_SEGMENTS_ENTRY_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_USER_TO_GROUP_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_WIKI_NODE_COUNT, "1");

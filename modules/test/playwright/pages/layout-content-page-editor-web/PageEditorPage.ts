@@ -16,6 +16,7 @@ export class PageEditorPage {
 	readonly page: Page;
 
 	readonly experienceSelector: Locator;
+	readonly languageSelector: Locator;
 	readonly publishButton: Locator;
 	readonly publishMasterButton: Locator;
 	readonly redoButton: Locator;
@@ -31,6 +32,7 @@ export class PageEditorPage {
 		this.experienceSelector = page.locator(
 			'.page-editor__experience-selector'
 		);
+		this.languageSelector = page.getByLabel('Select a language');
 		this.publishButton = page.getByLabel('Publish', {exact: true});
 		this.publishMasterButton = page.getByLabel('Publish Master', {
 			exact: true,
@@ -729,6 +731,16 @@ export class PageEditorPage {
 		await expect(this.experienceSelector).toContainText(experience);
 
 		await this.closeExperienceSelector();
+	}
+
+	async switchLanguage(language: string) {
+		await this.languageSelector.click();
+
+		await this.page
+			.getByRole('option', {
+				name: `${language} Language`,
+			})
+			.click();
 	}
 
 	async switchViewport(viewport: Viewport) {

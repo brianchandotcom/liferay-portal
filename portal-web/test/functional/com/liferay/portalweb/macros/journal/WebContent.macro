@@ -869,7 +869,7 @@ definition {
 		}
 
 		if (${saveAsDraft} == "true") {
-			PortletEntry.saveAsDraft();
+			WebContent.saveAsDraftWithPermissions();
 
 			AssertTextEquals(
 				key_status = "Draft",
@@ -1179,7 +1179,7 @@ definition {
 		}
 
 		if (${saveAsDraft} == "true") {
-			PortletEntry.saveAsDraft();
+			WebContent.saveAsDraftWithPermissions();
 
 			AssertTextEquals.assertPartialText(
 				key_status = "Draft",
@@ -1460,7 +1460,7 @@ definition {
 		}
 
 		if (${saveAsDraft} == "true") {
-			PortletEntry.saveAsDraft();
+			WebContent.saveAsDraftWithPermissions();
 
 			AssertTextEquals.assertPartialText(
 				key_status = "Draft",
@@ -1486,7 +1486,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		if (${saveAsDraft} == "true") {
-			PortletEntry.saveAsDraft();
+			WebContent.saveAsDraftWithPermissions();
 
 			AssertTextEquals.assertPartialText(
 				key_status = "Draft",
@@ -1531,7 +1531,7 @@ definition {
 			webContentWebContent = ${webContentWebContent});
 
 		if (${saveAsDraft} == "true") {
-			PortletEntry.saveAsDraft();
+			WebContent.saveAsDraftWithPermissions();
 
 			AssertTextEquals.assertPartialText(
 				key_status = "Draft",

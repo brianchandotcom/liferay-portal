@@ -1,6 +1,5 @@
 :root {
 	--commerce-header-user-height: 34px;
-	--local-control-menu-height: 0px;
 }
 
 .commerce-main {
@@ -15,8 +14,4 @@
 
 .signed-out .commerce-main {
 	min-height: 100vh;
-}
-
-.commerce-main-body {
-
 }

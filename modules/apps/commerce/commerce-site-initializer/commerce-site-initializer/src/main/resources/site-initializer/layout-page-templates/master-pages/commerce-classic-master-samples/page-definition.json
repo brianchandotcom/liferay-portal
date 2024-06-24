@@ -1,0 +1,363 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"cssClasses": [
+						"commerce-main"
+					],
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"htmlProperties": {
+								"htmlTag": "Header"
+							},
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "header-user",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+										"showAccountMenu": true,
+										"showCurrencyMenu": false,
+										"showLanguageMenu": true
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "header-main",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "header-nav",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"pageElements": [
+									{
+										"definition": {
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
+															},
+															"fragmentConfig": {
+																"displayStyle": "horizontal",
+																"hoveredItemColor": "",
+																"selectedItemColor": "",
+																"sublevels": "-1"
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"cssClasses": [
+								"commerce-main-body",
+								"flex-fill",
+								"pb-5"
+							],
+							"htmlProperties": {
+								"htmlTag": "Main"
+							},
+							"indexed": true,
+							"layout": {
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentSettings": {
+										"unallowedFragments": [
+										]
+									}
+								},
+								"type": "DropZone"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"htmlProperties": {
+								"htmlTag": "Footer"
+							},
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "footer",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "legalLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "contactUsLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "commerce-site-footer-logo",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "socialFacebookLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "copyrightLink",
+											"value": {
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "socialYoutube",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "privacyPolicyLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "socialInstagramLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "socialXLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "socialX",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "socialFacebook",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "socialInstagram",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "socialYoutubeLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "socialLinkedinLink",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"value": "#"
+														}
+													}
+												}
+											}
+										},
+										{
+											"id": "socialLinkedin",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"styleBook": {
+			"key": "commerce-classic",
+			"name": "commerce-classic"
+		},
+		"themeName": "Classic",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

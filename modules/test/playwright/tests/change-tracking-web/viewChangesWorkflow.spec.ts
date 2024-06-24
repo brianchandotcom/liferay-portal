@@ -541,3 +541,25 @@ test('LPD-24758 Error when viewing Workflow tab in publication history', async (
 
 	await expect(page.getByLabel('more-actions')).toBeHidden();
 });
+
+test('LPD-28970 Error when viewing data tab after viewing Workflow tab', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await changeTrackingPage.reviewChange(journalName);
+
+	await changeTrackingPage.selectTab('Workflow');
+
+	await changeTrackingPage.selectTab('Data');
+
+	await expect(page.locator('.alert-danger')).not.toBeVisible(
+		'Unable to display content due to an unexpected error.'
+	);
+
+	await expect(
+		page.getByRole('cell', {exact: true, name: journalName})
+	).toBeVisible();
+});

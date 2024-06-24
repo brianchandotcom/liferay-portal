@@ -13,10 +13,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Eudaldo Alonso
  */
 @ExtendedObjectClassDefinition(
-	generateUI = false, scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "seo", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.layout.seo.internal.configuration.LayoutSEOGeneralGroupConfiguration"
+	description = "layout-seo-general-configuration-description",
+	id = "com.liferay.layout.seo.internal.configuration.LayoutSEOGeneralGroupConfiguration",
+	localization = "content/Language",
+	name = "layout-seo-general-configuration-name"
 )
 public interface LayoutSEOGeneralGroupConfiguration {
 
@@ -31,8 +34,5 @@ public interface LayoutSEOGeneralGroupConfiguration {
 		required = false
 	)
 	public boolean includeSiteName();
-
-	@Meta.AD(deflt = "false", required = false)
-	public boolean showOnlyLayoutTitle();
 
 }

@@ -14,7 +14,12 @@ import {fetch} from 'frontend-js-web';
 import openDefaultFailureToast from './openDefaultFailureToast';
 import {EFieldFormat, EFieldType, IField} from './types';
 
-const INVALID_FIELDS = ['actions', 'scopeKey', 'x-class-name', 'x-schema-name'];
+export const INVALID_FIELDS = [
+	'actions',
+	'scopeKey',
+	'x-class-name',
+	'x-schema-name',
+];
 
 const LOCALIZABLE_PROPERTY_SUFFIX = '_i18n';
 
@@ -23,14 +28,14 @@ interface IProperty {
 	extensions?: any;
 	format?: EFieldFormat;
 	items?: any;
-	type: EFieldType;
+	type?: EFieldType;
 }
 
 interface IProperties {
 	[key: string]: IProperty;
 }
 
-interface ISchemas {
+export interface ISchemas {
 	[key: string]: {
 		properties: IProperties;
 		type: string;
@@ -44,7 +49,7 @@ const filterSchemaProperty = (propertyKey: string) => {
 	);
 };
 
-function getValidFields({
+export function getValidFields({
 	contextPath,
 	schemaName,
 	schemaStack,

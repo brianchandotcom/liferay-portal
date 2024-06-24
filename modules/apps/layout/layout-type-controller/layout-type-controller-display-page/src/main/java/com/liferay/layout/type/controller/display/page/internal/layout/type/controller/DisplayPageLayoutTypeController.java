@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -60,25 +59,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DisplayPageLayoutTypeController
 	extends BaseLayoutTypeControllerImpl {
-
-	@Override
-	public String getFriendlyURL(
-			HttpServletRequest httpServletRequest, Layout layout)
-		throws PortalException {
-
-		if (layout.isDraftLayout()) {
-			return null;
-		}
-
-		String friendlyURL = _portal.getCurrentURL(httpServletRequest);
-
-		if (friendlyURL.contains(StringPool.QUESTION)) {
-			friendlyURL = friendlyURL.substring(
-				0, friendlyURL.lastIndexOf(StringPool.QUESTION));
-		}
-
-		return friendlyURL;
-	}
 
 	@Override
 	public String getType() {
@@ -376,9 +356,6 @@ public class DisplayPageLayoutTypeController
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.display.page)"

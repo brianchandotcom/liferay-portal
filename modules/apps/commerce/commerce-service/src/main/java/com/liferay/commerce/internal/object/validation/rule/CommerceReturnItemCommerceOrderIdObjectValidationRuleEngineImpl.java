@@ -114,7 +114,7 @@ public class CommerceReturnItemCommerceOrderIdObjectValidationRuleEngineImpl
 	public String getKey() {
 		return ObjectValidationRuleConstants.ENGINE_TYPE_JAVA_DELEGATE_PREFIX +
 			CommerceReturnConstants.
-				ENGINE_TYPE_COMMERCE_RETURN_ITEM_COMMERCE_ORDER_ITEM_ID;
+				ENGINE_TYPE_COMMERCE_RETURN_ITEM_COMMERCE_ORDER_ID;
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class CommerceReturnItemCommerceOrderIdObjectValidationRuleEngineImpl
 		return _language.get(
 			locale,
 			CommerceReturnConstants.
-				ENGINE_TYPE_COMMERCE_RETURN_ITEM_COMMERCE_ORDER_ITEM_ID);
+				ENGINE_TYPE_COMMERCE_RETURN_ITEM_COMMERCE_ORDER_ID);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

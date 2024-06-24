@@ -31,8 +31,8 @@ public class CommerceReturnConstants {
 		"commerceReturnItemAuthorized";
 
 	public static final String
-		ENGINE_TYPE_COMMERCE_RETURN_ITEM_COMMERCE_ORDER_ITEM_ID =
-			"commerceReturnItemCommerceOrderItemId";
+		ENGINE_TYPE_COMMERCE_RETURN_ITEM_COMMERCE_ORDER_ID =
+			"commerceReturnItemCommerceOrderId";
 
 	public static final String ENGINE_TYPE_COMMERCE_RETURN_ITEM_QUANTITY =
 		"commerceReturnItemQuantity";

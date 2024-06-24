@@ -17,14 +17,14 @@
 		_layoutModel = ctCollectionLayoutModel
 	/>
 
-	<#list dataFactory.getSequence(dataFactory.maxPublicationJournalArticleCount) as publicationJournalArticleCount>
+	<#list dataFactory.getSequence(dataFactory.maxCTJournalArticleCount) as ctJournalArticleCount>
 		<#assign ctCollectionJournalArticleResourceModel = dataFactory.newCTCollectionJournalArticleResourceModel(ctCollectionId, publicationGroupId) />
 
 		${dataFactory.toCTCollectionInsertSQL(ctCollectionJournalArticleResourceModel, ctCollectionId)}
 
 		<#list dataFactory.getSequence(dataFactory.maxPublicationJournalArticleVersionCount) as publicationVersionCount>
 			<#assign
-				ctCollectionJournalArticleModel = dataFactory.newCTCollectionJournalArticleModel(ctCollectionId, ctCollectionJournalArticleResourceModel, publicationJournalArticleCount, publicationVersionCount)
+				ctCollectionJournalArticleModel = dataFactory.newCTCollectionJournalArticleModel(ctCollectionId, ctCollectionJournalArticleResourceModel, ctJournalArticleCount, publicationVersionCount)
 			/>
 
 			<@insertJournalArticle
@@ -45,9 +45,9 @@
 			_mbThreadId = dataFactory.getCounterNext()
 		/>
 
-		${dataFactory.toCTCollectionInsertSQL(dataFactory.newLayoutClassedModelUsageModel(publicationGroupId, ctCollectionLayoutModel.plid, portletIdPrefix + publicationJournalArticleCount, ctCollectionJournalArticleResourceModel), ctCollectionId)}
+		${dataFactory.toCTCollectionInsertSQL(dataFactory.newLayoutClassedModelUsageModel(publicationGroupId, ctCollectionLayoutModel.plid, portletIdPrefix + ctJournalArticleCount, ctCollectionJournalArticleResourceModel), ctCollectionId)}
 
-		<#assign journalArticleResourcePortletPreferencesModel = dataFactory.newPortletPreferencesModel(ctCollectionLayoutModel.plid, portletIdPrefix + publicationJournalArticleCount) />
+		<#assign journalArticleResourcePortletPreferencesModel = dataFactory.newPortletPreferencesModel(ctCollectionLayoutModel.plid, portletIdPrefix + ctJournalArticleCount) />
 
 		${dataFactory.toCTCollectionInsertSQL(journalArticleResourcePortletPreferencesModel, ctCollectionId)}
 

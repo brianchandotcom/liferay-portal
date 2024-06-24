@@ -682,6 +682,10 @@ public class DataFactory {
 			MAX_CP_DEFINITION_SPECIFICATION_OPTION_VALUE_COUNT;
 	}
 
+	public int getMaxCTJournalArticleCount() {
+		return BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_COUNT;
+	}
+
 	public int getMaxDDLRecordCount() {
 		return BenchmarksPropsValues.MAX_DDL_RECORD_COUNT;
 	}
@@ -708,10 +712,6 @@ public class DataFactory {
 
 	public int getMaxJournalArticleVersionCount() {
 		return BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_VERSION_COUNT;
-	}
-
-	public int getMaxPublicationJournalArticleCount() {
-		return BenchmarksPropsValues.MAX_PUBLICATION_JOURNAL_ARTICLE_COUNT;
 	}
 
 	public int getMaxPublicationJournalArticlePageCount() {

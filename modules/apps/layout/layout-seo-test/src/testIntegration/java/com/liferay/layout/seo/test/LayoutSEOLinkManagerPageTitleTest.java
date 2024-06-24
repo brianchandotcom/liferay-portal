@@ -287,6 +287,15 @@ public class LayoutSEOLinkManagerPageTitleTest {
 				_layoutSEOLinkManager.getFullPageTitle(
 					_layout, null, null, null, null, companyName,
 					LocaleUtil.getDefault()));
+
+			// Asserts instance and site share the same name
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					_layout.getTitle(), " - ", _group.getName()),
+				_layoutSEOLinkManager.getFullPageTitle(
+					_layout, null, null, null, null, _group.getName(),
+					LocaleUtil.getDefault()));
 		}
 	}
 

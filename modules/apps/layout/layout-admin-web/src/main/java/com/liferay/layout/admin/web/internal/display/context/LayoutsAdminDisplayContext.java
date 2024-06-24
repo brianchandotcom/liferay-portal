@@ -2089,10 +2089,19 @@ public class LayoutsAdminDisplayContext {
 	protected final ThemeDisplay themeDisplay;
 
 	private String _getBackURL() {
+		return _getBackURL(null);
+	}
+
+	private String _getBackURL(Layout layout) {
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			_liferayPortletRequest, getGroup(),
 			LayoutAdminPortletKeys.GROUP_PAGES, 0, 0,
 			PortletRequest.RENDER_PHASE);
+
+		if (layout != null) {
+			portletURL.setParameter(
+				"selPlid", String.valueOf(layout.getPlid()));
+		}
 
 		return portletURL.toString();
 	}
@@ -2169,7 +2178,7 @@ public class LayoutsAdminDisplayContext {
 	private String _getDraftLayoutURL(Layout layout) throws Exception {
 		return HttpComponentsUtil.addParameters(
 			PortalUtil.getLayoutFullURL(getDraftLayout(layout), themeDisplay),
-			"p_l_back_url", _getBackURL(), "p_l_back_url_title",
+			"p_l_back_url", _getBackURL(layout), "p_l_back_url_title",
 			LanguageUtil.get(httpServletRequest, "pages"), "p_l_mode",
 			Constants.EDIT);
 	}

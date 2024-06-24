@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 
@@ -18,7 +19,8 @@ const test = mergeTests(
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,
-	loginTest()
+	loginTest(),
+	pageEditorPagesTest
 );
 
 test('checks the correct label for restricted page in the page heading', async ({
@@ -53,4 +55,34 @@ test('checks the correct label for restricted page in the page heading', async (
 	await header.waitFor({state: 'visible'});
 
 	await expect(header.getByText('Restricted Page')).toBeVisible();
+});
+
+test('checks page title in view mode and in edit mode', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	const pageName = getRandomString();
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: pageName,
+	});
+
+	// Check the page title in the view mode
+
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+	await expect(await page.title()).toBe(
+		`${pageName} - ${site.name} - Liferay DXP`
+	);
+
+	// Check the page title in the edit mode
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	await expect(await page.title()).toBe(
+		`${pageName} - ${site.name} - Liferay DXP (Editing)`
+	);
 });

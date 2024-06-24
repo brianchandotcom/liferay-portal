@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.util.PropsValues;
 
@@ -18,11 +17,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-
-import org.apache.felix.cm.PersistenceManager;
 
 import org.junit.Assert;
 
@@ -61,34 +57,6 @@ public class ConfigurationTestUtil {
 	public static Path getConfigurationPath(String pid) {
 		return Paths.get(
 			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, pid.concat(".config"));
-	}
-
-	public static boolean isDictionaryNull(
-		PersistenceManager persistenceManager, String pid) {
-
-		Dictionary<Object, Object> dictionary = ReflectionTestUtil.invoke(
-			persistenceManager, "_getDictionary", new Class<?>[] {String.class},
-			pid);
-
-		if (dictionary == null) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public static boolean isListConfigurationsNull(
-			ConfigurationAdmin configurationAdmin, String pid)
-		throws Exception {
-
-		Configuration[] configurations = configurationAdmin.listConfigurations(
-			"(service.pid=" + pid + ")");
-
-		if (configurations == null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static Configuration _createConfiguration(

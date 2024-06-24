@@ -63,11 +63,9 @@ public class JSONReplacementsFileCheck extends BaseFileCheck {
 				new NaturalOrderStringComparator();
 
 			JSONObject jsonObject1 = (JSONObject)object1;
-
-			String issueKey1 = jsonObject1.getString("issueKey");
-
 			JSONObject jsonObject2 = (JSONObject)object2;
 
+			String issueKey1 = jsonObject1.getString("issueKey");
 			String issueKey2 = jsonObject2.getString("issueKey");
 
 			if (!issueKey1.equals(issueKey2)) {

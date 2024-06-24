@@ -45,7 +45,7 @@
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Authorize return without returning products"
+						"en_US": "Authorize Return Without Returning Products"
 					},
 					"name": "authorizeReturnWithoutReturningProducts",
 					"required": false,

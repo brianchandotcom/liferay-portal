@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.notification.internal.feature.flag;
+package com.liferay.commerce.notification.internal.instance.lifecycle;
 
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.dto.v1_0.util.NotificationUtil;
 import com.liferay.notification.service.NotificationTemplateLocalService;
+import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
@@ -17,16 +18,21 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,35 +43,52 @@ import java.net.URLConnection;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Stefano Motta
  */
 @Component(
-	property = "featureFlagKey=LPD-24498", service = FeatureFlagListener.class
+	property = "service.ranking:Integer=" + Integer.MIN_VALUE,
+	service = PortalInstanceLifecycleListener.class
 )
-public class CommerceOrderNotificationTemplateFeatureFlagListener
-	implements FeatureFlagListener {
+public class AddCommerceOrderNotificationPortalInstanceLifecycleListener
+	extends BasePortalInstanceLifecycleListener {
 
 	@Override
-	public void onValue(
-		long companyId, String featureFlagKey, boolean enabled) {
+	public void portalInstanceRegistered(Company company) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				company.getCompanyId(), "LPD-24498")) {
 
-		if (!enabled) {
 			return;
 		}
 
 		try {
-			_verifyCommerceOrderNotificationTemplate(companyId);
-			_verifyCommerceOrderObjectAction(companyId);
+			_verifyCommerceOrderNotificationTemplate(company.getCompanyId());
+			_verifyCommerceOrderObjectAction(company.getCompanyId());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
 		}
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceRegistration = bundleContext.registerService(
+			FeatureFlagListener.class, new FeatureFlagListenerImpl(),
+			MapUtil.singletonDictionary("featureFlagKey", "LPD-24498"));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
 	}
 
 	private User _getAdminUser(long companyId) throws Exception {
@@ -93,7 +116,9 @@ public class CommerceOrderNotificationTemplateFeatureFlagListener
 					fetchNotificationTemplateByExternalReferenceCode(
 						"L_COMMERCE_ORDER_TEMPLATE", companyId);
 
-		if (serviceBuilderNotificationTemplate != null) {
+		if ((_notificationType == null) ||
+			(serviceBuilderNotificationTemplate != null)) {
+
 			return;
 		}
 
@@ -176,10 +201,15 @@ public class CommerceOrderNotificationTemplateFeatureFlagListener
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceOrderNotificationTemplateFeatureFlagListener.class);
+		AddCommerceOrderNotificationPortalInstanceLifecycleListener.class);
 
 	@Reference
 	private NotificationTemplateLocalService _notificationTemplateLocalService;
+
+	@Reference(
+		target = "(component.name=com.liferay.notification.internal.type.EmailNotificationType)"
+	)
+	private NotificationType _notificationType;
 
 	@Reference
 	private NotificationTypeServiceTracker _notificationTypeServiceTracker;
@@ -196,7 +226,32 @@ public class CommerceOrderNotificationTemplateFeatureFlagListener
 	@Reference
 	private RoleLocalService _roleLocalService;
 
+	private ServiceRegistration<FeatureFlagListener> _serviceRegistration;
+
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private class FeatureFlagListenerImpl implements FeatureFlagListener {
+
+		@Override
+		public void onValue(
+			long companyId, String featureFlagKey, boolean enabled) {
+
+			if (!enabled) {
+				return;
+			}
+
+			try {
+				_verifyCommerceOrderNotificationTemplate(companyId);
+				_verifyCommerceOrderObjectAction(companyId);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
+		}
+
+	}
 
 }

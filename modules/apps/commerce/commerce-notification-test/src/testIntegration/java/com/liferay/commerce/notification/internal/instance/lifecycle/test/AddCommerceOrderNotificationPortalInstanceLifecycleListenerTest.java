@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.notification.test;
+package com.liferay.commerce.notification.internal.instance.lifecycle.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.model.NotificationTemplate;
@@ -12,7 +12,8 @@ import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -31,7 +32,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlags("LPD-24498")
 @RunWith(Arquillian.class)
-public class CommerceOrderNotificationTemplateFeatureFlagListenerTest {
+public class AddCommerceOrderNotificationPortalInstanceLifecycleListenerTest {
 
 	@ClassRule
 	@Rule
@@ -40,8 +41,8 @@ public class CommerceOrderNotificationTemplateFeatureFlagListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_featureFlagListener.onValue(
-			TestPropsValues.getCompanyId(), "LPD-24498", true);
+		_portalInstanceLifecycleListener.portalInstanceRegistered(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 	}
 
 	@Test
@@ -75,10 +76,8 @@ public class CommerceOrderNotificationTemplateFeatureFlagListenerTest {
 		Assert.assertNotNull(notificationTemplate);
 	}
 
-	@Inject(
-		filter = "component.name=com.liferay.commerce.notification.internal.feature.flag.CommerceOrderNotificationTemplateFeatureFlagListener"
-	)
-	private FeatureFlagListener _featureFlagListener;
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private NotificationTemplateLocalService _notificationTemplateLocalService;
@@ -88,5 +87,10 @@ public class CommerceOrderNotificationTemplateFeatureFlagListenerTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.commerce.notification.internal.instance.lifecycle.AddCommerceOrderNotificationPortalInstanceLifecycleListener"
+	)
+	private PortalInstanceLifecycleListener _portalInstanceLifecycleListener;
 
 }

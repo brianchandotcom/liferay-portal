@@ -4,11 +4,11 @@
  */
 
 import crypto from 'crypto';
+import fg from 'fast-glob';
 import fs from 'fs/promises';
 import path from 'path';
 import url from 'url';
 
-import expandGlobs from '../util/expandGlobs.mjs';
 import getNamedArguments from '../util/getNamedArguments.mjs';
 import objectSF from '../util/objectSF.mjs';
 import mainBase from './index.mjs';
@@ -58,13 +58,11 @@ Please update the hash field of the package.json file.
 async function digestNodeScripts(nodeScriptsPath) {
 	const sha256 = crypto.createHash('sha256');
 
-	let files = await expandGlobs(
-		['**/*.mjs', '**/*.js'],
-		['bundle/sass/binary/**', 'node_modules/**'],
-		{
-			baseDir: nodeScriptsPath,
-		}
-	);
+	let files = await fg(['**/*.mjs', '**/*.js'], {
+		absolute: true,
+		cwd: nodeScriptsPath,
+		ignore: ['bundle/sass/binary/**', 'node_modules/**'],
+	});
 
 	files = files.filter((file) => !path.basename(file).startsWith('.'));
 

@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import fg from 'fast-glob';
 import fs from 'fs/promises';
 import {r2} from 'liferay-theme-tasks';
 import path from 'path';
 
 import {BUILD_RESOURCES_PATH, SRC_PATH} from '../../util/constants.mjs';
-import expandGlobs from '../../util/expandGlobs.mjs';
 
 export default async function processCSSFiles() {
-	const cssFiles = await expandGlobs(['**/*.css'], [], {baseDir: SRC_PATH});
+	const cssFiles = await fg(['**/*.css'], {absolute: true, cwd: SRC_PATH});
 
 	if (!cssFiles.length) {
 		return;

@@ -1206,23 +1206,24 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public Layout getBrowsableLayout(Layout layout) {
-		List<String> types = TransformUtil.transformToList(
-			LayoutTypeControllerTracker.getTypes(),
-			type -> {
-				LayoutTypeController layoutTypeController =
-					LayoutTypeControllerTracker.getLayoutTypeController(type);
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(
+				layout.getType());
 
-				if ((layoutTypeController == null) ||
-					!layoutTypeController.isBrowsable()) {
-
-					return null;
-				}
-
-				return type;
-			});
-
-		if (types.contains(layout.getType())) {
+		if (layoutTypeController.isBrowsable()) {
 			return layout;
+		}
+
+		Map<String, LayoutTypeController> layoutTypeControllers =
+			LayoutTypeControllerTracker.getLayoutTypeControllers();
+		List<String> types = new ArrayList<>();
+
+		for (LayoutTypeController curLayoutTypeController :
+				layoutTypeControllers.values()) {
+
+			if (curLayoutTypeController.isBrowsable()) {
+				types.add(layoutTypeController.getType());
+			}
 		}
 
 		ChildLayout browsableChildLayout = _getBrowsableChildLayout(

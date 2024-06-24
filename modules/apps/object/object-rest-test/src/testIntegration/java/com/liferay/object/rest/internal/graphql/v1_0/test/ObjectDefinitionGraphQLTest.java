@@ -121,8 +121,6 @@ public class ObjectDefinitionGraphQLTest {
 			).build());
 
 		_parentObjectDefinitionName = _parentObjectDefinition.getShortName();
-		_parentObjectDefinitionPrimaryKeyName = StringUtil.removeFirst(
-			_parentObjectDefinition.getPKObjectFieldName(), "c_");
 
 		ObjectDefinition childObjectDefinition = _addObjectDefinition(false);
 
@@ -181,8 +179,12 @@ public class ObjectDefinitionGraphQLTest {
 	public void testAddObjectEntry() throws Exception {
 		String value = RandomTestUtil.randomString();
 
-		Assert.assertEquals(
-			value,
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_LIST_FIELD_NAME, JSONUtil.put("key", _LIST_FIELD_VALUE_KEY)
+			).put(
+				_OBJECT_FIELD_NAME, value
+			).toString(),
 			JSONUtil.getValueAsString(
 				_invoke(
 					new GraphQLField(
@@ -198,12 +200,11 @@ public class ObjectDefinitionGraphQLTest {
 										"\", ", _LIST_FIELD_NAME, ": {key: \"",
 										_LIST_FIELD_VALUE_KEY, "\"}}")
 								).build(),
-								new GraphQLField(_OBJECT_FIELD_NAME),
-								new GraphQLField(
-									_LIST_FIELD_NAME + " {key}"))))),
+								new GraphQLField(_LIST_FIELD_NAME + " {key}"),
+								new GraphQLField(_OBJECT_FIELD_NAME))))),
 				"JSONObject/data", "JSONObject/c",
-				"JSONObject/create" + _parentObjectDefinitionName,
-				"Object/" + _OBJECT_FIELD_NAME));
+				"JSONObject/create" + _parentObjectDefinitionName),
+			JSONCompareMode.STRICT);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"notprivacysafe.graphql.GraphQL", LoggerTestUtil.ERROR)) {
@@ -306,7 +307,7 @@ public class ObjectDefinitionGraphQLTest {
 				new GraphQLField(
 					"delete" + _parentObjectDefinitionName,
 					HashMapBuilder.<String, Object>put(
-						_parentObjectDefinitionPrimaryKeyName,
+						_getPKObjectFieldName(_parentObjectDefinition),
 						_parentObjectEntry.getObjectEntryId()
 					).build())));
 
@@ -404,6 +405,8 @@ public class ObjectDefinitionGraphQLTest {
 		String key = StringUtil.lowerCaseFirstLetter(
 			_parentObjectDefinitionName);
 
+		String primaryKeyName = _getPKObjectFieldName(_parentObjectDefinition);
+
 		Assert.assertEquals(
 			"peter@liferay.com",
 			JSONUtil.getValueAsString(
@@ -415,7 +418,7 @@ public class ObjectDefinitionGraphQLTest {
 							new GraphQLField(
 								key,
 								HashMapBuilder.<String, Object>put(
-									_parentObjectDefinitionPrimaryKeyName,
+									primaryKeyName,
 									_parentObjectEntry.getObjectEntryId()
 								).build(),
 								new GraphQLField(_OBJECT_FIELD_NAME))))),
@@ -430,7 +433,7 @@ public class ObjectDefinitionGraphQLTest {
 					new GraphQLField(
 						key,
 						HashMapBuilder.<String, Object>put(
-							_parentObjectDefinitionPrimaryKeyName,
+							primaryKeyName,
 							_parentObjectEntry.getObjectEntryId()
 						).build(),
 						new GraphQLField(_OBJECT_FIELD_NAME),
@@ -767,6 +770,8 @@ public class ObjectDefinitionGraphQLTest {
 	public void testUpdateObjectEntry() throws Exception {
 		String value = RandomTestUtil.randomString();
 
+		String primaryKeyName = _getPKObjectFieldName(_parentObjectDefinition);
+
 		JSONObject jsonObject = _invoke(
 			new GraphQLField(
 				"mutation",
@@ -781,27 +786,34 @@ public class ObjectDefinitionGraphQLTest {
 								_LIST_FIELD_NAME, ": {key: \"",
 								_LIST_FIELD_VALUE_KEY, "\"}}")
 						).build(),
-						new GraphQLField(_OBJECT_FIELD_NAME),
 						new GraphQLField(_LIST_FIELD_NAME + " {key}"),
-						new GraphQLField(
-							_parentObjectDefinitionPrimaryKeyName)))));
+						new GraphQLField(_OBJECT_FIELD_NAME),
+						new GraphQLField(primaryKeyName)))));
 
-		Assert.assertEquals(
-			value,
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_LIST_FIELD_NAME, JSONUtil.put("key", _LIST_FIELD_VALUE_KEY)
+			).put(
+				_OBJECT_FIELD_NAME, value
+			).toString(),
 			JSONUtil.getValueAsString(
 				jsonObject, "JSONObject/data", "JSONObject/c",
-				"JSONObject/create" + _parentObjectDefinitionName,
-				"Object/" + _OBJECT_FIELD_NAME));
-
-		value = RandomTestUtil.randomString();
+				"JSONObject/create" + _parentObjectDefinitionName),
+			JSONCompareMode.STRICT_ORDER);
 
 		Long objectEntryId = JSONUtil.getValueAsLong(
 			jsonObject, "JSONObject/data", "JSONObject/c",
 			"JSONObject/create" + _parentObjectDefinitionName,
-			"Object/" + _parentObjectDefinitionPrimaryKeyName);
+			"Object/" + primaryKeyName);
 
-		Assert.assertEquals(
-			value,
+		value = RandomTestUtil.randomString();
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_LIST_FIELD_NAME, JSONUtil.put("key", _LIST_FIELD_VALUE_KEY)
+			).put(
+				_OBJECT_FIELD_NAME, value
+			).toString(),
 			JSONUtil.getValueAsString(
 				_invoke(
 					new GraphQLField(
@@ -817,17 +829,14 @@ public class ObjectDefinitionGraphQLTest {
 										"\", ", _LIST_FIELD_NAME, ": {key: \"",
 										_LIST_FIELD_VALUE_KEY, "\"}}")
 								).put(
-									_parentObjectDefinitionPrimaryKeyName,
+									primaryKeyName,
 									String.valueOf(objectEntryId)
 								).build(),
-								new GraphQLField(_OBJECT_FIELD_NAME),
-								new GraphQLField(
-									_LIST_FIELD_NAME + " {key}"))))),
+								new GraphQLField(_LIST_FIELD_NAME + " {key}"),
+								new GraphQLField(_OBJECT_FIELD_NAME))))),
 				"JSONObject/data", "JSONObject/c",
-				"JSONObject/update" + _parentObjectDefinitionName,
-				"Object/" + _OBJECT_FIELD_NAME));
-
-		// Status DRAFT
+				"JSONObject/update" + _parentObjectDefinitionName),
+			JSONCompareMode.STRICT);
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -860,15 +869,14 @@ public class ObjectDefinitionGraphQLTest {
 										"\", statusCode:",
 										WorkflowConstants.STATUS_DRAFT, "}")
 								).put(
-									_parentObjectDefinitionPrimaryKeyName,
+									primaryKeyName,
 									String.valueOf(objectEntryId)
 								).build(),
 								new GraphQLField(_OBJECT_FIELD_NAME))))),
 				"JSONArray/errors", "Object/0"),
 			JSONCompareMode.LENIENT);
 
-		String pkName = StringUtil.removeFirst(
-			_draftAllowedObjectDefinition.getPKObjectFieldName(), "c_");
+		primaryKeyName = _getPKObjectFieldName(_draftAllowedObjectDefinition);
 
 		jsonObject = JSONUtil.getValueAsJSONObject(
 			_invoke(
@@ -885,7 +893,7 @@ public class ObjectDefinitionGraphQLTest {
 									"\", statusCode:",
 									WorkflowConstants.STATUS_DRAFT, "}")
 							).build(),
-							new GraphQLField(pkName),
+							new GraphQLField(primaryKeyName),
 							new GraphQLField("status"),
 							new GraphQLField("statusCode"))))),
 			"JSONObject/data", "JSONObject/c",
@@ -899,7 +907,7 @@ public class ObjectDefinitionGraphQLTest {
 			).toString(),
 			jsonObject.toString(), JSONCompareMode.LENIENT);
 
-		objectEntryId = jsonObject.getLong(pkName);
+		objectEntryId = jsonObject.getLong(primaryKeyName);
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -922,9 +930,10 @@ public class ObjectDefinitionGraphQLTest {
 										"\", statusCode: ",
 										WorkflowConstants.STATUS_APPROVED, "}")
 								).put(
-									pkName, String.valueOf(objectEntryId)
+									primaryKeyName,
+									String.valueOf(objectEntryId)
 								).build(),
-								new GraphQLField(pkName),
+								new GraphQLField(primaryKeyName),
 								new GraphQLField("status"),
 								new GraphQLField("statusCode"))))),
 				"JSONObject/data", "JSONObject/c",
@@ -962,9 +971,10 @@ public class ObjectDefinitionGraphQLTest {
 										"\", statusCode: ",
 										WorkflowConstants.STATUS_DRAFT, "}")
 								).put(
-									pkName, String.valueOf(objectEntryId)
+									primaryKeyName,
+									String.valueOf(objectEntryId)
 								).build(),
-								new GraphQLField(pkName))))),
+								new GraphQLField(primaryKeyName))))),
 				"JSONArray/errors", "Object/0"),
 			JSONCompareMode.LENIENT);
 	}
@@ -1011,6 +1021,11 @@ public class ObjectDefinitionGraphQLTest {
 			).build());
 
 		return objectDefinition;
+	}
+
+	private String _getPKObjectFieldName(ObjectDefinition objectDefinition) {
+		return StringUtil.removeFirst(
+			objectDefinition.getPKObjectFieldName(), "c_");
 	}
 
 	private JSONObject _invoke(GraphQLField queryGraphQLField)
@@ -1065,7 +1080,6 @@ public class ObjectDefinitionGraphQLTest {
 	private ObjectDefinition _parentObjectDefinition;
 
 	private String _parentObjectDefinitionName;
-	private String _parentObjectDefinitionPrimaryKeyName;
 	private ObjectEntry _parentObjectEntry;
 
 	private static class GraphQLField {

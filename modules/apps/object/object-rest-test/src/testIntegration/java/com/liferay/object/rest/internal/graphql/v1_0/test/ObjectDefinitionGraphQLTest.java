@@ -79,10 +79,6 @@ public class ObjectDefinitionGraphQLTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectFieldName = StringUtil.randomId();
-
-		_listFieldName = StringUtil.randomId();
-
 		_draftAllowedObjectDefinition = _addObjectDefinition(true);
 
 		_draftAllowedObjectDefinitionName =
@@ -96,15 +92,13 @@ public class ObjectDefinitionGraphQLTest {
 		ListTypeDefinition listTypeDefinition =
 			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(_listFieldName), false,
+				LocalizedMapUtil.getLocalizedMap(_LIST_FIELD_NAME), false,
 				Collections.emptyList());
 
 		_addListTypeEntry(listTypeDefinition, StringUtil.randomId());
 		_addListTypeEntry(listTypeDefinition, StringUtil.randomId());
 
-		_listFieldValueKey = StringUtil.randomId();
-
-		_addListTypeEntry(listTypeDefinition, _listFieldValueKey);
+		_addListTypeEntry(listTypeDefinition, _LIST_FIELD_VALUE_KEY);
 
 		_parentObjectDefinition = _addObjectDefinition(false);
 
@@ -119,7 +113,7 @@ public class ObjectDefinitionGraphQLTest {
 			).indexedAsKeyword(
 				true
 			).name(
-				_listFieldName
+				_LIST_FIELD_NAME
 			).objectDefinitionId(
 				_parentObjectDefinition.getObjectDefinitionId()
 			).required(
@@ -157,9 +151,9 @@ public class ObjectDefinitionGraphQLTest {
 			TestPropsValues.getUserId(), 0,
 			_parentObjectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				_listFieldName, _listFieldValueKey
+				_LIST_FIELD_NAME, _LIST_FIELD_VALUE_KEY
 			).put(
-				_objectFieldName, "peter@liferay.com"
+				_OBJECT_FIELD_NAME, "peter@liferay.com"
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -172,7 +166,7 @@ public class ObjectDefinitionGraphQLTest {
 					_parentObjectDefinition.getPKObjectFieldName()),
 				_parentObjectEntry.getObjectEntryId()
 			).put(
-				_objectFieldName, "igor@liferay.com"
+				_OBJECT_FIELD_NAME, "igor@liferay.com"
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 	}
@@ -200,15 +194,16 @@ public class ObjectDefinitionGraphQLTest {
 								HashMapBuilder.<String, Object>put(
 									_parentObjectDefinitionName,
 									StringBundler.concat(
-										"{", _objectFieldName, ": \"", value,
-										"\", ", _listFieldName, ": {key: \"",
-										_listFieldValueKey, "\"}}")
+										"{", _OBJECT_FIELD_NAME, ": \"", value,
+										"\", ", _LIST_FIELD_NAME, ": {key: \"",
+										_LIST_FIELD_VALUE_KEY, "\"}}")
 								).build(),
-								new GraphQLField(_objectFieldName),
-								new GraphQLField(_listFieldName + " {key}"))))),
+								new GraphQLField(_OBJECT_FIELD_NAME),
+								new GraphQLField(
+									_LIST_FIELD_NAME + " {key}"))))),
 				"JSONObject/data", "JSONObject/c",
 				"JSONObject/create" + _parentObjectDefinitionName,
-				"Object/" + _objectFieldName));
+				"Object/" + _OBJECT_FIELD_NAME));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"notprivacysafe.graphql.GraphQL", LoggerTestUtil.ERROR)) {
@@ -226,16 +221,14 @@ public class ObjectDefinitionGraphQLTest {
 									HashMapBuilder.<String, Object>put(
 										_parentObjectDefinitionName,
 										StringBundler.concat(
-											"{", _objectFieldName, ": \"",
+											"{", _OBJECT_FIELD_NAME, ": \"",
 											RandomTestUtil.randomString(), "\"",
 											", status: draft }")
 									).build(),
-									new GraphQLField(_objectFieldName))))),
+									new GraphQLField(_OBJECT_FIELD_NAME))))),
 					"JSONArray/errors", "Object/0", "JSONObject/extensions",
 					"Object/code"));
 		}
-
-		// Status DRAFT
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -264,18 +257,18 @@ public class ObjectDefinitionGraphQLTest {
 								HashMapBuilder.<String, Object>put(
 									_parentObjectDefinitionName,
 									StringBundler.concat(
-										"{", _objectFieldName, ": \"",
+										"{", _OBJECT_FIELD_NAME, ": \"",
 										RandomTestUtil.randomString(),
 										"\", statusCode: ",
 										WorkflowConstants.STATUS_DRAFT, "}")
 								).build(),
-								new GraphQLField(_objectFieldName))))),
+								new GraphQLField(_OBJECT_FIELD_NAME))))),
 				"JSONArray/errors", "Object/0"),
 			JSONCompareMode.LENIENT);
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				_objectFieldName, value
+				_OBJECT_FIELD_NAME, value
 			).put(
 				"status", "draft"
 			).put(
@@ -292,11 +285,11 @@ public class ObjectDefinitionGraphQLTest {
 								HashMapBuilder.<String, Object>put(
 									_draftAllowedObjectDefinitionName,
 									StringBundler.concat(
-										"{", _objectFieldName, ": \"", value,
+										"{", _OBJECT_FIELD_NAME, ": \"", value,
 										"\", statusCode:",
 										WorkflowConstants.STATUS_DRAFT, "}")
 								).build(),
-								new GraphQLField(_objectFieldName),
+								new GraphQLField(_OBJECT_FIELD_NAME),
 								new GraphQLField("status"),
 								new GraphQLField("statusCode"))))),
 				"JSONObject/data", "JSONObject/c",
@@ -349,14 +342,14 @@ public class ObjectDefinitionGraphQLTest {
 								key,
 								HashMapBuilder.<String, Object>put(
 									"filter",
-									"\"" + _objectFieldName +
+									"\"" + _OBJECT_FIELD_NAME +
 										" eq 'peter@liferay.com'\""
 								).build(),
 								new GraphQLField(
 									"items",
-									new GraphQLField(_objectFieldName)))))),
+									new GraphQLField(_OBJECT_FIELD_NAME)))))),
 				"JSONObject/data", "JSONObject/c", "JSONObject/" + key,
-				"Object/items", "Object/0", "Object/" + _objectFieldName));
+				"Object/items", "Object/0", "Object/" + _OBJECT_FIELD_NAME));
 		Assert.assertEquals(
 			"peter@liferay.com",
 			JSONUtil.getValueAsString(
@@ -369,14 +362,14 @@ public class ObjectDefinitionGraphQLTest {
 								key,
 								HashMapBuilder.<String, Object>put(
 									"filter",
-									"\"contains(" + _objectFieldName +
+									"\"contains(" + _OBJECT_FIELD_NAME +
 										",'peter@liferay.com')\""
 								).build(),
 								new GraphQLField(
 									"items",
-									new GraphQLField(_objectFieldName)))))),
+									new GraphQLField(_OBJECT_FIELD_NAME)))))),
 				"JSONObject/data", "JSONObject/c", "JSONObject/" + key,
-				"Object/items", "Object/0", "Object/" + _objectFieldName));
+				"Object/items", "Object/0", "Object/" + _OBJECT_FIELD_NAME));
 	}
 
 	@Test
@@ -398,7 +391,7 @@ public class ObjectDefinitionGraphQLTest {
 								key,
 								HashMapBuilder.<String, Object>put(
 									"filter",
-									"\"" + _objectFieldName +
+									"\"" + _OBJECT_FIELD_NAME +
 										" ne 'peter@liferay.com'\""
 								).build(),
 								new GraphQLField("totalCount"))))),
@@ -425,9 +418,9 @@ public class ObjectDefinitionGraphQLTest {
 									_parentObjectDefinitionPrimaryKeyName,
 									_parentObjectEntry.getObjectEntryId()
 								).build(),
-								new GraphQLField(_objectFieldName))))),
+								new GraphQLField(_OBJECT_FIELD_NAME))))),
 				"JSONObject/data", "JSONObject/c", "JSONObject/" + key,
-				"Object/" + _objectFieldName));
+				"Object/" + _OBJECT_FIELD_NAME));
 
 		JSONObject jsonObject = _invoke(
 			new GraphQLField(
@@ -440,7 +433,7 @@ public class ObjectDefinitionGraphQLTest {
 							_parentObjectDefinitionPrimaryKeyName,
 							_parentObjectEntry.getObjectEntryId()
 						).build(),
-						new GraphQLField(_objectFieldName),
+						new GraphQLField(_OBJECT_FIELD_NAME),
 						new GraphQLField("dateCreated"),
 						new GraphQLField("dateModified"),
 						new GraphQLField("status")))));
@@ -479,7 +472,7 @@ public class ObjectDefinitionGraphQLTest {
 									new GraphQLField(_RELATIONSHIP_NAME)))))),
 				"JSONObject/data", "JSONObject/c", "JSONObject/" + key,
 				"Object/items", "Object/0", "Object/" + _RELATIONSHIP_NAME,
-				"Object/" + _objectFieldName));
+				"Object/" + _OBJECT_FIELD_NAME));
 	}
 
 	@Test
@@ -784,12 +777,12 @@ public class ObjectDefinitionGraphQLTest {
 						HashMapBuilder.<String, Object>put(
 							_parentObjectDefinitionName,
 							StringBundler.concat(
-								"{", _objectFieldName, ": \"", value, "\", ",
-								_listFieldName, ": {key: \"",
-								_listFieldValueKey, "\"}}")
+								"{", _OBJECT_FIELD_NAME, ": \"", value, "\", ",
+								_LIST_FIELD_NAME, ": {key: \"",
+								_LIST_FIELD_VALUE_KEY, "\"}}")
 						).build(),
-						new GraphQLField(_objectFieldName),
-						new GraphQLField(_listFieldName + " {key}"),
+						new GraphQLField(_OBJECT_FIELD_NAME),
+						new GraphQLField(_LIST_FIELD_NAME + " {key}"),
 						new GraphQLField(
 							_parentObjectDefinitionPrimaryKeyName)))));
 
@@ -798,7 +791,7 @@ public class ObjectDefinitionGraphQLTest {
 			JSONUtil.getValueAsString(
 				jsonObject, "JSONObject/data", "JSONObject/c",
 				"JSONObject/create" + _parentObjectDefinitionName,
-				"Object/" + _objectFieldName));
+				"Object/" + _OBJECT_FIELD_NAME));
 
 		value = RandomTestUtil.randomString();
 
@@ -820,18 +813,19 @@ public class ObjectDefinitionGraphQLTest {
 								HashMapBuilder.<String, Object>put(
 									_parentObjectDefinitionName,
 									StringBundler.concat(
-										"{", _objectFieldName, ": \"", value,
-										"\", ", _listFieldName, ": {key: \"",
-										_listFieldValueKey, "\"}}")
+										"{", _OBJECT_FIELD_NAME, ": \"", value,
+										"\", ", _LIST_FIELD_NAME, ": {key: \"",
+										_LIST_FIELD_VALUE_KEY, "\"}}")
 								).put(
 									_parentObjectDefinitionPrimaryKeyName,
 									String.valueOf(objectEntryId)
 								).build(),
-								new GraphQLField(_objectFieldName),
-								new GraphQLField(_listFieldName + " {key}"))))),
+								new GraphQLField(_OBJECT_FIELD_NAME),
+								new GraphQLField(
+									_LIST_FIELD_NAME + " {key}"))))),
 				"JSONObject/data", "JSONObject/c",
 				"JSONObject/update" + _parentObjectDefinitionName,
-				"Object/" + _objectFieldName));
+				"Object/" + _OBJECT_FIELD_NAME));
 
 		// Status DRAFT
 
@@ -862,14 +856,14 @@ public class ObjectDefinitionGraphQLTest {
 								HashMapBuilder.<String, Object>put(
 									_parentObjectDefinitionName,
 									StringBundler.concat(
-										"{", _objectFieldName, ": \"", value,
+										"{", _OBJECT_FIELD_NAME, ": \"", value,
 										"\", statusCode:",
 										WorkflowConstants.STATUS_DRAFT, "}")
 								).put(
 									_parentObjectDefinitionPrimaryKeyName,
 									String.valueOf(objectEntryId)
 								).build(),
-								new GraphQLField(_objectFieldName))))),
+								new GraphQLField(_OBJECT_FIELD_NAME))))),
 				"JSONArray/errors", "Object/0"),
 			JSONCompareMode.LENIENT);
 
@@ -887,7 +881,7 @@ public class ObjectDefinitionGraphQLTest {
 							HashMapBuilder.<String, Object>put(
 								_draftAllowedObjectDefinitionName,
 								StringBundler.concat(
-									"{", _objectFieldName, ": \"", value,
+									"{", _OBJECT_FIELD_NAME, ": \"", value,
 									"\", statusCode:",
 									WorkflowConstants.STATUS_DRAFT, "}")
 							).build(),
@@ -924,7 +918,7 @@ public class ObjectDefinitionGraphQLTest {
 								HashMapBuilder.<String, Object>put(
 									_draftAllowedObjectDefinitionName,
 									StringBundler.concat(
-										"{", _objectFieldName, ": \"", value,
+										"{", _OBJECT_FIELD_NAME, ": \"", value,
 										"\", statusCode: ",
 										WorkflowConstants.STATUS_APPROVED, "}")
 								).put(
@@ -964,7 +958,7 @@ public class ObjectDefinitionGraphQLTest {
 								HashMapBuilder.<String, Object>put(
 									_draftAllowedObjectDefinitionName,
 									StringBundler.concat(
-										"{", _objectFieldName, ": \"", value,
+										"{", _OBJECT_FIELD_NAME, ": \"", value,
 										"\", statusCode: ",
 										WorkflowConstants.STATUS_DRAFT, "}")
 								).put(
@@ -1011,7 +1005,7 @@ public class ObjectDefinitionGraphQLTest {
 			).indexedAsKeyword(
 				true
 			).name(
-				_objectFieldName
+				_OBJECT_FIELD_NAME
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
 			).build());
@@ -1039,6 +1033,12 @@ public class ObjectDefinitionGraphQLTest {
 			Http.Method.POST);
 	}
 
+	private static final String _LIST_FIELD_NAME = StringUtil.randomId();
+
+	private static final String _LIST_FIELD_VALUE_KEY = StringUtil.randomId();
+
+	private static final String _OBJECT_FIELD_NAME = StringUtil.randomId();
+
 	private static final String _OBJECT_FIELD_NAME_LONG_TEXT =
 		"x" + RandomTestUtil.randomString();
 
@@ -1057,13 +1057,9 @@ public class ObjectDefinitionGraphQLTest {
 	private ObjectDefinition _draftAllowedObjectDefinition;
 
 	private String _draftAllowedObjectDefinitionName;
-	private String _listFieldName;
-	private String _listFieldValueKey;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	private String _objectFieldName;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _parentObjectDefinition;

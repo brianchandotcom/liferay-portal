@@ -718,10 +718,6 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_VERSION_COUNT;
 	}
 
-	public int getMaxPublicationJournalArticleSize() {
-		return BenchmarksPropsValues.MAX_PUBLICATION_JOURNAL_ARTICLE_SIZE;
-	}
-
 	public int getMaxPublicationJournalArticleVersionCount() {
 		return BenchmarksPropsValues.
 			MAX_PUBLICATION_JOURNAL_ARTICLE_VERSION_COUNT;

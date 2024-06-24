@@ -38,9 +38,9 @@ public class DCLSingleton<T> {
 			if (_singleton == null) {
 				_singleton = supplier.get();
 			}
-		}
 
-		return _singleton;
+			return _singleton;
+		}
 	}
 
 	private volatile T _singleton;

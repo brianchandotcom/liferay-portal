@@ -1442,7 +1442,7 @@ definition {
 			ObjectAdmin.assertObjectEntryFieldValueViaAPI(
 				attribute = "address",
 				attributeValue = "Dalian",
-				expectedValue = "2020-08-08T00:00:00Z",
+				expectedValue = "2020-08-08T00:00:00.000Z",
 				fieldName = "purchaseDate",
 				objectName = "PurchaseOrder");
 

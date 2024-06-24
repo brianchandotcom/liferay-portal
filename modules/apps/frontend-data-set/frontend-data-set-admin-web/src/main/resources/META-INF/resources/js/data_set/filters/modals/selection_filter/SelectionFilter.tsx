@@ -14,14 +14,12 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
-import {fetch} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
 import CheckboxMultiSelect from '../../../../components/CheckboxMultiSelect';
 import RequiredMark from '../../../../components/RequiredMark';
 import getAllPicklists from '../../../../utils/getAllPicklists';
-import openDefaultFailureToast from '../../../../utils/openDefaultFailureToast';
 import {
 	ESelectionFilterSourceType,
 	IField,
@@ -124,20 +122,6 @@ function Body({
 
 	const isValidSingleMode =
 		multiple || (!multiple && !(preselectedValues.length > 1));
-
-	async function getAPIValues(source: string) {
-		const response = await fetch(`${source}`);
-
-		if (!response.ok) {
-			openDefaultFailureToast();
-
-			return [];
-		}
-
-		const responseJSON = await response.json();
-
-		return responseJSON;
-	}
 
 	const isi18nFilterLabelsValid = (
 		i18nFilterLabels: Partial<Liferay.Language.FullyLocalizedValue<string>>
@@ -297,40 +281,20 @@ function Body({
 		}
 	};
 
-	useEffect(() => {
-		const isValidSource =
-			sourceType === ESelectionFilterSourceType.API_HEADLESS &&
-			source &&
-			!(source as string).match(/\{[A-Za-z0-9]+\}/g);
-
-		if (isValidSource && selectedItemKey && selectedItemLabel) {
-			getAPIValues(source as string).then((apiValues) => {
-				setFilteredSourceItems(
-					!apiValues.items.length
-						? []
-						: apiValues.items
-								.filter((item: any) => {
-									return fuzzy.match(
-										preselectedValueInput,
-										String(item[selectedItemLabel])
-									);
-								})
-								.map((item: any) => {
-									return {
-										label: String(item[selectedItemLabel]),
-										value: String(item[selectedItemKey]),
-									};
-								})
-				);
-			});
+	function setAPISource(
+		restApplication: string | null,
+		restEndpoint: string | null
+	): string | null {
+		if (!restApplication || !restEndpoint) {
+			return null;
 		}
-	}, [
-		preselectedValueInput,
-		selectedItemKey,
-		selectedItemLabel,
-		source,
-		sourceType,
-	]);
+
+		const source = `/o${restApplication.replace('v1.0/', '')}${restEndpoint}`;
+		setSource(source);
+		setSourceValidationError(false);
+
+		return source;
+	}
 
 	useEffect(() => {
 		if (
@@ -438,16 +402,6 @@ function Body({
 		}
 	}, [preselectedValueInput, source, sourceType]);
 
-	useEffect(() => {
-		if (selectedRESTApplication && selectedRESTEndpoint) {
-			setSource(
-				`/o${selectedRESTApplication.replace('v1.0/', '')}${selectedRESTEndpoint}`
-			);
-
-			setSourceValidationError(false);
-		}
-	}, [selectedRESTApplication, selectedRESTEndpoint]);
-
 	if (
 		!Liferay.FeatureFlags['LPD-10754'] &&
 		sourceType === ESelectionFilterSourceType.API_HEADLESS &&
@@ -533,6 +487,7 @@ function Body({
 
 											setSource(undefined);
 											setPreselectedValueInput('');
+
 											setPreselectedValues([]);
 										}}
 										options={[
@@ -614,6 +569,7 @@ function Body({
 												selectedRESTApplication,
 												selectedRESTEndpoint,
 												selectedRESTSchema,
+												sourceItems,
 											}) => {
 												const restApplication =
 													selectedRESTApplication!.replace(
@@ -639,6 +595,11 @@ function Body({
 													);
 												}
 
+												setAPISource(
+													restApplication,
+													selectedRESTEndpoint
+												);
+
 												setSelectedRESTSchema(
 													selectedRESTSchema
 												);
@@ -661,7 +622,15 @@ function Body({
 												setItemLabelValidationError(
 													false
 												);
+
+												setPreselectedValues([]);
+												setFilteredSourceItems(
+													sourceItems
+												);
 											}}
+											preselectedValueInput={
+												preselectedValueInput
+											}
 											requiredRESTApplicationValidationError={
 												requiredRESTApplicationValidationError
 											}
@@ -672,6 +641,7 @@ function Body({
 											restSchemaValidationError={
 												restSchemaValidationError
 											}
+											source={source as string}
 										/>
 									)}
 

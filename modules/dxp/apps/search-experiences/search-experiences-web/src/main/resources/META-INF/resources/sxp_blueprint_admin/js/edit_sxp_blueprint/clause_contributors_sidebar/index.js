@@ -292,7 +292,7 @@ export default function ({
 							{contributor.value.map((className, index) => (
 								<ClayList.Item
 									active={selected.includes(className)}
-									data-testid={
+									data-qa-id={
 										TEST_IDS.CLAUSE_CONTRIBUTORS_SIDEBAR_LIST_ITEM
 									}
 									flex

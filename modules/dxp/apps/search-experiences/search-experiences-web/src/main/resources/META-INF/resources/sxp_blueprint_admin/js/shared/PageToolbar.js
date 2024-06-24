@@ -261,7 +261,7 @@ export default function PageToolbar({
 
 								<strong
 									className="text-dark"
-									data-testid={TEST_IDS.ENTITY_ID}
+									data-qa-id={TEST_IDS.ENTITY_ID}
 								>
 									{entityId}
 								</strong>

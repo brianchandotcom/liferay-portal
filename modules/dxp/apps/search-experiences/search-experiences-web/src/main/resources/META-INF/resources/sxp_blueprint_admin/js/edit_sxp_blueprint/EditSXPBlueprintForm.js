@@ -1065,7 +1065,7 @@ function EditSXPBlueprintForm({
 						className={getCN({
 							active: openSidebar === SIDEBAR_TYPES.PREVIEW,
 						})}
-						data-testid={TEST_IDS.PREVIEW_SIDEBAR_BUTTON}
+						data-qa-id={TEST_IDS.PREVIEW_SIDEBAR_BUTTON}
 						displayType="secondary"
 						onClick={_handleToggleSidebar(SIDEBAR_TYPES.PREVIEW)}
 						small

@@ -76,7 +76,7 @@ function ResultListItem({explanation = '', fields, id, score = 0}) {
 	return (
 		<ClayList.Item
 			className="result-list-item"
-			data-testid={TEST_IDS.PREVIEW_SIDEBAR_RESULT_LIST_ITEM}
+			data-qa-id={TEST_IDS.PREVIEW_SIDEBAR_RESULT_LIST_ITEM}
 			flex
 			key={id}
 		>

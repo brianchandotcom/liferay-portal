@@ -219,7 +219,7 @@ function PreviewSidebar({
 			className={getCN('preview-sidebar', 'sidebar', 'sidebar-light', {
 				open: visible,
 			})}
-			data-testid={TEST_IDS.PREVIEW_SIDEBAR}
+			data-qa-id={TEST_IDS.PREVIEW_SIDEBAR}
 		>
 			<div className="sidebar-header">
 				<div className="component-title">

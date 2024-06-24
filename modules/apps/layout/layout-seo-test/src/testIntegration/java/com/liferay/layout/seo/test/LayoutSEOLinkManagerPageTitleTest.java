@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -262,6 +264,107 @@ public class LayoutSEOLinkManagerPageTitleTest {
 	}
 
 	@Test
+	public void testGetFullPageTitleWithIncludeInstanceNameWithIncludeSiteName()
+		throws Exception {
+
+		try (GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(),
+						_PID_LAYOUT_SEO_GENERAL_GROUP_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeInstanceName", true
+						).put(
+							"includeSiteName", true
+						).build())) {
+
+			String companyName = RandomTestUtil.randomString();
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					_layout.getTitle(), " - ", _group.getName(), " - ",
+					companyName),
+				_layoutSEOLinkManager.getFullPageTitle(
+					_layout, null, null, null, null, companyName,
+					LocaleUtil.getDefault()));
+		}
+	}
+
+	@Test
+	public void testGetFullPageTitleWithIncludeInstanceNameWithoutIncludeSiteName()
+		throws Exception {
+
+		try (GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(),
+						_PID_LAYOUT_SEO_GENERAL_GROUP_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeInstanceName", true
+						).put(
+							"includeSiteName", false
+						).build())) {
+
+			String companyName = RandomTestUtil.randomString();
+
+			Assert.assertEquals(
+				StringBundler.concat(_layout.getTitle(), " - ", companyName),
+				_layoutSEOLinkManager.getFullPageTitle(
+					_layout, null, null, null, null, companyName,
+					LocaleUtil.getDefault()));
+		}
+	}
+
+	@Test
+	public void testGetFullPageTitleWithoutIncludeInstanceNameWithIncludeSiteName()
+		throws Exception {
+
+		try (GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(),
+						_PID_LAYOUT_SEO_GENERAL_GROUP_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeInstanceName", false
+						).put(
+							"includeSiteName", true
+						).build())) {
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					_layout.getTitle(), " - ", _group.getName()),
+				_layoutSEOLinkManager.getFullPageTitle(
+					_layout, null, null, null, null,
+					RandomTestUtil.randomString(), LocaleUtil.getDefault()));
+		}
+	}
+
+	@Test
+	public void testGetFullPageTitleWithoutIncludeInstanceNameWithoutIncludeSiteName()
+		throws Exception {
+
+		try (GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(),
+						_PID_LAYOUT_SEO_GENERAL_GROUP_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeInstanceName", false
+						).put(
+							"includeSiteName", false
+						).build())) {
+
+			String companyName = RandomTestUtil.randomString();
+
+			Assert.assertEquals(
+				_layout.getTitle(),
+				_layoutSEOLinkManager.getFullPageTitle(
+					_layout, null, null, null, null, companyName,
+					LocaleUtil.getDefault()));
+		}
+	}
+
+	@Test
 	public void testGetFullPageUsesLayoutTitleAndCompanyName()
 		throws Exception {
 
@@ -369,6 +472,10 @@ public class LayoutSEOLinkManagerPageTitleTest {
 		_layout.setSystem(true);
 		_layout.setFriendlyURL("/manage");
 	}
+
+	private static final String _PID_LAYOUT_SEO_GENERAL_GROUP_CONFIGURATION =
+		"com.liferay.layout.seo.internal.configuration." +
+			"LayoutSEOGeneralGroupConfiguration";
 
 	@DeleteAfterTestRun
 	private Group _group;

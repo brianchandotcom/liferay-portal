@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import javax.portlet.PortletRequest;
@@ -93,16 +94,38 @@ public class LayoutsAdminDisplayContextTest {
 		_assertGetEditOrViewLayoutURL(layout, Constants.EDIT);
 	}
 
+	@Test
+	public void testGetEditOrViewLayoutURLViewURL() throws Exception {
+		Layout layout = _getContentLayout();
+
+		Mockito.when(
+			_layoutActionsHelper.isShowViewLayoutAction(layout)
+		).thenReturn(
+			true
+		);
+
+		_assertGetEditOrViewLayoutURL(layout, StringPool.BLANK);
+	}
+
 	private void _assertGetEditOrViewLayoutURL(Layout layout, String layoutMode)
 		throws Exception {
 
 		String friendlyURL = RandomTestUtil.randomString();
 
-		Mockito.when(
-			_portal.getLayoutFullURL(layout.fetchDraftLayout(), null)
-		).thenReturn(
-			friendlyURL
-		);
+		if (Validator.isNull(layoutMode)) {
+			Mockito.when(
+				_portal.getLayoutFullURL(layout, null)
+			).thenReturn(
+				friendlyURL
+			);
+		}
+		else {
+			Mockito.when(
+				_portal.getLayoutFullURL(layout.fetchDraftLayout(), null)
+			).thenReturn(
+				friendlyURL
+			);
+		}
 
 		String url = _layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout);
 

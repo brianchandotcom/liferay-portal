@@ -2089,7 +2089,7 @@ public class LayoutsAdminDisplayContext {
 	protected final ThemeDisplay themeDisplay;
 
 	private String _getBackURL() {
-		return _getBackURL(null);
+		return _getBackURL(getSelLayout());
 	}
 
 	private String _getBackURL(Layout layout) {

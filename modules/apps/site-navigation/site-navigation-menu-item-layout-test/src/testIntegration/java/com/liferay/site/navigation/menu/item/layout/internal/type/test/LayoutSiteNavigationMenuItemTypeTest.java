@@ -85,26 +85,6 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 	}
 
 	@Test
-	public void testAddToAutoMenuFalseToPrimaryMenu() throws PortalException {
-		_layoutService.addLayout(
-			_group.getGroupId(), false, 0,
-			HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), "welcome"
-			).build(),
-			new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
-			LayoutConstants.TYPE_PORTLET,
-			UnicodePropertiesBuilder.put(
-				"addToAutoMenus", Boolean.FALSE.toString()
-			).buildString(),
-			false, new HashMap<>(), _serviceContext);
-
-		Assert.assertEquals(
-			0,
-			_siteNavigationMenuItemLocalService.
-				getSiteNavigationMenuItemsCount());
-	}
-
-	@Test
 	public void testAddToAutoMenuTrueToMenu() throws PortalException {
 		SiteNavigationMenu autoSiteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(

@@ -30,14 +30,14 @@ public class FriendlyURLUpgradeProcess extends UpgradeProcess {
 
 			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(
-						"select categoryId, name from MBCategory order by " +
-							"name, categoryId asc");
+						"select categoryId, ctCollectionId, name from " +
+							"MBCategory order by name, categoryId asc");
 				ResultSet resultSet = preparedStatement1.executeQuery();
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
 						connection,
 						"update MBCategory set friendlyURL = ? where " +
-							"categoryId = ?")) {
+							"categoryId = ? and ctCollectionId = ?")) {
 
 				int count = 0;
 				String currentFriendlyURL = null;
@@ -45,7 +45,8 @@ public class FriendlyURLUpgradeProcess extends UpgradeProcess {
 
 				while (resultSet.next()) {
 					long categoryId = resultSet.getLong(1);
-					String name = resultSet.getString(2);
+					long ctCollectionId = resultSet.getLong(2);
+					String name = resultSet.getString(3);
 
 					currentFriendlyURL = _getFriendlyURL(categoryId, name);
 
@@ -66,6 +67,7 @@ public class FriendlyURLUpgradeProcess extends UpgradeProcess {
 					preparedStatement2.setString(
 						1, currentFriendlyURL + suffix);
 					preparedStatement2.setLong(2, categoryId);
+					preparedStatement2.setLong(3, ctCollectionId);
 
 					preparedStatement2.addBatch();
 				}

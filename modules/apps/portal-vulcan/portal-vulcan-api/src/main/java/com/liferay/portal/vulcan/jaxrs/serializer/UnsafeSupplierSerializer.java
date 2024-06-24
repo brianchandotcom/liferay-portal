@@ -13,6 +13,7 @@ import com.liferay.petra.function.UnsafeSupplier;
 
 /**
  * @author Alberto Javier Moreno Lage
+ * @author Carlos Correa
  */
 public class UnsafeSupplierSerializer
 	extends JsonSerializer<UnsafeSupplier<Object, Exception>> {
@@ -23,7 +24,12 @@ public class UnsafeSupplierSerializer
 		JsonGenerator jsonGenerator, SerializerProvider serializerProvider) {
 
 		try {
-			jsonGenerator.writeObject(unsafeSupplier.get());
+			Object value = unsafeSupplier.get();
+
+			JsonSerializer<Object> jsonSerializer =
+				serializerProvider.findValueSerializer(value.getClass(), null);
+
+			jsonSerializer.serialize(value, jsonGenerator, serializerProvider);
 		}
 		catch (Throwable throwable) {
 			throw new RuntimeException(throwable);

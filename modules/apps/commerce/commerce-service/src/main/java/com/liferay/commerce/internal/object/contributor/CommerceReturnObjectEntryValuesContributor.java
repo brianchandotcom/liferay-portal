@@ -93,15 +93,15 @@ public class CommerceReturnObjectEntryValuesContributor
 				return;
 			}
 
-			ObjectEntry originalCommerceReturn =
+			ObjectEntry originalCommerceReturnObjectEntry =
 				_objectEntryLocalService.fetchObjectEntry(
 					GetterUtil.getLong(
 						commerceReturnValues.get(
 							CommerceReturnConstants.
 								RETURN_FIELD_COMMERCE_RETURN_ID)));
 
-			if (originalCommerceReturn == null) {
-				originalCommerceReturn =
+			if (originalCommerceReturnObjectEntry == null) {
+				originalCommerceReturnObjectEntry =
 					_objectEntryLocalService.fetchObjectEntry(
 						GetterUtil.getString(
 							commerceReturnValues.get(
@@ -111,7 +111,7 @@ public class CommerceReturnObjectEntryValuesContributor
 			}
 
 			Map<String, Serializable> originalCommerceReturnValues =
-				originalCommerceReturn.getValues();
+				originalCommerceReturnObjectEntry.getValues();
 
 			String currentReturnStatus = GetterUtil.getString(
 				originalCommerceReturnValues.get(
@@ -131,18 +131,19 @@ public class CommerceReturnObjectEntryValuesContributor
 				return;
 			}
 
-			List<ObjectEntry> commerceReturnItems =
+			List<ObjectEntry> commerceReturnObjectEntries =
 				_objectEntryLocalService.getOneToManyObjectEntries(
-					originalCommerceReturn.getGroupId(),
+					originalCommerceReturnObjectEntry.getGroupId(),
 					_objectRelationshipLocalService.getObjectRelationship(
-						originalCommerceReturn.getObjectDefinitionId(),
+						originalCommerceReturnObjectEntry.
+							getObjectDefinitionId(),
 						"commerceReturnToCommerceReturnItems"
 					).getObjectRelationshipId(),
-					originalCommerceReturn.getObjectEntryId(), true, null,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+					originalCommerceReturnObjectEntry.getObjectEntryId(), true,
+					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			Map<String, List<ObjectEntry>> returnItemStatusMap =
-				_toReturnItemStatusMap(commerceReturnItems);
+				_toReturnItemStatusMap(commerceReturnObjectEntries);
 
 			if (GetterUtil.getBoolean(
 					commerceReturnValues.get("mark-as-completed"))) {
@@ -200,7 +201,7 @@ public class CommerceReturnObjectEntryValuesContributor
 			}
 
 			String nextReturnStatus = _getNextReturnStatus(
-				commerceReturnItems.size(), currentReturnStatus,
+				commerceReturnObjectEntries.size(), currentReturnStatus,
 				returnItemStatusMap);
 
 			if (StringUtil.equals(currentReturnStatus, nextReturnStatus)) {
@@ -211,12 +212,12 @@ public class CommerceReturnObjectEntryValuesContributor
 					nextReturnStatus,
 					CommerceReturnConstants.RETURN_STATUS_AUTHORIZED)) {
 
-				for (ObjectEntry authorizedReturnItem :
+				for (ObjectEntry objectEntry :
 						returnItemStatusMap.getOrDefault(
 							"authorizedReturnItems", Collections.emptyList())) {
 
 					Map<String, Serializable> authorizedReturnItemValues =
-						authorizedReturnItem.getValues();
+						objectEntry.getValues();
 
 					authorizedReturnItemValues.put(
 						CommerceReturnConstants.
@@ -227,8 +228,7 @@ public class CommerceReturnObjectEntryValuesContributor
 						"skipCommerceReturnItemContributor", true);
 
 					_objectEntryLocalService.updateObjectEntry(
-						authorizedReturnItem.getUserId(),
-						authorizedReturnItem.getObjectEntryId(),
+						objectEntry.getUserId(), objectEntry.getObjectEntryId(),
 						authorizedReturnItemValues, new ServiceContext());
 				}
 			}
@@ -246,25 +246,27 @@ public class CommerceReturnObjectEntryValuesContributor
 		int commerceReturnItemsSize, String currentReturnStatus,
 		Map<String, List<ObjectEntry>> returnItemStatusMap) {
 
-		List<ObjectEntry> notAuthorizedReturnItems =
+		List<ObjectEntry> notAuthorizedReturnItemObjectEntries =
 			returnItemStatusMap.getOrDefault(
 				"notAuthorizedReturnItems", Collections.emptyList());
 
-		int notAuthorizedReturnItemsSize = notAuthorizedReturnItems.size();
+		int notAuthorizedReturnItemsSize =
+			notAuthorizedReturnItemObjectEntries.size();
 
-		List<ObjectEntry> toBeProcessedReturnItems =
+		List<ObjectEntry> toBeProcessedReturnItemObjectEntries =
 			returnItemStatusMap.getOrDefault(
 				"toBeProcessedReturnItems", Collections.emptyList());
 
-		List<ObjectEntry> receivedReturnItems =
+		List<ObjectEntry> receivedReturnItemObjectEntries =
 			returnItemStatusMap.getOrDefault(
 				"receivedReturnItems", Collections.emptyList());
 
-		List<ObjectEntry> receiptRejectedReturnItems =
+		List<ObjectEntry> receiptRejectedReturnItemObjectEntries =
 			returnItemStatusMap.getOrDefault(
 				"receiptRejectedReturnItems", Collections.emptyList());
 
-		int receiptRejectedReturnItemsSize = receiptRejectedReturnItems.size();
+		int receiptRejectedReturnItemsSize =
+			receiptRejectedReturnItemObjectEntries.size();
 
 		if (StringUtil.equalsIgnoreCase(
 				currentReturnStatus,
@@ -278,7 +280,7 @@ public class CommerceReturnObjectEntryValuesContributor
 			}
 
 			int returnResolutionMethod = ListUtil.count(
-				receivedReturnItems,
+				receivedReturnItemObjectEntries,
 				receivedReturnItem -> {
 					Map<String, Serializable> values =
 						receivedReturnItem.getValues();
@@ -290,7 +292,7 @@ public class CommerceReturnObjectEntryValuesContributor
 				});
 
 			if ((commerceReturnItemsSize == returnResolutionMethod) ||
-				ListUtil.isNotEmpty(toBeProcessedReturnItems)) {
+				ListUtil.isNotEmpty(toBeProcessedReturnItemObjectEntries)) {
 
 				return CommerceReturnConstants.RETURN_STATUS_PROCESSING;
 			}
@@ -300,7 +302,8 @@ public class CommerceReturnObjectEntryValuesContributor
 				currentReturnStatus,
 				CommerceReturnConstants.RETURN_STATUS_PENDING)) {
 
-			int toBeProcessedReturnItemsSize = toBeProcessedReturnItems.size();
+			int toBeProcessedReturnItemsSize =
+				toBeProcessedReturnItemObjectEntries.size();
 
 			if ((toBeProcessedReturnItemsSize > 0) &&
 				(commerceReturnItemsSize ==
@@ -314,13 +317,15 @@ public class CommerceReturnObjectEntryValuesContributor
 				return CommerceReturnConstants.RETURN_STATUS_REJECTED;
 			}
 
-			List<ObjectEntry> authorizedReturnItems =
+			List<ObjectEntry> authorizedReturnItemObjectEntries =
 				returnItemStatusMap.getOrDefault(
 					"authorizedReturnItems", Collections.emptyList());
 
-			int authorizedReturnItemsSize = authorizedReturnItems.size();
+			int authorizedReturnItemsSize =
+				authorizedReturnItemObjectEntries.size();
 
-			int receivedReturnItemsSize = receivedReturnItems.size();
+			int receivedReturnItemsSize =
+				receivedReturnItemObjectEntries.size();
 
 			if (commerceReturnItemsSize ==
 					(authorizedReturnItemsSize + notAuthorizedReturnItemsSize +
@@ -345,13 +350,13 @@ public class CommerceReturnObjectEntryValuesContributor
 	}
 
 	private Map<String, List<ObjectEntry>> _toReturnItemStatusMap(
-		List<ObjectEntry> commerceReturnItems) {
+		List<ObjectEntry> commerceReturnObjectEntries) {
 
 		Map<String, List<ObjectEntry>> commerceReturnItemMap = new HashMap<>();
 
-		for (ObjectEntry commerceReturnItem : commerceReturnItems) {
+		for (ObjectEntry objectEntry : commerceReturnObjectEntries) {
 			Map<String, Serializable> commerceReturnItemValues =
-				commerceReturnItem.getValues();
+				objectEntry.getValues();
 
 			String returnItemStatus = GetterUtil.getString(
 				commerceReturnItemValues.get(
@@ -405,15 +410,16 @@ public class CommerceReturnObjectEntryValuesContributor
 			}
 
 			if (Validator.isNotNull(key)) {
-				List<ObjectEntry> items = commerceReturnItemMap.get(key);
+				List<ObjectEntry> objectEntries = commerceReturnItemMap.get(
+					key);
 
-				if (ListUtil.isEmpty(items)) {
-					items = new ArrayList<>();
+				if (ListUtil.isEmpty(objectEntries)) {
+					objectEntries = new ArrayList<>();
 				}
 
-				items.add(commerceReturnItem);
+				objectEntries.add(objectEntry);
 
-				commerceReturnItemMap.put(key, items);
+				commerceReturnItemMap.put(key, objectEntries);
 			}
 		}
 

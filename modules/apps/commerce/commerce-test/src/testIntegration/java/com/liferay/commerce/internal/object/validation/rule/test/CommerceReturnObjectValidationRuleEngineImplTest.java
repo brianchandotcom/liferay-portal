@@ -122,7 +122,7 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 
 	@Test
 	public void testCommerceReturnAccountEntryIdObjectValidationRuleEngineImpl() {
-		Map<String, Object> execute =
+		Map<String, Object> results =
 			_commerceReturnAccountEntryIdObjectValidationRuleEngineImpl.execute(
 				HashMapBuilder.<String, Object>put(
 					"entryDTO",
@@ -142,9 +142,9 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 				null);
 
 		Assert.assertFalse(
-			GetterUtil.getBoolean(execute.get("validationCriteriaMet")));
+			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 
-		execute =
+		results =
 			_commerceReturnAccountEntryIdObjectValidationRuleEngineImpl.execute(
 				HashMapBuilder.<String, Object>put(
 					"entryDTO",
@@ -164,12 +164,12 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 				null);
 
 		Assert.assertTrue(
-			GetterUtil.getBoolean(execute.get("validationCriteriaMet")));
+			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 	}
 
 	@Test
 	public void testCommerceReturnCommerceOrderIdObjectValidationRuleEngineImpl() {
-		Map<String, Object> execute =
+		Map<String, Object> results =
 			_commerceReturnCommerceOrderIdObjectValidationRuleEngineImpl.
 				execute(
 					HashMapBuilder.<String, Object>put(
@@ -196,9 +196,9 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 					null);
 
 		Assert.assertTrue(
-			GetterUtil.getBoolean(execute.get("validationCriteriaMet")));
+			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 
-		execute =
+		results =
 			_commerceReturnCommerceOrderIdObjectValidationRuleEngineImpl.
 				execute(
 					HashMapBuilder.<String, Object>put(
@@ -225,9 +225,9 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 					null);
 
 		Assert.assertFalse(
-			GetterUtil.getBoolean(execute.get("validationCriteriaMet")));
+			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 
-		execute =
+		results =
 			_commerceReturnCommerceOrderIdObjectValidationRuleEngineImpl.
 				execute(
 					HashMapBuilder.<String, Object>put(
@@ -244,14 +244,14 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 					null);
 
 		Assert.assertTrue(
-			GetterUtil.getBoolean(execute.get("validationCriteriaMet")));
+			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 	}
 
 	@Test
 	public void testCommerceReturnCommerceOrderStatusObjectValidationRuleEngineImpl()
 		throws Exception {
 
-		Map<String, Object> execute =
+		Map<String, Object> results =
 			_commerceReturnCommerceOrderStatusObjectValidationRuleEngineImpl.
 				execute(
 					HashMapBuilder.<String, Object>put(
@@ -268,7 +268,7 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 					null);
 
 		Assert.assertFalse(
-			GetterUtil.getBoolean(execute.get("validationCriteriaMet")));
+			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 
 		CommerceShipment commerceShipment =
 			_commerceShipmentLocalService.addCommerceShipment(
@@ -304,7 +304,7 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
 			_user.getUserId(), true);
 
-		execute =
+		results =
 			_commerceReturnCommerceOrderStatusObjectValidationRuleEngineImpl.
 				execute(
 					HashMapBuilder.<String, Object>put(
@@ -321,12 +321,12 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 					null);
 
 		Assert.assertTrue(
-			GetterUtil.getBoolean(execute.get("validationCriteriaMet")));
+			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 	}
 
 	@Test
 	public void testCommerceReturnReturnStatusObjectValidationRuleEngineImpl() {
-		Map<String, Object> execute =
+		Map<String, Object> results =
 			_commerceReturnReturnStatusObjectValidationRuleEngineImpl.execute(
 				HashMapBuilder.<String, Object>put(
 					"entryDTO",
@@ -342,9 +342,9 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 				null);
 
 		Assert.assertFalse(
-			GetterUtil.getBoolean(execute.get("validationCriteriaMet")));
+			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 
-		execute =
+		results =
 			_commerceReturnReturnStatusObjectValidationRuleEngineImpl.execute(
 				HashMapBuilder.<String, Object>put(
 					"entryDTO",
@@ -362,7 +362,7 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 				null);
 
 		Assert.assertTrue(
-			GetterUtil.getBoolean(execute.get("validationCriteriaMet")));
+			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 	}
 
 	@DeleteAfterTestRun

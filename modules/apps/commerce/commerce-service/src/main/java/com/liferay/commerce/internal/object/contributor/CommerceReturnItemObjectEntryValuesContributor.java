@@ -66,12 +66,12 @@ public class CommerceReturnItemObjectEntryValuesContributor
 
 			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
-			CommerceOrderItemPrice commerceOrderItemPricePerUnit =
+			CommerceOrderItemPrice commerceOrderItemPrice =
 				_commerceOrderPriceCalculation.getCommerceOrderItemPricePerUnit(
 					commerceOrder.getCommerceCurrency(), commerceOrderItem);
 
-			CommerceMoney finalPrice =
-				commerceOrderItemPricePerUnit.getFinalPrice();
+			CommerceMoney commerceMoney =
+				commerceOrderItemPrice.getFinalPrice();
 
 			commerceReturnItemValues.put(
 				CommerceReturnConstants.RETURN_ITEM_FIELD_AMOUNT,
@@ -81,7 +81,7 @@ public class CommerceReturnItemObjectEntryValuesContributor
 							commerceReturnItemValues.get(
 								CommerceReturnConstants.
 									RETURN_ITEM_FIELD_QUANTITY))),
-					finalPrice.getPrice()));
+					commerceMoney.getPrice()));
 
 			if (Boolean.parseBoolean(
 					String.valueOf(
@@ -112,7 +112,7 @@ public class CommerceReturnItemObjectEntryValuesContributor
 				return;
 			}
 
-			String nextReturnItemStatus = _calculateNextReturnItemStatus(
+			String nextReturnItemStatus = _getNextReturnItemStatus(
 				commerceReturnItemValues, returnStatus);
 
 			commerceReturnItemValues.put(
@@ -124,7 +124,7 @@ public class CommerceReturnItemObjectEntryValuesContributor
 		}
 	}
 
-	private String _calculateNextReturnItemStatus(
+	private String _getNextReturnItemStatus(
 		Map<String, Serializable> commerceReturnItemValues,
 		String returnStatus) {
 

@@ -10,6 +10,7 @@ import com.liferay.portal.db.schema.definition.internal.test.util.ConfigurationT
 import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseTestUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -65,15 +66,13 @@ public class DBSchemaDefinitionExporterTest {
 	@Before
 	public void setUp() throws Exception {
 		_databaseType = String.valueOf(DBManagerUtil.getDBType());
-
 		_folder = FileUtil.createTempFolder();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		FileUtil.deltree(_folder);
-
 		Files.deleteIfExists(ConfigurationTestUtil.getConfigurationPath(_PID));
+		FileUtil.deltree(_folder);
 	}
 
 	@Test
@@ -94,12 +93,13 @@ public class DBSchemaDefinitionExporterTest {
 			Assert.assertTrue(
 				!Files.exists(
 					ConfigurationTestUtil.getConfigurationPath(_PID)));
-			Assert.assertTrue(
-				ConfigurationTestUtil.isDictionaryNull(
-					_persistenceManager, _PID));
-			Assert.assertTrue(
-				ConfigurationTestUtil.isListConfigurationsNull(
-					_configurationAdmin, _PID));
+			Assert.assertNull(
+				ReflectionTestUtil.invoke(
+					_persistenceManager, "_getDictionary",
+					new Class<?>[] {String.class}, _PID));
+			Assert.assertNull(
+				_configurationAdmin.listConfigurations(
+					"(service.pid=" + _PID + ")"));
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 

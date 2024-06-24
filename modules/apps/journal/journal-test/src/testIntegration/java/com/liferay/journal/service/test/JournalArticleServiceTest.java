@@ -15,6 +15,8 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
@@ -45,6 +47,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -275,6 +279,45 @@ public class JournalArticleServiceTest {
 		}
 		catch (RequiredTemplateException requiredTemplateException) {
 		}
+	}
+
+	@Test
+	public void testDeleteTemplateSpecifiedByDeletedJournalArticle()
+		throws Exception {
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				_group.getGroupId(), "<title>Test Article</title>",
+				ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
+
+		String compositeClassName = ResourceActionsUtil.getCompositeModelName(
+			JournalArticle.class.getName(), DDMTemplate.class.getName());
+
+		DDMTemplateLink ddmTemplateLink =
+			_ddmTemplateLinkLocalService.addTemplateLink(
+				_classNameLocalService.getClassNameId(compositeClassName),
+				journalArticle.getId(), ddmTemplate.getTemplateId());
+
+		_journalArticleLocalService.deleteArticle(
+			_group.getGroupId(), journalArticle.getArticleId(),
+			new ServiceContext());
+
+		_ddmTemplateLocalService.deleteTemplate(ddmTemplate.getTemplateId());
+
+		Assert.assertNull(
+			_ddmTemplateLinkLocalService.fetchDDMTemplateLink(
+				ddmTemplateLink.getTemplateLinkId()));
+
+		Assert.assertNull(
+			_ddmTemplateLocalService.fetchDDMTemplate(
+				ddmTemplate.getTemplateId()));
 	}
 
 	@Test
@@ -1282,8 +1325,14 @@ public class JournalArticleServiceTest {
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
 	@Inject(filter = "ddm.form.deserializer.type=xsd")
 	private DDMFormDeserializer _ddmFormDeserializer;
+
+	@Inject
+	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 
 	@Inject
 	private DDMTemplateLocalService _ddmTemplateLocalService;

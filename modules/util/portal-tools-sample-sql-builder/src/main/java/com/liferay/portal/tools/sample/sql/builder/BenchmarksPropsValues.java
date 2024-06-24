@@ -159,6 +159,9 @@ public class BenchmarksPropsValues {
 			PropertiesHolder._get(
 				BenchmarksPropsKeys.MAX_CP_SPECIFICATION_OPTION_COUNT));
 
+	public static final int MAX_CT_COLLECTION_COUNT = GetterUtil.getInteger(
+		PropertiesHolder._get(BenchmarksPropsKeys.MAX_CT_COLLECTION_COUNT));
+
 	public static final int MAX_DDL_CUSTOM_FIELD_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_DDL_CUSTOM_FIELD_COUNT));
 
@@ -220,9 +223,6 @@ public class BenchmarksPropsValues {
 		GetterUtil.getInteger(
 			PropertiesHolder._get(
 				BenchmarksPropsKeys.MAX_PUBLICATION_CONTENT_LAYOUT_COUNT));
-
-	public static final int MAX_PUBLICATION_COUNT = GetterUtil.getInteger(
-		PropertiesHolder._get(BenchmarksPropsKeys.MAX_PUBLICATION_COUNT));
 
 	public static final int MAX_PUBLICATION_JOURNAL_ARTICLE_COUNT =
 		GetterUtil.getInteger(

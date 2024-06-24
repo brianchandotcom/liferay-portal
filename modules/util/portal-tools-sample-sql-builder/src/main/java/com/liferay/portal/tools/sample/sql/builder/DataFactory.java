@@ -3307,7 +3307,9 @@ public class DataFactory {
 
 		List<CTCollectionModel> ctCollectionModels = new ArrayList<>();
 
-		for (int i = 1; i <= BenchmarksPropsValues.MAX_PUBLICATION_COUNT; i++) {
+		for (int i = 1; i <= BenchmarksPropsValues.MAX_CT_COLLECTION_COUNT;
+			 i++) {
+
 			ctCollectionModels.add(
 				newCTCollectionModel(i, ctSchemaVersionModel));
 		}

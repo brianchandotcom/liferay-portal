@@ -165,9 +165,6 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_MB_THREAD_COUNT =
 		"sample.sql.max.mb.thread.count";
 
-	public static final String MAX_PUBLICATION_JOURNAL_ARTICLE_SIZE =
-		"sample.sql.max.publication.journal.article.size";
-
 	public static final String MAX_PUBLICATION_JOURNAL_ARTICLE_VERSION_COUNT =
 		"sample.sql.max.publication.journal.article.version.count";
 

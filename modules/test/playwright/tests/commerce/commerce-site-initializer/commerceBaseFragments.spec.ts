@@ -51,11 +51,11 @@ test('LPD-23780 Commerce Classic Header main fragment is correctly displayed', a
 	await page.goto(editPageLink);
 
 	await page.locator('button[title="Page Design Options"]').click();
-	await page.locator('div[aria-label="Liferay Commerce Master"]').click();
+	await page.locator('div[aria-label="Commerce Classic Master"]').click();
 	await page.getByText('Publish', {exact: true}).click();
 
 	const commerceHeaderTagFragments = page.locator(
-		'#commerce-header-components'
+		'#commerce-components-group'
 	);
 
 	await expect(commerceHeaderTagFragments).toBeVisible();

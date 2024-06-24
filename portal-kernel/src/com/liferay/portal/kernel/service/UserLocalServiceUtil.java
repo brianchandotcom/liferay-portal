@@ -706,23 +706,6 @@ public class UserLocalServiceUtil {
 		return getService().createUser(userId);
 	}
 
-	/**
-	 * Decrypts the user's primary key and password from their encrypted forms.
-	 * Used for decrypting a user's credentials from the values stored in an
-	 * automatic login cookie.
-	 *
-	 * @param companyId the primary key of the user's company
-	 * @param name the encrypted primary key of the user
-	 * @param password the encrypted password of the user
-	 * @return the user's primary key and password
-	 */
-	public static com.liferay.portal.kernel.util.KeyValuePair decryptUserId(
-			long companyId, String name, String password)
-		throws PortalException {
-
-		return getService().decryptUserId(companyId, name, password);
-	}
-
 	public static void deleteGroupUser(long groupId, long userId) {
 		getService().deleteGroupUser(groupId, userId);
 	}

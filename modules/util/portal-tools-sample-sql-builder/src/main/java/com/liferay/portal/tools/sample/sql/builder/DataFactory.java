@@ -643,6 +643,10 @@ public class DataFactory {
 		return sb.toString();
 	}
 
+	public long getLongValue(String ctCollectionIdString) {
+		return GetterUtil.getLong(ctCollectionIdString);
+	}
+
 	public int getMaxAccountEntryCommerceOrderCount() {
 		return BenchmarksPropsValues.MAX_ACCOUNT_ENTRY_COMMERCE_ORDER_COUNT;
 	}

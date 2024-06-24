@@ -5,16 +5,21 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {messageBoardsPagesTest} from '../../fixtures/messageBoardsTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
+import getRandomString from '../../utils/getRandomString';
+
 export const test = mergeTests(
+	apiHelpersTest,
 	isolatedSiteTest,
 	messageBoardsPagesTest,
 	loginTest(),
 	workflowPagesTest
 );
+
 test('LPD-25630 Show the status to guest user', async ({
 	messageBoardsEditThreadPage,
 	messageBoardsPage,
@@ -47,4 +52,45 @@ test('LPD-25630 Show the status to guest user', async ({
 	);
 
 	await expect(page.getByText('Pending')).toBeVisible();
+});
+
+test('LPD-29524 Search for message board thread by keywords', async ({
+	apiHelpers,
+	messageBoardsWidgetPage,
+	page,
+	site,
+}) => {
+	const messageBoardThread1 =
+		await apiHelpers.headlessDelivery.postMessageBoardThread({
+			articleBody: getRandomString(),
+			headline: getRandomString(),
+			siteId: site.id,
+		});
+	const messageBoardThread2 =
+		await apiHelpers.headlessDelivery.postMessageBoardThread({
+			articleBody: getRandomString(),
+			headline: getRandomString(),
+			siteId: site.id,
+		});
+
+	await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
+
+	await expect(
+		page.getByRole('link', {name: messageBoardThread1.headline})
+	).toBeVisible();
+
+	await expect(
+		page.getByRole('link', {name: messageBoardThread2.headline})
+	).toBeVisible();
+
+	await page.getByTestId('searchInput').fill(messageBoardThread1.headline);
+	await page.getByTestId('searchButton').click();
+
+	await expect(
+		page.getByRole('link', {name: messageBoardThread1.headline})
+	).toBeVisible();
+
+	await expect(
+		page.getByRole('link', {name: messageBoardThread2.headline})
+	).toBeHidden();
 });

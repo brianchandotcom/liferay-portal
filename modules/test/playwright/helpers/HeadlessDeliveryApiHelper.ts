@@ -139,6 +139,27 @@ export class HeadlessDeliveryApiHelper {
 		);
 	}
 
+	async postMessageBoardThread({
+		articleBody,
+		headline,
+		siteId,
+	}: {
+		articleBody: string;
+		headline: string;
+		siteId: string;
+	}): Promise<MessageBoardThread> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/message-board-threads`,
+			{
+				data: {
+					articleBody,
+					headline,
+				},
+				failOnStatusCode: true,
+			}
+		);
+	}
+
 	async postStructuredContent({
 		categoryIds,
 		contentStructureId,

@@ -690,6 +690,10 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_PAGE_COUNT;
 	}
 
+	public int getMaxCTJournalArticleVersionCount() {
+		return BenchmarksPropsValues.MAX_CT_JOURNAL_ARTICLE_VERSION_COUNT;
+	}
+
 	public int getMaxDDLRecordCount() {
 		return BenchmarksPropsValues.MAX_DDL_RECORD_COUNT;
 	}
@@ -716,11 +720,6 @@ public class DataFactory {
 
 	public int getMaxJournalArticleVersionCount() {
 		return BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_VERSION_COUNT;
-	}
-
-	public int getMaxPublicationJournalArticleVersionCount() {
-		return BenchmarksPropsValues.
-			MAX_PUBLICATION_JOURNAL_ARTICLE_VERSION_COUNT;
 	}
 
 	public int getMaxSegmentsEntrySegmentsExperienceCount() {

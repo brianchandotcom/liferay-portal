@@ -152,6 +152,8 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.MAX_CT_JOURNAL_ARTICLE_COUNT, "1");
 		properties.put(
 			BenchmarksPropsKeys.MAX_CT_JOURNAL_ARTICLE_PAGE_COUNT, "1");
+		properties.put(
+			BenchmarksPropsKeys.MAX_CT_JOURNAL_ARTICLE_VERSION_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DDL_CUSTOM_FIELD_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DDL_RECORD_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DDL_RECORD_SET_COUNT, "1");
@@ -170,9 +172,6 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.MAX_MB_CATEGORY_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_MB_MESSAGE_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_MB_THREAD_COUNT, "1");
-		properties.put(
-			BenchmarksPropsKeys.MAX_PUBLICATION_JOURNAL_ARTICLE_VERSION_COUNT,
-			"1");
 		properties.put(BenchmarksPropsKeys.MAX_SEGMENTS_ENTRY_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_USER_TO_GROUP_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_WIKI_NODE_COUNT, "1");

@@ -22,14 +22,14 @@
 
 		${dataFactory.toCTCollectionInsertSQL(ctCollectionJournalArticleResourceModel, ctCollectionId)}
 
-		<#list dataFactory.getSequence(dataFactory.maxPublicationJournalArticleVersionCount) as publicationVersionCount>
+		<#list dataFactory.getSequence(dataFactory.maxCTJournalArticleVersionCount) as ctJournalArticleVersionCount>
 			<#assign
-				ctCollectionJournalArticleModel = dataFactory.newCTCollectionJournalArticleModel(ctCollectionId, ctCollectionJournalArticleResourceModel, ctJournalArticleCount, publicationVersionCount)
+				ctCollectionJournalArticleModel = dataFactory.newCTCollectionJournalArticleModel(ctCollectionId, ctCollectionJournalArticleResourceModel, ctJournalArticleCount, ctJournalArticleVersionCount)
 			/>
 
 			<@insertJournalArticle
 				_ctCollectionId = ctCollectionIdString
-				_insertAssetEntry = (publicationVersionCount==dataFactory.maxPublicationJournalArticleVersionCount)
+				_insertAssetEntry = (ctJournalArticleVersionCount==dataFactory.maxCTJournalArticleVersionCount)
 				_journalArticleModel = ctCollectionJournalArticleModel
 				_journalDDMStructureModel = defaultCTJournalDDMStructureModel
 				_journalDDMTemplateModel = defaultCTJournalDDMTemplateModel

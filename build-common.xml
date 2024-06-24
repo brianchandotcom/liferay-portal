@@ -1694,12 +1694,18 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 
 	<macrodef name="setup-sass-compiler">
 		<sequential>
+			<mkdir dir="${sass.compiler.dir}" />
 			<if>
 				<os family="mac" />
 				<then>
 					<mirrors-get
 						dest="${sass.compiler.dir}"
 						src="${sass.compiler.mac.url}"
+					/>
+					<untar
+						compression="gzip"
+						dest="${sass.compiler.dir}"
+						src="${sass.compiler.dir}/${sass.compiler.mac.name}"
 					/>
 				</then>
 				<elseif>
@@ -1709,6 +1715,11 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 							dest="${sass.compiler.dir}"
 							src="${sass.compiler.linux.url}"
 						/>
+						<untar
+							compression="gzip"
+							dest="${sass.compiler.dir}"
+							src="${sass.compiler.dir}/${sass.compiler.linux.name}"
+						/>
 					</then>
 				</elseif>
 				<elseif>
@@ -1717,6 +1728,10 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 						<mirrors-get
 							dest="${sass.compiler.dir}"
 							src="${sass.compiler.windows.url}"
+						/>
+						<unzip
+							dest="${sass.compiler.dir}"
+							src="${sass.compiler.dir}/${sass.compiler.windows.name}"
 						/>
 					</then>
 				</elseif>

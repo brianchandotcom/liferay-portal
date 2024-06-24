@@ -34,6 +34,11 @@ export default async function installSassBinary() {
 			.digest('hex');
 
 		if (hash === archMap.hash) {
+
+			// Ant's untar task fails to set executable permission so force it from here
+
+			await setPermissions(downloadPath);
+
 			return sassBinaryPath;
 		}
 
@@ -107,4 +112,20 @@ async function downloadAndExtract(url, dir) {
 	}
 
 	console.log('✅ Binary Sass compiler is ready');
+}
+
+async function setPermissions(dir) {
+	const dirents = await fs.readdir(dir, {withFileTypes: true});
+
+	await Promise.all(
+		dirents.map(async (dirent) => {
+			const direntPath = path.join(dir, dirent.name);
+
+			await fs.chmod(direntPath, 0o755);
+
+			if (dirent.isDirectory()) {
+				await setPermissions(direntPath);
+			}
+		})
+	);
 }

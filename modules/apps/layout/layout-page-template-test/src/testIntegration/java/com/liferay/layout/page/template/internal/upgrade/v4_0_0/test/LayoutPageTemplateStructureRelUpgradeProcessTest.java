@@ -173,24 +173,6 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 				CollectionPaginationUtil.PAGINATION_TYPE_SIMPLE
 			).build());
 
-		// Upgrade with "showAllItems" enabled
-
-		_assertUpgradeWithItemConfig(
-			HashMapBuilder.<String, Object>put(
-				"displayAllItems", false
-			).put(
-				"displayAllPages", true
-			).put(
-				"paginationType",
-				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC
-			).build(),
-			HashMapBuilder.<String, Object>put(
-				"paginationType",
-				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC
-			).put(
-				"showAllItems", true
-			).build());
-
 		// Upgrade with "showAllItems" disabled
 
 		_assertUpgradeWithItemConfig(
@@ -207,6 +189,24 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC
 			).put(
 				"showAllItems", false
+			).build());
+
+		// Upgrade with "showAllItems" enabled
+
+		_assertUpgradeWithItemConfig(
+			HashMapBuilder.<String, Object>put(
+				"displayAllItems", false
+			).put(
+				"displayAllPages", true
+			).put(
+				"paginationType",
+				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"paginationType",
+				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC
+			).put(
+				"showAllItems", true
 			).build());
 	}
 

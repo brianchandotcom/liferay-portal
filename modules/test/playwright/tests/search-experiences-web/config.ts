@@ -6,7 +6,4 @@
 export const config = {
 	name: 'search-experiences-web',
 	testDir: 'tests/search-experiences-web',
-	use: {
-		testIdAttribute: 'data-testid',
-	},
 };

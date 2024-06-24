@@ -28,21 +28,6 @@ const DEFAULT_SXP_ELEMENT_DEFINITION = {
 	icon: 'custom-field',
 };
 
-interface createSXPBlueprintProps {
-	configuration?: Object;
-	defaultLanguageId?: string;
-	description?: string;
-	elementInstances?: Object[];
-	title?: string;
-}
-
-interface createSXPElementProps {
-	defaultLanguageId?: string;
-	description?: string;
-	elementDefinition?: Object;
-	title?: string;
-}
-
 export class SearchExperiencesApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -69,7 +54,13 @@ export class SearchExperiencesApiHelper {
 		description = '',
 		elementInstances = [],
 		title = `Blueprint${getRandomInt()}`,
-	}: createSXPBlueprintProps = {}): Promise<{id: number}> {
+	}: {
+		configuration?: Object;
+		defaultLanguageId?: string;
+		description?: string;
+		elementInstances?: Object[];
+		title?: string;
+	} = {}): Promise<{id: number}> {
 		const sxpBlueprint = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sxp-blueprints`,
 			{
@@ -109,7 +100,12 @@ export class SearchExperiencesApiHelper {
 		description = '',
 		elementDefinition = DEFAULT_SXP_ELEMENT_DEFINITION,
 		title = `Element${getRandomInt()}`,
-	}: createSXPElementProps = {}): Promise<{id: number}> {
+	}: {
+		defaultLanguageId?: string;
+		description?: string;
+		elementDefinition?: Object;
+		title?: string;
+	} = {}): Promise<{id: number}> {
 		const sxpElement = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sxp-elements`,
 			{

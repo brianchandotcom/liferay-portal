@@ -457,10 +457,10 @@ public class JournalArticleItemSelectorViewDisplayContextTest {
 
 		Assert.assertNotNull(searchContainer);
 
-		MockLiferayPortletURL iteratorURL =
+		MockLiferayPortletURL mockLiferayPortletURL =
 			(MockLiferayPortletURL)searchContainer.getIteratorURL();
 
-		Assert.assertEquals(scope, iteratorURL.getParameter("scope"));
+		Assert.assertEquals(scope, mockLiferayPortletURL.getParameter("scope"));
 	}
 
 	private static MockedStatic<GroupLocalServiceUtil>

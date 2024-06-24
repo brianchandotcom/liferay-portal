@@ -13,19 +13,19 @@ const SASS_BINARY = {
 	darwin: {
 		x64: {
 			binary: 'dart-sass/sass',
-			buildPropertiesKeyPrefix: 'sass.binary.mac',
+			buildPropertiesKeyPrefix: 'sass.compiler.mac',
 		},
 	},
 	linux: {
 		x64: {
 			binary: 'dart-sass/sass',
-			buildPropertiesKeyPrefix: 'sass.binary.linux',
+			buildPropertiesKeyPrefix: 'sass.compiler.linux',
 		},
 	},
 	win32: {
 		x64: {
 			binary: 'dart-sass/sass.bat',
-			buildPropertiesKeyPrefix: 'sass.binary.windows',
+			buildPropertiesKeyPrefix: 'sass.compiler.windows',
 		},
 	},
 };
@@ -54,7 +54,7 @@ export default async function getSassBinaryArchMap() {
 	const lines = props
 		.split('\n')
 		.map((line) => line.trim())
-		.filter((line) => line.startsWith('sass.binary.'));
+		.filter((line) => line.startsWith('sass.compiler.'));
 
 	const map = lines.reduce((map, line) => {
 		const parts = line.split('=');
@@ -75,8 +75,8 @@ export default async function getSassBinaryArchMap() {
 	// Then interpolate self referenced variables (beware: order of interpolation matters!)
 
 	for (const interpolateKey of [
-		'sass.binary.version',
-		'sass.binary.base.url',
+		'sass.compiler.version',
+		'sass.compiler.base.url',
 	]) {
 		for (const key of Object.keys(map)) {
 			map[key] = map[key].replace(

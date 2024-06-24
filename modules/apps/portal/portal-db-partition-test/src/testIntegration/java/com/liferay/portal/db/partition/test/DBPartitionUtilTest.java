@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -189,6 +190,10 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			Assert.assertEquals(
 				_JOBS_COUNT + 2, _getJobsCount(defaultPartitionName));
 			Assert.assertEquals(1, _getJobsCountByCompany(companyId));
+
+			_assertJobMessage(companyId, _JOB_NAME_1);
+			_assertJobMessage(COMPANY_IDS[0], _JOB_NAME_1);
+
 			Assert.assertEquals(
 				_getObjectNames("VIEW", COMPANY_IDS[0]),
 				_getObjectNames("VIEW", companyId));
@@ -436,6 +441,21 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		Assert.assertEquals(_JOBS_COUNT, _getJobsCount(defaultPartitionName));
 	}
 
+	private void _assertJobMessage(long companyId, String jobName)
+		throws Exception {
+
+		String companyJobName = StringBundler.concat(
+			jobName, StringPool.AT, companyId);
+
+		SchedulerResponse schedulerResponse = _schedulerEngine.getScheduledJob(
+			companyJobName, _JOB_GROUP_NAME, StorageType.PERSISTED);
+
+		Message message = schedulerResponse.getMessage();
+
+		Assert.assertEquals(companyId, message.getLong("companyId"));
+		Assert.assertEquals(companyJobName, message.getString("JOB_NAME"));
+	}
+
 	private void _assertResourcePermissionTable(long companyId)
 		throws Exception {
 
@@ -569,12 +589,19 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	}
 
 	private void _scheduleJob(long companyId, String jobName) throws Exception {
+		String companyJobName = StringBundler.concat(
+			jobName, StringPool.AT, companyId);
+
 		Trigger trigger = _triggerFactory.createTrigger(
-			StringBundler.concat(jobName, StringPool.AT, companyId),
-			_JOB_GROUP_NAME, null, null, 1, TimeUnit.DAY);
+			companyJobName, _JOB_GROUP_NAME, null, null, 1, TimeUnit.DAY);
+
+		Message message = new Message();
+
+		message.put("companyId", companyId);
+		message.put("JOB_NAME", companyJobName);
 
 		_schedulerEngine.schedule(
-			trigger, StringPool.BLANK, _JOB_GROUP_NAME, new Message(),
+			trigger, StringPool.BLANK, _JOB_GROUP_NAME, message,
 			StorageType.PERSISTED);
 	}
 

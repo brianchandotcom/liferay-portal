@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -154,6 +155,18 @@ public class IFrameSanitizerImplTest {
 	}
 
 	@Test
+	public void testSanitizeHTMLWithIFrameJournalArticleClassNameWhitelistedByDefault()
+		throws Exception {
+
+		Assert.assertEquals(
+			_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+			_sanitize(
+				"com.liferay.journal.model.JournalArticle", 0, _companyId,
+				_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+				ContentTypes.TEXT_HTML));
+	}
+
+	@Test
 	public void testSanitizeHTMLWithIFrameScopedByCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
@@ -179,6 +192,46 @@ public class IFrameSanitizerImplTest {
 		finally {
 			_companyLocalService.deleteCompany(company);
 		}
+	}
+
+	@Test
+	public void testSanitizeHTMLWithIFrameWhitelistedAll() throws Exception {
+		_updateCompanyConfiguration(
+			_companyId, true, false, StringPool.BLANK, StringPool.STAR);
+
+		Assert.assertEquals(
+			_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+			_sanitize(
+				RandomTestUtil.randomString(), 0, _companyId,
+				_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+				ContentTypes.TEXT_HTML));
+	}
+
+	@Test
+	public void testSanitizeHTMLWithIFrameWhitelistedClassName()
+		throws Exception {
+
+		_updateCompanyConfiguration(
+			_companyId, true, false, StringPool.BLANK, StringPool.BLANK);
+
+		String className = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			_BASIC_HTML_CONTENT + _EXPECTED_IFRAME_TAG_SANDBOX_ADDED,
+			_sanitize(
+				className, 0, _companyId,
+				_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+				ContentTypes.TEXT_HTML));
+
+		_updateCompanyConfiguration(
+			_companyId, true, false, StringPool.BLANK, className);
+
+		Assert.assertEquals(
+			_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+			_sanitize(
+				className, 0, _companyId,
+				_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+				ContentTypes.TEXT_HTML));
 	}
 
 	@Test

@@ -3176,8 +3176,7 @@ public class DataFactory {
 
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
-		for (int i = 1;
-			 i <= BenchmarksPropsValues.MAX_PUBLICATION_CONTENT_LAYOUT_COUNT;
+		for (int i = 1; i <= BenchmarksPropsValues.MAX_CT_CONTENT_LAYOUT_COUNT;
 			 i++) {
 
 			LayoutModel publicLayoutModel = _newContentPageLayoutModel(

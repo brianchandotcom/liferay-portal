@@ -148,6 +148,7 @@ public class SampleSQLBuilderTest {
 		properties.put(
 			BenchmarksPropsKeys.MAX_CP_SPECIFICATION_OPTION_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_CT_COLLECTION_COUNT, "1");
+		properties.put(BenchmarksPropsKeys.MAX_CT_CONTENT_LAYOUT_COUNT, "10");
 		properties.put(BenchmarksPropsKeys.MAX_DDL_CUSTOM_FIELD_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DDL_RECORD_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_DDL_RECORD_SET_COUNT, "1");
@@ -166,8 +167,6 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.MAX_MB_CATEGORY_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_MB_MESSAGE_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_MB_THREAD_COUNT, "1");
-		properties.put(
-			BenchmarksPropsKeys.MAX_PUBLICATION_CONTENT_LAYOUT_COUNT, "10");
 		properties.put(
 			BenchmarksPropsKeys.MAX_PUBLICATION_JOURNAL_ARTICLE_COUNT, "1");
 		properties.put(

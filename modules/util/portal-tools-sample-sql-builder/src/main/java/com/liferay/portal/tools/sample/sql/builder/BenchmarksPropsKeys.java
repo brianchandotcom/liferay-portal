@@ -106,6 +106,9 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_CT_COLLECTION_COUNT =
 		"sample.sql.max.change.tracking.collection.count";
 
+	public static final String MAX_CT_CONTENT_LAYOUT_COUNT =
+		"sample.sql.max.change.tracking.content.layout.count";
+
 	public static final String MAX_DDL_CUSTOM_FIELD_COUNT =
 		"sample.sql.max.ddl.custom.field.count";
 
@@ -155,9 +158,6 @@ public interface BenchmarksPropsKeys {
 
 	public static final String MAX_MB_THREAD_COUNT =
 		"sample.sql.max.mb.thread.count";
-
-	public static final String MAX_PUBLICATION_CONTENT_LAYOUT_COUNT =
-		"sample.sql.max.publication.content.layout.count";
 
 	public static final String MAX_PUBLICATION_JOURNAL_ARTICLE_COUNT =
 		"sample.sql.max.publication.journal.article.count";

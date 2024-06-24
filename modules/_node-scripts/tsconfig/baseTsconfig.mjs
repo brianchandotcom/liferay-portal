@@ -16,6 +16,6 @@ export default {
 		moduleResolution: 'node',
 		sourceMap: false,
 		strict: true,
-		target: 'es2020',
+		target: 'esnext',
 	},
 };

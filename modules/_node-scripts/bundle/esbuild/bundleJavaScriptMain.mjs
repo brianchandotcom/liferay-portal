@@ -45,7 +45,7 @@ export default async function bundleJavaScriptMain(
 			getScssLoaderPlugin(projectWebContextPath),
 		],
 		sourcemap: true,
-		target: ['es2020'],
+		target: ['es2022'],
 	};
 
 	await runEsbuild(esbuildConfig, 'main');

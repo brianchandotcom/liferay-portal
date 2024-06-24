@@ -56,7 +56,7 @@ async function bundle(
 			getImportBridgesPlugin(globalImports, overridenPackageSymbols),
 		],
 		sourcemap: true,
-		target: ['es2020'],
+		target: ['es2022'],
 	};
 
 	await writeExportBridge(overridenPackageSymbols, moduleName);

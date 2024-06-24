@@ -51,6 +51,7 @@ import {config as productNavigationUserPersonalBarWebConfig} from './tests/produ
 import {config as questionsWebConfig} from './tests/questions-web/config';
 import {config as rolesAdminWebConfig} from './tests/roles-admin-web/config';
 import {config as siteAdminWebConfig} from './tests/site-admin-web/config';
+import {config as siteNavigationAdminWebConfig} from './tests/site-navigation-admin-web/config';
 import {config as stableConfig} from './tests/stable/config';
 import {config as stylebookWebConfig} from './tests/style-book-web/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
@@ -111,6 +112,7 @@ export default defineConfig({
 		questionsWebConfig,
 		rolesAdminWebConfig,
 		siteAdminWebConfig,
+		siteNavigationAdminWebConfig,
 		stableConfig,
 		stylebookWebConfig,
 		usersAdminWebConfig,

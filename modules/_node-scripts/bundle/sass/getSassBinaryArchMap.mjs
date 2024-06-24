@@ -76,6 +76,9 @@ export default async function getSassBinaryArchMap() {
 
 	for (const interpolateKey of [
 		'sass.compiler.version',
+		'sass.compiler.linux.name',
+		'sass.compiler.mac.name',
+		'sass.compiler.windows.name',
 		'sass.compiler.base.url',
 	]) {
 		for (const key of Object.keys(map)) {

@@ -24,21 +24,6 @@
 			"name": "CommerceReturnItem",
 			"objectFields": [
 				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "ACCEPTED",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Accepted"
-					},
-					"name": "accepted",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Long"
-				},
-				{
 					"DBType": "BigDecimal",
 					"businessType": "PrecisionDecimal",
 					"externalReferenceCode": "AMOUNT",
@@ -52,6 +37,21 @@
 					"state": false,
 					"system": true,
 					"type": "BigDecimal"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "AUTHORIZE_RETURN_WITHOUT_RETURNING_PRODUCTS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Authorize return without returning products"
+					},
+					"name": "authorizeReturnWithoutReturningProducts",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Boolean"
 				},
 				{
 					"DBType": "Long",
@@ -82,6 +82,38 @@
 					"state": false,
 					"system": true,
 					"type": "BigDecimal"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "RECEIVED",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Received"
+					},
+					"name": "received",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "awaitingAuthorization",
+					"externalReferenceCode": "RETURN_ITEM_STATUS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Return Item Status"
+					},
+					"listTypeDefinitionExternalReferenceCode": "L_COMMERCE_RETURN_ITEM_STATUSES",
+					"name": "returnItemStatus",
+					"required": true,
+					"state": true,
+					"system": true,
+					"type": "String"
 				},
 				{
 					"DBType": "String",
@@ -115,6 +147,83 @@
 					"state": false,
 					"system": true,
 					"type": "String"
+				}
+			],
+			"objectValidationRules": [
+				{
+					"active": true,
+					"engine": "javaDelegate#commerceReturnItemAccountEntryId",
+					"engineLabel": "commerceReturnItemAccountEntryId",
+					"errorLabel": {
+						"en_US": "Account Entry ID is invalid"
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_ITEM_ACCOUNT_ENTRY_ID",
+					"name": {
+						"en_US": "Account Entry ID Validation"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN_ITEM",
+					"outputType": "fullValidation",
+					"system": true
+				},
+				{
+					"active": true,
+					"engine": "javaDelegate#commerceReturnItemAuthorized",
+					"engineLabel": "commerceReturnItemAuthorized",
+					"errorLabel": {
+						"en_US": "Authorized is invalid"
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_ITEM_AUTHORIZED",
+					"name": {
+						"en_US": "Authorized Validation"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN_ITEM",
+					"outputType": "fullValidation",
+					"system": true
+				},
+				{
+					"active": true,
+					"engine": "javaDelegate#commerceReturnItemCommerceOrderItemId",
+					"engineLabel": "commerceReturnItemCommerceOrderItemId",
+					"errorLabel": {
+						"en_US": "Commerce Order Item ID is invalid"
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_ITEM_COMMERCE_ORDER_ITEM_ID",
+					"name": {
+						"en_US": "Commerce Order Item ID Validation"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN_ITEM",
+					"outputType": "fullValidation",
+					"system": true
+				},
+				{
+					"active": true,
+					"engine": "javaDelegate#commerceReturnItemQuantity",
+					"engineLabel": "commerceReturnItemQuantity",
+					"errorLabel": {
+						"en_US": "Quantity is invalid"
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_ITEM_QUANTITY",
+					"name": {
+						"en_US": "Quantity Validation"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN_ITEM",
+					"outputType": "fullValidation",
+					"system": true
+				},
+				{
+					"active": true,
+					"engine": "javaDelegate#commerceReturnItemReceived",
+					"engineLabel": "javaDelegate#commerceReturnItemReceived",
+					"errorLabel": {
+						"en_US": "Received is invalid"
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_ITEM_RECEIVED",
+					"name": {
+						"en_US": "Received Validation"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN_ITEM",
+					"outputType": "fullValidation",
+					"system": true
 				}
 			],
 			"pluralLabel": {

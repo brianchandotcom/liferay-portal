@@ -753,24 +753,6 @@ public class UserLocalServiceWrapper
 		return _userLocalService.createUser(userId);
 	}
 
-	/**
-	 * Decrypts the user's primary key and password from their encrypted forms.
-	 * Used for decrypting a user's credentials from the values stored in an
-	 * automatic login cookie.
-	 *
-	 * @param companyId the primary key of the user's company
-	 * @param name the encrypted primary key of the user
-	 * @param password the encrypted password of the user
-	 * @return the user's primary key and password
-	 */
-	@Override
-	public com.liferay.portal.kernel.util.KeyValuePair decryptUserId(
-			long companyId, String name, String password)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.decryptUserId(companyId, name, password);
-	}
-
 	@Override
 	public void deleteGroupUser(long groupId, long userId) {
 		_userLocalService.deleteGroupUser(groupId, userId);

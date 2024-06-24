@@ -77,20 +77,20 @@
 		"to": "CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST"
 	},
 	{
-		"from": "CookieKeys.ID",
-		"issueKey": "LPS-159679",
-		"newImports": [
-			"com.liferay.portal.kernel.cookies.constants.CookiesConstants"
-		],
-		"to": "CookiesConstants.NAME_ID"
-	},
-	{
 		"from": "CookieKeys.getCookie(HttpServletRequest paramName, String paramName)",
 		"issueKey": "LPS-159679",
 		"newImports": [
 			"com.liferay.portal.kernel.cookies.CookiesManagerUtil"
 		],
 		"to": "CookiesManagerUtil.getCookieValue(param#1#, param#0#)"
+	},
+	{
+		"from": "CookieKeys.ID",
+		"issueKey": "LPS-159679",
+		"newImports": [
+			"com.liferay.portal.kernel.cookies.constants.CookiesConstants"
+		],
+		"to": "CookiesConstants.NAME_ID"
 	},
 	{
 		"from": "CookieKeys.SCREEN_NAME",
@@ -157,18 +157,18 @@
 			"Country",
 			"CommerceAddress"
 		],
-		"from": "setThreeLettersISOCode",
+		"from": "getTwoLettersISOCode",
 		"issueKey": "LPS-186923",
-		"to": "setA3"
+		"to": "getA2"
 	},
 	{
 		"classNames": [
 			"Country",
 			"CommerceAddress"
 		],
-		"from": "getTwoLettersISOCode",
+		"from": "setThreeLettersISOCode",
 		"issueKey": "LPS-186923",
-		"to": "getA2"
+		"to": "setA3"
 	},
 	{
 		"classNames": [
@@ -443,14 +443,6 @@
 		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#)"
 	},
 	{
-		"from": "compat/mixins",
-		"issueKey": "LPS-194519",
-		"to": "clay/cadmin-variables",
-		"validExtensions": [
-			"scss"
-		]
-	},
-	{
 		"classNames": [
 			"DLAppLocalService",
 			"DLAppLocalServiceUtil"
@@ -475,6 +467,14 @@
 			"java.util.Date"
 		],
 		"to": "updateFileEntry(param#0#, param#1#, param#2#, param#3#, param#4#, null, param#5#, param#6#, param#7#, param#8#, null, null, param#9#)"
+	},
+	{
+		"from": "compat/mixins",
+		"issueKey": "LPS-194519",
+		"to": "clay/cadmin-variables",
+		"validExtensions": [
+			"scss"
+		]
 	},
 	{
 		"classNames": [

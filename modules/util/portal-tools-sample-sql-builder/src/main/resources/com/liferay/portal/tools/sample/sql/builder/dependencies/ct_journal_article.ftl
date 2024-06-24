@@ -1,5 +1,6 @@
 <#list dataFactory.newCTCollectionResourcePermissionModels(ctCollectionId, "com.liferay.journal", publicationGroupId) as ctCollectionResourcePermissionModel>
 	${dataFactory.toInsertSQL(ctCollectionResourcePermissionModel)}
+
 	${dataFactory.toInsertSQL(dataFactory.newCTEntryModel(ctCollectionId, ctCollectionResourcePermissionModel, dataFactory.ctChangeTypeAddition))}
 </#list>
 

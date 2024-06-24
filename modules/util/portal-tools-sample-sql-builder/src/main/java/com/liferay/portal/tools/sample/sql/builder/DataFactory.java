@@ -714,10 +714,6 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_PUBLICATION_CONTENT_LAYOUT_COUNT;
 	}
 
-	public int getMaxPublicationCount() {
-		return BenchmarksPropsValues.MAX_PUBLICATION_COUNT;
-	}
-
 	public int getMaxPublicationJournalArticleCount() {
 		return BenchmarksPropsValues.MAX_PUBLICATION_JOURNAL_ARTICLE_COUNT;
 	}

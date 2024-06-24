@@ -697,14 +697,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 								<isfalse value="${source.auto.fix}" />
 							</and>
 							<then>
-								<gradle-execute dir="${project.dir}/modules" task=":portalYarnCheckFormat">
-									<env key="LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME" value="${git.working.branch.name}" />
-								</gradle-execute>
+								<gradle-execute dir="${project.dir}/modules" task=":portalYarnCheckFormat" />
 							</then>
 							<else>
-								<gradle-execute dir="${project.dir}/modules" task=":portalYarnFormat">
-									<env key="LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME" value="${git.working.branch.name}" />
-								</gradle-execute>
+								<gradle-execute dir="${project.dir}/modules" task=":portalYarnFormat" />
 							</else>
 						</if>
 					</then>

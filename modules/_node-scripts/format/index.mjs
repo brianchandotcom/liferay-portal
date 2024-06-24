@@ -24,5 +24,5 @@ export default async function main() {
 	}
 
 	console.log('📝 Running format...');
-	await format(!check, {allFiles: all});
+	await format(!check, {all});
 }

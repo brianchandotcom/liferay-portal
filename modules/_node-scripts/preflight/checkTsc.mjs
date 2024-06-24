@@ -7,31 +7,26 @@ import {$} from 'execa';
 
 import runTscChecks from '../tsc/runTscChecks.mjs';
 import generateTscConfig from '../tsconfig/index.mjs';
-import {getRootDir} from '../util/constants.mjs';
+import {LIFERAY_WORKING_BRANCH, getRootDir} from '../util/constants.mjs';
 
-export async function checkTsc({allFiles} = {allFiles: false}) {
+export async function checkTsc(all) {
 	console.log('📜 Generating tsconfig files...');
-
-	await generateTscConfig();
-
-	console.log(
-		`🕵️ Checking ${allFiles ? 'all' : 'modified'} typescript files...`
-	);
-
-	const rootDir = await getRootDir();
 
 	let commitHash;
 
-	if (!allFiles) {
-		commitHash = 'master';
+	if (!all) {
+		const {stdout} = await $`git rev-parse ${LIFERAY_WORKING_BRANCH}`;
 
-		if (process.env.LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME) {
-			const {stdout} =
-				await $`git rev-parse ${process.env.LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME}`;
-
-			commitHash = stdout;
-		}
+		commitHash = stdout;
 	}
+
+	console.log('📜 Validating tsconfig files...');
+
+	await generateTscConfig();
+
+	console.log(`🕵️ Checking ${all ? 'all' : 'modified'} typescript files...`);
+
+	const rootDir = await getRootDir();
 
 	return await runTscChecks({baseDir: rootDir, commitHash});
 }

@@ -26,7 +26,7 @@ const COMMANDS = {
 	},
 	'check:preflight': {
 		description: 'runs several other infra-type checks',
-		parameters: '',
+		parameters: '[--all]',
 		script: './preflight/index.mjs',
 	},
 	'check:tsc': {

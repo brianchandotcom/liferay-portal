@@ -11,7 +11,7 @@ import prettier from 'prettier';
 import stylelint from 'stylelint';
 
 import {getRootDir} from '../util/constants.mjs';
-import filterChangedFiles from '../util/filterChangedFiles.mjs';
+import getGitModifiedFiles from '../util/getGitModifiedFiles.mjs';
 import {readIgnoreFile} from '../util/readIgnoreFile.mjs';
 import {ID_END, ID_START} from './jsp/getPaddedReplacement.mjs';
 import processJSP from './jsp/processJSP.mjs';
@@ -23,6 +23,8 @@ import logError from './logError.mjs';
 const PRETTIER_IGNORE_FILE = '.prettierignore';
 const ESLINT_IGNORE_FILE = '.eslintignore';
 const GIT_IGNORE_FILE = '.gitignore';
+
+const EXTENSIONS = ['graphql', 'js', 'jsp', 'jspf', 'mjs', 'scss', 'ts', 'tsx'];
 
 async function getFilesToCheck(rootDir) {
 	const eslintIgnoreFilePath = path.join(rootDir, ESLINT_IGNORE_FILE);
@@ -76,24 +78,34 @@ const FALLBACK_FILE_PATH = '__fallback__.js';
 
 export default async function format(
 	fix,
-	{allFiles, filePath} = {allFiles: false, filePath: undefined}
+	{all, filePath} = {
+		all: undefined,
+		filePath: undefined,
+	}
 ) {
 	const rootDir = await getRootDir();
-	const workspacesDir = path.join(rootDir, '..', 'workspaces');
-	const playwrightDir = path.join(rootDir, 'test', 'playwright');
 
-	let filepaths = filePath
-		? [filePath]
-		: (
-				await Promise.all([
-					getFilesToCheck(rootDir),
-					getFilesToCheck(workspacesDir),
-					getFilesToCheck(playwrightDir),
-				])
-			).flat();
+	let filepaths = [];
 
-	if (!allFiles) {
-		filepaths = await filterChangedFiles(filepaths);
+	if (all) {
+		const workspacesDir = path.join(rootDir, '..', 'workspaces');
+		const playwrightDir = path.join(rootDir, 'test', 'playwright');
+
+		filepaths = (
+			await Promise.all([
+				getFilesToCheck(rootDir),
+				getFilesToCheck(workspacesDir),
+				getFilesToCheck(playwrightDir),
+			])
+		).flat();
+	}
+	else if (filePath) {
+		filepaths = [filePath];
+	}
+	else {
+		filepaths = (await getGitModifiedFiles()).filter((filepath) =>
+			EXTENSIONS.includes(path.extname(filepath))
+		);
 	}
 
 	if (!filepaths.length) {

@@ -5,12 +5,13 @@
 
 import {$} from 'execa';
 
+import {LIFERAY_WORKING_BRANCH} from './constants.mjs';
+
 const cachedGitModifiedFiles = {};
 
 export default async function getGitModifiedFiles(commit = undefined) {
 	if (commit === undefined) {
-		const {stdout} =
-			await $`git rev-parse ${process.env.LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME || 'master'}`;
+		const {stdout} = await $`git rev-parse ${LIFERAY_WORKING_BRANCH}`;
 
 		commit = stdout;
 	}

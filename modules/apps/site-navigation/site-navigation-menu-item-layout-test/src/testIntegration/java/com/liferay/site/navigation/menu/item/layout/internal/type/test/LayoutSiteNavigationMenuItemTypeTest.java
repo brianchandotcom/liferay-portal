@@ -80,8 +80,8 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 
 		Assert.assertEquals(
 			0,
-			_siteNavigationMenuItemLocalService.
-				getSiteNavigationMenuItemsCount());
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(
+				_siteNavigationMenu.getSiteNavigationMenuId()));
 	}
 
 	@Test
@@ -110,9 +110,14 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 			false, new HashMap<>(), _serviceContext);
 
 		Assert.assertEquals(
-			2,
-			_siteNavigationMenuItemLocalService.
-				getSiteNavigationMenuItemsCount());
+			1,
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(
+				autoSiteNavigationMenu.getSiteNavigationMenuId()));
+
+		Assert.assertEquals(
+			1,
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(
+				_siteNavigationMenu.getSiteNavigationMenuId()));
 	}
 
 	@Test
@@ -133,8 +138,8 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 
 		Assert.assertEquals(
 			1,
-			_siteNavigationMenuItemLocalService.
-				getSiteNavigationMenuItemsCount());
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(
+				_siteNavigationMenu.getSiteNavigationMenuId()));
 	}
 
 	@DeleteAfterTestRun

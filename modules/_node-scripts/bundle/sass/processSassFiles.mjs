@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import fg from 'fast-glob';
 import fs from 'fs/promises';
 import {r2} from 'liferay-theme-tasks';
 import path from 'path';
@@ -13,7 +14,6 @@ import {
 	BUILD_SASS_CACHE_PATH,
 	SRC_PATH,
 } from '../../util/constants.mjs';
-import expandGlobs from '../../util/expandGlobs.mjs';
 import projectScopeRequire from '../../util/projectScopeRequire.mjs';
 import runSass from './runSass.mjs';
 
@@ -93,8 +93,10 @@ function appendTimestamps(css, timestamp) {
 }
 
 async function collectSassFiles() {
-	const files = await expandGlobs(['**/*.scss'], SASS_EXCLUDE, {
-		baseDir: SRC_PATH,
+	const files = await fg(['**/*.scss'], {
+		absolute: true,
+		cwd: SRC_PATH,
+		ignore: SASS_EXCLUDE,
 	});
 
 	return files.reduce(

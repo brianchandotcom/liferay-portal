@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import fg from 'fast-glob';
 import fs from 'fs/promises';
 import path from 'path';
-
-import expandGlobs from '../util/expandGlobs.mjs';
 
 const HEADER = 'label,start,end,delta';
 
@@ -28,7 +27,7 @@ export default async function main() {
 
 	process.chdir(timingsDir);
 
-	const files = await expandGlobs(['!report.csv', '*.csv']);
+	const files = await fg(['!report.csv', '*.csv'], {absolute: true});
 
 	const labels = {};
 	const modules = {};

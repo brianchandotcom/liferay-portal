@@ -51,15 +51,12 @@ type TServices = {
 };
 
 type TUserAccount = {
-	agreedToTermsOfUse?: boolean;
 	alternateName?: string;
 	emailAddress?: string;
-	emailAddressVerified?: boolean;
 	familyName?: string;
 	givenName?: string;
 	id?: string;
 	name?: string;
-	password?: string;
 };
 
 export class HeadlessAdminUserApiHelper {

@@ -111,9 +111,9 @@ export async function syncAnalyticsCloud({
 	channelName: string;
 	page: Page;
 }) {
-	await createChannel({
+	const {channel, project} = await createChannel({
 		apiHelpers,
-		channelName,
+		channelName: channelName,
 	});
 
 	await createDataSource(page);
@@ -134,6 +134,11 @@ export async function syncAnalyticsCloud({
 	await syncAllContacts(page);
 
 	await page.getByRole('button', {name: 'Finish'}).click();
+
+	return {
+		channel,
+		project,
+	};
 }
 
 export async function syncSite({

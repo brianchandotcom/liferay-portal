@@ -35,5 +35,5 @@ export async function changeTimeFilter({
 		})
 		.click();
 
-	await waitForLoading(element);
+	await waitForLoading(page);
 }

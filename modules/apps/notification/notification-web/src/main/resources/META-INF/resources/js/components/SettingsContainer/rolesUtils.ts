@@ -46,10 +46,7 @@ export async function getEmailNotificationRoles(baseResourceURL: string) {
 	const roles = [] as MultiSelectItem[];
 
 	(
-		Object.entries(rolesResponse) as [
-			keyof RolesGroup,
-			LabelNameObject[],
-		][]
+		Object.entries(rolesResponse) as [keyof RolesGroup, LabelNameObject[]][]
 	).forEach(([roleGroupKey, roleValues]) => {
 		roles.push({
 			children: roleValues.map(({label, name}) => {
@@ -116,4 +113,22 @@ export function getCheckedChildren(
 			checked: rolesNames.includes(child.value),
 		};
 	});
+}
+
+export function handleMultiSelectRoleItemsChange(
+	itemsGroup: MultiSelectItem[]
+) {
+	const newRecipients: EmailNotificationRecipients[] = [];
+
+	if (itemsGroup.length) {
+		itemsGroup.forEach((itemGroup) => {
+			itemGroup.children.forEach((child) => {
+				if (child.checked) {
+					newRecipients.push({['roleName']: child.value});
+				}
+			});
+		});
+	}
+
+	return newRecipients;
 }

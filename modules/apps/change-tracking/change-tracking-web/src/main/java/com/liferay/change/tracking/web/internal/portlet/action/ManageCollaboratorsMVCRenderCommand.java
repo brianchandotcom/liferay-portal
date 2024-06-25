@@ -5,17 +5,22 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Truong
@@ -34,14 +39,28 @@ public class ManageCollaboratorsMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		if (!CTPermission.contains(
-				PermissionThreadLocal.getPermissionChecker(),
-				ActionKeys.PERMISSIONS)) {
+		long ctCollectionId = ParamUtil.getLong(
+			renderRequest, "ctCollectionId");
 
-			return null;
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
+
+		try {
+			if (!CTCollectionPermission.contains(
+					PermissionThreadLocal.getPermissionChecker(), ctCollection,
+					CTActionKeys.INVITE_USERS)) {
+
+				return null;
+			}
+
+			return "/publications/manage_collaborators.jsp";
 		}
-
-		return "/publications/manage_collaborators.jsp";
+		catch (PortalException portalException) {
+			throw new AssertionError(portalException);
+		}
 	}
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 }

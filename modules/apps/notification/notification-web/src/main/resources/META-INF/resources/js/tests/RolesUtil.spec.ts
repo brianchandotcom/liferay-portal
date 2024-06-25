@@ -4,10 +4,12 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+import {MultiSelectItem} from '@liferay/object-js-components-web';
 
 import {
 	getCheckedChildren,
 	getUserNotificationRoles,
+	handleMultiSelectRoleItemsChange,
 } from '../components/SettingsContainer/rolesUtil';
 
 it('Assert role names checked items', () => {
@@ -134,6 +136,83 @@ it('Assert roles in User Notification', () => {
 			checked: false,
 			label: 'CustomStrictRole',
 			value: 'CustomStrictRole',
+		},
+	]);
+});
+
+it('verify that handleMultiSelectRoleItemsChange generates new recipients in the correct data structure', () => {
+	const itemsGroupMock = [
+		{
+			children: [
+				{
+					checked: true,
+					label: 'Account Administrator',
+					value: 'Account Administrator',
+				},
+				{
+					checked: false,
+					label: 'Account Member',
+					value: 'Account Member',
+				},
+				{
+					checked: true,
+					label: 'Account Supplier',
+					value: 'Account Supplier',
+				},
+				{
+					checked: true,
+					label: 'Buyer',
+					value: 'Buyer',
+				},
+			],
+			label: 'Account Roles',
+			value: 'accountRoles',
+		},
+		{
+			children: [
+				{
+					checked: false,
+					label: 'Administrator',
+					value: 'Administrator',
+				},
+				{
+					checked: false,
+					label: 'Owner',
+					value: 'Owner',
+				},
+				{
+					checked: true,
+					label: 'Power User',
+					value: 'Power User',
+				},
+				{
+					checked: true,
+					label: 'Supplier',
+					value: 'Supplier',
+				},
+			],
+			label: 'Regular Roles',
+			value: 'regularRoles',
+		},
+	] as MultiSelectItem[];
+
+	const newRecipients = handleMultiSelectRoleItemsChange(itemsGroupMock);
+
+	expect(newRecipients).toStrictEqual([
+		{
+			roleName: 'Account Administrator',
+		},
+		{
+			roleName: 'Account Supplier',
+		},
+		{
+			roleName: 'Buyer',
+		},
+		{
+			roleName: 'Power User',
+		},
+		{
+			roleName: 'Supplier',
 		},
 	]);
 });

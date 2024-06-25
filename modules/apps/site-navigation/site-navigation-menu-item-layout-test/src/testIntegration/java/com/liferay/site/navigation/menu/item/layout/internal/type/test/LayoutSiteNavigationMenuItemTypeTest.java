@@ -125,6 +125,7 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 			1,
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(
 				autoSiteNavigationMenu.getSiteNavigationMenuId()));
+
 		Assert.assertEquals(
 			1,
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(

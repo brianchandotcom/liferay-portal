@@ -91,9 +91,6 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 		}
 
 		context.put(
-			Context.DEVICE_SCREEN_RESOLUTION_HEIGHT,
-			(double)screenResolutionDimensions.getHeight());
-		context.put(
 			Context.DEVICE_SCREEN_RESOLUTION_WIDTH,
 			(double)screenResolutionDimensions.getWidth());
 

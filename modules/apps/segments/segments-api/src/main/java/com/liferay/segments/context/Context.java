@@ -25,9 +25,6 @@ public class Context
 
 	public static final String COOKIES = "cookies";
 
-	public static final String DEVICE_SCREEN_RESOLUTION_HEIGHT =
-		"deviceScreenResolutionHeight";
-
 	public static final String DEVICE_SCREEN_RESOLUTION_WIDTH =
 		"deviceScreenResolutionWidth";
 

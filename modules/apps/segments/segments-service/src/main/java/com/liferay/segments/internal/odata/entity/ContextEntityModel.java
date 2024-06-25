@@ -49,9 +49,6 @@ public class ContextEntityModel implements EntityModel {
 					Context.LAST_SIGN_IN_DATE_TIME,
 					locale -> Context.LAST_SIGN_IN_DATE_TIME,
 					locale -> Context.LAST_SIGN_IN_DATE_TIME),
-				new DoubleEntityField(
-					Context.DEVICE_SCREEN_RESOLUTION_WIDTH,
-					locale -> Context.DEVICE_SCREEN_RESOLUTION_WIDTH),
 				new StringEntityField(
 					Context.BROWSER, locale -> Context.BROWSER),
 				new StringEntityField(

@@ -9,10 +9,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mobile.device.Device;
-import com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil;
-import com.liferay.portal.kernel.mobile.device.Dimensions;
-import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -47,7 +43,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -76,24 +71,6 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 			Context.BROWSER,
 			BrowserSnifferUtil.getBrowserId(httpServletRequest));
 		context.put(Context.COOKIES, _getCookies(httpServletRequest));
-
-		Device device = DeviceDetectionUtil.detectDevice(httpServletRequest);
-
-		Dimensions screenResolutionDimensions = null;
-
-		if ((device != null) &&
-			!Objects.equals(device, UnknownDevice.getInstance())) {
-
-			screenResolutionDimensions = device.getScreenResolution();
-		}
-		else {
-			screenResolutionDimensions = Dimensions.UNKNOWN;
-		}
-
-		context.put(
-			Context.DEVICE_SCREEN_RESOLUTION_WIDTH,
-			(double)screenResolutionDimensions.getWidth());
-
 		context.put(Context.HOSTNAME, httpServletRequest.getServerName());
 		context.put(
 			Context.LANGUAGE_ID,

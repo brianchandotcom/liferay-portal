@@ -25,9 +25,6 @@ public class Context
 
 	public static final String COOKIES = "cookies";
 
-	public static final String DEVICE_SCREEN_RESOLUTION_WIDTH =
-		"deviceScreenResolutionWidth";
-
 	public static final String HOSTNAME = "hostname";
 
 	public static final String LANGUAGE_ID = "languageId";

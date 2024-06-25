@@ -120,7 +120,7 @@ public class InviteUsersMVCResourceCommand
 		if ((ctCollection != null) &&
 			!CTCollectionPermission.contains(
 				themeDisplay.getPermissionChecker(), ctCollection,
-				ActionKeys.PERMISSIONS)) {
+				CTActionKeys.INVITE_USERS)) {
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,

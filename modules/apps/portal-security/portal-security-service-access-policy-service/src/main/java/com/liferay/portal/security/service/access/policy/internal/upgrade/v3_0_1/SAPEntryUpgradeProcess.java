@@ -5,41 +5,93 @@
 
 package com.liferay.portal.security.service.access.policy.internal.upgrade.v3_0_1;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 /**
  * @author Christopher Kian
  */
 public class SAPEntryUpgradeProcess extends UpgradeProcess {
 
-	public SAPEntryUpgradeProcess(SAPEntryLocalService sapEntryLocalService) {
-		_sapEntryLocalService = sapEntryLocalService;
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {
-				try {
-					_sapEntryLocalService.checkSystemSAPEntries(companyId);
-				}
-				catch (PortalException portalException) {
-					_log.error(
-						"Unable to add default service access policy for " +
-							"company " + companyId,
-						portalException);
+				try (PreparedStatement preparedStatement1 =
+						connection.prepareStatement(
+							"select count(*) from SAPEntry where name = " +
+								"'SYSTEM_TEMPLATE_DEFAULT' and companyId = " +
+									companyId)) {
+
+					ResultSet resultSet = preparedStatement1.executeQuery();
+
+					resultSet.next();
+
+					int count = resultSet.getInt(1);
+
+					if (count < 1) {
+						Timestamp now = new Timestamp(
+							System.currentTimeMillis());
+
+						String title =
+							"System Service Access Policy for RESTClient " +
+								"Requests in Templates";
+
+						String titleMapString =
+							LocalizationUtil.updateLocalization(
+								HashMapBuilder.put(
+									LocaleUtil.fromLanguageId(
+										UpgradeProcessUtil.getDefaultLanguageId(
+											companyId)),
+									title
+								).build(),
+								title, "Title",
+								UpgradeProcessUtil.getDefaultLanguageId(
+									companyId));
+
+						StringBuilder sb = new StringBuilder(5);
+
+						sb.append("insert into SAPEntry (uuid_, sapEntryId, ");
+						sb.append("companyId, userId, createDate, ");
+						sb.append("modifiedDate, allowedServiceSignatures, ");
+						sb.append("defaultSAPEntry, enabled, name, title) ");
+						sb.append("values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+						PreparedStatement preparedStatement2 =
+							connection.prepareStatement(sb.toString());
+
+						preparedStatement2.setString(
+							1, PortalUUIDUtil.generate());
+						preparedStatement2.setLong(
+							2, CounterLocalServiceUtil.increment());
+						preparedStatement2.setLong(3, companyId);
+						preparedStatement2.setLong(
+							4, UserLocalServiceUtil.getGuestUserId(companyId));
+						preparedStatement2.setTimestamp(5, now);
+						preparedStatement2.setTimestamp(6, now);
+						preparedStatement2.setString(7, StringPool.STAR);
+						preparedStatement2.setBoolean(8, false);
+						preparedStatement2.setBoolean(9, true);
+						preparedStatement2.setString(
+							10, "SYSTEM_TEMPLATE_DEFAULT");
+						preparedStatement2.setString(11, titleMapString);
+
+						preparedStatement2.execute();
+					}
 				}
 			});
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SAPEntryUpgradeProcess.class);
-
-	private final SAPEntryLocalService _sapEntryLocalService;
 
 }

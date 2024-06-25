@@ -74,7 +74,6 @@ const config = {
 				'fs',
 				'path',
 				'process',
-				'resolve',
 				'webpack',
 				'~',
 			],

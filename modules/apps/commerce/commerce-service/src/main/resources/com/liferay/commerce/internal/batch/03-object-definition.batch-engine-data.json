@@ -153,9 +153,9 @@
 				{
 					"active": true,
 					"engine": "javaDelegate#commerceReturnItemAccountEntryId",
-					"engineLabel": "commerceReturnItemAccountEntryId",
+					"engineLabel": "Commerce Return Item Account Entry ID",
 					"errorLabel": {
-						"en_US": "Account Entry ID is invalid"
+						"en_US": "The account entry ID is invalid."
 					},
 					"externalReferenceCode": "COMMERCE_RETURN_ITEM_ACCOUNT_ENTRY_ID",
 					"name": {
@@ -168,9 +168,9 @@
 				{
 					"active": true,
 					"engine": "javaDelegate#commerceReturnItemAuthorized",
-					"engineLabel": "commerceReturnItemAuthorized",
+					"engineLabel": "Commerce Return Item Authorized",
 					"errorLabel": {
-						"en_US": "Authorized is invalid"
+						"en_US": "The authorized field is invalid."
 					},
 					"externalReferenceCode": "COMMERCE_RETURN_ITEM_AUTHORIZED",
 					"name": {
@@ -183,9 +183,9 @@
 				{
 					"active": true,
 					"engine": "javaDelegate#commerceReturnItemCommerceOrderItemId",
-					"engineLabel": "commerceReturnItemCommerceOrderItemId",
+					"engineLabel": "Commerce Return Item Commerce Order Item ID",
 					"errorLabel": {
-						"en_US": "Commerce Order Item ID is invalid"
+						"en_US": "The commerce order item ID is invalid."
 					},
 					"externalReferenceCode": "COMMERCE_RETURN_ITEM_COMMERCE_ORDER_ITEM_ID",
 					"name": {
@@ -198,9 +198,9 @@
 				{
 					"active": true,
 					"engine": "javaDelegate#commerceReturnItemQuantity",
-					"engineLabel": "commerceReturnItemQuantity",
+					"engineLabel": "Commerce Return Item Quantity",
 					"errorLabel": {
-						"en_US": "Quantity is invalid"
+						"en_US": "The quantity is invalid."
 					},
 					"externalReferenceCode": "COMMERCE_RETURN_ITEM_QUANTITY",
 					"name": {
@@ -213,9 +213,9 @@
 				{
 					"active": true,
 					"engine": "javaDelegate#commerceReturnItemReceived",
-					"engineLabel": "javaDelegate#commerceReturnItemReceived",
+					"engineLabel": "Commerce Return Item Received",
 					"errorLabel": {
-						"en_US": "Received is invalid"
+						"en_US": "The received field is invalid."
 					},
 					"externalReferenceCode": "COMMERCE_RETURN_ITEM_RECEIVED",
 					"name": {

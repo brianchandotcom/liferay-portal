@@ -644,6 +644,17 @@ type UserAccount = {
 	password: string;
 	roleBriefs: {id: number; name: string}[];
 	type: string;
+	userAccountContactInformation?: {
+		telephones: [
+			{
+				extension?: string;
+				id?: number;
+				phoneNumber?: string;
+				phoneType?: string;
+				primary?: boolean;
+			},
+		];
+	};
 };
 
 type RequestBody = {

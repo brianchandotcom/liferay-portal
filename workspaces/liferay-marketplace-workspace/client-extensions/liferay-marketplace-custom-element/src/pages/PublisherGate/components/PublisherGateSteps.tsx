@@ -7,6 +7,7 @@ import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import useListTypeDefinition from '../../../hooks/useListTypeDefinition';
 import i18n from '../../../i18n';
 import zodSchema, {zodResolver} from '../../../schema/zod';
@@ -25,18 +26,24 @@ export enum StepType {
 }
 
 const PublisherGateSteps = () => {
+	const {myUserAccount} = useMarketplaceContext();
 	const [step, setStep] = useState<StepType>(StepType.FORM);
+
 	const form = useForm<PublisherForm>({
 		defaultValues: {
-			emailAddress: '',
-			extension: '',
-			firstName: '',
-			lastName: '',
+			emailAddress: myUserAccount.emailAddress ?? '',
+			extension:
+				myUserAccount?.userAccountContactInformation?.telephones[0]
+					.extension ?? '',
+			firstName: myUserAccount.givenName ?? '',
+			lastName: myUserAccount.familyName ?? '',
 			phone: {
 				code: '+1',
 				flag: 'en-us',
 			},
-			phoneNumber: '',
+			phoneNumber:
+				myUserAccount?.userAccountContactInformation?.telephones[0]
+					.phoneNumber ?? '',
 			publisherType: ['appPublisher'],
 			requestDescription: '',
 		},

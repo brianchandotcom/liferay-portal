@@ -101,7 +101,10 @@ public class BreadcrumbUtil {
 		Group group = GroupLocalServiceUtil.getGroup(
 			themeDisplay.getCompanyId(), GroupConstants.GUEST);
 
-		if (group.getPublicLayoutsPageCount() == 0) {
+		Layout layout = LayoutServiceUtil.fetchFirstLayout(
+			group.getGroupId(), false, true);
+
+		if (layout == null) {
 			return null;
 		}
 

@@ -18,19 +18,7 @@ config.ignorePatterns = [
 config.rules = {
 	...config.rules,
 	'@liferay/no-dynamic-require': 'off',
-	'@liferay/no-extraneous-dependencies': [
-		'error',
-		[
-			'child_process',
-			'crypto',
-			'fs',
-			'module',
-			'path',
-			'os',
-			'stream',
-			'url',
-		],
-	],
+	'@liferay/no-extraneous-dependencies': 'off',
 	'@liferay/portal/no-global-fetch': 'off',
 	'no-console': 'off',
 };

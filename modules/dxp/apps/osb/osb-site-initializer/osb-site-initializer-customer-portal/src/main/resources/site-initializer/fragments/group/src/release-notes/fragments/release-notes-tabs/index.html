@@ -1,3 +1,5 @@
+[#assign currentDisplayIdsParameterized = "" /]
+
 [#if themeDisplay?has_content]
 	[#assign displayPortalURLs = (themeDisplay.getURLCurrent()?split("release-notes/"))! /]
 

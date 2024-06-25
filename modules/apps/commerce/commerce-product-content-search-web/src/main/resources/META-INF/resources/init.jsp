@@ -27,6 +27,7 @@ page import="com.liferay.commerce.product.content.search.web.internal.constants.
 page import="com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionsSearchFacetDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.search.web.internal.display.context.CPPriceRangeFacetsDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext" %><%@
+page import="com.liferay.commerce.product.content.search.web.internal.display.context.CPSortDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionFacetsDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetTermDisplayContext" %><%@

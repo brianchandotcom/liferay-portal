@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useAtom} from 'jotai';
 import {useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
+import {taskSidebarRefresh} from '~/hooks/useSidebarTask';
 
 import useFormModal from '../../hooks/useFormModal';
 import useMutate from '../../hooks/useMutate';
@@ -17,6 +19,7 @@ const useTestflowActions = () => {
 	const {updateItemFromList} = useMutate();
 	const navigate = useNavigate();
 	const {forceRefetch, modal} = useFormModal();
+	const [, setTaskSidebarRefresh] = useAtom(taskSidebarRefresh);
 
 	const actionsRef = useRef([
 		{
@@ -29,16 +32,19 @@ const useTestflowActions = () => {
 		},
 		{
 			action: (task, mutate) =>
-				testrayTaskImpl.reanalyze(task).then(() =>
-					updateItemFromList(
-						mutate,
-						0,
-						{},
-						{
-							revalidate: true,
-						}
+				testrayTaskImpl
+					.reanalyze(task)
+					.then(() =>
+						updateItemFromList(
+							mutate,
+							0,
+							{},
+							{
+								revalidate: true,
+							}
+						)
 					)
-				),
+					.then(() => setTaskSidebarRefresh(new Date().getTime())),
 			hidden: ({dueStatus}) => dueStatus.key === TaskStatuses.IN_ANALYSIS,
 			icon: 'polls',
 			name: i18n.translate('reanalyze'),
@@ -46,16 +52,19 @@ const useTestflowActions = () => {
 		},
 		{
 			action: (subtask, mutate) =>
-				testrayTaskImpl.removeResource(subtask.id)?.then(() =>
-					updateItemFromList(
-						mutate,
-						0,
-						{},
-						{
-							revalidate: true,
-						}
+				testrayTaskImpl
+					.removeResource(subtask.id)
+					?.then(() =>
+						updateItemFromList(
+							mutate,
+							0,
+							{},
+							{
+								revalidate: true,
+							}
+						)
 					)
-				),
+					.then(() => setTaskSidebarRefresh(new Date().getTime())),
 			hidden: ({dueStatus}) => dueStatus.key === TaskStatuses.IN_ANALYSIS,
 			icon: 'trash',
 			name: i18n.translate('delete'),
@@ -68,16 +77,18 @@ const useTestflowActions = () => {
 						? () => testrayTaskImpl.complete(task)
 						: () => testrayTaskImpl.abandon(task);
 
-				return fn().then(() =>
-					updateItemFromList(
-						mutate,
-						0,
-						{},
-						{
-							revalidate: true,
-						}
+				return fn()
+					.then(() =>
+						updateItemFromList(
+							mutate,
+							0,
+							{},
+							{
+								revalidate: true,
+							}
+						)
 					)
-				);
+					.then(() => setTaskSidebarRefresh(new Date().getTime()));
 			},
 			hidden: ({dueStatus}) => dueStatus.key !== TaskStatuses.IN_ANALYSIS,
 			icon: 'align-justify',

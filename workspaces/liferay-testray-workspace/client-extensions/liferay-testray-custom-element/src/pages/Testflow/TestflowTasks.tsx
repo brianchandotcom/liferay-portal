@@ -4,6 +4,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {useAtom} from 'jotai';
 import {Dispatch, useContext, useState} from 'react';
 import {Link, useNavigate, useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
@@ -26,6 +27,7 @@ import useCaseResultGroupBy from '~/hooks/data/useCaseResultGroupBy';
 import useSubtaskScore from '~/hooks/data/useSubtaskScore';
 import useHeader from '~/hooks/useHeader';
 import useMutate from '~/hooks/useMutate';
+import {taskSidebarRefresh} from '~/hooks/useSidebarTask';
 import i18n from '~/i18n';
 import {Liferay} from '~/services/liferay';
 import {
@@ -62,6 +64,7 @@ const ShortcutIcon = () => (
 );
 
 const TestFlowTasks = () => {
+	const [, setTaskSidebarRefresh] = useAtom(taskSidebarRefresh);
 	const {
 		data: {projectId, testrayTask, testrayTaskUser},
 		revalidate: {revalidateSubtask},
@@ -143,6 +146,8 @@ const TestFlowTasks = () => {
 				revalidate: true,
 			}
 		);
+
+		setTaskSidebarRefresh(new Date().getTime());
 
 		dispatch({
 			payload: [],
@@ -415,6 +420,11 @@ const TestFlowTasks = () => {
 																revalidate:
 																	true,
 															}
+														);
+													})
+													.then(() => {
+														setTaskSidebarRefresh(
+															new Date().getTime()
 														);
 													})
 											}

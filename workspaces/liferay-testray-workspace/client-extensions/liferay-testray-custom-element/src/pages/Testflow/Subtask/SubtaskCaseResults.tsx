@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useAtom} from 'jotai';
 import {Dispatch, useState} from 'react';
 import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 import JiraLink from '~/components/JiraLink';
+import {taskSidebarRefresh} from '~/hooks/useSidebarTask';
 import {getTruncateText} from '~/util/getTruncateText';
 
 import FloatingBox from '../../../components/FloatingBox';
@@ -50,6 +52,7 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 	const {subtaskId, taskId} = useParams();
 	const {updateItemFromList} = useMutate();
 	const [isLoading, setIsLoading] = useState(false);
+	const [, setTaskSidebarRefresh] = useAtom(taskSidebarRefresh);
 
 	const {
 		data: {buildId, projectId, testraySubtask},
@@ -129,6 +132,8 @@ const SubtasksCaseResults: React.FC<SubtasksCaseResultsProps> = ({
 				revalidate: true,
 			}
 		);
+
+		setTaskSidebarRefresh(new Date().getTime());
 
 		dispatch({
 			payload: [],

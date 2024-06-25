@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useAtom} from 'jotai';
 import {useEffect, useMemo} from 'react';
 import {useForm} from 'react-hook-form';
+import {taskSidebarRefresh} from '~/hooks/useSidebarTask';
 import {getUniqueList} from '~/util';
 
 import Form from '../../../components/Form';
@@ -42,6 +44,7 @@ const SubtaskCompleteModal: React.FC<SubtaskCompleteModalProps> = ({
 	setForceRefetch,
 	subtask,
 }) => {
+	const [, setTaskSidebarRefresh] = useAtom(taskSidebarRefresh);
 	const {data: mbMessage} = useFetch(
 		liferayMessageBoardImpl.getMessagesIdURL(subtask.mbMessageId)
 	);
@@ -142,6 +145,9 @@ const SubtaskCompleteModal: React.FC<SubtaskCompleteModalProps> = ({
 			revalidateSubtask();
 
 			onSave();
+
+			setTaskSidebarRefresh(new Date().getTime());
+
 			setForceRefetch && setForceRefetch(new Date().getTime());
 		}
 		catch (error) {

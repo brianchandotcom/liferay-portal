@@ -4,10 +4,12 @@
  */
 
 import ClayButton from '@clayui/button';
+import {useAtom} from 'jotai';
 import {useEffect, useState} from 'react';
 import {useNavigate, useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 import useMutate from '~/hooks/useMutate';
+import {taskSidebarRefresh} from '~/hooks/useSidebarTask';
 
 import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
@@ -41,6 +43,7 @@ type OutletContext = {
 };
 
 const TaskHeaderActions = () => {
+	const [, setTaskSidebarRefresh] = useAtom(taskSidebarRefresh);
 	const {
 		data: {testraySubtasks, testrayTask, testrayTaskUser},
 		mutate: {mutateTask},
@@ -70,7 +73,7 @@ const TaskHeaderActions = () => {
 		},
 		onSave: async (newUserIds) => {
 			await testrayTaskUsersImpl.assign(testrayTask.id, newUserIds);
-
+			setTaskSidebarRefresh(new Date().getTime());
 			revalidateTaskUser();
 		},
 	});
@@ -129,6 +132,8 @@ const TaskHeaderActions = () => {
 								);
 
 								revalidateTaskUser();
+
+								setTaskSidebarRefresh(new Date().getTime());
 							}}
 						>
 							{i18n.translate('reanalyze')}
@@ -151,6 +156,8 @@ const TaskHeaderActions = () => {
 									await testrayTaskImpl.remove(
 										testrayTask.id
 									);
+
+									setTaskSidebarRefresh(new Date().getTime());
 
 									navigate('/testflow');
 
@@ -179,6 +186,9 @@ const TaskHeaderActions = () => {
 							fn(testrayTask)
 								.then(({dueStatus}) =>
 									mutateTaskPartial({dueStatus})
+								)
+								.then(() =>
+									setTaskSidebarRefresh(new Date().getTime())
 								)
 								.catch(console.error);
 						}}

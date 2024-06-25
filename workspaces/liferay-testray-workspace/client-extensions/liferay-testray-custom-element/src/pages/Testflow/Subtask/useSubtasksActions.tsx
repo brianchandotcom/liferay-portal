@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useAtom} from 'jotai';
 import {useRef} from 'react';
 import {useOutletContext} from 'react-router-dom';
+import {taskSidebarRefresh} from '~/hooks/useSidebarTask';
 
 import useFormActions from '../../../hooks/useFormActions';
 import useFormModal from '../../../hooks/useFormModal';
@@ -28,6 +30,7 @@ const useSubtasksActions = () => {
 	const {
 		revalidate: {revalidateSubtask},
 	} = useOutletContext<OutletContext>();
+	const [, setTaskSidebarRefresh] = useAtom(taskSidebarRefresh);
 	const {form} = useFormActions();
 	const {updateItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
@@ -36,18 +39,21 @@ const useSubtasksActions = () => {
 	const actionsRef = useRef([
 		{
 			action: (subtask, mutate) =>
-				testraySubtaskImpl.assignToMe(subtask).then(() => {
-					updateItemFromList(
-						mutate,
-						0,
-						{},
-						{
-							revalidate: true,
-						}
-					);
+				testraySubtaskImpl
+					.assignToMe(subtask)
+					.then(() => {
+						updateItemFromList(
+							mutate,
+							0,
+							{},
+							{
+								revalidate: true,
+							}
+						);
 
-					revalidateSubtask();
-				}),
+						revalidateSubtask();
+					})
+					.then(() => setTaskSidebarRefresh(new Date().getTime())),
 			hidden: ({dueStatus}) =>
 				dueStatus?.key === SubtaskStatuses.IN_ANALYSIS,
 			icon: 'user',
@@ -85,7 +91,11 @@ const useSubtasksActions = () => {
 
 											revalidateSubtask();
 										})
-
+										.then(() =>
+											setTaskSidebarRefresh(
+												new Date().getTime()
+											)
+										)
 										.then(form.onSuccess)
 										.catch(form.onError)
 										.finally(state.onClose);
@@ -123,18 +133,21 @@ const useSubtasksActions = () => {
 		},
 		{
 			action: (subtask, mutate) =>
-				testraySubtaskImpl.returnToOpen(subtask).then(() => {
-					updateItemFromList(
-						mutate,
-						0,
-						{},
-						{
-							revalidate: true,
-						}
-					);
+				testraySubtaskImpl
+					.returnToOpen(subtask)
+					.then(() => {
+						updateItemFromList(
+							mutate,
+							0,
+							{},
+							{
+								revalidate: true,
+							}
+						);
 
-					revalidateSubtask();
-				}),
+						revalidateSubtask();
+					})
+					.then(() => setTaskSidebarRefresh(new Date().getTime())),
 			hidden: ({dueStatus}) => dueStatus.key !== SubtaskStatuses.COMPLETE,
 			icon: 'polls',
 			name: i18n.translate('return-to-open'),

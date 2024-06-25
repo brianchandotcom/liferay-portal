@@ -112,8 +112,8 @@
 			<a href="${videoUrl}" target="_blank">
 				<div class="align-items-center d-flex justify-content-center position-relative video-preview">
 					<img
-						class="video-thumbnail"
 						aria-label="video-thumbnail"
+						class="video-thumbnail"
 						src="https://img.youtube.com/vi/${youtubeVideoId}/0.jpg"
 					/>
 

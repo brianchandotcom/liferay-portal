@@ -645,15 +645,7 @@ type UserAccount = {
 	roleBriefs: {id: number; name: string}[];
 	type: string;
 	userAccountContactInformation?: {
-		telephones: [
-			{
-				extension?: string;
-				id?: number;
-				phoneNumber?: string;
-				phoneType?: string;
-				primary?: boolean;
-			},
-		];
+		UserAccoutTelephone: UserAccoutTelephone[];
 	};
 };
 
@@ -701,6 +693,14 @@ type Industries = {
 	name_i18n: {
 		'en-US': string;
 	};
+};
+
+type UserAccoutTelephone = {
+	extension?: string;
+	id?: number;
+	phoneNumber?: string;
+	phoneType?: string;
+	primary?: boolean;
 };
 
 type UserForm = {

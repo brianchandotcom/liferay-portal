@@ -44,6 +44,7 @@ type ILiferay = {
 		getPathThemeImages: () => string;
 		getPortalURL: () => string;
 		getScopeGroupId: () => number;
+		getURLHome: () => string;
 		getUserEmailAddress: () => string;
 		getUserId: () => string;
 		getUserName: () => string;
@@ -89,6 +90,7 @@ export const Liferay = window.Liferay || {
 		getPathContext: () => '',
 		getPathThemeImages: () => '',
 		getPortalURL: () => '',
+		getURLHome: () => '',
 		getUserId: () => '',
 		isSignedIn: () => {
 			return false;

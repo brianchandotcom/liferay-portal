@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.url.validator.URLValidator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.web.internal.exception.RequiredLocaleException;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
@@ -225,6 +227,17 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Updating company properties " + unicodeProperties.toString());
+
+			_log.debug(
+				"Current complete url: " +
+					actionRequest.getAttribute("CURRENT_COMPLETE_URL"));
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			if (themeDisplay != null) {
+				_log.debug("User id: " + themeDisplay.getUserId());
+			}
 		}
 
 		if (unicodeProperties.containsKey(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS) &&

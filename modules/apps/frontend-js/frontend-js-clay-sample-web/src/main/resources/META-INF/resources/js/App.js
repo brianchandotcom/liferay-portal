@@ -6,8 +6,6 @@
 import ClayAlert from '@clayui/alert';
 import React from 'react';
 
-import '../css/main.scss';
-
 export function App() {
 	return (
 		<div>

@@ -85,13 +85,11 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 		if ((device != null) &&
 			!Objects.equals(device, UnknownDevice.getInstance())) {
 
-			context.put(Context.DEVICE_BRAND, device.getBrand());
 			context.put(Context.DEVICE_MODEL, device.getModel());
 
 			screenResolutionDimensions = device.getScreenResolution();
 		}
 		else {
-			context.put(Context.DEVICE_BRAND, StringPool.BLANK);
 			context.put(Context.DEVICE_MODEL, StringPool.BLANK);
 
 			screenResolutionDimensions = Dimensions.UNKNOWN;

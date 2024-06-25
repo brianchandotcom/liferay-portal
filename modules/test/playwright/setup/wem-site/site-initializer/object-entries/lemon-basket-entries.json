@@ -1,0 +1,13 @@
+{
+	"object-entries": [
+		{
+			"lemonBasketColor": "White",
+			"material": "plastic"
+		},
+		{
+			"lemonBasketColor": "Brown",
+			"material": "carton"
+		}
+	],
+	"objectDefinitionName": "LemonBasket"
+}

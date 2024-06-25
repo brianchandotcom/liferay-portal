@@ -1,5 +1,5 @@
 {
-	"@generated": "ab50ee01c9994b7c4e6af7fd7f5dfdd93690e216",
+	"@generated": "818cc7c68675051f507c53f2f1ab7c675638beac",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/portal-security-script-management-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

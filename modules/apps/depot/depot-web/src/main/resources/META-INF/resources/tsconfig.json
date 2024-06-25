@@ -1,5 +1,5 @@
 {
-	"@generated": "78ffa465df77b304d2b4754e45a3b5aa2c0e8570",
+	"@generated": "464b6c42a7640deab2aa2471dc7f1086620ce7c9",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/depot-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

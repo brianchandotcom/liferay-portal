@@ -1,5 +1,5 @@
 {
-	"@generated": "e22a11c8cf4282175675932beab60bd2f041bce0",
+	"@generated": "1588af96a122ef12f297ecb7813349e7471016a1",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -28,7 +28,7 @@
 		"rootDir": "../../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../../.tsc/buildinfo/portal-workflow-metrics-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../../node_modules/@types"

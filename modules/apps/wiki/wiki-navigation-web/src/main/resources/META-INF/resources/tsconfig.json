@@ -1,5 +1,5 @@
 {
-	"@generated": "667db47adfb7cf83e8816f5feb1f7b0a3b8c9dc9",
+	"@generated": "f334b4c0bed34af0ee2a0522069cd29bca79c01e",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/wiki-navigation-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

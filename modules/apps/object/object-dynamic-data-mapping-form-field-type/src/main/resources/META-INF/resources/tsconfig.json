@@ -1,5 +1,5 @@
 {
-	"@generated": "21ae52ba7c353d109de6d2642c7a46b078caf04d",
+	"@generated": "483d4eb92858684361056fb593456e4a2e9a933b",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -28,7 +28,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/object-dynamic-data-mapping-form-field-type.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

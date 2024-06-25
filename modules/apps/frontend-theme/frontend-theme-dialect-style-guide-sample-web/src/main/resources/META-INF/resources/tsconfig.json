@@ -1,5 +1,5 @@
 {
-	"@generated": "0d5f9fab735c09a706a4069a5c968c1f1343c7a6",
+	"@generated": "3e8b4db5e5d76fcd314d0ce5e6fea03b2200a51f",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/frontend-theme-dialect-style-guide-sample-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

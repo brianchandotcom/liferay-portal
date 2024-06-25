@@ -1,5 +1,5 @@
 {
-	"@generated": "1f22630921b17876f26c0e68c86085024c1fda75",
+	"@generated": "ba21ea0f74523b3452de7be82caac15d3c8d0e8c",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-js-tabs-support-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

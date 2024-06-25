@@ -1,5 +1,5 @@
 {
-	"@generated": "f48a67a969c3ef48983a00839c0db6e19d67e7ef",
+	"@generated": "9b895e3863af70f2e7b5eb7f108b915525aead2e",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/commerce-order-rule-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

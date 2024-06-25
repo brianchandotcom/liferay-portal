@@ -1,5 +1,5 @@
 {
-	"@generated": "1611fe7c94a317978d237922bf63dd18da8de0a3",
+	"@generated": "dbdaa28d5f741ec83792ae65e6d3fbee0bd572c2",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-js-aui-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

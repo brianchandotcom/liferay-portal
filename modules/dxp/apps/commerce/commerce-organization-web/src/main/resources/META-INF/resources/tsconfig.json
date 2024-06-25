@@ -1,5 +1,5 @@
 {
-	"@generated": "ec6b6b522cfe70957b3af04184e0a23a2db4725b",
+	"@generated": "e4ac445e8dda00679b3e18fc8ca800aa421d6e4e",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -28,7 +28,7 @@
 		"rootDir": "../../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../../.tsc/buildinfo/commerce-organization-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../../node_modules/@types"

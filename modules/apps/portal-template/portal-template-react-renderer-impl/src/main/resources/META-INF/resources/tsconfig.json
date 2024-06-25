@@ -1,5 +1,5 @@
 {
-	"@generated": "14e4b2d7dbde797da6d6bc78de916479ec922e12",
+	"@generated": "66b2fa8cfb0721e0015723fce0e8af8159f2d02d",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/portal-template-react-renderer-impl.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

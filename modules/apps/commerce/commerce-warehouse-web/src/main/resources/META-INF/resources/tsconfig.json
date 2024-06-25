@@ -1,5 +1,5 @@
 {
-	"@generated": "3a8a3212e4e2234966cc1cb6c17091be4f21b5d0",
+	"@generated": "efc43ec0405bd7f32ad688bdc97d66615c00db54",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/commerce-warehouse-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

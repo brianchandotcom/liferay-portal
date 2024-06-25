@@ -1,5 +1,5 @@
 {
-	"@generated": "c4de79067f319ba4ca1f072bfa9db90eeca03094",
+	"@generated": "39cc03bbc8dc523d32324268942bbc86b1cda530",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -25,7 +25,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/digital-signature-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

@@ -1,5 +1,5 @@
 {
-	"@generated": "e00c9028b76da6f27de2fc8496db40cf5a3ddffb",
+	"@generated": "c1b7c5bacbf195ee2fe2eacea43cc21598f46ad0",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/sharing-taglib.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

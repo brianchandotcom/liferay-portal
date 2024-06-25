@@ -1,5 +1,5 @@
 {
-	"@generated": "a33cc8279942653355ecb9c243e681e4aeda993b",
+	"@generated": "f72e13424886a8ad39361eb583ec0fd7df2ce797",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/message-boards-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

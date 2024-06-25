@@ -1,5 +1,5 @@
 {
-	"@generated": "c32816df12e785dc04847a5d8a98056e4f941eff",
+	"@generated": "8142eae1f067da89c444d4c750339ea47bd513ca",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -28,7 +28,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/layout-reports-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

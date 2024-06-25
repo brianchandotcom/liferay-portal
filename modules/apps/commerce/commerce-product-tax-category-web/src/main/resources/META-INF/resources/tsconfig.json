@@ -1,5 +1,5 @@
 {
-	"@generated": "747b784d942022468bd12dd4a543f4402ee7c8af",
+	"@generated": "75a8149fe83220e37a1d5b39d552c9999849f602",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/commerce-product-tax-category-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

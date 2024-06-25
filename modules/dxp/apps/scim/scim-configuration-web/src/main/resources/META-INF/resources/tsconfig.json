@@ -1,5 +1,5 @@
 {
-	"@generated": "5d92bd25789bcc19465720c9f756217bba1a9969",
+	"@generated": "f6e085a3f366883cee84332679cc022daed13c39",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../../.tsc/buildinfo/@liferay/scim-configuration-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../../node_modules/@types"

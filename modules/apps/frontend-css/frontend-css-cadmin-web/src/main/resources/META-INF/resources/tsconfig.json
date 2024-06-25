@@ -1,5 +1,5 @@
 {
-	"@generated": "52e84591658275284cced051973e07f40c843bcb",
+	"@generated": "ac4c560bff13d2c89eb0c99cbb9e0d620d7516af",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/frontend-css-cadmin-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

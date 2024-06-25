@@ -1,5 +1,5 @@
 {
-	"@generated": "4ae5e0a186ab130a5adf3cd0dffa66f61d1fa552",
+	"@generated": "10ccabe88586be381c4d1e1b7f974fc117f70a01",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-theme-classic-style-guide-sample-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

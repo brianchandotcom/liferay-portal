@@ -1,5 +1,5 @@
 {
-	"@generated": "4a82411d83cf9e09abc72f61cc347ce1a95ed860",
+	"@generated": "a3878fb47060c61d6961003f9fa72f1bebdae1a3",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/frontend-js-codemirror-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

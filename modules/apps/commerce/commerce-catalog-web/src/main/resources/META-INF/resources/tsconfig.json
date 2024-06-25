@@ -1,5 +1,5 @@
 {
-	"@generated": "5379cc66dce142024139898bb9cf4d7b26d703ea",
+	"@generated": "52471dde0c7d808ff609521583addce375bc5cac",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/commerce-catalog-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

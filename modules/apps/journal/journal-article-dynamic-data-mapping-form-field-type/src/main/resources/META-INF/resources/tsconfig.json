@@ -1,5 +1,5 @@
 {
-	"@generated": "34c3b3a341a68740b3b60d24ad75d387167200bf",
+	"@generated": "7918c29ecab561a3f8b503705d89ee531c68419a",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/journal-article-dynamic-data-mapping-form-field-type.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

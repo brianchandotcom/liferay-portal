@@ -1,5 +1,5 @@
 {
-	"@generated": "076405fdefb87278c3d2ac7ccdcc4b1f617c5f93",
+	"@generated": "a0c6bbfc4507f2c19e2b1cf166285bf57f335873",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/fragment-renderer-collection-filter-impl.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

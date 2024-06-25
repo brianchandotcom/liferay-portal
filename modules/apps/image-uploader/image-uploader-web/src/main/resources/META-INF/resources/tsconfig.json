@@ -1,5 +1,5 @@
 {
-	"@generated": "6b8815862a1127fd5f640449aa50552d10136cc0",
+	"@generated": "a772c99e0eebdabe03cbd0e9808f677862711a6f",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/image-uploader-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

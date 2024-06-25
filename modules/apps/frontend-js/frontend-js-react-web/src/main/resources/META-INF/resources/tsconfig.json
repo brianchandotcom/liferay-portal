@@ -1,5 +1,5 @@
 {
-	"@generated": "fbc4984b1eb0af4967414a8139a299d1df66cd11",
+	"@generated": "81cb8b0ea67f56379ecb39926c705487d4651a93",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/frontend-js-react-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

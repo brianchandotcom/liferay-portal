@@ -1,5 +1,5 @@
 {
-	"@generated": "51b2e042d2ed216f419dfe880d6e19e31029872f",
+	"@generated": "36d552b2c8124a1874cde1691bfa7c60b21c7bc4",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/flags-taglib.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

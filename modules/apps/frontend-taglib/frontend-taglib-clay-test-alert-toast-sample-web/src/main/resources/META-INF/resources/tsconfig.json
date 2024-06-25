@@ -1,5 +1,5 @@
 {
-	"@generated": "a8f7260f56d81c608ff7ce170725c0395b1347ff",
+	"@generated": "15e2bf062f54c335461de2fe31b592a32361f658",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-taglib-clay-test-alert-toast-sample-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

@@ -1,5 +1,5 @@
 {
-	"@generated": "e3ca239d643c909b3348e51c74645ff87a0d047f",
+	"@generated": "3854f7d1b1fac62e6a15f7c008a5b1fde023291a",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/locked-items-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

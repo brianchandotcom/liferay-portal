@@ -1,5 +1,5 @@
 {
-	"@generated": "477a8c9dec7e1dda430a9a6e93ff59741e71059e",
+	"@generated": "54eb7e3c8491c655ee3c6ca31bcfad57ba6328a7",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/frontend-css-common.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

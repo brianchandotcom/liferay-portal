@@ -1,5 +1,5 @@
 {
-	"@generated": "b72ffbc5cff9445d38f1eb2ccd4a4ce9ba8901f0",
+	"@generated": "e8a08c1d0f6a09c06e20fa75e00c5b01c03f81a2",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/adaptive-media-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

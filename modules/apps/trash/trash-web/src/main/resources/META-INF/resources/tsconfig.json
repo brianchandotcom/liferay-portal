@@ -1,5 +1,5 @@
 {
-	"@generated": "2dc04d75d69efe7af827b6a97fd6ae0eac2cb74b",
+	"@generated": "788e90be992ade533056c6a006c976a3a86845d8",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/trash-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

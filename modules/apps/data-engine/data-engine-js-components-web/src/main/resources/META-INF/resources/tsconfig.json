@@ -1,5 +1,5 @@
 {
-	"@generated": "3df5c02e47dd0cef5adfabe195f1bab40e882991",
+	"@generated": "189014cee71eae92dca2989834273a782fbde4ec",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/data-engine-js-components-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

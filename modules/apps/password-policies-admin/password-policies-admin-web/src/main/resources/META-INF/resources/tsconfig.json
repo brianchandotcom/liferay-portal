@@ -1,5 +1,5 @@
 {
-	"@generated": "11e6c4e74e9a612d0a2fe23f036681a975848f19",
+	"@generated": "2ddf4ba32f8945577e679aec332f6b1e29e8249c",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/password-policies-admin-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

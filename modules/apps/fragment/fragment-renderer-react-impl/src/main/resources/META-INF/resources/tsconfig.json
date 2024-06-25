@@ -1,5 +1,5 @@
 {
-	"@generated": "76d0d3294f24c0c2a1c4e4054c869a09f8430921",
+	"@generated": "b2fd4181cbd0b63ab4de492ea35a7e3fb617a5b7",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/fragment-renderer-react-impl.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

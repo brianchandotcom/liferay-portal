@@ -1,5 +1,5 @@
 {
-	"@generated": "11a3e1e5b44bf01d2e5557383a260457b0fe8828",
+	"@generated": "c05b1f98b356e1e48b4aa8299fa6ca110dcc4120",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/microblogs-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

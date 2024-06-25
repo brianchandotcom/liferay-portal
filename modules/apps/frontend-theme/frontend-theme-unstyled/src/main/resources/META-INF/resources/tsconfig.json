@@ -1,5 +1,5 @@
 {
-	"@generated": "4a5945cb58b6cd76f3cfa1e271e893e5cc61f5ad",
+	"@generated": "84b78a9b8bd508f3fd37e5f201fd517f19554173",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/liferay-frontend-theme-unstyled.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

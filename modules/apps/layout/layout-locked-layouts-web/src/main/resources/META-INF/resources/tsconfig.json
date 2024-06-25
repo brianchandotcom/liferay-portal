@@ -1,5 +1,5 @@
 {
-	"@generated": "5a1dd9076c54ef8b691f14928eaad04dbdbb1aed",
+	"@generated": "b6fe7975c2d2e3c2cd0301ca4ef2ada01a2adccc",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/layout-locked-layouts-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

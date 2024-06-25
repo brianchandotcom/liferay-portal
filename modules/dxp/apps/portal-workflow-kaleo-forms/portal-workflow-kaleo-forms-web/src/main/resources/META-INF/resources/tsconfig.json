@@ -1,5 +1,5 @@
 {
-	"@generated": "d28bffe5459bcde7e14557dc3ef53f3e9cb6e31c",
+	"@generated": "e232aa9c896bfd998db57c15294e121ade789c78",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../../.tsc/buildinfo/portal-workflow-kaleo-forms-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../../node_modules/@types"

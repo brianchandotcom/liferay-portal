@@ -1,5 +1,5 @@
 {
-	"@generated": "736741ea8fe4282fb2c1187f69e7292157d9c598",
+	"@generated": "c99eacd92473d4a2661c4347720d4a659e3efaee",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-js-lodash-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

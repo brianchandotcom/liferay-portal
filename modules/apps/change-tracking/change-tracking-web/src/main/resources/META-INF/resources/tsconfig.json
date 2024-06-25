@@ -1,5 +1,5 @@
 {
-	"@generated": "f1ffc10ca56582b8adc574ee368216b4c706259e",
+	"@generated": "94a054f848d925c690ec372644204023ece36cf5",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/change-tracking-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

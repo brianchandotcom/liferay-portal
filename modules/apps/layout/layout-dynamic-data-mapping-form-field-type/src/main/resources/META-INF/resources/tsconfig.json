@@ -1,5 +1,5 @@
 {
-	"@generated": "185aa6d295c7dbc9a97e5f69a2d86f54b29c74f2",
+	"@generated": "823d38d059ae68c8752012270f5af34441771a95",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/layout-dynamic-data-mapping-form-field-type.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

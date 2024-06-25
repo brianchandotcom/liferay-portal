@@ -1,5 +1,5 @@
 {
-	"@generated": "e5ee0018354bd70b2d7e378f0e4e3f0b46b12f7a",
+	"@generated": "1b2c55d2c1348586831db84f14afb3cec02ef880",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/click-to-chat-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

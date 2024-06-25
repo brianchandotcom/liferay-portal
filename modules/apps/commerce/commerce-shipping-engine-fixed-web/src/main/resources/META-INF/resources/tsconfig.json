@@ -1,5 +1,5 @@
 {
-	"@generated": "bfe0bed83b0a36a37d1242d57e2050c5477e5b09",
+	"@generated": "90716acb055b5a661f21432de247d6f94523be2a",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/commerce-shipping-engine-fixed-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

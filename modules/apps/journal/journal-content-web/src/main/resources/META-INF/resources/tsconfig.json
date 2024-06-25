@@ -1,5 +1,5 @@
 {
-	"@generated": "2738b08a25d0ed7d2177de5a22b7da8d6abce1c3",
+	"@generated": "26f2f4fe5a317f48c67bd918c17e9df8504b1e85",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/journal-content-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

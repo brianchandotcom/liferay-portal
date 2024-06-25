@@ -1,5 +1,5 @@
 {
-	"@generated": "7accd90eaf171deb72acb15cf3e4b4999063334f",
+	"@generated": "02c33d08535c4a83e8e03c937caafb75e87a8da2",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/commerce-product-measurement-unit-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

@@ -1,5 +1,5 @@
 {
-	"@generated": "7e3e6a995d0a14577035216fa52730da068a04ac",
+	"@generated": "c78e1cf8e117021a745dd56d9da30f1081a20b1b",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-taglib-clay.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

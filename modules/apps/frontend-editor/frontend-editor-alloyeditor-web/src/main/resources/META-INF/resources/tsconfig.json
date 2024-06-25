@@ -1,5 +1,5 @@
 {
-	"@generated": "1df1e84ae0b1ffa37de7470fc0d5a26ca520b929",
+	"@generated": "07bdca042d0ae612067f76422aae193f3aa96e22",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-editor-alloyeditor-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

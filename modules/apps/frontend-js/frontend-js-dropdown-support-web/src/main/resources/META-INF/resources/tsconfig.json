@@ -1,5 +1,5 @@
 {
-	"@generated": "2fb3714bdb931173e68c39206c81cec4bb208a1f",
+	"@generated": "21af006c014ce198fd5eda0b8ec858863a80a21c",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-js-dropdown-support-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

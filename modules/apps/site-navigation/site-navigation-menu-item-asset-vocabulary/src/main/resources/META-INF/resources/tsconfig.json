@@ -1,5 +1,5 @@
 {
-	"@generated": "1dca2c63ea67bb5243a95a3a7dceff0934791dcc",
+	"@generated": "45fdefeafaf73b87392e5d57bbf66da9bb47c93e",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/site-navigation-menu-item-vocabulary.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

@@ -1,5 +1,5 @@
 {
-	"@generated": "6671c5d4ebff9052802d670565da71455236f4dc",
+	"@generated": "12ec4a67fa5a842c06a39c3b4bff2064d3459361",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/my-subscriptions-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

@@ -1,5 +1,5 @@
 {
-	"@generated": "cea2521c3634caa4ad7f21e7b27c3e26b073e2bf",
+	"@generated": "7c04f1901fb43180a0cbb21e8d434cf622d08100",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../../.tsc/buildinfo/document-library-opener-onedrive-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../../node_modules/@types"

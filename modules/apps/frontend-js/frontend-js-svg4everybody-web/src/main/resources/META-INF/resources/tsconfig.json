@@ -1,5 +1,5 @@
 {
-	"@generated": "4154e1daba48d2ed5813569350ee69241e7452e1",
+	"@generated": "6071b01d5f60026265999cf9d67e7aac2a76b6b4",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-js-svg4everybody-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

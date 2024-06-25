@@ -1,5 +1,5 @@
 {
-	"@generated": "a5ee84e137c3f2cabd58567a9e41e49a0838a0e6",
+	"@generated": "a5859df3a862ea7f758885abb4e4a4a193091914",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/portal-company-log-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

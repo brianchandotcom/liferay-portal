@@ -1,5 +1,5 @@
 {
-	"@generated": "60eec29cf4fa333bd747284ee0e8006018149913",
+	"@generated": "380aa958ed36c51701bd7ea4d0ecb6296915d501",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/frontend-js-a11y-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

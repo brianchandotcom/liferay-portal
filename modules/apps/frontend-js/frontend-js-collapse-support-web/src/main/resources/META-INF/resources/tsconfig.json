@@ -1,5 +1,5 @@
 {
-	"@generated": "b8065f12475e5264e37d93fc9a652b828473696f",
+	"@generated": "b8c44951012149c119009cedec210c568769578e",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-js-collapse-support-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

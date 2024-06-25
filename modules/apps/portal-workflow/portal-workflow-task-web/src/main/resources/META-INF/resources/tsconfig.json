@@ -1,5 +1,5 @@
 {
-	"@generated": "34417ca00ff9a78c91b4efc794d270ff9a01038c",
+	"@generated": "2b09f9f1ebac0cc6f5f11f93687429049a9b6c8a",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/portal-workflow-task-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

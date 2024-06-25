@@ -1,5 +1,5 @@
 {
-	"@generated": "0bd8de3e420ae4ccafc37cb11a5782a26d533034",
+	"@generated": "8c19658d8d47ac89c281d3c37eecd4d1362a9ede",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/commerce-availability-estimate-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

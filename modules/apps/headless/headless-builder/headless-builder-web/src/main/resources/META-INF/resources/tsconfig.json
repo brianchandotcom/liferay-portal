@@ -1,5 +1,5 @@
 {
-	"@generated": "eefa39eeee77ac3c6ec96cb6c5bd3cff0fce4afc",
+	"@generated": "ef781a193c652c57672265a45157acee7af194df",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../../.tsc/buildinfo/@liferay/headless-builder-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../../node_modules/@types"

@@ -1,5 +1,5 @@
 {
-	"@generated": "fad41d4d8f949cc5c6ba4ca6c0679299c676b1ed",
+	"@generated": "86ec690d04c78ac51bfe406fbf2e5e697cf8c38d",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -37,7 +37,7 @@
 		"rootDir": "../../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../../.tsc/buildinfo/@liferay/commerce-shop-by-diagram-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../../node_modules/@types"

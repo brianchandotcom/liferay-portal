@@ -1,5 +1,5 @@
 {
-	"@generated": "6dd7629e4204f99b0c0c438482b98f69079c909a",
+	"@generated": "5587c8e2497eb7d6750329dc584ec05d4870c24b",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -25,7 +25,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/portal-search-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

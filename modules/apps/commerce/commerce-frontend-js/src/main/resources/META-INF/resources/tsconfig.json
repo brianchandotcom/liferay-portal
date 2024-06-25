@@ -1,5 +1,5 @@
 {
-	"@generated": "0967495f0ce51f6aed5a6f643019a8bc0353708e",
+	"@generated": "b5e5b1d637198dfd20df7f948dfe6dc70a376e61",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -31,7 +31,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/commerce-frontend-js.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

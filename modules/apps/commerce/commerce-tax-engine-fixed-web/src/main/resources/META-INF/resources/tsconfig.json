@@ -1,5 +1,5 @@
 {
-	"@generated": "072332c658213b99da4014189bcfecafe974f90a",
+	"@generated": "6cd8fadd33675421bf3f67fe6c857a2bace79355",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/commerce-tax-engine-fixed-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

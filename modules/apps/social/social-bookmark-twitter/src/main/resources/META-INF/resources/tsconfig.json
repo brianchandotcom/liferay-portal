@@ -1,5 +1,5 @@
 {
-	"@generated": "5326a8c75ee59b1d9128c3c8b9a1e82b92c5bb0f",
+	"@generated": "b716fb8ff63c773c808c24338c9892e03ebcf3ca",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/social-bookmark-twitter.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

@@ -1,5 +1,5 @@
 {
-	"@generated": "26f4d7ca7ba6841264aeacae53730c677e767608",
+	"@generated": "3f681656f88f3d1b909d5b5a99bf03cc1a01b06d",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/staging-bar-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

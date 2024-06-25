@@ -1,5 +1,5 @@
 {
-	"@generated": "1816da75822c741e2fb0e7eab231538d726f4cfd",
+	"@generated": "6be8caab5b923c7f59f0c2141be88bb7bbdc842c",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -28,7 +28,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/style-book-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

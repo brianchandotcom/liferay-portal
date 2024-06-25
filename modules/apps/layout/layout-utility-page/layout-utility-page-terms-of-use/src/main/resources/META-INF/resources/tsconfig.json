@@ -1,5 +1,5 @@
 {
-	"@generated": "25f173d2b5c97cfcf1b001972c7940240e3008f1",
+	"@generated": "31791cbe34ecdcf44dc9fab59012a560845e1b17",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../../.tsc/buildinfo/@liferay/layout-utility-page-terms-of-use.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../../node_modules/@types"

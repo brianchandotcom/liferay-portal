@@ -1,5 +1,5 @@
 {
-	"@generated": "205a7704e32ff74b595bb1dcabd693de7e1b983a",
+	"@generated": "0364f869a0c734089b495071350cae5a6385619c",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/data-engine-rest-impl.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

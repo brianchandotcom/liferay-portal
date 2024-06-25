@@ -1,5 +1,5 @@
 {
-	"@generated": "6d3b350491ce8538bd60f5849caf46b967c8cbc7",
+	"@generated": "52b7331341c8ab1e6f677bdb1c04280ec07af171",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-js-recharts.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

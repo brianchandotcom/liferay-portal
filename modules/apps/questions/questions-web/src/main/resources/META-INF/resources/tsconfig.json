@@ -1,5 +1,5 @@
 {
-	"@generated": "6c3c38d0b0af27c99455cbe043c734b815e47656",
+	"@generated": "06ff2697a2da5fd4b66fb24f7d0be758aa3973dc",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -31,7 +31,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/questions-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

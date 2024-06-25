@@ -1,5 +1,5 @@
 {
-	"@generated": "d46e44ed0ee6f0f8ff70b7ac8cb8c1cdc5a5e2bb",
+	"@generated": "14468260e219dd85aa2b7b78628914585ae722cb",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/frontend-editor-ckeditor-sample-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

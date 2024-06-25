@@ -1,5 +1,5 @@
 {
-	"@generated": "1748bbe3c7fd906d52e4fed8fa3ed13e89c1e46f",
+	"@generated": "6a83b7757509ba4d07c0f2890a6d4d7aae922c50",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/social-bookmarks-taglib.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

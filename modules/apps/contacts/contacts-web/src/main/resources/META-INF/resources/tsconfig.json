@@ -1,5 +1,5 @@
 {
-	"@generated": "952b1f18a553db32e93684b57a3ba75b026e8d22",
+	"@generated": "23996d1a73aa8941c46816d1c2dfd8571b333b96",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/contacts-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

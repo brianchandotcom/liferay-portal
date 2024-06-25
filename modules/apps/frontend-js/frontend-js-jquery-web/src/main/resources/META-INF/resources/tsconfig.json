@@ -1,5 +1,5 @@
 {
-	"@generated": "1ef043c63bb83dd8fca06c2e1cc9e6d0cd6a26ca",
+	"@generated": "bf910a848d89bd7635b4931474141bc1dda4d002",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-js-jquery-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

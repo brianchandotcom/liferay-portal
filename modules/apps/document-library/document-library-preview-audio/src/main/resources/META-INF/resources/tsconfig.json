@@ -1,5 +1,5 @@
 {
-	"@generated": "5674d46722e56600d05d2fe4b2de2f1533877075",
+	"@generated": "12a1954c5f177745058387cfa73ab64ece39dd7d",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/document-library-preview-audio.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

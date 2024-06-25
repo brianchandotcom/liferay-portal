@@ -1,5 +1,5 @@
 {
-	"@generated": "e2b66720ab1be179140db2124906e66e25cb3232",
+	"@generated": "89f0554409715c071d626ae45c3e4809e3dfbe02",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/commerce-currency-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

@@ -1,5 +1,5 @@
 {
-	"@generated": "5e626fadedd386a869282edfec8b3a271842299c",
+	"@generated": "2556c573be2f323f15800623c8ffa4601d6cf066",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -25,7 +25,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/segments-simulation-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

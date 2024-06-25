@@ -1,5 +1,5 @@
 {
-	"@generated": "ba649dc05dd1bac43be20cb1420a73829d51a530",
+	"@generated": "b0a48bbf7e7516de794e866da584cb26a240d57e",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/portal-workflow-instance-tracker-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

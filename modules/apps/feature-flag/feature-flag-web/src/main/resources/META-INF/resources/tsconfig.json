@@ -1,5 +1,5 @@
 {
-	"@generated": "0276a1814552cc8c538a5a0d60a7ab7bc096e685",
+	"@generated": "c4ab0037ffeed73a4c510a8f04a8b4cef2403e2b",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/feature-flag-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

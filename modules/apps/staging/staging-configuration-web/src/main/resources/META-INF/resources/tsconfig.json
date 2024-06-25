@@ -1,5 +1,5 @@
 {
-	"@generated": "b6d1ab3b1623f96761a8cfadaa849ef7c95ce034",
+	"@generated": "e6400eeee28eccfd6c98151ed3dbb21373d50f54",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/staging-configuration-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

@@ -1,5 +1,5 @@
 {
-	"@generated": "1e978eea2b4762be759ec6e30747be933d4b5574",
+	"@generated": "d27f1e82a72710c11d4d0745c04a1e221c1334d2",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/cookies-banner-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

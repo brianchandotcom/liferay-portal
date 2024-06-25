@@ -1,5 +1,5 @@
 {
-	"@generated": "384d16ca36ac87d488b4080fb0c41098ea2cd17c",
+	"@generated": "f1d787ab55a9d0a41bfe94faf289410b7c10f8f8",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/frontend-js-tooltip-support-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

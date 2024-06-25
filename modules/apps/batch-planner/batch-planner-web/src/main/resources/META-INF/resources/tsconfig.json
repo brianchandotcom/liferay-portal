@@ -1,5 +1,5 @@
 {
-	"@generated": "7501f31aa38ece12d052383b7dba78cd09c625b3",
+	"@generated": "65eb90dc96334d2af393f7f455c7ff826e31abf2",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/batch-planner-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

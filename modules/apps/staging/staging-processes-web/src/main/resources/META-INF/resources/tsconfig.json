@@ -1,5 +1,5 @@
 {
-	"@generated": "f222d989b183d3a40d623ef5549cabfa5cc56d5e",
+	"@generated": "c318364cc90bf40d5f26c18ad1903008fbd6a07f",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/staging-processes-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

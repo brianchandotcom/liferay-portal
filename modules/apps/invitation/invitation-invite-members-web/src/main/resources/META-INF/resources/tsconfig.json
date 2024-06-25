@@ -1,5 +1,5 @@
 {
-	"@generated": "5b8c829cb28677174bb4591e926832014f0ea067",
+	"@generated": "e0bcf65c96b01ec81da30ff5574e46d75514ff3e",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/invitation-invite-members-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

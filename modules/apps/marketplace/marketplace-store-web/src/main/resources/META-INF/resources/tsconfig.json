@@ -1,5 +1,5 @@
 {
-	"@generated": "93e25992828234846284feeabdcfccde1f6fc85f",
+	"@generated": "21599cf63ad9db69ab6b7722e9aa911526f9495a",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,7 +16,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/marketplace-store-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

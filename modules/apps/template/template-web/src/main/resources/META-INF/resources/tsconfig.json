@@ -1,5 +1,5 @@
 {
-	"@generated": "dc36f3ae1ae5687651e0f3f1616e91c52d277eba",
+	"@generated": "f84fbf8a1e3ea7493f9d0e5e8e0fdcf4494adbca",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -28,7 +28,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/template-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

@@ -1,5 +1,5 @@
 {
-	"@generated": "167b5b092fd8786ea099f23d3f2807902bfb7a4c",
+	"@generated": "c8d4c0f0071eea85f92bcfee2689a14a11317d8b",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -25,7 +25,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/segments-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

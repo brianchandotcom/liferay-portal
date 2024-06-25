@@ -1,5 +1,5 @@
 {
-	"@generated": "ddbd813c6fa003e8d963bbcfffef93235760f09c",
+	"@generated": "a21e6933551e935b142ffdc9588e8ac8cf3f81f2",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/expando-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

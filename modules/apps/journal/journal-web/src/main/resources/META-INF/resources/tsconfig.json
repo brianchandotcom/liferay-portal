@@ -1,5 +1,5 @@
 {
-	"@generated": "961351e8aeaab5cce1eef4d696cd9a3be5c36560",
+	"@generated": "65be7166a9c59756acddbbf4939638e7738d638a",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -34,7 +34,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/journal-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

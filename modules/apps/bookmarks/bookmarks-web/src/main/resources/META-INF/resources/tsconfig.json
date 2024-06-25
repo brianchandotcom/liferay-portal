@@ -1,5 +1,5 @@
 {
-	"@generated": "fab6ea0d7e575f074c69ff5a08d47187e31552a5",
+	"@generated": "4ace87232ab6b39c9d10576ba6e849cc377cd13a",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/bookmarks-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

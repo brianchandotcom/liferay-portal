@@ -1,5 +1,5 @@
 {
-	"@generated": "e40a05694037069d6acaccd18709f73a9b06e799",
+	"@generated": "7462bf0ee25312dc592ea736bac4649230117148",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/commerce-payment-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

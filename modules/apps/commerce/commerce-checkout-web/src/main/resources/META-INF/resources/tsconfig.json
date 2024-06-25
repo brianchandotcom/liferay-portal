@@ -1,5 +1,5 @@
 {
-	"@generated": "edddd10f1492f9b7bb7012817238f90d05a5c4b1",
+	"@generated": "9f627c0d519070a8218ca402502d29784e597ae0",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,7 +19,7 @@
 		"rootDir": "../../../../../../../..",
 		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/commerce-checkout-web.tsbuildinfo",
 		"typeRoots": [
 			"../../../../../../../../node_modules/@types"

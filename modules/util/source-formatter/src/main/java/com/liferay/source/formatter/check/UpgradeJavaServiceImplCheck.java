@@ -16,7 +16,8 @@ public class UpgradeJavaServiceImplCheck
 
 	@Override
 	protected String getAnnotationContent(
-		String className, String content, JavaClass javaClass) {
+		String absolutePath, String className, String content,
+		JavaClass javaClass) {
 
 		return joinLines(
 			"@Component(", "\tproperty = {",

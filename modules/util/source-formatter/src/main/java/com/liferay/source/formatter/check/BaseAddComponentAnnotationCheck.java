@@ -33,7 +33,8 @@ public abstract class BaseAddComponentAnnotationCheck extends BaseUpgradeCheck {
 					"public class",
 					joinLines(
 						getAnnotationContent(
-							extendedClassName, content, javaClass),
+							absolutePath, extendedClassName, content,
+							javaClass),
 						"public class"));
 			}
 		}
@@ -42,7 +43,7 @@ public abstract class BaseAddComponentAnnotationCheck extends BaseUpgradeCheck {
 	}
 
 	protected abstract String getAnnotationContent(
-		String className, String content, JavaClass javaClass);
+		String absolutePath, String className, String content, JavaClass javaClass);
 
 	protected abstract boolean isValidClassName(String className);
 

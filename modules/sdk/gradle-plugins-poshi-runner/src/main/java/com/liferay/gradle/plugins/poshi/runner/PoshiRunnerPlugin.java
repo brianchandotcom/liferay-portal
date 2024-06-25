@@ -457,6 +457,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		test.setTestClassesDirs(
 			project.files(_getExpandedPoshiRunnerDir(project)));
 
+		test.useJUnitPlatform();
+
 		TaskOutputs taskOutputs = test.getOutputs();
 
 		taskOutputs.upToDateWhen(

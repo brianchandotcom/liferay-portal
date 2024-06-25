@@ -5,6 +5,7 @@
 
 package com.liferay.saml.web.internal.struts;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -111,7 +112,7 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 		else if (samlSpIdpConnections.size() == 1) {
 			JspUtil.dispatch(
 				httpServletRequest, httpServletResponse,
-				"/portal/saml/select_idp.jsp", "", true);
+				"/portal/saml/select_idp.jsp", StringPool.BLANK, true);
 
 			return null;
 		}

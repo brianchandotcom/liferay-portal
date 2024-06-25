@@ -270,7 +270,7 @@ public class BreadcrumbUtil {
 		breadcrumbEntry.setTitle(
 			group.getDescriptiveName(themeDisplay.getLocale()));
 
-		Layout firstLayout;
+		Layout firstLayout = null;
 
 		if (layoutSet.isPrivateLayout()) {
 			firstLayout = LayoutServiceUtil.fetchFirstLayout(

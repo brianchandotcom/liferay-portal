@@ -270,7 +270,8 @@ public class EmailNotificationType extends BaseNotificationType {
 
 		userLocale = user.getLocale();
 
-		if (user.isGuestUser() &&
+		if (FeatureFlagManagerUtil.isEnabled("LPD-21580") &&
+			user.isGuestUser() &&
 			GetterUtil.getBoolean(useMostRelevantLocaleForGuestUsers)) {
 
 			userLocale = LocaleUtil.fromLanguageId(

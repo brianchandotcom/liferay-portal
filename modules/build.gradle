@@ -412,7 +412,7 @@ gradle.beforeProject {
 				rtlExcludedPathRegexps = [".+"]
 			}
 
-			if (!project.path.startsWith(":sdk:") && !project.path.startsWith(":test:") && !project.path.startsWith(":util:") && !project.path.contains("-theme-")) {
+			if (!project.path.startsWith(":sdk:") && !project.path.startsWith(":test:") && !project.path.startsWith(":util:") && !project.path.contains("-theme-") && !project.path.contains("site-initializer-")) {
 				buildCSS {
 					enabled = false
 				}

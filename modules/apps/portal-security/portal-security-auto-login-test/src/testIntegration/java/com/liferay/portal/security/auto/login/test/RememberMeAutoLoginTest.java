@@ -86,7 +86,6 @@ public class RememberMeAutoLoginTest {
 		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
 			mockHttpServletRequest, mockHttpServletResponse);
-
 		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
 			_buildRememberMeCookie(
@@ -149,7 +148,6 @@ public class RememberMeAutoLoginTest {
 			_cookiesManager.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 				mockHttpServletRequest, false));
-
 		Assert.assertNull(
 			_cookiesManager.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
@@ -180,7 +178,6 @@ public class RememberMeAutoLoginTest {
 			_cookiesManager.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 				mockHttpServletRequest, false));
-
 		Assert.assertNull(
 			_cookiesManager.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
@@ -193,7 +190,6 @@ public class RememberMeAutoLoginTest {
 		Cookie cookie = new Cookie(name, value);
 
 		cookie.setDomain("localhost");
-
 		cookie.setMaxAge(maxAge);
 
 		return cookie;

@@ -90,7 +90,6 @@ public class AuthenticatedSessionManagerUtilTest {
 			_cookiesManager.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 				mockHttpServletRequest, false));
-
 		Assert.assertNotNull(
 			_cookiesManager.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
@@ -137,7 +136,6 @@ public class AuthenticatedSessionManagerUtilTest {
 			_cookiesManager.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 				mockHttpServletRequest, false));
-
 		Assert.assertNull(
 			_cookiesManager.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,

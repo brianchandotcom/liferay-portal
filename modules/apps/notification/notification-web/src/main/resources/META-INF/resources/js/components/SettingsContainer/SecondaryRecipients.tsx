@@ -17,7 +17,7 @@ import {
 } from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {getCheckedChildren} from './rolesUtils';
+import {getCheckedChildren, handleMultiSelectRoleItemsChange} from './rolesUtils';
 
 interface SecondaryRecipientsProps {
 	emailNotificationRoles: MultiSelectItem[];
@@ -37,22 +37,6 @@ export function SecondaryRecipient({
 	const [bccRolesList, setBCCRolesList] = useState<MultiSelectItem[]>([]);
 	const [ccRolesList, setCCRolesList] = useState<MultiSelectItem[]>([]);
 	const [recipient] = values.recipients as EmailRecipients[];
-
-	const handleMultiSelectItemsChange = (itemsGroup: MultiSelectItem[]) => {
-		const newRecipients: EmailNotificationRecipients[] = [];
-
-		if (itemsGroup.length) {
-			itemsGroup.forEach((itemGroup) => {
-				itemGroup.children.forEach((child) => {
-					if (child.checked) {
-						newRecipients.push({['roleName']: child.value});
-					}
-				});
-			});
-		}
-
-		return newRecipients;
-	};
 
 	useEffect(() => {
 		if (emailNotificationRoles.length && !ccRolesList.length) {
@@ -200,9 +184,10 @@ export function SecondaryRecipient({
 										selectAllOption
 										setOptions={(items) => {
 											const newRecipients =
-												handleMultiSelectItemsChange(
+											handleMultiSelectRoleItemsChange(
 													items
 												);
+
 											setValues({
 												...values,
 												recipients: [
@@ -212,6 +197,7 @@ export function SecondaryRecipient({
 													},
 												],
 											});
+
 											setCCRolesList(items);
 										}}
 									/>
@@ -318,9 +304,10 @@ export function SecondaryRecipient({
 										selectAllOption
 										setOptions={(items) => {
 											const newRecipients =
-												handleMultiSelectItemsChange(
+											handleMultiSelectRoleItemsChange(
 													items
 												);
+
 											setValues({
 												...values,
 												recipients: [
@@ -330,6 +317,7 @@ export function SecondaryRecipient({
 													},
 												],
 											});
+											
 											setBCCRolesList(items);
 										}}
 									/>

@@ -40,6 +40,63 @@ components:
                 testrayStatusMetric:
                     $ref: "#/components/schemas/TestrayStatusMetric"
             type: object
+        TestrayCaseResult:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                comment:
+                    type: string
+                error:
+                    type: string
+                executionDate:
+                    type: string
+                gitHash:
+                    type: string
+                issues:
+                    type: string
+                priority:
+                    format: int64
+                    type: integer
+                status:
+                    type: string
+                testrayBuildId:
+                    format: int64
+                    type: integer
+                testrayCaseName:
+                    type: string
+                testrayCaseResultId:
+                    format: int64
+                    type: integer
+                testrayCaseTypeName:
+                    type: string
+                testrayComponentName:
+                    type: string
+                testrayProductVersionName:
+                    type: string
+                testrayRoutineId:
+                    format: int64
+                    type: integer
+                testrayRoutineName:
+                    type: string
+                testrayRunName:
+                    type: string
+                testrayRunNumber:
+                    format: int64
+                    type: integer
+                testrayTeamName:
+                    type: string
+                userImgUrl:
+                    type: string
+                userName:
+                    type: string
+                warning:
+                    type: integer
+            type: object
         TestrayCaseResultComparison:
             properties:
                 error1:
@@ -235,6 +292,182 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TestrayBuildAutofill"
             tags: ["TestrayBuildAutofill"]
+    "/testray-case-result-history/{testrayCaseId}":
+        get:
+            operationId: getTestrayCaseResultHistoryTestrayCasePage
+            parameters:
+                - in: path
+                  name: testrayCaseId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: error
+                  schema:
+                      type: string
+                - in: query
+                  name: issues
+                  schema:
+                      type: string
+                - in: query
+                  name: maxExecutionDate
+                  schema:
+                      type: string
+                - in: query
+                  name: minExecutionDate
+                  schema:
+                      type: string
+                - in: query
+                  name: noError
+                  schema:
+                      type: boolean
+                - in: query
+                  name: noIssues
+                  schema:
+                      type: boolean
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: status
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayProductVersionIds
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayRoutineIds
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayRunName
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayTeamIds
+                  schema:
+                      type: string
+                - in: query
+                  name: userId
+                  schema:
+                      type: string
+                - in: query
+                  name: warning
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayCaseResult"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayCaseResult"
+                                type: array
+            tags: ["TestrayCaseResult"]
+    "/testray-case-result/{testrayBuildId}":
+        get:
+            operationId: getTestrayCaseResultsTestrayBuildPage
+            parameters:
+                - in: path
+                  name: testrayBuildId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: comment
+                  schema:
+                      type: string
+                - in: query
+                  name: error
+                  schema:
+                      type: string
+                - in: query
+                  name: issues
+                  schema:
+                      type: string
+                - in: query
+                  name: noComment
+                  schema:
+                      type: boolean
+                - in: query
+                  name: noError
+                  schema:
+                      type: boolean
+                - in: query
+                  name: noIssues
+                  schema:
+                      type: boolean
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: priority
+                  schema:
+                      type: string
+                - in: query
+                  name: status
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseName
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayCaseTypeIds
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayComponentIds
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayRunId
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayRunName
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayTeamIds
+                  schema:
+                      type: string
+                - in: query
+                  name: userId
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayCaseResult"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestrayCaseResult"
+                                type: array
+            tags: ["TestrayCaseResult"]
     "/testray-run-comparisons/by-testray-routineId/{testrayRoutineId}":
         get:
             operationId: getTestrayRunComparisonByTestrayRoutineIdTestrayRoutine

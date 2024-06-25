@@ -53,7 +53,8 @@ public class ModelPreFilterContributorsRegistryImpl
 				_getMandatoryContributorNames(_getMandatoryContributors());
 
 			if ((includes != null) && !includes.isEmpty() &&
-				!includes.contains(StringPool.STAR)) {
+				!((includes.size() == 1) &&
+				  includes.contains(StringPool.STAR))) {
 
 				modelPreFilterContributors.removeIf(
 					modelPreFilterContributor -> {

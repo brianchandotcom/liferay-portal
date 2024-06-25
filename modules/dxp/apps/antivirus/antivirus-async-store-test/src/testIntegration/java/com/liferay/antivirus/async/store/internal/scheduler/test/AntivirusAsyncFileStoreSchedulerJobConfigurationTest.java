@@ -62,7 +62,7 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 	}
 
 	@Test(expected = Test.None.class)
-	public void testRunDoesNotThrowException() throws Exception {
+	public void testRun() throws Exception {
 		UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
 			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
 

@@ -28,8 +28,10 @@ export class CommerceMiniCartPage {
 	readonly showOptionsButton: Locator;
 	readonly submitButton: Locator;
 	readonly unitOfMeasureTableLabel: Locator;
+	readonly viewDetailsButton: Locator;
 
 	constructor(page: Page) {
+		this.cartItemActionsButton = page.getByTestId('cartItemActions');
 		this.editOptionsLabel = page.getByText('Edit Options', {exact: true});
 		this.editQuantityLabel = page.getByText('Edit Quantity', {exact: true});
 		this.editQuantitySelector = page.getByRole('spinbutton');
@@ -40,7 +42,6 @@ export class CommerceMiniCartPage {
 			exact: true,
 			name: 'Edit',
 		});
-		this.cartItemActionsButton = page.getByTestId('cartItemActions');
 		this.miniCartButton = page.getByTestId('miniCartButton');
 		this.miniCartButtonClose = page.locator('.mini-cart-close');
 		this.miniCartItemsContainer = page.locator('div.mini-cart-cart-items');
@@ -66,13 +67,17 @@ export class CommerceMiniCartPage {
 		this.unitOfMeasureTableLabel = page.getByText('Unit of Measure Table', {
 			exact: true,
 		});
+		this.viewDetailsButton = page.getByRole('button', {
+			exact: true,
+			name: 'View Details',
+		});
 	}
 
 	async quickAddToCart(sku: string) {
 		await this.miniCartButton.click();
 		await this.searchProductsInput.fill(sku);
+		await this.quickAddToCartSku(sku).waitFor({state: 'visible'});
 		await this.quickAddToCartSku(sku).click();
 		await this.quickAddToCartButton.click();
-		await this.miniCartButtonClose.click();
 	}
 }

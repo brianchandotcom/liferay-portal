@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 import {CommerceLayoutsPage} from '../commerceLayoutsPage';
 
 export class PendingOrdersPage {
+	readonly errorMessageCloseButton: Locator;
 	readonly layoutsPage: CommerceLayoutsPage;
 	readonly orderItemActionsButton: Locator;
 	readonly orderItemActionsButtonEdit: Locator;
@@ -15,9 +16,13 @@ export class PendingOrdersPage {
 	readonly pageLabel: Locator;
 	readonly pageTitle: Locator;
 	readonly panelList: Locator;
+	readonly skuLink: (sku: string) => Locator;
 	readonly viewButton: Locator;
 
 	constructor(page: Page) {
+		this.errorMessageCloseButton = page.getByRole('button', {
+			name: 'close',
+		});
 		this.layoutsPage = new CommerceLayoutsPage(page);
 		this.orderItemActionsButton = page.getByRole('button', {
 			name: 'Actions',
@@ -35,6 +40,7 @@ export class PendingOrdersPage {
 		this.panelList = page
 			.getByTestId('specificationFacetPanel')
 			.getByRole('button');
+		this.skuLink = (sku) => page.getByRole('link', {name: sku});
 		this.viewButton = page.getByLabel('View');
 	}
 

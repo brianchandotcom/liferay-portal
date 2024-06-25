@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
+import {DataApiHelpers} from '../../helpers/ApiHelpers';
 import {liferayConfig} from '../../liferay.config';
 
 export class CommerceLayoutsPage {
@@ -175,6 +176,82 @@ export class CommerceLayoutsPage {
 		await this.addWidgetButton.click();
 		await this.searchFormInput.fill(widgetName);
 		await this.addWidgetLabel(widgetName).click();
+	}
+
+	async cleanupSiteInitializerData(
+		apiHelpers: DataApiHelpers,
+		siteName: string
+	) {
+		const channels =
+			await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
+				siteName
+			);
+
+		apiHelpers.data.push({id: channels.items[0].id, type: 'channel'});
+
+		const catalogs =
+			await apiHelpers.headlessCommerceAdminCatalog.getCatalogsPage(
+				siteName
+			);
+
+		const catalogId = catalogs.items[0].id;
+
+		apiHelpers.data.push({id: catalogId, type: 'catalog'});
+
+		const products =
+			await apiHelpers.headlessCommerceAdminCatalog.getProductsPage(
+				50,
+				''
+			);
+
+		products.items.forEach((product) => {
+			if (product.catalogId === catalogId) {
+				apiHelpers.data.push({
+					id: product.productId,
+					type: 'product',
+				});
+			}
+		});
+
+		const options =
+			await apiHelpers.headlessCommerceAdminCatalog.getOptions();
+
+		options.items.forEach((option) => {
+			apiHelpers.data.push({
+				id: option.id,
+				type: 'option',
+			});
+		});
+
+		const optionCategories =
+			await apiHelpers.headlessCommerceAdminCatalog.getOptionCategories();
+
+		optionCategories.items.forEach((optionCategory) => {
+			apiHelpers.data.push({
+				id: optionCategory.id,
+				type: 'optionCategory',
+			});
+		});
+
+		const specifications =
+			await apiHelpers.headlessCommerceAdminCatalog.getSpecifications();
+
+		specifications.items.forEach((specification) => {
+			apiHelpers.data.push({
+				id: specification.id,
+				type: 'specification',
+			});
+		});
+
+		const warehouses =
+			await apiHelpers.headlessCommerceAdminInventoryApiHelper.getWarehousesPage();
+
+		warehouses.items.forEach((warehouse) => {
+			apiHelpers.data.push({
+				id: warehouse.id,
+				type: 'warehouse',
+			});
+		});
 	}
 
 	async createDisplayPageTemplate(

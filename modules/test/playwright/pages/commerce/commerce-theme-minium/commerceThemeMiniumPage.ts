@@ -6,6 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 export class CommerceThemeMiniumPage {
+	readonly goToMiniumLink: Locator;
 	readonly globalSearchButton: Locator;
 	readonly globalSearchClearButton: Locator;
 	readonly globalSearchInput: Locator;
@@ -16,8 +17,8 @@ export class CommerceThemeMiniumPage {
 	readonly stickerUserNav: Locator;
 
 	constructor(page: Page) {
+		this.goToMiniumLink = page.getByRole('link', {name: 'Go to Minium'});
 		this.page = page;
-
 		this.globalSearchButton = page.locator('.commerce-topbar-button');
 		this.globalSearchClearButton = page.getByLabel('Clear Search');
 		this.globalSearchInput = page

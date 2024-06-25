@@ -152,6 +152,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async deleteProductAccountGroup(id: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/product-account-groups/${id}`
+		);
+	}
+
 	async deleteCatalog(catalogId: number | string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/catalog/${catalogId}`
@@ -247,6 +253,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 			`${this.apiHelpers.baseUrl}${
 				this.basePath
 			}/products?${searchParams.toString()}`
+		);
+	}
+
+	async getProductAccountGroups(productId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/product-account-groups`
 		);
 	}
 
@@ -495,7 +507,10 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 
 		if (this.apiHelpers instanceof DataApiHelpers) {
-			this.apiHelpers.data.push({id: relatedProduct.id, type: 'relatedProduct'});
+			this.apiHelpers.data.push({
+				id: relatedProduct.id,
+				type: 'relatedProduct',
+			});
 		}
 
 		return relatedProduct;

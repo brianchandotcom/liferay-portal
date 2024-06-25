@@ -283,7 +283,7 @@ export class DataApiHelpers extends ApiHelpers {
 	}
 
 	async clearData() {
-		for await (const item of this.data.reverse()) {
+		for await (const item of this.data) {
 			switch (item.type) {
 				case 'account':
 					await this.headlessAdminUser.deleteAccount(item.id);
@@ -434,6 +434,13 @@ export class DataApiHelpers extends ApiHelpers {
 				default:
 					break;
 			}
+		}
+	}
+	setData(data: TDataApiHelpersData[]) {
+		this.data.length = 0;
+
+		while (data.length) {
+			this.data.push(data.pop());
 		}
 	}
 }

@@ -3,19 +3,32 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {test} from '@playwright/test';
+import {mergeTests} from '@playwright/test';
 
 import {DataApiHelpers} from '../helpers/ApiHelpers';
+import {BackendPage, backendPageTest} from './backendPageTest';
 
-const dataApiHelpersTest = test.extend<{apiHelpers: DataApiHelpers}>({
-	apiHelpers: async ({page}, use) => {
+const test = mergeTests(backendPageTest);
+
+const dataApiHelpersTest = test.extend<{
+	apiHelpers: DataApiHelpers;
+	backendPage: BackendPage;
+}>({
+	apiHelpers: async ({backendPage, page}, use) => {
 		const dataApiHelpers = new DataApiHelpers(page);
 
 		try {
 			await use(dataApiHelpers);
 		}
 		finally {
-			await dataApiHelpers.clearData();
+
+			// @ts-ignore
+
+			const adminDataApiHelpers = new DataApiHelpers(backendPage);
+
+			adminDataApiHelpers.setData(dataApiHelpers.data);
+
+			await adminDataApiHelpers.clearData();
 		}
 	},
 });

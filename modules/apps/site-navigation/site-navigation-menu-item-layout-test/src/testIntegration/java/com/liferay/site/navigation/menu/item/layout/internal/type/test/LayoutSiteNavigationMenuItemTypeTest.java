@@ -79,7 +79,7 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 	@Test
 	public void testAddToAutoMenuFalseToMenu() throws PortalException {
 		_layoutService.addLayout(
-			_group.getGroupId(), false, 0,
+			null, _group.getGroupId(), false, 0,
 			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(), "welcome"
 			).build(),
@@ -105,7 +105,7 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 				_serviceContext);
 
 		_layoutService.addLayout(
-			_group.getGroupId(), false, 0,
+			null, _group.getGroupId(), false, 0,
 			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(), "welcome"
 			).build(),
@@ -135,7 +135,7 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 	@Test
 	public void testAddToAutoMenuTrueToPrimaryMenu() throws PortalException {
 		_layoutService.addLayout(
-			_group.getGroupId(), false, 0,
+			null, _group.getGroupId(), false, 0,
 			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(), "welcome"
 			).build(),

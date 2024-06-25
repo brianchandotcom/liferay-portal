@@ -51,7 +51,7 @@ export class PageEditorPage {
 		);
 	}
 
-	async addFragment(setName: string, name: string) {
+	async addFragment(setName: string, name: string, dropTarget?: Locator) {
 		await this.goToSidebarTab('Fragments and Widgets');
 
 		const header = this.page.getByRole('menuitem', {
@@ -67,10 +67,30 @@ export class PageEditorPage {
 			await header.click();
 		}
 
-		await this.page.getByLabel(`Add ${name}`).focus();
+		if (dropTarget) {
+			await this.page.getByRole('menuitem', {name}).first().hover();
 
-		await this.page.keyboard.press('Enter');
-		await this.page.keyboard.press('Enter');
+			await this.page.mouse.down();
+			await dropTarget.hover();
+
+			const boundingClientRect = await dropTarget.evaluate((element) =>
+				element.getBoundingClientRect()
+			);
+
+			await dropTarget.hover({
+				position: {
+					x: boundingClientRect.width / 2,
+					y: boundingClientRect.height / 2,
+				},
+			});
+			await this.page.mouse.up();
+		}
+		else {
+			await this.page.getByLabel(`Add ${name}`).focus();
+
+			await this.page.keyboard.press('Enter');
+			await this.page.keyboard.press('Enter');
+		}
 
 		await this.waitForChangesSaved();
 	}

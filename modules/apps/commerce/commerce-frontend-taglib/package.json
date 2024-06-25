@@ -15,7 +15,7 @@
 	"scripts": {
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
-		"format": "liferay-npm-scripts format"
+		"format": "nodescripts format"
 	},
 	"version": "23.1.3"
 }

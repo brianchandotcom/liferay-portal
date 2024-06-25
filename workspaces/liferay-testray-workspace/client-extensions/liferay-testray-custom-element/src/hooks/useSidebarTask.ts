@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {atom, useAtomValue} from 'jotai';
 import {useMemo} from 'react';
 
 import SearchBuilder from '../core/SearchBuilder';
@@ -14,24 +15,29 @@ import {
 	testraySubtaskImpl,
 	testrayTaskUsersImpl,
 } from '../services/rest';
-import {SubtaskStatuses} from '../util/statuses';
+import {SubtaskStatuses, TaskStatuses} from '../util/statuses';
 import {useFetch} from './useFetch';
 
+const subtasksFilter = new SearchBuilder()
+	.eq('userId', Liferay.ThemeDisplay.getUserId())
+	.and()
+	.ne('dueStatus', SubtaskStatuses.MERGED)
+	.and()
+	.ne('dueStatus', SubtaskStatuses.COMPLETE)
+	.build();
+
+const taskFilters = new SearchBuilder()
+	.eq('userId', Liferay.ThemeDisplay.getUserId())
+	.and()
+	.eq('taskToTasksUsers/dueStatus', TaskStatuses.IN_ANALYSIS)
+	.build();
+
+export const taskSidebarRefresh = atom(0);
+
 export function useSidebarTask() {
-	const subtasksFilter = new SearchBuilder()
-		.eq('userId', Liferay.ThemeDisplay.getUserId())
-		.and()
-		.ne('dueStatus', SubtaskStatuses.MERGED)
-		.and()
-		.ne('dueStatus', SubtaskStatuses.COMPLETE)
-		.build();
-
-	const taskFilters = new SearchBuilder()
-		.eq('userId', Liferay.ThemeDisplay.getUserId())
-		.build();
-
+	const refresh = useAtomValue(taskSidebarRefresh);
 	const {data: tasksUserResponse} = useFetch<APIResponse<TestrayTaskUser>>(
-		testrayTaskUsersImpl.resource,
+		testrayTaskUsersImpl.resource + '&t=' + refresh,
 		{
 			params: {
 				filter: taskFilters,
@@ -42,7 +48,7 @@ export function useSidebarTask() {
 	);
 
 	const {data: subtasksResponse} = useFetch<APIResponse<TestraySubtask>>(
-		testraySubtaskImpl.resource,
+		testraySubtaskImpl.resource + '&t=' + refresh,
 		{
 			params: {
 				filter: subtasksFilter,

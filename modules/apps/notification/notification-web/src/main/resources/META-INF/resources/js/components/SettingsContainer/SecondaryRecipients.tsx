@@ -17,7 +17,10 @@ import {
 } from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {getCheckedChildren, handleMultiSelectRoleItemsChange} from './rolesUtils';
+import {
+	getCheckedChildren,
+	handleMultiSelectRoleItemsChange,
+} from './rolesUtil';
 
 interface SecondaryRecipientsProps {
 	emailNotificationRoles: MultiSelectItem[];
@@ -184,7 +187,7 @@ export function SecondaryRecipient({
 										selectAllOption
 										setOptions={(items) => {
 											const newRecipients =
-											handleMultiSelectRoleItemsChange(
+												handleMultiSelectRoleItemsChange(
 													items
 												);
 
@@ -304,7 +307,7 @@ export function SecondaryRecipient({
 										selectAllOption
 										setOptions={(items) => {
 											const newRecipients =
-											handleMultiSelectRoleItemsChange(
+												handleMultiSelectRoleItemsChange(
 													items
 												);
 
@@ -317,7 +320,7 @@ export function SecondaryRecipient({
 													},
 												],
 											});
-											
+
 											setBCCRolesList(items);
 										}}
 									/>

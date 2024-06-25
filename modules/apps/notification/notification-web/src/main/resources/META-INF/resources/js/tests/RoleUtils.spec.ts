@@ -8,7 +8,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {
 	getCheckedChildren,
 	getUserNotificationRoles,
-} from '../components/SettingsContainer/rolesUtils';
+} from '../components/SettingsContainer/rolesUtil';
 
 it('Assert role names checked items', () => {
 	const children = [

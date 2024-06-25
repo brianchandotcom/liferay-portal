@@ -13,7 +13,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {HEADERS} from '../../util/constants';
-import {getRoles, getUserNotificationRoles} from './rolesUtils';
+import {getRoles, getUserNotificationRoles} from './rolesUtil';
 
 interface User {
 	alternateName: string;

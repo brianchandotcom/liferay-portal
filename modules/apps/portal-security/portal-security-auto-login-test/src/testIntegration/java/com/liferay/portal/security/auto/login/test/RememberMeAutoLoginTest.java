@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.service.RememberMeTokenLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -26,9 +27,8 @@ import java.util.Date;
 
 import javax.servlet.http.Cookie;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,13 +48,9 @@ public class RememberMeAutoLoginTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
 	}
 
 	@Test
@@ -204,11 +200,12 @@ public class RememberMeAutoLoginTest {
 		return cookie;
 	}
 
-	private static User _user;
-
 	@Inject(
 		filter = "component.name=com.liferay.portal.security.auto.login.remember.me.RememberMeAutoLogin"
 	)
 	private AutoLogin _rememberMeAutoLogin;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

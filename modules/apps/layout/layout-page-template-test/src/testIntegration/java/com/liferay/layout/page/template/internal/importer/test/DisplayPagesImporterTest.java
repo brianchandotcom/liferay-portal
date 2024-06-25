@@ -155,9 +155,10 @@ public class DisplayPagesImporterTest {
 	}
 
 	@Test
-	public void testImportDisplayPageTemplateCollection() throws Exception {
+	public void testImportDisplayPageWithCollectionDisplay() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_importLayoutPageTemplateEntry("display-page-template-collection");
+			_importLayoutPageTemplateEntry(
+				"display-page-template-with-collection-display");
 
 		Assert.assertEquals(
 			"com.liferay.portal.kernel.repository.model.FileEntry",

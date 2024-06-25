@@ -3685,8 +3685,11 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
-	public void testUpdateObjectEntryWithAccountRestrictionAsAccountRoleWithPermission()
+	public void testUpdateObjectEntryWithAccountEntryRestricted3()
 		throws Exception {
+
+		// A user with an account role with update and view permissions can
+		// update related object entries with account restriction
 
 		ObjectDefinition objectDefinition = _createObjectDefinition(
 			Arrays.asList(

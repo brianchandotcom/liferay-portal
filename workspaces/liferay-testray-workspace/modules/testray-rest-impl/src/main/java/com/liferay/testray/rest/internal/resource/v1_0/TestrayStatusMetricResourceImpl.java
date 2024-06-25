@@ -78,13 +78,14 @@ public class TestrayStatusMetricResourceImpl
 
 		if (Validator.isNotNull(testrayCasePriorities)) {
 			sb.append("and c.priority_ in (");
-			sb.append(_interpolateParams(params, testrayCasePriorities));
+			sb.append(
+				TestrayUtil.interpolateParams(params, testrayCasePriorities));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and co.r_teamToComponents_c_teamId in (");
-			sb.append(_interpolateParams(params, testrayTeamIds));
+			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
 			sb.append(") ");
 		}
 
@@ -155,19 +156,20 @@ public class TestrayStatusMetricResourceImpl
 
 		if (Validator.isNotNull(testrayCasePriorities)) {
 			sb.append("and c.priority_ in (");
-			sb.append(_interpolateParams(params, testrayCasePriorities));
+			sb.append(
+				TestrayUtil.interpolateParams(params, testrayCasePriorities));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayCaseTypes)) {
 			sb.append("and c.r_caseTypeToCases_c_caseTypeId in (");
-			sb.append(_interpolateParams(params, testrayCaseTypes));
+			sb.append(TestrayUtil.interpolateParams(params, testrayCaseTypes));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and co.r_teamToComponents_c_teamId in (");
-			sb.append(_interpolateParams(params, testrayTeamIds));
+			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
 			sb.append(") ");
 		}
 
@@ -242,19 +244,20 @@ public class TestrayStatusMetricResourceImpl
 
 		if (Validator.isNotNull(testrayCasePriorities)) {
 			sb.append("and c.priority_ in (");
-			sb.append(_interpolateParams(params, testrayCasePriorities));
+			sb.append(
+				TestrayUtil.interpolateParams(params, testrayCasePriorities));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayCaseTypes)) {
 			sb.append("and c.r_caseTypeToCases_c_caseTypeId in (");
-			sb.append(_interpolateParams(params, testrayCaseTypes));
+			sb.append(TestrayUtil.interpolateParams(params, testrayCaseTypes));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and co.r_teamToComponents_c_teamId in (");
-			sb.append(_interpolateParams(params, testrayTeamIds));
+			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
 			sb.append(") ");
 		}
 
@@ -326,13 +329,14 @@ public class TestrayStatusMetricResourceImpl
 
 		if (Validator.isNotNull(testrayCasePriorities)) {
 			sb.append("and c.priority_ in (");
-			sb.append(_interpolateParams(params, testrayCasePriorities));
+			sb.append(
+				TestrayUtil.interpolateParams(params, testrayCasePriorities));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayCaseTypes)) {
 			sb.append("and c.r_caseTypeToCases_c_caseTypeId in (");
-			sb.append(_interpolateParams(params, testrayCaseTypes));
+			sb.append(TestrayUtil.interpolateParams(params, testrayCaseTypes));
 			sb.append(") ");
 		}
 
@@ -343,7 +347,7 @@ public class TestrayStatusMetricResourceImpl
 
 		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and t.c_teamId_ in (");
-			sb.append(_interpolateParams(params, testrayTeamIds));
+			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
 			sb.append(") ");
 		}
 
@@ -431,13 +435,14 @@ public class TestrayStatusMetricResourceImpl
 
 		if (Validator.isNotNull(testrayCasePriorities)) {
 			sb.append("and c.priority_ in (");
-			sb.append(_interpolateParams(params, testrayCasePriorities));
+			sb.append(
+				TestrayUtil.interpolateParams(params, testrayCasePriorities));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayCaseTypes)) {
 			sb.append("and c.r_caseTypeToCases_c_caseTypeId in (");
-			sb.append(_interpolateParams(params, testrayCaseTypes));
+			sb.append(TestrayUtil.interpolateParams(params, testrayCaseTypes));
 			sb.append(") ");
 		}
 
@@ -579,7 +584,7 @@ public class TestrayStatusMetricResourceImpl
 		if (Validator.isNotNull(testrayTaskStatus)) {
 			sb.append("and t.r_buildToTasks_c_buildId = b.c_buildId_ and ");
 			sb.append("t.dueStatus_ in (");
-			sb.append(_interpolateParams(params, testrayTaskStatus));
+			sb.append(TestrayUtil.interpolateParams(params, testrayTaskStatus));
 			sb.append(") ");
 		}
 
@@ -698,22 +703,6 @@ public class TestrayStatusMetricResourceImpl
 			GetterUtil.getLong(map.get("untested")));
 
 		return testrayStatusMetric;
-	}
-
-	private String _interpolateParams(List<Object> params, String values) {
-		String[] valuesArray = StringUtil.split(values);
-
-		StringBundler sb = new StringBundler();
-
-		for (String value : valuesArray) {
-			sb.append("? ");
-			sb.append(", ");
-			params.add(value);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
 	}
 
 	@Reference

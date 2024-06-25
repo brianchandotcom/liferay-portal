@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -102,6 +103,22 @@ public class TestrayUtil {
 			).get(
 				"count"
 			));
+	}
+
+	public static String interpolateParams(List<Object> params, String values) {
+		String[] valuesArray = StringUtil.split(values);
+
+		StringBundler sb = new StringBundler();
+
+		for (String value : valuesArray) {
+			sb.append("? ");
+			sb.append(", ");
+			params.add(value);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 }

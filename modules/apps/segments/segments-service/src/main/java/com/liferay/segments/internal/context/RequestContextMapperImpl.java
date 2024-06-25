@@ -7,7 +7,6 @@ package com.liferay.segments.internal.context;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
@@ -85,13 +84,9 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 		if ((device != null) &&
 			!Objects.equals(device, UnknownDevice.getInstance())) {
 
-			context.put(Context.DEVICE_MODEL, device.getModel());
-
 			screenResolutionDimensions = device.getScreenResolution();
 		}
 		else {
-			context.put(Context.DEVICE_MODEL, StringPool.BLANK);
-
 			screenResolutionDimensions = Dimensions.UNKNOWN;
 		}
 

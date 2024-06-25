@@ -266,8 +266,14 @@ public class AuthenticatedSessionManagerUtil {
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID, httpServletRequest);
 
 		if (Validator.isNotNull(rememberMeTokenId)) {
-			RememberMeTokenLocalServiceUtil.deleteRememberMeToken(
-				GetterUtil.getLong(rememberMeTokenId));
+			RememberMeToken rememberMeToken =
+				RememberMeTokenLocalServiceUtil.fetchRememberMeToken(
+					GetterUtil.getLong(rememberMeTokenId));
+
+			if (rememberMeToken != null) {
+				RememberMeTokenLocalServiceUtil.deleteRememberMeToken(
+					rememberMeToken);
+			}
 		}
 
 		CookiesManagerUtil.deleteCookies(

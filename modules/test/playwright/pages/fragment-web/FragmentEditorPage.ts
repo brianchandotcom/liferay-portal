@@ -39,6 +39,36 @@ export class FragmentEditorPage {
 		await this.page.getByText('Changes Saved').waitFor();
 	}
 
+	async addHTML(configuration: string) {
+
+		// Go to Code Tab
+
+		await this.page.getByRole('tab', {name: 'Code'}).waitFor();
+
+		await this.page.getByRole('tab', {name: 'Code'}).click();
+
+		// Enter HTML context
+
+		await this.page.getByText('HTML').waitFor();
+
+		// Delete current configuration
+
+		const codeMirror = await this.page
+			.locator('.CodeMirror-scroll')
+			.first();
+		await codeMirror.click();
+
+		await this.page.keyboard.press('Control+KeyA');
+		await this.page.keyboard.press('Backspace');
+
+		await this.page.getByText('Changes Saved').waitFor();
+
+		// Fill with new configuration
+
+		await this.page.keyboard.type(configuration);
+		await this.page.getByText('Changes Saved').waitFor();
+	}
+
 	async publish() {
 		await this.page.getByRole('button', {name: 'Publish'}).click();
 

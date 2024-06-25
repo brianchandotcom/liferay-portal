@@ -21,7 +21,10 @@ import {
 import React, {useEffect, useState} from 'react';
 
 import {NotificationTemplateError} from '../EditNotificationTemplate';
-import {getCheckedChildren, handleMultiSelectRoleItemsChange} from './rolesUtils';
+import {
+	getCheckedChildren,
+	handleMultiSelectRoleItemsChange,
+} from './rolesUtil';
 
 interface PrimaryRecipientProps {
 	emailNotificationRoles: MultiSelectItem[];
@@ -147,7 +150,8 @@ export function PrimaryRecipient({
 						)}
 						selectAllOption
 						setOptions={(items) => {
-							const newRecipients = handleMultiSelectRoleItemsChange(items);
+							const newRecipients =
+								handleMultiSelectRoleItemsChange(items);
 
 							setValues({
 								...values,
@@ -158,7 +162,7 @@ export function PrimaryRecipient({
 									},
 								],
 							});
-						
+
 							setToRolesList(items);
 						}}
 					/>

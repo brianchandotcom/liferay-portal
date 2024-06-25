@@ -23,7 +23,7 @@ import {BasicInfoContainer} from './BasicInfoContainer/BasicInfoContainer';
 import ContentContainer from './ContentContainer/ContentContainer';
 import DefinitionOfTermsContainer from './DefinitionOfTermsContainer/DefinitionOfTermsContainer';
 import {SettingsContainer} from './SettingsContainer/SettingsContainer';
-import {getEmailNotificationRoles} from './SettingsContainer/rolesUtils';
+import {getEmailNotificationRoles} from './SettingsContainer/rolesUtil';
 
 import './EditNotificationTemplate.scss';
 

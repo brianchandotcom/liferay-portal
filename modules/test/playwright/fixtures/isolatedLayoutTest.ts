@@ -66,14 +66,14 @@ function isolatedLayoutTest(options: IsolatedLayoutOptions = {}) {
 
 					// Create layout
 
-					layout = await apiHelpers.jsonWebServicesLayout.addLayout(
-						group.groupId,
-						getRandomString(),
-						{
+					layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+						groupId: group.groupId,
+						options: {
 							publish: options.publish,
 							type: options.type,
-						}
-					);
+						},
+						title: getRandomString(),
+					});
 
 					// Run test
 

@@ -195,7 +195,6 @@ public class RememberMeAutoLoginTest {
 		cookie.setDomain("localhost");
 
 		cookie.setMaxAge(maxAge);
-		cookie.setPath(StringPool.SLASH);
 
 		return cookie;
 	}

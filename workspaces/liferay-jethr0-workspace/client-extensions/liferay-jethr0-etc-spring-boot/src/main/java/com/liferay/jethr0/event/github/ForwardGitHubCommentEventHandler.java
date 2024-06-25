@@ -361,7 +361,8 @@ public class ForwardGitHubCommentEventHandler
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
 		String propertyValue = getJenkinsBranchBuildPropertyValue(
-			propertyName, gitHubPullRequest.getBaseRepositoryName());
+			propertyName, gitHubPullRequest.getBaseRepositoryName(),
+			gitHubPullRequest.getBaseBranchName());
 
 		return StringUtil.toSet(propertyValue, ",");
 	}
@@ -378,7 +379,8 @@ public class ForwardGitHubCommentEventHandler
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
 		String propertyValue = getJenkinsBranchBuildPropertyValue(
-			propertyName, gitHubPullRequest.getBaseRepositoryName());
+			propertyName, gitHubPullRequest.getBaseRepositoryName(),
+			gitHubPullRequest.getBaseBranchName());
 
 		return StringUtil.toSet(propertyValue, ",");
 	}

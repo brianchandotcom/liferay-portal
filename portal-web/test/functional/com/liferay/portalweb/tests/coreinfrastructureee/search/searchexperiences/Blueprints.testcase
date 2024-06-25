@@ -3931,9 +3931,15 @@ definition {
 
 		Navigator.gotoNavNested(navNested = "Query Settings");
 
-		Button.click(button = "Customize Contributors");
+		AssertChecked.assertCheckedNotVisible(
+			locator1 = "Radio#ANY",
+			radioLabel = "Disable All");
 
-		AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_TOGGLE_ENABLED");
+		Check.checkNotVisible(
+			locator1 = "Radio#ANY",
+			radioLabel = "Customize");
+
+		Button.click(button = "Customize Contributors");
 
 		ManagementBar.clickSelectAllCheckbox();
 
@@ -4830,6 +4836,10 @@ definition {
 		SelectWindow(value1 = "Creating and Managing Search Blueprints - Liferay Learn");
 
 		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
+
+		Check.checkNotVisible(
+			locator1 = "Radio#ANY",
+			radioLabel = "Enable All");
 
 		Navigator.gotoNavTab(navTab = "Configuration");
 

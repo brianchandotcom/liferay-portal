@@ -50,6 +50,7 @@ public class SugarCRMAccessTokenWebCacheItem implements WebCacheItem {
 		try {
 			Http.Options options = new Http.Options();
 
+			options.setCookieSpec(Http.CookieSpec.STANDARD);
 			options.setParts(
 				HashMapBuilder.put(
 					"client_id", _sugarCRMConfiguration.clientId()

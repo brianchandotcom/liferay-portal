@@ -70,11 +70,11 @@ public class LayoutsAdminDisplayContextTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_layoutActionsHelper = Mockito.mock(LayoutActionsHelper.class);
-		_liferayPortletRequest = new MockLiferayPortletActionRequest();
-
 		_setUpLanguageUtil();
 		_setUpPortalUtil();
+
+		_layoutActionsHelper = Mockito.mock(LayoutActionsHelper.class);
+		_liferayPortletRequest = new MockLiferayPortletActionRequest();
 
 		_layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(
 			null, _layoutActionsHelper, null, null, _liferayPortletRequest,
@@ -130,7 +130,6 @@ public class LayoutsAdminDisplayContextTest {
 		String url = _layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout);
 
 		Assert.assertTrue(url, StringUtil.startsWith(url, friendlyURL));
-
 		Assert.assertEquals(
 			url, layoutMode,
 			HttpComponentsUtil.getParameter(url, "p_l_mode", false));

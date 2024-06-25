@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -69,34 +68,9 @@ public class StagingBarDisplayContext {
 		).build();
 	}
 
-	public boolean isDraftLayout() {
-		if (_draftLayout != null) {
-			return _draftLayout;
-		}
-
-		if (!_layout.isTypeContent()) {
-			_draftLayout = false;
-
-			return _draftLayout;
-		}
-
-		boolean draftLayout = false;
-
-		if ((_layout.getClassNameId() == PortalUtil.getClassNameId(
-				Layout.class)) &&
-			(_layout.getClassPK() > 0)) {
-
-			draftLayout = true;
-		}
-
-		_draftLayout = draftLayout;
-
-		return _draftLayout;
-	}
-
 	public LayoutRevision updateLayoutRevision(LayoutRevision layoutRevision) {
 		if (!_layout.isTypeContent() || (layoutRevision == null) ||
-			layoutRevision.isApproved() || isDraftLayout()) {
+			layoutRevision.isApproved() || _layout.isDraftLayout()) {
 
 			return layoutRevision;
 		}
@@ -257,7 +231,6 @@ public class StagingBarDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingBarDisplayContext.class);
 
-	private Boolean _draftLayout;
 	private final Layout _layout;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;

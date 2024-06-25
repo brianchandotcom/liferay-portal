@@ -1214,17 +1214,20 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return layout;
 		}
 
-		Map<String, LayoutTypeController> layoutTypeControllers =
-			LayoutTypeControllerTracker.getLayoutTypeControllers();
-		List<String> types = new ArrayList<>();
+		List<String> types = TransformUtil.transformToList(
+			LayoutTypeControllerTracker.getTypes(),
+			type -> {
+				LayoutTypeController curLayoutTypeController =
+					LayoutTypeControllerTracker.getLayoutTypeController(type);
 
-		for (LayoutTypeController curLayoutTypeController :
-				layoutTypeControllers.values()) {
+				if ((curLayoutTypeController == null) ||
+					!curLayoutTypeController.isBrowsable()) {
 
-			if (curLayoutTypeController.isBrowsable()) {
-				types.add(layoutTypeController.getType());
-			}
-		}
+					return null;
+				}
+
+				return type;
+			});
 
 		ChildLayout browsableChildLayout = _getBrowsableChildLayout(
 			types, layout.getGroupId(), layout.getLayoutId(),

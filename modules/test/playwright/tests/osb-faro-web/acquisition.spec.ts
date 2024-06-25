@@ -12,11 +12,10 @@ import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
-import {faroConfig} from './faro.config';
-import {createChannel} from './utils/channel';
 import {CardSelector} from './utils/selectors';
 import {closeSessions} from './utils/sessions';
 import {changeTimeFilter} from './utils/time-filter';
+import {navigateToACSitesPageViaURL} from './utils/navigation';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -64,313 +63,412 @@ test('check if acquisition card displays PAID SEARCH channel after receiving an 
 	apiHelpers,
 	page,
 }) => {
-	const {channel, project} = await createChannel(
+	const channelName = 'My Property - ' + getRandomString();
+
+	const {channel, project} = await syncAnalyticsCloud({
 		apiHelpers,
-		'My Property - ' + getRandomString()
-	);
-
-	await syncAnalyticsCloud(apiHelpers, channel, page);
-
-	await sendEventByURL(page, 'utm_medium=paidsearch');
-
-	await closeSessions(apiHelpers, page);
-
-	await page.goto(
-		`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/${channel.id}/sites`
-	);
-
-	await page.waitForTimeout(3000);
-
-	await changeTimeFilter({
-		cardSelector: CardSelector.Acquisition,
+		channelName,
 		page,
-		timeFilterPeriod: 'Last 24 hours',
 	});
 
-	await checkAcquisitionChannelCount('paid search', '1', page);
+	await test.step('send event to initialize channel followed by closing the session', async () => {
+		await sendEventByURL(page, 'utm_medium=paidsearch');
 
-	await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-		`[${channel.id}]`,
-		project.groupId
-	);
+		await closeSessions(apiHelpers, page);
+	});
+
+	await test.step('go to AC workspace', async () => {
+		await navigateToACSitesPageViaURL({
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.waitForTimeout(3000);
+	});
+
+	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
+		await changeTimeFilter({
+			cardSelector: CardSelector.Acquisition,
+			page,
+			timeFilterPeriod: 'Last 24 hours',
+		});
+
+		await checkAcquisitionChannelCount('paid search', '1', page);
+	});
+
+	await test.step('delete channel', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
 });
 
 test('check if acquisition card displays DIRECT channel after receiving an event', async ({
 	apiHelpers,
 	page,
 }) => {
-	const {channel, project} = await createChannel(
+	const channelName = 'My Property - ' + getRandomString();
+
+	const {channel, project} = await syncAnalyticsCloud({
 		apiHelpers,
-		'My Property - ' + getRandomString()
-	);
-
-	await syncAnalyticsCloud(apiHelpers, channel, page);
-
-	await sendEventByURL(page, '');
-
-	await closeSessions(apiHelpers, page);
-
-	await page.goto(
-		`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/${channel.id}/sites`
-	);
-
-	await page.waitForTimeout(3000);
-
-	await changeTimeFilter({
-		cardSelector: CardSelector.Acquisition,
+		channelName,
 		page,
-		timeFilterPeriod: 'Last 24 hours',
 	});
 
-	await checkAcquisitionChannelCount('direct', '1', page);
+	await test.step('send event to initialize channel followed by closing the session', async () => {
+		await sendEventByURL(page, '');
 
-	await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-		`[${channel.id}]`,
-		project.groupId
-	);
+		await closeSessions(apiHelpers, page);
+	});
+
+	await test.step('go to AC workspace', async () => {
+		await navigateToACSitesPageViaURL({
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.waitForTimeout(3000);
+	});
+
+	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
+		await changeTimeFilter({
+			cardSelector: CardSelector.Acquisition,
+			page,
+			timeFilterPeriod: 'Last 24 hours',
+		});
+
+		await checkAcquisitionChannelCount('direct', '1', page);
+	});
+
+	await test.step('delete channel', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
 });
 
 test('check if acquisition card displays SOCIAL channel after receiving an event', async ({
 	apiHelpers,
 	page,
 }) => {
-	const {channel, project} = await createChannel(
+	const channelName = 'My Property - ' + getRandomString();
+
+	const {channel, project} = await syncAnalyticsCloud({
 		apiHelpers,
-		'My Property - ' + getRandomString()
-	);
-
-	await syncAnalyticsCloud(apiHelpers, channel, page);
-
-	await sendEventByURL(page, 'utm_medium=social');
-
-	await closeSessions(apiHelpers, page);
-
-	await page.goto(
-		`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/${channel.id}/sites`
-	);
-
-	await page.waitForTimeout(3000);
-
-	await changeTimeFilter({
-		cardSelector: CardSelector.Acquisition,
+		channelName,
 		page,
-		timeFilterPeriod: 'Last 24 hours',
 	});
 
-	await checkAcquisitionChannelCount('social', '1', page);
+	await test.step('send event to initialize channel followed by closing the session', async () => {
+		await sendEventByURL(page, 'utm_medium=social');
 
-	await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-		`[${channel.id}]`,
-		project.groupId
-	);
+		await closeSessions(apiHelpers, page);
+	});
+
+	await test.step('go to AC workspace', async () => {
+		await navigateToACSitesPageViaURL({
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.waitForTimeout(3000);
+	});
+
+	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
+		await changeTimeFilter({
+			cardSelector: CardSelector.Acquisition,
+			page,
+			timeFilterPeriod: 'Last 24 hours',
+		});
+
+		await checkAcquisitionChannelCount('social', '1', page);
+	});
+
+	await test.step('delete channel', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
 });
 
 test('check if acquisition card displays EMAIL channel after receiving an event', async ({
 	apiHelpers,
 	page,
 }) => {
-	const {channel, project} = await createChannel(
+	const channelName = 'My Property - ' + getRandomString();
+
+	const {channel, project} = await syncAnalyticsCloud({
 		apiHelpers,
-		'My Property - ' + getRandomString()
-	);
-
-	await syncAnalyticsCloud(apiHelpers, channel, page);
-
-	await sendEventByURL(page, 'utm_medium=email');
-
-	await closeSessions(apiHelpers, page);
-
-	await page.goto(
-		`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/${channel.id}/sites`
-	);
-
-	await page.waitForTimeout(3000);
-
-	await changeTimeFilter({
-		cardSelector: CardSelector.Acquisition,
+		channelName,
 		page,
-		timeFilterPeriod: 'Last 24 hours',
 	});
 
-	await checkAcquisitionChannelCount('email', '1', page);
+	await test.step('send event to initialize channel followed by closing the session', async () => {
+		await sendEventByURL(page, 'utm_medium=email');
 
-	await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-		`[${channel.id}]`,
-		project.groupId
-	);
+		await closeSessions(apiHelpers, page);
+	});
+
+	await test.step('go to AC workspace', async () => {
+		await navigateToACSitesPageViaURL({
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.waitForTimeout(3000);
+	});
+
+	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
+		await changeTimeFilter({
+			cardSelector: CardSelector.Acquisition,
+			page,
+			timeFilterPeriod: 'Last 24 hours',
+		});
+
+		await checkAcquisitionChannelCount('email', '1', page);
+	});
+
+	await test.step('delete channel', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
 });
 
 test('check if acquisition card displays AFFILIATES channel after receiving an event', async ({
 	apiHelpers,
 	page,
 }) => {
-	const {channel, project} = await createChannel(
+	const channelName = 'My Property - ' + getRandomString();
+
+	const {channel, project} = await syncAnalyticsCloud({
 		apiHelpers,
-		'My Property - ' + getRandomString()
-	);
-
-	await syncAnalyticsCloud(apiHelpers, channel, page);
-
-	await sendEventByURL(page, 'utm_medium=affiliate');
-
-	await closeSessions(apiHelpers, page);
-
-	await page.goto(
-		`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/${channel.id}/sites`
-	);
-
-	await page.waitForTimeout(3000);
-
-	await changeTimeFilter({
-		cardSelector: CardSelector.Acquisition,
+		channelName,
 		page,
-		timeFilterPeriod: 'Last 24 hours',
 	});
 
-	await checkAcquisitionChannelCount('affiliates', '1', page);
+	await test.step('send event to initialize channel followed by closing the session', async () => {
+		await sendEventByURL(page, 'utm_medium=affiliate');
 
-	await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-		`[${channel.id}]`,
-		project.groupId
-	);
+		await closeSessions(apiHelpers, page);
+	});
+
+	await test.step('go to AC workspace', async () => {
+		await navigateToACSitesPageViaURL({
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.waitForTimeout(3000);
+	});
+
+	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
+		await changeTimeFilter({
+			cardSelector: CardSelector.Acquisition,
+			page,
+			timeFilterPeriod: 'Last 24 hours',
+		});
+
+		await checkAcquisitionChannelCount('affiliates', '1', page);
+	});
+
+	await test.step('delete channel', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
 });
 
 test('check if acquisition card displays ORGANIC channel after receiving an event', async ({
 	apiHelpers,
 	page,
 }) => {
-	const {channel, project} = await createChannel(
+	const channelName = 'My Property - ' + getRandomString();
+
+	const {channel, project} = await syncAnalyticsCloud({
 		apiHelpers,
-		'My Property - ' + getRandomString()
-	);
-
-	await syncAnalyticsCloud(apiHelpers, channel, page);
-
-	await sendEventByURL(page, 'utm_medium=organic');
-
-	await closeSessions(apiHelpers, page);
-
-	await page.goto(
-		`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/${channel.id}/sites`
-	);
-
-	await page.waitForTimeout(3000);
-
-	await changeTimeFilter({
-		cardSelector: CardSelector.Acquisition,
+		channelName,
 		page,
-		timeFilterPeriod: 'Last 24 hours',
 	});
 
-	await checkAcquisitionChannelCount('organic', '1', page);
+	await test.step('send event to initialize channel followed by closing the session', async () => {
+		await sendEventByURL(page, 'utm_medium=organic');
 
-	await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-		`[${channel.id}]`,
-		project.groupId
-	);
+		await closeSessions(apiHelpers, page);
+	});
+
+	await test.step('go to AC workspace', async () => {
+		await navigateToACSitesPageViaURL({
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.waitForTimeout(3000);
+	});
+
+	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
+		await changeTimeFilter({
+			cardSelector: CardSelector.Acquisition,
+			page,
+			timeFilterPeriod: 'Last 24 hours',
+		});
+
+		await checkAcquisitionChannelCount('organic', '1', page);
+	});
+
+	await test.step('delete channel', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
 });
 
 test('check if acquisition card displays DISPLAY channel after receiving an event', async ({
 	apiHelpers,
 	page,
 }) => {
-	const {channel, project} = await createChannel(
+	const channelName = 'My Property - ' + getRandomString();
+
+	const {channel, project} = await syncAnalyticsCloud({
 		apiHelpers,
-		'My Property - ' + getRandomString()
-	);
-
-	await syncAnalyticsCloud(apiHelpers, channel, page);
-
-	await sendEventByURL(page, 'utm_medium=display');
-
-	await closeSessions(apiHelpers, page);
-
-	await page.goto(
-		`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/${channel.id}/sites`
-	);
-
-	await page.waitForTimeout(3000);
-
-	await changeTimeFilter({
-		cardSelector: CardSelector.Acquisition,
+		channelName,
 		page,
-		timeFilterPeriod: 'Last 24 hours',
 	});
 
-	await checkAcquisitionChannelCount('display', '1', page);
+	await test.step('send event to initialize channel followed by closing the session', async () => {
+		await sendEventByURL(page, 'utm_medium=display');
 
-	await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-		`[${channel.id}]`,
-		project.groupId
-	);
+		await closeSessions(apiHelpers, page);
+	});
+
+	await test.step('go to AC workspace', async () => {
+		await navigateToACSitesPageViaURL({
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.waitForTimeout(3000);
+	});
+
+	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
+		await changeTimeFilter({
+			cardSelector: CardSelector.Acquisition,
+			page,
+			timeFilterPeriod: 'Last 24 hours',
+		});
+
+		await checkAcquisitionChannelCount('display', '1', page);
+	});
+
+	await test.step('delete channel', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
 });
 
 test('check if acquisition card displays REFERRAL channel after receiving an event', async ({
 	apiHelpers,
 	page,
 }) => {
-	const {channel, project} = await createChannel(
+	const channelName = 'My Property - ' + getRandomString();
+
+	const {channel, project} = await syncAnalyticsCloud({
 		apiHelpers,
-		'My Property - ' + getRandomString()
-	);
-
-	await syncAnalyticsCloud(apiHelpers, channel, page);
-
-	await sendEventByURL(page, 'utm_medium=referral');
-
-	await closeSessions(apiHelpers, page);
-
-	await page.goto(
-		`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/${channel.id}/sites`
-	);
-
-	await page.waitForTimeout(3000);
-
-	await changeTimeFilter({
-		cardSelector: CardSelector.Acquisition,
+		channelName,
 		page,
-		timeFilterPeriod: 'Last 24 hours',
 	});
 
-	await checkAcquisitionChannelCount('referral', '1', page);
+	await test.step('send event to initialize channel followed by closing the session', async () => {
+		await sendEventByURL(page, 'utm_medium=referral');
 
-	await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-		`[${channel.id}]`,
-		project.groupId
-	);
+		await closeSessions(apiHelpers, page);
+	});
+
+	await test.step('go to AC workspace', async () => {
+		await navigateToACSitesPageViaURL({
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.waitForTimeout(3000);
+	});
+
+	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
+		await changeTimeFilter({
+			cardSelector: CardSelector.Acquisition,
+			page,
+			timeFilterPeriod: 'Last 24 hours',
+		});
+
+		await checkAcquisitionChannelCount('referral', '1', page);
+	});
+
+	await test.step('delete channel', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
 });
 
 test('check if acquisition card displays OTHER channel after receiving an event', async ({
 	apiHelpers,
 	page,
 }) => {
-	const {channel, project} = await createChannel(
+	const channelName = 'My Property - ' + getRandomString();
+
+	const {channel, project} = await syncAnalyticsCloud({
 		apiHelpers,
-		'My Property - ' + getRandomString()
-	);
-
-	await syncAnalyticsCloud(apiHelpers, channel, page);
-
-	await sendEventByURL(page, 'utm_medium=other');
-
-	await closeSessions(apiHelpers, page);
-
-	await page.goto(
-		`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/${channel.id}/sites`
-	);
-
-	await page.waitForTimeout(3000);
-
-	await changeTimeFilter({
-		cardSelector: CardSelector.Acquisition,
+		channelName,
 		page,
-		timeFilterPeriod: 'Last 24 hours',
 	});
 
-	await checkAcquisitionChannelCount('other', '1', page);
+	await test.step('send event to initialize channel followed by closing the session', async () => {
+		await sendEventByURL(page, 'utm_medium=other');
 
-	await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-		`[${channel.id}]`,
-		project.groupId
-	);
+		await closeSessions(apiHelpers, page);
+	});
+
+	await test.step('go to AC workspace', async () => {
+		await navigateToACSitesPageViaURL({
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.waitForTimeout(3000);
+	});
+
+	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
+		await changeTimeFilter({
+			cardSelector: CardSelector.Acquisition,
+			page,
+			timeFilterPeriod: 'Last 24 hours',
+		});
+
+		await checkAcquisitionChannelCount('other', '1', page);
+	});
+
+	await test.step('delete channel', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
 });

@@ -113,7 +113,7 @@ export async function syncAnalyticsCloud({
 }) {
 	const {channel, project} = await createChannel({
 		apiHelpers,
-		channelName: channelName,
+		channelName,
 	});
 
 	await createDataSource(page);

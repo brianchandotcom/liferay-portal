@@ -270,8 +270,7 @@ public class LayoutSEOLinkManagerPageTitleTest {
 		try (GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(),
-						_PID,
+						_group.getGroupId(), _PID,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeInstanceName", true
 						).put(
@@ -304,8 +303,7 @@ public class LayoutSEOLinkManagerPageTitleTest {
 		try (GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(),
-						_PID,
+						_group.getGroupId(), _PID,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeInstanceName", true
 						).put(
@@ -329,8 +327,7 @@ public class LayoutSEOLinkManagerPageTitleTest {
 		try (GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(),
-						_PID,
+						_group.getGroupId(), _PID,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeInstanceName", false
 						).put(
@@ -353,8 +350,7 @@ public class LayoutSEOLinkManagerPageTitleTest {
 		try (GroupConfigurationTemporarySwapper
 				groupConfigurationTemporarySwapper =
 					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(),
-						_PID,
+						_group.getGroupId(), _PID,
 						HashMapDictionaryBuilder.<String, Object>put(
 							"includeInstanceName", false
 						).put(

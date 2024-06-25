@@ -69,8 +69,8 @@ public class StagingBarDisplayContext {
 	}
 
 	public LayoutRevision updateLayoutRevision(LayoutRevision layoutRevision) {
-		if (!_layout.isTypeContent() || (layoutRevision == null) ||
-			layoutRevision.isApproved() || _layout.isDraftLayout()) {
+		if ((layoutRevision == null) || layoutRevision.isApproved() ||
+			!_layout.isTypeContent() || _layout.isDraftLayout()) {
 
 			return layoutRevision;
 		}

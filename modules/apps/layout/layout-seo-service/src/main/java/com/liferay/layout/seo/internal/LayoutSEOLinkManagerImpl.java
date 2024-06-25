@@ -13,6 +13,7 @@ import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -78,32 +79,13 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			layout, portletId, tilesTitle, titleListMergeable,
 			subtitleListMergeable, locale);
 
-		LayoutSEOGeneralGroupConfiguration layoutSEOGeneralGroupConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				LayoutSEOGeneralGroupConfiguration.class, layout.getGroupId());
+		String suffix = _getPageTitleSuffix(layout, companyName);
 
-		if (!layoutSEOGeneralGroupConfiguration.includeInstanceName() &&
-			!layoutSEOGeneralGroupConfiguration.includeSiteName()) {
-
-			return layoutTitle;
+		if (Validator.isNotNull(suffix)) {
+			return _merge(layoutTitle, suffix);
 		}
 
-		if (layoutSEOGeneralGroupConfiguration.includeInstanceName() &&
-			layoutSEOGeneralGroupConfiguration.includeSiteName()) {
-
-			String siteAndCompanyName = _getPageTitleSuffix(
-				layout, companyName);
-
-			return _merge(layoutTitle, siteAndCompanyName);
-		}
-
-		if (layoutSEOGeneralGroupConfiguration.includeInstanceName()) {
-			return _merge(layoutTitle, companyName);
-		}
-
-		Group group = layout.getGroup();
-
-		return _merge(layoutTitle, group.getDescriptiveName());
+		return layoutTitle;
 	}
 
 	@Override
@@ -259,15 +241,37 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	private String _getPageTitleSuffix(Layout layout, String companyName)
 		throws PortalException {
 
-		Group group = layout.getGroup();
+		LayoutSEOGeneralGroupConfiguration layoutSEOGeneralGroupConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				LayoutSEOGeneralGroupConfiguration.class, layout.getGroupId());
 
-		if (group.isControlPanel() || group.isLayoutPrototype() ||
-			StringUtil.equals(companyName, group.getDescriptiveName())) {
+		if (!layoutSEOGeneralGroupConfiguration.includeInstanceName() &&
+			!layoutSEOGeneralGroupConfiguration.includeSiteName()) {
 
+			return StringPool.BLANK;
+		}
+
+		if (layoutSEOGeneralGroupConfiguration.includeInstanceName() &&
+			layoutSEOGeneralGroupConfiguration.includeSiteName()) {
+
+			Group group = layout.getGroup();
+
+			if (group.isControlPanel() || group.isLayoutPrototype() ||
+				StringUtil.equals(companyName, group.getDescriptiveName())) {
+
+				return companyName;
+			}
+
+			return _merge(group.getDescriptiveName(), companyName);
+		}
+
+		if (layoutSEOGeneralGroupConfiguration.includeInstanceName()) {
 			return companyName;
 		}
 
-		return _merge(group.getDescriptiveName(), companyName);
+		Group group = layout.getGroup();
+
+		return group.getDescriptiveName();
 	}
 
 	private ThemeDisplay _getThemeDisplay() {

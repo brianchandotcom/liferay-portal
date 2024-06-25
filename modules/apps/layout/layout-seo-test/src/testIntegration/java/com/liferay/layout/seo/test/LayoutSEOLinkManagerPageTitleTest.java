@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.language.Language;
@@ -396,6 +397,99 @@ public class LayoutSEOLinkManagerPageTitleTest {
 		Assert.assertEquals(
 			_group.getName() + " - " + companyName,
 			_layoutSEOLinkManager.getPageTitleSuffix(_layout, companyName));
+	}
+
+	@Test
+	public void testGetPageTitleSuffixWithIncludeInstanceNameWithIncludeSiteName()
+		throws Exception {
+
+		try (GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeInstanceName", true
+						).put(
+							"includeSiteName", true
+						).build())) {
+
+			String companyName = RandomTestUtil.randomString();
+
+			Assert.assertEquals(
+				StringBundler.concat(_group.getName(), " - ", companyName),
+				_layoutSEOLinkManager.getPageTitleSuffix(_layout, companyName));
+
+			// Asserts instance and site share the same name
+
+			Assert.assertEquals(
+				_group.getName(),
+				_layoutSEOLinkManager.getPageTitleSuffix(
+					_layout, _group.getName()));
+		}
+	}
+
+	@Test
+	public void testGetPageTitleSuffixWithIncludeInstanceNameWithoutIncludeSiteName()
+		throws Exception {
+
+		try (GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeInstanceName", true
+						).put(
+							"includeSiteName", false
+						).build())) {
+
+			String companyName = RandomTestUtil.randomString();
+
+			Assert.assertEquals(
+				companyName,
+				_layoutSEOLinkManager.getPageTitleSuffix(_layout, companyName));
+		}
+	}
+
+	@Test
+	public void testGetPageTitleSuffixWithoutIncludeInstanceNameWithIncludeSiteName()
+		throws Exception {
+
+		try (GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeInstanceName", false
+						).put(
+							"includeSiteName", true
+						).build())) {
+
+			Assert.assertEquals(
+				_group.getName(),
+				_layoutSEOLinkManager.getPageTitleSuffix(
+					_layout, RandomTestUtil.randomString()));
+		}
+	}
+
+	@Test
+	public void testGetPageTitleSuffixWithoutIncludeInstanceNameWithoutIncludeSiteName()
+		throws Exception {
+
+		try (GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeInstanceName", false
+						).put(
+							"includeSiteName", false
+						).build())) {
+
+			Assert.assertEquals(
+				StringPool.BLANK,
+				_layoutSEOLinkManager.getPageTitleSuffix(
+					_layout, RandomTestUtil.randomString()));
+		}
 	}
 
 	@Test

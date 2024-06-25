@@ -80,7 +80,7 @@ public class UpgradeLayoutExternalReferenceCodeTest {
 
 		String externalReferenceCode = layout.getExternalReferenceCode();
 
-		_setExternalReferenceCodeToNull(layout.getPlid());
+		_setExternalReferenceCodeToBlank(layout.getPlid());
 
 		layout = _layoutLocalService.fetchLayout(layout.getPlid());
 
@@ -91,12 +91,22 @@ public class UpgradeLayoutExternalReferenceCodeTest {
 			_layoutLocalService.fetchLayoutByExternalReferenceCode(
 				externalReferenceCode, _group.getGroupId()));
 
+		_runUpgrade();
+
+		Layout updatedLayout = _layoutLocalService.fetchLayout(
+			layout.getPlid());
+
+		Assert.assertNotEquals(
+			StringPool.BLANK, updatedLayout.getExternalReferenceCode());
+		Assert.assertEquals(
+			updatedLayout.getUuid(), updatedLayout.getExternalReferenceCode());
+
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		String draftExternalReferenceCode =
 			draftLayout.getExternalReferenceCode();
 
-		_setExternalReferenceCodeToNull(draftLayout.getPlid());
+		_setExternalReferenceCodeToBlank(draftLayout.getPlid());
 
 		draftLayout = _layoutLocalService.fetchLayout(draftLayout.getPlid());
 
@@ -109,17 +119,11 @@ public class UpgradeLayoutExternalReferenceCodeTest {
 
 		_runUpgrade();
 
-		Layout updatedLayout = _layoutLocalService.fetchLayout(
-			layout.getPlid());
-
-		Assert.assertNotNull(updatedLayout.getExternalReferenceCode());
-		Assert.assertEquals(
-			updatedLayout.getUuid(), updatedLayout.getExternalReferenceCode());
-
 		Layout updatedDraftLayout = _layoutLocalService.fetchLayout(
 			draftLayout.getPlid());
 
-		Assert.assertNotNull(updatedDraftLayout.getExternalReferenceCode());
+		Assert.assertNotEquals(
+			StringPool.BLANK, updatedLayout.getExternalReferenceCode());
 		Assert.assertEquals(
 			updatedDraftLayout.getUuid(),
 			updatedDraftLayout.getExternalReferenceCode());
@@ -134,9 +138,9 @@ public class UpgradeLayoutExternalReferenceCodeTest {
 		_multiVMPool.clear();
 	}
 
-	private void _setExternalReferenceCodeToNull(long plid) throws Exception {
+	private void _setExternalReferenceCodeToBlank(long plid) throws Exception {
 		_db.runSQL(
-			"update Layout set externalReferenceCode = null where plid = " +
+			"update Layout set externalReferenceCode = '' where plid = " +
 				plid);
 
 		_multiVMPool.clear();

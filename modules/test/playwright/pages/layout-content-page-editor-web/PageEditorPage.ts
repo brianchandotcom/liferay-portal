@@ -7,6 +7,7 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {liferayConfig} from '../../liferay.config';
 import getPageDefinition from '../../tests/layout-content-page-editor-web/utils/getPageDefinition';
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
@@ -225,10 +226,13 @@ export class PageEditorPage {
 			.frameLocator('iframe[title="Select"]')
 			.getByRole('link', {name: collectionType})
 			.click();
-		await this.page
-			.frameLocator('iframe[title="Select"]')
-			.getByRole('button', {name: 'Select ' + collectionTitle})
-			.click();
+
+		await clickAndExpectToBeHidden({
+			target: this.page.locator('.modal-dialog'),
+			trigger: this.page
+				.frameLocator('iframe[title="Select"]')
+				.getByRole('button', {name: 'Select ' + collectionTitle}),
+		});
 	}
 
 	async chooseCollectionFilterOption(fieldName: string, option: string) {

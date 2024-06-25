@@ -236,6 +236,7 @@ public class CommerceReturnItemObjectValidationRuleEngineImplTest {
 		List<ObjectDefinition> objectDefinitions =
 			_objectDefinitionLocalService.getObjectDefinitions(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
 		ObjectDefinition commerceReturnObjectDefinition = null;
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {

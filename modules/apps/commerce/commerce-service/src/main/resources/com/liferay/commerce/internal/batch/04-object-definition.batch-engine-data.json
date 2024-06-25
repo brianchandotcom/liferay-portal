@@ -217,9 +217,9 @@
 				{
 					"active": true,
 					"engine": "javaDelegate#commerceReturnAccountEntryId",
-					"engineLabel": "commerceReturnAccountEntryId",
+					"engineLabel": "Commerce Return Account Entry ID",
 					"errorLabel": {
-						"en_US": "Account Entry ID is invalid"
+						"en_US": "The account entry ID is invalid."
 					},
 					"externalReferenceCode": "COMMERCE_RETURN_ACCOUNT_ENTRY_ID",
 					"name": {
@@ -232,9 +232,9 @@
 				{
 					"active": true,
 					"engine": "javaDelegate#commerceReturnCommerceOrderId",
-					"engineLabel": "commerceReturnCommerceOrderId",
+					"engineLabel": "Commerce Return Commerce Order ID",
 					"errorLabel": {
-						"en_US": "Commerce Order ID is invalid"
+						"en_US": "The commerce order ID is invalid."
 					},
 					"externalReferenceCode": "COMMERCE_RETURN_COMMERCE_ORDER_ID",
 					"name": {
@@ -247,9 +247,9 @@
 				{
 					"active": true,
 					"engine": "javaDelegate#commerceReturnCommerceOrderStatus",
-					"engineLabel": "commerceReturnCommerceOrderStatus",
+					"engineLabel": "Commerce Return Commerce Order Status",
 					"errorLabel": {
-						"en_US": "Commerce Order Status is invalid"
+						"en_US": "The commerce order status is invalid."
 					},
 					"externalReferenceCode": "COMMERCE_RETURN_COMMERCE_ORDER_STATUS",
 					"name": {
@@ -262,9 +262,9 @@
 				{
 					"active": true,
 					"engine": "javaDelegate#commerceReturnReturnStatus",
-					"engineLabel": "commerceReturnReturnStatus",
+					"engineLabel": "Commerce Return Return Status",
 					"errorLabel": {
-						"en_US": "Return Status is invalid"
+						"en_US": "The return status is invalid."
 					},
 					"externalReferenceCode": "COMMERCE_RETURN_RETURN_STATUS",
 					"name": {

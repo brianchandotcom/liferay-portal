@@ -224,6 +224,13 @@ pre[class*='language-'] {
 	max-width: var(--container-max-xl);
 }
 
+.course-bottom-nav:hover,
+.course-nav-bottom__banner:hover {
+	border: 2px solid var(--color-neutral-0, #ffffff);
+	cursor: pointer;
+	outline: 2px solid var(--color-brand-primary-lighten-2, #6399ff);
+}
+
 .course-nav-bottom__banner {
 	align-items: center;
 	background-color: var(--color-action-primary-default, #0b5fff);

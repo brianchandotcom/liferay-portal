@@ -282,6 +282,8 @@ public class BreadcrumbUtil {
 		}
 
 		if (firstLayout == null) {
+			breadcrumbEntry.setBrowsable(false);
+
 			breadcrumbEntries.add(breadcrumbEntry);
 
 			return;

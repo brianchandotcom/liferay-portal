@@ -28,6 +28,7 @@
 		"eslint": "7.32.0",
 		"execa": "^9.1.0",
 		"fast-glob": "^3.3.2",
+		"gulp": "4.0.2",
 		"jest": "25.1.0",
 		"jest-environment-jsdom-thirteen": "1.0.1",
 		"jest-fetch-mock": "^3.0.3",

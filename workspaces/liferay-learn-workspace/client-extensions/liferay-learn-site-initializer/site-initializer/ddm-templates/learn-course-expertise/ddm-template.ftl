@@ -9,7 +9,7 @@
 </div>
 
 <script>
-	const expertiseContainer = document.getElementsByClassName('learn-course-expertise-container')[0];
+	const learnCourseExpertiseContainer = document.getElementsByClassName('learn-course-expertise-container')[0];
 
-	expertiseContainer.classList.add("card-tag__expertise-" + ${selectExpertise.getData()});
+	learnCourseExpertiseContainer.classList.add("card-tag__expertise-" + ${selectExpertise.getData()});
 </script>

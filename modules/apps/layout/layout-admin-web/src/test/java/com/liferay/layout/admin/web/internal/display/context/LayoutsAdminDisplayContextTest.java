@@ -74,7 +74,6 @@ public class LayoutsAdminDisplayContextTest {
 		_setUpPortalUtil();
 
 		_layoutActionsHelper = Mockito.mock(LayoutActionsHelper.class);
-		_liferayPortletRequest = new MockLiferayPortletActionRequest();
 
 		_layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(
 			null, _layoutActionsHelper, null, null, _liferayPortletRequest,
@@ -196,6 +195,8 @@ public class LayoutsAdminDisplayContextTest {
 		PortalUtil portalUtil = new PortalUtil();
 
 		_portal = Mockito.mock(Portal.class);
+
+		_liferayPortletRequest = new MockLiferayPortletActionRequest();
 
 		MockLiferayPortletURL liferayPortletURL = new MockLiferayPortletURL();
 

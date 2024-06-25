@@ -71,6 +71,10 @@ const COMMANDS = {
 		description: 'Synchronously runs tests across multiple projects.',
 		script: './test/sync.mjs',
 	},
+	'theme:build': {
+		description: 'Build liferay theme with liferay-theme-tasks and gulp',
+		script: './theme/build.mjs',
+	},
 };
 
 const command = process.argv[2];

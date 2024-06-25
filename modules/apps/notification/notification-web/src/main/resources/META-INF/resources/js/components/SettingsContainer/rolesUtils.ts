@@ -23,9 +23,9 @@ export interface Roles {
 	totalCount: number;
 }
 interface RolesGroup {
-	accountRoles: LabelValueObject[];
-	organizationRoles: LabelValueObject[];
-	regularRoles: LabelValueObject[];
+	accountRoles: LabelNameObject[];
+	organizationRoles: LabelNameObject[];
+	regularRoles: LabelNameObject[];
 }
 
 const roleGroupLabels = {
@@ -48,15 +48,15 @@ export async function getEmailNotificationRoles(baseResourceURL: string) {
 	(
 		Object.entries(rolesResponse) as [
 			keyof RolesGroup,
-			LabelValueObject[],
+			LabelNameObject[],
 		][]
 	).forEach(([roleGroupKey, roleValues]) => {
 		roles.push({
-			children: roleValues.map(({label, value}) => {
+			children: roleValues.map(({label, name}) => {
 				return {
 					checked: false,
 					label,
-					value,
+					value: name,
 				};
 			}),
 			label: roleGroupLabels[roleGroupKey],

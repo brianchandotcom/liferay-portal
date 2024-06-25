@@ -12,6 +12,12 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
@@ -19,10 +25,12 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -102,10 +110,17 @@ public class BreadcrumbUtilTest {
 	@Test
 	public void testGetParentGroupBreadcrumbEntries() throws Exception {
 		Group childGroup = GroupTestUtil.addGroup(_group.getGroupId());
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
 		try {
 			_setUpThemeDisplay(
 				childGroup, LayoutTestUtil.addTypePortletLayout(childGroup));
+
+			RoleTestUtil.removeResourcePermission(
+				RoleConstants.GUEST, Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(_layout.getPlid()), ActionKeys.VIEW);
 
 			List<BreadcrumbEntry> breadcrumbEntries =
 				BreadcrumbUtil.getParentGroupBreadcrumbEntries(_themeDisplay);
@@ -117,8 +132,27 @@ public class BreadcrumbUtilTest {
 				breadcrumbEntries.get(0), _group.getDescriptiveName(_locale),
 				_portal.getLayoutSetFriendlyURL(
 					_group.getPublicLayoutSet(), _themeDisplay));
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(_company.getGuestUser());
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			_themeDisplay.setPermissionChecker(permissionChecker);
+
+			breadcrumbEntries = BreadcrumbUtil.getParentGroupBreadcrumbEntries(
+				_themeDisplay);
+
+			Assert.assertEquals(
+				breadcrumbEntries.toString(), 1, breadcrumbEntries.size());
+
+			_assertBreadcrumbEntry(
+				breadcrumbEntries.get(0), _group.getDescriptiveName(_locale),
+				null);
 		}
 		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+
 			_groupLocalService.deleteGroup(childGroup);
 		}
 	}
@@ -139,6 +173,9 @@ public class BreadcrumbUtilTest {
 		String expectedURL) {
 
 		Assert.assertEquals(expectedTitle, breadcrumbEntry.getTitle());
+
+		Assert.assertEquals(
+			Validator.isNotNull(expectedURL), breadcrumbEntry.isBrowsable());
 		Assert.assertEquals(expectedURL, breadcrumbEntry.getURL());
 	}
 

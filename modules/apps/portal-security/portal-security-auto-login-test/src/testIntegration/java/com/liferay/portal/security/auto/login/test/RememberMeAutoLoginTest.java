@@ -7,7 +7,7 @@ package com.liferay.portal.security.auto.login.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.CookiesManager;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.model.RememberMeToken;
@@ -63,7 +63,7 @@ public class RememberMeAutoLoginTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		CookiesManagerUtil.addCookie(
+		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
 			_buildRememberMeCookie(
 				CookiesConstants.NAME_REMEMBER_ME, Boolean.TRUE.toString(),
@@ -83,11 +83,11 @@ public class RememberMeAutoLoginTest {
 				new Date(System.currentTimeMillis() + loginMaxAgeMillis),
 				cookie::setValue);
 
-		CookiesManagerUtil.addCookie(
+		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
 			mockHttpServletRequest, mockHttpServletResponse);
 
-		CookiesManagerUtil.addCookie(
+		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
 			_buildRememberMeCookie(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
@@ -117,7 +117,7 @@ public class RememberMeAutoLoginTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		CookiesManagerUtil.addCookie(
+		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
 			_buildRememberMeCookie(
 				CookiesConstants.NAME_REMEMBER_ME, Boolean.TRUE.toString(), 1),
@@ -131,11 +131,11 @@ public class RememberMeAutoLoginTest {
 				_user.getCompanyId(), _user.getUserId(),
 				new Date(System.currentTimeMillis()), cookie::setValue);
 
-		CookiesManagerUtil.addCookie(
+		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
 			mockHttpServletRequest, mockHttpServletResponse);
 
-		CookiesManagerUtil.addCookie(
+		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
 			_buildRememberMeCookie(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
@@ -146,12 +146,12 @@ public class RememberMeAutoLoginTest {
 			mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertNull(
-			CookiesManagerUtil.getCookieValue(
+			_cookiesManager.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 				mockHttpServletRequest, false));
 
 		Assert.assertNull(
-			CookiesManagerUtil.getCookieValue(
+			_cookiesManager.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
 				mockHttpServletRequest, false));
 
@@ -177,12 +177,12 @@ public class RememberMeAutoLoginTest {
 			mockHttpServletRequest, new MockHttpServletResponse());
 
 		Assert.assertNull(
-			CookiesManagerUtil.getCookieValue(
+			_cookiesManager.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 				mockHttpServletRequest, false));
 
 		Assert.assertNull(
-			CookiesManagerUtil.getCookieValue(
+			_cookiesManager.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
 				mockHttpServletRequest, false));
 	}
@@ -199,6 +199,9 @@ public class RememberMeAutoLoginTest {
 
 		return cookie;
 	}
+
+	@Inject
+	private CookiesManager _cookiesManager;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.security.auto.login.remember.me.RememberMeAutoLogin"

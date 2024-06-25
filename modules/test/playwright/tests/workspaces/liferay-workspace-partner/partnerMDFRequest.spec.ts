@@ -4,6 +4,7 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import moment from 'moment';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {partnerPagesTest} from './fixtures/partnerPages';
@@ -16,7 +17,6 @@ import {
 	MDFRequestTargetMarkets,
 	MDFRequestTypeOfActivity,
 } from './utils/enums';
-import moment from 'moment';
 
 const test = mergeTests(apiHelpersTest, partnerSiteFixture, partnerPagesTest);
 

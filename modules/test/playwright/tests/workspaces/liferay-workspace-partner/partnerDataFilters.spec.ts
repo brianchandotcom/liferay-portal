@@ -5,8 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {partnerSiteFixture} from './fixtures/partnerSite';
 import {partnerPagesTest} from './fixtures/partnerPages';
+import {partnerSiteFixture} from './fixtures/partnerSite';
 
 export const test = mergeTests(partnerSiteFixture, partnerPagesTest);
 

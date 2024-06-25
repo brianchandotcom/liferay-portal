@@ -4,6 +4,7 @@
  */
 
 import {Locator, Page, expect} from '@playwright/test';
+
 import {
 	MDFRequestAdditionalOptions,
 	MDFRequestLiferayBusinessSalesGoals,
@@ -168,11 +169,11 @@ export class MDFRequestFormGoals {
 		additionalOptions,
 		companyName,
 		liferayBusinessSalesGoals,
+		liferayBusinessSalesGoalsOther,
 		overallCampaignDescription,
 		overallCampaignName,
-		liferayBusinessSalesGoalsOther,
-		targetMarkets,
 		targetAudienceRoles,
+		targetMarkets,
 	}: MDFRequestFormGoalsContent) {
 		await this.selectCompany(companyName);
 

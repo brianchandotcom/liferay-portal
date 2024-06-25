@@ -6,8 +6,12 @@
 package com.liferay.journal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
@@ -36,6 +40,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -65,6 +70,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
@@ -379,6 +385,62 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	@Test
 	public void testExportImportStructuredJournalArticle() throws Exception {
 		exportImportJournalArticle(false);
+	}
+
+	@Test
+	public void testExportImportWithCategoryOrSubcategory() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory parentAssetCategory =
+			_assetCategoryLocalService.addCategory(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				RandomTestUtil.randomString(),
+				assetVocabulary.getVocabularyId(), serviceContext);
+
+		AssetCategory childAssetCategory =
+			_assetCategoryLocalService.addCategory(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				parentAssetCategory.getCategoryId(),
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()
+				).build(),
+				null, assetVocabulary.getVocabularyId(), null, serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {parentAssetCategory.getCategoryId()});
+
+		JournalArticle article1 = JournalTestUtil.addArticle(
+			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), LocaleUtil.getSiteDefault(), false,
+			false, serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {childAssetCategory.getCategoryId()});
+
+		JournalArticle article2 = JournalTestUtil.addArticle(
+			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), LocaleUtil.getSiteDefault(), false,
+			false, serviceContext);
+
+		exportImportPortlet(JournalPortletKeys.JOURNAL);
+
+		Assert.assertEquals(
+			2,
+			JournalArticleLocalServiceUtil.getArticlesCount(
+				importedGroup.getGroupId()));
+
+		_assertGetCategories(parentAssetCategory, article1.getUuid());
+		_assertGetCategories(childAssetCategory, article2.getUuid());
 	}
 
 	@Ignore
@@ -766,6 +828,32 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			string.contains(substring));
 	}
 
+	private void _assertGetCategories(
+		AssetCategory assetCategory, String uuid) {
+
+		JournalArticle importedArticle =
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				uuid, importedGroup.getGroupId());
+
+		Assert.assertNotNull(importedArticle);
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getCategories(
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				importedArticle.getResourcePrimKey(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			assetCategories.toString(), 1, assetCategories.size());
+
+		AssetCategory importedAssetCategory = assetCategories.get(0);
+
+		Assert.assertEquals(
+			assetCategory.getUuid(), importedAssetCategory.getUuid());
+		Assert.assertEquals(
+			assetCategory.getName(), importedAssetCategory.getName());
+	}
+
 	private JSONObject _getArticleReferenceJSONObject(JournalArticle article)
 		throws Exception {
 
@@ -797,6 +885,12 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	private static ConfigurationProvider _configurationProvider;
 
 	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject
@@ -813,6 +907,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@Inject
 	private LayoutService _layoutService;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private ZipReaderFactory _zipReaderFactory;

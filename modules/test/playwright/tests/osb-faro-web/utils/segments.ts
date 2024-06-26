@@ -4,6 +4,7 @@
  */
 
 import {Page} from '@playwright/test';
+import {searchByTerm} from './utils';
 
 export async function addSegmentField({
 	criterionName,
@@ -31,6 +32,23 @@ export async function createDynamicSegment(page: Page) {
 export async function createStaticSegment(page: Page) {
 	await page.getByLabel('Menu').click();
 	await page.getByRole('menuitem', {name: 'Static Segment'}).click();
+}
+
+export async function deleteSegment({
+	page,
+	segmentName,
+}: {
+	page: Page;
+	segmentName: string;
+}) {
+	await searchByTerm({
+		page,
+		searchTerm: segmentName,
+	});
+
+	await page.locator('.dropdown-action').click();
+	await page.locator('button.dropdown-item:has-text("Delete")').click();
+	await page.getByRole('button', { name: 'Delete' }).click();
 }
 
 export async function dragAndDropCriteriaItem({

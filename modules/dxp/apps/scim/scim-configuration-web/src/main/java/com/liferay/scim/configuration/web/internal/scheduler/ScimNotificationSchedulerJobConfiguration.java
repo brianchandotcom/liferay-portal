@@ -254,8 +254,36 @@ public class ScimNotificationSchedulerJobConfiguration
 							String body = _generateBody(
 								strAccessTokenExpirationDate);
 
-							_sendNotificationEvent(users, body);
-							_sendEmail(company, subject, body, users);
+
+
+
+							String defaultEmailFromAddress = "scim-notification@" + company.getMx();
+							String defaultEmailFromName = "SCIM-Notification";
+
+							String mail = users.get(0).getEmailAddress();
+
+							SubscriptionSender subscriptionSender = new SubscriptionSender();
+
+							//subscriptionSender.setClassName();
+							//subscriptionSender.setClassPK();
+
+							subscriptionSender.setPortletId(ScimWebKeys.SCIM_CONFIGURATION);
+
+							subscriptionSender.setEntryTitle("entryTitle");
+
+							subscriptionSender.setNotificationType(UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);
+							subscriptionSender.setBody(body);
+							subscriptionSender.setFrom(defaultEmailFromAddress, defaultEmailFromName);
+							subscriptionSender.setReplyToAddress("admin@liferay.com");
+
+							subscriptionSender.addRuntimeSubscribers("admin@liferay.com", "toName");
+
+							subscriptionSender.setMailId("popPortletPrefix", "ids");
+
+							subscriptionSender.flushNotifications();
+
+							//_sendNotificationEvent(users, body);
+							//_sendEmail(company, subject, body, users);
 						}
 					}
 				}

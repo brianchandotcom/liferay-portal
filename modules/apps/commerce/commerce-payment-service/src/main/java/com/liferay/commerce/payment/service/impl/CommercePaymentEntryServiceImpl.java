@@ -202,6 +202,26 @@ public class CommercePaymentEntryServiceImpl
 	}
 
 	@Override
+	public int getCommercePaymentEntriesCount(
+			long companyId, long classNameId, long classPK, int type)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.hasPermission(
+				null, CommercePaymentEntry.class.getName(), companyId,
+				ActionKeys.VIEW)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, CommercePaymentEntry.class.getName(), 0,
+				ActionKeys.VIEW);
+		}
+
+		return commercePaymentEntryLocalService.getCommercePaymentEntriesCount(
+			companyId, classNameId, classPK, type);
+	}
+
+	@Override
 	public CommercePaymentEntry getCommercePaymentEntry(
 			long commercePaymentEntryId)
 		throws PortalException {

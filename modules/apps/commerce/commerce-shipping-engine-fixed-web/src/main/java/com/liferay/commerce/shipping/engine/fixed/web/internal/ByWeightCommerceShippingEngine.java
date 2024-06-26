@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -62,7 +63,16 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Override
 	public String getCommerceShippingOptionLabel(String name, Locale locale) {
-		return ResourceBundleUtil.getString(_getResourceBundle(locale), name);
+		CommerceShippingFixedOption commerceShippingFixedOption =
+			_commerceShippingFixedOptionLocalService.
+				fetchCommerceShippingFixedOption(
+					CompanyThreadLocal.getCompanyId(), name);
+
+		if (commerceShippingFixedOption == null) {
+			return StringPool.BLANK;
+		}
+
+		return commerceShippingFixedOption.getName(locale);
 	}
 
 	@Override

@@ -1,0 +1,201 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "L_UPS_CODES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "L_UPS_CODE_01",
+					"key": "upsexpress",
+					"name": "UPS Express",
+					"name_i18n": {
+						"en-US": "UPS Express"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_02",
+					"key": "upsexpedited",
+					"name": "UPS Expedited",
+					"name_i18n": {
+						"en-US": "UPS Expedited"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_03",
+					"key": "upsground",
+					"name": "UPS Ground",
+					"name_i18n": {
+						"en-US": "UPS Ground"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_07",
+					"key": "upsworldwideexpress",
+					"name": "UPS Worldwide Express",
+					"name_i18n": {
+						"en-US": "UPS Worldwide Express"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_08",
+					"key": "upsworldwideexpedited",
+					"name": "UPS Worldwide Expedited",
+					"name_i18n": {
+						"en-US": "UPS Worldwide Expedited"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_11",
+					"key": "upsstandard",
+					"name": "UPS Standard",
+					"name_i18n": {
+						"en-US": "UPS Standard"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_12",
+					"key": "ups3dayselect",
+					"name": "UPS 3 Day Select",
+					"name_i18n": {
+						"en-US": "UPS 3 Day Select"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_13",
+					"key": "upsnextdayairsaver",
+					"name": "UPS Next Day Air Saver",
+					"name_i18n": {
+						"en-US": "UPS Next Day Air Saver"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_14",
+					"key": "upsnextdayairearly",
+					"name": "UPS Next Day Air Early",
+					"name_i18n": {
+						"en-US": "UPS Next Day Air Early"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_17",
+					"key": "upsworldwideeconomyddu",
+					"name": "UPS Worldwide Economy DDU",
+					"name_i18n": {
+						"en-US": "UPS Worldwide Economy DDU"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_54",
+					"key": "upsworldwideexpressplus",
+					"name": "UPS Worldwide Express Plus",
+					"name_i18n": {
+						"en-US": "UPS Worldwide Express Plus"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_59",
+					"key": "ups2nddayairam",
+					"name": "UPS 2nd Day Air A.M.",
+					"name_i18n": {
+						"en-US": "UPS 2nd Day Air A.M."
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_65",
+					"key": "upsworldwidesaver",
+					"name": "UPS Worldwide Saver",
+					"name_i18n": {
+						"en-US": "UPS Worldwide Saver"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_70",
+					"key": "upsaccesspointeconomy",
+					"name": "UPS Access Point Economy",
+					"name_i18n": {
+						"en-US": "UPS Access Point Economy"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_71",
+					"key": "upsworldwideexpressfreightmidday",
+					"name": "UPS Worldwide Express Freight Midday",
+					"name_i18n": {
+						"en-US": "UPS Worldwide Express Freight Midday"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_72",
+					"key": "upsworldwideeconomyddp",
+					"name": "UPS Worldwide Economy DDP",
+					"name_i18n": {
+						"en-US": "UPS Worldwide Economy DDP"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_74",
+					"key": "upsexpress1200",
+					"name": "UPS Express 12:00",
+					"name_i18n": {
+						"en-US": "UPS Express 12:00"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_82",
+					"key": "upstodaystandard",
+					"name": "UPS Today Standard",
+					"name_i18n": {
+						"en-US": "UPS Today Standard"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_83",
+					"key": "upstodaydedicatedcourrier",
+					"name": "UPS Today Dedicated Courrier",
+					"name_i18n": {
+						"en-US": "UPS Today Dedicated Courrier"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_85",
+					"key": "upstodayexpress",
+					"name": "UPS Today Express",
+					"name_i18n": {
+						"en-US": "UPS Today Express"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_86",
+					"key": "upstodayexpresssaver",
+					"name": "UPS Today Express Saver",
+					"name_i18n": {
+						"en-US": "UPS Today Express Saver"
+					}
+				},
+				{
+					"externalReferenceCode": "L_UPS_CODE_96",
+					"key": "upsworldwideexpressfreight",
+					"name": "UPS Worldwide Express Freight",
+					"name_i18n": {
+						"en-US": "UPS Worldwide Express Freight"
+					}
+				}
+			],
+			"name": "UPS Codes",
+			"name_i18n": {
+				"en-US": "UPS Codes"
+			},
+			"system": false
+		}
+	]
+}

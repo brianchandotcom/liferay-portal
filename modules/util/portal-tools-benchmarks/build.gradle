@@ -10,15 +10,15 @@ dependencies {
 test {
 	systemProperties(
 		System.properties.subMap([
-				"benchmarks.test.excluded.company.web.ids",
-				"benchmarks.test.jdbc.driverClassName",
-				"benchmarks.test.jdbc.password",
-				"benchmarks.test.jdbc.url",
-				"benchmarks.test.jdbc.username",
-				"benchmarks.test.run.count",
-				"benchmarks.test.skip.warm.up",
-				"benchmarks.test.thread.count",
-				"benchmarks.test.user.password"
-			])
+			"benchmarks.test.excluded.company.web.ids",
+			"benchmarks.test.jdbc.driverClassName",
+			"benchmarks.test.jdbc.password",
+			"benchmarks.test.jdbc.url",
+			"benchmarks.test.jdbc.username",
+			"benchmarks.test.run.count",
+			"benchmarks.test.skip.warm.up",
+			"benchmarks.test.thread.count",
+			"benchmarks.test.user.password"
+		])
 	)
 }

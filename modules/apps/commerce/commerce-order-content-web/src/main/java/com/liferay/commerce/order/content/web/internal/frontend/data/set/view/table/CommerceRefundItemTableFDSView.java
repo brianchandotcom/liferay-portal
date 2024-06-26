@@ -21,10 +21,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceOrderFDSNames.RETURN_ITEMS,
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.REFUND_ITEMS,
 	service = FDSView.class
 )
-public class CommerceReturnItemTableFDSView extends BaseTableFDSView {
+public class CommerceRefundItemTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -32,23 +32,13 @@ public class CommerceReturnItemTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"commerceOrderItemToCommerceReturnItems.sku", "sku",
+			"paymentStatus", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"actionLink")
+				"label")
 		).add(
-			"commerceOrderItemToCommerceReturnItems.name.LANG", "product-name"
+			"amount", "amount"
 		).add(
-			"commerceOrderItemToCommerceReturnItems.unitOfMeasureKey", "uom"
-		).add(
-			"amount", "purchase-price",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"commerceCurrencyDataRenderer")
-		).add(
-			"quantity", "quantity"
-		).add(
-			"returnReason.name", "return-reason"
-		).add(
-			"received", "received-quantity"
+			"createDate", "createDate"
 		).build();
 	}
 

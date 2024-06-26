@@ -34,6 +34,9 @@ public class CommerceOrderFDSNames {
 	public static final String PREVIEW_ORDER_ITEMS =
 		CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT + "-previewOrderItems";
 
+	public static final String REFUND_ITEMS =
+		CommercePortletKeys.COMMERCE_RETURN_CONTENT + "-refundItems";
+
 	public static final String RETURN_ITEMS =
 		CommercePortletKeys.COMMERCE_RETURN_CONTENT + "-returnItems";
 

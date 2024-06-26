@@ -45,6 +45,7 @@ public class FriendlyURLUpgradeProcess extends UpgradeProcess {
 
 				while (resultSet.next()) {
 					long ctCollectionId = resultSet.getLong(1);
+
 					long categoryId = resultSet.getLong(2);
 					String name = resultSet.getString(3);
 

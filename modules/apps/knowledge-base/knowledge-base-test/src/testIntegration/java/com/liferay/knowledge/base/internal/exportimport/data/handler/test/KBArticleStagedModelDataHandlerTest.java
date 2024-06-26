@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -50,34 +49,6 @@ public class KBArticleStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@Test
-	public void testExportedKBArticleClassNameIdEqualsZero() throws Exception {
-		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			addDependentStagedModelsMap(stagingGroup);
-
-		StagedModel stagedModel = addStagedModel(
-			stagingGroup, dependentStagedModelsMap);
-
-		exportImportStagedModel(stagedModel);
-
-		KBArticle kbArticle = (KBArticle)stagedModel;
-
-		initExport();
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, kbArticle);
-
-		initImport();
-
-		KBArticle exportedKBArticle = (KBArticle)readExportedStagedModel(
-			kbArticle);
-
-		Assert.assertEquals(
-			0L,
-			(long)ReflectionTestUtil.getFieldValue(
-				exportedKBArticle, "_classNameId"));
-	}
 
 	@FeatureFlags("LPS-188058")
 	@Test

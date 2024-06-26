@@ -67,6 +67,7 @@
 		</portlet-ref>
 		<permissions>
 			<supports>
+				<action-key>EDIT_SUBORGANIZATIONS_ACCOUNTS</action-key>
 				<action-key>MANAGE_ACCOUNTS</action-key>
 				<action-key>MANAGE_AVAILABLE_ACCOUNTS</action-key>
 				<action-key>MANAGE_SUBORGANIZATIONS_ACCOUNTS</action-key>

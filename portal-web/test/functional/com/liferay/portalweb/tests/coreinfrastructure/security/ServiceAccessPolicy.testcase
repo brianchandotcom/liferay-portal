@@ -74,7 +74,7 @@ definition {
 			var curl = '''
 				${portalURL}/api/jsonws/user/get-current-user \
 					-basic \
-					-u test@liferay.com:test
+					-u test@liferay.com:${PropsUtil.get("default.admin.password")}
 			''';
 
 			SystemSettings.getUserEmailSuccessfully(
@@ -97,7 +97,7 @@ definition {
 			var curl = '''
 				${portalURL}/api/jsonws/user/get-current-user \
 					-basic \
-					-u test@liferay.com:test
+					-u test@liferay.com:${PropsUtil.get("default.admin.password")}
 			''';
 
 			SystemSettings.getCurrentUserEmailResquestDenied(curl = ${curl});

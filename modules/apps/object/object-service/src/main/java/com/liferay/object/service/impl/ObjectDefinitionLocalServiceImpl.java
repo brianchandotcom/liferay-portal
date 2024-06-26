@@ -1659,16 +1659,7 @@ public class ObjectDefinitionLocalServiceImpl
 			_log.debug("SQL: " + sql);
 		}
 
-		DataSource dataSource = objectDefinitionPersistence.getDataSource();
-
-		DB db = DBManagerUtil.getDB();
-
-		try (Connection connection = ConnectionUtil.getConnection(dataSource)) {
-			db.runSQL(connection, new String[] {sql});
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
+		runSQL(sql);
 	}
 
 	private String _getClassName(

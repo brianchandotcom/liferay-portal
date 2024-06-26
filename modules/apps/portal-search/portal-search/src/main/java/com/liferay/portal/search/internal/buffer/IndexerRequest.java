@@ -10,10 +10,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.lang.reflect.Method;
 
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author André de Oliveira
@@ -31,6 +33,8 @@ public class IndexerRequest {
 
 		_modelClassName = classedModel.getModelClassName();
 		_modelPrimaryKey = (Long)classedModel.getPrimaryKeyObj();
+
+		_classedModels = null;
 	}
 
 	public IndexerRequest(
@@ -43,6 +47,20 @@ public class IndexerRequest {
 		_modelPrimaryKey = modelPrimaryKey;
 
 		_classedModel = null;
+		_classedModels = null;
+	}
+
+	public IndexerRequest(
+		Method method, Set<ClassedModel> classedModels, Indexer<?> indexer) {
+
+		_method = method;
+		_classedModels = classedModels;
+
+		_indexer = new NoAutoCommitIndexer<>(indexer);
+
+		_classedModel = null;
+		_modelClassName = null;
+		_modelPrimaryKey = null;
 	}
 
 	@Override
@@ -74,12 +92,31 @@ public class IndexerRequest {
 	public void execute() throws Exception {
 		Class<?>[] parameterTypes = _method.getParameterTypes();
 
-		if (parameterTypes.length == 1) {
+		if (SetUtil.isNotEmpty(_classedModels)) {
+			_method.invoke(_indexer, _classedModels);
+		}
+		else if (parameterTypes.length == 1) {
 			_method.invoke(_indexer, _classedModel);
 		}
 		else {
 			_method.invoke(_indexer, _modelClassName, _modelPrimaryKey);
 		}
+	}
+
+	public Indexer<?> getIndexer() {
+		return _indexer;
+	}
+
+	public Method getMethod() {
+		return _method;
+	}
+
+	public String getModelClassName() {
+		return _modelClassName;
+	}
+
+	public Long getModelPrimaryKey() {
+		return _modelPrimaryKey;
 	}
 
 	@Override
@@ -102,6 +139,7 @@ public class IndexerRequest {
 	}
 
 	private final ClassedModel _classedModel;
+	private final Set<ClassedModel> _classedModels;
 	private final Indexer<?> _indexer;
 	private final Method _method;
 	private final String _modelClassName;

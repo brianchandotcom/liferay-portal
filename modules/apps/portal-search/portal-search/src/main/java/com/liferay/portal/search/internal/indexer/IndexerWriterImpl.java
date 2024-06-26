@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
@@ -33,7 +35,13 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Michael C. Han
@@ -134,8 +142,96 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 			return;
 		}
 
+		Map<Long, Map<IndexerWriterMode, List<T>>>
+			indexerWriterModeBaseModelListMap = new HashMap<>();
+
 		for (T baseModel : baseModels) {
-			reindex(baseModel);
+			long companyId = _modelIndexerWriterContributor.getCompanyId(
+				baseModel);
+
+			Map<IndexerWriterMode, List<T>> baseModelListMap =
+				indexerWriterModeBaseModelListMap.get(companyId);
+
+			if (MapUtil.isEmpty(baseModelListMap)) {
+				baseModelListMap = new HashMap<>();
+			}
+
+			IndexerWriterMode indexerWriterMode = _getIndexerWriterMode(
+				baseModel);
+
+			List<T> baseModelList = baseModelListMap.get(indexerWriterMode);
+
+			if (ListUtil.isEmpty(baseModelList)) {
+				baseModelList = new ArrayList<>();
+			}
+
+			baseModelList.add(baseModel);
+
+			baseModelListMap.put(indexerWriterMode, baseModelList);
+
+			indexerWriterModeBaseModelListMap.put(companyId, baseModelListMap);
+		}
+
+		for (Map.Entry<Long, Map<IndexerWriterMode, List<T>>> entry1 :
+				indexerWriterModeBaseModelListMap.entrySet()) {
+
+			long companyId = entry1.getKey();
+
+			Map<IndexerWriterMode, List<T>> baseModelListMap =
+				entry1.getValue();
+
+			for (Map.Entry<IndexerWriterMode, List<T>> entry2 :
+					baseModelListMap.entrySet()) {
+
+				Set<Document> documents = new HashSet<>();
+				IndexerWriterMode indexerWriterMode = entry2.getKey();
+				Set<String> uids = new HashSet<>();
+
+				List<T> baseModelList = entry2.getValue();
+
+				for (T baseModel : baseModelList) {
+					if ((indexerWriterMode == IndexerWriterMode.UPDATE) ||
+						(indexerWriterMode ==
+							IndexerWriterMode.PARTIAL_UPDATE)) {
+
+						documents.add(
+							_indexerDocumentBuilder.getDocument(baseModel));
+					}
+					else if (indexerWriterMode == IndexerWriterMode.DELETE) {
+						uids.add(
+							_indexerDocumentBuilder.getDocumentUID(baseModel));
+					}
+				}
+
+				if (indexerWriterMode == IndexerWriterMode.UPDATE) {
+					_updateDocumentIndexWriter.updateDocuments(
+						companyId, documents, false);
+				}
+				else if (indexerWriterMode ==
+							IndexerWriterMode.PARTIAL_UPDATE) {
+
+					_updateDocumentIndexWriter.updateDocumentsPartially(
+						companyId, documents, false);
+				}
+				else if (indexerWriterMode == IndexerWriterMode.DELETE) {
+					try {
+						_indexWriterHelper.deleteDocuments(
+							companyId, uids, false);
+					}
+					catch (SearchException searchException) {
+						throw new RuntimeException(searchException);
+					}
+				}
+				else if (indexerWriterMode == IndexerWriterMode.SKIP) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Skipping models");
+					}
+				}
+			}
+		}
+
+		for (T baseModel : baseModels) {
+			_modelIndexerWriterContributor.modelIndexed(baseModel);
 		}
 	}
 
@@ -213,14 +309,15 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 		IndexerWriterMode indexerWriterMode = _getIndexerWriterMode(baseModel);
 
-		if ((indexerWriterMode == IndexerWriterMode.UPDATE) ||
-			(indexerWriterMode == IndexerWriterMode.PARTIAL_UPDATE)) {
-
-			Document document = _indexerDocumentBuilder.getDocument(baseModel);
-
+		if (indexerWriterMode == IndexerWriterMode.UPDATE) {
 			_updateDocumentIndexWriter.updateDocument(
 				_modelIndexerWriterContributor.getCompanyId(baseModel),
-				document);
+				_indexerDocumentBuilder.getDocument(baseModel));
+		}
+		else if (indexerWriterMode == IndexerWriterMode.PARTIAL_UPDATE) {
+			_updateDocumentIndexWriter.updateDocumentPartially(
+				_modelIndexerWriterContributor.getCompanyId(baseModel),
+				_indexerDocumentBuilder.getDocument(baseModel), false);
 		}
 		else if (indexerWriterMode == IndexerWriterMode.DELETE) {
 			long companyId = _modelIndexerWriterContributor.getCompanyId(

@@ -194,6 +194,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -4530,14 +4531,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected long[] getClassNameIds() {
-		if (_classNameIds == null) {
-			_classNameIds = new long[] {
-				_classNameLocalService.getClassNameId(Group.class),
-				_classNameLocalService.getClassNameId(Organization.class)
-			};
+		if (_classNameIdsSupplier == null) {
+			_classNameIdsSupplier =
+				_classNameLocalService.getClassNameIdsSupplier(
+					new String[] {
+						Group.class.getName(), Organization.class.getName()
+					});
 		}
 
-		return _classNameIds;
+		return _classNameIdsSupplier.get();
 	}
 
 	protected String getFriendlyURL(
@@ -4765,25 +4767,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return true;
 		}
 
-		if (_complexSQLClassNameIds == null) {
-			String[] complexSQLClassNames =
-				PropsValues.GROUPS_COMPLEX_SQL_CLASS_NAMES;
-
-			long[] complexSQLClassNameIds =
-				new long[complexSQLClassNames.length];
-
-			for (int i = 0; i < complexSQLClassNames.length; i++) {
-				String complexSQLClassName = complexSQLClassNames[i];
-
-				complexSQLClassNameIds[i] =
-					_classNameLocalService.getClassNameId(complexSQLClassName);
-			}
-
-			_complexSQLClassNameIds = complexSQLClassNameIds;
+		if (_complexSQLClassNameIdsSupplier == null) {
+			_complexSQLClassNameIdsSupplier =
+				_classNameLocalService.getClassNameIdsSupplier(
+					PropsValues.GROUPS_COMPLEX_SQL_CLASS_NAMES);
 		}
 
 		for (long classNameId : classNameIds) {
-			if (ArrayUtil.contains(_complexSQLClassNameIds, classNameId)) {
+			if (ArrayUtil.contains(
+					_complexSQLClassNameIdsSupplier.get(), classNameId)) {
+
 				return true;
 			}
 		}
@@ -5543,7 +5536,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@BeanReference(type = AssetVocabularyLocalService.class)
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
-	private volatile long[] _classNameIds;
+	private volatile Supplier<long[]> _classNameIdsSupplier;
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;
@@ -5554,7 +5547,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@BeanReference(type = CompanyPersistence.class)
 	private CompanyPersistence _companyPersistence;
 
-	private volatile long[] _complexSQLClassNameIds;
+	private volatile Supplier<long[]> _complexSQLClassNameIdsSupplier;
 
 	@BeanReference(type = DLAppLocalService.class)
 	private DLAppLocalService _dlAppLocalService;

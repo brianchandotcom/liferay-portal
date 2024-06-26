@@ -10,6 +10,7 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +35,8 @@ public class ConfigurationPortalInstanceLifecycleListener
 			return;
 		}
 
+		_configurationMap.remove(company.getCompanyId());
+
 		List<String> pids = DBPartitionUtil.getConfigurationPids(
 			company.getCompanyId());
 
@@ -42,7 +45,9 @@ public class ConfigurationPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
-		if (!DBPartition.isPartitionEnabled()) {
+		if (!DBPartition.isPartitionEnabled() ||
+			MapUtil.isEmpty(_configurationMap)) {
+
 			return;
 		}
 

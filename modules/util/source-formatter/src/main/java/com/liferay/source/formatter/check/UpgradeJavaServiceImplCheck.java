@@ -6,7 +6,17 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.util.FileUtil;
+
+import java.io.File;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
 
 /**
  * @author Kyle Miho
@@ -23,7 +33,7 @@ public class UpgradeJavaServiceImplCheck
 			"@Component(", "\tproperty = {",
 			String.format(
 				"\t\t\"json.web.service.context.name=%s\",",
-				_getContextName(javaClass)),
+				_getContextName(javaClass, absolutePath)),
 			String.format(
 				"\t\t\"json.web.service.context.path=%s\"",
 				_getContextPath(className)),
@@ -47,7 +57,19 @@ public class UpgradeJavaServiceImplCheck
 		return className.contains("ServiceBaseImpl");
 	}
 
-	private static String _getContextName(JavaClass javaClass) {
+	private static String _getContextName(
+		JavaClass javaClass, String absolutePath) {
+
+		File serviceXMLFile = _getServiceXML(absolutePath);
+
+		if (serviceXMLFile != null) {
+			Document document = SourceUtil.readXML(
+				FileUtil.read(serviceXMLFile));
+
+			return StringUtil.toLowerCase(
+				_getPortletShortName(document.getRootElement()));
+		}
+
 		String contextName = StringUtil.extractFirst(
 			javaClass.getPackageName(), ".service.impl");
 
@@ -56,6 +78,39 @@ public class UpgradeJavaServiceImplCheck
 
 	private static String _getContextPath(String baseImplName) {
 		return StringUtil.extractFirst(baseImplName, "ServiceBaseImpl");
+	}
+
+	private static String _getPortletShortName(Element rootElement) {
+		Element portletElement = rootElement.element("portlet");
+
+		if (portletElement != null) {
+			return portletElement.attributeValue("short-name");
+		}
+
+		Element namespaceElement = rootElement.element("namespace");
+
+		return namespaceElement.getText();
+	}
+
+	private static File _getServiceXML(String absolutePath) {
+		Path serviceXmlPath = Paths.get(absolutePath);
+
+		do {
+			serviceXmlPath = serviceXmlPath.getParent();
+		}
+		while (!serviceXmlPath.endsWith("src"));
+
+		serviceXmlPath = serviceXmlPath.getParent();
+
+		serviceXmlPath = serviceXmlPath.resolve("service.xml");
+
+		File file = serviceXmlPath.toFile();
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		return file;
 	}
 
 }

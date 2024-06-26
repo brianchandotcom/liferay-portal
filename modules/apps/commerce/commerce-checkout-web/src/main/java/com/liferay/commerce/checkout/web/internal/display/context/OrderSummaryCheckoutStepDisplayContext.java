@@ -19,7 +19,6 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
-import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
@@ -287,21 +286,14 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		return commerceTermEntry.getLabel(LanguageUtil.getLanguageId(locale));
 	}
 
-	public String getShippingOptionName(String shippingOptionKey, Locale locale)
-		throws PortalException {
-
+	public String getShippingOptionName(Locale locale) throws PortalException {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
-		if (shippingOptionKey.isEmpty() || (locale == null) ||
-			(commerceOrder == null) ||
+		if ((commerceOrder == null) ||
 			Validator.isNull(commerceOrder.getShippingOptionName())) {
 
 			return StringPool.BLANK;
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		CommerceShippingMethod commerceShippingMethod =
 			commerceOrder.getCommerceShippingMethod();
@@ -310,27 +302,8 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(
 				commerceShippingMethod.getEngineKey());
 
-		CommerceContext commerceContext =
-			(CommerceContext)_httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		List<CommerceShippingOption> commerceShippingOptions =
-			commerceShippingEngine.getCommerceShippingOptions(
-				commerceContext, commerceOrder, themeDisplay.getLocale());
-
-		for (CommerceShippingOption commerceShippingOption :
-				commerceShippingOptions) {
-
-			String commerceShippingOptionKey = commerceShippingOption.getKey();
-
-			if (commerceShippingOptionKey.equals(
-					commerceOrder.getShippingOptionName())) {
-
-				return commerceShippingOption.getName();
-			}
-		}
-
-		return StringPool.BLANK;
+		return commerceShippingEngine.getCommerceShippingOptionLabel(
+			commerceOrder.getShippingOptionName(), locale);
 	}
 
 	public boolean hasViewBillingAddressPermission(

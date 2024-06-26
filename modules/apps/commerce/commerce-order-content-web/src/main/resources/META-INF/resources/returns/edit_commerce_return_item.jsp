@@ -11,6 +11,8 @@
 CommerceReturnContentDisplayContext commerceReturnContentDisplayContext = (CommerceReturnContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceReturnItem commerceReturnItem = commerceReturnContentDisplayContext.getCommerceReturnItem();
+
+boolean disabled = ParamUtil.getBoolean(request, "disabled");
 %>
 
 <liferay-frontend:side-panel-content
@@ -22,20 +24,27 @@ CommerceReturnItem commerceReturnItem = commerceReturnContentDisplayContext.getC
 		<aui:form name="commerceReturnItemsFm" onSubmit="event.preventDefault();">
 			<aui:input name="commerceReturnItemId" type="hidden" value="<%= commerceReturnContentDisplayContext.getCommerceReturnItemId() %>" />
 
-			<aui:input ignoreRequestValue="<%= true %>" name="quantity" type="text" value="<%= commerceReturnContentDisplayContext.getFormattedQuantity() %>">
+			<aui:input disabled="<%= disabled %>" ignoreRequestValue="<%= true %>" name="quantity" type="text" value="<%= commerceReturnContentDisplayContext.getFormattedQuantity() %>">
 				<aui:validator name="min">0</aui:validator>
 				<aui:validator name="number" />
 			</aui:input>
 
-			<aui:field-wrapper label='<%= LanguageUtil.get(resourceBundle, "return-reason") %>' name="returnReasonFieldWrapper">
-				<div id="autocomplete-root"></div>
-			</aui:field-wrapper>
+			<c:choose>
+				<c:when test="<%= disabled %>">
+					<aui:input disabled="<%= disabled %>" ignoreRequestValue="<%= true %>" name="return-reason" type="text" value="<%= commerceReturnItem.getReturnReason() %>" />
+				</c:when>
+				<c:otherwise>
+					<aui:field-wrapper label='<%= LanguageUtil.get(resourceBundle, "return-reason") %>' name="returnReasonFieldWrapper">
+						<div id="autocomplete-root"></div>
+					</aui:field-wrapper>
 
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" value="save" />
+					<aui:button-row>
+						<aui:button cssClass="btn-lg" type="submit" value="save" />
 
-				<aui:button cssClass="btn-lg" type="cancel" />
-			</aui:button-row>
+						<aui:button cssClass="btn-lg" type="cancel" />
+					</aui:button-row>
+				</c:otherwise>
+			</c:choose>
 		</aui:form>
 	</commerce-ui:panel>
 </liferay-frontend:side-panel-content>

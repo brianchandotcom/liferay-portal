@@ -283,36 +283,77 @@ public class CommerceReturnContentDisplayContext {
 			getCommerceReturnItemFDSActionDropdownItems()
 		throws PortalException {
 
-		CommerceReturn commerceReturn = getCommerceReturn();
-
-		if (!StringUtil.equals(
-				commerceReturn.getReturnStatus(),
-				CommerceReturnConstants.RETURN_STATUS_DRAFT)) {
-
-			return Collections.emptyList();
-		}
-
 		HttpServletRequest httpServletRequest = _cpRequestHelper.getRequest();
 
-		return ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				PortletURLBuilder.create(
-					PortletProviderUtil.getPortletURL(
-						httpServletRequest, CommerceReturn.class.getName(),
-						PortletProvider.Action.EDIT)
-				).setMVCRenderCommandName(
-					"/commerce_return_content/edit_commerce_return_item"
-				).setParameter(
-					"commerceReturnItemId", "{id}"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				null, "edit", _language.get(httpServletRequest, "edit"), "get",
-				"get", "sidePanel"),
-			new FDSActionDropdownItem(
-				null, null, "delete",
-				_language.get(httpServletRequest, "delete"), "delete", "delete",
-				"headless"));
+		CommerceReturn commerceReturn = getCommerceReturn();
+
+		if (StringUtil.equals(
+				commerceReturn.getReturnStatus(),
+				CommerceReturnConstants.RETURN_STATUS_PROCESSING) ||
+			StringUtil.equals(
+				commerceReturn.getReturnStatus(),
+				CommerceReturnConstants.RETURN_STATUS_COMPLETED)) {
+
+			return ListUtil.fromArray(
+				new FDSActionDropdownItem(
+					PortletURLBuilder.create(
+						PortletProviderUtil.getPortletURL(
+							httpServletRequest, CommerceReturn.class.getName(),
+							PortletProvider.Action.EDIT)
+					).setMVCRenderCommandName(
+						"/commerce_return_content/edit_commerce_return_item"
+					).setParameter(
+						"commerceReturnItemId", "{id}"
+					).setParameter(
+						"disabled", true
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString(),
+					null, "get",
+					_language.get(httpServletRequest, "view-details"), "get",
+					"get", "sidePanel"),
+				new FDSActionDropdownItem(
+					PortletURLBuilder.create(
+						PortletProviderUtil.getPortletURL(
+							httpServletRequest, CommerceReturn.class.getName(),
+							PortletProvider.Action.EDIT)
+					).setMVCRenderCommandName(
+						"/commerce_return_content/view_commerce_refund"
+					).setParameter(
+						"commerceOrderId", commerceReturn.getOrderId()
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString(),
+					null, "edit",
+					_language.get(httpServletRequest, "view-refunds"), "get",
+					"get", "modal"));
+		}
+		else if (StringUtil.equals(
+					commerceReturn.getReturnStatus(),
+					CommerceReturnConstants.RETURN_STATUS_DRAFT)) {
+
+			return ListUtil.fromArray(
+				new FDSActionDropdownItem(
+					PortletURLBuilder.create(
+						PortletProviderUtil.getPortletURL(
+							httpServletRequest, CommerceReturn.class.getName(),
+							PortletProvider.Action.EDIT)
+					).setMVCRenderCommandName(
+						"/commerce_return_content/edit_commerce_return_item"
+					).setParameter(
+						"commerceReturnItemId", "{id}"
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString(),
+					null, "get", _language.get(httpServletRequest, "edit"),
+					"get", "get", "sidePanel"),
+				new FDSActionDropdownItem(
+					null, null, "delete",
+					_language.get(httpServletRequest, "delete"), "delete",
+					"delete", "headless"));
+		}
+
+		return Collections.emptyList();
 	}
 
 	public long getCommerceReturnItemId() {

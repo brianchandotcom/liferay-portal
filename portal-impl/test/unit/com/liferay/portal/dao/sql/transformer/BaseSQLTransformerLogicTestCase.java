@@ -25,6 +25,13 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	@Test
+	public void testReplaceAggregation() {
+		Assert.assertEquals(
+			getAggregationTransformedSQL(),
+			sqlTransformer.transform(getAggregationOriginalSQL()));
+	}
+
+	@Test
 	public void testReplaceBitwiseCheck() {
 		Assert.assertEquals(
 			getBitwiseCheckTransformedSQL(),
@@ -162,6 +169,14 @@ public abstract class BaseSQLTransformerLogicTestCase {
 		String sql = "select * from Foo";
 
 		Assert.assertEquals(sql, sqlTransformer.transform(sql));
+	}
+
+	protected String getAggregationOriginalSQL() {
+		return "select foo from Foo order by AGGREGATION_STRING_MIN(foo)";
+	}
+
+	protected String getAggregationTransformedSQL() {
+		return "select foo from Foo order by MIN(foo)";
 	}
 
 	protected String getBitwiseCheckOriginalSQL() {

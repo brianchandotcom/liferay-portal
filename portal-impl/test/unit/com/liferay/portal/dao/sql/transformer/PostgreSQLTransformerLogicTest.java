@@ -33,6 +33,15 @@ public class PostgreSQLTransformerLogicTest
 		return "DROP TABLE IF EXISTS Foo";
 	}
 
+	@Test
+	public void testReplaceBooleanAggregation() {
+		Assert.assertEquals(
+			"select foo from Foo order by CASE WHEN MIN(CAST(foo AS " +
+				"INTEGER)) = 1 THEN 1 ELSE 0 END",
+			sqlTransformer.transform(
+				"select foo from Foo order by AGGREGATION_BOOLEAN_MIN(foo)"));
+	}
+
 	@Override
 	@Test
 	public void testReplaceModWithExtraWhitespace() {

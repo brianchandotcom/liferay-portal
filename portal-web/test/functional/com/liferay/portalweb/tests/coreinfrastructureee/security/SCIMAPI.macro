@@ -47,7 +47,7 @@ definition {
 
 		var header = '''
 			${portalURL}/o/scim/v1.0/${api} \
-				-u test@${domain}:test \
+				-u test@${domain}:${PropsUtil.get("default.admin.password")} \
 				-H accept: application/scim+json \
 				-H Content-Type: application/scim+json
 		''';

@@ -10,6 +10,7 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -27,6 +28,10 @@ public class PortalInstanceLifecycleListenerImpl
 	@Override
 	public void portalInstancePreunregistered(Company company)
 		throws Exception {
+
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
 
 		_countryLocalService.deleteCompanyCountries(company.getCompanyId());
 	}

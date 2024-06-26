@@ -7,6 +7,7 @@ package com.liferay.portal.instance.lifecycle.internal;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 
@@ -23,6 +24,10 @@ public class PortletPreferencesCleanUpPortalInstanceLifecycleListener
 	@Override
 	public void portalInstancePreunregistered(Company company)
 		throws Exception {
+
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
 
 		_portletPreferencesLocalService.deletePortletPreferencesByOwnerId(
 			company.getCompanyId());

@@ -7,6 +7,7 @@ package com.liferay.portal.list.type.internal.portal.instance.lifecycle;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -30,6 +31,10 @@ public class PortalInstanceLifecycleListenerImpl
 	@Override
 	public void portalInstancePreunregistered(Company company)
 		throws Exception {
+
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
 
 		_listTypeLocalService.deleteListTypes(company.getCompanyId());
 	}

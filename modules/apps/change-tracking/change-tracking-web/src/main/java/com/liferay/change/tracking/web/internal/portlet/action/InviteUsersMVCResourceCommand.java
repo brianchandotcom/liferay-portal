@@ -243,7 +243,7 @@ public class InviteUsersMVCResourceCommand
 		if (role == PublicationRoleConstants.ROLE_ADMIN) {
 			return new String[] {
 				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW,
-				CTActionKeys.PUBLISH
+				CTActionKeys.INVITE_USERS, CTActionKeys.PUBLISH
 			};
 		}
 		else if (role == PublicationRoleConstants.ROLE_EDITOR) {

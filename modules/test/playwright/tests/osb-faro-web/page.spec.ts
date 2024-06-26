@@ -21,6 +21,17 @@ import {
 	navigateToACWorkspace,
 } from './utils/navigation';
 import {createSitePage, navigateToSitePage} from './utils/portal';
+import {
+	addSegmentField,
+	addStaticMember,
+	createDynamicSegment,
+	createStaticSegment,
+	deleteSegment,
+	saveSegment,
+	selectOperator,
+	setSegmentName,
+} from './utils/segments';
+import {cardSelector, segmentConditions} from './utils/selectors';
 import {changeTimeFilter} from './utils/time-filter';
 import {expectNotToBeVisible, expectToBeVisible} from './utils/utils';
 
@@ -53,6 +64,241 @@ const goToWithReferrer = async function ({
 		aTag.click();
 	}, url);
 };
+
+test('Check that the Dynamic Segment does not continue to appear in the audience card after the segment is deleted', async ({
+	apiHelpers,
+	page,
+}) => {
+	const channelName = 'My Property - ' + getRandomString();
+	const {channel, project} = await createChannel({
+		apiHelpers,
+		channelName,
+	});
+	const date1 = new Date();
+	const individualName = ['user1'];
+	const pageName = 'Liferay - AC Page';
+	const dynamicSegmentName = 'Test Dynamic Segment';
+	const staticSegmentName = 'Test Static Segment';
+	const segmentsName = [dynamicSegmentName, staticSegmentName];
+
+	await test.step('Create an Individual and their respective Identity directly in the AC database', async () => {
+		await createIndividuals({
+			apiHelpers,
+			names: individualName,
+		});
+
+		await apiHelpers.jsonWebServicesOSBAsah.createIdentities([
+			{
+				createDate: date1.toISOString(),
+				id: '1',
+				individualId: 'user1@liferay.com',
+			},
+		]);
+	});
+
+	await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date1.toISOString(),
+				eventId: 'pageViewed',
+				title: pageName,
+				userId: '1',
+			},
+		]);
+	});
+
+	await test.step('Create an event for the individual to appear in periods different than the Last 24 hours in AC', async () => {
+		const date2 = new Date();
+		date2.setDate(date2.getDate() - 5);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createPagesDaily([
+			{
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date2.toISOString(),
+				title: pageName,
+				userId: '1',
+				views: 1,
+			},
+		]);
+	});
+
+	await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await navigateToACSitesPageViaURL({
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+	});
+
+	await test.step('Go to Segments', async () => {
+		await navigateTo({
+			page,
+			pageName: 'Segments',
+		});
+	});
+
+	await test.step('Create dynamic segment', async () => {
+		await createDynamicSegment(page);
+
+		await addSegmentField({
+			page,
+			criterionName: 'email',
+			criterionType: 'Individual Attributes',
+		});
+
+		await selectOperator({
+			operator: 'is known',
+			operatorField: segmentConditions.criteriaCondition,
+			page,
+		});
+
+		await setSegmentName({
+			page,
+			segmentName: dynamicSegmentName,
+		});
+
+		await saveSegment(page);
+	});
+
+	await test.step('Go to Segments', async () => {
+		await navigateTo({
+			page,
+			pageName: 'Segments',
+		});
+	});
+
+	await test.step('Create static segment', async () => {
+		await createStaticSegment(page);
+
+		await setSegmentName({
+			page,
+			segmentName: staticSegmentName,
+		});
+
+		await addStaticMember({
+			memberNames: individualName,
+			page,
+		});
+
+		await saveSegment(page);
+	});
+
+	await test.step('Run the Segment Nanite ', async () => {
+
+		// Wait for LPD-29615
+
+	});
+
+	await test.step('Go to Sites > Go to Pages Tab', async () => {
+		await navigateTo({
+			page,
+			pageName: 'Sites',
+		});
+
+		await navigateTo({
+			page,
+			pageName: 'Pages',
+		});
+	});
+
+	await test.step('Access one of the pages on the list', async () => {
+		await navigateTo({
+			page,
+			pageName,
+		});
+	});
+
+	await test.step('Check that the created segment appears on the Audience card', async () => {
+		await expectToBeVisible({
+			itemNames: segmentsName,
+			page,
+		});
+	});
+
+	await test.step('Change the time filter of the Audience card to Last 24 hours', async () => {
+		await changeTimeFilter({
+			cardSelector: cardSelector.Audience,
+			page,
+			timeFilterPeriod: 'Last 24 hours',
+		});
+	});
+
+	await test.step('Check that the created segment appears on the Audience card', async () => {
+		await expectToBeVisible({
+			itemNames: segmentsName,
+			page,
+		});
+	});
+
+	await test.step('Go to Segments', async () => {
+		await navigateTo({
+			page,
+			pageName: 'Segments',
+		});
+	});
+
+	await test.step('Delete the segments', async () => {
+		await deleteSegment({
+			page,
+			segmentName: dynamicSegmentName,
+		});
+
+		await deleteSegment({
+			page,
+			segmentName: staticSegmentName,
+		});
+	});
+
+	await test.step('Go to Sites > Go to Pages Tab', async () => {
+		await navigateTo({
+			page,
+			pageName: 'Sites',
+		});
+
+		await navigateTo({
+			page,
+			pageName: 'Pages',
+		});
+	});
+
+	await test.step('Access one of the pages on the list', async () => {
+		await navigateTo({
+			page,
+			pageName,
+		});
+	});
+
+	await test.step('Check that no segments appear on the Audience card', async () => {
+		await expect(
+			page.locator('.audience-report-chart-bar li')
+		).toBeHidden();
+	});
+
+	await test.step('Change the time filter of the Audience card to Last 24 hours', async () => {
+		await changeTimeFilter({
+			cardSelector: cardSelector.Audience,
+			page,
+			timeFilterPeriod: 'Last 24 hours',
+		});
+	});
+
+	await test.step('Check that no segments appear on the Audience card', async () => {
+		await expect(
+			page.locator('.audience-report-chart-bar li')
+		).toBeHidden();
+	});
+
+	await test.step('Delete the property that was used during automation execution', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+	});
+});
 
 test('shows individuals who viewed a page less than 24 hours ago', async ({
 	apiHelpers,

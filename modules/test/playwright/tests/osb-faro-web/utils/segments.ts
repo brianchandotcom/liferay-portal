@@ -119,6 +119,27 @@ export async function setSegmentName({
 	}
 
 	await page.getByPlaceholder('Segment').fill(segmentName);
-	await page.getByRole('button', {name: 'Unnamed Segment'}).click();
-	await page.getByPlaceholder('Unnamed Segment').fill(segmentName);
+}
+
+export async function addStaticMember({
+	memberNames,
+	page,
+}: {
+	memberNames: string[] | string;
+	page: Page;
+}) {
+	await page.getByRole('button', {name: 'Add Members'}).click();
+
+	const namesArray = Array.isArray(memberNames) ? memberNames : [memberNames];
+
+	for (const memberName of namesArray) {
+		await searchByTerm({
+			page,
+			searchTerm: memberName,
+		});
+
+		await page.locator('.clickable').getByText(memberName).first().click();
+	}
+
+	await page.getByRole('button', {name: 'Add', exact: true}).click();
 }

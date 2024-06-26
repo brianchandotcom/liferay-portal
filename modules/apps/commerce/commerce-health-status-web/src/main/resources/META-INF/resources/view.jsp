@@ -52,18 +52,16 @@ CommerceHealthStatusDisplayContext commerceHealthStatusDisplayContext = (Commerc
 					%>
 
 					<div class="<%= iconCheckCssClass %>">
-						<liferay-ui:icon
-							cssClass="commerce-admin-icon-check"
-							icon="check"
-							markupView="lexicon"
+						<clay:icon
+							cssClass="text-success"
+							symbol="check"
 						/>
 					</div>
 
 					<div class="<%= iconTimesCssClass %>">
-						<liferay-ui:icon
-							cssClass="commerce-admin-icon-times"
-							icon="times"
-							markupView="lexicon"
+						<clay:icon
+							cssClass="text-danger"
+							symbol="times"
 						/>
 					</div>
 

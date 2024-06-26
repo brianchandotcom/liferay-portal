@@ -40,6 +40,9 @@ public class InviteUsersMVCResourceCommandTest {
 			ArrayUtil.contains(modelResourceActions, ActionKeys.VIEW));
 		Assert.assertFalse(
 			ArrayUtil.contains(modelResourceActions, CTActionKeys.PUBLISH));
+		Assert.assertFalse(
+			ArrayUtil.contains(
+				modelResourceActions, CTActionKeys.INVITE_USERS));
 	}
 
 	@Test
@@ -55,6 +58,9 @@ public class InviteUsersMVCResourceCommandTest {
 			ArrayUtil.contains(modelResourceActions, ActionKeys.VIEW));
 		Assert.assertTrue(
 			ArrayUtil.contains(modelResourceActions, CTActionKeys.PUBLISH));
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				modelResourceActions, CTActionKeys.INVITE_USERS));
 	}
 
 	@Test
@@ -70,6 +76,9 @@ public class InviteUsersMVCResourceCommandTest {
 			ArrayUtil.contains(modelResourceActions, ActionKeys.VIEW));
 		Assert.assertTrue(
 			ArrayUtil.contains(modelResourceActions, CTActionKeys.PUBLISH));
+		Assert.assertFalse(
+			ArrayUtil.contains(
+				modelResourceActions, CTActionKeys.INVITE_USERS));
 	}
 
 	@Test
@@ -85,6 +94,9 @@ public class InviteUsersMVCResourceCommandTest {
 			ArrayUtil.contains(modelResourceActions, ActionKeys.VIEW));
 		Assert.assertFalse(
 			ArrayUtil.contains(modelResourceActions, CTActionKeys.PUBLISH));
+		Assert.assertFalse(
+			ArrayUtil.contains(
+				modelResourceActions, CTActionKeys.INVITE_USERS));
 	}
 
 	private String[] _getModelResourceActions(int role) {

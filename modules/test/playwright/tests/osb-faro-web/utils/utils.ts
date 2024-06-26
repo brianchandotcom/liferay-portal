@@ -4,21 +4,8 @@
  */
 
 import {Page, expect} from '@playwright/test';
+
 import {waitForLoading} from './loading';
-
-export async function searchByTerm({
-	page,
-	searchTerm,
-}: {
-	page: Page;
-	searchTerm: string;
-}) {
-	await waitForLoading(page);
-
-	await page.getByPlaceholder('Search').first().click();
-	await page.getByPlaceholder('Search').first().fill(searchTerm);
-	await page.getByPlaceholder('Search').first().press('Enter');
-}
 
 export async function expectNotToBeVisible({
 	itemNames,
@@ -50,4 +37,18 @@ export async function expectToBeVisible({
 			timeout: 100 * 1000,
 		});
 	}
+}
+
+export async function searchByTerm({
+	page,
+	searchTerm,
+}: {
+	page: Page;
+	searchTerm: string;
+}) {
+	await waitForLoading(page);
+
+	await page.getByPlaceholder('Search').first().click();
+	await page.getByPlaceholder('Search').first().fill(searchTerm);
+	await page.getByPlaceholder('Search').first().press('Enter');
 }

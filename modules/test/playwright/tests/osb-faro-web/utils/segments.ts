@@ -4,6 +4,7 @@
  */
 
 import {Page} from '@playwright/test';
+
 import {segmentConditions} from './selectors';
 import {searchByTerm} from './utils';
 
@@ -23,6 +24,29 @@ export async function addSegmentField({
 		page,
 		segmentField: criterionName,
 	});
+}
+
+export async function addStaticMember({
+	memberNames,
+	page,
+}: {
+	memberNames: string[] | string;
+	page: Page;
+}) {
+	await page.getByRole('button', {name: 'Add Members'}).click();
+
+	const namesArray = Array.isArray(memberNames) ? memberNames : [memberNames];
+
+	for (const memberName of namesArray) {
+		await searchByTerm({
+			page,
+			searchTerm: memberName,
+		});
+
+		await page.locator('.clickable').getByText(memberName).first().click();
+	}
+
+	await page.getByRole('button', {name: 'Add', exact: true}).click();
 }
 
 export async function createDynamicSegment(page: Page) {
@@ -49,7 +73,7 @@ export async function deleteSegment({
 
 	await page.locator('.dropdown-action').click();
 	await page.locator('button.dropdown-item:has-text("Delete")').click();
-	await page.getByRole('button', { name: 'Delete' }).click();
+	await page.getByRole('button', {name: 'Delete'}).click();
 }
 
 export async function dragAndDropCriteriaItem({
@@ -94,7 +118,7 @@ export async function selectOperator({
 	index = 0,
 	operator,
 	operatorField,
-	page
+	page,
 }: {
 	index?: number;
 	operator: string;
@@ -114,32 +138,9 @@ export async function setSegmentName({
 }) {
 	const editDynamicSegmentName = page.getByText('Unnamed Segment');
 
-	if (await editDynamicSegmentName.isVisible()){
+	if (await editDynamicSegmentName.isVisible()) {
 		await editDynamicSegmentName.click();
 	}
 
 	await page.getByPlaceholder('Segment').fill(segmentName);
-}
-
-export async function addStaticMember({
-	memberNames,
-	page,
-}: {
-	memberNames: string[] | string;
-	page: Page;
-}) {
-	await page.getByRole('button', {name: 'Add Members'}).click();
-
-	const namesArray = Array.isArray(memberNames) ? memberNames : [memberNames];
-
-	for (const memberName of namesArray) {
-		await searchByTerm({
-			page,
-			searchTerm: memberName,
-		});
-
-		await page.locator('.clickable').getByText(memberName).first().click();
-	}
-
-	await page.getByRole('button', {name: 'Add', exact: true}).click();
 }

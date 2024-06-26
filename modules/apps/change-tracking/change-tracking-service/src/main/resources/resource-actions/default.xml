@@ -32,6 +32,7 @@
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
+				<action-key>INVITE_USERS</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>PUBLISH</action-key>
 				<action-key>UPDATE</action-key>
@@ -39,6 +40,7 @@
 			</supports>
 			<guest-unsupported>
 				<action-key>DELETE</action-key>
+				<action-key>INVITE_USERS</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>PUBLISH</action-key>
 				<action-key>UPDATE</action-key>

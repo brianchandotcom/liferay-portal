@@ -16,6 +16,8 @@ public class CTActionKeys {
 
 	public static final String ADD_TEMPLATE = "ADD_TEMPLATE";
 
+	public static final String INVITE_USERS = "INVITE_USERS";
+
 	public static final String PUBLISH = "PUBLISH";
 
 	public static final String WORK_ON_PRODUCTION = "WORK_ON_PRODUCTION";

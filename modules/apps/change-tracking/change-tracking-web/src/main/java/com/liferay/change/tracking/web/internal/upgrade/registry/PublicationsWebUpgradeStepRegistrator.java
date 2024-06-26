@@ -98,6 +98,13 @@ public class PublicationsWebUpgradeStepRegistrator
 			"1.0.7", "1.0.8",
 			new CleanUpPDFPreviewsUpgradeProcess(
 				_ctCollectionLocalService, _portal));
+
+		registry.register(
+			"1.0.8", "1.0.9",
+			new com.liferay.change.tracking.web.internal.upgrade.v1_0_9.
+				PublicationsAdminRoleUpgradeProcess(
+					_companyLocalService, _resourcePermissionLocalService,
+					_roleLocalService));
 	}
 
 	@Reference

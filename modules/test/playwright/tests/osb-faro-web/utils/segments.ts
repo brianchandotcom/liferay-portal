@@ -86,7 +86,7 @@ export async function editSegment(page: Page) {
 }
 
 export async function saveSegment(page: Page) {
-	await page.getByRole('button', {name: 'Save Segment'}).click();
+	await page.locator('button[type="submit"]').click();
 	await page.waitForSelector('div.alert-success', {state: 'visible'});
 }
 
@@ -112,6 +112,13 @@ export async function setSegmentName({
 	page: Page;
 	segmentName: string;
 }) {
+	const editDynamicSegmentName = page.getByText('Unnamed Segment');
+
+	if (await editDynamicSegmentName.isVisible()){
+		await editDynamicSegmentName.click();
+	}
+
+	await page.getByPlaceholder('Segment').fill(segmentName);
 	await page.getByRole('button', {name: 'Unnamed Segment'}).click();
 	await page.getByPlaceholder('Unnamed Segment').fill(segmentName);
 }

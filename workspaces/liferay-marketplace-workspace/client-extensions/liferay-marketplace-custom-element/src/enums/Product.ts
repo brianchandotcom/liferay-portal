@@ -12,6 +12,11 @@ export enum PRODUCT_CATEGORIES {
 	MARKETPLACE_SOLUTION_TAGS = 'marketplace-solution-tags',
 }
 
+export enum PRODUCT_PRICE_MODEL {
+	FREE = 'Free',
+	PAID = 'Paid',
+}
+
 export enum PRODUCT_SPECIFICATION_KEY {
 	SOLUTION_COMPANY_DESCRIPTION = 'solution-company-description',
 	SOLUTION_COMPANY_EMAIL = 'solution-company-email',
@@ -23,6 +28,15 @@ export enum PRODUCT_SPECIFICATION_KEY {
 	SOLUTION_HEADER_TITLE = 'solution-header-title',
 	SOLUTION_HEADER_VIDEO_DESCRIPTION = 'solution-header-video-description',
 	SOLUTION_HEADER_VIDEO_URL = 'solution-header-video-url',
+}
+
+export enum PRODUCT_SUPPORT_SPECIFICATION_KEY {
+	APP_DOCUMENTATION_URL = 'appdocumentationurl',
+	APP_INSTALLATION_GUIDE_URL = 'appinstallationguideurl',
+	APP_USAGE_TERMS_URL = 'appusagetermsurl',
+	PUBLISHER_WEBSITE_URL = 'publisherwebsiteurl',
+	SUPPORT_EMAIL = 'supportemailaddress',
+	SUPPORT_URL = 'supporturl'
 }
 
 export enum PRODUCT_TAGS {

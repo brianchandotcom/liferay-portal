@@ -12,17 +12,27 @@ import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import i18n from '../../../i18n';
 import {getEulaDescription} from '../../../utils/util';
 import {useGetAppContext} from '../GetAppContextProvider';
+import {PRODUCT_SUPPORT_SPECIFICATION_KEY} from '../../../enums/Product';
 
 const LicenseTermsCheckbox = () => {
 	const [
 		{
 			payment: {eulaCheckbox},
+			product
 		},
 		dispatch,
 	] = useGetAppContext();
 	const {data: eula = ''} = useSWR('/eula', getEulaDescription);
 	const {properties} = useMarketplaceContext();
 	const eulaModal = useModal();
+
+	const appUsageTerms = product.productSpecifications?.find(
+		(specification: any) =>
+			specification?.specificationKey ===
+		PRODUCT_SUPPORT_SPECIFICATION_KEY.APP_USAGE_TERMS_URL
+	);
+
+	const formattedProtocolUrl = appUsageTerms?.value?.startsWith('https://') ? appUsageTerms?.value :  'https://' + appUsageTerms?.value
 
 	return (
 		<>
@@ -46,7 +56,8 @@ const LicenseTermsCheckbox = () => {
 				/>
 				<span>
 					I have read and agree to the
-					<a onClick={() => eulaModal.onOpenChange(true)}>
+					<a rel="noopener noreferrer" onClick={() => appUsageTerms?.value ? 
+								window.open(formattedProtocolUrl as string, '_blank') : eulaModal.onOpenChange(true)}>
 						&nbsp;End User License Agreement&nbsp;
 					</a>
 					and the

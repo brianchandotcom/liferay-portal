@@ -15,7 +15,10 @@ import {TYPES} from '../AppContext/actionTypes';
 
 import './ProvideAppSupportAndHelpPage.scss';
 import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
-import {PRICE_MODEL} from '../../enums';
+import {
+	PRODUCT_PRICE_MODEL,
+	PRODUCT_SUPPORT_SPECIFICATION_KEY,
+} from '../../../../../../enums/Product';
 
 interface ProvideAppSupportAndHelpPageProps {
 	onClickBack: () => void;
@@ -52,27 +55,32 @@ export function ProvideAppSupportAndHelpPage({
 	const bodySpecification = useMemo(
 		() => [
 			{
-				specificationKey: 'supporturl',
+				specificationKey: PRODUCT_SUPPORT_SPECIFICATION_KEY.SUPPORT_URL,
 				value: supportURL?.value,
 			},
 			{
-				specificationKey: 'publisherwebsiteurl',
+				specificationKey:
+					PRODUCT_SUPPORT_SPECIFICATION_KEY.PUBLISHER_WEBSITE_URL,
 				value: publisherWebsiteURL?.value,
 			},
 			{
-				specificationKey: 'supportemailaddress',
+				specificationKey:
+					PRODUCT_SUPPORT_SPECIFICATION_KEY.SUPPORT_EMAIL,
 				value: supportEmail?.value,
 			},
 			{
-				specificationKey: 'appusagetermsurl',
+				specificationKey:
+					PRODUCT_SUPPORT_SPECIFICATION_KEY.APP_USAGE_TERMS_URL,
 				value: appUsageTermsURL?.value,
 			},
 			{
-				specificationKey: 'appdocumentationurl',
+				specificationKey:
+					PRODUCT_SUPPORT_SPECIFICATION_KEY.APP_DOCUMENTATION_URL,
 				value: appDocumentationURL?.value,
 			},
 			{
-				specificationKey: 'appinstallationguideurl',
+				specificationKey:
+					PRODUCT_SUPPORT_SPECIFICATION_KEY.APP_INSTALLATION_GUIDE_URL,
 				value: appInstallationGuideURL?.value,
 			},
 		],
@@ -127,7 +135,7 @@ export function ProvideAppSupportAndHelpPage({
 						})
 					}
 					placeholder="http:// Enter app name"
-					required={priceModel.value === PRICE_MODEL.PAID}
+					required={priceModel.value === PRODUCT_PRICE_MODEL.PAID}
 					value={publisherWebsiteURL?.value}
 				/>
 
@@ -143,7 +151,7 @@ export function ProvideAppSupportAndHelpPage({
 						})
 					}
 					placeholder="Enter Support Email Address"
-					required={priceModel.value === PRICE_MODEL.PAID}
+					required={priceModel.value === PRODUCT_PRICE_MODEL.PAID}
 					value={supportEmail.value}
 				/>
 

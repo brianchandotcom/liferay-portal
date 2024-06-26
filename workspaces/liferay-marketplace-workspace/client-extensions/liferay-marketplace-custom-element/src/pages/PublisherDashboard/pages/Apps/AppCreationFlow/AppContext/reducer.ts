@@ -251,6 +251,18 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			return {...state, appStorefrontImages};
 		}
 
+		case TYPES.UPDATE_APP_SUPPORT_EMAIL: {
+			const {id, value} = action.payload;
+
+			return {
+				...state,
+				supportEmail: {
+					id,
+					value,
+				},
+			};
+		}
+
 		case TYPES.UPDATE_APP_SUPPORT_URL: {
 			const {id, value} = action.payload;
 

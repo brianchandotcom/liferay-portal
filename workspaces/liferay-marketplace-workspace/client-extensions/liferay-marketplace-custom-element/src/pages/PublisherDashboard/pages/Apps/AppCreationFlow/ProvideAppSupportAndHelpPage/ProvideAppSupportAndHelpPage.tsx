@@ -15,6 +15,7 @@ import {TYPES} from '../AppContext/actionTypes';
 
 import './ProvideAppSupportAndHelpPage.scss';
 import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
+import {PRICE_MODEL} from '../../enums';
 
 interface ProvideAppSupportAndHelpPageProps {
 	onClickBack: () => void;
@@ -33,7 +34,9 @@ export function ProvideAppSupportAndHelpPage({
 			appInstallationGuideURL,
 			appProductId,
 			appUsageTermsURL,
+			priceModel,
 			publisherWebsiteURL,
+			supportEmail,
 			supportURL,
 		},
 		dispatch,
@@ -87,7 +90,24 @@ export function ProvideAppSupportAndHelpPage({
 						})
 					}
 					placeholder="http:// Enter app name"
+					required={priceModel.value === PRICE_MODEL.PAID}
 					value={publisherWebsiteURL?.value}
+				/>
+
+				<Input
+					label="Support Email"
+					onChange={({target}) =>
+						dispatch({
+							payload: {
+								id: supportEmail?.id,
+								value: target.value,
+							},
+							type: TYPES.UPDATE_APP_SUPPORT_EMAIL,
+						})
+					}
+					placeholder="Enter Support Email Address"
+					required={priceModel.value === PRICE_MODEL.PAID}
+					value={supportEmail.value}
 				/>
 
 				<Input
@@ -137,7 +157,11 @@ export function ProvideAppSupportAndHelpPage({
 			</Section>
 
 			<NewAppPageFooterButtons
-				disableContinueButton={processing}
+				disableContinueButton={
+					processing ||
+					!supportEmail.value.length ||
+					!publisherWebsiteURL.value.length
+				}
 				isLoading={processing}
 				onClickBack={() => onClickBack()}
 				onClickContinue={async () => {
@@ -146,7 +170,6 @@ export function ProvideAppSupportAndHelpPage({
 						_tempProductId,
 						supportURL?.id,
 						'supportURL',
-						'Support URL',
 						supportURL?.value
 					);
 
@@ -175,7 +198,6 @@ export function ProvideAppSupportAndHelpPage({
 								_tempProductId,
 								publisherWebsiteURL?.id,
 								'publisherWebsiteURL',
-								'Publisher Web site URL',
 								publisherWebsiteURL?.value
 							);
 
@@ -198,13 +220,42 @@ export function ProvideAppSupportAndHelpPage({
 							});
 						}
 					}
+
+					if (supportEmail.value.length) {
+						const supportEmailSpecificationId =
+							await submitSpecification(
+								_tempProductId,
+								supportEmail?.id,
+								'supportemailaddress',
+								supportEmail?.value
+							);
+
+						if (supportEmailSpecificationId !== -1) {
+							dispatch({
+								payload: {
+									id: supportEmailSpecificationId,
+									value: publisherWebsiteURL.value,
+								},
+								type: TYPES.UPDATE_APP_SUPPORT_EMAIL,
+							});
+						}
+						else {
+							dispatch({
+								payload: {
+									id: supportEmail?.id,
+									value: supportEmail.value,
+								},
+								type: TYPES.UPDATE_APP_SUPPORT_EMAIL,
+							});
+						}
+					}
+
 					if (appUsageTermsURL?.value) {
 						const appUsageTermsURLSpecificationId =
 							await submitSpecification(
 								_tempProductId,
 								appUsageTermsURL?.id,
 								'appUsageTermsURL',
-								'App Usage Terms URL',
 								appUsageTermsURL?.value
 							);
 
@@ -233,7 +284,6 @@ export function ProvideAppSupportAndHelpPage({
 								_tempProductId,
 								appDocumentationURL?.id,
 								'appDocumentationURL',
-								'App Documentation URL',
 								appDocumentationURL?.value
 							);
 
@@ -262,7 +312,6 @@ export function ProvideAppSupportAndHelpPage({
 								_tempProductId,
 								appInstallationGuideURL?.id,
 								'appInstallationGuideURL',
-								'App Installation Guide URL',
 								appInstallationGuideURL?.value
 							);
 

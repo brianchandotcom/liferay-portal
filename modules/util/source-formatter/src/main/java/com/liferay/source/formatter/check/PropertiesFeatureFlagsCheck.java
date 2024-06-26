@@ -121,6 +121,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 					_getFeatureFlagKeys(fileContent, _featureFlagPattern1));
 				featureFlagKeys.addAll(
 					_getFeatureFlagKeys(fileContent, _featureFlagPattern5));
+				featureFlagKeys.addAll(
+					_getFeatureFlagKeys(fileContent, _featureFlagPattern6));
 				featureFlagKeys.addAll(_getFeatureFlagKeys(fileContent, true));
 			}
 			else if (fileName.endsWith(".json")) {
@@ -419,6 +421,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		"\"featureFlag\": \"(.+?)\"");
 	private static final Pattern _featureFlagPattern5 = Pattern.compile(
 		"\"featureFlagKey=([A-Z]+-\\d+)\"");
+	private static final Pattern _featureFlagPattern6 = Pattern.compile(
+		"featureFlagKey = \"([A-Z]+-\\d+)\"");
 	private static final Pattern _featureFlagsPattern = Pattern.compile(
 		"(\n|\\A)##\n## Feature Flag\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");
 	private static final Pattern _featureFlagUIPattern = Pattern.compile(

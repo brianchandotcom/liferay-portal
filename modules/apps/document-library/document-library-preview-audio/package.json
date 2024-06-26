@@ -1,0 +1,9 @@
+{
+	"name": "document-library-preview-audio",
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
+	},
+	"version": "3.0.26"
+}

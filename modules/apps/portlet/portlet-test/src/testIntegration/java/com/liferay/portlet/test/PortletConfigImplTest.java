@@ -1,0 +1,206 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portlet.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.Set;
+
+import javax.portlet.GenericPortlet;
+import javax.portlet.PortletConfig;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
+
+/**
+ * @author Kevin Lee
+ */
+@RunWith(Arquillian.class)
+public class PortletConfigImplTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() {
+		Bundle bundle = FrameworkUtil.getBundle(PortletConfigImplTest.class);
+
+		_bundleContext = bundle.getBundleContext();
+	}
+
+	@After
+	public void tearDown() {
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations.clear();
+	}
+
+	@Test
+	public void testGetResourceBundleWithoutProperty() {
+		Portlet portlet = _registerPortlet(false);
+
+		Assert.assertNull(portlet.getResourceBundle());
+
+		Locale locale1 = LocaleUtil.US;
+		Locale locale2 = LocaleUtil.SPAIN;
+
+		_registerResourceBundle(locale1, "value1");
+		_registerResourceBundle(locale2, "value2");
+
+		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+			portlet, null);
+
+		_testResourceBundle(portletConfig, locale1, "value1");
+		_testResourceBundle(portletConfig, locale2, "value2");
+	}
+
+	@Test
+	public void testGetResourceBundleWithProperty() {
+		Portlet portlet = _registerPortlet(true);
+
+		Assert.assertNotNull(portlet.getResourceBundle());
+
+		Locale locale1 = LocaleUtil.US;
+		Locale locale2 = LocaleUtil.SPAIN;
+
+		_registerResourceBundle(locale1, "value1");
+		_registerResourceBundle(locale2, "value2");
+
+		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+			portlet, null);
+
+		_testResourceBundle(portletConfig, locale1, "value1");
+		_testResourceBundle(portletConfig, locale2, "value2");
+	}
+
+	private Portlet _registerPortlet(boolean hasResourceBundle) {
+		String portletId = RandomTestUtil.randomString();
+
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				javax.portlet.Portlet.class, new TestPortlet(),
+				HashMapDictionaryBuilder.put(
+					"javax.portlet.name", portletId
+				).put(
+					"javax.portlet.resource-bundle",
+					() -> {
+						if (hasResourceBundle) {
+							return "content.Language";
+						}
+
+						return null;
+					}
+				).build()));
+
+		return PortletLocalServiceUtil.getPortletById(portletId);
+	}
+
+	private void _registerResourceBundle(Locale locale, String value) {
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				ResourceBundle.class, new TestResourceBundle(locale, value),
+				HashMapDictionaryBuilder.<String, Object>put(
+					Constants.SERVICE_RANKING, 1
+				).put(
+					"language.id", _language.getLanguageId(locale)
+				).build()));
+	}
+
+	private void _testResourceBundle(
+		PortletConfig portletConfig, Locale locale, String expectedValue) {
+
+		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
+
+		Assert.assertEquals(locale, resourceBundle.getLocale());
+
+		Assert.assertEquals(
+			expectedValue,
+			ResourceBundleUtil.getString(
+				resourceBundle, TestResourceBundle.class.getName()));
+	}
+
+	private BundleContext _bundleContext;
+
+	@Inject
+	private Language _language;
+
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
+
+	private static class TestPortlet extends GenericPortlet {
+	}
+
+	private static class TestResourceBundle extends ResourceBundle {
+
+		@Override
+		public Enumeration<String> getKeys() {
+			return Collections.enumeration(handleKeySet());
+		}
+
+		@Override
+		public Locale getLocale() {
+			return _locale;
+		}
+
+		@Override
+		protected Object handleGetObject(String key) {
+			if (key.equals(TestResourceBundle.class.getName())) {
+				return _value;
+			}
+
+			return null;
+		}
+
+		@Override
+		protected Set<String> handleKeySet() {
+			return Collections.singleton(TestResourceBundle.class.getName());
+		}
+
+		private TestResourceBundle(Locale locale, String value) {
+			_locale = locale;
+			_value = value;
+		}
+
+		private final Locale _locale;
+		private final String _value;
+
+	}
+
+}

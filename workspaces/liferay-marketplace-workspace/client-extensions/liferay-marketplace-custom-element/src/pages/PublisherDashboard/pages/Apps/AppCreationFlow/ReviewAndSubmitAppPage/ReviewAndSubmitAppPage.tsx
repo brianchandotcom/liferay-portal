@@ -130,6 +130,7 @@ export function ReviewAndSubmitAppPage({
 
 				if (
 					[
+						'supportemailaddress',
 						'supporturl',
 						'publisherwebsiteurl',
 						'ppusagetermsurl',

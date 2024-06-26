@@ -54,6 +54,7 @@ export type InitialStateProps = {
 	};
 	skuTrialId: number;
 	skuVersionId: number;
+	supportEmail: Specification;
 	supportURL: Specification;
 	versionName?: string;
 };
@@ -74,15 +75,18 @@ const initialState = {
 	appName: '',
 	appTags: [],
 	appType: {value: ''},
+	appUsageTermsURL: {value: ''},
 	appVersion: '1.0',
 	buildAppPackages: {},
 	dayTrial: 'no',
 	optionValuesId: {},
 	priceModel: {value: 'Free'},
+	publisherWebsiteURL: {value: ''},
 	resourceRequirements: {
 		cpu: '',
 		ram: '',
 	},
+	supportEmail: {value: ''},
 	supportURL: '',
 } as unknown as InitialStateProps;
 

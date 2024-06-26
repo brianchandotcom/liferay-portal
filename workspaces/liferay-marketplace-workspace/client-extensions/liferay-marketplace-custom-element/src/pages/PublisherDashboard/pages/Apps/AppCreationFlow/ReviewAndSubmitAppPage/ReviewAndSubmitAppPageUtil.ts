@@ -35,6 +35,13 @@ export type App = {
 export const supportAndHelpMap = new Map<string, {icon: string; title: string}>(
 	[
 		[
+			'supportemailaddress',
+			{
+				icon: 'envelope-open',
+				title: 'Support Email',
+			},
+		],
+		[
 			'supporturl',
 			{
 				icon: 'phone',

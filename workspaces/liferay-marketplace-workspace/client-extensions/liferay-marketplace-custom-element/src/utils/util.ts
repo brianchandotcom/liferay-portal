@@ -228,7 +228,6 @@ export async function submitSpecification(
 	productId: number | string,
 	productSpecificationId: number,
 	key: string,
-	title: string,
 	value: string
 ): Promise<number> {
 	const specifications = await getSpecifications();

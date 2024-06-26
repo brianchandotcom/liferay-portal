@@ -51,30 +51,29 @@ public class TestrayCaseResultResourceImpl
 			Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(44);
+		StringBundler sb = new StringBundler(43);
 
-		sb.append("select bd.gitHash_, bd.c_buildId_, cr.c_caseResultId_, ");
-		sb.append("cr.dueStatus_, cr.errors_, cr.issues_, cr.warnings_, ");
-		sb.append("oe.createDate as executionDate, pv.name_ as ");
-		sb.append("productVersion, rn.name_ as runName, rt.name_ as ");
-		sb.append("routineName, rt.c_routineId_, tm.name_ as teamName from ");
-		sb.append("O_[%COMPANY_ID%]_Build bd, O_[%COMPANY_ID%]_CaseResult ");
-		sb.append("cr, O_[%COMPANY_ID%]_Case cs, O_[%COMPANY_ID%]_CaseType ");
-		sb.append("ct, O_[%COMPANY_ID%]_Component cp, O_[%COMPANY_ID%]_Run ");
-		sb.append("rn, O_[%COMPANY_ID%]_Routine rt, ");
+		sb.append("select b.c_buildId_, b.dueDate_ as executionDate, ");
+		sb.append("b.gitHash_,  cr.c_caseResultId_, cr.dueStatus_, ");
+		sb.append("cr.errors_, cr.issues_, cr.warnings_, pv.name_ as ");
+		sb.append("productVersion, r.name_ as runName, ro.name_ as ");
+		sb.append("routineName, ro.c_routineId_, t.name_ as teamName from ");
+		sb.append("O_[%COMPANY_ID%]_Build b, O_[%COMPANY_ID%]_CaseResult cr, ");
+		sb.append("O_[%COMPANY_ID%]_Case c, O_[%COMPANY_ID%]_CaseType ct, ");
+		sb.append("O_[%COMPANY_ID%]_Component co, O_[%COMPANY_ID%]_Run r, ");
+		sb.append("O_[%COMPANY_ID%]_Routine ro, ");
 		sb.append("O_[%COMPANY_ID%]_ProductVersion pv, O_[%COMPANY_ID%]_Team ");
-		sb.append("tm, ObjectEntry oe where cs.c_caseId_ = ? and ");
-		sb.append("cr.r_buildToCaseResult_c_buildId = bd.c_buildId_ and ");
-		sb.append("cs.c_caseId_ = cr.r_caseToCaseResult_c_caseId and ");
-		sb.append("ct.c_caseTypeId_ = cs.r_caseTypeToCases_c_caseTypeId and ");
-		sb.append("cp.c_componentId_ = ");
-		sb.append("cr.r_componentToCaseResult_c_componentId and rn.c_runId_ ");
-		sb.append("= cr.r_runToCaseResult_c_runId and tm.c_teamId_ = ");
-		sb.append("cp.r_teamToComponents_c_teamId and oe.objectEntryId = ");
-		sb.append("cr.c_caseResultId_ and rt.c_routineId_ = ");
-		sb.append("bd.r_routineToBuilds_c_routineId and ");
+		sb.append("t where c.c_caseId_ = ? and ");
+		sb.append("cr.r_buildToCaseResult_c_buildId = b.c_buildId_ and ");
+		sb.append("c.c_caseId_ = cr.r_caseToCaseResult_c_caseId and ");
+		sb.append("ct.c_caseTypeId_ = c.r_caseTypeToCases_c_caseTypeId and ");
+		sb.append("co.c_componentId_ = ");
+		sb.append("cr.r_componentToCaseResult_c_componentId and r.c_runId_ = ");
+		sb.append("cr.r_runToCaseResult_c_runId and t.c_teamId_ = ");
+		sb.append("co.r_teamToComponents_c_teamId and ro.c_routineId_ = ");
+		sb.append("b.r_routineToBuilds_c_routineId and ");
 		sb.append("pv.c_productVersionId_ =");
-		sb.append("bd.r_productVersionToBuilds_c_productVersionId ");
+		sb.append("b.r_productVersionToBuilds_c_productVersionId ");
 
 		List<Object> params = new ArrayList<>();
 
@@ -105,12 +104,12 @@ public class TestrayCaseResultResourceImpl
 		}
 
 		if (Validator.isNotNull(maxExecutionDate)) {
-			sb.append("and oe.createDate < ?");
+			sb.append("and b.dueDate_ <= ?");
 			params.add(maxExecutionDate);
 		}
 
 		if (Validator.isNotNull(minExecutionDate)) {
-			sb.append("and oe.createDate > ?");
+			sb.append("and b.dueDate_ >= ?");
 			params.add(minExecutionDate);
 		}
 
@@ -123,18 +122,18 @@ public class TestrayCaseResultResourceImpl
 		}
 
 		if (Validator.isNotNull(testrayRoutineIds)) {
-			sb.append("and rt.c_routineId_ in (");
+			sb.append("and ro.c_routineId_ in (");
 			sb.append(TestrayUtil.interpolateParams(params, testrayRoutineIds));
 			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayRunName)) {
-			sb.append("and rn.name_ ? ");
+			sb.append("and r.name_ like ? ");
 			params.add("%" + testrayRunName + "%");
 		}
 
 		if (Validator.isNotNull(testrayTeamIds)) {
-			sb.append("and cp.r_teamToComponents_c_teamId in (");
+			sb.append("and co.r_teamToComponents_c_teamId in (");
 			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
 			sb.append(") ");
 		}
@@ -149,7 +148,7 @@ public class TestrayCaseResultResourceImpl
 			params.add(warning);
 		}
 
-		sb.append("group by cr.c_caseResultId_ order by oe.createDate desc ");
+		sb.append("group by cr.c_caseResultId_ order by b.dueDate_ desc ");
 
 		String sql = StringUtil.replace(
 			sb.toString(), "[%COMPANY_ID%]",
@@ -220,28 +219,26 @@ public class TestrayCaseResultResourceImpl
 			String testrayUserId, Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(48);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("select cr.c_caseResultId_, cr.comment_, cr.dueStatus_, ");
-		sb.append("cr.errors_, cr.issues_, ct.name_ as caseTypeName, ");
-		sb.append("cs.name_ as caseName, cs.priority_, rn.name_ as runName, ");
-		sb.append("rn.number_ as runNumber, cp.name_ as componentName, ");
-		sb.append("tm.name_ as teamName,us.firstName, ");
-		sb.append("us.lastName,us.middleName, us.uuid_, us.portraitId from ");
-		sb.append("O_[%COMPANY_ID%]_Build bd, O_[%COMPANY_ID%]_CaseResult cr ");
-		sb.append("left outer join User_ us on us.userId = ");
-		sb.append("cr.r_userToCaseResults_userId, O_[%COMPANY_ID%]_Case ");
-		sb.append("cs,O_[%COMPANY_ID%]_CaseType ct, ");
-		sb.append("O_[%COMPANY_ID%]_Component cp, O_[%COMPANY_ID%]_Run rn, ");
-		sb.append("O_[%COMPANY_ID%]_Team tm,ObjectEntry oe where ");
-		sb.append("bd.c_buildId_ = ? and cr.r_buildToCaseResult_c_buildId = ");
-		sb.append("bd.c_buildId_ and cs.c_caseId_ = ");
-		sb.append("cr.r_caseToCaseResult_c_caseId and ct.c_caseTypeId_ = ");
-		sb.append("cs.r_caseTypeToCases_c_caseTypeId and cp.c_componentId_ = ");
-		sb.append("cr.r_componentToCaseResult_c_componentId and rn.c_runId_ ");
-		sb.append("= cr.r_runToCaseResult_c_runId and tm.c_teamId_ = ");
-		sb.append("cp.r_teamToComponents_c_teamId and oe.objectEntryId = ");
-		sb.append("cr.c_caseResultId_ ");
+		sb.append("cr.errors_, cr.issues_, ct.name_ as caseTypeName, c.name_ ");
+		sb.append("as caseName, c.priority_, r.name_ as runName, r.number_ ");
+		sb.append("as runNumber, co.name_ as componentName, t.name_ as ");
+		sb.append("teamName,u.firstName, u.lastName, u.middleName, u.uuid_, ");
+		sb.append("u.portraitId from O_[%COMPANY_ID%]_Build b, ");
+		sb.append("O_[%COMPANY_ID%]_CaseResult cr left outer join User_ u on ");
+		sb.append("u.userId = cr.r_userToCaseResults_userId, ");
+		sb.append("O_[%COMPANY_ID%]_Case c, O_[%COMPANY_ID%]_CaseType ct, ");
+		sb.append("O_[%COMPANY_ID%]_Component co, O_[%COMPANY_ID%]_Run r, ");
+		sb.append("O_[%COMPANY_ID%]_Team t where b.c_buildId_ = ? and ");
+		sb.append("cr.r_buildToCaseResult_c_buildId = b.c_buildId_  and ");
+		sb.append("c.c_caseId_ = cr.r_caseToCaseResult_c_caseId and ");
+		sb.append("ct.c_caseTypeId_ = c.r_caseTypeToCases_c_caseTypeId and  ");
+		sb.append("co.c_componentId_ = ");
+		sb.append("cr.r_componentToCaseResult_c_componentId and r.c_runId_ = ");
+		sb.append("cr.r_runToCaseResult_c_runId and t.c_teamId_ = ");
+		sb.append("co.r_teamToComponents_c_teamId ");
 
 		List<Object> params = new ArrayList<>();
 
@@ -275,7 +272,7 @@ public class TestrayCaseResultResourceImpl
 		}
 
 		if (Validator.isNotNull(priority)) {
-			sb.append("and cs.priority_ in (");
+			sb.append("and c.priority_ in (");
 			sb.append(TestrayUtil.interpolateParams(params, priority));
 			sb.append(") ");
 		}
@@ -287,12 +284,12 @@ public class TestrayCaseResultResourceImpl
 		}
 
 		if (Validator.isNotNull(testrayCaseName)) {
-			sb.append("and cs.name_ like ? ");
+			sb.append("and c.name_ like ? ");
 			params.add("%" + testrayCaseName + "%");
 		}
 
 		if (Validator.isNotNull(testrayCaseTypeIds)) {
-			sb.append("and cs.r_caseTypeToCases_c_caseTypeId in (");
+			sb.append("and c.r_caseTypeToCases_c_caseTypeId in (");
 			sb.append(
 				TestrayUtil.interpolateParams(params, testrayCaseTypeIds));
 			sb.append(") ");
@@ -311,12 +308,12 @@ public class TestrayCaseResultResourceImpl
 		}
 
 		if (Validator.isNotNull(testrayRunName)) {
-			sb.append("and rn.name_ ? ");
+			sb.append("and r.name_ like ? ");
 			params.add("%" + testrayRunName + "%");
 		}
 
 		if (Validator.isNotNull(testrayTeamIds)) {
-			sb.append("and cp.r_teamToComponents_c_teamId in (");
+			sb.append("and co.r_teamToComponents_c_teamId in (");
 			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
 			sb.append(") ");
 		}
@@ -326,8 +323,8 @@ public class TestrayCaseResultResourceImpl
 			params.add(testrayUserId);
 		}
 
-		sb.append("group by cr.c_caseResultId_, us.firstName, us.lastName, ");
-		sb.append("us.middleName, us.uuid_, us.portraitId order by ");
+		sb.append("group by cr.c_caseResultId_, u.firstName, u.lastName, ");
+		sb.append("u.middleName, u.uuid_, u.portraitId order by ");
 		sb.append("cr.dueStatus_ asc, cr.errors_ asc");
 
 		String sql = StringUtil.replace(

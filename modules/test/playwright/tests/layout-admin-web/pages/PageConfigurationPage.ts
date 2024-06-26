@@ -82,4 +82,15 @@ export class PageConfigurationPage {
 			'The page was updated successfully.'
 		);
 	}
+
+	async setHTMLTitle(title: string) {
+		await this.page.getByLabel('HTML Title').fill(title);
+
+		await this.saveButton.click();
+
+		await waitForSuccessAlert(
+			this.page,
+			'The page was updated successfully.'
+		);
+	}
 }

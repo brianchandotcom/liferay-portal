@@ -10,8 +10,10 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
+import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -20,6 +22,8 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	pagesAdminPagesTest,
+	pagesPagesTest,
 	pageEditorPagesTest
 );
 
@@ -77,6 +81,50 @@ test('checks page title in view mode and in edit mode', async ({
 	expect(await page.title()).toBe(`${pageName} - ${site.name} - Liferay DXP`);
 
 	// Check the page title in the edit mode
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	expect(await page.title()).toBe(
+		`${pageName} - ${site.name} - Liferay DXP (Editing)`
+	);
+});
+
+test('checks page SEO HTML title is not shown in edit mode', async ({
+	apiHelpers,
+	page,
+	pageConfigurationPage,
+	pageEditorPage,
+	pagesAdminPage,
+	site,
+}) => {
+
+	// Create page
+
+	const pageName = getRandomString();
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: pageName,
+	});
+
+	// Change SEO HTML title
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+	await pageConfigurationPage.goToSection(pageName, 'SEO');
+
+	const HTMLTitle = getRandomString();
+
+	await pageConfigurationPage.setHTMLTitle(HTMLTitle);
+
+	// Check SEO HTML title is shown in view mode
+
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+	expect(await page.title()).toBe(
+		`${HTMLTitle} - ${site.name} - Liferay DXP`
+	);
+
+	// Check SEO HTML title is not shown in view mode
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 

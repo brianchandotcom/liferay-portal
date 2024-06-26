@@ -1,0 +1,9 @@
+{
+	"name": "@liferay/wiki-navigation-web",
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
+	},
+	"version": "6.0.29"
+}

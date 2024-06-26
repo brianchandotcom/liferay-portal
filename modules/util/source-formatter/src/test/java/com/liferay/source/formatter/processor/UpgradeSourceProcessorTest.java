@@ -125,7 +125,7 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testUpgradeJavaFinderImplCheck() throws Exception {
 		test(
-			"upgrade/service/persistence/impl/UpgradeJavaFinderImplCheck." +
+			"upgrade/src/service/persistence/impl/UpgradeJavaFinderImplCheck." +
 				"testjava");
 	}
 
@@ -163,7 +163,9 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testUpgradeJavaLocalServiceImplCheck() throws Exception {
-		test("upgrade/service/impl/UpgradeJavaLocalServiceImplCheck.testjava");
+		test(
+			"upgrade/src/service/impl" +
+				"/UpgradeJavaLocalServiceImplCheck.testjava");
 	}
 
 	@Test
@@ -205,7 +207,7 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testUpgradeJavaServiceImplCheck() throws Exception {
-		test("upgrade/service/impl/UpgradeJavaServiceImplCheck.testjava");
+		test("upgrade/src/service/impl/UpgradeJavaServiceImplCheck.testjava");
 	}
 
 	@Test

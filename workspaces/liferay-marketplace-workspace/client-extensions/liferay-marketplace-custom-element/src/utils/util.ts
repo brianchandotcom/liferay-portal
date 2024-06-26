@@ -7,8 +7,8 @@ import accountPlaceholder from '../assets/images/account_placeholder.png';
 import appPlaceholder from '../assets/images/app_placeholder.png';
 import {
 	createProductSpecification,
+	getProductSpecifications,
 	getSiteStructuredContentByKey,
-	getSpecifications,
 	updateProductSpecification,
 } from './api';
 
@@ -225,40 +225,31 @@ export function removeProtocolURL(url: string) {
 }
 
 export async function submitSpecification(
-	productId: number | string,
-	productSpecificationId: number,
-	key: string,
-	value: string
-): Promise<number> {
-	const specifications = await getSpecifications();
+	productId: number,
+	productSpecifications: {specificationKey: string; value: string}[]
+) {
+	const dataSpecificationList = await getProductSpecifications({
+		appProductId: productId as number,
+	});
 
-	const specification = specifications.items.map(
-		({specificationKey}: {specificationKey: string}) =>
-			specificationKey === key
-	);
+	for (const productSpecification of productSpecifications) {
+		const dataSpecification = dataSpecificationList?.find(
+			(specification) =>
+				specification?.specificationKey ===
+				productSpecification.specificationKey
+		);
 
-	if (productSpecificationId) {
-		updateProductSpecification({
+		const fn = dataSpecification?.id
+			? updateProductSpecification
+			: createProductSpecification;
+
+		await fn({
 			body: {
-				specificationKey: key,
-				value: {en_US: value},
+				specificationKey: productSpecification.specificationKey,
+				value: {en_US: productSpecification.value},
 			},
-			id: productSpecificationId,
+			id: dataSpecification?.id || productId,
 		});
-
-		return -1;
-	}
-	else {
-		const {id} = await createProductSpecification({
-			body: {
-				specificationId: specification.id,
-				specificationKey: key,
-				value: {en_US: value},
-			},
-			id: productId,
-		});
-
-		return id;
 	}
 }
 

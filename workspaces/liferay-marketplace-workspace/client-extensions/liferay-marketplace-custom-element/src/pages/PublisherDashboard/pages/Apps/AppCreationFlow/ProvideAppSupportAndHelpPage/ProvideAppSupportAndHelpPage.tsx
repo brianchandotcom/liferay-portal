@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 
 import {Header} from '../../../../../../components/Header/Header';
 import {Input} from '../../../../../../components/Input/Input';
@@ -48,6 +48,43 @@ export function ProvideAppSupportAndHelpPage({
 		appId,
 		productId: appProductId,
 	});
+
+	const bodySpecification = useMemo(
+		() => [
+			{
+				specificationKey: 'supporturl',
+				value: supportURL?.value,
+			},
+			{
+				specificationKey: 'publisherwebsiteurl',
+				value: publisherWebsiteURL?.value,
+			},
+			{
+				specificationKey: 'supportemailaddress',
+				value: supportEmail?.value,
+			},
+			{
+				specificationKey: 'appusagetermsurl',
+				value: appUsageTermsURL?.value,
+			},
+			{
+				specificationKey: 'appdocumentationurl',
+				value: appDocumentationURL?.value,
+			},
+			{
+				specificationKey: 'appinstallationguideurl',
+				value: appInstallationGuideURL?.value,
+			},
+		],
+		[
+			appDocumentationURL?.value,
+			appInstallationGuideURL?.value,
+			appUsageTermsURL?.value,
+			publisherWebsiteURL?.value,
+			supportEmail?.value,
+			supportURL?.value,
+		]
+	);
 
 	return (
 		<div className="provide-app-support-and-help-page-container">
@@ -166,174 +203,12 @@ export function ProvideAppSupportAndHelpPage({
 				onClickBack={() => onClickBack()}
 				onClickContinue={async () => {
 					setProcessing(true);
-					const supportURLSpecificationId = await submitSpecification(
-						_tempProductId,
-						supportURL?.id,
-						'supportURL',
-						supportURL?.value
+
+					await submitSpecification(
+						_tempProductId as number,
+						bodySpecification
 					);
 
-					if (supportURLSpecificationId !== -1) {
-						dispatch({
-							payload: {
-								id: supportURLSpecificationId,
-								value: supportURL.value,
-							},
-							type: TYPES.UPDATE_APP_SUPPORT_URL,
-						});
-					}
-					else {
-						dispatch({
-							payload: {
-								id: supportURL?.id,
-								value: supportURL.value,
-							},
-							type: TYPES.UPDATE_APP_SUPPORT_URL,
-						});
-					}
-
-					if (publisherWebsiteURL?.value) {
-						const publisherWebsiteURLSpecificationId =
-							await submitSpecification(
-								_tempProductId,
-								publisherWebsiteURL?.id,
-								'publisherWebsiteURL',
-								publisherWebsiteURL?.value
-							);
-
-						if (publisherWebsiteURLSpecificationId !== -1) {
-							dispatch({
-								payload: {
-									id: publisherWebsiteURLSpecificationId,
-									value: publisherWebsiteURL.value,
-								},
-								type: TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL,
-							});
-						}
-						else {
-							dispatch({
-								payload: {
-									id: publisherWebsiteURL?.id,
-									value: publisherWebsiteURL.value,
-								},
-								type: TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL,
-							});
-						}
-					}
-
-					if (supportEmail.value.length) {
-						const supportEmailSpecificationId =
-							await submitSpecification(
-								_tempProductId,
-								supportEmail?.id,
-								'supportemailaddress',
-								supportEmail?.value
-							);
-
-						if (supportEmailSpecificationId !== -1) {
-							dispatch({
-								payload: {
-									id: supportEmailSpecificationId,
-									value: publisherWebsiteURL.value,
-								},
-								type: TYPES.UPDATE_APP_SUPPORT_EMAIL,
-							});
-						}
-						else {
-							dispatch({
-								payload: {
-									id: supportEmail?.id,
-									value: supportEmail.value,
-								},
-								type: TYPES.UPDATE_APP_SUPPORT_EMAIL,
-							});
-						}
-					}
-
-					if (appUsageTermsURL?.value) {
-						const appUsageTermsURLSpecificationId =
-							await submitSpecification(
-								_tempProductId,
-								appUsageTermsURL?.id,
-								'appUsageTermsURL',
-								appUsageTermsURL?.value
-							);
-
-						if (appUsageTermsURLSpecificationId !== -1) {
-							dispatch({
-								payload: {
-									id: appUsageTermsURLSpecificationId,
-									value: appUsageTermsURL.value,
-								},
-								type: TYPES.UPDATE_APP_USAGE_TERMS_URL,
-							});
-						}
-						else {
-							dispatch({
-								payload: {
-									id: appUsageTermsURL?.id,
-									value: appUsageTermsURL.value,
-								},
-								type: TYPES.UPDATE_APP_USAGE_TERMS_URL,
-							});
-						}
-					}
-					if (appDocumentationURL?.value) {
-						const appDocumentationURLSpecificationId =
-							await submitSpecification(
-								_tempProductId,
-								appDocumentationURL?.id,
-								'appDocumentationURL',
-								appDocumentationURL?.value
-							);
-
-						if (appDocumentationURLSpecificationId !== -1) {
-							dispatch({
-								payload: {
-									id: appDocumentationURLSpecificationId,
-									value: appDocumentationURL.value,
-								},
-								type: TYPES.UPDATE_APP_DOCUMENTATION_URL,
-							});
-						}
-						else {
-							dispatch({
-								payload: {
-									id: appDocumentationURL?.id,
-									value: appDocumentationURL.value,
-								},
-								type: TYPES.UPDATE_APP_DOCUMENTATION_URL,
-							});
-						}
-					}
-					if (appInstallationGuideURL?.value) {
-						const appInstallationGuideURLSpecificationId =
-							await submitSpecification(
-								_tempProductId,
-								appInstallationGuideURL?.id,
-								'appInstallationGuideURL',
-								appInstallationGuideURL?.value
-							);
-
-						if (appInstallationGuideURLSpecificationId !== -1) {
-							dispatch({
-								payload: {
-									id: appInstallationGuideURLSpecificationId,
-									value: appInstallationGuideURL.value,
-								},
-								type: TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL,
-							});
-						}
-						else {
-							dispatch({
-								payload: {
-									id: appInstallationGuideURL?.id,
-									value: appInstallationGuideURL.value,
-								},
-								type: TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL,
-							});
-						}
-					}
 					setProcessing(false);
 
 					onClickContinue();

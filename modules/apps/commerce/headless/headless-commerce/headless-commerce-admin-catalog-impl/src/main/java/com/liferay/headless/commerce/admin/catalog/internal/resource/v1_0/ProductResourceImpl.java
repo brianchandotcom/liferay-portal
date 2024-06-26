@@ -24,6 +24,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -34,6 +35,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureService;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.commerce.product.service.CProductLocalService;
@@ -72,6 +74,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductTaxConfigurat
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductVirtualSettings;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.RelatedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuUnitOfMeasure;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.ProductEntityModel;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.AttachmentUtil;
@@ -88,6 +91,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductTax
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductVirtualSettingsUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.RelatedProductUtil;
+import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuUnitOfMeasureUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
@@ -1081,15 +1085,41 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 				serviceContext.setExpandoBridgeAttributes(null);
 
-				SkuUtil.updateCommercePriceEntries(
-					_commercePriceEntryLocalService,
-					_commercePriceListLocalService, _configurationProvider,
-					cpInstance,
-					(BigDecimal)GetterUtil.get(
-						sku.getPrice(), cpInstance.getPrice()),
-					(BigDecimal)GetterUtil.get(
-						sku.getPromoPrice(), cpInstance.getPromoPrice()),
-					StringPool.BLANK, serviceContext);
+				if (sku.getSkuUnitOfMeasures() == null) {
+					SkuUtil.updateCommercePriceEntries(
+						_commercePriceEntryLocalService,
+						_commercePriceListLocalService, _configurationProvider,
+						cpInstance,
+						(BigDecimal)GetterUtil.get(
+							sku.getPrice(), cpInstance.getPrice()),
+						(BigDecimal)GetterUtil.get(
+							sku.getPromoPrice(), cpInstance.getPromoPrice()),
+						StringPool.BLANK, serviceContext);
+				}
+				else {
+					for (SkuUnitOfMeasure skuUnitOfMeasure :
+							sku.getSkuUnitOfMeasures()) {
+
+						CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+							SkuUnitOfMeasureUtil.
+								addOrUpdateCPInstanceUnitOfMeasure(
+									_cpInstanceUnitOfMeasureService,
+									cpInstance, skuUnitOfMeasure,
+									serviceContext);
+
+						SkuUtil.updateCommercePriceEntries(
+							_commercePriceEntryLocalService,
+							_commercePriceListLocalService,
+							_configurationProvider, cpInstance,
+							(BigDecimal)GetterUtil.get(
+								skuUnitOfMeasure.getBasePrice(),
+								BigDecimal.ZERO),
+							(BigDecimal)GetterUtil.get(
+								skuUnitOfMeasure.getPromoPrice(),
+								BigDecimal.ZERO),
+							cpInstanceUnitOfMeasure.getKey(), serviceContext);
+					}
+				}
 			}
 		}
 
@@ -1579,6 +1609,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureService
+		_cpInstanceUnitOfMeasureService;
 
 	@Reference
 	private CPOptionService _cpOptionService;

@@ -421,35 +421,6 @@ gradle.beforeProject {
 					enabled = false
 				}
 			}
-			else if (FileUtil.exists(project, "package.json")) {
-				JsonSlurper jsonSlurper = new JsonSlurper()
-
-				File packageJSONFile = project.file("package.json")
-
-				Map<String, Object> packageJSONMap = jsonSlurper.parse(packageJSONFile, "UTF-8")
-
-				Map<String, String> scriptsJSONMap = packageJSONMap.get("scripts")
-
-				boolean liferayESModule = false
-
-				if (scriptsJSONMap != null) {
-					for (Map.Entry<String, String> entry : scriptsJSONMap.entrySet()) {
-						if (Objects.equals(entry.key, "build") && (Objects.equals(entry.value, "node-scripts") || entry.value.startsWith("node-scripts "))) {
-							liferayESModule = true
-						}
-					}
-				}
-
-				if (packageJSONFile.text.contains("liferay-npm-scripts build") || liferayESModule) {
-					buildCSS {
-						enabled = false
-					}
-
-					copyCSS {
-						enabled = false
-					}
-				}
-			}
 		}
 
 		pluginManager.withPlugin("com.liferay.jasper.jspc") {

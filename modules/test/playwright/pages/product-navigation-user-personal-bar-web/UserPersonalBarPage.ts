@@ -30,7 +30,7 @@ export class UserPersonalBarPage {
 		this.editConfigurationSubmitButton = page.getByTestId(
 			'submitConfiguration'
 		);
-		this.notificationBadge = page.getByTestId('notificationsCount');
+		this.notificationBadge = page.getByLabel('New Notification');
 		this.page = page;
 		this.processBuilderConfigurationTab = page.getByRole('link', {
 			name: 'Configuration',

@@ -13,3 +13,10 @@ export enum CardSelector {
 	TopPages = '.top-pages-card-root',
 	VisitorsByDayAndTime = '.visitors-by-time-card',
 }
+
+export enum segmentConditions {
+	criteriaCondition = '.criterion-input',
+	atMostOrAtLeast = '.operator-input:not(.criterion-input):not([data-testid])',
+	timeConjunction = '[data-testid="conjunction-input"]',
+	selectedTime = '[data-testid="clay-select"]',
+}

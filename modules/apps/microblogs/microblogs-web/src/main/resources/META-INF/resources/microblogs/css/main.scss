@@ -1,5 +1,4 @@
 @import 'bourbon';
-@import 'mixins';
 
 $microblogs-border-color: #eaeaea;
 
@@ -159,10 +158,6 @@ $microblogs-border-color: #eaeaea;
 			color: #ccc;
 			font-size: 0.9em;
 
-			.action {
-				display: none;
-			}
-
 			.action-container a {
 				display: inline-block;
 				padding-right: 5px;
@@ -287,10 +282,6 @@ $microblogs-border-color: #eaeaea;
 			width: 100%;
 			word-wrap: break-word;
 		}
-
-		@include respond-to(phone, tablet) {
-			font-size: 18px;
-		}
 	}
 
 	.field-input-text {
@@ -325,19 +316,5 @@ $microblogs-border-color: #eaeaea;
 
 	.taglib-page-iterator {
 		padding: 5px 25px;
-	}
-}
-
-/* ---------- Responsive ---------- */
-
-@include respond-to(phone, tablet) {
-	.microblogs-portlet .microblogs-entry .footer .action {
-		display: inline-block;
-	}
-}
-
-@include respond-to(phone) {
-	.microblogs-portlet .microblogs-post {
-		width: auto;
 	}
 }

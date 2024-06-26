@@ -1,0 +1,29 @@
+assemble:
+    - fromTask: bootJar
+liferay-ups-commerce-shipping-engine:
+    key: liferay-ups-commerce-shipping-engine
+    name: Liferay UPS Commerce Shipping Engine
+    oAuth2ApplicationExternalReferenceCode: liferay-ups-commerce-shipping-engine-oauth-application-user-agent
+    shippingEngineTypeSettings:
+        clientId:
+        clientSecret:
+        dimensionsUnitOfMeasurementCode:
+        packageWeightUnitOfMeasurementCode:
+        packagingTypeCode:
+        ratingCodes:
+        shipperAddressLine1:
+        shipperAddressLine2:
+        shipperAddressLine3:
+        shipperCountryCode:
+        shipperPostalCode:
+        simpleRateCode:
+    type: commerceShippingEngine
+liferay-ups-commerce-shipping-engine-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay UPS Commerce Shipping Engine OAuth Application User Agent
+    scopes:
+        - Liferay.Headless.Admin.List.Type.everything
+        - Liferay.Headless.Admin.Workflow.everything
+        - Liferay.Headless.Commerce.Admin.Catalog.everything
+    type: oAuthApplicationUserAgent

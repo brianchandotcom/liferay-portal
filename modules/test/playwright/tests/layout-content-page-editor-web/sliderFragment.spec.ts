@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {checkAccessibility} from '../../utils/checkAccessibility';
 import getRandomString from '../../utils/getRandomString';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -30,6 +31,26 @@ test('checks that the Slider fragment works correctly', async ({
 	pageEditorPage,
 	site,
 }) => {
+	const expectSlideIsActive = async (name) => {
+		await expect(page.getByLabel(name, {exact: true})).toHaveClass(
+			/active/
+		);
+		await expect(page.getByLabel(`Go to ${name}`)).toHaveAttribute(
+			'aria-current',
+			'true'
+		);
+	};
+
+	const expectSlideIsNotActive = async (name) => {
+		await expect(page.getByLabel(name, {exact: true})).not.toHaveClass(
+			/active/
+		);
+		await expect(page.getByLabel(`Go to ${name}`)).toHaveAttribute(
+			'aria-current',
+			'false'
+		);
+	};
+
 	const sliderId = getRandomString();
 
 	const sliderDefinition = getFragmentDefinition({
@@ -86,4 +107,60 @@ test('checks that the Slider fragment works correctly', async ({
 	});
 
 	await expect(await slide.all()).toHaveLength(2);
+
+	// Check Auto Hide Play button
+
+	const playButton = await page.locator('.stopped');
+
+	await expect(playButton).not.toHaveClass(
+		/carousel-toggle-button--always-visible/
+	);
+
+	await pageEditorPage.changeFragmentConfiguration({
+		fieldLabel: 'Auto Hide Play Button',
+		fragmentId: sliderId,
+		tab: 'General',
+		value: false,
+	});
+
+	await expect(playButton).toHaveClass(
+		/carousel-toggle-button--always-visible/
+	);
+
+	await pageEditorPage.publishPage();
+
+	// Go to view mode
+
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+	// Pause the carousel
+
+	await expect(page.getByText('Stop slide rotation')).toBeVisible();
+
+	await page.locator('.carousel-toggle-button.playing').click();
+
+	await expect(page.getByText('Start slide rotation')).toBeVisible();
+
+	// Check the slide 1 is active
+
+	await expectSlideIsActive('Slide 1');
+	await expectSlideIsNotActive('Slide 2');
+
+	// Click next slide and check the slide 2 is active
+
+	await page.getByLabel('Next Slide').click();
+
+	await expectSlideIsActive('Slide 2');
+	await expectSlideIsNotActive('Slide 1');
+
+	// Click previous slide and check the slide 1 is active
+
+	await page.getByLabel('Previous Slide').click();
+
+	await expectSlideIsActive('Slide 1');
+	await expectSlideIsNotActive('Slide 2');
+
+	// Check accessibility
+
+	await checkAccessibility({page, selectors: ['.component-slider']});
 });

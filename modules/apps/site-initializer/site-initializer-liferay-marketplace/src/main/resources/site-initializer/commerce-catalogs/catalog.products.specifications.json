@@ -153,6 +153,14 @@
 	},
 	{
 		"categoryKey": "app-support-and-help",
+		"cpDefinitionExternalReferenceCode": "MKT-SUPPORT-EMAIL",
+		"description": "",
+		"facetable": false,
+		"key": "supportemailaddress",
+		"title": "Support Email Address"
+	},
+	{
+		"categoryKey": "app-support-and-help",
 		"cpDefinitionExternalReferenceCode": "MKT-SUPPORT-URL",
 		"description": "",
 		"facetable": false,

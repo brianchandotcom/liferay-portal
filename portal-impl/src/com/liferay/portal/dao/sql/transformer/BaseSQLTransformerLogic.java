@@ -31,6 +31,18 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return _functions;
 	}
 
+	protected Function<String, String> getAggregationFunction() {
+		Pattern pattern = getAggregationPattern();
+
+		return (String sql) -> replaceAggregation(pattern.matcher(sql));
+	}
+
+	protected Pattern getAggregationPattern() {
+		return Pattern.compile(
+			"AGGREGATION_(.+?)_(.+?)\\(\\s*(.+?)\\s*\\)",
+			Pattern.CASE_INSENSITIVE);
+	}
+
 	protected Function<String, String> getBitwiseCheckFunction() {
 		Pattern pattern = getBitwiseCheckPattern();
 
@@ -190,6 +202,10 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		return Pattern.compile(
 			"SUBSTR\\(\\s*(.+?)\\s*,\\s*(.+?)\\s*,\\s*(.+?)\\s*\\)",
 			Pattern.CASE_INSENSITIVE);
+	}
+
+	protected String replaceAggregation(Matcher matcher) {
+		return matcher.replaceAll("$2($3)");
 	}
 
 	protected String replaceBitwiseCheck(Matcher matcher) {

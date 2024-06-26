@@ -87,7 +87,7 @@ const initialState = {
 		ram: '',
 	},
 	supportEmail: {value: ''},
-	supportURL: '',
+	supportURL: {value: ''},
 } as unknown as InitialStateProps;
 
 interface AppContextProps extends Array<InitialStateProps | Function> {

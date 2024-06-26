@@ -133,7 +133,7 @@ export function ReviewAndSubmitAppPage({
 						'supportemailaddress',
 						'supporturl',
 						'publisherwebsiteurl',
-						'ppusagetermsurl',
+						'appusagetermsurl',
 						'appdocumentationurl',
 						'appinstallationguideurl',
 					].includes(specificationKey)

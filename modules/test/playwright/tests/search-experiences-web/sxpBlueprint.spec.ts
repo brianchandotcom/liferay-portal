@@ -63,7 +63,7 @@ test.describe('Created blueprint has accurate clause contributors', () => {
 });
 
 test.describe('Saved blueprint maintains accurate clause contributors', () => {
-	let sxpBlueprint: any;
+	let sxpBlueprint: SXPBlueprint;
 
 	test.beforeEach(async ({apiHelpers, sxpBlueprintsAndElementsViewPage}) => {
 		await test.step('Create blueprint with API', async () => {
@@ -266,7 +266,7 @@ test.describe('Saved blueprint maintains accurate clause contributors', () => {
 });
 
 test.describe('Searching in preview with clause contributors is accurate', () => {
-	let sxpBlueprint: any;
+	let sxpBlueprint: SXPBlueprint;
 
 	test.beforeEach(async ({apiHelpers, sxpBlueprintsAndElementsViewPage}) => {
 		await test.step('Create blueprint with API', async () => {

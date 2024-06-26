@@ -60,7 +60,7 @@ export class SearchExperiencesApiHelper {
 		description?: string;
 		elementInstances?: Object[];
 		title?: string;
-	} = {}): Promise<{id: number}> {
+	} = {}): Promise<SXPBlueprint> {
 		const sxpBlueprint = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sxp-blueprints`,
 			{
@@ -105,7 +105,7 @@ export class SearchExperiencesApiHelper {
 		description?: string;
 		elementDefinition?: Object;
 		title?: string;
-	} = {}): Promise<{id: number}> {
+	} = {}): Promise<SXPElement> {
 		const sxpElement = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sxp-elements`,
 			{

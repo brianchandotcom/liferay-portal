@@ -4,6 +4,7 @@
  */
 export enum cardSelector {
 	Acquisition = '.acquisitions-card-root',
+	Audience = '.analytics-audience-report-card',
 	CohortAnalysis = '.cohort-analysis-card-root',
 	Interests = '.interests-card-root',
 	Metrics = '.analytics-metrics-card',

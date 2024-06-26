@@ -36,7 +36,7 @@ export enum PRODUCT_SUPPORT_SPECIFICATION_KEY {
 	APP_USAGE_TERMS_URL = 'appusagetermsurl',
 	PUBLISHER_WEBSITE_URL = 'publisherwebsiteurl',
 	SUPPORT_EMAIL = 'supportemailaddress',
-	SUPPORT_URL = 'supporturl'
+	SUPPORT_URL = 'supporturl',
 }
 
 export enum PRODUCT_TAGS {

@@ -14,11 +14,11 @@ import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 
 import './ProvideAppSupportAndHelpPage.scss';
-import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
 import {
 	PRODUCT_PRICE_MODEL,
 	PRODUCT_SUPPORT_SPECIFICATION_KEY,
 } from '../../../../../../enums/Product';
+import useFeaturePreview from '../../../../../../hooks/useFeaturePreview';
 
 interface ProvideAppSupportAndHelpPageProps {
 	onClickBack: () => void;

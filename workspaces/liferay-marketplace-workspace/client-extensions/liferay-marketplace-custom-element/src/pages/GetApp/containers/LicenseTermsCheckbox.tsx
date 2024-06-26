@@ -9,16 +9,16 @@ import useSWR from 'swr';
 import {Checkbox} from '../../../components/Checkbox/Checkbox';
 import {ContentModal} from '../../../components/ContentModal/ContentModal';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import {PRODUCT_SUPPORT_SPECIFICATION_KEY} from '../../../enums/Product';
 import i18n from '../../../i18n';
 import {getEulaDescription} from '../../../utils/util';
 import {useGetAppContext} from '../GetAppContextProvider';
-import {PRODUCT_SUPPORT_SPECIFICATION_KEY} from '../../../enums/Product';
 
 const LicenseTermsCheckbox = () => {
 	const [
 		{
 			payment: {eulaCheckbox},
-			product
+			product: {productSpecifications},
 		},
 		dispatch,
 	] = useGetAppContext();
@@ -26,13 +26,15 @@ const LicenseTermsCheckbox = () => {
 	const {properties} = useMarketplaceContext();
 	const eulaModal = useModal();
 
-	const appUsageTerms = product.productSpecifications?.find(
-		(specification: any) =>
+	const appUsageTerms = productSpecifications?.find(
+		(specification) =>
 			specification?.specificationKey ===
-		PRODUCT_SUPPORT_SPECIFICATION_KEY.APP_USAGE_TERMS_URL
+			PRODUCT_SUPPORT_SPECIFICATION_KEY.APP_USAGE_TERMS_URL
 	);
 
-	const formattedProtocolUrl = appUsageTerms?.value?.startsWith('https://') ? appUsageTerms?.value :  'https://' + appUsageTerms?.value
+	const formattedProtocolUrl = appUsageTerms?.value?.startsWith('https://')
+		? appUsageTerms?.value
+		: 'https://' + appUsageTerms?.value;
 
 	return (
 		<>
@@ -56,8 +58,17 @@ const LicenseTermsCheckbox = () => {
 				/>
 				<span>
 					I have read and agree to the
-					<a rel="noopener noreferrer" onClick={() => appUsageTerms?.value ? 
-								window.open(formattedProtocolUrl as string, '_blank') : eulaModal.onOpenChange(true)}>
+					<a
+						onClick={() =>
+							appUsageTerms?.value
+								? window.open(
+										formattedProtocolUrl as string,
+										'_blank'
+									)
+								: eulaModal.onOpenChange(true)
+						}
+						rel="noopener noreferrer"
+					>
 						&nbsp;End User License Agreement&nbsp;
 					</a>
 					and the

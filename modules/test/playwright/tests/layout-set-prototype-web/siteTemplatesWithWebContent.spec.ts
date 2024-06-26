@@ -7,8 +7,8 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {contentPagesTest} from '../../fixtures/contentPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
@@ -20,9 +20,9 @@ import {widgetPagesTest} from '../../fixtures/widgetPagesTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {LayoutSetPrototype} from '../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
 import {WebContentDisplayPage} from '../../pages/journal-content-web/WebContentDisplayPage';
-import {ContentPage} from '../../pages/layout-admin-web/ContentPage';
 import {PagesAdminPage} from '../../pages/layout-admin-web/PagesAdminPage';
 import {WidgetPage} from '../../pages/layout-admin-web/WidgetPage';
+import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEditorPage';
 import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {ProductMenuPage} from '../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {UIElementsPage} from '../../pages/uielements/UIElementsPage';
@@ -43,7 +43,7 @@ export const test = mergeTests(
 	pagesPagesTest,
 	widgetPagesTest,
 	webContentDisplayPageTest,
-	contentPagesTest,
+	pageEditorPagesTest,
 	serverAdministrationPageTest,
 	sitesPageTest,
 	systemSettingsPageTest,
@@ -153,10 +153,10 @@ test('Can switch template with web content on widget page.', async ({
 test('Can switch template with web content on content page.', async ({
 	apiHelpers,
 	applicationsMenuPage,
-	contentPage,
 	journalPage,
 	layoutSetPrototypePage,
 	page,
+	pageEditorPage,
 	pagesAdminPage,
 	productMenuPage,
 	serverAdministrationPage,
@@ -173,10 +173,10 @@ test('Can switch template with web content on content page.', async ({
 
 	await createSiteTemplateWithWebContentOnContentPage({
 		applicationsMenuPage,
-		contentPage,
 		journalPage,
 		layoutSetPrototypePage,
 		page,
+		pageEditorPage,
 		pagesAdminPage,
 		productMenuPage,
 		templateName: contentTemplateName1,
@@ -188,10 +188,10 @@ test('Can switch template with web content on content page.', async ({
 
 	await createSiteTemplateWithWebContentOnContentPage({
 		applicationsMenuPage,
-		contentPage,
 		journalPage,
 		layoutSetPrototypePage,
 		page,
+		pageEditorPage,
 		pagesAdminPage,
 		productMenuPage,
 		templateName: contentTemplateName2,
@@ -253,10 +253,10 @@ test('Can switch template with web content on content page.', async ({
 test('Can switch template with web content on home page.', async ({
 	apiHelpers,
 	applicationsMenuPage,
-	contentPage,
 	journalPage,
 	layoutSetPrototypePage,
 	page,
+	pageEditorPage,
 	pagesAdminPage,
 	productMenuPage,
 	serverAdministrationPage,
@@ -273,10 +273,10 @@ test('Can switch template with web content on home page.', async ({
 
 	await createSiteTemplateWithWebContentOnHomePage({
 		applicationsMenuPage,
-		contentPage,
 		journalPage,
 		layoutSetPrototypePage,
 		page,
+		pageEditorPage,
 		pagesAdminPage,
 		productMenuPage,
 		templateName: contentTemplateName1,
@@ -288,10 +288,10 @@ test('Can switch template with web content on home page.', async ({
 
 	await createSiteTemplateWithWebContentOnHomePage({
 		applicationsMenuPage,
-		contentPage,
 		journalPage,
 		layoutSetPrototypePage,
 		page,
+		pageEditorPage,
 		pagesAdminPage,
 		productMenuPage,
 		templateName: contentTemplateName2,
@@ -450,10 +450,10 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 
 async function createSiteTemplateWithWebContentOnContentPage({
 	applicationsMenuPage,
-	contentPage,
 	journalPage,
 	layoutSetPrototypePage,
 	page,
+	pageEditorPage,
 	pagesAdminPage,
 	productMenuPage,
 	templateName,
@@ -463,10 +463,10 @@ async function createSiteTemplateWithWebContentOnContentPage({
 	webContentName,
 }: {
 	applicationsMenuPage: ApplicationsMenuPage;
-	contentPage: ContentPage;
 	journalPage: JournalPage;
 	layoutSetPrototypePage: LayoutSetPrototypePage;
 	page: Page;
+	pageEditorPage: PageEditorPage;
 	pagesAdminPage: PagesAdminPage;
 	productMenuPage: ProductMenuPage;
 	templateName: string;
@@ -494,17 +494,17 @@ async function createSiteTemplateWithWebContentOnContentPage({
 	await pagesAdminPage.addTemplatePageButton.click();
 	await pagesAdminPage.addContentPage(templateName);
 
-	await contentPage.addWebContentDisplayToPage();
+	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
 	await webContentDisplayPage.addWebContentWithDisplay();
 	await uiElementsPage.publishButton.click();
 }
 
 async function createSiteTemplateWithWebContentOnHomePage({
 	applicationsMenuPage,
-	contentPage,
 	journalPage,
 	layoutSetPrototypePage,
 	page,
+	pageEditorPage,
 	pagesAdminPage,
 	productMenuPage,
 	templateName,
@@ -514,10 +514,10 @@ async function createSiteTemplateWithWebContentOnHomePage({
 	webContentName,
 }: {
 	applicationsMenuPage: ApplicationsMenuPage;
-	contentPage: ContentPage;
 	journalPage: JournalPage;
 	layoutSetPrototypePage: LayoutSetPrototypePage;
 	page: Page;
+	pageEditorPage: PageEditorPage;
 	pagesAdminPage: PagesAdminPage;
 	productMenuPage: ProductMenuPage;
 	templateName: string;
@@ -541,7 +541,7 @@ async function createSiteTemplateWithWebContentOnHomePage({
 
 	await productMenuPage.goToPages();
 	await pagesAdminPage.homePageLink.click();
-	await contentPage.addWebContentDisplayToPage();
+	await pageEditorPage.addWidget('Content Management', 'Web Content Display');
 	await webContentDisplayPage.addWebContentWithDisplay();
 	await uiElementsPage.publishButton.click();
 }

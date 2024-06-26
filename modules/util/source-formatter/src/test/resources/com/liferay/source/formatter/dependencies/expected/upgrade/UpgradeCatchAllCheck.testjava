@@ -27,6 +27,8 @@ import org.osgi.service.component.annotations.Reference;
 public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	public void method() {
+		_countryService.fetchCountryByA2(123, "test123");
+
 		AccountPortletKeys.ACCOUNT_USERS_ADMIN;
 		AccountPortletKeys.ACCOUNT_GROUPS_ADMIN;
 
@@ -34,11 +36,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CommerceOrderPaymentConstants.STATUS_COMPLETED;
 		CommerceOrderPaymentConstants.STATUS_PENDING;
 
-		for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()) {
-			commerceOrderItem.getQuantity();
-		}
-
-		_countryService.fetchCountryByA2(123, "test123");
+		CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST;
+		CookiesConstants.NAME_ID;
+		CookiesConstants.NAME_USER_UUID;
 
 		DestinationNames.COMMERCE_BASE_PRICE_LIST;
 		DestinationNames.COMMERCE_ORDER_STATUS;
@@ -53,18 +53,24 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 		fDSTableSchemaBuilder.add("test123", "test123");
 
+		for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()) {
+			commerceOrderItem.getQuantity();
+		}
+
 		_htmlParser.extractText(null);
 
 		new ArrayList<>(LanguageUtil.getAvailableLocales());
 
-		CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST;
-		CookiesConstants.NAME_ID;
-		CookiesConstants.NAME_USER_UUID;
+		AssetListEntryCreateDateComparator.getInstance(false);
+		AssetTagCountComparator.getInstance(false);
 
 		PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX;
 		PortletDisplayTemplateConstants.ENTRIES;
 
 		ServiceTrackerList<Class<E>> serviceTrackerList = ServiceTrackerListFactory.open(null, null);
+
+		StructureStructureKeyComparator.getInstance(true);
+		StructureStructureKeyComparator.getInstance(false);
 	}
 
 	public void method(
@@ -92,6 +98,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		LayoutItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion();
 
 		layoutItemSelectorCriterion.setShowHiddenPages(null);
+
+		AssetListEntryCreateDateComparator.getInstance(showHiddenPages);
+		AssetTagCountComparator.getInstance(showHiddenPages);
 	}
 
 	public void method(CommerceAddress commerceAddress) {

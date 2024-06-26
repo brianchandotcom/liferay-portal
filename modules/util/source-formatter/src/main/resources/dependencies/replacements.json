@@ -69,6 +69,40 @@
 		"to": ""
 	},
 	{
+		"from": "new AssetListEntryCreateDateComparator()",
+		"issueKey": "LPD-26157",
+		"skipParametersValidation": true,
+		"to": "AssetListEntryCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new AssetListEntryCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-26157",
+		"skipParametersValidation": true,
+		"to": "AssetListEntryCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new AssetTagCountComparator()",
+		"issueKey": "LPD-26157",
+		"skipParametersValidation": true,
+		"to": "AssetTagCountComparator.getInstance(false)"
+	},
+	{
+		"from": "new AssetTagCountComparator(boolean paramName)",
+		"issueKey": "LPD-26157",
+		"skipParametersValidation": true,
+		"to": "AssetTagCountComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "StructureStructureKeyComparator.INSTANCE_ASCENDING",
+		"issueKey": "LPD-26157",
+		"to": "StructureStructureKeyComparator.getInstance(true)"
+	},
+	{
+		"from": "StructureStructureKeyComparator.INSTANCE_DESCENDING",
+		"issueKey": "LPD-26157",
+		"to": "StructureStructureKeyComparator.getInstance(false)"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

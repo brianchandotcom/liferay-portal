@@ -13,6 +13,8 @@ import org.osgi.service.component.annotations.Reference;
 public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 	public void method() {
+		_countryService.fetchCommerceCountry(123, "test123");
+
 		AccountPortletKeys.COMMERCE_ACCOUNT_ADMIN;
 		AccountPortletKeys.COMMERCE_ACCOUNT_GROUP_ADMIN;
 
@@ -20,11 +22,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CommerceOrderConstants.PAYMENT_STATUS_PAID;
 		CommerceOrderConstants.PAYMENT_STATUS_PENDING;
 
-		for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()) {
-			commerceOrderItem.getQuantity();
-		}
-
-		_countryService.fetchCommerceCountry(123, "test123");
+		CookieKeys.COMMERCE_CONTINUE_AS_GUEST;
+		CookieKeys.ID;
+		CookieKeys.SCREEN_NAME;
 
 		DestinationNames.BASE_PRICE_LIST;
 		DestinationNames.ORDER_STATUS;
@@ -39,18 +39,24 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 		fDSTableSchemaBuilder.addFDSTableSchemaField("test123", "test123");
 
+		for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()) {
+			commerceOrderItem.getQuantity();
+		}
+
 		HtmlUtil.extractText(null);
 
 		ListUtil.fromArray(LanguageUtil.getAvailableLocales());
 
-		CookieKeys.COMMERCE_CONTINUE_AS_GUEST;
-		CookieKeys.ID;
-		CookieKeys.SCREEN_NAME;
+		new AssetListEntryCreateDateComparator();
+		new AssetTagCountComparator();
 
 		PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX;
 		PortletDisplayTemplateManager.ENTRIES;
 
 		ServiceTrackerList<Class<T>, Class<E>> serviceTrackerList = ServiceTrackerListFactory.open(null, null);
+
+		StructureStructureKeyComparator.INSTANCE_ASCENDING;
+		StructureStructureKeyComparator.INSTANCE_DESCENDING;
 	}
 
 	public void method(
@@ -79,6 +85,9 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 		layoutItemSelectorCriterion.setShowHiddenPages(null);
 		layoutItemSelectorCriterion.setShowHiddenPages(showHiddenPages);
+
+		new AssetListEntryCreateDateComparator(showHiddenPages);
+		new AssetTagCountComparator(showHiddenPages);
 	}
 
 	public void method(CommerceAddress commerceAddress) {

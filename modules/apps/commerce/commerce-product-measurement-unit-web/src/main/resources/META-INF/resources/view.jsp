@@ -71,17 +71,15 @@ CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext = (CPMeasureme
 					>
 						<c:choose>
 							<c:when test="<%= cpMeasurementUnit.isPrimary() %>">
-								<liferay-ui:icon
-									cssClass="commerce-admin-icon-check"
-									icon="check"
-									markupView="lexicon"
+								<clay:icon
+									cssClass="text-success"
+									symbol="check"
 								/>
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:icon
-									cssClass="commerce-admin-icon-times"
-									icon="times"
-									markupView="lexicon"
+								<clay:icon
+									cssClass="text-danger"
+									symbol="times"
 								/>
 							</c:otherwise>
 						</c:choose>

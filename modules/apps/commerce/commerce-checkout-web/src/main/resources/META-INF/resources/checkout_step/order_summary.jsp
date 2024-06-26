@@ -543,7 +543,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 			String commerceShippingOptionName = StringPool.BLANK;
 
 			if (commerceOrder.getShippingOptionName() != null) {
-				commerceShippingOptionName = orderSummaryCheckoutStepDisplayContext.getShippingOptionName(commerceOrder.getShippingOptionName(), locale);
+				commerceShippingOptionName = orderSummaryCheckoutStepDisplayContext.getShippingOptionName(locale);
 			}
 			%>
 

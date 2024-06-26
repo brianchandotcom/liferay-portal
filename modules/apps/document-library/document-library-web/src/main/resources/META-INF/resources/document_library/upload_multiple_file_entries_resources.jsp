@@ -219,6 +219,7 @@ else {
 										dataDefinitionId="<%= ddmStructure.getStructureId() %>"
 										dataRecordValues="<%= DataRecordValuesUtil.getDataRecordValues(ddmFormValues, ddmStructure) %>"
 										namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() + StringPool.UNDERLINE %>"
+										persistDefaultValues="<%= true %>"
 										persisted="<%= fileEntry != null %>"
 										submittable="<%= false %>"
 									/>

@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luis Ortiz
  */
 @Component(service = PortalInstanceLifecycleListener.class)
-public class ConfigurationCleanupPortalInstanceLifecycleListener
+public class ConfigurationPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
@@ -37,7 +37,7 @@ public class ConfigurationCleanupPortalInstanceLifecycleListener
 		List<String> pids = DBPartitionUtil.getConfigurationPids(
 			company.getCompanyId());
 
-		_configMap.put(company.getCompanyId(), pids);
+		_configurationMap.put(company.getCompanyId(), pids);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class ConfigurationCleanupPortalInstanceLifecycleListener
 			return;
 		}
 
-		for (String pid : _configMap.get(company.getCompanyId())) {
+		for (String pid : _configurationMap.get(company.getCompanyId())) {
 			Configuration configuration = _configurationAdmin.getConfiguration(
 				pid, "?");
 
@@ -55,10 +55,10 @@ public class ConfigurationCleanupPortalInstanceLifecycleListener
 			}
 		}
 
-		_configMap.remove(company.getCompanyId());
+		_configurationMap.remove(company.getCompanyId());
 	}
 
-	private static final HashMap<Long, List<String>> _configMap =
+	private static final HashMap<Long, List<String>> _configurationMap =
 		new HashMap<>();
 
 	@Reference

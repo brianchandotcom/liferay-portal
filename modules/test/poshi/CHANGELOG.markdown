@@ -1,5 +1,11 @@
 # Poshi Runner Change Log
 
+## 1.0.491
+
+### Runner
+
+* [POSHI-700](https://liferay.atlassian.net/browse/POSHI-700) - Use JUnit 5 for Poshi Runner tests
+
 ## 1.0.490
 
 ### Core

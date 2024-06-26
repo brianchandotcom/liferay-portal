@@ -2392,6 +2392,10 @@ public class PortalImpl implements Portal {
 
 		String host = httpServletRequest.getHeader("Host");
 
+		if (Validator.isNull(host)) {
+			host = httpServletRequest.getServerName();
+		}
+
 		if (host != null) {
 			host = StringUtil.toLowerCase(host.trim());
 

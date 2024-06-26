@@ -73,7 +73,7 @@ definition {
 		}
 
 		task ("View there is no collection items shown in Collection Display") {
-			PageEditor.viewCollectionItem(assetTitle = "Sample Collection Item");
+			PageEditor.viewCollectionItem(assetTitle = "Dynamic Collection");
 
 			PageEditor.viewNumberOfCollectionItemsInCollectionPage(numberOfItems = "(0 Items)");
 		}
@@ -170,7 +170,7 @@ definition {
 		}
 
 		task ("View there is no collection items shown in Collection Display") {
-			PageEditor.viewCollectionItem(assetTitle = "Sample Collection Item");
+			PageEditor.viewCollectionItem(assetTitle = "Manual Collection");
 
 			PageEditor.viewNumberOfCollectionItemsInCollectionPage(numberOfItems = "(0 Items)");
 		}

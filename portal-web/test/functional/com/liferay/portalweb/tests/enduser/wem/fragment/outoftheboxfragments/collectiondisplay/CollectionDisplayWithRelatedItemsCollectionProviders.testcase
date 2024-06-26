@@ -1038,7 +1038,7 @@ definition {
 		task ("Add a Heading fragment into the Collection Display") {
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Sample Collection Item",
+				entryTitle = "Blogs with This Category",
 				fragmentName = "Heading");
 		}
 

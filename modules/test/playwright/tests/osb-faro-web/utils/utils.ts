@@ -24,11 +24,13 @@ export async function expectNotToBeVisible({
 	itemNames,
 	page,
 }: {
-	itemNames: string[];
+	itemNames: string[] | string;
 	page: Page;
 }) {
-	for (const itemName of itemNames) {
-		await expect(page.getByRole('cell', {name: itemName})).toBeHidden({
+	const namesArray = Array.isArray(itemNames) ? itemNames : [itemNames];
+
+	for (const itemName of namesArray) {
+		await expect(page.getByText(itemName)).toBeHidden({
 			timeout: 100 * 1000,
 		});
 	}
@@ -38,11 +40,13 @@ export async function expectToBeVisible({
 	itemNames,
 	page,
 }: {
-	itemNames: string[];
+	itemNames: string[] | string;
 	page: Page;
 }) {
-	for (const itemName of itemNames) {
-		await expect(page.getByRole('cell', {name: itemName})).toBeVisible({
+	const namesArray = Array.isArray(itemNames) ? itemNames : [itemNames];
+
+	for (const itemName of namesArray) {
+		await expect(page.getByText(itemName)).toBeVisible({
 			timeout: 100 * 1000,
 		});
 	}

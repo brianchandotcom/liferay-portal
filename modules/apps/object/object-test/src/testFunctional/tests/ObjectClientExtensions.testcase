@@ -98,6 +98,8 @@ definition {
 
 			PortletEntry.save();
 
+			ObjectAdmin.goToCustomObject(objectName = "ProxyCustomObject");
+
 			AssertElementPresent(
 				key_entry = "objectEntryManager Entry Updated",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");

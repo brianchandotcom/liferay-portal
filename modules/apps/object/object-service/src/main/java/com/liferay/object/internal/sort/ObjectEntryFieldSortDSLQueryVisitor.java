@@ -20,6 +20,7 @@ import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
 import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
 import com.liferay.petra.sql.dsl.spi.query.OrderBy;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.sql.Clob;
 import java.sql.Types;
 
+import java.util.Objects;
 import java.util.Stack;
 
 /**
@@ -76,8 +78,18 @@ public class ObjectEntryFieldSortDSLQueryVisitor
 				getPrimaryKeyColumn(fieldTable), null, dslQuery, fieldTable);
 		}
 
+		String prefix = StringPool.BLANK;
+
+		if (Objects.equals(
+				objectField.getDBType(),
+				ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
+
+			prefix = "AGGREGATION_BOOLEAN_";
+		}
+
 		OrderByExpression orderByExpression = _getOrderByExpression(
-			_isParentComplexField(sort), columnExpression, sort.isReverse());
+			_isParentComplexField(sort), columnExpression, prefix,
+			sort.isReverse());
 
 		Stack<BaseASTNode> allBaseASTNodes = getAllBaseASTNodes(
 			OrderByStep.class, dslQuery);
@@ -121,19 +133,21 @@ public class ObjectEntryFieldSortDSLQueryVisitor
 	}
 
 	private OrderByExpression _getOrderByExpression(
-		boolean aggregate, Expression<?> expression, boolean reverse) {
+		boolean aggregate, Expression<?> expression, String prefix,
+		boolean reverse) {
 
 		if (reverse) {
 			if (aggregate) {
 				expression = new AggregateExpression<>(
-					false, expression, "max");
+					false, expression, prefix + "max");
 			}
 
 			return expression.descending();
 		}
 
 		if (aggregate) {
-			expression = new AggregateExpression<>(false, expression, "min");
+			expression = new AggregateExpression<>(
+				false, expression, prefix + "min");
 		}
 
 		return expression.ascending();

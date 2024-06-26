@@ -178,7 +178,7 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[@data-testid='localized-main-input']</td>
+	<td>//input[@placeholder='Untitled Segment']</td>
 	<td></td>
 </tr>
 <tr>

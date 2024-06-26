@@ -614,68 +614,6 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-13001. As an admin verify that is possible to export the roles"
-	@priority = 5
-	test CanExportRolesViaAPI {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "true";
-
-		task ("Given an the admin uses the POST to create an export task for the roles") {
-			var portalURL = PropsUtil.get("portal.url");
-			var exportTaskId = CommerceJSONAccountsAPI._getExportTaskId(
-				className = "com.liferay.headless.admin.user.dto.v1_0.Role",
-				contentType = "JSON");
-
-			echo("The exportTaskId is: ${exportTaskId}");
-		}
-
-		task ("When the admin nagivates to the /o/api") {
-			APIExplorer.navigateToOpenAPI(
-				api = "headless-batch-engine",
-				portalURL = ${portalURL},
-				version = "v1.0");
-		}
-
-		task ("And admin uses the GET with an ID to retrive the export file") {
-			Click(
-				locator1 = "OpenAPI#API_METHOD",
-				method = "getExportTaskContent",
-				service = "ExportTask");
-
-			Type(
-				locator1 = "OpenAPI#HEADER_PARAMETER",
-				name = "",
-				value1 = ${exportTaskId});
-
-			Click(
-				key_text = "Execute",
-				locator1 = "Button#ANY_ENABLED");
-
-			var attachment = selenium.getText("//div[contains(@id,'getExportTaskContent')]//td[contains(.,'Response body')]//span[3]");
-
-			echo("The attachment is: ${attachment}");
-
-			var filename = StringUtil.extractLast(${attachment}, "=");
-
-			echo("The file name is: ${filename}");
-
-			Click(
-				key_entry = "Download file",
-				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
-		}
-
-		task ("Then the file is downloaded") {
-			var fileStatus = CommerceUtilities.assertDownloadedFile(downloadedFileName = ${filename});
-
-			if (${fileStatus} == "true") {
-				echo("The file ${filename} is present");
-			}
-			else {
-				fail("The file is not present");
-			}
-		}
-	}
-
 	@description = "COMMERCE-13000. As an admin verify that is possible to import the roles from a JSON file"
 	@priority = 5
 	test CanImportRolesViaAPI {

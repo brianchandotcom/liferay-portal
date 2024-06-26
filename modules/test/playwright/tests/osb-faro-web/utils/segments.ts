@@ -4,6 +4,7 @@
  */
 
 import {Page} from '@playwright/test';
+import {segmentConditions} from './selectors';
 import {searchByTerm} from './utils';
 
 export async function addSegmentField({
@@ -87,6 +88,21 @@ export async function editSegment(page: Page) {
 export async function saveSegment(page: Page) {
 	await page.getByRole('button', {name: 'Save Segment'}).click();
 	await page.waitForSelector('div.alert-success', {state: 'visible'});
+}
+
+export async function selectOperator({
+	index = 0,
+	operator,
+	operatorField,
+	page
+}: {
+	index?: number;
+	operator: string;
+	operatorField: segmentConditions;
+	page: Page;
+}) {
+	await page.locator(operatorField).nth(index).click();
+	await page.getByRole('option', {name: operator}).click();
 }
 
 export async function setSegmentName({

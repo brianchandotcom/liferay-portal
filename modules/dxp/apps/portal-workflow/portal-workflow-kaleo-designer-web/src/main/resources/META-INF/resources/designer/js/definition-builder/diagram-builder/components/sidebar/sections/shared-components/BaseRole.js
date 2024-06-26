@@ -4,14 +4,13 @@
  */
 
 import ClayAutocomplete from '@clayui/autocomplete';
-import {useResource} from '@clayui/data-provider';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
+import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
-import {contextUrl} from '../../../../../constants';
-import {headers, userBaseURL} from '../../../../../util/fetchUtil';
+import {userBaseURL} from '../../../../../util/fetchUtil';
 
 export default function BaseRole({
 	defaultFieldValue = {id: '', name: ''},
@@ -20,24 +19,10 @@ export default function BaseRole({
 	updateSelectedItem,
 }) {
 	const [active, setActive] = useState(false);
-	const [filter, setFilter] = useState(true);
+	const [filter, setFilter] = useState(false);
 	const [fieldValues, setFieldValues] = useState(defaultFieldValue);
-	const [networkStatus, setNetworkStatus] = useState(4);
-	const {resource} = useResource({
-		fetchOptions: {
-			headers: {
-				...headers,
-				'accept': `application/json`,
-				'x-csrf-token': Liferay.authToken,
-			},
-		},
-		fetchPolicy: 'cache-first',
-		link: `${window.location.origin}${contextUrl}${userBaseURL}/roles?restrictFields=rolePermissions`,
-		onNetworkStatusChange: setNetworkStatus,
-		variables: {
-			pageSize: -1,
-		},
-	});
+	const [loading, setLoading] = useState(false);
+	const [roleItems, setRoleItems] = useState([]);
 
 	useEffect(() => {
 		if (defaultFieldValue.name !== '') {
@@ -52,8 +37,31 @@ export default function BaseRole({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [defaultFieldValue]);
 
-	const loading = networkStatus < 4;
-	const error = networkStatus === 5;
+	useEffect(() => {
+		const makeFetch = async () => {
+			setLoading(true);
+
+			const response = await fetch(
+				`${userBaseURL}/roles?restrictFields=rolePermissions?pageSize=-1`,
+				{
+					headers: new Headers({
+						'Accept': 'application/json',
+						'Accept-Language':
+							Liferay.ThemeDisplay.getBCP47LanguageId(),
+						'Content-Type': 'application/json',
+					}),
+				}
+			);
+
+			const {items} = await response.json();
+
+			setRoleItems(items);
+
+			setLoading(false);
+		};
+
+		makeFetch();
+	}, []);
 
 	const handleInputFocus = () => {
 		setFilter(fieldValues.name === '');
@@ -62,19 +70,23 @@ export default function BaseRole({
 
 	const handleInputChange = (event) => {
 		event.persist();
-		setFilter(true);
+
 		setFieldValues((previousValues) => ({
 			...previousValues,
 			name: event.target.value,
 		}));
 	};
 
-	const filterItems = () =>
-		resource.items.filter((item) =>
-			!filter
-				? item
-				: item.name.toLowerCase().match(fieldValues.name.toLowerCase())
+
+	const filteredItems = useMemo(() => {
+		return roleItems.filter((item) =>
+			filter ?
+				item.name
+					.toLowerCase()
+					.match(fieldValues.name.toLowerCase())
+				: item
 		);
+	}, [roleItems, fieldValues])
 
 	const handleItemClick = (item) => {
 		setFieldValues({id: item.id, name: item.name});
@@ -99,20 +111,19 @@ export default function BaseRole({
 					/>
 
 					<ClayAutocomplete.DropDown
-						active={!!resource && active}
+						active={!!roleItems.length && active}
 						closeOnClickOutside
 						onSetActive={setActive}
 					>
 						<ClayDropDown.ItemList>
-							{(error || (resource && resource.error)) && (
+							{!roleItems.length && (
 								<ClayDropDown.Item className="disabled">
 									{Liferay.Language.get('no-results-found')}
 								</ClayDropDown.Item>
 							)}
 
-							{!error &&
-								resource?.items &&
-								filterItems().map((item) => (
+							{!!roleItems.length &&
+								filteredItems.map((item) => (
 									<ClayAutocomplete.Item
 										key={item.id}
 										onClickCapture={() => {

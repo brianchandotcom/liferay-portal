@@ -6,6 +6,8 @@
 package com.liferay.commerce.shipping.engine.internal;
 
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -34,12 +37,14 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,13 +72,15 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 		try {
 			JSONObject jsonObject = _getJSONObject(
 				JSONUtil.put(
+					"bcp47LanguageId", _language.getBCP47LanguageId(locale)
+				).put(
 					"locale", locale
 				).put(
 					"name", name
 				),
 				"option-label");
 
-			return jsonObject.getString(name);
+			return jsonObject.getString("name");
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -90,6 +97,7 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 
 		try {
 			return _getCommerceShippingOptions(
+				commerceOrder,
 				_getJSONObject(
 					_getPayloadJSONObject(commerceContext, commerceOrder),
 					"options"));
@@ -124,6 +132,7 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 
 		try {
 			return _getCommerceShippingOptions(
+				commerceOrder,
 				_getJSONObject(
 					_getPayloadJSONObject(commerceContext, commerceOrder),
 					"options-enabled"));
@@ -310,7 +319,7 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 	}
 
 	private List<CommerceShippingOption> _getCommerceShippingOptions(
-		JSONObject jsonObject) {
+		CommerceOrder commerceOrder, JSONObject jsonObject) {
 
 		List<CommerceShippingOption> commerceShippingOptions =
 			new ArrayList<>();
@@ -322,10 +331,41 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 			object -> {
 				JSONObject shippingOptionJSONObject = (JSONObject)object;
 
+				BigDecimal amount = (BigDecimal)GetterUtil.getNumber(
+					shippingOptionJSONObject.get("amount"));
+
+				String currencyCode = shippingOptionJSONObject.getString(
+					"currencyCode");
+
+				if (Validator.isNotNull(currencyCode)) {
+					try {
+						CommerceCurrency commerceCurrency =
+							_commerceCurrencyLocalService.getCommerceCurrency(
+								commerceOrder.getCompanyId(), currencyCode);
+
+						if (commerceCurrency.getCommerceCurrencyId() !=
+								commerceOrder.getCommerceCurrencyId()) {
+
+							CommerceCurrency commerceOrderCommerceCurrency =
+								commerceOrder.getCommerceCurrency();
+
+							BigDecimal rate =
+								commerceOrderCommerceCurrency.getRate();
+
+							amount = amount.multiply(
+								rate.divide(
+									commerceCurrency.getRate(),
+									RoundingMode.HALF_UP));
+						}
+					}
+					catch (Exception exception) {
+						_log.error(exception);
+					}
+				}
+
 				commerceShippingOptions.add(
 					new CommerceShippingOption(
-						(BigDecimal)GetterUtil.getNumber(
-							shippingOptionJSONObject.get("amount")),
+						amount,
 						shippingOptionJSONObject.getString("shippingMethodKey"),
 						shippingOptionJSONObject.getString("key"),
 						shippingOptionJSONObject.getString("name"),
@@ -386,6 +426,9 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Reference
 	private CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
 
@@ -397,6 +440,9 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PortalCatapult _portalCatapult;

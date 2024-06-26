@@ -60,6 +60,18 @@ type TUserAccount = {
 	password?: string;
 };
 
+type TExportBatch = {
+	className?: string;
+	contentType?: string;
+	errorMessage?: string;
+	executeStatus?: string;
+	externalReferenceCode?: string;
+	id?: number;
+	processedItemsCount?: number;
+	startTime?: string;
+	totalItemsCount?: number;
+}
+
 export class HeadlessAdminUserApiHelper {
 	readonly apiHelpers: ApiHelpers | DataApiHelpers;
 	readonly basePath: string;
@@ -245,6 +257,12 @@ export class HeadlessAdminUserApiHelper {
 			`${this.apiHelpers.baseUrl}${this.basePath}/roles/${roleId}/association/user-account/${userAccountId}`,
 			{data: {}, failOnStatusCode: true}
 		);
+	}
+
+	async postRolesPageExportBatch(): Promise<TExportBatch> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/roles/export-batch`
+		)
 	}
 
 	async postOrganization(

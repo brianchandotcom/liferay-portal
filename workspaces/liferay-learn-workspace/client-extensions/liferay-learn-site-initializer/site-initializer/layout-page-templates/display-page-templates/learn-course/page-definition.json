@@ -186,7 +186,7 @@
 															"value": {
 																"html": {
 																	"mapping": {
-																		"fieldKey": "JournalArticle_title",
+																		"fieldKey": "DDMStructure_course",
 																		"itemReference": {
 																			"contextSource": "DisplayPageItem"
 																		}

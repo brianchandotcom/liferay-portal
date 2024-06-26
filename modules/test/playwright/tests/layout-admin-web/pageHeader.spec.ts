@@ -74,15 +74,13 @@ test('checks page title in view mode and in edit mode', async ({
 
 	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-	await expect(await page.title()).toBe(
-		`${pageName} - ${site.name} - Liferay DXP`
-	);
+	expect(await page.title()).toBe(`${pageName} - ${site.name} - Liferay DXP`);
 
 	// Check the page title in the edit mode
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-	await expect(await page.title()).toBe(
+	expect(await page.title()).toBe(
 		`${pageName} - ${site.name} - Liferay DXP (Editing)`
 	);
 });

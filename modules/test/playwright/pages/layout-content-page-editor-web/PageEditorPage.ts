@@ -301,7 +301,7 @@ export class PageEditorPage {
 	async deleteExperience(name: string) {
 		await this.openExperienceSelector();
 
-		await this.page.on('dialog', async (dialog) => await dialog.accept());
+		this.page.on('dialog', async (dialog) => await dialog.accept());
 
 		await this.page
 			.locator('.dropdown-menu__experience', {
@@ -657,7 +657,7 @@ export class PageEditorPage {
 
 		const isActive = await this.isActive(fragmentId, isDesktop);
 
-		await expect(isActive).toBe(true);
+		expect(isActive).toBe(true);
 	}
 
 	async selectEditable(

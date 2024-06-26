@@ -96,8 +96,7 @@ test('allows adding a Collection Display with a manual collection into another C
 
 	// Expect second collection to display only Animal 01 and Animal 02 contents that times
 
-	const secondCollection =
-		await pageEditorPage.getFragment(secondCollectionId);
+	const secondCollection = pageEditorPage.getFragment(secondCollectionId);
 
 	await expect(secondCollection.locator('li')).toHaveCount(count * 2);
 	await expect(secondCollection.getByText('Animal 01')).toHaveCount(count);
@@ -192,7 +191,7 @@ test('checks Content Flags, Content Ratings and Content Display are compatible w
 	// Check that the Content Display shows the content in each item
 
 	await expect(
-		await page.locator('.page-editor').getByText('Content', {exact: true})
+		page.locator('.page-editor').getByText('Content', {exact: true})
 	).toHaveCount(2);
 	await expect(page.getByText('Animal 01 content')).toBeVisible();
 	await expect(page.getByText('Animal 02 content')).toBeVisible();
@@ -448,7 +447,7 @@ test('checks that fragment ids used within a display collection are not repeated
 			await fragmentIds.push(fragment.getAttribute('id'));
 		}
 
-		await expect(Array.from(new Set(fragmentIds))).toHaveLength(4);
+		expect(Array.from(new Set(fragmentIds))).toHaveLength(4);
 	};
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(

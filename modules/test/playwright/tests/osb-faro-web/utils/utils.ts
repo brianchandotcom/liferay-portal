@@ -4,6 +4,7 @@
  */
 
 import {Page, expect} from '@playwright/test';
+import {waitForLoading} from './loading';
 
 export async function searchByTerm({
 	page,
@@ -12,6 +13,8 @@ export async function searchByTerm({
 	page: Page;
 	searchTerm: string;
 }) {
+	await waitForLoading(page);
+
 	await page.getByPlaceholder('Search').first().click();
 	await page.getByPlaceholder('Search').first().fill(searchTerm);
 	await page.getByPlaceholder('Search').first().press('Enter');

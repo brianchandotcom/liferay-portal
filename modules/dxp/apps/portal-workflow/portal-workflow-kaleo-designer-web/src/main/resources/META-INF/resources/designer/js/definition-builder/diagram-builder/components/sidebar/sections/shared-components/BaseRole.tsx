@@ -8,21 +8,33 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {ChangeEvent, useEffect, useMemo, useState} from 'react';
+
+// @ts-ignore
 
 import {userBaseURL} from '../../../../../util/fetchUtil';
+
+interface BaseRoleProps {
+	defaultFieldValue: {
+		id: string;
+		name: string;
+	};
+	inputLabel: string;
+	selectLabel: string;
+	updateSelectedItem: (value: Role) => void;
+}
 
 export default function BaseRole({
 	defaultFieldValue = {id: '', name: ''},
 	inputLabel,
 	selectLabel,
 	updateSelectedItem,
-}) {
+}: BaseRoleProps) {
 	const [active, setActive] = useState(false);
 	const [filter, setFilter] = useState(false);
 	const [fieldValues, setFieldValues] = useState(defaultFieldValue);
 	const [loading, setLoading] = useState(false);
-	const [roleItems, setRoleItems] = useState([]);
+	const [roleItems, setRoleItems] = useState<Role[]>([]);
 
 	useEffect(() => {
 		if (defaultFieldValue.name !== '') {
@@ -53,7 +65,7 @@ export default function BaseRole({
 				}
 			);
 
-			const {items} = await response.json();
+			const {items} = (await response.json()) as {items: Role[]};
 
 			setRoleItems(items);
 
@@ -68,8 +80,12 @@ export default function BaseRole({
 		setActive(true);
 	};
 
-	const handleInputChange = (event) => {
+	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
 		event.persist();
+
+		if (!filter) {
+			setFilter(true);
+		}
 
 		setFieldValues((previousValues) => ({
 			...previousValues,
@@ -77,19 +93,18 @@ export default function BaseRole({
 		}));
 	};
 
-
 	const filteredItems = useMemo(() => {
 		return roleItems.filter((item) =>
-			filter ?
-				item.name
-					.toLowerCase()
-					.match(fieldValues.name.toLowerCase())
+			filter
+				? item.name.toLowerCase().match(fieldValues.name.toLowerCase())
 				: item
 		);
-	}, [roleItems, fieldValues])
 
-	const handleItemClick = (item) => {
-		setFieldValues({id: item.id, name: item.name});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [fieldValues, roleItems]);
+
+	const handleItemClick = (item: Role) => {
+		setFieldValues({id: String(item.id), name: item.name});
 		setActive(false);
 
 		updateSelectedItem(item);

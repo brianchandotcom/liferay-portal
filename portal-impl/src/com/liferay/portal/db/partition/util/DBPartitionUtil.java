@@ -51,6 +51,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -180,6 +181,43 @@ public class DBPartitionUtil {
 		}
 
 		return pids;
+	}
+
+	public static HashMap<String, String> getConfigurations(long companyId)
+		throws SQLException {
+
+		HashMap<String, String> configurations = new HashMap<>();
+
+		Connection connection = CurrentConnectionUtil.getConnection(
+			InfrastructureUtil.getDataSource());
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select configurationId, dictionary from ",
+					_getPartitionName(companyId), ".Configuration_"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				configurations.put(
+					resultSet.getString(1), resultSet.getString(2));
+			}
+		}
+
+		return configurations;
+	}
+
+	public static long getCurrentCompanyId() {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		if (!DBPartition.isPartitionEnabled()) {
+			return companyId;
+		}
+
+		if (companyId == CompanyConstants.SYSTEM) {
+			companyId = _defaultCompanyId;
+		}
+
+		return companyId;
 	}
 
 	public static boolean insertDBPartition(long companyId)
@@ -438,6 +476,12 @@ public class DBPartitionUtil {
 						_dbPartitionDB.getCreateTableSQL(
 							fromPartitionName, toPartitionName, fromTableName,
 							toTableName));
+
+					if (StringUtil.equalsIgnoreCase(
+							fromTableName, "Configuration_")) {
+
+						continue;
+					}
 
 					statement.executeUpdate(
 						_getCopyDataSQL(

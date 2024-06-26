@@ -5,15 +5,22 @@
 
 package com.liferay.portal.db.partition.internal.instance.lifecycle;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.util.PortalInstances;
 
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.felix.cm.file.ConfigurationHandler;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -41,6 +48,44 @@ public class ConfigurationPortalInstanceLifecycleListener
 			company.getCompanyId());
 
 		_configurationMap.put(company.getCompanyId(), pids);
+	}
+
+	@Override
+	public void portalInstanceRegistered(Company company) throws Exception {
+		if (!DBPartition.isPartitionEnabled() ||
+			!PortalInstances.isCompanyInCopyProcess()) {
+
+			return;
+		}
+
+		HashMap<String, String> configurations =
+			DBPartitionUtil.getConfigurations(
+				PortalInstances.getCompanyInCopyProcess());
+
+		for (Map.Entry<String, String> configurationEntry :
+				configurations.entrySet()) {
+
+			String dictionaryString = configurationEntry.getValue();
+
+			Dictionary<String, Object> dictionary = ConfigurationHandler.read(
+				new UnsyncByteArrayInputStream(
+					dictionaryString.getBytes(StringPool.UTF8)));
+
+			if (dictionary.get("service.factoryPid") != null) {
+				Configuration configuration =
+					_configurationAdmin.createFactoryConfiguration(
+						(String)dictionary.get("service.factoryPid"),
+						StringPool.QUESTION);
+
+				dictionary.put("service.pid", configuration.getPid());
+
+				if (dictionary.get("companyId") != null) {
+					dictionary.put("companyId", company.getCompanyId());
+				}
+
+				configuration.update(dictionary);
+			}
+		}
 	}
 
 	@Override

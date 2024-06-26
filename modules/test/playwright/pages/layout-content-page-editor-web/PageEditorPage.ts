@@ -162,7 +162,7 @@ export class PageEditorPage {
 		fragmentId: string;
 		isDesktop?: boolean;
 		tab: ConfigurationTab;
-		value?: string;
+		value?: string | boolean;
 		valueFromStylebook?: boolean;
 	}) {
 		await this.selectFragment(fragmentId, isDesktop);
@@ -179,7 +179,7 @@ export class PageEditorPage {
 				.getByLabel('Value from Stylebook', {exact: true})
 				.click();
 
-			const valueButton = await this.page.getByTitle(value, {
+			const valueButton = await this.page.getByTitle(value as string, {
 				exact: true,
 			});
 
@@ -189,10 +189,25 @@ export class PageEditorPage {
 			const type = await field.evaluate((element) => element.tagName);
 
 			if (type === 'INPUT' || type === 'TEXTAREA') {
-				await field.fill(value);
+				const inputType = await field.evaluate(
+					(element: HTMLInputElement) => element.type
+				);
+
+				if (inputType === 'checkbox') {
+					if (value as boolean) {
+						field.check();
+					}
+					else {
+						field.uncheck();
+					}
+
+					return;
+				}
+
+				await field.fill(value as string);
 			}
 			else if (type === 'SELECT') {
-				await field.selectOption(value);
+				await field.selectOption(value as string);
 			}
 			else if (type === 'BUTTON') {
 				await field.click();

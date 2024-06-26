@@ -12,12 +12,12 @@ import {checkYarnLock} from './checkYarnLock.mjs';
  * Runs the "preflight" checks (basically everything that is not already covered
  * by Prettier or ESLint).
  */
-export default async function preflight() {
+export default async function preflight({allFiles} = {allFiles: false}) {
 	const results = await Promise.all([
 		checkConfigFileNames(),
 		checkPackageJSONFiles(),
 		checkYarnLock(),
-		checkTsc(),
+		checkTsc({allFiles}),
 	]);
 
 	const errors = results.flat();

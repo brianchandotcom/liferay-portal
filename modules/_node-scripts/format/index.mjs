@@ -20,7 +20,7 @@ export default async function main() {
 
 	if (path.resolve(process.cwd()) === rootDir) {
 		console.log('🛫 Running preflight...');
-		await preflight();
+		await preflight({allFiles: all});
 	}
 
 	console.log('📝 Running format...');

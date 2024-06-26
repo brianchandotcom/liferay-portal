@@ -30,7 +30,7 @@ export default async function runTscChecks(
 		const cpuCount = os.cpus().length;
 
 		console.log(
-			`ℹ️ A total of ${cpuCount} CPUs were detected: launching tsc in groups of ${cpuCount} projects`
+			`ℹ️ A total of ${cpuCount} CPUs were detected: launching tsc using ${cpuCount} workers`
 		);
 
 		let projectDirs;

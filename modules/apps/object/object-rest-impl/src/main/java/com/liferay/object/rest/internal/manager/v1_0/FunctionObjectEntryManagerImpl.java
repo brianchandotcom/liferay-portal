@@ -332,18 +332,17 @@ public class FunctionObjectEntryManagerImpl
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			_jsonFactory.looseSerialize(objectEntry));
 
-		jsonObject = _jsonFactory.createJSONObject(
-			HashMapBuilder.put(
-				"creator", jsonObject.get("creator")
-			).put(
-				"dateCreated", jsonObject.get("dateCreated")
-			).put(
-				"dateModified", jsonObject.get("dateModified")
-			).put(
-				"externalReferenceCode", jsonObject.get("externalReferenceCode")
-			).put(
-				"status", jsonObject.get("status")
-			).build());
+		jsonObject = JSONUtil.put(
+			"creator", jsonObject.get("creator")
+		).put(
+			"dateCreated", jsonObject.get("dateCreated")
+		).put(
+			"dateModified", jsonObject.get("dateModified")
+		).put(
+			"externalReferenceCode", jsonObject.get("externalReferenceCode")
+		).put(
+			"status", jsonObject.get("status")
+		);
 
 		Map<String, Object> properties = objectEntry.getProperties();
 

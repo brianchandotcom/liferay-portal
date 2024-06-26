@@ -8,7 +8,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/c//koroneikiaccounts/by-external-reference-code/${koroneikiERC} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 		''';
@@ -28,7 +28,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/c/koroneikiaccounts/${koroneikiAccountId} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{

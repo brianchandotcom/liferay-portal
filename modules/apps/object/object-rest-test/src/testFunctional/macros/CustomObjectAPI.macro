@@ -44,7 +44,7 @@ definition {
 
 		if (isSet(userEmailAddress)) {
 			var headers = '''
-				-u ${userEmailAddress}:test \
+				-u ${userEmailAddress}:${PropsUtil.get("default.admin.password")} \
 				-H Content-Type: application/json \
 			''';
 		}

@@ -114,7 +114,7 @@ definition {
 			Type(
 				labelTitle = "Password",
 				locator1 = "Masterclass#SIGN_IN_FORM",
-				value1 = "test");
+				value1 = ${PropsUtil.get('default.admin.password')});
 		}
 
 		Check(

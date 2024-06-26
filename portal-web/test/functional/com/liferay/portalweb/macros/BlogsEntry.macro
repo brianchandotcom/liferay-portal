@@ -579,7 +579,7 @@ definition {
 		var curl = '''
 			${portalURL}/xmlrpc/pingback \
 				-H 'Content-Type: text/xml' \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d '
 				<?xml version="1.0" encoding="iso-8859-1"?>
 				<methodCall>

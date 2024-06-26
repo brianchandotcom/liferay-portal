@@ -7,7 +7,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test' \
+				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}' \
 				-d '{
 					"articleBody": "${bodyField}",
 					"headline": "${titleField}",

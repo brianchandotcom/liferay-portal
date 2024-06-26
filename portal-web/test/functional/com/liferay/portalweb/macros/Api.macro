@@ -1,6 +1,6 @@
 definition {
 
-	var password = "test";
+	var password = PropsUtil.get("default.admin.password");
 	var userEmailAddress = "test@liferay.com";
 
 	@summary = "Default summary"

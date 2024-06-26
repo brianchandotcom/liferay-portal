@@ -8,7 +8,7 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLoginInfo = "test:test";
+			var userLoginInfo = "test:${PropsUtil.get(\"default.admin.password\")}";
 		}
 		else {
 			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();

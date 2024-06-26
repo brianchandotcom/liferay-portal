@@ -67,7 +67,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${parentResourcePrimKey}/wiki-pages \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test' \
+				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}' \
 				-d '{
 					"content": "${content}",
 					"creator": {},
@@ -146,7 +146,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-nodes/${nodeId}/wiki-pages \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test' \
+				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}' \
 				-d '{
 					"content": "${content}",
 					"creator": {},
@@ -172,7 +172,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${wikiPageId} \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test' \
+				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}' \
 		''';
 
 		var response = JSONCurlUtil.delete(${curl});
@@ -336,7 +336,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${resourcePrimKey} \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test' \
+				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}' \
 				-d '{
 					"content": "${content}",
 					"creator": {},

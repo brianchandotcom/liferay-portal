@@ -226,7 +226,7 @@ definition {
 
 		var curl = '''
 			${analyticsCloudURL}/o/faro/main/${groupId}/preferences/send_email_report
-				-u 'test@liferay.com:test'
+				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}'
 				-F 'channelId="${channelId}"'
 				-F 'userId="${userID}"'
 				-F 'frequency="${frequency}"'

@@ -35,7 +35,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/country/get-country-by-name \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d name=${countryName} \
 		''';
 
@@ -54,7 +54,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/country/get-country-by-name \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d name=${countryName} \
 		''';
 
@@ -72,7 +72,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/region/get-regions \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d companyId=${companyId} \
 				-d a2=${countryAbbreviation} \
 				-d active=true

@@ -153,7 +153,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/search-experiences-rest/v1.0/sxp-blueprints?search=${title} \
 				-H 'accept: application/json' \
-				-u test@liferay.com:test
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")}
 		''';
 
 		var blueprintId = JSONCurlUtil.get(${curl}, "$.items[?(@['title'] == '${title}')]['id']");
@@ -172,7 +172,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/search-experiences-rest/v1.0/sxp-elements?search=${title} \
 				-H 'accept: application/json' \
-				-u test@liferay.com:test
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")}
 		''';
 
 		var elementId = JSONCurlUtil.get(${curl}, "$.items[?(@['title'] == '${title}')]['id']");

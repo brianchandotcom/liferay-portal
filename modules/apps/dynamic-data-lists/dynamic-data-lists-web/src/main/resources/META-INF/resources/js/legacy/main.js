@@ -650,6 +650,7 @@ AUI.add(
 							SpreadSheet.updateRecord(
 								recordId,
 								recordIndex,
+								recordsetId,
 								instance._normalizeRecordData(record, true),
 								false,
 								instance.get('portletNamespace'),
@@ -763,6 +764,7 @@ AUI.add(
 			updateRecord(
 				recordId,
 				displayIndex,
+				recordSetId,
 				ddmFormValues,
 				majorVersion,
 				portletNamespace,
@@ -780,6 +782,7 @@ AUI.add(
 						displayIndex,
 						majorVersion,
 						recordId,
+						recordSetId,
 					}),
 					dataType: 'JSON',
 					method: 'POST',

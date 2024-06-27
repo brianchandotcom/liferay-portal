@@ -6,5 +6,7 @@
 export async function closeSessions(apiHelpers, page) {
 	await apiHelpers.jsonWebServicesOSBAsah.closeSessions();
 
+	// This timeout is required because backend needs this time to close sessions properly.
+
 	await page.waitForTimeout(10000);
 }

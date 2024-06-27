@@ -96,7 +96,7 @@ public class CPDefinitionIndexerTest {
 		Assert.assertEquals(
 			expectedValue,
 			document.get(
-				"expando__keyword__custom_fields__" + _EXPANDO_COLUMN));
+				"expando__keyword__custom_fields__" + _EXPANDO_COLUMN_NAME));
 	}
 
 	@Test
@@ -156,7 +156,7 @@ public class CPDefinitionIndexerTest {
 		}
 
 		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
-			expandoTable, _EXPANDO_COLUMN, ExpandoColumnConstants.STRING);
+			expandoTable, _EXPANDO_COLUMN_NAME, ExpandoColumnConstants.STRING);
 
 		_expandoColumns.add(expandoColumn);
 
@@ -175,7 +175,7 @@ public class CPDefinitionIndexerTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		serviceContext.setExpandoBridgeAttributes(
-			Collections.singletonMap(_EXPANDO_COLUMN, expandoValue));
+			Collections.singletonMap(_EXPANDO_COLUMN_NAME, expandoValue));
 
 		cpInstance.setExpandoBridgeAttributes(serviceContext);
 
@@ -184,7 +184,8 @@ public class CPDefinitionIndexerTest {
 		_indexer.reindex(cpInstance.getCPDefinition());
 	}
 
-	private static final String _EXPANDO_COLUMN = "expandoColumn";
+	private static final String _EXPANDO_COLUMN_NAME =
+		RandomTestUtil.randomString();
 
 	private static Indexer<CPDefinition> _indexer;
 

@@ -22,7 +22,7 @@ export class CommerceProductSpecificationsPage {
 	constructor(page: Page) {
 		this.page = page;
 
-		this.addNewProductSpecifications = page.getByLabel('Label Required');
+		this.addNewProductSpecifications = page.getByLabel('Label\n\n\t\t\t\n\t\t\t\t\n\n\t\t\t\tRequired');
 		this.addNewProductSpecificationsGroup =
 			page.getByText('Title required');
 		this.addDescriptionSpecifications = page.getByLabel(
@@ -44,5 +44,10 @@ export class CommerceProductSpecificationsPage {
 		this.successMessagge = page.getByText(
 			'Success:Your request completed successfully.'
 		);
+	}
+
+	async waitForKey (specificationName) {
+		await this.addNewProductSpecifications.fill(specificationName);
+		await this.addNewProductSpecifications.waitFor();
 	}
 }

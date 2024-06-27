@@ -301,6 +301,18 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async patchSpecification(
+		specificationId: string,
+		listTypeDefinitionId: number
+	) {
+		return this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/specifications/${specificationId}`,
+			{
+				listTypeDefinitionId,
+			}
+		);
+	}
+
 	async patchSku(cpInstanceId: string, sku?: TSku) {
 		return this.apiHelpers.patch(
 			`${this.apiHelpers.baseUrl}${this.basePath}/skus/${cpInstanceId}`,

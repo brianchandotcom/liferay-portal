@@ -8,17 +8,21 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
+	dataApiHelpersTest,
 	loginTest()
 );
 test('LPD-28891 Key is not automatically generated when writing new Specifications label', async ({
+	apiHelpers,
 	applicationsMenuPage,
 	commerceProductSpecificationsPage,
+	page,
 }) => {
 	await applicationsMenuPage.goToCommerceSpecifications();
 
@@ -28,16 +32,22 @@ test('LPD-28891 Key is not automatically generated when writing new Specificatio
 
 	await commerceProductSpecificationsPage.createNewSpecificationsProduct.click();
 
-	await commerceProductSpecificationsPage.addNewProductSpecifications.fill(
-		'Specification-1'
+	await commerceProductSpecificationsPage.waitForKey(
+		'Specification 1'
 	);
 
 	await commerceProductSpecificationsPage.addDescriptionSpecifications.fill(
 		'Specification-1 Description'
 	);
 
+	await expect(commerceProductSpecificationsPage.addDescriptionSpecifications).toBeVisible();
+
+	await commerceProductSpecificationsPage.keyContent.fill(
+		'specification-1'
+	);
+
 	await expect(commerceProductSpecificationsPage.keyContent).toHaveValue(
-		'Specification-1'
+		'specification-1'
 	);
 
 	await commerceProductSpecificationsPage.saveButton.click();
@@ -69,4 +79,28 @@ test('LPD-28891 Key is not automatically generated when writing new Specificatio
 	await expect(
 		commerceProductSpecificationsPage.successMessagge
 	).toBeVisible();
+
+	const specifications =
+		await apiHelpers.headlessCommerceAdminCatalog.getSpecifications();
+
+	for (let i = 0; i < specifications.totalCount; i++) {
+		if (specifications.items[i].title.en_US === 'Specification 1') {
+			apiHelpers.data.push({
+				id: specifications.items[i].id,
+				type: 'specification',
+			});
+		}
+	}
+
+	const optionCategory =
+		await apiHelpers.headlessCommerceAdminCatalog.getOptionCategories();
+
+	for (let i = 0; i < optionCategory.totalCount; i++) {
+		if (optionCategory.items[i].title.en_US === 'Specification group') {
+			apiHelpers.data.push({
+				id: optionCategory.items[i].id,
+				type: 'optionCategory',
+			});
+		}
+	}
 });

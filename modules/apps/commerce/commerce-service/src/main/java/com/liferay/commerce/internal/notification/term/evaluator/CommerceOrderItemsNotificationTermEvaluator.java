@@ -116,9 +116,8 @@ public class CommerceOrderItemsNotificationTermEvaluator
 
 		User user = _userLocalService.getUser(commerceOrder.getUserId());
 
-		Locale locale = user.getLocale();
-
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
+		Locale locale = user.getLocale();
 
 		template.put(
 			"orderItems",

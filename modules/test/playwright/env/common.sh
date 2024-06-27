@@ -322,6 +322,34 @@ function start_app_server {
 	echo "${LIFERAY_PORTAL_URL} is now available."
 }
 
+function start_client_extensions_spring_boot_application {
+	local client_extension_dir=${_PORTAL_PROJECT_DIR}/${1}
+
+	if [[ -d ${client_extension_dir} ]]
+	then
+		local spring_boot_class_name=$(find ${client_extension_dir} -name "*SpringBootApplication.java" | grep "SpringBootApplication.java" | xargs basename | sed 's/.java//')
+
+		echo "Starting ${spring_boot_class_name}"
+
+		cd ${client_extension_dir}
+
+		local gradlew=$(get_gradlew)
+
+		${gradlew} bootRun &
+
+		while ! curl --output /dev/null --silent --head --fail http://localhost:58081/ready
+		do
+			sleep 5
+		done
+
+		sleep 5
+
+		echo "Started ${spring_boot_class_name}"
+	else
+		echo "The directory ${client_extension_dir} does not exist."
+	fi
+}
+
 function stop_analytics_cloud {
 	cd ${_PORTAL_PROJECT_DIR}
 
@@ -339,6 +367,30 @@ function stop_app_server {
 	done
 
 	echo "${LIFERAY_PORTAL_URL} is no longer available."
+}
+
+function stop_client_extensions_spring_boot_application {
+	local client_extension_dir=${_PORTAL_PROJECT_DIR}/${1}
+
+	if [[ -d ${client_extension_dir} ]]
+	then
+		local spring_boot_class_name=$(find ${client_extension_dir} -name "*SpringBootApplication.java" | grep "SpringBootApplication.java" | xargs basename | sed 's/.java//')
+
+		echo "Stopping the ${spring_boot_class_name}"
+
+		kill -SIGTERM $(jps | grep ${spring_boot_class_name} | awk '{print $1}')
+
+		while curl --output /dev/null --silent --head --fail http://localhost:58081/ready
+		do
+			sleep 5
+		done
+
+		sleep 5
+
+		echo "Stopped ${spring_boot_class_name}"
+	else
+		echo "The directory ${client_extension_dir} does not exist."
+	fi
 }
 
 function update_portal_ext_properties {

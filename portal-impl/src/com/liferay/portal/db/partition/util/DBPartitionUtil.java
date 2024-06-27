@@ -186,8 +186,6 @@ public class DBPartitionUtil {
 	public static HashMap<String, String> getConfigurations(long companyId)
 		throws SQLException {
 
-		HashMap<String, String> configurations = new HashMap<>();
-
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
 
@@ -197,13 +195,15 @@ public class DBPartitionUtil {
 					_getPartitionName(companyId), ".Configuration_"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
+			HashMap<String, String> configurations = new HashMap<>();
+
 			while (resultSet.next()) {
 				configurations.put(
 					resultSet.getString(1), resultSet.getString(2));
 			}
-		}
 
-		return configurations;
+			return configurations;
+		}
 	}
 
 	public static boolean insertDBPartition(long companyId)

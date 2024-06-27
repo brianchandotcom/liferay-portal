@@ -26,9 +26,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
+import com.liferay.portal.kernel.scheduler.SchedulerEngine;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -471,6 +475,21 @@ public class DBPartitionUtil {
 			}
 
 			throw new PortalException(exception1);
+		}
+
+		try {
+			_reloadCompanyIdQuartzJobs(fromCompanyId, toCompanyId);
+		}
+		catch (PortalException portalException1) {
+			try {
+				_removeCompanyIdQuartzJobs(toCompanyId);
+			}
+			catch (PortalException portalException2) {
+				throw new PortalException(
+					"Unable to roll back schema creation", portalException2);
+			}
+
+			throw portalException1;
 		}
 	}
 
@@ -1092,6 +1111,57 @@ public class DBPartitionUtil {
 				whereClause));
 
 		_deleteData(tableName, fromPartitionName, statement, whereClause);
+	}
+
+	private static void _reloadCompanyIdQuartzJobs(
+			long fromCompanyId, long toCompanyId)
+		throws PortalException {
+
+		for (SchedulerResponse schedulerResponse :
+				SchedulerEngineHelperUtil.getScheduledJobs()) {
+
+			Message message = schedulerResponse.getMessage();
+
+			String jobName = schedulerResponse.getJobName();
+
+			if ((message.getLong("companyId") != fromCompanyId) ||
+				!jobName.contains(String.valueOf(toCompanyId))) {
+
+				continue;
+			}
+
+			message.remove(SchedulerEngine.JOB_STATE);
+
+			message.put("companyId", toCompanyId);
+
+			SchedulerEngineHelperUtil.delete(
+				jobName, schedulerResponse.getGroupName(),
+				schedulerResponse.getStorageType());
+			SchedulerEngineHelperUtil.schedule(
+				schedulerResponse.getTrigger(),
+				schedulerResponse.getStorageType(),
+				schedulerResponse.getDescription(),
+				schedulerResponse.getDestinationName(), message);
+		}
+	}
+
+	private static void _removeCompanyIdQuartzJobs(long companyId)
+		throws PortalException {
+
+		for (SchedulerResponse schedulerResponse :
+				SchedulerEngineHelperUtil.getScheduledJobs()) {
+
+			String jobName = schedulerResponse.getJobName();
+
+			if (!jobName.contains(String.valueOf(companyId))) {
+				continue;
+			}
+
+			SchedulerEngineHelperUtil.delete(
+				schedulerResponse.getJobName(),
+				schedulerResponse.getGroupName(),
+				schedulerResponse.getStorageType());
+		}
 	}
 
 	private static void _replaceCompanyIdQuartzColumns(

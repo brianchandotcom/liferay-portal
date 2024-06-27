@@ -188,6 +188,10 @@ public class PortalInstances {
 		return PortalInstancePool.getCompanyIds();
 	}
 
+	public static Long getCompanyInCopyProcess() {
+		return _companyIdInCopyProcess;
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             PortalInstancePool#getDefaultCompanyId}
@@ -321,6 +325,14 @@ public class PortalInstances {
 		return false;
 	}
 
+	public static boolean isCompanyInCopyProcess() {
+		if (_companyIdInCopyProcess != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isCompanyInDeletionProcess(long companyId) {
 		return _companyIdsInDeletionProcess.contains(companyId);
 	}
@@ -352,6 +364,17 @@ public class PortalInstances {
 		PortalInstancePool.remove(companyId);
 
 		WebAppPool.remove(companyId, WebKeys.PORTLET_CATEGORY);
+	}
+
+	public static SafeCloseable setCompanyInCopyProcess(long companyId) {
+		if (_companyIdInCopyProcess != null) {
+			throw new UnsupportedOperationException(
+				"There is already a company in copy process");
+		}
+
+		_companyIdInCopyProcess = companyId;
+
+		return () -> _companyIdInCopyProcess = null;
 	}
 
 	public static SafeCloseable setCompanyInDeletionProcess(long companyId) {
@@ -481,6 +504,7 @@ public class PortalInstances {
 
 	private static final Set<String> _autoLoginIgnoreHosts;
 	private static final Set<String> _autoLoginIgnorePaths;
+	private static Long _companyIdInCopyProcess;
 	private static final List<Long> _companyIdsInDeletionProcess =
 		new CopyOnWriteArrayList<>();
 	private static final Set<String> _virtualHostsIgnoreHosts;

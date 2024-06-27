@@ -537,9 +537,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		validateWebId(webId);
 
+		SafeCloseable safeCloseable1 = PortalInstances.setCompanyInCopyProcess(
+			fromCompanyId);
+
 		DBPartitionUtil.copyDBPartition(fromCompanyId, toCompanyId);
 
-		SafeCloseable safeCloseable = CompanyThreadLocal.setWithSafeCloseable(
+		SafeCloseable safeCloseable2 = CompanyThreadLocal.setWithSafeCloseable(
 			toCompanyId);
 
 		long companyId = toCompanyId;
@@ -572,7 +575,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					});
 			}
 			finally {
-				safeCloseable.close();
+				safeCloseable1.close();
+				safeCloseable2.close();
 			}
 
 			throw new PortalException(throwable);
@@ -580,7 +584,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		finally {
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					safeCloseable.close();
+					safeCloseable1.close();
+					safeCloseable2.close();
 
 					return null;
 				});

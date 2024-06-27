@@ -161,7 +161,7 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 			_log.error(exception);
 		}
 
-		return StringPool.BLANK;
+		return _functionCommerceShippingEngineConfiguration.name();
 	}
 
 	public UnicodeProperties getTypeSettingsUnicodeProperties() {

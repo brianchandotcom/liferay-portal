@@ -390,6 +390,36 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
+	async editHTMLEditable(
+		fragmentId: string,
+		editableId: string,
+		value: string
+	) {
+
+		// Select fragment and editable
+
+		await this.selectEditable(fragmentId, editableId);
+
+		const editable = this.getEditable(fragmentId, editableId);
+
+		// Enable editor
+
+		await editable.dblclick();
+
+		// Set the content using codemirror API and save
+
+		await this.page
+			.locator('.CodeMirror')
+			.evaluate(
+				(element: any, value) => element.CodeMirror.setValue(value),
+				value
+			);
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+
+		await this.waitForChangesSaved();
+	}
+
 	async editTextEditable(
 		fragmentId: string,
 		editableId: string,

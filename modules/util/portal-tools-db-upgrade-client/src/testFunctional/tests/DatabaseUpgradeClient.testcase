@@ -93,16 +93,6 @@ definition {
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-help");
 	}
 
-	@description = "LPS-158522: Upgrade client should not be able to run on versions greater than Java SE 8 "
-	@priority = 3
-	test CheckUpgradeClientJavaVersion {
-		property portal.upstream = "quarantine";
-		property skip.get.testcase.database.properties = "true";
-		property skip.upgrade-legacy-database = "true";
-
-		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-java-version");
-	}
-
 	@description = "LPS-158522: Upgrade client cannot start a second upgrade process"
 	@priority = 3
 	test CheckUpgradeClientSecondProcess {

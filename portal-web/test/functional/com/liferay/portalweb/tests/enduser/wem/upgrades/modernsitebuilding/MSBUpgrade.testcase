@@ -34,7 +34,7 @@ definition {
 	@priority = 5
 	test ViewMSBAndAddContentPageAfterUpgrade71102 {
 		property data.archive.type = "data-archive-msb";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.2";
 
 		ValidatePagesUpgrade.viewMSBUpgrade();

@@ -2,7 +2,7 @@
 definition {
 
 	property ci.retries.disabled = "true";
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.liferay.virtual.instance = "false";
@@ -19,7 +19,7 @@ definition {
 	@priority = 4
 	test DefaultSiteCanBeExportedAfterUpgrade71103 {
 		property data.archive.type = "data-archive-default-site-export";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		task ("Navigate to Export portlet") {
@@ -35,7 +35,7 @@ definition {
 	@priority = 3
 	test DefaultSiteCanBeExportedAfterUpgrade72101 {
 		property data.archive.type = "data-archive-default-site-export";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		task ("Navigate to Export portlet") {
@@ -51,7 +51,7 @@ definition {
 	@priority = 3
 	test DefaultSiteCanBeExportedAfterUpgrade73101 {
 		property data.archive.type = "data-archive-default-site-export";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10.1";
 
 		task ("Navigate to Export portlet") {
@@ -67,7 +67,7 @@ definition {
 	@priority = 3
 	test DefaultSiteCanBeExportedAfterUpgrade701016 {
 		property data.archive.type = "data-archive-default-site-export";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.16";
 
 		task ("Navigate to Export portlet") {
@@ -83,7 +83,7 @@ definition {
 	@priority = 3
 	test ExportTemplateCanBeEditedAfterUpgrade71103 {
 		property data.archive.type = "data-archive-edit-export-template";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		task ("Add Blog and Web Content entry") {
@@ -153,7 +153,7 @@ definition {
 	@priority = 3
 	test ExportTemplateCanBeEditedAfterUpgrade72101 {
 		property data.archive.type = "data-archive-edit-export-template";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		task ("Add Blog and Web Content entry") {
@@ -223,7 +223,7 @@ definition {
 	@priority = 3
 	test ExportTemplateCanBeEditedAfterUpgrade73101 {
 		property data.archive.type = "data-archive-edit-export-template";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10.1";
 
 		task ("Add Blog and Web Content entry") {
@@ -293,7 +293,7 @@ definition {
 	@priority = 3
 	test ExportTemplateCanBeEditedAfterUpgrade701016 {
 		property data.archive.type = "data-archive-edit-export-template";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.16";
 
 		task ("Add Blog and Web Content entry") {

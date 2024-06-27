@@ -1,7 +1,7 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.liferay.virtual.instance = "false";
@@ -24,7 +24,7 @@ definition {
 	@priority = 4
 	test CreateNewStructureUsingAnUpgradedStructureAsFieldsetAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10";
 
 		ValidateDataEngineUpgrade.createNewStructureUsingAnUpgradedStructureAsFieldset();
@@ -35,7 +35,7 @@ definition {
 	@priority = 4
 	test CreateNewStructureUsingAnUpgradedStructureAsFieldsetAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		ValidateDataEngineUpgrade.createNewStructureUsingAnUpgradedStructureAsFieldset();
@@ -46,7 +46,7 @@ definition {
 	@priority = 4
 	test CreateNewStructureUsingAnUpgradedStructureAsFieldsetAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		ValidateDataEngineUpgrade.createNewStructureUsingAnUpgradedStructureAsFieldset();
@@ -57,7 +57,7 @@ definition {
 	@priority = 4
 	test CreateNewStructureUsingAnUpgradedStructureAsFieldsetAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.14";
 
 		ValidateDataEngineUpgrade.createNewStructureUsingAnUpgradedStructureAsFieldset();
@@ -68,7 +68,7 @@ definition {
 	@priority = 4
 	test EditAnUpgradedStructureWithFieldGroupAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
 
 		ValidateDataEngineUpgrade.editAnUpgradedStructureWithFieldGroup();
@@ -79,7 +79,7 @@ definition {
 	@priority = 4
 	test EditAnUpgradedStructureWithFieldsetAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10";
 
 		ValidateDataEngineUpgrade.editAnUpgradedStructureWithFieldset();
@@ -90,7 +90,7 @@ definition {
 	@priority = 4
 	test EditAnUpgradedStructureWithFieldsetAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		ValidateDataEngineUpgrade.editAnUpgradedStructureWithFieldset();
@@ -101,7 +101,7 @@ definition {
 	@priority = 4
 	test EditAnUpgradedStructureWithFieldsetAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		ValidateDataEngineUpgrade.editAnUpgradedStructureWithFieldset();
@@ -112,7 +112,7 @@ definition {
 	@priority = 4
 	test EditAnUpgradedStructureWithFieldsetAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.14";
 
 		ValidateDataEngineUpgrade.editAnUpgradedStructureWithFieldset();
@@ -123,7 +123,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10";
 
 		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Color,Web Content,Geolocation,Link to Page,Separator";
@@ -136,7 +136,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Color,Web Content,Geolocation,Link to Page,Separator";
@@ -149,7 +149,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Color,Web Content,Geolocation,Link to Page,Separator";
@@ -162,7 +162,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
 
 		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Link to Page,Separator";
@@ -175,7 +175,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.14";
 
 		var allFields = "Text,Text Box,Select,Boolean,Radio,Date,Integer,Decimal,Number,Image,HTML,Documents and Media,Link to Page,Separator,Web Content,Geolocation";
@@ -188,7 +188,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10";
 
 		ValidateDataEngineUpgrade.validateFieldLabelsTranslatedInStructureWithFieldGroup();
@@ -199,7 +199,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		ValidateDataEngineUpgrade.validateFieldLabelsTranslatedInStructureWithFieldGroup();
@@ -210,7 +210,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		ValidateDataEngineUpgrade.validateFieldLabelsTranslatedInStructureWithFieldGroup();
@@ -221,7 +221,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
 
 		ValidateDataEngineUpgrade.validateFieldLabelsTranslatedInStructureWithFieldGroup();
@@ -232,7 +232,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldGroupAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.14";
 
 		ValidateDataEngineUpgrade.validateFieldLabelsTranslatedInStructureWithFieldGroup();
@@ -243,7 +243,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldSetAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10";
 
 		ValidateDataEngineUpgrade.validateFieldLabelsTranslatedInStructureWithFieldSet();
@@ -254,7 +254,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldSetAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		ValidateDataEngineUpgrade.validateFieldLabelsTranslatedInStructureWithFieldSet();
@@ -265,7 +265,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldSetAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		ValidateDataEngineUpgrade.validateFieldLabelsTranslatedInStructureWithFieldSet();
@@ -276,7 +276,7 @@ definition {
 	@priority = 4
 	test ValidateFieldLabelsTranslatedInStructureWithFieldSetAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.14";
 
 		ValidateDataEngineUpgrade.validateFieldLabelsTranslatedInStructureWithFieldSet();
@@ -287,7 +287,7 @@ definition {
 	@priority = 4
 	test ValidateNStructureAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10";
 
 		ValidateDataEngineUpgrade.validateNStructure();
@@ -298,7 +298,7 @@ definition {
 	@priority = 4
 	test ValidateNStructureAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		ValidateDataEngineUpgrade.validateNStructure();
@@ -309,7 +309,7 @@ definition {
 	@priority = 4
 	test ValidateNStructureAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		ValidateDataEngineUpgrade.validateNStructure();
@@ -320,7 +320,7 @@ definition {
 	@priority = 4
 	test ValidateNStructureAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
 
 		ValidateDataEngineUpgrade.validateNStructure();
@@ -331,7 +331,7 @@ definition {
 	@priority = 4
 	test ValidateNStructureAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-structure";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.14";
 
 		ValidateDataEngineUpgrade.validateNStructure();

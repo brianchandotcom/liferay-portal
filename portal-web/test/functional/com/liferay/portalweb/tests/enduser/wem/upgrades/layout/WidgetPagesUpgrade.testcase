@@ -36,7 +36,7 @@ definition {
 	@priority = 5
 	test AddWidgetToPageAfterUpgrade621015 {
 		property data.archive.type = "data-archive-pages-administration";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.15";
 
 		Navigator.openURL();
@@ -50,7 +50,7 @@ definition {
 	@priority = 5
 	test AddWidgetToPageAfterUpgrade621021 {
 		property data.archive.type = "data-archive-pages-administration";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
 
 		Navigator.openURL();

@@ -2,7 +2,7 @@
 definition {
 
 	property ci.retries.disabled = "true";
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property dummy.socket.proxy.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -182,7 +182,7 @@ definition {
 	test CanImportJSONFileToConfigureSAMLIDPAfterUpgrade701016 {
 		property custom.properties = "feature.flag.COMMERCE-8087=true${line.separator}feature.flag.LPS-186620=true";
 		property data.archive.type = "data-archive-saml-broken-mapping";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.release = "false";
 		property portal.version = "7.0.10.16";
 
@@ -336,7 +336,7 @@ definition {
 	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade7412 {
 		property data.archive.type = "data-archive-saml";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property portal.version = "7.4.12";
@@ -365,7 +365,7 @@ definition {
 	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-saml";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		task ("View SAML general IdP and connection configuration") {
@@ -379,7 +379,7 @@ definition {
 	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade73101 {
 		property data.archive.type = "data-archive-saml";
-		property database.types = "db2,mariadb,mysql,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,postgresql";
 		property portal.version = "7.3.10.1";
 
 		task ("View SAML general IdP and connection configuration") {
@@ -406,7 +406,7 @@ definition {
 	@priority = 4
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7310 {
 		property data.archive.type = "data-archive-saml-encryption";
-		property database.types = "db2,mariadb,mysql,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,postgresql";
 		property portal.version = "7.3.10";
 
 		task ("View SAML general IdP and connection with encryption configuration ") {
@@ -420,7 +420,7 @@ definition {
 	@priority = 4
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7412 {
 		property data.archive.type = "data-archive-saml-encryption";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property portal.version = "7.4.12";

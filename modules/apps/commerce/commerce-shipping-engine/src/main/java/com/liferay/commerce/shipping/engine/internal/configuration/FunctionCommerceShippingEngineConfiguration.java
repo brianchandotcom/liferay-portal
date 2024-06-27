@@ -25,6 +25,9 @@ public interface FunctionCommerceShippingEngineConfiguration {
 	@Meta.AD(name = "key", required = false)
 	public String key();
 
+	@Meta.AD(name = "name", required = false)
+	public String name();
+
 	@Meta.AD(required = false, type = Meta.Type.String)
 	public String oAuth2ApplicationExternalReferenceCode();
 

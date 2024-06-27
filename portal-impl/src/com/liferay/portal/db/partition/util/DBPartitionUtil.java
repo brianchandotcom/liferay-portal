@@ -454,6 +454,8 @@ public class DBPartitionUtil {
 				}
 			}
 
+			_reloadCompanyIdQuartzJobs(fromCompanyId, toCompanyId);
+
 			connection.commit();
 		}
 		catch (Exception exception1) {
@@ -475,21 +477,6 @@ public class DBPartitionUtil {
 			}
 
 			throw new PortalException(exception1);
-		}
-
-		try {
-			_reloadCompanyIdQuartzJobs(fromCompanyId, toCompanyId);
-		}
-		catch (PortalException portalException1) {
-			try {
-				_removeCompanyIdQuartzJobs(toCompanyId);
-			}
-			catch (PortalException portalException2) {
-				throw new PortalException(
-					"Unable to roll back schema creation", portalException2);
-			}
-
-			throw portalException1;
 		}
 	}
 
@@ -1142,25 +1129,6 @@ public class DBPartitionUtil {
 				schedulerResponse.getStorageType(),
 				schedulerResponse.getDescription(),
 				schedulerResponse.getDestinationName(), message);
-		}
-	}
-
-	private static void _removeCompanyIdQuartzJobs(long companyId)
-		throws PortalException {
-
-		for (SchedulerResponse schedulerResponse :
-				SchedulerEngineHelperUtil.getScheduledJobs()) {
-
-			String jobName = schedulerResponse.getJobName();
-
-			if (!jobName.contains(String.valueOf(companyId))) {
-				continue;
-			}
-
-			SchedulerEngineHelperUtil.delete(
-				schedulerResponse.getJobName(),
-				schedulerResponse.getGroupName(),
-				schedulerResponse.getStorageType());
 		}
 	}
 

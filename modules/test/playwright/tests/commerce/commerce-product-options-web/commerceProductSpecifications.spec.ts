@@ -22,7 +22,6 @@ test('LPD-28891 Key is not automatically generated when writing new Specificatio
 	apiHelpers,
 	applicationsMenuPage,
 	commerceProductSpecificationsPage,
-	page,
 }) => {
 	await applicationsMenuPage.goToCommerceSpecifications();
 
@@ -32,19 +31,17 @@ test('LPD-28891 Key is not automatically generated when writing new Specificatio
 
 	await commerceProductSpecificationsPage.createNewSpecificationsProduct.click();
 
-	await commerceProductSpecificationsPage.waitForKey(
-		'Specification 1'
-	);
+	await commerceProductSpecificationsPage.waitForKey('Specification 1');
 
 	await commerceProductSpecificationsPage.addDescriptionSpecifications.fill(
 		'Specification-1 Description'
 	);
 
-	await expect(commerceProductSpecificationsPage.addDescriptionSpecifications).toBeVisible();
+	await expect(
+		commerceProductSpecificationsPage.addDescriptionSpecifications
+	).toBeVisible();
 
-	await commerceProductSpecificationsPage.keyContent.fill(
-		'specification-1'
-	);
+	await commerceProductSpecificationsPage.keyContent.fill('specification-1');
 
 	await expect(commerceProductSpecificationsPage.keyContent).toHaveValue(
 		'specification-1'

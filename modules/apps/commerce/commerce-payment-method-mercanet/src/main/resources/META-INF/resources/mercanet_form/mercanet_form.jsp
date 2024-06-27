@@ -20,8 +20,8 @@ String seal = URLDecoder.decode((String)request.getAttribute(CommercePaymentWebK
 	<input type="submit" value="Proceed to checkout" />
 </form>
 
-<aui:script>
+<script>
 	window.onload = function () {
 		document.querySelector('form').submit();
 	};
-</aui:script>
+</script>

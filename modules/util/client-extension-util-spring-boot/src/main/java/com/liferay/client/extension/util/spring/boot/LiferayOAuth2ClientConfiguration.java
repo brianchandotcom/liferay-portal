@@ -6,13 +6,16 @@
 package com.liferay.client.extension.util.spring.boot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.AuthorizedClientServiceReactiveOAuth2AuthorizedClientManager;
@@ -60,24 +63,38 @@ public class LiferayOAuth2ClientConfiguration {
 	}
 
 	@Bean
+	@Primary
 	public ClientRegistrationRepository clientRegistrationRepository() {
-		ClientRegistration[] clientRegistrations = _getClientRegistrations();
+		List<ClientRegistration> clientRegistrations = new ArrayList<>(
+			Arrays.asList(_getClientRegistrations()));
 
-		if (clientRegistrations.length > 0) {
+		if (_extraClientRegistrationRepository != null) {
+			_extraClientRegistrationRepository.forEach(
+				clientRegistrations::add);
+		}
+
+		if (!clientRegistrations.isEmpty()) {
 			return new InMemoryClientRegistrationRepository(
-				clientRegistrations);
+				clientRegistrations.toArray(new ClientRegistration[0]));
 		}
 
 		return new InMemoryClientRegistrationRepository(Collections.emptyMap());
 	}
 
 	@Bean
+	@Primary
 	public ReactiveClientRegistrationRepository clientRegistrations() {
-		ClientRegistration[] clientRegistrations = _getClientRegistrations();
+		List<ClientRegistration> clientRegistrations = new ArrayList<>(
+			Arrays.asList(_getClientRegistrations()));
 
-		if (clientRegistrations.length > 0) {
+		if (_extraReactiveClientRegistrationRepository != null) {
+			_extraReactiveClientRegistrationRepository.forEach(
+				clientRegistrations::add);
+		}
+
+		if (!clientRegistrations.isEmpty()) {
 			return new InMemoryReactiveClientRegistrationRepository(
-				clientRegistrations);
+				clientRegistrations.toArray(new ClientRegistration[0]));
 		}
 
 		return new ReactiveClientRegistrationRepository() {
@@ -185,6 +202,16 @@ public class LiferayOAuth2ClientConfiguration {
 
 	@Autowired
 	private Environment _environment;
+
+	@Autowired(required = false)
+	@Qualifier("extra")
+	private InMemoryClientRegistrationRepository
+		_extraClientRegistrationRepository;
+
+	@Autowired(required = false)
+	@Qualifier("extra")
+	private InMemoryReactiveClientRegistrationRepository
+		_extraReactiveClientRegistrationRepository;
 
 	@Value("${com.liferay.lxc.dxp.domains}")
 	private String _lxcDXPDomains;

@@ -30,6 +30,6 @@ public class RememberMeTokenTable {
 	private static final String _TABLE_NAME = "RememberMeToken";
 
 	private static final String _TABLE_SQL_CREATE =
-		"create table RememberMeToken (mvccVersion LONG default 0 not null,rememberMeTokenId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,value VARCHAR(255) null,expirationDate DATE null)";
+		"create table RememberMeToken (mvccVersion LONG default 0 not null,rememberMeTokenId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,expirationDate DATE null,value VARCHAR(255) null)";
 
 }

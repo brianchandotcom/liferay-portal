@@ -11,6 +11,7 @@ import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortle
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -19,34 +20,37 @@ import org.junit.Test;
 public abstract class
 	BaseSearchWidgetsExportImportPortletPreferencesProcessorTestCase {
 
-	@Test
-	public void testExportImportPortletPreferencesProcessorExportCapabilityIsNotEmpty()
-		throws Exception {
+	@Before
+	public void setUp() {
+		_exportImportPortletPreferencesProcessor =
+			getExportImportPortletPreferencesProcessor();
+	}
 
+	@Test
+	public void testExportImportPortletPreferencesProcessorExportCapabilityIsNotEmpty() {
 		List<Capability> exportCapabilities =
-			exportImportPortletPreferencesProcessor.getExportCapabilities();
+			_exportImportPortletPreferencesProcessor.getExportCapabilities();
 
 		Assert.assertFalse(exportCapabilities.isEmpty());
 	}
 
 	@Test
-	public void testExportImportPortletPreferencesProcessorImportCapabilityIsNotEmpty()
-		throws Exception {
-
+	public void testExportImportPortletPreferencesProcessorImportCapabilityIsNotEmpty() {
 		List<Capability> importCapabilities =
-			exportImportPortletPreferencesProcessor.getImportCapabilities();
+			_exportImportPortletPreferencesProcessor.getImportCapabilities();
 
 		Assert.assertFalse(importCapabilities.isEmpty());
 	}
 
 	@Test
-	public void testExportImportPortletPreferencesProcessorIsNotNull()
-		throws Exception {
-
-		Assert.assertNotNull(exportImportPortletPreferencesProcessor);
+	public void testExportImportPortletPreferencesProcessorIsNotNull() {
+		Assert.assertNotNull(_exportImportPortletPreferencesProcessor);
 	}
 
-	protected ExportImportPortletPreferencesProcessor
-		exportImportPortletPreferencesProcessor;
+	protected abstract ExportImportPortletPreferencesProcessor
+		getExportImportPortletPreferencesProcessor();
+
+	private ExportImportPortletPreferencesProcessor
+		_exportImportPortletPreferencesProcessor;
 
 }

@@ -12,7 +12,6 @@ import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortle
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -29,10 +28,11 @@ public class TagFacetExportImportPortletPreferencesProcessorTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() {
-		exportImportPortletPreferencesProcessor =
-			_exportImportPortletPreferencesProcessor;
+	@Override
+	protected ExportImportPortletPreferencesProcessor
+		getExportImportPortletPreferencesProcessor() {
+
+		return _exportImportPortletPreferencesProcessor;
 	}
 
 	@Inject(filter = "javax.portlet.name=" + TagFacetPortletKeys.TAG_FACET)

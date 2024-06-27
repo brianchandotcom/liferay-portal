@@ -9,6 +9,9 @@ import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
 import {createChannel} from '../../osb-faro-web/utils/channel';
 import {createDataSource} from '../../osb-faro-web/utils/dataSource';
+import getRandomString from '../../../utils/getRandomString';
+import getFragmentDefinition from '../../layout-content-page-editor-web/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 
 export async function acceptsCookiesBanner(page: Page) {
 	const cookiesBannerButton = page.getByRole('button', {name: 'Accept All'});
@@ -25,6 +28,37 @@ export async function connectToAnalyticsCloud(page: Page) {
 
 	await page.getByRole('button', {name: 'Connect'}).click();
 }
+
+export const createSitePage = async function ({
+	apiHelpers,
+	pageTitle,
+	siteName = 'Guest',
+}: {
+	apiHelpers: ApiHelpers;
+	pageTitle: string;
+	siteName?: string;
+}) {
+	const company =
+		await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+			'liferay.com'
+		);
+
+	const group = await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+		company.companyId,
+		siteName
+	);
+
+	return await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			}),
+		]),
+		siteId: group.groupId,
+		title: pageTitle,
+	});
+};
 
 export async function disconnectFromAnalyticsCloud(page: Page) {
 	const disconnectButton = page.getByRole('button', {name: 'Disconnect'});
@@ -106,10 +140,12 @@ export async function syncAnalyticsCloud({
 	apiHelpers,
 	channelName,
 	page,
+	siteName,
 }: {
 	apiHelpers: ApiHelpers;
 	channelName: string;
 	page: Page;
+	siteName?: string;
 }) {
 	const {channel, project} = await createChannel({
 		apiHelpers,
@@ -129,6 +165,7 @@ export async function syncAnalyticsCloud({
 	await syncSite({
 		channelName,
 		page,
+		siteName,
 	});
 
 	await syncAllContacts(page);
@@ -144,9 +181,11 @@ export async function syncAnalyticsCloud({
 export async function syncSite({
 	channelName,
 	page,
+	siteName = 'Liferay DXP',
 }: {
 	channelName: string;
 	page: Page;
+	siteName?: string;
 }) {
 	await expect(
 		page.getByRole('heading', {name: 'Property Assignment'})
@@ -177,6 +216,12 @@ export async function syncSite({
 	await page.getByRole('tab', {name: 'Sites'}).click();
 
 	await page.waitForSelector('div[aria-modal="true"] tbody');
+
+	await page.locator('.active').getByPlaceholder('Search').fill(siteName);
+
+	await page.locator('.active').getByRole('button', {name: 'Search'}).click();
+
+	await expect(page.locator('span[data-testid="loading"]')).toBeHidden();
 
 	const checkbox = await page.$(
 		'.modal table.table tbody tr:first-child input[type="checkbox"]'

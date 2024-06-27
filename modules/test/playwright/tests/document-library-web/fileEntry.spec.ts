@@ -5,26 +5,29 @@
 
 import {expect, mergeTests} from '@playwright/test';
 import moment from 'moment';
-import assert from 'node:assert';
 import path from 'path';
 
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 
-export const testFeatureFlagsEnabled = mergeTests(
-	loginTest(),
-	featureFlagsTest({
-		'LPD-10701': true,
-	}),
-	documentLibraryPagesTest
+const baseTest = mergeTests(
+	documentLibraryPagesTest,
+	isolatedSiteTest,
+	loginTest()
 );
 
-export const testUploadMultipleFieldsWithCustomDocumentType = mergeTests(
-	loginTest(),
-	documentLibraryPagesTest
+export const testFeatureFlagsEnabled = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPD-10701': true,
+	})
 );
+
+export const testUploadMultipleFieldsWithCustomDocumentType =
+	mergeTests(baseTest);
 
 testFeatureFlagsEnabled(
 	'LPD-16658 Show a success message after scheduling a new file',
@@ -154,7 +157,7 @@ testFeatureFlagsEnabled(
 	}
 );
 
-testFeatureFlagsEnabled(
+testUploadMultipleFieldsWithCustomDocumentType(
 	'LPD-29609 Error uploading multiples files with custom document type',
 	async ({
 		documentLibraryEditDocumentTypesPage,

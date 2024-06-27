@@ -190,6 +190,9 @@ public class LocalizedValueUtil {
 						JSONFactoryUtil.createJSONObject(
 							(Map<?, ?>)deserializedObject));
 				}
+				else {
+					localizedValues.put(languageId, value);
+				}
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {

@@ -31,6 +31,13 @@ export class DocumentLibraryEditDocumentTypesPage {
 		await this.page.getByTitle(type).dblclick();
 	}
 
+	async createNewDLTypeWithNumericField(title: string) {
+		await this.goto();
+		await this.addField('Numeric');
+		await this.titleSelector.fill(title);
+		await this.saveButton.click();
+	}
+
 	async createNewDLTypeWithUploadField(title: string) {
 		await this.goto();
 		await this.addField('Upload');

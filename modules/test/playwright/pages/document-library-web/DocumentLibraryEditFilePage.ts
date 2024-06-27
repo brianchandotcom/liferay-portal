@@ -4,6 +4,7 @@
  */
 
 import {Locator, Page} from '@playwright/test';
+import path from 'path';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {DocumentLibraryPage} from './DocumentLibraryPage';
@@ -129,5 +130,14 @@ export class DocumentLibraryEditFilePage {
 		}
 
 		await this.publishButton.click();
+	}
+
+	async publishMultipleFiles(dTypeTitle: string, filePaths: string[]) {
+		await this.page.getByRole('button', {name: 'Select Files'}).waitFor();
+		await this.page.locator('input[type="file"]').setInputFiles(filePaths);
+		await this.page.getByRole('button', {name: 'Document Type'}).click();
+		await this.page.getByRole('button', {name: 'Basic Document'}).click();
+		await this.page.getByRole('menuitem', {name: dTypeTitle}).click();
+		await this.page.getByRole('button', {name: 'Publish'}).click();
 	}
 }

@@ -5,6 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 import moment from 'moment';
+import assert from 'node:assert';
+import path from 'path';
 
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -16,6 +18,11 @@ export const testFeatureFlagsEnabled = mergeTests(
 	featureFlagsTest({
 		'LPD-10701': true,
 	}),
+	documentLibraryPagesTest
+);
+
+export const testUploadMultipleFieldsWithCustomDocumentType = mergeTests(
+	loginTest(),
 	documentLibraryPagesTest
 );
 
@@ -144,5 +151,31 @@ testFeatureFlagsEnabled(
 		await documentLibraryPage.deleteFileEntry(title);
 
 		await documentLibraryPage.deleteDocumentType(dTypeTitle);
+	}
+);
+
+testFeatureFlagsEnabled(
+	'LPD-29609 Error uploading multiples files with custom document type',
+	async ({
+		documentLibraryEditDocumentTypesPage,
+		documentLibraryEditFilePage,
+		page,
+	}) => {
+		const dTypeTitle = getRandomString();
+
+		await documentLibraryEditDocumentTypesPage.createNewDLTypeWithNumericField(
+			dTypeTitle
+		);
+		await documentLibraryEditFilePage.goToNewFileDifferentType(
+			'Multiple Files Upload'
+		);
+
+		await documentLibraryEditFilePage.publishMultipleFiles(dTypeTitle, [
+			path.join(__dirname, '/dependencies/image1.jpeg'),
+		]);
+
+		await expect(
+			page.getByRole('link', {exact: true, name: 'image1'})
+		).toBeVisible();
 	}
 );

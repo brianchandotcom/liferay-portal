@@ -60,6 +60,7 @@
 	<import class="com.liferay.portal.kernel.model.Region" />
 	<import class="com.liferay.portal.kernel.model.RegionLocalization" />
 	<import class="com.liferay.portal.kernel.model.Release" />
+	<import class="com.liferay.portal.kernel.model.RememberMeToken" />
 	<import class="com.liferay.portal.kernel.model.Repository" />
 	<import class="com.liferay.portal.kernel.model.RepositoryEntry" />
 	<import class="com.liferay.portal.kernel.model.ResourceAction" />
@@ -815,6 +816,17 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="verified" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="state_" name="state" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="testString" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.portal.model.impl.RememberMeTokenImpl" table="RememberMeToken">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="rememberMeTokenId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="expirationDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="token" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.portal.model.impl.RepositoryImpl" table="Repository">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="repositoryId" type="long">

@@ -100,9 +100,8 @@ test('LPD-27633 Do not show site in breadcrumb', async ({
 	messageBoardsWidgetPage,
 	page,
 	site,
-	workflowPage,
 }) => {
-	await page.goto(site.friendlyUrlPath);
+	await messageBoardsPage.goto(site.friendlyUrlPath);
 
 	const layout = await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
 

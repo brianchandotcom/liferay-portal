@@ -4,8 +4,8 @@
  */
 
 export const config = {
-	name: 'frontend-data-set-views-web',
-	testDir: 'tests/frontend-data-set-views-web',
+	name: 'frontend-data-set-admin-web',
+	testDir: 'tests/frontend-data-set-admin-web',
 	use: {
 		testIdAttribute: 'data-testid',
 	},

@@ -101,7 +101,7 @@ export class FDSFragmentPage {
 
 		await this.page
 			.frameLocator('iframe[title="Select"]')
-			.locator('.fds-view-item-selector')
+			.locator('.fds-admin-item-selector')
 			.waitFor({state: 'visible'});
 
 		await this.page

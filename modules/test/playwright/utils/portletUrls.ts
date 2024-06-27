@@ -15,6 +15,8 @@ export const PORTLET_URLS = {
 	fragments: '/~/control_panel/manage/-/fragments/fragment_collections',
 	journal:
 		'/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet',
+	journalStructures:
+		'/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_structures.jsp',
 	journalTemplates:
 		'/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_templates.jsp',
 	knowledgeBase:

@@ -1135,6 +1135,138 @@ baseTest(
 	}
 );
 
+baseTest(
+	'LPD-28728: the value of a repeated field of an article is the same as the structure default value',
+	async ({
+		apiHelpers,
+		journalEditArticlePage,
+		journalEditStructureDefaultValuesPage,
+		page,
+		site,
+	}) => {
+		const fieldName = 'Text1';
+		const structureName = 'Structure1';
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{name: fieldName, repeatable: true}],
+			name: structureName,
+		});
+
+		const structure = await apiHelpers.dataEngine.createStructure(
+			site.id,
+			dataDefinition
+		);
+
+		await journalEditStructureDefaultValuesPage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		const content = getRandomString();
+
+		await journalEditStructureDefaultValuesPage.fillTextField(
+			fieldName,
+			content
+		);
+
+		await journalEditStructureDefaultValuesPage.save();
+
+		const modifiedStructure = await apiHelpers.dataEngine.getStructure(
+			structure.id
+		);
+
+		expect(modifiedStructure.dataDefinitionFields[0].defaultValue).toEqual({
+			en_US: `${content}`,
+		});
+
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		const textField = page.getByRole('textbox', {
+			name: fieldName,
+		});
+
+		await expect(textField).toHaveValue(content);
+
+		await page.getByLabel('Add Duplicate Field Text').click();
+
+		await expect(textField.nth(1)).toHaveValue(content);
+	}
+);
+
+baseTest(
+	'LPD-28728: the default value of a structure is not deleted after the structure update',
+	async ({
+		apiHelpers,
+		journalEditStructureDefaultValuesPage,
+		journalEditStructurePage,
+		site,
+	}) => {
+		const fieldName = 'Text1';
+		const structureName = 'Structure1';
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{name: fieldName, repeatable: true}],
+			name: structureName,
+		});
+
+		const structure = await apiHelpers.dataEngine.createStructure(
+			site.id,
+			dataDefinition
+		);
+
+		await journalEditStructureDefaultValuesPage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		const content = getRandomString();
+
+		await journalEditStructureDefaultValuesPage.fillTextField(
+			fieldName,
+			content
+		);
+
+		await journalEditStructureDefaultValuesPage.save();
+
+		await journalEditStructurePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		await journalEditStructurePage.showFieldProperties(fieldName);
+
+		await expect(
+			journalEditStructurePage.propertyPlaceholderText
+		).toBeEmpty();
+
+		const placeholderText = getRandomString();
+
+		await journalEditStructurePage.fillFieldProperty(
+			journalEditStructurePage.propertyPlaceholderText,
+			placeholderText
+		);
+
+		await expect(
+			journalEditStructurePage.propertyPlaceholderText
+		).toHaveValue(placeholderText);
+
+		await journalEditStructurePage.save();
+
+		const modifiedStructure = await apiHelpers.dataEngine.getStructure(
+			structure.id
+		);
+
+		expect(modifiedStructure.dataDefinitionFields[0].defaultValue).toEqual({
+			en_US: `${content}`,
+		});
+	}
+);
+
 scheduleTest(
 	'Create a web content scheduled',
 	async ({journalEditArticlePage, site}) => {

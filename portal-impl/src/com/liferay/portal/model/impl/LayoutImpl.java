@@ -409,16 +409,16 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public String getCssText() throws PortalException {
-		Layout masterLayout = _getMasterLayout();
-
-		if (masterLayout != null) {
-			return masterLayout.getCssText();
-		}
-
 		if (isInheritLookAndFeel()) {
 			LayoutSet layoutSet = getLayoutSet();
 
 			return layoutSet.getCss();
+		}
+
+		Layout masterLayout = _getMasterLayout();
+
+		if (masterLayout != null) {
+			return masterLayout.getCssText();
 		}
 
 		return getCss();

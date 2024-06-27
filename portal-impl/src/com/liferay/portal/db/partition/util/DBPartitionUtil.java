@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -454,12 +455,14 @@ public class DBPartitionUtil {
 				}
 			}
 
-			_reloadQuartzJobs(fromCompanyId, toCompanyId);
-
 			connection.commit();
+
+			_reloadQuartzJobs(fromCompanyId, toCompanyId);
 		}
 		catch (Exception exception1) {
-			if (!_dbPartitionDB.isDDLTransactional()) {
+			if (!_dbPartitionDB.isDDLTransactional() ||
+				(exception1 instanceof SchedulerException)) {
+
 				try (Statement statement = connection.createStatement()) {
 					statement.executeUpdate(
 						_dbPartitionDB.getDropPartitionSQL(toPartitionName));
@@ -1101,7 +1104,7 @@ public class DBPartitionUtil {
 	}
 
 	private static void _reloadQuartzJobs(long fromCompanyId, long toCompanyId)
-		throws PortalException {
+		throws SchedulerException {
 
 		for (SchedulerResponse schedulerResponse :
 				SchedulerEngineHelperUtil.getScheduledJobs()) {

@@ -76,7 +76,7 @@ public class CPDefinitionIndexerTest {
 	public void testGetCPDefinitionCPInstanceExpandoAttributes()
 		throws Exception {
 
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
@@ -84,7 +84,7 @@ public class CPDefinitionIndexerTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
-			catalog.getGroupId());
+			commerceCatalog.getGroupId());
 
 		String expectedValue =
 			RandomTestUtil.randomString() + cpInstance.getCPInstanceId();

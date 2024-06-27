@@ -73,65 +73,65 @@ CategoryFacetPortletInstanceConfiguration categoryFacetPortletInstanceConfigurat
 						persistState="<%= true %>"
 						title="category"
 					>
-							<c:if test="<%= !assetCategoriesSearchFacetDisplayContext.isNothingSelected() %>">
-								<clay:button
-									cssClass="btn-unstyled c-mb-4 facet-clear-btn"
-									displayType="link"
-									id='<%= liferayPortletResponse.getNamespace() + "facetAssetCategoriesClear" %>'
-									onClick="Liferay.Search.FacetUtil.clearSelections(event);"
-								>
-									<strong><liferay-ui:message key="clear" /></strong>
-								</clay:button>
-							</c:if>
+						<c:if test="<%= !assetCategoriesSearchFacetDisplayContext.isNothingSelected() %>">
+							<clay:button
+								cssClass="btn-unstyled c-mb-4 facet-clear-btn"
+								displayType="link"
+								id='<%= liferayPortletResponse.getNamespace() + "facetAssetCategoriesClear" %>'
+								onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+							>
+								<strong><liferay-ui:message key="clear" /></strong>
+							</clay:button>
+						</c:if>
 
-							<ul class="list-unstyled">
+						<ul class="list-unstyled">
 
-								<%
-								int i = 0;
+							<%
+							int i = 0;
 
-								for (BucketDisplayContext bucketDisplayContext : assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts()) {
-									i++;
-								%>
+							for (BucketDisplayContext bucketDisplayContext : assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts()) {
+								i++;
+							%>
 
-									<li class="facet-value">
-										<div class="custom-checkbox custom-control">
-											<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
-												<input
-													<%= bucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
-													class="custom-control-input facet-term"
-													data-term-id="<%= bucketDisplayContext.getFilterValue() %>"
-													disabled
-													id="<portlet:namespace />term_<%= i %>"
-													name="<portlet:namespace />term_<%= i %>"
-													onChange="Liferay.Search.FacetUtil.changeSelection(event);"
-													type="checkbox"
-												/>
+								<li class="facet-value">
+									<div class="custom-checkbox custom-control">
+										<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
+											<input
+												<%= bucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
+												class="custom-control-input facet-term"
+												data-term-id="<%= bucketDisplayContext.getFilterValue() %>"
+												disabled
+												id="<portlet:namespace />term_<%= i %>"
+												name="<portlet:namespace />term_<%= i %>"
+												onChange="Liferay.Search.FacetUtil.changeSelection(event);"
+												type="checkbox"
+											/>
 
-												<span class="custom-control-label term-name <%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
-													<span class="custom-control-label-text">
-														<c:choose>
-															<c:when test="<%= bucketDisplayContext.isSelected() %>">
-																<strong><%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %></strong>
-															</c:when>
-															<c:otherwise>
-																<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>
-															</c:otherwise>
-														</c:choose>
-													</span>
+											<span class="custom-control-label term-name <%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
+												<span class="custom-control-label-text">
+													<c:choose>
+														<c:when test="<%= bucketDisplayContext.isSelected() %>">
+															<strong><%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %></strong>
+														</c:when>
+														<c:otherwise>
+															<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>
+														</c:otherwise>
+													</c:choose>
 												</span>
+											</span>
 
-												<c:if test="<%= bucketDisplayContext.isFrequencyVisible() %>">
-													<small class="term-count">
-														(<%= bucketDisplayContext.getFrequency() %>)
-													</small>
-												</c:if>
-											</label>
-										</div>
-									</li>
+											<c:if test="<%= bucketDisplayContext.isFrequencyVisible() %>">
+												<small class="term-count">
+													(<%= bucketDisplayContext.getFrequency() %>)
+												</small>
+											</c:if>
+										</label>
+									</div>
+								</li>
 
-								<%
-								}
-								%>
+							<%
+							}
+							%>
 
 						</ul>
 					</liferay-ui:panel>

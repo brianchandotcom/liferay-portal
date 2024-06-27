@@ -119,12 +119,17 @@ const CaseResultOutlet = () => {
 						},
 						{
 							active: pathname !== basePath,
-							path: `${basePath}/history`,
+							path: `${basePath}/history?${new URLSearchParams({
+								filter: JSON.stringify({
+									testrayRoutineIds: [testrayRoutine.id],
+								}),
+								filterSchema: 'buildResultsHistory',
+							})}`,
 							title: i18n.translate('history'),
 						},
 					]
 		);
-	}, [basePath, isEditCase, pathname, setTabs]);
+	}, [basePath, isEditCase, pathname, setTabs, testrayRoutine.id]);
 
 	return (
 		<PageRenderer error={error} loading={loading}>

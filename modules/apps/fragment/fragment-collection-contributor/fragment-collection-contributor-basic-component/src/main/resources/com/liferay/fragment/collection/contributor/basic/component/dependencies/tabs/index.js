@@ -141,6 +141,8 @@ function main() {
 	tabItems.forEach(function (item, index) {
 		item.addEventListener('click', function (event) {
 			openTabPanel(event, index);
+
+			dropdownButton.focus();
 		});
 	});
 

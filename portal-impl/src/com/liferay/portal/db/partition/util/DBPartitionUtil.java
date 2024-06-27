@@ -479,32 +479,24 @@ public class DBPartitionUtil {
 			long toCompanyId, Statement statement)
 		throws Exception {
 
-		List<String> columnNames = _getColumnNames(
-			statement.getConnection(), tableName);
-
-		String columnName = "";
-
 		if (StringUtil.endsWith(tableName, "JOB_DETAILS")) {
-			columnNames.removeIf(value -> value.equalsIgnoreCase("job_name"));
+			_replaceQuartzColumnCompanyId(
+				partitionName, fromCompanyId, tableName, toCompanyId, statement,
+				"job_name");
+		}
+		else if (StringUtil.equalsIgnoreCase(tableName, "QUARTZ_TRIGGERS") ||
+				 StringUtil.equalsIgnoreCase(
+					 tableName, "QUARTZ_FIRED_TRIGGERS")) {
 
-			columnName = "job_name";
+			_replaceQuartzColumnCompanyId(
+				partitionName, fromCompanyId, tableName, toCompanyId, statement,
+				"job_name", "trigger_name");
 		}
 		else {
-			columnNames.removeIf(
-				value -> value.equalsIgnoreCase("trigger_name"));
-
-			columnName = "trigger_name";
+			_replaceQuartzColumnCompanyId(
+				partitionName, fromCompanyId, tableName, toCompanyId, statement,
+				"trigger_name");
 		}
-
-		statement.executeUpdate(
-			StringBundler.concat(
-				"insert into ", partitionName, StringPool.PERIOD, tableName,
-				"(", columnName, ", ", StringUtil.merge(columnNames),
-				") select replace (", columnName, ", '@", fromCompanyId,
-				"', '@", toCompanyId, "') as ", columnName, ", ",
-				StringUtil.merge(columnNames), " from ", partitionName,
-				StringPool.PERIOD, tableName,
-				_getQuartzWhereClauseSQL(fromCompanyId, tableName)));
 	}
 
 	private static void _deleteCompanyData(
@@ -1101,6 +1093,38 @@ public class DBPartitionUtil {
 				whereClause));
 
 		_deleteData(tableName, fromPartitionName, statement, whereClause);
+	}
+
+	private static void _replaceQuartzColumnCompanyId(
+			String partitionName, long fromCompanyId, String tableName,
+			long toCompanyId, Statement statement,
+			String... replacedColumnNames)
+		throws Exception {
+
+		List<String> columnNames = _getColumnNames(
+			statement.getConnection(), tableName);
+
+		List<String> replacementSQLs = new ArrayList<>();
+
+		for (String replacedColumnName : replacedColumnNames) {
+			replacementSQLs.add(
+				StringBundler.concat(
+					"replace (", replacedColumnName, ", '@", fromCompanyId,
+					"', '@", toCompanyId, "') as ", replacedColumnName));
+
+			columnNames.removeIf(
+				value -> value.equalsIgnoreCase(replacedColumnName));
+		}
+
+		statement.executeUpdate(
+			StringBundler.concat(
+				"insert into ", partitionName, StringPool.PERIOD, tableName,
+				"(", StringUtil.merge(replacedColumnNames), ", ",
+				StringUtil.merge(columnNames), ") select ",
+				StringUtil.merge(replacementSQLs), ", ",
+				StringUtil.merge(columnNames), " from ", partitionName,
+				StringPool.PERIOD, tableName,
+				_getQuartzWhereClauseSQL(fromCompanyId, tableName)));
 	}
 
 	private static void _restoreView(

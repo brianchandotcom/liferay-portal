@@ -27,24 +27,17 @@ public abstract class
 	}
 
 	@Test
-	public void testExportImportPortletPreferencesProcessorExportCapabilityIsNotEmpty() {
+	public void testExportImportPortletPreferencesProcessorCapabilities() {
+		Assert.assertNotNull(_exportImportPortletPreferencesProcessor);
+
 		List<Capability> exportCapabilities =
 			_exportImportPortletPreferencesProcessor.getExportCapabilities();
-
-		Assert.assertFalse(exportCapabilities.isEmpty());
-	}
-
-	@Test
-	public void testExportImportPortletPreferencesProcessorImportCapabilityIsNotEmpty() {
 		List<Capability> importCapabilities =
 			_exportImportPortletPreferencesProcessor.getImportCapabilities();
 
-		Assert.assertFalse(importCapabilities.isEmpty());
-	}
+		Assert.assertFalse(exportCapabilities.isEmpty());
 
-	@Test
-	public void testExportImportPortletPreferencesProcessorIsNotNull() {
-		Assert.assertNotNull(_exportImportPortletPreferencesProcessor);
+		Assert.assertFalse(importCapabilities.isEmpty());
 	}
 
 	protected abstract ExportImportPortletPreferencesProcessor

@@ -241,6 +241,51 @@ test.describe('Sorting in Data Set Manager', () => {
 		});
 	});
 
+	test('Unmark default sorting when a new one is marked and saved @LPD-25392', async ({
+		page,
+		sortingPage,
+	}) => {
+		await test.step('Navigate to Sorting section', async () => {
+			await sortingPage.goto({
+				dataSetLabel,
+			});
+		});
+
+		await test.step('Create new sorting Date Modified as default', async () => {
+			await sortingPage.openAddSortingModal();
+
+			await page.getByLabel('Label').fill('Date Modified');
+			await page.getByLabel('Sort By').selectOption('dateModified');
+			await page.getByLabel('Use as Default Sorting').check();
+
+			await saveFromModal({page});
+		});
+
+		await test.step('Create new sorting Date Created as default', async () => {
+			await sortingPage.openAddSortingModal();
+
+			await page.getByLabel('Label').fill('Date Created');
+			await page.getByLabel('Sort By').selectOption('dateCreated');
+			await page.getByLabel('Use as Default Sorting').check();
+
+			await saveFromModal({page});
+		});
+
+		await test.step('Check that Date Created is marked as default and Date Modified is not', async () => {
+			await expect(
+				page
+					.getByRole('row', {name: 'Date Created'})
+					.getByRole('cell', {name: 'Yes'})
+			).toBeVisible();
+
+			await expect(
+				page
+					.getByRole('row', {name: 'Date Modified'})
+					.getByRole('cell', {name: 'No'})
+			).toBeVisible();
+		});
+	});
+
 	test('Sorting label in the table is not blank after changing default site language @LPD-25464', async ({
 		page,
 		sortingPage,

@@ -72,6 +72,10 @@ public class DisplayPageLayoutTypeController
 
 		String friendlyURL = _portal.getCurrentURL(httpServletRequest);
 
+		if (friendlyURL.startsWith(Portal.PATH_MAIN)) {
+			return null;
+		}
+
 		if (friendlyURL.contains(StringPool.QUESTION)) {
 			friendlyURL = friendlyURL.substring(
 				0, friendlyURL.lastIndexOf(StringPool.QUESTION));

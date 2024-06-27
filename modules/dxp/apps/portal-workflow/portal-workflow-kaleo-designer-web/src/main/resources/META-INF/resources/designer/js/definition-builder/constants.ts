@@ -4,7 +4,7 @@
  */
 
 const contextUrl = Liferay.ThemeDisplay.getPathContext();
-const defaultLanguageId = themeDisplay.getLanguageId();
+const defaultLanguageId = Liferay.ThemeDisplay.getLanguageId();
 
 const editorConfig = {
 	tabSpaces: 4,

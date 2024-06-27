@@ -222,7 +222,15 @@ test.describe('Sorting Dropdown in Data Set Fragment', () => {
 			});
 
 			await test.step('Change user account default language to Spanish', async () => {
-				await accountSettingsPage.goToAccountSettings();
+
+				// This method should be used, but since it uses it a different
+				// configured `testIdAttribute`, a locator has to be used.
+				//
+				// await accountSettingsPage.goToAccountSettings();
+
+				await page.locator('[data-qa-id="userPersonalMenu"]').click();
+
+				await accountSettingsPage.accountSettingsMenuItem.click();
 
 				await page.getByLabel('Language').selectOption('es_ES');
 
@@ -257,7 +265,9 @@ test.describe('Sorting Dropdown in Data Set Fragment', () => {
 		finally {
 			if (spanishLanguage) {
 				await test.step('Change user account default language back to English', async () => {
-					await page.getByTestId('userPersonalMenu').click();
+					await page
+						.locator('[data-qa-id="userPersonalMenu"]')
+						.click(); // This is using `locator` instead of `getByTestId` because of the difference in `testIdAttribute` names.
 
 					await page
 						.getByRole('menuitem', {

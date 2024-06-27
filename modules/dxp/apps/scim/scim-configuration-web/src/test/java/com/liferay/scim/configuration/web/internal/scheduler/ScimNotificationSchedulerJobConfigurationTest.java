@@ -42,20 +42,105 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 		MONTH,TEN_DAYS, DAY);
 
 	@Test
-	public void testNullWorkflowDefinitionManager() throws Exception {
+	public void testSendNotificationBecauseIsNotificationDay() throws Exception {
 
 
 		ScimNotificationSchedulerJobConfiguration scimNotificationSchedulerJobConfiguration = new ScimNotificationSchedulerJobConfiguration();
 
 		int daysToExpire = 30;
 
-		Integer daysLastNotification = null;
+		int daysLastNotification = 20000;
 
 
 		boolean notification = scimNotificationSchedulerJobConfiguration.hasToSendNotification(daysToExpire, daysLastNotification, notificationTime);
 
 
 		Assert.assertTrue(notification);
+	}
+
+	@Test
+	public void testSendNotificationBecauseIsNotNotificationDayButNotSentNotificationBefore() throws Exception {
+
+
+		ScimNotificationSchedulerJobConfiguration scimNotificationSchedulerJobConfiguration = new ScimNotificationSchedulerJobConfiguration();
+
+		int daysToExpire = 28;
+
+		int daysLastNotification = 20000;
+
+
+		boolean notification = scimNotificationSchedulerJobConfiguration.hasToSendNotification(daysToExpire, daysLastNotification, notificationTime);
+
+
+		Assert.assertTrue(notification);
+	}
+
+	@Test
+	public void testSendNotificationBecauseIsNotNotificationDayAndSentNotificationBefore() throws Exception {
+
+
+		ScimNotificationSchedulerJobConfiguration scimNotificationSchedulerJobConfiguration = new ScimNotificationSchedulerJobConfiguration();
+
+		int daysToExpire = 28;
+
+		int daysLastNotification = 29;
+
+
+		boolean notification = scimNotificationSchedulerJobConfiguration.hasToSendNotification(daysToExpire, daysLastNotification, notificationTime);
+
+
+		Assert.assertFalse(notification);
+	}
+
+	@Test
+	public void testSendNotificationBecauseIsNotNeeded() throws Exception {
+
+
+		ScimNotificationSchedulerJobConfiguration scimNotificationSchedulerJobConfiguration = new ScimNotificationSchedulerJobConfiguration();
+
+		int daysToExpire = 50;
+
+		int daysLastNotification = 20000;
+
+
+		boolean notification = scimNotificationSchedulerJobConfiguration.hasToSendNotification(daysToExpire, daysLastNotification, notificationTime);
+
+
+		Assert.assertFalse(notification);
+	}
+
+	@Test
+	public void testSendNotificationTokenExpiredAndNotNotifyYet() throws Exception {
+
+
+		ScimNotificationSchedulerJobConfiguration scimNotificationSchedulerJobConfiguration = new ScimNotificationSchedulerJobConfiguration();
+
+		int daysToExpire = -1;
+
+		int daysLastNotification = 20000;
+
+
+		boolean notification = scimNotificationSchedulerJobConfiguration.hasToSendNotification(daysToExpire, daysLastNotification, notificationTime);
+
+
+		Assert.assertTrue(notification);
+	}
+
+	@Test
+	public void testSendNotificationBecauseIsNoNotificationDayButNotSentNotificationBefore() throws Exception {
+
+
+		ScimNotificationSchedulerJobConfiguration scimNotificationSchedulerJobConfiguration = new ScimNotificationSchedulerJobConfiguration();
+
+		int daysToExpire = -2;
+
+		int daysLastNotification = -1;
+
+
+		boolean notification = scimNotificationSchedulerJobConfiguration.hasToSendNotification(daysToExpire, daysLastNotification, notificationTime);
+
+
+		Assert.assertFalse(notification);
 	}
 
 

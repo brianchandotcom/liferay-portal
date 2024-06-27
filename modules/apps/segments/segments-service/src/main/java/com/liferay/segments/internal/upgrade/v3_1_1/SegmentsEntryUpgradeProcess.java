@@ -30,7 +30,7 @@ public class SegmentsEntryUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					_inactivateSegmentsEntry(
+					_deactivateSegmentsEntry(
 						resultSet.getLong("ctCollectionId"),
 						resultSet.getLong("groupId"),
 						resultSet.getLong("segmentsEntryId"),
@@ -40,7 +40,7 @@ public class SegmentsEntryUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _inactivateSegmentsEntry(
+	private void _deactivateSegmentsEntry(
 		long ctCollectionId, long groupId, long segmentsEntryId,
 		String criteria) {
 
@@ -55,17 +55,23 @@ public class SegmentsEntryUpgradeProcess extends UpgradeProcess {
 			preparedStatement.executeUpdate();
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					String.format(
-						"Successfully inactivated segments entry {groupId: " +
-							"%s, segmentsEntryId: %s, criteria: %s} because " +
-								"it contains device-related constraints",
-						groupId, segmentsEntryId, criteria));
+				StringBundler sb = new StringBundler(8);
+
+				sb.append("Successfully deactivated segments entry with ");
+				sb.append("criteria ");
+				sb.append(criteria);
+				sb.append(", group ID ");
+				sb.append(groupId);
+				sb.append(" and segments entry ID ");
+				sb.append(segmentsEntryId);
+				sb.append(" because it contains device-related constraints");
+
+				_log.debug(sb.toString());
 			}
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to inactivate segments entry ID " + segmentsEntryId,
+				"Unable to deactivate segments entry ID " + segmentsEntryId,
 				exception);
 		}
 	}

@@ -113,7 +113,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/education_courses_blue-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/education_courses_blue.svg$]"
 																				}
 																			}
 																		},
@@ -396,7 +396,7 @@
 														"fragmentImage": {
 															"url": {
 																"value_i18n": {
-																	"en_US": "/documents/d/liferay-learn/waves-svg"
+																	"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/vectors/waves.svg$]"
 																}
 															}
 														},
@@ -446,7 +446,7 @@
 				"pageElements": [
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\n.course-module-number {\n   height: 32px;\n   width: 32px;\n   background: #E2E2E4;\n   display: flex;\n   border-radius: 50%;\n   text-align: center;\n  justify-content: center;\npadding-top: 4px;\n}\n  \n  a {\n    display: flex;\n    gap: .5rem;\n    align-items: center;\n    height: 48px;\n  }\n  \n  .learn-article-nav-item {\n     height: 56px;\n  }\n}",
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n.course-module-number {\n   height: 32px;\n   width: 32px;\n   background: var(--color-neutral-2, #E2E2E4);\n   display: flex;\n   border-radius: 50%;\n   text-align: center;\n  justify-content: center;\npadding-top: 4px;\n}\n  \n  a {\n    display: flex;\n    gap: .5rem;\n    align-items: center;\n    height: 48px;\n  }\n  \n  .learn-article-nav-item {\n     height: 56px;\n  }\n}",
 							"fragmentStyle": {
 								"backgroundColor": "colorNeutral1",
 								"borderRadius": "borderRadiusLg",
@@ -497,7 +497,7 @@
 					},
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\n.course-bottom-nav:hover {\n border: 2px solid  white;\n cursor: pointer;\n outline: 2px solid #6399FF;\n}\n  \n  .course-bottom-nav {\n    background-image: url('/documents/d/liferay-learn/waves_sm-svg');\n    background-repeat: no-repeat;\n    background-position: calc(100% + 60px) center;\n    background-size: 220px 220px;\n  }\n  \n}",
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n.course-bottom-nav:hover {\n border: 2px solid  white;\n cursor: pointer;\n outline: 2px solid var(--color-brand-primary-lighten-2, #6399ff);\n}\n  \n  .course-bottom-nav {\n    background-image: url('[$DOCUMENT_URL:/site-initializer/documents/group/vectors/waves_sm.svg$]');\n    background-repeat: no-repeat;\n    background-position: calc(100% + 60px) center;\n    background-size: 220px 220px;\n  }\n  \n}",
 							"indexed": true,
 							"layout": {
 								"widthType": "Fixed"
@@ -623,7 +623,7 @@
 									"cssClasses": [
 										"course-bottom-nav"
 									],
-									"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground: #0B5FFF;\nborder-radius: 10px;\nlist-style-type: none;\n\n  .course-bottom-nav-cta {\n    background: #064DD4;\n    padding: 10px;\n    border-radius: 8px;\n    margin-right: 1rem;\n}\n\nul {\n  list-style-type: none; \n  width: 100%\n}\n\nul a {\n  color: white;\n}\n}",
+									"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground: var(--color-brand-primary, #0b5fff);\nborder-radius: 10px;\nlist-style-type: none;\n\n  .course-bottom-nav-cta {\n    background: #064DD4;\n    padding: 10px;\n    border-radius: 8px;\n    margin-right: 1rem;\n}\n\nul {\n  list-style-type: none; \n  width: 100%\n}\n\nul a {\n  color: white;\n}\n}",
 									"fragmentStyle": {
 										"height": "64px",
 										"marginTop": "3",

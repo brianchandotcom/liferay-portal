@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -61,6 +62,17 @@ public class CompleteTaskMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			boolean hideDefaultSuccessMessage = ParamUtil.getBoolean(
+				actionRequest, "hideDefaultSuccessMessage");
+
+			if (hideDefaultSuccessMessage) {
+				SessionMessages.add(
+					actionRequest,
+					_portal.getPortletId(actionRequest) +
+						SessionMessages.
+							KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+			}
+
 			long workflowTaskId = ParamUtil.getLong(
 				actionRequest, "workflowTaskId");
 

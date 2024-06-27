@@ -1119,6 +1119,8 @@ public class GetEntryRenderDataMVCResourceCommand
 						).setParameter(
 							"assigneeUserId", workflowTask.getAssigneeUserId()
 						).setParameter(
+							"hideDefaultSuccessMessage", "true"
+						).setParameter(
 							"transitionName", workflowTransition.getName()
 						).setParameter(
 							"workflowTaskId", workflowTask.getWorkflowTaskId()

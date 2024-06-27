@@ -96,11 +96,11 @@ public class ScimNotificationSchedulerJobConfiguration
 			return true;
 		}
 
-		for (int i = 0; i < (notificationDays.size() - 1); i++) {
-			if ((notificationDays.get(i) >= daysToExpire) &&
-				(daysToExpire > notificationDays.get(i + 1))) {
+		for (int i = 1; i < notificationDays.size(); i++) {
+			if ((notificationDays.get(i - 1) >= daysToExpire) &&
+				(daysToExpire > notificationDays.get(i))) {
 
-				if (daysLastNotification > notificationDays.get(i)) {
+				if (daysLastNotification > notificationDays.get(i - 1)) {
 					return true;
 				}
 			}
@@ -257,7 +257,9 @@ public class ScimNotificationSchedulerJobConfiguration
 		String defaultEmailFromAddress = "scim-notification@" + company.getMx();
 		String defaultEmailFromName = "SCIM-Notification";
 
-		String mail = users.get(0).getEmailAddress();
+		String mail = users.get(
+			0
+		).getEmailAddress();
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 

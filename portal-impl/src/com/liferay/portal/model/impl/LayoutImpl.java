@@ -386,34 +386,13 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public ColorScheme getColorScheme() throws PortalException {
-		if (!isInheritLookAndFeel()) {
-			Theme theme = getTheme();
-
-			return ThemeLocalServiceUtil.getColorScheme(
-				getCompanyId(), theme.getThemeId(), getColorSchemeId());
+		if (_colorScheme != null) {
+			return _colorScheme;
 		}
 
-		Layout masterLayout = _getMasterLayout();
+		_colorScheme = _getColorScheme();
 
-		if (masterLayout != null) {
-			if (Validator.isNotNull(masterLayout.getThemeId()) &&
-				Validator.isNotNull(masterLayout.getColorSchemeId())) {
-
-				return ThemeLocalServiceUtil.getColorScheme(
-					getCompanyId(), masterLayout.getThemeId(),
-					masterLayout.getColorSchemeId());
-			}
-
-			LayoutSet masterLayoutSet =
-				LayoutSetLocalServiceUtil.fetchLayoutSet(
-					masterLayout.getGroupId(), isPrivateLayout());
-
-			return masterLayoutSet.getColorScheme();
-		}
-
-		LayoutSet layoutSet = getLayoutSet();
-
-		return layoutSet.getColorScheme();
+		return _colorScheme;
 	}
 
 	/**
@@ -1661,6 +1640,25 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 	}
 
+	private ColorScheme _getColorScheme() throws PortalException {
+		if (isInheritLookAndFeel()) {
+			LayoutSet layoutSet = getLayoutSet();
+
+			return layoutSet.getColorScheme();
+		}
+
+		Layout masterLayout = _getMasterLayout();
+
+		if (masterLayout != null) {
+			return ThemeLocalServiceUtil.getColorScheme(
+				getCompanyId(), masterLayout.getThemeId(),
+				masterLayout.getColorSchemeId());
+		}
+
+		return ThemeLocalServiceUtil.getColorScheme(
+			getCompanyId(), getThemeId(), getColorSchemeId());
+	}
+
 	private String _getFaviconURL(long faviconFileEntryId) {
 		if (faviconFileEntryId <= 0) {
 			return null;
@@ -1912,6 +1910,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 		_initFriendlyURLKeywords();
 	}
 
+	private ColorScheme _colorScheme;
 	private String _faviconURL;
 	private LayoutSet _layoutSet;
 	private transient LayoutType _layoutType;

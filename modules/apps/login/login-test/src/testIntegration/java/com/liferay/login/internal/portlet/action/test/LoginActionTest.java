@@ -12,7 +12,6 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.login.AuthLoginGroupSettingsUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -130,10 +129,6 @@ public class LoginActionTest {
 					HashMapDictionaryBuilder.<String, Object>put(
 						"promptEnabled", true
 					).build())) {
-
-			System.out.println(
-				"promptEnabled: " +
-					AuthLoginGroupSettingsUtil.isPromptEnabled(groupId));
 
 			UserTestUtil.setUser(TestPropsValues.getUser());
 

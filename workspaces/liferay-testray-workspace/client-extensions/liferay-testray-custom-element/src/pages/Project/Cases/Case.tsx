@@ -9,7 +9,6 @@ import JiraLink from '../../../components/JiraLink';
 import Container from '../../../components/Layout/Container';
 import PreviewInformation from '../../../components/Markdown/PreviewChangeType';
 import QATable from '../../../components/Table/QATable';
-import SearchBuilder from '../../../core/SearchBuilder';
 import useIssuesFound from '../../../hooks/data/useIssuesFound';
 import i18n from '../../../i18n';
 import {TestrayCase} from '../../../services/rest';
@@ -90,15 +89,15 @@ const Case = () => {
 
 			<Container className="mt-3">
 				<CaseResultHistory
-					listViewProps={{
-						variables: {
-							filter: SearchBuilder.eq('caseId', testrayCase.id),
-						},
-					}}
+					caseId={String(testrayCase.id)}
 					tableProps={{
 						actions,
-						navigateTo: ({build, id}) =>
-							`/project/${projectId}/routines/${build?.routine?.id}/build/${build?.id}/case-result/${id}`,
+						navigateTo: ({
+							testrayBuildId,
+							testrayCaseResultId,
+							testrayRoutineId,
+						}) =>
+							`/project/${projectId}/routines/${testrayRoutineId}/build/${testrayBuildId}/case-result/${testrayCaseResultId}`,
 					}}
 				/>
 			</Container>

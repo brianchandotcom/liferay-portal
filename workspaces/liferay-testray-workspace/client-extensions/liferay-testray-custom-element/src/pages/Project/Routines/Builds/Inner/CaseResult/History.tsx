@@ -6,7 +6,6 @@
 import {useOutletContext, useParams} from 'react-router-dom';
 
 import Container from '../../../../../../components/Layout/Container';
-import SearchBuilder from '../../../../../../core/SearchBuilder';
 import {TestrayCaseResult} from '../../../../../../services/rest';
 import CaseResultHistory from '../../../../Cases/CaseResultHistory';
 
@@ -22,17 +21,14 @@ const History = () => {
 	return (
 		<Container>
 			<CaseResultHistory
-				listViewProps={{
-					variables: {
-						filter: SearchBuilder.eq(
-							'caseId',
-							caseResult.case?.id as number
-						),
-					},
-				}}
+				caseId={String(caseResult.case?.id)}
 				tableProps={{
-					navigateTo: ({build, id}) =>
-						`/project/${projectId}/routines/${build?.routine?.id}/build/${build?.id}/case-result/${id}`,
+					navigateTo: ({
+						testrayBuildId,
+						testrayCaseResultId,
+						testrayRoutineId,
+					}) =>
+						`/project/${projectId}/routines/${testrayRoutineId}/build/${testrayBuildId}/case-result/${testrayCaseResultId}`,
 				}}
 			/>
 		</Container>

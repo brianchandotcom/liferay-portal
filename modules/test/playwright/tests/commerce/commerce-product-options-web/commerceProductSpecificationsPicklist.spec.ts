@@ -11,7 +11,6 @@ import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import { listTypeDefinitionsPagesTest } from '../../../fixtures/listTypeDefinitionsPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -98,15 +97,13 @@ test('LPD-22572 Picklist on product specifications page', async ({
 	).toBeVisible();
 
 	const specifications =
-			await apiHelpers.headlessCommerceAdminCatalog.getSpecifications();
+		await apiHelpers.headlessCommerceAdminCatalog.getSpecifications();
 
-		for (let i = 0; i < specifications.totalCount; i++) {
-			await apiHelpers.headlessCommerceAdminCatalog.deleteSpecification(
-				specifications.items[i].id,
-			);
-		}
+	for (let i = 0; i < specifications.totalCount; i++) {
+		await apiHelpers.headlessCommerceAdminCatalog.deleteSpecification(
+			specifications.items[i].id
+		);
+	}
 
-	await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
-		picklist.id
-	);
+	await apiHelpers.listTypeAdmin.deleteListTypeDefinition(picklist.id);
 });

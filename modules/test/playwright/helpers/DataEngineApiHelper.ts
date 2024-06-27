@@ -31,4 +31,12 @@ export class DataEngineApiHelper {
 			{data: dataDefinition}
 		);
 	}
+
+	async getStructure(
+		id: string
+	): Promise<DataDefinition> {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/data-definitions/${id}`
+		);
+	}
 }

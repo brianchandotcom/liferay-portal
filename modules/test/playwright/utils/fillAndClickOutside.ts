@@ -4,8 +4,9 @@
  */
 
 import getRandomString from './getRandomString';
+import {Locator, Page} from "@playwright/test";
 
-export default async function fillAndClickOutside(page, element, content?) {
+export default async function fillAndClickOutside(page: Page, element: Locator, content?: string) {
 	await element.click();
 	await element.fill(content || getRandomString());
 	await page.locator('body').click();

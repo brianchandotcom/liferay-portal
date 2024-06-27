@@ -10,6 +10,7 @@ type DataDefinition = {
 	dataDefinitionFields: DefinitionField[];
 	defaultDataLayout: DataLayout;
 	defaultLanguageId: Locale;
+	id: string;
 	name: {[keys: string]: string};
 };
 
@@ -19,6 +20,7 @@ type DefinitionField = {
 		displayStyle: 'singleline' | 'multiline';
 		fieldReference: string;
 	};
+	defaultValue: {[keys: string]: string};
 	fieldType: 'text' | 'select';
 	indexType: 'keyword' | 'text' | 'none';
 	label: {[keys: string]: string};

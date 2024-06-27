@@ -7,14 +7,14 @@ import {fetch} from 'frontend-js-web';
 
 import {contextUrl} from '../constants';
 
-const userBaseURL = '/o/headless-admin-user/v1.0';
-const workflowBaseURL = '/o/headless-admin-workflow/v1.0';
+export const userBaseURL = '/o/headless-admin-user/v1.0';
+export const workflowBaseURL = '/o/headless-admin-workflow/v1.0';
 
-const headers = {
+export const headers = {
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 };
 
-function publishDefinitionRequest(requestBody) {
+export function publishDefinitionRequest(requestBody: WorkflowDefinition) {
 	return fetch(`${workflowBaseURL}/workflow-definitions/deploy`, {
 		body: JSON.stringify(requestBody),
 		headers: {
@@ -25,14 +25,17 @@ function publishDefinitionRequest(requestBody) {
 	});
 }
 
-function retrieveAccountRoles(accountId) {
+export function retrieveAccountRoles(accountId: number) {
 	return fetch(`${userBaseURL}/accounts/${accountId}/account-roles`, {
 		headers,
 		method: 'GET',
 	});
 }
 
-function retrieveDefinitionRequest(definitionName, versionNumber) {
+export function retrieveDefinitionRequest(
+	definitionName: string,
+	versionNumber: number
+) {
 	let url = `${workflowBaseURL}/workflow-definitions/by-name/${definitionName}?contentFormat=xml`;
 
 	if (versionNumber) {
@@ -45,7 +48,7 @@ function retrieveDefinitionRequest(definitionName, versionNumber) {
 	});
 }
 
-function retrieveRoleById(roleId) {
+export function retrieveRoleById(roleId: number) {
 	return fetch(
 		`${window.location.origin}${contextUrl}${userBaseURL}/roles/${roleId}`,
 		{
@@ -55,7 +58,7 @@ function retrieveRoleById(roleId) {
 	);
 }
 
-function retrieveRoles() {
+export function retrieveRoles() {
 	return fetch(
 		`${window.location.origin}${contextUrl}${userBaseURL}/roles?restrictFields=rolePermissions&pageSize=-1`,
 		{
@@ -65,7 +68,7 @@ function retrieveRoles() {
 	);
 }
 
-function retrieveUsersBy(filterType, keywords) {
+export function retrieveUsersBy(filterType: string, keywords: string[]) {
 	let filterParameter = String();
 	for (const keyword of keywords) {
 		filterParameter =
@@ -75,17 +78,16 @@ function retrieveUsersBy(filterType, keywords) {
 		.replace(/'/g, '%27')
 		.slice(0, -8);
 
-	const url = new URL(
-		`${window.location.origin}${contextUrl}${userBaseURL}/user-accounts?filter=${filterParameter}`
+	return fetch(
+		`${window.location.origin}${contextUrl}${userBaseURL}/user-accounts?filter=${filterParameter}`,
+		{
+			headers,
+			method: 'GET',
+		}
 	);
-
-	return fetch(url, {
-		headers,
-		method: 'GET',
-	});
 }
 
-function saveDefinitionRequest(requestBody) {
+export function saveDefinitionRequest(requestBody: WorkflowDefinition) {
 	return fetch(`${workflowBaseURL}/workflow-definitions/save`, {
 		body: JSON.stringify(requestBody),
 		headers: {
@@ -95,16 +97,3 @@ function saveDefinitionRequest(requestBody) {
 		method: 'POST',
 	});
 }
-
-export {
-	headers,
-	userBaseURL,
-	workflowBaseURL,
-	publishDefinitionRequest,
-	retrieveAccountRoles,
-	retrieveDefinitionRequest,
-	retrieveRoleById,
-	retrieveRoles,
-	retrieveUsersBy,
-	saveDefinitionRequest,
-};

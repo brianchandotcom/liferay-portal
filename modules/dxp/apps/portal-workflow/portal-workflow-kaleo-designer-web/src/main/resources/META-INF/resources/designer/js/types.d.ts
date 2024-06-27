@@ -44,3 +44,14 @@ interface RolePermission {
 	roleId: number;
 	scope: number;
 }
+
+interface WorkflowDefinition {
+	active: boolean;
+	content: string;
+	name: string;
+	title: string;
+	title_i18n: {
+		[key: string]: string;
+	};
+	version: number;
+}

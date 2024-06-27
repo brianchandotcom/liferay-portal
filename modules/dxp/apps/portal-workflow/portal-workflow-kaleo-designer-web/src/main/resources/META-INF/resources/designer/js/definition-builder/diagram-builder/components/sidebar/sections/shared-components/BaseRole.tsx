@@ -10,8 +10,6 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {ChangeEvent, useEffect, useMemo, useState} from 'react';
 
-// @ts-ignore
-
 import {userBaseURL} from '../../../../../util/fetchUtil';
 
 interface BaseRoleProps {

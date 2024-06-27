@@ -14,8 +14,8 @@ public enum Environment {
 		"https://payment-webinit.mercanet.bnpparibas.net/rs-services/v2" +
 			"/paymentInit"),
 	TEST(
-		"https://payment-webinit-mercanet.test.sips-atos.com/rs-services/v2" +
-			"/paymentInit");
+		"https://payment-webinit-mercanet.test.sips-services.com/rs-services" +
+			"/v2/paymentInit");
 
 	public String getUrl() {
 		return _url;

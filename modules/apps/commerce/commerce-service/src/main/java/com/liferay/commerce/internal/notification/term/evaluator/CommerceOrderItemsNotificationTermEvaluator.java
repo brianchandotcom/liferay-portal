@@ -174,9 +174,10 @@ public class CommerceOrderItemsNotificationTermEvaluator
 					CPDefinition cpDefinition =
 						commerceOrderItem.getCPDefinition();
 
-					return portalURL +
-						_commerceMediaResolver.getDefaultURL(
-							cpDefinition.getGroupId());
+					String defaultURL = _commerceMediaResolver.getDefaultURL(
+						cpDefinition.getGroupId());
+
+					return portalURL + defaultURL;
 				}
 
 				String imageURL = _commerceMediaResolver.getURL(

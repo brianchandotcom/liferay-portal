@@ -1,6 +1,5 @@
 {
 	"pageElement": {
-		"id": "fa753593-45fc-c22e-3f04-52285b713aef",
 		"pageElements": [
 			{
 				"definition": {
@@ -27,7 +26,6 @@
 					},
 					"name": "Header Container"
 				},
-				"id": "da4fb11c-9047-8537-fc71-8e84cd024fbb",
 				"pageElements": [
 					{
 						"definition": {
@@ -52,11 +50,12 @@
 							},
 							"name": "Header Banner"
 						},
-						"id": "c4783be1-4acd-ee87-b215-ad5e74e3f658",
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"width": "100%"},
+									"fragmentStyle": {
+										"width": "100%"
+									},
 									"indexed": true,
 									"layout": {
 										"align": "Center",
@@ -65,7 +64,6 @@
 									},
 									"name": "Header Contents"
 								},
-								"id": "274e5f3d-4cca-ec38-f2fe-a61293477e4b",
 								"pageElements": [
 									{
 										"definition": {
@@ -77,7 +75,6 @@
 											},
 											"name": "Header Left-Side Contents"
 										},
-										"id": "030f5744-5446-ec86-3f1b-649568c61676",
 										"pageElements": [
 											{
 												"definition": {
@@ -100,7 +97,6 @@
 													},
 													"name": "Course Container"
 												},
-												"id": "4b88c1c3-9997-4832-ebc6-8014843271e2",
 												"pageElements": [
 													{
 														"definition": {
@@ -121,7 +117,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -133,7 +130,6 @@
 															"indexed": true,
 															"name": "Course Icon"
 														},
-														"id": "728dd6ee-4f81-3bcf-d7ac-fc5fc5fdbe43",
 														"type": "Fragment"
 													},
 													{
@@ -151,7 +147,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Course"
@@ -169,7 +166,6 @@
 															"indexed": true,
 															"name": "Course Text"
 														},
-														"id": "72841fb9-bafa-da45-d142-42467913e45f",
 														"type": "Fragment"
 													}
 												],
@@ -180,7 +176,8 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-html",
@@ -204,7 +201,6 @@
 													"indexed": true,
 													"name": "Course Description"
 												},
-												"id": "4a6573c7-68ff-7085-f2f0-54d63307b0a3",
 												"type": "Fragment"
 											}
 										],
@@ -223,7 +219,6 @@
 											},
 											"name": "Course Info Tags"
 										},
-										"id": "60a86f96-0260-c88e-98f9-eb99dacfa9b9",
 										"pageElements": [
 											{
 												"definition": {
@@ -232,10 +227,10 @@
 													],
 													"customCSS": ".[$FRAGMENT_CLASS$] {\n  \n  .course-info-tag {\n    color: var(--color-state-info-darken-2, #1C3667)\n    background: var(--color-state-info-lighten-2, #E6EBF5);\n    padding: 4px 8px;\n    border-radius: 4px;\n  }\n  \n  .card-tag__time p::before {\n  content: '';\n  display: inline-block;\n  width: 14px;\n  height: 14px;\n  margin-bottom: 2px;\n  margin-right: 4px; \n  background-image: url(\"data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.7'%3E%3Cmask id='mask0_2278_5196' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='0' y='0' width='16' height='16'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M13.6562 2.34375C12.1465 0.831299 10.1377 0 8 0C5.8623 0 3.85352 0.831299 2.34375 2.34375C0.831055 3.85315 0 5.86255 0 8C0 10.1375 0.831055 12.1469 2.34375 13.6562C3.85645 15.1687 5.8623 16 8 16C10.1377 16 12.1465 15.1687 13.6562 13.6562C15.1689 12.1438 16 10.1375 16 8C16 5.86255 15.1689 3.85315 13.6562 2.34375ZM8 14C4.69043 14 2 11.3093 2 8C2 4.69067 4.69043 2 8 2C11.3096 2 14 4.69067 14 8C14 11.3093 11.3096 14 8 14ZM6 11C5.87207 11 5.74316 10.95 5.64648 10.8531C5.4502 10.6594 5.4502 10.3406 5.64648 10.1469L7.14648 8.64685C7.05273 8.44995 7 8.2312 7 8C7 7.34692 7.41895 6.79065 8 6.58435V3.5C8 3.22498 8.22461 3 8.5 3C8.77441 3 9 3.22498 9 3.5V6.58435C9.58105 6.79065 10 7.34692 10 8C10 8.82812 9.32812 9.5 8.5 9.5C8.26855 9.5 8.0498 9.4469 7.85254 9.35315L6.35254 10.8531C6.25586 10.95 6.12793 11 6 11Z' fill='%236B6C7E'/%3E%3C/mask%3E%3Cg mask='url(%23mask0_2278_5196)'%3E%3Crect width='16' height='16' fill='%231C3667'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");\n  background-size: cover;\n  vertical-align: middle;  \n  }\n}\n",
 													"indexed": true,
-													"layout": {},
+													"layout": {
+													},
 													"name": "Time Tag"
 												},
-												"id": "73a1df4a-ef0a-0ff3-8bb3-853eefd881e9",
 												"pageElements": [
 													{
 														"definition": {
@@ -254,7 +249,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "DDMStructure_courseTime",
@@ -271,7 +267,6 @@
 															},
 															"indexed": true
 														},
-														"id": "ecfb9b58-4625-b5d1-0b17-9ed24f9aebee",
 														"type": "Fragment"
 													}
 												],
@@ -283,10 +278,10 @@
 														"course-info-tag"
 													],
 													"indexed": true,
-													"layout": {},
+													"layout": {
+													},
 													"name": "Persona Tag"
 												},
-												"id": "8d96d04c-d614-00d2-c07b-653493d55104",
 												"pageElements": [
 													{
 														"definition": {
@@ -305,7 +300,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "DDMStructure_selectPersona",
@@ -319,7 +315,6 @@
 															],
 															"indexed": true
 														},
-														"id": "5bd75d4c-0083-6b97-7258-cf230bb11045",
 														"type": "Fragment"
 													}
 												],
@@ -331,10 +326,10 @@
 														"course-info-tag"
 													],
 													"indexed": true,
-													"layout": {},
+													"layout": {
+													},
 													"name": "Expertise Tag"
 												},
-												"id": "612fd9a3-32d4-b0c8-e759-be52877db2e3",
 												"pageElements": [
 													{
 														"definition": {
@@ -344,7 +339,8 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-html"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-html",
@@ -365,7 +361,6 @@
 															},
 															"indexed": true
 														},
-														"id": "dfa2bc4b-f467-f20e-bba7-5df46e6c24e6",
 														"type": "Fragment"
 													}
 												],
@@ -380,10 +375,10 @@
 							{
 								"definition": {
 									"indexed": true,
-									"layout": {},
+									"layout": {
+									},
 									"name": "Waves Background"
 								},
-								"id": "56dc208b-ae7a-d17e-a55d-9d7e7249988b",
 								"pageElements": [
 									{
 										"definition": {
@@ -405,14 +400,14 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
 											"indexed": true,
 											"name": "Waves Image"
 										},
-										"id": "d32f1fc2-34fb-b928-b1bb-92fbc76f82e6",
 										"type": "Fragment"
 									}
 								],
@@ -448,7 +443,6 @@
 					},
 					"name": "Content Container"
 				},
-				"id": "231bf450-fdb1-91a1-efdf-aac632ac98de",
 				"pageElements": [
 					{
 						"definition": {
@@ -466,15 +460,19 @@
 								"width": "100%"
 							},
 							"indexed": true,
-							"layout": {"marginRight": 2},
+							"layout": {
+								"marginRight": 2
+							},
 							"name": "Side Menu Container"
 						},
-						"id": "3632210b-206e-e22c-fe1b-3002479a09a1",
 						"pageElements": [
 							{
 								"definition": {
-									"fragment": {"key": "BASIC_COMPONENT-html"},
-									"fragmentConfig": {},
+									"fragment": {
+										"key": "BASIC_COMPONENT-html"
+									},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-html",
@@ -492,7 +490,6 @@
 									],
 									"indexed": true
 								},
-								"id": "471b3c8d-6c1e-3df7-2049-2bc0a4edc796",
 								"type": "Fragment"
 							}
 						],
@@ -502,22 +499,26 @@
 						"definition": {
 							"customCSS": ".[$FRAGMENT_CLASS$] {\n.course-bottom-nav:hover {\n border: 2px solid  white;\n cursor: pointer;\n outline: 2px solid #6399FF;\n}\n  \n  .course-bottom-nav {\n    background-image: url('/documents/d/liferay-learn/waves_sm-svg');\n    background-repeat: no-repeat;\n    background-position: calc(100% + 60px) center;\n    background-size: 220px 220px;\n  }\n  \n}",
 							"indexed": true,
-							"layout": {"widthType": "Fixed"},
+							"layout": {
+								"widthType": "Fixed"
+							},
 							"name": "Main Content Container"
 						},
-						"id": "be01953f-f5ff-9bb2-aae3-dc6344c5434c",
 						"pageElements": [
 							{
 								"definition": {
 									"fragment": {
 										"key": "BASIC_COMPONENT-heading"
 									},
-									"fragmentConfig": {"headingLevel": "h2"},
+									"fragmentConfig": {
+										"headingLevel": "h2"
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Congratulations! You've Completed the Course"
@@ -528,7 +529,6 @@
 									],
 									"indexed": true
 								},
-								"id": "0c0bc3ed-f0c6-8d9d-9c50-55150e573eca",
 								"type": "Fragment"
 							},
 							{
@@ -546,7 +546,6 @@
 									},
 									"name": "Image Container"
 								},
-								"id": "08ff67c3-07ae-2286-439b-28ac9c325161",
 								"pageElements": [
 									{
 										"definition": {
@@ -572,7 +571,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -582,7 +582,6 @@
 											},
 											"indexed": true
 										},
-										"id": "f22258da-69a7-52be-5c01-6bd3852b3610",
 										"type": "Fragment"
 									}
 								],
@@ -590,8 +589,11 @@
 							},
 							{
 								"definition": {
-									"fragment": {"key": "BASIC_COMPONENT-html"},
-									"fragmentConfig": {},
+									"fragment": {
+										"key": "BASIC_COMPONENT-html"
+									},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-html",
@@ -614,12 +616,13 @@
 									},
 									"indexed": true
 								},
-								"id": "8948d945-39c7-a481-37c6-4cc7a42ba268",
 								"type": "Fragment"
 							},
 							{
 								"definition": {
-									"cssClasses": ["course-bottom-nav"],
+									"cssClasses": [
+										"course-bottom-nav"
+									],
 									"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground: #0B5FFF;\nborder-radius: 10px;\nlist-style-type: none;\n\n  .course-bottom-nav-cta {\n    background: #064DD4;\n    padding: 10px;\n    border-radius: 8px;\n    margin-right: 1rem;\n}\n\nul {\n  list-style-type: none; \n  width: 100%\n}\n\nul a {\n  color: white;\n}\n}",
 									"fragmentStyle": {
 										"height": "64px",
@@ -639,14 +642,14 @@
 									},
 									"name": "Course Bottom Nav"
 								},
-								"id": "faeafc74-67e5-402e-2031-9f8feacbfdbb",
 								"pageElements": [
 									{
 										"definition": {
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-html",
@@ -664,7 +667,6 @@
 											],
 											"indexed": true
 										},
-										"id": "c998cbab-4587-9d43-f0ed-20dd48b6e6e1",
 										"type": "Fragment"
 									}
 								],
@@ -677,8 +679,10 @@
 										"key": "sign-in",
 										"siteKey": "Liferay Learn"
 									},
-									"fragmentConfig": {},
-									"fragmentFields": [],
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"fontSize": "0.875rem",
 										"fontWeight": "fontWeightBold",
@@ -686,7 +690,6 @@
 									},
 									"indexed": true
 								},
-								"id": "cf70b41f-ca92-ad00-57e8-8501473469c1",
 								"type": "Fragment"
 							}
 						],
@@ -700,7 +703,9 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"masterPage": {"key": "liferay-learn"},
+		"masterPage": {
+			"key": "liferay-learn"
+		},
 		"themeName": "Dialect"
 	},
 	"version": 1.1

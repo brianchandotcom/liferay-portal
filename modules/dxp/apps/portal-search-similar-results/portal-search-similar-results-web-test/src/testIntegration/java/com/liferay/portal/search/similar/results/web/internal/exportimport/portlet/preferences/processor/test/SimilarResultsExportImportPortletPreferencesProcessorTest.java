@@ -33,30 +33,17 @@ public class SimilarResultsExportImportPortletPreferencesProcessorTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testExportImportPortletPreferencesProcessorExportCapabilityIsNotEmpty()
-		throws Exception {
+	public void testExportImportPortletPreferencesProcessorCapabilities() {
+		Assert.assertNotNull(_exportImportPortletPreferencesProcessor);
 
 		List<Capability> exportCapabilities =
 			_exportImportPortletPreferencesProcessor.getExportCapabilities();
-
-		Assert.assertFalse(exportCapabilities.isEmpty());
-	}
-
-	@Test
-	public void testExportImportPortletPreferencesProcessorImportCapabilityIsNotEmpty()
-		throws Exception {
-
 		List<Capability> importCapabilities =
 			_exportImportPortletPreferencesProcessor.getImportCapabilities();
 
+		Assert.assertFalse(exportCapabilities.isEmpty());
+
 		Assert.assertFalse(importCapabilities.isEmpty());
-	}
-
-	@Test
-	public void testExportImportPortletPreferencesProcessorIsNotNull()
-		throws Exception {
-
-		Assert.assertNotNull(_exportImportPortletPreferencesProcessor);
 	}
 
 	@Inject(

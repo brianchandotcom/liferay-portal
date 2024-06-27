@@ -46,7 +46,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("Product")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"active", "catalogId", "name", "productType"})
+@Schema(requiredProperties = {"active", "name", "productType"})
 @XmlRootElement(name = "Product")
 public class Product implements Serializable {
 
@@ -227,6 +227,51 @@ public class Product implements Serializable {
 	@JsonIgnore
 	private Supplier<Catalog> _catalogSupplier;
 
+	@Schema(example = "AB-34098-789-N")
+	public String getCatalogExternalReferenceCode() {
+		if (_catalogExternalReferenceCodeSupplier != null) {
+			catalogExternalReferenceCode =
+				_catalogExternalReferenceCodeSupplier.get();
+
+			_catalogExternalReferenceCodeSupplier = null;
+		}
+
+		return catalogExternalReferenceCode;
+	}
+
+	public void setCatalogExternalReferenceCode(
+		String catalogExternalReferenceCode) {
+
+		this.catalogExternalReferenceCode = catalogExternalReferenceCode;
+
+		_catalogExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCatalogExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			catalogExternalReferenceCodeUnsafeSupplier) {
+
+		_catalogExternalReferenceCodeSupplier = () -> {
+			try {
+				return catalogExternalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String catalogExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _catalogExternalReferenceCodeSupplier;
+
 	@DecimalMin("0")
 	@Schema(example = "30054")
 	public Long getCatalogId() {
@@ -264,7 +309,6 @@ public class Product implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
 	protected Long catalogId;
 
 	@JsonIgnore
@@ -2275,6 +2319,22 @@ public class Product implements Serializable {
 			sb.append("\"catalog\": ");
 
 			sb.append(String.valueOf(catalog));
+		}
+
+		String catalogExternalReferenceCode = getCatalogExternalReferenceCode();
+
+		if (catalogExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"catalogExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(catalogExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		Long catalogId = getCatalogId();

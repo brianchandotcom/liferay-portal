@@ -54,7 +54,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/group/get-groups \
-				-u ${creatorEmailAddress}:test \
+				-u ${creatorEmailAddress}:${PropsUtil.get("default.admin.password")} \
 				-d companyId=${companyId} \
 				-d parentGroupId=0 \
 				-d site=true \
@@ -245,7 +245,7 @@ definition {
 		}
 
 		if (!(isSet(creatorPassword))) {
-			var creatorPassword = "test";
+			var creatorPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''

@@ -91,7 +91,7 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Sample Collection Item",
+				entryTitle = "Purchase Orders",
 				fragmentName = "Button");
 
 			PageEditorEditableLink.gotoEditableFieldLink(
@@ -447,7 +447,7 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Sample Collection Item",
+				entryTitle = "Related Stories",
 				fragmentName = "Heading");
 
 			PageEditorMapping.mapEditableFieldToCollectionItems(
@@ -478,7 +478,7 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Sample Collection Item",
+				entryTitle = "Purchase Orders",
 				fragmentName = "Button");
 
 			PageEditorEditableLink.gotoEditableFieldLink(
@@ -581,7 +581,7 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Sample Collection Item",
+				entryTitle = "Related Stories",
 				fragmentName = "Heading");
 
 			PageEditorMapping.mapEditableFieldToCollectionItems(
@@ -612,7 +612,7 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Sample Collection Item",
+				entryTitle = "Purchase Orders",
 				fragmentName = "Button");
 
 			PageEditorEditableLink.gotoEditableFieldLink(
@@ -694,7 +694,7 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Sample Collection Item",
+				entryTitle = "Purchase Orders",
 				fragmentName = "Button");
 
 			PageEditorEditableLink.gotoEditableFieldLink(
@@ -817,7 +817,7 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Sample Collection Item",
+				entryTitle = "Purchase Orders",
 				fragmentName = "Button");
 
 			PageEditorEditableLink.gotoEditableFieldLink(
@@ -953,7 +953,7 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Sample Collection Item",
+				entryTitle = "Purchase Orders",
 				fragmentName = "Button");
 
 			PageEditorEditableLink.gotoEditableFieldLink(
@@ -1148,7 +1148,7 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Sample Collection Item",
+				entryTitle = "Purchase Orders",
 				fragmentName = "Button");
 
 			PageEditorEditableLink.gotoEditableFieldLink(
@@ -1265,7 +1265,7 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Sample Collection Item",
+				entryTitle = "Purchase Orders",
 				fragmentName = "Button");
 
 			PageEditorEditableLink.gotoEditableFieldLink(
@@ -1396,7 +1396,7 @@ definition {
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
-				entryTitle = "Sample Collection Item",
+				entryTitle = "Purchase Orders",
 				fragmentName = "Button");
 
 			PageEditorEditableLink.gotoEditableFieldLink(

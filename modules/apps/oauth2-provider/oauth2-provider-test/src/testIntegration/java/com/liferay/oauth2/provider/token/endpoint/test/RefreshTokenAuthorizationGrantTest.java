@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -48,7 +49,8 @@ public class RefreshTokenAuthorizationGrantTest
 	public void test() throws Exception {
 		JSONObject jsonObject = getToken(
 			"oauthTestApplication", null,
-			getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
+			getResourceOwnerPasswordBiFunction(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
 			this::parseJSONObject);
 
 		WebTarget webTarget = getWebTarget("/annotated");
@@ -125,7 +127,8 @@ public class RefreshTokenAuthorizationGrantTest
 	protected AuthorizationGrant getAuthorizationGrant(String clientId) {
 		return new RefreshTokenAuthorizationGrant(
 			getRefreshToken(
-				new PasswordAuthorizationGrant("test@liferay.com", "test"),
+				new PasswordAuthorizationGrant(
+					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
 				clientAuthentications.get(clientId)));
 	}
 

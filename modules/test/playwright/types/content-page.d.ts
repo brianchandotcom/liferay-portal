@@ -16,11 +16,14 @@ type FragmentField = {
 	value?: {
 		fragmentLink?: Record<string, string>;
 		text?: {
-			mapping: {
+			mapping?: {
 				fieldKey: string;
 				itemReference: {
 					contextSource: string;
 				};
+			};
+			value_i18n: {
+				en_US: string;
 			};
 		};
 	};
@@ -74,6 +77,7 @@ type PageElement = {
 		numberOfItems?: number;
 		size?: number;
 		widgetInstance?: {
+			widgetConfig?: Record<string, any>;
 			widgetName: string;
 		};
 	};

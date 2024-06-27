@@ -177,7 +177,7 @@ public class GetLayoutsStrutsActionTest {
 
 		for (int i = 0; i < count; i++) {
 			Layout layout = LayoutLocalServiceUtil.addLayout(
-				TestPropsValues.getUserId(), _group.getGroupId(), false,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 				parentLayoutId, RandomTestUtil.randomString(), StringPool.BLANK,
 				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
 				StringPool.BLANK,

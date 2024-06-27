@@ -113,7 +113,7 @@ definition {
 		}
 
 		if (!(isSet(creatorPassword))) {
-			var creatorPassword = "test";
+			var creatorPassword = JSONUtil2.getSuperAdminUserPassword();
 		}
 
 		var curl = '''
@@ -144,14 +144,14 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/update-agreed-to-terms-of-use/user-id/${userId}/agreed-to-terms-of-use/true \
-				-u test:test
+				-u test:${PropsUtil.get("default.admin.password")}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test \
-				-u test:test
+				-u test:${PropsUtil.get("default.admin.password")}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
@@ -177,7 +177,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/delete-user \
-				-u ${userName}:test \
+				-u ${userName}:${PropsUtil.get("default.admin.password")} \
 				-d userId=${userId}
 		''';
 
@@ -291,7 +291,7 @@ definition {
 		}
 
 		if (!(isSet(creatorPassword))) {
-			var creatorPassword = "test";
+			var creatorPassword = JSONUtil2.getSuperAdminUserPassword();
 		}
 
 		var curl = '''
@@ -316,7 +316,7 @@ definition {
 		}
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLoginInfo = "test:test";
+			var userLoginInfo = "test:${PropsUtil.get(\"default.admin.password\")}";
 		}
 		else {
 			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();

@@ -85,8 +85,6 @@ public class EmailNotificationSender implements NotificationSender {
 				CalendarBookingLocalServiceImpl.class.getName());
 			subscriptionSender.setClassPK(
 				notificationTemplateContext.getCalendarId());
-			subscriptionSender.setCompanyId(
-				notificationTemplateContext.getCompanyId());
 			subscriptionSender.setContextAttributes(
 				"[$CALENDAR_NAME$]",
 				notificationTemplateContext.getAttribute("calendarName"),

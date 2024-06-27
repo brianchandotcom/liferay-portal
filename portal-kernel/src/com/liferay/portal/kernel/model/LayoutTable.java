@@ -30,6 +30,10 @@ public class LayoutTable extends BaseTable<LayoutTable> {
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<LayoutTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<LayoutTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, Long> plid = createColumn(
 		"plid", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<LayoutTable, Long> groupId = createColumn(

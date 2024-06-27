@@ -157,3 +157,75 @@ test('focus order is correct', async ({
 
 	await expect(generalTab).toBeFocused();
 });
+
+test('check that it cannot be accessed by keyboard in disabled areas', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	for (const item of await page
+		.locator('.page-editor__disabled-area .navbar-classic')
+		.all()) {
+		await expect(item).toHaveAttribute('inert', '');
+		await expect(item).toHaveAttribute('aria-hidden', 'true');
+	}
+});
+
+test('checks the correct keyboard navigation in the experience selector', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Open the experience selector
+
+	const experienceSelectorButton = await page.getByLabel(
+		'Experience: Default'
+	);
+
+	await experienceSelectorButton.press('Enter');
+
+	// Go back and check that the experience selector button is focused and the dropdown is closed
+
+	const newExperienceButton = page.getByLabel('New Experience', {
+		exact: true,
+	});
+
+	await newExperienceButton.press('Shift+Tab');
+
+	await expect(newExperienceButton).not.toBeVisible();
+	await expect(experienceSelectorButton).toBeFocused();
+
+	// Open the experience selector again
+
+	await experienceSelectorButton.press('Enter');
+
+	// Check the focus goes to New Experience button and continue navigating
+
+	await expect(newExperienceButton).toBeFocused();
+
+	await newExperienceButton.press('Tab');
+
+	await page
+		.getByRole('link', {name: 'Content Page Personalization.'})
+		.press('Tab');
+
+	// Check that the dropdown is closed
+
+	await expect(newExperienceButton).not.toBeVisible();
+});

@@ -28,8 +28,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutModel
-	extends AttachedModel, BaseModel<Layout>, CTModel<Layout>, LocalizedModel,
-			MVCCModel, ShardedModel, StagedGroupedModel, WorkflowedModel {
+	extends AttachedModel, BaseModel<Layout>, CTModel<Layout>,
+			ExternalReferenceCodeModel, LocalizedModel, MVCCModel, ShardedModel,
+			StagedGroupedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -101,6 +102,23 @@ public interface LayoutModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this layout.
+	 *
+	 * @return the external reference code of this layout
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this layout.
+	 *
+	 * @param externalReferenceCode the external reference code of this layout
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the plid of this layout.

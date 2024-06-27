@@ -85,11 +85,8 @@ public class CTMessageBusInterceptorTest {
 
 	@Test
 	public void testInterceptSubscriptionSenderMessage() throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
-
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		subscriptionSender.setCompanyId(companyId);
 		subscriptionSender.setMailId(
 			CTMessageBusInterceptorTest.class.getName(), "test");
 
@@ -112,25 +109,16 @@ public class CTMessageBusInterceptorTest {
 		Assert.assertEquals(
 			DestinationNames.SUBSCRIPTION_SENDER,
 			deserializedMessage.getDestinationName());
-
-		SubscriptionSender deserializedSubscriptionSender =
-			(SubscriptionSender)deserializedMessage.getPayload();
-
-		Assert.assertEquals(
-			companyId, deserializedSubscriptionSender.getCompanyId());
 	}
 
 	@Test
 	public void testPublishSubscriptionSenderMessage() throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
-
 		Message message = new Message();
 
 		message.setDestinationName(DestinationNames.SUBSCRIPTION_SENDER);
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		subscriptionSender.setCompanyId(companyId);
 		subscriptionSender.setMailId(
 			CTMessageBusInterceptorTest.class.getName(), "test");
 
@@ -152,14 +140,6 @@ public class CTMessageBusInterceptorTest {
 				_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 		}
 
-		Message receivedMessage = _testDestination.getReceivedMessage();
-
-		SubscriptionSender deserializedSubscriptionSender =
-			(SubscriptionSender)receivedMessage.getPayload();
-
-		Assert.assertEquals(
-			companyId, deserializedSubscriptionSender.getCompanyId());
-
 		List<Message> messages = _ctMessageLocalService.getMessages(
 			_ctCollection.getCtCollectionId());
 
@@ -170,12 +150,6 @@ public class CTMessageBusInterceptorTest {
 		Assert.assertEquals(
 			DestinationNames.SUBSCRIPTION_SENDER,
 			deserializedMessage.getDestinationName());
-
-		deserializedSubscriptionSender =
-			(SubscriptionSender)receivedMessage.getPayload();
-
-		Assert.assertEquals(
-			companyId, deserializedSubscriptionSender.getCompanyId());
 
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 

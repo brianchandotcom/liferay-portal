@@ -47,10 +47,12 @@ import {config as portalSearchWebConfig} from './tests/portal-search-web/config'
 import {config as portalSecurityScriptManagementWebConfig} from './tests/portal-security-script-management-web/config';
 import {config as portalWorkflowKaleoDesignerWebConfig} from './tests/portal-workflow-kaleo-designer-web/config';
 import {config as portletConfigurationWebConfig} from './tests/portlet-configuration-web/config';
+import {config as productNavigationProductMenuWeb} from './tests/product-navigation-product-menu-web/config';
 import {config as productNavigationUserPersonalBarWebConfig} from './tests/product-navigation-user-personal-bar-web/config';
 import {config as questionsWebConfig} from './tests/questions-web/config';
 import {config as rolesAdminWebConfig} from './tests/roles-admin-web/config';
 import {config as siteAdminWebConfig} from './tests/site-admin-web/config';
+import {config as siteNavigationAdminWebConfig} from './tests/site-navigation-admin-web/config';
 import {config as stableConfig} from './tests/stable/config';
 import {config as stylebookWebConfig} from './tests/style-book-web/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
@@ -107,10 +109,12 @@ export default defineConfig({
 		portalSecurityScriptManagementWebConfig,
 		portalWorkflowKaleoDesignerWebConfig,
 		portletConfigurationWebConfig,
+		productNavigationProductMenuWeb,
 		productNavigationUserPersonalBarWebConfig,
 		questionsWebConfig,
 		rolesAdminWebConfig,
 		siteAdminWebConfig,
+		siteNavigationAdminWebConfig,
 		stableConfig,
 		stylebookWebConfig,
 		usersAdminWebConfig,

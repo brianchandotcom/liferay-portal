@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -2379,16 +2380,18 @@ public class GraphQLServletExtender {
 						_getExtendedGraphQLError(
 							graphQLError, Response.Status.NOT_FOUND));
 				}
-				else if (!_isClientErrorException(graphQLError)) {
+				else if (_isClientErrorException(graphQLError) ||
+						 _isStatusException(graphQLError)) {
+
 					processedErrors.add(
 						_getExtendedGraphQLError(
-							graphQLError,
-							Response.Status.INTERNAL_SERVER_ERROR));
+							graphQLError, Response.Status.BAD_REQUEST));
 				}
 				else {
 					processedErrors.add(
 						_getExtendedGraphQLError(
-							graphQLError, Response.Status.BAD_REQUEST));
+							graphQLError,
+							Response.Status.INTERNAL_SERVER_ERROR));
 				}
 			}
 
@@ -2415,9 +2418,8 @@ public class GraphQLServletExtender {
 			).build();
 		}
 
-		private Throwable _getThrowable(GraphQLError graphQLError) {
-			ExceptionWhileDataFetching exceptionWhileDataFetching =
-				(ExceptionWhileDataFetching)graphQLError;
+		private Throwable _getThrowable(
+			ExceptionWhileDataFetching exceptionWhileDataFetching) {
 
 			Throwable throwable = exceptionWhileDataFetching.getException();
 
@@ -2457,7 +2459,8 @@ public class GraphQLServletExtender {
 				return false;
 			}
 
-			Throwable throwable = _getThrowable(graphQLError);
+			Throwable throwable = _getThrowable(
+				(ExceptionWhileDataFetching)graphQLError);
 
 			if (throwable instanceof ForbiddenException ||
 				throwable instanceof SecurityException) {
@@ -2473,7 +2476,8 @@ public class GraphQLServletExtender {
 				return false;
 			}
 
-			Throwable throwable = _getThrowable(graphQLError);
+			Throwable throwable = _getThrowable(
+				(ExceptionWhileDataFetching)graphQLError);
 
 			if (throwable instanceof NoSuchModelException ||
 				throwable instanceof NotFoundException ||
@@ -2502,6 +2506,23 @@ public class GraphQLServletExtender {
 
 			return StringUtil.containsIgnoreCase(
 				(String)path.get(path.size() - 1), "parent");
+		}
+
+		private boolean _isStatusException(GraphQLError graphQLError) {
+			if (!(graphQLError instanceof ExceptionWhileDataFetching)) {
+				return false;
+			}
+
+			if (StringUtil.endsWith(
+					ClassUtil.getClassName(
+						_getThrowable(
+							(ExceptionWhileDataFetching)graphQLError)),
+					"StatusException")) {
+
+				return true;
+			}
+
+			return false;
 		}
 
 		private final Set<String> _graphQLNamespaces;

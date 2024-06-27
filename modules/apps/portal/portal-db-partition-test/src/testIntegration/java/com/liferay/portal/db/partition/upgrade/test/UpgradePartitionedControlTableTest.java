@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.upgrade.util.UpgradePartitionedControlTable;
@@ -117,7 +118,7 @@ public class UpgradePartitionedControlTableTest
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> {
 					if (PortalInstancePool.getDefaultCompanyId() ==
-							DBPartitionUtil.getCurrentCompanyId()) {
+							CompanyThreadLocal.getNonsystemCompanyId()) {
 
 						return;
 					}

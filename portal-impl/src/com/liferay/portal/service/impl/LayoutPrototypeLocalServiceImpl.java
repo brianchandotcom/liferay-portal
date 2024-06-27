@@ -99,7 +99,7 @@ public class LayoutPrototypeLocalServiceImpl
 				serviceContext.getAttribute("addDefaultLayout"), true)) {
 
 			_layoutLocalService.addLayout(
-				userId, group.getGroupId(), true,
+				null, userId, group.getGroupId(), true,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 				layoutPrototype.getNameMap(), null, null, null, null,
 				LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,

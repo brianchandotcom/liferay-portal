@@ -19,9 +19,11 @@ import com.liferay.commerce.internal.notification.term.provider.SalesAgentNotifi
 import com.liferay.commerce.internal.notification.type.ObjectDefinitionCommerceNotificationType;
 import com.liferay.commerce.internal.order.term.contributor.ObjectCommerceDefinitionTermContributor;
 import com.liferay.commerce.internal.order.term.contributor.ObjectRecipientCommerceDefinitionTermContributor;
+import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.notification.type.CommerceNotificationType;
 import com.liferay.commerce.order.CommerceDefinitionTermContributor;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -72,30 +74,25 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				_bundleContext.registerService(
 					NotificationTermEvaluator.class,
 					new CommerceOrderAccountNotificationTermEvaluator(
-						_accountEntryModelResourcePermission,
-						_commerceOrderLocalService, objectDefinition,
-						_permissionCheckerFactory, _roleLocalService,
-						_userLocalService),
+						_commerceOrderLocalService, objectDefinition),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"class.name", objectDefinition.getClassName()
 					).build()),
 				_bundleContext.registerService(
 					NotificationTermEvaluator.class,
 					new CommerceOrderAddressNotificationTermEvaluator(
-						_accountEntryModelResourcePermission,
-						_commerceOrderLocalService, objectDefinition,
-						_permissionCheckerFactory, _roleLocalService,
-						_userLocalService),
+						_commerceOrderLocalService, objectDefinition),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"class.name", objectDefinition.getClassName()
 					).build()),
 				_bundleContext.registerService(
 					NotificationTermEvaluator.class,
 					new CommerceOrderItemsNotificationTermEvaluator(
-						_commerceMoneyFactory,
+						_commerceMediaResolver, _commerceMoneyFactory,
 						_commerceOrderItemQuantityFormatter,
 						_commerceOrderLocalService,
 						_commerceOrderPriceCalculation, _companyLocalService,
+						_cpDefinitionLocalService,
 						_cpInstanceUnitOfMeasureLocalService, _cpInstanceHelper,
 						_language, objectDefinition, _userLocalService),
 					HashMapDictionaryBuilder.<String, Object>put(
@@ -226,6 +223,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private BundleContext _bundleContext;
 
 	@Reference
+	private CommerceMediaResolver _commerceMediaResolver;
+
+	@Reference
 	private CommerceMoneyFactory _commerceMoneyFactory;
 
 	@Reference
@@ -240,6 +240,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

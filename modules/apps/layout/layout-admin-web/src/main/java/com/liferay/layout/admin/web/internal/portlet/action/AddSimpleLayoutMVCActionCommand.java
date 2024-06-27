@@ -104,7 +104,7 @@ public class AddSimpleLayoutMVCActionCommand
 
 		try {
 			Layout layout = _layoutService.addLayout(
-				groupId, privateLayout, parentLayoutId, nameMap,
+				null, groupId, privateLayout, parentLayoutId, nameMap,
 				new HashMap<>(), new HashMap<>(), new HashMap<>(),
 				new HashMap<>(), type, typeSettingsUnicodeProperties.toString(),
 				false, new HashMap<>(), masterLayoutPlid, serviceContext);

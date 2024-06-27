@@ -43,7 +43,7 @@ public class DefaultLayoutPrototypesUtil {
 		}
 
 		Layout layout = LayoutLocalServiceUtil.addLayout(
-			group.getCreatorUserId(), group.getGroupId(),
+			null, group.getCreatorUserId(), group.getGroupId(),
 			layoutSet.isPrivateLayout(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, null, null, null,
 			null, LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,

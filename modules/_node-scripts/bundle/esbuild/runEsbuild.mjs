@@ -27,7 +27,7 @@ async function doRunEsbuild(esbuildesbuildConfig, configName) {
 	const lapse = performance.now() - start;
 
 	console.log(
-		`Esbuild for ${configName} took: ${(lapse / 1000).toFixed(3)} s`
+		`⌛ Esbuild for ${configName} took: ${(lapse / 1000).toFixed(3)} s`
 	);
 }
 

@@ -1692,6 +1692,53 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-nodejs-sass">
+		<sequential>
+			<mkdir dir="${nodejs.sass.dir}" />
+			<if>
+				<os family="mac" />
+				<then>
+					<mirrors-get
+						dest="${nodejs.sass.dir}"
+						src="${nodejs.sass.mac.url}"
+					/>
+					<untar
+						compression="gzip"
+						dest="${nodejs.sass.dir}"
+						src="${nodejs.sass.dir}/${nodejs.sass.mac.name}"
+					/>
+				</then>
+				<elseif>
+					<os family="unix" />
+					<then>
+						<mirrors-get
+							dest="${nodejs.sass.dir}"
+							src="${nodejs.sass.linux.url}"
+						/>
+						<untar
+							compression="gzip"
+							dest="${nodejs.sass.dir}"
+							src="${nodejs.sass.dir}/${nodejs.sass.linux.name}"
+						/>
+					</then>
+				</elseif>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<mirrors-get
+							dest="${nodejs.sass.dir}"
+							src="${nodejs.sass.windows.url}"
+						/>
+						<unzip
+							dest="${nodejs.sass.dir}"
+							src="${nodejs.sass.dir}/${nodejs.sass.windows.name}"
+						/>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-sdk">
 		<attribute default="true" name="setupbinariescache" />
 

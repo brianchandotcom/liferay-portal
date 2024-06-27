@@ -106,7 +106,6 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 			_localization.getMap(bodyLocalizedValuesMap));
 		subscriptionSender.setClassName(className);
 		subscriptionSender.setClassPK(classPK);
-		subscriptionSender.setCompanyId(user.getCompanyId());
 		subscriptionSender.setContextAttribute("[$CONTENT$]", content, false);
 		subscriptionSender.setContextAttributes(
 			"[$USER_ADDRESS$]", messageUserEmailAddress, "[$USER_NAME$]",

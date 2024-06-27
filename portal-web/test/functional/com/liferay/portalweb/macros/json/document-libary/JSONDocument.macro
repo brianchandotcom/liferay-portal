@@ -16,7 +16,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/documents/${fileEntryId}/comments \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:test'
+				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}'
 				-d '{
 					"creator": {
 					},

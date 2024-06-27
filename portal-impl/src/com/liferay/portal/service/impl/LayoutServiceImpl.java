@@ -96,6 +96,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * etc.
 	 * </p>
 	 *
+	 * @param  externalReferenceCode the layout's external reference code
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parentLayoutId the layout ID of the parent layout (optionally
@@ -131,8 +132,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			long classNameId, long classPK, Map<Locale, String> localeNamesMap,
+			String externalReferenceCode, long groupId, boolean privateLayout,
+			long parentLayoutId, long classNameId, long classPK,
+			Map<Locale, String> localeNamesMap,
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, String typeSettings,
@@ -153,10 +155,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 
 		Layout layout = layoutLocalService.addLayout(
-			getUserId(), groupId, privateLayout, parentLayoutId, classNameId,
-			classPK, localeNamesMap, localeTitlesMap, descriptionMap,
-			keywordsMap, robotsMap, type, typeSettings, hidden, system,
-			friendlyURLMap, masterLayoutPlid, serviceContext);
+			externalReferenceCode, getUserId(), groupId, privateLayout,
+			parentLayoutId, classNameId, classPK, localeNamesMap,
+			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
+			typeSettings, hidden, system, friendlyURLMap, masterLayoutPlid,
+			serviceContext);
 
 		checkLayoutTypeSettings(layout, StringPool.BLANK, typeSettings);
 
@@ -173,6 +176,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * etc.
 	 * </p>
 	 *
+	 * @param  externalReferenceCode the layout's external reference code
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parentLayoutId the layout ID of the parent layout (optionally
@@ -205,8 +209,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			Map<Locale, String> localeNamesMap,
+			String externalReferenceCode, long groupId, boolean privateLayout,
+			long parentLayoutId, Map<Locale, String> localeNamesMap,
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, String typeSettings,
@@ -215,10 +219,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException {
 
 		return addLayout(
-			groupId, privateLayout, parentLayoutId, 0, 0, localeNamesMap,
-			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, false, friendlyURLMap, masterLayoutPlid,
-			serviceContext);
+			externalReferenceCode, groupId, privateLayout, parentLayoutId, 0, 0,
+			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
+			robotsMap, type, typeSettings, hidden, false, friendlyURLMap,
+			masterLayoutPlid, serviceContext);
 	}
 
 	/**
@@ -231,6 +235,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * etc.
 	 * </p>
 	 *
+	 * @param  externalReferenceCode the layout's external reference code
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parentLayoutId the layout ID of the parent layout (optionally
@@ -262,8 +267,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			Map<Locale, String> localeNamesMap,
+			String externalReferenceCode, long groupId, boolean privateLayout,
+			long parentLayoutId, Map<Locale, String> localeNamesMap,
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, String typeSettings,
@@ -272,9 +277,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		throws PortalException {
 
 		return addLayout(
-			groupId, privateLayout, parentLayoutId, 0, 0, localeNamesMap,
-			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, false, friendlyURLMap, 0, serviceContext);
+			externalReferenceCode, groupId, privateLayout, parentLayoutId, 0, 0,
+			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
+			robotsMap, type, typeSettings, hidden, false, friendlyURLMap, 0,
+			serviceContext);
 	}
 
 	/**
@@ -288,6 +294,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * etc.
 	 * </p>
 	 *
+	 * @param  externalReferenceCode the layout's external reference code
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parentLayoutId the layout ID of the parent layout (optionally
@@ -314,9 +321,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 */
 	@Override
 	public Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			String name, String title, String description, String type,
-			boolean hidden, String friendlyURL, ServiceContext serviceContext)
+			String externalReferenceCode, long groupId, boolean privateLayout,
+			long parentLayoutId, String name, String title, String description,
+			String type, boolean hidden, String friendlyURL,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -332,8 +340,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 
 		return layoutLocalService.addLayout(
-			getUserId(), groupId, privateLayout, parentLayoutId, name, title,
-			description, type, hidden, friendlyURL, serviceContext);
+			externalReferenceCode, getUserId(), groupId, privateLayout,
+			parentLayoutId, name, title, description, type, hidden, friendlyURL,
+			serviceContext);
 	}
 
 	@Override
@@ -420,6 +429,19 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getPermissionChecker(), plid, ActionKeys.DELETE);
 
 		layoutLocalService.deleteLayout(plid, serviceContext);
+	}
+
+	@Override
+	public void deleteLayout(String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		Layout layout = getLayoutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.DELETE);
+
+		layoutLocalService.deleteLayout(layout);
 	}
 
 	@Override
@@ -675,6 +697,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 
 		return plid;
+	}
+
+	@Override
+	public Layout getLayoutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		Layout layout = layoutLocalService.fetchLayoutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.VIEW);
+
+		return layout;
 	}
 
 	/**

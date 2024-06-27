@@ -45,6 +45,19 @@ const COMMANDS = {
 		parameters: '',
 		script: './tsconfig/index.mjs',
 	},
+	'setup': {
+		description: 'setup working environment used by node-scripts',
+		parameters: '',
+		script: './setup.mjs',
+	},
+	'test': {
+		description: 'runs unit tests in a single or multiple projects.',
+		script: './test/index.mjs',
+	},
+	'test:sync': {
+		description: 'Synchronously runs tests across multiple projects.',
+		script: './test/sync.mjs',
+	},
 };
 
 const command = process.argv[2];

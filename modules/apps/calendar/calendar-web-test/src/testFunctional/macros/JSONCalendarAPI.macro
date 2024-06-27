@@ -8,7 +8,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/calendar.calendar/delete-calendar \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d calendarId=${calendarId}
 		''';
 
@@ -23,7 +23,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/calendar.calendarbooking/delete-calendar-booking \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d calendarBookingId=${calendarBookingId}
 		''';
 
@@ -38,7 +38,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/calendar.calendarresource/delete-calendar-resource \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d calendarResourceId=${calendarResourceId}
 		''';
 
@@ -53,7 +53,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/calendar.calendarbooking/get-calendar-bookings \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d calendarId=${calendarId} \
 				-d "startTime=-1" \
 				-d "endTime=-1"
@@ -74,7 +74,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/calendar.calendar/search \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d companyId=${companyId} \
 				-d groupIds= \
 				-d calendarResourceIds= \
@@ -102,7 +102,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/calendar.calendarresource/search \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d companyId=${companyId} \
 				-d groupIds= \
 				-d classNameIds= \
@@ -128,7 +128,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/calendar.calendar/search \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d companyId=${companyId} \
 				-d groupIds= \
 				-d calendarResourceIds= \
@@ -152,7 +152,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/calendar.calendar/search \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d companyId=${companyId} \
 				-d groupIds= \
 				-d calendarResourceIds= \
@@ -177,7 +177,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/calendar.calendar/update-color \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d calendarId=${calendarId} \
 				-d color=${color}
 		''';

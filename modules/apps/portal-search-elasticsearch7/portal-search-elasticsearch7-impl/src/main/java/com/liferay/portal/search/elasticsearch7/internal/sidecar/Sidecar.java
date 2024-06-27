@@ -99,8 +99,8 @@ public class Sidecar {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Sidecar Elasticsearch ", _getNodeName(), " started at ",
-					address));
+					"Sidecar Elasticsearch ", _getNodeVersion(),
+					StringPool.SPACE, _getNodeName(), " started at ", address));
 		}
 
 		_address = address;
@@ -457,7 +457,12 @@ public class Sidecar {
 			return nodeName;
 		}
 
-		return "liferay";
+		return "liferay_sidecar";
+	}
+
+	private String _getNodeVersion() {
+		return ResourceUtil.getResourceAsString(
+			getClass(), SidecarConstants.SIDECAR_VERSION_FILE_NAME);
 	}
 
 	private URL _getSecurityPolicyURL(URL bundleURL) {

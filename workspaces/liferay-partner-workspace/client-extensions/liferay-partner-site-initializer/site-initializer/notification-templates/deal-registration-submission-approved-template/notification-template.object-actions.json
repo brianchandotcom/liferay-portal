@@ -1,0 +1,14 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "leadStatus == 'Qualified'",
+		"externalReferenceCode": "NOTIFICATION-TEMPLATE-DEAL-APPROVED",
+		"label": {
+			"en_US": "Notification Template Deal Approved"
+		},
+		"name": "notificationTemplateDealApproved",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterUpdate",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:LeadNotification$]"
+	}
+]

@@ -554,7 +554,7 @@ public class FriendlyURLServletTest {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		Layout redirectLayout = _layoutLocalService.addLayout(
-			serviceContext.getUserId(), groupId, false,
+			null, serviceContext.getUserId(), groupId, false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap,
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),

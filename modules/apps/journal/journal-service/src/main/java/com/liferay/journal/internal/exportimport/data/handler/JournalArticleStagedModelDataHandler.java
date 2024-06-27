@@ -1567,8 +1567,6 @@ public class JournalArticleStagedModelDataHandler
 						jsonObject.getString("className"));
 					subscriptionSender.setClassPK(
 						jsonObject.getLong("classPK"));
-					subscriptionSender.setCompanyId(
-						userNotificationEvent.getCompanyId());
 
 					Map<String, HashMap<String, Object>> contextMap =
 						(Map)_jsonFactory.looseDeserialize(

@@ -7,10 +7,13 @@ package com.liferay.login.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.login.AuthLoginGroupSettingsUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -18,6 +21,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -80,6 +84,40 @@ public class LoginActionTest {
 	}
 
 	@Test
+	public void testExclusiveStateInModalWhenLoginFromALayoutUtilityPageEntry()
+		throws Exception {
+
+		Group group = _groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+
+		_layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, _serviceContext.getUserId(), group.getGroupId(), 0, 0,
+				true, RandomTestUtil.randomString(),
+				LayoutUtilityPageEntryConstants.TYPE_LOGIN, 0, _serviceContext);
+
+		UserTestUtil.setUser(
+			_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
+
+		URL url = new URL(
+			"http://localhost:8080/c/portal/login?p_l_id=" +
+				_layoutLocalService.getDefaultPlid(group.getGroupId()) +
+					"&windowState=exclusive");
+
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)url.openConnection();
+
+		httpURLConnection.setRequestMethod("GET");
+
+		Assert.assertEquals(200, httpURLConnection.getResponseCode());
+
+		String queryString = httpURLConnection.getURL(
+		).getQuery();
+
+		Assert.assertTrue(queryString.contains("p_p_state=exclusive"));
+	}
+
+	@Test
 	public void testNormalStateWhenLoginFromAnUtilityPage() throws Exception {
 		long groupId = _group.getGroupId();
 
@@ -91,10 +129,6 @@ public class LoginActionTest {
 					HashMapDictionaryBuilder.<String, Object>put(
 						"promptEnabled", true
 					).build())) {
-
-			System.out.println(
-				"promptEnabled: " +
-					AuthLoginGroupSettingsUtil.isPromptEnabled(groupId));
 
 			UserTestUtil.setUser(TestPropsValues.getUser());
 
@@ -135,7 +169,7 @@ public class LoginActionTest {
 				_group, TestPropsValues.getUserId());
 
 		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,
@@ -174,7 +208,17 @@ public class LoginActionTest {
 	private Group _group;
 
 	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@DeleteAfterTestRun
+	private LayoutUtilityPageEntry _layoutUtilityPageEntry;
+
+	@Inject
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	private String _originalName;
 

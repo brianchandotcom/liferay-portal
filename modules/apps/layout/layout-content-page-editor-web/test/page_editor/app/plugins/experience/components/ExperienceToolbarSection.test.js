@@ -158,13 +158,19 @@ describe('ExperienceToolbarSection', () => {
 		serviceFetch.mockReset();
 	});
 
-	it('renders ExperienceToolbarSection component and makes sure that the button has aria-label and the label is present', async () => {
+	it('renders ExperienceToolbarSection component and makes sure that the button has the correct attributes for accessibility', async () => {
 		renderExperienceToolbarSection(mockState, mockConfig);
+
+		const dropDownButton = screen.getByLabelText('experience', {
+			exact: false,
+		});
 
 		expect(screen.getByText('experience')).toBeInTheDocument();
 		expect(
 			screen.getByLabelText('experience: Default Experience')
 		).toBeInTheDocument();
+		expect(dropDownButton).toHaveAttribute('aria-haspopup', 'true');
+		expect(dropDownButton).toHaveAttribute('aria-expanded', 'false');
 	});
 
 	it('shows a list of Experiences ordered by priority', async () => {

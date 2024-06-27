@@ -12,6 +12,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:commerce:commerce-product-type-simple")
 	testIntegrationImplementation project(":apps:commerce:commerce-test-util")
 	testIntegrationImplementation project(":apps:document-library:document-library-test-util")
+	testIntegrationImplementation project(":apps:expando:expando-test-util")
 	testIntegrationImplementation project(":apps:layout:layout-test-util")
 	testIntegrationImplementation project(":apps:list-type:list-type-api")
 	testIntegrationImplementation project(":apps:portal-search:portal-search-api")

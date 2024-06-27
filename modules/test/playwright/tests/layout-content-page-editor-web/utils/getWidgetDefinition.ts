@@ -5,14 +5,17 @@
 
 export default function getWidgetDefinition({
 	id,
+	widgetConfig,
 	widgetName,
 }: {
 	id: string;
+	widgetConfig?: Record<string, any>;
 	widgetName: string;
 }): PageElement {
 	return {
 		definition: {
 			widgetInstance: {
+				widgetConfig,
 				widgetName,
 			},
 		},

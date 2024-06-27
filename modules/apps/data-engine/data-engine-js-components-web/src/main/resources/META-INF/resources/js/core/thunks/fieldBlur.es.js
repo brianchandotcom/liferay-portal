@@ -18,6 +18,13 @@ export default function fieldBlur({
 
 		dispatch({payload: properties, type: EVENT_TYPES.FIELD.BLUR});
 
+		if (Liferay.FeatureFlags['LPD-11228']) {
+			dispatch({
+				payload: fieldInstance.label,
+				type: EVENT_TYPES.HISTORY.BLUR,
+			});
+		}
+
 		Liferay.fire('ddmFieldBlur', {
 			fieldName: fieldInstance.label,
 			focusDuration:

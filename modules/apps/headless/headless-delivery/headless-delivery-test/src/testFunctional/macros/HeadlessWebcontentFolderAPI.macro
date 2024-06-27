@@ -49,7 +49,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/structured-content-folders/${structuredContentFolderId}/subscribe \
-				-u ${userName}@liferay.com:test \
+				-u ${userName}@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-H accept: application/json \
 		''';
 

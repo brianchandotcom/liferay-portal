@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {wemSiteTest} from '../../fixtures/wemSiteTest';
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import getRandomString from '../../utils/getRandomString';
 import getContainerDefinition from './utils/getContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -64,9 +65,10 @@ test('grid background image can be customized', async ({
 		.frameLocator('iframe[title="Select"]')
 		.locator('[data-title="echo-logo.png"]');
 
-	await card.click({trial: true});
-
-	await card.click();
+	await clickAndExpectToBeHidden({
+		target: page.locator('.modal-dialog'),
+		trigger: card,
+	});
 
 	expect(
 		await pageEditorPage

@@ -16,6 +16,7 @@ import {
 	getLocalizedValue,
 } from '../../utils/getLocalizedValue';
 import ViewsContext from '../ViewsContext';
+import {ClayTable} from './ClayTable';
 
 // @ts-ignore
 
@@ -425,6 +426,30 @@ const Table = ({
 		...visibleFields.map((field) => String(field.fieldName)),
 		'item-actions'
 	);
+
+	if (Liferay.FeatureFlags['LPS-193005']) {
+		return (
+			<DndTable.TableContextProvider
+				columnNames={visibleFields.map((field) =>
+					String(field.fieldName)
+				)}
+			>
+				<ClayTable
+					fields={schema.fields as any}
+					inlineAddingSettings={inlineAddingSettings}
+					itemInlineChanges={itemsChanges}
+					items={items}
+					itemsActions={itemsActions}
+					nestedItemsReferenceKey={nestedItemsReferenceKey}
+					selectItems={selectItems}
+					selectable={selectable}
+					selectedItemsKey={selectedItemsKey}
+					selectedItemsValue={selectedItemsValue}
+					selectionType={selectionType}
+				/>
+			</DndTable.TableContextProvider>
+		);
+	}
 
 	return (
 		<DndTable.TableContextProvider columnNames={columnNames}>

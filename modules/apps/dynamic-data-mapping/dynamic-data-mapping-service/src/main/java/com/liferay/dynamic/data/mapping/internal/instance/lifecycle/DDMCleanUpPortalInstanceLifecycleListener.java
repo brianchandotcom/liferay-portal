@@ -15,6 +15,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.model.Company;
 
 import java.util.Deque;
@@ -34,6 +35,10 @@ public class DDMCleanUpPortalInstanceLifecycleListener
 	@Override
 	public void portalInstancePreunregistered(Company company)
 		throws Exception {
+
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
 
 		for (DDMTemplate ddmTemplate :
 				_ddmTemplateLocalService.getTemplatesByGroupId(

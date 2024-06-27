@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useMemo} from 'react';
@@ -43,24 +42,12 @@ function Row({children, className, paddingLeftCells}) {
 		}
 	}
 
-	const Container = Liferay.FeatureFlags['LPS-193005']
-		? ClayTable.Row
-		: 'div';
-
 	return (
-		<Container
-			className={classNames(
-				{
-					'dnd-tr': !Liferay.FeatureFlags['LPS-193005'],
-				},
-				className
-			)}
-			style={style}
-		>
+		<div className={classNames('dnd-tr', className)} style={style}>
 			{placeholderPaddingCells}
 
 			{children}
-		</Container>
+		</div>
 	);
 }
 

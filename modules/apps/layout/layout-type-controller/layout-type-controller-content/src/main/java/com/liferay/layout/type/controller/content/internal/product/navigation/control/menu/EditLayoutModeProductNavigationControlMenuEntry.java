@@ -105,7 +105,7 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 					ServiceContextFactory.getInstance(httpServletRequest);
 
 				draftLayout = _layoutLocalService.addLayout(
-					layout.getUserId(), layout.getGroupId(),
+					null, layout.getUserId(), layout.getGroupId(),
 					layout.isPrivateLayout(), layout.getParentLayoutId(),
 					_portal.getClassNameId(Layout.class), layout.getPlid(),
 					layout.getNameMap(), layout.getTitleMap(),

@@ -157,12 +157,7 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 
 	@Override
 	public long getClassNameId() {
-		if (_classNameId == 0) {
-			_classNameId = PortalUtil.getClassNameId(
-				KBArticleConstants.getClassName());
-		}
-
-		return _classNameId;
+		return PortalUtil.getClassNameId(KBArticleConstants.getClassName());
 	}
 
 	@Override
@@ -280,6 +275,5 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 	}
 
 	private long _attachmentsFolderId;
-	private long _classNameId;
 
 }

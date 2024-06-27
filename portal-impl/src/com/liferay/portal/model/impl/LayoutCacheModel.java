@@ -67,7 +67,7 @@ public class LayoutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(87);
+		StringBundler sb = new StringBundler(89);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -75,6 +75,8 @@ public class LayoutCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", plid=");
 		sb.append(plid);
 		sb.append(", groupId=");
@@ -172,6 +174,13 @@ public class LayoutCacheModel
 		}
 		else {
 			layoutImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			layoutImpl.setExternalReferenceCode("");
+		}
+		else {
+			layoutImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		layoutImpl.setPlid(plid);
@@ -355,6 +364,7 @@ public class LayoutCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		plid = objectInput.readLong();
 
@@ -428,6 +438,13 @@ public class LayoutCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(plid);
@@ -587,6 +604,7 @@ public class LayoutCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long plid;
 	public long groupId;
 	public long companyId;

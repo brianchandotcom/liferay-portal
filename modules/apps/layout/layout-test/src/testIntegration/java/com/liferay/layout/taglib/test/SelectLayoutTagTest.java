@@ -94,7 +94,7 @@ public class SelectLayoutTagTest {
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
 		_layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 			layout.getLayoutId(), RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, LayoutConstants.TYPE_CONTENT,
 			false, StringPool.BLANK,

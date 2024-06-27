@@ -1,0 +1,9 @@
+{
+	"name": "@liferay/image-uploader-web",
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
+	},
+	"version": "5.0.48"
+}

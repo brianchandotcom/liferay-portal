@@ -78,16 +78,16 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 		}
 
 		_layout1 = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(), false, 0,
-			"name", "title", "description", LayoutConstants.TYPE_PORTLET, false,
-			_FRIENDLY_URL_1,
+			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			false, 0, "name", "title", "description",
+			LayoutConstants.TYPE_PORTLET, false, _FRIENDLY_URL_1,
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId()));
 
 		_layout2 = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(), false, 0,
-			"name", "title", "description", LayoutConstants.TYPE_PORTLET, false,
-			_FRIENDLY_URL_2,
+			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			false, 0, "name", "title", "description",
+			LayoutConstants.TYPE_PORTLET, false, _FRIENDLY_URL_2,
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId()));
 	}

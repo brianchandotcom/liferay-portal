@@ -32,7 +32,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/graphql \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-F operations={"query":"mutation($file: [Upload]) {createSiteDocument(siteKey: \"guest\", multipartBody: $file) {id}}","variables":{"file":null}} \
 				-F map={"0": ["variables.file"]} \
 				-F 0=@${dependencyFilePath}

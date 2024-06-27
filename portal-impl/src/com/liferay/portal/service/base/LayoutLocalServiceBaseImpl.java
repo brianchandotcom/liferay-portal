@@ -262,6 +262,21 @@ public abstract class LayoutLocalServiceBaseImpl
 		return layoutPersistence.fetchByUUID_G_P(uuid, groupId, privateLayout);
 	}
 
+	@Override
+	public Layout fetchLayoutByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return layoutPersistence.fetchByERC_G(externalReferenceCode, groupId);
+	}
+
+	@Override
+	public Layout getLayoutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return layoutPersistence.findByERC_G(externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the layout with the primary key.
 	 *

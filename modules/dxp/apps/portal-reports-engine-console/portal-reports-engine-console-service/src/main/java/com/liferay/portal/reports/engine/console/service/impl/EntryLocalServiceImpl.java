@@ -531,7 +531,6 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			subscriptionSender.addFileAttachment(file, reportName);
 		}
 
-		subscriptionSender.setCompanyId(entry.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$FROM_ADDRESS$]", fromAddress, "[$FROM_NAME$]", fromName,
 			"[$PAGE_URL$]", entry.getPageURL(), "[$REPORT_NAME$]", reportName);

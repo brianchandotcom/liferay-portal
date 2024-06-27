@@ -1,0 +1,14 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "leadStatus == 'CAM rejected'",
+		"externalReferenceCode": "NOTIFICATION-TEMPLATE-DEAL-REJECTED",
+		"label": {
+			"en_US": "Notification Template Deal Rejected"
+		},
+		"name": "notificationTemplateDealRejected",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterUpdate",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:LeadNotification$]"
+	}
+]

@@ -222,7 +222,7 @@ test('checks that the layout can be resized', async ({
 
 	// Check the original size of the resizer element
 
-	await expect(originalSizeResizer.width).toBe(360);
+	expect(originalSizeResizer.width).toBe(360);
 
 	// Simulate mouse movement to resize the element
 
@@ -241,7 +241,7 @@ test('checks that the layout can be resized', async ({
 
 	const newSizeResizer = await resizer.boundingBox();
 
-	await expect(newSizeResizer.width).toBe(460);
+	expect(newSizeResizer.width).toBe(460);
 });
 
 test('checks that the value of a field is propagated to smaller viewports', async ({

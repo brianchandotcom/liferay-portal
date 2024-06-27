@@ -44,7 +44,7 @@
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format",
-		"test": "liferay-npm-scripts test"
+		"test": "node-scripts test"
 	},
 	"version": "4.0.169"
 }

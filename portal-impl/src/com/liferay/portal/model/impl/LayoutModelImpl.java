@@ -73,22 +73,22 @@ public class LayoutModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"plid", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"parentPlid", Types.BIGINT}, {"privateLayout", Types.BOOLEAN},
-		{"layoutId", Types.BIGINT}, {"parentLayoutId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"title", Types.CLOB},
-		{"description", Types.CLOB}, {"keywords", Types.VARCHAR},
-		{"robots", Types.VARCHAR}, {"type_", Types.VARCHAR},
-		{"typeSettings", Types.CLOB}, {"hidden_", Types.BOOLEAN},
-		{"system_", Types.BOOLEAN}, {"friendlyURL", Types.VARCHAR},
-		{"iconImageId", Types.BIGINT}, {"themeId", Types.VARCHAR},
-		{"colorSchemeId", Types.VARCHAR}, {"styleBookEntryId", Types.BIGINT},
-		{"css", Types.CLOB}, {"priority", Types.INTEGER},
-		{"faviconFileEntryId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"plid", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"parentPlid", Types.BIGINT},
+		{"privateLayout", Types.BOOLEAN}, {"layoutId", Types.BIGINT},
+		{"parentLayoutId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"title", Types.CLOB}, {"description", Types.CLOB},
+		{"keywords", Types.VARCHAR}, {"robots", Types.VARCHAR},
+		{"type_", Types.VARCHAR}, {"typeSettings", Types.CLOB},
+		{"hidden_", Types.BOOLEAN}, {"system_", Types.BOOLEAN},
+		{"friendlyURL", Types.VARCHAR}, {"iconImageId", Types.BIGINT},
+		{"themeId", Types.VARCHAR}, {"colorSchemeId", Types.VARCHAR},
+		{"styleBookEntryId", Types.BIGINT}, {"css", Types.CLOB},
+		{"priority", Types.INTEGER}, {"faviconFileEntryId", Types.BIGINT},
 		{"masterLayoutPlid", Types.BIGINT},
 		{"layoutPrototypeUuid", Types.VARCHAR},
 		{"layoutPrototypeLinkEnabled", Types.BOOLEAN},
@@ -105,6 +105,7 @@ public class LayoutModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -148,7 +149,7 @@ public class LayoutModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Layout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title TEXT null,description TEXT null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,styleBookEntryId LONG,css TEXT null,priority INTEGER,faviconFileEntryId LONG,masterLayoutPlid LONG,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (plid, ctCollectionId))";
+		"create table Layout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,plid LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title TEXT null,description TEXT null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,styleBookEntryId LONG,css TEXT null,priority INTEGER,faviconFileEntryId LONG,masterLayoutPlid LONG,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (plid, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 
@@ -207,97 +208,103 @@ public class LayoutModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long FRIENDLYURL_COLUMN_BITMASK = 8L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long FRIENDLYURL_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long HIDDEN_COLUMN_BITMASK = 32L;
+	public static final long GROUPID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long ICONIMAGEID_COLUMN_BITMASK = 64L;
+	public static final long HIDDEN_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LAYOUTID_COLUMN_BITMASK = 128L;
+	public static final long ICONIMAGEID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LAYOUTPROTOTYPEUUID_COLUMN_BITMASK = 256L;
+	public static final long LAYOUTID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MASTERLAYOUTPLID_COLUMN_BITMASK = 512L;
+	public static final long LAYOUTPROTOTYPEUUID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PARENTLAYOUTID_COLUMN_BITMASK = 1024L;
+	public static final long MASTERLAYOUTPLID_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PARENTPLID_COLUMN_BITMASK = 2048L;
+	public static final long PARENTLAYOUTID_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIORITY_COLUMN_BITMASK = 4096L;
+	public static final long PARENTPLID_COLUMN_BITMASK = 4096L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 8192L;
+	public static final long PRIORITY_COLUMN_BITMASK = 8192L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 16384L;
+	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 16384L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 32768L;
+	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 32768L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SYSTEM_COLUMN_BITMASK = 65536L;
+	public static final long STATUS_COLUMN_BITMASK = 65536L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 131072L;
+	public static final long SYSTEM_COLUMN_BITMASK = 131072L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 262144L;
+	public static final long TYPE_COLUMN_BITMASK = 262144L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 524288L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(
@@ -397,6 +404,8 @@ public class LayoutModelImpl
 			attributeGetterFunctions.put(
 				"ctCollectionId", Layout::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", Layout::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode", Layout::getExternalReferenceCode);
 			attributeGetterFunctions.put("plid", Layout::getPlid);
 			attributeGetterFunctions.put("groupId", Layout::getGroupId);
 			attributeGetterFunctions.put("companyId", Layout::getCompanyId);
@@ -477,6 +486,9 @@ public class LayoutModelImpl
 				(BiConsumer<Layout, Long>)Layout::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<Layout, String>)Layout::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<Layout, String>)Layout::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"plid", (BiConsumer<Layout, Long>)Layout::setPlid);
 			attributeSetterBiConsumers.put(
@@ -642,6 +654,35 @@ public class LayoutModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -2322,6 +2363,7 @@ public class LayoutModelImpl
 		layoutImpl.setMvccVersion(getMvccVersion());
 		layoutImpl.setCtCollectionId(getCtCollectionId());
 		layoutImpl.setUuid(getUuid());
+		layoutImpl.setExternalReferenceCode(getExternalReferenceCode());
 		layoutImpl.setPlid(getPlid());
 		layoutImpl.setGroupId(getGroupId());
 		layoutImpl.setCompanyId(getCompanyId());
@@ -2378,6 +2420,8 @@ public class LayoutModelImpl
 		layoutImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		layoutImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		layoutImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		layoutImpl.setPlid(this.<Long>getColumnOriginalValue("plid"));
 		layoutImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
 		layoutImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
@@ -2548,6 +2592,16 @@ public class LayoutModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			layoutCacheModel.uuid = null;
+		}
+
+		layoutCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode = layoutCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			layoutCacheModel.externalReferenceCode = null;
 		}
 
 		layoutCacheModel.plid = getPlid();
@@ -2825,6 +2879,7 @@ public class LayoutModelImpl
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _plid;
 	private long _groupId;
 	private long _companyId;
@@ -2905,6 +2960,8 @@ public class LayoutModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("plid", _plid);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -2979,85 +3036,87 @@ public class LayoutModelImpl
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("plid", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("plid", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("parentPlid", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("privateLayout", 2048L);
+		columnBitmasks.put("parentPlid", 2048L);
 
-		columnBitmasks.put("layoutId", 4096L);
+		columnBitmasks.put("privateLayout", 4096L);
 
-		columnBitmasks.put("parentLayoutId", 8192L);
+		columnBitmasks.put("layoutId", 8192L);
 
-		columnBitmasks.put("classNameId", 16384L);
+		columnBitmasks.put("parentLayoutId", 16384L);
 
-		columnBitmasks.put("classPK", 32768L);
+		columnBitmasks.put("classNameId", 32768L);
 
-		columnBitmasks.put("name", 65536L);
+		columnBitmasks.put("classPK", 65536L);
 
-		columnBitmasks.put("title", 131072L);
+		columnBitmasks.put("name", 131072L);
 
-		columnBitmasks.put("description", 262144L);
+		columnBitmasks.put("title", 262144L);
 
-		columnBitmasks.put("keywords", 524288L);
+		columnBitmasks.put("description", 524288L);
 
-		columnBitmasks.put("robots", 1048576L);
+		columnBitmasks.put("keywords", 1048576L);
 
-		columnBitmasks.put("type_", 2097152L);
+		columnBitmasks.put("robots", 2097152L);
 
-		columnBitmasks.put("typeSettings", 4194304L);
+		columnBitmasks.put("type_", 4194304L);
 
-		columnBitmasks.put("hidden_", 8388608L);
+		columnBitmasks.put("typeSettings", 8388608L);
 
-		columnBitmasks.put("system_", 16777216L);
+		columnBitmasks.put("hidden_", 16777216L);
 
-		columnBitmasks.put("friendlyURL", 33554432L);
+		columnBitmasks.put("system_", 33554432L);
 
-		columnBitmasks.put("iconImageId", 67108864L);
+		columnBitmasks.put("friendlyURL", 67108864L);
 
-		columnBitmasks.put("themeId", 134217728L);
+		columnBitmasks.put("iconImageId", 134217728L);
 
-		columnBitmasks.put("colorSchemeId", 268435456L);
+		columnBitmasks.put("themeId", 268435456L);
 
-		columnBitmasks.put("styleBookEntryId", 536870912L);
+		columnBitmasks.put("colorSchemeId", 536870912L);
 
-		columnBitmasks.put("css", 1073741824L);
+		columnBitmasks.put("styleBookEntryId", 1073741824L);
 
-		columnBitmasks.put("priority", 2147483648L);
+		columnBitmasks.put("css", 2147483648L);
 
-		columnBitmasks.put("faviconFileEntryId", 4294967296L);
+		columnBitmasks.put("priority", 4294967296L);
 
-		columnBitmasks.put("masterLayoutPlid", 8589934592L);
+		columnBitmasks.put("faviconFileEntryId", 8589934592L);
 
-		columnBitmasks.put("layoutPrototypeUuid", 17179869184L);
+		columnBitmasks.put("masterLayoutPlid", 17179869184L);
 
-		columnBitmasks.put("layoutPrototypeLinkEnabled", 34359738368L);
+		columnBitmasks.put("layoutPrototypeUuid", 34359738368L);
 
-		columnBitmasks.put("sourcePrototypeLayoutUuid", 68719476736L);
+		columnBitmasks.put("layoutPrototypeLinkEnabled", 68719476736L);
 
-		columnBitmasks.put("publishDate", 137438953472L);
+		columnBitmasks.put("sourcePrototypeLayoutUuid", 137438953472L);
 
-		columnBitmasks.put("lastPublishDate", 274877906944L);
+		columnBitmasks.put("publishDate", 274877906944L);
 
-		columnBitmasks.put("status", 549755813888L);
+		columnBitmasks.put("lastPublishDate", 549755813888L);
 
-		columnBitmasks.put("statusByUserId", 1099511627776L);
+		columnBitmasks.put("status", 1099511627776L);
 
-		columnBitmasks.put("statusByUserName", 2199023255552L);
+		columnBitmasks.put("statusByUserId", 2199023255552L);
 
-		columnBitmasks.put("statusDate", 4398046511104L);
+		columnBitmasks.put("statusByUserName", 4398046511104L);
+
+		columnBitmasks.put("statusDate", 8796093022208L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -1514,6 +1514,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
+		preunregisterCompany(company);
+
 		if (DBPartition.isPartitionEnabled()) {
 			_clearCompanyCache(companyId, true);
 			_clearVirtualHostCache(companyId);
@@ -1531,8 +1533,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			return company;
 		}
-
-		preunregisterCompany(company);
 
 		companyPersistence.remove(company);
 

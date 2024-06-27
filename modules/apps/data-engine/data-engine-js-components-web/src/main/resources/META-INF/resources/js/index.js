@@ -77,6 +77,7 @@ export {
 	dragAndDropReducer,
 	fieldEditableReducer,
 	languageReducer,
+	historyReducer,
 	pagesStructureReducer,
 	activePageReducer,
 } from './core/reducers/index.es';

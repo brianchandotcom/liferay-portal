@@ -292,7 +292,10 @@ const AppsPanel = ({
 						<ClayLayout.Col className="pr-0" md="9" xl="8">
 							<ClayTabs.Content activeIndex={activeTab}>
 								{categories.map(({childCategories}, index) => (
-									<ClayTabs.TabPane key={`tabPane-${index}`}>
+									<ClayTabs.TabPane
+										key={`tabPane-${index}`}
+										tabIndex={null}
+									>
 										<div
 											aria-labelledby={`${portletNamespace}tab_${index}`}
 											className="applications-menu-nav-columns c-pt-md-3 c-py-2"

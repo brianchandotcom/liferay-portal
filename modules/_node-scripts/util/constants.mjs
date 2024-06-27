@@ -29,6 +29,10 @@ export const BUILD_NPM_EXPORTS_PATH = path.join(
 	BUILD_MAIN_EXPORTS_PATH,
 	'exports'
 );
+export const BUILD_SASS_CACHE_PATH = path.join(
+	BUILD_RESOURCES_PATH,
+	'.sass-cache'
+);
 
 export const WORK_PATH = path.join('build', 'node-scripts');
 export const WORK_EXPORT_PATH = path.join(WORK_PATH, 'export');
@@ -44,6 +48,10 @@ const NO_RECURSE_PROJECT_DIRS = [
 	'sdk',
 	'test',
 ];
+
+export async function getBuildPropertiesPath() {
+	return path.resolve(await getRootDir(), '..', 'build.properties');
+}
 
 let cachedProjectDirs;
 

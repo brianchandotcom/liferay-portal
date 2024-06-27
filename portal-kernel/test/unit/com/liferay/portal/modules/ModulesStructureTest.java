@@ -1689,8 +1689,8 @@ public class ModulesStructureTest {
 	private static Set<String> _checkoutPrivateAppsDirs;
 	private static final Set<String> _excludedDirNames = SetUtil.fromList(
 		Arrays.asList(
-			"bin", "build", "classes", "ext-test-impl", "node_modules",
-			"test-classes", "tmp"));
+			"_node-scripts", "bin", "build", "classes", "ext-test-impl",
+			"node_modules", "test-classes", "tmp"));
 	private static final Pattern _gitRepoGradleProjectGroupPattern =
 		Pattern.compile("com\\.liferay(?:\\.[a-z]+)+");
 	private static final Set<String> _gitRepoGradlePropertiesKeys =

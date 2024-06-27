@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 
@@ -44,14 +45,16 @@ public class GrantedFlowsTest extends BaseClientTestCase {
 
 		String tokenString = getToken(
 			"oauthTestApplicationPassword", null,
-			getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
+			getResourceOwnerPasswordBiFunction(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
 			this::parseTokenString);
 
 		Assert.assertNotNull(tokenString);
 
 		errorString = getToken(
 			"oauthTestApplicationClient", null,
-			getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
+			getResourceOwnerPasswordBiFunction(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
 			this::parseError);
 
 		Assert.assertEquals("unauthorized_client", errorString);
@@ -65,21 +68,23 @@ public class GrantedFlowsTest extends BaseClientTestCase {
 		errorString = getToken(
 			"oauthTestApplicationNoGrants", null,
 			getAuthorizationCodePKCEBiFunction(
-				"test@liferay.com", "test", null),
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null),
 			this::parseError);
 
 		Assert.assertEquals("unauthorized_client", errorString);
 
 		tokenString = getToken(
 			"oauthTestApplicationCode", null,
-			getAuthorizationCodeBiFunction("test@liferay.com", "test", null),
+			getAuthorizationCodeBiFunction(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null),
 			this::parseTokenString);
 
 		Assert.assertNotNull(tokenString);
 
 		errorString = getToken(
 			"oauthTestApplicationPassword", null,
-			getAuthorizationCodeBiFunction("test@liferay.com", "test", null),
+			getAuthorizationCodeBiFunction(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null),
 			this::parseError);
 
 		Assert.assertEquals("unauthorized_client", errorString);
@@ -87,7 +92,7 @@ public class GrantedFlowsTest extends BaseClientTestCase {
 		tokenString = getToken(
 			"oauthTestApplicationCodePKCE", null,
 			getAuthorizationCodePKCEBiFunction(
-				"test@liferay.com", "test", null),
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null),
 			this::parseTokenString);
 
 		Assert.assertNotNull(tokenString);

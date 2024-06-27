@@ -82,13 +82,28 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			_configurationProvider.getGroupConfiguration(
 				LayoutSEOGeneralGroupConfiguration.class, layout.getGroupId());
 
-		if (layoutSEOGeneralGroupConfiguration.showOnlyLayoutTitle()) {
+		if (!layoutSEOGeneralGroupConfiguration.includeInstanceName() &&
+			!layoutSEOGeneralGroupConfiguration.includeSiteName()) {
+
 			return layoutTitle;
 		}
 
-		String siteAndCompanyName = _getPageTitleSuffix(layout, companyName);
+		if (layoutSEOGeneralGroupConfiguration.includeInstanceName() &&
+			layoutSEOGeneralGroupConfiguration.includeSiteName()) {
 
-		return _merge(layoutTitle, siteAndCompanyName);
+			String siteAndCompanyName = _getPageTitleSuffix(
+				layout, companyName);
+
+			return _merge(layoutTitle, siteAndCompanyName);
+		}
+
+		if (layoutSEOGeneralGroupConfiguration.includeInstanceName()) {
+			return _merge(layoutTitle, companyName);
+		}
+
+		Group group = layout.getGroup();
+
+		return _merge(layoutTitle, group.getDescriptiveName());
 	}
 
 	@Override

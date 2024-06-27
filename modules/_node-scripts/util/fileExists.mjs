@@ -12,7 +12,7 @@ export default async function fileExists(filePath) {
 		return true;
 	}
 	catch (error) {
-		if (error.code !== 'ENOENT') {
+		if (error.code !== 'ENOENT' && error.code !== 'ENOTDIR') {
 			throw error;
 		}
 

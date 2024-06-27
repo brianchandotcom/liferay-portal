@@ -290,9 +290,10 @@ public class ServicePreAction extends Action {
 				PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_FRIENDLY_URL));
 
 		Layout layout = LayoutLocalServiceUtil.addLayout(
-			userId, groupId, true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			nameMap, null, null, null, null, LayoutConstants.TYPE_PORTLET,
-			StringPool.BLANK, false, friendlyURLMap, new ServiceContext());
+			null, userId, groupId, true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, null, null, null,
+			null, LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,
+			friendlyURLMap, new ServiceContext());
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -376,9 +377,10 @@ public class ServicePreAction extends Action {
 				PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_FRIENDLY_URL));
 
 		Layout layout = LayoutLocalServiceUtil.addLayout(
-			userId, groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			nameMap, null, null, null, null, LayoutConstants.TYPE_PORTLET,
-			StringPool.BLANK, false, friendlyURLMap, new ServiceContext());
+			null, userId, groupId, false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, null, null, null,
+			null, LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,
+			friendlyURLMap, new ServiceContext());
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

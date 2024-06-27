@@ -191,6 +191,7 @@ export default function UndoRedo({
 				disabled={step <= 0}
 				displayType="secondary"
 				onClick={() => {
+					Liferay.fire('journal:undo');
 					handleUndoRedo(step - 1);
 				}}
 				size="sm"
@@ -204,6 +205,7 @@ export default function UndoRedo({
 				disabled={!history.length || step === history.length - 1}
 				displayType="secondary"
 				onClick={() => {
+					Liferay.fire('journal:redo');
 					handleUndoRedo(step + 1);
 				}}
 				size="sm"

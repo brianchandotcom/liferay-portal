@@ -4,14 +4,58 @@
  */
 
 import crypto from 'crypto';
+import fg from 'fast-glob';
 import fs from 'fs/promises';
 import path from 'path';
 
 import {SRC_PATH, SRC_TSCONFIG_PATH, getRootDir} from '../util/constants.mjs';
+import fileExists from '../util/fileExists.mjs';
 import objectSF from '../util/objectSF.mjs';
 import baseTsconfig from './baseTsconfig.mjs';
 
 const GENERATED = '@generated';
+
+export async function writeProjectTestsTsconfig(projectDir) {
+	const tsTests = await fg('test/**/*.{ts,tsx}', {cwd: projectDir});
+
+	if (!tsTests.length) {
+		return;
+	}
+
+	const tsConfig = {
+		'@readonly': '** AUTO-GENERATED: DO NOT EDIT **',
+		'compilerOptions': {
+			allowSyntheticDefaultImports: true,
+			baseUrl: '.',
+			checkJs: false,
+			composite: true,
+			jsx: 'react',
+			module: 'ESNext',
+			moduleResolution: 'node',
+			rootDir: '../',
+			strict: true,
+			target: 'es2020',
+			typeRoots: ['../../../../node_modules/@types'],
+		},
+		'include': ['**/*.ts', '**/*.tsx', '../src/**/*.ts', '../src/**/*.tsx'],
+	};
+
+	tsConfig[GENERATED] = hash(tsConfig);
+
+	let contents = '';
+
+	const testConfigPath = path.join(projectDir, 'test', 'tsconfig.json');
+
+	if (await fileExists(testConfigPath)) {
+		contents = await fs.readFile(testConfigPath, 'utf8');
+	}
+
+	const previousConfig = JSON.parse(contents.trim() ? contents : '{}');
+
+	if (tsConfig[GENERATED] !== previousConfig[GENERATED]) {
+		await fs.writeFile(testConfigPath, objectSF(tsConfig), 'utf-8');
+	}
+}
 
 export default async function writeProjectTsconfig(
 	projectsEntryPoints,
@@ -95,20 +139,23 @@ export default async function writeProjectTsconfig(
 
 	json[GENERATED] = hash(json);
 
-	const contents = await fs.readFile(
-		path.join(srcPath, 'tsconfig.json'),
-		'utf8'
-	);
+	let contents = '';
+
+	const configPath = path.join(srcPath, 'tsconfig.json');
+
+	if (await fileExists(configPath)) {
+		contents = await fs.readFile(configPath, 'utf8');
+	}
 
 	const previousConfig = JSON.parse(contents.trim() ? contents : '{}');
 
 	if (json[GENERATED] !== previousConfig[GENERATED]) {
-		const configPath = path.join(srcPath, 'tsconfig.json');
-
 		await fs.writeFile(configPath, objectSF(json), 'utf-8');
 
 		console.log(`Generated new tsconfig.json at ${configPath}`);
 	}
+
+	await writeProjectTestsTsconfig(projectDir);
 }
 
 function hash(config) {

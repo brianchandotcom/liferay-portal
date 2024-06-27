@@ -106,7 +106,7 @@ export class DisplayPageTemplatesPage {
 	async markAsDefault(name: string) {
 		await this.clickMoreActions(name);
 
-		await this.page.once('dialog', (dialog) => {
+		this.page.once('dialog', (dialog) => {
 			dialog.accept().catch(() => {});
 		});
 

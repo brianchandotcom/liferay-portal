@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -101,6 +102,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 			GraphQLDTOProperty.of("externalReferenceCode", String.class));
 		graphQLDTOProperties.add(
 			GraphQLDTOProperty.of("status", true, String.class));
+		graphQLDTOProperties.add(
+			GraphQLDTOProperty.of("statusCode", Integer.class));
 
 		List<GraphQLDTOProperty> relationshipGraphQLDTOProperties =
 			new ArrayList<>();
@@ -508,6 +511,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		Status status = objectEntry.getStatus();
 
 		properties.put("status", status.getLabel());
+		properties.put("statusCode", status.getCode());
 
 		return properties;
 	}
@@ -520,10 +524,30 @@ public class ObjectDefinitionGraphQLDTOContributor
 		}
 
 		objectEntry.setId(() -> (Long)map.get(getIdName()));
+		objectEntry.setStatus(
+			() -> {
+				if (map.get("statusCode") == null) {
+					return null;
+				}
+
+				int statusCode = (int)map.get("statusCode");
+
+				return new Status() {
+					{
+						setCode(() -> statusCode);
+						setLabel(
+							() -> WorkflowConstants.getStatusLabel(statusCode));
+					}
+				};
+			});
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			if (Objects.equals(entry.getKey(), "statusCode")) {
+				continue;
+			}
+
 			properties.put(entry.getKey(), entry.getValue());
 		}
 

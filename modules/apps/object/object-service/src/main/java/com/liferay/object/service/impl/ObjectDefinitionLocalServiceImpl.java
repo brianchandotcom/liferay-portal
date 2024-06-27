@@ -1329,6 +1329,24 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 	}
 
+	@Override
+	protected void runSQL(String sql) {
+		if (_log.isDebugEnabled()) {
+			_log.debug("SQL: " + sql);
+		}
+
+		DataSource dataSource = objectDefinitionPersistence.getDataSource();
+
+		DB db = DBManagerUtil.getDB();
+
+		try (Connection connection = ConnectionUtil.getConnection(dataSource)) {
+			db.runSQL(connection, new String[] {sql});
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+	}
+
 	private ObjectDefinitionDeployer _addingObjectDefinitionDeployer(
 		ObjectDefinitionDeployer objectDefinitionDeployer) {
 
@@ -1639,22 +1657,7 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _dropTable(String dbTableName) {
-		String sql = "DROP_TABLE_IF_EXISTS(" + dbTableName + ")";
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("SQL: " + sql);
-		}
-
-		DataSource dataSource = objectDefinitionPersistence.getDataSource();
-
-		DB db = DBManagerUtil.getDB();
-
-		try (Connection connection = ConnectionUtil.getConnection(dataSource)) {
-			db.runSQL(connection, new String[] {sql});
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
+		runSQL("DROP_TABLE_IF_EXISTS(" + dbTableName + ")");
 	}
 
 	private String _getClassName(

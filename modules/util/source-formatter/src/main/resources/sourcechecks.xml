@@ -1045,6 +1045,10 @@
 			<category name="Styling" />
 			<description name="Sorts by `roleName` in `page.json` files." />
 		</check>
+		<check name="JSONReplacementsFileCheck">
+			<category name="Styling" />
+			<description name="Sorts by `issueKey`, `from` and `to` in `replacements.json` file." />
+		</check>
 		<check name="JSONResourcePermissionsFileCheck">
 			<category name="Styling" />
 			<description name="Sorts by `resourceName` and `roleName` in `resource-permissions.json` files." />

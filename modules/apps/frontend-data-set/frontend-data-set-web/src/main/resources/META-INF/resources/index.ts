@@ -79,9 +79,9 @@ export interface IInlineEditingSettings {
 
 export interface IActionsDropdown extends IBaseActions {
 	loading: boolean;
-	menuActive: boolean;
+	menuActive?: boolean;
 	onClick: Function;
-	onMenuActiveChange: Function;
+	onMenuActiveChange?: Function;
 	setLoading: Function;
 }
 

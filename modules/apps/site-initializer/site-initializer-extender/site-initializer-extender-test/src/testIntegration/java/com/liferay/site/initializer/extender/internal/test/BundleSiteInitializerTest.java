@@ -16,7 +16,9 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.link.model.AssetLink;
 import com.liferay.asset.link.service.AssetLinkLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
@@ -654,6 +656,16 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"com.liferay.journal.model.JournalArticle",
 			assetListEntry.getAssetEntryType());
+
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
+			_assetListEntrySegmentsEntryRelLocalService.
+				fetchAssetListEntrySegmentsEntryRel(
+					assetListEntry.getAssetListEntryId(), 0);
+
+		Assert.assertTrue(
+			StringUtil.contains(
+				assetListEntrySegmentsEntryRel.getTypeSettings(),
+				"queryValues0=Test Keyword", StringPool.BLANK));
 
 		assetListEntry = assetListEntries.get(1);
 
@@ -4305,6 +4317,10 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Inject
+	private AssetListEntrySegmentsEntryRelLocalService
+		_assetListEntrySegmentsEntryRelLocalService;
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

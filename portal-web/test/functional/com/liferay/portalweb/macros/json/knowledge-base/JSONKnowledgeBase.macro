@@ -272,7 +272,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/kb.kbfolder/add-kb-folder \
 				-d externalReferenceCode= \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d groupId=${groupId} \
 				-d parentResourceClassNameId=${parentResourceClassNameId} \
 				-d parentResourcePrimKey=${folderId} \
@@ -511,7 +511,7 @@ definition {
 				-H accept: application/json \
 				-H Content-Type: multipart/form-data \
 				-F knowledgeBaseAttachment={"externalReferenceCode": "${externalReferenceCode}"} \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-F file=@${filePath}
 		''';
 

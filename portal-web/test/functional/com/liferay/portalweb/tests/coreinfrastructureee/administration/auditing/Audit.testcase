@@ -886,7 +886,7 @@ definition {
 
 			var curl = '''
 				http://www.able.com:8080/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/userea@liferay.com \
-					-u test@www.able.com:test
+					-u test@www.able.com:${PropsUtil.get("default.admin.password")}
 			''';
 
 			var userId = JSONCurlUtil.get(${curl}, "$['userId']");
@@ -955,7 +955,7 @@ definition {
 
 			var curl = '''
 				http://www.able.com:8080/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/userea@liferay.com \
-					-u test@www.able.com:test
+					-u test@www.able.com:${PropsUtil.get("default.admin.password")}
 			''';
 
 			var userId = JSONCurlUtil.get(${curl}, "$['userId']");
@@ -1186,7 +1186,7 @@ definition {
 
 			var curl = '''
 				http://www.able.com:8080/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/userea@liferay.com \
-					-u test@www.able.com:test
+					-u test@www.able.com:${PropsUtil.get("default.admin.password")}
 			''';
 
 			var userId = JSONCurlUtil.get(${curl}, "$['userId']");

@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -40,7 +41,8 @@ public class GrantResourceOwnerKillSwitchTest extends BaseClientTestCase {
 			"unauthorized_client",
 			getToken(
 				"oauthTestApplication", null,
-				getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
+				getResourceOwnerPasswordBiFunction(
+					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD),
 				this::parseError));
 	}
 

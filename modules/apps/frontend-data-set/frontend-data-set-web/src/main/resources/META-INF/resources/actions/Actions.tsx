@@ -27,8 +27,8 @@ function Actions({
 	actions: Array<IItemsActions>;
 	itemData: any;
 	itemId: string | number;
-	menuActive: boolean;
-	onMenuActiveChange: Function;
+	menuActive?: boolean;
+	onMenuActiveChange?: Function;
 }) {
 	const {
 		executeAsyncItemAction,

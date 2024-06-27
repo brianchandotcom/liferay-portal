@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -58,6 +58,8 @@ describe('PageContentSelectors', () => {
 	});
 
 	it('renders a selector to choose between “Experiences” or “Segments”', () => {
+		jest.useFakeTimers();
+
 		render(<PageContentSelectors {...mockProps} />);
 
 		const previewBySelector = screen.getByRole('combobox', {
@@ -69,6 +71,10 @@ describe('PageContentSelectors', () => {
 		expect(previewBySelector).toHaveTextContent('segments');
 
 		userEvent.click(previewBySelector);
+
+		act(() => {
+			jest.runAllTimers();
+		});
 
 		expect(document.getElementById('segments')).toBeInTheDocument();
 		expect(document.getElementById('experiences')).toBeInTheDocument();
@@ -85,6 +91,8 @@ describe('PageContentSelectors', () => {
 	});
 
 	it('If no experiences available renders empty experiences message', async () => {
+		jest.useFakeTimers();
+
 		render(
 			<PageContentSelectors
 				{...{...mockProps, segmentsExperiences: []}}
@@ -96,6 +104,11 @@ describe('PageContentSelectors', () => {
 		});
 
 		userEvent.click(previewBySelector);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
 		fireEvent.click(document.getElementById('experiences'));
 
 		expect(

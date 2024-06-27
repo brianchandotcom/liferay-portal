@@ -51,7 +51,13 @@ test('renders all panel buttons in the vertical bar', async ({
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	for (const panel of PANELS) {
-		await expect(page.getByLabel(panel, {exact: true})).toBeVisible();
+		const panelButton = await page.getByLabel(panel, {exact: true});
+
+		await expect(panelButton).toBeVisible();
+		await expect(panelButton).toHaveAttribute(
+			'aria-selected',
+			panel === PANELS[0] ? 'true' : 'false'
+		);
 	}
 });
 
@@ -146,6 +152,16 @@ test('checks sidebar accessibility', async ({
 	});
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Check where the focus goes when the sidebar is closed
+
+	await page.getByRole('button', {name: 'Close'}).press('Enter');
+
+	await expect(
+		page.getByLabel('Fragments and Widgets', {exact: true})
+	).toBeFocused();
+
+	// Check with axe
 
 	await checkAccessibility({
 		page,

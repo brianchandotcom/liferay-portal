@@ -44,6 +44,7 @@ public class LayoutServiceUtil {
 	 * etc.
 	 * </p>
 	 *
+	 * @param externalReferenceCode the layout's external reference code
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param parentLayoutId the layout ID of the parent layout (optionally
@@ -78,8 +79,8 @@ public class LayoutServiceUtil {
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public static Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			long classNameId, long classPK,
+			String externalReferenceCode, long groupId, boolean privateLayout,
+			long parentLayoutId, long classNameId, long classPK,
 			Map<java.util.Locale, String> localeNamesMap,
 			Map<java.util.Locale, String> localeTitlesMap,
 			Map<java.util.Locale, String> descriptionMap,
@@ -91,10 +92,10 @@ public class LayoutServiceUtil {
 		throws PortalException {
 
 		return getService().addLayout(
-			groupId, privateLayout, parentLayoutId, classNameId, classPK,
-			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
-			robotsMap, type, typeSettings, hidden, system, friendlyURLMap,
-			masterLayoutPlid, serviceContext);
+			externalReferenceCode, groupId, privateLayout, parentLayoutId,
+			classNameId, classPK, localeNamesMap, localeTitlesMap,
+			descriptionMap, keywordsMap, robotsMap, type, typeSettings, hidden,
+			system, friendlyURLMap, masterLayoutPlid, serviceContext);
 	}
 
 	/**
@@ -107,6 +108,7 @@ public class LayoutServiceUtil {
 	 * etc.
 	 * </p>
 	 *
+	 * @param externalReferenceCode the layout's external reference code
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param parentLayoutId the layout ID of the parent layout (optionally
@@ -138,8 +140,8 @@ public class LayoutServiceUtil {
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public static Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			Map<java.util.Locale, String> localeNamesMap,
+			String externalReferenceCode, long groupId, boolean privateLayout,
+			long parentLayoutId, Map<java.util.Locale, String> localeNamesMap,
 			Map<java.util.Locale, String> localeTitlesMap,
 			Map<java.util.Locale, String> descriptionMap,
 			Map<java.util.Locale, String> keywordsMap,
@@ -150,10 +152,10 @@ public class LayoutServiceUtil {
 		throws PortalException {
 
 		return getService().addLayout(
-			groupId, privateLayout, parentLayoutId, localeNamesMap,
-			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, friendlyURLMap, masterLayoutPlid,
-			serviceContext);
+			externalReferenceCode, groupId, privateLayout, parentLayoutId,
+			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
+			robotsMap, type, typeSettings, hidden, friendlyURLMap,
+			masterLayoutPlid, serviceContext);
 	}
 
 	/**
@@ -166,6 +168,7 @@ public class LayoutServiceUtil {
 	 * etc.
 	 * </p>
 	 *
+	 * @param externalReferenceCode the layout's external reference code
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param parentLayoutId the layout ID of the parent layout (optionally
@@ -196,8 +199,8 @@ public class LayoutServiceUtil {
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public static Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			Map<java.util.Locale, String> localeNamesMap,
+			String externalReferenceCode, long groupId, boolean privateLayout,
+			long parentLayoutId, Map<java.util.Locale, String> localeNamesMap,
 			Map<java.util.Locale, String> localeTitlesMap,
 			Map<java.util.Locale, String> descriptionMap,
 			Map<java.util.Locale, String> keywordsMap,
@@ -208,9 +211,10 @@ public class LayoutServiceUtil {
 		throws PortalException {
 
 		return getService().addLayout(
-			groupId, privateLayout, parentLayoutId, localeNamesMap,
-			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, friendlyURLMap, serviceContext);
+			externalReferenceCode, groupId, privateLayout, parentLayoutId,
+			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
+			robotsMap, type, typeSettings, hidden, friendlyURLMap,
+			serviceContext);
 	}
 
 	/**
@@ -224,6 +228,7 @@ public class LayoutServiceUtil {
 	 * etc.
 	 * </p>
 	 *
+	 * @param externalReferenceCode the layout's external reference code
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param parentLayoutId the layout ID of the parent layout (optionally
@@ -249,14 +254,15 @@ public class LayoutServiceUtil {
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public static Layout addLayout(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			String name, String title, String description, String type,
-			boolean hidden, String friendlyURL, ServiceContext serviceContext)
+			String externalReferenceCode, long groupId, boolean privateLayout,
+			long parentLayoutId, String name, String title, String description,
+			String type, boolean hidden, String friendlyURL,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addLayout(
-			groupId, privateLayout, parentLayoutId, name, title, description,
-			type, hidden, friendlyURL, serviceContext);
+			externalReferenceCode, groupId, privateLayout, parentLayoutId, name,
+			title, description, type, hidden, friendlyURL, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry
@@ -312,6 +318,12 @@ public class LayoutServiceUtil {
 		throws PortalException {
 
 		getService().deleteLayout(plid, serviceContext);
+	}
+
+	public static void deleteLayout(String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		getService().deleteLayout(externalReferenceCode, groupId);
 	}
 
 	public static void deleteTempFileEntry(
@@ -402,6 +414,14 @@ public class LayoutServiceUtil {
 		throws PortalException {
 
 		return getService().getDefaultPlid(groupId, scopeGroupId, portletId);
+	}
+
+	public static Layout getLayoutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getLayoutByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

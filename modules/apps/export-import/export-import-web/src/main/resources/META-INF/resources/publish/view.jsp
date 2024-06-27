@@ -119,7 +119,7 @@ PortletURL simplePublishRedirectURL = PortletURLBuilder.createRenderURL(
 
 <c:if test='<%= !publishConfigurationButtons.equals("template") %>'>
 	<clay:container-fluid
-		cssClass="publish-navbar"
+		cssClass="p-0 publish-navbar"
 	>
 		<clay:content-row
 			verticalAlign="center"

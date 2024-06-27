@@ -1142,7 +1142,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
-				-u test@liferay.com:test
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")}
 		''';
 
 		var objectDefinition = JSONCurlUtil.get(${curl});
@@ -1158,7 +1158,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/object.objectdefinition/get-object-definitions \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d <CURL_DATA[start=-1]CURL_DATA> \
 				-d <CURL_DATA[end=-1]CURL_DATA>
 		''';
@@ -1190,7 +1190,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var objectName = StringUtil.toLowerCase(${objectName});
@@ -1220,7 +1220,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var objectName = StringUtil.toLowerCase(${objectName});
@@ -1258,7 +1258,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var objectName = StringUtil.toLowerCase(${objectName});
@@ -1296,7 +1296,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		if (!(isSet(index))) {
@@ -1326,7 +1326,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var objectFieldId = JSONObject.getObjectFieldId(
@@ -1361,7 +1361,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -1396,7 +1396,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -1422,7 +1422,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		if (!(isSet(objectDefinitionId))) {
@@ -1448,7 +1448,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var objectName = StringUtil.toLowerCase(${objectName});
@@ -1472,7 +1472,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var objectName = StringUtil.toLowerCase(${objectName});
@@ -1496,7 +1496,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -1522,7 +1522,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -1551,7 +1551,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
 				-H 'Content-Type: application/json' \
-				-u test@liferay.com:test \
+				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-d '{
 					"accountEntryRestricted": true,
 					"accountEntryRestrictedObjectFieldName": "${accountEntryRestrictedObjectFieldName}"
@@ -1571,7 +1571,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''
@@ -1600,7 +1600,7 @@ definition {
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var curl = '''

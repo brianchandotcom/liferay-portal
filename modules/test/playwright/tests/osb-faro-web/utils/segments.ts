@@ -5,10 +5,79 @@
 
 import {Page} from '@playwright/test';
 
-export async function dragAndDropCriteriaItem(page: Page, itemName: string) {
-	const source = page.getByTestId(`criteria-item-${itemName}`);
+export async function addSegmentField({
+	criterionName,
+	criterionType,
+	page,
+}: {
+	criterionName: string;
+	criterionType?: string;
+	page: Page;
+}) {
+	await page.locator('button.dropdown-toggle.btn-outline-secondary').click();
+	await page.getByRole('menuitem', {name: criterionType}).click();
 
+	await dragAndDropCriteriaItem({
+		page,
+		segmentField: criterionName,
+	});
+}
+
+export async function createDynamicSegment(page: Page) {
+	await page.getByLabel('Menu').click();
+	await page.getByRole('menuitem', {name: 'Dynamic Segment'}).click();
+}
+
+export async function createStaticSegment(page: Page) {
+	await page.getByLabel('Menu').click();
+	await page.getByRole('menuitem', {name: 'Static Segment'}).click();
+}
+
+export async function dragAndDropCriteriaItem({
+	page,
+	segmentField,
+}: {
+	page: Page;
+	segmentField: string;
+}) {
+	const source = page.getByText(segmentField);
 	const target = page.locator('div.drop-zone-target').last();
 
 	return await source.dragTo(target);
+}
+
+export async function editCriteriaAttributeValue({
+	attributeValue,
+	page,
+}: {
+	attributeValue: string;
+	page: Page;
+}) {
+	await page
+		.locator('input[data-testid="attribute-value-string-input"]')
+		.click();
+	await page
+		.locator('input[data-testid="attribute-value-string-input"]')
+		.fill(attributeValue);
+}
+
+export async function editSegment(page: Page) {
+	await page.getByRole('link', {name: 'Edit Segment'}).click();
+	await page.waitForSelector('text=Edit Individuals Segment');
+}
+
+export async function saveSegment(page: Page) {
+	await page.getByRole('button', {name: 'Save Segment'}).click();
+	await page.waitForSelector('div.alert-success', {state: 'visible'});
+}
+
+export async function setSegmentName({
+	page,
+	segmentName,
+}: {
+	page: Page;
+	segmentName: string;
+}) {
+	await page.getByRole('button', {name: 'Unnamed Segment'}).click();
+	await page.getByPlaceholder('Unnamed Segment').fill(segmentName);
 }

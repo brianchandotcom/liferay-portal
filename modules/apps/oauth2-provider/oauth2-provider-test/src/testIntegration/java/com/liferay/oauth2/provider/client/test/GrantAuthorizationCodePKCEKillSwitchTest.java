@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 
@@ -44,7 +45,8 @@ public class GrantAuthorizationCodePKCEKillSwitchTest
 			"unauthorized_client",
 			parseErrorParameter(
 				getCodeResponse(
-					"test@liferay.com", "test", null,
+					"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD,
+					null,
 					getCodeFunction(
 						webTarget -> webTarget.queryParam(
 							"client_id", "oauthTestApplicationCodePKCE"

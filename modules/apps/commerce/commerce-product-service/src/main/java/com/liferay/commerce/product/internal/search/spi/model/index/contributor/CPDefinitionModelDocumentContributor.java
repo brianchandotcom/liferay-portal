@@ -508,6 +508,11 @@ public class CPDefinitionModelDocumentContributor
 			_expandoBridgeIndexer.addAttributes(
 				document, cpDefinition.getExpandoBridge());
 
+			for (CPInstance cpInstance : cpDefinition.getCPInstances()) {
+				_expandoBridgeIndexer.addAttributes(
+					document, cpInstance.getExpandoBridge());
+			}
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Commerce product definition " + cpDefinition +

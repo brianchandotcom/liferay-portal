@@ -8,6 +8,7 @@ import {render, screen} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
+import {checkAccessibility} from '@liferay/layout-js-components-web';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
 import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
@@ -154,6 +155,12 @@ describe('ContentsSidebar', () => {
 
 		expect(screen.getByText('WC1')).toBeInTheDocument();
 		expect(screen.getByText('WC2')).toBeInTheDocument();
+	});
+
+	it('checks panel accessibility', async () => {
+		const {container} = renderPageContent();
+
+		await checkAccessibility({context: container});
 	});
 
 	it('shows inline text within the content list when the editable type is text', () => {

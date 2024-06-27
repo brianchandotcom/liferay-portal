@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.scim.rest.client.dto.v1_0.Group;
 import com.liferay.scim.rest.client.dto.v1_0.Meta;
 import com.liferay.scim.rest.client.dto.v1_0.MultiValuedAttribute;
@@ -77,7 +78,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		UserResource.Builder builder = UserResource.builder();
 
 		_userResource = builder.authentication(
-			"test@liferay.com", "test"
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).locale(
 			LocaleUtil.getDefault()
 		).build();

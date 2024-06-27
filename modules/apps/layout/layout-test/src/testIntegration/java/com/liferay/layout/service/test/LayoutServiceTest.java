@@ -347,7 +347,7 @@ public class LayoutServiceTest {
 		).build();
 
 		return _layoutService.addLayout(
-			_group.getGroupId(), privateLayout,
+			null, _group.getGroupId(), privateLayout,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0, map, map,
 			Collections.emptyMap(), Collections.emptyMap(),
 			Collections.emptyMap(), LayoutConstants.TYPE_PORTLET, typeSettings,

@@ -12,7 +12,10 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.test.util.LayoutPageTemplateTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -25,6 +28,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -121,8 +126,74 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 	}
 
+	@Test
+	public void testUpdateLayoutPageTemplateEntryName() throws Exception {
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				_layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.BASIC,
+				masterLayoutPageTemplateEntry.getPlid(),
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				StringPool.BLANK, _serviceContext);
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		_layoutLocalService.updateStyleBookEntryId(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			styleBookEntry.getStyleBookEntryId());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_layoutLocalService.updateStyleBookEntryId(
+			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+			draftLayout.getLayoutId(), styleBookEntry.getStyleBookEntryId());
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				RandomTestUtil.randomString());
+
+		layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Assert.assertEquals(
+			masterLayoutPageTemplateEntry.getPlid(),
+			layout.getMasterLayoutPlid());
+		Assert.assertEquals(
+			styleBookEntry.getStyleBookEntryId(), layout.getStyleBookEntryId());
+
+		draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertEquals(
+			masterLayoutPageTemplateEntry.getPlid(),
+			draftLayout.getMasterLayoutPlid());
+		Assert.assertEquals(
+			styleBookEntry.getStyleBookEntryId(),
+			draftLayout.getStyleBookEntryId());
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
 
@@ -131,5 +202,8 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		_layoutPageTemplateEntryLocalService;
 
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }

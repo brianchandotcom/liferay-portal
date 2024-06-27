@@ -10,6 +10,7 @@ import com.liferay.friendly.url.taglib.servlet.taglib.InputTag;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -98,7 +99,12 @@ public class InputTagTest {
 			_group.getCompanyId());
 
 		String originalLanguageIds = portletPreferences.getValue(
-			PropsKeys.LOCALES, StringPool.BLANK);
+			PropsKeys.LOCALES,
+			StringUtil.merge(
+				LocaleUtil.toLanguageIds(
+					LanguageUtil.getCompanyAvailableLocales(
+						_group.getCompanyId())),
+				StringPool.COMMA));
 
 		try {
 			Map<Locale, String> friendlyURLMap = _layout.getFriendlyURLMap();
@@ -115,7 +121,7 @@ public class InputTagTest {
 				_group.getCompanyId(),
 				UnicodePropertiesBuilder.put(
 					PropsKeys.LOCALES,
-					com.liferay.petra.string.StringUtil.merge(
+					StringUtil.merge(
 						ArrayUtil.remove(
 							StringUtil.split(
 								originalLanguageIds, StringPool.COMMA),
@@ -158,7 +164,12 @@ public class InputTagTest {
 			_group.getCompanyId());
 
 		String languageIds = portletPreferences.getValue(
-			PropsKeys.LOCALES, StringPool.BLANK);
+			PropsKeys.LOCALES,
+			StringUtil.merge(
+				LocaleUtil.toLanguageIds(
+					LanguageUtil.getCompanyAvailableLocales(
+						_group.getCompanyId())),
+				StringPool.COMMA));
 
 		String languageId = LocaleUtil.toLanguageId(LocaleUtil.SPAIN);
 
@@ -167,7 +178,7 @@ public class InputTagTest {
 
 		typeSettingsUnicodeProperties.setProperty(
 			PropsKeys.LOCALES,
-			com.liferay.petra.string.StringUtil.merge(
+			StringUtil.merge(
 				ArrayUtil.remove(
 					StringUtil.split(languageIds, StringPool.COMMA),
 					languageId),

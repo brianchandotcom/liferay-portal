@@ -260,7 +260,7 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orders/${orderId}/orderNotes \
-				-u ${userEmail}@liferay.com:test \
+				-u ${userEmail}@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
@@ -730,7 +730,7 @@ definition {
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orderNotes/${orderNoteId} \
-				-u ${userEmail}@liferay.com:test \
+				-u ${userEmail}@liferay.com:${PropsUtil.get("default.admin.password")} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{${payload}}'

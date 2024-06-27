@@ -36,7 +36,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 %>
 
 <clay:container-fluid
-	cssClass="mt-2 publish-navbar text-right"
+	cssClass="mt-2 p-0 publish-navbar text-right"
 >
 	<clay:link
 		displayType="link"

@@ -1,0 +1,25 @@
+{
+	"@generated": "f1715e6b61115f12ce6161bf4f486b9079507fe4",
+	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"checkJs": false,
+		"composite": true,
+		"jsx": "react",
+		"module": "ESNext",
+		"moduleResolution": "node",
+		"rootDir": "../",
+		"strict": true,
+		"target": "es2020",
+		"typeRoots": [
+			"../../../../node_modules/@types"
+		]
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"../src/**/*.ts",
+		"../src/**/*.tsx"
+	]
+}

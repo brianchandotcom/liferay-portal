@@ -559,7 +559,7 @@ public class LayoutFriendlyURLTest {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), groupId, privateLayout,
+			null, TestPropsValues.getUserId(), groupId, privateLayout,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),

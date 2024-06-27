@@ -3,14 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const LEGACY_EVENTS = {
-	FIELD_EVALUATION_ERROR: 'evaluationError',
+const DATA_LAYOUT = {
+	NAME: 'data_layout_name',
 };
 
-const PAGE = {
-	CHANGE: 'page_change',
-	UPDATE: 'pages_update',
-	VALIDATION_FAILED: 'page_validation_failed',
+const DND = {
+	MOVE: 'field_move',
+	RESIZE: 'field_resize',
 };
 
 const FIELD = {
@@ -27,21 +26,16 @@ const FIELD = {
 	REPEATED: 'field_repeated',
 };
 
-const DATA_LAYOUT = {
-	NAME: 'data_layout_name',
-};
-
-const DND = {
-	MOVE: 'field_move',
-	RESIZE: 'field_resize',
-};
-
-const SECTION = {
-	ADD: 'section_add',
-};
-
 const FIELD_SET = {
 	ADD: 'fieldset_add',
+};
+
+const HISTORY = {
+	ADD: 'add_step',
+	BLUR: 'handle_blur',
+	EDITED: 'mark_edited',
+	NEXT: 'next_step',
+	PREV: 'prev_step',
 };
 
 const LANGUAGE = {
@@ -51,12 +45,27 @@ const LANGUAGE = {
 	UPDATE: 'language_update',
 };
 
+const LEGACY_EVENTS = {
+	FIELD_EVALUATION_ERROR: 'evaluationError',
+};
+
+const PAGE = {
+	CHANGE: 'page_change',
+	UPDATE: 'pages_update',
+	VALIDATION_FAILED: 'page_validation_failed',
+};
+
+const SECTION = {
+	ADD: 'section_add',
+};
+
 export const EVENT_TYPES = {
 	...LEGACY_EVENTS,
 	DATA_LAYOUT,
 	DND,
 	FIELD,
 	FIELD_SET,
+	HISTORY,
 	LANGUAGE,
 	PAGE,
 	SECTION,

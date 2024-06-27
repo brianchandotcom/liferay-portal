@@ -146,7 +146,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 				public void execute(DependencySet dependencySet) {
 					GradleUtil.addDependency(
 						project, FIND_SECURITY_BUGS_CONFIGURATION_NAME,
-						"com.google.code.findbugs", "findbugs", "3.0.1");
+						"com.github.spotbugs", "spotbugs", "4.5.3");
 				}
 
 			});
@@ -451,7 +451,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 	private void _configureTaskWriteFindBugsProjectProvider(
 		final Project project, final JavaPluginConvention javaPluginConvention,
 		final TaskProvider<Task> classesTaskProvider,
-		final TaskProvider<JavaCompile> compileJSPTaskProivder,
+		final TaskProvider<JavaCompile> compileJSPTaskProvider,
 		final TaskProvider<CompileJSPTask> generateJSPJavaTaskProvider,
 		TaskProvider<WriteFindBugsProjectTask>
 			writeFindBugsProjectTaskProvider) {
@@ -466,6 +466,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 					writeFindBugsProjectTask.dependsOn(classesTaskProvider);
 					writeFindBugsProjectTask.dependsOn(
 						generateJSPJavaTaskProvider);
+					writeFindBugsProjectTask.dependsOn(compileJSPTaskProvider);
 
 					SourceSet mainSourceSet = _getSourceSet(
 						javaPluginConvention, SourceSet.MAIN_SOURCE_SET_NAME);
@@ -474,7 +475,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 						mainSourceSet.getJava();
 
 					final JavaCompile compileJSPJavaCompile =
-						compileJSPTaskProivder.get();
+						compileJSPTaskProvider.get();
 
 					writeFindBugsProjectTask.setAuxClasspath(
 						project.files(
@@ -542,7 +543,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 	private static final String _FIND_SECURITY_BUGS_INCLUDE_FILE_NAME =
 		"fsb-include.xml";
 
-	private static final String _VERSION = "1.10.1.LIFERAY-PATCHED-2";
+	private static final String _VERSION = "1.13.0.LIFERAY-PATCHED-1";
 
 	private static final Transformer<File, Task> _reportsFileGetter =
 		new Transformer<File, Task>() {

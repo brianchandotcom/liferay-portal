@@ -105,7 +105,11 @@ public class TestPropsUtil {
 		"object.storage.salesforce.consumer.secret",
 		"object.storage.salesforce.login.url",
 		"object.storage.salesforce.password",
-		"object.storage.salesforce.username");
+		"object.storage.salesforce.username",
+		"object.storage.sugarcrm.access.token.url",
+		"object.storage.sugarcrm.base.url", "object.storage.sugarcrm.client.id",
+		"object.storage.sugarcrm.grant.type",
+		"object.storage.sugarcrm.password", "object.storage.sugarcrm.username");
 	private static final TestPropsUtil _testPropsUtil = new TestPropsUtil();
 
 	private final Properties _props = new Properties();

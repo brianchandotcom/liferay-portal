@@ -1,0 +1,25 @@
+diff --git a/com/h3xstream/findsecbugs/taintanalysis/TaintConfigLoader.java b/com/h3xstream/findsecbugs/taintanalysis/TaintConfigLoader.java
+index cd5dc9aa4b97c..357a4dba612f6 100644
+--- a/com/h3xstream/findsecbugs/taintanalysis/TaintConfigLoader.java
++++ b/com/h3xstream/findsecbugs/taintanalysis/TaintConfigLoader.java
+@@ -54,11 +54,11 @@ public class TaintConfigLoader {
+             // for comments or removing summary temporarily
+             return;
+         }
+-        String[] tuple = line.split("\\:");
+-        if (tuple.length != 2) {
++        int pos = line.lastIndexOf(':');
++        if (pos < 0) {
+             throw new IOException("Line format is not 'type signature:config info': " + line);
+         }
+-        receiver.receiveTaintConfig(tuple[0].trim(), tuple[1]);
++        receiver.receiveTaintConfig(line.substring(0, pos).trim(), line.substring(pos + 1).trim());
+     }
+
+     /**
+@@ -68,3 +68,4 @@ public class TaintConfigLoader {
+         void receiveTaintConfig(String typeSignature, String config) throws IOException;
+     }
+ }
++/* @generated */
+\ No newline at end of file

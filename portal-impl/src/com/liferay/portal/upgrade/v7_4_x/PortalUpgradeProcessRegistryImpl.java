@@ -411,7 +411,10 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(31, 1, 1), new UpgradePortletPreferencesCompanyId());
 
 		upgradeVersionTreeMap.put(
-			new Version(31, 2, 0), RememberMeTokenTable.create());
+      new Version(31, 2, 0), new UpgradeLayoutExternalReferenceCode());
+
+    upgradeVersionTreeMap.put(
+			new Version(31, 3, 0), RememberMeTokenTable.create());
 	}
 
 }

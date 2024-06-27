@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.net.URI;
 
@@ -41,7 +42,7 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 	@Test
 	public void testResponseCodeLocationApplication() {
 		Response response = getCodeResponse(
-			"test@liferay.com", "test", null,
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestApplicationCode"
@@ -57,7 +58,7 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 		Assert.assertEquals(locationURI.getHost(), _HOST);
 
 		response = getCodeResponse(
-			"test@liferay.com", "test", null,
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestApplicationCodePKCE"
@@ -76,7 +77,7 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 	@Test
 	public void testResponseCodeLocationTrustedApplication() {
 		Response response = getCodeResponse(
-			"test@liferay.com", "test", null,
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestTrustedApplicationCode"
@@ -92,7 +93,7 @@ public class TrustedApplicationClientTest extends BaseClientTestCase {
 		Assert.assertNotEquals(locationURI.getHost(), _HOST);
 
 		response = getCodeResponse(
-			"test@liferay.com", "test", null,
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD, null,
 			getCodeFunction(
 				webTarget -> webTarget.queryParam(
 					"client_id", "oauthTestTrustedApplicationCodePKCE"

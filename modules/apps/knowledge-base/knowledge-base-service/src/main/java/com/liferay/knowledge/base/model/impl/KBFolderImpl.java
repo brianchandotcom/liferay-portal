@@ -39,12 +39,7 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 
 	@Override
 	public long getClassNameId() {
-		if (_classNameId == 0) {
-			_classNameId = PortalUtil.getClassNameId(
-				KBFolderConstants.getClassName());
-		}
-
-		return _classNameId;
+		return PortalUtil.getClassNameId(KBFolderConstants.getClassName());
 	}
 
 	@Override
@@ -123,7 +118,5 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 
 		return ancestors;
 	}
-
-	private long _classNameId;
 
 }

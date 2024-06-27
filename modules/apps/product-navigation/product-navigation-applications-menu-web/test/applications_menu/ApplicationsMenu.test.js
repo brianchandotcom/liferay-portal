@@ -209,8 +209,8 @@ describe('ApplicationsMenu', () => {
 	});
 
 	it('closes Applications Menu modal when clicking outside', async () => {
-		const {getByTestId, getByTitle} = renderApplicationsMenu();
-		const trigger = getByTestId('applicationsMenu');
+		const {findByTestId, findByTitle} = renderApplicationsMenu();
+		const trigger = await findByTestId('applicationsMenu');
 
 		await act(async () => {
 			fireEvent.click(trigger);
@@ -220,7 +220,7 @@ describe('ApplicationsMenu', () => {
 			jest.runAllTimers();
 		});
 
-		const closeButton = getByTitle('close');
+		const closeButton = await findByTitle('close');
 
 		await act(async () => {
 			const backdropElement = document.querySelector(

@@ -70,7 +70,7 @@ public class CommerceCartContentHealthStatus
 		}
 
 		Layout layout = _layoutService.addLayout(
-			commerceChannel.getSiteGroupId(), privateLayout,
+			null, commerceChannel.getSiteGroupId(), privateLayout,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, name, null,
 			LayoutConstants.TYPE_PORTLET, true, friendlyURL,
 			new ServiceContext());

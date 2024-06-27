@@ -122,7 +122,7 @@ public class PortletTCKBridge {
 			String pageName = pageElement.attributeValue("name");
 
 			Layout layout = _layoutLocalService.addLayout(
-				userId, group.getGroupId(), true,
+				null, userId, group.getGroupId(), true,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, pageName, pageName,
 				pageName, LayoutConstants.TYPE_PORTLET, false,
 				"/" + StringUtil.toLowerCase(pageName), new ServiceContext());

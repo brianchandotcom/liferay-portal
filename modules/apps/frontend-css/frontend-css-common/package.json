@@ -1,0 +1,9 @@
+{
+	"name": "@liferay/frontend-css-common",
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
+	},
+	"version": "6.0.9"
+}

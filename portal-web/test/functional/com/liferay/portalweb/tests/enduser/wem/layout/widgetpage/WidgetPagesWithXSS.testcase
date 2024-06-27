@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@description = "View the XSS is escaped when store it in widget page name."
+	@description = "This is a test for LPS-178476. View the XSS is escaped when store it in widget page name."
 	@priority = 4
 	@uitest
 	test ViewWidgetPage {
@@ -51,6 +51,14 @@ definition {
 		}
 
 		task ("View the alert not shown") {
+			AssertAlertNotPresent();
+		}
+
+		task ("When the user accesses to the Page Tree") {
+			PagesFinder.goToPagesFinder();
+		}
+
+		task ("Then the user shouldn't see alert popup") {
 			AssertAlertNotPresent();
 		}
 	}

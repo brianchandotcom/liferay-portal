@@ -16,6 +16,7 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.DuplicateLayoutExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.MasterLayoutException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -89,6 +91,145 @@ public class LayoutLocalServiceTest {
 		FriendlyURLEntryLocalServiceUtil.deleteGroupFriendlyURLEntries(
 			_group.getGroupId(),
 			ClassNameLocalServiceUtil.getClassNameId(User.class));
+	}
+
+	@Test
+	public void testAddContentLayoutWithExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		Layout layout = _layoutLocalService.addLayout(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			LayoutConstants.TYPE_CONTENT, false, false, null, _serviceContext);
+
+		Assert.assertEquals(
+			externalReferenceCode, layout.getExternalReferenceCode());
+
+		layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+			externalReferenceCode, _group.getGroupId());
+
+		Assert.assertEquals(
+			externalReferenceCode, layout.getExternalReferenceCode());
+
+		Layout draftLayout1 = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout1);
+		Assert.assertNotNull(draftLayout1.getExternalReferenceCode());
+
+		Layout draftLayout2 =
+			_layoutLocalService.getLayoutByExternalReferenceCode(
+				draftLayout1.getExternalReferenceCode(), _group.getGroupId());
+
+		Assert.assertEquals(draftLayout1, draftLayout2);
+	}
+
+	@Test
+	public void testAddContentLayoutWithoutExternalReferenceCode()
+		throws Exception {
+
+		Layout layout1 = _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			LayoutConstants.TYPE_CONTENT, false, false, null, _serviceContext);
+
+		String externalReferenceCode = layout1.getExternalReferenceCode();
+
+		Assert.assertEquals(externalReferenceCode, layout1.getUuid());
+
+		Layout layout2 = _layoutLocalService.getLayoutByExternalReferenceCode(
+			externalReferenceCode, _group.getGroupId());
+
+		Assert.assertEquals(layout1, layout2);
+
+		Layout draftLayout1 = layout1.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout1);
+		Assert.assertNotNull(draftLayout1.getExternalReferenceCode());
+
+		Layout draftLayout2 =
+			_layoutLocalService.getLayoutByExternalReferenceCode(
+				draftLayout1.getExternalReferenceCode(), _group.getGroupId());
+
+		Assert.assertEquals(draftLayout1, draftLayout2);
+	}
+
+	@Test(expected = DuplicateLayoutExternalReferenceCodeException.class)
+	public void testAddLayoutWithExistingExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_layoutLocalService.addLayout(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			LayoutConstants.TYPE_CONTENT, false, false, null, _serviceContext);
+
+		_layoutLocalService.addLayout(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			LayoutConstants.TYPE_CONTENT, false, false, null, _serviceContext);
+	}
+
+	@Test
+	public void testAddWidgetLayoutWithExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.randomString();
+
+		Layout layout = _layoutLocalService.addLayout(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			LayoutConstants.TYPE_PORTLET, false, false, null, _serviceContext);
+
+		Assert.assertEquals(
+			externalReferenceCode, layout.getExternalReferenceCode());
+
+		layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+			externalReferenceCode, _group.getGroupId());
+
+		Assert.assertEquals(
+			externalReferenceCode, layout.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testAddWidgetLayoutWithoutExternalReferenceCode()
+		throws Exception {
+
+		Layout layout1 = _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			LayoutConstants.TYPE_PORTLET, false, false, null, _serviceContext);
+
+		String externalReferenceCode = layout1.getExternalReferenceCode();
+
+		Assert.assertEquals(externalReferenceCode, layout1.getUuid());
+
+		Layout layout2 = _layoutLocalService.getLayoutByExternalReferenceCode(
+			externalReferenceCode, _group.getGroupId());
+
+		Assert.assertEquals(layout1, layout2);
+	}
+
+	@Test
+	public void testDeleteLayoutByExternalReferenceCode() throws Exception {
+		Layout layout = _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			LayoutConstants.TYPE_CONTENT, false, false, null, _serviceContext);
+
+		_layoutLocalService.deleteLayout(
+			layout.getExternalReferenceCode(), layout.getGroupId());
+
+		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
 	}
 
 	@Test
@@ -156,7 +297,7 @@ public class LayoutLocalServiceTest {
 			_serviceContext);
 
 		Layout layout2 = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "friendly url 1", null,
 			RandomTestUtil.randomString(), LayoutConstants.TYPE_PORTLET, false,
 			false, null, _serviceContext);
@@ -188,7 +329,7 @@ public class LayoutLocalServiceTest {
 				publishedLayout.getTypeSettingsProperties();
 
 			draftLayout = _layoutLocalService.addLayout(
-				publishedLayout.getUserId(), publishedLayout.getGroupId(),
+				null, publishedLayout.getUserId(), publishedLayout.getGroupId(),
 				publishedLayout.isPrivateLayout(),
 				publishedLayout.getParentLayoutId(),
 				_portal.getClassNameId(Layout.class), publishedLayout.getPlid(),
@@ -213,7 +354,7 @@ public class LayoutLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		Layout widgetLayout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), true,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			LayoutConstants.TYPE_PORTLET, false, false, null, serviceContext);

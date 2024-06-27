@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -102,9 +100,6 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		// Company
 
 		long companyId = serviceContext.getCompanyId();
-
-		Company company = _companyLocalService.getCompany(
-			serviceContext.getCompanyId());
 
 		// Group
 
@@ -182,13 +177,13 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		for (User recipient : recipients) {
 			try {
 				_notify(
-					reporterUser.getUserId(), company, group,
-					reporterEmailAddress, reporterUserName,
-					reportedEmailAddress, reportedUserName, reportedURL,
-					flagsRequest.getClassPK(), flagsRequest.getContentTitle(),
-					contentType, flagsRequest.getContentURL(), reason, fromName,
-					fromAddress, recipient.getFullName(),
-					recipient.getEmailAddress(), subject, body, serviceContext);
+					reporterUser.getUserId(), group, reporterEmailAddress,
+					reporterUserName, reportedEmailAddress, reportedUserName,
+					reportedURL, flagsRequest.getClassPK(),
+					flagsRequest.getContentTitle(), contentType,
+					flagsRequest.getContentURL(), reason, fromName, fromAddress,
+					recipient.getFullName(), recipient.getEmailAddress(),
+					subject, body, serviceContext);
 			}
 			catch (IOException ioException) {
 				if (_log.isWarnEnabled()) {
@@ -268,12 +263,11 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 	}
 
 	private void _notify(
-			long reporterUserId, Company company, Group group,
-			String reporterEmailAddress, String reporterUserName,
-			String reportedEmailAddress, String reportedUserName,
-			String reportedUserURL, long contentId, String contentTitle,
-			String contentType, String contentURL, String reason,
-			String fromName, String fromAddress, String toName,
+			long reporterUserId, Group group, String reporterEmailAddress,
+			String reporterUserName, String reportedEmailAddress,
+			String reportedUserName, String reportedUserURL, long contentId,
+			String contentTitle, String contentType, String contentURL,
+			String reason, String fromName, String fromAddress, String toName,
 			String toAddress, String subject, String body,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -283,7 +277,6 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setBody(body);
-		subscriptionSender.setCompanyId(company.getCompanyId());
 		subscriptionSender.setContextAttributes(
 			"[$CONTENT_ID$]", contentId, "[$CONTENT_TITLE$]", contentTitle,
 			"[$CONTENT_TYPE$]", contentType, "[$CONTENT_URL$]", contentURL,
@@ -309,9 +302,6 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FlagsRequestMessageListener.class);
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

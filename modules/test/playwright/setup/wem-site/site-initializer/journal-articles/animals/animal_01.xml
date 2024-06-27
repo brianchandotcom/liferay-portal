@@ -7,4 +7,42 @@
 	<dynamic-element index-type="keyword" instance-id="8HFRNkw7" name="Content" type="text">
 		<dynamic-content language-id="en_US"><![CDATA[Animal 01 content]]></dynamic-content>
 	</dynamic-element>
+	<dynamic-element field-reference="Country" index-type="text" instance-id="uz2EEttK" name="Country" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Spain]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[España]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Country" index-type="text" instance-id="vpq2auxv" name="Country" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[France]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[Francia]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Country" index-type="text" instance-id="ivrne27a" name="Country" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Italy]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[Italia]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Country" index-type="text" instance-id="lhzl7oa8" name="Country" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[United Kingdom]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[Reino Unido]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="Species" index-type="" instance-id="usr27yce" name="Species" type="fieldset">
+		<dynamic-element field-reference="SpeciesName" index-type="text" instance-id="pqm3qtun" name="SpeciesName" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Poodle]]></dynamic-content>
+			<dynamic-content language-id="es_ES"><![CDATA[Caniche]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="SpeciesImage" index-type="text" instance-id="0ivmgk92" name="SpeciesImage" type="image">
+			<dynamic-content language-id="en_US">
+				<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/poodle.jpg$]]]>
+			</dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+	<dynamic-element field-reference="Species" index-type="" instance-id="q11s20o9" name="Species" type="fieldset">
+		<dynamic-element field-reference="SpeciesName" index-type="keyword" instance-id="dfyfb9ca" name="SpeciesName" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Pug]]></dynamic-content>
+			<dynamic-content language-id="es_ES"><![CDATA[Carlino]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element field-reference="SpeciesImage" index-type="text" instance-id="efwxpmpb" name="SpeciesImage" type="image">
+			<dynamic-content language-id="en_US">
+				<![CDATA[[$DOCUMENT_JSON:/site-initializer/documents/group/pug.jpg$]]]>
+			</dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
 </root>

@@ -153,18 +153,28 @@ public class DBPartitionUtil {
 		}
 	}
 
-	public static long getCurrentCompanyId() {
-		long companyId = CompanyThreadLocal.getCompanyId();
+	public static List<String> getConfigurationPids(long companyId)
+		throws SQLException {
 
-		if (!DBPartition.isPartitionEnabled()) {
-			return companyId;
+		List<String> pids = new ArrayList<>();
+
+		Connection connection = CurrentConnectionUtil.getConnection(
+			InfrastructureUtil.getDataSource());
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select configurationId from ",
+					_getPartitionName(companyId),
+					".Configuration_ where dictionary like ",
+					"'%org.apache.felix.configadmin.revision%'"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				pids.add(resultSet.getString(1));
+			}
 		}
 
-		if (companyId == CompanyConstants.SYSTEM) {
-			companyId = _defaultCompanyId;
-		}
-
-		return companyId;
+		return pids;
 	}
 
 	public static boolean insertDBPartition(long companyId)
@@ -197,7 +207,7 @@ public class DBPartitionUtil {
 			Connection connection, boolean copyData, String viewName)
 		throws Exception {
 
-		long companyId = getCurrentCompanyId();
+		long companyId = CompanyThreadLocal.getNonsystemCompanyId();
 
 		if (companyId == _defaultCompanyId) {
 			return;
@@ -1076,7 +1086,8 @@ public class DBPartitionUtil {
 			DBInspector dbInspector = new DBInspector(connection);
 
 			if ((dbInspector.isControlTable(tableName) &&
-				 (getCurrentCompanyId() != _defaultCompanyId)) ||
+				 (CompanyThreadLocal.getNonsystemCompanyId() !=
+					 _defaultCompanyId)) ||
 				dbInspector.hasView(tableName)) {
 
 				return true;

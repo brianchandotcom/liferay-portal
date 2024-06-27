@@ -323,6 +323,7 @@ export default function PageTemplateModal({
 								error={formErrors.templateSetId}
 								id={`${namespace}templateSet`}
 								name={Liferay.Language.get('page-template-set')}
+								required
 							>
 								<ClaySelectWithOption
 									id={`${namespace}templateSet`}

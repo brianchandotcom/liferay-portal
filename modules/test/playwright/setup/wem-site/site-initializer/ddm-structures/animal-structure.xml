@@ -11,6 +11,7 @@
 						"en_US"
 					],
 					"defaultLanguageId": "en_US",
+					"definitionSchemaVersion": "2.0",
 					"fields": [
 						{
 							"autocomplete": false,
@@ -60,14 +61,183 @@
 							},
 							"type": "text",
 							"visibilityExpression": ""
+						},
+						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": [
+								"vertical"
+							],
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "Country",
+							"hideField": false,
+							"htmlAutocompleteAttribute": "",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Country"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "Country",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": true,
+							"requireConfirmation": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"collapsible": false,
+							"ddmStructureId": "",
+							"ddmStructureKey": "",
+							"ddmStructureLayoutId": "",
+							"fieldReference": "Species",
+							"label": {
+								"en_US": "Species"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": false,
+							"name": "Species",
+							"nestedFields": [
+								{
+									"confirmationErrorMessage": {
+										"en_US": ""
+									},
+									"confirmationLabel": {
+										"en_US": ""
+									},
+									"dataType": "string",
+									"direction": [
+										"vertical"
+									],
+									"displayStyle": "singleline",
+									"fieldNamespace": "",
+									"fieldReference": "SpeciesName",
+									"hideField": false,
+									"htmlAutocompleteAttribute": "",
+									"indexType": "keyword",
+									"label": {
+										"en_US": "Species Name"
+									},
+									"labelAtStructureLevel": true,
+									"localizable": true,
+									"name": "SpeciesName",
+									"nativeField": false,
+									"objectFieldName": "",
+									"placeholder": {
+										"en_US": ""
+									},
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"requireConfirmation": false,
+									"required": false,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"tooltip": {
+										"en_US": ""
+									},
+									"type": "text",
+									"visibilityExpression": ""
+								},
+								{
+									"dataType": "image",
+									"fieldNamespace": "",
+									"fieldReference": "SpeciesImage",
+									"indexType": "text",
+									"label": {
+										"en_US": "Species Image"
+									},
+									"localizable": true,
+									"name": "SpeciesImage",
+									"objectFieldName": "",
+									"predefinedValue": {
+										"en_US": "{}"
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"requiredDescription": true,
+									"requiredErrorMessage": {
+										"en_US": ""
+									},
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"type": "image",
+									"visibilityExpression": ""
+								}
+							],
+							"normalizedStructure": false,
+							"readOnly": false,
+							"repeatable": true,
+							"required": false,
+							"rows": [
+								{
+									"columns": [
+										{
+											"fields": [
+												"SpeciesName"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fields": [
+												"SpeciesImage"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"showLabel": true,
+							"type": "fieldset",
+							"upgradedStructure": false
 						}
 					],
-					"readOnly": false,
-					"repeatable": false,
-					"required": false,
-					"showLabel": true,
-					"type": "fieldset",
-					"upgradedStructure": false
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
 				}
 			]]>
 		</definition>

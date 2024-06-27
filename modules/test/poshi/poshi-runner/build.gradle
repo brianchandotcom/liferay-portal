@@ -25,7 +25,7 @@ dependencies {
 			strictly "4.1.84.Final"
 		}
 	}
-	api group: "junit", name: "junit", version: "4.13.1"
+	api group: "org.junit.vintage", name: "junit-vintage-engine", version: "5.10.2"
 	api group: "net.lightbody.bmp", name: "browsermob-core", version: "2.1.5"
 	api group: "org.bytedeco.javacpp-presets", name: "opencv", version: "2.4.10-0.10"
 	api group: "org.dom4j", name: "dom4j", transitive: false, version: "2.1.3"

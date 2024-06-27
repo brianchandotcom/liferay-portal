@@ -8,6 +8,7 @@ export {default as dataLayoutReducer} from './dataLayoutReducer.es';
 export {default as dragAndDropReducer} from './dragAndDropReducer.es';
 export {default as fieldEditableReducer} from './fieldEditableReducer.es';
 export {default as fieldReducer} from './fieldReducer.es';
+export {default as historyReducer} from './historyReducer.es';
 export {default as languageReducer} from './languageReducer.es';
-export {default as pagesStructureReducer} from './pagesStructureReducer.es';
 export {default as pageValidationReducer} from './pageValidationReducer.es';
+export {default as pagesStructureReducer} from './pagesStructureReducer.es';

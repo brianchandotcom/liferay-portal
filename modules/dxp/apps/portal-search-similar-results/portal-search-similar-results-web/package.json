@@ -1,0 +1,9 @@
+{
+	"name": "@liferay/portal-search-similar-results-web",
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format"
+	},
+	"version": "3.0.47"
+}

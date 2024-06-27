@@ -3219,7 +3219,6 @@ public class DLFileEntryLocalServiceImpl
 
 		subscriptionSender.setClassName(DLFileEntryConstants.getClassName());
 		subscriptionSender.setClassPK(fileVersion.getFileEntryId());
-		subscriptionSender.setCompanyId(fileVersion.getCompanyId());
 
 		if (folder != null) {
 			subscriptionSender.setContextAttribute(
@@ -3407,7 +3406,6 @@ public class DLFileEntryLocalServiceImpl
 
 		subscriptionSender.setClassName(DLFileEntryConstants.getClassName());
 		subscriptionSender.setClassPK(fileVersion.getFileEntryId());
-		subscriptionSender.setCompanyId(fileVersion.getCompanyId());
 
 		if (folder != null) {
 			subscriptionSender.setContextAttribute(

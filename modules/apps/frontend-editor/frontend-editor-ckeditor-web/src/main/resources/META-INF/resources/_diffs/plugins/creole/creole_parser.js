@@ -285,10 +285,12 @@
 					let imagePath = r[1];
 					const imagePathPrefix = options ? options.imagePrefix : '';
 
-					if (imagePathPrefix) {
-						if (!/^https?:\/\//gi.test(imagePath)) {
-							imagePath = imagePathPrefix + imagePath;
-						}
+					if (
+						imagePathPrefix &&
+						!imagePath.startsWith('data:image/') &&
+						!/^https?:\/\//gi.test(imagePath)
+					) {
+						imagePath = imagePathPrefix + imagePath;
 					}
 
 					const image = document.createElement('img');

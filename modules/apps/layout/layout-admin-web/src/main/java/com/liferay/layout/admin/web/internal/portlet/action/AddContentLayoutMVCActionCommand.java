@@ -101,7 +101,7 @@ public class AddContentLayoutMVCActionCommand
 					"layoutPrototypeUuid", layoutPrototype.getUuid());
 
 				layout = _layoutService.addLayout(
-					groupId, privateLayout, parentLayoutId, nameMap,
+					null, groupId, privateLayout, parentLayoutId, nameMap,
 					new HashMap<>(), new HashMap<>(), new HashMap<>(),
 					new HashMap<>(), LayoutConstants.TYPE_PORTLET,
 					typeSettingsUnicodeProperties.toString(), false,
@@ -136,7 +136,7 @@ public class AddContentLayoutMVCActionCommand
 				}
 
 				layout = _layoutService.addLayout(
-					groupId, privateLayout, parentLayoutId,
+					null, groupId, privateLayout, parentLayoutId,
 					portal.getClassNameId(LayoutPageTemplateEntry.class),
 					layoutPageTemplateEntryId, nameMap, new HashMap<>(),
 					new HashMap<>(), new HashMap<>(), new HashMap<>(),

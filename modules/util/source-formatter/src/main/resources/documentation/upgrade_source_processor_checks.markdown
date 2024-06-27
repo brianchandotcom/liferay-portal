@@ -34,6 +34,7 @@ UpgradeJavaSchedulerEntryImplConstructorCheck | [Upgrade](upgrade_checks.markdow
 UpgradeJavaScreenContributorClassCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace class `PortalSettingsConfigurationScreenContributor` by `ConfigurationScreenWrapper` and create an inner class. |
 UpgradeJavaServiceImplCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Add Component annotation to `*ServiceImpl.java` file. |
 UpgradeJavaServiceReferenceAnnotationCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code migration to replace '@ServiceReference' by '@Reference'. |
+UpgradeJavaSortFieldNameTranslatorCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Upgrade class that implements SortFieldNameTranslator. |
 UpgradeJavaStorageTypeAwareCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code to delete StorageTypeAware interface. |
 UpgradePortletFTLCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Include the CSS classes 'cadmin' and include for impression of 'right cadmin' in 'portlet.ftl' file. |
 UpgradeRejectedExecutionHandlerCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler. |

@@ -122,7 +122,7 @@ test('creates new experiences as expected', async ({
 
 	// Edit heading text in E1 experience
 
-	await pageEditorPage.editEditableText(headingId, 'element-text', 'E1 Text');
+	await pageEditorPage.editTextEditable(headingId, 'element-text', 'E1 Text');
 
 	await pageEditorPage.publishPage();
 

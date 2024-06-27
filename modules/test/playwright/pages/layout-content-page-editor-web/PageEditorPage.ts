@@ -390,7 +390,7 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
-	async editEditableText(
+	async editTextEditable(
 		fragmentId: string,
 		editableId: string,
 		value: string

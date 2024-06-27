@@ -280,7 +280,7 @@ test('modifies inline text on all collection items', async ({
 
 	// Fill new content
 
-	await pageEditorPage.editEditableText(
+	await pageEditorPage.editTextEditable(
 		headingId,
 		'element-text',
 		'New Content'

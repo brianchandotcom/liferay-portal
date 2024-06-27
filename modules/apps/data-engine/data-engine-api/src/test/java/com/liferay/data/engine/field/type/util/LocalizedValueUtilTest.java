@@ -93,6 +93,20 @@ public class LocalizedValueUtilTest {
 	}
 
 	@Test
+	public void testToLocalizedValuesMapWithBooleanValues() {
+		Map<String, Object> map = LocalizedValueUtil.toLocalizedValuesMap(
+			new LocalizedValue() {
+				{
+					addString(LocaleUtil.US, "true");
+					addString(LocaleUtil.BRAZIL, "false");
+				}
+			});
+
+		Assert.assertEquals("true", map.get("en_US"));
+		Assert.assertEquals("false", map.get("pt_BR"));
+	}
+
+	@Test
 	public void testToLocalizedValuesMapWithJSONArrayValues() throws Exception {
 		Map<String, Object> map = LocalizedValueUtil.toLocalizedValuesMap(
 			new LocalizedValue() {

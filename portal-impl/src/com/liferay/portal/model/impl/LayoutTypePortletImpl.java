@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.PortletWrapper;
 import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
@@ -1900,13 +1900,9 @@ public class LayoutTypePortletImpl
 		try {
 			Layout layout = getLayout();
 
-			if (!layout.isInheritLookAndFeel()) {
-				return layout.getThemeId();
-			}
+			Theme theme = layout.getTheme();
 
-			LayoutSet layoutSet = layout.getLayoutSet();
-
-			return layoutSet.getThemeId();
+			return theme.getThemeId();
 		}
 		catch (Exception exception) {
 			_log.error(exception);

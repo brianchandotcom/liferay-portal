@@ -244,14 +244,6 @@ definition {
 		Click(
 			key_roleTitle = ${enterUser},
 			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_ROLE_NAME");
-
-		Click(
-			key_navItem = ${contactUser},
-			locator1 = "PRMNavigation#NAV_LINK");
-
-		Click(
-			key_navItem = ${inforUser},
-			locator1 = "PRMNavigation#NAV_LINK");
 	}
 
 	@summary = "Default summary"

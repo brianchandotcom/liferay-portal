@@ -109,11 +109,12 @@ test('LPD-27633 Do not show site in breadcrumb', async ({
 
 	await messageBoardsWidgetPage.addCategory(site, layout, categoryName);
 
-	await page
-		.locator(
-			'[id="_com_liferay_message_boards_web_portlet_MBPortlet_mbCategoriesSearchContainer_1_menu"]'
-		)
-		.click();
+	const searchMenu = page.locator(
+		'[id="_com_liferay_message_boards_web_portlet_MBPortlet_mbCategoriesSearchContainer_1_menu"]'
+	);
+
+	await searchMenu.waitFor();
+	await searchMenu.click();
 
 	await page.getByRole('menuitem', {name: 'Move'}).click();
 

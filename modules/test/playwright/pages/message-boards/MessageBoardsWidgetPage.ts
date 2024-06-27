@@ -60,7 +60,12 @@ export class MessageBoardsWidgetPage {
 			`/web${site.friendlyUrlPath}${layout.friendlyURL}`
 		);
 
-		await this.page.getByRole('link', {name: 'Add Category'}).click();
+		const categoryMenu = this.page.getByRole('link', {
+			name: 'Add Category',
+		});
+
+		await categoryMenu.waitFor();
+		await categoryMenu.click();
 
 		await this.page
 			.locator(

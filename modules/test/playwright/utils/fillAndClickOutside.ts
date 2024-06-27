@@ -3,10 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import getRandomString from './getRandomString';
-import {Locator, Page} from "@playwright/test";
+import {Locator, Page} from '@playwright/test';
 
-export default async function fillAndClickOutside(page: Page, element: Locator, content?: string) {
+import getRandomString from './getRandomString';
+
+export default async function fillAndClickOutside(
+	page: Page,
+	element: Locator,
+	content?: string
+) {
 	await element.click();
 	await element.fill(content || getRandomString());
 	await page.locator('body').click();

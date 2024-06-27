@@ -5,21 +5,19 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.price.list.exception.CommercePriceEntryPriceException;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuUnitOfMeasure;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.math.BigDecimal;
-
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author João Victor Cordeiro
@@ -27,28 +25,97 @@ import java.util.Map;
 public class SkuUnitOfMeasureUtil {
 
 	public static CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
-			CPInstanceUnitOfMeasureService
-				cpInstanceUnitOfMeasureService,
+			CPInstanceUnitOfMeasureService cpInstanceUnitOfMeasureService,
+			CommercePriceEntryService commercePriceEntryService,
 			CPInstance cpInstance, SkuUnitOfMeasure skuUnitOfMeasure,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
-		Map<Locale, String> nameMap = LanguageUtils.getLocalizedMap(
-			skuUnitOfMeasure.getName());
-
-		return cpInstanceUnitOfMeasureService.
-			addOrUpdateCPInstanceUnitOfMeasure(
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			cpInstanceUnitOfMeasureService.addOrUpdateCPInstanceUnitOfMeasure(
 				cpInstance.getCPInstanceId(),
 				GetterUtil.get(skuUnitOfMeasure.getActive(), true),
-				BigDecimalUtil.get(
+				(BigDecimal)GetterUtil.getNumber(
 					skuUnitOfMeasure.getIncrementalOrderQuantity(),
 					BigDecimal.ONE),
-				GetterUtil.get(skuUnitOfMeasure.getKey(), StringPool.BLANK),
-				nameMap, GetterUtil.get(skuUnitOfMeasure.getPrecision(), 1),
-				GetterUtil.get(skuUnitOfMeasure.getPrimary(), false),
-				GetterUtil.get(skuUnitOfMeasure.getPriority(), 0),
-				BigDecimalUtil.get(skuUnitOfMeasure.getRate(), BigDecimal.ONE),
-				GetterUtil.get(skuUnitOfMeasure.getSku(), cpInstance.getSku()));
+				skuUnitOfMeasure.getKey(),
+				LanguageUtils.getLocalizedMap(skuUnitOfMeasure.getName()),
+				GetterUtil.getInteger(skuUnitOfMeasure.getPrecision()),
+				GetterUtil.get(
+					skuUnitOfMeasure.getPrimary(),
+					_isDefaultPrimary(
+						cpInstanceUnitOfMeasureService,
+						cpInstance.getCPInstanceId())),
+				GetterUtil.getDouble(skuUnitOfMeasure.getPriority()),
+				(BigDecimal)GetterUtil.getNumber(
+					skuUnitOfMeasure.getRate(), BigDecimal.ONE),
+				cpInstance.getSku());
+
+		int count =
+			cpInstanceUnitOfMeasureService.getCPInstanceUnitOfMeasuresCount(
+				cpInstance.getCPInstanceId());
+
+		if ((count > 1) && (skuUnitOfMeasure.getBasePrice() == null)) {
+			throw new CommercePriceEntryPriceException();
+		}
+
+		if (skuUnitOfMeasure.getBasePrice() != null) {
+			updateCommercePriceEntry(
+				commercePriceEntryService, cpInstance, cpInstanceUnitOfMeasure,
+				skuUnitOfMeasure.getBasePrice(),
+				CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
+		}
+
+		if (skuUnitOfMeasure.getPromoPrice() != null) {
+			updateCommercePriceEntry(
+				commercePriceEntryService, cpInstance, cpInstanceUnitOfMeasure,
+				skuUnitOfMeasure.getPromoPrice(),
+				CommercePriceListConstants.TYPE_PROMOTION, serviceContext);
+		}
+
+		return cpInstanceUnitOfMeasure;
+	}
+
+	public static void updateCommercePriceEntry(
+			CommercePriceEntryService commercePriceEntryService,
+			CPInstance cpInstance,
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure, BigDecimal price,
+			String type, ServiceContext serviceContext)
+		throws Exception {
+
+		if (price == null) {
+			return;
+		}
+
+		CommercePriceEntry commercePriceEntry =
+			commercePriceEntryService.getInstanceBaseCommercePriceEntry(
+				cpInstance.getCPInstanceUuid(), type,
+				cpInstanceUnitOfMeasure.getKey());
+
+		if (commercePriceEntry != null) {
+			commercePriceEntryService.updatePricingInfo(
+				commercePriceEntry.getCommercePriceEntryId(),
+				commercePriceEntry.isBulkPricing(), price,
+				commercePriceEntry.isPriceOnApplication(),
+				commercePriceEntry.getPromoPrice(),
+				cpInstanceUnitOfMeasure.getKey(), serviceContext);
+		}
+	}
+
+	private static boolean _isDefaultPrimary(
+			CPInstanceUnitOfMeasureService cpInstanceUnitOfMeasureService,
+			long cpInstanceId)
+		throws Exception {
+
+		int count =
+			cpInstanceUnitOfMeasureService.getCPInstanceUnitOfMeasuresCount(
+				cpInstanceId);
+
+		if (count > 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

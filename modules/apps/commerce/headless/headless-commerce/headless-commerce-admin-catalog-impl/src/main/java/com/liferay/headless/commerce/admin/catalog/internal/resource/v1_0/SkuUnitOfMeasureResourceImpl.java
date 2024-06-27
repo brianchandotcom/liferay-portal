@@ -6,8 +6,6 @@
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
-import com.liferay.commerce.price.list.exception.CommercePriceEntryPriceException;
-import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPInstance;
@@ -16,6 +14,7 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuUnitOfMeasure;
+import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuUnitOfMeasureUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuUnitOfMeasureResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -148,17 +147,19 @@ public class SkuUnitOfMeasureResourceImpl
 				cpInstanceUnitOfMeasure.getCPInstanceId());
 
 			if (skuUnitOfMeasure.getBasePrice() != null) {
-				_updateCommercePriceEntry(
-					cpInstance, cpInstanceUnitOfMeasure,
-					skuUnitOfMeasure.getBasePrice(),
-					CommercePriceListConstants.TYPE_PRICE_LIST);
+				SkuUnitOfMeasureUtil.updateCommercePriceEntry(
+					_commercePriceEntryService, cpInstance,
+					cpInstanceUnitOfMeasure, skuUnitOfMeasure.getBasePrice(),
+					CommercePriceListConstants.TYPE_PRICE_LIST,
+					_serviceContextHelper.getServiceContext());
 			}
 
 			if (skuUnitOfMeasure.getPromoPrice() != null) {
-				_updateCommercePriceEntry(
-					cpInstance, cpInstanceUnitOfMeasure,
-					skuUnitOfMeasure.getPromoPrice(),
-					CommercePriceListConstants.TYPE_PROMOTION);
+				SkuUnitOfMeasureUtil.updateCommercePriceEntry(
+					_commercePriceEntryService, cpInstance,
+					cpInstanceUnitOfMeasure, skuUnitOfMeasure.getPromoPrice(),
+					CommercePriceListConstants.TYPE_PROMOTION,
+					_serviceContextHelper.getServiceContext());
 			}
 		}
 
@@ -180,7 +181,10 @@ public class SkuUnitOfMeasureResourceImpl
 		}
 
 		return _toSkuUnitOfMeasure(
-			_addOrUpdateCPInstanceUnitOfMeasure(cpInstance, skuUnitOfMeasure));
+			SkuUnitOfMeasureUtil.addOrUpdateCPInstanceUnitOfMeasure(
+				_cpInstanceUnitOfMeasureService, _commercePriceEntryService,
+				cpInstance, skuUnitOfMeasure,
+				_serviceContextHelper.getServiceContext()));
 	}
 
 	@Override
@@ -189,55 +193,10 @@ public class SkuUnitOfMeasureResourceImpl
 		throws Exception {
 
 		return _toSkuUnitOfMeasure(
-			_addOrUpdateCPInstanceUnitOfMeasure(
-				_cpInstanceService.getCPInstance(id), skuUnitOfMeasure));
-	}
-
-	private CPInstanceUnitOfMeasure _addOrUpdateCPInstanceUnitOfMeasure(
-			CPInstance cpInstance, SkuUnitOfMeasure skuUnitOfMeasure)
-		throws Exception {
-
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-			_cpInstanceUnitOfMeasureService.addOrUpdateCPInstanceUnitOfMeasure(
-				cpInstance.getCPInstanceId(),
-				GetterUtil.get(skuUnitOfMeasure.getActive(), true),
-				(BigDecimal)GetterUtil.getNumber(
-					skuUnitOfMeasure.getIncrementalOrderQuantity(),
-					BigDecimal.ONE),
-				skuUnitOfMeasure.getKey(),
-				LanguageUtils.getLocalizedMap(skuUnitOfMeasure.getName()),
-				GetterUtil.getInteger(skuUnitOfMeasure.getPrecision()),
-				GetterUtil.get(
-					skuUnitOfMeasure.getPrimary(),
-					_isDefaultPrimary(cpInstance.getCPInstanceId())),
-				GetterUtil.getDouble(skuUnitOfMeasure.getPriority()),
-				(BigDecimal)GetterUtil.getNumber(
-					skuUnitOfMeasure.getRate(), BigDecimal.ONE),
-				cpInstance.getSku());
-
-		int count =
-			_cpInstanceUnitOfMeasureService.getCPInstanceUnitOfMeasuresCount(
-				cpInstance.getCPInstanceId());
-
-		if ((count > 1) && (skuUnitOfMeasure.getBasePrice() == null)) {
-			throw new CommercePriceEntryPriceException();
-		}
-
-		if (skuUnitOfMeasure.getBasePrice() != null) {
-			_updateCommercePriceEntry(
-				cpInstance, cpInstanceUnitOfMeasure,
-				skuUnitOfMeasure.getBasePrice(),
-				CommercePriceListConstants.TYPE_PRICE_LIST);
-		}
-
-		if (skuUnitOfMeasure.getPromoPrice() != null) {
-			_updateCommercePriceEntry(
-				cpInstance, cpInstanceUnitOfMeasure,
-				skuUnitOfMeasure.getPromoPrice(),
-				CommercePriceListConstants.TYPE_PROMOTION);
-		}
-
-		return cpInstanceUnitOfMeasure;
+			SkuUnitOfMeasureUtil.addOrUpdateCPInstanceUnitOfMeasure(
+				_cpInstanceUnitOfMeasureService, _commercePriceEntryService,
+				_cpInstanceService.getCPInstance(id), skuUnitOfMeasure,
+				_serviceContextHelper.getServiceContext()));
 	}
 
 	private Map<String, Map<String, String>> _getActions(
@@ -266,18 +225,6 @@ public class SkuUnitOfMeasureResourceImpl
 		).build();
 	}
 
-	private boolean _isDefaultPrimary(long cpInstanceId) throws Exception {
-		int count =
-			_cpInstanceUnitOfMeasureService.getCPInstanceUnitOfMeasuresCount(
-				cpInstanceId);
-
-		if (count > 0) {
-			return false;
-		}
-
-		return true;
-	}
-
 	private SkuUnitOfMeasure _toSkuUnitOfMeasure(
 			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure)
 		throws Exception {
@@ -289,32 +236,6 @@ public class SkuUnitOfMeasureResourceImpl
 				cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
-	}
-
-	private void _updateCommercePriceEntry(
-			CPInstance cpInstance,
-			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure, BigDecimal price,
-			String type)
-		throws Exception {
-
-		if (price == null) {
-			return;
-		}
-
-		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryService.getInstanceBaseCommercePriceEntry(
-				cpInstance.getCPInstanceUuid(), type,
-				cpInstanceUnitOfMeasure.getKey());
-
-		if (commercePriceEntry != null) {
-			_commercePriceEntryService.updatePricingInfo(
-				commercePriceEntry.getCommercePriceEntryId(),
-				commercePriceEntry.isBulkPricing(), price,
-				commercePriceEntry.isPriceOnApplication(),
-				commercePriceEntry.getPromoPrice(),
-				cpInstanceUnitOfMeasure.getKey(),
-				_serviceContextHelper.getServiceContext());
-		}
 	}
 
 	@Reference

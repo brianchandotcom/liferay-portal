@@ -351,26 +351,8 @@ public class CompanyLocalServiceDBPartitionTest
 
 		Company copiedCompany = null;
 
-		String pid;
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
-					company.getCompanyId())) {
-
-			pid = ConfigurationTestUtil.createFactoryConfiguration(
-				CompanyLocalServiceDBPartitionTest.class.getName(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"companyId", company.getCompanyId()
-				).put(
-					"test", RandomTestUtil.randomString()
-				).build());
-		}
-
-		Configuration configuration = _configurationAdmin.getConfiguration(pid);
-
-		Assert.assertNotNull(configuration);
-
-		Assert.assertTrue(_persistenceManager.exists(pid));
+		Configuration configuration = _assertCreateFactoryConfiguration(
+			company.getCompanyId());
 
 		try {
 			copiedCompany = companyLocalService.copyDBPartitionCompany(
@@ -480,24 +462,8 @@ public class CompanyLocalServiceDBPartitionTest
 	public void testDeleteCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		String pid = null;
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
-					company.getCompanyId())) {
-
-			pid = ConfigurationTestUtil.createFactoryConfiguration(
-				CompanyLocalServiceDBPartitionTest.class.getName(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"companyId", company.getCompanyId()
-				).put(
-					"test", RandomTestUtil.randomString()
-				).build());
-		}
-
-		Assert.assertNotNull(_configurationAdmin.getConfiguration(pid));
-
-		Assert.assertTrue(_persistenceManager.exists(pid));
+		Configuration configuration = _assertCreateFactoryConfiguration(
+			company.getCompanyId());
 
 		int dbPartitionsCount = _getDBPartitionsCount();
 
@@ -514,9 +480,9 @@ public class CompanyLocalServiceDBPartitionTest
 		Assert.assertNull(
 			ReflectionTestUtil.invoke(
 				configurationManager, "getConfiguration",
-				new Class<?>[] {String.class}, pid));
+				new Class<?>[] {String.class}, configuration.getPid()));
 
-		Assert.assertFalse(_persistenceManager.exists(pid));
+		Assert.assertFalse(_persistenceManager.exists(configuration.getPid()));
 	}
 
 	@Test
@@ -652,6 +618,32 @@ public class CompanyLocalServiceDBPartitionTest
 		Assert.assertEquals(webId, company.getWebId());
 
 		_virtualHostLocalService.getVirtualHost(virtualHostname);
+	}
+
+	private Configuration _assertCreateFactoryConfiguration(long companyId)
+		throws Exception {
+
+		String pid = null;
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+
+			pid = ConfigurationTestUtil.createFactoryConfiguration(
+				CompanyLocalServiceDBPartitionTest.class.getName(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"companyId", companyId
+				).put(
+					"test", RandomTestUtil.randomString()
+				).build());
+		}
+
+		Configuration configuration = _configurationAdmin.getConfiguration(pid);
+
+		Assert.assertNotNull(configuration);
+
+		Assert.assertTrue(_persistenceManager.exists(pid));
+
+		return configuration;
 	}
 
 	private void _assertTargetConfiguration(

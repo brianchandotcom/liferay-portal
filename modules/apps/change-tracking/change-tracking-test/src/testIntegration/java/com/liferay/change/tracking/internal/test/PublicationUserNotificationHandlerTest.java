@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -65,7 +64,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Gislayne Vitorino
  * @author Brooke Dalton
  */
-@FeatureFlags("LPD-11018")
 @RunWith(Arquillian.class)
 public class PublicationUserNotificationHandlerTest {
 

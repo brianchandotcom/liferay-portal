@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -256,10 +255,6 @@ public class CTPublishBackgroundTaskExecutor
 	@Override
 	public String handleException(
 		BackgroundTask backgroundTask, Exception exception) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-11018")) {
-			return super.handleException(backgroundTask, exception);
-		}
 
 		boolean showConflicts = false;
 

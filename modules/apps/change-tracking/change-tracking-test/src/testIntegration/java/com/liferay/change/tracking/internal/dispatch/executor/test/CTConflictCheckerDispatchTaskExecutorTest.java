@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -54,7 +53,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Pei-Jung Lan
  */
-@FeatureFlags("LPD-11018")
 @RunWith(Arquillian.class)
 public class CTConflictCheckerDispatchTaskExecutorTest {
 

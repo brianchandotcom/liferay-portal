@@ -14,7 +14,6 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.time.LocalDateTime;
 
@@ -44,10 +43,7 @@ public class AddCTConflictCheckerDispatchTriggerPortalInstanceLifecycleListener
 		dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
 			null, _userLocalService.getGuestUserId(company.getCompanyId()),
 			_dispatchTaskExecutor, CTConflictCheckerDispatchTaskExecutor.KEY,
-			UnicodePropertiesBuilder.put(
-				"featureFlagKey", "LPD-11018"
-			).build(),
-			CTConflictCheckerDispatchTaskExecutor.KEY, true);
+			null, CTConflictCheckerDispatchTaskExecutor.KEY, true);
 
 		TimeZone timeZone = company.getTimeZone();
 

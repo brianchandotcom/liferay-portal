@@ -8,10 +8,10 @@
 />
 
 <#list 0..siblingsJSONArray.length()-1 as i>
-	<#assign siblingObject = siblingsJSONArray.getJSONObject(i) />
+	<#assign sibling = siblingsJSONArray.getJSONObject(i) />
 
-	<#if siblingObject.getString("title") == "${course.getData()}">
-		<#assign courseData = siblingObject />
+	<#if sibling.getString("title") == "${course.getData()}">
+		<#assign courseData = sibling />
 		<#break>
 	</#if>
 </#list>

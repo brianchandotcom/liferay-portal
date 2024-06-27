@@ -73,7 +73,6 @@ CategoryFacetPortletInstanceConfiguration categoryFacetPortletInstanceConfigurat
 						persistState="<%= true %>"
 						title="category"
 					>
-						<div class="panel-body">
 							<c:if test="<%= !assetCategoriesSearchFacetDisplayContext.isNothingSelected() %>">
 								<clay:button
 									cssClass="btn-unstyled c-mb-4 facet-clear-btn"

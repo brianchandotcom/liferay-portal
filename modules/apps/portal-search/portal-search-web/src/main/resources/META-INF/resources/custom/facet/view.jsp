@@ -69,7 +69,6 @@ CustomFacetPortletInstanceConfiguration customFacetPortletInstanceConfiguration 
 						persistState="<%= true %>"
 						title="<%= customFacetDisplayContext.getDisplayCaption() %>"
 					>
-						<div class="panel-body">
 							<c:if test="<%= !customFacetDisplayContext.isNothingSelected() %>">
 								<clay:button
 									cssClass="btn-unstyled c-mb-4 facet-clear-btn"

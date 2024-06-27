@@ -62,7 +62,6 @@ CustomFilterPortletInstanceConfiguration customFilterPortletInstanceConfiguratio
 					persistState="<%= true %>"
 					title="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getHeading()) %>"
 				>
-					<div class="panel-body">
 						<aui:input cssClass="custom-filter-value-input" data-qa-id="customFilterValueInput" disabled="<%= customFilterDisplayContext.isImmutable() %>" id="<%= liferayPortletResponse.getNamespace() + StringUtil.randomId() %>" label="" name="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getParameterName()) %>" useNamespace="<%= false %>" value="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getFilterValue()) %>" />
 
 					<clay:button

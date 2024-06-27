@@ -10,24 +10,24 @@ import {contextUrl} from '../constants';
 export const userBaseURL = '/o/headless-admin-user/v1.0';
 export const workflowBaseURL = '/o/headless-admin-workflow/v1.0';
 
-export const headers = {
+export const HEADERS = new Headers({
+	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-};
+	'Content-Type': 'application/json',
+	'x-csrf-token': Liferay.authToken,
+});
 
 export function publishDefinitionRequest(requestBody: WorkflowDefinition) {
 	return fetch(`${workflowBaseURL}/workflow-definitions/deploy`, {
 		body: JSON.stringify(requestBody),
-		headers: {
-			...headers,
-			'Content-Type': 'application/json',
-		},
+		headers: HEADERS,
 		method: 'POST',
 	});
 }
 
 export function retrieveAccountRoles(accountId: number) {
 	return fetch(`${userBaseURL}/accounts/${accountId}/account-roles`, {
-		headers,
+		headers: HEADERS,
 		method: 'GET',
 	});
 }
@@ -43,7 +43,7 @@ export function retrieveDefinitionRequest(
 	}
 
 	return fetch(url, {
-		headers,
+		headers: HEADERS,
 		method: 'GET',
 	});
 }
@@ -52,7 +52,7 @@ export function retrieveRoleById(roleId: number) {
 	return fetch(
 		`${window.location.origin}${contextUrl}${userBaseURL}/roles/${roleId}`,
 		{
-			headers,
+			headers: HEADERS,
 			method: 'GET',
 		}
 	);
@@ -62,7 +62,7 @@ export function retrieveRoles() {
 	return fetch(
 		`${window.location.origin}${contextUrl}${userBaseURL}/roles?restrictFields=rolePermissions&pageSize=-1`,
 		{
-			headers,
+			headers: HEADERS,
 			method: 'GET',
 		}
 	);
@@ -81,7 +81,7 @@ export function retrieveUsersBy(filterType: string, keywords: string[]) {
 	return fetch(
 		`${window.location.origin}${contextUrl}${userBaseURL}/user-accounts?filter=${filterParameter}`,
 		{
-			headers,
+			headers: HEADERS,
 			method: 'GET',
 		}
 	);
@@ -90,10 +90,7 @@ export function retrieveUsersBy(filterType: string, keywords: string[]) {
 export function saveDefinitionRequest(requestBody: WorkflowDefinition) {
 	return fetch(`${workflowBaseURL}/workflow-definitions/save`, {
 		body: JSON.stringify(requestBody),
-		headers: {
-			...headers,
-			'Content-Type': 'application/json',
-		},
+		headers: HEADERS,
 		method: 'POST',
 	});
 }

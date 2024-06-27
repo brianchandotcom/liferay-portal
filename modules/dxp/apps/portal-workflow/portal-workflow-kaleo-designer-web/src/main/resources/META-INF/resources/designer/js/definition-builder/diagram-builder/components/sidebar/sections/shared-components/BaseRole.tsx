@@ -10,7 +10,7 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {ChangeEvent, useEffect, useMemo, useState} from 'react';
 
-import {userBaseURL} from '../../../../../util/fetchUtil';
+import {HEADERS, userBaseURL} from '../../../../../util/fetchUtil';
 
 interface BaseRoleProps {
 	defaultFieldValue: {
@@ -54,12 +54,7 @@ export default function BaseRole({
 			const response = await fetch(
 				`${userBaseURL}/roles?restrictFields=rolePermissions?pageSize=-1`,
 				{
-					headers: new Headers({
-						'Accept': 'application/json',
-						'Accept-Language':
-							Liferay.ThemeDisplay.getBCP47LanguageId(),
-						'Content-Type': 'application/json',
-					}),
+					headers: HEADERS,
 				}
 			);
 

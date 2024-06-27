@@ -96,13 +96,10 @@ test('LPD-29524 Search for message board thread by keywords', async ({
 });
 
 test('LPD-27633 Do not show site in breadcrumb', async ({
-	messageBoardsPage,
 	messageBoardsWidgetPage,
 	page,
 	site,
 }) => {
-	await messageBoardsPage.goto(site.friendlyUrlPath);
-
 	const layout = await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
 
 	const categoryName = getRandomString();

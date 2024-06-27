@@ -69,7 +69,7 @@
 		</div>
 	</div>
 
-	<#if !themeDisplay.isSignedIn()==true>
+	<#if !themeDisplay.isSignedIn()>
 		<div class="menu-sign-in">
 			<a href="${htmlUtil.escape(themeDisplay.getURLSignIn())}">Sign in</a> to save your progress!
 		</div>

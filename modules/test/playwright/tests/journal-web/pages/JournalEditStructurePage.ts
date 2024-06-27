@@ -5,8 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {JournalStructuresPage} from './JournalStructuresPage';
-import {waitForSuccessAlert} from "../../../utils/waitForSuccessAlert";
 
 export enum FIELD_TYPES {
 	DATE = 'Date',
@@ -29,7 +29,7 @@ export class JournalEditStructurePage {
 		this.journalStructurePage = new JournalStructuresPage(page);
 		this.propertyPlaceholderText = page.getByLabel('Placeholder Text');
 		this.propertiesTab = page.getByRole('tab', {name: 'Properties'});
-		this.saveButton = this.page.getByRole('button', { name: 'Save' });
+		this.saveButton = this.page.getByRole('button', {name: 'Save'});
 	}
 
 	async goto({
@@ -40,7 +40,9 @@ export class JournalEditStructurePage {
 		structureName?: string;
 	} = {}) {
 		await this.journalStructurePage.goto(siteUrl);
-		await this.page.getByRole('link', { exact: true, name: `${structureName}` }).click();
+		await this.page
+			.getByRole('link', {exact: true, name: `${structureName}`})
+			.click();
 
 		await this.propertiesTab.waitFor();
 

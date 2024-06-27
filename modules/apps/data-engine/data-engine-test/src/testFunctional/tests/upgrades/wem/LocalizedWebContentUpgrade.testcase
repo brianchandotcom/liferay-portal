@@ -1,7 +1,7 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.liferay.virtual.instance = "false";
@@ -24,7 +24,7 @@ definition {
 	@priority = 4
 	test CreateNewWebContentUsingAnUpgradedStructureAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
 
 		ValidateDataEngineUpgrade.createNewWebContentUsingAnUpgradedStructure();
@@ -35,7 +35,7 @@ definition {
 	@priority = 4
 	test CreateNewWebContentUsingAnUpgradedStructureWithFieldsetAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10";
 
 		ValidateDataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
@@ -46,7 +46,7 @@ definition {
 	@priority = 4
 	test CreateNewWebContentUsingAnUpgradedStructureWithFieldsetAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		ValidateDataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
@@ -57,7 +57,7 @@ definition {
 	@priority = 4
 	test CreateNewWebContentUsingAnUpgradedStructureWithFieldsetAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		ValidateDataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
@@ -68,7 +68,7 @@ definition {
 	@priority = 4
 	test CreateNewWebContentUsingAnUpgradedStructureWithFieldsetAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.14";
 
 		ValidateDataEngineUpgrade.createNewWebContentUsingAnUpgradedStructureWithFieldset();
@@ -79,7 +79,7 @@ definition {
 	@priority = 4
 	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10";
 
 		ValidateDataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
@@ -90,7 +90,7 @@ definition {
 	@priority = 4
 	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		ValidateDataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
@@ -101,7 +101,7 @@ definition {
 	@priority = 4
 	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		ValidateDataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
@@ -112,7 +112,7 @@ definition {
 	@priority = 4
 	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
 
 		ValidateDataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
@@ -123,7 +123,7 @@ definition {
 	@priority = 4
 	test EditAnUpgradedWebContentWithTranslationsAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.14";
 
 		ValidateDataEngineUpgrade.editAnUpgradedWebContentWithTranslations();
@@ -134,7 +134,7 @@ definition {
 	@priority = 4
 	test ValidateNWebContentAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10";
 
 		ValidateDataEngineUpgrade.validateNWebContent();
@@ -145,7 +145,7 @@ definition {
 	@priority = 4
 	test ValidateNWebContentAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		ValidateDataEngineUpgrade.validateNWebContent();
@@ -156,7 +156,7 @@ definition {
 	@priority = 4
 	test ValidateNWebContentAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		ValidateDataEngineUpgrade.validateNWebContent();
@@ -167,7 +167,7 @@ definition {
 	@priority = 4
 	test ValidateNWebContentAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
 
 		ValidateDataEngineUpgrade.validateNWebContent();
@@ -178,7 +178,7 @@ definition {
 	@priority = 4
 	test ValidateNWebContentAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.14";
 
 		ValidateDataEngineUpgrade.validateNWebContent();
@@ -189,7 +189,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10";
 
 		var fieldList = "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Color,Web Content,Geolocation";
@@ -202,7 +202,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		var fieldList = "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Color,Web Content,Geolocation";
@@ -215,7 +215,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		var fieldList = "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Color,Web Content,Geolocation";
@@ -228,7 +228,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
 
 		var fieldList = "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box";
@@ -241,7 +241,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithAllFieldsTranslatedAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.14";
 
 		var fieldList = "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Web Content,Geolocation";
@@ -254,7 +254,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10";
 
 		ValidateDataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
@@ -265,7 +265,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		ValidateDataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
@@ -276,7 +276,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		ValidateDataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
@@ -287,7 +287,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
 
 		ValidateDataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
@@ -298,7 +298,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithFieldGroupLevel2AndTranslationsAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.14";
 
 		ValidateDataEngineUpgrade.validateWebContentWithFieldGroupLevel2AndTranslations();
@@ -309,7 +309,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithFieldsetLevel2AndTranslationsAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10";
 
 		ValidateDataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
@@ -320,7 +320,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithFieldsetLevel2AndTranslationsAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		ValidateDataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
@@ -331,7 +331,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithFieldsetLevel2AndTranslationsAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		ValidateDataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
@@ -342,7 +342,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithFieldsetLevel2AndTranslationsAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.14";
 
 		ValidateDataEngineUpgrade.validateWebContentWithFieldsetLevel2AndTranslations();
@@ -353,7 +353,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade7310 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10";
 
 		ValidateDataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
@@ -364,7 +364,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade71103 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10.3";
 
 		ValidateDataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
@@ -375,7 +375,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade72101 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		ValidateDataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
@@ -386,7 +386,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade621021 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
 
 		ValidateDataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();
@@ -397,7 +397,7 @@ definition {
 	@priority = 4
 	test ValidateWebContentWithRepeatableFieldGroupAndTranslationsAfterUpgrade701014 {
 		property data.archive.type = "data-archive-data-engine-web-content";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.14";
 
 		ValidateDataEngineUpgrade.validateWebContentWithRepeatableFieldGroupAndTranslations();

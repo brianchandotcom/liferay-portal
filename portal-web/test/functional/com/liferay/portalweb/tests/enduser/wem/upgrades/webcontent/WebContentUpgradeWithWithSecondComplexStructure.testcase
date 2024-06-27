@@ -3,7 +3,7 @@ definition {
 
 	property ci.retries.disabled = "true";
 	property data.archive.type = "data-archive-web-content-second-complex-fields";
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property portal.version = "7.3.10.1";
@@ -184,7 +184,7 @@ definition {
 	@priority = 3
 	test CanDisableSearchableInTextField {
 		property data.archive.type = "data-archive-web-content-second-complex-fields";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10.1";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

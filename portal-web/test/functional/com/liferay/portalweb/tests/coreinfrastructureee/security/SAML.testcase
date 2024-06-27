@@ -4009,7 +4009,7 @@ definition {
 	test SPInitiatedSSOSyncsUserAttributesFromIdPToSPDefaultMapping {
 		property app.server.bundles.size = "0";
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "quarantine";
@@ -5110,7 +5110,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSO {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
-		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -5357,7 +5357,7 @@ definition {
 	test ViewSPInitiatedSSOWithOktaAndUserGroups {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -5419,7 +5419,7 @@ definition {
 	test ViewSPInitiatedSSOWithOktaUserGroupCanBeAssignedLater {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -5499,7 +5499,7 @@ definition {
 	test ViewSPInitiatedSSOWithOktaUserGroupsAreNotCreatedDuringLogin {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -5559,7 +5559,7 @@ definition {
 	test ViewSPInitiatedSSOWithOktaWithMultipleUserGroups {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";

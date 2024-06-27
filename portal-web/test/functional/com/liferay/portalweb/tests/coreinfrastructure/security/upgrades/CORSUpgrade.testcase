@@ -2,7 +2,7 @@
 definition {
 
 	property ci.retries.disabled = "true";
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.liferay.virtual.instance = "false";
@@ -41,7 +41,7 @@ definition {
 	@priority = 4
 	test ViewWebContextsCORSConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-web-contexts-cors";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		task ("Go to configuration and view web content CORS") {

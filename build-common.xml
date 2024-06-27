@@ -1692,33 +1692,33 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 		</sequential>
 	</macrodef>
 
-	<macrodef name="setup-sass-compiler">
+	<macrodef name="setup-nodejs-sass">
 		<sequential>
-			<mkdir dir="${sass.compiler.dir}" />
+			<mkdir dir="${nodejs.sass.dir}" />
 			<if>
 				<os family="mac" />
 				<then>
 					<mirrors-get
-						dest="${sass.compiler.dir}"
-						src="${sass.compiler.mac.url}"
+						dest="${nodejs.sass.dir}"
+						src="${nodejs.sass.mac.url}"
 					/>
 					<untar
 						compression="gzip"
-						dest="${sass.compiler.dir}"
-						src="${sass.compiler.dir}/${sass.compiler.mac.name}"
+						dest="${nodejs.sass.dir}"
+						src="${nodejs.sass.dir}/${nodejs.sass.mac.name}"
 					/>
 				</then>
 				<elseif>
 					<os family="unix" />
 					<then>
 						<mirrors-get
-							dest="${sass.compiler.dir}"
-							src="${sass.compiler.linux.url}"
+							dest="${nodejs.sass.dir}"
+							src="${nodejs.sass.linux.url}"
 						/>
 						<untar
 							compression="gzip"
-							dest="${sass.compiler.dir}"
-							src="${sass.compiler.dir}/${sass.compiler.linux.name}"
+							dest="${nodejs.sass.dir}"
+							src="${nodejs.sass.dir}/${nodejs.sass.linux.name}"
 						/>
 					</then>
 				</elseif>
@@ -1726,12 +1726,12 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 					<os family="windows" />
 					<then>
 						<mirrors-get
-							dest="${sass.compiler.dir}"
-							src="${sass.compiler.windows.url}"
+							dest="${nodejs.sass.dir}"
+							src="${nodejs.sass.windows.url}"
 						/>
 						<unzip
-							dest="${sass.compiler.dir}"
-							src="${sass.compiler.dir}/${sass.compiler.windows.name}"
+							dest="${nodejs.sass.dir}"
+							src="${nodejs.sass.dir}/${nodejs.sass.windows.name}"
 						/>
 					</then>
 				</elseif>

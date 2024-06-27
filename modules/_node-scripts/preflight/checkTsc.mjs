@@ -7,9 +7,15 @@ import {$} from 'execa';
 
 import runTscChecks from '../tsc/runTscChecks.mjs';
 import generateTscConfig from '../tsconfig/index.mjs';
+import {getRootDir} from '../util/constants.mjs';
 
 export async function checkTsc() {
-	let commitHash;
+	console.log('📜 Generating tsconfig files...');
+	await generateTscConfig();
+
+	const rootDir = await getRootDir();
+
+	let commitHash = 'master';
 
 	if (process.env.LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME) {
 		const {stdout} =
@@ -18,8 +24,5 @@ export async function checkTsc() {
 		commitHash = stdout;
 	}
 
-	console.log('📜 Validating tsconfig files...');
-	await generateTscConfig();
-
-	return await runTscChecks(commitHash);
+	return await runTscChecks({baseDir: rootDir, commitHash});
 }

@@ -1,6 +1,10 @@
 {
+	"_sha-256": "fd82aec9b180550deb83f6f1342d60b9250d7ddb9c3598c4266c533f4c9e6583",
 	"bin": {
 		"node-scripts": "./bin.js"
+	},
+	"com.liferay": {
+		"sha256": "5d5933f654dcfc1c441f532bb0604290d4946715db711bbbb134ea60f3afbf5f"
 	},
 	"dependencies": {
 		"@babel/preset-env": "7.24.7",
@@ -41,8 +45,8 @@
 	"exports": "./index.js",
 	"name": "@liferay/node-scripts",
 	"scripts": {
-		"checkFormat": "node-scripts format --check",
-		"format": "node-scripts format",
+		"checkFormat": "node-scripts format:self --check",
+		"format": "node-scripts format:self",
 		"install": "node-scripts setup"
 	},
 	"version": "1.0.0"

@@ -40,6 +40,12 @@ const COMMANDS = {
 		parameters: '<source file path>',
 		script: './format/file.mjs',
 	},
+	'format:self': {
+		description:
+			'formats node-scripts (not to be used externally in any other project).',
+		parameters: '',
+		script: './format/self.mjs',
+	},
 	'generate:tsconfig': {
 		description: 'generates tsconfig.json files for all projects',
 		parameters: '',

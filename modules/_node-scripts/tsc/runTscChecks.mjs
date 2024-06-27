@@ -18,8 +18,10 @@ import getFileProjectDir from '../util/getFileProjectDir.mjs';
 import getGitModifiedFiles from '../util/getGitModifiedFiles.mjs';
 import runConcurrentTasks from '../util/runConcurrentTasks.mjs';
 
-export default async function runTscChecks(modifiedSince) {
-	const cwd = path.resolve('.');
+export default async function runTscChecks(
+	{baseDir, commitHash} = {baseDir: '.', commitHash: undefined}
+) {
+	const cwd = path.resolve(baseDir);
 	const rootDir = await getRootDir();
 
 	const results = [];
@@ -33,8 +35,8 @@ export default async function runTscChecks(modifiedSince) {
 
 		let projectDirs;
 
-		if (modifiedSince) {
-			projectDirs = await getGitModifiedProjectDirs(modifiedSince);
+		if (commitHash) {
+			projectDirs = await getGitModifiedProjectDirs(commitHash);
 
 			console.log(
 				`ℹ️ Going to check ${projectDirs.length} modified projects`
@@ -67,7 +69,7 @@ export default async function runTscChecks(modifiedSince) {
 		results.push(...tscResults);
 	}
 	else {
-		if (modifiedSince) {
+		if (commitHash) {
 			console.error(`
 ❌ Argument --modified-since can only be given when checking the whole liferay-portal from modules
    directory.

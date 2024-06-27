@@ -392,8 +392,8 @@ public class DBPartitionUtil {
 
 						if (_isCopyableQuartzTable(fromTableName)) {
 							_copyQuartzTableRow(
-								_defaultPartitionName, fromCompanyId,
-								fromTableName, toCompanyId, statement);
+								fromCompanyId, fromTableName, toCompanyId,
+								statement);
 
 							quartzTableNames.add(fromTableName);
 						}
@@ -475,26 +475,25 @@ public class DBPartitionUtil {
 	}
 
 	private static void _copyQuartzTableRow(
-			String partitionName, long fromCompanyId, String tableName,
-			long toCompanyId, Statement statement)
+			long fromCompanyId, String tableName, long toCompanyId,
+			Statement statement)
 		throws Exception {
 
 		if (StringUtil.endsWith(tableName, "JOB_DETAILS")) {
 			_replaceCompanyIdQuartzColumns(
-				partitionName, fromCompanyId, toCompanyId, tableName, statement,
-				"job_name");
+				fromCompanyId, toCompanyId, tableName, statement, "job_name");
 		}
 		else if (StringUtil.equalsIgnoreCase(tableName, "QUARTZ_TRIGGERS") ||
 				 StringUtil.equalsIgnoreCase(
 					 tableName, "QUARTZ_FIRED_TRIGGERS")) {
 
 			_replaceCompanyIdQuartzColumns(
-				partitionName, fromCompanyId, toCompanyId, tableName, statement,
-				"job_name", "trigger_name");
+				fromCompanyId, toCompanyId, tableName, statement, "job_name",
+				"trigger_name");
 		}
 		else {
 			_replaceCompanyIdQuartzColumns(
-				partitionName, fromCompanyId, toCompanyId, tableName, statement,
+				fromCompanyId, toCompanyId, tableName, statement,
 				"trigger_name");
 		}
 	}
@@ -1096,8 +1095,8 @@ public class DBPartitionUtil {
 	}
 
 	private static void _replaceCompanyIdQuartzColumns(
-			String partitionName, long fromCompanyId, long toCompanyId,
-			String tableName, Statement statement, String... replaceColumnNames)
+			long fromCompanyId, long toCompanyId, String tableName,
+			Statement statement, String... replaceColumnNames)
 		throws Exception {
 
 		List<String> columnNames = _getColumnNames(
@@ -1117,12 +1116,11 @@ public class DBPartitionUtil {
 
 		statement.executeUpdate(
 			StringBundler.concat(
-				"insert into ", partitionName, StringPool.PERIOD, tableName,
-				"(", StringUtil.merge(replaceColumnNames), ", ",
+				"insert into ", tableName, "(",
+				StringUtil.merge(replaceColumnNames), ", ",
 				StringUtil.merge(columnNames), ") select ",
 				StringUtil.merge(replaceSQLs), ", ",
-				StringUtil.merge(columnNames), " from ", partitionName,
-				StringPool.PERIOD, tableName,
+				StringUtil.merge(columnNames), " from ", tableName,
 				_getQuartzWhereClauseSQL(fromCompanyId, tableName)));
 	}
 

@@ -5,6 +5,8 @@
 
 package com.liferay.journal.internal.model.listener;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,7 +48,9 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 				ddmStructure.getStructureKey()) &&
 			 Objects.equals(
 				 originalDDMStructure.getDefinition(),
-				 ddmStructure.getDefinition()))) {
+				 ddmStructure.getDefinition())) ||
+			_isPredefinedValuesUpdate(
+				originalDDMStructure.getDDMForm(), ddmStructure.getDDMForm())) {
 
 			return;
 		}
@@ -117,6 +122,41 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
 		}
+	}
+
+	private boolean _isPredefinedValuesUpdate(
+		DDMForm ddmForm1, DDMForm ddmForm2) {
+
+		Map<String, DDMFormField> ddmFormFieldsMap1 =
+			ddmForm1.getDDMFormFieldsMap(true);
+
+		Map<String, DDMFormField> ddmFormFieldsMap2 =
+			ddmForm2.getDDMFormFieldsMap(true);
+
+		if (ddmFormFieldsMap1.size() != ddmFormFieldsMap2.size()) {
+			return false;
+		}
+
+		for (Map.Entry<String, DDMFormField> entry :
+				ddmFormFieldsMap1.entrySet()) {
+
+			DDMFormField ddmFormField2 = ddmFormFieldsMap2.get(entry.getKey());
+
+			if (ddmFormField2 == null) {
+				return false;
+			}
+
+			DDMFormField ddmFormField1 = entry.getValue();
+
+			if (!Objects.equals(
+					ddmFormField1.getPredefinedValue(),
+					ddmFormField2.getPredefinedValue())) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Reference

@@ -183,17 +183,17 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD_READ_ONLY</td>
-	<td>//input[@data-testid='localized-main-input' and @readonly]</td>
+	<td>//input[@placeholder='Untitled Segment' and @readonly]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TRANSLATION_BUTTON</td>
-	<td>//button[contains(@data-testid,'localized')]</td>
+	<td>//button[@title='Open Localizations']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TRANSLATION_STATUS_TITLE</td>
-	<td>//div[contains(@class, 'dropdown-menu')]//li[contains(@role, 'presentation')]//span[contains(text(), '${key_locale}')]</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//li[contains(@role, 'presentation')]//div[contains(text(), '${key_locale}')]</td>
 	<td></td>
 </tr>
 </tbody>

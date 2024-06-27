@@ -389,9 +389,18 @@ public class DLFileEntryLocalServiceImpl
 
 		Date date = new Date();
 
-		_dates.computeIfAbsent(
+		_dates.compute(
 			companyId,
-			key -> new Date(date.getTime() - (checkInterval * Time.MINUTE)));
+			(key, value) -> {
+				Date checkDate = new Date(
+					date.getTime() - (checkInterval * Time.MINUTE));
+
+				if ((value != null) && value.before(checkDate)) {
+					return value;
+				}
+
+				return checkDate;
+			});
 
 		long userId = _getActiveCompanyAdminUserId(companyId);
 

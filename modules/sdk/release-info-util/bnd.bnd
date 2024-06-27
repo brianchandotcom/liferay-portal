@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Release Info Utilities
+Bundle-SymbolicName: com.liferay.release.info.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.release.info.util

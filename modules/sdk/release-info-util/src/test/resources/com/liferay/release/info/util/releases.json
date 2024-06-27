@@ -1,0 +1,11 @@
+[
+	{
+		"product": "dxp",
+		"productGroupVersion": "2024.q1",
+		"productVersion": "DXP 2024.Q1.10",
+		"promoted": "true",
+		"releaseKey": "dxp-test-release-key",
+		"targetPlatformVersion": "2024.q1.10",
+		"url": "https://releases-cdn.liferay.com/dxp/dxp-test-release-key"
+	}
+]

@@ -19,6 +19,7 @@ const headlessDeliveryAPIs = [
 
 const testrayRestAPIs = [
 	'testray-build-autofill',
+	'testray-case-result',
 	'testray-run-comparisons',
 	'testray-status-metrics',
 	'testray-testflow',

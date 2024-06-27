@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useParams, useSearchParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import Avatar from '~/components/Avatar';
 import AssignToMe from '~/components/Avatar/AssignToMe/AssignToMe';
 import Code from '~/components/Code';
@@ -13,131 +13,83 @@ import ListView from '~/components/ListView';
 import StatusBadge from '~/components/StatusBadge';
 import {StatusBadgeType} from '~/components/StatusBadge/StatusBadge';
 import useMutate from '~/hooks/useMutate';
-import useSearchBuilder from '~/hooks/useSearchBuilder';
 import i18n from '~/i18n';
-import {
-	PickList,
-	TestrayCaseResult,
-	testrayCaseResultImpl,
-} from '~/services/rest';
+import {testrayCaseResultImpl} from '~/services/rest';
 import {getTruncateText} from '~/util/getTruncateText';
 
 import useBuildTestActions from './useBuildTestActions';
 
 const Build = () => {
-	const [searchParams] = useSearchParams();
 	const {actions, form} = useBuildTestActions();
 	const {buildId} = useParams();
 	const {updateItemFromList} = useMutate();
-
-	const runId = searchParams.get('runId');
-
-	const caseResultFilter = useSearchBuilder({useURIEncode: false});
-
-	const filter = runId
-		? caseResultFilter.eq('buildId', buildId as string).build()
-		: caseResultFilter.eq('buildId', buildId as string).build();
 
 	return (
 		<Container className="mt-4">
 			<ListView
 				initialContext={{
 					columns: {environment: false},
-					pageSize: 50,
-					sort: [
-						{
-							direction: 'ASC',
-							key: 'dueStatus',
-						},
-						{
-							direction: 'ASC',
-							key: 'errors',
-						},
-					],
+					pageSize: 200,
 				}}
 				managementToolbarProps={{
 					applyFilters: true,
 					filterSchema: 'buildResults',
 					title: i18n.translate('tests'),
 				}}
-				resource={testrayCaseResultImpl.resource}
+				resource={`/testray-case-result/${buildId}`}
 				tableProps={{
 					actions,
 					columns: [
 						{
 							clickable: true,
-							key: 'caseType',
-							render: (
-								_,
-								{case: testrayCase}: TestrayCaseResult
-							) => testrayCase?.caseType?.name,
+							key: 'testrayCaseTypeName',
 							value: i18n.translate('case-type'),
 						},
 						{
 							clickable: true,
 							key: 'priority',
-							render: (
-								_,
-								{case: testrayCase}: TestrayCaseResult
-							) => testrayCase?.priority,
 							value: i18n.translate('priority'),
 						},
 						{
 							clickable: true,
-							key: 'team',
-							render: (_, testrayCaseResult: TestrayCaseResult) =>
-								testrayCaseResult.component?.team?.name,
+							key: 'testrayTeamName',
 							value: i18n.translate('team'),
 						},
 						{
 							clickable: true,
-							key: 'component',
-							render: (_, testrayCaseResult: TestrayCaseResult) =>
-								testrayCaseResult.component?.name,
+							key: 'testrayComponentName',
 							value: i18n.translate('component'),
 						},
 						{
-							key: 'name',
-							render: (
-								_,
-								{case: testrayCase}: TestrayCaseResult
-							) => testrayCase?.name,
+							key: 'testrayCaseName',
 							selectable: true,
 							size: 'xl',
 							value: i18n.translate('case'),
 						},
 						{
 							clickable: true,
-							key: 'run',
-							render: (_, caseResult: TestrayCaseResult) =>
-								caseResult.run?.number
-									?.toString()
-									.padStart(2, '0'),
+							key: 'testrayRunNumber',
+							render: (testrayRunNumber) =>
+								testrayRunNumber?.toString().padStart(2, '0'),
 							value: i18n.translate('run'),
 						},
 						{
 							clickable: true,
-							key: 'environment',
-							render: (_, item: TestrayCaseResult) =>
-								item?.run?.name,
+							key: 'testrayRunName',
 							value: i18n.translate('environment'),
 							width: '250',
 						},
 						{
 							key: 'user',
-							render: (
-								_: any,
-								caseResult: TestrayCaseResult,
-								mutate
-							) => {
-								if (caseResult?.user) {
+							render: (_: any, caseResult, mutate) => {
+								if (caseResult.userName) {
 									return (
 										<Avatar
 											className="text-capitalize"
 											displayName
-											name={caseResult.user.name}
+											name={caseResult.userName}
 											size="sm"
-											url={caseResult.user.image}
+											url={caseResult.userImgUrl}
 										/>
 									);
 								}
@@ -146,7 +98,11 @@ const Build = () => {
 									<AssignToMe
 										onClick={() =>
 											testrayCaseResultImpl
-												.assignToMe(caseResult)
+												.assignToMe({
+													...caseResult,
+													id: caseResult.testrayCaseResultId,
+													startDate: null,
+												})
 												.then(() => {
 													updateItemFromList(
 														mutate,
@@ -169,12 +125,12 @@ const Build = () => {
 						},
 						{
 							clickable: true,
-							key: 'dueStatus',
-							render: (dueStatus: PickList) => (
+							key: 'status',
+							render: (dueStatus) => (
 								<StatusBadge
-									type={dueStatus.key as StatusBadgeType}
+									type={dueStatus as StatusBadgeType}
 								>
-									{dueStatus.name}
+									{dueStatus}
 								</StatusBadge>
 							),
 							value: i18n.translate('status'),
@@ -190,7 +146,7 @@ const Build = () => {
 							value: i18n.translate('issues'),
 						},
 						{
-							key: 'errors',
+							key: 'error',
 							render: (errors: string) =>
 								errors && (
 									<Code title={errors as string}>
@@ -208,14 +164,9 @@ const Build = () => {
 							value: i18n.translate('comment'),
 						},
 					],
-					navigateTo: ({id}) => `case-result/${id}`,
+					navigateTo: ({testrayCaseResultId}) =>
+						`case-result/${testrayCaseResultId}`,
 					rowWrap: true,
-				}}
-				transformData={(response) =>
-					testrayCaseResultImpl.transformDataFromList(response)
-				}
-				variables={{
-					filter,
 				}}
 			/>
 		</Container>

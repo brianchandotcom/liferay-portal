@@ -2901,51 +2901,6 @@ definition {
 			specialCharacters = "true");
 	}
 
-	@description = "This test ensures that the user can republish an expired document after disabling expiration date."
-	@priority = 4
-	test CanRepublishDocumentAfterDisablingExpirationDate {
-		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		DMDocument.updateCheckInterval(fieldValue = 1);
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_5.txt",
-			groupName = "Guest",
-			mimeType = "text/plain",
-			sourceFileName = "Document_5.txt");
-
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "Document_5.txt",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.setExpirationDate(
-			enableExpirationDate = "true",
-			increaseMinutes = 1);
-
-		Navigator.openURL();
-
-		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 3000);
-
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "Document_5.txt",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.publishExpiredDocument(
-			disableExpirationDate = "true",
-			dmDocumentTitle = "Document_5.txt");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.viewStatus(
-			dmDocumentStatus = "Approved",
-			dmDocumentTitle = "Document_5.txt");
-	}
-
 	@description = "This case covers LPS-97708. It ensures that a document can be restored from the Recycle Bin even if its original folder no longer exists."
 	@priority = 3
 	@refactordone

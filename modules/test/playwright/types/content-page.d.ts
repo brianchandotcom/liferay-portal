@@ -22,7 +22,7 @@ type FragmentField = {
 					contextSource: string;
 				};
 			};
-			value_i18n: {
+			value_i18n?: {
 				en_US: string;
 			};
 		};

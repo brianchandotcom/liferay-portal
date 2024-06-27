@@ -150,6 +150,43 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro _getAccountExternalReferenceCode(accountEntryName = null,externalReferenceCode = null) {
+		Variables.assertDefined(parameterList = ${accountEntryName});
+
+		if (!(isSet(emailAddress))) {
+			var emailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(password))) {
+			var password = "test";
+		}
+
+		var companyId = JSONCompany.getCompanyId();
+		var portalURL = JSONCompany.getPortalURL();
+		var userId = JSONUserSetter.setUserId(userEmailAddress = ${emailAddress});
+		var curl = '''
+			${portalURL}/api/jsonws/account.accountentry/get-account-entries \
+				-u ${emailAddress}:${password} \
+				-d companyId=${companyId} \
+				-d status=0 \
+				-d <CURL_DATA[start=-1]CURL_DATA> \
+				-d <CURL_DATA[end=-1]CURL_DATA> \
+				-d -orderByComparator=
+		''';
+
+		var accountExternalReferenceCode = JSONCurlUtil.post(${curl}, "$.[?(@['name'] == '${accountEntryName}')]['externalReferenceCode']");
+
+		echo("curl: ${curl}");
+
+		if (${externalReferenceCode} == "") {
+			fail("FAIL. Cannot find account entry.");
+		}
+		else {
+			return ${accountExternalReferenceCode};
+		}
+	}
+
+	@summary = "Default summary"
 	macro _setAccountExternalReferenceCode(accountEntryName = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${externalReferenceCode}");
 

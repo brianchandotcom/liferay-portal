@@ -468,22 +468,6 @@ definition {
 				value1 = ${optionAndOperator});
 		}
 
-		if (isSet(filterType)) {
-			Select(
-				key_fieldName = "queryName0",
-				locator1 = "PRMMDFRequest#SELECT",
-				value1 = ${filterType});
-
-			Click(
-				key_button = "Select",
-				locator1 = "CommerceWidget#PRODUCT_PUBLISHER_FILTER_ADD_SELECT_BUTTON");
-
-			CommerceWidget.setFilterItems(
-				categories = ${categories},
-				filterTitle = ${filterType},
-				tags = ${filterEntries});
-		}
-
 		Button.click(button = "Save");
 
 		Alert.viewSuccessMessage();
@@ -863,7 +847,7 @@ definition {
 		}
 
 		var accountID = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountName});
-		var accountERC = JSONPRMAPI.getAccountExternalReferenceCode(accountEntryName = ${accountName});
+		var accountERC = JSONAccountEntryAPI._getAccountExternalReferenceCode(accountEntryName = ${accountName});
 
 		for (var accountDetails : list "${accountImage},${accountName},${accountType},${accountTaxID},${accountERC},${accountID},${accountDescription}") {
 			AssertElementPresent(

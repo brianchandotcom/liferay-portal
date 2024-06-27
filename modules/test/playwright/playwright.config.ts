@@ -28,6 +28,7 @@ import {config as frontendJsSpaWebConfig} from './tests/frontend-js-spa-web/conf
 import {config as frontendTaglibClayConfig} from './tests/frontend-taglib-clay/config';
 import {config as headlessBuilderImplConfig} from './tests/headless-builder-impl/config';
 import {config as headlessBuilderWebConfig} from './tests/headless-builder-web/config';
+import {config as jethr0Config} from './tests/workspaces/liferay-workspace-jethr0/config';
 import {config as journalWebConfig} from './tests/journal-web/config';
 import {config as knowledgeBaseWebConfig} from './tests/knowledge-base-web/config';
 import {config as layoutAdminWebConfig} from './tests/layout-admin-web/config';
@@ -89,6 +90,7 @@ export default defineConfig({
 		frontendTaglibClayConfig,
 		headlessBuilderImplConfig,
 		headlessBuilderWebConfig,
+		jethr0Config,
 		journalWebConfig,
 		knowledgeBaseWebConfig,
 		layoutAdminWebConfig,

@@ -891,6 +891,36 @@
 	},
 	{
 		"actionIds": [
+			"VIEW",
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaim$]",
+		"roleName": "Channel Finance Manager (CFM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW",
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaim$]",
+		"roleName": "Channel Marketing Director (CMD)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW",
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaim$]",
+		"roleName": "Channel Marketing Manager (CMM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
 			"ADD_DISCUSSION"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaim$]",
@@ -1528,6 +1558,15 @@
 			"VIEW"
 		],
 		"primKey": "[$PermissionAction#MDF-REQUEST-SEE-RESTRICTED-FIELDS$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
+		"roleName": "Channel Finance Manager (CFM)",
+		"scope": 4
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$PermissionAction#MDF-REQUEST-COMPLETE$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
 		"roleName": "Channel Finance Manager (CFM)",
 		"scope": 4

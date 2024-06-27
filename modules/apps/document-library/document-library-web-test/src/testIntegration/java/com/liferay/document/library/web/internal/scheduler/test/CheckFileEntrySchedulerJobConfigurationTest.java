@@ -65,6 +65,101 @@ public class CheckFileEntrySchedulerJobConfigurationTest {
 		UserTestUtil.setUser(TestPropsValues.getUser());
 	}
 
+
+	@Test
+	public void testCheckFileEntriesChangingCheckIntervalShouldExpireFileEntries()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), (byte[])null, null, null, null,
+			serviceContext);
+
+		FileEntry fileEntry2 = _dlAppService.addFileEntry(
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), (byte[])null, null, null, null,
+			serviceContext);
+
+		Date expirationDate = new Date(
+			System.currentTimeMillis() - Time.MINUTE);
+
+		DLFileEntry dlFileEntry1 = _dlFileEntryLocalService.getFileEntry(
+			fileEntry1.getFileEntryId());
+
+		dlFileEntry1.setExpirationDate(expirationDate);
+
+		dlFileEntry1 = _dlFileEntryLocalService.updateDLFileEntry(dlFileEntry1);
+
+		DLFileVersion dlFileVersion1 = dlFileEntry1.getFileVersion();
+
+		dlFileVersion1.setExpirationDate(expirationDate);
+
+		_dlFileVersionLocalService.updateDLFileVersion(dlFileVersion1);
+
+		_dlFileEntryLocalService.checkFileEntries(_group.getCompanyId(), 2);
+
+		dlFileEntry1 = _dlFileEntryLocalService.getFileEntry(
+			fileEntry1.getFileEntryId());
+
+		dlFileVersion1 = dlFileEntry1.getFileVersion();
+
+		DLFileEntry dlFileEntry2 = _dlFileEntryLocalService.getFileEntry(
+			fileEntry2.getFileEntryId());
+
+		DLFileVersion dlFileVersion2 = dlFileEntry2.getFileVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, dlFileEntry1.getStatus());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, dlFileVersion1.getStatus());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, dlFileEntry2.getStatus());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, dlFileVersion2.getStatus());
+
+		expirationDate = new Date(
+			System.currentTimeMillis() - (3 * Time.MINUTE));
+
+		dlFileEntry2 = _dlFileEntryLocalService.getFileEntry(
+			fileEntry2.getFileEntryId());
+
+		dlFileEntry2.setExpirationDate(expirationDate);
+
+		dlFileEntry2 = _dlFileEntryLocalService.updateDLFileEntry(dlFileEntry2);
+
+		dlFileVersion2 = dlFileEntry2.getFileVersion();
+
+		dlFileVersion2.setExpirationDate(expirationDate);
+
+		_dlFileVersionLocalService.updateDLFileVersion(dlFileVersion2);
+
+		_dlFileEntryLocalService.checkFileEntries(_group.getCompanyId(), 4);
+
+		dlFileEntry2 = _dlFileEntryLocalService.getFileEntry(
+			fileEntry2.getFileEntryId());
+
+		dlFileVersion2 = dlFileEntry2.getFileVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, dlFileEntry2.getStatus());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED, dlFileVersion2.getStatus());
+	}
+
 	@Test
 	public void testExpireFileVersions() throws Exception {
 		ServiceContext serviceContext =

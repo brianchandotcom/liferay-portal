@@ -7,11 +7,11 @@ import {Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
-import {createChannel} from '../../osb-faro-web/utils/channel';
-import {createDataSource} from '../../osb-faro-web/utils/dataSource';
 import getRandomString from '../../../utils/getRandomString';
 import getFragmentDefinition from '../../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
+import {createChannel} from '../../osb-faro-web/utils/channel';
+import {createDataSource} from '../../osb-faro-web/utils/dataSource';
 
 export async function acceptsCookiesBanner(page: Page) {
 	const cookiesBannerButton = page.getByRole('button', {name: 'Accept All'});

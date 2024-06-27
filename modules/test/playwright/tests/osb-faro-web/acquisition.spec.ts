@@ -7,8 +7,10 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {
@@ -19,8 +21,6 @@ import {navigateToACSitesPageViaURL} from './utils/navigation';
 import {CardSelector} from './utils/selectors';
 import {closeSessions} from './utils/sessions';
 import {changeTimeFilter} from './utils/time-filter';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {ApiHelpers} from '../../helpers/ApiHelpers';
 
 export const test = mergeTests(
 	apiHelpersTest,

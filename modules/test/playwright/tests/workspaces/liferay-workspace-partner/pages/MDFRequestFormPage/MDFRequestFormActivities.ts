@@ -32,9 +32,9 @@ export class MDFRequestFormActivities {
 	readonly totalMDFRequestAmount: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
 		this.addActivity = page.getByRole('button', {name: 'Add Activity'});
 		this.addExpense = page.getByRole('button', {name: 'Add Expense'});
+		this.page = page;
 		this.totalMDFRequestAmount = page.getByText(
 			'Total MDF Requested Amount:'
 		);

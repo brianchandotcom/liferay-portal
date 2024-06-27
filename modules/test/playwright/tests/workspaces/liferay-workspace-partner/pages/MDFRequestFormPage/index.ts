@@ -31,12 +31,11 @@ export class MDFRequestFormPage {
 	readonly page: Page;
 	readonly previousButton: Locator;
 	readonly saveAsDraftButton: Locator;
-	readonly submitButton: Locator;
 	readonly seeMDFHomeButton: Locator;
+	readonly submitButton: Locator;
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
 		this.form = {
@@ -44,18 +43,19 @@ export class MDFRequestFormPage {
 			goals: new MDFRequestFormGoals(page),
 			review: {},
 		};
+		this.newRequestButton = page.getByRole('button', {
+			name: 'New Request',
+		});
+		this.page = page;
 		this.previousButton = page.getByRole('button', {name: 'Previous'});
 		this.saveAsDraftButton = page.getByRole('button', {
 			name: 'Save as Draft',
 		});
-		this.submitButton = page.getByRole('button', {
-			name: 'Submit',
-		});
-		this.newRequestButton = page.getByRole('button', {
-			name: 'New Request',
-		});
 		this.seeMDFHomeButton = page.getByRole('button', {
 			name: 'See MDF Home',
+		});
+		this.submitButton = page.getByRole('button', {
+			name: 'Submit',
 		});
 		this.successMessage = page.getByText('Success!');
 	}

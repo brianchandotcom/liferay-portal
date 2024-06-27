@@ -90,19 +90,19 @@ export enum MDFRequestActivityTactics {
 }
 
 export enum MDFRequestActivityBudgetExpense {
-	SPONSORSHIP_FEE = 'sponsorshipFee',
-	FOOD_AND_BEVERAGE = 'foodAndBeverage',
-	DIGITAL_ADVERTISING = 'digitalAdvertising',
+	BROADCAST_ADVERTISING = 'broadcastAdvertising',
+	COBRANDED_MERCHANDISE = 'cobrandedMerchandise',
 	CONTENT_CREATION = 'contentCreation',
-	SOCIAL_MARKETING = 'socialMarketing',
+	DIGITAL_ADVERTISING = 'digitalAdvertising',
+	DIGITAL_MARKETING = 'digitalMarketing',
 	DIRECT_MAIL = 'directMail',
+	EMAIL_MARKETING = 'emailMarketing',
+	FOOD_AND_BEVERAGE = 'foodAndBeverage',
+	OTHER = 'other',
 	OUTBOUND_TELESALES = 'outboundTelesales',
 	PRINT_ADVERTISING = 'printAdvertising',
-	BROADCAST_ADVERTISING = 'broadcastAdvertising',
 	PROSPECT_LIST_PURCHASE = 'prospectListPurchase',
-	COBRANDED_MERCHANDISE = 'cobrandedMerchandise',
 	ROOM_RENTAL = 'roomRental',
-	DIGITAL_MARKETING = 'digitalMarketing',
-	EMAIL_MARKETING = 'emailMarketing',
-	OTHER = 'other',
+	SOCIAL_MARKETING = 'socialMarketing',
+	SPONSORSHIP_FEE = 'sponsorshipFee',
 }

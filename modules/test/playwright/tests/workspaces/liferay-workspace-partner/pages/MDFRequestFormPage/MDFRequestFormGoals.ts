@@ -79,13 +79,15 @@ export class MDFRequestFormGoals {
 	};
 
 	constructor(page: Page) {
+		this.additionalOptions = {
+			dxpMigrationUpgrade: page.getByLabel(
+				'6.x to DXP Migration/Upgrade'
+			),
+			migrationFromCompetitorPlatform: page.getByLabel(
+				'Migration from competitor platform'
+			),
+		};
 		this.companyName = page.locator('select[name="company"]');
-		this.overallCampaignName = page.locator(
-			'input[name="overallCampaignName"]'
-		);
-		this.overallCampaignDescription = page.locator(
-			'input[name="overallCampaignDescription"]'
-		);
 		this.liferayBusinessSalesGoals = {
 			leadGeneration: page.getByLabel('Lead generation'),
 			nurtureExistingProspects: page.getByLabel(
@@ -97,6 +99,22 @@ export class MDFRequestFormGoals {
 		this.liferayBusinessSalesGoalsOther = page.locator(
 			'input[name="liferayBusinessSalesGoalsOther"]'
 		);
+		this.overallCampaignDescription = page.locator(
+			'input[name="overallCampaignDescription"]'
+		);
+		this.overallCampaignName = page.locator(
+			'input[name="overallCampaignName"]'
+		);
+		this.targetAudienceRoles = {
+			administrator: page.getByLabel('Administrator'),
+			associateAnalyst: page.getByLabel('Associate/Analyst'),
+			cLevelExecutiveVP: page.getByLabel('C-Level/Executive/VP'),
+			developerEngineer: page.getByLabel('Developer/Engineer'),
+			directorManager: page.getByLabel('Director/Manager'),
+			ecommerceLeadership: page.getByLabel('eCommerce Leadership'),
+			independentContractor: page.getByLabel('Independent Contractor'),
+			projectManager: page.getByLabel('Project Manager'),
+		};
 		this.targetMarkets = {
 			aerospaceDefense: page.getByLabel('Aerospace & Defense'),
 			agriculture: page.getByLabel('Agriculture'),
@@ -133,36 +151,18 @@ export class MDFRequestFormGoals {
 			utilities: page.getByLabel('Utilities'),
 			wholesaleDistribution: page.getByLabel('Wholesale/Distribution'),
 		};
-		this.additionalOptions = {
-			dxpMigrationUpgrade: page.getByLabel(
-				'6.x to DXP Migration/Upgrade'
-			),
-			migrationFromCompetitorPlatform: page.getByLabel(
-				'Migration from competitor platform'
-			),
-		};
-		this.targetAudienceRoles = {
-			administrator: page.getByLabel('Administrator'),
-			associateAnalyst: page.getByLabel('Associate/Analyst'),
-			cLevelExecutiveVP: page.getByLabel('C-Level/Executive/VP'),
-			developerEngineer: page.getByLabel('Developer/Engineer'),
-			directorManager: page.getByLabel('Director/Manager'),
-			ecommerceLeadership: page.getByLabel('eCommerce Leadership'),
-			independentContractor: page.getByLabel('Independent Contractor'),
-			projectManager: page.getByLabel('Project Manager'),
-		};
 	}
 
 	async selectCompany(companyName: string) {
 		await this.companyName.selectOption({label: companyName});
 	}
 
-	async fillLiferayBusinessSalesGoalsOther(text: string) {
+	async fillLiferayBusinessSalesGoalsOther(text: string | undefined) {
 		await this.liferayBusinessSalesGoals.other.check();
 
 		await expect(this.liferayBusinessSalesGoals.other).toBeChecked();
 
-		await this.liferayBusinessSalesGoalsOther.fill(text);
+		await this.liferayBusinessSalesGoalsOther.fill(text || '');
 	}
 
 	async fillForm({

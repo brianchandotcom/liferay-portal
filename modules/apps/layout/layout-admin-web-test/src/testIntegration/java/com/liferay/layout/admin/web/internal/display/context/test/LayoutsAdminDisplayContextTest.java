@@ -7,7 +7,9 @@ package com.liferay.layout.admin.web.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -17,12 +19,16 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -34,6 +40,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portlet.test.MockLiferayPortletContext;
+
+import java.util.List;
 
 import javax.portlet.Portlet;
 
@@ -60,6 +68,39 @@ public class LayoutsAdminDisplayContextTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testAvailableActions() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		Group group = _groupLocalService.getGroup(
+			company.getCompanyId(), GroupConstants.GUEST);
+
+		_layoutLocalService.deleteLayouts(
+			group.getGroupId(), false,
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
+
+		Layout layout1 = LayoutTestUtil.addTypePortletLayout(group);
+
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
+
+		List<String> availableActions = _getAvailableActions(group, layout2);
+
+		Assert.assertTrue(availableActions.contains("changePermissions"));
+		Assert.assertFalse(availableActions.contains("convertSelectedPages"));
+		Assert.assertTrue(availableActions.contains("deleteSelectedPages"));
+		Assert.assertTrue(availableActions.contains("exportTranslation"));
+
+		_layoutLocalService.deleteLayout(layout2);
+
+		availableActions = _getAvailableActions(group, layout1);
+
+		Assert.assertTrue(availableActions.contains("changePermissions"));
+		Assert.assertTrue(availableActions.contains("convertSelectedPages"));
+		Assert.assertFalse(availableActions.contains("deleteSelectedPages"));
+		Assert.assertFalse(availableActions.contains("exportTranslation"));
 	}
 
 	@Test
@@ -132,6 +173,24 @@ public class LayoutsAdminDisplayContextTest {
 		Assert.assertFalse(editOrViewLayoutURL.contains(Constants.EDIT));
 	}
 
+	private List<String> _getAvailableActions(Group group, Layout layout)
+		throws Exception {
+
+		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
+
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			_getMockLiferayPortletRenderRequest(group);
+
+		mvcPortlet.render(
+			mockLiferayPortletRenderRequest,
+			new MockLiferayPortletRenderResponse());
+
+		return ReflectionTestUtil.invoke(
+			mockLiferayPortletRenderRequest.getAttribute(
+				"LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT"),
+			"getAvailableActions", new Class<?>[] {Layout.class}, layout);
+	}
+
 	private String _getEditOrViewLayoutURL(Group group, Layout layout)
 		throws Exception {
 
@@ -191,6 +250,12 @@ public class LayoutsAdminDisplayContextTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.layout.admin.web.internal.portlet.GroupPagesPortlet"

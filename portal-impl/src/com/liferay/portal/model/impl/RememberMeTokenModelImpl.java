@@ -80,7 +80,7 @@ public class RememberMeTokenModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RememberMeToken (mvccVersion LONG default 0 not null,rememberMeTokenId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,expirationDate DATE null,token VARCHAR(75) null)";
+		"create table RememberMeToken (mvccVersion LONG default 0 not null,rememberMeTokenId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,expirationDate DATE null,token VARCHAR(255) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RememberMeToken";
 

@@ -6,12 +6,17 @@
 package com.liferay.portal.security.iframe.sanitizer.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -19,6 +24,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -44,6 +50,24 @@ public class IFrameSanitizerImplTest {
 	@Before
 	public void setUp() throws Exception {
 		_companyId = TestPropsValues.getCompanyId();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		String filterString = StringBundler.concat(
+			"(&(companyId=", _companyId, ")(service.factoryPid=",
+			_CONFIGURATION_PID, ".scoped))");
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			filterString);
+
+		if (ArrayUtil.isNotEmpty(configurations)) {
+			Configuration configuration = configurations[0];
+
+			if (configuration != null) {
+				configuration.delete();
+			}
+		}
 	}
 
 	@Test
@@ -94,6 +118,54 @@ public class IFrameSanitizerImplTest {
 			_sanitize(
 				_companyId, _BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG_SANDBOX,
 				ContentTypes.TEXT_HTML));
+	}
+
+	@Test
+	public void testSanitizeHTMLWithIFrameAndSandboxAttributeValuesEmpty()
+		throws Exception {
+
+		_updateCompanyConfiguration(_companyId, true, false, "");
+
+		Assert.assertEquals(
+			_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG_SANDBOX,
+			_sanitize(
+				_companyId, _BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG_SANDBOX,
+				ContentTypes.TEXT_HTML));
+	}
+
+	@Test
+	public void testSanitizeHTMLWithIFrameEnabledByDefault() throws Exception {
+		Assert.assertEquals(
+			_BASIC_HTML_CONTENT + _EXPECTED_IFRAME_TAG_SANDBOX_ADDED,
+			_sanitize(
+				_companyId, _BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+				ContentTypes.TEXT_HTML));
+	}
+
+	@Test
+	public void testSanitizeHTMLWithIFrameScopedByCompany() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		try {
+			_updateCompanyConfiguration(
+				company.getCompanyId(), false, false, "");
+
+			Assert.assertEquals(
+				_BASIC_HTML_CONTENT + _EXPECTED_IFRAME_TAG_SANDBOX_ADDED,
+				_sanitize(
+					_companyId, _BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+					ContentTypes.TEXT_HTML));
+
+			Assert.assertEquals(
+				_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+				_sanitize(
+					company.getCompanyId(),
+					_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+					ContentTypes.TEXT_HTML));
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
 
 	@Test
@@ -202,6 +274,9 @@ public class IFrameSanitizerImplTest {
 	private static ConfigurationAdmin _configurationAdmin;
 
 	private long _companyId;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private ConfigurationProvider _configurationProvider;

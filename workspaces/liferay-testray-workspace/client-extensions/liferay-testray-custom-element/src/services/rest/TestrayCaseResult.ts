@@ -23,6 +23,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 				caseId: r_caseToCaseResult_c_caseId,
 				comment,
 				dueStatus,
+				errors,
 				issues,
 				mbMessageId,
 				mbThreadId,
@@ -32,6 +33,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			}) => ({
 				comment,
 				dueStatus,
+				errors,
 				issues,
 				mbMessageId,
 				mbThreadId,
@@ -115,38 +117,41 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 	}
 
 	public assignTo(caseResult: TestrayCaseResult, userId: number) {
-		return this.update(caseResult.id, {
-			dueStatus: caseResult.dueStatus.key,
-			startDate: caseResult.startDate,
-			userId,
-		});
+		return this.update(
+			caseResult.id || Number(caseResult.testrayCaseResultId),
+			{
+				userId,
+			}
+		);
 	}
 
 	public assignToMe(caseResult: TestrayCaseResult) {
-		return this.update(caseResult.id, {
-			startDate: caseResult.startDate,
-			userId: Number(Liferay.ThemeDisplay.getUserId()),
-		});
+		return this.update(
+			caseResult.id || Number(caseResult.testrayCaseResultId),
+			{
+				userId: Number(Liferay.ThemeDisplay.getUserId()),
+			}
+		);
 	}
 
 	public removeAssign(caseResult: TestrayCaseResult) {
-		return this.update(caseResult.id, {
-			startDate: null,
-			userId: this.UNASSIGNED_USER_ID,
-		});
+		return this.update(
+			caseResult.id || Number(caseResult.testrayCaseResultId),
+			{
+				userId: this.UNASSIGNED_USER_ID,
+			}
+		);
 	}
 
 	public reopenTest(caseResult: TestrayCaseResult) {
 		return this.update(caseResult.id, {
 			dueStatus: CaseResultStatuses.UNTESTED,
-			startDate: null,
 		});
 	}
 
 	public resetTest(caseResult: TestrayCaseResult) {
 		return this.update(caseResult.id, {
 			dueStatus: CaseResultStatuses.UNTESTED,
-			startDate: null,
 			userId: this.UNASSIGNED_USER_ID,
 		});
 	}

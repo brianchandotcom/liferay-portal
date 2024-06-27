@@ -98,11 +98,7 @@ const Build = () => {
 									<AssignToMe
 										onClick={() =>
 											testrayCaseResultImpl
-												.assignToMe({
-													...caseResult,
-													id: caseResult.testrayCaseResultId,
-													startDate: null,
-												})
+												.assignToMe(caseResult)
 												.then(() => {
 													updateItemFromList(
 														mutate,

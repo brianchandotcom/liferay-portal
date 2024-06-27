@@ -1,0 +1,1 @@
+<p>You've successfully finished the "${course.getData()}" course! We're proud of your dedication and hard work.</p>

@@ -219,7 +219,7 @@ public class TestrayCaseResultResourceImpl
 			String testrayUserId, Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("select cr.c_caseResultId_, cr.comment_, cr.dueStatus_, ");
 		sb.append("cr.errors_, cr.issues_, ct.name_ as caseTypeName, c.name_ ");
@@ -325,7 +325,8 @@ public class TestrayCaseResultResourceImpl
 
 		sb.append("group by cr.c_caseResultId_, u.firstName, u.lastName, ");
 		sb.append("u.middleName, u.uuid_, u.portraitId order by ");
-		sb.append("cr.dueStatus_ asc, cr.errors_ asc");
+		sb.append("cr.dueStatus_ asc, cr.errors_ is null asc, c.priority_ ");
+		sb.append("desc, t.name_ asc, co.name_ asc, ct.name_ asc ");
 
 		String sql = StringUtil.replace(
 			sb.toString(), "[%COMPANY_ID%]",

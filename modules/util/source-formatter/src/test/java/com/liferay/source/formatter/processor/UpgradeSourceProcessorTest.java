@@ -234,6 +234,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaSortFieldNameTranslatorCheck() throws Exception {
+		test("upgrade/UpgradeJavaSortFieldNameTranslatorCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaStorageTypeAwareCheck() throws Exception {
 		test("upgrade/UpgradeJavaStorageTypeAwareCheck.testjava");
 	}

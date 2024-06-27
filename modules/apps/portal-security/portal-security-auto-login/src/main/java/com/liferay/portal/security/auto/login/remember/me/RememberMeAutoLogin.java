@@ -10,13 +10,14 @@ import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.RememberMeToken;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
+import com.liferay.portal.kernel.service.RememberMeTokenLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -53,69 +54,74 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String autoUserId = CookiesManagerUtil.getCookieValue(
-			CookiesConstants.NAME_ID, httpServletRequest, false);
-		String autoPassword = CookiesManagerUtil.getCookieValue(
-			CookiesConstants.NAME_PASSWORD, httpServletRequest, false);
-		String rememberMe = CookiesManagerUtil.getCookieValue(
-			CookiesConstants.NAME_REMEMBER_ME, httpServletRequest, false);
+		String rememberMeTokenId = CookiesManagerUtil.getCookieValue(
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID, httpServletRequest,
+			false);
+		String rememberMeTokenToken = CookiesManagerUtil.getCookieValue(
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN, httpServletRequest,
+			false);
+
+		RememberMeToken rememberMeToken = null;
+
+		if (Validator.isNotNull(rememberMeTokenId) &&
+			Validator.isNotNull(rememberMeTokenToken)) {
+
+			rememberMeToken = _rememberMeTokenLocalService.fetchRememberMeToken(
+				GetterUtil.getLong(rememberMeTokenId), rememberMeTokenToken);
+		}
+
+		// LPS-11218
+
+		if (rememberMeToken == null) {
+			removeCookies(httpServletRequest, httpServletResponse);
+
+			return null;
+		}
+
+		User user = _userLocalService.fetchUserById(
+			rememberMeToken.getUserId());
+
+		Company company = _portal.getCompany(httpServletRequest);
+
+		User guestUser = _userLocalService.getGuestUser(company.getCompanyId());
 
 		// LEP-5188
 
 		String proxyPath = _portal.getPathProxy();
 		String contextPath = _portal.getPathContext();
 
+		boolean rememberMe = GetterUtil.getBoolean(
+			CookiesManagerUtil.getCookieValue(
+				CookiesConstants.NAME_REMEMBER_ME, httpServletRequest, false));
+
 		if (proxyPath.equals(contextPath)) {
 			if (Validator.isNotNull(httpServletRequest.getContextPath())) {
-				rememberMe = Boolean.TRUE.toString();
+				rememberMe = true;
 			}
 		}
 		else {
 			if (!contextPath.equals(httpServletRequest.getContextPath())) {
-				rememberMe = Boolean.TRUE.toString();
+				rememberMe = false;
 			}
 		}
 
-		String[] credentials = null;
+		if ((user == null) || (guestUser.getUserId() == user.getUserId()) ||
+			!user.isActive() || !rememberMe || rememberMeToken.isExpired() ||
+			!company.isAutoLogin()) {
 
-		if (Validator.isNotNull(autoUserId) &&
-			Validator.isNotNull(autoPassword) &&
-			Validator.isNotNull(rememberMe)) {
+			removeCookies(httpServletRequest, httpServletResponse);
 
-			Company company = _portal.getCompany(httpServletRequest);
+			_rememberMeTokenLocalService.deleteRememberMeToken(
+				rememberMeToken.getRememberMeTokenId());
 
-			if (company.isAutoLogin()) {
-				KeyValuePair kvp = _userLocalService.decryptUserId(
-					company.getCompanyId(), autoUserId, autoPassword);
-
-				credentials = new String[3];
-
-				credentials[0] = kvp.getKey();
-				credentials[1] = kvp.getValue();
-				credentials[2] = Boolean.FALSE.toString();
-			}
+			return null;
 		}
 
-		// LPS-11218
+		String[] credentials = new String[3];
 
-		if (credentials != null) {
-			Company company = _portal.getCompany(httpServletRequest);
-
-			User guestUser = _userLocalService.getGuestUser(
-				company.getCompanyId());
-
-			long userId = GetterUtil.getLong(credentials[0]);
-
-			User user = _userLocalService.fetchUserById(userId);
-
-			if ((user == null) || (guestUser.getUserId() == userId) ||
-				!user.isActive()) {
-
-				removeCookies(httpServletRequest, httpServletResponse);
-
-				return null;
-			}
-		}
+		credentials[0] = String.valueOf(user.getUserId());
+		credentials[1] = user.getPassword();
+		credentials[2] = String.valueOf(user.isPasswordEncrypted());
 
 		return credentials;
 	}
@@ -128,10 +134,10 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 
 		CookiesManagerUtil.deleteCookies(
 			domain, httpServletRequest, httpServletResponse,
-			CookiesConstants.NAME_ID);
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID);
 		CookiesManagerUtil.deleteCookies(
 			domain, httpServletRequest, httpServletResponse,
-			CookiesConstants.NAME_PASSWORD);
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -139,6 +145,9 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RememberMeTokenLocalService _rememberMeTokenLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

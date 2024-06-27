@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 import com.liferay.portal.upgrade.util.UpgradePartitionedControlTable;
+import com.liferay.portal.upgrade.v7_4_x.util.RememberMeTokenTable;
 
 /**
  * @author Pei-Jung Lan
@@ -410,7 +411,10 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(31, 1, 1), new UpgradePortletPreferencesCompanyId());
 
 		upgradeVersionTreeMap.put(
-			new Version(31, 2, 0), new UpgradeLayoutExternalReferenceCode());
+      new Version(31, 2, 0), new UpgradeLayoutExternalReferenceCode());
+
+    upgradeVersionTreeMap.put(
+			new Version(31, 3, 0), RememberMeTokenTable.create());
 	}
 
 }

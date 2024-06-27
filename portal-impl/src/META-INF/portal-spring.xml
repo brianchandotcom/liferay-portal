@@ -247,6 +247,9 @@
 	<bean class="com.liferay.portal.service.impl.ReleaseLocalServiceImpl" id="com.liferay.portal.kernel.service.ReleaseLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.ReleaseModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.ReleaseModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.persistence.impl.ReleasePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ReleasePersistence" />
+	<bean class="com.liferay.portal.service.impl.RememberMeTokenLocalServiceImpl" id="com.liferay.portal.kernel.service.RememberMeTokenLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.RememberMeTokenModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.RememberMeTokenModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.RememberMeTokenPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RememberMeTokenPersistence" />
 	<bean class="com.liferay.portal.service.impl.RepositoryLocalServiceImpl" id="com.liferay.portal.kernel.service.RepositoryLocalService" />
 	<bean class="com.liferay.portal.service.impl.RepositoryServiceImpl" id="com.liferay.portal.kernel.service.RepositoryService" />
 	<bean class="com.liferay.portal.service.persistence.impl.RepositoryModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.RepositoryModelArgumentsResolver" />

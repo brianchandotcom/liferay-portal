@@ -128,6 +128,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 					caseId,
 					comment: undefined,
 					dueStatus: CaseResultStatuses.UNTESTED,
+					errors: undefined,
 					issues: undefined,
 					mbMessageId: 0,
 					mbThreadId: 0,

@@ -41,7 +41,8 @@ const useBuildTestActions = () => {
 										.then(() =>
 											updateItemFromList(
 												mutate,
-												caseResult.id,
+												caseResult.id ||
+													(caseResult.testrayCaseResultId as number),
 												{user},
 												{revalidate: true}
 											)
@@ -61,16 +62,15 @@ const useBuildTestActions = () => {
 		},
 		{
 			action: (caseResult, mutate) => {
-				(caseResult.user &&
-				caseResult.user.id.toString() ===
-					Liferay.ThemeDisplay.getUserId()
+				(caseResult.userName === Liferay.ThemeDisplay.getUserName()
 					? testrayCaseResultImpl.removeAssign(caseResult)
 					: testrayCaseResultImpl.assignToMe(caseResult)
 				)
 					.then((user) =>
 						updateItemFromList(
 							mutate,
-							caseResult.id,
+							caseResult.id ||
+								(caseResult.testrayCaseResultId as number),
 							{user},
 							{revalidate: true}
 						)
@@ -81,19 +81,22 @@ const useBuildTestActions = () => {
 			icon: 'user',
 			name: (caseResult) =>
 				i18n.translate(
-					caseResult.user &&
-						caseResult.user.id.toString() ===
-							Liferay.ThemeDisplay.getUserId()
+					caseResult.userName === Liferay.ThemeDisplay.getUserName()
 						? 'unassign-myself'
 						: 'assign-to-me'
 				),
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}, mutate) =>
+			action: ({testrayCaseResultId}, mutate) =>
 				testrayCaseResultImpl
-					.removeResource(id)
-					?.then(() => removeItemFromList(mutate, id))
+					.removeResource(testrayCaseResultId as number)
+					?.then(() =>
+						removeItemFromList(
+							mutate,
+							testrayCaseResultId as number
+						)
+					)
 					.then(form.onSuccess)
 					.catch(form.onError),
 			icon: 'trash',

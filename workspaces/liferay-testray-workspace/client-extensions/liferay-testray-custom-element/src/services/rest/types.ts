@@ -216,7 +216,10 @@ export type TestrayCaseResult = {
 	run?: TestrayRun;
 	runId?: number;
 	startDate: string;
+	status?: string;
+	testrayCaseResultId?: number;
 	user?: UserAccount;
+	userName: string;
 	warnings: number;
 } & CaseResultAggregation;
 

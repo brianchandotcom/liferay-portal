@@ -51,6 +51,51 @@ public class AccountEntryModelResourcePermissionTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testEditSuborganizationsAccountsPermissions()
+		throws Exception {
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_ORGANIZATION);
+
+		for (String actionId : _ACTION_IDS) {
+			RoleTestUtil.addResourcePermission(
+				role, AccountEntry.class.getName(),
+				ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+				actionId);
+		}
+
+		User user = UserTestUtil.addUser();
+
+		Organization parentOrganization =
+			OrganizationTestUtil.addOrganization();
+		Organization suborganization = OrganizationTestUtil.addOrganization(
+			parentOrganization.getOrganizationId(),
+			RandomTestUtil.randomString(), false);
+
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			AccountEntryArgs.withOrganizations(suborganization));
+
+		_assertDoesNotContain(user, accountEntry, _ACTION_IDS);
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			user.getUserId(), suborganization.getGroupId(),
+			role.getRoleId());
+
+		_userLocalService.addOrganizationUser(
+			parentOrganization.getOrganizationId(), user.getUserId());
+
+		RoleTestUtil.addResourcePermission(
+			role, Organization.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			AccountActionKeys.EDIT_SUBORGANIZATIONS_ACCOUNTS);
+
+		_assertContains(user, accountEntry, _ACTION_IDS);
+		_assertDoesNotContain(
+			user, accountEntry, AccountActionKeys.MANAGE_ORGANIZATIONS);
+	}
+
+	@Test
 	public void testManageAvailableAccountsPermissions() throws Exception {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);

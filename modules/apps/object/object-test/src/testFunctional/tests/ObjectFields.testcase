@@ -1650,13 +1650,7 @@ definition {
 				objectName = "CustomObject176851",
 				outputOption = "Integer");
 
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 176851");
-
-			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
-
-			PortletEntry.publish();
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject176851");
 		}
 
 		task ("And given a page with Custom Object") {

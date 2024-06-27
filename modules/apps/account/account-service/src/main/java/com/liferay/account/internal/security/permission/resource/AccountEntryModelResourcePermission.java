@@ -146,9 +146,9 @@ public class AccountEntryModelResourcePermission
 					(OrganizationPermissionUtil.contains(
 						permissionChecker, organization,
 						AccountActionKeys.EDIT_SUBORGANIZATIONS_ACCOUNTS) ||
-					OrganizationPermissionUtil.contains(
-						permissionChecker, organization,
-						AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS)) &&
+					 OrganizationPermissionUtil.contains(
+						 permissionChecker, organization,
+						 AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS)) &&
 					((organizationMember &&
 					  Objects.equals(actionId, ActionKeys.VIEW)) ||
 					 permissionChecker.hasPermission(

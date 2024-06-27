@@ -22,7 +22,8 @@ public class AccountActionKeys {
 
 	public static final String EDIT_ORGANIZATIONS = "EDIT_ORGANIZATIONS";
 
-	public static final String EDIT_SUBORGANIZATIONS_ACCOUNTS = "EDIT_SUBORGANIZATIONS_ACCOUNTS";
+	public static final String EDIT_SUBORGANIZATIONS_ACCOUNTS =
+		"EDIT_SUBORGANIZATIONS_ACCOUNTS";
 
 	public static final String INVITE_USER = "INVITE_USER";
 

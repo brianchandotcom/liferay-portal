@@ -51,9 +51,7 @@ public class AccountEntryModelResourcePermissionTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testEditSuborganizationsAccountsPermissions()
-		throws Exception {
-
+	public void testEditSuborganizationsAccountsPermissions() throws Exception {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_ORGANIZATION);
 
 		for (String actionId : _ACTION_IDS) {
@@ -64,13 +62,14 @@ public class AccountEntryModelResourcePermissionTest {
 				actionId);
 		}
 
-		User user = UserTestUtil.addUser();
-
 		Organization parentOrganization =
 			OrganizationTestUtil.addOrganization();
+
 		Organization suborganization = OrganizationTestUtil.addOrganization(
 			parentOrganization.getOrganizationId(),
 			RandomTestUtil.randomString(), false);
+
+		User user = UserTestUtil.addUser();
 
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
 			AccountEntryArgs.withOrganizations(suborganization));
@@ -78,8 +77,7 @@ public class AccountEntryModelResourcePermissionTest {
 		_assertDoesNotContain(user, accountEntry, _ACTION_IDS);
 
 		_userGroupRoleLocalService.addUserGroupRole(
-			user.getUserId(), suborganization.getGroupId(),
-			role.getRoleId());
+			user.getUserId(), suborganization.getGroupId(), role.getRoleId());
 
 		_userLocalService.addOrganizationUser(
 			parentOrganization.getOrganizationId(), user.getUserId());

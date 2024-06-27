@@ -76,7 +76,7 @@ public class SegmentsCriteriaJSONObjectMapperImpl
 			return null;
 		}
 
-		Expression expression = _parseFilterString(
+		Expression expression = _toExpression(
 			segmentsCriteriaContributor.getEntityModel(), filterString);
 
 		JSONObject jsonObject = (JSONObject)expression.accept(
@@ -98,7 +98,7 @@ public class SegmentsCriteriaJSONObjectMapperImpl
 		return jsonObject;
 	}
 
-	private Expression _parseFilterString(
+	private Expression _toExpression(
 			EntityModel entityModel, String filterString)
 		throws Exception {
 

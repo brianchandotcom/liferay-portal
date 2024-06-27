@@ -114,24 +114,24 @@ public class EditSegmentsEntryDisplayContext {
 			return _data;
 		}
 
-		HashMapBuilder.HashMapWrapper<String, Object> builder =
+		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
 			HashMapBuilder.<String, Object>put("context", _getContext());
 
 		try {
-			builder.put("props", _getProps());
+			hashMapWrapper.put("props", _getProps());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
 
-			builder.put(
+			hashMapWrapper.put(
 				"error",
 				LanguageUtil.get(
 					_httpServletRequest, "the-segment-is-no-longer-available"));
 		}
 
-		_data = builder.build();
+		_data = hashMapWrapper.build();
 
 		return _data;
 	}

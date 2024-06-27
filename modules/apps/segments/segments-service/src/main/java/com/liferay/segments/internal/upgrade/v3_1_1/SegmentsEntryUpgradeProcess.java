@@ -64,7 +64,7 @@ public class SegmentsEntryUpgradeProcess extends UpgradeProcess {
 				sb.append(groupId);
 				sb.append(" and segments entry ID ");
 				sb.append(segmentsEntryId);
-				sb.append(" because it contains device-related constraints");
+				sb.append(" because it contains device related constraints");
 
 				_log.debug(sb.toString());
 			}

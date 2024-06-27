@@ -418,14 +418,14 @@ public class XhtmlTranslationVisitorTest {
 	@Test
 	public void testParseImageAndTextInListItem() {
 		Assert.assertEquals(
-			"<ul><li><img src=\"imageLink\" alt=\"altText\"/> end.</li></ul>",
+			"<ul><li><img alt=\"altText\" src=\"imageLink\" /> end.</li></ul>",
 			translate("list-17.creole"));
 	}
 
 	@Test
 	public void testParseImageInListItem() {
 		Assert.assertEquals(
-			"<ul><li><img src=\"imageLink\" alt=\"altText\"/></li></ul>",
+			"<ul><li><img alt=\"altText\" src=\"imageLink\" /></li></ul>",
 			translate("list-16.creole"));
 	}
 
@@ -540,9 +540,9 @@ public class XhtmlTranslationVisitorTest {
 	@Test
 	public void testParseMultipleImageTags() {
 		Assert.assertEquals(
-			"<p><img src=\"L1\" alt=\"A1\"/><img src=\"L2\" alt=\"A2\"/><img " +
-				"src=\"L3\" alt=\"A3\"/><img src=\"L4\" alt=\"A4\"/><img " +
-					"src=\"L5\" alt=\"A5\"/> </p>",
+			"<p><img alt=\"A1\" src=\"L1\" /><img alt=\"A2\" src=\"L2\" " +
+				"/><img alt=\"A3\" src=\"L3\" /><img alt=\"A4\" src=\"L4\" " +
+					"/><img alt=\"A5\" src=\"L5\" /> </p>",
 			translate("image-5.creole"));
 	}
 
@@ -584,16 +584,16 @@ public class XhtmlTranslationVisitorTest {
 	@Test
 	public void testParseOnlySpacesContentInImageTag() {
 		Assert.assertEquals(
-			"<p><img src=\"L1\" alt=\"A1\"/><img src=\"L2\" alt=\"A2\"/>" +
-				"<img src=\"L3\" alt=\"A3\"/><img src=\"L4\" alt=\"A4\"/>" +
-					"<img src=\"L5\" alt=\"A5\"/> </p>",
+			"<p><img alt=\"A1\" src=\"L1\" /><img alt=\"A2\" src=\"L2\" />" +
+				"<img alt=\"A3\" src=\"L3\" /><img alt=\"A4\" src=\"L4\" />" +
+					"<img alt=\"A5\" src=\"L5\" /> </p>",
 			translate("image-5.creole"));
 	}
 
 	@Test
 	public void testParseSimpleImageTag() {
 		Assert.assertEquals(
-			"<p><img src=\"link\" alt=\"alternative text\"/> </p>",
+			"<p><img alt=\"alternative text\" src=\"link\" /> </p>",
 			translate("image-1.creole"));
 	}
 
@@ -669,8 +669,8 @@ public class XhtmlTranslationVisitorTest {
 	@Test
 	public void testParseTableImagesNested() {
 		Assert.assertEquals(
-			"<table><tr><th>H1</th></tr><tr><td><img src=\"image.png\" " +
-				"alt=\"Image\"/></td></tr></table>",
+			"<table><tr><th>H1</th></tr><tr><td><img alt=\"Image\" " +
+				"src=\"image.png\" /></td></tr></table>",
 			translate("table-4.creole"));
 	}
 

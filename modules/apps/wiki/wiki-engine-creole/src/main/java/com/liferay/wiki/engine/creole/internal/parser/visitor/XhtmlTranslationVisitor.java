@@ -147,12 +147,10 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 
 	@Override
 	public void visit(ImageNode imageNode) {
-		append("<img src=\"");
-		append(HtmlUtil.escape(imageNode.getLink()));
-		append("\" ");
+		append("<img");
 
 		if (imageNode.hasAltCollectionNode()) {
-			append("alt=\"");
+			append(" alt=\"");
 
 			CollectionNode altCollectionNode = imageNode.getAltNode();
 
@@ -161,7 +159,9 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 			append("\"");
 		}
 
-		append("/>");
+		append(" src=\"");
+		append(HtmlUtil.escape(imageNode.getLink()));
+		append("\" />");
 	}
 
 	@Override

@@ -816,8 +816,13 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
-		updateDDMFields(
-			article, _formatContent(article, content, groupId, user));
+		DDMFormValues ddmFormValues = _formatContent(
+			article, content, groupId, user);
+
+		updateDDMFields(article, ddmFormValues);
+
+		_updateDDMStructurePredefinedValues(
+			userId, article.getDDMStructureId(), ddmFormValues, serviceContext);
 
 		return journalArticlePersistence.findByPrimaryKey(article.getId());
 	}
@@ -5363,8 +5368,13 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
-		updateDDMFields(
-			article, _formatContent(article, content, groupId, user));
+		DDMFormValues ddmFormValues = _formatContent(
+			article, content, groupId, user);
+
+		updateDDMFields(article, ddmFormValues);
+
+		_updateDDMStructurePredefinedValues(
+			userId, article.getDDMStructureId(), ddmFormValues, serviceContext);
 
 		// Small image
 
@@ -8138,6 +8148,42 @@ public class JournalArticleLocalServiceImpl
 
 		return _journalArticleLocalizationPersistence.update(
 			journalArticleLocalization);
+	}
+
+	private void _updateDDMStructurePredefinedValues(
+			long userId, long ddmStructureId, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		boolean update = false;
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			ddmStructureId);
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		for (DDMFormFieldValue ddmFormFieldValue :
+				ddmFormValues.getDDMFormFieldValues()) {
+
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(
+				ddmFormFieldValue.getName());
+
+			if (ddmFormField != null) {
+				ddmFormField.setPredefinedValue(
+					(LocalizedValue)ddmFormFieldValue.getValue());
+
+				update = true;
+			}
+		}
+
+		if (update) {
+			_ddmStructureLocalService.updateStructure(
+				userId, ddmStructureId, ddmForm,
+				ddmStructure.getDDMFormLayout(), serviceContext);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

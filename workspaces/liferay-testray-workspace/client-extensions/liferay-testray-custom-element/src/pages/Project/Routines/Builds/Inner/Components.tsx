@@ -120,9 +120,7 @@ const Components = () => {
 					navigateTo: ({testrayComponentId}) =>
 						`..?${new URLSearchParams({
 							filter: JSON.stringify({
-								'componentToCaseResult/id': [
-									testrayComponentId,
-								],
+								testrayComponentIds: [testrayComponentId],
 							}),
 							filterSchema: 'buildResults',
 						})}`,

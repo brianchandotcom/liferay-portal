@@ -120,8 +120,7 @@ const Teams = () => {
 					navigateTo: ({testrayTeamId}) =>
 						`..?${new URLSearchParams({
 							filter: JSON.stringify({
-								'componentToCaseResult/r_teamToComponents_c_teamId':
-									[testrayTeamId],
+								testrayTeamIds: [testrayTeamId],
 							}),
 							filterSchema: 'buildResults',
 						})}`,

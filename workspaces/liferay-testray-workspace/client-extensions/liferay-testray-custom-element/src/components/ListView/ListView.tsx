@@ -177,7 +177,7 @@ const ListView: React.FC<ListViewProps> = ({
 			...filterVariables.appliedFilter,
 		};
 
-		const filters: {[key: string]: string | undefined} = {};
+		const filters: {[key: string]: string | undefined | boolean} = {};
 
 		Object.entries(appliedFilters).forEach(([key, value]) => {
 			const matchingField = filterSchema.fields.find(
@@ -185,10 +185,16 @@ const ListView: React.FC<ListViewProps> = ({
 			);
 
 			if (matchingField) {
-				filters[key] = SearchBuilder.createCustomFilter(
-					matchingField,
-					value
-				);
+				if (value.includes('No')) {
+					const newKey = `no${key.charAt(0).toUpperCase() + key.slice(1)}`;
+					filters[newKey] = true;
+				}
+				else {
+					filters[key] = SearchBuilder.createCustomFilter(
+						matchingField,
+						value
+					);
+				}
 				delete appliedFilters[key];
 			}
 		});

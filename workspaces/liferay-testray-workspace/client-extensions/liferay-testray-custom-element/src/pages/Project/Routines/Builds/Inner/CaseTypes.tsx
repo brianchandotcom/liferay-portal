@@ -123,8 +123,7 @@ const CaseTypes = () => {
 					navigateTo: ({testrayCaseTypeId}) =>
 						`..?${new URLSearchParams({
 							filter: JSON.stringify({
-								'caseToCaseResult/r_caseTypeToCases_c_caseTypeId':
-									[testrayCaseTypeId],
+								testrayCaseTypeIds: [testrayCaseTypeId],
 							}),
 							filterSchema: 'buildResults',
 						})}`,

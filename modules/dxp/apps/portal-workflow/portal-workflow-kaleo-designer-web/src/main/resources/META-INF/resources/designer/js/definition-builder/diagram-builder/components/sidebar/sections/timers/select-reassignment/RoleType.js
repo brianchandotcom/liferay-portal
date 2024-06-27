@@ -9,7 +9,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {DefinitionBuilderContext} from '../../../../../../DefinitionBuilderContext';
 import {contextUrl} from '../../../../../../constants';
 import {
-	headers,
+	HEADERS,
 	retrieveAccountRoles,
 	userBaseURL,
 } from '../../../../../../util/fetchUtil';
@@ -24,11 +24,7 @@ const RoleType = ({subSectionIdentifier, subSectionsLength, ...otherProps}) => {
 
 	const {resource} = useResource({
 		fetchOptions: {
-			headers: {
-				...headers,
-				'accept': `application/json`,
-				'x-csrf-token': Liferay.authToken,
-			},
+			headers: HEADERS,
 		},
 		fetchPolicy: 'cache-first',
 		link: `${window.location.origin}${contextUrl}${userBaseURL}/roles?restrictFields=rolePermissions`,

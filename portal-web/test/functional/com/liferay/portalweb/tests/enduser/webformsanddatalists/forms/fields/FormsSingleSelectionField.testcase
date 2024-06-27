@@ -694,8 +694,6 @@ definition {
 	@description = "Verify that an option can be selected as a Predefined Value"
 	@priority = 5
 	test PredefinedValueCanBeAdded {
-		property portal.upstream = "quarantine";
-
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");

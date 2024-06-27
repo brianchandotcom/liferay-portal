@@ -51,11 +51,19 @@ const persistedTab = (function () {
 })();
 
 function activeTab(item) {
+	const getAriaLabel = () => {
+		const label = dropdownButton.getAttribute('aria-label');
+		const [currentSelectionText] = label.split(':');
+
+		return `${currentSelectionText}: ${item.textContent.trim()}`;
+	};
+
 	tabItems.forEach(function (tabItem) {
 		tabItem.setAttribute('aria-selected', false);
 		tabItem.classList.remove('active');
 	});
 
+	dropdownButton.setAttribute('aria-label', getAriaLabel());
 	item.setAttribute('aria-selected', true);
 	item.classList.add('active');
 }

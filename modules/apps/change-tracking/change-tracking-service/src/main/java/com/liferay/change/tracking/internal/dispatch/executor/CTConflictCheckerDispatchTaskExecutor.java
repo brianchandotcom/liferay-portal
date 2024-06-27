@@ -16,7 +16,6 @@ import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -48,12 +47,6 @@ public class CTConflictCheckerDispatchTaskExecutor
 			DispatchTrigger dispatchTrigger,
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				dispatchTrigger.getCompanyId(), "LPD-11018")) {
-
-			return;
-		}
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_ctCollectionLocalService.getActionableDynamicQuery();

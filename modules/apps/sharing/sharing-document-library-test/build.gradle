@@ -1,4 +1,8 @@
 dependencies {
+	testIntegrationImplementation project(":apps:document-library:document-library-api")
+	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationImplementation project(":apps:friendly-url:friendly-url-api")
+	testIntegrationImplementation project(":apps:frontend-taglib:frontend-taglib-clay")
 	testIntegrationImplementation project(":apps:portal-security:portal-security-permission-api")
 	testIntegrationImplementation project(":apps:sharing:sharing-api")
 	testIntegrationImplementation project(":apps:sharing:sharing-test-util")

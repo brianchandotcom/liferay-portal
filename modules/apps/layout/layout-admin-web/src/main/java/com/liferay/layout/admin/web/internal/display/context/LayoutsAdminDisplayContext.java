@@ -2048,7 +2048,8 @@ public class LayoutsAdminDisplayContext {
 
 		if (LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.DELETE)) {
+				ActionKeys.DELETE) &&
+			_layoutActionsHelper.isShowDeleteAction(layout)) {
 
 			availableActions.add("deleteSelectedPages");
 		}

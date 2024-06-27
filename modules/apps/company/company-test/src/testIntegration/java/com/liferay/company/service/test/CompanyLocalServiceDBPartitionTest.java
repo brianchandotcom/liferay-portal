@@ -8,6 +8,7 @@ package com.liferay.company.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.db.partition.db.DBPartitionDB;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
@@ -41,6 +42,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -60,6 +62,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.BundleListener;
+import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
@@ -348,6 +351,27 @@ public class CompanyLocalServiceDBPartitionTest
 
 		Company copiedCompany = null;
 
+		String pid;
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					company.getCompanyId())) {
+
+			pid = ConfigurationTestUtil.createFactoryConfiguration(
+				CompanyLocalServiceDBPartitionTest.class.getName(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"companyId", company.getCompanyId()
+				).put(
+					"test", RandomTestUtil.randomString()
+				).build());
+		}
+
+		Configuration configuration = _configurationAdmin.getConfiguration(pid);
+
+		Assert.assertNotNull(configuration);
+
+		Assert.assertTrue(_persistenceManager.exists(pid));
+
 		try {
 			copiedCompany = companyLocalService.copyDBPartitionCompany(
 				company.getCompanyId(), null, name, virtualHostname, webId);
@@ -356,6 +380,8 @@ public class CompanyLocalServiceDBPartitionTest
 				copiedCompany, name, virtualHostname, webId);
 
 			long copiedCompanyId = copiedCompany.getCompanyId();
+
+			_assertTargetConfiguration(copiedCompanyId, configuration);
 
 			companyLocalService.deleteCompany(copiedCompany);
 
@@ -626,6 +652,31 @@ public class CompanyLocalServiceDBPartitionTest
 		Assert.assertEquals(webId, company.getWebId());
 
 		_virtualHostLocalService.getVirtualHost(virtualHostname);
+	}
+
+	private void _assertTargetConfiguration(
+			long companyId, Configuration configuration)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select configurationId, dictionary from ",
+					getPartitionName(companyId),
+					".Configuration_ where configurationId like '",
+					configuration.getFactoryPid(), "%'"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.next());
+
+			String configurationId = resultSet.getString("configurationId");
+
+			String dictionary = resultSet.getString("dictionary");
+
+			Assert.assertTrue(dictionary.contains(String.valueOf(companyId)));
+			Assert.assertFalse(dictionary.contains(configuration.getPid()));
+
+			Assert.assertTrue(_persistenceManager.exists(configurationId));
+		}
 	}
 
 	private void _checkPartitionDoesNotExist(long companyId)

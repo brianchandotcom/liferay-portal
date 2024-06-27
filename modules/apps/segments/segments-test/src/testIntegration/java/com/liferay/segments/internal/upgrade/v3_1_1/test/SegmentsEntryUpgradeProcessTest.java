@@ -55,6 +55,7 @@ public class SegmentsEntryUpgradeProcessTest {
 		Locale locale = LocaleUtil.fromLanguageId(
 			UpgradeProcessUtil.getDefaultLanguageId(_group.getCompanyId()));
 
+		_addSegmentsEntry(null, locale);
 		_addSegmentsEntry(
 			JSONUtil.put(
 				"operatorName", "eq"
@@ -91,7 +92,6 @@ public class SegmentsEntryUpgradeProcessTest {
 				"value", "1000.0"
 			).toString(),
 			locale);
-		_addSegmentsEntry(null, locale);
 	}
 
 	@After

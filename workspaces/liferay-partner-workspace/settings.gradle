@@ -18,5 +18,3 @@ buildscript {
 }
 
 apply plugin: "com.liferay.workspace"
-
-include "poshi"

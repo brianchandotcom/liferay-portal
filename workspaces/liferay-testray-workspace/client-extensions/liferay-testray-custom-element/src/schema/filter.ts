@@ -358,7 +358,6 @@ const filterSchema = {
 				isCustomFilter: true,
 				label: i18n.translate('case-name'),
 				name: 'testrayCaseName',
-
 				type: 'text',
 			},
 			overrides(baseFilters.assignee, {

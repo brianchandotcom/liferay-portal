@@ -49,3 +49,29 @@ export const createSitePage = async function ({
 		title: pageTitle,
 	});
 }
+
+export async function navigateToSitePage({
+	page,
+	pageName,
+	siteName,
+}: {
+	page: Page;
+	pageName: string;
+	siteName?: string;
+}) {
+	const pageNameURL = pageName.replace(/ /g, '-').toLowerCase();
+
+	if (siteName) {
+		const siteNameURL = siteName.replace(/ /g, '-').toLowerCase();
+
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/web/${siteNameURL}/` +
+				`${pageNameURL}`
+		);
+	}
+	else {
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/web/guest/${pageNameURL}`
+		);
+	}
+}

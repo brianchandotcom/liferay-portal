@@ -98,11 +98,9 @@ public class StagingBarDisplayContextTest {
 			_stagingBarDisplayContext.updateLayoutRevision(layoutRevision);
 
 		Assert.assertNotEquals(layoutRevision, updatedLayoutRevision);
-
 		Assert.assertEquals(
 			layoutRevision.getLayoutRevisionId(),
 			updatedLayoutRevision.getLayoutRevisionId());
-
 		Assert.assertEquals(
 			layoutRevision.getName() + "-Updated",
 			updatedLayoutRevision.getName());

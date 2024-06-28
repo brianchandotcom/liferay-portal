@@ -8,11 +8,13 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.tools.GitUtil;
+import com.liferay.source.formatter.SourceFormatterArgs;
+import com.liferay.source.formatter.processor.SourceProcessor;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +32,7 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws IOException {
+		throws Exception {
 
 		if (!fileName.endsWith(".testcase")) {
 			return content;
@@ -85,7 +87,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 	}
 
 	private void _checkGlobalDependenciesFileReferences(
-		String absolutePath, String fileName) {
+			String absolutePath, String fileName)
+		throws Exception {
 
 		for (Map.Entry<String, Set<String>> entry :
 				_dependenciesGlobalFileReferencesMap.entrySet()) {
@@ -96,16 +99,46 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 				continue;
 			}
 
-			for (String referencesFileName : referencesFileNames) {
-				if (referencesFileName.equals(absolutePath)) {
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Test dependencies file '", entry.getKey(),
-							"' is only referenced by one module, move it to ",
-							"module dependencies directory"));
+			SourceProcessor sourceProcessor = getSourceProcessor();
 
-					break;
+			SourceFormatterArgs sourceFormatterArgs =
+				sourceProcessor.getSourceFormatterArgs();
+
+			if (sourceFormatterArgs.isFormatCurrentBranch()) {
+				String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
+					sourceFormatterArgs.getBaseDirName(),
+					sourceFormatterArgs.getGitWorkingBranchName(),
+					absolutePath);
+
+				for (String line : currentBranchFileDiff.split("\n")) {
+					String shortFileName = _getShortFileName(entry.getKey());
+
+					if (line.startsWith(StringPool.DASH) &&
+						_containsFileName(line, shortFileName)) {
+
+						addMessage(
+							fileName,
+							StringBundler.concat(
+								"Test dependencies file '", entry.getKey(),
+								"' is only referenced by one module, move it to ",
+								"module dependencies directory"));
+
+						break;
+					}
+				}
+			}
+			else {
+				for (String referencesFileName : referencesFileNames) {
+					if (referencesFileName.equals(absolutePath)) {
+						addMessage(
+							fileName,
+							StringBundler.concat(
+								"Test dependencies file '", entry.getKey(),
+								"' is only referenced by one module, move it to ",
+								"module dependencies directory"));
+
+						break;
+					}
 				}
 			}
 		}
@@ -147,8 +180,14 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 		}
 	}
 
+	private String _getShortFileName(String fileName) {
+		int pos = fileName.lastIndexOf(StringPool.SLASH);
+
+		return fileName.substring(pos + 1);
+	}
+
 	private synchronized void _populateTestCaseAndDependenciesFileNames()
-		throws IOException {
+		throws Exception {
 
 		if (_testCaseFileNames != null) {
 			return;
@@ -214,40 +253,32 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 			for (Map.Entry<String, Set<String>> entry :
 					_dependenciesFileReferencesMap.entrySet()) {
 
-				String dependenciesFileName = entry.getKey();
+				if (_containsFileName(
+						testCaseFileContent,
+						_getShortFileName(entry.getKey()))) {
 
-				int pos = dependenciesFileName.lastIndexOf(StringPool.SLASH);
-
-				String shortFileName = dependenciesFileName.substring(pos + 1);
-
-				if (_containsFileName(testCaseFileContent, shortFileName)) {
 					Set<String> referencesFileNames = entry.getValue();
 
 					referencesFileNames.add(testCaseFileName);
 
 					_dependenciesFileReferencesMap.put(
-						dependenciesFileName, referencesFileNames);
+						entry.getKey(), referencesFileNames);
 				}
 			}
 
 			for (Map.Entry<String, Set<String>> entry :
 					_dependenciesGlobalFileReferencesMap.entrySet()) {
 
-				String dependenciesGlobalFileName = entry.getKey();
+				if (_containsFileName(
+						testCaseFileContent,
+						_getShortFileName(entry.getKey()))) {
 
-				int pos = dependenciesGlobalFileName.lastIndexOf(
-					StringPool.SLASH);
-
-				String shortFileName = dependenciesGlobalFileName.substring(
-					pos + 1);
-
-				if (_containsFileName(testCaseFileContent, shortFileName)) {
 					Set<String> referencesFileNames = entry.getValue();
 
 					referencesFileNames.add(testCaseFileName);
 
 					_dependenciesGlobalFileReferencesMap.put(
-						dependenciesGlobalFileName, referencesFileNames);
+						entry.getKey(), referencesFileNames);
 				}
 			}
 		}

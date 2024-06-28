@@ -42,8 +42,8 @@ public class RememberMeTokenLocalServiceImpl
 		rememberMeToken.setCompanyId(companyId);
 		rememberMeToken.setUserId(userId);
 		rememberMeToken.setCreateDate(new Date());
-		rememberMeToken.setToken(PasswordEncryptorUtil.encrypt(generate));
 		rememberMeToken.setExpirationDate(expirationDate);
+		rememberMeToken.setToken(PasswordEncryptorUtil.encrypt(generate));
 
 		rememberMeToken = rememberMeTokenPersistence.update(rememberMeToken);
 

@@ -1157,7 +1157,7 @@ create table RememberMeToken (
 	userId LONG,
 	createDate DATE null,
 	expirationDate DATE null,
-	token VARCHAR(255) null
+	value VARCHAR(255) null
 );
 
 create table Repository (

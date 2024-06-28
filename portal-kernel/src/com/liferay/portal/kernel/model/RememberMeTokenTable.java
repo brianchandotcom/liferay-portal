@@ -38,8 +38,8 @@ public class RememberMeTokenTable extends BaseTable<RememberMeTokenTable> {
 	public final Column<RememberMeTokenTable, Date> expirationDate =
 		createColumn(
 			"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<RememberMeTokenTable, String> token = createColumn(
-		"token", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<RememberMeTokenTable, String> value = createColumn(
+		"value", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private RememberMeTokenTable() {
 		super("RememberMeToken", RememberMeTokenTable::new);

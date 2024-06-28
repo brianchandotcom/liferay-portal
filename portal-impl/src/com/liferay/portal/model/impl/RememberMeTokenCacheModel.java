@@ -83,8 +83,8 @@ public class RememberMeTokenCacheModel
 		sb.append(createDate);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
-		sb.append(", token=");
-		sb.append(token);
+		sb.append(", value=");
+		sb.append(value);
 		sb.append("}");
 
 		return sb.toString();
@@ -113,11 +113,11 @@ public class RememberMeTokenCacheModel
 			rememberMeTokenImpl.setExpirationDate(new Date(expirationDate));
 		}
 
-		if (token == null) {
-			rememberMeTokenImpl.setToken("");
+		if (value == null) {
+			rememberMeTokenImpl.setValue("");
 		}
 		else {
-			rememberMeTokenImpl.setToken(token);
+			rememberMeTokenImpl.setValue(value);
 		}
 
 		rememberMeTokenImpl.resetOriginalValues();
@@ -136,7 +136,7 @@ public class RememberMeTokenCacheModel
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
-		token = objectInput.readUTF();
+		value = objectInput.readUTF();
 	}
 
 	@Override
@@ -151,11 +151,11 @@ public class RememberMeTokenCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(expirationDate);
 
-		if (token == null) {
+		if (value == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(token);
+			objectOutput.writeUTF(value);
 		}
 	}
 
@@ -165,6 +165,6 @@ public class RememberMeTokenCacheModel
 	public long userId;
 	public long createDate;
 	public long expirationDate;
-	public String token;
+	public String value;
 
 }

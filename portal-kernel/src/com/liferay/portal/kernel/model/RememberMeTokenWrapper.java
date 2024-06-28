@@ -38,7 +38,7 @@ public class RememberMeTokenWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("expirationDate", getExpirationDate());
-		attributes.put("token", getToken());
+		attributes.put("value", getValue());
 
 		return attributes;
 	}
@@ -81,10 +81,10 @@ public class RememberMeTokenWrapper
 			setExpirationDate(expirationDate);
 		}
 
-		String token = (String)attributes.get("token");
+		String value = (String)attributes.get("value");
 
-		if (token != null) {
-			setToken(token);
+		if (value != null) {
+			setValue(value);
 		}
 	}
 
@@ -154,16 +154,6 @@ public class RememberMeTokenWrapper
 	}
 
 	/**
-	 * Returns the token of this remember me token.
-	 *
-	 * @return the token of this remember me token
-	 */
-	@Override
-	public String getToken() {
-		return model.getToken();
-	}
-
-	/**
 	 * Returns the user ID of this remember me token.
 	 *
 	 * @return the user ID of this remember me token
@@ -181,6 +171,16 @@ public class RememberMeTokenWrapper
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
+	}
+
+	/**
+	 * Returns the value of this remember me token.
+	 *
+	 * @return the value of this remember me token
+	 */
+	@Override
+	public String getValue() {
+		return model.getValue();
 	}
 
 	@Override
@@ -249,16 +249,6 @@ public class RememberMeTokenWrapper
 	}
 
 	/**
-	 * Sets the token of this remember me token.
-	 *
-	 * @param token the token of this remember me token
-	 */
-	@Override
-	public void setToken(String token) {
-		model.setToken(token);
-	}
-
-	/**
 	 * Sets the user ID of this remember me token.
 	 *
 	 * @param userId the user ID of this remember me token
@@ -276,6 +266,16 @@ public class RememberMeTokenWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	/**
+	 * Sets the value of this remember me token.
+	 *
+	 * @param value the value of this remember me token
+	 */
+	@Override
+	public void setValue(String value) {
+		model.setValue(value);
 	}
 
 	@Override

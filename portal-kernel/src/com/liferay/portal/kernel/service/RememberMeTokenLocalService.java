@@ -264,9 +264,6 @@ public interface RememberMeTokenLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRememberMeTokensCount();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<RememberMeToken> getUserRememberMeTokens(long userId);
-
 	/**
 	 * Updates the remember me token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

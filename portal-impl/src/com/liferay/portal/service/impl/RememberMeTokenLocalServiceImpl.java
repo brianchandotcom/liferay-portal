@@ -32,10 +32,8 @@ public class RememberMeTokenLocalServiceImpl
 			Consumer<String> tokenConsumer)
 		throws PwdEncryptorException {
 
-		long rememberMeTokenId = counterLocalService.increment();
-
 		RememberMeToken rememberMeToken = rememberMeTokenPersistence.create(
-			rememberMeTokenId);
+			counterLocalService.increment());
 
 		String generate = PortalUUIDUtil.generate();
 

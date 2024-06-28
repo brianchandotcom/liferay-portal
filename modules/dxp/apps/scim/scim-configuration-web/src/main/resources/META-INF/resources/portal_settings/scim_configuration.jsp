@@ -61,7 +61,7 @@ long oauthTokenExpirationDays = GetterUtil.getLong(request.getAttribute(ScimWebK
 					</div>
 				</c:when>
 				<c:when test="<%= oauthTokenExpirationDays < 0 %>">
-					<div class="alert alert-warning">
+					<div class="alert alert-danger">
 						<liferay-ui:message arguments="<%= GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION)) %>" key="scim-access-token-already-expired-date-x" translateArguments="<%= false %>" />
 					</div>
 				</c:when>

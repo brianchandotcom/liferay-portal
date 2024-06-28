@@ -74,7 +74,8 @@ public class IFrameSanitizerImplTest {
 	@Test
 	public void testSanitizeHTMLWithIFrame() throws Exception {
 		_updateCompanyConfiguration(
-			_companyId, true, false, StringPool.BLANK, StringPool.BLANK);
+			StringPool.BLANK, _companyId, true, false, StringPool.BLANK,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			_BASIC_HTML_CONTENT + _EXPECTED_IFRAME_TAG_SANDBOX_ADDED,
@@ -89,7 +90,8 @@ public class IFrameSanitizerImplTest {
 		throws Exception {
 
 		_updateCompanyConfiguration(
-			_companyId, false, false, StringPool.BLANK, StringPool.BLANK);
+			StringPool.BLANK, _companyId, false, false, StringPool.BLANK,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
@@ -104,7 +106,8 @@ public class IFrameSanitizerImplTest {
 		throws Exception {
 
 		_updateCompanyConfiguration(
-			_companyId, true, true, StringPool.BLANK, StringPool.BLANK);
+			StringPool.BLANK, _companyId, true, true, StringPool.BLANK,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			_BASIC_HTML_CONTENT,
@@ -119,7 +122,8 @@ public class IFrameSanitizerImplTest {
 		throws Exception {
 
 		_updateCompanyConfiguration(
-			_companyId, true, false, "test", StringPool.BLANK);
+			StringPool.BLANK, _companyId, true, false, "test",
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			_BASIC_HTML_CONTENT + _EXPECTED_IFRAME_TAG_SANDBOX,
@@ -134,13 +138,32 @@ public class IFrameSanitizerImplTest {
 		throws Exception {
 
 		_updateCompanyConfiguration(
-			_companyId, true, false, StringPool.BLANK, StringPool.BLANK);
+			StringPool.BLANK, _companyId, true, false, StringPool.BLANK,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG_SANDBOX,
 			_sanitize(
 				StringPool.BLANK, 0, _companyId,
 				_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG_SANDBOX,
+				ContentTypes.TEXT_HTML));
+	}
+
+	@Test
+	public void testSanitizeHTMLWithIFrameBlacklistedClassName()
+		throws Exception {
+
+		String className = RandomTestUtil.randomString();
+
+		_updateCompanyConfiguration(
+			className, _companyId, true, false, StringPool.BLANK,
+			StringPool.BLANK);
+
+		Assert.assertEquals(
+			_BASIC_HTML_CONTENT + _EXPECTED_IFRAME_TAG_SANDBOX_ADDED,
+			_sanitize(
+				className, 0, _companyId,
+				_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
 				ContentTypes.TEXT_HTML));
 	}
 
@@ -172,8 +195,8 @@ public class IFrameSanitizerImplTest {
 
 		try {
 			_updateCompanyConfiguration(
-				company.getCompanyId(), false, false, StringPool.BLANK,
-				StringPool.BLANK);
+				StringPool.BLANK, company.getCompanyId(), false, false,
+				StringPool.BLANK, StringPool.BLANK);
 
 			Assert.assertEquals(
 				_BASIC_HTML_CONTENT + _EXPECTED_IFRAME_TAG_SANDBOX_ADDED,
@@ -197,7 +220,33 @@ public class IFrameSanitizerImplTest {
 	@Test
 	public void testSanitizeHTMLWithIFrameWhitelistedAll() throws Exception {
 		_updateCompanyConfiguration(
-			_companyId, true, false, StringPool.BLANK, StringPool.STAR);
+			StringPool.BLANK, _companyId, true, false, StringPool.BLANK,
+			StringPool.STAR);
+
+		Assert.assertEquals(
+			_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+			_sanitize(
+				RandomTestUtil.randomString(), 0, _companyId,
+				_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+				ContentTypes.TEXT_HTML));
+	}
+
+	@Test
+	public void testSanitizeHTMLWithIFrameWhitelistedAllExceptClassNameBlacklisted()
+		throws Exception {
+
+		String className = RandomTestUtil.randomString();
+
+		_updateCompanyConfiguration(
+			className, _companyId, true, false, StringPool.BLANK,
+			StringPool.STAR);
+
+		Assert.assertEquals(
+			_BASIC_HTML_CONTENT + _EXPECTED_IFRAME_TAG_SANDBOX_ADDED,
+			_sanitize(
+				className, 0, _companyId,
+				_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
+				ContentTypes.TEXT_HTML));
 
 		Assert.assertEquals(
 			_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
@@ -212,7 +261,8 @@ public class IFrameSanitizerImplTest {
 		throws Exception {
 
 		_updateCompanyConfiguration(
-			_companyId, true, false, StringPool.BLANK, StringPool.BLANK);
+			StringPool.BLANK, _companyId, true, false, StringPool.BLANK,
+			StringPool.BLANK);
 
 		String className = RandomTestUtil.randomString();
 
@@ -224,7 +274,8 @@ public class IFrameSanitizerImplTest {
 				ContentTypes.TEXT_HTML));
 
 		_updateCompanyConfiguration(
-			_companyId, true, false, StringPool.BLANK, className);
+			StringPool.BLANK, _companyId, true, false, StringPool.BLANK,
+			className);
 
 		Assert.assertEquals(
 			_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
@@ -237,7 +288,8 @@ public class IFrameSanitizerImplTest {
 	@Test
 	public void testSanitizeHTMLWithInvalidContentType() throws Exception {
 		_updateCompanyConfiguration(
-			_companyId, true, false, StringPool.BLANK, StringPool.BLANK);
+			StringPool.BLANK, _companyId, true, false, StringPool.BLANK,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			_BASIC_CONTENT,
@@ -259,7 +311,8 @@ public class IFrameSanitizerImplTest {
 	@Test
 	public void testSanitizeHTMLWithNullContent() throws Exception {
 		_updateCompanyConfiguration(
-			_companyId, true, false, StringPool.BLANK, StringPool.BLANK);
+			StringPool.BLANK, _companyId, true, false, StringPool.BLANK,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			StringPool.BLANK,
@@ -271,7 +324,8 @@ public class IFrameSanitizerImplTest {
 	@Test
 	public void testSanitizeHTMLWithNullContentType() throws Exception {
 		_updateCompanyConfiguration(
-			_companyId, true, false, StringPool.BLANK, StringPool.BLANK);
+			StringPool.BLANK, _companyId, true, false, StringPool.BLANK,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			_BASIC_HTML_CONTENT + _INITIAL_IFRAME_TAG,
@@ -283,7 +337,8 @@ public class IFrameSanitizerImplTest {
 	@Test
 	public void testSanitizeHTMLWithoutIFrame() throws Exception {
 		_updateCompanyConfiguration(
-			_companyId, true, false, StringPool.BLANK, StringPool.BLANK);
+			StringPool.BLANK, _companyId, true, false, StringPool.BLANK,
+			StringPool.BLANK);
 
 		Assert.assertEquals(
 			_BASIC_HTML_CONTENT,
@@ -303,8 +358,9 @@ public class IFrameSanitizerImplTest {
 	}
 
 	private void _updateCompanyConfiguration(
-			long companyId, boolean enabled, boolean removeIFrameTags,
-			String sandboxAttributeValues, String whitelist)
+			String blacklist, long companyId, boolean enabled,
+			boolean removeIFrameTags, String sandboxAttributeValues,
+			String whitelist)
 		throws Exception {
 
 		ConfigurationTestUtil.updateConfiguration(
@@ -313,6 +369,8 @@ public class IFrameSanitizerImplTest {
 				_configurationProvider.saveCompanyConfiguration(
 					companyId, _CONFIGURATION_PID,
 					HashMapDictionaryBuilder.<String, Object>put(
+						"blacklist", blacklist
+					).put(
 						"enabled", enabled
 					).put(
 						"removeIFrameTags", removeIFrameTags

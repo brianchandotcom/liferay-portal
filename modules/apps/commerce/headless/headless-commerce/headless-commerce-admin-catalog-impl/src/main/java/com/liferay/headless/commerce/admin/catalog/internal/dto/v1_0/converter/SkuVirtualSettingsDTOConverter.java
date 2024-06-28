@@ -101,6 +101,9 @@ public class SkuVirtualSettingsDTOConverter
 				setDuration(
 					() -> TimeUnit.MILLISECONDS.toDays(
 						cpDefinitionVirtualSetting.getDuration()));
+				setId(
+					cpDefinitionVirtualSetting::
+						getCPDefinitionVirtualSettingId);
 				setMaxUsages(cpDefinitionVirtualSetting::getMaxUsages);
 				setOverride(cpDefinitionVirtualSetting::isOverride);
 				setSampleSrc(

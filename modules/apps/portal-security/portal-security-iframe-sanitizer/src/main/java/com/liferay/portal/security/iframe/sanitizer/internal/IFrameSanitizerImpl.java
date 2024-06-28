@@ -47,6 +47,7 @@ public class IFrameSanitizerImpl implements Sanitizer {
 			Validator.isNull(content) || Validator.isNull(contentType) ||
 			!contentType.equals(ContentTypes.TEXT_HTML) ||
 			_isWhitelisted(
+				_iFrameConfigurationHelper.getCompanyBlacklist(companyId),
 				className, classPK,
 				_iFrameConfigurationHelper.getCompanyWhitelist(companyId))) {
 
@@ -93,9 +94,18 @@ public class IFrameSanitizerImpl implements Sanitizer {
 	}
 
 	private boolean _isWhitelisted(
-		String className, long classPK, Set<String> whitelist) {
+		Set<String> blacklist, String className, long classPK,
+		Set<String> whitelist) {
 
 		String classNameAndClassPK = className + StringPool.POUND + classPK;
+
+		for (String blacklistItem : blacklist) {
+			if (blacklistItem.equals(StringPool.STAR) ||
+				classNameAndClassPK.startsWith(blacklistItem)) {
+
+				return false;
+			}
+		}
 
 		for (String whitelistItem : whitelist) {
 			if (whitelistItem.equals(StringPool.STAR) ||

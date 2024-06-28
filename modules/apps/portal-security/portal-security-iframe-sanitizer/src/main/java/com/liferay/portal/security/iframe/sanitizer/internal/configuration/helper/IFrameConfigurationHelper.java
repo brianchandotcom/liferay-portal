@@ -40,6 +40,10 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class IFrameConfigurationHelper {
 
+	public Set<String> getCompanyBlacklist(long companyId) {
+		return _companyBlacklist.getOrDefault(companyId, _defaultBlacklist);
+	}
+
 	public IFrameConfiguration getCompanyIFrameConfiguration(long companyId) {
 		return _companyConfigurationBeans.getOrDefault(
 			companyId, _defaultIFrameConfiguration);
@@ -76,6 +80,38 @@ public class IFrameConfigurationHelper {
 
 		_defaultWhitelist = SetUtil.fromArray(
 			_defaultIFrameConfiguration.whitelist());
+		_defaultBlacklist = SetUtil.fromArray(
+			_defaultIFrameConfiguration.blacklist());
+	}
+
+	private Set<String> _getBlacklist(long companyId) {
+		IFrameConfiguration iFrameConfiguration = getCompanyIFrameConfiguration(
+			companyId);
+
+		if (iFrameConfiguration == null) {
+			return Collections.emptySet();
+		}
+
+		return _getClassNames(
+			SetUtil.fromArray(iFrameConfiguration.blacklist()));
+	}
+
+	private Set<String> _getClassNames(Set<String> classNames) {
+		if (SetUtil.isEmpty(classNames)) {
+			return Collections.emptySet();
+		}
+
+		for (String className : classNames) {
+			className = className.trim();
+
+			if (!className.isEmpty()) {
+				className = _stripTrailingStar(className);
+
+				classNames.add(className);
+			}
+		}
+
+		return classNames;
 	}
 
 	private Set<String> _getWhitelist(long companyId) {
@@ -86,24 +122,8 @@ public class IFrameConfigurationHelper {
 			return Collections.emptySet();
 		}
 
-		Set<String> whitelist = SetUtil.fromArray(
-			iFrameConfiguration.whitelist());
-
-		if (SetUtil.isEmpty(whitelist)) {
-			return Collections.emptySet();
-		}
-
-		for (String whitelistItem : whitelist) {
-			whitelistItem = whitelistItem.trim();
-
-			if (!whitelistItem.isEmpty()) {
-				whitelistItem = _stripTrailingStar(whitelistItem);
-
-				whitelist.add(whitelistItem);
-			}
-		}
-
-		return whitelist;
+		return _getClassNames(
+			SetUtil.fromArray(iFrameConfiguration.whitelist()));
 	}
 
 	private String _stripTrailingStar(String item) {
@@ -120,11 +140,14 @@ public class IFrameConfigurationHelper {
 		return item;
 	}
 
+	private final Map<Long, Set<String>> _companyBlacklist =
+		new ConcurrentHashMap<>();
 	private final Map<Long, IFrameConfiguration> _companyConfigurationBeans =
 		new ConcurrentHashMap<>();
 	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
 	private final Map<Long, Set<String>> _companyWhitelist =
 		new ConcurrentHashMap<>();
+	private volatile Set<String> _defaultBlacklist = new HashSet<>();
 	private volatile IFrameConfiguration _defaultIFrameConfiguration;
 	private volatile Set<String> _defaultWhitelist = new HashSet<>();
 	private ServiceRegistration<ManagedServiceFactory> _serviceRegistration;
@@ -158,6 +181,7 @@ public class IFrameConfigurationHelper {
 					ConfigurableUtil.createConfigurable(
 						IFrameConfiguration.class, dictionary));
 				_companyIds.put(pid, companyId);
+				_companyBlacklist.put(companyId, _getBlacklist(companyId));
 				_companyWhitelist.put(companyId, _getWhitelist(companyId));
 			}
 		}
@@ -167,6 +191,7 @@ public class IFrameConfigurationHelper {
 
 			if (companyId != null) {
 				_companyConfigurationBeans.remove(companyId);
+				_companyBlacklist.remove(companyId);
 				_companyWhitelist.remove(companyId);
 			}
 		}

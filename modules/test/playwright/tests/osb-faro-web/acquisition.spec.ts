@@ -144,7 +144,7 @@ test('check if acquisition card displays PAID SEARCH channel after receiving an 
 	});
 
 	await test.step('delete site on DXP side', async () => {
-		navigateToDXPandDeleteSite({apiHelpers, page, site});
+		await navigateToDXPandDeleteSite({apiHelpers, page, site});
 	});
 });
 
@@ -210,7 +210,7 @@ test('check if acquisition card displays DIRECT channel after receiving an event
 	});
 
 	await test.step('delete site on DXP side', async () => {
-		navigateToDXPandDeleteSite({apiHelpers, page, site});
+		await navigateToDXPandDeleteSite({apiHelpers, page, site});
 	});
 });
 
@@ -276,7 +276,7 @@ test('check if acquisition card displays SOCIAL channel after receiving an event
 	});
 
 	await test.step('delete site on DXP side', async () => {
-		navigateToDXPandDeleteSite({apiHelpers, page, site});
+		await navigateToDXPandDeleteSite({apiHelpers, page, site});
 	});
 });
 
@@ -342,7 +342,7 @@ test('check if acquisition card displays EMAIL channel after receiving an event'
 	});
 
 	await test.step('delete site on DXP side', async () => {
-		navigateToDXPandDeleteSite({apiHelpers, page, site});
+		await navigateToDXPandDeleteSite({apiHelpers, page, site});
 	});
 });
 
@@ -408,7 +408,7 @@ test('check if acquisition card displays AFFILIATES channel after receiving an e
 	});
 
 	await test.step('delete site on DXP side', async () => {
-		navigateToDXPandDeleteSite({apiHelpers, page, site});
+		await navigateToDXPandDeleteSite({apiHelpers, page, site});
 	});
 });
 
@@ -474,7 +474,7 @@ test('check if acquisition card displays ORGANIC channel after receiving an even
 	});
 
 	await test.step('delete site on DXP side', async () => {
-		navigateToDXPandDeleteSite({apiHelpers, page, site});
+		await navigateToDXPandDeleteSite({apiHelpers, page, site});
 	});
 });
 
@@ -540,7 +540,7 @@ test('check if acquisition card displays DISPLAY channel after receiving an even
 	});
 
 	await test.step('delete site on DXP side', async () => {
-		navigateToDXPandDeleteSite({apiHelpers, page, site});
+		await navigateToDXPandDeleteSite({apiHelpers, page, site});
 	});
 });
 
@@ -606,7 +606,7 @@ test('check if acquisition card displays REFERRAL channel after receiving an eve
 	});
 
 	await test.step('delete site on DXP side', async () => {
-		navigateToDXPandDeleteSite({apiHelpers, page, site});
+		await navigateToDXPandDeleteSite({apiHelpers, page, site});
 	});
 });
 
@@ -672,6 +672,6 @@ test('check if acquisition card displays OTHER channel after receiving an event'
 	});
 
 	await test.step('delete site on DXP side', async () => {
-		navigateToDXPandDeleteSite({apiHelpers, page, site});
+		await navigateToDXPandDeleteSite({apiHelpers, page, site});
 	});
 });

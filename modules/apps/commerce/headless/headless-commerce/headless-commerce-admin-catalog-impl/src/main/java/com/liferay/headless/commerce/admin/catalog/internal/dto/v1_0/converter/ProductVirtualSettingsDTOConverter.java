@@ -98,6 +98,9 @@ public class ProductVirtualSettingsDTOConverter
 				setDuration(
 					() -> TimeUnit.MILLISECONDS.toDays(
 						cpDefinitionVirtualSetting.getDuration()));
+				setId(
+					cpDefinitionVirtualSetting::
+						getCPDefinitionVirtualSettingId);
 				setMaxUsages(cpDefinitionVirtualSetting::getMaxUsages);
 				setProductVirtualSettingsFileEntries(
 					() -> _toProductVirtualSettingsFileEntries(

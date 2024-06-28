@@ -92,6 +92,22 @@ public class CPDefinitionVirtualSettingServiceImpl
 	}
 
 	@Override
+	public CPDefinitionVirtualSetting getCPDefinitionVirtualSetting(
+			long cpDefinitionVirtualSettingId)
+		throws PortalException {
+
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			cpDefinitionVirtualSettingLocalService.
+				getCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId);
+
+		_checkPermission(
+			cpDefinitionVirtualSetting.getClassName(),
+			cpDefinitionVirtualSetting.getClassPK(), ActionKeys.VIEW);
+
+		return cpDefinitionVirtualSetting;
+	}
+
+	@Override
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 			long cpDefinitionVirtualSettingId, long fileEntryId, String url,
 			int activationStatus, long duration, int maxUsages,

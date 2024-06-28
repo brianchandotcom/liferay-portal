@@ -21,10 +21,10 @@ export class MessageBoardsWidgetPage {
 	}
 
 	async addMessageBoardsPortlet(site: Site) {
-		const layout = await this.apiHelpers.jsonWebServicesLayout.addLayout(
-			site.id,
-			getRandomString()
-		);
+		const layout = await this.apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
 
 		await this.page.goto(
 			`/web${site.friendlyUrlPath}${layout.friendlyURL}`

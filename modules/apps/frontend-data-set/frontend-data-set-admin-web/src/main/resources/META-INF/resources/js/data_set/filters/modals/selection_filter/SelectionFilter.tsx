@@ -281,7 +281,7 @@ function Body({
 		}
 	};
 
-	function setAPISource(
+	function getAPIHeadlessSourceURL(
 		restApplication: string | null,
 		restEndpoint: string | null
 	): string | null {
@@ -289,11 +289,7 @@ function Body({
 			return null;
 		}
 
-		const source = `/o${restApplication.replace('v1.0/', '')}${restEndpoint}`;
-		setSource(source);
-		setSourceValidationError(false);
-
-		return source;
+		return `/o${restApplication.replace('v1.0/', '')}${restEndpoint}`;
 	}
 
 	useEffect(() => {
@@ -595,10 +591,14 @@ function Body({
 													);
 												}
 
-												setAPISource(
-													restApplication,
-													selectedRESTEndpoint
-												);
+												const source =
+													getAPIHeadlessSourceURL(
+														restApplication,
+														selectedRESTEndpoint
+													);
+
+												setSource(source as string);
+												setSourceValidationError(false);
 
 												setSelectedRESTSchema(
 													selectedRESTSchema

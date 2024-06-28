@@ -107,20 +107,6 @@ function ApiRestApplication({
 		return true;
 	};
 
-	async function getAPIValues(source: string) {
-		const response = await fetch(source);
-
-		if (!response.ok) {
-			openDefaultFailureToast();
-
-			return [];
-		}
-
-		const responseJSON = await response.json();
-
-		return responseJSON;
-	}
-
 	async function getSourceItems({
 		preselectedValueInput,
 		selectedItemKey,
@@ -139,8 +125,19 @@ function ApiRestApplication({
 			return;
 		}
 
-		const sourceItems = await getAPIValues(source as string).then(
-			(apiValues) => {
+		const sourceItems = await fetch(source as string)
+			.then((response) => {
+				if (!response.ok) {
+					openDefaultFailureToast();
+
+					return [];
+				}
+
+				const responseJSON = response.json();
+
+				return responseJSON;
+			})
+			.then((apiValues) => {
 				return !apiValues.items.length
 					? []
 					: apiValues.items
@@ -156,8 +153,7 @@ function ApiRestApplication({
 									value: String(item[selectedItemKey]),
 								};
 							});
-			}
-		);
+			});
 
 		return sourceItems;
 	}
@@ -745,8 +741,8 @@ function ApiRestApplication({
 											source,
 										}).then((sourceItems) =>
 											onChange({
-												selectedItemKey: item,
-												selectedItemLabel,
+												selectedItemKey,
+												selectedItemLabel: item,
 												selectedRESTApplication,
 												selectedRESTEndpoint,
 												selectedRESTSchema,

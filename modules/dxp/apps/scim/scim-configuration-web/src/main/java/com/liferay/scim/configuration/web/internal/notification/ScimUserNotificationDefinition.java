@@ -29,8 +29,12 @@ public class ScimUserNotificationDefinition extends UserNotificationDefinition {
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(
+				"email", UserNotificationDeliveryConstants.TYPE_EMAIL, true,
+				false));
+		addUserNotificationDeliveryType(
+			new UserNotificationDeliveryType(
 				"website", UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
-				true));
+				false));
 	}
 
 }

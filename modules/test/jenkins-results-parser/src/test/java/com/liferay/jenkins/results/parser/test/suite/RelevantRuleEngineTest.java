@@ -17,8 +17,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -26,10 +26,17 @@ import org.junit.Test;
  */
 public class RelevantRuleEngineTest {
 
+	@After
+	public void tearDown() {
+		RelevantRuleEngine.clear();
+	}
+
 	@Test
 	public void testModifiedFileForPlaywrightBatch() {
 		RelevantRuleEngine relevantRuleEngine = RelevantRuleEngine.getInstance(
 			_baseDir);
+
+		System.out.println(relevantRuleEngine);
 
 		List<RelevantRule> relevantRules =
 			relevantRuleEngine.getMatchingRelevantRules(
@@ -97,6 +104,8 @@ public class RelevantRuleEngineTest {
 	public void testModifiedFileInBaseDirAndModule1Dir() {
 		RelevantRuleEngine relevantRuleEngine = RelevantRuleEngine.getInstance(
 			_baseDir);
+
+		System.out.println(relevantRuleEngine);
 
 		List<RelevantRule> relevantRules =
 			relevantRuleEngine.getMatchingRelevantRules(

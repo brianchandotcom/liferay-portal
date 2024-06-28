@@ -122,7 +122,7 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 	private static final String _SLAVE_LABEL_DEFAULT = "!master";
 
 	private static final Pattern _testFilePathPattern = Pattern.compile(
-		".+/test/playwright/tests/(?<specFilePath>.+)");
+		".+/playwright/tests/(?<specFilePath>.+)");
 
 	private final Integer _minimumSlaveRAM;
 	private final String _slaveLabel;

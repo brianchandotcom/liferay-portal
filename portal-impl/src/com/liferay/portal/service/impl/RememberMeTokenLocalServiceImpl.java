@@ -86,7 +86,7 @@ public class RememberMeTokenLocalServiceImpl
 
 	@Override
 	public List<RememberMeToken> getUserRememberMeTokens(long userId) {
-		return RememberMeTokenUtil.findByUserId(userId);
+		return rememberMeTokenPersistence.findByUserId(userId);
 	}
 
 	@BeanReference(type = UserLocalService.class)

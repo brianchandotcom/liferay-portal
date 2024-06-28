@@ -75,6 +75,41 @@ export class JournalEditArticlePage {
 			.click();
 	}
 
+	async createArticleForStructure({
+		structureName,
+		title
+	}: {
+		structureName?: string;
+		title?: string;
+	} = {}) {
+		await fillAndClickOutside(
+			this.page,
+			this.page.getByPlaceholder('Untitled ' + structureName),
+			title
+		);
+
+		await this.publishArticle();
+
+		await waitForSuccessAlert(
+			this.page,
+			`Success:${title} was created successfully.`
+		);
+	}
+
+	async publishArticle() {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: 'Publish With Permissions',
+			}),
+			trigger: this.page.getByRole('button', {
+				name: 'Select and Confirm Publish Settings',
+			}),
+		});
+
+		await this.page.getByRole('button', {exact: true, name: 'Publish'}).click();
+	}
+
 	async editArticle(title: string) {
 		await this.journalPage.goToJournalArticleAction('Edit', title);
 

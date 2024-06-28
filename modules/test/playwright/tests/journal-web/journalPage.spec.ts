@@ -8,9 +8,9 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 import getDataStructureDefinition from './utils/getDataStructureDefinition';
-import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -21,6 +21,7 @@ export const test = mergeTests(
 
 test('LPP-50468 After clicking on Clear (filter by structrure) you can see all the web contents', async ({
 	apiHelpers,
+	journalEditArticlePage,
 	journalPage,
 	page,
 	site,
@@ -35,19 +36,25 @@ test('LPP-50468 After clicking on Clear (filter by structrure) you can see all t
 	});
 
 	//2) Create structure
+	const structureName = 'Structure Test';
+
 	const dataDefinition = getDataStructureDefinition({
 		defaultLanguageId: 'en_US',
 		fields: [{name: 'Text', repeatable: false}],
-		name: 'Structure Test',
+		name: structureName,
 	});
 
-	const structure = await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+	await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
 
 	//3) Create web content based on structure
-	await apiHelpers.jsonWebServicesJournal.addWebContent({
-		ddmStructureId: structure.id,
-		groupId: site.id,
-		titleMap: {en_US: 'Second Web Content'}
+	await journalEditArticlePage.goto({
+		siteUrl: site.friendlyUrlPath,
+		structureName,
+	});
+
+	await journalEditArticlePage.createArticleForStructure({
+		structureName,
+		title: 'Second Web Content',
 	});
 
 	await journalPage.goto(site.friendlyUrlPath);
@@ -63,6 +70,8 @@ test('LPP-50468 After clicking on Clear (filter by structrure) you can see all t
 	await page.getByLabel('Filter', { exact: true }).click();
 	await page.getByRole('menuitem', { name: 'Structures' }).click();
 	await page.frameLocator('iframe[title="Structures"]').getByRole('cell', { name: 'Basic Web Content' }).click();
+
+	await page.getByRole('heading', {name: 'Search Results'}).waitFor();
 
 	await expect(
 		page.getByRole('link', { name: 'Second Web content' })

@@ -6,8 +6,8 @@
 import {Checkbox} from '../../../components/Checkbox/Checkbox';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {PRODUCT_SUPPORT_SPECIFICATION_KEY} from '../../../enums/Product';
-import {useGetAppContext} from '../GetAppContextProvider';
 import {Liferay} from '../../../liferay/liferay';
+import {useGetAppContext} from '../GetAppContextProvider';
 
 const LicenseTermsCheckbox = () => {
 	const [

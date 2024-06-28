@@ -7,9 +7,11 @@ package com.liferay.blogs.item.selector.web.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -19,6 +21,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -52,6 +55,23 @@ public class BlogsItemSelectorViewDisplayContextTest {
 
 	@Test
 	public void testShowDragAndDropZone() throws Exception {
+		Assert.assertTrue(
+			ReflectionTestUtil.invoke(
+				_getBlogsItemSelectorViewDisplayContext(),
+				"showDragAndDropZone", new Class<?>[] {ThemeDisplay.class},
+				_getThemeDisplay()));
+	}
+
+	@FeatureFlags("LPD-29516")
+	@Test
+	public void testShowDragAndDropZoneWithWorkflowEnabledAndFeatureFlagEnabled()
+		throws Exception {
+
+		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			_group.getGroupId(), BlogsEntry.class.getName(), 0, 0,
+			"Single Approver", 1);
+
 		Assert.assertTrue(
 			ReflectionTestUtil.invoke(
 				_getBlogsItemSelectorViewDisplayContext(),
@@ -107,5 +127,9 @@ public class BlogsItemSelectorViewDisplayContextTest {
 		type = ItemSelectorView.class
 	)
 	private ItemSelectorView<BlogsItemSelectorCriterion> _itemSelectorView;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

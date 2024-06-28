@@ -32,24 +32,6 @@ export const test = mergeTests(
 	loginTest()
 );
 
-async function navigateToDXPandDeleteSite({
-	apiHelpers,
-	page,
-	site,
-}: {
-	apiHelpers: ApiHelpers;
-	page: Page;
-	site: Site;
-}) {
-	await page.goto(liferayConfig.environment.baseUrl);
-
-	await expect(page.getByText('Welcome to Liferay')).toBeVisible({
-		timeout: 100 * 1000,
-	});
-
-	await apiHelpers.headlessSite.deleteSite(String(site.id));
-}
-
 async function navigateToDXPByChannelViaURL({
 	page,
 	pageName,

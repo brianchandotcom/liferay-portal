@@ -50,6 +50,20 @@ export const createSitePage = async function ({
 	});
 }
 
+export async function navigateToDXPandDeleteSite({
+	apiHelpers,
+	page,
+	site,
+}: {
+	apiHelpers: ApiHelpers;
+	page: Page;
+	site: Site;
+}) {
+	await page.goto(liferayConfig.environment.baseUrl);
+
+	await apiHelpers.headlessSite.deleteSite(String(site.id));
+}
+
 export async function navigateToSitePage({
 	page,
 	pageName,

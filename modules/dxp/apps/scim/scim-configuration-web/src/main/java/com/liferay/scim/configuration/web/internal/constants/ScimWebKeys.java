@@ -17,6 +17,9 @@ public class ScimWebKeys {
 	public static final String SCIM_OAUTH2_ACCESS_TOKEN =
 		"SCIM_OAUTH2_ACCESS_TOKEN";
 
+	public static final String SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION =
+		"SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION";
+
 	public static final String SCIM_OAUTH2_APPLICATION_NAME =
 		"SCIM_OAUTH2_APPLICATION_NAME";
 

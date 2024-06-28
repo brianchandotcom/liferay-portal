@@ -52,8 +52,14 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 		</div>
 	</div>
 
-	<label for="<portlet:namespace />generateAccessToken">
-		<liferay-ui:message key="scim-generate-access-token" />
+		<c:if test="<%= Validator.isNotNull(oAuth2AccessToken) %>">
+			<div class="alert alert-warning">
+				<liferay-ui:message arguments="<%= GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION)) %>" key="scim-access-token-expiration-date-x" translateArguments="<%= false %>" />
+			</div>
+		</c:if>
+
+		<label for="<portlet:namespace />genetareAccessToken">
+			<liferay-ui:message key="scim-generate-access-token" />
 
 		<span aria-label="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>">
 			<clay:icon

@@ -160,9 +160,7 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeNoFriendlyURLEntryLocalization()
-		throws Exception {
-
+	public void testUpgradeNoFriendlyURLEntryLocalization() throws Exception {
 		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
 
 		Layout draftLayout1 = layout1.fetchDraftLayout();

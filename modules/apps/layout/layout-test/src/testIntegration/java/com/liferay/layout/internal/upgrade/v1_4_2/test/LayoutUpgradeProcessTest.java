@@ -136,9 +136,7 @@ public class LayoutUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeWhenPrivateLayoutAlreadyExists()
-		throws Exception {
-
+	public void testUpgradeWhenPrivateLayoutAlreadyExists() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,

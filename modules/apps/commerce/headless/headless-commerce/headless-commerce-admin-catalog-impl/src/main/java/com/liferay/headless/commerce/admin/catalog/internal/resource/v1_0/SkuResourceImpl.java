@@ -5,7 +5,6 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
-import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
@@ -488,29 +487,10 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			for (SkuUnitOfMeasure skuUnitOfMeasure :
 					sku.getSkuUnitOfMeasures()) {
 
-				CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-					SkuUnitOfMeasureUtil.addOrUpdateCPInstanceUnitOfMeasure(
-						_cpInstanceUnitOfMeasureService,
-						_commercePriceEntryService, cpInstance,
-						skuUnitOfMeasure, serviceContext);
-
-				if (skuUnitOfMeasure.getBasePrice() != null) {
-					SkuUnitOfMeasureUtil.updateCommercePriceEntry(
-						_commercePriceEntryService, cpInstance,
-						cpInstanceUnitOfMeasure,
-						skuUnitOfMeasure.getBasePrice(),
-						CommercePriceListConstants.TYPE_PRICE_LIST,
-						serviceContext);
-				}
-
-				if (skuUnitOfMeasure.getPromoPrice() != null) {
-					SkuUnitOfMeasureUtil.updateCommercePriceEntry(
-						_commercePriceEntryService, cpInstance,
-						cpInstanceUnitOfMeasure,
-						skuUnitOfMeasure.getPromoPrice(),
-						CommercePriceListConstants.TYPE_PROMOTION,
-						serviceContext);
-				}
+				SkuUnitOfMeasureUtil.addOrUpdateCPInstanceUnitOfMeasure(
+					_cpInstanceUnitOfMeasureService, _commercePriceEntryService,
+					_commercePriceListLocalService, cpInstance,
+					skuUnitOfMeasure, serviceContext);
 			}
 		}
 

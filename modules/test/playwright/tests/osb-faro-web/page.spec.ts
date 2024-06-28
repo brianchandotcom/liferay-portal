@@ -12,9 +12,7 @@ import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import {
-	syncAnalyticsCloud,
-} from '../analytics-settings-web/utils/analyticsSettings';
+import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
 import {createChannel, switchChannel} from './utils/channel';
 import {createIndividuals} from './utils/individuals';
 import {
@@ -22,9 +20,9 @@ import {
 	navigateToACSitesPageViaURL,
 	navigateToACWorkspace,
 } from './utils/navigation';
+import {createSitePage, navigateToSitePage} from './utils/portal';
 import {changeTimeFilter} from './utils/time-filter';
 import {expectNotToBeVisible, expectToBeVisible} from './utils/utils';
-import {createSitePage, navigateToSitePage} from './utils/portal';
 
 export const test = mergeTests(
 	apiHelpersTest,

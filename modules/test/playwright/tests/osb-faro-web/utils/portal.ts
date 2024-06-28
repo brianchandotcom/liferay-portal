@@ -48,7 +48,7 @@ export const createSitePage = async function ({
 		siteId: group.groupId,
 		title: pageTitle,
 	});
-}
+};
 
 export async function navigateToDXPandDeleteSite({
 	apiHelpers,

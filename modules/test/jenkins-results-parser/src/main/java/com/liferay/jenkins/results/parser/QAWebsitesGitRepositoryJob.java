@@ -5,10 +5,13 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
+
 import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
@@ -61,6 +64,22 @@ public class QAWebsitesGitRepositoryJob
 
 	public List<String> getProjectNames() {
 		return _projectNames;
+	}
+
+	@Override
+	public Set<String> getRawBatchNames() {
+		for (String projectName : getProjectNames()) {
+			if (projectName.equals("playwright")) {
+				return new HashSet<>(
+					Collections.singletonList("qa-websites-playwright-jdk8"));
+			}
+		}
+
+		JobProperty jobProperty = getJobProperty("test.batch.names");
+
+		recordJobProperty(jobProperty);
+
+		return getSetFromString(jobProperty.getValue());
 	}
 
 	@Override

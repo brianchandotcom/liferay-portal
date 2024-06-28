@@ -136,7 +136,7 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 	public static
 		com.liferay.commerce.product.type.virtual.model.
 			CPDVirtualSettingFileEntry deleteCPDVirtualSettingFileEntry(
-					HttpPrincipal httpPrincipal, String className, long classPK,
+					HttpPrincipal httpPrincipal,
 					long cpdVirtualSettingFileEntryId)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -145,6 +145,51 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 				CPDVirtualSettingFileEntryServiceUtil.class,
 				"deleteCPDVirtualSettingFileEntry",
 				_deleteCPDVirtualSettingFileEntryParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpdVirtualSettingFileEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.type.virtual.model.
+				CPDVirtualSettingFileEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static
+		com.liferay.commerce.product.type.virtual.model.
+			CPDVirtualSettingFileEntry deleteCPDVirtualSettingFileEntry(
+					HttpPrincipal httpPrincipal, String className, long classPK,
+					long cpdVirtualSettingFileEntryId)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPDVirtualSettingFileEntryServiceUtil.class,
+				"deleteCPDVirtualSettingFileEntry",
+				_deleteCPDVirtualSettingFileEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK, cpdVirtualSettingFileEntryId);
@@ -189,7 +234,7 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDVirtualSettingFileEntryServiceUtil.class,
 				"fetchCPDVirtualSettingFileEntry",
-				_fetchCPDVirtualSettingFileEntryParameterTypes3);
+				_fetchCPDVirtualSettingFileEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpdVirtualSettingFileEntryId);
@@ -234,7 +279,7 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDVirtualSettingFileEntryServiceUtil.class,
 				"getCPDVirtualSettingFileEntries",
-				_getCPDVirtualSettingFileEntriesParameterTypes4);
+				_getCPDVirtualSettingFileEntriesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK, cpDefinitionVirtualSettingId,
@@ -281,7 +326,7 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDVirtualSettingFileEntryServiceUtil.class,
 				"getCPDVirtualSettingFileEntry",
-				_getCPDVirtualSettingFileEntryParameterTypes5);
+				_getCPDVirtualSettingFileEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpdVirtualSettingFileEntryId);
@@ -327,7 +372,7 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPDVirtualSettingFileEntryServiceUtil.class,
 				"updateCPDefinitionVirtualSetting",
-				_updateCPDefinitionVirtualSettingParameterTypes6);
+				_updateCPDefinitionVirtualSettingParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpdVirtualSettingFileEntryId, fileEntryId, url,
@@ -376,22 +421,26 @@ public class CPDVirtualSettingFileEntryServiceHttp {
 	};
 	private static final Class<?>[]
 		_deleteCPDVirtualSettingFileEntryParameterTypes2 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_deleteCPDVirtualSettingFileEntryParameterTypes3 = new Class[] {
 			String.class, long.class, long.class
 		};
 	private static final Class<?>[]
-		_fetchCPDVirtualSettingFileEntryParameterTypes3 = new Class[] {
+		_fetchCPDVirtualSettingFileEntryParameterTypes4 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_getCPDVirtualSettingFileEntriesParameterTypes4 = new Class[] {
+		_getCPDVirtualSettingFileEntriesParameterTypes5 = new Class[] {
 			String.class, long.class, long.class, int.class, int.class
 		};
 	private static final Class<?>[]
-		_getCPDVirtualSettingFileEntryParameterTypes5 = new Class[] {
+		_getCPDVirtualSettingFileEntryParameterTypes6 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_updateCPDefinitionVirtualSettingParameterTypes6 = new Class[] {
+		_updateCPDefinitionVirtualSettingParameterTypes7 = new Class[] {
 			long.class, long.class, String.class, String.class
 		};
 

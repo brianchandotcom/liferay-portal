@@ -63,6 +63,11 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 			String className, long classPK)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionVirtualSetting getCPDefinitionVirtualSetting(
+			long cpDefinitionVirtualSettingId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -80,6 +80,26 @@ public class CPDVirtualSettingFileEntryServiceImpl
 
 	@Override
 	public CPDVirtualSettingFileEntry deleteCPDVirtualSettingFileEntry(
+			long cpdVirtualSettingFileEntryId)
+		throws PortalException {
+
+		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
+			cpdVirtualSettingFileEntryLocalService.
+				getCPDVirtualSettingFileEntry(cpdVirtualSettingFileEntryId);
+
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			cpdVirtualSettingFileEntry.getCPDefinitionVirtualSetting();
+
+		_checkPermission(
+			cpDefinitionVirtualSetting.getClassName(),
+			cpDefinitionVirtualSetting.getClassPK(), ActionKeys.UPDATE);
+
+		return cpdVirtualSettingFileEntryLocalService.
+			deleteCPDVirtualSettingFileEntry(cpdVirtualSettingFileEntryId);
+	}
+
+	@Override
+	public CPDVirtualSettingFileEntry deleteCPDVirtualSettingFileEntry(
 			String className, long classPK, long cpdVirtualSettingFileEntryId)
 		throws PortalException {
 
@@ -164,15 +184,11 @@ public class CPDVirtualSettingFileEntryServiceImpl
 				cpdVirtualSettingFileEntryId, fileEntryId, url, version);
 	}
 
-	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)
+	private void _checkCommerceCatalog(long groupId, String actionId)
 		throws PortalException {
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
-			cpDefinitionId);
-
 		CommerceCatalog commerceCatalog =
-			_commerceCatalogLocalService.fetchCommerceCatalogByGroupId(
-				cpDefinition.getGroupId());
+			_commerceCatalogLocalService.fetchCommerceCatalogByGroupId(groupId);
 
 		if (commerceCatalog == null) {
 			throw new PrincipalException();
@@ -194,7 +210,10 @@ public class CPDVirtualSettingFileEntryServiceImpl
 			cpDefinitionId = cpInstance.getCPDefinitionId();
 		}
 
-		_checkCommerceCatalog(cpDefinitionId, action);
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpDefinitionId);
+
+		_checkCommerceCatalog(cpDefinition.getGroupId(), action);
 	}
 
 	@Reference

@@ -19,3 +19,33 @@ export async function acceptsCookiesBanner(page: Page) {
 	}
 }
 
+export const createSitePage = async function ({
+	apiHelpers,
+	pageTitle,
+	siteName = 'Guest',
+}: {
+	apiHelpers: ApiHelpers;
+	pageTitle: string;
+	siteName?: string;
+}) {
+	const company =
+		await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+			'liferay.com'
+		);
+
+	const group = await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+		company.companyId,
+		siteName
+	);
+
+	return await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			}),
+		]),
+		siteId: group.groupId,
+		title: pageTitle,
+	});
+}

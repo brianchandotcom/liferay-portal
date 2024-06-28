@@ -14,13 +14,13 @@ import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {
-	createSitePage,
 	syncAnalyticsCloud,
 } from '../analytics-settings-web/utils/analyticsSettings';
 import {navigateToACSitesPageViaURL} from './utils/navigation';
 import {CardSelector} from './utils/selectors';
 import {closeSessions} from './utils/sessions';
 import {changeTimeFilter} from './utils/time-filter';
+import {createSitePage, navigateToDXPandDeleteSite} from './utils/portal';
 
 export const test = mergeTests(
 	apiHelpersTest,

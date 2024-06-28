@@ -143,9 +143,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeDisplaPageWithoutFragments()
-		throws Exception {
-
+	public void testUpgradeDisplaPageWithoutFragments() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,

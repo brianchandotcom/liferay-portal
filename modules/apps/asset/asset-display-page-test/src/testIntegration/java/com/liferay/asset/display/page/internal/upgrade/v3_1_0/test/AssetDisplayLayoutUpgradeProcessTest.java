@@ -70,9 +70,7 @@ public class AssetDisplayLayoutUpgradeProcessTest
 	}
 
 	@Test
-	public void testUpgradeTypeDefaultAssetDisplayPage()
-		throws Exception {
-
+	public void testUpgradeTypeDefaultAssetDisplayPage() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -106,9 +104,7 @@ public class AssetDisplayLayoutUpgradeProcessTest
 	}
 
 	@Test
-	public void testUpgradeTypeSpecificAssetDisplayPage()
-		throws Exception {
-
+	public void testUpgradeTypeSpecificAssetDisplayPage() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);

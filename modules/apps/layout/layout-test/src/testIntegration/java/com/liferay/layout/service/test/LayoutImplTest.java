@@ -389,6 +389,8 @@ public class LayoutImplTest {
 			masterLayout.getLayoutId(), "dialect_WAR_dialecttheme", "01",
 			StringPool.BLANK);
 
+		layout = _layoutLocalService.getLayout(layout.getPlid());
+
 		_assertThemeId(layout, "dialect_WAR_dialecttheme");
 
 		layout = _layoutLocalService.updateLookAndFeel(

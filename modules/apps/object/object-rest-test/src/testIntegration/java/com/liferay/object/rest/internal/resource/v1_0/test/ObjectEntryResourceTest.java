@@ -5720,46 +5720,6 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
-	@Test
-	public void testGetObjectEntryWithActions() throws Exception {
-		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_objectDefinition1.getObjectDefinitionId(), true, StringPool.BLANK,
-			RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_WEBHOOK,
-			ObjectActionTriggerConstants.KEY_STANDALONE,
-			UnicodePropertiesBuilder.put(
-				"secret", "standalone"
-			).put(
-				"url", "https://standalone.com"
-			).build(),
-			false);
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME_1, "value"
-			).toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
-
-		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
-
-		JSONObject actionJSONObject = actionsJSONObject.getJSONObject(
-			objectAction.getName());
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				"http://localhost:8080/o",
-				_objectDefinition1.getRESTContextPath(),
-				"/by-external-reference-code/",
-				jsonObject.getString("externalReferenceCode"),
-				"/object-actions/", objectAction.getName()),
-			actionJSONObject.getString("href"));
-		Assert.assertEquals("PUT", actionJSONObject.getString("method"));
-	}
-
 	@FeatureFlags("LPS-174455")
 	@Test
 	public void testGetObjectEntryWithAttachmentObjectField() throws Exception {

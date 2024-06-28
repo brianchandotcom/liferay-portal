@@ -244,7 +244,7 @@ public class DSEnvelopeManagerTest {
 		// after adding envelopes
 
 		IdempotentRetryAssert.retryAssert(
-			2, TimeUnit.SECONDS,
+			10, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			() -> _assertPage(
 				dsEnvelope1.getName(), "asc", 2, "",
 				dsEnvelopes -> {

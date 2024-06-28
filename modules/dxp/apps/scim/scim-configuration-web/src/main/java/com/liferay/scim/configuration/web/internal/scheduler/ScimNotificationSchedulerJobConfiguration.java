@@ -239,7 +239,7 @@ public class ScimNotificationSchedulerJobConfiguration
 
 		List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
 
-		ListUtil.filter(
+		users = ListUtil.filter(
 			users,
 			user -> {
 				if (user.getType() ==

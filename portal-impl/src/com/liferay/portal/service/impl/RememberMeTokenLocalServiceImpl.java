@@ -52,8 +52,8 @@ public class RememberMeTokenLocalServiceImpl
 
 	@Override
 	public void checkUserExpiredRememberMeTokens(long userId) {
-		List<RememberMeToken> userRememberMeTokens = getUserRememberMeTokens(
-			userId);
+		List<RememberMeToken> userRememberMeTokens =
+			rememberMeTokenPersistence.findByUserId(userId);
 
 		for (RememberMeToken rememberMeToken : userRememberMeTokens) {
 			if (rememberMeToken.isExpired()) {
@@ -82,11 +82,6 @@ public class RememberMeTokenLocalServiceImpl
 		}
 
 		return rememberMeToken;
-	}
-
-	@Override
-	public List<RememberMeToken> getUserRememberMeTokens(long userId) {
-		return rememberMeTokenPersistence.findByUserId(userId);
 	}
 
 	@BeanReference(type = UserLocalService.class)

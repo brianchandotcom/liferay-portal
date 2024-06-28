@@ -6,11 +6,11 @@
 import DOMPurify from 'isomorphic-dompurify';
 import useSWR from 'swr';
 
-import withProviders from '../../../hoc/withProviders';
-import i18n from '../../../i18n';
-import {getEulaDescription} from '../../../utils/util';
+import withProviders from '../../hoc/withProviders';
+import i18n from '../../i18n';
+import {getEulaDescription} from '../../utils/util';
 
-export function LicenseAgreement() {
+export function LicenseAgreementPage() {
 	const {data: eula = ''} = useSWR('/eula', getEulaDescription);
 
 	return (
@@ -32,4 +32,4 @@ export function LicenseAgreement() {
 	);
 }
 
-export default withProviders(LicenseAgreement);
+export default withProviders(LicenseAgreementPage);

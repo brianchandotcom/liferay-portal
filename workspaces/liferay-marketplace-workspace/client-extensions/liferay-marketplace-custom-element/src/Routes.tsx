@@ -17,7 +17,7 @@ const lazyRoutes = {
 	'customer-gate': React.lazy(() => import('./pages/CustomerGate')),
 	'get-app': React.lazy(() => import('./pages/GetApp/GetAppRouter')),
 	'license-agreement': React.lazy(
-		() => import('./pages/GetApp/LicenseAgreement')
+		() => import('./pages/LicenseAgreementPage')
 	),
 	'next-steps': React.lazy(() => import('./pages/NextSteps')),
 	'published-apps': React.lazy(

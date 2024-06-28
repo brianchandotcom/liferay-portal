@@ -111,10 +111,9 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 					absolutePath);
 
 				for (String line : currentBranchFileDiff.split("\n")) {
-					String shortFileName = _getShortFileName(entry.getKey());
-
 					if (line.startsWith(StringPool.DASH) &&
-						_containsFileName(line, shortFileName)) {
+						_containsFileName(
+							line, _getShortFileName(entry.getKey()))) {
 
 						addMessage(
 							fileName,

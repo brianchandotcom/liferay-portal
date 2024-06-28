@@ -52,11 +52,10 @@ public class RememberMeTokenLocalServiceImpl
 	}
 
 	@Override
-	public void checkUserExpiredRememberMeTokens(long userId) {
-		List<RememberMeToken> userRememberMeTokens =
-			rememberMeTokenPersistence.findByUserId(userId);
+	public void deleteExpiredRememberMeTokens(long userId) {
+		for (RememberMeToken rememberMeToken :
+				rememberMeTokenPersistence.findByUserId(userId)) {
 
-		for (RememberMeToken rememberMeToken : userRememberMeTokens) {
 			if (rememberMeToken.isExpired()) {
 				deleteRememberMeToken(rememberMeToken);
 			}

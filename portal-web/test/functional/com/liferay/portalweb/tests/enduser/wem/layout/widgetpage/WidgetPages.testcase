@@ -96,7 +96,7 @@ definition {
 		}
 
 		task ("Add a translation of page to es-ES") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",

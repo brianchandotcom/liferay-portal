@@ -25,7 +25,12 @@ public class ScimNotificationSchedulerJobConfigurationTest {
 	public static final int MONTH = 30;
 
 	public static final int TEN_DAYS = 10;
-	
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
 	public static final List<Integer> notificationTime = Arrays.asList(
 		MONTH, TEN_DAYS, DAY);
 

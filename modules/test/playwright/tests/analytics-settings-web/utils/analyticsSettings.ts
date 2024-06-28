@@ -7,19 +7,9 @@ import {Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
-import getRandomString from '../../../utils/getRandomString';
-import getFragmentDefinition from '../../layout-content-page-editor-web/utils/getFragmentDefinition';
-import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 import {createChannel} from '../../osb-faro-web/utils/channel';
 import {createDataSource} from '../../osb-faro-web/utils/dataSource';
-
-export async function acceptsCookiesBanner(page: Page) {
-	const cookiesBannerButton = page.getByRole('button', {name: 'Accept All'});
-
-	if (await cookiesBannerButton.isVisible()) {
-		await cookiesBannerButton.click();
-	}
-}
+import {acceptsCookiesBanner} from '../../osb-faro-web/utils/portal';
 
 export async function connectToAnalyticsCloud(page: Page) {
 	await page.getByPlaceholder('Paste token here.').click();

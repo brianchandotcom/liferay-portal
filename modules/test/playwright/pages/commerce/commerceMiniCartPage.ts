@@ -13,10 +13,15 @@ export class CommerceMiniCartPage {
 	readonly editUnitOfMeasureLabel: Locator;
 	readonly miniCartButton: Locator;
 	readonly miniCartButtonClose: Locator;
+	readonly miniCartItemsContainer: Locator;
 	readonly miniCartSaveButton: Locator;
 	readonly miniCartUnitOfMeasureSelector: Locator;
 	readonly page: Page;
 	readonly editQuantitySelector: Locator;
+	readonly priceField: (
+		price: string,
+		container?: Locator | Page
+	) => Promise<Locator>;
 	readonly quickAddToCartButton: Locator;
 	readonly quickAddToCartSku: (sku: string) => Locator;
 	readonly searchProductsInput: Locator;
@@ -38,6 +43,7 @@ export class CommerceMiniCartPage {
 		this.cartItemActionsButton = page.getByTestId('cartItemActions');
 		this.miniCartButton = page.getByTestId('miniCartButton');
 		this.miniCartButtonClose = page.locator('.mini-cart-close');
+		this.miniCartItemsContainer = page.locator('div.mini-cart-cart-items');
 		this.miniCartSaveButton = page.getByRole('button', {
 			exact: true,
 			name: 'Save',
@@ -45,6 +51,9 @@ export class CommerceMiniCartPage {
 		this.miniCartUnitOfMeasureSelector = page.locator(
 			'select[name="minicart-uom-selector"]'
 		);
+		this.priceField = async (price: string, container = this.page) => {
+			return container.getByText(price);
+		};
 		this.quickAddToCartButton = page.getByTestId('quickAddToCartButton');
 		this.quickAddToCartSku = (sku) =>
 			page.getByRole('menuitem', {name: sku});

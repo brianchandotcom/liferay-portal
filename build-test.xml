@@ -9692,7 +9692,14 @@ org.apache.catalina.tribes.level = FINE]]>
 			<replacetoken><![CDATA[<Engine name="Catalina" defaultHost="localhost">]]></replacetoken>
 			<replacevalue><![CDATA[<Engine defaultHost="localhost" name="Catalina">
 
-    	<Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"/>]]></replacevalue>
+	<Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster">
+		<Manager className="com.liferay.support.tomcat.session.LiferayDeltaManager" />
+		<Channel className="org.apache.catalina.tribes.group.GroupChannel">
+			<Sender className="org.apache.catalina.tribes.transport.ReplicationTransmitter">
+				<Transport className="org.apache.catalina.tribes.transport.nio.PooledParallelSender" timeout="300000" />
+			</Sender>
+		</Channel>
+	</Cluster>]]></replacevalue>
 		</replace>
 	</target>
 

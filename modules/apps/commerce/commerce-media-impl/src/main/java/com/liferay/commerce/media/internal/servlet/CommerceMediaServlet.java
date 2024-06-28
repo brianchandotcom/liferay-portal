@@ -605,8 +605,7 @@ public class CommerceMediaServlet extends HttpServlet {
 							cpDefinitionVirtualSetting.
 								getCPDVirtualSettingFileEntries(),
 							cpdVirtualSettingFileEntry ->
-								cpdVirtualSettingFileEntry.
-									getCPDefinitionVirtualSettingFileEntryId()),
+								cpdVirtualSettingFileEntry.getFileEntryId()),
 						fileEntryId)) {
 
 					_sendError(

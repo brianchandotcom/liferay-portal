@@ -60,10 +60,6 @@ public class RememberMeTokenLocalServiceUtil {
 		return getService().addRememberMeToken(rememberMeToken);
 	}
 
-	public static void checkUserExpiredRememberMeTokens(long userId) {
-		getService().checkUserExpiredRememberMeTokens(userId);
-	}
-
 	/**
 	 * @throws PortalException
 	 */
@@ -84,6 +80,10 @@ public class RememberMeTokenLocalServiceUtil {
 		long rememberMeTokenId) {
 
 		return getService().createRememberMeToken(rememberMeTokenId);
+	}
+
+	public static void deleteExpiredRememberMeTokens(long userId) {
+		getService().deleteExpiredRememberMeTokens(userId);
 	}
 
 	/**

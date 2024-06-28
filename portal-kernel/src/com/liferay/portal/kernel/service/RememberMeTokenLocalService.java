@@ -77,8 +77,6 @@ public interface RememberMeTokenLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public RememberMeToken addRememberMeToken(RememberMeToken rememberMeToken);
 
-	public void checkUserExpiredRememberMeTokens(long userId);
-
 	/**
 	 * @throws PortalException
 	 */
@@ -93,6 +91,8 @@ public interface RememberMeTokenLocalService
 	 */
 	@Transactional(enabled = false)
 	public RememberMeToken createRememberMeToken(long rememberMeTokenId);
+
+	public void deleteExpiredRememberMeTokens(long userId);
 
 	/**
 	 * @throws PortalException

@@ -6,7 +6,10 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.AntUtil;
+import com.liferay.jenkins.results.parser.GitRepositoryJob;
+import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.NotificationUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
@@ -61,6 +64,34 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected PlaywrightBatchTestClassGroup(
+		JSONObject jsonObject, PortalTestClassJob portalTestClassJob,
+		String playwrightBaseDir) {
+
+		super(jsonObject, portalTestClassJob);
+
+		if (playwrightBaseDir != null) {
+			_playwrightBaseDir = playwrightBaseDir;
+		}
+
+		if (ignore()) {
+			return;
+		}
+
+		if (testRelevantChanges) {
+			List<JobProperty> relevantPlaywrightJobProperties =
+				getRelevantPlaywrightJobProperties();
+
+			if (!relevantPlaywrightJobProperties.isEmpty()) {
+				recordJobProperties(relevantPlaywrightJobProperties);
+			}
+		}
+
+		addDefaultProjectJobProperty(batchName);
+
+		setTestClasses();
+	}
+
+	protected PlaywrightBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
@@ -94,6 +125,34 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		_projectNames.addAll(
 			playwrightTestSelector.getPlaywrightProjectNames());
+
+		setTestClasses();
+	}
+
+	protected PlaywrightBatchTestClassGroup(
+		String batchName, PortalTestClassJob portalTestClassJob,
+		String playwrightBaseDir) {
+
+		super(batchName, portalTestClassJob);
+
+		if (playwrightBaseDir != null) {
+			_playwrightBaseDir = playwrightBaseDir;
+		}
+
+		if (ignore()) {
+			return;
+		}
+
+		if (testRelevantChanges) {
+			List<JobProperty> relevantPlaywrightJobProperties =
+				getRelevantPlaywrightJobProperties();
+
+			if (!relevantPlaywrightJobProperties.isEmpty()) {
+				recordJobProperties(relevantPlaywrightJobProperties);
+			}
+		}
+
+		addDefaultProjectJobProperty(batchName);
 
 		setTestClasses();
 	}
@@ -323,17 +382,28 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				return;
 			}
 
-			File workingDirectory =
-				portalGitWorkingDirectory.getWorkingDirectory();
+			Job job = getJob();
+
+			GitRepositoryJob gitRepositoryJob = (GitRepositoryJob)job;
+
+			GitWorkingDirectory gitWorkingDirectory =
+				gitRepositoryJob.getGitWorkingDirectory();
+
+			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
 
 			File playwrightBaseDir = new File(
-				workingDirectory, "modules/test/playwright");
+				workingDirectory, _playwrightBaseDir);
 
-			try {
-				AntUtil.callTarget(workingDirectory, "build.xml", "setup-yarn");
-			}
-			catch (Exception exception) {
-				exception.printStackTrace();
+			String workingDirectoryPath = workingDirectory.getPath();
+
+			if (!workingDirectoryPath.contains("qa-websites-ee")) {
+				try {
+					AntUtil.callTarget(
+						workingDirectory, "build.xml", "setup-yarn");
+				}
+				catch (Exception exception) {
+					exception.printStackTrace();
+				}
 			}
 
 			_callNPMCommand(playwrightBaseDir, "npm install");
@@ -427,6 +497,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
+	private static String _playwrightBaseDir = "modules/test/playwright";
 	private static JSONObject _playwrightJSONObject;
 	private static final AtomicBoolean _playwrightJSONObjectsLoaded =
 		new AtomicBoolean();

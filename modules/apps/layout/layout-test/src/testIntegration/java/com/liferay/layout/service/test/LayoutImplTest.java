@@ -356,6 +356,12 @@ public class LayoutImplTest {
 
 		_assertThemeId(layout, "admin_WAR_admintheme");
 
+		layout = _layoutLocalService.updateLookAndFeel(
+			_group.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			"classic_WAR_classictheme", "01", StringPool.BLANK);
+
+		_assertThemeId(layout, "classic_WAR_classictheme");
+
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
@@ -369,18 +375,25 @@ public class LayoutImplTest {
 
 		masterLayout = _layoutLocalService.updateLookAndFeel(
 			masterLayout.getGroupId(), masterLayout.isPrivateLayout(),
-			masterLayout.getLayoutId(), "dialect_WAR_dialecttheme", "01",
+			masterLayout.getLayoutId(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK);
 
 		layout = _layoutLocalService.updateMasterLayoutPlid(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			masterLayout.getPlid());
 
+		_assertThemeId(layout, "admin_WAR_admintheme");
+
+		_layoutLocalService.updateLookAndFeel(
+			masterLayout.getGroupId(), masterLayout.isPrivateLayout(),
+			masterLayout.getLayoutId(), "dialect_WAR_dialecttheme", "01",
+			StringPool.BLANK);
+
 		_assertThemeId(layout, "dialect_WAR_dialecttheme");
 
 		layout = _layoutLocalService.updateLookAndFeel(
 			_group.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			"classic_WAR_classictheme", "01", StringPool.BLANK);
+			"admin_WAR_admintheme", "01", StringPool.BLANK);
 
 		_assertThemeId(layout, "dialect_WAR_dialecttheme");
 	}

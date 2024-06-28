@@ -35,11 +35,12 @@ public class RememberMeTokenLocalServiceImpl
 		RememberMeToken rememberMeToken = rememberMeTokenPersistence.create(
 			counterLocalService.increment());
 
-		String generate = PortalUUIDUtil.generate();
-
 		rememberMeToken.setCompanyId(companyId);
 		rememberMeToken.setUserId(userId);
 		rememberMeToken.setExpirationDate(expirationDate);
+
+		String generate = PortalUUIDUtil.generate();
+
 		rememberMeToken.setToken(PasswordEncryptorUtil.encrypt(generate));
 
 		rememberMeToken = rememberMeTokenPersistence.update(rememberMeToken);

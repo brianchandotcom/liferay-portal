@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
@@ -117,7 +116,7 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 		BlogsTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.ADD);
 
-		return BlogsEntryLocalServiceUtil.addEntry(
+		return _blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 	}
@@ -129,8 +128,7 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected void subscribeToContainer() throws Exception {
-		BlogsEntryLocalServiceUtil.subscribe(
-			user.getUserId(), group.getGroupId());
+		_blogsEntryLocalService.subscribe(user.getUserId(), group.getGroupId());
 	}
 
 	@Override
@@ -148,7 +146,7 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 
 		BlogsEntry blogsEntry = (BlogsEntry)baseModel;
 
-		return BlogsEntryLocalServiceUtil.updateEntry(
+		return _blogsEntryLocalService.updateEntry(
 			TestPropsValues.getUserId(), blogsEntry.getEntryId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);

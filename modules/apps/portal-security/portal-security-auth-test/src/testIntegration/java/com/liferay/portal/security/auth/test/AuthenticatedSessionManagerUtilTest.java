@@ -92,7 +92,7 @@ public class AuthenticatedSessionManagerUtilTest {
 				mockHttpServletRequest, false));
 		Assert.assertNotNull(
 			_cookiesManager.getCookieValue(
-				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
+				CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE,
 				mockHttpServletRequest, false));
 	}
 
@@ -111,7 +111,7 @@ public class AuthenticatedSessionManagerUtilTest {
 			mockHttpServletRequest, mockHttpServletResponse);
 
 		Cookie cookie = _buildCookie(
-			CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN, StringPool.BLANK, 1);
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, StringPool.BLANK, 1);
 
 		RememberMeToken rememberMeToken =
 			RememberMeTokenLocalServiceUtil.addRememberMeToken(
@@ -138,7 +138,7 @@ public class AuthenticatedSessionManagerUtilTest {
 				mockHttpServletRequest, false));
 		Assert.assertNull(
 			_cookiesManager.getCookieValue(
-				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
+				CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE,
 				mockHttpServletRequest, false));
 
 		Assert.assertNull(

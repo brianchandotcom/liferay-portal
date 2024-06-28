@@ -58,7 +58,7 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID, httpServletRequest,
 			false);
 		String rememberMeTokenToken = CookiesManagerUtil.getCookieValue(
-			CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN, httpServletRequest,
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, httpServletRequest,
 			false);
 
 		RememberMeToken rememberMeToken = null;
@@ -137,7 +137,7 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID);
 		CookiesManagerUtil.deleteCookies(
 			domain, httpServletRequest, httpServletResponse,
-			CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN);
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

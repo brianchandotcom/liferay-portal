@@ -215,7 +215,7 @@ public class AuthenticatedSessionManagerUtil {
 				httpServletRequest, httpServletResponse);
 
 			Cookie cookie = _buildRememberMeCookie(
-				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN, StringPool.BLANK,
+				CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, StringPool.BLANK,
 				domain, loginMaxAge);
 
 			RememberMeToken rememberMeToken =
@@ -281,7 +281,7 @@ public class AuthenticatedSessionManagerUtil {
 			CookiesConstants.NAME_GUEST_LANGUAGE_ID, CookiesConstants.NAME_ID,
 			CookiesConstants.NAME_PASSWORD, CookiesConstants.NAME_REMEMBER_ME,
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
-			CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN);
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE);
 
 		if (!rememberMe) {
 			CookiesManagerUtil.deleteCookies(

@@ -13,6 +13,8 @@ import {PlacedOrdersPage} from '../pages/commerce/commerce-order-content-web/pla
 import {ReturnDetailsPage} from '../pages/commerce/commerce-order-content-web/returnDetailsPage';
 import {ReturnsPage} from '../pages/commerce/commerce-order-content-web/returnsPage';
 import {OrganizationManagementPage} from '../pages/commerce/commerce-organization-web/organizationManagementPage';
+import {ReturnDetailsPage} from '../pages/commerce/commerce-order-content-web/returnDetailsPage';
+import {ReturnsPage} from '../pages/commerce/commerce-order-content-web/returnsPage';
 import {SpecificationFacetsPage} from '../pages/commerce/commerce-product-content-search-web/specificationFacetsPage';
 import {ProductDetailsPage} from '../pages/commerce/commerce-product-content-web/productDetailsPage';
 import {ProductPublisherPage} from '../pages/commerce/commerce-product-content-web/productPublisherPage';

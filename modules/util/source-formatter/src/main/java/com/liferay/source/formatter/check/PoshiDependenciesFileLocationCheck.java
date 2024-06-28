@@ -120,8 +120,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 							fileName,
 							StringBundler.concat(
 								"Test dependencies file '", entry.getKey(),
-								"' is only referenced by one module, move it to ",
-								"module dependencies directory"));
+								"' is only referenced by one module, move it ",
+								"to module dependencies directory"));
 
 						break;
 					}
@@ -134,8 +134,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 							fileName,
 							StringBundler.concat(
 								"Test dependencies file '", entry.getKey(),
-								"' is only referenced by one module, move it to ",
-								"module dependencies directory"));
+								"' is only referenced by one module, move it ",
+								"to module dependencies directory"));
 
 						break;
 					}

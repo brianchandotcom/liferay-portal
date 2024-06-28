@@ -17,10 +17,9 @@
 	},
 	"name": "headless-discovery-web",
 	"scripts": {
-		"build": "liferay-npm-scripts webpack",
+		"build": "webpack",
 		"checkFormat": "node-scripts format --check",
-		"format": "node-scripts format",
-		"start": "liferay-npm-scripts webpack --env=development"
+		"format": "node-scripts format"
 	},
 	"version": "4.0.44"
 }

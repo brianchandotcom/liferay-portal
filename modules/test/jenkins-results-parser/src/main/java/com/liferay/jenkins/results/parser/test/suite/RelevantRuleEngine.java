@@ -22,6 +22,10 @@ import java.util.Set;
  */
 public class RelevantRuleEngine {
 
+	public static void clear() {
+		_relevantRuleEngine = null;
+	}
+
 	public static RelevantRuleEngine getInstance() {
 		if (_relevantRuleEngine == null) {
 			throw new IllegalStateException(

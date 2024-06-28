@@ -149,19 +149,19 @@ public interface RememberMeTokenModel
 	public void setExpirationDate(Date expirationDate);
 
 	/**
-	 * Returns the token of this remember me token.
+	 * Returns the value of this remember me token.
 	 *
-	 * @return the token of this remember me token
+	 * @return the value of this remember me token
 	 */
 	@AutoEscape
-	public String getToken();
+	public String getValue();
 
 	/**
-	 * Sets the token of this remember me token.
+	 * Sets the value of this remember me token.
 	 *
-	 * @param token the token of this remember me token
+	 * @param value the value of this remember me token
 	 */
-	public void setToken(String token);
+	public void setValue(String value);
 
 	@Override
 	public RememberMeToken cloneWithOriginalValues();

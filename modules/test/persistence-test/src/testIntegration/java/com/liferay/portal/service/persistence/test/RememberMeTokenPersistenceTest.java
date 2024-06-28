@@ -122,7 +122,7 @@ public class RememberMeTokenPersistenceTest {
 
 		newRememberMeToken.setExpirationDate(RandomTestUtil.nextDate());
 
-		newRememberMeToken.setToken(RandomTestUtil.randomString());
+		newRememberMeToken.setValue(RandomTestUtil.randomString());
 
 		_rememberMeTokens.add(_persistence.update(newRememberMeToken));
 
@@ -148,7 +148,7 @@ public class RememberMeTokenPersistenceTest {
 			Time.getShortTimestamp(existingRememberMeToken.getExpirationDate()),
 			Time.getShortTimestamp(newRememberMeToken.getExpirationDate()));
 		Assert.assertEquals(
-			existingRememberMeToken.getToken(), newRememberMeToken.getToken());
+			existingRememberMeToken.getValue(), newRememberMeToken.getValue());
 	}
 
 	@Test
@@ -185,7 +185,7 @@ public class RememberMeTokenPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"RememberMeToken", "mvccVersion", true, "rememberMeTokenId", true,
 			"companyId", true, "userId", true, "createDate", true,
-			"expirationDate", true, "token", true);
+			"expirationDate", true, "value", true);
 	}
 
 	@Test
@@ -418,7 +418,7 @@ public class RememberMeTokenPersistenceTest {
 
 		rememberMeToken.setExpirationDate(RandomTestUtil.nextDate());
 
-		rememberMeToken.setToken(RandomTestUtil.randomString());
+		rememberMeToken.setValue(RandomTestUtil.randomString());
 
 		_rememberMeTokens.add(_persistence.update(rememberMeToken));
 

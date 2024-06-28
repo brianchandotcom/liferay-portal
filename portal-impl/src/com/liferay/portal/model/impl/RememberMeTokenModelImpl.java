@@ -63,7 +63,7 @@ public class RememberMeTokenModelImpl
 		{"mvccVersion", Types.BIGINT}, {"rememberMeTokenId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
-		{"token", Types.VARCHAR}
+		{"value", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -76,11 +76,11 @@ public class RememberMeTokenModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("token", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RememberMeToken (mvccVersion LONG default 0 not null,rememberMeTokenId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,expirationDate DATE null,token VARCHAR(255) null)";
+		"create table RememberMeToken (mvccVersion LONG default 0 not null,rememberMeTokenId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,expirationDate DATE null,value VARCHAR(255) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RememberMeToken";
 
@@ -238,7 +238,7 @@ public class RememberMeTokenModelImpl
 				"createDate", RememberMeToken::getCreateDate);
 			attributeGetterFunctions.put(
 				"expirationDate", RememberMeToken::getExpirationDate);
-			attributeGetterFunctions.put("token", RememberMeToken::getToken);
+			attributeGetterFunctions.put("value", RememberMeToken::getValue);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -280,8 +280,8 @@ public class RememberMeTokenModelImpl
 				(BiConsumer<RememberMeToken, Date>)
 					RememberMeToken::setExpirationDate);
 			attributeSetterBiConsumers.put(
-				"token",
-				(BiConsumer<RememberMeToken, String>)RememberMeToken::setToken);
+				"value",
+				(BiConsumer<RememberMeToken, String>)RememberMeToken::setValue);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -399,22 +399,22 @@ public class RememberMeTokenModelImpl
 	}
 
 	@Override
-	public String getToken() {
-		if (_token == null) {
+	public String getValue() {
+		if (_value == null) {
 			return "";
 		}
 		else {
-			return _token;
+			return _value;
 		}
 	}
 
 	@Override
-	public void setToken(String token) {
+	public void setValue(String value) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_token = token;
+		_value = value;
 	}
 
 	public long getColumnBitmask() {
@@ -479,7 +479,7 @@ public class RememberMeTokenModelImpl
 		rememberMeTokenImpl.setUserId(getUserId());
 		rememberMeTokenImpl.setCreateDate(getCreateDate());
 		rememberMeTokenImpl.setExpirationDate(getExpirationDate());
-		rememberMeTokenImpl.setToken(getToken());
+		rememberMeTokenImpl.setValue(getValue());
 
 		rememberMeTokenImpl.resetOriginalValues();
 
@@ -502,8 +502,8 @@ public class RememberMeTokenModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		rememberMeTokenImpl.setExpirationDate(
 			this.<Date>getColumnOriginalValue("expirationDate"));
-		rememberMeTokenImpl.setToken(
-			this.<String>getColumnOriginalValue("token"));
+		rememberMeTokenImpl.setValue(
+			this.<String>getColumnOriginalValue("value"));
 
 		return rememberMeTokenImpl;
 	}
@@ -606,12 +606,12 @@ public class RememberMeTokenModelImpl
 			rememberMeTokenCacheModel.expirationDate = Long.MIN_VALUE;
 		}
 
-		rememberMeTokenCacheModel.token = getToken();
+		rememberMeTokenCacheModel.value = getValue();
 
-		String token = rememberMeTokenCacheModel.token;
+		String value = rememberMeTokenCacheModel.value;
 
-		if ((token != null) && (token.length() == 0)) {
-			rememberMeTokenCacheModel.token = null;
+		if ((value != null) && (value.length() == 0)) {
+			rememberMeTokenCacheModel.value = null;
 		}
 
 		return rememberMeTokenCacheModel;
@@ -681,7 +681,7 @@ public class RememberMeTokenModelImpl
 	private long _userId;
 	private Date _createDate;
 	private Date _expirationDate;
-	private String _token;
+	private String _value;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<RememberMeToken, Object> function =
@@ -717,7 +717,7 @@ public class RememberMeTokenModelImpl
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("expirationDate", _expirationDate);
-		_columnOriginalValues.put("token", _token);
+		_columnOriginalValues.put("value", _value);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -743,7 +743,7 @@ public class RememberMeTokenModelImpl
 
 		columnBitmasks.put("expirationDate", 32L);
 
-		columnBitmasks.put("token", 64L);
+		columnBitmasks.put("value", 64L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

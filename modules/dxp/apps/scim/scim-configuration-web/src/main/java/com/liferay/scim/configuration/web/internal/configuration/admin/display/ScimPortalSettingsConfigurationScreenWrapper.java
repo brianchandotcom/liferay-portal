@@ -27,6 +27,9 @@ import com.liferay.portal.settings.configuration.admin.display.PortalSettingsCon
 import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
@@ -196,6 +199,19 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 				httpServletRequest.setAttribute(
 					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN,
 					oAuth2Authorization.getAccessTokenContent());
+
+				Date accessTokenExpirationDate =
+					oAuth2Authorization.getAccessTokenExpirationDate();
+
+				SimpleDateFormat formatter = new SimpleDateFormat(
+					"dd-MMM-yyyy");
+
+				String strAccessTokenExpirationDate = formatter.format(
+					accessTokenExpirationDate);
+
+				httpServletRequest.setAttribute(
+					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION,
+					strAccessTokenExpirationDate);
 			}
 
 			httpServletRequest.setAttribute(

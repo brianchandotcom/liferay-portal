@@ -6,7 +6,7 @@
 					"cssClasses": [
 						"container"
 					],
-					"customCSS": ".commerce-main-body {\nalign-content: center;\nbackground-color: var(--white);\n}",
+					"customCSS": ".commerce-main {\nbackground-color: var(--white);\n}\n.commerce-main-body {\nalign-content: center;\nbackground-color: var(--white);\n}",
 					"gutters": true,
 					"indexed": true,
 					"modulesPerRow": 2,
@@ -247,7 +247,7 @@
 	"settings": {
 		"colorSchemeName": "01",
 		"masterPage": {
-			"key": "liferay-commerce-master"
+			"key": "commerce-classic-master"
 		},
 		"themeName": "Classic",
 		"themeSettings": {

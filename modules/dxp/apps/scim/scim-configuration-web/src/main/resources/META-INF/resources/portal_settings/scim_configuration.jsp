@@ -23,7 +23,7 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 </aui:select>
 
 <c:choose>
-	<c:when test="<%= Validator.isNotNull(oAuth2ApplicationName)  %>">
+	<c:when test="<%= Validator.isNotNull(oAuth2ApplicationName) %>">
 
 		<%
 		String oAuth2AccessTokenInputId = liferayPortletResponse.getNamespace() + "oAuth2AccessToken";

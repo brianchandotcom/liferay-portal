@@ -318,16 +318,6 @@ function start_analytics_cloud {
 }
 
 function start_app_server {
-	mkdir -p ${LIFERAY_HOME}/routes/default/dxp
-
-	local portal_url_scheme=$(echo ${LIFERAY_PORTAL_URL} | awk -F:// '{print $1}')
-	local portal_url_hostname=$(echo ${LIFERAY_PORTAL_URL} | awk -F:// '{print $2}')
-
-	echo "${portal_url_hostname}" > ${LIFERAY_HOME}/routes/default/dxp/com.liferay.lxc.dxp.domains
-	echo "${portal_url_hostname}" > ${LIFERAY_HOME}/routes/default/dxp/com.liferay.lxc.dxp.main.domain
-	echo "${portal_url_hostname}" > ${LIFERAY_HOME}/routes/default/dxp/com.liferay.lxc.dxp.mainDomain
-	echo "${portal_url_scheme}" > ${LIFERAY_HOME}/routes/default/dxp/com.liferay.lxc.dxp.server.protocol
-
 	cd $(get_tomcat_dir)/bin
 
 	/bin/bash catalina.sh run &
@@ -355,7 +345,7 @@ function start_client_extensions_spring_boot_application {
 
 		local gradlew=$(get_gradlew)
 
-		${gradlew} bootRun &
+		${gradlew} bootRun -Pliferay.workspace.home.dir=${LIFERAY_HOME} &
 
 		local sleep_interval=5
 		local sleep_duration=60

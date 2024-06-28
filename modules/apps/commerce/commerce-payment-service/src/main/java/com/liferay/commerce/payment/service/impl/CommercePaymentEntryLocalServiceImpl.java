@@ -5,7 +5,11 @@
 
 package com.liferay.commerce.payment.service.impl;
 
+import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentEntryConstants;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundType;
 import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundTypeRegistry;
 import com.liferay.commerce.payment.exception.CommercePaymentEntryAmountException;
@@ -17,6 +21,8 @@ import com.liferay.commerce.payment.exception.CommercePaymentEntryReasonKeyExcep
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalService;
 import com.liferay.commerce.payment.service.base.CommercePaymentEntryLocalServiceBaseImpl;
+import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -33,6 +39,8 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -42,6 +50,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHits;
@@ -318,54 +327,113 @@ public class CommercePaymentEntryLocalServiceImpl
 			externalReferenceCode = null;
 		}
 
-		CommercePaymentEntry commercePaymentEntry =
+		CommercePaymentEntry originalCommercePaymentEntry =
 			commercePaymentEntryLocalService.getCommercePaymentEntry(
 				commercePaymentEntryId);
 
 		CommercePaymentEntryRefundType commercePaymentEntryRefundType =
 			_commercePaymentEntryRefundTypeRegistry.
 				getCommercePaymentEntryRefundType(
-					commercePaymentEntry.getCompanyId(), reasonKey);
+					originalCommercePaymentEntry.getCompanyId(), reasonKey);
+
+		int originalPaymentStatus =
+			originalCommercePaymentEntry.getPaymentStatus();
 
 		_validate(
 			commercePaymentEntryRefundType,
-			commercePaymentEntry.getClassNameId(),
-			commercePaymentEntry.getClassPK(), amount, paymentIntegrationType,
-			commercePaymentEntry.getPaymentStatus(), reasonKey, type);
+			originalCommercePaymentEntry.getClassNameId(),
+			originalCommercePaymentEntry.getClassPK(), amount,
+			paymentIntegrationType, originalPaymentStatus, reasonKey, type);
 
-		commercePaymentEntry.setExternalReferenceCode(externalReferenceCode);
-		commercePaymentEntry.setCommerceChannelId(commerceChannelId);
-		commercePaymentEntry.setAmount(amount);
-		commercePaymentEntry.setCallbackURL(callbackURL);
-		commercePaymentEntry.setCancelURL(cancelURL);
-		commercePaymentEntry.setCurrencyCode(currencyCode);
-		commercePaymentEntry.setErrorMessages(errorMessages);
-		commercePaymentEntry.setLanguageId(languageId);
-		commercePaymentEntry.setNote(note);
-		commercePaymentEntry.setPayload(payload);
-		commercePaymentEntry.setPaymentIntegrationKey(paymentIntegrationKey);
-		commercePaymentEntry.setPaymentIntegrationType(paymentIntegrationType);
-		commercePaymentEntry.setPaymentStatus(paymentStatus);
+		originalCommercePaymentEntry.setExternalReferenceCode(
+			externalReferenceCode);
+		originalCommercePaymentEntry.setCommerceChannelId(commerceChannelId);
+		originalCommercePaymentEntry.setAmount(amount);
+		originalCommercePaymentEntry.setCallbackURL(callbackURL);
+		originalCommercePaymentEntry.setCancelURL(cancelURL);
+		originalCommercePaymentEntry.setCurrencyCode(currencyCode);
+		originalCommercePaymentEntry.setErrorMessages(errorMessages);
+		originalCommercePaymentEntry.setLanguageId(languageId);
+		originalCommercePaymentEntry.setNote(note);
+		originalCommercePaymentEntry.setPayload(payload);
+		originalCommercePaymentEntry.setPaymentIntegrationKey(
+			paymentIntegrationKey);
+		originalCommercePaymentEntry.setPaymentIntegrationType(
+			paymentIntegrationType);
+		originalCommercePaymentEntry.setPaymentStatus(paymentStatus);
 
 		if (Validator.isNull(reasonKey)) {
-			commercePaymentEntry.setReasonKey(null);
-			commercePaymentEntry.setReasonNameMap(null);
+			originalCommercePaymentEntry.setReasonKey(null);
+			originalCommercePaymentEntry.setReasonNameMap(null);
 		}
-		else if (!reasonKey.equals(commercePaymentEntry.getReasonKey())) {
-			commercePaymentEntry.setReasonKey(reasonKey);
-			commercePaymentEntry.setReasonNameMap(
+		else if (!reasonKey.equals(
+					originalCommercePaymentEntry.getReasonKey())) {
+
+			originalCommercePaymentEntry.setReasonKey(reasonKey);
+			originalCommercePaymentEntry.setReasonNameMap(
 				commercePaymentEntryRefundType.getNameMap());
 		}
 
-		commercePaymentEntry.setRedirectURL(redirectURL);
+		originalCommercePaymentEntry.setRedirectURL(redirectURL);
 
 		if (Validator.isNotNull(transactionCode)) {
-			commercePaymentEntry.setTransactionCode(transactionCode);
+			originalCommercePaymentEntry.setTransactionCode(transactionCode);
 		}
 
-		commercePaymentEntry.setType(type);
+		originalCommercePaymentEntry.setType(type);
 
-		return commercePaymentEntryPersistence.update(commercePaymentEntry);
+		CommercePaymentEntry commercePaymentEntry =
+			commercePaymentEntryPersistence.update(
+				originalCommercePaymentEntry);
+
+		paymentStatus = commercePaymentEntry.getPaymentStatus();
+
+		if (!StringUtil.equals(
+				commercePaymentEntry.getClassName(),
+				CommerceOrder.class.getName()) ||
+			(originalPaymentStatus == paymentStatus)) {
+
+			return commercePaymentEntry;
+		}
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.getCommerceOrder(
+				commercePaymentEntry.getClassPK());
+
+		long commerceOrderId = commerceOrder.getCommerceOrderId();
+
+		if (paymentStatus != CommercePaymentEntryConstants.STATUS_CREATED) {
+			commerceOrder =
+				_commerceOrderLocalService.updatePaymentStatusAndTransactionId(
+					commerceOrder.getUserId(), commerceOrderId, paymentStatus,
+					commercePaymentEntry.getTransactionCode());
+
+			_commerceOrderPaymentLocalService.addCommerceOrderPayment(
+				commerceOrderId, paymentStatus,
+				commercePaymentEntry.getErrorMessages());
+		}
+
+		if ((paymentStatus != CommerceOrderPaymentConstants.STATUS_COMPLETED) ||
+			(commerceOrder.getOrderStatus() ==
+				CommerceOrderConstants.ORDER_STATUS_PENDING)) {
+
+			return commercePaymentEntry;
+		}
+
+		long userId = commerceOrder.getUserId();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker != null) {
+			userId = permissionChecker.getUserId();
+		}
+
+		_commerceOrderEngine.transitionCommerceOrder(
+			commerceOrder, CommerceOrderConstants.ORDER_STATUS_PENDING, userId,
+			true);
+
+		return commercePaymentEntry;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -588,6 +656,15 @@ public class CommercePaymentEntryLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CommerceOrderEngine _commerceOrderEngine;
+
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private CommerceOrderPaymentLocalService _commerceOrderPaymentLocalService;
 
 	@Reference
 	private CommercePaymentEntryAuditLocalService

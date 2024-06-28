@@ -29,12 +29,12 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
 
 import java.io.IOException;
@@ -86,7 +86,7 @@ public class ScimNotificationSchedulerJobConfiguration
 		int daysToExpire, int daysLastNotification,
 		List<Integer> notificationDays) {
 
-		if (Validator.isNull(notificationDays) ||
+		if (ListUtil.isEmpty(notificationDays) ||
 			(daysToExpire > notificationDays.get(0))) {
 
 			return false;
@@ -98,11 +98,10 @@ public class ScimNotificationSchedulerJobConfiguration
 
 		for (int i = 1; i < notificationDays.size(); i++) {
 			if ((notificationDays.get(i - 1) >= daysToExpire) &&
-				(daysToExpire > notificationDays.get(i))) {
+				(daysToExpire > notificationDays.get(i)) &&
+				(daysLastNotification > notificationDays.get(i - 1))) {
 
-				if (daysLastNotification > notificationDays.get(i - 1)) {
-					return true;
-				}
+				return true;
 			}
 		}
 
@@ -257,10 +256,6 @@ public class ScimNotificationSchedulerJobConfiguration
 		String defaultEmailFromAddress = "scim-notification@" + company.getMx();
 		String defaultEmailFromName = "SCIM-Notification";
 
-		String mail = users.get(
-			0
-		).getEmailAddress();
-
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		//subscriptionSender.setClassName();
@@ -268,7 +263,7 @@ public class ScimNotificationSchedulerJobConfiguration
 
 		subscriptionSender.setPortletId(ScimWebKeys.SCIM_CONFIGURATION);
 
-		subscriptionSender.setEntryTitle("entryTitle");
+		subscriptionSender.setEntryTitle(body);
 
 		subscriptionSender.setNotificationType(
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);
@@ -276,9 +271,16 @@ public class ScimNotificationSchedulerJobConfiguration
 
 		subscriptionSender.setFrom(
 			defaultEmailFromAddress, defaultEmailFromName);
-		subscriptionSender.setReplyToAddress("user@liferay.com");
 
-		subscriptionSender.addRuntimeSubscribers("user@liferay.com", "toName");
+		for (int i = 0; i < users.size(); i++) {
+			subscriptionSender.addRuntimeSubscribers(
+				users.get(
+					i
+				).getEmailAddress(),
+				users.get(
+					i
+				).getFullName());
+		}
 
 		subscriptionSender.setMailId("popPortletPrefix", "ids");
 		subscriptionSender.setSubject(subject);

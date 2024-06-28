@@ -10,12 +10,10 @@ import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.model.RememberMeToken;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.persistence.RememberMeTokenUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.service.base.RememberMeTokenLocalServiceBaseImpl;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -69,11 +67,8 @@ public class RememberMeTokenLocalServiceImpl
 		RememberMeToken rememberMeToken = fetchRememberMeToken(
 			rememberMeTokenId);
 
-		if (rememberMeToken == null) {
-			return null;
-		}
-
-		if (!Objects.equals(
+		if ((rememberMeToken == null) ||
+			!Objects.equals(
 				rememberMeToken.getToken(),
 				PasswordEncryptorUtil.encrypt(
 					token, rememberMeToken.getToken()))) {

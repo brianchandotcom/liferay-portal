@@ -207,6 +207,28 @@ public class PriceTag extends IncludeTag {
 	protected CommerceChannelLocalService commerceChannelLocalService;
 	protected ConfigurationProvider configurationProvider;
 
+	private BigDecimal _getMinQuantity(
+		BigDecimal minQuantity, BigDecimal multipleQuantity, int precision) {
+
+		BigDecimal minDifference = minQuantity.remainder(multipleQuantity);
+
+		if (minDifference.intValue() <= 0) {
+			if (multipleQuantity.compareTo(minQuantity) < 0) {
+				return minQuantity.setScale(precision);
+			}
+
+			return multipleQuantity.setScale(precision);
+		}
+
+		return minQuantity.add(
+			multipleQuantity
+		).subtract(
+			minDifference
+		).setScale(
+			precision
+		);
+	}
+
 	private PriceModel _getPriceModel(
 			CommerceContext commerceContext, long cpInstanceId)
 		throws PortalException {
@@ -232,6 +254,10 @@ public class PriceTag extends IncludeTag {
 				CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
 					cpInstanceUnitOfMeasures.get(0);
 
+				_quantity = _getMinQuantity(
+					_quantity,
+					cpInstanceUnitOfMeasure.getIncrementalOrderQuantity(),
+					cpInstanceUnitOfMeasure.getPrecision());
 				_unitOfMeasureKey = cpInstanceUnitOfMeasure.getKey();
 			}
 

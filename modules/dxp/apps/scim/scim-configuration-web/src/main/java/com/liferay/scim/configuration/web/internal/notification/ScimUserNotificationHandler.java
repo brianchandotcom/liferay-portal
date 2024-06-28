@@ -5,16 +5,13 @@
 
 package com.liferay.scim.configuration.web.internal.notification;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.scim.configuration.web.internal.constants.ScimWebKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,6 +32,15 @@ public class ScimUserNotificationHandler extends BaseUserNotificationHandler {
 	}
 
 	@Override
+	public boolean isDeliver(
+			long userId, long classNameId, int notificationType,
+			int deliveryType, ServiceContext serviceContext)
+		throws PortalException {
+
+		return true;
+	}
+
+	@Override
 	protected String getBody(
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
@@ -43,23 +49,10 @@ public class ScimUserNotificationHandler extends BaseUserNotificationHandler {
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		return jsonObject.getString("body");
+		return jsonObject.getString("entryTitle");
 	}
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserNotificationEventLocalService
-		_userNotificationEventLocalService;
 
 }

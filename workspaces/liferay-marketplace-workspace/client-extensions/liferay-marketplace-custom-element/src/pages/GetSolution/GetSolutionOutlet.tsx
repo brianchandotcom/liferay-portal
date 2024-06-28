@@ -112,6 +112,8 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 			CommerceSelectAccountImpl.selectAccount(accountId),
 		]);
 
+		await marketplaceSpringBootOAuth2.provisioningTrial(cart.id);
+
 		const maxTrialsReached = trialAvailability.fallback
 			? false
 			: trialAvailability.available === 0;

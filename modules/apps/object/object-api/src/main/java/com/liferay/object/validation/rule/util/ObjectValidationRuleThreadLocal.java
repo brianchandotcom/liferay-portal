@@ -16,29 +16,21 @@ import java.util.Set;
  */
 public class ObjectValidationRuleThreadLocal {
 
-	public static void addExecutedObjectValidationRuleId(
-		long objectValidationRuleId) {
+	public static void addValidatedObjectEntryId(long objectEntryId) {
+		Set<Long> validatedObjectEntryIds = _validatedObjectEntryIds.get();
 
-		Set<Long> executedObjectValidationRuleIds =
-			_executedObjectValidationRuleIds.get();
-
-		executedObjectValidationRuleIds.add(objectValidationRuleId);
-
-		_executedObjectValidationRuleIds.set(executedObjectValidationRuleIds);
+		validatedObjectEntryIds.add(objectEntryId);
 	}
 
-	public static boolean isExecutedObjectValidationRuleId(
-		long objectValidationRuleId) {
+	public static boolean isValidatedObjectEntry(long objectEntryId) {
+		Set<Long> validatedObjectEntryIds = _validatedObjectEntryIds.get();
 
-		Set<Long> executedObjectValidationRuleIds =
-			_executedObjectValidationRuleIds.get();
-
-		return executedObjectValidationRuleIds.contains(objectValidationRuleId);
+		return validatedObjectEntryIds.contains(objectEntryId);
 	}
 
-	private static final ThreadLocal<Set<Long>>
-		_executedObjectValidationRuleIds = new CentralizedThreadLocal<>(
-			ObjectEntryThreadLocal.class + "._executedObjectValidationRuleIds",
+	private static final ThreadLocal<Set<Long>> _validatedObjectEntryIds =
+		new CentralizedThreadLocal<>(
+			ObjectEntryThreadLocal.class + "._validatedObjectEntryIds",
 			HashSet::new);
 
 }

@@ -12,6 +12,7 @@ interface Props {
 interface Field {
 	localizable?: boolean;
 	name: string;
+	required?: boolean;
 	repeatable?: boolean;
 }
 
@@ -23,7 +24,12 @@ export default function getDataStructureDefinition({
 	return {
 		availableLanguageIds: [defaultLanguageId],
 		dataDefinitionFields: fields.map(
-			({localizable = true, name: fieldName, repeatable = false}) => {
+			({
+				localizable = true,
+				name: fieldName,
+				repeatable = false,
+				required = false,
+			}) => {
 				return {
 					customProperties: {
 						dataType: 'string',
@@ -37,6 +43,7 @@ export default function getDataStructureDefinition({
 					},
 					localizable,
 					name: fieldName,
+					required,
 					repeatable,
 					showLabel: true,
 				};

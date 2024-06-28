@@ -202,11 +202,11 @@ autoSaveAsDraftTest(
 
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
-		await journalEditArticlePage.titlePlaceholder.click();
+		await journalEditArticlePage.titleInput.click();
 
 		await page.waitForTimeout(200);
 
-		await journalEditArticlePage.titlePlaceholder.fill(title);
+		await journalEditArticlePage.titleInput.fill(title);
 
 		await expect(changesSavedIndicator).toBeVisible();
 
@@ -216,15 +216,13 @@ autoSaveAsDraftTest(
 
 		await expect(undobutton).toBeDisabled();
 
-		await expect(journalEditArticlePage.titlePlaceholder).toHaveValue('');
+		await expect(journalEditArticlePage.titleInput).toHaveValue('');
 
 		await redoButton.click();
 
 		await expect(redoButton).toBeDisabled();
 
-		await expect(journalEditArticlePage.titlePlaceholder).toHaveValue(
-			title
-		);
+		await expect(journalEditArticlePage.titleInput).toHaveValue(title);
 	}
 );
 
@@ -1011,6 +1009,113 @@ translationTest(
 	}
 );
 
+baseTest(
+	'LPD-29527 - Can delete translation of a web content created from a structure with at least one required and non-localizable field',
+	async ({apiHelpers, journalEditArticlePage, journalPage, page, site}) => {
+		const basicTextFieldName = 'Text1234';
+		const content = getRandomString();
+		const nonLocalizableFieldName = 'TextNonLocalizable';
+		const structureName = 'Structure 1';
+		const title = getRandomString();
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [
+				{name: basicTextFieldName},
+				{
+					localizable: false,
+					name: nonLocalizableFieldName,
+					required: true,
+				},
+			],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		await fillAndClickOutside(
+			page,
+			journalEditArticlePage.titleInput,
+			title
+		);
+
+		await fillAndClickOutside(
+			page,
+			page.getByLabel(basicTextFieldName),
+			content
+		);
+
+		await fillAndClickOutside(
+			page,
+			page.getByLabel(nonLocalizableFieldName),
+			content
+		);
+
+		const translationButton = page.locator(
+			'[id="_com_liferay_journal_web_portlet_JournalPortlet__com_liferay_journal_web_portlet_JournalPortlet_titleMapAsXMLMenu"]'
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Not translated into Catalan. Press enter to edit Catalan translation.',
+			}),
+			trigger: translationButton,
+		});
+
+		await expect(async () => {
+			await fillAndClickOutside(page, journalEditArticlePage.titleInput);
+
+			await translationButton.click();
+
+			await expect(
+				page.getByRole('menuitem', {
+					exact: true,
+					name: 'Translated into Catalan. Press enter to edit Catalan translation.',
+				})
+			).toBeVisible();
+		}).toPass();
+
+		await journalEditArticlePage.publishButton.click();
+
+		await waitForSuccessAlert(
+			page,
+			`Success:${title} was created successfully.`
+		);
+
+		await page.getByLabel('Close', {exact: true});
+
+		await journalPage.goToJournalArticleAction(
+			'Delete Translations',
+			title
+		);
+
+		await page
+			.frameLocator('iframe[title="Delete Translations"]')
+			.getByLabel('català')
+			.check();
+
+		page.on('dialog', (dialog) => dialog.accept());
+
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await journalEditArticlePage.editArticle(title);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Not translated into Catalan. Press enter to edit Catalan translation.',
+			}),
+			trigger: translationButton,
+		});
+	}
+);
+
 scheduleTest(
 	'Create a web content selecting permissions in the modal',
 	async ({journalEditArticlePage, journalPage, page, site}) => {
@@ -1034,7 +1139,7 @@ scheduleTest(
 
 		const title = getRandomString();
 
-		await journalEditArticlePage.titlePlaceholder.fill(title);
+		await journalEditArticlePage.titleInput.fill(title);
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,

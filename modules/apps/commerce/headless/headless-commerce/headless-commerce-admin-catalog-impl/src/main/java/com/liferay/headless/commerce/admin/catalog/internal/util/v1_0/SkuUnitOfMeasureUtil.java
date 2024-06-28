@@ -8,7 +8,9 @@ package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.exception.CommercePriceEntryPriceException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureService;
@@ -27,6 +29,7 @@ public class SkuUnitOfMeasureUtil {
 	public static CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
 			CPInstanceUnitOfMeasureService cpInstanceUnitOfMeasureService,
 			CommercePriceEntryService commercePriceEntryService,
+			CommercePriceListLocalService commercePriceListLocalService,
 			CPInstance cpInstance, SkuUnitOfMeasure skuUnitOfMeasure,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -61,14 +64,16 @@ public class SkuUnitOfMeasureUtil {
 
 		if (skuUnitOfMeasure.getBasePrice() != null) {
 			updateCommercePriceEntry(
-				commercePriceEntryService, cpInstance, cpInstanceUnitOfMeasure,
+				commercePriceEntryService, commercePriceListLocalService,
+				cpInstance, cpInstanceUnitOfMeasure,
 				skuUnitOfMeasure.getBasePrice(),
 				CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
 		}
 
 		if (skuUnitOfMeasure.getPromoPrice() != null) {
 			updateCommercePriceEntry(
-				commercePriceEntryService, cpInstance, cpInstanceUnitOfMeasure,
+				commercePriceEntryService, commercePriceListLocalService,
+				cpInstance, cpInstanceUnitOfMeasure,
 				skuUnitOfMeasure.getPromoPrice(),
 				CommercePriceListConstants.TYPE_PROMOTION, serviceContext);
 		}
@@ -78,6 +83,7 @@ public class SkuUnitOfMeasureUtil {
 
 	public static void updateCommercePriceEntry(
 			CommercePriceEntryService commercePriceEntryService,
+			CommercePriceListLocalService commercePriceListLocalService,
 			CPInstance cpInstance,
 			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure, BigDecimal price,
 			String type, ServiceContext serviceContext)
@@ -92,7 +98,18 @@ public class SkuUnitOfMeasureUtil {
 				cpInstance.getCPInstanceUuid(), type,
 				cpInstanceUnitOfMeasure.getKey());
 
-		if (commercePriceEntry != null) {
+		if (commercePriceEntry == null) {
+			CommercePriceList commercePriceList =
+				commercePriceListLocalService.
+					getCatalogBaseCommercePriceListByType(
+						cpInstance.getGroupId(), type);
+
+			commercePriceEntryService.addCommercePriceEntry(
+				null, cpInstance.getCPInstanceId(),
+				commercePriceList.getCommercePriceListId(), price, false, null,
+				cpInstanceUnitOfMeasure.getKey(), serviceContext);
+		}
+		else {
 			commercePriceEntryService.updatePricingInfo(
 				commercePriceEntry.getCommercePriceEntryId(),
 				commercePriceEntry.isBulkPricing(), price,

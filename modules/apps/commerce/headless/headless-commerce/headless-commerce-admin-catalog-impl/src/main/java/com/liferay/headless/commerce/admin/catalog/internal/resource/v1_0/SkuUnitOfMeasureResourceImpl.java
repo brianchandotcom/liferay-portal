@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
@@ -148,16 +149,18 @@ public class SkuUnitOfMeasureResourceImpl
 
 			if (skuUnitOfMeasure.getBasePrice() != null) {
 				SkuUnitOfMeasureUtil.updateCommercePriceEntry(
-					_commercePriceEntryService, cpInstance,
-					cpInstanceUnitOfMeasure, skuUnitOfMeasure.getBasePrice(),
+					_commercePriceEntryService, _commercePriceListLocalService,
+					cpInstance, cpInstanceUnitOfMeasure,
+					skuUnitOfMeasure.getBasePrice(),
 					CommercePriceListConstants.TYPE_PRICE_LIST,
 					_serviceContextHelper.getServiceContext());
 			}
 
 			if (skuUnitOfMeasure.getPromoPrice() != null) {
 				SkuUnitOfMeasureUtil.updateCommercePriceEntry(
-					_commercePriceEntryService, cpInstance,
-					cpInstanceUnitOfMeasure, skuUnitOfMeasure.getPromoPrice(),
+					_commercePriceEntryService, _commercePriceListLocalService,
+					cpInstance, cpInstanceUnitOfMeasure,
+					skuUnitOfMeasure.getPromoPrice(),
 					CommercePriceListConstants.TYPE_PROMOTION,
 					_serviceContextHelper.getServiceContext());
 			}
@@ -183,7 +186,7 @@ public class SkuUnitOfMeasureResourceImpl
 		return _toSkuUnitOfMeasure(
 			SkuUnitOfMeasureUtil.addOrUpdateCPInstanceUnitOfMeasure(
 				_cpInstanceUnitOfMeasureService, _commercePriceEntryService,
-				cpInstance, skuUnitOfMeasure,
+				_commercePriceListLocalService, cpInstance, skuUnitOfMeasure,
 				_serviceContextHelper.getServiceContext()));
 	}
 
@@ -195,6 +198,7 @@ public class SkuUnitOfMeasureResourceImpl
 		return _toSkuUnitOfMeasure(
 			SkuUnitOfMeasureUtil.addOrUpdateCPInstanceUnitOfMeasure(
 				_cpInstanceUnitOfMeasureService, _commercePriceEntryService,
+				_commercePriceListLocalService,
 				_cpInstanceService.getCPInstance(id), skuUnitOfMeasure,
 				_serviceContextHelper.getServiceContext()));
 	}
@@ -240,6 +244,9 @@ public class SkuUnitOfMeasureResourceImpl
 
 	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;
+
+	@Reference
+	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@Reference
 	private CPInstanceService _cpInstanceService;

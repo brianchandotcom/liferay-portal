@@ -38,8 +38,8 @@ public class JournalArticleSmallImageSourceUpgradeProcess
 			StringBundler.concat(
 				"update JournalArticle set smallImageSource = ",
 				JournalArticleConstants.SMALL_IMAGE_SOURCE_URL,
-				" where smallImage = [$TRUE$] and not (smallImageURL is null ",
-				"or smallImageURL = '')"));
+				" where smallImage = [$TRUE$] and (smallImageURL is not null ",
+				"or smallImageURL != '')"));
 	}
 
 }

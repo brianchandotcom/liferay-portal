@@ -118,12 +118,8 @@ public class JSONMessageBodyWriterTest {
 			null, "test-vulcan/test-class?fields=property1UnsafeSupplier",
 			Http.Method.GET);
 
-		Assert.assertTrue(
-			"property1UnsafeSupplier should have been computed",
-			_property1UnsafeSupplierComputed);
-		Assert.assertFalse(
-			"property2UnsafeSupplier should not have been computed",
-			_property2UnsafeSupplierComputed);
+		Assert.assertTrue(_property1UnsafeSupplierComputed);
+		Assert.assertFalse(_property2UnsafeSupplierComputed);
 
 		_property1UnsafeSupplierComputed = false;
 		_property2UnsafeSupplierComputed = false;
@@ -131,12 +127,8 @@ public class JSONMessageBodyWriterTest {
 		HTTPTestUtil.invokeToJSONObject(
 			null, "test-vulcan/test-class?fields=testClass", Http.Method.GET);
 
-		Assert.assertTrue(
-			"property1UnsafeSupplier should have been computed",
-			_property1UnsafeSupplierComputed);
-		Assert.assertTrue(
-			"property2UnsafeSupplier should have been computed",
-			_property2UnsafeSupplierComputed);
+		Assert.assertTrue(_property1UnsafeSupplierComputed);
+		Assert.assertTrue(_property2UnsafeSupplierComputed);
 
 		_property1UnsafeSupplierComputed = false;
 		_property2UnsafeSupplierComputed = false;
@@ -146,12 +138,8 @@ public class JSONMessageBodyWriterTest {
 			"test-vulcan/test-class?restrictFields=property1UnsafeSupplier",
 			Http.Method.GET);
 
-		Assert.assertTrue(
-			"property1UnsafeSupplier should have been computed",
-			_property1UnsafeSupplierComputed);
-		Assert.assertTrue(
-			"property2UnsafeSupplier should have been computed",
-			_property2UnsafeSupplierComputed);
+		Assert.assertTrue(_property1UnsafeSupplierComputed);
+		Assert.assertTrue(_property2UnsafeSupplierComputed);
 
 		_property1UnsafeSupplierComputed = false;
 		_property2UnsafeSupplierComputed = false;
@@ -162,12 +150,8 @@ public class JSONMessageBodyWriterTest {
 				"testClass",
 			Http.Method.GET);
 
-		Assert.assertFalse(
-			"property1UnsafeSupplier should not have been computed",
-			_property1UnsafeSupplierComputed);
-		Assert.assertTrue(
-			"property2UnsafeSupplier should have been computed",
-			_property2UnsafeSupplierComputed);
+		Assert.assertFalse(_property1UnsafeSupplierComputed);
+		Assert.assertTrue(_property2UnsafeSupplierComputed);
 
 		_property1UnsafeSupplierComputed = false;
 		_property2UnsafeSupplierComputed = false;
@@ -175,12 +159,8 @@ public class JSONMessageBodyWriterTest {
 		HTTPTestUtil.invokeToJSONObject(
 			null, "test-vulcan/test-class", Http.Method.GET);
 
-		Assert.assertTrue(
-			"property1UnsafeSupplier should have been computed",
-			_property1UnsafeSupplierComputed);
-		Assert.assertTrue(
-			"property2UnsafeSupplier should have been computed",
-			_property2UnsafeSupplierComputed);
+		Assert.assertTrue(_property1UnsafeSupplierComputed);
+		Assert.assertTrue(_property2UnsafeSupplierComputed);
 	}
 
 	public class TestApplication extends Application {

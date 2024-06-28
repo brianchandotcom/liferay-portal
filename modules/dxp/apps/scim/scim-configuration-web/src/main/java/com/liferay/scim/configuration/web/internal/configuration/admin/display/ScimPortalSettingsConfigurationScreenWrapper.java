@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
@@ -212,6 +213,19 @@ public class ScimPortalSettingsConfigurationScreenWrapper
 				httpServletRequest.setAttribute(
 					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION,
 					strAccessTokenExpirationDate);
+
+				int daysBetweenExpiration = DateUtil.getDaysBetween(
+					new Date(), accessTokenExpirationDate);
+
+				int compareDaysBetweenExpiration = DateUtil.compareTo(
+					accessTokenExpirationDate, new Date());
+
+				long accessTokenExpirationDays =
+					compareDaysBetweenExpiration * daysBetweenExpiration;
+
+				httpServletRequest.setAttribute(
+					ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION_DAYS,
+					accessTokenExpirationDays);
 			}
 
 			httpServletRequest.setAttribute(

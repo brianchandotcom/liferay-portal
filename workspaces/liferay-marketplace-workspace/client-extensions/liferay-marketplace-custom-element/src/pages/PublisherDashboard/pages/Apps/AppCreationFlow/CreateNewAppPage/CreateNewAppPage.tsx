@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 
 import {Header} from '../../../../../../components/Header/Header';
@@ -11,6 +12,8 @@ import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 
 import './CreateNewAppPage.scss';
+import i18n from '../../../../../../i18n';
+import {getSiteName} from '../../../../../../utils/getSite';
 
 type CreateNewAppPageProps = {
 	catalogId: string;
@@ -21,6 +24,7 @@ export function CreateNewAppPage({
 	catalogId,
 	onClickContinue,
 }: CreateNewAppPageProps) {
+	const siteName = getSiteName();
 	const [_, dispatch] = useAppContext();
 
 	return (
@@ -47,6 +51,19 @@ export function CreateNewAppPage({
 							Liferay Publisher License Agreement
 						</span>
 					</div>
+
+					<ClayButton
+						className="border border-dark rounded-lg text-dark"
+						displayType="secondary"
+						onClick={() =>
+							window.open(
+								`/documents/d/${siteName}/developer_agreement_marketplace-pdf`
+							)
+						}
+					>
+						{i18n.translate('download')}
+						<ClayIcon className="ml-2" symbol="download" />
+					</ClayButton>
 				</div>
 
 				<div className="create-new-app-card-body">

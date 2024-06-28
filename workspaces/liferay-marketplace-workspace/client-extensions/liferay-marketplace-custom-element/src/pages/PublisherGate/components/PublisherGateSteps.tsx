@@ -28,22 +28,20 @@ export enum StepType {
 const PublisherGateSteps = () => {
 	const {myUserAccount} = useMarketplaceContext();
 	const [step, setStep] = useState<StepType>(StepType.FORM);
+	const userPhone =
+		myUserAccount?.userAccountContactInformation?.telephones || [];
 
 	const form = useForm<PublisherForm>({
 		defaultValues: {
-			emailAddress: myUserAccount.emailAddress ?? '',
-			extension:
-				myUserAccount?.userAccountContactInformation?.telephones[0]
-					.extension ?? '',
-			firstName: myUserAccount.givenName ?? '',
-			lastName: myUserAccount.familyName ?? '',
+			emailAddress: myUserAccount ? myUserAccount?.emailAddress : '',
+			extension: userPhone?.length ? userPhone[0]?.extension : '',
+			firstName: myUserAccount ? myUserAccount?.givenName : '',
+			lastName: myUserAccount ? myUserAccount?.familyName : '',
 			phone: {
 				code: '+1',
 				flag: 'en-us',
 			},
-			phoneNumber:
-				myUserAccount?.userAccountContactInformation?.telephones[0]
-					.phoneNumber ?? '',
+			phoneNumber: userPhone?.length ? userPhone[0]?.phoneNumber : '',
 			publisherType: ['appPublisher'],
 			requestDescription: '',
 		},

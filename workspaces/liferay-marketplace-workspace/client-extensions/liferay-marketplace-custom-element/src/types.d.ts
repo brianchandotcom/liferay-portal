@@ -645,7 +645,7 @@ type UserAccount = {
 	roleBriefs: {id: number; name: string}[];
 	type: string;
 	userAccountContactInformation?: {
-		UserAccoutTelephone: UserAccoutTelephone[];
+		telephones?: UserAccoutTelephone[];
 	};
 };
 

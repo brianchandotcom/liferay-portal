@@ -10,10 +10,16 @@ import './LicenseAgreement.scss';
 import ClayButton from '@clayui/button';
 
 import i18n from '../../../../i18n';
+import {Liferay} from '../../../../liferay/liferay';
 import {getSiteName} from '../../../../utils/getSite';
 
 const LicenseAgreement = () => {
 	const siteName = getSiteName();
+
+	const LicenseAgreementpath = Liferay.ThemeDisplay.getLayoutURL().replace(
+		'publisher-dashboard',
+		'license-agreement'
+	);
 
 	return (
 		<>
@@ -32,7 +38,7 @@ const LicenseAgreement = () => {
 						displayType="secondary"
 						onClick={() =>
 							window.open(
-								`/documents/d/${siteName}/developeragreement_marketplace-docx`
+								`/documents/d/${siteName}/developer_agreement_marketplace-pdf`
 							)
 						}
 					>
@@ -42,29 +48,23 @@ const LicenseAgreement = () => {
 				</div>
 
 				<div className="p-4 text-agreement">
-					<small>
-						PLEASE READ THE FOLLOWING LIFERAY PUBLISHER PROGRAM
-						LICENSE AGREEMENT TERMS AND CONDITIONS CAREFULLY BEFORE
-						DONLOADING OR USING THE LIFERAY SOFTWARE OR LIFERAY
-						SERVICES. THESE TERMS AND CONDITIONS CONSTITUTE A LEGAL
-						AGREEMENT BETWEEN YOU AND LIFERAY.
-					</small>
+					<strong>LIFERAY MARKETPLACE DEVELOPER AGREEMENT</strong>
 
 					<div className="mt-4">
-						Duis aute irure dolor in reprehenderit in voluptate
-						velit esse cillum dolore eu fugiat nulla pariatur.
-						Excepteur sint occaecat cupidatat non proident, sunt in
-						culpa qui officia deserunt mollit anim id est laborum.
-						Cras mattis consectetur purus sit amet fermentum.
-						Integer posuere erat a ante venenatis dapibus posuere
-						velit aliquet. Fusce dapibus, tellus ac cursus commodo,
-						tortor mauris condimentum nibh, ut fermentum massa justo
-						sit amet risus. Fusce dapibus, tellus ac cursus commodo,
-						tortor mauris condimentum nibh, ut fermentum massa justo
-						sit amet risus. Lorem ipsum dolor sit amet, consectetur
-						adipiscing elit. Integer posuere erat a ante venenatis
-						dapibus posuere velit aliquet. Cras justo odio, dapibus
-						ac facilisis in, egestas eget quam.
+						PLEASE READ THIS AGREEMENT CAREFULLY BEFORE USING THE
+						MARKETPLACE TO MARKET OR DISTRIBUTE YOUR DEVELOPER
+						PRODUCTS, DOWNLOADING AND/OR USING THE LIFERAY
+						MARKETPLACE. IF YOU ARE ENTERING INTO THIS AGREEMENT ON
+						BEHALF OF A COMPANY OR OTHER LEGAL ENTITY, YOU REPRESENT
+						THAT YOU HAVE THE AUTHORITY TO BIND SUCH ENTITY TO THIS
+						AGREEMENT, IN WHICH CASE THE TERMS &quot;YOU&quot; OR
+						&quot;YOUR&quot; SHALL REFER TO SUCH ENTITY. IF YOU DO
+						NOT HAVE SUCH AUTHORITY, OR IF YOU DO NOT
+						UNCONDITIONALLY AGREE TO ALL OF THE TERMS OF THIS
+						AGREEMENT, YOU WILL NOT HAVE ANY RIGHT TO USE THE
+						MARKETPLACE AND LIFERAY SOFTWARE AND YOU MUST
+						IMMEDIATELY DISCONTINUE PARTICIPATION IN THE MARKETPLACE
+						PROGRAM AND USE OF THE LIFERAY SOFTWARE.
 					</div>
 				</div>
 			</div>
@@ -72,8 +72,12 @@ const LicenseAgreement = () => {
 			<small>
 				By clicking on the button &quot;continue&quot; below, I confirm
 				that I have read and agree to be bound by the&nbsp;
-				<a href="#">Liferay Publisher Program License Agreement.</a> I
-				also confirm that I am of the legal age of majority in the
+				<a href={LicenseAgreementpath} target="_blank">
+					<strong>
+						Liferay Publisher Program License Agreement.
+					</strong>
+				</a>{' '}
+				I also confirm that I am of the legal age of majority in the
 				jurisdiction where I reside (at least 18 years of age in many
 				countries).
 			</small>

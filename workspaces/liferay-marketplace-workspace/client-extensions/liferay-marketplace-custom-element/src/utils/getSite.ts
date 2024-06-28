@@ -6,6 +6,9 @@
 import {Liferay} from '../liferay/liferay';
 import {isCloudEnvironment} from './util';
 
+const CLOUD_SITE_NAME_INDEX = -1;
+const LOCAL_SITE_NAME_INDEX = 2;
+
 const getSiteName = () => {
 	const isCloundEnvironment = isCloudEnvironment();
 	const marketplaceUrl = (
@@ -13,7 +16,9 @@ const getSiteName = () => {
 			? Liferay.ThemeDisplay.getURLHome()
 			: Liferay.ThemeDisplay.getLayoutRelativeURL()
 	).split('/');
-	const index = isCloundEnvironment ? -1 : 2;
+	const index = isCloundEnvironment
+		? CLOUD_SITE_NAME_INDEX
+		: LOCAL_SITE_NAME_INDEX;
 
 	return marketplaceUrl.at(index);
 };

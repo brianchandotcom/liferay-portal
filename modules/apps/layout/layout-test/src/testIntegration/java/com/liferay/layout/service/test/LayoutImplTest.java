@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.LayoutTypeControllerImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.release.feature.flag.ReleaseFeatureFlag;
+import com.liferay.release.feature.flag.ReleaseFeatureFlagManager;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -325,7 +327,19 @@ public class LayoutImplTest {
 
 	@Test
 	public void testPrivateLayoutGetTheme() throws Exception {
-		_assertGetTheme(LayoutTestUtil.addTypePortletLayout(_group, true));
+		boolean enabled = _releaseFeatureFlagManager.isEnabled(
+			ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS);
+
+		try {
+			_releaseFeatureFlagManager.setEnabled(
+				ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS, false);
+
+			_assertGetTheme(LayoutTestUtil.addTypePortletLayout(_group, true));
+		}
+		finally {
+			_releaseFeatureFlagManager.setEnabled(
+				ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS, enabled);
+		}
 	}
 
 	@Test
@@ -400,5 +414,8 @@ public class LayoutImplTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Inject
+	private ReleaseFeatureFlagManager _releaseFeatureFlagManager;
 
 }

@@ -368,7 +368,10 @@ public class ObjectValidationRuleLocalServiceImpl
 			JSONObject payloadJSONObject, long userId)
 		throws PortalException {
 
-		if (baseModel == null) {
+		if ((baseModel == null) ||
+			ObjectValidationRuleThreadLocal.isValidatedObjectEntry(
+				(long)baseModel.getPrimaryKeyObj())) {
+
 			return;
 		}
 
@@ -392,13 +395,6 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		for (ObjectValidationRule objectValidationRule :
 				objectValidationRules) {
-
-			if (ObjectValidationRuleThreadLocal.
-					isExecutedObjectValidationRuleId(
-						objectValidationRule.getObjectValidationRuleId())) {
-
-				continue;
-			}
 
 			Map<String, Object> results = new HashMap<>();
 
@@ -448,9 +444,6 @@ public class ObjectValidationRuleLocalServiceImpl
 				results = objectValidationRuleEngine.execute(
 					(Map<String, Object>)variables.get("entryDTO"), null);
 			}
-
-			ObjectValidationRuleThreadLocal.addExecutedObjectValidationRuleId(
-				objectValidationRule.getObjectValidationRuleId());
 
 			Locale locale = LocaleUtil.getMostRelevantLocale();
 
@@ -503,6 +496,9 @@ public class ObjectValidationRuleLocalServiceImpl
 					new ObjectValidationRuleResult(errorMessage));
 			}
 		}
+
+		ObjectValidationRuleThreadLocal.addValidatedObjectEntryId(
+			(long)baseModel.getPrimaryKeyObj());
 
 		if (ListUtil.isNotEmpty(objectValidationRuleResults)) {
 			throw new ObjectValidationRuleEngineException(

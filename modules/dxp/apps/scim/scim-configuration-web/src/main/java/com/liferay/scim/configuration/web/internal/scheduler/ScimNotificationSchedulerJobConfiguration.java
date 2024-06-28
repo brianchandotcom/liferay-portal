@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
@@ -237,6 +238,18 @@ public class ScimNotificationSchedulerJobConfiguration
 			companyId, RoleConstants.ADMINISTRATOR);
 
 		List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
+
+		ListUtil.filter(
+			users,
+			user -> {
+				if (user.getType() ==
+						UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT) {
+
+					return false;
+				}
+
+				return true;
+			});
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 

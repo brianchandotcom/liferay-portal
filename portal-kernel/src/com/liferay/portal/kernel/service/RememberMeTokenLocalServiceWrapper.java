@@ -336,13 +336,6 @@ public class RememberMeTokenLocalServiceWrapper
 		return _rememberMeTokenLocalService.getRememberMeTokensCount();
 	}
 
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.RememberMeToken>
-		getUserRememberMeTokens(long userId) {
-
-		return _rememberMeTokenLocalService.getUserRememberMeTokens(userId);
-	}
-
 	/**
 	 * Updates the remember me token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -16,6 +16,7 @@ import com.liferay.portal.service.base.RememberMeTokenLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -73,10 +74,10 @@ public class RememberMeTokenLocalServiceImpl
 			return null;
 		}
 
-		String rememberMeTokenToken = rememberMeToken.getToken();
-
-		if (!rememberMeTokenToken.equals(
-				PasswordEncryptorUtil.encrypt(token, rememberMeTokenToken))) {
+		if (!Objects.equals(
+				rememberMeToken.getToken(),
+				PasswordEncryptorUtil.encrypt(
+					token, rememberMeToken.getToken()))) {
 
 			return null;
 		}

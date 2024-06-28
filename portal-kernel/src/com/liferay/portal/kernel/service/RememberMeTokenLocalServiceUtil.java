@@ -295,10 +295,6 @@ public class RememberMeTokenLocalServiceUtil {
 		return getService().getRememberMeTokensCount();
 	}
 
-	public static List<RememberMeToken> getUserRememberMeTokens(long userId) {
-		return getService().getUserRememberMeTokens(userId);
-	}
-
 	/**
 	 * Updates the remember me token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

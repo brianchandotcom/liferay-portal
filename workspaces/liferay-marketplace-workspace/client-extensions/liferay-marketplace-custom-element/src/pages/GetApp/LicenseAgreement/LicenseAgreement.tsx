@@ -4,31 +4,31 @@
  */
 
 import DOMPurify from 'isomorphic-dompurify';
+import useSWR from 'swr';
 
 import withProviders from '../../../hoc/withProviders';
-import useSWR from 'swr';
-import {getEulaDescription} from '../../../utils/util';
 import i18n from '../../../i18n';
+import {getEulaDescription} from '../../../utils/util';
 
 export function LicenseAgreement() {
 	const {data: eula = ''} = useSWR('/eula', getEulaDescription);
 
 	return (
-		<div>
+		<body>
 			<header className="d-flex justify-content-center">
 				<h2>{i18n.translate('end-user-license-agreement')}</h2>
 			</header>
 
 			<hr />
 
-			<body>
+			<main>
 				<div
 					dangerouslySetInnerHTML={{
 						__html: DOMPurify.sanitize(eula),
 					}}
 				/>
-			</body>
-		</div>
+			</main>
+		</body>
 	);
 }
 

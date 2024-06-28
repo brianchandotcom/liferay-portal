@@ -16,11 +16,12 @@
 						"widthType": "Fixed"
 					}
 				},
-				"id": "66597580-1964-23a0-33d2-4689602dea97",
 				"pageElements": [
 					{
 						"definition": {
-							"fragmentStyle": {"width": "1000px"},
+							"fragmentStyle": {
+								"width": "1000px"
+							},
 							"widgetInstance": {
 								"widgetConfig": {
 									"properties": "path=license-agreement"
@@ -28,7 +29,6 @@
 								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element"
 							}
 						},
-						"id": "6b1ed696-8d8e-3009-b105-c511829c26cf",
 						"type": "Widget"
 					}
 				],

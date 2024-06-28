@@ -1666,6 +1666,11 @@ components:
                     format:
                         int64
                     type: integer
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
                 maxUsages:
                     description:
                         Number of downloads available for attachment
@@ -1722,10 +1727,23 @@ components:
             type: object
         ProductVirtualSettingsFileEntry:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 attachment:
                     description:
                         Base64 encoded file
                     type: string
+                id:
+                    example: 30324
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
                 src:
                     description:
                         URL to download the file
@@ -2076,6 +2094,11 @@ components:
                     format:
                         int64
                     type: integer
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
                 maxUsages:
                     description:
                         Number of downloads available for attachment
@@ -2136,10 +2159,23 @@ components:
             type: object
         SkuVirtualSettingsFileEntry:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 attachment:
                     description:
                         Base64 encoded file
                     type: string
+                id:
+                    example: 30324
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
                 src:
                     description:
                         URL to download the file
@@ -6515,6 +6551,288 @@ paths:
             summary: Updates an product option value by ID.
             tags:
                 - ProductOptionValue
+    "/product-virtual-settings-file-entries/{id}":
+        delete:
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource ID
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Deletes a product virtual setting file entry by ID.
+            tags: ["ProductVirtualSettingsFileEntry"]
+        get:
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductVirtualSettingsFileEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductVirtualSettingsFileEntry"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.read
+            summary: Gets a product virtual setting file entry by ID.
+            tags: ["ProductVirtualSettingsFileEntry"]
+        patch:
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                                productVirtualSettingsFileEntry:
+                                    $ref: "#/components/schemas/ProductVirtualSettingsFileEntry"
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductVirtualSettingsFileEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductVirtualSettingsFileEntry"
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Updates a product virtual setting file entry by ID.
+            tags: ["ProductVirtualSettingsFileEntry"]
+    "/product-virtual-settings/{id}/product-virtual-settings-file-entries":
+        get:
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          Product virtual settings ID
+                      format: int64
+                      type: integer
+                  style: simple
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductVirtualSettingsFileEntry"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductVirtualSettingsFileEntry"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a list of virtual settings file entries.
+            tags: ["ProductVirtualSettingsFileEntry"]
+        post:
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                                productVirtualSettingsFileEntry:
+                                    $ref: "#/components/schemas/ProductVirtualSettingsFileEntry"
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProductVirtualSettingsFileEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProductVirtualSettingsFileEntry"
+            tags: ["ProductVirtualSettingsFileEntry"]
     "/productOptions/{id}":
         delete:
             operationId: deleteProductOption
@@ -14275,6 +14593,288 @@ paths:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a sku unit of measure by ID.
             tags: ["SkuUnitOfMeasure"]
+    "/sku-virtual-settings-file-entries/{id}":
+        delete:
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Deletes a sku virtual setting file entry by ID.
+            tags: ["SkuVirtualSettingsFileEntry"]
+        get:
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SkuVirtualSettingsFileEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SkuVirtualSettingsFileEntry"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.read
+            summary: Gets a sku virtual setting file entry by ID.
+            tags: ["SkuVirtualSettingsFileEntry"]
+        patch:
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                                skuVirtualSettingsFileEntry:
+                                    $ref: "#/components/schemas/SkuVirtualSettingsFileEntry"
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SkuVirtualSettingsFileEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SkuVirtualSettingsFileEntry"
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Updates a sku virtual setting file entry by ID.
+            tags: ["SkuVirtualSettingsFileEntry"]
+    "/sku-virtual-settings/{id}/sku-virtual-settings-file-entries":
+        get:
+            parameters:
+                - in: path
+                  explode: false
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          Sku Virtual Settings ID
+                      format: int64
+                      type: integer
+                  style: simple
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SkuVirtualSettingsFileEntry"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SkuVirtualSettingsFileEntry"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a list of sku virtual settings file entries.
+            tags: ["SkuVirtualSettingsFileEntry"]
+        post:
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                                skuVirtualSettingsFileEntry:
+                                    $ref: "#/components/schemas/SkuVirtualSettingsFileEntry"
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SkuVirtualSettingsFileEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SkuVirtualSettingsFileEntry"
+            tags: ["SkuVirtualSettingsFileEntry"]
     "/skus":
         get:
             operationId: getSkusPage

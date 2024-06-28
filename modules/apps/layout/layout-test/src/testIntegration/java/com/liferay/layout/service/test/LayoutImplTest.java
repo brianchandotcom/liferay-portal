@@ -382,7 +382,7 @@ public class LayoutImplTest {
 			_group.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			"classic_WAR_classictheme", "01", StringPool.BLANK);
 
-		_assertThemeId(layout, "classic_WAR_classictheme");
+		_assertThemeId(layout, "dialect_WAR_dialecttheme");
 	}
 
 	private void _assertThemeId(Layout layout, String themeId)

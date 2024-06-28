@@ -149,11 +149,12 @@ definition {
 		Variables.assertDefined(parameterList = ${title});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/o/search-experiences-rest/v1.0/sxp-blueprints?search=${title} \
 				-H 'accept: application/json' \
-				-u test@liferay.com:${PropsUtil.get("default.admin.password")}
+				-u ${userLoginInfo}
 		''';
 
 		var blueprintId = JSONCurlUtil.get(${curl}, "$.items[?(@['title'] == '${title}')]['id']");
@@ -168,11 +169,12 @@ definition {
 		Variables.assertDefined(parameterList = ${title});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/o/search-experiences-rest/v1.0/sxp-elements?search=${title} \
 				-H 'accept: application/json' \
-				-u test@liferay.com:${PropsUtil.get("default.admin.password")}
+				-u ${userLoginInfo}
 		''';
 
 		var elementId = JSONCurlUtil.get(${curl}, "$.items[?(@['title'] == '${title}')]['id']");

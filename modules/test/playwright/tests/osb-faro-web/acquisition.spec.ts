@@ -10,17 +10,14 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import {
-	syncAnalyticsCloud,
-} from '../analytics-settings-web/utils/analyticsSettings';
+import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
 import {navigateToACSitesPageViaURL} from './utils/navigation';
+import {createSitePage, navigateToDXPandDeleteSite} from './utils/portal';
 import {CardSelector} from './utils/selectors';
 import {closeSessions} from './utils/sessions';
 import {changeTimeFilter} from './utils/time-filter';
-import {createSitePage, navigateToDXPandDeleteSite} from './utils/portal';
 
 export const test = mergeTests(
 	apiHelpersTest,

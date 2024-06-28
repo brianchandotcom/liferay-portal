@@ -394,17 +394,14 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			File playwrightBaseDir = new File(
 				workingDirectory, _playwrightBaseDir);
 
-			String workingDirectoryPath = workingDirectory.getPath();
 
-			if (!workingDirectoryPath.contains("qa-websites-ee")) {
 				try {
 					AntUtil.callTarget(
-						workingDirectory, "build.xml", "setup-yarn");
+							portalGitWorkingDirectory.getWorkingDirectory(), "build.xml", "setup-yarn");
 				}
 				catch (Exception exception) {
 					exception.printStackTrace();
 				}
-			}
 
 			_callNPMCommand(playwrightBaseDir, "npm install");
 

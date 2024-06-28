@@ -456,6 +456,61 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddMultipleObjectEntriesWithObjectValidationRule()
+		throws Exception {
+
+		ObjectValidationRule objectValidationRule = _addObjectValidationRule(
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap("Field must be an email address"),
+			"isEmailAddress(emailAddressRequired)");
+
+		_addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "bob@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		_assertCount(1);
+
+		for (String invalidEmailAddress :
+				Arrays.asList(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString())) {
+
+			try {
+				_addObjectEntry(
+					HashMapBuilder.<String, Serializable>put(
+						"emailAddressRequired", invalidEmailAddress
+					).put(
+						"listTypeEntryKeyRequired", "listTypeEntryKey1"
+					).build());
+
+				Assert.fail();
+			}
+			catch (ModelListenerException modelListenerException) {
+				ObjectValidationRuleEngineException
+					objectValidationRuleEngineException =
+						(ObjectValidationRuleEngineException)
+							modelListenerException.getCause();
+
+				List<ObjectValidationRuleResult> objectValidationRuleResults =
+					objectValidationRuleEngineException.
+						getObjectValidationRuleResults();
+
+				Assert.assertEquals(
+					objectValidationRuleResults.toString(), 1,
+					objectValidationRuleResults.size());
+
+				_assertObjectValidationRuleResult(
+					objectValidationRule.getErrorLabel(LocaleUtil.getDefault()),
+					null, objectValidationRuleResults.get(0));
+			}
+		}
+	}
+
+	@Test
 	public void testAddObjectEntry() throws Exception {
 		_assertCount(0);
 
@@ -3486,7 +3541,12 @@ public class ObjectEntryLocalServiceTest {
 		try {
 			user.setEmailAddress(RandomTestUtil.randomString());
 
-			_clearExecutedObjectValidationIds();
+			ThreadLocal<Set<Long>> threadLocal =
+				ReflectionTestUtil.getFieldValue(
+					ObjectValidationRuleThreadLocal.class,
+					"_validatedObjectEntryIds");
+
+			threadLocal.set(new HashSet<>());
 
 			_userLocalService.updateUser(user);
 
@@ -3632,8 +3692,6 @@ public class ObjectEntryLocalServiceTest {
 			Map<String, Serializable> values)
 		throws Exception {
 
-		_clearExecutedObjectValidationIds();
-
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), groupId, objectDefinitionId, values,
 			ServiceContextTestUtil.getServiceContext());
@@ -3759,14 +3817,6 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			expectedObjectFieldName,
 			objectValidationRuleResult.getObjectFieldName());
-	}
-
-	private void _clearExecutedObjectValidationIds() throws Exception {
-		ThreadLocal<Set<Long>> threadLocal = ReflectionTestUtil.getFieldValue(
-			ObjectValidationRuleThreadLocal.class,
-			"_executedObjectValidationRuleIds");
-
-		threadLocal.set(new HashSet<>());
 	}
 
 	private boolean _containsObjectEntryValuesSQLQuery(LogCapture logCapture) {

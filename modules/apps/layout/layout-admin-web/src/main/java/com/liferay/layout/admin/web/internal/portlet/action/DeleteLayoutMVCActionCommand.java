@@ -156,22 +156,25 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			_layoutService.deleteLayout(selPlid, serviceContext);
 
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse,
-				JSONUtil.put(
-					"redirectURL",
-					() -> {
-						String redirect = ParamUtil.getString(
-							actionRequest, "redirect");
+			if (!layout.isDraftLayout()) {
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"redirectURL",
+						() -> {
+							String redirect = ParamUtil.getString(
+								actionRequest, "redirect");
 
-						if (redirect != null) {
-							return redirect;
-						}
+							if (redirect != null) {
+								return redirect;
+							}
 
-						return _portal.getControlPanelPortletURL(
-							actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-							PortletRequest.RENDER_PHASE);
-					}));
+							return _portal.getControlPanelPortletURL(
+								actionRequest,
+								LayoutAdminPortletKeys.GROUP_PAGES,
+								PortletRequest.RENDER_PHASE);
+						}));
+			}
 		}
 		catch (Exception exception) {
 			Throwable throwable = exception.getCause();

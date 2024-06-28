@@ -8,7 +8,7 @@ definition {
 	property database.upgrade.enabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property portal.version = "6.2.10.21";
+	property portal.version = "7.4.13";
 	property skip.start.app.server = "true";
 	property test.liferay.virtual.instance = "false";
 	property test.run.type = "single";

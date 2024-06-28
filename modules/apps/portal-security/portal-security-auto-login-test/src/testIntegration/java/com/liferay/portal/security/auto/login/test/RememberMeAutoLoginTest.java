@@ -71,7 +71,7 @@ public class RememberMeAutoLoginTest {
 			mockHttpServletRequest, mockHttpServletResponse);
 
 		Cookie cookie = _buildRememberMeCookie(
-			CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN, StringPool.BLANK,
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, StringPool.BLANK,
 			PropsValues.COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE);
 
 		long loginMaxAgeMillis =
@@ -123,7 +123,7 @@ public class RememberMeAutoLoginTest {
 			mockHttpServletRequest, mockHttpServletResponse);
 
 		Cookie cookie = _buildRememberMeCookie(
-			CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN, StringPool.BLANK, 1);
+			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, StringPool.BLANK, 1);
 
 		RememberMeToken rememberMeToken =
 			RememberMeTokenLocalServiceUtil.addRememberMeToken(
@@ -150,7 +150,7 @@ public class RememberMeAutoLoginTest {
 				mockHttpServletRequest, false));
 		Assert.assertNull(
 			_cookiesManager.getCookieValue(
-				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
+				CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE,
 				mockHttpServletRequest, false));
 
 		Assert.assertNull(
@@ -168,7 +168,7 @@ public class RememberMeAutoLoginTest {
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 				RandomTestUtil.randomString()),
 			new Cookie(
-				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
+				CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE,
 				RandomTestUtil.randomString()));
 
 		_rememberMeAutoLogin.login(
@@ -180,7 +180,7 @@ public class RememberMeAutoLoginTest {
 				mockHttpServletRequest, false));
 		Assert.assertNull(
 			_cookiesManager.getCookieValue(
-				CookiesConstants.NAME_REMEMBER_ME_TOKEN_TOKEN,
+				CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE,
 				mockHttpServletRequest, false));
 	}
 

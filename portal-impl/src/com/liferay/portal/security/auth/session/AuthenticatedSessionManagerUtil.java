@@ -198,7 +198,7 @@ public class AuthenticatedSessionManagerUtil {
 			CookiesConstants.CONSENT_TYPE_NECESSARY, idCookie,
 			httpServletRequest, httpServletResponse);
 
-		RememberMeTokenLocalServiceUtil.checkUserExpiredRememberMeTokens(
+		RememberMeTokenLocalServiceUtil.deleteExpiredRememberMeTokens(
 			user.getUserId());
 
 		if (rememberMe) {
@@ -290,7 +290,7 @@ public class AuthenticatedSessionManagerUtil {
 				CookiesConstants.NAME_LOGIN);
 		}
 
-		RememberMeTokenLocalServiceUtil.checkUserExpiredRememberMeTokens(
+		RememberMeTokenLocalServiceUtil.deleteExpiredRememberMeTokens(
 			PortalUtil.getUserId(httpServletRequest));
 
 		try {

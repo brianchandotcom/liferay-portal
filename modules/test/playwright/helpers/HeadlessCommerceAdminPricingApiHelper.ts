@@ -11,7 +11,11 @@ type TDiscount = {
 	couponCode?: string;
 	discountCategories?: string;
 	discountProductGroups?: string;
-	discountProducts?: string;
+	discountProducts?: [
+		{
+			productId: number | string;
+		},
+	];
 	id?: number;
 	level?: string;
 	limitationType?: string;

@@ -20,8 +20,15 @@ export class ProductDetailsPage {
 	readonly optionSelector: (optionName: string) => Promise<Locator>;
 	readonly page: Page;
 	readonly pageTitle: Locator;
-	readonly priceField: (price: string) => Promise<Locator>;
-	readonly promoPriceField: (promoPrice: string) => Promise<Locator>;
+	readonly priceContainer: Locator;
+	readonly priceField: (
+		price: string,
+		container?: Locator | Page
+	) => Promise<Locator>;
+	readonly promoPriceField: (
+		promoPrice: string,
+		container?: Locator | Page
+	) => Promise<Locator>;
 	readonly selectOption: (
 		optionLabel: string,
 		optionName: string
@@ -51,11 +58,15 @@ export class ProductDetailsPage {
 			return page.getByLabel(optionName);
 		};
 		this.page = page;
-		this.priceField = async (price: string) => {
-			return page.getByText(price);
+		this.priceContainer = page.locator('div.price-container');
+		this.priceField = async (price: string, container = this.page) => {
+			return container.getByText(price);
 		};
-		this.promoPriceField = async (promoPrice: string) => {
-			return page.getByText(promoPrice);
+		this.promoPriceField = async (
+			promoPrice: string,
+			container = this.page
+		) => {
+			return container.getByText(promoPrice);
 		};
 		this.selectOption = (optionLabel: string, optionName: string) =>
 			page.getByLabel(optionName).selectOption({label: optionLabel});

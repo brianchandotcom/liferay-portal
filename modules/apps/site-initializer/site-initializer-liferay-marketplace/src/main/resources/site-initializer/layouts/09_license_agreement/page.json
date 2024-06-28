@@ -1,0 +1,24 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/license-agreement",
+	"hidden": true,
+	"name": "License Agreement",
+	"name_i18n": {
+		"en_US": "License Agreement"
+	},
+	"permissions": [
+		{
+			"actionIds": [],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": ["VIEW"],
+			"roleName": "User",
+			"scope": 4
+		}
+	],
+	"system": false,
+	"type": "content"
+}

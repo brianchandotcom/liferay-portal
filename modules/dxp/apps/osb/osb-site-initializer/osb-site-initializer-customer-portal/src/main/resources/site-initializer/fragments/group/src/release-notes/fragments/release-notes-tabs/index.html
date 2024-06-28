@@ -10,15 +10,16 @@
 	[#assign currentDisplayIds = (displayPortalURLs?last?split(currentTabId)?last)! /]
 
 	[#assign
-		paginationInitialValue = "1"
-		paginationURLParameter = "&start=" /]
+		parameter = "&start="
+		parameterValue = "1"
+	/]
 
-	[#assign paginationParameterIndex = currentDisplayIds?index_of(paginationURLParameter) /]
+	[#assign paginationParameterIndex = currentDisplayIds?index_of(parameter) /]
 
 	[#if paginationParameterIndex != -1]
-		[#assign beforePaginationParameter = currentDisplayIds?substring(0, paginationParameterIndex + paginationURLParameter?length) /]
+		[#assign beforePaginationParameter = currentDisplayIds?substring(0, paginationParameterIndex + parameter?length) /]
 
-		[#assign currentDisplayIdsParameterized = beforePaginationParameter + paginationInitialValue /]
+		[#assign currentDisplayIdsParameterized = beforePaginationParameter + parameterValue /]
 	[/#if]
 [/#if]
 

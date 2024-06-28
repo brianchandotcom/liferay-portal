@@ -187,6 +187,17 @@ public class TestClassGroupFactory {
 
 			return new ModulesSegmentTestClassGroup(batchTestClassGroup);
 		}
+		else if (batchTestClassGroup instanceof
+					QAWebsitesPlaywrightBatchTestClassGroup) {
+
+			if (jsonObject != null) {
+				return new QAWebsitesPlaywrightSegmentTestClassGroup(
+					batchTestClassGroup, jsonObject);
+			}
+
+			return new QAWebsitesPlaywrightSegmentTestClassGroup(
+				batchTestClassGroup);
+		}
 		else if (batchTestClassGroup instanceof PlaywrightBatchTestClassGroup) {
 			if (jsonObject != null) {
 				return new PlaywrightSegmentTestClassGroup(
@@ -429,6 +440,18 @@ public class TestClassGroupFactory {
 				else {
 					batchTestClassGroup =
 						new QAWebsitesFunctionalBatchTestClassGroup(
+							batchName, (QAWebsitesGitRepositoryJob)job);
+				}
+			}
+			else if (batchName.startsWith("qa-websites-playwright-")) {
+				if (jsonObject != null) {
+					batchTestClassGroup =
+						new QAWebsitesPlaywrightBatchTestClassGroup(
+							jsonObject, (QAWebsitesGitRepositoryJob)job);
+				}
+				else {
+					batchTestClassGroup =
+						new QAWebsitesPlaywrightBatchTestClassGroup(
 							batchName, (QAWebsitesGitRepositoryJob)job);
 				}
 			}

@@ -78,8 +78,7 @@ public class ScimNotificationSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(
-			1, TimeUnit.MINUTE);
+		return TriggerConfiguration.createTriggerConfiguration(1, TimeUnit.DAY);
 	}
 
 	public boolean hasToSendNotification(

@@ -103,7 +103,7 @@ public class ConsoleService {
 		throws Exception {
 
 		JSONObject jsonObject = _postProject(
-			true, _consoleProjectPrefix + "-ext" + orderId);
+			_consoleProjectPrefix + "-ext" + orderId);
 
 		_inviteProject(
 			_trialAdminEmailAddress, jsonObject.getString("projectId"));
@@ -241,15 +241,19 @@ public class ConsoleService {
 			).block());
 	}
 
-	private JSONObject _postProject(boolean environment, String projectId)
-		throws Exception {
-
+	private JSONObject _postProject(String projectId) throws Exception {
 		JSONObject jsonObject = _post(
 			new JSONObject(
 			).put(
 				"cluster", _consoleCluster
 			).put(
-				"environment", environment
+				"environment", true
+			).put(
+				"metadata",
+				new JSONObject(
+				).put(
+					"skipCloudProviderIamConfiguration", true
+				)
 			).put(
 				"projectId", projectId
 			),

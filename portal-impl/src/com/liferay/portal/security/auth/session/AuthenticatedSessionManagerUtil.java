@@ -207,7 +207,6 @@ public class AuthenticatedSessionManagerUtil {
 				_buildRememberMeCookie(
 					CookiesConstants.NAME_LOGIN, login, domain, loginMaxAge),
 				httpServletRequest, httpServletResponse);
-
 			CookiesManagerUtil.addCookie(
 				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
 				_buildRememberMeCookie(
@@ -228,15 +227,15 @@ public class AuthenticatedSessionManagerUtil {
 					cookie::setValue);
 
 			CookiesManagerUtil.addCookie(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
-				httpServletRequest, httpServletResponse);
-
-			CookiesManagerUtil.addCookie(
 				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
 				_buildRememberMeCookie(
 					CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 					String.valueOf(rememberMeToken.getRememberMeTokenId()),
 					domain, loginMaxAge),
+				httpServletRequest, httpServletResponse);
+
+			CookiesManagerUtil.addCookie(
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
 				httpServletRequest, httpServletResponse);
 		}
 	}

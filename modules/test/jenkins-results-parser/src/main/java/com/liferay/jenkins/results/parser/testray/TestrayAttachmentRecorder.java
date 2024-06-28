@@ -727,6 +727,32 @@ public class TestrayAttachmentRecorder {
 					throw new RuntimeException(ioException);
 				}
 			}
+			else {
+				GitWorkingDirectory qaWebsitesGitWorkingDirectory =
+					_getQAWebsitesGitWorkingDirectory();
+
+				if (qaWebsitesGitWorkingDirectory != null) {
+					File qaPlaywrightReportFile = new File(
+						qaWebsitesGitWorkingDirectory.getWorkingDirectory(),
+						"playwright/playwright-report/index.html");
+
+					File sourceReportDir =
+						qaPlaywrightReportFile.getParentFile();
+
+					File recordedFilesBuildDir = _getRecordedFilesBuildDir();
+
+					try {
+						JenkinsResultsParserUtil.copy(
+							sourceReportDir,
+							new File(
+								recordedFilesBuildDir,
+								sourceReportDir.getName()));
+					}
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
+					}
+				}
+			}
 		}
 	}
 

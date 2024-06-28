@@ -211,14 +211,15 @@ export class FiltersPage {
 		await this.newSelectionFilterModal.restSchemaField.waitFor();
 		await this.newSelectionFilterModal.restSchemaField.click();
 
-		await this.newSelectionFilterModal.restSchemaOptions.waitFor();
 		await this.newSelectionFilterModal.restSchemaOptions
 			.getByRole('option', {exact: true, name: restSchema})
 			.click();
+		await this.newSelectionFilterModal.restSchemaField.click();
 
+		await this.newSelectionFilterModal.restEndpointField.waitFor();
 		await this.newSelectionFilterModal.restEndpointField.click();
-		await this.newSelectionFilterModal.restEndpointOptions.waitFor();
-		await this.page
+
+		await this.newSelectionFilterModal.restEndpointOptions
 			.getByRole('option', {exact: true, name: restEndpoint})
 			.click();
 		await this.newSelectionFilterModal.restEndpointField.click();

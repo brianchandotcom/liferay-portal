@@ -71,7 +71,10 @@ test.afterEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 });
 
 test.describe('Filters in Data Set Manager', () => {
-	test('Can create a selection filter', async ({filtersPage, page}) => {
+	test('Can create a selection filter from picklist source', async ({
+		filtersPage,
+		page,
+	}) => {
 		await test.step('Create a selection filter from picklist source', async () => {
 			await filtersPage.createSelectionFilterPicklist({
 				filterBy: 'externalReferenceCode',

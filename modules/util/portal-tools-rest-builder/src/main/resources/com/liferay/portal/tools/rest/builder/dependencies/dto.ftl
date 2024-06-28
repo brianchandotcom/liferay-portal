@@ -416,6 +416,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		}
 
 		private final class CachedUnsafeSupplier<T, E extends Throwable> implements UnsafeSupplier<T, E> {
+
 			public CachedUnsafeSupplier(UnsafeSupplier<T, E> unsafeSupplier) {
 				_unsafeSupplier = unsafeSupplier;
 			}
@@ -427,6 +428,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 				synchronized (_unsafeSupplier) {
 					_value = _unsafeSupplier.get();
+
 					_set = true;
 				}
 
@@ -436,6 +438,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			private boolean _set;
 			private final UnsafeSupplier<T, E> _unsafeSupplier;
 			private T _value;
+
 		}
 	</#if>
 

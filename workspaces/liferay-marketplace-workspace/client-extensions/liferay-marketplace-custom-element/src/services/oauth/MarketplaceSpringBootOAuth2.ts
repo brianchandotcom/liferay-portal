@@ -94,6 +94,16 @@ export default class MarketplaceSpringBootOAuth2 extends OAuth2Client {
 		return response.json() as Promise<AnalyticsViews>;
 	}
 
+	async provisioningTrial(orderId: number): Promise<any> {
+
+		// No need to await the following request
+		// Will be processed as a Job.
+
+		this.oAuth2Client.fetch(`/trial/provisioning/${orderId}`, {
+			method: 'POST',
+		});
+	}
+
 	async createLicenseKey(payload: LicenseTypePayload): Promise<LicenseKey> {
 		return this.oAuth2Client.fetch('/provisioning/license-keys', {
 			body: JSON.stringify(payload),

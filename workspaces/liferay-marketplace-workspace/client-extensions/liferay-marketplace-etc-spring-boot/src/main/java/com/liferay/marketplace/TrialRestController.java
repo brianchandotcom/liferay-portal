@@ -261,6 +261,33 @@ public class TrialRestController extends BaseRestController {
 			).build());
 	}
 
+	@PostMapping("provisioning/{orderId}")
+	public void postProvisioningOrder(
+			@AuthenticationPrincipal Jwt jwt, @PathVariable long orderId)
+		throws Exception {
+
+		OrderResource orderResource = _getOrderResource();
+
+		Order order = orderResource.getOrder(orderId);
+
+		postProvisioning(
+			jwt,
+			new JSONObject(
+			).put(
+				"classPK", orderId
+			).put(
+				"modelDTOOrder",
+				new JSONObject(
+				).put(
+					"accountId", String.valueOf(order.getAccountId())
+				).put(
+					"creatorEmailAddress", order.getCreatorEmailAddress()
+				).put(
+					"orderStatus", order.getOrderStatus()
+				)
+			).toString());
+	}
+
 	private void _deletePortalInstance(long orderId) throws Exception {
 		PortalInstanceResource portalInstanceResource =
 			_getPortalInstanceResource();

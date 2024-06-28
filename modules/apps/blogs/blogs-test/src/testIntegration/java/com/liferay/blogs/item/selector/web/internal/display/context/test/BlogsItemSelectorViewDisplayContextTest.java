@@ -62,6 +62,20 @@ public class BlogsItemSelectorViewDisplayContextTest {
 				_getThemeDisplay()));
 	}
 
+	@Test
+	public void testShowDragAndDropZoneWithWorkflowEnabled() throws Exception {
+		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			_group.getGroupId(), BlogsEntry.class.getName(), 0, 0,
+			"Single Approver", 1);
+
+		Assert.assertFalse(
+			ReflectionTestUtil.invoke(
+				_getBlogsItemSelectorViewDisplayContext(),
+				"showDragAndDropZone", new Class<?>[] {ThemeDisplay.class},
+				_getThemeDisplay()));
+	}
+
 	@FeatureFlags("LPD-29516")
 	@Test
 	public void testShowDragAndDropZoneWithWorkflowEnabledAndFeatureFlagEnabled()

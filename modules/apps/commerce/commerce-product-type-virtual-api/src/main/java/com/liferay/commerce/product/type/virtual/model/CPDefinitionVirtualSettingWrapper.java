@@ -283,6 +283,13 @@ public class CPDefinitionVirtualSettingWrapper
 	}
 
 	@Override
+	public java.util.List<CPDVirtualSettingFileEntry>
+		getCPDVirtualSettingFileEntries(int start, int end) {
+
+		return model.getCPDVirtualSettingFileEntries(start, end);
+	}
+
+	@Override
 	public int getCPDVirtualSettingFileEntriesCount() {
 		return model.getCPDVirtualSettingFileEntriesCount();
 	}

@@ -57,6 +57,9 @@ public interface CPDefinitionVirtualSetting
 	public java.util.List<CPDVirtualSettingFileEntry>
 		getCPDVirtualSettingFileEntries();
 
+	public java.util.List<CPDVirtualSettingFileEntry>
+		getCPDVirtualSettingFileEntries(int start, int end);
+
 	public int getCPDVirtualSettingFileEntriesCount();
 
 	public com.liferay.portal.kernel.repository.model.FileEntry

@@ -62,6 +62,14 @@ public class CPDefinitionVirtualSettingServiceUtil {
 		return getService().fetchCPDefinitionVirtualSetting(className, classPK);
 	}
 
+	public static CPDefinitionVirtualSetting getCPDefinitionVirtualSetting(
+			long cpDefinitionVirtualSettingId)
+		throws PortalException {
+
+		return getService().getCPDefinitionVirtualSetting(
+			cpDefinitionVirtualSettingId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -73,6 +73,17 @@ public class CPDefinitionVirtualSettingServiceWrapper
 			fetchCPDefinitionVirtualSetting(className, classPK);
 	}
 
+	@Override
+	public
+		com.liferay.commerce.product.type.virtual.model.
+			CPDefinitionVirtualSetting getCPDefinitionVirtualSetting(
+					long cpDefinitionVirtualSettingId)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionVirtualSettingService.getCPDefinitionVirtualSetting(
+			cpDefinitionVirtualSettingId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

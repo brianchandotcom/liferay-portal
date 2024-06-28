@@ -55,11 +55,6 @@ public class RememberMeTokenLocalServiceWrapper
 		return _rememberMeTokenLocalService.addRememberMeToken(rememberMeToken);
 	}
 
-	@Override
-	public void checkUserExpiredRememberMeTokens(long userId) {
-		_rememberMeTokenLocalService.checkUserExpiredRememberMeTokens(userId);
-	}
-
 	/**
 	 * @throws PortalException
 	 */
@@ -83,6 +78,11 @@ public class RememberMeTokenLocalServiceWrapper
 
 		return _rememberMeTokenLocalService.createRememberMeToken(
 			rememberMeTokenId);
+	}
+
+	@Override
+	public void deleteExpiredRememberMeTokens(long userId) {
+		_rememberMeTokenLocalService.deleteExpiredRememberMeTokens(userId);
 	}
 
 	/**

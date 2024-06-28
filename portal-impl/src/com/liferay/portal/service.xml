@@ -1989,7 +1989,7 @@
 		<!-- Other fields -->
 
 		<column name="expirationDate" type="Date" />
-		<column name="token" type="String" />
+		<column name="value" type="String" />
 
 		<!-- Finder methods -->
 

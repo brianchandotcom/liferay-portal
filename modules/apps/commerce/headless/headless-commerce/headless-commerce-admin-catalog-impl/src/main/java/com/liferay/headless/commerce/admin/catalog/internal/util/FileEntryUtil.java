@@ -5,19 +5,26 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.util;
 
+import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.type.virtual.service.CPDVirtualSettingFileEntryService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.File;
@@ -30,6 +37,34 @@ import java.util.Set;
  * @author Stefano Motta
  */
 public class FileEntryUtil {
+
+	public static FileEntry addFileEntry(
+			BinaryFile binaryFile, long commerceCatalogGroupId,
+			CPDVirtualSettingFileEntryService cpdVirtualSettingFileEntryService,
+			DLAppService dlAppService,
+			RepositoryLocalService repositoryLocalService,
+			UniqueFileNameProvider uniqueFileNameProvider,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DLValidatorUtil.validateFileSize(
+			serviceContext.getScopeGroupId(), binaryFile.getFileName(),
+			binaryFile.getContentType(), binaryFile.getSize());
+
+		Repository repository = repositoryLocalService.fetchRepository(
+			commerceCatalogGroupId, CPConstants.SERVICE_NAME_PRODUCT);
+
+		String uniqueFileName = uniqueFileNameProvider.provide(
+			binaryFile.getFileName(),
+			curFileName -> _exists(
+				commerceCatalogGroupId, dlAppService, repository, curFileName));
+
+		return cpdVirtualSettingFileEntryService.addFileEntry(
+			commerceCatalogGroupId,
+			(repository != null) ? repository.getDlFolderId() : 0,
+			binaryFile.getInputStream(), uniqueFileName,
+			binaryFile.getContentType(), CPConstants.SERVICE_NAME_PRODUCT);
+	}
 
 	public static long getFileEntryId(
 			String attachment, String url,
@@ -95,6 +130,33 @@ public class FileEntryUtil {
 		}
 
 		return uniqueFileName.concat(extension);
+	}
+
+	private static boolean _exists(
+		long groupId, DLAppService dlAppService, Repository repository,
+		String fileName) {
+
+		try {
+			if (repository == null) {
+				return false;
+			}
+
+			FileEntry fileEntry = dlAppService.getFileEntryByFileName(
+				groupId, repository.getDlFolderId(), fileName);
+
+			if (fileEntry != null) {
+				return true;
+			}
+
+			return false;
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return false;
+		}
 	}
 
 	private static boolean _exists(

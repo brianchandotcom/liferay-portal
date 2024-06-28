@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ScimUserNotificationHandler extends BaseUserNotificationHandler {
 
 	public ScimUserNotificationHandler() {
-		setActionable(true);
+		setActionable(false);
 		setPortletId(ScimWebKeys.SCIM_CONFIGURATION);
 	}
 

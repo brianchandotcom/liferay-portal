@@ -35,6 +35,7 @@ definition {
 		Variables.assertDefined(parameterList = "${parentResourcePrimKey},${headline}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		if (isSet(viewableBy)) {
 			var viewableBy = ${viewableBy};
@@ -67,7 +68,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${parentResourcePrimKey}/wiki-pages \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}' \
+				-u ${userLoginInfo} \
 				-d '{
 					"content": "${content}",
 					"creator": {},
@@ -114,6 +115,7 @@ definition {
 		Variables.assertDefined(parameterList = "${nodeId},${headline}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		if (isSet(viewableBy)) {
 			var viewableBy = ${viewableBy};
@@ -146,7 +148,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-nodes/${nodeId}/wiki-pages \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}' \
+				-u ${userLoginInfo} \
 				-d '{
 					"content": "${content}",
 					"creator": {},
@@ -168,11 +170,12 @@ definition {
 		Variables.assertDefined(parameterList = ${wikiPageId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${wikiPageId} \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}' \
+				-u ${userLoginInfo} \
 		''';
 
 		var response = JSONCurlUtil.delete(${curl});
@@ -304,6 +307,7 @@ definition {
 		Variables.assertDefined(parameterList = ${resourcePrimKey});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		if (isSet(viewableBy)) {
 			var viewableBy = ${viewableBy};
@@ -336,7 +340,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${resourcePrimKey} \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}' \
+				-u ${userLoginInfo} \
 				-d '{
 					"content": "${content}",
 					"creator": {},

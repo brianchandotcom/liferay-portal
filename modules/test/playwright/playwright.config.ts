@@ -28,7 +28,6 @@ import {config as frontendJsSpaWebConfig} from './tests/frontend-js-spa-web/conf
 import {config as frontendTaglibClayConfig} from './tests/frontend-taglib-clay/config';
 import {config as headlessBuilderImplConfig} from './tests/headless-builder-impl/config';
 import {config as headlessBuilderWebConfig} from './tests/headless-builder-web/config';
-import {config as jethr0Config} from './tests/workspaces/liferay-workspace-jethr0/config';
 import {config as journalWebConfig} from './tests/journal-web/config';
 import {config as knowledgeBaseWebConfig} from './tests/knowledge-base-web/config';
 import {config as layoutAdminWebConfig} from './tests/layout-admin-web/config';
@@ -58,6 +57,7 @@ import {config as stableConfig} from './tests/stable/config';
 import {config as stylebookWebConfig} from './tests/style-book-web/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
 import {config as wikiWebConfig} from './tests/wiki-web/config';
+import {config as jethr0Config} from './tests/workspaces/liferay-workspace-jethr0/config';
 import {config as marketplaceConfig} from './tests/workspaces/liferay-workspace-marketplace/config';
 
 const setupProjects = [wemSiteSetup, wemSiteTeardown];

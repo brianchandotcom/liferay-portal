@@ -30,12 +30,13 @@ definition {
 	macro _getCountryAbbreviation() {
 		Variables.assertDefined(parameterList = ${countryName});
 
-		var portalURL = PropsUtil.get("portal.url");
 		var countryName = StringUtil.replace(${countryName}, " ", "-");
+		var portalURL = PropsUtil.get("portal.url");
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/country/get-country-by-name \
-				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
+				-u ${userLoginInfo} \
 				-d name=${countryName} \
 		''';
 
@@ -51,11 +52,12 @@ definition {
 		Variables.assertDefined(parameterList = ${countryName});
 
 		var portalURL = PropsUtil.get("portal.url");
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/country/get-country-by-name \
-				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
-				-d name=${countryName} \
+				-u ${userLoginInfo} \
+				-d name=${countryName}
 		''';
 
 		var country = JSONCurlUtil.post(${curl});
@@ -69,10 +71,11 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 		var portalURL = PropsUtil.get("portal.url");
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/region/get-regions \
-				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
+				-u ${userLoginInfo} \
 				-d companyId=${companyId} \
 				-d a2=${countryAbbreviation} \
 				-d active=true

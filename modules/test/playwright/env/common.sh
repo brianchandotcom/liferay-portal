@@ -472,5 +472,4 @@ function wait_for_portal_log_inactivity {
 	echo "No portal activity in ${sleep_interval}s"
 }
 
-
 main "${@}"

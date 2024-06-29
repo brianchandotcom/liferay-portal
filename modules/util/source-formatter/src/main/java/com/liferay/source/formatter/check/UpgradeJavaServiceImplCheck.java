@@ -57,9 +57,7 @@ public class UpgradeJavaServiceImplCheck
 		return className.contains("ServiceBaseImpl");
 	}
 
-	private static String _getContextName(
-		JavaClass javaClass, String absolutePath) {
-
+	private String _getContextName(JavaClass javaClass, String absolutePath) {
 		File serviceXMLFile = _getServiceXML(absolutePath);
 
 		if (serviceXMLFile != null) {
@@ -76,11 +74,11 @@ public class UpgradeJavaServiceImplCheck
 		return StringUtil.extractLast(contextName, ".");
 	}
 
-	private static String _getContextPath(String baseImplName) {
+	private String _getContextPath(String baseImplName) {
 		return StringUtil.extractFirst(baseImplName, "ServiceBaseImpl");
 	}
 
-	private static String _getPortletShortName(Element rootElement) {
+	private String _getPortletShortName(Element rootElement) {
 		Element portletElement = rootElement.element("portlet");
 
 		if (portletElement != null) {
@@ -92,7 +90,7 @@ public class UpgradeJavaServiceImplCheck
 		return namespaceElement.getText();
 	}
 
-	private static File _getServiceXML(String absolutePath) {
+	private File _getServiceXML(String absolutePath) {
 		Path serviceXmlPath = Paths.get(absolutePath);
 
 		do {

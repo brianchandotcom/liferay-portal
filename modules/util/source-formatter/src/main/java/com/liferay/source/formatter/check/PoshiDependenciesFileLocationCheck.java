@@ -135,8 +135,6 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 							"Test dependencies file '", entry.getKey(),
 							"' is only referenced by one module, move it to ",
 							"module dependencies directory"));
-
-					break;
 				}
 			}
 		}

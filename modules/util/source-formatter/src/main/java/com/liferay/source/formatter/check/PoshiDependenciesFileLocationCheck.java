@@ -8,6 +8,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.processor.SourceProcessor;
@@ -93,7 +94,8 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 		for (Map.Entry<String, Set<String>> entry :
 				_dependenciesGlobalFileReferencesMap.entrySet()) {
 
-			Set<String> referencesFileNames = entry.getValue();
+			List<String> referencesFileNames = ListUtil.fromCollection(
+				entry.getValue());
 
 			if (referencesFileNames.size() != 1) {
 				continue;
@@ -127,15 +129,15 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 				}
 			}
 
-			for (String referencesFileName : referencesFileNames) {
-				if (referencesFileName.equals(absolutePath)) {
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Test dependencies file '", entry.getKey(),
-							"' is only referenced by one module, move it to ",
-							"module dependencies directory"));
-				}
+			String referencesFileName = referencesFileNames.get(0);
+
+			if (referencesFileName.equals(absolutePath)) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Test dependencies file '", entry.getKey(),
+						"' is only referenced by one module, move it to ",
+						"module dependencies directory"));
 			}
 		}
 	}

@@ -126,18 +126,17 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 					}
 				}
 			}
-			else {
-				for (String referencesFileName : referencesFileNames) {
-					if (referencesFileName.equals(absolutePath)) {
-						addMessage(
-							fileName,
-							StringBundler.concat(
-								"Test dependencies file '", entry.getKey(),
-								"' is only referenced by one module, move it ",
-								"to module dependencies directory"));
 
-						break;
-					}
+			for (String referencesFileName : referencesFileNames) {
+				if (referencesFileName.equals(absolutePath)) {
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Test dependencies file '", entry.getKey(),
+							"' is only referenced by one module, move it to ",
+							"module dependencies directory"));
+
+					break;
 				}
 			}
 		}

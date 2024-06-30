@@ -9,6 +9,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.processor.SourceProcessor;
@@ -117,21 +118,14 @@ public class PoshiDependenciesFileLocationCheck extends BaseFileCheck {
 						_containsFileName(
 							line, _getShortFileName(entry.getKey()))) {
 
-						addMessage(
-							fileName,
-							StringBundler.concat(
-								"Test dependencies file '", entry.getKey(),
-								"' is only referenced by one module, move it ",
-								"to module dependencies directory"));
-
 						break;
 					}
 				}
 			}
 
-			String referencesFileName = referencesFileNames.get(0);
+			if (sourceFormatterArgs.isFormatCurrentBranch() ||
+				StringUtil.equals(absolutePath, referencesFileNames.get(0))) {
 
-			if (referencesFileName.equals(absolutePath)) {
 				addMessage(
 					fileName,
 					StringBundler.concat(

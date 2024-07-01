@@ -11,6 +11,7 @@ import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import getRandomString from '../../utils/getRandomString';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 
 export const test = mergeTests(
@@ -623,4 +624,51 @@ test('LPD-28734 SuccessMessage appears on Workflow Portlet after doing workflow 
 	await expect(
 		page.locator('#ToastAlertContainer .alert-success').first()
 	).toBeHidden();
+});
+
+test('LPD-28975 Workflow tab shows unexpected error for asset added in publication and subsequently enabling workflow', async ({
+	changeTrackingPage,
+	ctCollection,
+	journalEditArticlePage,
+	page,
+	workflowPage,
+}) => {
+	await changeTrackingPage.workOnProduction();
+
+	await workflowPage.goto();
+
+	await workflowPage.changeWorkflow('Web Content Article', 'No Workflow', {
+		disable: true,
+	});
+
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	await journalEditArticlePage.goto();
+
+	const title1 = getRandomString();
+
+	await journalEditArticlePage.fillTitle(title1);
+
+	await page.getByRole('button', {name: 'Publish'}).click();
+
+	await waitForSuccessAlert(
+		page,
+		`Success:${title1} was created successfully.`
+	);
+
+	await workflowPage.goto();
+
+	await workflowPage.changeWorkflow('Web Content Article', 'Single Approver');
+
+	await journalEditArticlePage.goto();
+
+	const title2 = getRandomString();
+
+	await journalEditArticlePage.submitArticleForWorkflow(title2);
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.name);
+
+	await changeTrackingPage.reviewChange(title1);
+
+	await changeTrackingPage.viewDisplayTab('Workflow', {isHidden: true});
 });

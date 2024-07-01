@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {FormError, Input} from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
@@ -26,81 +25,54 @@ export function Sender({
 	const [recipient] = values.recipients as EmailRecipients[];
 
 	return (
-		<>
-			<div className="row">
-				<div className="col-lg-6">
-					<Input
-						disabled={values.system}
-						error={errors.from}
-						id="fromAddress"
-						label={Liferay.Language.get('email-address')}
-						name="fromAddress"
-						onChange={({target}) =>
-							setValues({
-								...values,
-								recipients: [
-									{
-										...recipient,
-										from: target.value,
-									},
-								],
-							})
-						}
-						required
-						value={recipient.from}
-					/>
-				</div>
-
-				<div className="col-lg-6">
-					<InputLocalized
-						disabled={values.system}
-						error={errors.fromName}
-						id="fromName"
-						label={Liferay.Language.get('name')}
-						name="fromName"
-						onChange={(translation) => {
-							setValues({
-								...values,
-								recipients: [
-									{
-										...recipient,
-										fromName: translation,
-									},
-								],
-							});
-						}}
-						placeholder=""
-						required
-						selectedLocale={selectedLocale}
-						translations={recipient.fromName}
-					/>
-				</div>
+		<div className="row">
+			<div className="col-lg-6">
+				<Input
+					disabled={values.system}
+					error={errors.from}
+					id="fromAddress"
+					label={Liferay.Language.get('email-address')}
+					name="fromAddress"
+					onChange={({target}) =>
+						setValues({
+							...values,
+							recipients: [
+								{
+									...recipient,
+									from: target.value,
+								},
+							],
+						})
+					}
+					required
+					value={recipient.from}
+				/>
 			</div>
-			<>
-				<ClayForm.Group className="ml-1 row">
-					<div className="mr-2">
-						<ClayCheckbox
-							checked={recipient.usePreferredLocaleForGuestUsers}
-							disabled={values.system}
-							label={Liferay.Language.get(
-								'enable-sending-email-notifications-in-the-preferred-language-for-guest-users'
-							)}
-							onChange={({target: {checked}}) => {
-								setValues({
-									...values,
-									recipients: [
-										{
-											...recipient,
-											usePreferredLocaleForGuestUsers:
-												checked,
-										},
-									],
-								});
-							}}
-						/>
-					</div>
-				</ClayForm.Group>
-			</>
-		</>
+
+			<div className="col-lg-6">
+				<InputLocalized
+					disabled={values.system}
+					error={errors.fromName}
+					id="fromName"
+					label={Liferay.Language.get('name')}
+					name="fromName"
+					onChange={(translation) => {
+						setValues({
+							...values,
+							recipients: [
+								{
+									...recipient,
+									fromName: translation,
+								},
+							],
+						});
+					}}
+					placeholder=""
+					required
+					selectedLocale={selectedLocale}
+					translations={recipient.fromName}
+				/>
+			</div>
+		</div>
 	);
 }

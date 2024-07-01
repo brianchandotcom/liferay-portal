@@ -78,11 +78,11 @@ function storeNewLayoutData(state, segmentsExperienceId, layoutData) {
 function selectExperience(state, experienceId) {
 	let nextState = state;
 
-	if (!state.loadedSegmentsExperiences.includes(experienceId)) {
+	if (!state.loadedSegmentsExperiences?.includes(experienceId)) {
 		nextState = {
 			...nextState,
 			loadedSegmentsExperiences: [
-				...nextState.loadedSegmentsExperiences,
+				...(nextState.loadedSegmentsExperiences || []),
 				experienceId,
 			],
 		};

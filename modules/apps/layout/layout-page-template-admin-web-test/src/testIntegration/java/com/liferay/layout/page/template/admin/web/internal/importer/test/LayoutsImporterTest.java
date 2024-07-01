@@ -6,7 +6,10 @@
 package com.liferay.layout.page.template.admin.web.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -26,21 +29,26 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -53,6 +61,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -63,6 +73,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.io.File;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -141,6 +152,52 @@ public class LayoutsImporterTest {
 					layoutPageTemplateEntry.getPlid()));
 	}
 
+	@Test
+	public void testImportLayoutPageTemplateEntryWithCTCollection()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry();
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
+		_addFragmentEntryLink(fragmentEntry, layoutPageTemplateEntry);
+
+		File file = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
+			new long[] {
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+			});
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext2);
+
+		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			_assertLayoutsImporterResultEntries(
+				fragmentEntry,
+				_layoutsImporter.importFile(
+					TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
+					LayoutsImportStrategy.DO_NOT_OVERWRITE, true));
+
+			Assert.assertFalse(
+				_ctCollectionLocalService.hasUnapprovedChanges(
+					ctCollection.getCtCollectionId()));
+		}
+		finally {
+			_ctCollectionLocalService.deleteCTCollection(ctCollection);
+
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	private FragmentEntry _addFragmentEntry(
 			String html, String key, String name, ServiceContext serviceContext)
 		throws Exception {
@@ -159,28 +216,57 @@ public class LayoutsImporterTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
-	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(
-			String html, String key, String name)
+	private void _addFragmentEntryLink(
+			FragmentEntry fragmentEntry,
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), draftLayout,
+			fragmentEntry.getFragmentEntryKey(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()),
+			fragmentEntry.getType());
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertFragmentEntryLink(fragmentEntry, layoutPageTemplateEntry);
+	}
+
+	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry()
 		throws Exception {
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group1.getGroupId(),
+					null, _serviceContext1.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					"Page Template Collection", StringPool.BLANK,
+					RandomTestUtil.randomString(), StringPool.BLANK,
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					_serviceContext1);
 
+		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, _serviceContext1.getUserId(), _group1.getGroupId(),
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
+			RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.BASIC, 0,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext1);
+	}
+
+	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(
+			String html, String key, String name)
+		throws Exception {
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, _serviceContext1.getUserId(),
-				_serviceContext1.getScopeGroupId(),
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				"Page Template One", LayoutPageTemplateEntryTypeConstants.BASIC,
-				0, WorkflowConstants.STATUS_APPROVED, _serviceContext1);
+			_addLayoutPageTemplateEntry();
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			html, key, name, _serviceContext1);
@@ -230,6 +316,69 @@ public class LayoutsImporterTest {
 			updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				fileEntry.getFileEntryId());
+	}
+
+	private void _assertFragmentEntryLink(
+			FragmentEntry fragmentEntry,
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws Exception {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layoutPageTemplateEntry.getGroupId(),
+					layoutPageTemplateEntry.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
+
+		Assert.assertEquals(
+			MapUtil.toString(fragmentLayoutStructureItems), 1,
+			fragmentLayoutStructureItems.size());
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				SetUtil.randomElement(fragmentLayoutStructureItems.keySet()));
+
+		Assert.assertEquals(
+			fragmentEntry.getFragmentEntryKey(),
+			fragmentEntryLink.getRendererKey());
+	}
+
+	private void _assertLayoutsImporterResultEntries(
+			FragmentEntry fragmentEntry,
+			List<LayoutsImporterResultEntry> layoutsImporterResultEntries)
+		throws Exception {
+
+		Assert.assertNotNull(layoutsImporterResultEntries);
+
+		Assert.assertEquals(
+			layoutsImporterResultEntries.toString(), 1,
+			layoutsImporterResultEntries.size());
+
+		LayoutsImporterResultEntry layoutPageTemplateImportEntry =
+			layoutsImporterResultEntries.get(0);
+
+		Assert.assertEquals(
+			LayoutsImporterResultEntry.Status.IMPORTED,
+			layoutPageTemplateImportEntry.getStatus());
+
+		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(
+			layoutPageTemplateImportEntry.getName());
+
+		layoutPageTemplateEntryKey = StringUtil.replace(
+			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
+
+		LayoutPageTemplateEntry curLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group2.getGroupId(), layoutPageTemplateEntryKey);
+
+		Assert.assertNotNull(curLayoutPageTemplateEntry);
+
+		_assertFragmentEntryLink(fragmentEntry, curLayoutPageTemplateEntry);
 	}
 
 	private void _assertLayoutsImporterResultEntry(
@@ -544,6 +693,13 @@ public class LayoutsImporterTest {
 	}
 
 	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Inject
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
+
+	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Inject
@@ -557,6 +713,9 @@ public class LayoutsImporterTest {
 
 	@DeleteAfterTestRun
 	private Group _group2;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutPageTemplateCollectionLocalService

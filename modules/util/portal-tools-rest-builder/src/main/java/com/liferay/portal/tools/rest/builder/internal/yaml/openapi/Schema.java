@@ -42,6 +42,10 @@ public class Schema {
 		return _description;
 	}
 
+	public Discriminator getDiscriminator() {
+		return _discriminator;
+	}
+
 	public List<String> getEnumValues() {
 		return _enumValues;
 	}
@@ -150,6 +154,10 @@ public class Schema {
 		_description = description;
 	}
 
+	public void setDiscriminator(Discriminator discriminator) {
+		_discriminator = discriminator;
+	}
+
 	public void setEnumValues(List<String> enumValues) {
 		_enumValues = enumValues;
 	}
@@ -238,6 +246,7 @@ public class Schema {
 	private String _default;
 	private boolean _deprecated;
 	private String _description;
+	private Discriminator _discriminator;
 	private List<String> _enumValues;
 	private Object _example;
 	private String _format;

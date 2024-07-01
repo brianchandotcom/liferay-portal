@@ -27,9 +27,6 @@ public class JUnitTestSelector extends BaseTestSelector {
 		MODULES_INCLUDES_REQUIRED_TEST_BATCH_CLASS_NAMES_INCLUDES =
 			"modules.includes.required.test.batch.class.names.includes";
 
-	public static final String TEST_BATCH_CLASS_NAMES_FILTER =
-		"test.batch.class.names.filter";
-
 	public JUnitTestSelector(
 		File propertiesFile, Properties properties, String batchName,
 		String relevantRuleName, String testSuiteName) {
@@ -45,7 +42,6 @@ public class JUnitTestSelector extends BaseTestSelector {
 
 	public void addJobProperties() {
 		_excludesJobProperties.add(getExcludesJobProperty());
-		_filterJobProperties.add(getFilterJobProperty());
 		_includesJobProperties.add(getIncludesJobProperty());
 	}
 
@@ -57,15 +53,6 @@ public class JUnitTestSelector extends BaseTestSelector {
 		return getJobProperty(
 			MODULES_INCLUDES_REQUIRED_TEST_BATCH_CLASS_NAMES_EXCLUDES,
 			JobProperty.Type.MODULE_EXCLUDE_GLOB);
-	}
-
-	public List<JobProperty> getFilterJobProperties() {
-		return _filterJobProperties;
-	}
-
-	public JobProperty getFilterJobProperty() {
-		return getJobProperty(
-			TEST_BATCH_CLASS_NAMES_FILTER, JobProperty.Type.FILTER_GLOB);
 	}
 
 	public List<JobProperty> getIncludesJobProperties() {
@@ -87,7 +74,6 @@ public class JUnitTestSelector extends BaseTestSelector {
 		JUnitTestSelector jUnitTestSelector = (JUnitTestSelector)testSelector;
 
 		_excludesJobProperties.add(jUnitTestSelector.getExcludesJobProperty());
-		_filterJobProperties.add(jUnitTestSelector.getFilterJobProperty());
 		_includesJobProperties.add(jUnitTestSelector.getIncludesJobProperty());
 	}
 
@@ -97,7 +83,6 @@ public class JUnitTestSelector extends BaseTestSelector {
 	}
 
 	private final List<JobProperty> _excludesJobProperties = new ArrayList<>();
-	private final List<JobProperty> _filterJobProperties = new ArrayList<>();
 	private final List<JobProperty> _includesJobProperties = new ArrayList<>();
 
 }

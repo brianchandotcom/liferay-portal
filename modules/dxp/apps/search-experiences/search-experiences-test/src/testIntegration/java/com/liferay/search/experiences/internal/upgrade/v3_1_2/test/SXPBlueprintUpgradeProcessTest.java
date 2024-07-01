@@ -58,12 +58,12 @@ public class SXPBlueprintUpgradeProcessTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Class<?> clazz = getClass();
+
 		_group = GroupTestUtil.addGroup();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, TestPropsValues.getUserId());
-
-		Class<?> clazz = getClass();
 
 		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
 			null, TestPropsValues.getUserId(),

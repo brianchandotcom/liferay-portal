@@ -929,24 +929,18 @@ definition {
 
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
+				gridOptionType = "Rows",
 				index = ${index},
 				optionFieldLabel = "Rows",
 				optionValue = "Option ${index}");
-
-			if (${index} != 3) {
-				FormFields.clickAddOptionButton(gridOptionType = "Rows");
-			}
 		}
 
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
+				gridOptionType = "Columns",
 				index = ${index},
 				optionFieldLabel = "Columns",
 				optionValue = "Option ${index}");
-
-			if (${index} != 3) {
-				FormFields.clickAddOptionButton(gridOptionType = "Columns");
-			}
 		}
 
 		WebContentStructures.addTranslations(localeList = "ca-ES");
@@ -960,7 +954,7 @@ definition {
 			fieldFieldLabelEdit = "Grid - ca-ES");
 
 		for (var index : list "1,2,3") {
-			DataEngine.addFieldOption(
+			DataEngine.editFieldOption(
 				fieldFieldLabel = "Grid - ca-ES",
 				index = ${index},
 				optionFieldLabel = "Rows",
@@ -968,7 +962,7 @@ definition {
 		}
 
 		for (var index : list "1,2,3") {
-			DataEngine.addFieldOption(
+			DataEngine.editFieldOption(
 				fieldFieldLabel = "Grid - ca-ES",
 				index = ${index},
 				optionFieldLabel = "Columns",

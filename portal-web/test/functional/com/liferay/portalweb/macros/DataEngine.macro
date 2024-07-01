@@ -234,7 +234,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFieldOption(optionValue = null, fieldFieldLabel = null, index = null, optionFieldLabel = null) {
+	macro addFieldOption(optionValue = null, fieldFieldLabel = null, index = null, optionFieldLabel = null, gridOptionType = null) {
 		if (isSet(fieldFieldLabel)) {
 			AssertClick.assertPartialTextClickAt(
 				key_fieldFieldLabel = ${fieldFieldLabel},
@@ -243,7 +243,12 @@ definition {
 		}
 
 		if (${index} != 1) {
-			FormFields.clickAddOptionButton();
+			if (isSet(gridOptionType)) {
+				FormFields.clickAddOptionButton(gridOptionType = ${gridOptionType});
+			}
+			else {
+				FormFields.clickAddOptionButton();
+			}
 		}
 
 		if (isSet(optionFieldLabel)) {
@@ -1208,6 +1213,22 @@ definition {
 		Check.checkToggleSwitch(locator1 = "Checkbox#SWITCH");
 
 		Click(locator1 = "Sidebar#BACK");
+	}
+
+	@summary = "Default summary"
+	macro editFieldOption(optionValue = null, fieldFieldLabel = null, index = null, optionFieldLabel = null) {
+		if (isSet(fieldFieldLabel)) {
+			AssertClick.assertPartialTextClickAt(
+				key_fieldFieldLabel = ${fieldFieldLabel},
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+				value1 = ${fieldFieldLabel});
+		}
+
+		Type(
+			index = ${index},
+			key_optionFieldLabel = ${optionFieldLabel},
+			locator1 = "Sidebar#OPTION_INPUT",
+			value1 = ${optionValue});
 	}
 
 	@summary = "Default summary"

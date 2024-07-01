@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -305,6 +306,7 @@ public abstract class BaseFragmentCollectionContributor
 		FragmentComposition fragmentComposition =
 			fragmentCompositionLocalService.createFragmentComposition(0L);
 
+		fragmentComposition.setCompanyId(CompanyConstants.SYSTEM);
 		fragmentComposition.setFragmentCompositionKey(fragmentCompositionKey);
 		fragmentComposition.setName(name);
 		fragmentComposition.setData(definition);
@@ -395,6 +397,7 @@ public abstract class BaseFragmentCollectionContributor
 		FragmentEntry fragmentEntry =
 			fragmentEntryLocalService.createFragmentEntry(0L);
 
+		fragmentEntry.setCompanyId(CompanyConstants.SYSTEM);
 		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
 		fragmentEntry.setName(name);
 		fragmentEntry.setCss(css);

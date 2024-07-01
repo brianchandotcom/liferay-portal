@@ -62,13 +62,15 @@ public class SXPBlueprintImportUpgradeContributorStorageSchemaTest {
 	}
 
 	@Test
-	public void testImportSXPBlueprintWithDisableAllContributors() throws Exception {
+	public void testImportSXPBlueprintWithDisableAllContributors()
+		throws Exception {
+
 		SXPBlueprint sxpBlueprintV10 =
 			_sxpBlueprintLocalService.getSXPBlueprint(
 				_sxpBlueprintV10.getSXPBlueprintId());
 
 		_assertGeneralConfiguration(
-			_WILDCARD_ARRAY, new String[0], sxpBlueprintV10, );
+			_WILDCARD_ARRAY, new String[0], sxpBlueprintV10);
 
 		SXPBlueprint sxpBlueprintV11 =
 			_sxpBlueprintLocalService.getSXPBlueprint(
@@ -80,7 +82,9 @@ public class SXPBlueprintImportUpgradeContributorStorageSchemaTest {
 	}
 
 	@Test
-	public void testImportSXPBlueprintWithEnableAllContributors() throws Exception {
+	public void testImportSXPBlueprintWithEnableAllContributors()
+		throws Exception {
+
 		SXPBlueprint sxpBlueprintV10 =
 			_sxpBlueprintLocalService.getSXPBlueprint(
 				_sxpBlueprintV10.getSXPBlueprintId());
@@ -98,7 +102,9 @@ public class SXPBlueprintImportUpgradeContributorStorageSchemaTest {
 	}
 
 	@Test
-	public void testImportSXPBlueprintWithEnableSomeContributors() throws Exception {
+	public void testImportSXPBlueprintWithEnableSomeContributors()
+		throws Exception {
+
 		String[] expectedIncludes = {
 			"com.liferay.journal.internal.search.spi.model.query.contributor." +
 				"JournalArticleKeywordQueryContributor",
@@ -125,23 +131,6 @@ public class SXPBlueprintImportUpgradeContributorStorageSchemaTest {
 	@Rule
 	public TestName testName = new TestName();
 
-	private void _assertGeneralConfiguration(
-			String[] expectedExcludes,
-			String[] expectedIncludes, SXPBlueprint sxpBlueprint)
-		throws Exception {
-
-		GeneralConfiguration generalConfiguration = _getGeneralConfiguration(
-			sxpBlueprint);
-
-		Assert.assertArrayEquals(
-			expectedExcludes,
-			generalConfiguration.getClauseContributorsExcludes());
-
-		Assert.assertArrayEquals(
-			expectedIncludes,
-			generalConfiguration.getClauseContributorsIncludes());
-	}
-
 	private SXPBlueprint _addSXPBlueprint(String schemaVersion)
 		throws Exception {
 
@@ -160,6 +149,23 @@ public class SXPBlueprintImportUpgradeContributorStorageSchemaTest {
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			_serviceContext);
+	}
+
+	private void _assertGeneralConfiguration(
+			String[] expectedExcludes, String[] expectedIncludes,
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		GeneralConfiguration generalConfiguration = _getGeneralConfiguration(
+			sxpBlueprint);
+
+		Assert.assertArrayEquals(
+			expectedExcludes,
+			generalConfiguration.getClauseContributorsExcludes());
+
+		Assert.assertArrayEquals(
+			expectedIncludes,
+			generalConfiguration.getClauseContributorsIncludes());
 	}
 
 	private String[] _getExpectedExcludes(SXPBlueprint sxpBlueprint) {

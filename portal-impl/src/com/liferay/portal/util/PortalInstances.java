@@ -369,7 +369,7 @@ public class PortalInstances {
 	public static SafeCloseable setCopyInProcessCompanyId(long companyId) {
 		if (_copyInProcessCompanyId != null) {
 			throw new UnsupportedOperationException(
-				"There is already a company in copy process");
+				"Company in process company ID is not null");
 		}
 
 		_copyInProcessCompanyId = companyId;

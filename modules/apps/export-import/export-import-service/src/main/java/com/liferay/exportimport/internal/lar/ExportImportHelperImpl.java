@@ -767,6 +767,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			return false;
 		}
 
+		if (ExportImportThreadLocal.isLayoutStagingInProcess() &&
+			!_isStagedPortlet(portletDataContext)) {
+
+			return false;
+		}
+
 		return true;
 	}
 
@@ -1438,6 +1444,17 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			parameterMap,
 			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
 				PortletIdCodec.decodePortletName(portletId));
+	}
+
+	private boolean _isStagedPortlet(PortletDataContext portletDataContext) {
+		Group group = _groupLocalService.fetchGroup(
+			portletDataContext.getGroupId());
+
+		if (group == null) {
+			return false;
+		}
+
+		return group.isStagedPortlet(portletDataContext.getPortletId());
 	}
 
 	private boolean _populateLayoutsJSON(

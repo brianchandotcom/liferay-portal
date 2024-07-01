@@ -11,6 +11,7 @@ import com.liferay.batch.engine.unit.BatchEngineUnitMetaInfo;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 
 import java.util.ArrayList;
@@ -71,6 +72,10 @@ public class BatchEngineBundleTracker {
 
 		@Override
 		public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+			if (StartupHelperUtil.isUpgrading()) {
+				return null;
+			}
+
 			Dictionary<String, String> headers = bundle.getHeaders(
 				StringPool.BLANK);
 

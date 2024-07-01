@@ -272,7 +272,6 @@ public class ObjectEntryDTOConverter
 		}
 
 		unsafeSuppliers.put(objectFieldName, () -> primaryKey);
-
 		unsafeSuppliers.put(
 			objectRelationshipERCObjectFieldName, () -> relatedObjectEntryERC);
 	}
@@ -457,11 +456,9 @@ public class ObjectEntryDTOConverter
 
 						Folder folder = new Folder();
 
-						long folderId = dlFileEntry.getFolderId();
-
 						folder.setExternalReferenceCode(
 							() -> {
-								if (folderId == 0) {
+								if (dlFileEntry.getFolderId() == 0) {
 									return null;
 								}
 
@@ -469,7 +466,6 @@ public class ObjectEntryDTOConverter
 
 								return dlFolder.getExternalReferenceCode();
 							});
-
 						folder.setSiteId(dlFileEntry::getGroupId);
 
 						return folder;
@@ -487,7 +483,7 @@ public class ObjectEntryDTOConverter
 		return fileEntry;
 	}
 
-	private String _getDateTimeField(
+	private String _getDateString(
 		ObjectField objectField, Timestamp timestamp) {
 
 		String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
@@ -848,7 +844,7 @@ public class ObjectEntryDTOConverter
 
 				unsafeSuppliers.put(
 					objectFieldName,
-					() -> _getDateTimeField(objectField, timestamp));
+					() -> _getDateString(objectField, timestamp));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.

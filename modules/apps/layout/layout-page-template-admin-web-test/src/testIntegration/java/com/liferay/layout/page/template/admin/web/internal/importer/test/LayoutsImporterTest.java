@@ -42,6 +42,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
@@ -162,6 +163,9 @@ public class LayoutsImporterTest {
 		FragmentEntry fragmentEntry =
 			_fragmentCollectionContributorRegistry.getFragmentEntry(
 				"BASIC_COMPONENT-heading");
+
+		Assert.assertEquals(
+			CompanyConstants.SYSTEM, fragmentEntry.getCompanyId());
 
 		_addFragmentEntryLink(fragmentEntry, layoutPageTemplateEntry);
 

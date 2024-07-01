@@ -37,12 +37,12 @@
 </tr>
 <tr>
 	<td>ENTRY_NAME</td>
-	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//a[text()='${key_entryName}']</td>
+	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//*[text()='${key_entryName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_NAME_EXACT_MATCH</td>
-	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//a[text()='${key_entryName}']</td>
+	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//*[text()='${key_entryName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>ENTRY_NAME_WITH_UOM</td>
-	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//div[contains(@class,'dnd-td') and contains(text(),'${key_uom}')]//..//a[text()='${key_entryName}']</td>
+	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//div[contains(@class,'dnd-td') and contains(text(),'${key_uom}')]//..//*[text()='${key_entryName}']</td>
 	<td></td>
 </tr>
 <tr>

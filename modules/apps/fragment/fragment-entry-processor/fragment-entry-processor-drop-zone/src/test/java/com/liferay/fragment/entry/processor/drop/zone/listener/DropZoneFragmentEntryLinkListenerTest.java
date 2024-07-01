@@ -295,8 +295,13 @@ public class DropZoneFragmentEntryLinkListenerTest {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		_dropZoneFragmentEntryLinkListener.updateLayoutPageTemplateStructure(
-			fragmentEntryLink, null);
+		try {
+			_dropZoneFragmentEntryLinkListener.
+				updateLayoutPageTemplateStructure(fragmentEntryLink, null);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		Mockito.verify(
 			serviceContext

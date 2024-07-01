@@ -80,7 +80,7 @@ public class DeleteLayoutMVCActionCommandTest {
 	}
 
 	@Test
-	public void testDeleteLayoutWithDiscardDraft() throws Exception {
+	public void testDeleteLayoutWithDraftLayout() throws Exception {
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
 			new MockLiferayPortletActionResponse();
 

@@ -2,9 +2,11 @@
 	courseData = ""
 	groupPathFriendlyURLPublic = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getScopeGroup().getFriendlyURL()
 	navigationJSONObject = jsonFactoryUtil.createJSONObject(navigation.getData())
-	childrenJSONArray = navigationJSONObject.getJSONArray("children")
+
+	childrenJSONArray1 = navigationJSONObject.getJSONArray("children")
 	siblingsJSONArray = navigationJSONObject.getJSONArray("siblings")
 />
+
 <#list 0..siblingsJSONArray.length()-1 as i>
 	<#assign sibling = siblingsJSONArray.getJSONObject(i) />
 	<#if sibling.getString("title") == "${course.getData()}">
@@ -12,20 +14,22 @@
 		<#break>
 	</#if>
 </#list>
+
 <div class="learn-article-nav">
 	<div class="learn-article-nav-content">
-		<#if childrenJSONArray.length() gt 0>
+		<#if childrenJSONArray1.length() gt 0>
 			<ul class="m-0 p-2">
 				<li class="learn-article-nav-item ${(navigationJSONObject.getJSONObject("self").url == courseData.url)?then("selected", "")}">
 					<a class="liferay-nav-item" href="${courseData.url}">
 						<span>Introduction</span>
 					</a>
 				</li>
-				<#list 0..childrenJSONArray.length()-1 as i>
+				<#list 0..childrenJSONArray1.length()-1 as i>
 					<div>
-						<#assign child = childrenJSONArray.getJSONObject(i)
+						<#assign
+							child = childrenJSONArray1.getJSONObject(i)
 
-							lessonsJSONArray = child.getJSONArray("children")
+							childrenJSONArray2 = child.getJSONArray("children")
 						/>
 
 						<div class="panel-group">
@@ -37,13 +41,13 @@
 									data-target= "#collapsePanel${i}"
 									data-toggle="liferay-collapse"
 									onclick="togglePanel(this)"
-							>
+								>
 									<span class="panel-title">
 										<li class="learn-article-nav-item">
 											<div
 												class="liferay-nav-item ${(navigationJSONObject.getJSONObject("self").url == child.url)?then("selected", "")}"
-												href="${child.url}" style="display: flex;
-												justify-content: space-between;">
+												href="${child.url}"
+												style="display: flex; justify-content: space-between;">
 												<div class="nav-item-number-title">
 													<div>
 														<span class="course-module-number">${i+1}</span>
@@ -58,7 +62,7 @@
 										<svg
 											class="lexicon-icon lexicon-icon-angle-right"
 											role="presentation"
-									>
+										>
 											<use xlink:href="/o/admin-theme/images/clay/icons.svg#angle-right"></use>
 										</svg>
 									</span>
@@ -66,7 +70,7 @@
 										<svg
 											class="lexicon-icon lexicon-icon-angle-down"
 											role="presentation"
-									>
+										>
 											<use xlink:href="/o/admin-theme/images/clay/icons.svg#angle-down"></use>
 										</svg>
 									</span>
@@ -74,10 +78,10 @@
 
 								<div class="panel-collapse collapse" id="collapsePanel${i}">
 									<div class="panel-body">
-										<#assign lessons = lessonsJSONArray?eval_json />
+										<#assign lessons = childrenJSONArray2?eval_json />
 
 										<#list lessons as lesson>
-											<div class="container-lesson"><div class="course-module-transparent" > </div><a href="${lesson.url}">${lesson.title}</a></div>
+											<div class="container-lesson"><div class="course-module-transparent" ></div><a href="${lesson.url}">${lesson.title}</a></div>
 										</#list>
 									</div>
 								</div>
@@ -92,17 +96,16 @@
 
 <script>
 function togglePanel(button) {
-	var isExpanded = button.getAttribute('aria-expanded') === 'true';
-	var liferayNavItem = button.querySelector('.liferay-nav-item');
-	var spanNumber = button.querySelector('.course-module-number');
+	const courseModuleNumber = button.querySelector('.course-module-number');
+	const liferayNavItem = button.querySelector('.liferay-nav-item');
 
-	if (isExpanded) {
+	if (button.getAttribute('aria-expanded') === 'true') {
 		button.setAttribute('aria-expanded', 'false');
-		spanNumber.classList.remove('highlighted');
+		courseModuleNumber.classList.remove('highlighted');
 		liferayNavItem.classList.remove('highlightedNavItem');
 	} else {
 		button.setAttribute('aria-expanded', 'true');
-		spanNumber.classList.add('highlighted');
+		courseModuleNumber.classList.add('highlighted');
 		liferayNavItem.classList.add('highlightedNavItem');
 	}
 }

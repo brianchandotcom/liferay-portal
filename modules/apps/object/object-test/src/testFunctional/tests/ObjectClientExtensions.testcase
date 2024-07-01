@@ -191,47 +191,62 @@ definition {
 	@description = "LPS-179377 - Verify an action can be created using an action client extension"
 	@priority = 5
 	test CanTriggerAction {
-		task ("Given Liferay Sample Batch and Liferay Sample Etc Spring Boot are deployed into the current virtual instance") {
-			for (var clientExtension : list "liferay-sample-batch,liferay-sample-etc-spring-boot") {
+		task ("Given Liferay Sample Etc Spring Boot is deployed into the current virtual instance") {
+			var clientExtensionSamples = "liferay-sample-etc-spring-boot";
+
+			for (var clientExtension : list ${clientExtensionSamples}) {
 				AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");
 			}
-		}
 
-		task ("and Given an object entry") {
 			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "start-liferay-sample-etc-spring-boot -Dvirtual.instance.id=${companyWebId}");
+		}
 
+		task ("and Given a custom object definition with a text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Student",
+				objectName = "Student",
+				pluralLabelName = "Students");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "Student");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "Student");
+		}
+
+		task ("and Given an action using the client extension") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Student");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Sample Spring Boot Object Action",
+				actionName = "SampleSpringBootObjectAction",
+				active = "true",
+				thenAction = "object-action-executor[function#liferay-sample-etc-spring-boot-object-action-1]",
+				whenAction = "On After Add");
+		}
+
+		task ("When the entry is added") {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "field1",
-				objectName = "Sample",
-				value = "Entry A");
+				fieldName = "name",
+				objectName = "Student",
+				value = "John");
 		}
 
-		task ("When the user updates the object entry") {
-			ObjectAdmin.goToCustomObject(objectName = "Sample");
+		task ("Then the action is triggered successfully") {
+			Refresh();
 
-			ObjectPortlet.viewEntryDetails(entry = "Entry A");
-
-			Type(
-				locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
-				value1 = "Entry Updated");
-
-			PortletEntry.save();
-
-			ObjectAdmin.goToCustomObject(objectName = "Sample");
-
-			AssertElementPresent(
-				key_entry = "Entry Updated",
-				locator1 = "ObjectPortlet#ENTRY_VALUE");
-		}
-
-		task ("Then the action is triggered and the object entry DTO structure is returned in the console log") {
-			var objectId = JSONObject.getObjectId(objectName = "Sample");
-
-			AssertConsoleTextPresent(value1 = "objectDefinitionId: ${objectId}");
-
-			AssertConsoleTextPresent(value1 = "objectActionTriggerKey: onAfterUpdate");
-
-			AssertConsoleTextPresent(value1 = "values: {field1: Entry Updated}");
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionLabel = "Sample Spring Boot Object Action",
+				status = "Success");
 		}
 	}
 

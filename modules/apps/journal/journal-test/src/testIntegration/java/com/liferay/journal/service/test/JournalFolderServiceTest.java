@@ -21,6 +21,7 @@ import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -689,6 +690,40 @@ public class JournalFolderServiceTest {
 		Assert.assertEquals(
 			JournalFolderConstants.RESTRICTION_TYPE_INHERIT,
 			childFolder.getRestrictionType());
+	}
+
+	@Test
+	public void testSearchDDMStructuresInRestrictedFolder() throws Exception {
+		JournalFolder folder = _journalFolderFixture.addFolder(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test Folder");
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		long[] ddmStructureIds = {ddmStructure.getStructureId()};
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		_journalFolderLocalService.updateFolder(
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			folder.getFolderId(), folder.getParentFolderId(), folder.getName(),
+			folder.getDescription(), ddmStructureIds,
+			JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW,
+			false, serviceContext);
+
+		List<DDMStructure> ddmStructures =
+			_journalFolderService.searchDDMStructures(
+				_group.getCompanyId(),
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					_group.getGroupId()),
+				folder.getFolderId(),
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW,
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(ddmStructures.toString(), 1, ddmStructures.size());
 	}
 
 	@Test

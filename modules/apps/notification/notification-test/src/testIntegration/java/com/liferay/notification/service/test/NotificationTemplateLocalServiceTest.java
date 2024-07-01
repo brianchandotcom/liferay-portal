@@ -117,7 +117,10 @@ public class NotificationTemplateLocalServiceTest {
 					user, StringUtil.randomString(256),
 					NotificationConstants.TYPE_USER_NOTIFICATION)));
 
-		// Add draft email notification template
+		_notificationTemplateLocalService.addNotificationTemplate(
+			NotificationTemplateUtil.createNotificationContext(
+				user, StringUtil.randomString(255),
+				NotificationConstants.TYPE_USER_NOTIFICATION));
 
 		NotificationTemplate notificationTemplate =
 			_notificationTemplateLocalService.addNotificationTemplate(
@@ -159,8 +162,6 @@ public class NotificationTemplateLocalServiceTest {
 
 		_notificationTemplateLocalService.deleteNotificationTemplate(
 			notificationTemplate);
-
-		// Add email notification template
 
 		String body = StringUtil.randomString(255);
 		String description = RandomTestUtil.randomString();
@@ -231,13 +232,6 @@ public class NotificationTemplateLocalServiceTest {
 			NotificationRecipientSettingConstants.
 				NAME_USE_PREFERRED_LOCALE_FOR_GUEST_USERS,
 			notificationRecipientId, usePreferredLocaleForGuestUsers);
-
-		// Add user notification template
-
-		_notificationTemplateLocalService.addNotificationTemplate(
-			NotificationTemplateUtil.createNotificationContext(
-				user, StringUtil.randomString(255),
-				NotificationConstants.TYPE_USER_NOTIFICATION));
 	}
 
 	private void _assertNotificationRecipientSetting(

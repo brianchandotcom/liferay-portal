@@ -23,7 +23,7 @@ const DownloadTable: React.FC<DownloadTableProps> = ({
 		return <Loading />;
 	}
 
-	if (!virualItems.length) {
+	if (!virualItems?.length) {
 		return (
 			<EmptyState
 				description={i18n.translate('no-results-found')}

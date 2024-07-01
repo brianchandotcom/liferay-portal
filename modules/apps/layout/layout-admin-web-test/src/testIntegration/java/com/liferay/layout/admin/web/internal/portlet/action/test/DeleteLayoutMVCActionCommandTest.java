@@ -63,13 +63,11 @@ public class DeleteLayoutMVCActionCommandTest {
 
 	@Test
 	public void testDeleteLayout() throws Exception {
-		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
-			new MockLiferayPortletActionResponse();
-
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId());
-
 		String redirect = RandomTestUtil.randomString();
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
 
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(layout.getPlid(), redirect),
@@ -91,9 +89,6 @@ public class DeleteLayoutMVCActionCommandTest {
 
 	@Test
 	public void testDeleteLayoutWithDraftLayout() throws Exception {
-		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
-			new MockLiferayPortletActionResponse();
-
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId());
 
@@ -102,6 +97,9 @@ public class DeleteLayoutMVCActionCommandTest {
 				layout.getPlid(), LocaleUtil.getDefault());
 
 		Layout draftLayout = layoutConversionResult.getDraftLayout();
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
 
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(
@@ -129,9 +127,7 @@ public class DeleteLayoutMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
 		mockLiferayPortletActionRequest.addParameter("redirect", redirect);
-
 		mockLiferayPortletActionRequest.addParameter(
 			"rowIds", new String[] {String.valueOf(plid)});
 

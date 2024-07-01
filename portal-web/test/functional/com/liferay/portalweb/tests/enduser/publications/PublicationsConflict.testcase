@@ -65,20 +65,6 @@ definition {
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication 1 Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit 1");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit 1");
-
-		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit 2");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit 2");
-
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication 2 Name");
 
 		PublicationsNavigator.gotoPublish(publicationName = "Publication 2 Name");

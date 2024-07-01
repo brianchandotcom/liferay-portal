@@ -97,87 +97,22 @@ public class LayoutsImporterTest {
 
 	@Test
 	public void testImportLayoutPageTemplateEntry() throws Exception {
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				addLayoutPageTemplateCollection(
-					null, TestPropsValues.getUserId(), _group1.getGroupId(),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					"Page Template Collection", StringPool.BLANK,
-					LayoutPageTemplateCollectionTypeConstants.BASIC,
-					_serviceContext1);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, _serviceContext1.getUserId(),
-				_serviceContext1.getScopeGroupId(),
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				"Page Template One", LayoutPageTemplateEntryTypeConstants.BASIC,
-				0, WorkflowConstants.STATUS_APPROVED, _serviceContext1);
-
+		String key = "test-text-fragment";
 		String html =
 			"<lfr-editable id=\"element-text\" type=\"text\">Test Text " +
 				"Fragment</lfr-editable>";
+		String name = "Test Text Fragment";
 
-		FragmentEntry fragmentEntry = _addFragmentEntry(
-			_group1.getGroupId(), "test-text-fragment", "Test Text Fragment",
-			html);
-
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layoutPageTemplateEntry1.getPlid());
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group1.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), defaultSegmentsExperienceId,
-				layoutPageTemplateEntry1.getPlid(), StringPool.BLANK, html,
-				StringPool.BLANK,
-				_read("export_import_fragment_field_text_config.json"),
-				_read("export_import_fragment_field_text_editable_values.json"),
-				StringPool.BLANK, 0, null, fragmentEntry.getType(),
-				_serviceContext1);
-
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				_group1.getGroupId(), layoutPageTemplateEntry1.getPlid(),
-				defaultSegmentsExperienceId,
-				StringUtil.replace(
-					_read("export_import_layout_data.json"), "${", "}",
-					HashMapBuilder.put(
-						"FRAGMENT_ENTRY_LINK1_ID",
-						String.valueOf(
-							fragmentEntryLink.getFragmentEntryLinkId())
-					).build()));
-
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			_group1.getGroupId(), RandomTestUtil.randomString(),
-			_serviceContext1);
-
-		Class<?> clazz = getClass();
-
-		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			null, _group1.getGroupId(), TestPropsValues.getUserId(),
-			LayoutPageTemplateEntry.class.getName(),
-			layoutPageTemplateEntry1.getLayoutPageTemplateEntryId(),
-			RandomTestUtil.randomString(), repository.getDlFolderId(),
-			clazz.getResourceAsStream("dependencies/thumbnail.png"),
-			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
-
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry1.getLayoutPageTemplateEntryId(),
-			fileEntry.getFileEntryId());
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry(html, key, name);
 
 		File file = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
 			new long[] {
-				layoutPageTemplateEntry1.getLayoutPageTemplateEntryId()
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 			});
 
-		_addFragmentEntry(
-			_group2.getGroupId(), "test-text-fragment", "Test Text Fragment",
-			html);
+		_addFragmentEntry(_group2.getGroupId(), html, key, name);
 
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
 
@@ -198,103 +133,16 @@ public class LayoutsImporterTest {
 			layoutsImporterResultEntries.toString(), 1,
 			layoutsImporterResultEntries.size());
 
-		LayoutsImporterResultEntry layoutPageTemplateImportEntry =
-			layoutsImporterResultEntries.get(0);
-
-		Assert.assertEquals(
-			LayoutsImporterResultEntry.Status.IMPORTED,
-			layoutPageTemplateImportEntry.getStatus());
-
-		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(
-			layoutPageTemplateImportEntry.getName());
-
-		layoutPageTemplateEntryKey = StringUtil.replace(
-			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group2.getGroupId(), layoutPageTemplateEntryKey);
-
-		Assert.assertNotNull(layoutPageTemplateEntry2);
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure1 =
+		_assertLayoutsImporterResultEntry(
+			layoutsImporterResultEntries.get(0),
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					layoutPageTemplateEntry1.getGroupId(),
-					layoutPageTemplateEntry1.getPlid());
-		LayoutPageTemplateStructure layoutPageTemplateStructure2 =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					layoutPageTemplateEntry2.getGroupId(),
-					layoutPageTemplateEntry2.getPlid());
-
-		LayoutStructure layoutStructure1 = LayoutStructure.of(
-			layoutPageTemplateStructure1.getDefaultSegmentsExperienceData());
-		LayoutStructure layoutStructure2 = LayoutStructure.of(
-			layoutPageTemplateStructure2.getDefaultSegmentsExperienceData());
-
-		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem1 =
-			_getContainerLayoutStructureItem(layoutStructure1);
-		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem2 =
-			_getContainerLayoutStructureItem(layoutStructure2);
-
-		_validateContainerLayoutStructureItem(
-			containerStyledLayoutStructureItem1,
-			containerStyledLayoutStructureItem2);
-
-		List<String> containerLayoutStructureItemChildrenItemIds1 =
-			containerStyledLayoutStructureItem1.getChildrenItemIds();
-		List<String> containerLayoutStructureItemChildrenItemIds2 =
-			containerStyledLayoutStructureItem2.getChildrenItemIds();
-
-		RowStyledLayoutStructureItem rowStyledLayoutStructureItem1 =
-			(RowStyledLayoutStructureItem)
-				layoutStructure1.getLayoutStructureItem(
-					containerLayoutStructureItemChildrenItemIds1.get(0));
-		RowStyledLayoutStructureItem rowStyledLayoutStructureItem2 =
-			(RowStyledLayoutStructureItem)
-				layoutStructure2.getLayoutStructureItem(
-					containerLayoutStructureItemChildrenItemIds2.get(0));
-
-		_validateRowLayoutStructureItem(
-			rowStyledLayoutStructureItem1, rowStyledLayoutStructureItem2);
-
-		List<String> rowLayoutStructureItemChildrenItemIds1 =
-			rowStyledLayoutStructureItem1.getChildrenItemIds();
-		List<String> rowLayoutStructureItemChildrenItemIds2 =
-			rowStyledLayoutStructureItem2.getChildrenItemIds();
-
-		ColumnLayoutStructureItem columnLayoutStructureItem1 =
-			(ColumnLayoutStructureItem)layoutStructure1.getLayoutStructureItem(
-				rowLayoutStructureItemChildrenItemIds1.get(0));
-		ColumnLayoutStructureItem columnLayoutStructureItem2 =
-			(ColumnLayoutStructureItem)layoutStructure2.getLayoutStructureItem(
-				rowLayoutStructureItemChildrenItemIds2.get(0));
-
-		_validateColumnLayoutStructureItem(
-			columnLayoutStructureItem1, columnLayoutStructureItem2);
-
-		List<String> columnLayoutStructureItemChildrenItemIds1 =
-			columnLayoutStructureItem1.getChildrenItemIds();
-		List<String> columnLayoutStructureItemChildrenItemIds2 =
-			columnLayoutStructureItem2.getChildrenItemIds();
-
-		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem1 =
-			(FragmentStyledLayoutStructureItem)
-				layoutStructure1.getLayoutStructureItem(
-					columnLayoutStructureItemChildrenItemIds1.get(0));
-		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem2 =
-			(FragmentStyledLayoutStructureItem)
-				layoutStructure2.getLayoutStructureItem(
-					columnLayoutStructureItemChildrenItemIds2.get(0));
-
-		_validateFragmentLayoutStructureItem(
-			fragmentStyledLayoutStructureItem1,
-			fragmentStyledLayoutStructureItem2);
+					layoutPageTemplateEntry.getGroupId(),
+					layoutPageTemplateEntry.getPlid()));
 	}
 
 	private FragmentEntry _addFragmentEntry(
-			long groupId, String key, String name, String html)
+			long groupId, String html, String key, String name)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -311,6 +159,173 @@ public class LayoutsImporterTest {
 			StringPool.BLANK, html, StringPool.BLANK, false, StringPool.BLANK,
 			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(
+			String html, String key, String name)
+		throws Exception {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					null, TestPropsValues.getUserId(), _group1.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					"Page Template Collection", StringPool.BLANK,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
+					_serviceContext1);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, _serviceContext1.getUserId(),
+				_serviceContext1.getScopeGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				"Page Template One", LayoutPageTemplateEntryTypeConstants.BASIC,
+				0, WorkflowConstants.STATUS_APPROVED, _serviceContext1);
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			_group1.getGroupId(), html, key, name);
+
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layoutPageTemplateEntry.getPlid());
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group1.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), defaultSegmentsExperienceId,
+				layoutPageTemplateEntry.getPlid(), StringPool.BLANK, html,
+				StringPool.BLANK,
+				_read("export_import_fragment_field_text_config.json"),
+				_read("export_import_fragment_field_text_editable_values.json"),
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				_serviceContext1);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group1.getGroupId(), layoutPageTemplateEntry.getPlid(),
+				defaultSegmentsExperienceId,
+				StringUtil.replace(
+					_read("export_import_layout_data.json"), "${", "}",
+					HashMapBuilder.put(
+						"FRAGMENT_ENTRY_LINK1_ID",
+						String.valueOf(
+							fragmentEntryLink.getFragmentEntryLinkId())
+					).build()));
+
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+			_group1.getGroupId(), RandomTestUtil.randomString(),
+			_serviceContext1);
+
+		Class<?> clazz = getClass();
+
+		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+			null, _group1.getGroupId(), TestPropsValues.getUserId(),
+			LayoutPageTemplateEntry.class.getName(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			RandomTestUtil.randomString(), repository.getDlFolderId(),
+			clazz.getResourceAsStream("dependencies/thumbnail.png"),
+			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
+
+		return _layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				fileEntry.getFileEntryId());
+	}
+
+	private void _assertLayoutsImporterResultEntry(
+			LayoutsImporterResultEntry layoutPageTemplateImportEntry,
+			LayoutPageTemplateStructure layoutPageTemplateStructure)
+		throws Exception {
+
+		Assert.assertEquals(
+			LayoutsImporterResultEntry.Status.IMPORTED,
+			layoutPageTemplateImportEntry.getStatus());
+
+		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(
+			layoutPageTemplateImportEntry.getName());
+
+		layoutPageTemplateEntryKey = StringUtil.replace(
+			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
+
+		LayoutPageTemplateEntry curLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group2.getGroupId(), layoutPageTemplateEntryKey);
+
+		Assert.assertNotNull(curLayoutPageTemplateEntry);
+
+		LayoutPageTemplateStructure curLayoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					curLayoutPageTemplateEntry.getGroupId(),
+					curLayoutPageTemplateEntry.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+		LayoutStructure curLayoutStructure = LayoutStructure.of(
+			curLayoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
+			_getContainerLayoutStructureItem(layoutStructure);
+		ContainerStyledLayoutStructureItem
+			curContainerStyledLayoutStructureItem =
+				_getContainerLayoutStructureItem(curLayoutStructure);
+
+		_validateContainerLayoutStructureItem(
+			containerStyledLayoutStructureItem,
+			curContainerStyledLayoutStructureItem);
+
+		List<String> containerLayoutStructureItemChildrenItemIds =
+			containerStyledLayoutStructureItem.getChildrenItemIds();
+		List<String> curContainerLayoutStructureItemChildrenItemIds =
+			curContainerStyledLayoutStructureItem.getChildrenItemIds();
+
+		RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
+			(RowStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItem(
+					containerLayoutStructureItemChildrenItemIds.get(0));
+		RowStyledLayoutStructureItem curRowStyledLayoutStructureItem =
+			(RowStyledLayoutStructureItem)
+				curLayoutStructure.getLayoutStructureItem(
+					curContainerLayoutStructureItemChildrenItemIds.get(0));
+
+		_validateRowLayoutStructureItem(
+			rowStyledLayoutStructureItem, curRowStyledLayoutStructureItem);
+
+		List<String> rowLayoutStructureItemChildrenItemIds =
+			rowStyledLayoutStructureItem.getChildrenItemIds();
+		List<String> curRowLayoutStructureItemChildrenItemIds =
+			curRowStyledLayoutStructureItem.getChildrenItemIds();
+
+		ColumnLayoutStructureItem columnLayoutStructureItem =
+			(ColumnLayoutStructureItem)layoutStructure.getLayoutStructureItem(
+				rowLayoutStructureItemChildrenItemIds.get(0));
+		ColumnLayoutStructureItem curColumnLayoutStructureItem =
+			(ColumnLayoutStructureItem)
+				curLayoutStructure.getLayoutStructureItem(
+					curRowLayoutStructureItemChildrenItemIds.get(0));
+
+		_validateColumnLayoutStructureItem(
+			columnLayoutStructureItem, curColumnLayoutStructureItem);
+
+		List<String> columnLayoutStructureItemChildrenItemIds =
+			columnLayoutStructureItem.getChildrenItemIds();
+		List<String> curColumnLayoutStructureItemChildrenItemIds =
+			curColumnLayoutStructureItem.getChildrenItemIds();
+
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItem(
+					columnLayoutStructureItemChildrenItemIds.get(0));
+		FragmentStyledLayoutStructureItem curFragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)
+				curLayoutStructure.getLayoutStructureItem(
+					curColumnLayoutStructureItemChildrenItemIds.get(0));
+
+		_validateFragmentLayoutStructureItem(
+			fragmentStyledLayoutStructureItem,
+			curFragmentStyledLayoutStructureItem);
 	}
 
 	private ContainerStyledLayoutStructureItem _getContainerLayoutStructureItem(

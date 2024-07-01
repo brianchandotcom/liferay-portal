@@ -114,7 +114,7 @@ public class ObjectActionDownloadTriggerMessageListener
 			() -> ObjectEntryUtil.getPayloadJSONObject(
 				_dtoConverterRegistry, _jsonFactory,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ATTACHMENT_DOWNLOAD,
-				objectDefinition, objectEntry, null, null,
+				objectDefinition, objectEntry, null,
 				_userLocalService.getUser(message.getLong("userId"))),
 			message.getLong("userId"));
 	}

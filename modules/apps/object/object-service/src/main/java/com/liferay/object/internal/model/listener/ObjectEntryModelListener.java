@@ -233,7 +233,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				_dtoConverterRegistry, _jsonFactory, objectActionTriggerKey,
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectEntry.getObjectDefinitionId()),
-				objectEntry, originalObjectEntry, null, user),
+				objectEntry, originalObjectEntry, user),
 			user.getUserId());
 	}
 
@@ -502,7 +502,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 						_dtoConverterRegistry, _jsonFactory, null,
 						_objectDefinitionLocalService.getObjectDefinition(
 							objectEntry.getObjectDefinitionId()),
-						objectEntry, originalObjectEntry, null,
+						objectEntry, originalObjectEntry,
 						_userLocalService.getUser(userId)),
 					userId);
 			}

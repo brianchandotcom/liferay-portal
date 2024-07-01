@@ -346,7 +346,7 @@ public class ObjectEntryLocalServiceImpl
 			_executeObjectActions(
 				objectEntry.getCompanyId(),
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, objectDefinition,
-				objectEntry, null, serviceContext.getLanguageId(), user);
+				objectEntry, null, user);
 		}
 		finally {
 			ObjectActionThreadLocal.setClearObjectEntryIdsMap(
@@ -1586,8 +1586,7 @@ public class ObjectEntryLocalServiceImpl
 		_executeObjectActions(
 			objectEntry.getCompanyId(),
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, objectDefinition,
-			objectEntry, originalObjectEntry, serviceContext.getLanguageId(),
-			user);
+			objectEntry, originalObjectEntry, user);
 
 		return objectEntry;
 	}
@@ -2020,8 +2019,7 @@ public class ObjectEntryLocalServiceImpl
 	private void _executeObjectActions(
 			long companyId, String objectActionTrigger,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			ObjectEntry originalObjectEntry, String preferredLanguageId,
-			User user)
+			ObjectEntry originalObjectEntry, User user)
 		throws NoSuchObjectDefinitionException {
 
 		ObjectActionEngine objectActionEngine =
@@ -2031,8 +2029,7 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getClassName(), companyId, objectActionTrigger,
 			() -> ObjectEntryUtil.getPayloadJSONObject(
 				_dtoConverterRegistry, _jsonFactory, objectActionTrigger,
-				objectDefinition, objectEntry, originalObjectEntry,
-				preferredLanguageId, user),
+				objectDefinition, objectEntry, originalObjectEntry, user),
 			user.getUserId());
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-187142") ||
@@ -2060,7 +2057,7 @@ public class ObjectEntryLocalServiceImpl
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
 				_objectDefinitionPersistence.findByPrimaryKey(
 					rootObjectEntry.getObjectDefinitionId()),
-				rootObjectEntry, null, preferredLanguageId, user),
+				rootObjectEntry, null, user),
 			user.getUserId());
 	}
 

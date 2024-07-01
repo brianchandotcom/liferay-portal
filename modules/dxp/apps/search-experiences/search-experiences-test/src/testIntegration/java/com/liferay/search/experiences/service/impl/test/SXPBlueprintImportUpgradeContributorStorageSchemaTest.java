@@ -57,48 +57,48 @@ public class SXPBlueprintImportUpgradeContributorStorageSchemaTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, TestPropsValues.getUserId());
 
-		_sxpBlueprintv10 = _addSXPBlueprint("1.0");
-		_sxpBlueprintv11 = _addSXPBlueprint("1.0");
+		_sxpBlueprintV10 = _addSXPBlueprint("1.0");
+		_sxpBlueprintV11 = _addSXPBlueprint("1.0");
 	}
 
 	@Test
-	public void testImportBlueprintDisableAllContributors() throws Exception {
-		SXPBlueprint sxpBlueprintv10 =
+	public void testImportSXPBlueprintWithDisableAllContributors() throws Exception {
+		SXPBlueprint sxpBlueprintV10 =
 			_sxpBlueprintLocalService.getSXPBlueprint(
-				_sxpBlueprintv10.getSXPBlueprintId());
+				_sxpBlueprintV10.getSXPBlueprintId());
 
 		_assertGeneralConfiguration(
-			sxpBlueprintv10, _WILDCARD_ARRAY, new String[0]);
+			sxpBlueprintV10, _WILDCARD_ARRAY, new String[0]);
 
-		SXPBlueprint sxpBlueprintv11 =
+		SXPBlueprint sxpBlueprintV11 =
 			_sxpBlueprintLocalService.getSXPBlueprint(
-				_sxpBlueprintv11.getSXPBlueprintId());
+				_sxpBlueprintV11.getSXPBlueprintId());
 
 		_assertGeneralConfiguration(
-			sxpBlueprintv11, _getExpectedExcludes(_sxpBlueprintv11),
-			_getExpectedIncludes(_sxpBlueprintv11));
+			sxpBlueprintV11, _getExpectedExcludes(_sxpBlueprintV11),
+			_getExpectedIncludes(_sxpBlueprintV11));
 	}
 
 	@Test
-	public void testImportBlueprintEnableAllContributors() throws Exception {
-		SXPBlueprint sxpBlueprintv10 =
+	public void testImportSXPBlueprintWithEnableAllContributors() throws Exception {
+		SXPBlueprint sxpBlueprintV10 =
 			_sxpBlueprintLocalService.getSXPBlueprint(
-				_sxpBlueprintv10.getSXPBlueprintId());
+				_sxpBlueprintV10.getSXPBlueprintId());
 
 		_assertGeneralConfiguration(
-			sxpBlueprintv10, new String[0], _WILDCARD_ARRAY);
+			sxpBlueprintV10, new String[0], _WILDCARD_ARRAY);
 
-		SXPBlueprint sxpBlueprintv11 =
+		SXPBlueprint sxpBlueprintV11 =
 			_sxpBlueprintLocalService.getSXPBlueprint(
-				_sxpBlueprintv11.getSXPBlueprintId());
+				_sxpBlueprintV11.getSXPBlueprintId());
 
 		_assertGeneralConfiguration(
-			sxpBlueprintv11, _getExpectedExcludes(_sxpBlueprintv11),
-			_getExpectedIncludes(_sxpBlueprintv11));
+			sxpBlueprintV11, _getExpectedExcludes(_sxpBlueprintV11),
+			_getExpectedIncludes(_sxpBlueprintV11));
 	}
 
 	@Test
-	public void testImportBlueprintEnableSomeContributors() throws Exception {
+	public void testImportSXPBlueprintWithEnableSomeContributors() throws Exception {
 		String[] expectedIncludes = {
 			"com.liferay.journal.internal.search.spi.model.query.contributor." +
 				"JournalArticleKeywordQueryContributor",
@@ -106,20 +106,20 @@ public class SXPBlueprintImportUpgradeContributorStorageSchemaTest {
 				"JournalFolderKeywordQueryContributor"
 		};
 
-		SXPBlueprint sxpBlueprintv10 =
+		SXPBlueprint sxpBlueprintV10 =
 			_sxpBlueprintLocalService.getSXPBlueprint(
-				_sxpBlueprintv10.getSXPBlueprintId());
+				_sxpBlueprintV10.getSXPBlueprintId());
 
 		_assertGeneralConfiguration(
-			sxpBlueprintv10, new String[0], expectedIncludes);
+			sxpBlueprintV10, new String[0], expectedIncludes);
 
-		SXPBlueprint sxpBlueprintv11 =
+		SXPBlueprint sxpBlueprintV11 =
 			_sxpBlueprintLocalService.getSXPBlueprint(
-				_sxpBlueprintv11.getSXPBlueprintId());
+				_sxpBlueprintV11.getSXPBlueprintId());
 
 		_assertGeneralConfiguration(
-			sxpBlueprintv11, _getExpectedExcludes(_sxpBlueprintv11),
-			_getExpectedIncludes(_sxpBlueprintv11));
+			sxpBlueprintV11, _getExpectedExcludes(_sxpBlueprintV11),
+			_getExpectedIncludes(_sxpBlueprintV11));
 	}
 
 	@Rule
@@ -196,9 +196,9 @@ public class SXPBlueprintImportUpgradeContributorStorageSchemaTest {
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;
 
 	@DeleteAfterTestRun
-	private SXPBlueprint _sxpBlueprintv10;
+	private SXPBlueprint _sxpBlueprintV10;
 
 	@DeleteAfterTestRun
-	private SXPBlueprint _sxpBlueprintv11;
+	private SXPBlueprint _sxpBlueprintV11;
 
 }

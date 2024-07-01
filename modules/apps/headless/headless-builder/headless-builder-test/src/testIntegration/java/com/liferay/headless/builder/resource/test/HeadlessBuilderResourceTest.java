@@ -112,7 +112,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	@BeforeClass
 	public static void setUpClass() {
 		_dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd'T'00:00:00'Z'");
+			"yyyy-MM-dd'T'00:00:00.000'Z'");
 		_dateTimeFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 	}

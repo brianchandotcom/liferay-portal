@@ -102,31 +102,29 @@ export function ConfigurationContainer({
 				/>
 			</ClayForm.Group>
 
-			{Liferay.FeatureFlags['LPD-23379'] && (
-				<ClayForm.Group>
-					<Toggle
-						disabled={disabled || values.active}
-						label={sub(
-							Liferay.Language.get('enable-x'),
-							Liferay.Language.get('indexed-search')
-						)}
-						name="enableIndexSearch"
-						onBlur={(event) => {
-							event.stopPropagation();
+			<ClayForm.Group>
+				<Toggle
+					disabled={disabled || values.active}
+					label={sub(
+						Liferay.Language.get('enable-x'),
+						Liferay.Language.get('indexed-search')
+					)}
+					name="enableIndexSearch"
+					onBlur={(event) => {
+						event.stopPropagation();
 
-							if (onSubmit) {
-								onSubmit();
-							}
-						}}
-						onToggle={() =>
-							setValues({
-								enableIndexSearch: !values.enableIndexSearch,
-							})
+						if (onSubmit) {
+							onSubmit();
 						}
-						toggled={values.enableIndexSearch}
-					/>
-				</ClayForm.Group>
-			)}
+					}}
+					onToggle={() =>
+						setValues({
+							enableIndexSearch: !values.enableIndexSearch,
+						})
+					}
+					toggled={values.enableIndexSearch}
+				/>
+			</ClayForm.Group>
 
 			<ClayForm.Group>
 				<Toggle

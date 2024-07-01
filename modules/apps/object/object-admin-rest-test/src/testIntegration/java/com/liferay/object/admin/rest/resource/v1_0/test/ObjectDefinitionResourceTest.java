@@ -282,7 +282,6 @@ public class ObjectDefinitionResourceTest
 					objectDefinitionsJSONObject.getString("items"))));
 	}
 
-	@FeatureFlags("LPD-23379")
 	@Override
 	@Test
 	public void testPostObjectDefinition() throws Exception {

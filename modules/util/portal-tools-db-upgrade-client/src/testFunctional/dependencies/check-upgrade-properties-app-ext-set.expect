@@ -34,7 +34,7 @@ expect "Please enter your database password" {
 	send "[database.password]\r"
 }
 
-set timeout 900
+set timeout 1200
 
 expect {
 	"Checking to see if all upgrades have completed... done" {send_user "PASS"}

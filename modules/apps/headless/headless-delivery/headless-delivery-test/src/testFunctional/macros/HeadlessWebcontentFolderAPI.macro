@@ -46,10 +46,11 @@ definition {
 	@summary = "Default summary"
 	macro _subscribeStructuredContentFolder(structuredContentFolderId = null, userName = null) {
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/structured-content-folders/${structuredContentFolderId}/subscribe \
-				-u ${userName}@liferay.com:${PropsUtil.get("default.admin.password")} \
+				-u ${userName}@liferay.com:${userPassword} \
 				-H accept: application/json \
 		''';
 

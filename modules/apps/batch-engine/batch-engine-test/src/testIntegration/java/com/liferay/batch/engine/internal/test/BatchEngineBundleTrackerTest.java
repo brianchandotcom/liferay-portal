@@ -78,8 +78,8 @@ public class BatchEngineBundleTrackerTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_originalStopWatch = ReflectionTestUtil.getFieldValue(
-			DBUpgrader.class, "_stopWatch");
+		_originalStopWatch = ReflectionTestUtil.getAndSetFieldValue(
+			DBUpgrader.class, "_stopWatch", null);
 	}
 
 	@AfterClass
@@ -93,8 +93,6 @@ public class BatchEngineBundleTrackerTest {
 		_bundle = FrameworkUtil.getBundle(BatchEngineBundleTrackerTest.class);
 
 		_bundleContext = _bundle.getBundleContext();
-
-		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_stopWatch", null);
 	}
 
 	@Test

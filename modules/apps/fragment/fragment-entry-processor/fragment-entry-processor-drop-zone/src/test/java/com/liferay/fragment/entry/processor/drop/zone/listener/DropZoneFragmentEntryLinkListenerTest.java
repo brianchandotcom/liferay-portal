@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -282,10 +283,34 @@ public class DropZoneFragmentEntryLinkListenerTest {
 			KeyValuePair... dropZoneIdItemIdKeyValuePairs)
 		throws Exception {
 
-		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
+		ServiceContext serviceContext = Mockito.mock(ServiceContext.class);
+
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			serviceContext.getThemeDisplay()
+		).thenReturn(
+			themeDisplay
+		);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		_dropZoneFragmentEntryLinkListener.updateLayoutPageTemplateStructure(
 			fragmentEntryLink, null);
+
+		Mockito.verify(
+			serviceContext
+		).getRequest();
+		Mockito.verify(
+			serviceContext
+		).getResponse();
+
+		Mockito.verify(
+			themeDisplay
+		).getRequest();
+		Mockito.verify(
+			themeDisplay
+		).getResponse();
 
 		if (never) {
 			Mockito.verify(

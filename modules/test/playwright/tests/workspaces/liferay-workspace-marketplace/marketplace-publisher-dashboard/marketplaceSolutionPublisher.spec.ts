@@ -77,11 +77,11 @@ test.describe('Can Publish and Manage Solutions', () => {
 	test.afterEach(async ({apiHelpers}) => {
 		await apiHelpers.headlessAdminUser.deleteAccount(_account.id);
 
+		await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(_productId);
+
 		await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(
 			_catalog.id
 		);
-
-		await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(_productId);
 	});
 
 	test('LPD-26707 New Solution Template button should be visible for Suppliers', async ({

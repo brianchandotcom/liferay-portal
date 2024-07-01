@@ -26,6 +26,10 @@ export class PublisherAppPage {
 			name: Locator;
 			tags: Locator;
 		};
+		support: {
+			publisherWebsiteUrl: Locator;
+			supportEmail: Locator;
+		};
 		version: {
 			notes: Locator;
 			version: Locator;
@@ -34,12 +38,12 @@ export class PublisherAppPage {
 	protected publishProductPayload: PublishProductPayload;
 	readonly logoUploadButton: Locator;
 	readonly page: Page;
+	readonly paidPriceModel: Locator;
 	readonly selectFileButton: Locator;
 	readonly standardLicenses: Locator;
 	readonly submissionCheckbox: Locator;
 	readonly submitButton: Locator;
 	readonly zipFilesContainer: Locator;
-	readonly paidPriceModel: Locator;
 
 	constructor(page: Page) {
 		this.addPackagesButton = page.getByRole('button', {
@@ -67,26 +71,34 @@ export class PublisherAppPage {
 					.filter({hasText: /^Select tags$/})
 					.nth(2),
 			},
+			support: {
+				publisherWebsiteUrl: page
+					.getByPlaceholder('http:// Enter app name')
+					.nth(1),
+				supportEmail: page.getByPlaceholder(
+					'Enter Support Email Address'
+				),
+			},
 			version: {
 				notes: page.getByPlaceholder('Enter app description'),
 				version: page.getByPlaceholder('0.0.0'),
 			},
 		};
 		this.logoUploadButton = page.getByText('Upload Image');
-		this.selectFileButton = page.getByRole('button', {
-			name: 'Select a file',
-		});
-		this.standardLicenses = page.getByText('Standard License prices');
-		this.submitButton = page.getByRole('button', {
-			name: 'Submit App',
-		});
-		this.submissionCheckbox = page.getByRole('checkbox');
-
 		this.page = page;
 		this.paidPriceModel = page
 			.locator('div')
 			.filter({hasText: /^Paid$/})
 			.first();
+		this.selectFileButton = page.getByRole('button', {
+			name: 'Select a file',
+		});
+		this.standardLicenses = page.getByText('Standard License prices');
+		this.submissionCheckbox = page.getByRole('checkbox');
+		this.submitButton = page.getByRole('button', {
+			name: 'Submit App',
+		});
+
 		this.zipFilesContainer = page.locator(
 			'.document-file-list-item-container'
 		);
@@ -277,7 +289,20 @@ export class PublisherAppPage {
 	}
 
 	async fillSupport() {
-		await this.continue();
+		if (this.publishProductPayload.priceModel === 'free') {
+			expect(this.continueButton).toBeEnabled();
+			await this.continue();
+		}
+		else {
+			expect(this.continueButton).toBeDisabled();
+			await this.form.support.publisherWebsiteUrl.fill(
+				this.publishProductPayload.support.publisherWebsiteUrl
+			);
+			await this.form.support.supportEmail.fill(
+				this.publishProductPayload.support.supportEmail
+			);
+			await this.continue();
+		}
 	}
 
 	async reviewAndSubmit() {

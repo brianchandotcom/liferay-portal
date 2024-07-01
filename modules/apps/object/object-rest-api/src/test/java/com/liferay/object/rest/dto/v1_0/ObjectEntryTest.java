@@ -83,9 +83,6 @@ public class ObjectEntryTest {
 				Map<String, Object> properties =
 					(Map<String, Object>)future.get();
 
-				Assert.assertEquals(
-					properties.toString(), 5, properties.size());
-
 				Assert.assertEquals("value1", properties.get("property1"));
 				Assert.assertEquals(
 					properties.toString(), "value2",
@@ -95,6 +92,8 @@ public class ObjectEntryTest {
 					properties.get("property3"));
 				Assert.assertNull(properties.get("property4"));
 				Assert.assertNull(properties.get("property5"));
+				Assert.assertEquals(
+					properties.toString(), 5, properties.size());
 
 				Assert.assertEquals(1, atomicInteger1.get());
 				Assert.assertEquals(1, atomicInteger2.get());

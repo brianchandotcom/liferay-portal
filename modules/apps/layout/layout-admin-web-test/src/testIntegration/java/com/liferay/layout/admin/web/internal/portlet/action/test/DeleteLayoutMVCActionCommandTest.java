@@ -70,6 +70,8 @@ public class DeleteLayoutMVCActionCommandTest {
 			_getMockLiferayPortletActionRequest(layout.getPlid()),
 			mockLiferayPortletActionResponse);
 
+		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
+
 		MockHttpServletResponse mockHttpServletResponse =
 			(MockHttpServletResponse)
 				mockLiferayPortletActionResponse.getHttpServletResponse();
@@ -96,6 +98,9 @@ public class DeleteLayoutMVCActionCommandTest {
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(draftLayout.getPlid()),
 			mockLiferayPortletActionResponse);
+
+		Assert.assertNull(
+			_layoutLocalService.fetchLayout(draftLayout.getPlid()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			(MockHttpServletResponse)

@@ -5,21 +5,19 @@
 
 import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {
-	ReactPortal,
-	useIsMounted,
-	useStateSafe,
-} from '@liferay/frontend-js-react-web';
+import {ReactPortal, useStateSafe} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {useId, useSessionState} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useRef} from 'react';
 
-import useLazy from '../../common/hooks/useLazy';
-import useLoad from '../../common/hooks/useLoad';
-import usePlugins from '../../common/hooks/usePlugins';
-import * as Actions from '../actions/index';
+import BrowserSidebar from '../../plugins/browser/components/BrowserSidebar';
+import CommentsSidebar from '../../plugins/comments/components/CommentsSidebar';
+import FragmentsSidebar from '../../plugins/fragments_and_widgets/components/FragmentsSidebar';
+import MappingSidebar from '../../plugins/mapping/components/MappingSidebar';
+import ContentsSidebar from '../../plugins/page_content/components/ContentsSidebar';
+import PageDesignOptionsSidebar from '../../plugins/page_design_options/components/PageDesignOptionsSidebar';
+import RulesSidebar from '../../plugins/page_rules/components/RulesSidebar';
 import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
@@ -30,13 +28,7 @@ import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import {useDropClear} from '../utils/drag_and_drop/useDragAndDrop';
 import isSmallResolution from '../utils/isSmallResolution';
 
-const {Suspense, useCallback, useEffect} = React;
-
-/**
- * Failure to preload is a non-critical failure, so we'll use this to swallow
- * rejected promises silently.
- */
-const swallow = [(value) => value, (_error) => undefined];
+const {useEffect} = React;
 
 /**
  * Load the first available panel if the selected sidebar panel ID is not found.
@@ -68,10 +60,7 @@ export const SIDEBAR_WIDTH_RESIZE_STEP = 20;
 export default function Sidebar() {
 	const dropClearRef = useDropClear();
 	const [hasError, setHasError] = useStateSafe(false);
-	const {getInstance, register} = usePlugins();
 	const dispatch = useDispatch();
-	const isMounted = useIsMounted();
-	const load = useLoad();
 	const [resizing, setResizing] = useStateSafe(false);
 	const selectItem = useSelectItem();
 	const separatorRef = useRef();
@@ -99,63 +88,6 @@ export default function Sidebar() {
 		panels,
 		sidebarPanels: config.sidebarPanels,
 	});
-
-	const promise = panel
-		? load(sidebarPanelId, panel.pluginClass)
-		: Promise.resolve();
-
-	const app = {
-		Actions,
-		config,
-		dispatch,
-		store,
-	};
-
-	let registerPanel;
-
-	if (sidebarPanelId && panel) {
-		registerPanel = register(sidebarPanelId, promise, {app, panel});
-	}
-
-	const togglePlugin = () => {
-		if (hasError) {
-			setHasError(false);
-		}
-
-		if (registerPanel) {
-			registerPanel.then((plugin) => {
-				if (
-					plugin &&
-					typeof plugin.activate === 'function' &&
-					isMounted()
-				) {
-					plugin.activate();
-				}
-				else if (!plugin) {
-					setHasError(true);
-				}
-			});
-		}
-	};
-
-	useEffect(
-		() => {
-			if (panel) {
-				togglePlugin(panel);
-			}
-			else if (sidebarPanelId) {
-				dispatch(
-					switchSidebarPanel({
-						sidebarOpen: false,
-						sidebarPanelId: null,
-					})
-				);
-			}
-		},
-
-		/* eslint-disable react-hooks/exhaustive-deps */
-		[panel, sidebarOpen, sidebarPanelId]
-	);
 
 	useEffect(() => {
 		const wrapper = document.getElementById('wrapper');
@@ -255,17 +187,6 @@ export default function Sidebar() {
 			separatorElement.removeEventListener('mousedown', handleMouseDown);
 		};
 	}, [separatorRef, setResizing, setSidebarWidth, sidebarWidthRef]);
-
-	const SidebarPanel = useLazy(
-		useCallback(({instance}) => {
-			if (typeof instance.renderSidebar === 'function') {
-				return instance.renderSidebar();
-			}
-			else {
-				return null;
-			}
-		}, [])
-	);
 
 	const deselectItem = (event) => {
 		if (event.target === event.currentTarget) {
@@ -394,8 +315,7 @@ export default function Sidebar() {
 
 							const active =
 								sidebarOpen && sidebarPanelId === panelId;
-							const {icon, isLink, label, pluginClass, url} =
-								panel;
+							const {icon, isLink, label, url} = panel;
 
 							if (isLink) {
 								return (
@@ -411,11 +331,6 @@ export default function Sidebar() {
 								);
 							}
 
-							const prefetch = () =>
-								load(panel.sidebarPanelId, pluginClass).then(
-									...swallow
-								);
-
 							return (
 								<ClayButtonWithIcon
 									aria-controls={sidebarContentId}
@@ -430,8 +345,6 @@ export default function Sidebar() {
 									id={`${sidebarId}${panel.sidebarPanelId}`}
 									key={panel.sidebarPanelId}
 									onClick={() => handleClick(panel)}
-									onFocus={prefetch}
-									onMouseEnter={prefetch}
 									role="tab"
 									size="sm"
 									symbol={icon}
@@ -502,19 +415,7 @@ export default function Sidebar() {
 								setHasError(true);
 							}}
 						>
-							<Suspense
-								fallback={
-									<ClayLoadingIndicator
-										className="my-4"
-										size="sm"
-									/>
-								}
-							>
-								<SidebarPanel
-									getInstance={getInstance}
-									pluginId={sidebarPanelId}
-								/>
-							</Suspense>
+							<SidebarPanel sidebarPanelId={sidebarPanelId} />
 						</ErrorBoundary>
 					)}
 
@@ -538,6 +439,26 @@ export default function Sidebar() {
 		</ReactPortal>
 	);
 }
+
+const PANEL_COMPONENTS = {
+	browser: BrowserSidebar,
+	comments: CommentsSidebar,
+	fragments_and_widgets: FragmentsSidebar,
+	mapping: MappingSidebar,
+	page_content: ContentsSidebar,
+	page_design_options: PageDesignOptionsSidebar,
+	page_rules: RulesSidebar,
+};
+
+const SidebarPanel = React.memo(({sidebarPanelId}) => {
+	const Component = PANEL_COMPONENTS[sidebarPanelId];
+
+	if (Component !== null) {
+		return <Component />;
+	}
+
+	return null;
+});
 
 class ErrorBoundary extends React.Component {
 	static getDerivedStateFromError(_error) {

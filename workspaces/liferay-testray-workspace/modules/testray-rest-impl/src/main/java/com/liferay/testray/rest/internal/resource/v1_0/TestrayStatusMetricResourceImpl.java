@@ -637,6 +637,9 @@ public class TestrayStatusMetricResourceImpl
 									).build());
 							}
 
+							testrayBuildArchived = GetterUtil.getBoolean(
+								String.valueOf(value.get("archived_")));
+
 							if (value.get("dueDate_") != null) {
 								testrayBuildDueDate = value.get(
 									"dueDate_"
@@ -649,12 +652,10 @@ public class TestrayStatusMetricResourceImpl
 								value.get("gitHash_"));
 							testrayBuildName = GetterUtil.getString(
 								value.get("name_"));
-							testrayBuildPromoted = GetterUtil.getBoolean(
-								String.valueOf(value.get("promoted_")));
-							testrayBuildArchived = GetterUtil.getBoolean(
-								String.valueOf(value.get("archived_")));
 							testrayBuildProductVersion = GetterUtil.getString(
 								value.get("productVersionName"));
+							testrayBuildPromoted = GetterUtil.getBoolean(
+								String.valueOf(value.get("promoted_")));
 							testrayBuildTaskStatus = GetterUtil.getString(
 								value.get("taskStatus"));
 							testrayStatusMetric = _getTestrayStatusMetric(

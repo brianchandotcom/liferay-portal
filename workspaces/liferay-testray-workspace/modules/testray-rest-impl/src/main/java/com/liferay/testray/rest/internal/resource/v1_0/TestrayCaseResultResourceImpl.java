@@ -171,16 +171,17 @@ public class TestrayCaseResultResourceImpl
 				values,
 				value -> new TestrayCaseResult() {
 					{
+						error = GetterUtil.getString(value.get("errors_"));
+
 						if (value.get("executionDate") != null) {
 							executionDate = value.get(
 								"executionDate"
 							).toString();
 						}
 
-						error = GetterUtil.getString(value.get("errors_"));
+						gitHash = GetterUtil.getString(value.get("gitHash_"));
 						issues = GetterUtil.getString(value.get("issues_"));
 						status = GetterUtil.getString(value.get("dueStatus_"));
-						gitHash = GetterUtil.getString(value.get("gitHash_"));
 						testrayBuildId = GetterUtil.getLong(
 							value.get("c_buildId_"));
 						testrayCaseResultId = GetterUtil.getLong(

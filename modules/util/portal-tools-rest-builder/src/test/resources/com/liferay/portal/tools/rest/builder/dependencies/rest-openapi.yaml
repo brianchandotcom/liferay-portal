@@ -1,24 +1,14 @@
 components:
     schemas:
-        BaseSchema:
-            properties:
-                name:
-                    type: string
-                type:
-                    enum:
-                        - ChildSchema1
-                        - ChildSchema2
-                    type: string
-            type: object
         ChildSchema1:
             allOf:
-                - $ref: "#/components/schemas/BaseSchema"
+                - $ref: "#/components/schemas/PolymorphicSchema"
             type: object
         ChildSchema2:
             allOf:
-                - $ref: "#/components/schemas/BaseSchema"
+                - $ref: "#/components/schemas/PolymorphicSchema"
                 - properties:
-                      name:
+                      text:
                           type: string
             type: object
         Document:
@@ -76,9 +66,14 @@ components:
                     ChildSchema1: "#/components/schemas/ChildSchema1"
                     ChildSchema2: "#/components/schemas/ChildSchema2"
                 propertyName: type
-            oneOf:
-                - $ref: "#/components/schemas/ChildSchema1"
-                - $ref: "#/components/schemas/ChildSchema2"
+            properties:
+                name:
+                    type: string
+                type:
+                    enum:
+                        - ChildSchema1
+                        - ChildSchema2
+                    type: string
             type: object
         Test:
             description:

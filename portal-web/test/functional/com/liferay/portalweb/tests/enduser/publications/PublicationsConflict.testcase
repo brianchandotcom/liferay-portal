@@ -65,9 +65,13 @@ definition {
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication 1 Name");
 
-		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication 2 Name");
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication 2 Name");
 
-		PublicationsNavigator.gotoPublish(publicationName = "Publication 2 Name");
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication 2 Name");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Document Title Edit 2",

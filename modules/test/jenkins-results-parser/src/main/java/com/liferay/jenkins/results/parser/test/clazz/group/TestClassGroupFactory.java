@@ -12,6 +12,7 @@ import com.liferay.jenkins.results.parser.PortalAWSJob;
 import com.liferay.jenkins.results.parser.PortalEnvironmentJob;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
+import com.liferay.jenkins.results.parser.test.batch.JUnitTestBatch;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestBatch;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
 
@@ -354,6 +355,11 @@ public class TestClassGroupFactory {
 				if (jsonObject != null) {
 					batchTestClassGroup = new ModulesJUnitBatchTestClassGroup(
 						jsonObject, portalTestClassJob);
+				}
+				else if (testBatch != null) {
+					batchTestClassGroup = new ModulesJUnitBatchTestClassGroup(
+						batchName, portalTestClassJob,
+						(JUnitTestBatch)testBatch);
 				}
 				else {
 					batchTestClassGroup = new ModulesJUnitBatchTestClassGroup(

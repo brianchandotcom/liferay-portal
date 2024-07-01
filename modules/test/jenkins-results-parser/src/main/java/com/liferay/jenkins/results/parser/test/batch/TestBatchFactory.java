@@ -41,12 +41,15 @@ public class TestBatchFactory {
 				batchName.startsWith("unit")) {
 
 				JUnitTestSelector jUnitTestSelector = new JUnitTestSelector(
-					properties, batchName, relevantRuleName, testSuiteName);
+					propertiesFile, properties, batchName, relevantRuleName,
+					testSuiteName);
 
 				JUnitTestBatch jUnitTestBatch = new JUnitTestBatch(
 					batchName, jUnitTestSelector);
 
 				jUnitTestSelector.setTestBatch(jUnitTestBatch);
+
+				return jUnitTestBatch;
 			}
 
 			if (batchName.startsWith("playwright-js")) {

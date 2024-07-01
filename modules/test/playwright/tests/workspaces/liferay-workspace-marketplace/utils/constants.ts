@@ -20,6 +20,7 @@ export const products = {
 		dxpVersions: ['7.3'],
 		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),
 		name: 'Cloud App - Free',
+		priceModel: 'free',
 		resourceRequirements: {
 			cpus: 0,
 			ram: 0,
@@ -48,6 +49,10 @@ export const products = {
 			cpus: 0,
 			ram: 0,
 		},
+		support: {
+			publisherWebsiteUrl: 'www.liferay.com',
+			supportEmail: 'test@liferay.com',
+		},
 		tags: ['Client Extension Type'],
 		version: {
 			notes: 'Lorem Ipsum...',
@@ -63,6 +68,35 @@ export const products = {
 		dxpVersions: ['7.3', '7.4'],
 		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),
 		name: 'DXP App - Free',
+		priceModel: 'free',
+		tags: ['Client Extension Type'],
+		version: {
+			notes: 'Lorem Ipsum...',
+			version: '1.0.0',
+		},
+		zipFiles: [path.join(dependenciesFolder, 'folder.marketplace.zip')],
+	},
+	dxp_paid: {
+		categories: ['Customer Data Management'],
+		cloudCompatible: false,
+		compatibleOfferings: ['Self-Hosted', 'Self-Managed', 'Fully-Managed'],
+		description: 'My paid cloud app',
+		dxpVersions: ['7.3'],
+		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),
+		name: 'DXP App - Paid',
+		price: {
+			developer: 100,
+			standard: 100,
+		},
+		priceModel: 'paid',
+		resourceRequirements: {
+			cpus: 0,
+			ram: 0,
+		},
+		support: {
+			publisherWebsiteUrl: 'www.liferay.com',
+			supportEmail: 'test@liferay.com',
+		},
 		tags: ['Client Extension Type'],
 		version: {
 			notes: 'Lorem Ipsum...',

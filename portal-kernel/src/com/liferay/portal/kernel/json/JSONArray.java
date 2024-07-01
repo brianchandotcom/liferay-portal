@@ -10,9 +10,12 @@ import com.liferay.petra.function.UnsafeSupplier;
 import java.io.Externalizable;
 import java.io.Writer;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 @SuppressWarnings("rawtypes")
 public interface JSONArray extends Externalizable, Iterable, JSONSerializable {
 

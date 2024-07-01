@@ -57,8 +57,8 @@ public class SXPBlueprintImportUpgradeContributorStorageSchemaTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, TestPropsValues.getUserId());
 
-		_sxpBlueprintv10 = _createSXPBlueprint("1.0");
-		_sxpBlueprintv11 = _createSXPBlueprint("1.0");
+		_sxpBlueprintv10 = _addSXPBlueprint("1.0");
+		_sxpBlueprintv11 = _addSXPBlueprint("1.0");
 	}
 
 	@Test
@@ -142,7 +142,7 @@ public class SXPBlueprintImportUpgradeContributorStorageSchemaTest {
 			generalConfiguration.getClauseContributorsIncludes());
 	}
 
-	private SXPBlueprint _createSXPBlueprint(String schemaVersion)
+	private SXPBlueprint _addSXPBlueprint(String schemaVersion)
 		throws Exception {
 
 		Class<?> clazz = getClass();

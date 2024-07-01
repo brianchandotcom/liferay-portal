@@ -36,6 +36,7 @@
 		"prettier": "^3.2.5",
 		"react-test-renderer": "16.13.1",
 		"regenerator-runtime": "0.11.1",
+		"resolve": "^1.19.0",
 		"sass": "1.77.5",
 		"stylelint": "13.2.0",
 		"tar": "^7.2.0",

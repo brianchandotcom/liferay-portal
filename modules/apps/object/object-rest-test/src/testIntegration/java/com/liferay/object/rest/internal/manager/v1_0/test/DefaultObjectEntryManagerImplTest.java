@@ -1347,10 +1347,9 @@ public class DefaultObjectEntryManagerImplTest
 					childNode.getPrimaryKey()),
 				new ObjectEntry() {
 					{
-						setProperties(
-							HashMapBuilder.<String, Object>put(
-								objectField.getName(), objectEntry.getId()
-							).build());
+						properties = HashMapBuilder.<String, Object>put(
+							objectField.getName(), objectEntry.getId()
+						).build();
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY));
@@ -1366,11 +1365,10 @@ public class DefaultObjectEntryManagerImplTest
 					rootNode.getPrimaryKey()),
 				new ObjectEntry() {
 					{
-						setProperties(
-							HashMapBuilder.<String, Object>put(
-								"r_oneToManyRelationshipName2_accountEntryId",
-								accountEntry.getAccountEntryId()
-							).build());
+						properties = HashMapBuilder.<String, Object>put(
+							"r_oneToManyRelationshipName2_accountEntryId",
+							accountEntry.getAccountEntryId()
+						).build();
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY));
@@ -1428,29 +1426,25 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, objectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"attachmentObjectFieldName",
-							() -> {
-								com.liferay.portal.kernel.repository.model.
-									FileEntry fileEntry =
-										TempFileEntryUtil.addTempFileEntry(
-											group.getGroupId(),
-											TestPropsValues.getUserId(),
-											objectDefinition.getPortletId(),
-											TempFileEntryUtil.getTempFileName(
-												fileName),
-											FileUtil.createTempFile(
-												RandomTestUtil.randomString(
-												).getBytes()),
-											ContentTypes.TEXT_PLAIN);
+					properties = HashMapBuilder.<String, Object>put(
+						"attachmentObjectFieldName",
+						() -> {
+							com.liferay.portal.kernel.repository.model.FileEntry
+								fileEntry = TempFileEntryUtil.addTempFileEntry(
+									group.getGroupId(),
+									TestPropsValues.getUserId(),
+									objectDefinition.getPortletId(),
+									TempFileEntryUtil.getTempFileName(fileName),
+									FileUtil.createTempFile(
+										RandomTestUtil.randomString(
+										).getBytes()),
+									ContentTypes.TEXT_PLAIN);
 
-								return fileEntry.getFileEntryId();
-							}
-						).put(
-							"externalReferenceCode",
-							RandomTestUtil.randomString()
-						).build());
+							return fileEntry.getFileEntryId();
+						}
+					).put(
+						"externalReferenceCode", RandomTestUtil.randomString()
+					).build();
 				}
 			},
 			String.valueOf(group.getGroupId()));
@@ -1994,12 +1988,11 @@ public class DefaultObjectEntryManagerImplTest
 				_simpleDTOConverterContext, _objectDefinition1,
 				new ObjectEntry() {
 					{
-						setProperties(
-							HashMapBuilder.<String, Object>put(
-								"textObjectFieldName", "Able"
-							).put(
-								"textObjectFieldNameExtension", "Baker"
-							).build());
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", "Able"
+						).put(
+							"textObjectFieldNameExtension", "Baker"
+						).build();
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -2009,20 +2002,18 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, _objectDefinition2,
 				new ObjectEntry() {
 					{
-						setProperties(
-							HashMapBuilder.<String, Object>put(
-								_objectRelationshipFieldName,
-								parentObjectEntry1.getId()
-							).put(
-								"longIntegerObjectFieldName", 21394167160L
-							).put(
-								"picklistObjectFieldName",
-								picklistObjectFieldValue1
-							).put(
-								"textObjectFieldName", "aaa"
-							).putAll(
-								_localizedObjectFieldI18nValues
-							).build());
+						properties = HashMapBuilder.<String, Object>put(
+							_objectRelationshipFieldName,
+							parentObjectEntry1.getId()
+						).put(
+							"longIntegerObjectFieldName", 21394167160L
+						).put(
+							"picklistObjectFieldName", picklistObjectFieldValue1
+						).put(
+							"textObjectFieldName", "aaa"
+						).putAll(
+							_localizedObjectFieldI18nValues
+						).build();
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -2031,29 +2022,27 @@ public class DefaultObjectEntryManagerImplTest
 			childObjectEntry1,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							_objectRelationshipFieldName,
-							parentObjectEntry1.getId()
-						).put(
-							"localizedLongTextObjectFieldName",
-							"en_US localizedLongTextObjectFieldValue"
-						).put(
-							"localizedRichTextObjectFieldName",
-							"en_US <i>localizedRichTextObjectFieldValue</i>"
-						).put(
-							"localizedRichTextObjectFieldNameRawText",
-							"en_US localizedRichTextObjectFieldValue"
-						).put(
-							"localizedTextObjectFieldName",
-							"en_US localizedTextObjectFieldValue1"
-						).put(
-							"picklistObjectFieldName", picklistObjectFieldValue1
-						).put(
-							"textObjectFieldName", "aaa"
-						).putAll(
-							_localizedObjectFieldI18nValues
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						_objectRelationshipFieldName, parentObjectEntry1.getId()
+					).put(
+						"localizedLongTextObjectFieldName",
+						"en_US localizedLongTextObjectFieldValue"
+					).put(
+						"localizedRichTextObjectFieldName",
+						"en_US <i>localizedRichTextObjectFieldValue</i>"
+					).put(
+						"localizedRichTextObjectFieldNameRawText",
+						"en_US localizedRichTextObjectFieldValue"
+					).put(
+						"localizedTextObjectFieldName",
+						"en_US localizedTextObjectFieldValue1"
+					).put(
+						"picklistObjectFieldName", picklistObjectFieldValue1
+					).put(
+						"textObjectFieldName", "aaa"
+					).putAll(
+						_localizedObjectFieldI18nValues
+					).build();
 				}
 			});
 
@@ -2062,11 +2051,9 @@ public class DefaultObjectEntryManagerImplTest
 				_simpleDTOConverterContext, _objectDefinition1,
 				new ObjectEntry() {
 					{
-						setProperties(
-							HashMapBuilder.<String, Object>put(
-								"textObjectFieldName",
-								RandomTestUtil.randomString()
-							).build());
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -2078,52 +2065,12 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, _objectDefinition2,
 				new ObjectEntry() {
 					{
-						setProperties(
-							HashMapBuilder.<String, Object>put(
-								_objectRelationshipFieldName,
-								parentObjectEntry2.getId()
-							).put(
-								"localizedLongTextObjectFieldName",
-								"en_US localizedLongTextObjectFieldValue"
-							).put(
-								"localizedTextObjectFieldName_i18n",
-								HashMapBuilder.put(
-									"en_US",
-									"en_US localizedTextObjectFieldValue2"
-								).put(
-									"pt_BR",
-									"pt_BR localizedTextObjectFieldValue2"
-								).build()
-							).put(
-								"picklistObjectFieldName",
-								picklistObjectFieldValue2
-							).put(
-								"textObjectFieldName", "aab"
-							).build());
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		assertEquals(
-			childObjectEntry2,
-			new ObjectEntry() {
-				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
+						properties = HashMapBuilder.<String, Object>put(
 							_objectRelationshipFieldName,
 							parentObjectEntry2.getId()
 						).put(
 							"localizedLongTextObjectFieldName",
 							"en_US localizedLongTextObjectFieldValue"
-						).put(
-							"localizedLongTextObjectFieldName_i18n",
-							HashMapBuilder.put(
-								"en_US",
-								"en_US localizedLongTextObjectFieldValue"
-							).build()
-						).put(
-							"localizedTextObjectFieldName",
-							"en_US localizedTextObjectFieldValue2"
 						).put(
 							"localizedTextObjectFieldName_i18n",
 							HashMapBuilder.put(
@@ -2135,7 +2082,40 @@ public class DefaultObjectEntryManagerImplTest
 							"picklistObjectFieldName", picklistObjectFieldValue2
 						).put(
 							"textObjectFieldName", "aab"
-						).build());
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		assertEquals(
+			childObjectEntry2,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						_objectRelationshipFieldName, parentObjectEntry2.getId()
+					).put(
+						"localizedLongTextObjectFieldName",
+						"en_US localizedLongTextObjectFieldValue"
+					).put(
+						"localizedLongTextObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", "en_US localizedLongTextObjectFieldValue"
+						).build()
+					).put(
+						"localizedTextObjectFieldName",
+						"en_US localizedTextObjectFieldValue2"
+					).put(
+						"localizedTextObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", "en_US localizedTextObjectFieldValue2"
+						).put(
+							"pt_BR", "pt_BR localizedTextObjectFieldValue2"
+						).build()
+					).put(
+						"picklistObjectFieldName", picklistObjectFieldValue2
+					).put(
+						"textObjectFieldName", "aab"
+					).build();
 				}
 			});
 
@@ -3069,11 +3049,10 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, _objectDefinition3,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationshipName_accountEntryId",
-							accountEntry.getAccountEntryId()
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry.getAccountEntryId()
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -3087,13 +3066,11 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, childObjectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							objectField1.getName(), objectEntry1.getId()
-						).put(
-							objectField2.getName(),
-							accountEntry.getAccountEntryId()
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						objectField1.getName(), objectEntry1.getId()
+					).put(
+						objectField2.getName(), accountEntry.getAccountEntryId()
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -3102,13 +3079,12 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, childObjectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							objectField1.getName(), objectEntry1.getId()
-						).put(
-							objectField2.getName(),
-							_addAccountEntry().getAccountEntryId()
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						objectField1.getName(), objectEntry1.getId()
+					).put(
+						objectField2.getName(),
+						_addAccountEntry().getAccountEntryId()
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -3141,11 +3117,10 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, _objectDefinition3,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationshipName_accountEntryId",
-							accountEntry.getAccountEntryId()
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry.getAccountEntryId()
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -3154,13 +3129,11 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, childObjectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							objectField1.getName(), objectEntry2.getId()
-						).put(
-							objectField2.getName(),
-							accountEntry.getAccountEntryId()
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						objectField1.getName(), objectEntry2.getId()
+					).put(
+						objectField2.getName(), accountEntry.getAccountEntryId()
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -3169,13 +3142,12 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, childObjectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							objectField1.getName(), objectEntry2.getId()
-						).put(
-							objectField2.getName(),
-							_addAccountEntry().getAccountEntryId()
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						objectField1.getName(), objectEntry2.getId()
+					).put(
+						objectField2.getName(),
+						_addAccountEntry().getAccountEntryId()
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -3218,11 +3190,10 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, _objectDefinition3,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationshipName_accountEntryId",
-							accountEntry.getAccountEntryId()
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry.getAccountEntryId()
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -3231,11 +3202,9 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, childObjectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							objectField2.getName(),
-							accountEntry.getAccountEntryId()
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						objectField2.getName(), accountEntry.getAccountEntryId()
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -3248,11 +3217,10 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, childObjectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							objectField2.getName(),
-							_addAccountEntry().getAccountEntryId()
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						objectField2.getName(),
+						_addAccountEntry().getAccountEntryId()
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -3283,39 +3251,37 @@ public class DefaultObjectEntryManagerImplTest
 			dtoConverterContext, _objectDefinition2,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"dateObjectFieldName",
-							_simpleDateFormat.format(RandomTestUtil.nextDate())
-						).put(
-							"dateTimeObjectFieldName",
-							nowLocalDateTime.truncatedTo(ChronoUnit.MILLIS)
-						).put(
-							"decimalObjectFieldName",
-							RandomTestUtil.randomDouble()
-						).put(
-							"integerObjectFieldName", RandomTestUtil.randomInt()
-						).put(
-							"longIntegerObjectFieldName",
-							RandomTestUtil.randomLong(
-								ObjectFieldValidationConstants.
-									BUSINESS_TYPE_LONG_VALUE_MIN,
-								ObjectFieldValidationConstants.
-									BUSINESS_TYPE_LONG_VALUE_MAX)
-						).put(
-							"multiselectPicklistObjectFieldName",
-							Collections.singletonList(_addListTypeEntry())
-						).put(
-							"precisionDecimalObjectFieldName",
-							new BigDecimal(
-								String.valueOf(RandomTestUtil.randomDouble()))
-						).put(
-							"richTextObjectFieldName",
-							StringBundler.concat(
-								"<i>", RandomTestUtil.randomString(), "</i>")
-						).put(
-							"textObjectFieldName", "textObjectFieldValue"
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						"dateObjectFieldName",
+						_simpleDateFormat.format(RandomTestUtil.nextDate())
+					).put(
+						"dateTimeObjectFieldName",
+						nowLocalDateTime.truncatedTo(ChronoUnit.MILLIS)
+					).put(
+						"decimalObjectFieldName", RandomTestUtil.randomDouble()
+					).put(
+						"integerObjectFieldName", RandomTestUtil.randomInt()
+					).put(
+						"longIntegerObjectFieldName",
+						RandomTestUtil.randomLong(
+							ObjectFieldValidationConstants.
+								BUSINESS_TYPE_LONG_VALUE_MIN,
+							ObjectFieldValidationConstants.
+								BUSINESS_TYPE_LONG_VALUE_MAX)
+					).put(
+						"multiselectPicklistObjectFieldName",
+						Collections.singletonList(_addListTypeEntry())
+					).put(
+						"precisionDecimalObjectFieldName",
+						new BigDecimal(
+							String.valueOf(RandomTestUtil.randomDouble()))
+					).put(
+						"richTextObjectFieldName",
+						StringBundler.concat(
+							"<i>", RandomTestUtil.randomString(), "</i>")
+					).put(
+						"textObjectFieldName", "textObjectFieldValue"
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -3363,17 +3329,16 @@ public class DefaultObjectEntryManagerImplTest
 				objectEntry.getId(),
 				new ObjectEntry() {
 					{
-						setProperties(objectEntryProperties);
+						properties = objectEntryProperties;
 					}
 				}),
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>putAll(
-							objectEntryProperties
-						).put(
-							"textObjectFieldName", "textObjectFieldValue"
-						).build());
+					properties = HashMapBuilder.<String, Object>putAll(
+						objectEntryProperties
+					).put(
+						"textObjectFieldName", "textObjectFieldValue"
+					).build();
 				}
 			});
 		assertEquals(
@@ -3382,24 +3347,22 @@ public class DefaultObjectEntryManagerImplTest
 				objectEntry.getId(),
 				new ObjectEntry() {
 					{
-						setProperties(
-							HashMapBuilder.<String, Object>put(
-								"dateObjectFieldName", () -> null
-							).put(
-								"dateTimeObjectFieldName", () -> null
-							).build());
+						properties = HashMapBuilder.<String, Object>put(
+							"dateObjectFieldName", () -> null
+						).put(
+							"dateTimeObjectFieldName", () -> null
+						).build();
 					}
 				}),
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>putAll(
-							objectEntryProperties
-						).put(
-							"dateObjectFieldName", () -> null
-						).put(
-							"dateTimeObjectFieldName", () -> null
-						).build());
+					properties = HashMapBuilder.<String, Object>putAll(
+						objectEntryProperties
+					).put(
+						"dateObjectFieldName", () -> null
+					).put(
+						"dateTimeObjectFieldName", () -> null
+					).build();
 				}
 			});
 	}
@@ -3435,11 +3398,10 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, objectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"attachmentObjectFieldName",
-							_getAttachmentObjectFieldValue()
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						"attachmentObjectFieldName",
+						_getAttachmentObjectFieldValue()
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -3457,7 +3419,7 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),
 			new ObjectEntry() {
 				{
-					setProperties(Collections.emptyMap());
+					properties = Collections.emptyMap();
 				}
 			});
 
@@ -3518,7 +3480,7 @@ public class DefaultObjectEntryManagerImplTest
 			dtoConverterContext, _objectDefinition2,
 			new ObjectEntry() {
 				{
-					setProperties(_localizedObjectFieldI18nValues);
+					properties = _localizedObjectFieldI18nValues;
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -4140,11 +4102,10 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, objectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"picklistObjectFieldName",
-							actualPicklistObjectFieldValue
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						"picklistObjectFieldName",
+						actualPicklistObjectFieldValue
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -4191,11 +4152,10 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, _objectDefinition3,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationshipName1_accountEntryId",
-							accountEntry.getAccountEntryId()
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName1_accountEntryId",
+						accountEntry.getAccountEntryId()
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -4209,7 +4169,7 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, objectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(values);
+					properties = values;
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -4227,13 +4187,12 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, objectDefinition1,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"externalReferenceCode",
-							objectEntryExternalReferenceCode1
-						).put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						"externalReferenceCode",
+						objectEntryExternalReferenceCode1
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -4247,14 +4206,13 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, objectDefinition2,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							objectRelationshipERCObjectFieldName,
-							objectEntryExternalReferenceCode1
-						).put(
-							"externalReferenceCode",
-							objectEntryExternalReferenceCode2
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						objectRelationshipERCObjectFieldName,
+						objectEntryExternalReferenceCode1
+					).put(
+						"externalReferenceCode",
+						objectEntryExternalReferenceCode2
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -4345,11 +4303,10 @@ public class DefaultObjectEntryManagerImplTest
 				objectEntry.getId()),
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"countAggregationObjectFieldName1",
-							String.valueOf(expectedValue)
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						"countAggregationObjectFieldName1",
+						String.valueOf(expectedValue)
+					).build();
 				}
 			});
 	}
@@ -4386,7 +4343,7 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition2, objectEntryId),
 			new ObjectEntry() {
 				{
-					setProperties(expectedLocalizedValues);
+					properties = expectedLocalizedValues;
 				}
 			});
 
@@ -4407,7 +4364,7 @@ public class DefaultObjectEntryManagerImplTest
 					_objectDefinition2, objectEntryId),
 				new ObjectEntry() {
 					{
-						setProperties(expectedLocalizedValues);
+						properties = expectedLocalizedValues;
 					}
 				});
 		}
@@ -4466,7 +4423,8 @@ public class DefaultObjectEntryManagerImplTest
 		if (expectedPicklistObjectFieldValue == null) {
 			Map<String, Object> properties = objectEntry.getProperties();
 
-			Assert.assertNull(properties.get("picklistObjectFieldName"));
+			Assert.assertFalse(
+				properties.containsKey("picklistObjectFieldName"));
 		}
 		else {
 			Assert.assertEquals(
@@ -4484,20 +4442,17 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, _objectDefinition2,
 				new ObjectEntry() {
 					{
-						setProperties(
-							HashMapBuilder.<String, Object>put(
-								"picklistObjectFieldName",
-								picklistObjectFieldValue
-							).build());
+						properties = HashMapBuilder.<String, Object>put(
+							"picklistObjectFieldName", picklistObjectFieldValue
+						).build();
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY),
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"picklistObjectFieldName", expectedListEntry
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						"picklistObjectFieldName", expectedListEntry
+					).build();
 				}
 			});
 	}
@@ -4770,11 +4725,10 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, objectDefinition, objectEntryId,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"picklistObjectFieldName",
-							actualPicklistObjectFieldValue
-						).build());
+					properties = HashMapBuilder.<String, Object>put(
+						"picklistObjectFieldName",
+						actualPicklistObjectFieldValue
+					).build();
 				}
 			});
 
@@ -4791,7 +4745,7 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, objectDefinition, objectEntryId,
 			new ObjectEntry() {
 				{
-					setProperties(values);
+					properties = values;
 				}
 			});
 	}

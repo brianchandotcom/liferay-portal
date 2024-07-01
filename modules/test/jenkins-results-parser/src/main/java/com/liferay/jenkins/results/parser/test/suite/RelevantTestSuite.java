@@ -32,7 +32,7 @@ public class RelevantTestSuite {
 		_baseDir = baseDir;
 		_modifiedFiles = modifiedFiles;
 
-		_relevantRuleEngine = new RelevantRuleEngine(baseDir);
+		_relevantRuleEngine = RelevantRuleEngine.getInstance(baseDir);
 
 		_job = job;
 	}

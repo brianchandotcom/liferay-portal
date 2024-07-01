@@ -284,7 +284,7 @@ definition {
 		}
 
 		task ("And the price and inventory of generated SKUs are configured for the options product") {
-			if (IsElementPresent(locator1 = "//div[@class='data-set-wrapper' or @class='searchcontainer-content']//a[text()='VALUE3VALUE1']")) {
+			if (IsElementPresent(locator1 = "//div[@class='data-set-wrapper' or @class='searchcontainer-content']//*[text()='VALUE3VALUE1']")) {
 				CommerceNavigator.gotoEntry(entryName = "VALUE3VALUE1");
 
 				CommerceSKUs.editSkuName(
@@ -293,7 +293,7 @@ definition {
 					publish = "true");
 			}
 
-			if (IsElementPresent(locator1 = "//div[@class='data-set-wrapper' or @class='searchcontainer-content']//a[text()='VALUE4VALUE2']")) {
+			if (IsElementPresent(locator1 = "//div[@class='data-set-wrapper' or @class='searchcontainer-content']//*[text()='VALUE4VALUE2']")) {
 				CommerceNavigator.gotoEntry(entryName = "VALUE4VALUE2");
 
 				CommerceSKUs.editSkuName(

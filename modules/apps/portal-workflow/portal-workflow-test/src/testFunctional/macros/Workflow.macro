@@ -1222,7 +1222,7 @@ definition {
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_END_DATE");
 
-		AssertElementNotPresent(locator1 = "//div[@id='_158_workflowInstancesSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[7]/span/a[contains(@id,'menu_withdraw-submission')]/span");
+		AssertElementNotPresent(locator1 = "//div[@id='_158_workflowInstancesSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[7]/a[contains(@id,'menu_withdraw-submission')]/span");
 
 		AssertTextNotPresent(value1 = "Withdraw Submission");
 	}

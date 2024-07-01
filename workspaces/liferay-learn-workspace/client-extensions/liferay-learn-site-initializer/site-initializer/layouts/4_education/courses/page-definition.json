@@ -499,50 +499,6 @@
 																"contentDisplay": "FlexRow"
 															}
 														},
-														"pageElements": [
-															{
-																"definition": {
-																	"cssClasses": [
-																		"card-tag__content-type"
-																	],
-																	"fragment": {
-																		"key": "dialect-text",
-																		"siteKey": "Liferay Learn"
-																	},
-																	"fragmentConfig": {
-																		"textType": "text-paragraph-sm",
-																		"truncateText": false
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Gated Content"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"backgroundColor": "colorNeutral2",
-																		"borderRadius": "borderRadiusSm",
-																		"fontFamily": "fontFamilySansSerif",
-																		"fontWeight": "fontWeightNormal",
-																		"paddingBottom": "1",
-																		"paddingLeft": "2",
-																		"paddingRight": "2",
-																		"paddingTop": "1",
-																		"textColor": "colorNeutral8"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
 														"type": "Section"
 													},
 													{

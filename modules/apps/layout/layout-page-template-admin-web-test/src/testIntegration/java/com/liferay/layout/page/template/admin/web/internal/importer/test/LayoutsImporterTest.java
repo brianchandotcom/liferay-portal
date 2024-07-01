@@ -112,7 +112,7 @@ public class LayoutsImporterTest {
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 			});
 
-		_addFragmentEntry(_group2.getGroupId(), html, key, name);
+		_addFragmentEntry(html, key, name, _serviceContext2);
 
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
 
@@ -142,19 +142,17 @@ public class LayoutsImporterTest {
 	}
 
 	private FragmentEntry _addFragmentEntry(
-			long groupId, String html, String key, String name)
+			String html, String key, String name, ServiceContext serviceContext)
 		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
-				null, TestPropsValues.getUserId(), groupId, "Test Collection",
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(), "Test Collection",
 				StringPool.BLANK, serviceContext);
 
 		return _fragmentEntryLocalService.addFragmentEntry(
-			null, TestPropsValues.getUserId(), groupId,
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollection.getFragmentCollectionId(), key, name,
 			StringPool.BLANK, html, StringPool.BLANK, false, StringPool.BLANK,
 			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
@@ -185,7 +183,7 @@ public class LayoutsImporterTest {
 				0, WorkflowConstants.STATUS_APPROVED, _serviceContext1);
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			_group1.getGroupId(), html, key, name);
+			html, key, name, _serviceContext1);
 
 		long defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(

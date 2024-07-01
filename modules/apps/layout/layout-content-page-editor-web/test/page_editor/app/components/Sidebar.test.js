@@ -3,13 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	act,
-	fireEvent,
-	render,
-	screen,
-	waitForElementToBeRemoved,
-} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import {sessionStorage} from 'frontend-js-web';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
@@ -23,7 +17,7 @@ import Sidebar, {
 import {DragAndDropContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/drag_and_drop/useDragAndDrop';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
-const renderSidebar = async () => {
+const renderSidebar = () =>
 	render(
 		<StoreMother.Component>
 			<DndProvider backend={HTML5Backend}>
@@ -33,11 +27,6 @@ const renderSidebar = async () => {
 			</DndProvider>
 		</StoreMother.Component>
 	);
-
-	await waitForElementToBeRemoved(() =>
-		document.querySelector('.loading-animation')
-	);
-};
 
 describe('Sidebar', () => {
 	describe('resize', () => {

@@ -24,6 +24,7 @@
 						<span>Introduction</span>
 					</a>
 				</li>
+
 				<#list 0..childrenJSONArray1.length()-1 as i>
 					<div>
 						<#assign
@@ -47,7 +48,8 @@
 											<div
 												class="liferay-nav-item ${(navigationJSONObject.getJSONObject("self").url == child.url)?then("selected", "")}"
 												href="${child.url}"
-												style="display: flex; justify-content: space-between;">
+												style="display: flex; justify-content: space-between;"
+											>
 												<div class="nav-item-number-title">
 													<div>
 														<span class="course-module-number">${i+1}</span>
@@ -103,7 +105,8 @@ function togglePanel(button) {
 		button.setAttribute('aria-expanded', 'false');
 		courseModuleNumber.classList.remove('highlighted');
 		liferayNavItem.classList.remove('highlightedNavItem');
-	} else {
+	}
+	else {
 		button.setAttribute('aria-expanded', 'true');
 		courseModuleNumber.classList.add('highlighted');
 		liferayNavItem.classList.add('highlightedNavItem');

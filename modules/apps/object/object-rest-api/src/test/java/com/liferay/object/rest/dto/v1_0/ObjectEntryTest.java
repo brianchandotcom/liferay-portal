@@ -40,6 +40,7 @@ public class ObjectEntryTest {
 		AtomicInteger atomicInteger2 = new AtomicInteger();
 		AtomicInteger atomicInteger3 = new AtomicInteger();
 		AtomicInteger atomicInteger4 = new AtomicInteger();
+		String nullString = null;
 
 		ObjectEntry objectEntry = new ObjectEntry() {
 			{
@@ -55,9 +56,9 @@ public class ObjectEntryTest {
 						new UnsafeSupplierImpl(atomicInteger3, "value3")
 					).put(
 						"property4",
-						new UnsafeSupplierImpl(atomicInteger4, null)
+						new UnsafeSupplierImpl(atomicInteger4, nullString)
 					).put(
-						"property5", null
+						"property5", nullString
 					).build());
 			}
 		};

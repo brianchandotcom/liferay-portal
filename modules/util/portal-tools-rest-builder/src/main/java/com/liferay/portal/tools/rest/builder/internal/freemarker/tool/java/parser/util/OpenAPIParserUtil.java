@@ -66,13 +66,18 @@ public class OpenAPIParserUtil {
 
 		for (Schema allOfSchema : allOfSchemas) {
 			if (allOfSchema.getReference() != null) {
+				Schema processedAllOfSchema = schemas.get(
+					getReferenceName(allOfSchema.getReference()));
+
+				if (processedAllOfSchema.getDiscriminator() != null) {
+					continue;
+				}
+
 				if (allOfSchema.isMergeProperties() &&
 					ConfigUtil.isVersionCompatible(configYAML, 4)) {
 
-					allOfSchema = schemas.get(
-						getReferenceName(allOfSchema.getReference()));
-
-					propertySchemas.putAll(allOfSchema.getPropertySchemas());
+					propertySchemas.putAll(
+						processedAllOfSchema.getPropertySchemas());
 				}
 				else {
 					Schema itemSchema = new Schema();

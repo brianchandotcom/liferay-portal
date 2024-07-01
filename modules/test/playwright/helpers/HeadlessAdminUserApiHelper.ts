@@ -70,7 +70,7 @@ type TExportBatch = {
 	processedItemsCount?: number;
 	startTime?: string;
 	totalItemsCount?: number;
-}
+};
 
 export class HeadlessAdminUserApiHelper {
 	readonly apiHelpers: ApiHelpers | DataApiHelpers;
@@ -262,7 +262,7 @@ export class HeadlessAdminUserApiHelper {
 	async postRolesPageExportBatch(): Promise<TExportBatch> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/roles/export-batch`
-		)
+		);
 	}
 
 	async postOrganization(

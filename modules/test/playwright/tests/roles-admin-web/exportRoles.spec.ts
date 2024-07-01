@@ -3,42 +3,41 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from "@playwright/test";
-import fs from "fs";
+import {expect, mergeTests} from '@playwright/test';
+import fs from 'fs';
 
-import {dataApiHelpersTest} from "../../fixtures/dataApiHelpersTest";
-import {featureFlagsTest} from "../../fixtures/featureFlagsTest";
-import {loginTest} from "../../fixtures/loginTest";
-import {rolesPagesTest} from "../../fixtures/rolesPagesTest";
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {loginTest} from '../../fixtures/loginTest';
+import {rolesPagesTest} from '../../fixtures/rolesPagesTest';
 
 export const test = mergeTests(
-    dataApiHelpersTest,
-    featureFlagsTest({
-        'LPD-19843': true,
-        'LPS-187142': true,
-    }),
-    loginTest(),
-    rolesPagesTest
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-19843': true,
+		'LPS-187142': true,
+	}),
+	loginTest(),
+	rolesPagesTest
 );
 
-test('LPD-29557 Can export roles via API', async ({
-    apiHelpers,
-    page
-}) => {
+test('LPD-29557 Can export roles via API', async ({apiHelpers, page}) => {
+	const exportTaskId = (
+		await apiHelpers.headlessAdminUser.postRolesPageExportBatch()
+	).id;
 
-    const exportTaskId = (await apiHelpers.headlessAdminUser.postRolesPageExportBatch()).id;
+	await page.waitForTimeout(1000);
 
-    await page.waitForTimeout(1000);
+	const exportTask =
+		await apiHelpers.headlessBatchEngine.getExportTask(exportTaskId);
 
-    const exportTask = await apiHelpers.headlessBatchEngine.getExportTask(exportTaskId);
+	await expect(exportTask.executeStatus).toEqual('COMPLETED');
 
-    await expect(exportTask.executeStatus).toEqual("COMPLETED");
+	const fileName =
+		await apiHelpers.headlessBatchEngine.getExportTaskContent(exportTaskId);
+	const stats = fs.statSync(fileName);
 
-    const fileName = await apiHelpers.headlessBatchEngine.getExportTaskContent(exportTaskId);
-    const stats = fs.statSync(fileName);
+	await expect(stats.size).toBeGreaterThan(30);
 
-    await expect(stats.size ).toBeGreaterThan(30);
-
-    fs.unlinkSync(fileName);
-
-})
+	fs.unlinkSync(fileName);
+});

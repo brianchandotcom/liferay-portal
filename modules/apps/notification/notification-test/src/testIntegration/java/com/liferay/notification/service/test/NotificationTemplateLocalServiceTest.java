@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -42,7 +41,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Murilo Stodolni
  */
-@FeatureFlags({"LPD-11165", "LPD-21580"})
 @RunWith(Arquillian.class)
 public class NotificationTemplateLocalServiceTest {
 
@@ -162,88 +160,10 @@ public class NotificationTemplateLocalServiceTest {
 
 		_notificationTemplateLocalService.deleteNotificationTemplate(
 			notificationTemplate);
-
-		String body = StringUtil.randomString(255);
-		String description = RandomTestUtil.randomString();
-		String subject = RandomTestUtil.randomString(256);
-		String from = RandomTestUtil.randomString();
-		String fromName = RandomTestUtil.randomString();
-		String to = RandomTestUtil.randomString();
-		String singleRecipient = String.valueOf(RandomTestUtil.randomBoolean());
-		String usePreferredLocaleForGuestUsers = String.valueOf(
-			RandomTestUtil.randomBoolean());
-
-		notificationTemplate =
-			_notificationTemplateLocalService.addNotificationTemplate(
-				NotificationTemplateUtil.createNotificationContext(
-					user, body, description,
-					Arrays.asList(
-						NotificationTemplateUtil.
-							createNotificationRecipientSetting(
-								NotificationRecipientSettingConstants.NAME_FROM,
-								from),
-						NotificationTemplateUtil.
-							createNotificationRecipientSetting(
-								NotificationRecipientSettingConstants.
-									NAME_FROM_NAME,
-								fromName),
-						NotificationTemplateUtil.
-							createNotificationRecipientSetting(
-								NotificationRecipientSettingConstants.NAME_TO,
-								to),
-						NotificationTemplateUtil.
-							createNotificationRecipientSetting(
-								NotificationRecipientSettingConstants.
-									NAME_SINGLE_RECIPIENT,
-								singleRecipient),
-						NotificationTemplateUtil.
-							createNotificationRecipientSetting(
-								NotificationRecipientSettingConstants.
-									NAME_USE_PREFERRED_LOCALE_FOR_GUEST_USERS,
-								usePreferredLocaleForGuestUsers)),
-					subject, NotificationConstants.TYPE_EMAIL));
-
-		Assert.assertEquals(user.getUserId(), notificationTemplate.getUserId());
-		Assert.assertEquals(body, notificationTemplate.getBody());
-		Assert.assertEquals(subject, notificationTemplate.getSubject());
-		Assert.assertEquals(
-			NotificationConstants.TYPE_EMAIL, notificationTemplate.getType());
-
-		notificationRecipient = notificationTemplate.getNotificationRecipient();
-
-		Assert.assertNotNull(notificationRecipient);
-
-		notificationRecipientId =
-			notificationRecipient.getNotificationRecipientId();
-
-		_assertNotificationRecipientSetting(
-			NotificationRecipientSettingConstants.NAME_FROM,
-			notificationRecipientId, from);
-		_assertNotificationRecipientSetting(
-			NotificationRecipientSettingConstants.NAME_FROM_NAME,
-			notificationRecipientId, fromName);
-		_assertNotificationRecipientSetting(
-			NotificationRecipientSettingConstants.NAME_TO,
-			notificationRecipientId, to);
-		_assertNotificationRecipientSetting(
-			NotificationRecipientSettingConstants.NAME_SINGLE_RECIPIENT,
-			notificationRecipientId, singleRecipient);
-		_assertNotificationRecipientSetting(
-			NotificationRecipientSettingConstants.
-				NAME_USE_PREFERRED_LOCALE_FOR_GUEST_USERS,
-			notificationRecipientId, usePreferredLocaleForGuestUsers);
 	}
 
 	private void _assertNotificationRecipientSetting(
 			String name, long notificationRecipientId)
-		throws Exception {
-
-		_assertNotificationRecipientSetting(
-			name, notificationRecipientId, _externalReferenceCode);
-	}
-
-	private void _assertNotificationRecipientSetting(
-			String name, long notificationRecipientId, String value)
 		throws Exception {
 
 		NotificationRecipientSetting notificationRecipientSetting =
@@ -253,7 +173,7 @@ public class NotificationTemplateLocalServiceTest {
 
 		Assert.assertEquals(name, notificationRecipientSetting.getName());
 		Assert.assertEquals(
-			value,
+			_externalReferenceCode,
 			notificationRecipientSetting.getValue(LocaleUtil.getDefault()));
 	}
 

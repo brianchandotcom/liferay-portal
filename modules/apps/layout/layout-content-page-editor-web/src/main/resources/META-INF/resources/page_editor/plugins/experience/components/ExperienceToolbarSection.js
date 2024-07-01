@@ -11,8 +11,8 @@ import togglePermissions from '../../../app/actions/togglePermission';
 import {config} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../app/selectors/selectSegmentsExperienceId';
+import ExperienceReducer from '../reducers/index';
 import ExperienceSelector from './ExperienceSelector';
-import ExperienceReducer from './reducers/index';
 
 function ExperienceToolbarSection() {
 	const availableSegmentsExperiences = useSelector(

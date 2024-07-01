@@ -22,6 +22,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -127,6 +128,9 @@ public class FDSAdminPortlet extends MVCPortlet {
 
 		try {
 			BatchEngineUnitThreadLocal.setFileName(_bundle.toString());
+
+			_publishSystemObjectDefinitions(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId());
 
 			_generate(
 				themeDisplay.getCompanyId(), themeDisplay.getLocale(),
@@ -1040,6 +1044,31 @@ public class FDSAdminPortlet extends MVCPortlet {
 			fdsViewObjectDefinition, locale, userId);
 		_createFDSSortObjectDefinition(fdsViewObjectDefinition, locale, userId);
 	}
+
+	private void _publishSystemObjectDefinitions(long companyId, long userId)
+		throws PortalException {
+
+		for (String objectDefinitionERC : _OBJECT_DEFINITIONS_ERC) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						objectDefinitionERC, companyId);
+
+			if (objectDefinition.getStatus() !=
+					WorkflowConstants.STATUS_APPROVED) {
+
+				_objectDefinitionLocalService.publishSystemObjectDefinition(
+					userId, objectDefinition.getObjectDefinitionId());
+			}
+		}
+	}
+
+	private static final String[] _OBJECT_DEFINITIONS_ERC = {
+		"L_DATA_SET", "L_DATA_SET_ACTION", "L_DATA_SET_CARDS_SECTION",
+		"L_DATA_SET_CLIENT_EXTENSION_FILTER", "L_DATA_SET_DATE_FILTER",
+		"L_DATA_SET_LIST_SECTION", "L_DATA_SET_SELECTION_FILTER",
+		"L_DATA_SET_SORT", "L_DATA_SET_TABLE_SECTION"
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FDSAdminPortlet.class);

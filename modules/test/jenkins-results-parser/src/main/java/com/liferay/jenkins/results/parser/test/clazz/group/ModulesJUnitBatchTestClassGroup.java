@@ -403,23 +403,13 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 	private List<JobProperty> _getTestSelectorExcludesJobProperties() {
 		JUnitTestSelector jUnitTestSelector = _testBatch.getTestSelector();
 
-		List<JobProperty> excludesJobProperties =
-			jUnitTestSelector.getExcludesJobProperties();
-
-		recordJobProperties(excludesJobProperties);
-
-		return excludesJobProperties;
+		return jUnitTestSelector.getExcludesJobProperties();
 	}
 
 	private List<JobProperty> _getTestSelectorIncludesJobProperties() {
 		JUnitTestSelector jUnitTestSelector = _testBatch.getTestSelector();
 
-		List<JobProperty> includesJobProperties =
-			jUnitTestSelector.getIncludesJobProperties();
-
-		recordJobProperties(includesJobProperties);
-
-		return includesJobProperties;
+		return jUnitTestSelector.getIncludesJobProperties();
 	}
 
 	private JUnitTestBatch _testBatch;

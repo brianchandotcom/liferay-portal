@@ -5,7 +5,7 @@ ${dataFactory.toInsertSQL(ctSchemaVersionModel)}
 <#--Create a Publications specific group-->
 
 <#assign
-	groupModel = dataFactory.newPublicationGroupModel()
+	groupModel = dataFactory.newCTCollectionGroupModel()
 	groupId = groupModel.groupId
 />
 

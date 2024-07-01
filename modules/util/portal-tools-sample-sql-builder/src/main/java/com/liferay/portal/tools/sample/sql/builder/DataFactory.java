@@ -3195,6 +3195,14 @@ public class DataFactory {
 		return layoutModels;
 	}
 
+	public GroupModel newCTCollectionGroupModel() {
+		long groupId = _groupCounter.get();
+
+		return newGroupModel(
+			getClassNameId(Group.class), groupId, groupId, "Publication Group",
+			true);
+	}
+
 	public JournalArticleModel newCTCollectionJournalArticleModel(
 			long ctCollectionId,
 			JournalArticleResourceModel journalArticleResourceModel,
@@ -5426,14 +5434,6 @@ public class DataFactory {
 		}
 
 		return portletPreferenceValueModel;
-	}
-
-	public GroupModel newPublicationGroupModel() {
-		long groupId = _groupCounter.get();
-
-		return newGroupModel(
-			getClassNameId(Group.class), groupId, groupId, "Publication Group",
-			true);
 	}
 
 	public List<ReleaseModel> newReleaseModels() throws Exception {

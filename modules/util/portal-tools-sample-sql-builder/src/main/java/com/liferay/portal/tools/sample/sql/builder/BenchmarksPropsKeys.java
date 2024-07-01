@@ -104,19 +104,19 @@ public interface BenchmarksPropsKeys {
 		"sample.sql.max.cp.specification.option.count";
 
 	public static final String MAX_CT_COLLECTION_COUNT =
-		"sample.sql.max.change.tracking.collection.count";
+		"sample.sql.max.ct.collection.count";
 
 	public static final String MAX_CT_CONTENT_LAYOUT_COUNT =
-		"sample.sql.max.change.tracking.content.layout.count";
+		"sample.sql.max.ct.content.layout.count";
 
 	public static final String MAX_CT_JOURNAL_ARTICLE_COUNT =
-		"sample.sql.max.change.tracking.journal.article.count";
+		"sample.sql.max.ct.journal.article.count";
 
 	public static final String MAX_CT_JOURNAL_ARTICLE_PAGE_COUNT =
-		"sample.sql.max.change.tracking.journal.article.page.count";
+		"sample.sql.max.ct.journal.article.page.count";
 
 	public static final String MAX_CT_JOURNAL_ARTICLE_VERSION_COUNT =
-		"sample.sql.max.change.tracking.journal.article.version.count";
+		"sample.sql.max.ct.journal.article.version.count";
 
 	public static final String MAX_DDL_CUSTOM_FIELD_COUNT =
 		"sample.sql.max.ddl.custom.field.count";

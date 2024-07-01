@@ -46,7 +46,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		JSONArray clauseContributorsExcludesjsonArray =
 			generalConfigurationjsonObject.getJSONArray(
 				"clauseContributorsExcludes");
-
 		JSONArray clauseContributorsIncludesjsonArray =
 			generalConfigurationjsonObject.getJSONArray(
 				"clauseContributorsIncludes");

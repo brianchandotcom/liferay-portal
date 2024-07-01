@@ -98,6 +98,7 @@
 										"pageElements": [
 											{
 												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n  margin-top: 5px;\n}",
 													"fragmentStyle": {
 														"backgroundColor": "var(--color-brand-primary-lighten-5, #e7efff);",
 														"borderRadius": "10px",
@@ -131,7 +132,7 @@
 																			},
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/platform-svg?imagePreview=1"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/platform.svg$]"
 																				}
 																			}
 																		},

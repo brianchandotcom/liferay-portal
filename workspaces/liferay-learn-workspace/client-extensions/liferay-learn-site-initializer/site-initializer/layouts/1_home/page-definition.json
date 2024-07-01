@@ -321,7 +321,7 @@
 																			},
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/guest/cloud-svg?imagePreview=1"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/cloud.svg$]"
 																				}
 																			}
 																		},
@@ -470,7 +470,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/guest/commerce-svg?imagePreview=1"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/commerce.svg$]"
 																				}
 																			}
 																		},
@@ -619,7 +619,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/guest/content_ms-svg?imagePreview=1"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/content_ms.svg$]"
 																				}
 																			}
 																		},
@@ -768,7 +768,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/guest/development_t-svg?imagePreview=1"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/development_t.svg$]"
 																				}
 																			}
 																		},
@@ -917,7 +917,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/guest/digital_ams-svg?imagePreview=1"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/digital_ams.svg$]"
 																				}
 																			}
 																		},
@@ -1066,7 +1066,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/guest/dxp_shima-svg?imagePreview=1"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/dxp_shima.svg$]"
 																				}
 																			}
 																		},
@@ -1215,7 +1215,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/guest/integration-svg?imagePreview=1"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/integration.svg$]"
 																				}
 																			}
 																		},
@@ -1364,7 +1364,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/guest/personalization-svg?imagePreview=1"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/personalization.svg$]"
 																				}
 																			}
 																		},
@@ -1513,7 +1513,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/guest/platform-svg?imagePreview=1"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/platform.svg$]"
 																				}
 																			}
 																		},
@@ -1662,7 +1662,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/guest/search-svg?imagePreview=1"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/search.svg$]"
 																				}
 																			}
 																		},
@@ -1811,7 +1811,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/guest/security-svg?imagePreview=1"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/security.svg$]"
 																				}
 																			}
 																		},
@@ -1960,7 +1960,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/guest/sites-svg?imagePreview=1"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/sites.svg$]"
 																				}
 																			}
 																		},
@@ -2151,7 +2151,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/guest/analytics_c-svg?imagePreview=1"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/analytics_c.svg$]"
 																						}
 																					}
 																				},
@@ -2300,7 +2300,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/guest/commerce_product-svg?imagePreview=1"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/commerce_product.svg$]"
 																						}
 																					}
 																				},
@@ -2449,7 +2449,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/guest/dxp_p-svg?imagePreview=1"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/dxp_p.svg$]"
 																						}
 																					}
 																				},
@@ -2598,7 +2598,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/guest/dxp_c-svg?imagePreview=1"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/dxp_c.svg$]"
 																						}
 																					}
 																				},
@@ -2747,7 +2747,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/guest/reference-svg?imagePreview=1"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/reference.svg$]"
 																						}
 																					}
 																				},

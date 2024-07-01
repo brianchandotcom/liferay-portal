@@ -93,23 +93,13 @@ public class ObjectEntryTest {
 				Assert.assertEquals(
 					properties.toString(), "value3",
 					properties.get("property3"));
-				Assert.assertNull(
-					"The value should be null", properties.get("property4"));
-				Assert.assertNull(
-					"The value should be null", properties.get("property5"));
+				Assert.assertNull(properties.get("property4"));
+				Assert.assertNull(properties.get("property5"));
 
-				Assert.assertEquals(
-					"The field should have been computed only once", 1,
-					atomicInteger1.get());
-				Assert.assertEquals(
-					"The field should have been computed only once", 1,
-					atomicInteger2.get());
-				Assert.assertEquals(
-					"The field should have been computed only once", 1,
-					atomicInteger3.get());
-				Assert.assertEquals(
-					"The field should have been computed only once", 1,
-					atomicInteger4.get());
+				Assert.assertEquals(1, atomicInteger1.get());
+				Assert.assertEquals(1, atomicInteger2.get());
+				Assert.assertEquals(1, atomicInteger3.get());
+				Assert.assertEquals(1, atomicInteger4.get());
 			}
 		}
 		finally {

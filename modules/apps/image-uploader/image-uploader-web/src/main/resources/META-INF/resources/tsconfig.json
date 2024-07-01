@@ -1,0 +1,32 @@
+{
+	"@generated": "6b8815862a1127fd5f640449aa50552d10136cc0",
+	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"checkJs": false,
+		"composite": true,
+		"declarationDir": "../../../../../../../../.tsc/types",
+		"emitDeclarationOnly": true,
+		"jsx": "react",
+		"module": "es6",
+		"moduleResolution": "node",
+		"paths": {
+		},
+		"rootDir": "../../../../../../../..",
+		"sourceMap": false,
+		"strict": true,
+		"target": "es2020",
+		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/image-uploader-web.tsbuildinfo",
+		"typeRoots": [
+			"../../../../../../../../node_modules/@types"
+		]
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"../../../../../../../../global.d.ts"
+	],
+	"references": [
+	]
+}

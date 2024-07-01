@@ -1,0 +1,32 @@
+{
+	"@generated": "11a3e1e5b44bf01d2e5557383a260457b0fe8828",
+	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"checkJs": false,
+		"composite": true,
+		"declarationDir": "../../../../../../../../.tsc/types",
+		"emitDeclarationOnly": true,
+		"jsx": "react",
+		"module": "es6",
+		"moduleResolution": "node",
+		"paths": {
+		},
+		"rootDir": "../../../../../../../..",
+		"sourceMap": false,
+		"strict": true,
+		"target": "es2020",
+		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/microblogs-web.tsbuildinfo",
+		"typeRoots": [
+			"../../../../../../../../node_modules/@types"
+		]
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"../../../../../../../../global.d.ts"
+	],
+	"references": [
+	]
+}

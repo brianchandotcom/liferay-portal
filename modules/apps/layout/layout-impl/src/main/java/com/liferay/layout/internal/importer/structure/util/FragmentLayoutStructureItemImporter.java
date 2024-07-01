@@ -378,7 +378,7 @@ public class FragmentLayoutStructureItemImporter
 				_fragmentEntryProcessorRegistry.
 					getDefaultEditableValuesJSONObject(
 						_getProcessedHTML(
-							fragmentEntry.getCompanyId(), configuration,
+							layout.getCompanyId(), configuration,
 							fragmentEntryProcessorValuesJSONObject.toString(),
 							fragmentCollection, fragmentEntry.getHtml(),
 							fragmentKey, type),

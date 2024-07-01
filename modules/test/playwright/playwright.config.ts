@@ -15,6 +15,7 @@ import {config as blogsWebConfig} from './tests/blogs-web/config';
 import {config as changeTrackingWebConfig} from './tests/change-tracking-web/config';
 import {config as clientExtensionWebConfig} from './tests/client-extension-web/config';
 import {config as commerceConfig} from './tests/commerce/config';
+import {config as configurationAdminWebConfig} from './tests/configuration-admin-web/config';
 import {config as contentDashboardWebConfig} from './tests/content-dashboard-web/config';
 import {config as cookiesBannerWebConfig} from './tests/cookies-banner-web/config';
 import {config as dispatchWebConfig} from './tests/dispatch-web/config';
@@ -82,6 +83,7 @@ export default defineConfig({
 		clientExtensionWebConfig,
 		commerceConfig,
 		commerceWorkspaceConfig,
+		configurationAdminWebConfig,
 		contentDashboardWebConfig,
 		dispatchWebConfig,
 		documentLibraryWebConfig,

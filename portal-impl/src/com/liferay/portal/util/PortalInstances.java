@@ -504,9 +504,9 @@ public class PortalInstances {
 
 	private static final Set<String> _autoLoginIgnoreHosts;
 	private static final Set<String> _autoLoginIgnorePaths;
-	private static Long _copyInProcessCompanyId;
 	private static final List<Long> _companyIdsInDeletionProcess =
 		new CopyOnWriteArrayList<>();
+	private static Long _copyInProcessCompanyId;
 	private static final Set<String> _virtualHostsIgnoreHosts;
 	private static final Set<String> _virtualHostsIgnorePaths;
 

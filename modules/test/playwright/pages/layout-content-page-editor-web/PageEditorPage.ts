@@ -69,22 +69,10 @@ export class PageEditorPage {
 		}
 
 		if (dropTarget) {
-			await this.page.getByRole('menuitem', {name}).first().hover();
-
-			await this.page.mouse.down();
-			await dropTarget.hover();
-
-			const boundingClientRect = await dropTarget.evaluate((element) =>
-				element.getBoundingClientRect()
+			this.dragAndDropElement(
+				this.page.getByRole('menuitem', {name}).first(),
+				dropTarget
 			);
-
-			await dropTarget.hover({
-				position: {
-					x: boundingClientRect.width / 2,
-					y: boundingClientRect.height / 2,
-				},
-			});
-			await this.page.mouse.up();
 		}
 		else {
 			await this.page.getByLabel(`Add ${name}`).focus();
@@ -122,7 +110,7 @@ export class PageEditorPage {
 			.press('Enter');
 	}
 
-	async addWidget(category: string, name: string) {
+	async addWidget(category: string, name: string, dropTarget?: Locator) {
 		await this.goToSidebarTab('Fragments and Widgets');
 
 		await this.page
@@ -142,10 +130,18 @@ export class PageEditorPage {
 			await header.click();
 		}
 
-		await this.page.getByLabel(`Add ${name}`).first().focus();
+		if (dropTarget) {
+			this.dragAndDropElement(
+				this.page.getByRole('menuitem', {name}).first(),
+				dropTarget
+			);
+		}
+		else {
+			await this.page.getByLabel(`Add ${name}`).first().focus();
 
-		await this.page.keyboard.press('Enter');
-		await this.page.keyboard.press('Enter');
+			await this.page.keyboard.press('Enter');
+			await this.page.keyboard.press('Enter');
+		}
 
 		await this.waitForChangesSaved();
 	}
@@ -380,6 +376,25 @@ export class PageEditorPage {
 			'Success:The experience was duplicated successfully.',
 			{autoClose: false}
 		);
+	}
+
+	async dragAndDropElement(dragTarget, dropTarget) {
+		await dragTarget.hover();
+
+		await this.page.mouse.down();
+		await dropTarget.hover();
+
+		const boundingClientRect = await dropTarget.evaluate((element) =>
+			element.getBoundingClientRect()
+		);
+
+		await dropTarget.hover({
+			position: {
+				x: boundingClientRect.width / 2,
+				y: boundingClientRect.height / 2,
+			},
+		});
+		await this.page.mouse.up();
 	}
 
 	async duplicateFragment(fragmentId: string) {

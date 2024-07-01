@@ -27,7 +27,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
-import com.liferay.object.validation.rule.util.ObjectValidationRuleThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
@@ -56,7 +55,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -83,10 +81,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -232,12 +228,6 @@ public class AccountEntryLocalServiceTest {
 				"This name is invalid.",
 				objectValidationRuleResult.getErrorMessage());
 		}
-
-		ThreadLocal<Set<Long>> threadLocal = ReflectionTestUtil.getFieldValue(
-			ObjectValidationRuleThreadLocal.class,
-			"_executedObjectValidationRuleIds");
-
-		threadLocal.set(new HashSet<>());
 
 		try {
 			AccountEntryTestUtil.addAccountEntry(

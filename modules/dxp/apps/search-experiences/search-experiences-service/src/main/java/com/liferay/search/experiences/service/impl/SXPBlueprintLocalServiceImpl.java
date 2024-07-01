@@ -5,6 +5,7 @@
 
 package com.liferay.search.experiences.service.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -19,14 +20,17 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
-import com.liferay.search.experiences.internal.util.SXPBlueprintUpgradeContributorStorageSchemaUtil;
 import com.liferay.search.experiences.model.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
+import com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.service.base.SXPBlueprintLocalServiceBaseImpl;
 import com.liferay.search.experiences.validator.SXPBlueprintValidator;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -78,7 +82,7 @@ public class SXPBlueprintLocalServiceImpl
 		sxpBlueprint.setStatusByUserId(user.getUserId());
 		sxpBlueprint.setStatusDate(serviceContext.getModifiedDate(null));
 
-		sxpBlueprint = _upgradeImportedBlueprint(sxpBlueprint);
+		sxpBlueprint = _upgradeSXPBlueprint(sxpBlueprint);
 
 		sxpBlueprint = sxpBlueprintPersistence.update(sxpBlueprint);
 
@@ -188,9 +192,38 @@ public class SXPBlueprintLocalServiceImpl
 		return updateSXPBlueprint(sxpBlueprint);
 	}
 
-	private SXPBlueprint _upgradeImportedBlueprint(SXPBlueprint sxpBlueprint) {
-		return SXPBlueprintUpgradeContributorStorageSchemaUtil.
-			upgradeContributorStorageSchema(sxpBlueprint);
+	private SXPBlueprint _upgradeSXPBlueprint(SXPBlueprint sxpBlueprint) {
+		if (!Objects.equals(sxpBlueprint.getSchemaVersion(), "1.0")) {
+			return sxpBlueprint;
+		}
+
+		sxpBlueprint.setSchemaVersion("1.1");
+
+		Configuration configuration = ConfigurationUtil.toConfiguration(
+			sxpBlueprint.getConfigurationJSON());
+
+		GeneralConfiguration generalConfiguration =
+			configuration.getGeneralConfiguration();
+
+		String[] clauseContributorsExcludes =
+			generalConfiguration.getClauseContributorsExcludes();
+		String[] clauseContributorsIncludes =
+			generalConfiguration.getClauseContributorsIncludes();
+
+		if (clauseContributorsExcludes.length == 0) {
+			generalConfiguration.setClauseContributorsIncludes(() -> _WILDCARD);
+		}
+		else if (clauseContributorsIncludes.length == 0) {
+			generalConfiguration.setClauseContributorsExcludes(() -> _WILDCARD);
+		}
+		else {
+			generalConfiguration.setClauseContributorsExcludes(
+				() -> new String[0]);
+		}
+
+		sxpBlueprint.setConfigurationJSON(configuration.toString());
+
+		return sxpBlueprint;
 	}
 
 	private void _validate(
@@ -206,6 +239,8 @@ public class SXPBlueprintLocalServiceImpl
 			_sxpBlueprintValidator.validate(titleMap);
 		}
 	}
+
+	private static final String[] _WILDCARD = {StringPool.STAR};
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

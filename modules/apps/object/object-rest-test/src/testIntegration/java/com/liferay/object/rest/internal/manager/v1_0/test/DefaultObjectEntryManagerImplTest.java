@@ -2857,12 +2857,14 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectEntry parentObjectEntry1 = _addObjectEntry(
 			_objectDefinition1,
-			Collections.singletonMap(
-				"textObjectFieldName", textObjectFieldValue));
+			HashMapBuilder.<String, Object>put(
+				"textObjectFieldName", textObjectFieldValue
+			).build());
 		ObjectEntry parentObjectEntry2 = _addObjectEntry(
 			_objectDefinition1,
-			Collections.singletonMap(
-				"textObjectFieldName", textObjectFieldValue));
+			HashMapBuilder.<String, Object>put(
+				"textObjectFieldName", textObjectFieldValue
+			).build());
 
 		_user = _addUser();
 
@@ -2881,17 +2883,20 @@ public class DefaultObjectEntryManagerImplTest
 
 		_addObjectEntry(
 			_objectDefinition2,
-			Collections.singletonMap(
-				_objectRelationshipFieldName, parentObjectEntry1.getId()));
+			HashMapBuilder.<String, Object>put(
+				_objectRelationshipFieldName, parentObjectEntry1.getId()
+			).build());
 		_addObjectEntry(
 			_objectDefinition2,
-			Collections.singletonMap(
-				_objectRelationshipFieldName, parentObjectEntry2.getId()));
+			HashMapBuilder.<String, Object>put(
+				_objectRelationshipFieldName, parentObjectEntry2.getId()
+			).build());
 
 		ObjectEntry childObjectEntry = _addObjectEntry(
 			_objectDefinition2,
-			Collections.singletonMap(
-				_objectRelationshipFieldName, parentObjectEntry2.getId()));
+			HashMapBuilder.<String, Object>put(
+				_objectRelationshipFieldName, parentObjectEntry2.getId()
+			).build());
 
 		_addRoleUser(new String[] {ActionKeys.VIEW}, _objectDefinition2, _user);
 
@@ -2910,10 +2915,9 @@ public class DefaultObjectEntryManagerImplTest
 			childObjectEntry.getId(),
 			new ObjectEntry() {
 				{
-					setProperties(
-						() -> Collections.singletonMap(
-							_objectRelationshipFieldName,
-							parentObjectEntry1.getId()));
+					properties = HashMapBuilder.<String, Object>put(
+						_objectRelationshipFieldName, parentObjectEntry1.getId()
+					).build();
 				}
 			});
 

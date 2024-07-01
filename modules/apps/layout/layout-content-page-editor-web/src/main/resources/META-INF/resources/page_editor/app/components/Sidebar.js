@@ -77,7 +77,7 @@ export default function Sidebar() {
 	const separatorRef = useRef();
 	const sidebarContentId = useId();
 	const sidebarId = useId();
-	const store = useSelector((state) => state);
+	const sidebar = useSelector((state) => state.sidebar);
 
 	const [sidebarWidth, setSidebarWidth] = useSessionState(
 		`${config.portletNamespace}_sidebar-width`,
@@ -91,11 +91,11 @@ export default function Sidebar() {
 	const tabListRef = useRef();
 
 	const panels = useSelector(selectAvailablePanels(config.panels));
-	const sidebarHidden = store.sidebar.hidden;
-	const sidebarOpen = selectSidebarIsOpened(store);
-	const itemConfigurationOpen = selectItemConfigurationOpen(store);
+	const sidebarHidden = sidebar.hidden;
+	const sidebarOpen = selectSidebarIsOpened({sidebar});
+	const itemConfigurationOpen = selectItemConfigurationOpen({sidebar});
 	const {panel, sidebarPanelId} = getActivePanelData({
-		panelId: store.sidebar.panelId,
+		panelId: sidebar.panelId,
 		panels,
 		sidebarPanels: config.sidebarPanels,
 	});
@@ -283,7 +283,7 @@ export default function Sidebar() {
 			switchSidebarPanel({
 				itemConfigurationOpen: smallResolution
 					? false
-					: store.sidebar.itemConfigurationOpen,
+					: sidebar.itemConfigurationOpen,
 				sidebarOpen: open,
 				sidebarPanelId: panel.sidebarPanelId,
 			})

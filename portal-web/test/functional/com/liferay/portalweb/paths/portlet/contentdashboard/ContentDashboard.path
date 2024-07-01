@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>EMPTY_AUDIT_GRAPH_TEXT</td>
-	<td>//*[contains(@class, 'text-truncate') and contains(text(),'There is no data')]</td>
+	<td>//div[contains(@class, 'c-empty-state-title')]//span[contains(text(), 'There is no data')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -212,7 +212,7 @@
 </tr>
 <tr>
 	<td>NO_CATEGORIES_SELECTED_TEXT</td>
-	<td>//*[contains(@class, 'text-truncate') and contains(text(),'There are no categories selected')]</td>
+	<td>//div[contains(@class, 'c-empty-state-title')]//span[contains(text(), 'There are no categories selected')]</td>
 	<td></td>
 </tr>
 <tr>

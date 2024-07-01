@@ -9,7 +9,7 @@ source ${CURRENT_DIR_NAME}/../../../../env/common.sh
 function main {
 	default_set_up
 
-	start_client_extensions_spring_boot_application workspaces/liferay-jethr0-workspace/client-extensions/liferay-jethr0-etc-spring-boot
+	start_client_extension_spring_boot_application workspaces/liferay-jethr0-workspace/client-extensions/liferay-jethr0-etc-spring-boot
 }
 
 main "${@}"

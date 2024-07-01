@@ -332,7 +332,7 @@ function start_app_server {
 	echo "${LIFERAY_PORTAL_URL} is now available."
 }
 
-function start_client_extensions_spring_boot_application {
+function start_client_extension_spring_boot_application {
 	local client_extension_dir=${_PORTAL_PROJECT_DIR}/${1}
 
 	if [[ -d ${client_extension_dir} ]]
@@ -399,7 +399,7 @@ function stop_app_server {
 	echo "${LIFERAY_PORTAL_URL} is no longer available."
 }
 
-function stop_client_extensions_spring_boot_application {
+function stop_client_extension_spring_boot_application {
 	local client_extension_dir=${_PORTAL_PROJECT_DIR}/${1}
 
 	if [[ -d ${client_extension_dir} ]]

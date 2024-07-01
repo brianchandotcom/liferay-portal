@@ -94,6 +94,8 @@ export function ProvideAppSupportAndHelpPage({
 		]
 	);
 
+	const isPaidApp = priceModel.value === PRODUCT_PRICE_MODEL.PAID;
+
 	return (
 		<div className="provide-app-support-and-help-page-container">
 			<div className="provide-app-support-and-help-page-header">
@@ -135,7 +137,7 @@ export function ProvideAppSupportAndHelpPage({
 						})
 					}
 					placeholder="http:// Enter app name"
-					required={priceModel.value === PRODUCT_PRICE_MODEL.PAID}
+					required={isPaidApp}
 					value={publisherWebsiteURL?.value}
 				/>
 
@@ -151,7 +153,7 @@ export function ProvideAppSupportAndHelpPage({
 						})
 					}
 					placeholder="Enter Support Email Address"
-					required={priceModel.value === PRODUCT_PRICE_MODEL.PAID}
+					required={isPaidApp}
 					value={supportEmail.value}
 				/>
 
@@ -203,9 +205,11 @@ export function ProvideAppSupportAndHelpPage({
 
 			<NewAppPageFooterButtons
 				disableContinueButton={
-					processing ||
-					!supportEmail.value.length ||
-					!publisherWebsiteURL.value.length
+					!isPaidApp
+						? processing
+						: processing ||
+							!supportEmail.value.length ||
+							!publisherWebsiteURL.value.length
 				}
 				isLoading={processing}
 				onClickBack={() => onClickBack()}

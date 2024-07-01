@@ -10,7 +10,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.BulkLayoutConverter;
 import com.liferay.layout.util.template.LayoutConversionResult;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -59,8 +58,6 @@ public class DeleteLayoutMVCActionCommandTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
 	}
 
 	@After
@@ -135,7 +132,8 @@ public class DeleteLayoutMVCActionCommandTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(_company);
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setUser(TestPropsValues.getUser());
@@ -145,8 +143,6 @@ public class DeleteLayoutMVCActionCommandTest {
 
 	@Inject
 	private BulkLayoutConverter _bulkLayoutConverter;
-
-	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

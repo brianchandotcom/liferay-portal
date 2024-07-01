@@ -93,18 +93,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	public List<JobProperty> getFilterJobProperties() {
-		if (_jUnitTestBatch != null) {
-			JUnitTestSelector jUnitTestSelector =
-				_jUnitTestBatch.getTestSelector();
-
-			List<JobProperty> testSelectorFilterJobProperties =
-				jUnitTestSelector.getFilterJobProperties();
-
-			recordJobProperties(testSelectorFilterJobProperties);
-
-			return testSelectorFilterJobProperties;
-		}
-
 		List<JobProperty> filterJobProperties = new ArrayList<>();
 
 		filterJobProperties.add(
@@ -737,7 +725,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		long start = System.currentTimeMillis();
 
 		List<PathMatcher> filterPathMatchers = getPathMatchers(
-			jUnitTestSelector.getFilterJobProperties());
+			getFilterJobProperties());
 		List<PathMatcher> excludesPathMatchers = getPathMatchers(
 			jUnitTestSelector.getExcludesJobProperties());
 

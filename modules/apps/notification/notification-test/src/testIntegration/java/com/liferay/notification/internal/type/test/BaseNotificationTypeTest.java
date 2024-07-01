@@ -586,8 +586,7 @@ public class BaseNotificationTypeTest {
 	}
 
 	protected void executeNotificationObjectAction(
-			DTOConverterContext dtoConverterContext, long fileEntryId,
-			NotificationTemplate notificationTemplate)
+			long fileEntryId, NotificationTemplate notificationTemplate)
 		throws Exception {
 
 		ObjectAction objectAction = objectActionLocalService.addObjectAction(
@@ -632,14 +631,6 @@ public class BaseNotificationTypeTest {
 
 		objectActionLocalService.deleteObjectAction(
 			objectAction.getObjectActionId());
-	}
-
-	protected void executeNotificationObjectAction(
-			long fileEntryId, NotificationTemplate notificationTemplate)
-		throws Exception {
-
-		executeNotificationObjectAction(
-			dtoConverterContext, fileEntryId, notificationTemplate);
 	}
 
 	protected String getObjectRelationshipObjectField2Name()

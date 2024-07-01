@@ -50,7 +50,7 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 	const subscriptionsGroupSelected =
 		accountSubscriptionGroups?.items[selectedItemIndex]?.name;
 
-	const portalOrDXPSubscriptions = ['Portal', 'DXP'];
+	const portalOrDXPSubscriptions = ['Portal', 'Liferay Self-Hosted'];
 
 	return (
 		<div>

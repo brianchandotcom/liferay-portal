@@ -3,40 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-// @ts-ignore
-
-import Browser from '../../plugins/browser/index';
-
-// @ts-ignore
-
-import Comments from '../../plugins/comments/index';
-
-// @ts-ignore
-
-import Experience from '../../plugins/experience/index';
-
-// @ts-ignore
-
-import FragmentsAndWidgets from '../../plugins/fragments_and_widgets/index';
-
-// @ts-ignore
-
-import Mapping from '../../plugins/mapping/index';
-
-// @ts-ignore
-
-import PageContent from '../../plugins/page_content/index';
-
-// @ts-ignore
-
-import PageDesignOptions from '../../plugins/page_design_options/index';
-
-// @ts-ignore
-
-import PageRules from '../../plugins/page_rules/index';
 import {SidebarPanel} from '../../types/SidebarPanel';
 import {Config} from '../../types/config';
-import {LAYOUT_TYPES, LayoutType} from './constants/layoutTypes';
 
 const DEFAULT_CONFIG: Partial<Config> = {
 	toolbarId: 'pageEditorToolbar',
@@ -59,22 +27,16 @@ export function initializeConfig(backendConfig: Config) {
 		return config;
 	}
 
-	const {commonStyles, layoutType, portletNamespace, sidebarPanels} =
-		backendConfig;
+	const {commonStyles, portletNamespace, sidebarPanels} = backendConfig;
 
 	const toolbarId = `${portletNamespace}${DEFAULT_CONFIG.toolbarId}`;
-
-	// Special items requiring augmentation, creation, or transformation.
-
-	const augmentedPanels = augmentPanelData(sidebarPanels as SidebarPanel[]);
 
 	const syntheticItems: Partial<Config> = {
 		commonStyles: getCommonStyles(commonStyles),
 		commonStylesFields: getCommonStylesFields(commonStyles),
-		panels: generatePanels(augmentedPanels),
-		sidebarPanels: partitionPanels(augmentedPanels),
+		panels: generatePanels(sidebarPanels as SidebarPanel[]),
+		sidebarPanels: partitionPanels(sidebarPanels as SidebarPanel[]),
 		toolbarId,
-		toolbarPlugins: getToolbarPlugins(layoutType, toolbarId),
 	};
 
 	config = {
@@ -84,48 +46,6 @@ export function initializeConfig(backendConfig: Config) {
 	};
 
 	return config;
-}
-
-const PLUGIN_CLASS_MAP = {
-	browser: Browser,
-	comments: Comments,
-	experience: Experience,
-	fragments_and_widgets: FragmentsAndWidgets,
-	mapping: Mapping,
-	page_content: PageContent,
-	page_design_options: PageDesignOptions,
-	page_rules: PageRules,
-};
-
-/**
- * In general, we expect the sidebarPanelId to correspond with the name
- * of a plugin. Here we deal with the exceptions by mapping IDs to
- * plugin names.
- */
-const SIDEBAR_PANEL_IDS_TO_PLUGINS: Record<string, string> = {};
-
-function augmentPanelData(sidebarPanels: SidebarPanel[]) {
-	return sidebarPanels.map((panel) => {
-		if (isSeparator(panel) || panel.isLink) {
-			return panel;
-		}
-
-		const mapping = SIDEBAR_PANEL_IDS_TO_PLUGINS[panel.sidebarPanelId];
-
-		const sidebarPanelId = mapping || panel.sidebarPanelId;
-
-		return {
-			...panel,
-
-			// https://github.com/liferay/liferay-js-toolkit/issues/324
-
-			// @ts-ignore
-
-			pluginClass: PLUGIN_CLASS_MAP[sidebarPanelId],
-
-			sidebarPanelId,
-		};
-	});
 }
 
 function generatePanels(sidebarPanels: SidebarPanel[]): Config['panels'] {
@@ -171,43 +91,6 @@ function getCommonStylesFields(
 	});
 
 	return commonStylesFields;
-}
-
-/**
- * Currently we have segments experience data sprinkled throughout the
- * server data. In the future we may choose to encapsulate it better and
- * deal with it inside the plugin.
- */
-function getToolbarPlugins(layoutType: LayoutType, toolbarId: string) {
-	const toolbarPluginId = 'experience';
-	const selectId = `${toolbarId}_${toolbarPluginId}`;
-
-	return layoutType === LAYOUT_TYPES.content
-		? [
-				{
-					loadingPlaceholder: `
-			<div class="page-editor__toolbar-experience">
-				<label class="d-lg-block d-none mr-2" for="${selectId}">
-					Experience
-				</label>
-				<button class="form-control-select pr-4 text-left text-truncate btn btn-sm btn-secondary"
-					type="button" 
-					id="${selectId}"
-					disabled>
-					<div class="autofit-row autofit-row-center">
-						<div class="autofit-col autofit-col-expand">
-							<span class="text-truncate">Default</span>
-						</div>
-						<div class="autofit-col"></div>
-					</div>
-				</button>
-			</div>
-		`,
-					pluginClass: Experience,
-					toolbarPluginId: 'experience',
-				},
-			]
-		: [];
 }
 
 function isSeparator(panel: SidebarPanel) {

@@ -78,10 +78,6 @@ public class NotificationContext {
 		return _portletId;
 	}
 
-	public String getPreferredLanguageId() {
-		return _preferredLanguageId;
-	}
-
 	public Locale getSiteDefaultLocale() {
 		return _siteDefaultLocale;
 	}
@@ -160,10 +156,6 @@ public class NotificationContext {
 		_portletId = portletId;
 	}
 
-	public void setPreferredLanguageId(String preferredLanguageId) {
-		_preferredLanguageId = preferredLanguageId;
-	}
-
 	public void setSiteDefaultLocale(Locale siteDefaultLocale) {
 		_siteDefaultLocale = siteDefaultLocale;
 	}
@@ -196,7 +188,6 @@ public class NotificationContext {
 	private List<NotificationRecipientSetting> _notificationRecipientSettings;
 	private NotificationTemplate _notificationTemplate;
 	private String _portletId;
-	private String _preferredLanguageId;
 	private Locale _siteDefaultLocale;
 	private Map<String, Object> _termValues;
 	private String _type;

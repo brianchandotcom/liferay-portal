@@ -5,7 +5,6 @@
 
 package com.liferay.notification.internal.upgrade.v3_10_2;
 
-import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.internal.upgrade.BaseNotificationRecipientSettingUpgradeProcess;
 import com.liferay.petra.string.StringPool;
 
@@ -17,8 +16,7 @@ public class NotificationRecipientSettingUpgradeProcess
 
 	@Override
 	protected String getNotificationRecipientSettingName() {
-		return NotificationRecipientSettingConstants.
-			NAME_USE_PREFERRED_LOCALE_FOR_GUEST_USERS;
+		return "usePreferredLocaleForGuestUsers";
 	}
 
 	@Override

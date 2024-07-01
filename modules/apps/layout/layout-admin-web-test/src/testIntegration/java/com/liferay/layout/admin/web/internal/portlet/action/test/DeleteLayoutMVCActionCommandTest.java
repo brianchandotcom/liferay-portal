@@ -10,6 +10,8 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.BulkLayoutConverter;
 import com.liferay.layout.util.template.LayoutConversionResult;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -66,8 +69,10 @@ public class DeleteLayoutMVCActionCommandTest {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId());
 
+		String redirect = RandomTestUtil.randomString();
+
 		_mvcActionCommand.processAction(
-			_getMockLiferayPortletActionRequest(layout.getPlid()),
+			_getMockLiferayPortletActionRequest(layout.getPlid(), redirect),
 			mockLiferayPortletActionResponse);
 
 		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
@@ -76,9 +81,12 @@ public class DeleteLayoutMVCActionCommandTest {
 			(MockHttpServletResponse)
 				mockLiferayPortletActionResponse.getHttpServletResponse();
 
-		String content = mockHttpServletResponse.getContentAsString();
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			mockHttpServletResponse.getContentAsString());
 
-		Assert.assertNotNull(content);
+		Assert.assertEquals(
+			jsonObject.toString(), redirect,
+			jsonObject.getString("redirectURL"));
 	}
 
 	@Test
@@ -96,7 +104,8 @@ public class DeleteLayoutMVCActionCommandTest {
 		Layout draftLayout = layoutConversionResult.getDraftLayout();
 
 		_mvcActionCommand.processAction(
-			_getMockLiferayPortletActionRequest(draftLayout.getPlid()),
+			_getMockLiferayPortletActionRequest(
+				draftLayout.getPlid(), RandomTestUtil.randomString()),
 			mockLiferayPortletActionResponse);
 
 		Assert.assertNull(
@@ -112,7 +121,7 @@ public class DeleteLayoutMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			long plid)
+			long plid, String redirect)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -120,6 +129,8 @@ public class DeleteLayoutMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		mockLiferayPortletActionRequest.addParameter("redirect", redirect);
 
 		mockLiferayPortletActionRequest.addParameter(
 			"rowIds", new String[] {String.valueOf(plid)});
@@ -147,6 +158,9 @@ public class DeleteLayoutMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

@@ -274,6 +274,7 @@ definition {
 		}
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = ${groupName},
 			site = ${site});
@@ -281,7 +282,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}'
+				-u 'test@liferay.com:${userPassword}'
 		''';
 
 		var imageId = JSONCurlUtil.get(${curl}, "$..[?(@['title'] == '${imageTitle}')]['id']");
@@ -321,6 +322,7 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${imageTitle}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 		var imageId = JSONBlog.getBlogImageId(
 			groupName = ${groupName},
 			imageTitle = ${imageTitle},
@@ -329,7 +331,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-posting-images/${imageId} \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}'
+				-u 'test@liferay.com:${userPassword}'
 		''';
 
 		JSONCurlUtil.delete(${curl});
@@ -520,6 +522,7 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${sourceFileName}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -539,7 +542,7 @@ definition {
 			${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-posting-images \
 				-H accept: application/json \
 				-H Content-Type: multipart/form-data \
-				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
+				-u test@liferay.com:${userPassword} \
 				-F file=@${filePath}
 		''';
 

@@ -118,11 +118,12 @@ definition {
 			groupName = ${groupName},
 			titleField = ${titleField});
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}'
+				-u 'test@liferay.com:${userPassword}'
 		''';
 
 		var status = JSONCurlUtil.get(${curl}, "$.[?(@['headline'] == '${titleField}')]['status']");
@@ -145,11 +146,12 @@ definition {
 			pending = 1,
 			titleField = ${titleField});
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}'
+				-u 'test@liferay.com:${userPassword}'
 		''';
 
 		var status = JSONCurlUtil.get(${curl}, "$.[?(@['headline'] == '${titleField}')]['status']");

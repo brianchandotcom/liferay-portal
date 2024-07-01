@@ -575,11 +575,12 @@ definition {
 	macro executePingbackViacURL(entryTitle = null) {
 		var ip = ${ip};
 		var portalURL = ${portalURL};
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/xmlrpc/pingback \
 				-H 'Content-Type: text/xml' \
-				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
+				-u test@liferay.com:${userPassword} \
 				-d '
 				<?xml version="1.0" encoding="iso-8859-1"?>
 				<methodCall>

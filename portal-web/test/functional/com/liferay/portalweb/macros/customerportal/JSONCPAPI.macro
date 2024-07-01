@@ -5,10 +5,11 @@ definition {
 		Variables.assertDefined(parameterList = ${koroneikiERC});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c//koroneikiaccounts/by-external-reference-code/${koroneikiERC} \
-				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
+				-u test@liferay.com:${userPassword} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 		''';
@@ -25,10 +26,11 @@ definition {
 		Variables.assertDefined(parameterList = ${koroneikiAccountId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/c/koroneikiaccounts/${koroneikiAccountId} \
-				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
+				-u test@liferay.com:${userPassword} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{

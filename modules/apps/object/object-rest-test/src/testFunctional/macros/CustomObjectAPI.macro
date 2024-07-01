@@ -43,8 +43,10 @@ definition {
 		}
 
 		if (isSet(userEmailAddress)) {
+			var userPassword = PropsUtil.get("default.admin.password");
+
 			var headers = '''
-				-u ${userEmailAddress}:${PropsUtil.get("default.admin.password")} \
+				-u ${userEmailAddress}:${userPassword} \
 				-H Content-Type: application/json \
 			''';
 		}

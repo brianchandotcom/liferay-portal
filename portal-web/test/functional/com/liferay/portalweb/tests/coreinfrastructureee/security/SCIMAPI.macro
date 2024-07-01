@@ -45,9 +45,11 @@ definition {
 			var api = "v2/Users";
 		}
 
+		var userPassword = PropsUtil.get("default.admin.password");
+
 		var header = '''
 			${portalURL}/o/scim/v1.0/${api} \
-				-u test@${domain}:${PropsUtil.get("default.admin.password")} \
+				-u test@${domain}:${userPassword} \
 				-H accept: application/scim+json \
 				-H Content-Type: application/scim+json
 		''';

@@ -8,6 +8,7 @@ definition {
 			groupName = ${groupName},
 			portalURL = ${baseURL});
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (!(isSet(parentCommentId))) {
 			var parentCommentId = 0;
@@ -16,7 +17,7 @@ definition {
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/documents/${fileEntryId}/comments \
 				-H 'Content-Type: application/json' \
-				-u 'test@liferay.com:${PropsUtil.get("default.admin.password")}'
+				-u 'test@liferay.com:${userPassword}'
 				-d '{
 					"creator": {
 					},

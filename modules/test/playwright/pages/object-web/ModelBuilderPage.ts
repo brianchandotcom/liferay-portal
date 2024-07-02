@@ -198,8 +198,19 @@ export class ModelBuilderPage {
 			.click();
 	}
 
-	async clickToggleSidebarsButton() {
-		this.toggleSidebarsButton.click();
+	async connectObjectDefinitionsNodeHandles(
+		objectDefinitionId1: number,
+		objectDefinitionId2: number
+	) {
+		await this.getObjectDefinitionNodeRelationshipHandle(
+			objectDefinitionId1,
+			'right'
+		).dragTo(
+			this.getObjectDefinitionNodeRelationshipHandle(
+				objectDefinitionId2,
+				'left'
+			)
+		);
 	}
 
 	async createObjectField({
@@ -248,21 +259,9 @@ export class ModelBuilderPage {
 	}
 
 	async createObjectRelationship(
-		objectDefinitionId1: number,
-		objectDefinitionId2: number,
 		objectRelationshipLabel: string,
 		type: string
 	) {
-		await this.getObjectDefinitionNodeRelationshipHandle(
-			objectDefinitionId1,
-			'right'
-		).dragTo(
-			this.getObjectDefinitionNodeRelationshipHandle(
-				objectDefinitionId2,
-				'left'
-			)
-		);
-
 		await expect(this.newObjectRelationshipTitle).toBeVisible();
 
 		await this.newObjectRelationshipLabel.fill(objectRelationshipLabel);

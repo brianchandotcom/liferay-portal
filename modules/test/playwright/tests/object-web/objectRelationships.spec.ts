@@ -42,16 +42,19 @@ test.describe('Manage object relationships through Model Builder', () => {
 
 		await viewObjectDefinitionsPage.viewInModelBuilder();
 
-		await modelBuilderPage.clickToggleSidebarsButton();
+		await modelBuilderPage.toggleSidebarsButton.click();
 
 		await modelBuilderPage.clickFitViewButton();
+
+		await modelBuilderPage.connectObjectDefinitionsNodeHandles(
+			objectDefinition1.id,
+			objectDefinition2.id
+		);
 
 		const objectRelationshipLabel = 'objectRelationship' + getRandomInt();
 
 		const objectRelationship =
 			await modelBuilderPage.createObjectRelationship(
-				objectDefinition1.id,
-				objectDefinition2.id,
 				objectRelationshipLabel,
 				'One to Many'
 			);

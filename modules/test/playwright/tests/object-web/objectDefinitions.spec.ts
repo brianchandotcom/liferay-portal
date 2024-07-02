@@ -185,7 +185,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 
 		objectDefinitions.push(objectDefinition2);
 
-		await modelBuilderPage.clickToggleSidebarsButton();
+		await modelBuilderPage.toggleSidebarsButton.click();
 
 		await modelBuilderPage.clickFitViewButton();
 

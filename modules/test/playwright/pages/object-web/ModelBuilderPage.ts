@@ -245,19 +245,6 @@ export class ModelBuilderPage {
 		await this.newObjectFieldSaveButton.click();
 	}
 
-	async fillNewObjectFieldLabel(objectFieldLabel: string) {
-		await this.newObjectFieldLabel.fill(objectFieldLabel);
-	}
-
-	async selectNewObjectFieldBusinessTypeOption(
-		objectFieldBusinessType: string
-	) {
-		await this.newObjectFieldSelectBusinessType.click();
-		await this.page
-			.getByRole('option', {exact: true, name: objectFieldBusinessType})
-			.click();
-	}
-
 	async createObjectRelationship(
 		objectRelationshipLabel: string,
 		type: string
@@ -294,6 +281,32 @@ export class ModelBuilderPage {
 		await this.modalDeleteObjectRelationshipConfirmationButton.click();
 	}
 
+	async fillNewObjectFieldLabel(objectFieldLabel: string) {
+		await this.newObjectFieldLabel.fill(objectFieldLabel);
+	}
+
+	async openNewFieldModal(objectDefinitionName: string) {
+		await this.leftSidebarItems
+			.filter({hasText: objectDefinitionName})
+			.click();
+
+		await this.objectDefinitionNodes
+			.filter({hasText: objectDefinitionName})
+			.getByRole('button', {name: 'Add Field or Relationship'})
+			.click();
+
+		await this.addObjectFieldButton.click();
+	}
+
+	async selectNewObjectFieldBusinessTypeOption(
+		objectFieldBusinessType: string
+	) {
+		await this.newObjectFieldSelectBusinessType.click();
+		await this.page
+			.getByRole('option', {exact: true, name: objectFieldBusinessType})
+			.click();
+	}
+
 	getLinkedObjectDefinitionIconLocator = (objectDefinitionLabel: string) => {
 		return this.objectDefinitionNodes
 			.filter({
@@ -319,19 +332,6 @@ export class ModelBuilderPage {
 
 	getObjectFolderERCHeaderLocator(objectFolderERC: string) {
 		return this.page.getByTitle(`ERC: ${objectFolderERC}`);
-	}
-
-	async openNewFieldModal(objectDefinitionName: string) {
-		await this.leftSidebarItems
-			.filter({hasText: objectDefinitionName})
-			.click();
-
-		await this.objectDefinitionNodes
-			.filter({hasText: objectDefinitionName})
-			.getByRole('button', {name: 'Add Field or Relationship'})
-			.click();
-
-		await this.addObjectFieldButton.click();
 	}
 
 	getObjectFolderLabelHeaderLocator = (objectFolderLabel: string) => {

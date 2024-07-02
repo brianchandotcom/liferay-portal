@@ -504,8 +504,8 @@ definition {
 			}
 			else {
 				AssertTextEquals(
-					key_paymentMethod = ${deliveryTerm},
-					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
+					key_deliveryTerm = ${deliveryTerm},
+					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_DELIVERY_TERM",
 					value1 = ${deliveryTerm});
 			}
 		}

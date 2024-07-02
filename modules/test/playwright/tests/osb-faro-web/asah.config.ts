@@ -5,9 +5,12 @@
 
 const asahConfig = {
 	environment: {
-		baseUrl: process.env.OSB_ASAH_BACKEND_URL
+		backendUrl: process.env.OSB_ASAH_BACKEND_URL
 			? process.env.OSB_ASAH_BACKEND_URL
 			: 'http://osbasahbackend:8080',
+		batchCuratordUrl: process.env.OSB_ASAH_BATCH_CURATOR_URL
+			? process.env.OSB_ASAH_BATCH_CURATOR_URL
+			: 'http://osbasahbatchcurator:8080',
 		projectId: process.env.PROJECT_ID ? process.env.PROJECT_ID : 'osbasah',
 	},
 };

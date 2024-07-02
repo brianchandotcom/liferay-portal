@@ -276,8 +276,6 @@ definition {
 	@description = "Verify that the user is able to search by Workflow title"
 	@priority = 4
 	test CanSearchByTitle {
-		property portal.upstream = "quarantine";
-
 		Workflow.openWorkflowListView();
 
 		ProcessBuilderListView.searchForWorkflow(workflowName = "Approver");
@@ -293,7 +291,6 @@ definition {
 	@description = "Verify that search can be done using non-ASCII character"
 	@priority = 4
 	test CanSearchNonAsciiChar {
-		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

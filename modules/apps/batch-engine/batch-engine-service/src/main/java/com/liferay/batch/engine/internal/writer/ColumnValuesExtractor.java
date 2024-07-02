@@ -145,8 +145,7 @@ public class ColumnValuesExtractor {
 				ColumnDescriptor[] fieldColumnDescriptors =
 					columnDescriptorProvider.getColumnDescriptors(
 						companyId, fieldName, masterIndex,
-						fieldNameObjectValuePairs.get("properties"),
-						taskItemDelegateName);
+						fieldNameObjectValuePairs, taskItemDelegateName);
 
 				columnDescriptors = _combine(
 					columnDescriptors, fieldColumnDescriptors, localIndex);

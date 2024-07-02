@@ -10,10 +10,13 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
+import com.liferay.portal.vulcan.jaxrs.serializer.UnsafeSupplierSerializer;
 
 import java.util.HashSet;
 import java.util.List;
@@ -44,6 +47,15 @@ public class ObjectWriterFactory {
 			disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 			enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
 			setDateFormat(new ISO8601DateFormat());
+			registerModule(
+				new SimpleModule() {
+					{
+						addSerializer(
+							(Class<UnsafeSupplier<Object, Exception>>)
+								(Class<?>)UnsafeSupplier.class,
+							new UnsafeSupplierSerializer());
+					}
+				});
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};

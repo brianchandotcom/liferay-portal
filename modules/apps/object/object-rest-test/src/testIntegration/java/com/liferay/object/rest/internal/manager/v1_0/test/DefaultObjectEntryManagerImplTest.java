@@ -957,18 +957,20 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, _objectDefinition2,
 				new ObjectEntry() {
 					{
-						properties = Collections.singletonMap(
-							"dateTimeObjectFieldName", localDateTime);
+						properties = HashMapBuilder.<String, Object>put(
+							"dateTimeObjectFieldName", localDateTime
+						).build();
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY),
 			new ObjectEntry() {
 				{
-					properties = Collections.singletonMap(
+					properties = HashMapBuilder.<String, Object>put(
 						"dateTimeObjectFieldName",
 						localDateTime.format(
 							DateTimeFormatter.ofPattern(
-								"yyyy-MM-dd'T'HH:mm:ss.SSS")));
+								"yyyy-MM-dd'T'HH:mm:ss.SSS"))
+					).build();
 				}
 			});
 
@@ -997,15 +999,17 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition2,
 				new ObjectEntry() {
 					{
-						properties = Collections.singletonMap(
-							"dateTimeUTCObjectFieldName", localDateTime);
+						properties = HashMapBuilder.<String, Object>put(
+							"dateTimeUTCObjectFieldName", localDateTime
+						).build();
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY),
 			new ObjectEntry() {
 				{
-					properties = Collections.singletonMap(
-						"dateTimeUTCObjectFieldName", dateTimeString1);
+					properties = HashMapBuilder.<String, Object>put(
+						"dateTimeUTCObjectFieldName", dateTimeString1
+					).build();
 				}
 			});
 
@@ -1020,8 +1024,9 @@ public class DefaultObjectEntryManagerImplTest
 			dtoConverterContext, _objectDefinition2,
 			new ObjectEntry() {
 				{
-					properties = Collections.singletonMap(
-						"dateTimeUTCObjectFieldName", dateTimeString2);
+					properties = HashMapBuilder.<String, Object>put(
+						"dateTimeUTCObjectFieldName", dateTimeString2
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -2852,12 +2857,14 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectEntry parentObjectEntry1 = _addObjectEntry(
 			_objectDefinition1,
-			Collections.singletonMap(
-				"textObjectFieldName", textObjectFieldValue));
+			HashMapBuilder.<String, Object>put(
+				"textObjectFieldName", textObjectFieldValue
+			).build());
 		ObjectEntry parentObjectEntry2 = _addObjectEntry(
 			_objectDefinition1,
-			Collections.singletonMap(
-				"textObjectFieldName", textObjectFieldValue));
+			HashMapBuilder.<String, Object>put(
+				"textObjectFieldName", textObjectFieldValue
+			).build());
 
 		_user = _addUser();
 
@@ -2876,17 +2883,20 @@ public class DefaultObjectEntryManagerImplTest
 
 		_addObjectEntry(
 			_objectDefinition2,
-			Collections.singletonMap(
-				_objectRelationshipFieldName, parentObjectEntry1.getId()));
+			HashMapBuilder.<String, Object>put(
+				_objectRelationshipFieldName, parentObjectEntry1.getId()
+			).build());
 		_addObjectEntry(
 			_objectDefinition2,
-			Collections.singletonMap(
-				_objectRelationshipFieldName, parentObjectEntry2.getId()));
+			HashMapBuilder.<String, Object>put(
+				_objectRelationshipFieldName, parentObjectEntry2.getId()
+			).build());
 
 		ObjectEntry childObjectEntry = _addObjectEntry(
 			_objectDefinition2,
-			Collections.singletonMap(
-				_objectRelationshipFieldName, parentObjectEntry2.getId()));
+			HashMapBuilder.<String, Object>put(
+				_objectRelationshipFieldName, parentObjectEntry2.getId()
+			).build());
 
 		_addRoleUser(new String[] {ActionKeys.VIEW}, _objectDefinition2, _user);
 
@@ -2905,10 +2915,9 @@ public class DefaultObjectEntryManagerImplTest
 			childObjectEntry.getId(),
 			new ObjectEntry() {
 				{
-					setProperties(
-						() -> Collections.singletonMap(
-							_objectRelationshipFieldName,
-							parentObjectEntry1.getId()));
+					properties = HashMapBuilder.<String, Object>put(
+						_objectRelationshipFieldName, parentObjectEntry1.getId()
+					).build();
 				}
 			});
 
@@ -4539,8 +4548,7 @@ public class DefaultObjectEntryManagerImplTest
 		if (expectedPicklistObjectFieldValue == null) {
 			Map<String, Object> properties = objectEntry.getProperties();
 
-			Assert.assertFalse(
-				properties.containsKey("picklistObjectFieldName"));
+			Assert.assertNull(properties.get("picklistObjectFieldName"));
 		}
 		else {
 			Assert.assertEquals(

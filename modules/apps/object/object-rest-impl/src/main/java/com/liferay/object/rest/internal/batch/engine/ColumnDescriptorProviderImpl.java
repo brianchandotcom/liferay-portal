@@ -16,6 +16,7 @@ import com.liferay.object.rest.dto.v1_0.Link;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,9 +42,12 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 	@Override
 	public ColumnDescriptor[] getColumnDescriptors(
 			long companyId, String fieldName, int index,
-			ObjectValuePair<Field, Method> propertiesObjectValuePair,
+			Map<String, ObjectValuePair<Field, Method>> objectValuePairs,
 			String taskItemDelegateName)
 		throws PortalException {
+
+		ObjectValuePair<Field, Method> propertiesObjectValuePair =
+			objectValuePairs.get("properties");
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -292,7 +296,22 @@ public class ColumnDescriptorProviderImpl implements ColumnDescriptorProvider {
 			map = (Map<?, ?>)method.invoke(object);
 		}
 
-		return map.get(fieldName);
+		Object value = map.get(fieldName);
+
+		if (!(value instanceof UnsafeSupplier<?, ?>)) {
+			return value;
+		}
+
+		UnsafeSupplier<?, ?> unsafeSupplier = (UnsafeSupplier<?, ?>)value;
+
+		try {
+			value = unsafeSupplier.get();
+		}
+		catch (Throwable throwable) {
+			throw new RuntimeException(throwable);
+		}
+
+		return value;
 	}
 
 	@Reference

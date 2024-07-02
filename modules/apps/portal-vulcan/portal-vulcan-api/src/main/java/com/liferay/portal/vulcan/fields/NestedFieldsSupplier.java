@@ -6,6 +6,7 @@
 package com.liferay.portal.vulcan.fields;
 
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.HashMap;
@@ -80,6 +81,59 @@ public class NestedFieldsSupplier<T> {
 		nestedFieldsContext.decrementCurrentDepth();
 
 		return nestedFieldValues;
+	}
+
+	public static Map<String, UnsafeSupplier<Object, Exception>>
+			supplyUnsafeSupplier(
+				UnsafeFunction
+					<String, UnsafeSupplier<Object, Exception>, Exception>
+						unsafeFunction)
+		throws Exception {
+
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
+		if (!_mustProcessNestedFields(nestedFieldsContext)) {
+			return null;
+		}
+
+		Map<String, UnsafeSupplier<Object, Exception>>
+			nestedFieldUnsafeSuppliers = new HashMap<>();
+
+		nestedFieldsContext.incrementCurrentDepth();
+
+		NestedFieldsContext clonedNestedFieldsContext =
+			nestedFieldsContext.clone();
+
+		for (String fieldName : nestedFieldsContext.getFieldNames()) {
+			UnsafeSupplier<Object, Exception> unsafeSupplier =
+				unsafeFunction.apply(fieldName);
+
+			if (unsafeSupplier == null) {
+				continue;
+			}
+
+			nestedFieldUnsafeSuppliers.put(
+				fieldName,
+				() -> {
+					NestedFieldsContext oldNestedFieldsContext =
+						NestedFieldsContextThreadLocal.
+							getAndSetNestedFieldsContext(
+								clonedNestedFieldsContext);
+
+					try {
+						return unsafeSupplier.get();
+					}
+					finally {
+						NestedFieldsContextThreadLocal.setNestedFieldsContext(
+							oldNestedFieldsContext);
+					}
+				});
+		}
+
+		nestedFieldsContext.decrementCurrentDepth();
+
+		return nestedFieldUnsafeSuppliers;
 	}
 
 	private static boolean _mustProcessNestedFields(

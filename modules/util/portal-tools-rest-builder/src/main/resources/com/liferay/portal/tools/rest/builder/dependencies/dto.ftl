@@ -40,6 +40,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -150,12 +151,6 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			@DecimalMin("${propertySchema.minimum}")
 		</#if>
 
-		<#if propertySchema.jsonMap>
-			@JsonAnyGetter
-
-			<#assign jsonMapPropertyNames = jsonMapPropertyNames + [propertyName] />
-		</#if>
-
 		<#if propertySchema.maxLength??>
 			<#assign sizeParameters = sizeParameters + ["max = ${propertySchema.maxLength}"] />
 		</#if>
@@ -201,15 +196,44 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			@JsonGetter("${propertyName}")
 		</#if>
 
-		public ${propertyType} get${capitalizedPropertyName}() {
-			if (_${propertyName}Supplier != null) {
-				${propertyName} = _${propertyName}Supplier.get();
+		<#if propertySchema.isJsonMap()>
+			<#assign jsonMapPropertyNames = jsonMapPropertyNames + [propertyName] />
 
-				_${propertyName}Supplier = null;
+			public ${propertyType} get${capitalizedPropertyName}() {
+				if (${propertyName} == null) {
+					return null;
+				}
+
+				${propertyName}.replaceAll(
+					(key, value) -> {
+						if (!(value instanceof UnsafeSupplier<?, ?>)) {
+							return value;
+						}
+
+						try {
+							UnsafeSupplier<?, ?> unsafeSupplier = (UnsafeSupplier<?, ?>)value;
+
+							return unsafeSupplier.get();
+						}
+						catch (Throwable throwable) {
+							throw new RuntimeException(throwable);
+						}
+					}
+				);
+
+				return ${propertyName};
 			}
+		<#else>
+			public ${propertyType} get${capitalizedPropertyName}() {
+				if (_${propertyName}Supplier != null) {
+					${propertyName} = _${propertyName}Supplier.get();
 
-			return ${propertyName};
-		}
+					_${propertyName}Supplier = null;
+				}
+
+				return ${propertyName};
+			}
+		</#if>
 
 		<#if enumSchemas?keys?seq_contains(propertyType)>
 			@JsonIgnore
@@ -225,16 +249,43 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		</#if>
 
 		public void set${capitalizedPropertyName}(${propertyType} ${propertyName}) {
-			this.${propertyName} = ${propertyName};
+			<#if propertySchema.jsonMap>
+				if (${propertyName} == null) {
+					this.${propertyName} = null;
 
-			_${propertyName}Supplier = null;
+					return;
+				}
+
+				${propertyType} ${propertyName}Map = new HashMap<>(${propertyName});
+
+				${propertyName}Map.replaceAll(
+					(key, value) -> {
+						if (!(value instanceof UnsafeSupplier<?, ?>)) {
+							return value;
+						}
+
+						return new CachedUnsafeSupplier((UnsafeSupplier<?, ?>)value);
+					});
+
+				this.${propertyName} = Collections.synchronizedMap(${propertyName}Map);
+			<#else>
+				this.${propertyName} = ${propertyName};
+
+				_${propertyName}Supplier = null;
+			</#if>
 		}
 
 		@JsonIgnore
 		public void set${capitalizedPropertyName}(UnsafeSupplier<${propertyType}, Exception> ${propertyName}UnsafeSupplier) {
 			<#if propertySchema.jsonMap>
+				if (${propertyName}UnsafeSupplier == null) {
+					set${capitalizedPropertyName}((${propertyType}) null);
+
+					return;
+				}
+
 				try {
-					${propertyName} = ${propertyName}UnsafeSupplier.get();
+					set${capitalizedPropertyName}(${propertyName}UnsafeSupplier.get());
 				}
 				catch (RuntimeException runtimeException) {
 					throw runtimeException;
@@ -294,10 +345,16 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 				@NotNull
 			</#if>
 		</#if>
-		protected ${propertyType} ${propertyName}<#if propertySchema.jsonMap> = new HashMap<>()</#if>;
 
-		@JsonIgnore
-		private Supplier<${propertyType}> _${propertyName}Supplier;
+		<#if propertySchema.jsonMap>
+			@JsonAnyGetter
+			protected ${propertyType} ${propertyName} = Collections.synchronizedMap(new HashMap<>());
+		<#else>
+			protected ${propertyType} ${propertyName};
+
+			@JsonIgnore
+			private Supplier<${propertyType}> _${propertyName}Supplier;
+		</#if>
 	</#list>
 
 	@Override
@@ -336,15 +393,52 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 			{
 				<#list jsonMapPropertyNames as propertyName>
-					Map<String, Object> ${propertyName} = get${propertyName?cap_first}();
-
 					if (${propertyName}.containsKey(propertyName)) {
-						return ${propertyName}.get(propertyName);
+						Object value = ${propertyName}.get(propertyName);
+
+						if (!(value instanceof UnsafeSupplier<?, ?>)) {
+							return value;
+						}
+
+						UnsafeSupplier<?, ?> unsafeSupplier = (UnsafeSupplier<?, ?>)value;
+
+						try {
+							return unsafeSupplier.get();
+						}
+						catch (Throwable throwable) {
+							throw new RuntimeException(throwable);
+						}
 					}
 				</#list>
 			}
 
 			return null;
+		}
+
+		private final class CachedUnsafeSupplier<T, E extends Throwable> implements UnsafeSupplier<T, E> {
+
+			public CachedUnsafeSupplier(UnsafeSupplier<T, E> unsafeSupplier) {
+				_unsafeSupplier = unsafeSupplier;
+			}
+
+			public T get() throws E {
+				if (_set) {
+					return _value;
+				}
+
+				synchronized (_unsafeSupplier) {
+					_value = _unsafeSupplier.get();
+
+					_set = true;
+				}
+
+				return _value;
+			}
+
+			private boolean _set;
+			private final UnsafeSupplier<T, E> _unsafeSupplier;
+			private T _value;
+
 		}
 	</#if>
 

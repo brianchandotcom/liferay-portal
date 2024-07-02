@@ -14,10 +14,12 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONArrayStdSerializer;
 import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONObjectStdSerializer;
+import com.liferay.portal.vulcan.jaxrs.serializer.UnsafeSupplierSerializer;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
@@ -47,6 +49,10 @@ public class ObjectMapperContextResolver
 						addSerializer(
 							JSONObject.class,
 							new JSONObjectStdSerializer(JSONObject.class));
+						addSerializer(
+							(Class<UnsafeSupplier<Object, Exception>>)
+								(Class<?>)UnsafeSupplier.class,
+							new UnsafeSupplierSerializer());
 					}
 				});
 			setDateFormat(new ISO8601DateFormat());

@@ -22,6 +22,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -137,23 +138,52 @@ public class TestJSONMapAttribute implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@JsonAnyGetter
 	@Schema
 	@Valid
 	public Map<String, Object> getProperties1() {
-		if (_properties1Supplier != null) {
-			properties1 = _properties1Supplier.get();
-
-			_properties1Supplier = null;
+		if (properties1 == null) {
+			return null;
 		}
+
+		properties1.replaceAll(
+			(key, value) -> {
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
+				}
+
+				try {
+					UnsafeSupplier<?, ?> unsafeSupplier =
+						(UnsafeSupplier<?, ?>)value;
+
+					return unsafeSupplier.get();
+				}
+				catch (Throwable throwable) {
+					throw new RuntimeException(throwable);
+				}
+			});
 
 		return properties1;
 	}
 
 	public void setProperties1(Map<String, Object> properties1) {
-		this.properties1 = properties1;
+		if (properties1 == null) {
+			this.properties1 = null;
 
-		_properties1Supplier = null;
+			return;
+		}
+
+		Map<String, Object> properties1Map = new HashMap<>(properties1);
+
+		properties1Map.replaceAll(
+			(key, value) -> {
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
+				}
+
+				return new CachedUnsafeSupplier((UnsafeSupplier<?, ?>)value);
+			});
+
+		this.properties1 = Collections.synchronizedMap(properties1Map);
 	}
 
 	@JsonIgnore
@@ -161,8 +191,14 @@ public class TestJSONMapAttribute implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			properties1UnsafeSupplier) {
 
+		if (properties1UnsafeSupplier == null) {
+			setProperties1((Map<String, Object>)null);
+
+			return;
+		}
+
 		try {
-			properties1 = properties1UnsafeSupplier.get();
+			setProperties1(properties1UnsafeSupplier.get());
 		}
 		catch (RuntimeException runtimeException) {
 			throw runtimeException;
@@ -173,30 +209,58 @@ public class TestJSONMapAttribute implements Serializable {
 	}
 
 	@GraphQLField
+	@JsonAnyGetter
 	@JsonAnySetter
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> properties1 = new HashMap<>();
+	protected Map<String, Object> properties1 = Collections.synchronizedMap(
+		new HashMap<>());
 
-	@JsonIgnore
-	private Supplier<Map<String, Object>> _properties1Supplier;
-
-	@JsonAnyGetter
 	@Schema
 	@Valid
 	public Map<String, Object> getProperties2() {
-		if (_properties2Supplier != null) {
-			properties2 = _properties2Supplier.get();
-
-			_properties2Supplier = null;
+		if (properties2 == null) {
+			return null;
 		}
+
+		properties2.replaceAll(
+			(key, value) -> {
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
+				}
+
+				try {
+					UnsafeSupplier<?, ?> unsafeSupplier =
+						(UnsafeSupplier<?, ?>)value;
+
+					return unsafeSupplier.get();
+				}
+				catch (Throwable throwable) {
+					throw new RuntimeException(throwable);
+				}
+			});
 
 		return properties2;
 	}
 
 	public void setProperties2(Map<String, Object> properties2) {
-		this.properties2 = properties2;
+		if (properties2 == null) {
+			this.properties2 = null;
 
-		_properties2Supplier = null;
+			return;
+		}
+
+		Map<String, Object> properties2Map = new HashMap<>(properties2);
+
+		properties2Map.replaceAll(
+			(key, value) -> {
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
+				}
+
+				return new CachedUnsafeSupplier((UnsafeSupplier<?, ?>)value);
+			});
+
+		this.properties2 = Collections.synchronizedMap(properties2Map);
 	}
 
 	@JsonIgnore
@@ -204,8 +268,14 @@ public class TestJSONMapAttribute implements Serializable {
 		UnsafeSupplier<Map<String, Object>, Exception>
 			properties2UnsafeSupplier) {
 
+		if (properties2UnsafeSupplier == null) {
+			setProperties2((Map<String, Object>)null);
+
+			return;
+		}
+
 		try {
-			properties2 = properties2UnsafeSupplier.get();
+			setProperties2(properties2UnsafeSupplier.get());
 		}
 		catch (RuntimeException runtimeException) {
 			throw runtimeException;
@@ -216,12 +286,11 @@ public class TestJSONMapAttribute implements Serializable {
 	}
 
 	@GraphQLField
+	@JsonAnyGetter
 	@JsonAnySetter
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> properties2 = new HashMap<>();
-
-	@JsonIgnore
-	private Supplier<Map<String, Object>> _properties2Supplier;
+	protected Map<String, Object> properties2 = Collections.synchronizedMap(
+		new HashMap<>());
 
 	@Override
 	public boolean equals(Object object) {
@@ -247,20 +316,70 @@ public class TestJSONMapAttribute implements Serializable {
 			return getName();
 		}
 		else {
-			Map<String, Object> properties1 = getProperties1();
-
 			if (properties1.containsKey(propertyName)) {
-				return properties1.get(propertyName);
+				Object value = properties1.get(propertyName);
+
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
+				}
+
+				UnsafeSupplier<?, ?> unsafeSupplier =
+					(UnsafeSupplier<?, ?>)value;
+
+				try {
+					return unsafeSupplier.get();
+				}
+				catch (Throwable throwable) {
+					throw new RuntimeException(throwable);
+				}
 			}
 
-			Map<String, Object> properties2 = getProperties2();
-
 			if (properties2.containsKey(propertyName)) {
-				return properties2.get(propertyName);
+				Object value = properties2.get(propertyName);
+
+				if (!(value instanceof UnsafeSupplier<?, ?>)) {
+					return value;
+				}
+
+				UnsafeSupplier<?, ?> unsafeSupplier =
+					(UnsafeSupplier<?, ?>)value;
+
+				try {
+					return unsafeSupplier.get();
+				}
+				catch (Throwable throwable) {
+					throw new RuntimeException(throwable);
+				}
 			}
 		}
 
 		return null;
+	}
+
+	private final class CachedUnsafeSupplier<T, E extends Throwable>
+		implements UnsafeSupplier<T, E> {
+
+		public CachedUnsafeSupplier(UnsafeSupplier<T, E> unsafeSupplier) {
+			_unsafeSupplier = unsafeSupplier;
+		}
+
+		public T get() throws E {
+			if (_set) {
+				return _value;
+			}
+
+			synchronized (_unsafeSupplier) {
+				_value = _unsafeSupplier.get();
+				_set = true;
+			}
+
+			return _value;
+		}
+
+		private boolean _set;
+		private final UnsafeSupplier<T, E> _unsafeSupplier;
+		private T _value;
+
 	}
 
 	@Override

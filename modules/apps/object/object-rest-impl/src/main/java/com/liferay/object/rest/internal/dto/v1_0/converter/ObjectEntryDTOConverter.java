@@ -47,6 +47,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -250,9 +251,10 @@ public class ObjectEntryDTOConverter
 	}
 
 	private void _addManyToOneObjectRelationshipNames(
-		Map<String, Object> map, ObjectField objectField,
-		String objectFieldName, ObjectRelationship objectRelationship,
-		long primaryKey, Map<String, Serializable> values) {
+		ObjectField objectField, String objectFieldName,
+		ObjectRelationship objectRelationship, long primaryKey,
+		Map<String, UnsafeSupplier<Object, Exception>> unsafeSuppliers,
+		Map<String, Serializable> values) {
 
 		String objectRelationshipERCObjectFieldName =
 			ObjectFieldSettingUtil.getValue(
@@ -263,20 +265,21 @@ public class ObjectEntryDTOConverter
 		String relatedObjectEntryERC = GetterUtil.getString(
 			values.get(objectRelationshipERCObjectFieldName));
 
-		if (map.get(objectRelationship.getName()) == null) {
-			map.put(
-				objectRelationship.getName() + "ERC", relatedObjectEntryERC);
+		if (unsafeSuppliers.get(objectRelationship.getName()) == null) {
+			unsafeSuppliers.put(
+				objectRelationship.getName() + "ERC",
+				() -> relatedObjectEntryERC);
 		}
 
-		map.put(objectFieldName, primaryKey);
-
-		map.put(objectRelationshipERCObjectFieldName, relatedObjectEntryERC);
+		unsafeSuppliers.put(objectFieldName, () -> primaryKey);
+		unsafeSuppliers.put(
+			objectRelationshipERCObjectFieldName, () -> relatedObjectEntryERC);
 	}
 
 	private void _addManyToOneRelatedObjectEntries(
-			DTOConverterContext dtoConverterContext, Map<String, Object> map,
-			String objectFieldName, ObjectRelationship objectRelationship,
-			long primaryKey)
+			DTOConverterContext dtoConverterContext, String objectFieldName,
+			ObjectRelationship objectRelationship, long primaryKey,
+			Map<String, UnsafeSupplier<Object, Exception>> unsafeSuppliers)
 		throws Exception {
 
 		String relatedObjectDefinitionName = StringUtil.replaceLast(
@@ -400,16 +403,104 @@ public class ObjectEntryDTOConverter
 			if (StringUtil.equals(
 					nestedFieldName, objectRelationship.getName())) {
 
-				map.put(objectRelationship.getName(), entry.getValue());
+				unsafeSuppliers.put(
+					objectRelationship.getName(), entry::getValue);
 			}
 
 			if (nestedFieldName.contains(relatedObjectDefinitionName) ||
 				StringUtil.equals(
 					nestedFieldName, objectRelationship.getName())) {
 
-				map.put(manyToOneRelationshipName, entry.getValue());
+				unsafeSuppliers.put(manyToOneRelationshipName, entry::getValue);
 			}
 		}
+	}
+
+	private FileEntry _getAttachmentField(
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry objectEntry,
+			ObjectField objectField, long fileEntryId, String objectFieldName)
+		throws Exception {
+
+		FileEntry fileEntry = new FileEntry();
+
+		DLFileEntry dlFileEntry = _dLFileEntryLocalService.fetchDLFileEntry(
+			fileEntryId);
+
+		if (dlFileEntry == null) {
+			return fileEntry;
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPS-174455")) {
+
+			fileEntry.setFileBase64(
+				() -> (String)NestedFieldsSupplier.supply(
+					objectFieldName + ".fileBase64",
+					fieldName -> Base64.encode(
+						_file.getBytes(dlFileEntry.getContentStream()))));
+			fileEntry.setFolder(
+				() -> (Folder)NestedFieldsSupplier.supply(
+					objectFieldName + ".folder",
+					fieldName -> {
+						if (!Objects.equals(
+								ObjectFieldSettingConstants.
+									VALUE_DOCS_AND_MEDIA,
+								ObjectFieldSettingUtil.getValue(
+									ObjectFieldSettingConstants.
+										NAME_FILE_SOURCE,
+									objectField))) {
+
+							return null;
+						}
+
+						Folder folder = new Folder();
+
+						folder.setExternalReferenceCode(
+							() -> {
+								if (dlFileEntry.getFolderId() == 0) {
+									return null;
+								}
+
+								DLFolder dlFolder = dlFileEntry.getFolder();
+
+								return dlFolder.getExternalReferenceCode();
+							});
+						folder.setSiteId(dlFileEntry::getGroupId);
+
+						return folder;
+					}));
+		}
+
+		fileEntry.setId(dlFileEntry::getFileEntryId);
+		fileEntry.setLink(
+			() -> LinkUtil.toLink(
+				_dlAppService, dlFileEntry, _dlURLHelper,
+				objectDefinition.getExternalReferenceCode(),
+				objectEntry.getExternalReferenceCode(), _portal));
+		fileEntry.setName(dlFileEntry::getFileName);
+
+		return fileEntry;
+	}
+
+	private String _getDateString(
+		ObjectField objectField, Timestamp timestamp) {
+
+		String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+
+		if (objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_DATE) ||
+			StringUtil.equals(
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.NAME_TIME_STORAGE, objectField),
+				ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC)) {
+
+			pattern += "'Z'";
+		}
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+		return simpleDateFormat.format(timestamp);
 	}
 
 	private DTOConverterContext _getDTOConverterContext(
@@ -459,12 +550,13 @@ public class ObjectEntryDTOConverter
 		};
 	}
 
-	private Map<String, Serializable> _getNestedFieldsRelatedProperties(
-			DTOConverterContext dtoConverterContext, long groupId,
-			ObjectDefinition objectDefinition, long primaryKey)
+	private Map<String, UnsafeSupplier<Object, Exception>>
+			_getNestedFieldsRelatedProperties(
+				DTOConverterContext dtoConverterContext, long groupId,
+				ObjectDefinition objectDefinition, long primaryKey)
 		throws Exception {
 
-		return NestedFieldsSupplier.supply(
+		return NestedFieldsSupplier.supplyUnsafeSupplier(
 			nestedFieldName -> {
 				ObjectRelationship objectRelationship =
 					_objectRelationshipLocalService.
@@ -506,7 +598,7 @@ public class ObjectEntryDTOConverter
 								getSystemObjectDefinitionManager(
 									relatedObjectDefinition.getName());
 
-					return TransformUtil.transformToArray(
+					return () -> TransformUtil.transformToArray(
 						relatedModels,
 						relatedModel -> _toExtendedEntity(
 							(BaseModel<?>)relatedModel, dtoConverterContext,
@@ -515,7 +607,7 @@ public class ObjectEntryDTOConverter
 						Object.class);
 				}
 
-				return TransformUtil.transformToArray(
+				return () -> TransformUtil.transformToArray(
 					relatedModels,
 					relatedModel -> {
 						com.liferay.object.model.ObjectEntry objectEntry =
@@ -686,7 +778,8 @@ public class ObjectEntryDTOConverter
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
-		Map<String, Object> map = new HashMap<>();
+		Map<String, UnsafeSupplier<Object, Exception>> unsafeSuppliers =
+			new HashMap<>();
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
@@ -710,7 +803,8 @@ public class ObjectEntryDTOConverter
 				Map<String, Serializable> objectField_i18n =
 					(Map<String, Serializable>)values.get(i18nObjectFieldName);
 
-				map.put(i18nObjectFieldName, objectField_i18n);
+				unsafeSuppliers.put(
+					i18nObjectFieldName, () -> objectField_i18n);
 
 				if ((dtoConverterContext.getLocale() != null) &&
 					(objectField_i18n != null)) {
@@ -731,68 +825,11 @@ public class ObjectEntryDTOConverter
 					continue;
 				}
 
-				FileEntry fileEntry = new FileEntry();
-
-				DLFileEntry dlFileEntry =
-					_dLFileEntryLocalService.fetchDLFileEntry(fileEntryId);
-
-				if (dlFileEntry != null) {
-					if (FeatureFlagManagerUtil.isEnabled(
-							objectDefinition.getCompanyId(), "LPS-174455")) {
-
-						fileEntry.setFileBase64(
-							() -> (String)NestedFieldsSupplier.supply(
-								objectFieldName + ".fileBase64",
-								fieldName -> Base64.encode(
-									_file.getBytes(
-										dlFileEntry.getContentStream()))));
-						fileEntry.setFolder(
-							() -> (Folder)NestedFieldsSupplier.supply(
-								objectFieldName + ".folder",
-								fieldName -> {
-									if (!Objects.equals(
-											ObjectFieldSettingConstants.
-												VALUE_DOCS_AND_MEDIA,
-											ObjectFieldSettingUtil.getValue(
-												ObjectFieldSettingConstants.
-													NAME_FILE_SOURCE,
-												objectField))) {
-
-										return null;
-									}
-
-									Folder folder = new Folder();
-
-									folder.setExternalReferenceCode(
-										() -> {
-											if (dlFileEntry.getFolderId() ==
-													0) {
-
-												return null;
-											}
-
-											DLFolder dlFolder =
-												dlFileEntry.getFolder();
-
-											return dlFolder.
-												getExternalReferenceCode();
-										});
-									folder.setSiteId(dlFileEntry::getGroupId);
-
-									return folder;
-								}));
-					}
-
-					fileEntry.setId(dlFileEntry::getFileEntryId);
-					fileEntry.setLink(
-						() -> LinkUtil.toLink(
-							_dlAppService, dlFileEntry, _dlURLHelper,
-							objectDefinition.getExternalReferenceCode(),
-							objectEntry.getExternalReferenceCode(), _portal));
-					fileEntry.setName(dlFileEntry::getFileName);
-				}
-
-				map.put(objectFieldName, fileEntry);
+				unsafeSuppliers.put(
+					objectFieldName,
+					() -> _getAttachmentField(
+						objectDefinition, objectEntry, objectField, fileEntryId,
+						objectFieldName));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_DATE) ||
@@ -805,23 +842,9 @@ public class ObjectEntryDTOConverter
 					continue;
 				}
 
-				String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
-
-				if (objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_DATE) ||
-					StringUtil.equals(
-						ObjectFieldSettingUtil.getValue(
-							ObjectFieldSettingConstants.NAME_TIME_STORAGE,
-							objectField),
-						ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC)) {
-
-					pattern += "'Z'";
-				}
-
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					pattern);
-
-				map.put(objectFieldName, simpleDateFormat.format(timestamp));
+				unsafeSuppliers.put(
+					objectFieldName,
+					() -> _getDateString(objectField, timestamp));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.
@@ -831,11 +854,14 @@ public class ObjectEntryDTOConverter
 					continue;
 				}
 
-				map.put(
+				Serializable finalSerializable = serializable;
+
+				unsafeSuppliers.put(
 					objectFieldName,
-					TransformUtil.transformToList(
+					() -> TransformUtil.transformToList(
 						StringUtil.split(
-							(String)serializable, StringPool.COMMA_AND_SPACE),
+							(String)finalSerializable,
+							StringPool.COMMA_AND_SPACE),
 						key -> _getListEntry(
 							dtoConverterContext, key,
 							objectField.getListTypeDefinitionId())));
@@ -847,22 +873,24 @@ public class ObjectEntryDTOConverter
 					continue;
 				}
 
-				ListEntry listEntry = _getListEntry(
-					dtoConverterContext, (String)serializable,
-					objectField.getListTypeDefinitionId());
+				Serializable finalSerializable = serializable;
 
-				if (listEntry != null) {
-					map.put(objectFieldName, listEntry);
-				}
+				unsafeSuppliers.put(
+					objectFieldName,
+					() -> _getListEntry(
+						dtoConverterContext, (String)finalSerializable,
+						objectField.getListTypeDefinitionId()));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
-				map.put(objectFieldName, serializable);
-				map.put(
+				Serializable finalSerializable = serializable;
+
+				unsafeSuppliers.put(objectFieldName, () -> finalSerializable);
+				unsafeSuppliers.put(
 					objectFieldName + "RawText",
-					HtmlParserUtil.extractText(
-						GetterUtil.getString(serializable)));
+					() -> HtmlParserUtil.extractText(
+						GetterUtil.getString(finalSerializable)));
 			}
 			else if (Objects.equals(
 						objectField.getRelationshipType(),
@@ -877,31 +905,33 @@ public class ObjectEntryDTOConverter
 
 				if (primaryKey > 0) {
 					_addManyToOneRelatedObjectEntries(
-						dtoConverterContext, map, objectFieldName,
-						objectRelationship, primaryKey);
+						dtoConverterContext, objectFieldName,
+						objectRelationship, primaryKey, unsafeSuppliers);
 				}
 
 				_addManyToOneObjectRelationshipNames(
-					map, objectField, objectFieldName, objectRelationship,
-					primaryKey, values);
+					objectField, objectFieldName, objectRelationship,
+					primaryKey, unsafeSuppliers, values);
 			}
 			else {
-				map.put(objectFieldName, serializable);
+				Serializable finalSerializable = serializable;
+
+				unsafeSuppliers.put(objectFieldName, () -> finalSerializable);
 			}
 		}
 
 		values.remove(objectDefinition.getPKObjectFieldName());
 
-		Map<String, Serializable> nestedFieldsRelatedProperties =
-			_getNestedFieldsRelatedProperties(
+		Map<String, UnsafeSupplier<Object, Exception>>
+			nestedFieldsRelatedProperties = _getNestedFieldsRelatedProperties(
 				dtoConverterContext, objectEntry.getGroupId(), objectDefinition,
 				objectEntry.getObjectEntryId());
 
 		if (nestedFieldsRelatedProperties != null) {
-			map.putAll(nestedFieldsRelatedProperties);
+			unsafeSuppliers.putAll(nestedFieldsRelatedProperties);
 		}
 
-		return map;
+		return (Map<String, Object>)(Map)unsafeSuppliers;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

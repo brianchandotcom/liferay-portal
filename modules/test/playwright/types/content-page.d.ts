@@ -11,6 +11,13 @@ type CollectionConfig = {
 	collectionType?: 'Collection' | 'CollectionProvider';
 };
 
+type CollectionViewport = {
+	collectionViewportDefinition: {
+		numberOfColumns: number;
+	};
+	id: 'landscapeMobile' | 'portraitMobile' | 'tablet';
+};
+
 type FragmentField = {
 	id?: string;
 	value?: {
@@ -63,6 +70,7 @@ type PageDefinition = {
 type PageElement = {
 	definition?: {
 		collectionConfig?: CollectionConfig;
+		collectionViewports?: Array<CollectionViewport>;
 		formConfig?: FormConfig;
 		fragment?: {
 			key: string;

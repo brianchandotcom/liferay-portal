@@ -257,6 +257,44 @@ public class JournalArticleServiceTest {
 	}
 
 	@Test
+	public void testDeleteDDMTemplateSpecifiedByDeletedArticle()
+		throws Exception {
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				_group.getGroupId(), "<title>Test Article</title>",
+				ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
+
+		DDMTemplateLink ddmTemplateLink =
+			_ddmTemplateLinkLocalService.addTemplateLink(
+				_classNameLocalService.getClassNameId(
+					ResourceActionsUtil.getCompositeModelName(
+						JournalArticle.class.getName(),
+						DDMTemplate.class.getName())),
+				journalArticle.getId(), ddmTemplate.getTemplateId());
+
+		_journalArticleLocalService.deleteArticle(
+			_group.getGroupId(), journalArticle.getArticleId(),
+			new ServiceContext());
+
+		_ddmTemplateLocalService.deleteTemplate(ddmTemplate.getTemplateId());
+
+		Assert.assertNull(
+			_ddmTemplateLocalService.fetchDDMTemplate(
+				ddmTemplate.getTemplateId()));
+		Assert.assertNull(
+			_ddmTemplateLinkLocalService.fetchDDMTemplateLink(
+				ddmTemplateLink.getTemplateLinkId()));
+	}
+
+	@Test
 	public void testDeleteTemplateReferencedByJournalArticles()
 		throws Exception {
 
@@ -279,44 +317,6 @@ public class JournalArticleServiceTest {
 		}
 		catch (RequiredTemplateException requiredTemplateException) {
 		}
-	}
-
-	@Test
-	public void testDeleteDDMTemplateSpecifiedByDeletedArticle()
-		throws Exception {
-
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName());
-
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			_group.getGroupId(), ddmStructure.getStructureId(),
-			PortalUtil.getClassNameId(JournalArticle.class));
-
-		JournalArticle journalArticle =
-			JournalTestUtil.addArticleWithXMLContent(
-				_group.getGroupId(), "<title>Test Article</title>",
-				ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
-
-		DDMTemplateLink ddmTemplateLink =
-			_ddmTemplateLinkLocalService.addTemplateLink(
-				_classNameLocalService.getClassNameId(
-				ResourceActionsUtil.getCompositeModelName(
-					JournalArticle.class.getName(),
-					DDMTemplate.class.getName())),
-				journalArticle.getId(), ddmTemplate.getTemplateId());
-
-		_journalArticleLocalService.deleteArticle(
-			_group.getGroupId(), journalArticle.getArticleId(),
-			new ServiceContext());
-
-		_ddmTemplateLocalService.deleteTemplate(ddmTemplate.getTemplateId());
-
-		Assert.assertNull(
-			_ddmTemplateLocalService.fetchDDMTemplate(
-				ddmTemplate.getTemplateId()));
-		Assert.assertNull(
-			_ddmTemplateLinkLocalService.fetchDDMTemplateLink(
-				ddmTemplateLink.getTemplateLinkId()));
 	}
 
 	@Test

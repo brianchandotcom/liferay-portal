@@ -13,9 +13,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.workspace.internal.util.ResourceUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.util.Validator;
+import com.liferay.resource.util.ResourceUtil;
 
 import java.io.File;
 

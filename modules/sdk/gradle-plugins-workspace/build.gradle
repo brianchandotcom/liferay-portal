@@ -54,7 +54,6 @@ dependencies {
 		exclude group: "org.sonatype.plexus"
 	}
 	api group: "com.liferay", name: "com.liferay.release.util", version: "1.0.0"
-	api group: "com.liferay", name: "com.liferay.resource.util", version: "1.0.0"
 	api group: "de.undercouch", name: "gradle-download-task", version: "5.4.0"
 	api group: "net.java.dev.jna", name: "jna", version: "5.8.0"
 	api group: "net.saliman", name: "gradle-properties-plugin", version: "1.4.6"

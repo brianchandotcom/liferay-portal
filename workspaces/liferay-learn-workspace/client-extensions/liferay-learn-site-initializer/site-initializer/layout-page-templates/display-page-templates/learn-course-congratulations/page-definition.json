@@ -446,7 +446,7 @@
 				"pageElements": [
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\n.course-module-number {\n   height: 32px;\n   width: 32px;\n   background: var(--color-neutral-2, #E2E2E4);\n   display: flex;\n   border-radius: 50%;\n   text-align: center;\n  justify-content: center;\npadding-top: 4px;\n}\n  \n  a {\n    display: flex;\n    gap: .5rem;\n    align-items: center;\n    height: 48px;\n  }\n  \n  .learn-article-nav-item {\n     height: 56px;\n  }\n}",
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n\theight: 100%;\n}",
 							"fragmentStyle": {
 								"backgroundColor": "colorNeutral1",
 								"borderRadius": "borderRadiusLg",

@@ -732,12 +732,11 @@ public class TestrayAttachmentRecorder {
 					_getQAWebsitesGitWorkingDirectory();
 
 				if (qaWebsitesGitWorkingDirectory != null) {
-					File qaPlaywrightReportFile = new File(
+					playwrightReportFile = new File(
 						qaWebsitesGitWorkingDirectory.getWorkingDirectory(),
 						"playwright/playwright-report/index.html");
 
-					File sourceReportDir =
-						qaPlaywrightReportFile.getParentFile();
+					File sourceReportDir = playwrightReportFile.getParentFile();
 
 					File recordedFilesBuildDir = _getRecordedFilesBuildDir();
 

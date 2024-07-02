@@ -7,8 +7,8 @@ package com.liferay.gradle.plugins.workspace;
 
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.workspace.internal.util.ReleaseUtil;
 import com.liferay.gradle.util.Validator;
+import com.liferay.release.util.ReleaseUtil;
 
 import groovy.lang.Closure;
 

@@ -30,7 +30,6 @@ import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.docker.DockerPruneImage;
 import com.liferay.gradle.plugins.workspace.internal.configurator.TargetPlatformRootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.workspace.internal.util.ReleaseUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.plugins.workspace.task.CreateTokenTask;
 import com.liferay.gradle.plugins.workspace.task.InitBundleTask;
@@ -39,6 +38,8 @@ import com.liferay.gradle.plugins.workspace.task.VerifyProductTask;
 import com.liferay.gradle.util.ArrayUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
+import com.liferay.release.util.ReleaseEntry;
+import com.liferay.release.util.ReleaseUtil;
 
 import de.undercouch.gradle.tasks.download.Download;
 
@@ -1490,9 +1491,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				public boolean isSatisfiedBy(Task task) {
 					if (!Objects.equals(
 							workspaceExtension.getBundleUrl(),
-							ReleaseUtil.getFromReleaseProperties(
+							ReleaseUtil.getFromReleaseEntry(
 								workspaceExtension.getProduct(),
-								ReleaseUtil.ReleaseProperties::getBundleUrl))) {
+								ReleaseEntry::getBundleURL))) {
 
 						if (Objects.nonNull(_bundleCheckSumSHA512)) {
 							return true;

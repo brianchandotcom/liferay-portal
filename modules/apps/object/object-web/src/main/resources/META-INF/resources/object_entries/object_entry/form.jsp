@@ -223,7 +223,9 @@ portletDisplay.setURLBack(backURL);
 								else if (response.ok) {
 									Liferay.Util.openToast({
 										message:
-											'<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "your-request-completed-successfully")) %>',
+											'<%=
+												HtmlUtil.escapeJS(LanguageUtil.get(
+													LocaleUtil.fromLanguageId(LanguageUtil.getBCP47LanguageId(request)), "your-request-completed-successfully")) %>',
 										type: 'success',
 									});
 

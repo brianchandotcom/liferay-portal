@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
@@ -16,7 +17,6 @@ import {sitesPageTest} from '../../fixtures/sitesPageTest';
 import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
 import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
-import {widgetPagesTest} from '../../fixtures/widgetPagesTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {LayoutSetPrototype} from '../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
 import {WebContentDisplayPage} from '../../pages/journal-content-web/WebContentDisplayPage';
@@ -41,7 +41,7 @@ export const test = mergeTests(
 	productMenuPageTest,
 	uiElementsPageTest,
 	pagesPagesTest,
-	widgetPagesTest,
+	pageViewModePagesTest,
 	webContentDisplayPageTest,
 	pageEditorPagesTest,
 	serverAdministrationPageTest,

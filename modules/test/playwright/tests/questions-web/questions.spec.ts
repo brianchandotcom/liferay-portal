@@ -9,7 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {widgetPagesTest} from '../../fixtures/widgetPagesTest';
+import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {questionsPagesTest} from './fixtures/questionsPagesTest';
 
@@ -19,7 +19,7 @@ export const baseTest = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
 	questionsPagesTest,
-	widgetPagesTest
+	pageViewModePagesTest
 );
 
 const tagWithSpaces = mergeTests(baseTest);

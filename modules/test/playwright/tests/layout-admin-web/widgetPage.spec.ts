@@ -8,7 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {widgetPagesTest} from '../../fixtures/widgetPagesTest';
+import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../utils/getRandomString';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
 import addDraftStructuredContent from '../../utils/structured-content/addDraftStructuredContent';
@@ -21,7 +21,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
 	loginTest(),
-	widgetPagesTest
+	pageViewModePagesTest
 );
 
 test('LPD-15256 Approved and scheduled web contents should be displayed in the "Content" tab of the "Add" panel of a widget page, whereas draft, expired and in-trash web contents should not', async ({

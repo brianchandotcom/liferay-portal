@@ -7,7 +7,7 @@ import {test} from '@playwright/test';
 
 import {WidgetPagePage} from '../pages/layout-admin-web/WidgetPagePage';
 
-const widgetPagesTest = test.extend<{
+const pageViewModePagesTest = test.extend<{
 	widgetPagePage: WidgetPagePage;
 }>({
 	widgetPagePage: async ({page}, use) => {
@@ -15,4 +15,4 @@ const widgetPagesTest = test.extend<{
 	},
 });
 
-export {widgetPagesTest};
+export {pageViewModePagesTest};

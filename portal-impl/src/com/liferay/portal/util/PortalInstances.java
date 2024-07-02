@@ -366,17 +366,6 @@ public class PortalInstances {
 		WebAppPool.remove(companyId, WebKeys.PORTLET_CATEGORY);
 	}
 
-	public static SafeCloseable setCopyInProcessCompanyId(long companyId) {
-		if (_copyInProcessCompanyId != null) {
-			throw new UnsupportedOperationException(
-				"Company in process company ID is not null");
-		}
-
-		_copyInProcessCompanyId = companyId;
-
-		return () -> _copyInProcessCompanyId = null;
-	}
-
 	public static SafeCloseable setCompanyInDeletionProcess(long companyId) {
 		if (_companyIdsInDeletionProcess.contains(companyId)) {
 			throw new UnsupportedOperationException(
@@ -386,6 +375,17 @@ public class PortalInstances {
 		_companyIdsInDeletionProcess.add(companyId);
 
 		return () -> _companyIdsInDeletionProcess.remove(companyId);
+	}
+
+	public static SafeCloseable setCopyInProcessCompanyId(long companyId) {
+		if (_copyInProcessCompanyId != null) {
+			throw new UnsupportedOperationException(
+				"Company in process company ID is not null");
+		}
+
+		_copyInProcessCompanyId = companyId;
+
+		return () -> _copyInProcessCompanyId = null;
 	}
 
 	private static long _getCompanyIdByHost(

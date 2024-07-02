@@ -919,14 +919,14 @@ definition {
 
 	@summary = "Default summary"
 	macro goToDataSetAdminPage() {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet");
 	}
 
 	@summary = "Default summary"
 	macro goToDataSetViewAdminPage(dataSetName = null) {
 		var dataSetEntryId = JSONDataSet._getDataSetEntryIdByName(dataSetName = ${dataSetName});
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet&p_p_lifecycle=0&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_mvcPath=%2Ffds_views.jsp&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsEntryId=${dataSetEntryId}");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet&p_p_lifecycle=0&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_mvcPath=%2Ffds_views.jsp&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_fdsEntryId=${dataSetEntryId}");
 	}
 
 	@summary = "Default summary"

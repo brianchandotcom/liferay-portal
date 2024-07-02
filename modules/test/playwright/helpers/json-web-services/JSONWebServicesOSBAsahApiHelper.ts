@@ -4,6 +4,7 @@
  */
 
 import {asahConfig} from '../../tests/osb-faro-web/asah.config';
+import { Nanites } from '../../tests/osb-faro-web/utils/nanites';
 import {ApiHelpers} from '../ApiHelpers';
 
 type Event = {
@@ -67,6 +68,17 @@ export class JSONWebServicesOSBAsahApiHelper {
 			'Content-Type': 'application/json',
 			'OSB-Asah-Project-ID': asahConfig.environment.projectId,
 		};
+	}
+
+	async runNanites(nanites: Nanites[]): Promise<any> {
+		return this.apiHelpers.post(
+			`${asahConfig.environment.batchCuratordUrl}/nanites/run`,
+			{
+				data: nanites,
+				failOnStatusCode: true,
+				headers: this.getHeaders(),
+			}
+		);
 	}
 
 	async createEvents(events: Event[]): Promise<any> {

@@ -5,23 +5,18 @@
 
 import {test} from '@playwright/test';
 
-import {WidgetPagePage} from '../../../pages/layout-admin-web/WidgetPagePage';
 import {QuestionsPage} from '../pages/QuestionsPage';
 import {QuestionsTopicsPage} from '../pages/QuestionsTopicsPage';
 
 const questionsPagesTest = test.extend<{
 	questionsPage: QuestionsPage;
 	questionsTopicsPage: QuestionsTopicsPage;
-	widgetPagePage: WidgetPagePage;
 }>({
 	questionsPage: async ({page}, use) => {
 		await use(new QuestionsPage(page));
 	},
 	questionsTopicsPage: async ({page}, use) => {
 		await use(new QuestionsTopicsPage(page));
-	},
-	widgetPagePage: async ({page}, use) => {
-		await use(new WidgetPagePage(page));
 	},
 });
 

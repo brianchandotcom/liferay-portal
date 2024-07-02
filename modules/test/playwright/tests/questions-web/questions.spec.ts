@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedLayoutTest} from '../../fixtures/isolatedLayoutTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {widgetPagesTest} from '../../fixtures/widgetPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {questionsPagesTest} from './fixtures/questionsPagesTest';
 
@@ -17,7 +18,8 @@ export const baseTest = mergeTests(
 	isolatedLayoutTest({publish: false, type: 'portlet'}),
 	isolatedSiteTest,
 	loginTest(),
-	questionsPagesTest
+	questionsPagesTest,
+	widgetPagesTest
 );
 
 const tagWithSpaces = mergeTests(baseTest);

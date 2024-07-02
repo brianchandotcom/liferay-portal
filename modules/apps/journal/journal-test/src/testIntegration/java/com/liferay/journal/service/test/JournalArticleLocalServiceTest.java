@@ -181,6 +181,41 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testAddArticleWithURLWithURLWithConsecutiveSlashes()
+		throws Exception {
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "/test//////test",
+			"test");
+
+		Map<Locale, String> friendlyURLMap = article.getFriendlyURLMap();
+
+		Assert.assertFalse(friendlyURLMap.isEmpty());
+
+		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
+			Assert.assertEquals("test/test", entry.getValue());
+		}
+	}
+
+	@Test
+	public void testAddArticleWithURLWithURLWithStartingSlash()
+		throws Exception {
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "/test", "test");
+
+		Map<Locale, String> friendlyURLMap = article.getFriendlyURLMap();
+
+		Assert.assertFalse(friendlyURLMap.isEmpty());
+
+		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
+			Assert.assertEquals("test", entry.getValue());
+		}
+	}
+
+	@Test
 	public void testArticleFriendlyURLValidation() throws Exception {
 		_assertArticleFriendlyURLMap(_group);
 

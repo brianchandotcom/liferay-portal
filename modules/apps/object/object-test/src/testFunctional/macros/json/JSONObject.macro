@@ -1139,10 +1139,11 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(objectName = ${objectName});
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
-				-u test@liferay.com:${PropsUtil.get("default.admin.password")}
+				-u test@liferay.com:${userPassword}
 		''';
 
 		var objectDefinition = JSONCurlUtil.get(${curl});
@@ -1155,10 +1156,11 @@ definition {
 		Variables.assertDefined(parameterList = ${name});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/api/jsonws/object.objectdefinition/get-object-definitions \
-				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
+				-u test@liferay.com:${userPassword} \
 				-d <CURL_DATA[start=-1]CURL_DATA> \
 				-d <CURL_DATA[end=-1]CURL_DATA>
 		''';
@@ -1548,10 +1550,12 @@ definition {
 			fail("FAIL. Cannot find relationship between ${objectName} and AccountEntry.");
 		}
 
+		var userPassword = PropsUtil.get("default.admin.password");
+
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
 				-H 'Content-Type: application/json' \
-				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
+				-u test@liferay.com:${userPassword} \
 				-d '{
 					"accountEntryRestricted": true,
 					"accountEntryRestrictedObjectFieldName": "${accountEntryRestrictedObjectFieldName}"

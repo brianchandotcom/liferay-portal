@@ -74,17 +74,17 @@ public class TestrayManagerImpl implements TestrayManager {
 		StringBundler sb = new StringBundler(12);
 
 		sb.append("select cr.r_caseToCaseResult_c_caseId, sum(case when ");
-		sb.append("cr.prev_status != cr.dueStatus_ and cr.prev_status is not ");
-		sb.append("null then 1 end) as changed, count(c_caseResultId_) as ");
-		sb.append("total_cases from (select c_caseResultId_, ");
-		sb.append("r_caseToCaseResult_c_caseId, dueStatus_, lag(dueStatus_) ");
-		sb.append("over (partition by r_caseToCaseResult_c_caseId order by ");
-		sb.append("c_caseResultId_) prev_status from ");
-		sb.append("lportal.O_[%COMPANY_ID%]_CaseResult where ");
-		sb.append("r_caseToCaseResult_c_caseId = ? and (dueStatus_ ='passed' ");
-		sb.append("or dueStatus_ ='failed') and startDate_ is not null and ");
-		sb.append("startDate_ >= ? order by c_caseResultId_) as cr group by ");
-		sb.append("r_caseToCaseResult_c_caseId");
+		sb.append("cr.previousStatus != cr.dueStatus_ and cr.previousStatus ");
+		sb.append("is not null then 1 end) as totalChanges, count(");
+		sb.append("c_caseResultId_) as totalCases from (select ");
+		sb.append("c_caseResultId_, r_caseToCaseResult_c_caseId, dueStatus_, ");
+		sb.append("lag(dueStatus_) over (partition by ");
+		sb.append("r_caseToCaseResult_c_caseId order by c_caseResultId_) ");
+		sb.append("previousStatus from lportal.O_[%COMPANY_ID%]_CaseResult ");
+		sb.append("where r_caseToCaseResult_c_caseId = ? and (dueStatus_ = ");
+		sb.append("'passed' or dueStatus_ ='failed') and startDate_ is not ");
+		sb.append("null and startDate_ >= ? order by c_caseResultId_) as cr ");
+		sb.append("group by r_caseToCaseResult_c_caseId");
 
 		List<Map<String, Object>> values = TestrayUtil.executeQuery(
 			StringUtil.replace(

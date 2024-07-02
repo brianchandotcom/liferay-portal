@@ -133,8 +133,8 @@ public class TestrayFlakyTrackerDispatchTaskExecutor
 			}
 
 			double flakyScore =
-				GetterUtil.getDouble(testrayFlakyScores.get("changed")) /
-					GetterUtil.getDouble(testrayFlakyScores.get("total_cases"));
+				GetterUtil.getDouble(testrayFlakyScores.get("totalChanges")) /
+					GetterUtil.getDouble(testrayFlakyScores.get("totalCases"));
 
 			if (flakyScore > GetterUtil.getDouble(
 					unicodeProperties.getProperty(

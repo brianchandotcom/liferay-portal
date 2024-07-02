@@ -61,6 +61,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
 		super(jsonObject, portalTestClassJob);
+
+		prepareTestClassGroup(batchName);
 	}
 
 	protected PlaywrightBatchTestClassGroup(
@@ -73,22 +75,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			_playwrightBaseDir = playwrightBaseDir;
 		}
 
-		if (ignore()) {
-			return;
-		}
-
-		if (testRelevantChanges) {
-			List<JobProperty> relevantPlaywrightJobProperties =
-				getRelevantPlaywrightJobProperties();
-
-			if (!relevantPlaywrightJobProperties.isEmpty()) {
-				recordJobProperties(relevantPlaywrightJobProperties);
-			}
-		}
-
-		addDefaultProjectJobProperty(batchName);
-
-		setTestClasses();
+		prepareTestClassGroup(batchName);
 	}
 
 	protected PlaywrightBatchTestClassGroup(
@@ -96,22 +83,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
-		if (ignore()) {
-			return;
-		}
-
-		if (testRelevantChanges) {
-			List<JobProperty> relevantPlaywrightJobProperties =
-				getRelevantPlaywrightJobProperties();
-
-			if (!relevantPlaywrightJobProperties.isEmpty()) {
-				recordJobProperties(relevantPlaywrightJobProperties);
-			}
-		}
-
-		addDefaultProjectJobProperty(batchName);
-
-		setTestClasses();
+		prepareTestClassGroup(batchName);
 	}
 
 	protected PlaywrightBatchTestClassGroup(
@@ -139,22 +111,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			_playwrightBaseDir = playwrightBaseDir;
 		}
 
-		if (ignore()) {
-			return;
-		}
-
-		if (testRelevantChanges) {
-			List<JobProperty> relevantPlaywrightJobProperties =
-				getRelevantPlaywrightJobProperties();
-
-			if (!relevantPlaywrightJobProperties.isEmpty()) {
-				recordJobProperties(relevantPlaywrightJobProperties);
-			}
-		}
-
-		addDefaultProjectJobProperty(batchName);
-
-		setTestClasses();
+		prepareTestClassGroup(batchName);
 	}
 
 	protected List<JobProperty> getRelevantPlaywrightJobProperties() {
@@ -190,6 +147,25 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 	protected List<JSONObject> getSpecJSONObjects() {
 		return _specJSONObjects;
+	}
+
+	protected void prepareTestClassGroup(String batchName) {
+		if (ignore()) {
+			return;
+		}
+
+		if (testRelevantChanges) {
+			List<JobProperty> relevantPlaywrightJobProperties =
+				getRelevantPlaywrightJobProperties();
+
+			if (!relevantPlaywrightJobProperties.isEmpty()) {
+				recordJobProperties(relevantPlaywrightJobProperties);
+			}
+		}
+
+		addDefaultProjectJobProperty(batchName);
+
+		setTestClasses();
 	}
 
 	protected void setTestClasses() {
@@ -394,14 +370,14 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			File playwrightBaseDir = new File(
 				workingDirectory, _playwrightBaseDir);
 
-
-				try {
-					AntUtil.callTarget(
-							portalGitWorkingDirectory.getWorkingDirectory(), "build.xml", "setup-yarn");
-				}
-				catch (Exception exception) {
-					exception.printStackTrace();
-				}
+			try {
+				AntUtil.callTarget(
+					portalGitWorkingDirectory.getWorkingDirectory(),
+					"build.xml", "setup-yarn");
+			}
+			catch (Exception exception) {
+				exception.printStackTrace();
+			}
 
 			_callNPMCommand(playwrightBaseDir, "npm install");
 

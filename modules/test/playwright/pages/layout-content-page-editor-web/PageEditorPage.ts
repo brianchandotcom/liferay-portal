@@ -29,6 +29,13 @@ export class PageEditorPage {
 
 	readonly segmentEditorPage: SegmentEditorPage;
 
+	readonly VIEWPORTS_CLASSNAMES = {
+		'Desktop': 'desktop',
+		'Landscape Phone': 'landscapeMobile',
+		'Portrait Phone': 'portraitMobile',
+		'Tablet': 'tablet',
+	};
+
 	constructor(page: Page) {
 		this.page = page;
 
@@ -901,13 +908,11 @@ export class PageEditorPage {
 
 	async switchViewport(viewport: Viewport) {
 		await this.page.getByLabel(viewport, {exact: true}).click();
-
-		if (viewport !== 'Desktop') {
-			await this.page
-				.frameLocator('.page-editor__global-context-iframe')
-				.locator('.page-editor')
-				.waitFor();
-		}
+		await this.page
+			.locator(
+				`.page-editor__layout-viewport--size-${this.VIEWPORTS_CLASSNAMES[viewport]}`
+			)
+			.waitFor();
 	}
 
 	async waitForChangesSaved() {

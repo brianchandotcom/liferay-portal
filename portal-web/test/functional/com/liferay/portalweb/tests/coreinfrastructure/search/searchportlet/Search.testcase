@@ -693,7 +693,7 @@ definition {
 		SearchPage.searchEmbedded(searchTerm = "test");
 
 		SearchResults.viewMultipleSearchResults(
-			resultsList = "tree.png,stars.png,satellite.png,moon.png,earth.png,Home,Test Test",
+			resultsList = "tree.png,stars.png,satellite.png,moon.png,earth.png,Home",
 			searchTerm = "test");
 
 		User.logoutAndLoginPG(

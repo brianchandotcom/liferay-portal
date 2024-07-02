@@ -21,7 +21,7 @@ import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {LayoutSetPrototype} from '../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
 import {WebContentDisplayPage} from '../../pages/journal-content-web/WebContentDisplayPage';
 import {PagesAdminPage} from '../../pages/layout-admin-web/PagesAdminPage';
-import {WidgetPage} from '../../pages/layout-admin-web/WidgetPage';
+import {WidgetPagePage} from '../../pages/layout-admin-web/WidgetPagePage';
 import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEditorPage';
 import {ApplicationsMenuPage} from '../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {ProductMenuPage} from '../../pages/product-navigation-control-menu-web/ProductMenuPage';
@@ -69,7 +69,7 @@ test('Can switch template with web content on widget page.', async ({
 	systemSettingsPage,
 	uiElementsPage,
 	webContentDisplayPage,
-	widgetPage,
+	widgetPagePage,
 }) => {
 	const widgetTemplateName1: string = getRandomString();
 	const widgetTemplateName2: string = getRandomString();
@@ -89,7 +89,7 @@ test('Can switch template with web content on widget page.', async ({
 		uiElementsPage,
 		webContentDisplayPage,
 		webContentName: `${webContentName1} `,
-		widgetPage,
+		widgetPagePage,
 	});
 
 	await createSiteTemplateWithWebContentOnWidgetPage({
@@ -104,7 +104,7 @@ test('Can switch template with web content on widget page.', async ({
 		uiElementsPage,
 		webContentDisplayPage,
 		webContentName: `${webContentName2} `,
-		widgetPage,
+		widgetPagePage,
 	});
 	const layoutSetPrototypes: LayoutSetPrototype[] =
 		await apiHelpers.jsonWebServicesLayoutSetPrototype.getLayoutSetPrototypes();
@@ -402,7 +402,7 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 	uiElementsPage,
 	webContentDisplayPage,
 	webContentName,
-	widgetPage,
+	widgetPagePage,
 }: {
 	applicationsMenuPage: ApplicationsMenuPage;
 	journalPage: JournalPage;
@@ -415,7 +415,7 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 	uiElementsPage: UIElementsPage;
 	webContentDisplayPage: WebContentDisplayPage;
 	webContentName: string;
-	widgetPage: WidgetPage;
+	widgetPagePage: WidgetPagePage;
 }): Promise<void> {
 	await applicationsMenuPage.goToSiteTemplates();
 	await layoutSetPrototypePage.addSiteTemplate(templateName);
@@ -439,7 +439,7 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 	await pagesAdminPage.addWidgetPage(templateName);
 
 	await productMenuPage.clickSpecificPage(templateName);
-	await widgetPage.clickToAddApplication();
+	await widgetPagePage.clickToAddApplication();
 	await webContentDisplayPage.addWebContentWithWidget();
 	await uiElementsPage.setupUpdatedAlert.waitFor({state: 'hidden'});
 	await uiElementsPage.closeClickable.click();

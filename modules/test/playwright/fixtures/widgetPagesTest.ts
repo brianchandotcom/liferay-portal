@@ -5,13 +5,13 @@
 
 import {test} from '@playwright/test';
 
-import {WidgetPage} from '../pages/layout-admin-web/WidgetPage';
+import {WidgetPagePage} from '../pages/layout-admin-web/WidgetPagePage';
 
 const widgetPagesTest = test.extend<{
-	widgetPage: WidgetPage;
+	widgetPagePage: WidgetPagePage;
 }>({
-	widgetPage: async ({page}, use) => {
-		await use(new WidgetPage(page));
+	widgetPagePage: async ({page}, use) => {
+		await use(new WidgetPagePage(page));
 	},
 });
 

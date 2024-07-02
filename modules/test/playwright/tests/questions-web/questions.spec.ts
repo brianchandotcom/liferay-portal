@@ -30,14 +30,14 @@ tagWithSpaces(
 		questionsPage,
 		questionsTopicsPage,
 		site,
-		widgetPage,
+		widgetPagePage,
 	}) => {
 		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
 			title: getRandomString(),
 		});
 		await page.goto('/web' + site.friendlyUrlPath + layout.friendlyURL);
-		await widgetPage.addPortlet('Questions');
+		await widgetPagePage.addPortlet('Questions');
 
 		await questionsTopicsPage.addNewTopic('New topic');
 		await questionsTopicsPage.goToTopic('New topic');

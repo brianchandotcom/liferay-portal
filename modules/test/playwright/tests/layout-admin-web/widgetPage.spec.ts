@@ -28,7 +28,7 @@ test('LPD-15256 Approved and scheduled web contents should be displayed in the "
 	apiHelpers,
 	page,
 	site,
-	widgetPage,
+	widgetPagePage,
 }) => {
 	const approvedWebContentTitle = 'Approved Web Content';
 	const draftWebContentTitle = 'Draft Web Content';
@@ -88,9 +88,9 @@ test('LPD-15256 Approved and scheduled web contents should be displayed in the "
 		title: getRandomString(),
 	});
 
-	await widgetPage.goToSitePage(site, layout.friendlyURL);
-	await widgetPage.clickControlMenuAddButton();
-	await widgetPage.goToControlMenuAddPanelContentTab();
+	await widgetPagePage.goToSitePage(site, layout.friendlyURL);
+	await widgetPagePage.clickControlMenuAddButton();
+	await widgetPagePage.goToControlMenuAddPanelContentTab();
 	await _verifyVisibleWebContents();
 
 	await page.getByLabel('Select Label').selectOption('8');

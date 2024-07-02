@@ -726,31 +726,30 @@ public class TestrayAttachmentRecorder {
 				catch (IOException ioException) {
 					throw new RuntimeException(ioException);
 				}
+
+				return;
 			}
-			else {
-				GitWorkingDirectory qaWebsitesGitWorkingDirectory =
-					_getQAWebsitesGitWorkingDirectory();
+		}
 
-				if (qaWebsitesGitWorkingDirectory != null) {
-					playwrightReportFile = new File(
-						qaWebsitesGitWorkingDirectory.getWorkingDirectory(),
-						"playwright/playwright-report/index.html");
+		GitWorkingDirectory qaWebsitesGitWorkingDirectory =
+			_getQAWebsitesGitWorkingDirectory();
 
-					File sourceReportDir = playwrightReportFile.getParentFile();
+		if (qaWebsitesGitWorkingDirectory != null) {
+			File playwrightReportFile = new File(
+				qaWebsitesGitWorkingDirectory.getWorkingDirectory(),
+				"playwright/playwright-report/index.html");
 
-					File recordedFilesBuildDir = _getRecordedFilesBuildDir();
+			File sourceReportDir = playwrightReportFile.getParentFile();
 
-					try {
-						JenkinsResultsParserUtil.copy(
-							sourceReportDir,
-							new File(
-								recordedFilesBuildDir,
-								sourceReportDir.getName()));
-					}
-					catch (IOException ioException) {
-						throw new RuntimeException(ioException);
-					}
-				}
+			File recordedFilesBuildDir = _getRecordedFilesBuildDir();
+
+			try {
+				JenkinsResultsParserUtil.copy(
+					sourceReportDir,
+					new File(recordedFilesBuildDir, sourceReportDir.getName()));
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 		}
 	}

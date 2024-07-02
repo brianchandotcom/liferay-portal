@@ -54,7 +54,6 @@ import org.apache.logging.log4j.message.SimpleMessage;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -84,26 +83,12 @@ public class UpgradeRecorderTest {
 
 		_originalStopWatch = ReflectionTestUtil.getAndSetFieldValue(
 			DBUpgrader.class, "_stopWatch", null);
-
-		_originalVerifyProcessError = ReflectionTestUtil.getFieldValue(
-			_upgradeRecorder, "_verifyProcessError");
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		ReflectionTestUtil.setFieldValue(
 			DBUpgrader.class, "_stopWatch", _originalStopWatch);
-
-		ReflectionTestUtil.setFieldValue(
-			_upgradeRecorder, "_verifyProcessError",
-			_originalVerifyProcessError);
-	}
-
-	@Before
-	public void setUp() {
-		ReflectionTestUtil.setFieldValue(
-			_upgradeRecorder, "_verifyProcessError",
-			_originalVerifyProcessError);
 	}
 
 	@Test
@@ -448,7 +433,6 @@ public class UpgradeRecorderTest {
 
 	private static Bundle _bundle;
 	private static StopWatch _originalStopWatch;
-	private static boolean _originalVerifyProcessError;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder",

@@ -473,12 +473,12 @@
 </tr>
 <tr>
 	<td>CHECKOUT_SUMMARY_DELIVERY_TERM</td>
-	<td>//div[contains(@class,'delivery-term')]/div[contains(.,'${key_deliveryTerm}')]</td>
+	<td>//div[contains(@class,'delivery-term')]//div[contains(@class,'shipping-description')]//a[text()='${key_deliveryTerm}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CHECKOUT_SUMMARY_PAYMENT_TERM</td>
-	<td>//div[contains(@class,'payment-method')][contains(.,'Payment Terms')]/div[contains(.,'${key_paymentTerm}')]</td>
+	<td>//div[contains(@class,'payment-term')]//div[contains(@class,'shipping-description')]//a[text()='${key_paymentTerm}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -588,7 +588,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 			%>
 
 			<c:if test="<%= Validator.isNotNull(deliveryTermEntryName) %>">
-				<div class="panel-body payment-method">
+				<div class="delivery-term panel-body">
 					<div class="h5">
 						<liferay-ui:message key="delivery-terms" />
 					</div>
@@ -617,7 +617,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 			%>
 
 			<c:if test="<%= Validator.isNotNull(paymentTermEntryName) %>">
-				<div class="panel-body payment-method">
+				<div class="panel-body payment-term">
 					<div class="h5">
 						<liferay-ui:message key="payment-terms" />
 					</div>

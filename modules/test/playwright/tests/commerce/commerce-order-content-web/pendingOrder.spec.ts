@@ -81,7 +81,7 @@ test('LPD-13627 Edit pending order item with UOM', async ({
 			cartItems: [
 				{
 					options: '[]',
-					quantity: 1,
+					quantity: 3,
 					replacedSkuId: 0,
 					skuId: sku1.id,
 					skuUnitOfMeasure: {key: uom1.key},

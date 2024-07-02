@@ -64,7 +64,7 @@ export default function getCollectionDefinition({
 				},
 				collectionType: classPK ? 'Collection' : 'CollectionProvider',
 			},
-			listStyle: LIST_STYLES[listStyle],
+			listStyle: LIST_STYLES[listStyle] || '',
 		},
 		id,
 		pageElements,

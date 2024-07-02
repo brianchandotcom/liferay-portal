@@ -100,7 +100,7 @@ definition {
 			var portalURL = ${specificURL};
 		}
 		else {
-			var portalURL = JSONCompany.getDefaultPortalURL();
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(creatorEmailAddress))) {

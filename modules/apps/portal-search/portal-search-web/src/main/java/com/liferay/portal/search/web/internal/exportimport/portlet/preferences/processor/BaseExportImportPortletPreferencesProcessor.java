@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Felipe Lorenz
  */
-public abstract class BaseSearchWidgetsExportImportPortletPreferencesProcessor
+public abstract class BaseExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {
 
 	@Override

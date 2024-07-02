@@ -214,10 +214,10 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 	public void testIsShowWithResourcePermission() throws Exception {
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
-		portletPreferences.setNew(true);
 		portletPreferences.setPortletPreferencesId(RandomTestUtil.nextLong());
 		portletPreferences.setCompanyId(TestPropsValues.getCompanyId());
 		portletPreferences.setOwnerId(TestPropsValues.getUserId());
+		portletPreferences.setNew(true);
 
 		long plid = _layout.getPlid();
 

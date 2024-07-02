@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="ParsePrimitiveTypeCheck" files=".*" />
+	</checkstyle>
+	<source-check>
+		<suppress checks="IllegalImportsCheck" files=".*" />
+		<suppress checks="JSONValidationCheck" files=".*/read-json-bad.json" />
+	</source-check>
+</suppressions>

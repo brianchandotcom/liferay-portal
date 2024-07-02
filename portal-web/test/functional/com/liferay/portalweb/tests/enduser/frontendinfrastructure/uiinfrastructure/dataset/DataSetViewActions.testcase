@@ -2088,7 +2088,7 @@ definition {
 			Type(
 				key_fieldId = "URL",
 				locator1 = "TextArea#ANY_ID",
-				value1 = "http://localhost:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet&p_p_lifecycle=0&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_mvcPath=%2Ffds_view.jsp&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsEntryId=33344&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsEntryLabel=Data+Set+Test&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsViewId=33346&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsViewLabel=View+Test");
+				value1 = "http://localhost:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet&p_p_lifecycle=0&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_mvcPath=%2Ffds_view.jsp&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_fdsEntryId=33344&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_fdsEntryLabel=Data+Set+Test&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_fdsViewId=33346&_com_liferay_frontend_data_set_admin_web_internal_portlet_FDSAdminPortlet_fdsViewLabel=View+Test");
 
 			PortletEntry.save();
 		}

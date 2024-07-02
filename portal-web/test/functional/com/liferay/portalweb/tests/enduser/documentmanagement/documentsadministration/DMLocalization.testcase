@@ -269,7 +269,7 @@ definition {
 
 		VideoShortcut.addCP(
 			localizedDocumentTypeName = "外部動画のショートカット",
-			localizedPublish = "公開",
+			localizedPublish = "保存",
 			localizedVideoURL = "動画URL",
 			videoShortcutTitle = "DM Title",
 			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");

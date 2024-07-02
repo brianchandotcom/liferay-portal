@@ -146,12 +146,6 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
-	async deleteUserAccount(userAccountId: number) {
-		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/user-accounts/${userAccountId}`
-		);
-	}
-
 	async getSiteByFriendlyUrlPath(friendlyUrlPath: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/by-friendly-url-path/${friendlyUrlPath}`

@@ -4427,8 +4427,7 @@ public class DefaultObjectEntryManagerImplTest
 		if (expectedPicklistObjectFieldValue == null) {
 			Map<String, Object> properties = objectEntry.getProperties();
 
-			Assert.assertFalse(
-				properties.containsKey("picklistObjectFieldName"));
+			Assert.assertNull(properties.get("picklistObjectFieldName"));
 		}
 		else {
 			Assert.assertEquals(

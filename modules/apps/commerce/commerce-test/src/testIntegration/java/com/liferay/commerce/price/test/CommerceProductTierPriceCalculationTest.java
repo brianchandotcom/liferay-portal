@@ -110,7 +110,7 @@ public class CommerceProductTierPriceCalculationTest {
 	}
 
 	@Test
-	public void testTierPriceExpirationDateWithCPInstanceUnitOfMeasure()
+	public void testBulkPriceExpirationDateWithCPInstanceUnitOfMeasure()
 		throws Exception {
 
 		frutillaRule.scenario(
@@ -119,9 +119,9 @@ public class CommerceProductTierPriceCalculationTest {
 		).given(
 			"A product with a unit of measure"
 		).and(
-			"A tier price applied"
+			"A bulk price applied"
 		).when(
-			"The tier price expired"
+			"The bulk price expired"
 		).then(
 			"The correct price for the unit of measure is returned"
 		);
@@ -235,6 +235,134 @@ public class CommerceProductTierPriceCalculationTest {
 
 		Assert.assertTrue(
 			BigDecimalUtil.eq(new BigDecimal(10000), commerceMoney.getPrice()));
+	}
+
+	@Test
+	public void testTierPriceExpirationDateWithCPInstanceUnitOfMeasure()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"The price of a product with a unit of measure is calculated " +
+				"correctly"
+		).given(
+			"A product with a unit of measure"
+		).and(
+			"A tier price applied"
+		).when(
+			"The tier price expired"
+		).then(
+			"The correct price for the unit of measure is returned"
+		);
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
+			true);
+
+		List<CPInstance> cpInstances = cpDefinition.getCPInstances();
+
+		CPInstance cpInstance = cpInstances.get(0);
+
+		_commercePriceEntryLocalService.addCommercePriceEntry(
+			RandomTestUtil.randomString(), cpDefinition.getCProductId(),
+			cpInstance.getCPInstanceUuid(),
+			_commercePriceList.getCommercePriceListId(), new BigDecimal(20),
+			false, BigDecimal.ZERO, StringPool.BLANK, _serviceContext);
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			_accountEntry, _commerceCurrency, null, _user, _group, null);
+
+		CommerceProductPrice commerceProductPrice =
+			_commerceProductPriceCalculation.getCommerceProductPrice(
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, true,
+				StringPool.BLANK, commerceContext);
+
+		CommerceMoney commerceMoney = commerceProductPrice.getFinalPrice();
+
+		Assert.assertTrue(
+			BigDecimalUtil.eq(new BigDecimal(20), commerceMoney.getPrice()));
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			_cpInstanceUnitOfMeasureLocalService.addCPInstanceUnitOfMeasure(
+				_user.getUserId(), cpInstance.getCPInstanceId(), true,
+				BigDecimal.ONE, RandomTestUtil.randomString(),
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()
+				).build(),
+				2, false, 0.0, BigDecimal.ONE, cpInstance.getSku());
+
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryLocalService.addCommercePriceEntry(
+				RandomTestUtil.randomString(), cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				_commercePriceList.getCommercePriceListId(), new BigDecimal(5),
+				false, BigDecimal.ZERO, cpInstanceUnitOfMeasure.getKey(),
+				_serviceContext);
+
+		commerceProductPrice =
+			_commerceProductPriceCalculation.getCommerceProductPrice(
+				cpInstance.getCPInstanceId(),
+				cpInstanceUnitOfMeasure.getIncrementalOrderQuantity(), true,
+				cpInstanceUnitOfMeasure.getKey(), commerceContext);
+
+		commerceMoney = commerceProductPrice.getFinalPrice();
+
+		Assert.assertTrue(
+			BigDecimalUtil.eq(new BigDecimal(5), commerceMoney.getPrice()));
+
+		commerceProductPrice =
+			_commerceProductPriceCalculation.getCommerceProductPrice(
+				cpInstance.getCPInstanceId(), new BigDecimal(20), true,
+				cpInstanceUnitOfMeasure.getKey(), commerceContext);
+
+		commerceMoney = commerceProductPrice.getFinalPrice();
+
+		Assert.assertTrue(
+			BigDecimalUtil.eq(new BigDecimal(100), commerceMoney.getPrice()));
+
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			_commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
+				commercePriceEntry.getCommercePriceEntryId(), new BigDecimal(4),
+				BigDecimal.ZERO, false, new BigDecimal(5), _serviceContext);
+
+		commerceProductPrice =
+			_commerceProductPriceCalculation.getCommerceProductPrice(
+				cpInstance.getCPInstanceId(), new BigDecimal(5), true,
+				cpInstanceUnitOfMeasure.getKey(), commerceContext);
+
+		commerceMoney = commerceProductPrice.getFinalPrice();
+
+		Assert.assertTrue(
+			BigDecimalUtil.eq(new BigDecimal(24), commerceMoney.getPrice()));
+
+		commerceTierPriceEntry.setExpirationDate(RandomTestUtil.nextDate());
+
+		_commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(
+			commerceTierPriceEntry);
+
+		commerceProductPrice =
+			_commerceProductPriceCalculation.getCommerceProductPrice(
+				cpInstance.getCPInstanceId(), new BigDecimal(10), true,
+				cpInstanceUnitOfMeasure.getKey(), commerceContext);
+
+		commerceMoney = commerceProductPrice.getFinalPrice();
+
+		Assert.assertTrue(
+			BigDecimalUtil.eq(new BigDecimal(44), commerceMoney.getPrice()));
+
+		UnsafeRunnable<Exception> unsafeRunnable =
+			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
+
+		unsafeRunnable.run();
+
+		commerceProductPrice =
+			_commerceProductPriceCalculation.getCommerceProductPrice(
+				cpInstance.getCPInstanceId(), new BigDecimal(20), true,
+				cpInstanceUnitOfMeasure.getKey(), commerceContext);
+
+		commerceMoney = commerceProductPrice.getFinalPrice();
+
+		Assert.assertTrue(
+			BigDecimalUtil.eq(new BigDecimal(100), commerceMoney.getPrice()));
 	}
 
 	@Rule

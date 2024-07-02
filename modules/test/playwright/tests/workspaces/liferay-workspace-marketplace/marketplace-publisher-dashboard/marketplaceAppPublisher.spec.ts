@@ -9,7 +9,7 @@ import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
-import {createMarketplaceAccountUserCatalog} from '../helpers/marketplaceApiHelpers';
+import {createMarketplaceAccountUserCatalog} from '../helpers/marketplaceHelpers';
 import {PublishProductPayload} from '../types';
 import {products} from '../utils/constants';
 

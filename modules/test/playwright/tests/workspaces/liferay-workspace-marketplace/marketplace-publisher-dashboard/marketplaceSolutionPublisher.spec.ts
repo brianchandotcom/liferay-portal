@@ -10,6 +10,10 @@ import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVis
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
+import {
+	assignMarketplaceUserToAccountRole,
+	createMarketplaceAccountUserCatalog,
+} from '../helpers/marketplaceHelpers';
 import {solutions} from '../utils/constants';
 
 export const test = mergeTests(
@@ -31,42 +35,21 @@ test.describe('Can Publish and Manage Solutions', () => {
 
 	test.beforeEach(
 		async ({apiHelpers, marketplace, publisherSolutionPage}) => {
-			const account = await apiHelpers.headlessAdminUser.postAccount({
-				name: ACCOUNT_NAME.SUPPLIER,
-				type: 'supplier',
-			});
-
-			_account = account;
-
-			const user =
-				await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-					'test@liferay.com'
-				);
-
-			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-				account.id,
-				['test@liferay.com']
-			);
-
-			const rolesResponse =
-				await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
-
-			const accountSupplierRole = rolesResponse?.items?.filter((role) => {
-				return role.name === SOLUTION_PUBLISHER_ROLE;
-			});
-
-			await apiHelpers.headlessAdminUser.assignUserToAccountRole(
-				account.id,
-				accountSupplierRole[0].id,
-				user.id
-			);
-
-			const catalog =
-				await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-					accountId: account.id,
+			const {account, catalog} =
+				await createMarketplaceAccountUserCatalog({
+					accountName: ACCOUNT_NAME.SUPPLIER,
+					accountType: 'supplier',
+					apiHelpers,
 				});
 
+			_account = account;
 			_catalog = catalog;
+
+			await assignMarketplaceUserToAccountRole({
+				accountId: account.id,
+				accountRole: SOLUTION_PUBLISHER_ROLE,
+				apiHelpers,
+			});
 
 			await publisherSolutionPage.goto(
 				`web${marketplace.friendlyUrlPath}/publisher-dashboard#/solutions`
@@ -175,23 +158,14 @@ test.describe(`Supplier Accounts without ${SOLUTION_PUBLISHER_ROLE} role can not
 
 	test.beforeEach(
 		async ({apiHelpers, marketplace, publisherSolutionPage}) => {
-			const account = await apiHelpers.headlessAdminUser.postAccount({
-				name: ACCOUNT_NAME.SUPPLIER,
-				type: 'supplier',
-			});
-
-			_account = account;
-
-			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-				account.id,
-				['test@liferay.com']
-			);
-
-			const catalog =
-				await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-					accountId: account.id,
+			const {account, catalog} =
+				await createMarketplaceAccountUserCatalog({
+					accountName: ACCOUNT_NAME.SUPPLIER,
+					accountType: 'supplier',
+					apiHelpers,
 				});
 
+			_account = account;
 			_catalog = catalog;
 
 			await publisherSolutionPage.goto(

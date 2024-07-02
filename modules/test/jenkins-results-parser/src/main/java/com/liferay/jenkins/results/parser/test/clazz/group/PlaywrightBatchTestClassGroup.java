@@ -60,20 +60,18 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	protected PlaywrightBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
-		super(jsonObject, portalTestClassJob);
-
-		prepareTestClassGroup(batchName);
+		this(
+			jsonObject, portalTestClassJob,
+			_DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH);
 	}
 
 	protected PlaywrightBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob,
-		String playwrightBaseDir) {
+		String playwrightRelativeDirPath) {
 
 		super(jsonObject, portalTestClassJob);
 
-		if (playwrightBaseDir != null) {
-			_playwrightBaseDir = playwrightBaseDir;
-		}
+		_playwrightRelativeDirPath = playwrightRelativeDirPath;
 
 		prepareTestClassGroup(batchName);
 	}
@@ -81,16 +79,18 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	protected PlaywrightBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, portalTestClassJob);
-
-		prepareTestClassGroup(batchName);
+		this(
+			batchName, portalTestClassJob,
+			_DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH);
 	}
 
 	protected PlaywrightBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob,
 		PlaywrightTestBatch playwrightTestBatch) {
 
-		super(batchName, portalTestClassJob);
+		this(
+			batchName, portalTestClassJob,
+			_DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH);
 
 		PlaywrightTestSelector playwrightTestSelector =
 			playwrightTestBatch.getTestSelector();
@@ -103,13 +103,11 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 	protected PlaywrightBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob,
-		String playwrightBaseDir) {
+		String playwrightRelativeDirPath) {
 
 		super(batchName, portalTestClassJob);
 
-		if (playwrightBaseDir != null) {
-			_playwrightBaseDir = playwrightBaseDir;
-		}
+		_playwrightRelativeDirPath = playwrightRelativeDirPath;
 
 		prepareTestClassGroup(batchName);
 	}
@@ -368,7 +366,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
 
 			File playwrightBaseDir = new File(
-				workingDirectory, _playwrightBaseDir);
+				workingDirectory, _playwrightRelativeDirPath);
 
 			try {
 				AntUtil.callTarget(
@@ -470,13 +468,16 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
-	private static String _playwrightBaseDir = "modules/test/playwright";
+	private static final String _DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH =
+		"modules/test/playwright";
+
 	private static JSONObject _playwrightJSONObject;
 	private static final AtomicBoolean _playwrightJSONObjectsLoaded =
 		new AtomicBoolean();
 	private static final List<JSONObject> _specJSONObjects =
 		Collections.synchronizedList(new ArrayList<JSONObject>());
 
+	private final String _playwrightRelativeDirPath;
 	private final Set<String> _projectNames = new HashSet<>();
 
 }

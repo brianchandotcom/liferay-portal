@@ -181,34 +181,6 @@ public class AddItemMVCActionCommandTest {
 	public void testAddItemToLayoutDataItemTypeCollectionMobileLandscapeConfig()
 		throws Exception {
 
-		_assertTypeCollectionMobileLandscapeConfig(1);
-	}
-
-	@Test
-	public void testAddItemToLayoutDataItemTypeCollectionPortraitMobileConfig()
-		throws Exception {
-
-		_assertTypeCollectionPortraitMobileConfig(1);
-	}
-
-	@Test
-	public void testAddItemToLayoutDataItemTypeCollectionTabletConfig()
-		throws Exception {
-
-		_assertTypeCollectionTabletConfig(1);
-	}
-
-	@Test
-	public void testAddItemToLayoutDataItemTypeRowMobileLandscapeConfig()
-		throws Exception {
-
-		_assertTypeRowMobileLandscapeConfig(1, 12);
-	}
-
-	private void _assertTypeCollectionMobileLandscapeConfig(
-			Integer expectedNumberOfColumns)
-		throws Exception {
-
 		JSONObject itemConfigJSONObject = _getCollectionItemConfigJSONObject();
 
 		JSONObject mobileLandscapeConfigJSONObject =
@@ -217,12 +189,11 @@ public class AddItemMVCActionCommandTest {
 
 		Assert.assertNotNull(mobileLandscapeConfigJSONObject);
 		Assert.assertEquals(
-			expectedNumberOfColumns,
-			mobileLandscapeConfigJSONObject.get("numberOfColumns"));
+			1, mobileLandscapeConfigJSONObject.get("numberOfColumns"));
 	}
 
-	private void _assertTypeCollectionPortraitMobileConfig(
-			Integer expectedNumberOfColumns)
+	@Test
+	public void testAddItemToLayoutDataItemTypeCollectionPortraitMobileConfig()
 		throws Exception {
 
 		JSONObject itemConfigJSONObject = _getCollectionItemConfigJSONObject();
@@ -233,12 +204,11 @@ public class AddItemMVCActionCommandTest {
 
 		Assert.assertNotNull(portraitMobileConfigJSONObject);
 		Assert.assertEquals(
-			expectedNumberOfColumns,
-			portraitMobileConfigJSONObject.get("numberOfColumns"));
+			1, portraitMobileConfigJSONObject.get("numberOfColumns"));
 	}
 
-	private void _assertTypeCollectionTabletConfig(
-			Integer expectedNumberOfColumns)
+	@Test
+	public void testAddItemToLayoutDataItemTypeCollectionTabletConfig()
 		throws Exception {
 
 		JSONObject itemConfigJSONObject = _getCollectionItemConfigJSONObject();
@@ -247,14 +217,11 @@ public class AddItemMVCActionCommandTest {
 			ViewportSize.TABLET.getViewportSizeId());
 
 		Assert.assertNotNull(tabletConfigJSONObject);
-		Assert.assertEquals(
-			expectedNumberOfColumns,
-			tabletConfigJSONObject.get("numberOfColumns"));
+		Assert.assertEquals(1, tabletConfigJSONObject.get("numberOfColumns"));
 	}
 
-	private void _assertTypeRowMobileLandscapeConfig(
-			Integer expectedModulesPerRow,
-			Integer expectedColumnMobileLandscapeSize)
+	@Test
+	public void testAddItemToLayoutDataItemTypeRowMobileLandscapeConfig()
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -310,8 +277,7 @@ public class AddItemMVCActionCommandTest {
 
 		Assert.assertNotNull(mobileLandscapeConfigJSONObject);
 		Assert.assertEquals(
-			expectedModulesPerRow,
-			mobileLandscapeConfigJSONObject.get("modulesPerRow"));
+			1, mobileLandscapeConfigJSONObject.get("modulesPerRow"));
 
 		List<String> columnsItemIds =
 			rowStyledLayoutStructureItem.getChildrenItemIds();
@@ -336,8 +302,7 @@ public class AddItemMVCActionCommandTest {
 
 			Assert.assertNotNull(mobileLandscapeConfigJSONObject);
 			Assert.assertEquals(
-				expectedColumnMobileLandscapeSize,
-				mobileLandscapeConfigJSONObject.get("size"));
+				12, mobileLandscapeConfigJSONObject.get("size"));
 		}
 	}
 

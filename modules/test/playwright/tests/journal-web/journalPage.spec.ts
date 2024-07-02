@@ -72,10 +72,14 @@ test('LPP-50468 After clicking on Clear (filter by structrure) you can see all t
 	).toBeVisible();
 
 	await page.getByLabel('Filter', { exact: true }).click();
-	await page.getByRole('menuitem', { name: 'Structures' }).click();
-	await page.frameLocator('iframe[title="Structures"]').getByRole('cell', { name: 'Basic Web Content' }).click();
 
-	await page.getByRole('heading', {name: 'Search Results'}).waitFor();
+	await page.getByRole('menuitem', { name: 'Structures' }).click();
+
+	const structuresFrame = await page.frameLocator('iframe[title="Structures"]');
+
+	await structuresFrame.getByLabel('Reverse Order Direction: Currently Descending').waitFor();
+
+	await structuresFrame.getByRole('cell', { name: 'Basic Web Content' }).click();
 
 	await expect(
 		page.getByRole('link', { name: 'Second Web content' })

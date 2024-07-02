@@ -186,6 +186,20 @@ public class AddItemMVCActionCommandTest {
 	}
 
 	@Test
+	public void testAddItemToLayoutDataItemTypeCollectionPortraitMobileConfig()
+		throws Exception {
+
+		_assertTypeCollectionPortraitMobileConfig(1);
+	}
+
+	@Test
+	public void testAddItemToLayoutDataItemTypeCollectionTabletConfig()
+		throws Exception {
+
+		_assertTypeCollectionTabletConfig(1);
+	}
+
+	@Test
 	public void testAddItemToLayoutDataItemTypeRowMobileLandscapeConfig()
 		throws Exception {
 
@@ -250,6 +264,125 @@ public class AddItemMVCActionCommandTest {
 		Assert.assertEquals(
 			expectedNumberOfColumns,
 			mobileLandscapeConfigJSONObject.get("numberOfColumns"));
+	}
+
+	private void _assertTypeCollectionPortraitMobileConfig(
+			Integer expectedNumberOfColumns)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"itemType", LayoutDataItemTypeConstants.TYPE_COLLECTION);
+		mockLiferayPortletActionRequest.addParameter(
+			"parentItemId", _layoutStructure.getMainItemId());
+		mockLiferayPortletActionRequest.addParameter("position", "0");
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_addItemToLayoutData",
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
+
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutDataJSONObject.toString());
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructure.getMainItemId());
+
+		List<String> childrenItemIds =
+			rootLayoutStructureItem.getChildrenItemIds();
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(childrenItemIds.get(0));
+
+		Assert.assertEquals(
+			_layoutStructure.getMainItemId(),
+			layoutStructureItem.getParentItemId());
+		Assert.assertEquals(
+			LayoutDataItemTypeConstants.TYPE_COLLECTION,
+			layoutStructureItem.getItemType());
+		Assert.assertTrue(
+			layoutStructureItem instanceof CollectionStyledLayoutStructureItem);
+
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)layoutStructureItem;
+
+		JSONObject itemConfigJSONObject =
+			collectionStyledLayoutStructureItem.getItemConfigJSONObject();
+
+		JSONObject portraitMobileConfigJSONObject =
+			itemConfigJSONObject.getJSONObject(
+				ViewportSize.PORTRAIT_MOBILE.getViewportSizeId());
+
+		Assert.assertNotNull(portraitMobileConfigJSONObject);
+		Assert.assertEquals(
+			expectedNumberOfColumns,
+			portraitMobileConfigJSONObject.get("numberOfColumns"));
+	}
+
+	private void _assertTypeCollectionTabletConfig(
+			Integer expectedNumberOfColumns)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"itemType", LayoutDataItemTypeConstants.TYPE_COLLECTION);
+		mockLiferayPortletActionRequest.addParameter(
+			"parentItemId", _layoutStructure.getMainItemId());
+		mockLiferayPortletActionRequest.addParameter("position", "0");
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_addItemToLayoutData",
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
+
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutDataJSONObject.toString());
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructure.getMainItemId());
+
+		List<String> childrenItemIds =
+			rootLayoutStructureItem.getChildrenItemIds();
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(childrenItemIds.get(0));
+
+		Assert.assertEquals(
+			_layoutStructure.getMainItemId(),
+			layoutStructureItem.getParentItemId());
+		Assert.assertEquals(
+			LayoutDataItemTypeConstants.TYPE_COLLECTION,
+			layoutStructureItem.getItemType());
+		Assert.assertTrue(
+			layoutStructureItem instanceof CollectionStyledLayoutStructureItem);
+
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)layoutStructureItem;
+
+		JSONObject itemConfigJSONObject =
+			collectionStyledLayoutStructureItem.getItemConfigJSONObject();
+
+		JSONObject tabletConfigJSONObject = itemConfigJSONObject.getJSONObject(
+			ViewportSize.TABLET.getViewportSizeId());
+
+		Assert.assertNotNull(tabletConfigJSONObject);
+		Assert.assertEquals(
+			expectedNumberOfColumns,
+			tabletConfigJSONObject.get("numberOfColumns"));
 	}
 
 	private void _assertTypeRowMobileLandscapeConfig(

@@ -30,7 +30,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import org.apache.commons.lang.time.StopWatch;
 
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -54,21 +53,14 @@ public class DeleteAPIPropertiesToAPIPropertiesUpgradeProcessTest
 
 	@BeforeClass
 	public static void setUpClass() {
-		_originalStopWatch = ReflectionTestUtil.getFieldValue(
-			DBUpgrader.class, "_stopWatch");
+		_originalStopWatch = ReflectionTestUtil.getAndSetFieldValue(
+			DBUpgrader.class, "_stopWatch", null);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		ReflectionTestUtil.setFieldValue(
 			DBUpgrader.class, "_stopWatch", _originalStopWatch);
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		super.setUp();
-
-		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_stopWatch", null);
 	}
 
 	@Test

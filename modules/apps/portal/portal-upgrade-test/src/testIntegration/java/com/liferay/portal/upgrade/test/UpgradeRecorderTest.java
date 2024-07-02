@@ -82,8 +82,8 @@ public class UpgradeRecorderTest {
 	public static void setUpClass() {
 		_bundle = FrameworkUtil.getBundle(UpgradeRecorderTest.class);
 
-		_originalStopWatch = ReflectionTestUtil.getFieldValue(
-			DBUpgrader.class, "_stopWatch");
+		_originalStopWatch = ReflectionTestUtil.getAndSetFieldValue(
+			DBUpgrader.class, "_stopWatch", null);
 
 		_originalVerifyProcessError = ReflectionTestUtil.getFieldValue(
 			_upgradeRecorder, "_verifyProcessError");
@@ -101,8 +101,6 @@ public class UpgradeRecorderTest {
 
 	@Before
 	public void setUp() {
-		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_stopWatch", null);
-
 		ReflectionTestUtil.setFieldValue(
 			_upgradeRecorder, "_verifyProcessError",
 			_originalVerifyProcessError);

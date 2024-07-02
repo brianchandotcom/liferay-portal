@@ -10,7 +10,6 @@ import com.liferay.change.tracking.model.CTMessage;
 import com.liferay.change.tracking.service.CTMessageLocalService;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -67,8 +66,6 @@ public class CTMessageCompanyIdUpgradeProcessTest {
 		Message message = new Message();
 
 		message.put("companyId", companyId);
-
-		message.setPayload(JSONUtil.put("testKey", "testValue"));
 
 		String messageContent = JSONFactoryUtil.serialize(message);
 

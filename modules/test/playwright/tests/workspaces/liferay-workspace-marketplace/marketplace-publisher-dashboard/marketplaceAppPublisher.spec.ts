@@ -9,6 +9,7 @@ import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
+import {createMarketplaceAccountUserCatalog} from '../helpers/marketplaceApiHelpers';
 import {PublishProductPayload} from '../types';
 import {products} from '../utils/constants';
 
@@ -30,22 +31,14 @@ test.describe('Can Publish Marketplace Apps', () => {
 
 	test.beforeEach(
 		async ({apiHelpers, marketplace, publisherSolutionPage}) => {
-			const account = await apiHelpers.headlessAdminUser.postAccount({
-				name: ACCOUNT_NAME.SUPPLIER,
-				type: 'supplier',
-			});
+			const {account, catalog} =
+				await createMarketplaceAccountUserCatalog({
+					accountName: ACCOUNT_NAME.SUPPLIER,
+					accountType: 'supplier',
+					apiHelpers,
+				});
 
 			_account = account;
-
-			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-				account.id,
-				['test@liferay.com']
-			);
-
-			const catalog =
-				await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-					accountId: account.id,
-				});
 
 			_catalog = catalog;
 

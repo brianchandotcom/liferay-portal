@@ -1,0 +1,29 @@
+[
+	{
+		"appServerTomcatVersion": "appServerTomcatVersion value",
+		"buildTimestamp": "buildTimestamp value",
+		"bundleChecksumSHA512": "bundleChecksumSHA512 value",
+		"bundleURL": "bundleURL value",
+		"gitHashLiferayDocker": "gitHashLiferayDocker value",
+		"gitHashLiferayPortalEE": "gitHashLiferayPortalEE value",
+		"liferayDockerImage": "liferayDockerImage value",
+		"liferayDockerTags": "liferayDockerTags value",
+		"liferayProductVersion": "liferayProductVersion value",
+		"product": "product value",
+		"productGroupVersion": "productGroupVersion value",
+		"productVersion": "productVersion value",
+		"promoted": "true",
+		"releaseDate": "releaseDate value",
+		"releaseKey": "FIRST",
+		"targetPlatformVersion": "targetPlatformVersion value",
+		"url": "url value"
+	},
+	{
+		"product": "product value",
+		"productGroupVersion": "productGroupVersion value",
+		"productVersion": "productVersion value",
+		"promoted": "true",
+		"releaseKey": "SECOND",
+		"url": "https://releases-cdn.liferay.com/dxp/second"
+	}
+]

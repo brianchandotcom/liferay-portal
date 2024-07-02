@@ -1,0 +1,33 @@
+import de.undercouch.gradle.tasks.download.Download
+
+apply plugin: "de.undercouch.download"
+
+task downloadReleasesJson(type: Download)
+
+configurations {
+	portalTestSnapshot {
+		exclude group: "com.liferay.portal", module: "com.liferay.portal.impl"
+		exclude group: "com.liferay.portal", module: "com.liferay.portal.kernel"
+	}
+}
+
+dependencies {
+	implementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"
+	implementation group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
+	implementation group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
+	implementation group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
+}
+
+downloadReleasesJson {
+	dest buildDir
+	onlyIfNewer true
+	src "https://releases-cdn.liferay.com/releases.json"
+}
+
+processResources {
+	from downloadReleasesJson
+}
+
+updateFileVersions {
+	match(/name: "com\.liferay\.release\.info\.util", version: "(\d.+)"/, "../../sdk/gradle-plugins-workspace/build.gradle")
+}

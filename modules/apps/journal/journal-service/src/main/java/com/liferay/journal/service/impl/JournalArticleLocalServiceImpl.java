@@ -7946,6 +7946,14 @@ public class JournalArticleLocalServiceImpl
 
 			String languageId = _language.getLanguageId(entry.getKey());
 
+			if (friendlyURL.startsWith(StringPool.SLASH)) {
+				friendlyURL = friendlyURL.replaceAll("^/+", StringPool.BLANK);
+			}
+
+			if (friendlyURL.contains(StringPool.SLASH)) {
+				friendlyURL = friendlyURL.replaceAll("/+", StringPool.SLASH);
+			}
+
 			String urlTitle = friendlyURLEntryLocalService.getUniqueUrlTitle(
 				groupId,
 				_classNameLocalService.getClassNameId(JournalArticle.class),

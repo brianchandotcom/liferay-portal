@@ -899,6 +899,14 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name Spain");
 
+		Click(
+			key_currentLocale = StringUtil.lowerCase("en-US"),
+			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+		Click(
+			key_locale = "es-ES",
+			locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
 		AssertTextEquals(
 			key_fieldFieldLabel = "Imagen",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",

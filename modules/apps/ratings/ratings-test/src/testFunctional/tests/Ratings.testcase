@@ -368,13 +368,14 @@ definition {
 			ratingResult = "Rate this as good");
 
 		Ratings.viewRateThumb(
+			ratingResult = "Rate this as bad",
+			toolTip = "true",
+			voteCount = 0);
+
+		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as good",
 			toolTip = "true",
 			voteCount = 1);
-
-		Ratings.viewRateThumb(
-			ratingResult = "Rate this as bad",
-			voteCount = 0);
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

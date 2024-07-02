@@ -8,12 +8,20 @@ package com.liferay.testray.rest.manager;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.testray.rest.dto.v1_0.TestrayCache;
 
+import java.time.OffsetDateTime;
+
+import java.util.Map;
+
 import org.w3c.dom.Document;
 
 /**
  * @author José Abelenda
  */
 public interface TestrayManager {
+
+	public Map<String, Object> fetchTestrayFlakyScores(
+			long companyId, long testrayCaseId, OffsetDateTime offsetDateTime)
+		throws Exception;
 
 	public void loadTestrayCache(
 			long companyId, TestrayCache testrayCache, long userId)

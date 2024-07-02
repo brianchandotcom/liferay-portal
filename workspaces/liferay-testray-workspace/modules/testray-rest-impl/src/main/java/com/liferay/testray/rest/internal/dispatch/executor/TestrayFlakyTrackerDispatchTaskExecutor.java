@@ -1,0 +1,194 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.testray.rest.internal.dispatch.executor;
+
+import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
+import com.liferay.dispatch.executor.DispatchTaskExecutor;
+import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
+import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.testray.rest.manager.TestrayManager;
+
+import java.io.Serializable;
+
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Nilton Vieira
+ */
+@Component(
+	property = {
+		"dispatch.task.executor.name=testray-flaky-tracker",
+		"dispatch.task.executor.overlapping=false",
+		"dispatch.task.executor.type=testray-flaky-tracker"
+	},
+	service = DispatchTaskExecutor.class
+)
+public class TestrayFlakyTrackerDispatchTaskExecutor
+	extends BaseDispatchTaskExecutor {
+
+	@Override
+	public void doExecute(
+			DispatchTrigger dispatchTrigger,
+			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
+		throws Exception {
+
+		UnicodeProperties unicodeProperties =
+			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
+
+		if (Validator.isNull(
+				unicodeProperties.getProperty("testrayFlakyScoreThreshold")) ||
+			Validator.isNull(
+				unicodeProperties.getProperty("testrayFlakyMaxDays"))) {
+
+			_log.error("The required properties are not set");
+
+			return;
+		}
+
+		User user = _userLocalService.fetchUser(dispatchTrigger.getUserId());
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		String originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(user.getUserId());
+
+		try {
+			_process(dispatchTrigger, unicodeProperties);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
+	}
+
+	@Override
+	public String getName() {
+		return "testray-flaky-tracker";
+	}
+
+	private void _process(
+			DispatchTrigger dispatchTrigger,
+			UnicodeProperties unicodeProperties)
+		throws Exception {
+
+		List<Map<String, Serializable>> testrayCases =
+			_objectEntryLocalService.getValuesList(
+				0, dispatchTrigger.getCompanyId(), dispatchTrigger.getUserId(),
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					dispatchTrigger.getCompanyId(), "C_Case"
+				).getObjectDefinitionId(),
+				null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Checking " + testrayCases.size() + " tests");
+		}
+
+		int flaky = 0;
+
+		for (Map<String, Serializable> testrayCase : testrayCases) {
+			Map<String, Object> testrayFlakyScores =
+				_testrayManager.fetchTestrayFlakyScores(
+					dispatchTrigger.getCompanyId(),
+					GetterUtil.getLong(testrayCase.get("c_caseId")),
+					_currentDateTime.minusDays(
+						GetterUtil.getLong(
+							unicodeProperties.getProperty(
+								"testrayFlakyMaxDays"))));
+
+			if (testrayFlakyScores == null) {
+				continue;
+			}
+
+			double flakyScore =
+				GetterUtil.getDouble(testrayFlakyScores.get("changed")) /
+					GetterUtil.getDouble(testrayFlakyScores.get("total_cases"));
+
+			if (flakyScore > GetterUtil.getDouble(
+					unicodeProperties.getProperty(
+						"testrayFlakyScoreThreshold"))) {
+
+				if (Objects.equals(
+						String.valueOf(testrayCase.get("flaky")), "true")) {
+
+					continue;
+				}
+
+				testrayCase.put("flaky", true);
+			}
+			else {
+				if (Objects.equals(
+						String.valueOf(testrayCase.get("flaky")), "false")) {
+
+					continue;
+				}
+
+				testrayCase.put("flaky", false);
+			}
+
+			_objectEntryLocalService.updateObjectEntry(
+				dispatchTrigger.getUserId(), (Long)testrayCase.get("c_caseId"),
+				testrayCase, new ServiceContext());
+
+			flaky++;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Flaky tests updated: " + flaky);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TestrayFlakyTrackerDispatchTaskExecutor.class);
+
+	private final OffsetDateTime _currentDateTime = OffsetDateTime.now(
+		ZoneOffset.UTC
+	).truncatedTo(
+		ChronoUnit.SECONDS
+	);
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private TestrayManager _testrayManager;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+}

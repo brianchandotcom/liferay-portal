@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.testray.rest.dto.v1_0.TestrayCache;
+import com.liferay.testray.rest.internal.util.TestrayUtil;
 import com.liferay.testray.rest.manager.TestrayManager;
 
 import java.io.File;
@@ -37,6 +38,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.sql.Timestamp;
+
+import java.time.OffsetDateTime;
 
 import java.util.HashMap;
 import java.util.List;
@@ -62,6 +65,39 @@ import org.w3c.dom.NodeList;
  */
 @Component(service = TestrayManager.class)
 public class TestrayManagerImpl implements TestrayManager {
+
+	@Override
+	public Map<String, Object> fetchTestrayFlakyScores(
+			long companyId, long testrayCaseId, OffsetDateTime offsetDateTime)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(12);
+
+		sb.append("select cr.r_caseToCaseResult_c_caseId, sum(case when ");
+		sb.append("cr.prev_status != cr.dueStatus_ and cr.prev_status is not ");
+		sb.append("null then 1 end) as changed, count(c_caseResultId_) as ");
+		sb.append("total_cases from (select c_caseResultId_, ");
+		sb.append("r_caseToCaseResult_c_caseId, dueStatus_, lag(dueStatus_) ");
+		sb.append("over (partition by r_caseToCaseResult_c_caseId order by ");
+		sb.append("c_caseResultId_) prev_status from ");
+		sb.append("lportal.O_[%COMPANY_ID%]_CaseResult where ");
+		sb.append("r_caseToCaseResult_c_caseId = ? and (dueStatus_ ='passed' ");
+		sb.append("or dueStatus_ ='failed') and startDate_ is not null and ");
+		sb.append("startDate_ >= ? order by c_caseResultId_) as cr group by ");
+		sb.append("r_caseToCaseResult_c_caseId");
+
+		List<Map<String, Object>> values = TestrayUtil.executeQuery(
+			StringUtil.replace(
+				sb.toString(), "[%COMPANY_ID%]", String.valueOf(companyId)),
+			ListUtil.fromArray(
+				GetterUtil.getLong(testrayCaseId), offsetDateTime));
+
+		if (values.isEmpty()) {
+			return null;
+		}
+
+		return values.get(0);
+	}
 
 	public void loadTestrayCache(
 			long companyId, TestrayCache testrayCache, long userId)

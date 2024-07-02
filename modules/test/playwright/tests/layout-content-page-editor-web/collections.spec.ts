@@ -11,6 +11,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {wemSiteTest} from '../../fixtures/wemSiteTest';
 import {ANIMALS_COLLECTION_NAME} from '../../setup/wem-site/constants';
 import getRandomString from '../../utils/getRandomString';
@@ -27,7 +28,8 @@ const test = mergeTests(
 		'LPS-178052': true,
 	}),
 	loginTest(),
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	pageViewModePagesTest
 );
 
 const testWithIsolatedSite = mergeTests(test, isolatedSiteTest);
@@ -531,4 +533,68 @@ test('checks that fragment ids used within a display collection are not repeated
 	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 	await checkNonRepeatedFragmentIds();
+});
+
+test('displays correct layout in other viewports', async ({
+	apiHelpers,
+	collectionsPage,
+	page,
+	pageEditorPage,
+	wemSite,
+}) => {
+
+	// Create definition for a collection mapped to Animals collection
+
+	const animalsClassPK = await collectionsPage.getCollectionClassPK(
+		ANIMALS_COLLECTION_NAME,
+		wemSite.friendlyUrlPath
+	);
+
+	const headingId = getRandomString();
+
+	const animalsCollection = getCollectionItemDefinition(getRandomString(), [
+		getFragmentDefinition({id: headingId, key: 'BASIC_COMPONENT-heading'}),
+	]);
+
+	const collectionId = getRandomString();
+
+	const collectionDefinition = getCollectionDefinition({
+		classPK: animalsClassPK,
+		id: collectionId,
+		pageElements: [animalsCollection],
+	});
+
+	// Create a content page and go to edit mode
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([collectionDefinition]),
+		siteId: wemSite.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+
+	// Change layout to 4 columns in Desktop
+
+	await pageEditorPage.changeFragmentConfiguration({
+		fieldLabel: 'Layout',
+		fragmentId: collectionId,
+		tab: 'General',
+		value: '4 Columns',
+	});
+
+	await pageEditorPage.publishPage();
+
+	// Go to view mode and check correct layout is displayed on each viewport
+
+	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+	const row = page.locator('.lfr-layout-structure-item-collection row');
+
+	for (const col of await row.locator('.col').all()) {
+		await expect(col).toHaveClass(/col-lg-3/);
+		await expect(col).toHaveClass(/col-md-12/);
+		await expect(col).toHaveClass(/col-sm-12/);
+		await expect(col).toHaveClass(/col-12/);
+	}
 });

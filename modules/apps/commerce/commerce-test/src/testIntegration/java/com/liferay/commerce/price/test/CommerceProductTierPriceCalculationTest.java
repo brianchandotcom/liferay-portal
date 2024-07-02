@@ -97,7 +97,6 @@ public class CommerceProductTierPriceCalculationTest {
 					CommercePriceListConstants.TYPE_PRICE_LIST);
 
 		_group = GroupTestUtil.addGroup();
-
 		_user = UserTestUtil.addUser(_company);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(

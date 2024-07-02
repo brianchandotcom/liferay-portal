@@ -119,8 +119,8 @@ public class TestrayFlakyTrackerDispatchTaskExecutor
 		int flaky = 0;
 
 		for (Map<String, Serializable> testrayCase : testrayCases) {
-			Map<String, Object> testrayFlakyScores =
-				_testrayManager.fetchTestrayFlakyScores(
+			Map<String, Object> testrayCaseFlakyParameters =
+				_testrayManager.fetchTestrayCaseFlakyParameters(
 					dispatchTrigger.getCompanyId(),
 					_currentDateTime.minusDays(
 						GetterUtil.getLong(
@@ -128,15 +128,16 @@ public class TestrayFlakyTrackerDispatchTaskExecutor
 								"testrayCaseFlakyLimitDays"))),
 					GetterUtil.getLong(testrayCase.get("c_caseId")));
 
-			if (testrayFlakyScores == null) {
+			if (testrayCaseFlakyParameters == null) {
 				continue;
 			}
 
-			double flakyScore =
-				GetterUtil.getDouble(testrayFlakyScores.get("totalChanges")) /
-					GetterUtil.getDouble(testrayFlakyScores.get("totalCases"));
+			double totalChanges = GetterUtil.getDouble(
+				testrayCaseFlakyParameters.get("totalChanges"));
+			double totalCases = GetterUtil.getDouble(
+				testrayCaseFlakyParameters.get("totalCases"));
 
-			if (flakyScore > GetterUtil.getDouble(
+			if ((totalChanges / totalCases) > GetterUtil.getDouble(
 					unicodeProperties.getProperty(
 						"testrayCaseFlakyThreshold"))) {
 

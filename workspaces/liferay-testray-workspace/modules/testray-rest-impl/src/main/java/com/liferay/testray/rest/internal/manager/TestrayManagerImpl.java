@@ -67,7 +67,7 @@ import org.w3c.dom.NodeList;
 public class TestrayManagerImpl implements TestrayManager {
 
 	@Override
-	public Map<String, Object> fetchTestrayFlakyScores(
+	public Map<String, Object> fetchTestrayCaseFlakyParameters(
 			long companyId, OffsetDateTime offsetDateTime, long testrayCaseId)
 		throws Exception {
 

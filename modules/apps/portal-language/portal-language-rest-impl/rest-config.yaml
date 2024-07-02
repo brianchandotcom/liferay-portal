@@ -1,0 +1,11 @@
+apiDir: "../portal-language-rest-api/src/main/java"
+apiPackagePath: "com.liferay.portal.language.rest"
+application:
+    baseURI: "/portal-language"
+    className: "LanguageRESTApplication"
+    name: "Liferay.Portal.Language.REST"
+author: "Thiago Buarque"
+clientDir: "../portal-language-rest-client/src/main/java"
+compatibilityVersion: 6
+forcePredictableOperationId: true
+testDir: "../portal-language-rest-test/src/testIntegration/java"

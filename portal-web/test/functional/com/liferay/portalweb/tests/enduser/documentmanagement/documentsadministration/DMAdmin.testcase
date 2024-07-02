@@ -119,25 +119,29 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
+		DMFolder.gotoEntry(dmFolderName = "DM Folder Name");
+
 		Pagination.changePagination(itemsPerPage = 20);
 
-		Pagination.viewResults(results = "Showing 1 to 11 of 11 entries.");
+		Pagination.viewResults(results = "Showing 1 to 10 of 10 entries.");
 
 		Navigator.openSitePage(
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
 
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
 		LexiconEntry.changeDisplayStyle(displayStyle = "List");
 
 		Pagination.changePagination(itemsPerPage = 4);
 
-		Pagination.viewResults(results = "Showing 1 to 4 of 11 entries.");
+		Pagination.viewResults(results = "Showing 1 to 4 of 10 entries.");
 
 		DMDocument.checkDocumentCheckboxPG(dmDocumentTitle = "DM Document Title8");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#NAVBAR_TEXT",
-			value1 = "1 of 11 Items Selected");
+			value1 = "1 of 10 Items Selected");
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
@@ -145,7 +149,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#NAVBAR_TEXT",
-			value1 = "5 of 11 Items Selected");
+			value1 = "5 of 10 Items Selected");
 	}
 
 	@description = "This is a test for LPS-91861. It checks that the counts can be reset in management toolbar."

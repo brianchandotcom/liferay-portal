@@ -8,7 +8,6 @@ import {
 	ORDER_TYPES,
 	ORDER_WORKFLOW_STATUS_CODE,
 	PAYMENT_STATUS,
-	PRODUCT_WORKFLOW_STATUS_CODE,
 } from '../utils/constants';
 
 export async function createMarketplaceAccountUserCatalog({
@@ -80,9 +79,8 @@ export async function assignMarketplaceUserToAccountRole({
 export async function createMarketplaceTestProductOrder({
 	accountId,
 	apiHelpers,
-	catalogId,
 	orderItems,
-	productName,
+	productBody,
 }) {
 	try {
 		const channel =
@@ -91,52 +89,9 @@ export async function createMarketplaceTestProductOrder({
 			);
 
 		const product =
-			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-				active: true,
-				catalogId,
-				name: {
-					en_US: productName,
-				},
-				productChannels: [
-					{
-						channelId: channel.items[0].id,
-						currencyCode: 'USD',
-						id: channel.items[0].id,
-						name: MARKETPLACE_CHANNEL,
-						type: 'site',
-					},
-				],
-				productSpecifications: [
-					{
-						specificationKey: 'type',
-						value: {
-							en_US: 'DXP',
-						},
-					},
-					{
-						specificationKey: 'price-model',
-						value: {
-							en_US: 'paid',
-						},
-					},
-					{
-						specificationKey: 'latest-version',
-						value: {
-							en_US: '1.0.1',
-						},
-					},
-				],
-				productStatus: PRODUCT_WORKFLOW_STATUS_CODE.APPROVED,
-				productType: 'virtual',
-				productVirtualSettings: {
-					productVirtualSettingsFileEntries: [
-						{
-							attachment: btoa('liferay'),
-							version: 'Liferay Portal 7.4 GA110',
-						},
-					],
-				},
-			});
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct(
+				productBody
+			);
 
 		const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
 			accountId,

@@ -17,6 +17,10 @@ import {
 	createMarketplaceAccountUserCatalog,
 	createMarketplaceTestProductOrder,
 } from '../helpers/marketplaceHelpers';
+import {
+	MARKETPLACE_CHANNEL,
+	PRODUCT_WORKFLOW_STATUS_CODE,
+} from '../utils/constants';
 
 export const test = mergeTests(
 	backendPageTest,
@@ -41,6 +45,11 @@ test.describe('Can Purchase and Manage Apps', () => {
 	let _order;
 
 	test.beforeEach(async ({apiHelpers}) => {
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
+				`name eq ${MARKETPLACE_CHANNEL}`
+			);
+
 		const {account, catalog} = await createMarketplaceAccountUserCatalog({
 			accountName: CUSTOMER_ACCOUNT_NAME,
 			accountType: 'person',
@@ -56,12 +65,58 @@ test.describe('Can Purchase and Manage Apps', () => {
 			apiHelpers,
 		});
 
+		const productBody = {
+			active: true,
+			catalogId: catalog.id,
+			name: {
+				en_US: PRODUCT_NAME,
+			},
+			productChannels: [
+				{
+					channelId: channel.items[0].id,
+					currencyCode: 'USD',
+					id: channel.items[0].id,
+					name: MARKETPLACE_CHANNEL,
+					type: 'site',
+				},
+			],
+			productSpecifications: [
+				{
+					specificationKey: 'type',
+					value: {
+						en_US: 'DXP',
+					},
+				},
+				{
+					specificationKey: 'price-model',
+					value: {
+						en_US: 'paid',
+					},
+				},
+				{
+					specificationKey: 'latest-version',
+					value: {
+						en_US: '1.0.1',
+					},
+				},
+			],
+			productStatus: PRODUCT_WORKFLOW_STATUS_CODE.APPROVED,
+			productType: 'virtual',
+			productVirtualSettings: {
+				productVirtualSettingsFileEntries: [
+					{
+						attachment: btoa('liferay'),
+						version: 'Liferay Portal 7.4 GA110',
+					},
+				],
+			},
+		};
+
 		const {order, product} = await createMarketplaceTestProductOrder({
 			accountId: account.id,
 			apiHelpers,
-			catalogId: catalog.id,
 			orderItems: ORDER_ITEMS,
-			productName: PRODUCT_NAME,
+			productBody,
 		});
 
 		_order = order;

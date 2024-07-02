@@ -8,7 +8,7 @@ import {isNode} from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
-import DefinitionInfo from './DefnitionInfo';
+import {DefinitionInfo} from './DefinitionInfo/DefinitionInfo';
 import SidebarBody from './SidebarBody';
 import SidebarHeader from './SidebarHeader';
 import sectionComponents from './sections/sectionComponents';

@@ -46,7 +46,7 @@ export default function DisplayTemplateSelector({namespace, props}: Props) {
 			return;
 		}
 
-		const [groupId, groupKey, ...value] = option.split('-');
+		const [groupId, groupKey, ...value] = option.split('_SEPARATOR_');
 
 		setSelectedDisplayStyle({
 			groupId,
@@ -93,7 +93,7 @@ export default function DisplayTemplateSelector({namespace, props}: Props) {
 					id={`${namespace}displayStyle`}
 					items={items}
 					onSelectionChange={onSelectionChangeHandlder}
-					selectedKey={`${selectedDisplayStyle.groupId}-${selectedDisplayStyle.groupKey}-${selectedDisplayStyle.name}`}
+					selectedKey={`${selectedDisplayStyle.groupId}_SEPARATOR_${selectedDisplayStyle.groupKey}_SEPARATOR_${selectedDisplayStyle.name}`}
 				>
 					{(group) => (
 						<DropDown.Group
@@ -106,11 +106,11 @@ export default function DisplayTemplateSelector({namespace, props}: Props) {
 										item.groupId
 											? item.groupId
 											: displayStyleGroupId
-									}-${
+									}_SEPARATOR_${
 										item.groupKey
 											? item.groupKey
 											: displayStyleGroupKey
-									}-${item.value}`}
+									}_SEPARATOR_${item.value}`}
 								>
 									{item.label}
 								</Option>

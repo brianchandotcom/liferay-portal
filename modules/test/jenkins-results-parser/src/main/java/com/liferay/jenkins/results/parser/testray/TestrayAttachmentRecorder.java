@@ -152,6 +152,21 @@ public class TestrayAttachmentRecorder {
 		return sb.toString();
 	}
 
+	private void _copyToRecordedFilesBuildDir(File sourceFile) {
+		if (!sourceFile.exists()) {
+			return;
+		}
+
+		try {
+			JenkinsResultsParserUtil.copy(
+				sourceFile,
+				new File(_getRecordedFilesBuildDir(), sourceFile.getName()));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	private List<File> _getLiferayBundlesDirs() {
 		List<File> liferayBundlesDirs = new ArrayList<>();
 
@@ -713,19 +728,8 @@ public class TestrayAttachmentRecorder {
 				"modules/test/playwright/playwright-report/index.html");
 
 			if (playwrightReportFile.exists()) {
-				File sourceReportDir = playwrightReportFile.getParentFile();
-
-				File recordedFilesBuildDir = _getRecordedFilesBuildDir();
-
-				try {
-					JenkinsResultsParserUtil.copy(
-						sourceReportDir,
-						new File(
-							recordedFilesBuildDir, sourceReportDir.getName()));
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
+				_copyToRecordedFilesBuildDir(
+					playwrightReportFile.getParentFile());
 
 				return;
 			}
@@ -739,17 +743,9 @@ public class TestrayAttachmentRecorder {
 				qaWebsitesGitWorkingDirectory.getWorkingDirectory(),
 				"playwright/playwright-report/index.html");
 
-			File sourceReportDir = playwrightReportFile.getParentFile();
-
-			File recordedFilesBuildDir = _getRecordedFilesBuildDir();
-
-			try {
-				JenkinsResultsParserUtil.copy(
-					sourceReportDir,
-					new File(recordedFilesBuildDir, sourceReportDir.getName()));
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
+			if (playwrightReportFile.exists()) {
+				_copyToRecordedFilesBuildDir(
+					playwrightReportFile.getParentFile());
 			}
 		}
 	}

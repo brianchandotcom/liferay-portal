@@ -49,6 +49,12 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 		new AssetListEntryCreateDateComparator();
 		new AssetTagCountComparator();
+		new CommercePricingClassCreateDateComparator();
+		new CommerceTierPriceEntryMinQuantityComparator();
+		new CommercePriceListPriorityComparator();
+		new CommercePriceListDisplayDateComparator();
+		new CommercePriceListCreateDateComparator();
+		new CommercePriceEntryUOMCreateDateComparator();
 
 		PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX;
 		PortletDisplayTemplateManager.ENTRIES;
@@ -88,6 +94,12 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 
 		new AssetListEntryCreateDateComparator(showHiddenPages);
 		new AssetTagCountComparator(showHiddenPages);
+		new CommercePricingClassCreateDateComparator(showHiddenPages);
+		new CommerceTierPriceEntryMinQuantityComparator(showHiddenPages);
+		new CommercePriceListPriorityComparator(showHiddenPages);
+		new CommercePriceListDisplayDateComparator(showHiddenPages);
+		new CommercePriceListCreateDateComparator(showHiddenPages);
+		new CommercePriceEntryUOMCreateDateComparator(showHiddenPages);
 	}
 
 	public void method(CommerceAddress commerceAddress) {

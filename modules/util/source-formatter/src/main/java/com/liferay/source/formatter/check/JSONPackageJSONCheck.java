@@ -109,7 +109,9 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		String value = scriptsJSONObject.getString(key);
 
 		for (String allowedValue : allowedValues) {
-			if (value.endsWith(StringPool.SPACE + allowedValue)) {
+			if (value.equals(allowedValue) ||
+				value.endsWith(StringPool.SPACE + allowedValue)) {
+
 				return;
 			}
 		}
@@ -124,21 +126,24 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 			return;
 		}
 
-		StringBundler sb = new StringBundler((allowedValues.length * 3) + 5);
+		StringBundler sb = new StringBundler((allowedValues.length * 4) + 5);
 
 		sb.append("Value '");
 		sb.append(value);
 		sb.append("' for entry '");
 		sb.append(key);
-		sb.append("' should end with one of the following values: ");
+		sb.append(
+			"' should end with (or be exactly) one of the following values: ");
 
-		for (String allowedValue : allowedValues) {
+		for (int i = 0; i < allowedValues.length; i++) {
+			if (i > 0) {
+				sb.append(", ");
+			}
+
 			sb.append(StringPool.APOSTROPHE);
-			sb.append(allowedValue);
-			sb.append("', ");
+			sb.append(allowedValues[i]);
+			sb.append(StringPool.APOSTROPHE);
 		}
-
-		sb.setIndex(sb.index() - 1);
 
 		addMessage(fileName, sb.toString());
 	}

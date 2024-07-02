@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Resource Utilities
+Bundle-SymbolicName: com.liferay.resource.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.resource.util

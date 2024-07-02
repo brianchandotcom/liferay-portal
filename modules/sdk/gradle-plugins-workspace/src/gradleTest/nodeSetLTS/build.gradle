@@ -6,8 +6,8 @@ runGradleTest {
 	doLast {
 		Project withInvalidLTSValueProject = project(":with-invalid-lts-value")
 
-		assert withInvalidLTSValueProject.node.nodeVersion == "16.13.0"
-		assert withInvalidLTSValueProject.node.npmVersion == "8.1.0"
+		assert withInvalidLTSValueProject.node.nodeVersion == "20.12.2"
+		assert withInvalidLTSValueProject.node.npmVersion == "10.5.0"
 
 		Project withValidLTSValueProject = project(":with-valid-lts-value")
 

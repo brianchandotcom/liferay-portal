@@ -389,8 +389,8 @@ public class TestClassGroupFactory {
 				}
 				else if (testBatch != null) {
 					batchTestClassGroup = new PlaywrightBatchTestClassGroup(
-						batchName, portalTestClassJob,
-						(PlaywrightTestBatch)testBatch);
+						batchName, (PlaywrightTestBatch)testBatch,
+						portalTestClassJob);
 				}
 				else {
 					batchTestClassGroup = new PlaywrightBatchTestClassGroup(

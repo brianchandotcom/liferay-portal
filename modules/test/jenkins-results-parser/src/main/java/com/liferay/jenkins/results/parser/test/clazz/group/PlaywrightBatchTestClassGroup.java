@@ -61,13 +61,13 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
 		this(
-			jsonObject, portalTestClassJob,
-			_DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH);
+			jsonObject, _DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH,
+			portalTestClassJob);
 	}
 
 	protected PlaywrightBatchTestClassGroup(
-		JSONObject jsonObject, PortalTestClassJob portalTestClassJob,
-		String playwrightRelativeDirPath) {
+		JSONObject jsonObject, String playwrightRelativeDirPath,
+		PortalTestClassJob portalTestClassJob) {
 
 		super(jsonObject, portalTestClassJob);
 
@@ -77,20 +77,12 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected PlaywrightBatchTestClassGroup(
-		String batchName, PortalTestClassJob portalTestClassJob) {
+		String batchName, PlaywrightTestBatch playwrightTestBatch,
+		PortalTestClassJob portalTestClassJob) {
 
 		this(
-			batchName, portalTestClassJob,
-			_DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH);
-	}
-
-	protected PlaywrightBatchTestClassGroup(
-		String batchName, PortalTestClassJob portalTestClassJob,
-		PlaywrightTestBatch playwrightTestBatch) {
-
-		this(
-			batchName, portalTestClassJob,
-			_DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH);
+			batchName, _DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH,
+			portalTestClassJob);
 
 		PlaywrightTestSelector playwrightTestSelector =
 			playwrightTestBatch.getTestSelector();
@@ -102,8 +94,16 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected PlaywrightBatchTestClassGroup(
-		String batchName, PortalTestClassJob portalTestClassJob,
-		String playwrightRelativeDirPath) {
+		String batchName, PortalTestClassJob portalTestClassJob) {
+
+		this(
+			batchName, _DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH,
+			portalTestClassJob);
+	}
+
+	protected PlaywrightBatchTestClassGroup(
+		String batchName, String playwrightRelativeDirPath,
+		PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
 

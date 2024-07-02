@@ -18,13 +18,13 @@ public class QAWebsitesPlaywrightBatchTestClassGroup
 	public QAWebsitesPlaywrightBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
-		super(jsonObject, portalTestClassJob, "playwright");
+		super(jsonObject, "playwright", portalTestClassJob);
 	}
 
 	public QAWebsitesPlaywrightBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, portalTestClassJob, "playwright");
+		super(batchName, "playwright", portalTestClassJob);
 	}
 
 }

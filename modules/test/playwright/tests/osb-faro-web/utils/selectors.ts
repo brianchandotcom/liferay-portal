@@ -2,7 +2,7 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
-export enum cardSelector {
+export enum CardSelectors {
 	Acquisition = '.acquisitions-card-root',
 	Audience = '.analytics-audience-report-card',
 	CohortAnalysis = '.cohort-analysis-card-root',
@@ -15,7 +15,7 @@ export enum cardSelector {
 	VisitorsByDayAndTime = '.visitors-by-time-card',
 }
 
-export enum segmentConditions {
+export enum SegmentConditions {
 	atMostOrAtLeast = '.operator-input:not(.criterion-input):not([data-testid])',
 	criteriaCondition = '.criterion-input',
 	selectedTime = '[data-testid="clay-select"]',

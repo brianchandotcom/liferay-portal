@@ -5,7 +5,7 @@
 
 import {Page} from '@playwright/test';
 
-import {segmentConditions} from './selectors';
+import {SegmentConditions} from './selectors';
 import {searchByTerm} from './utils';
 
 export async function addSegmentField({
@@ -46,7 +46,7 @@ export async function addStaticMember({
 		await page.locator('.clickable').getByText(memberName).first().click();
 	}
 
-	await page.getByRole('button', {name: 'Add', exact: true}).click();
+	await page.getByRole('button', {exact: true, name: 'Add'}).click();
 }
 
 export async function createDynamicSegment(page: Page) {
@@ -122,7 +122,7 @@ export async function selectOperator({
 }: {
 	index?: number;
 	operator: string;
-	operatorField: segmentConditions;
+	operatorField: SegmentConditions;
 	page: Page;
 }) {
 	await page.locator(operatorField).nth(index).click();

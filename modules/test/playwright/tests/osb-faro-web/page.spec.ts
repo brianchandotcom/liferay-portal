@@ -31,7 +31,7 @@ import {
 	selectOperator,
 	setSegmentName,
 } from './utils/segments';
-import {cardSelector, segmentConditions} from './utils/selectors';
+import {CardSelectors, SegmentConditions} from './utils/selectors';
 import {changeTimeFilter} from './utils/time-filter';
 import {expectNotToBeVisible, expectToBeVisible} from './utils/utils';
 
@@ -145,14 +145,14 @@ test('Check that the Dynamic Segment does not continue to appear in the audience
 		await createDynamicSegment(page);
 
 		await addSegmentField({
-			page,
 			criterionName: 'email',
 			criterionType: 'Individual Attributes',
+			page,
 		});
 
 		await selectOperator({
 			operator: 'is known',
-			operatorField: segmentConditions.criteriaCondition,
+			operatorField: SegmentConditions.criteriaCondition,
 			page,
 		});
 
@@ -221,7 +221,7 @@ test('Check that the Dynamic Segment does not continue to appear in the audience
 
 	await test.step('Change the time filter of the Audience card to Last 24 hours', async () => {
 		await changeTimeFilter({
-			cardSelector: cardSelector.Audience,
+			cardSelector: CardSelectors.Audience,
 			page,
 			timeFilterPeriod: 'Last 24 hours',
 		});
@@ -280,7 +280,7 @@ test('Check that the Dynamic Segment does not continue to appear in the audience
 
 	await test.step('Change the time filter of the Audience card to Last 24 hours', async () => {
 		await changeTimeFilter({
-			cardSelector: cardSelector.Audience,
+			cardSelector: CardSelectors.Audience,
 			page,
 			timeFilterPeriod: 'Last 24 hours',
 		});

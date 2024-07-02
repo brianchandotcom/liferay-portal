@@ -6,14 +6,14 @@
 import {Locator, Page} from '@playwright/test';
 
 import {waitForLoading} from './loading';
-import {cardSelector} from './selectors';
+import {CardSelectors} from './selectors';
 
 export async function changeTimeFilter({
 	cardSelector,
 	page,
 	timeFilterPeriod,
 }: {
-	cardSelector?: cardSelector;
+	cardSelector?: CardSelectors;
 	page: Page;
 	timeFilterPeriod: string;
 }) {

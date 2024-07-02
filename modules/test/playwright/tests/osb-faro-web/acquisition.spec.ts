@@ -15,7 +15,7 @@ import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
 import {navigateToACSitesPageViaURL} from './utils/navigation';
 import {createSitePage, navigateToDXPandDeleteSite} from './utils/portal';
-import {CardSelector} from './utils/selectors';
+import {CardSelectors} from './utils/selectors';
 import {closeSessions} from './utils/sessions';
 import {changeTimeFilter} from './utils/time-filter';
 
@@ -125,7 +125,7 @@ test('check if acquisition card displays PAID SEARCH channel after receiving an 
 
 	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
 		await changeTimeFilter({
-			cardSelector: CardSelector.Acquisition,
+			cardSelector: CardSelectors.Acquisition,
 			page,
 			timeFilterPeriod: 'Last 24 hours',
 		});
@@ -191,7 +191,7 @@ test('check if acquisition card displays DIRECT channel after receiving an event
 
 	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
 		await changeTimeFilter({
-			cardSelector: CardSelector.Acquisition,
+			cardSelector: CardSelectors.Acquisition,
 			page,
 			timeFilterPeriod: 'Last 24 hours',
 		});
@@ -257,7 +257,7 @@ test('check if acquisition card displays SOCIAL channel after receiving an event
 
 	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
 		await changeTimeFilter({
-			cardSelector: CardSelector.Acquisition,
+			cardSelector: CardSelectors.Acquisition,
 			page,
 			timeFilterPeriod: 'Last 24 hours',
 		});
@@ -323,7 +323,7 @@ test('check if acquisition card displays EMAIL channel after receiving an event'
 
 	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
 		await changeTimeFilter({
-			cardSelector: CardSelector.Acquisition,
+			cardSelector: CardSelectors.Acquisition,
 			page,
 			timeFilterPeriod: 'Last 24 hours',
 		});
@@ -389,7 +389,7 @@ test('check if acquisition card displays AFFILIATES channel after receiving an e
 
 	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
 		await changeTimeFilter({
-			cardSelector: CardSelector.Acquisition,
+			cardSelector: CardSelectors.Acquisition,
 			page,
 			timeFilterPeriod: 'Last 24 hours',
 		});
@@ -455,7 +455,7 @@ test('check if acquisition card displays ORGANIC channel after receiving an even
 
 	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
 		await changeTimeFilter({
-			cardSelector: CardSelector.Acquisition,
+			cardSelector: CardSelectors.Acquisition,
 			page,
 			timeFilterPeriod: 'Last 24 hours',
 		});
@@ -521,7 +521,7 @@ test('check if acquisition card displays DISPLAY channel after receiving an even
 
 	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
 		await changeTimeFilter({
-			cardSelector: CardSelector.Acquisition,
+			cardSelector: CardSelectors.Acquisition,
 			page,
 			timeFilterPeriod: 'Last 24 hours',
 		});
@@ -587,7 +587,7 @@ test('check if acquisition card displays REFERRAL channel after receiving an eve
 
 	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
 		await changeTimeFilter({
-			cardSelector: CardSelector.Acquisition,
+			cardSelector: CardSelectors.Acquisition,
 			page,
 			timeFilterPeriod: 'Last 24 hours',
 		});
@@ -653,7 +653,7 @@ test('check if acquisition card displays OTHER channel after receiving an event'
 
 	await test.step('change time filter in Acquisition card to Last 24 Hours and check if channel has count as 1', async () => {
 		await changeTimeFilter({
-			cardSelector: CardSelector.Acquisition,
+			cardSelector: CardSelectors.Acquisition,
 			page,
 			timeFilterPeriod: 'Last 24 hours',
 		});

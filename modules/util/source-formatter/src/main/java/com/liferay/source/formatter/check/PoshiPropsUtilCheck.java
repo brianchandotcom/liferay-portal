@@ -50,12 +50,20 @@ public class PoshiPropsUtilCheck extends BaseFileCheck {
 		Matcher matcher = _propsUtilGetPasswordPattern.matcher(content);
 
 		while (matcher.find()) {
+			String variableName = matcher.group(1);
+
+			int x = content.indexOf("${" + variableName + "}", matcher.end());
+
+			if ((x == -1) || _isInsideTripleQuotes(content, x)) {
+				continue;
+			}
+
 			addMessage(
 				fileName,
 				StringBundler.concat(
 					"Pass '", matcher.group(2),
 					"' directly instead of assigning value to variable '",
-					matcher.group(1), "'"),
+					variableName, "'"),
 				getLineNumber(content, matcher.start()) + 1);
 		}
 

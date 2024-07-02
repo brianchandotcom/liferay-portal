@@ -63,9 +63,9 @@ public class TestrayFlakyTrackerDispatchTaskExecutor
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
 		if (Validator.isNull(
-				unicodeProperties.getProperty("testrayFlakyScoreThreshold")) ||
+				unicodeProperties.getProperty("testrayCaseFlakyThreshold")) ||
 			Validator.isNull(
-				unicodeProperties.getProperty("testrayFlakyMaxDays"))) {
+				unicodeProperties.getProperty("testrayCaseFlakyLimitDays"))) {
 
 			_log.error("The required properties are not set");
 
@@ -125,7 +125,7 @@ public class TestrayFlakyTrackerDispatchTaskExecutor
 					_currentDateTime.minusDays(
 						GetterUtil.getLong(
 							unicodeProperties.getProperty(
-								"testrayFlakyMaxDays"))),
+								"testrayCaseFlakyLimitDays"))),
 					GetterUtil.getLong(testrayCase.get("c_caseId")));
 
 			if (testrayFlakyScores == null) {
@@ -138,7 +138,7 @@ public class TestrayFlakyTrackerDispatchTaskExecutor
 
 			if (flakyScore > GetterUtil.getDouble(
 					unicodeProperties.getProperty(
-						"testrayFlakyScoreThreshold"))) {
+						"testrayCaseFlakyThreshold"))) {
 
 				if (Objects.equals(
 						String.valueOf(testrayCase.get("flaky")), "true")) {

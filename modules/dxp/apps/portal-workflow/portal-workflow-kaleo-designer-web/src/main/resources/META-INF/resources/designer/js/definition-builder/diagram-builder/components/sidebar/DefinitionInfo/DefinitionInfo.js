@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -8,13 +8,13 @@ import ClayTabs from '@clayui/tabs';
 import moment from 'moment/min/moment-with-locales';
 import React, {useContext, useState} from 'react';
 
-import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
+import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
 import {
 	publishDefinitionRequest,
 	retrieveDefinitionRequest,
 	saveDefinitionRequest,
-} from '../../../util/fetchUtil';
-import lang from '../../../util/lang';
+} from '../../../../util/fetchUtil';
+import lang from '../../../../util/lang';
 
 moment.locale(Liferay.ThemeDisplay.getBCP47LanguageId());
 
@@ -210,7 +210,7 @@ const TABS = [
 	},
 ];
 
-export default function DefinitionInfo() {
+export function DefinitionInfo() {
 	const [activeIndex, setActiveIndex] = useState(0);
 
 	const {definitionInfo, version} = useContext(DefinitionBuilderContext);

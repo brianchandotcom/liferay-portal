@@ -8,16 +8,16 @@ import {Page} from '@playwright/test';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import getRandomString from '../../utils/getRandomString';
 import {performLogout} from '../../utils/performLogin';
-import {WidgetPage} from '../layout-admin-web/WidgetPage';
+import {WidgetPagePage} from '../layout-admin-web/WidgetPagePage';
 export class MessageBoardsWidgetPage {
 	readonly apiHelpers: ApiHelpers;
 	readonly page: Page;
-	readonly widgetPage: WidgetPage;
+	readonly widgetPagePage: WidgetPagePage;
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
 		this.page = page;
-		this.widgetPage = new WidgetPage(page);
+		this.widgetPagePage = new WidgetPagePage(page);
 	}
 
 	async addMessageBoardsPortlet(site: Site) {
@@ -30,7 +30,7 @@ export class MessageBoardsWidgetPage {
 			`/web${site.friendlyUrlPath}${layout.friendlyURL}`
 		);
 
-		await this.widgetPage.addPortlet('Message Boards');
+		await this.widgetPagePage.addPortlet('Message Boards');
 
 		return layout;
 	}

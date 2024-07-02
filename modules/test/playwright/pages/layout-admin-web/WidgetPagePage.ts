@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export class WidgetPage {
+export class WidgetPagePage {
 	readonly addApplicationButton: Locator;
 	readonly controlMenuAddButton: Locator;
 	readonly controlMenuAddPanelContentTab: Locator;

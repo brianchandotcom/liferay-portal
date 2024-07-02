@@ -5,14 +5,14 @@
 
 import {test} from '@playwright/test';
 
-import {WidgetPage} from '../../../pages/layout-admin-web/WidgetPage';
+import {WidgetPagePage} from '../../../pages/layout-admin-web/WidgetPagePage';
 import {QuestionsPage} from '../pages/QuestionsPage';
 import {QuestionsTopicsPage} from '../pages/QuestionsTopicsPage';
 
 const questionsPagesTest = test.extend<{
 	questionsPage: QuestionsPage;
 	questionsTopicsPage: QuestionsTopicsPage;
-	widgetPage: WidgetPage;
+	widgetPagePage: WidgetPagePage;
 }>({
 	questionsPage: async ({page}, use) => {
 		await use(new QuestionsPage(page));
@@ -20,8 +20,8 @@ const questionsPagesTest = test.extend<{
 	questionsTopicsPage: async ({page}, use) => {
 		await use(new QuestionsTopicsPage(page));
 	},
-	widgetPage: async ({page}, use) => {
-		await use(new WidgetPage(page));
+	widgetPagePage: async ({page}, use) => {
+		await use(new WidgetPagePage(page));
 	},
 });
 

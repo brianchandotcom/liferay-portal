@@ -119,8 +119,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 		</#if>
 	)
 </#if>
+
+<#assign isPolymorphicParent = schema.discriminator?has_content />
+
 @XmlRootElement(name = "${schemaName}")
-public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoParentClassName}</#if> implements Serializable {
+public <#if isPolymorphicParent>abstract</#if> class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoParentClassName}</#if> <#if !isPolymorphicParent>implements Serializable</#if> {
 
 	public static ${schemaName} toDTO(String json) {
 		return ObjectMapperUtil.readValue(${schemaName}.class, json);

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -522,9 +521,6 @@ public class AddItemMVCActionCommandTest {
 	private Group _group;
 
 	private Layout _layout;
-
-	@Inject
-	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService

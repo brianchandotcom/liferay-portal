@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.internal.upgrade.v3_3_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntry;
@@ -18,12 +19,18 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -32,9 +39,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
@@ -48,6 +57,9 @@ import com.liferay.segments.test.util.SegmentsTestUtil;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.GenericPortlet;
+import javax.portlet.Portlet;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -55,6 +67,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Lourdes Fernández Besada
@@ -153,6 +170,84 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 			segmentsExperience2Value, _segmentsExperienceId2);
 	}
 
+	@Test
+	public void testUpgradeWithFragmentEntryLinkTypePortlet() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		String portletId = RandomTestUtil.randomString();
+
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				Portlet.class, new TestPortlet(),
+				HashMapDictionaryBuilder.put(
+					"com.liferay.portlet.instanceable", "true"
+				).put(
+					"javax.portlet.name", portletId
+				).build());
+
+		try {
+			com.liferay.portal.kernel.model.Portlet portlet =
+				_portletLocalService.fetchPortletById(
+					TestPropsValues.getCompanyId(), portletId);
+
+			FragmentEntryLink fragmentEntryLink =
+				_addTypePortletFragmentStyledLayoutStructureItems(portletId);
+
+			String name = RandomTestUtil.randomString();
+
+			String defaultSegmentsExperienceValue =
+				RandomTestUtil.randomString();
+
+			_addPortletPreferenceValue(
+				portlet,
+				StringBundler.concat(
+					portletId, _INSTANCE_SEPARATOR,
+					fragmentEntryLink.getNamespace()),
+				name, defaultSegmentsExperienceValue);
+
+			String segmentsExperience1Value = RandomTestUtil.randomString();
+
+			_addPortletPreferenceValue(
+				portlet,
+				StringBundler.concat(
+					portletId, _INSTANCE_SEPARATOR,
+					fragmentEntryLink.getNamespace(),
+					_SEGMENTS_EXPERIENCE_SEPARATOR_1, _segmentsExperienceId1),
+				name, segmentsExperience1Value);
+
+			String segmentsExperience2Value = RandomTestUtil.randomString();
+
+			_addPortletPreferenceValue(
+				portlet,
+				StringBundler.concat(
+					portletId, _INSTANCE_SEPARATOR,
+					fragmentEntryLink.getNamespace(),
+					_SEGMENTS_EXPERIENCE_SEPARATOR_2, _segmentsExperienceId2),
+				name, segmentsExperience2Value);
+
+			_assertGetFragmentEntryLinksBySegmentsExperienceId();
+
+			_runUpgrade();
+
+			_assertGetFragmentEntryLinksByPlid(3);
+
+			_assertFragmentEntryLink(
+				defaultSegmentsExperienceValue, name, portletId,
+				_SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			_assertFragmentEntryLink(
+				segmentsExperience1Value, name, portletId,
+				_segmentsExperienceId1);
+			_assertFragmentEntryLink(
+				segmentsExperience2Value, name, portletId,
+				_segmentsExperienceId2);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
+
 	private void _addFragmentStyledLayoutStructureItem(
 			long fragmentEntryLinkId, long segmentsExperienceId)
 		throws Exception {
@@ -207,6 +302,64 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 		return fragmentEntryLink;
 	}
 
+	private void _addPortletPreferenceValue(
+			com.liferay.portal.kernel.model.Portlet portlet, String portletId,
+			String name, String value)
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.addPortletPreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				portletId, portlet, null);
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			_portletPreferenceValueLocalService.getPreferences(
+				portletPreferences);
+
+		jxPortletPreferences.setValue(name, value);
+
+		_portletPreferencesLocalService.updatePreferences(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(), portletId,
+			jxPortletPreferences);
+	}
+
+	private FragmentEntryLink _addTypePortletFragmentStyledLayoutStructureItems(
+			String portletId)
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				null, StringPool.BLANK, StringPool.BLANK, 0, StringPool.BLANK,
+				StringPool.BLANK, _layout, StringPool.BLANK,
+				_SEGMENTS_EXPERIENCE_ID_DEFAULT,
+				FragmentConstants.TYPE_PORTLET);
+
+		fragmentEntryLink.setEditableValues(
+			JSONUtil.put(
+				"instanceId", fragmentEntryLink.getNamespace()
+			).put(
+				"portletId", portletId
+			).toString());
+
+		fragmentEntryLink =
+			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				fragmentEntryLink);
+
+		_assertFragmentStyledLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			_SEGMENTS_EXPERIENCE_ID_DEFAULT);
+
+		_addFragmentStyledLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(), _segmentsExperienceId1);
+		_addFragmentStyledLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(), _segmentsExperienceId2);
+
+		return fragmentEntryLink;
+	}
+
 	private void _assertFragmentEntryLink(
 			String expectedValue, long segmentsExperienceId)
 		throws Exception {
@@ -241,6 +394,43 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 
 		Assert.assertEquals(
 			expectedValue, elementTextJSONObject.getString(_languageId));
+	}
+
+	private void _assertFragmentEntryLink(
+			String expected, String name, String portletId,
+			long segmentsExperienceId)
+		throws Exception {
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					_group.getGroupId(), segmentsExperienceId,
+					_layout.getPlid());
+
+		Assert.assertEquals(
+			fragmentEntryLinks.toString(), 1, fragmentEntryLinks.size());
+
+		FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(0);
+
+		Assert.assertEquals(
+			FragmentConstants.TYPE_PORTLET, fragmentEntryLink.getType());
+
+		Assert.assertTrue(
+			Validator.isNotNull(fragmentEntryLink.getEditableValues()));
+
+		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		Assert.assertEquals(
+			portletId, editableValuesJSONObject.getString("portletId"));
+
+		String instanceId = editableValuesJSONObject.getString("instanceId");
+
+		Assert.assertEquals(fragmentEntryLink.getNamespace(), instanceId);
+
+		_assertPortletPreferenceValue(
+			expected, name,
+			StringBundler.concat(portletId, _INSTANCE_SEPARATOR, instanceId));
 	}
 
 	private void _assertFragmentStyledLayoutStructureItem(
@@ -298,6 +488,21 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 			fragmentEntryLinks.toString(), count, fragmentEntryLinks.size());
 	}
 
+	private void _assertPortletPreferenceValue(
+			String expected, String name, String portletId)
+		throws Exception {
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			_portletPreferenceValueLocalService.getPreferences(
+				_portletPreferencesLocalService.getPortletPreferences(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+					portletId));
+
+		Assert.assertEquals(
+			expected, jxPortletPreferences.getValue(name, null));
+	}
+
 	private void _runUpgrade() throws Exception {
 		UpgradeProcess[] upgradeProcesses = UpgradeTestUtil.getUpgradeSteps(
 			_upgradeStepRegistrator, new Version(3, 3, 0));
@@ -309,10 +514,18 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 		_multiVMPool.clear();
 	}
 
+	private static final String _INSTANCE_SEPARATOR = "_INSTANCE_";
+
 	private static final long _SEGMENTS_EXPERIENCE_ID_DEFAULT = 0;
 
 	private static final String _SEGMENTS_EXPERIENCE_ID_PREFIX =
 		"segments-experience-id-";
+
+	private static final String _SEGMENTS_EXPERIENCE_SEPARATOR_1 =
+		"_SEGMENTS_EXPERIENCE_";
+
+	private static final String _SEGMENTS_EXPERIENCE_SEPARATOR_2 =
+		"SEGMENTSEXPERIENCE";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
@@ -346,7 +559,20 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 	@Inject
 	private Portal _portal;
 
+	@Inject
+	private PortletLocalService _portletLocalService;
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Inject
+	private PortletPreferenceValueLocalService
+		_portletPreferenceValueLocalService;
+
 	private long _segmentsExperienceId1;
 	private long _segmentsExperienceId2;
+
+	private class TestPortlet extends GenericPortlet {
+	}
 
 }

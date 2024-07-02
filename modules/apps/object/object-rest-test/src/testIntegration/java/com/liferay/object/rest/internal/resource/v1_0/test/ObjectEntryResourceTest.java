@@ -6293,7 +6293,7 @@ public class ObjectEntryResourceTest {
 				jsonObject.getString("id"),
 			Http.Method.GET);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
 					"taxonomyCategoryId",
@@ -6310,7 +6310,8 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			jsonObject.getJSONArray(
 				"taxonomyCategoryBriefs"
-			).toString());
+			).toString(),
+			JSONCompareMode.NON_EXTENSIBLE);
 	}
 
 	@Test
@@ -6338,7 +6339,7 @@ public class ObjectEntryResourceTest {
 				"?nestedFields=embeddedTaxonomyCategory"),
 			Http.Method.GET);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
 					"embeddedTaxonomyCategory",
@@ -6361,7 +6362,8 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			jsonObject.getJSONArray(
 				"taxonomyCategoryBriefs"
-			).toString());
+			).toString(),
+			JSONCompareMode.NON_EXTENSIBLE);
 	}
 
 	@Test
@@ -6571,7 +6573,7 @@ public class ObjectEntryResourceTest {
 				jsonObject.getString("id"),
 			Http.Method.PATCH);
 
-		Assert.assertEquals(
+		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
 					"taxonomyCategoryId",
@@ -6594,7 +6596,8 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			jsonObject.getJSONArray(
 				"taxonomyCategoryBriefs"
-			).toString());
+			).toString(),
+			JSONCompareMode.NON_EXTENSIBLE);
 	}
 
 	@FeatureFlags("LPS-174455")

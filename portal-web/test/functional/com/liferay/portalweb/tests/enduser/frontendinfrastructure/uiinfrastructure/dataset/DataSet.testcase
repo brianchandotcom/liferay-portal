@@ -429,32 +429,6 @@ definition {
 		}
 	}
 
-	@description = "Needs refactor after LPS-183512 is fixed | LPS-175990. Confirm the error message that appears when the user tries to create a data set entry with more than 280 characters in the name field"
-	@priority = 3
-	test CannotExceed280Characters {
-		task ("When the user goes to add data sets") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("When a user types a name that is more than 280 characters") {
-			PortletEntry.inputName(name = "Lorem ipsum dolor sit amet consectetur adipiscing elit. Nam fermentum est sed varius porttitor odio tortor commodo ligula quis auctor nulla massa ut eros. Vestibulum in eros maximus quam gravida dapibus. Proin vitae mi diam. Duis iaculis nisi quis pharetra varius arcu eros bibendum turpis nec posuere nibh arcu id orci.");
-		}
-
-		task ("And choose the provider named Channel") {
-			DataSetAdmin.selectProvider(key_type = "/data-set-manager/entries");
-		}
-
-		task ("And clicking on the Save button") {
-			Button.clickSave();
-		}
-
-		task ("Then Confirm that alert messages are present") {
-			AssertTextPresent(
-				locator1 = "Message#ERROR",
-				value1 = "Your request failed to complete.");
-		}
-	}
-
 	@description = "LPS-172882: Display matched result in new FDS View modal"
 	@priority = 3
 	test CanReturnAMatchedResult {

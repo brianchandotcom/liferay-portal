@@ -102,6 +102,7 @@ export default function Preview({activeSize, open, previewRef}: IPreviewProps) {
 				<iframe
 					className="border-0 h-100 w-100"
 					src={createIframeURL()}
+					title={Liferay.Language.get('simulation-preview')}
 				/>
 			</div>
 		</div>

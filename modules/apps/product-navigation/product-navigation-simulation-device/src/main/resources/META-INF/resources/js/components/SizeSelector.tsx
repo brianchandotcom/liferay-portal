@@ -9,6 +9,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
@@ -129,6 +130,8 @@ function SizeButton({
 		}
 	};
 
+	const labelId = useId();
+
 	return (
 		<ClayButton
 			aria-controls={
@@ -142,6 +145,7 @@ function SizeButton({
 						: false
 					: undefined
 			}
+			aria-labelledby={labelId}
 			className={classNames('col-4 size-button text-center', {
 				'd-lg-block d-none': !responsive,
 				'selected': activeSize.id === id,
@@ -153,7 +157,9 @@ function SizeButton({
 				<ClayIcon symbol={icon} />
 			</span>
 
-			<span className="mt-1">{label}</span>
+			<span className="mt-1" id={labelId}>
+				{label}
+			</span>
 		</ClayButton>
 	);
 }

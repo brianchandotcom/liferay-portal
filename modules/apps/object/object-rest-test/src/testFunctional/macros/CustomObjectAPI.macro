@@ -42,9 +42,11 @@ definition {
 			var api = StringUtil.add(${api}, "/scopes/${scopeKey}", "");
 		}
 
+		var userPassword = PropsUtil.get("default.admin.password");
+
 		if (isSet(userEmailAddress)) {
 			var headers = '''
-				-u ${userEmailAddress}:${PropsUtil.get("default.admin.password")} \
+				-u ${userEmailAddress}:${userPassword} \
 				-H Content-Type: application/json \
 			''';
 		}

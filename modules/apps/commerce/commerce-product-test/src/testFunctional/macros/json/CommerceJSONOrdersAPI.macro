@@ -258,9 +258,11 @@ definition {
 			var userEmail = "test";
 		}
 
+		var userPassword = PropsUtil.get("default.admin.password");
+
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orders/${orderId}/orderNotes \
-				-u ${userEmail}@liferay.com:${PropsUtil.get("default.admin.password")} \
+				-u ${userEmail}@liferay.com:${userPassword} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
@@ -728,9 +730,11 @@ definition {
 
 		echo("payload: ${payload}");
 
+		var userPassword = PropsUtil.get("default.admin.password");
+
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-order/v1.0/orderNotes/${orderNoteId} \
-				-u ${userEmail}@liferay.com:${PropsUtil.get("default.admin.password")} \
+				-u ${userEmail}@liferay.com:${userPassword} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{${payload}}'

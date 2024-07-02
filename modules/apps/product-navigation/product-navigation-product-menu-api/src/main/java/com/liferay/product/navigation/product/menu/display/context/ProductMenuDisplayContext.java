@@ -5,6 +5,7 @@
 
 package com.liferay.product.navigation.product.menu.display.context;
 
+import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,24 +58,24 @@ public class ProductMenuDisplayContext {
 			return _childPanelCategories;
 		}
 
-		_childPanelCategories =
-			PanelCategoryRegistryUtil.getChildPanelCategories(
-				PanelCategoryKeys.ROOT, _themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroup());
+		_childPanelCategories = _panelCategoryHelper.getChildPanelCategories(
+			PanelCategoryKeys.ROOT, _themeDisplay);
 
 		if (_isEnableApplicationsMenu()) {
 			return _childPanelCategories;
 		}
 
 		List<PanelCategory> applicationsMenuChildPanelCategories =
-			PanelCategoryRegistryUtil.getChildPanelCategories(
-				PanelCategoryKeys.APPLICATIONS_MENU,
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroup());
+			_panelCategoryHelper.getChildPanelCategories(
+				PanelCategoryKeys.APPLICATIONS_MENU, _themeDisplay);
 
 		Collections.reverse(applicationsMenuChildPanelCategories);
 
-		_childPanelCategories.addAll(0, applicationsMenuChildPanelCategories);
+		List<PanelCategory> panelCategoriesWithPanelApps =
+			_filterPanelCategoriesWithPanelApps(
+				applicationsMenuChildPanelCategories);
+
+		_childPanelCategories.addAll(0, panelCategoriesWithPanelApps);
 
 		return _childPanelCategories;
 	}
@@ -194,6 +196,23 @@ public class ProductMenuDisplayContext {
 		}
 
 		return true;
+	}
+
+	private List<PanelCategory> _filterPanelCategoriesWithPanelApps(
+		List<PanelCategory> panelCategories) {
+
+		List<PanelCategory> filteredPanelCategories = new ArrayList<>();
+
+		for (PanelCategory panelCategory : panelCategories) {
+			List<PanelApp> panelApps = _panelCategoryHelper.getAllPanelApps(
+				panelCategory.getKey());
+
+			if (!panelApps.isEmpty()) {
+				filteredPanelCategories.add(panelCategory);
+			}
+		}
+
+		return filteredPanelCategories;
 	}
 
 	private boolean _hasAdministrationPortletPermission() throws Exception {

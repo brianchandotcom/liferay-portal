@@ -7,9 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 export class CustomerDashboardPage {
 	readonly accountSearchDropdown: Locator;
-	readonly detailDashboardTab: Locator;
 	readonly downloadButton: Locator;
-	readonly downloadDashboardTab: Locator;
 	readonly dropdownDownloadButton: Locator;
 	readonly page: Page;
 	readonly purchasedApp: (productName: string) => Locator;
@@ -17,9 +15,7 @@ export class CustomerDashboardPage {
 
 	constructor(page: Page) {
 		this.accountSearchDropdown = page.locator('#account-search.dropdown');
-		this.detailDashboardTab = page.getByRole('link', {name: 'Details'});
 		this.downloadButton = page.getByRole('button', {name: 'Download'});
-		this.downloadDashboardTab = page.getByRole('link', {name: 'Download'});
 		this.dropdownDownloadButton = page.getByRole('menuitem', {
 			name: 'Download App',
 		});

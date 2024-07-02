@@ -114,6 +114,7 @@ public class SharingDLViewFileVersionDisplayContextTest {
 				StringUtil.toLowerCase(_group.getGroupKey()), "/",
 				friendlyURLEntry.getUrlTitle(), "')"),
 			dropdownItem.get("href"));
+
 		Assert.assertEquals("link", dropdownItem.get("icon"));
 		Assert.assertEquals(
 			LanguageUtil.get(LocaleUtil.getDefault(), "copy-link"),

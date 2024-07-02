@@ -4,7 +4,6 @@
  */
 
 import {Locator, Page} from '@playwright/test';
-import path from 'path';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {DocumentLibraryPage} from './DocumentLibraryPage';

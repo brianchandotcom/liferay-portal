@@ -125,12 +125,6 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
-	async deleteUserAccount(userAccountId: number) {
-		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/user-accounts/${userAccountId}`
-		);
-	}
-
 	async deleteRoleUserAccountAssociation(
 		roleId: number,
 		userAccountId: number

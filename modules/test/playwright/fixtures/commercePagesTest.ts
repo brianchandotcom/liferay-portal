@@ -57,8 +57,8 @@ const commercePagesTest = test.extend<{
 	commerceLayoutsPage: CommerceLayoutsPage;
 	commerceMiniCartPage: CommerceMiniCartPage;
 	commercePaymentsPage: CommercePaymentsPage;
-	commerceThemeMiniumPage: CommerceThemeMiniumPage;
 	commerceThemeMiniumCatalogPage: CommerceThemeMiniumCatalogPage;
+	commerceThemeMiniumPage: CommerceThemeMiniumPage;
 	pendingOrdersPage: PendingOrdersPage;
 	placedOrdersPage: PlacedOrdersPage;
 	productDetailsPage: ProductDetailsPage;
@@ -130,11 +130,11 @@ const commercePagesTest = test.extend<{
 	commercePaymentsPage: async ({page}, use) => {
 		await use(new CommercePaymentsPage(page));
 	},
-	commerceThemeMiniumPage: async ({page}, use) => {
-		await use(new CommerceThemeMiniumPage(page));
-	},
 	commerceThemeMiniumCatalogPage: async ({page}, use) => {
 		await use(new CommerceThemeMiniumCatalogPage(page));
+	},
+	commerceThemeMiniumPage: async ({page}, use) => {
+		await use(new CommerceThemeMiniumPage(page));
 	},
 	pendingOrdersPage: async ({page}, use) => {
 		await use(new PendingOrdersPage(page));

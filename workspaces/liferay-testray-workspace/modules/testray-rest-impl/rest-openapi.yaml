@@ -55,6 +55,8 @@ components:
                     type: string
                 executionDate:
                     type: string
+                flaky:
+                    type: boolean
                 gitHash:
                     type: string
                 issues:
@@ -394,6 +396,10 @@ paths:
                   name: error
                   schema:
                       type: string
+                - in: query
+                  name: flaky
+                  schema:
+                      type: boolean
                 - in: query
                   name: issues
                   schema:

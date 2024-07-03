@@ -3,124 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
 import ClayTabs from '@clayui/tabs';
 import React, {useContext, useState} from 'react';
 
 import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
-import {
-	publishDefinitionRequest,
-	retrieveDefinitionRequest,
-	saveDefinitionRequest,
-} from '../../../../util/fetchUtil';
-import lang from '../../../../util/lang';
 import {DetailsTab} from './DetailsTab';
-
-const VersionRow = ({versionNumber}) => {
-	const {
-		definitionName,
-		setAlertMessage,
-		setAlertType,
-		setDefinitionName,
-		setShowAlert,
-		setVersion,
-	} = useContext(DefinitionBuilderContext);
-
-	const restoreSuccess = (response) => {
-		const alertMessage = lang.sub(
-			Liferay.Language.get('restored-to-revision-x'),
-			[versionNumber]
-		);
-
-		setAlertMessage(alertMessage);
-		setAlertType('success');
-
-		setShowAlert(true);
-
-		response.json().then(({name, version}) => {
-			setDefinitionName(name);
-			setVersion(parseInt(version, 10));
-		});
-	};
-
-	const restoreFailed = () => {
-		const alertMessage = Liferay.Language.get(
-			'unable-to-restore-this-item'
-		);
-
-		setAlertMessage(alertMessage);
-		setAlertType('danger');
-
-		setShowAlert(true);
-	};
-
-	return (
-		<div className="info-group">
-			<div className="version-row">
-				<label className="text-secondary">
-					{Liferay.Language.get('version')} {versionNumber}
-				</label>
-
-				<ClayButtonWithIcon
-					className="text-secondary"
-					displayType="unstyled"
-					onClick={() => {
-						retrieveDefinitionRequest(definitionName, versionNumber)
-							.then((response) => response.json())
-							.then(
-								({
-									active,
-									content,
-									title,
-									title_i18n,
-									version,
-								}) => {
-									if (active) {
-										publishDefinitionRequest({
-											active,
-											content,
-											name: definitionName,
-											title,
-											title_i18n,
-											version,
-										}).then((response) => {
-											if (response.ok) {
-												restoreSuccess(response);
-											}
-											else {
-												restoreFailed();
-											}
-										});
-									}
-									else {
-										saveDefinitionRequest({
-											active,
-											content,
-											name: definitionName,
-											title,
-											title_i18n,
-											version,
-										}).then((response) => {
-											if (response.ok) {
-												restoreSuccess(response);
-											}
-											else {
-												restoreFailed();
-											}
-										});
-									}
-								}
-							);
-					}}
-					symbol="restore"
-					title={Liferay.Language.get('restore')}
-				/>
-			</div>
-
-			<div className="sheet-subtitle" />
-		</div>
-	);
-};
+import {VersionRow} from './VersionRow';
 
 const RevisionHistory = ({version}) => {
 	const otherVersions = [];

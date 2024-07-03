@@ -23,7 +23,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface RSSPortletInstanceConfiguration {
 
-	@Meta.AD(deflt = "0", name = "display-style-group-id", required = false)
+	@Meta.AD(
+		deflt = "0", description = "display-style-group-id-desciption",
+		name = "display-style-group-id", required = false
+	)
 	public long displayStyleGroupId();
 
 	@Meta.AD(name = "display-style-group-key", required = false)

@@ -212,6 +212,47 @@ public class TestrayCaseResult implements Serializable {
 	private Supplier<String> _executionDateSupplier;
 
 	@Schema
+	public Boolean getFlaky() {
+		if (_flakySupplier != null) {
+			flaky = _flakySupplier.get();
+
+			_flakySupplier = null;
+		}
+
+		return flaky;
+	}
+
+	public void setFlaky(Boolean flaky) {
+		this.flaky = flaky;
+
+		_flakySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFlaky(
+		UnsafeSupplier<Boolean, Exception> flakyUnsafeSupplier) {
+
+		_flakySupplier = () -> {
+			try {
+				return flakyUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean flaky;
+
+	@JsonIgnore
+	private Supplier<Boolean> _flakySupplier;
+
+	@Schema
 	public String getGitHash() {
 		if (_gitHashSupplier != null) {
 			gitHash = _gitHashSupplier.get();
@@ -1036,6 +1077,18 @@ public class TestrayCaseResult implements Serializable {
 			sb.append(_escape(executionDate));
 
 			sb.append("\"");
+		}
+
+		Boolean flaky = getFlaky();
+
+		if (flaky != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"flaky\": ");
+
+			sb.append(flaky);
 		}
 
 		String gitHash = getGitHash();

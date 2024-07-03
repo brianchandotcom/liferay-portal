@@ -103,13 +103,14 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayCaseResultsTestrayBuild(comment: ___, error: ___, issues: ___, noComment: ___, noError: ___, noIssues: ___, page: ___, pageSize: ___, priority: ___, status: ___, testrayBuildId: ___, testrayCaseName: ___, testrayCaseTypeIds: ___, testrayComponentIds: ___, testrayRunId: ___, testrayRunName: ___, testrayTeamIds: ___, userId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayCaseResultsTestrayBuild(comment: ___, error: ___, flaky: ___, issues: ___, noComment: ___, noError: ___, noIssues: ___, page: ___, pageSize: ___, priority: ___, status: ___, testrayBuildId: ___, testrayCaseName: ___, testrayCaseTypeIds: ___, testrayComponentIds: ___, testrayRunId: ___, testrayRunName: ___, testrayTeamIds: ___, userId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public TestrayCaseResultPage testrayCaseResultsTestrayBuild(
 			@GraphQLName("testrayBuildId") Long testrayBuildId,
 			@GraphQLName("comment") String comment,
 			@GraphQLName("error") String error,
+			@GraphQLName("flaky") Boolean flaky,
 			@GraphQLName("issues") String issues,
 			@GraphQLName("noComment") Boolean noComment,
 			@GraphQLName("noError") Boolean noError,
@@ -132,8 +133,8 @@ public class Query {
 			this::_populateResourceContext,
 			testrayCaseResultResource -> new TestrayCaseResultPage(
 				testrayCaseResultResource.getTestrayCaseResultsTestrayBuildPage(
-					testrayBuildId, comment, error, issues, noComment, noError,
-					noIssues, priority, status, testrayCaseName,
+					testrayBuildId, comment, error, flaky, issues, noComment,
+					noError, noIssues, priority, status, testrayCaseName,
 					testrayCaseTypeIds, testrayComponentIds, testrayRunId,
 					testrayRunName, testrayTeamIds, userId,
 					Pagination.of(page, pageSize))));

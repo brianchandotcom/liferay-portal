@@ -52,8 +52,8 @@ public interface TestrayCaseResultResource {
 		throws Exception;
 
 	public Page<TestrayCaseResult> getTestrayCaseResultsTestrayBuildPage(
-			Long testrayBuildId, String comment, String error, String issues,
-			Boolean noComment, Boolean noError, Boolean noIssues,
+			Long testrayBuildId, String comment, String error, Boolean flaky,
+			String issues, Boolean noComment, Boolean noError, Boolean noIssues,
 			String priority, String status, String testrayCaseName,
 			String testrayCaseTypeIds, String testrayComponentIds,
 			String testrayRunId, String testrayRunName, String testrayTeamIds,

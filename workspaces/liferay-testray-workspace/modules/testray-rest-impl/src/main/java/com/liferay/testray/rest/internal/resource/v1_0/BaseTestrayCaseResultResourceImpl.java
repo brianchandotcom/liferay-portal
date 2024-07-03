@@ -217,6 +217,10 @@ public abstract class BaseTestrayCaseResultResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "flaky"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "issues"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -297,6 +301,9 @@ public abstract class BaseTestrayCaseResultResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("error")
 			String error,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("flaky")
+			Boolean flaky,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("issues")
 			String issues,

@@ -377,7 +377,6 @@ public class TestrayCaseResultResourceImpl
 									GetterUtil.getLong(value.get("portraitId")),
 									GetterUtil.getString(value.get("uuid_")));
 							});
-
 						setUserName(
 							() -> {
 								FullNameGenerator fullNameGenerator =

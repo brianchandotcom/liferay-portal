@@ -12,7 +12,6 @@ import {INITIAL_FILTER} from '../utils/constants/initialFilter';
 export default function useFilters(
 	sort: string,
 	urlParams: URLSearchParams,
-	openOpportunitiesFilter?: boolean,
 	isRenewalListing?: boolean
 ) {
 	const [filters, setFilters] = useState(
@@ -22,12 +21,8 @@ export default function useFilters(
 	);
 
 	const opportunitiesInitialFilter = isRenewalListing
-		? openOpportunitiesFilter
-			? Filters.RENEWAL_LISTING.open
-			: Filters.RENEWAL_LISTING.closed
-		: openOpportunitiesFilter
-			? Filters.OPPORTUNITY_LISTING.open
-			: Filters.OPPORTUNITY_LISTING.closed;
+		? Filters.RENEWAL_LISTING.opportunities
+		: Filters.OPPORTUNITY_LISTING.opportunities;
 
 	const onFilter = useCallback(
 		(newFilters: Partial<typeof INITIAL_FILTER>) =>
@@ -39,10 +34,6 @@ export default function useFilters(
 	);
 
 	sessionStorage.setItem('opportunitiesFilters', JSON.stringify(filters));
-	sessionStorage.setItem(
-		'openOpportunitiesFilter',
-		JSON.stringify(openOpportunitiesFilter)
-	);
 
 	useEffect(() => {
 		let initialFilter = ``;

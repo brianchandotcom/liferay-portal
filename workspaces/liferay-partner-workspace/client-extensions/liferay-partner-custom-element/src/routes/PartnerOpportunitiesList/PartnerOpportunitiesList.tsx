@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {CSVLink} from 'react-csv';
 
 import './index.css';
@@ -28,7 +28,6 @@ import useQueryParams from '../../common/hooks/useQueryParams';
 import {
 	Filters,
 	currentFiscalYearStart,
-	previousFiscalYearStart,
 } from '../../common/utils/constants/filters';
 import {maxPagination} from '../../common/utils/constants/maxPagination';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
@@ -55,46 +54,9 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 
 	const urlParams = useQueryParams();
 
-	const [openOpportunitiesFilter, setOpenOpportunitiesFilter] = useState(
-		urlParams.has('filter')
-			? !urlParams.get('filter')?.includes("stage eq 'Closed Lost'") &&
-					!urlParams
-						.get('filter')
-						?.includes("stage eq 'Closed Won'") &&
-					!urlParams
-						.get('filter')
-						?.includes("stage eq 'Disqualified'") &&
-					!urlParams.get('filter')?.includes("stage eq 'Rejected'") &&
-					!urlParams
-						.get('filter')
-						?.includes("stage eq 'Rolled into Opportunity'")
-			: true
-	);
-
-	useEffect(() => {
-		if (urlParams.has('filter')) {
-			setOpenOpportunitiesFilter(
-				!urlParams.get('filter')?.includes("stage eq 'Closed Lost'") &&
-					!urlParams
-						.get('filter')
-						?.includes("stage eq 'Closed Won'") &&
-					!urlParams
-						.get('filter')
-						?.includes("stage eq 'Disqualified'") &&
-					!urlParams.get('filter')?.includes("stage eq 'Rejected'") &&
-					!urlParams
-						.get('filter')
-						?.includes("stage eq 'Rolled into Opportunity'")
-			);
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [urlParams.entries()]);
-
 	const {filters, onFilter, setFilters} = useFilters(
 		debouncedDealRegistrationTableSort,
 		urlParams,
-		openOpportunitiesFilter,
 		isRenewalListing
 	);
 
@@ -165,15 +127,10 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 		},
 	];
 
-	const rangeDataPicker = openOpportunitiesFilter
-		? {
-				end: '',
-				start: previousFiscalYearStart,
-			}
-		: {
-				end: '',
-				start: currentFiscalYearStart,
-			};
+	const rangeDataPicker = {
+		end: '',
+		start: currentFiscalYearStart,
+	};
 
 	const getFilters = () => {
 		const filterFields = [
@@ -182,9 +139,8 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 					<CheckboxFilter
 						availableItems={
 							isRenewalListing
-								? Filters.RENEWAL_LISTING.renewalsListStage
-								: Filters.OPPORTUNITY_LISTING
-										.opportunityListStage
+								? Filters.RENEWAL_LISTING.stages
+								: Filters.OPPORTUNITY_LISTING.stages
 						}
 						clearCheckboxes={!filters.stage.value?.length}
 						initialCheckedItems={filters.stage.value}

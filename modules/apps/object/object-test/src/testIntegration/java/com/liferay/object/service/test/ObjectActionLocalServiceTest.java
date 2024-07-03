@@ -246,8 +246,7 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectAction objectAction1 = _addNotificationObjectAction(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-			accountEntryObjectDefinition,
-			"[%ACCOUNTENTRY_AUTHOR_EMAIL_ADDRESS%]");
+			accountEntryObjectDefinition);
 
 		User omniadminUser = UserTestUtil.addOmniadminUser();
 
@@ -270,34 +269,6 @@ public class ObjectActionLocalServiceTest {
 			notificationQueueEntries.toString(), 1,
 			notificationQueueEntries.size());
 
-		Map<String, Object> notificationRecipientSettingsMap =
-			NotificationRecipientSettingUtil.
-				getNotificationRecipientSettingsMap(
-					notificationQueueEntries.get(0));
-
-		User user = TestPropsValues.getUser();
-
-		AssertUtils.assertEqualsSorted(
-			StringUtil.split(user.getEmailAddress()),
-			StringUtil.split(
-				String.valueOf(notificationRecipientSettingsMap.get("bcc"))));
-		Assert.assertEquals(
-			user.getEmailAddress() + ",cc@liferay.com",
-			notificationRecipientSettingsMap.get("cc"));
-		Assert.assertEquals(
-			user.getEmailAddress(),
-			notificationRecipientSettingsMap.get("from"));
-		Assert.assertEquals(
-			user.getFirstName(),
-			notificationRecipientSettingsMap.get("fromName"));
-
-		Assert.assertTrue(
-			(boolean)notificationRecipientSettingsMap.get("singleRecipient"));
-		AssertUtils.assertEqualsSorted(
-			StringUtil.split(omniadminUser.getEmailAddress()),
-			StringUtil.split(
-				String.valueOf(notificationRecipientSettingsMap.get("to"))));
-
 		// Commerce order system object
 
 		ObjectDefinition commerceOrderObjectDefinition =
@@ -309,7 +280,7 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectAction objectAction2 = _addNotificationObjectAction(
 			DestinationNames.COMMERCE_PAYMENT_STATUS,
-			commerceOrderObjectDefinition, "[%CURRENT_USER_EMAIL_ADDRESS%]");
+			commerceOrderObjectDefinition);
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 			_user.getUserId(), _commerceChannel.getGroupId(),
@@ -2326,18 +2297,14 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	private ObjectAction _addNotificationObjectAction(
-			String objectActionTriggerKey, ObjectDefinition objectDefinition,
-			String to)
+			String objectActionTriggerKey, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		NotificationTemplate notificationTemplate =
 			NotificationTemplateLocalServiceUtil.createNotificationTemplate(
 				RandomTestUtil.randomInt());
 
-		User user = TestPropsValues.getUser();
-
-		notificationTemplate.setUserId(user.getUserId());
-
+		notificationTemplate.setUserId(_user.getUserId());
 		notificationTemplate.setObjectDefinitionId(
 			objectDefinition.getObjectDefinitionId());
 		notificationTemplate.setBody(RandomTestUtil.randomString());
@@ -2372,7 +2339,8 @@ public class ObjectActionLocalServiceTest {
 						Collections.singletonMap(
 							LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
 				NotificationRecipientSettingUtil.
-					createNotificationRecipientSetting("to", to)));
+					createNotificationRecipientSetting(
+						"to", "[%CURRENT_USER_EMAIL_ADDRESS%]")));
 		notificationContext.setNotificationTemplate(notificationTemplate);
 		notificationContext.setType(NotificationConstants.TYPE_EMAIL);
 

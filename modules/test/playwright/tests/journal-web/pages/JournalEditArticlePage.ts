@@ -77,7 +77,7 @@ export class JournalEditArticlePage {
 
 	async createArticleForStructure({
 		structureName,
-		title
+		title,
 	}: {
 		structureName?: string;
 		title?: string;
@@ -107,7 +107,9 @@ export class JournalEditArticlePage {
 			}),
 		});
 
-		await this.page.getByRole('button', {exact: true, name: 'Publish'}).click();
+		await this.page
+			.getByRole('button', {exact: true, name: 'Publish'})
+			.click();
 	}
 
 	async editArticle(title: string) {

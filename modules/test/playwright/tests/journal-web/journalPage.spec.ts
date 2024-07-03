@@ -30,16 +30,15 @@ test('LPP-50468 After clicking on Clear (filter by structrure) you can see all t
 	page,
 	site,
 }) => {
-	//1) create basic web content
-	const basicWebContentStructureId = await getBasicWebContentStructureId(apiHelpers);
+	const basicWebContentStructureId =
+		await getBasicWebContentStructureId(apiHelpers);
 
 	await apiHelpers.jsonWebServicesJournal.addWebContent({
 		ddmStructureId: basicWebContentStructureId,
 		groupId: site.id,
-		titleMap: {en_US: 'First Web content'}
+		titleMap: {en_US: 'First Web content'},
 	});
 
-	//2) Create structure
 	const structureName = 'Structure Test';
 
 	const dataDefinition = getDataStructureDefinition({
@@ -50,7 +49,6 @@ test('LPP-50468 After clicking on Clear (filter by structrure) you can see all t
 
 	await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
 
-	//3) Create web content based on structure
 	await journalEditArticlePage.goto({
 		siteUrl: site.friendlyUrlPath,
 		structureName,
@@ -64,30 +62,38 @@ test('LPP-50468 After clicking on Clear (filter by structrure) you can see all t
 	await journalPage.goto(site.friendlyUrlPath);
 
 	await expect(
-		page.getByRole('link', { name: 'First Web content' })
+		page.getByRole('link', {name: 'First Web content'})
 	).toBeVisible();
 
 	await expect(
-		page.getByRole('link', { name: 'Second Web content' })
+		page.getByRole('link', {name: 'Second Web content'})
 	).toBeVisible();
 
-	await page.getByLabel('Filter', { exact: true }).click();
+	await page.getByLabel('Filter', {exact: true}).click();
 
-	await page.getByRole('menuitem', { name: 'Structures' }).click();
+	await page.getByRole('menuitem', {name: 'Structures'}).click();
 
-	const structuresFrame = await page.frameLocator('iframe[title="Structures"]');
+	const structuresFrame = await page.frameLocator(
+		'iframe[title="Structures"]'
+	);
 
-	await structuresFrame.getByLabel('Reverse Order Direction: Currently Descending').waitFor();
+	await structuresFrame
+		.getByLabel('Reverse Order Direction: Currently Descending')
+		.waitFor();
 
-	await structuresFrame.getByRole('cell', { name: 'Basic Web Content' }).click();
+	await structuresFrame
+		.getByRole('cell', {name: 'Basic Web Content'})
+		.click();
 
 	await expect(
-		page.getByRole('link', { name: 'Second Web content' })
+		page.getByRole('link', {name: 'Second Web content'})
 	).toBeHidden();
 
-	await page.getByLabel('Clear 1 Result for Structures: Basic Web Content').click();
+	await page
+		.getByLabel('Clear 1 Result for Structures: Basic Web Content')
+		.click();
 
 	await expect(
-		page.getByRole('link', { name: 'Second Web content' })
+		page.getByRole('link', {name: 'Second Web content'})
 	).toBeVisible();
 });

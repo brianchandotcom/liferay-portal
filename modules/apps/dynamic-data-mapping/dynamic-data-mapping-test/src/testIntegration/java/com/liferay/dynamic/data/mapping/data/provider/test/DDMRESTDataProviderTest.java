@@ -47,6 +47,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -493,28 +495,32 @@ public class DDMRESTDataProviderTest {
 	public void testGetDataWithWebServiceError() throws Exception {
 		_setUserPermissionChecker(false);
 
-		String outputParameterId = StringUtil.randomString();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.dynamic.data.mapping.data.provider.internal." +
+					"rest.DDMRESTDataProvider",
+				LoggerTestUtil.WARN)) {
 
-		long ddmDataProviderId = _addDDMDataProviderInstance(
-			_createDDMDataProviderDDMFormValues(
-				false, false, StringPool.BLANK, null, outputParameterId,
-				"nameCurrentValue;name", "list", null, null,
-				"http://localhost"),
-			false);
+			String outputParameterId = StringUtil.randomString();
 
-		DDMDataProviderResponse ddmDataProviderResponse =
-			_ddmDataProvider.getData(
-				_createDDMDataProviderRequest(
-					ddmDataProviderId, null, null, null, null, null, null));
+			DDMDataProviderResponse ddmDataProviderResponse =
+				_ddmDataProvider.getData(
+					_createDDMDataProviderRequest(
+						_addDDMDataProviderInstance(
+							_createDDMDataProviderDDMFormValues(
+								false, false, StringPool.BLANK, null,
+								outputParameterId, "nameCurrentValue;name",
+								"list", null, null, "http://localhost"),
+							false),
+						null, null, null, null, null, null));
 
-		Assert.assertEquals(
-			DDMDataProviderResponseStatus.SERVICE_UNAVAILABLE,
-			ddmDataProviderResponse.getStatus());
-
-		List<KeyValuePair> keyValuePairs = ddmDataProviderResponse.getOutput(
-			outputParameterId, List.class);
-
-		Assert.assertEquals(keyValuePairs.toString(), 0, keyValuePairs.size());
+			Assert.assertEquals(
+				DDMDataProviderResponseStatus.SERVICE_UNAVAILABLE,
+				ddmDataProviderResponse.getStatus());
+			Assert.assertTrue(
+				ListUtil.isEmpty(
+					ddmDataProviderResponse.getOutput(
+						outputParameterId, List.class)));
+		}
 	}
 
 	private long _addDDMDataProviderInstance(

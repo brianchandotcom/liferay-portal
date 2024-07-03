@@ -39,7 +39,7 @@ export default async function getSassBinaryArchMap() {
 
 	archMap = archMap[os.arch()];
 
-	if (archMap === null) {
+	if (!archMap) {
 		return null;
 	}
 

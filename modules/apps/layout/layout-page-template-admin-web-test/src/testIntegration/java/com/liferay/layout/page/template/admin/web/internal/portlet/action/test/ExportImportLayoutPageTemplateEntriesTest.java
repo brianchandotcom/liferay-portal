@@ -123,7 +123,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Rubén Pulido
  */
 @RunWith(Arquillian.class)
-public class ImportExportLayoutPageTemplateEntriesTest {
+public class ExportImportLayoutPageTemplateEntriesTest {
 
 	@ClassRule
 	@Rule

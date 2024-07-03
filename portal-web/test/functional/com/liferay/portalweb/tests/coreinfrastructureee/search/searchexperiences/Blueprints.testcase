@@ -48,10 +48,10 @@ definition {
 			Click.clickNoMouseOver(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_CLEAR");
 		}
 
-		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+		Blueprints.searchBlueprintsPreview(searchTerm = "tree");
 
 		AssertElementPresent(
-			key_resultTitle = "Test",
+			key_resultTitle = "tree.png",
 			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE");
 
 		PortletEntry.save();

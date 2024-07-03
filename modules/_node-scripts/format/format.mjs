@@ -313,7 +313,7 @@ export default async function format(
 async function getEslintConfig(rootDir) {
 	const eslintConfigPath = path.join(rootDir, '.eslintrc.js');
 
-	const {default: eslintConfig} = await import(eslintConfigPath);
+	const {default: eslintConfig} = await import('file://' + eslintConfigPath);
 
 	return eslintConfig;
 }
@@ -321,7 +321,9 @@ async function getEslintConfig(rootDir) {
 async function getPrettierConfig(rootDir) {
 	const prettierConfigPath = path.join(rootDir, '.prettierrc.js');
 
-	const {default: prettierConfig} = await import(prettierConfigPath);
+	const {default: prettierConfig} = await import(
+		'file://' + prettierConfigPath
+	);
 
 	return prettierConfig;
 }
@@ -329,7 +331,9 @@ async function getPrettierConfig(rootDir) {
 async function getStylelintConfig(rootDir) {
 	const stylelintConfigPath = path.join(rootDir, '.stylelintrc.js');
 
-	const {default: stylelintConfig} = await import(stylelintConfigPath);
+	const {default: stylelintConfig} = await import(
+		'file://' + stylelintConfigPath
+	);
 
 	return stylelintConfig;
 }

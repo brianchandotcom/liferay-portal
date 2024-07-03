@@ -462,8 +462,9 @@ public class CompanyLocalServiceDBPartitionTest
 	public void testDeleteCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		Configuration configuration = _createFactoryConfiguration(
-			company.getCompanyId());
+		String pid = _createFactoryConfiguration(
+			company.getCompanyId()
+		).getPid();
 
 		int dbPartitionsCount = _getDBPartitionsCount();
 
@@ -480,9 +481,9 @@ public class CompanyLocalServiceDBPartitionTest
 		Assert.assertNull(
 			ReflectionTestUtil.invoke(
 				configurationManager, "getConfiguration",
-				new Class<?>[] {String.class}, configuration.getPid()));
+				new Class<?>[] {String.class}, pid));
 
-		Assert.assertFalse(_persistenceManager.exists(configuration.getPid()));
+		Assert.assertFalse(_persistenceManager.exists(pid));
 	}
 
 	@Test

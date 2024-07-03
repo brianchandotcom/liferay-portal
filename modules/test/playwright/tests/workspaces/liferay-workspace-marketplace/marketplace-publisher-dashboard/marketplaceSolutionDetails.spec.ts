@@ -6,6 +6,7 @@
 import {mergeTests} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {marketplaceDataTest} from '../fixtures/marketplaceDataTest';
 import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
 import {
@@ -27,7 +28,11 @@ import {
 	SOLUTION_PUBLISHER_ROLE,
 } from './marketplaceSolutionPublisher.spec';
 
-export const test = mergeTests(marketplaceSiteFixture, marketplacePagesTest);
+export const test = mergeTests(
+	marketplaceSiteFixture,
+	marketplacePagesTest,
+	marketplaceDataTest
+);
 
 test.describe('Publishers Can View Marketplace Solution Details', () => {
 	let _catalog;
@@ -35,8 +40,16 @@ test.describe('Publishers Can View Marketplace Solution Details', () => {
 	let _product;
 	let _order;
 
-	test.beforeEach(async ({apiHelpers, marketplace}) => {
-		console;
+	test.beforeEach(async ({apiHelpers, marketplace, marketplaceHelpers}) => {
+
+		// const testa =
+		// 	await marketplaceHelpers.createMarketplaceAccountUserCatalog({
+		// 		accountName: ACCOUNT_NAME.SUPPLIER,
+		// 		accountType: 'supplier',
+		// 		apiHelpers,
+		// 	});
+
+		// console.log('testa', testa);
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(

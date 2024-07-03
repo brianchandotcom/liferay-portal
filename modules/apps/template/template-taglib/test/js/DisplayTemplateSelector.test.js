@@ -7,7 +7,9 @@ import '@testing-library/jest-dom/extend-expect';
 import {act, fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
-import DisplayTemplateSelector from '../../src/main/resources/META-INF/resources/js/DisplayTemplateSelector';
+import DisplayTemplateSelector, {
+	getOptionData,
+} from '../../src/main/resources/META-INF/resources/js/DisplayTemplateSelector';
 
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
@@ -32,14 +34,14 @@ const DEFAULT_PROPS = {
 					value: 'ddmTemplate_LANGUAGE-ICON-FTL',
 				},
 				{
-					groupId: 20119,
-					groupKey: '68468904643977',
+					groupId: 20120,
+					groupKey: '43412343123142',
 					label: 'Icon Menu',
 					value: 'ddmTemplate_LANGUAGE-ICON-MENU-FTL',
 				},
 				{
-					groupId: 20119,
-					groupKey: '68468904643977',
+					groupId: 20121,
+					groupKey: '43445647432322',
 					label: 'Long Text',
 					value: 'ddmTemplate_LANGUAGE-LONG-TEXT-FTL',
 				},
@@ -84,5 +86,17 @@ describe('DisplayTemplateSelector', () => {
 			'templateSelector:changedTemplate',
 			{value: 'ddmTemplate_LANGUAGE-LONG-TEXT-FTL'}
 		);
+	});
+});
+
+describe('getOptionData', () => {
+	it('returns correct values when they include hyphens', async () => {
+		const OPTION_WITH_HYPHEN = 'groupId-1__groupKey-2__value-3-4-5';
+
+		expect(getOptionData(OPTION_WITH_HYPHEN)).toStrictEqual({
+			groupId: 'groupId-1',
+			groupKey: 'groupKey-2',
+			value: 'value-3-4-5',
+		});
 	});
 });

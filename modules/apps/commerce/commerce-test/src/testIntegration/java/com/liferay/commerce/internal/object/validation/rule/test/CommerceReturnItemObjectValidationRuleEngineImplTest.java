@@ -232,7 +232,7 @@ public class CommerceReturnItemObjectValidationRuleEngineImplTest {
 
 	@Ignore
 	@Test
-	public void testCommerceReturnItemCommerceOrderIdObjectValidationRuleEngineImpl()
+	public void testCommerceReturnItemCommerceOrderItemIdObjectValidationRuleEngineImpl()
 		throws Exception {
 
 		List<ObjectDefinition> objectDefinitions =
@@ -265,7 +265,7 @@ public class CommerceReturnItemObjectValidationRuleEngineImplTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		Map<String, Object> results =
-			_commerceReturnItemCommerceOrderIdObjectValidationRuleEngineImpl.
+			_commerceReturnItemCommerceOrderItemIdObjectValidationRuleEngineImpl.
 				execute(
 					HashMapBuilder.<String, Object>put(
 						"entryDTO",
@@ -288,7 +288,7 @@ public class CommerceReturnItemObjectValidationRuleEngineImplTest {
 			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 
 		results =
-			_commerceReturnItemCommerceOrderIdObjectValidationRuleEngineImpl.
+			_commerceReturnItemCommerceOrderItemIdObjectValidationRuleEngineImpl.
 				execute(
 					HashMapBuilder.<String, Object>put(
 						"entryDTO",
@@ -458,10 +458,10 @@ public class CommerceReturnItemObjectValidationRuleEngineImplTest {
 		_commerceReturnItemAuthorizedObjectValidationRuleEngineImpl;
 
 	@Inject(
-		filter = "component.name=com.liferay.commerce.internal.object.validation.rule.CommerceReturnItemCommerceOrderIdObjectValidationRuleEngineImpl"
+		filter = "component.name=com.liferay.commerce.internal.object.validation.rule.CommerceReturnItemCommerceOrderItemIdObjectValidationRuleEngineImpl"
 	)
 	private ObjectValidationRuleEngine
-		_commerceReturnItemCommerceOrderIdObjectValidationRuleEngineImpl;
+		_commerceReturnItemCommerceOrderItemIdObjectValidationRuleEngineImpl;
 
 	@Inject(
 		filter = "component.name=com.liferay.commerce.internal.object.validation.rule.CommerceReturnItemQuantityObjectValidationRuleEngineImpl"

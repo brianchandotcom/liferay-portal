@@ -8,7 +8,6 @@ package com.liferay.commerce.internal.object.validation.rule;
 import com.liferay.commerce.constants.CommerceReturnConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -81,17 +80,12 @@ public class CommerceReturnAccountEntryIdObjectValidationRuleEngineImpl
 
 	@Override
 	public String getKey() {
-		return ObjectValidationRuleConstants.ENGINE_TYPE_JAVA_DELEGATE_PREFIX +
-			CommerceReturnConstants.
-				ENGINE_TYPE_COMMERCE_RETURN_ACCOUNT_ENTRY_ID;
+		return "javaDelegate#commerceReturnAccountEntryId";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(
-			locale,
-			CommerceReturnConstants.
-				ENGINE_TYPE_COMMERCE_RETURN_ACCOUNT_ENTRY_ID);
+		return _language.get(locale, "commerce-return-account-entry-id");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

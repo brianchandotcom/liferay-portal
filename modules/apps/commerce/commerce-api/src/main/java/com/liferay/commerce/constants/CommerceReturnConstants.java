@@ -13,36 +13,6 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class CommerceReturnConstants {
 
-	public static final String ENGINE_TYPE_COMMERCE_RETURN_ACCOUNT_ENTRY_ID =
-		"commerceReturnAccountEntryId";
-
-	public static final String ENGINE_TYPE_COMMERCE_RETURN_COMMERCE_ORDER_ID =
-		"commerceReturnCommerceOrderId";
-
-	public static final String
-		ENGINE_TYPE_COMMERCE_RETURN_COMMERCE_ORDER_STATUS =
-			"commerceReturnCommerceOrderStatus";
-
-	public static final String
-		ENGINE_TYPE_COMMERCE_RETURN_ITEM_ACCOUNT_ENTRY_ID =
-			"commerceReturnItemAccountEntryId";
-
-	public static final String ENGINE_TYPE_COMMERCE_RETURN_ITEM_AUTHORIZED =
-		"commerceReturnItemAuthorized";
-
-	public static final String
-		ENGINE_TYPE_COMMERCE_RETURN_ITEM_COMMERCE_ORDER_ITEM_ID =
-			"commerceReturnItemCommerceOrderItemId";
-
-	public static final String ENGINE_TYPE_COMMERCE_RETURN_ITEM_QUANTITY =
-		"commerceReturnItemQuantity";
-
-	public static final String ENGINE_TYPE_COMMERCE_RETURN_ITEM_RECEIVED =
-		"commerceReturnItemReceived";
-
-	public static final String ENGINE_TYPE_COMMERCE_RETURN_RETURN_STATUS =
-		"commerceReturnReturnStatus";
-
 	public static final String RETURN_FIELD_ACCOUNT_ENTRY_ID =
 		"r_accountToCommerceReturns_accountEntryId";
 

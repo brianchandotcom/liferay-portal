@@ -8,7 +8,6 @@ package com.liferay.commerce.internal.object.validation.rule;
 import com.liferay.commerce.constants.CommerceReturnConstants;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
-import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.scope.ObjectDefinitionScoped;
@@ -37,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Crescenzo Rega
  */
 @Component(service = ObjectValidationRuleEngine.class)
-public class CommerceReturnItemCommerceOrderIdObjectValidationRuleEngineImpl
+public class CommerceReturnItemCommerceOrderItemIdObjectValidationRuleEngineImpl
 	implements ObjectDefinitionScoped, ObjectValidationRuleEngine {
 
 	@Override
@@ -112,21 +111,18 @@ public class CommerceReturnItemCommerceOrderIdObjectValidationRuleEngineImpl
 
 	@Override
 	public String getKey() {
-		return ObjectValidationRuleConstants.ENGINE_TYPE_JAVA_DELEGATE_PREFIX +
-			CommerceReturnConstants.
-				ENGINE_TYPE_COMMERCE_RETURN_ITEM_COMMERCE_ORDER_ITEM_ID;
+		return "javaDelegate#commerceReturnItemCommerceOrderItemId";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(
-			locale,
-			CommerceReturnConstants.
-				ENGINE_TYPE_COMMERCE_RETURN_ITEM_COMMERCE_ORDER_ITEM_ID);
+			locale, "commerce-return-item-commerce-order-item-id");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceReturnItemCommerceOrderIdObjectValidationRuleEngineImpl.class);
+		CommerceReturnItemCommerceOrderItemIdObjectValidationRuleEngineImpl.
+			class);
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;

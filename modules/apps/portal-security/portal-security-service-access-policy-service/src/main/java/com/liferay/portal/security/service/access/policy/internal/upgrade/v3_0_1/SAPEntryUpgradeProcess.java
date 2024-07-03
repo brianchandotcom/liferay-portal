@@ -6,6 +6,7 @@
 package com.liferay.portal.security.service.access.policy.internal.upgrade.v3_0_1;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -31,9 +32,10 @@ public class SAPEntryUpgradeProcess extends UpgradeProcess {
 			companyId -> {
 				try (PreparedStatement preparedStatement1 =
 						connection.prepareStatement(
-							"select count(*) from SAPEntry where name = " +
-								"'SYSTEM_TEMPLATE_DEFAULT' and companyId = " +
-									companyId)) {
+							StringBundler.concat(
+								"select count(*) from SAPEntry where name = ",
+								"'SYSTEM_LOCAL_REST_CLIENT' and companyId = ",
+								companyId))) {
 
 					ResultSet resultSet = preparedStatement1.executeQuery();
 
@@ -46,8 +48,8 @@ public class SAPEntryUpgradeProcess extends UpgradeProcess {
 							System.currentTimeMillis());
 
 						String title =
-							"System Service Access Policy for RESTClient " +
-								"Requests in Templates";
+							"System Service Access Policy for Local " +
+								"RESTClient Requests";
 
 						String titleMapString =
 							LocalizationUtil.updateLocalization(
@@ -85,7 +87,7 @@ public class SAPEntryUpgradeProcess extends UpgradeProcess {
 						preparedStatement2.setBoolean(8, false);
 						preparedStatement2.setBoolean(9, true);
 						preparedStatement2.setString(
-							10, "SYSTEM_TEMPLATE_DEFAULT");
+							10, "SYSTEM_LOCAL_REST_CLIENT");
 						preparedStatement2.setString(11, titleMapString);
 
 						preparedStatement2.execute();

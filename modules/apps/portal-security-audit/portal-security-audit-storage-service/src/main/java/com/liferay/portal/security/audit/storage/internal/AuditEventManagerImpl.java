@@ -7,11 +7,14 @@ package com.liferay.portal.security.audit.storage.internal;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.audit.AuditEvent;
 import com.liferay.portal.security.audit.AuditEventManager;
 import com.liferay.portal.security.audit.storage.service.AuditEventLocalService;
+import com.liferay.portal.util.PortalInstances;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,6 +53,14 @@ public class AuditEventManagerImpl implements AuditEventManager {
 
 			for (Map.Entry<Long, List<AuditMessage>> entry :
 					auditMessagesMap.entrySet()) {
+
+				if (PortalInstances.isCompanyInDeletionProcess(
+						entry.getKey()) ||
+					!ArrayUtil.contains(
+						PortalInstancePool.getCompanyIds(), entry.getKey())) {
+
+					continue;
+				}
 
 				_companyLocalService.forEachCompanyId(
 					companyId -> _auditEventLocalService.addAuditEvents(

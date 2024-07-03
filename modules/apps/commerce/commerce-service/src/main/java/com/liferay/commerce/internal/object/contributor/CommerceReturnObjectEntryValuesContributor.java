@@ -7,6 +7,7 @@ package com.liferay.commerce.internal.object.contributor;
 
 import com.liferay.commerce.constants.CommerceReturnConstants;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.CommerceReturnThreadLocal;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -159,8 +160,9 @@ public class CommerceReturnObjectEntryValuesContributor
 						CommerceReturnConstants.
 							RETURN_ITEM_FIELD_RETURN_ITEM_STATUS,
 						CommerceReturnConstants.RETURN_ITEM_STATUS_COMPLETED);
-					objectEntryValues.put(
-						"skipCommerceReturnItemContributor", true);
+
+					CommerceReturnThreadLocal.
+						setSkipCommerceReturnItemContributor(true);
 
 					_objectEntryLocalService.updateObjectEntry(
 						objectEntry.getUserId(), objectEntry.getObjectEntryId(),
@@ -174,8 +176,8 @@ public class CommerceReturnObjectEntryValuesContributor
 				return;
 			}
 
-			if (GetterUtil.getBoolean(
-					commerceReturnValues.get("mark-as-processed"))) {
+			if (CommerceReturnThreadLocal.isMarkAsProcessed()) {
+				CommerceReturnThreadLocal.setMarkAsProcessed(false);
 
 				for (ObjectEntry objectEntry :
 						returnItemStatusMap.getOrDefault(
@@ -189,8 +191,9 @@ public class CommerceReturnObjectEntryValuesContributor
 						CommerceReturnConstants.
 							RETURN_ITEM_FIELD_RETURN_ITEM_STATUS,
 						CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED);
-					objectEntryValues.put(
-						"skipCommerceReturnItemContributor", true);
+
+					CommerceReturnThreadLocal.
+						setSkipCommerceReturnItemContributor(true);
 
 					_objectEntryLocalService.updateObjectEntry(
 						objectEntry.getUserId(), objectEntry.getObjectEntryId(),
@@ -224,8 +227,9 @@ public class CommerceReturnObjectEntryValuesContributor
 							RETURN_ITEM_FIELD_RETURN_ITEM_STATUS,
 						CommerceReturnConstants.
 							RETURN_ITEM_STATUS_AWAITING_RECEIPT);
-					authorizedReturnItemValues.put(
-						"skipCommerceReturnItemContributor", true);
+
+					CommerceReturnThreadLocal.
+						setSkipCommerceReturnItemContributor(true);
 
 					_objectEntryLocalService.updateObjectEntry(
 						objectEntry.getUserId(), objectEntry.getObjectEntryId(),

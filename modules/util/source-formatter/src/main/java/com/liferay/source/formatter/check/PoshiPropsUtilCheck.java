@@ -52,9 +52,21 @@ public class PoshiPropsUtilCheck extends BaseFileCheck {
 		Matcher matcher = _propsUtilGetPasswordPattern.matcher(content);
 
 		while (matcher.find()) {
+			int x = content.lastIndexOf("if (", matcher.start());
+
+			if (x != -1) {
+				String s = content.substring(x, matcher.start());
+
+				if (!s.contains("\tmacro ") && !s.contains("\ttest ") &&
+					(getLevel(s, "{", "}") == 1)) {
+
+					continue;
+				}
+			}
+
 			String variableName = matcher.group(1);
 
-			int x = content.indexOf("${" + variableName + "}", matcher.end());
+			x = content.indexOf("${" + variableName + "}", matcher.end());
 
 			if ((x == -1) || _isInsideTripleQuotes(content, x)) {
 				continue;

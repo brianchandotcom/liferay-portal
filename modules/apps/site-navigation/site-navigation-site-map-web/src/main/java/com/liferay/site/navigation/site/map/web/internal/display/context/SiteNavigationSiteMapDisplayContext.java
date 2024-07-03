@@ -77,23 +77,59 @@ public class SiteNavigationSiteMapDisplayContext {
 		return sb.toString();
 	}
 
-	public Long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId != null) {
-			return _displayStyleGroupId;
+	public long getDisplayStyleGroupId() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String ddmTemplateGroupKey = getDisplayStyleGroupKey();
+
+		if (Validator.isNotNull(ddmTemplateGroupKey)) {
+			Group group = GroupLocalServiceUtil.fetchGroup(
+				themeDisplay.getCompanyId(), ddmTemplateGroupKey);
+
+			if (group != null) {
+				return group.getGroupId();
+			}
 		}
 
-		_displayStyleGroupId =
+		return themeDisplay.getScopeGroupId();
+	}
+
+	public String getDisplayStyleGroupKey() {
+		if (Validator.isNotNull(_displayStyleGroupKey)) {
+			return _displayStyleGroupKey;
+		}
+
+		String displayStyleGroupKey =
+			_siteNavigationSiteMapPortletInstanceConfiguration.
+				displayStyleGroupKey();
+
+		if (Validator.isNotNull(displayStyleGroupKey)) {
+			_displayStyleGroupKey = displayStyleGroupKey;
+
+			return _displayStyleGroupKey;
+		}
+
+		long displayStyleGroupId =
 			_siteNavigationSiteMapPortletInstanceConfiguration.
 				displayStyleGroupId();
 
-		Group displayStyleGroup = GroupLocalServiceUtil.fetchGroup(
-			_displayStyleGroupId);
+		if (displayStyleGroupId <= 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-		if (displayStyleGroup == null) {
-			_displayStyleGroupId = _themeDisplay.getSiteGroupId();
+			displayStyleGroupId = themeDisplay.getScopeGroupId();
 		}
 
-		return _displayStyleGroupId;
+		Group group = GroupLocalServiceUtil.fetchGroup(displayStyleGroupId);
+
+		if (group != null) {
+			_displayStyleGroupKey = group.getGroupKey();
+		}
+
+		return _displayStyleGroupKey;
 	}
 
 	public String getItemSelectorURL() {
@@ -305,7 +341,7 @@ public class SiteNavigationSiteMapDisplayContext {
 		sb.append("</ul>");
 	}
 
-	private Long _displayStyleGroupId;
+	private String _displayStyleGroupKey;
 	private final HttpServletRequest _httpServletRequest;
 	private Boolean _includeRootInTree;
 	private final ItemSelector _itemSelector;

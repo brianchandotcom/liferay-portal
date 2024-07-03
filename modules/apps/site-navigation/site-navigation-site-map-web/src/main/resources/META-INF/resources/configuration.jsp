@@ -25,7 +25,7 @@
 				<liferay-template:template-selector
 					className="<%= LayoutSet.class.getName() %>"
 					displayStyle="<%= siteNavigationSiteMapPortletInstanceConfiguration.displayStyle() %>"
-					displayStyleGroupId="<%= siteNavigationSiteMapDisplayContext.getDisplayStyleGroupId() %>"
+					displayStyleGroupKey="<%= siteNavigationSiteMapDisplayContext.getDisplayStyleGroupKey() %>"
 					refreshURL="<%= configurationRenderURL %>"
 					showEmptyOption="<%= true %>"
 				/>

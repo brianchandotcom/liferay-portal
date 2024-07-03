@@ -26,6 +26,9 @@ public interface SiteNavigationSiteMapPortletInstanceConfiguration {
 	@Meta.AD(deflt = "0", name = "display-style-group-id", required = false)
 	public long displayStyleGroupId();
 
+	@Meta.AD(name = "display-style-group-key", required = false)
+	public String displayStyleGroupKey();
+
 	@Meta.AD(name = "display-style", required = false)
 	public String displayStyle();
 

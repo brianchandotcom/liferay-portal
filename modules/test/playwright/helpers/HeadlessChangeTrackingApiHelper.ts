@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import getRandomString from '../utils/getRandomString';
 import {ApiHelpers} from './ApiHelpers';
 
 export class HeadlessChangeTrackingApiHelper {
@@ -23,7 +24,7 @@ export class HeadlessChangeTrackingApiHelper {
 	async createCTCollection(name: string) {
 		const requestBody = {
 			description: '',
-			externalReferenceCode: 'string',
+			externalReferenceCode: getRandomString(),
 			name,
 			status: {code: 0, label: 'string', label_i18n: 'string'},
 		};

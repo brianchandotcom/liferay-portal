@@ -698,6 +698,11 @@ public class WorkflowTaskDisplayContext {
 		return _showExtraInfo;
 	}
 
+	public boolean isWorkflowTaskReadOnly() {
+		return (boolean)_liferayPortletRequest.getAttribute(
+			WebKeys.WORKFLOW_TASK_READ_ONLY);
+	}
+
 	private String _getActorName(WorkflowLog workflowLog) {
 		if (workflowLog.getRoleId() != 0) {
 			Role role = _getRole(workflowLog.getRoleId());

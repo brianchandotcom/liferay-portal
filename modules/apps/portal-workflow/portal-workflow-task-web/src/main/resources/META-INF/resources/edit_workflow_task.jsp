@@ -69,9 +69,11 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				%>
 
-				<liferay-util:include page="/workflow_task_action.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="mvcPath" value="/edit_workflow_task.jsp" />
-				</liferay-util:include>
+				<c:if test="<%= workflowTaskDisplayContext.isWorkflowTaskReadOnly() == false %>">
+					<liferay-util:include page="/workflow_task_action.jsp" servletContext="<%= application %>">
+						<liferay-util:param name="mvcPath" value="/edit_workflow_task.jsp" />
+					</liferay-util:include>
+				</c:if>
 
 				<clay:col
 					md="6"
@@ -178,48 +180,50 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 										<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 									</portlet:renderURL>
 
-									<liferay-ui:icon
-										data='<%= Collections.singletonMap("title", "View") %>'
-										icon="view"
-										label="<%= false %>"
-										linkCssClass="btn btn-monospaced btn-outline-secondary"
-										markupView="lexicon"
-										message="view[action]"
-										target="_blank"
-										toolTip="<%= true %>"
-										url="<%= assetRenderer.isPreviewInContext() ? workflowHandler.getURLViewInContext(assetRenderer.getClassPK(), liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>"
-									/>
-
-									<c:if test="<%= workflowTaskDisplayContext.hasViewDiffsPortletURL(workflowTask) %>">
+									<c:if test="<%= workflowTaskDisplayContext.isWorkflowTaskReadOnly() == false %>">
 										<liferay-ui:icon
-											icon="paste"
+											data='<%= Collections.singletonMap("title", "View") %>'
+											icon="view"
 											label="<%= false %>"
 											linkCssClass="btn btn-monospaced btn-outline-secondary"
 											markupView="lexicon"
-											message="diffs"
+											message="view[action]"
+											target="_blank"
 											toolTip="<%= true %>"
-											url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>"
+											url="<%= assetRenderer.isPreviewInContext() ? workflowHandler.getURLViewInContext(assetRenderer.getClassPK(), liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>"
 										/>
-									</c:if>
 
-									<c:if test="<%= assetEntry != null %>">
-										<portlet:renderURL var="viewLayoutClassedModelUsagesURL">
-											<portlet:param name="mvcPath" value="/view_layout_classed_model_usages.jsp" />
-											<portlet:param name="redirect" value="<%= currentURL %>" />
-											<portlet:param name="className" value="<%= assetEntry.getClassName() %>" />
-											<portlet:param name="classPK" value="<%= String.valueOf(assetEntry.getClassPK()) %>" />
-											<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-										</portlet:renderURL>
+										<c:if test="<%= workflowTaskDisplayContext.hasViewDiffsPortletURL(workflowTask) %>">
+											<liferay-ui:icon
+												icon="paste"
+												label="<%= false %>"
+												linkCssClass="btn btn-monospaced btn-outline-secondary"
+												markupView="lexicon"
+												message="diffs"
+												toolTip="<%= true %>"
+												url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>"
+											/>
+										</c:if>
 
-										<liferay-ui:icon
-											icon="list"
-											label="<%= false %>"
-											linkCssClass="btn btn-monospaced btn-outline-secondary"
-											markupView="lexicon"
-											message="view-usages"
-											toolTip="<%= true %>"
-											url="<%= viewLayoutClassedModelUsagesURL %>"
-										/>
+										<c:if test="<%= assetEntry != null %>">
+											<portlet:renderURL var="viewLayoutClassedModelUsagesURL">
+												<portlet:param name="mvcPath" value="/view_layout_classed_model_usages.jsp" />
+												<portlet:param name="redirect" value="<%= currentURL %>" />
+												<portlet:param name="className" value="<%= assetEntry.getClassName() %>" />
+												<portlet:param name="classPK" value="<%= String.valueOf(assetEntry.getClassPK()) %>" />
+												<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
+											</portlet:renderURL>
+
+											<liferay-ui:icon
+												icon="list"
+												label="<%= false %>"
+												linkCssClass="btn btn-monospaced btn-outline-secondary"
+												markupView="lexicon"
+												message="view-usages"
+												toolTip="<%= true %>"
+												url="<%= viewLayoutClassedModelUsagesURL %>"
+											/>
+										</c:if>
 									</c:if>
 								</c:if>
 

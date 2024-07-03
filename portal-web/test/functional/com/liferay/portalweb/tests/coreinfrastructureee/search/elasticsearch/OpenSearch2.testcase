@@ -27,10 +27,10 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		SearchPage.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "tree");
 
 		AssertElementPresent(
-			key_searchAssetTitle = "Test Test",
+			key_searchAssetTitle = "tree.png",
 			locator1 = "SearchPage#RESULT_TITLE");
 	}
 

@@ -79,7 +79,6 @@ definition {
 
 	@summary = "Default summary"
 	macro viewAssetAppearsOnMetric(canonicalURLSuffix = null, canonicalURL, cardTitle, index = null, metricTitle, pageName) {
-		var key_cardTitle = ${cardTitle};
 		var key_index = ${index};
 		var key_metricTitle = ${metricTitle};
 
@@ -87,7 +86,9 @@ definition {
 
 		var visitorsBehaviorMetricValue = selenium.getText("ACCards#METRIC_VALUE_BY_METRIC_TITLE");
 
-		ScrollWebElementIntoView(locator1 = "ACCards#CARD_TITLE");
+		ScrollWebElementIntoView(
+			key_cardTitle = ${cardTitle},
+			locator1 = "ACCards#CARD_TITLE");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ACAssets#APPEARS_ON_PAGE_NAME",

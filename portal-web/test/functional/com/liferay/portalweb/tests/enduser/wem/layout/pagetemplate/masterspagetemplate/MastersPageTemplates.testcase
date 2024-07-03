@@ -697,9 +697,9 @@ definition {
 
 			Alert.viewSuccessMessage();
 
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 			AssertElementNotPresent(
 				key_type = "dark",

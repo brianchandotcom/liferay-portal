@@ -110,6 +110,19 @@ public class ExportImportDisplayPagesTest {
 	}
 
 	@Test
+	public void testExportImportDisplayPageWithoutVariation() throws Exception {
+		Assert.assertNull(
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				"com.liferay.commerce.product.model.CPDefinition"));
+
+		_assertExportImportDisplayPage(
+			_portal.getClassNameId(
+				"com.liferay.commerce.product.model.CPDefinition"),
+			0, null, 0);
+	}
+
+	@Test
 	public void testFileEntryExportImportDisplayPage() throws Exception {
 		_assertExportImportDisplayPageWithInfoItemFormVariation(
 			"com.liferay.portal.kernel.repository.model.FileEntry");

@@ -126,3 +126,46 @@ export async function createMarketplaceTestProductOrder({
 		throw error;
 	}
 }
+
+export async function getMarketplaceVocabularyAndCategory({
+	apiHelpers,
+	categoryName,
+	siteId,
+	vocabularyName,
+}) {
+	try {
+		const {items: vocabularies} =
+			await apiHelpers.headlessAdminTaxonomy.getTaxonomyVocabularyBySiteId(
+				siteId
+			);
+
+		const vocabulary = vocabularies.find(
+			(vocabulary) => vocabulary.name === vocabularyName
+		);
+
+		if (!vocabulary) {
+			throw new Error(`Vocabulary "${vocabularyName}" not found`);
+		}
+
+		const {items: categories} =
+			await apiHelpers.headlessAdminTaxonomy.getTaxonomyCategoryByVocabularyId(
+				vocabulary.id
+			);
+
+		const category = categories.find(
+			(category) => category.name === categoryName
+		);
+
+		if (!category) {
+			throw new Error(
+				`Category "${categoryName}" not found in vocabulary "${vocabularyName}"`
+			);
+		}
+
+		return category;
+	}
+	catch (error) {
+		console.error('Error when trying to get category', error);
+		throw error;
+	}
+}

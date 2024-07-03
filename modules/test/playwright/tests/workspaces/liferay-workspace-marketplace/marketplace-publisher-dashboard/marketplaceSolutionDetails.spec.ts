@@ -12,6 +12,7 @@ import {
 	assignMarketplaceUserToAccountRole,
 	createMarketplaceAccountUserCatalog,
 	createMarketplaceTestProductOrder,
+	getMarketplaceVocabularyAndCategory,
 } from '../helpers/marketplaceHelpers';
 import {
 	ORDER_ITEMS,
@@ -57,30 +58,19 @@ test.describe('Publishers Can View Marketplace Solution Details', () => {
 			apiHelpers,
 		});
 
-		const {items} =
-			await apiHelpers.headlessAdminTaxonomy.getTaxonomyVocabularyBySiteId(
-				marketplace.id
-			);
-
-		const productTypeVocabulary = items.filter(
-			(vocabulary) => vocabulary.name === 'Marketplace Product Type'
-		);
-
-		const categories =
-			await apiHelpers.headlessAdminTaxonomy.getTaxonomyCategoryByVocabularyId(
-				productTypeVocabulary[0].id
-			);
-
-		const solutionCategory = categories.items.filter(
-			(category) => category.name === 'Solution'
-		);
+		const solutionCategory = await getMarketplaceVocabularyAndCategory({
+			apiHelpers,
+			categoryName: 'Solution',
+			siteId: marketplace.id,
+			vocabularyName: 'Marketplace Product Type',
+		});
 
 		const productBody = {
 			active: true,
 			catalogId: catalog.id,
 			categories: [
 				{
-					id: solutionCategory[0].id,
+					id: solutionCategory.id,
 					name: 'Solution',
 				},
 			],

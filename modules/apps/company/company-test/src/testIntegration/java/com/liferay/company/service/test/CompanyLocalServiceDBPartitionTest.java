@@ -645,26 +645,6 @@ public class CompanyLocalServiceDBPartitionTest
 		_virtualHostLocalService.getVirtualHost(virtualHostname);
 	}
 
-	private Configuration _createFactoryConfiguration(long companyId)
-		throws Exception {
-
-		String pid = null;
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
-
-			pid = ConfigurationTestUtil.createFactoryConfiguration(
-				CompanyLocalServiceDBPartitionTest.class.getName(),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"companyId", companyId
-				).put(
-					"test", RandomTestUtil.randomString()
-				).build());
-		}
-
-		return _configurationAdmin.getConfiguration(pid);
-	}
-
 	private void _checkPartitionDoesNotExist(long companyId)
 		throws SQLException {
 
@@ -716,6 +696,26 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertTrue(
 				tableNames.contains(StringUtil.toUpperCase(expectedTableName)));
 		}
+	}
+
+	private Configuration _createFactoryConfiguration(long companyId)
+		throws Exception {
+
+		String pid = null;
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+
+			pid = ConfigurationTestUtil.createFactoryConfiguration(
+				CompanyLocalServiceDBPartitionTest.class.getName(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"companyId", companyId
+				).put(
+					"test", RandomTestUtil.randomString()
+				).build());
+		}
+
+		return _configurationAdmin.getConfiguration(pid);
 	}
 
 	private long[] _getCompanyIdsBySQL() {

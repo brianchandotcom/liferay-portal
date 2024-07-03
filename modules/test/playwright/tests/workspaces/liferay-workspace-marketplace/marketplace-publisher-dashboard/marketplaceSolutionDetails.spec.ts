@@ -58,7 +58,7 @@ test.describe('Publishers Can View Marketplace Solution Details', () => {
 		});
 
 		const {items} =
-			await apiHelpers.headlessAdminTaxonomy.getTaxonomyVocabularyBySite(
+			await apiHelpers.headlessAdminTaxonomy.getTaxonomyVocabularyBySiteId(
 				marketplace.id
 			);
 
@@ -67,7 +67,7 @@ test.describe('Publishers Can View Marketplace Solution Details', () => {
 		);
 
 		const categories =
-			await apiHelpers.headlessAdminTaxonomy.getTaxonomyCategory(
+			await apiHelpers.headlessAdminTaxonomy.getTaxonomyCategoryByVocabularyId(
 				productTypeVocabulary[0].id
 			);
 

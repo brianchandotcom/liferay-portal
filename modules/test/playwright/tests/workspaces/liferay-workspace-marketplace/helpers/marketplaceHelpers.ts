@@ -126,5 +126,3 @@ export async function createMarketplaceTestProductOrder({
 		throw error;
 	}
 }
-
-export default {createMarketplaceAccountUserCatalog};

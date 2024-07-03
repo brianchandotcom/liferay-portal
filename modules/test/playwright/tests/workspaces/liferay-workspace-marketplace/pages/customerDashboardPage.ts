@@ -32,6 +32,12 @@ export class CustomerDashboardPage {
 				);
 	}
 
+	async goto(siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(`/web${siteUrl}/customer-dashboard`, {
+			waitUntil: 'networkidle',
+		});
+	}
+
 	async selectAccount(accountName: string) {
 		await this.accountSearchDropdown.click();
 		await this.page.getByRole('menuitem', {name: accountName}).click();
@@ -40,11 +46,5 @@ export class CustomerDashboardPage {
 		// using window.reload()
 
 		await this.page.waitForTimeout(2000);
-	}
-
-	async goto(url: string) {
-		await this.page.goto(url, {
-			waitUntil: 'networkidle',
-		});
 	}
 }

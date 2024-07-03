@@ -142,9 +142,7 @@ test.describe('Can Purchase and Manage Apps', () => {
 		customerDashboardPage,
 		marketplace,
 	}) => {
-		await customerDashboardPage.goto(
-			`web${marketplace.friendlyUrlPath}/customer-dashboard`
-		);
+		await customerDashboardPage.goto(marketplace.friendlyUrlPath);
 
 		await customerDashboardPage.selectAccount(CUSTOMER_ACCOUNT_NAME);
 
@@ -194,9 +192,7 @@ test.describe('Can Purchase and Manage Apps', () => {
 		customerDashboardPage,
 		marketplace,
 	}) => {
-		await customerDashboardPage.goto(
-			`web${marketplace.friendlyUrlPath}/customer-dashboard`
-		);
+		await customerDashboardPage.goto(marketplace.friendlyUrlPath);
 
 		await customerDashboardPage.selectAccount(CUSTOMER_ACCOUNT_NAME);
 

@@ -7,17 +7,23 @@ import {Locator, Page, expect} from '@playwright/test';
 
 export class PublisherDashboardPage {
 	readonly accountSearchDropdown: Locator;
+	readonly publishedApp: (productName: string) => Locator;
+	readonly solutionsTab: Locator;
 	readonly newAppButton: Locator;
+
 	readonly page: Page;
 
 	constructor(page: Page) {
 		this.accountSearchDropdown = page.locator('#account-search.dropdown');
+		this.publishedApp = (productName: string) =>
+			page.getByRole('cell', {name: productName}).locator('span');
+		this.solutionsTab = page.getByRole('link', {name: 'Solutions'});
 		this.newAppButton = page.getByRole('button', {name: 'New App'});
 		this.page = page;
 	}
 
-	async goto() {
-		await this.page.goto('/web/marketplace/publisher-dashboard', {
+	async goto(siteUrl: Site['friendlyUrlPath']) {
+		await this.page.goto(`/web${siteUrl}/publisher-dashboard`, {
 			waitUntil: 'networkidle',
 		});
 	}

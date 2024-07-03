@@ -63,6 +63,7 @@ test.describe('Can Publish Marketplace Apps', () => {
 
 		test(`can publish "${product.name}"`, async ({
 			apiHelpers,
+			marketplace,
 			page,
 			publisherAppPage,
 			publisherDashboardPage,
@@ -73,7 +74,7 @@ test.describe('Can Publish Marketplace Apps', () => {
 
 			// Go to Publisher Dashboard
 
-			await publisherDashboardPage.goto();
+			await publisherDashboardPage.goto(marketplace.friendlyUrlPath);
 
 			await publisherDashboardPage.selectAccount(ACCOUNT_NAME.SUPPLIER);
 

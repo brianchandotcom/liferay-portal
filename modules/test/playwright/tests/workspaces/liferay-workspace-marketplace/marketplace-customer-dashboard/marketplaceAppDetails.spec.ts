@@ -114,9 +114,7 @@ test.describe('Custumers Can View Marketplace App Details', () => {
 		customerDashboardAppDetailsPage,
 		marketplace,
 	}) => {
-		await customerDashboardAppDetailsPage.goto(
-			`web${marketplace.friendlyUrlPath}/customer-dashboard`
-		);
+		await customerDashboardAppDetailsPage.goto(marketplace.friendlyUrlPath);
 
 		await customerDashboardAppDetailsPage.selectAccount(
 			CUSTOMER_ACCOUNT_NAME

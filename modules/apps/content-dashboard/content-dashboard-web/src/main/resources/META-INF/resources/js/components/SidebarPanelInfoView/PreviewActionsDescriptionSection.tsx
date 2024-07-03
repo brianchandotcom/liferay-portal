@@ -6,8 +6,13 @@
 import ClayLink from '@clayui/link';
 import React from 'react';
 
-const {default: Preview} = require('./Preview');
-const {default: Share} = require('./Share');
+// @ts-ignore
+
+import Preview from './Preview';
+
+// @ts-ignore
+
+import Share from './Share';
 
 const PreviewActionsDescriptionSection = ({
 	description,

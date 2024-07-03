@@ -6,8 +6,13 @@
 import ClayLabel from '@clayui/label';
 import React from 'react';
 
-const {default: CollapsibleSection} = require('./CollapsibleSection');
-const {default: ItemVocabularies} = require('./ItemVocabularies');
+// @ts-ignore
+
+import CollapsibleSection from './CollapsibleSection';
+
+// @ts-ignore
+
+import ItemVocabularies from './ItemVocabularies';
 import {
 	getCategoriesCountFromVocabularies,
 	groupVocabulariesBy,

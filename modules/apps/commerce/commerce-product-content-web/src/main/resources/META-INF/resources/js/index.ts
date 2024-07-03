@@ -3,37 +3,27 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-// @ts-ignore
-
-const {
-	default: AvailabilityCPInstanceChangeHandler,
-} = require('./AvailabilityCPInstanceChangeHandler');
-
-// @ts-ignore
-
-const {default: CPInstanceChangeHandler} = require('./CPInstanceChangeHandler');
-
-// @ts-ignore
-
-const {default: OptionSelector} = require('./OptionSelector');
-
-// @ts-ignore
-
-const {default: Tabs} = require('./Tabs');
-
-// @ts-ignore
-
-const {default: miniCompare} = require('./miniCompare');
-
-export {TagSelector} from './TagSelector';
-export {Rule} from './Rule';
-export {CategorySelector} from './CategorySelector';
 export {default as AutoField} from './AutoField';
 
-export {
-	AvailabilityCPInstanceChangeHandler,
-	CPInstanceChangeHandler,
-	OptionSelector,
-	Tabs,
-	miniCompare,
-};
+// @ts-ignore
+
+export {default as AvailabilityCPInstanceChangeHandler} from './AvailabilityCPInstanceChangeHandler';
+
+// @ts-ignore
+
+export {default as CPInstanceChangeHandler} from './CPInstanceChangeHandler';
+export {CategorySelector} from './CategorySelector';
+
+// @ts-ignore
+
+export {default as OptionSelector} from './OptionSelector';
+export {Rule} from './Rule';
+
+// @ts-ignore
+
+export {default as Tabs} from './Tabs';
+export {TagSelector} from './TagSelector';
+
+// @ts-ignore
+
+export {default as miniCompare} from './miniCompare';

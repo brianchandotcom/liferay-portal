@@ -4,40 +4,101 @@
  */
 
 /*
- * Using 'require' here since they are .js files and we need to cast to `any`.
+ * Using '@ts-ignore' here since they are .js files and we need to cast to `any`.
  */
-const {default: Captcha} = require('./Captcha/Captcha.es');
-const {
-	default: CheckboxMultiple,
-} = require('./CheckboxMultiple/CheckboxMultiple.es');
-const {default: ColorPicker} = require('./ColorPicker/ColorPicker.es');
-const {default: DatePicker} = require('./DatePicker/DatePicker.es');
-const {
-	default: DocumentLibrary,
-} = require('./DocumentLibrary/DocumentLibrary.es');
-const {default: ReactFieldBase} = require('./FieldBase/ReactFieldBase.es');
-const {default: FieldSet} = require('./FieldSet/FieldSet.es');
-const {default: Geolocation} = require('./Geolocation/Geolocation.es');
-const {default: Grid} = require('./Grid/Grid.es');
-const {default: HelpText} = require('./HelpText/HelpText.es');
-const {default: ImagePicker} = require('./ImagePicker/ImagePicker.es');
-const {
-	default: LocalizableText,
-} = require('./LocalizableText/LocalizableText.es');
-const {default: ObjectField} = require('./ObjectField/ObjectField');
-const {
-	default: OptionFieldKeyValue,
-} = require('./OptionFieldKeyValue/OptionFieldKeyValue');
-const {default: Options} = require('./Options/Options.es');
-const {default: Paragraph} = require('./Paragraph/Paragraph.es');
-const {default: Password} = require('./Password/Password.es');
-const {default: Radio} = require('./Radio/Radio.es');
-const {default: RedirectButton} = require('./RedirectButton/RedirectButton.es');
-const {default: RichText} = require('./RichText/RichText.es');
-const {default: SearchLocation} = require('./SearchLocation/SearchLocation.es');
-const {default: Separator} = require('./Separator/Separator.es');
-const {default: Text} = require('./Text/Text.es');
-const {default: Validation} = require('./Validation/Validation');
+
+// @ts-ignore
+
+import Captcha from './Captcha/Captcha.es';
+
+// @ts-ignore
+
+import CheckboxMultiple from './CheckboxMultiple/CheckboxMultiple.es';
+
+// @ts-ignore
+
+import ColorPicker from './ColorPicker/ColorPicker.es';
+
+// @ts-ignore
+
+import DatePicker from './DatePicker/DatePicker.es';
+
+// @ts-ignore
+
+import DocumentLibrary from './DocumentLibrary/DocumentLibrary.es';
+import ReactFieldBase from './FieldBase/ReactFieldBase.es';
+
+// @ts-ignore
+
+import FieldSet from './FieldSet/FieldSet.es';
+
+// @ts-ignore
+
+import Geolocation from './Geolocation/Geolocation.es';
+
+// @ts-ignore
+
+import Grid from './Grid/Grid.es';
+
+// @ts-ignore
+
+import HelpText from './HelpText/HelpText.es';
+
+// @ts-ignore
+
+import ImagePicker from './ImagePicker/ImagePicker.es';
+
+// @ts-ignore
+
+import LocalizableText from './LocalizableText/LocalizableText.es';
+
+// @ts-ignore
+
+import ObjectField from './ObjectField/ObjectField';
+
+// @ts-ignore
+
+import OptionFieldKeyValue from './OptionFieldKeyValue/OptionFieldKeyValue';
+
+// @ts-ignore
+
+import Options from './Options/Options.es';
+
+// @ts-ignore
+
+import Paragraph from './Paragraph/Paragraph.es';
+
+// @ts-ignore
+
+import Password from './Password/Password.es';
+
+// @ts-ignore
+
+import Radio from './Radio/Radio.es';
+
+// @ts-ignore
+
+import RedirectButton from './RedirectButton/RedirectButton.es';
+
+// @ts-ignore
+
+import RichText from './RichText/RichText.es';
+
+// @ts-ignore
+
+import SearchLocation from './SearchLocation/SearchLocation.es';
+
+// @ts-ignore
+
+import Separator from './Separator/Separator.es';
+
+// @ts-ignore
+
+import Text from './Text/Text.es';
+
+// @ts-ignore
+
+import Validation from './Validation/Validation';
 
 export {default as Checkbox} from './Checkbox/Checkbox';
 export {default as Numeric} from './Numeric/Numeric';

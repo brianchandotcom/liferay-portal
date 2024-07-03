@@ -7,8 +7,10 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
-const {default: FileUrlCopyButton} = require('./FileUrlCopyButton');
-const {default: formatDate} = require('./utils/formatDate');
+// @ts-ignore
+
+import FileUrlCopyButton from './FileUrlCopyButton';
+import formatDate from './utils/formatDate';
 
 const SpecificItem = ({
 	languageTag,

@@ -20,6 +20,9 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
+
+	testIntegrationImplementation project(":apps:export-import:export-import-api")
+	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
 }
 
 liferay {

@@ -18,6 +18,12 @@ export class EditUserPage {
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly membershipsAccountsTable: Locator;
 	readonly membershipsLink: Locator;
+	readonly membershipsUserGroupsTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly membershipsUserGroupsTable: Locator;
 	readonly organizationsLink: Locator;
 	readonly page: Page;
 	readonly passwordConfirmationFrame: FrameLocator;
@@ -53,6 +59,21 @@ export class EditUserPage {
 		};
 		this.membershipsAccountsTable = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_accountEntriesSearchContainer'
+		);
+		this.membershipsUserGroupsTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean
+		) => {
+			return await searchTableRowByValue(
+				this.membershipsUserGroupsTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
+		this.membershipsUserGroupsTable = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_userGroupsSearchContainer'
 		);
 		this.membershipsLink = page.getByRole('link', {
 			exact: true,

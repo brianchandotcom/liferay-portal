@@ -72,6 +72,13 @@ type TExportBatch = {
 	totalItemsCount?: number;
 };
 
+type TUserGroup = {
+	description?: string;
+	externalReferenceCode?: string;
+	id?: number;
+	name: string;
+};
+
 export class HeadlessAdminUserApiHelper {
 	readonly apiHelpers: ApiHelpers | DataApiHelpers;
 	readonly basePath: string;
@@ -134,6 +141,18 @@ export class HeadlessAdminUserApiHelper {
 	async deleteOrganization(organizationId: string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/organizations/${organizationId}`
+		);
+	}
+
+	async deleteUserAccount(userAccountId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/user-accounts/${userAccountId}`
+		);
+	}
+
+	async deleteUserGroup(userGroupId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/user-groups/${userGroupId}`
 		);
 	}
 
@@ -328,6 +347,27 @@ export class HeadlessAdminUserApiHelper {
 		}
 
 		return userAccount;
+	}
+
+	async postUserGroup(userGroup?: TUserGroup): Promise<TUserGroup> {
+		userGroup = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/user-groups`,
+			{
+				data: {
+					name: 'UserGroup' + getRandomInt(),
+					...(userGroup || {}),
+				},
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: userGroup.id,
+				type: 'userGroup',
+			});
+		}
+
+		return userGroup;
 	}
 
 	async getAccountRoles(accountId: number) {

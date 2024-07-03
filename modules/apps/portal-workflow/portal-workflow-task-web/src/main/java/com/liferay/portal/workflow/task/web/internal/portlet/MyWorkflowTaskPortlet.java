@@ -8,6 +8,7 @@ package com.liferay.portal.workflow.task.web.internal.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.manager.WorkflowLogManager;
@@ -134,15 +136,48 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 	}
 
 	private void _checkWorkflowTaskViewPermission(
-			WorkflowTask workflowTask, ThemeDisplay themeDisplay)
+			RenderRequest renderRequest, ThemeDisplay themeDisplay,
+			WorkflowTask workflowTask)
 		throws PortalException {
 
 		long groupId = MapUtil.getLong(
 			workflowTask.getOptionalAttributes(), "groupId",
 			themeDisplay.getSiteGroupId());
 
-		_workflowTaskPermission.check(
-			themeDisplay.getPermissionChecker(), workflowTask, groupId);
+		if (_workflowTaskPermission.contains(
+				themeDisplay.getPermissionChecker(), workflowTask, groupId)) {
+
+			renderRequest.setAttribute(WebKeys.WORKFLOW_TASK, workflowTask);
+			renderRequest.setAttribute(
+				WebKeys.WORKFLOW_TASK_READ_ONLY, Boolean.FALSE);
+
+			return;
+		}
+
+		if ((_countUserInstanceTasks(false, themeDisplay) > 0) ||
+			(_countUserInstanceTasks(true, themeDisplay) > 0)) {
+
+			renderRequest.setAttribute(WebKeys.WORKFLOW_TASK, workflowTask);
+			renderRequest.setAttribute(
+				WebKeys.WORKFLOW_TASK_READ_ONLY, Boolean.TRUE);
+
+			return;
+		}
+
+		throw new PrincipalException.MustHavePermission(
+			themeDisplay.getPermissionChecker(), WorkflowTask.class.getName(),
+			workflowTask.getWorkflowTaskId(), ActionKeys.VIEW);
+	}
+
+	private int _countUserInstanceTasks(
+			boolean taskCompleted, ThemeDisplay themeDisplay)
+		throws WorkflowException {
+
+		return _workflowTaskManager.getWorkflowTaskCountByUser(
+			themeDisplay.getCompanyId(),
+			themeDisplay.getPermissionChecker(
+			).getUserId(),
+			taskCompleted);
 	}
 
 	private void _setWorkflowTaskDisplayContextRenderRequestAttribute(
@@ -168,12 +203,10 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			WorkflowTask workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(
-				themeDisplay.getCompanyId(), workflowTaskId);
-
-			_checkWorkflowTaskViewPermission(workflowTask, themeDisplay);
-
-			renderRequest.setAttribute(WebKeys.WORKFLOW_TASK, workflowTask);
+			_checkWorkflowTaskViewPermission(
+				renderRequest, themeDisplay,
+				WorkflowTaskManagerUtil.getWorkflowTask(
+					themeDisplay.getCompanyId(), workflowTaskId));
 		}
 	}
 
@@ -185,6 +218,9 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 
 	@Reference
 	private WorkflowLogManager _workflowLogManager;
+
+	@Reference
+	private WorkflowTaskManager _workflowTaskManager;
 
 	@Reference
 	private WorkflowTaskPermission _workflowTaskPermission;

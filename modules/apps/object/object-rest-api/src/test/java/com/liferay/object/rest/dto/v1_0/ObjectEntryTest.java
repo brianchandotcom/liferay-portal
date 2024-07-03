@@ -47,16 +47,20 @@ public class ObjectEntryTest {
 				setProperties(
 					HashMapBuilder.<String, Object>put(
 						"property1",
-						new AtomicIntegerUnsafeSupplier(atomicInteger1, "value1")
+						new AtomicIntegerUnsafeSupplier(
+							atomicInteger1, "value1")
 					).put(
 						"property2",
-						new AtomicIntegerUnsafeSupplier(atomicInteger2, "value2")
+						new AtomicIntegerUnsafeSupplier(
+							atomicInteger2, "value2")
 					).put(
 						"property3",
-						new AtomicIntegerUnsafeSupplier(atomicInteger3, "value3")
+						new AtomicIntegerUnsafeSupplier(
+							atomicInteger3, "value3")
 					).put(
 						"property4",
-						new AtomicIntegerUnsafeSupplier(atomicInteger4, nullString)
+						new AtomicIntegerUnsafeSupplier(
+							atomicInteger4, nullString)
 					).put(
 						"property5", nullString
 					).build());

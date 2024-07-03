@@ -416,6 +416,39 @@ public class ObjectEntryDTOConverter
 		}
 	}
 
+	private String _getDateString(
+		ObjectField objectField, Timestamp timestamp) {
+
+		String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+
+		if (objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_DATE) ||
+			StringUtil.equals(
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.NAME_TIME_STORAGE, objectField),
+				ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC)) {
+
+			pattern += "'Z'";
+		}
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+		return simpleDateFormat.format(timestamp);
+	}
+
+	private DTOConverterContext _getDTOConverterContext(
+		DTOConverterContext dtoConverterContext, long objectEntryId) {
+
+		UriInfo uriInfo = dtoConverterContext.getUriInfo();
+
+		return new DefaultDTOConverterContext(
+			dtoConverterContext.isAcceptAllLanguages(), null,
+			dtoConverterContext.getDTOConverterRegistry(),
+			dtoConverterContext.getHttpServletRequest(), objectEntryId,
+			dtoConverterContext.getLocale(), uriInfo,
+			dtoConverterContext.getUser());
+	}
+
 	private FileEntry _getFileEntry(
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry objectEntry,
@@ -481,39 +514,6 @@ public class ObjectEntryDTOConverter
 		fileEntry.setName(dlFileEntry::getFileName);
 
 		return fileEntry;
-	}
-
-	private String _getDateString(
-		ObjectField objectField, Timestamp timestamp) {
-
-		String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
-
-		if (objectField.compareBusinessType(
-				ObjectFieldConstants.BUSINESS_TYPE_DATE) ||
-			StringUtil.equals(
-				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.NAME_TIME_STORAGE, objectField),
-				ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC)) {
-
-			pattern += "'Z'";
-		}
-
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
-		return simpleDateFormat.format(timestamp);
-	}
-
-	private DTOConverterContext _getDTOConverterContext(
-		DTOConverterContext dtoConverterContext, long objectEntryId) {
-
-		UriInfo uriInfo = dtoConverterContext.getUriInfo();
-
-		return new DefaultDTOConverterContext(
-			dtoConverterContext.isAcceptAllLanguages(), null,
-			dtoConverterContext.getDTOConverterRegistry(),
-			dtoConverterContext.getHttpServletRequest(), objectEntryId,
-			dtoConverterContext.getLocale(), uriInfo,
-			dtoConverterContext.getUser());
 	}
 
 	private ListEntry _getListEntry(

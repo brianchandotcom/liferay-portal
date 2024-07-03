@@ -61,7 +61,11 @@ public class RelevantTestSuite {
 		return testBatches;
 	}
 
-	private final List<File> _modifiedFiles;
+	public void setModifiedFiles(List<File> modifiedFiles) {
+		_modifiedFiles = modifiedFiles;
+	}
+
+	private List<File> _modifiedFiles;
 	private final RelevantRuleEngine _relevantRuleEngine;
 
 }

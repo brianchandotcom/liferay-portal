@@ -5,18 +5,24 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -61,6 +67,10 @@ public class JournalEditArticleDisplayContextTest {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(_language);
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(_portal);
 	}
 
 	@Test
@@ -89,6 +99,13 @@ public class JournalEditArticleDisplayContextTest {
 		).get(
 			_httpServletRequest, "home"
 		);
+	}
+
+	@Test
+	public void testGetDefaultArticleLanguageId() throws PortalException {
+		_testGetDefaultArticleLanguageIdFromArticle();
+		_testGetDefaultArticleLanguageIdWithParameter();
+		_testGetDefaultArticleLanguageIdWithUnavailableLocale();
 	}
 
 	@Test
@@ -332,6 +349,117 @@ public class JournalEditArticleDisplayContextTest {
 		);
 	}
 
+	private void _testGetDefaultArticleLanguageIdFromArticle()
+		throws PortalException {
+
+		String defaultLanguageId = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_httpServletRequest.getParameter("defaultLanguageId")
+		).thenReturn(
+			defaultLanguageId
+		);
+
+		Mockito.when(
+			_language.isAvailableLocale(
+				0, LocaleUtil.toLanguageId(LocaleUtil.SPAIN))
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_portal.getSiteDefaultLocale(0)
+		).thenReturn(
+			LocaleUtil.UK
+		);
+
+		DDMFormValues ddmFormValues = Mockito.mock(DDMFormValues.class);
+
+		Mockito.when(
+			ddmFormValues.getDefaultLocale()
+		).thenReturn(
+			LocaleUtil.SPAIN
+		);
+
+		JournalArticle journalArticle = Mockito.mock(JournalArticle.class);
+
+		Mockito.when(
+			journalArticle.getArticleId()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			journalArticle.getDDMFormValues()
+		).thenReturn(
+			ddmFormValues
+		);
+
+		_journalEditArticleDisplayContext =
+			new JournalEditArticleDisplayContext(
+				_httpServletRequest, _liferayPortletResponse, journalArticle);
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			_journalEditArticleDisplayContext.getDefaultArticleLanguageId());
+	}
+
+	private void _testGetDefaultArticleLanguageIdWithParameter() {
+		String defaultLanguageId = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_httpServletRequest.getParameter("defaultLanguageId")
+		).thenReturn(
+			defaultLanguageId
+		);
+
+		Mockito.when(
+			_language.isAvailableLocale(0, defaultLanguageId)
+		).thenReturn(
+			true
+		);
+
+		_journalEditArticleDisplayContext =
+			new JournalEditArticleDisplayContext(
+				_httpServletRequest, _liferayPortletResponse, null);
+
+		Assert.assertEquals(
+			defaultLanguageId,
+			_journalEditArticleDisplayContext.getDefaultArticleLanguageId());
+	}
+
+	private void _testGetDefaultArticleLanguageIdWithUnavailableLocale()
+		throws PortalException {
+
+		String defaultLanguageId = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_httpServletRequest.getParameter("defaultLanguageId")
+		).thenReturn(
+			defaultLanguageId
+		);
+
+		Mockito.when(
+			_language.isAvailableLocale(0, defaultLanguageId)
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			_portal.getSiteDefaultLocale(0)
+		).thenReturn(
+			LocaleUtil.UK
+		);
+
+		_journalEditArticleDisplayContext =
+			new JournalEditArticleDisplayContext(
+				_httpServletRequest, _liferayPortletResponse, null);
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.UK),
+			_journalEditArticleDisplayContext.getDefaultArticleLanguageId());
+	}
+
 	private static final String _UNEXPECTED_FOLDER_NAME_MESSAGE =
 		"Unexpected folder name";
 
@@ -347,6 +475,7 @@ public class JournalEditArticleDisplayContextTest {
 	private final Language _language = Mockito.mock(Language.class);
 	private final LiferayPortletResponse _liferayPortletResponse = Mockito.mock(
 		LiferayPortletResponse.class);
+	private final Portal _portal = Mockito.mock(Portal.class);
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

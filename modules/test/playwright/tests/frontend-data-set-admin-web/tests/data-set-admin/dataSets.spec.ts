@@ -82,7 +82,7 @@ async function assertTableActionLabels(page) {
 	});
 }
 
-async function assertTableCellContent({page, rowIndex = 0, dataSetConfig}) {
+async function assertTableCellContent({dataSetConfig, page, rowIndex = 0}) {
 	await test.step('Assert table cell content', async () => {
 		await page
 			.locator('.dnd-table > .dnd-tbody > .dnd-tr')
@@ -154,7 +154,10 @@ test('Create data set via UI', async ({dataSetsPage, page}) => {
 
 	await assertTableColumnLabels(page);
 
-	await assertTableCellContent({page, dataSetConfig: tableSectionsDataSetConfig});
+	await assertTableCellContent({
+		dataSetConfig: tableSectionsDataSetConfig,
+		page,
+	});
 
 	await assertTableActionLabels(page);
 
@@ -171,7 +174,7 @@ test('Create parameterized data set via UI', async ({dataSetsPage, page}) => {
 
 	await assertTableColumnLabels(page);
 
-	await assertTableCellContent({page, dataSetConfig: blogPostsDataSetConfig});
+	await assertTableCellContent({dataSetConfig: blogPostsDataSetConfig, page});
 
 	await assertTableActionLabels(page);
 
@@ -202,7 +205,10 @@ test('Create data set via API', async ({
 
 	await assertTableColumnLabels(page);
 
-	await assertTableCellContent({page, dataSetConfig: tableSectionsDataSetConfig});
+	await assertTableCellContent({
+		dataSetConfig: tableSectionsDataSetConfig,
+		page,
+	});
 
 	await assertTableActionLabels(page);
 });
@@ -292,13 +298,13 @@ test('Can paginate created Data Sets', async ({
 	await assertTableRowsCount(page, 4);
 });
 
-test('Can sort Data Set by different columns', async({
+test('Can sort Data Set by different columns', async ({
 	dataSetManagerApiHelpers,
 	dataSetsPage,
 	page,
 }) => {
 	const productsDataSetERC = getRandomString();
-	
+
 	await test.step('Create collection of Data Sets', async () => {
 		const blogPostDataSetERC = getRandomString();
 		dataSetERCs.push(blogPostDataSetERC);
@@ -338,96 +344,283 @@ test('Can sort Data Set by different columns', async({
 
 	await assertTableRowsCount(page, 4);
 
-	await test.step('Check Data Sets default sort is by creation date, in descending order', async() => {
-		await assertTableCellContent({page, rowIndex: 0, dataSetConfig: skusDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 1, dataSetConfig: productsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 2, dataSetConfig: catalogsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 3, dataSetConfig: blogPostsDataSetConfig});
+	await test.step('Check Data Sets default sort is by creation date, in descending order', async () => {
+		await assertTableCellContent({
+			dataSetConfig: skusDataSetConfig,
+			page,
+			rowIndex: 0,
+		});
+		await assertTableCellContent({
+			dataSetConfig: productsDataSetConfig,
+			page,
+			rowIndex: 1,
+		});
+		await assertTableCellContent({
+			dataSetConfig: catalogsDataSetConfig,
+			page,
+			rowIndex: 2,
+		});
+		await assertTableCellContent({
+			dataSetConfig: blogPostsDataSetConfig,
+			page,
+			rowIndex: 3,
+		});
 	});
 
-	await test.step('Check that it is possible to sort Data Sets by Name', async() => {
+	await test.step('Check that it is possible to sort Data Sets by Name', async () => {
 		dataSetsPage.sortBy('Name');
-		await assertTableCellContent({page, rowIndex: 0, dataSetConfig: blogPostsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 1, dataSetConfig: catalogsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 2, dataSetConfig: productsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 3, dataSetConfig: skusDataSetConfig});
+		await assertTableCellContent({
+			dataSetConfig: blogPostsDataSetConfig,
+			page,
+			rowIndex: 0,
+		});
+		await assertTableCellContent({
+			dataSetConfig: catalogsDataSetConfig,
+			page,
+			rowIndex: 1,
+		});
+		await assertTableCellContent({
+			dataSetConfig: productsDataSetConfig,
+			page,
+			rowIndex: 2,
+		});
+		await assertTableCellContent({
+			dataSetConfig: skusDataSetConfig,
+			page,
+			rowIndex: 3,
+		});
 
 		dataSetsPage.sortBy('Name');
-		await assertTableCellContent({page, rowIndex: 0, dataSetConfig: skusDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 1, dataSetConfig: productsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 2, dataSetConfig: catalogsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 3, dataSetConfig: blogPostsDataSetConfig});
+		await assertTableCellContent({
+			dataSetConfig: skusDataSetConfig,
+			page,
+			rowIndex: 0,
+		});
+		await assertTableCellContent({
+			dataSetConfig: productsDataSetConfig,
+			page,
+			rowIndex: 1,
+		});
+		await assertTableCellContent({
+			dataSetConfig: catalogsDataSetConfig,
+			page,
+			rowIndex: 2,
+		});
+		await assertTableCellContent({
+			dataSetConfig: blogPostsDataSetConfig,
+			page,
+			rowIndex: 3,
+		});
 	});
 
-	await test.step('Check that it is possible to sort Data Sets by REST Application', async() => {
+	await test.step('Check that it is possible to sort Data Sets by REST Application', async () => {
+
 		// Reload to start with default sort
+
 		await page.reload();
 
 		dataSetsPage.sortBy('REST Application');
-		await assertTableCellContent({page, rowIndex: 0, dataSetConfig: skusDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 1, dataSetConfig: productsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 2, dataSetConfig: catalogsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 3, dataSetConfig: blogPostsDataSetConfig});
+		await assertTableCellContent({
+			dataSetConfig: skusDataSetConfig,
+			page,
+			rowIndex: 0,
+		});
+		await assertTableCellContent({
+			dataSetConfig: productsDataSetConfig,
+			page,
+			rowIndex: 1,
+		});
+		await assertTableCellContent({
+			dataSetConfig: catalogsDataSetConfig,
+			page,
+			rowIndex: 2,
+		});
+		await assertTableCellContent({
+			dataSetConfig: blogPostsDataSetConfig,
+			page,
+			rowIndex: 3,
+		});
 
 		dataSetsPage.sortBy('REST Application');
-		await assertTableCellContent({page, rowIndex: 0, dataSetConfig: blogPostsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 1, dataSetConfig: catalogsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 2, dataSetConfig: productsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 3, dataSetConfig: skusDataSetConfig});
+		await assertTableCellContent({
+			dataSetConfig: blogPostsDataSetConfig,
+			page,
+			rowIndex: 0,
+		});
+		await assertTableCellContent({
+			dataSetConfig: catalogsDataSetConfig,
+			page,
+			rowIndex: 1,
+		});
+		await assertTableCellContent({
+			dataSetConfig: productsDataSetConfig,
+			page,
+			rowIndex: 2,
+		});
+		await assertTableCellContent({
+			dataSetConfig: skusDataSetConfig,
+			page,
+			rowIndex: 3,
+		});
 	});
 
-	await test.step('Check that it is possible to sort Data Sets by REST Endpoint', async() => {
+	await test.step('Check that it is possible to sort Data Sets by REST Endpoint', async () => {
+
 		// Reload to start with default sort
+
 		await page.reload();
 
 		dataSetsPage.sortBy('REST Endpoint');
-		await assertTableCellContent({page, rowIndex: 0, dataSetConfig: catalogsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 1, dataSetConfig: productsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 2, dataSetConfig: blogPostsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 3, dataSetConfig: skusDataSetConfig});
+		await assertTableCellContent({
+			dataSetConfig: catalogsDataSetConfig,
+			page,
+			rowIndex: 0,
+		});
+		await assertTableCellContent({
+			dataSetConfig: productsDataSetConfig,
+			page,
+			rowIndex: 1,
+		});
+		await assertTableCellContent({
+			dataSetConfig: blogPostsDataSetConfig,
+			page,
+			rowIndex: 2,
+		});
+		await assertTableCellContent({
+			dataSetConfig: skusDataSetConfig,
+			page,
+			rowIndex: 3,
+		});
 
 		dataSetsPage.sortBy('REST Endpoint');
-		await assertTableCellContent({page, rowIndex: 0, dataSetConfig: skusDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 1, dataSetConfig: blogPostsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 2, dataSetConfig: productsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 3, dataSetConfig: catalogsDataSetConfig});
+		await assertTableCellContent({
+			dataSetConfig: skusDataSetConfig,
+			page,
+			rowIndex: 0,
+		});
+		await assertTableCellContent({
+			dataSetConfig: blogPostsDataSetConfig,
+			page,
+			rowIndex: 1,
+		});
+		await assertTableCellContent({
+			dataSetConfig: productsDataSetConfig,
+			page,
+			rowIndex: 2,
+		});
+		await assertTableCellContent({
+			dataSetConfig: catalogsDataSetConfig,
+			page,
+			rowIndex: 3,
+		});
 	});
 
-	await test.step('Check that it is possible to sort Data Sets by REST Schema', async() => {
+	await test.step('Check that it is possible to sort Data Sets by REST Schema', async () => {
+
 		// Reload to start with default sort
+
 		await page.reload();
 
 		dataSetsPage.sortBy('REST Schema');
-		await assertTableCellContent({page, rowIndex: 0, dataSetConfig: blogPostsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 1, dataSetConfig: catalogsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 2, dataSetConfig: productsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 3, dataSetConfig: skusDataSetConfig});
+		await assertTableCellContent({
+			dataSetConfig: blogPostsDataSetConfig,
+			page,
+			rowIndex: 0,
+		});
+		await assertTableCellContent({
+			dataSetConfig: catalogsDataSetConfig,
+			page,
+			rowIndex: 1,
+		});
+		await assertTableCellContent({
+			dataSetConfig: productsDataSetConfig,
+			page,
+			rowIndex: 2,
+		});
+		await assertTableCellContent({
+			dataSetConfig: skusDataSetConfig,
+			page,
+			rowIndex: 3,
+		});
 
 		dataSetsPage.sortBy('REST Schema');
-		await assertTableCellContent({page, rowIndex: 0, dataSetConfig: skusDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 1, dataSetConfig: productsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 2, dataSetConfig: catalogsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 3, dataSetConfig: blogPostsDataSetConfig});
+		await assertTableCellContent({
+			dataSetConfig: skusDataSetConfig,
+			page,
+			rowIndex: 0,
+		});
+		await assertTableCellContent({
+			dataSetConfig: productsDataSetConfig,
+			page,
+			rowIndex: 1,
+		});
+		await assertTableCellContent({
+			dataSetConfig: catalogsDataSetConfig,
+			page,
+			rowIndex: 2,
+		});
+		await assertTableCellContent({
+			dataSetConfig: blogPostsDataSetConfig,
+			page,
+			rowIndex: 3,
+		});
 	});
 
-	await test.step('Check that it is possible to sort Data Sets by Modified Date', async() => {
+	await test.step('Check that it is possible to sort Data Sets by Modified Date', async () => {
+
 		// Reload to start with default sort
-		await page.reload();
-
-		dataSetsPage.sortBy('Modified Date');
-		await assertTableCellContent({page, rowIndex: 0, dataSetConfig: blogPostsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 1, dataSetConfig: catalogsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 2, dataSetConfig: productsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 3, dataSetConfig: skusDataSetConfig});
-
-		await dataSetManagerApiHelpers.updateDataSet({defaultItemsPerPage: 8, erc: productsDataSetERC});
 
 		await page.reload();
 
 		dataSetsPage.sortBy('Modified Date');
-		await assertTableCellContent({page, rowIndex: 0, dataSetConfig: blogPostsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 1, dataSetConfig: catalogsDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 2, dataSetConfig: skusDataSetConfig});
-		await assertTableCellContent({page, rowIndex: 3, dataSetConfig: productsDataSetConfig});
+		await assertTableCellContent({
+			dataSetConfig: blogPostsDataSetConfig,
+			page,
+			rowIndex: 0,
+		});
+		await assertTableCellContent({
+			dataSetConfig: catalogsDataSetConfig,
+			page,
+			rowIndex: 1,
+		});
+		await assertTableCellContent({
+			dataSetConfig: productsDataSetConfig,
+			page,
+			rowIndex: 2,
+		});
+		await assertTableCellContent({
+			dataSetConfig: skusDataSetConfig,
+			page,
+			rowIndex: 3,
+		});
+
+		await dataSetManagerApiHelpers.updateDataSet({
+			defaultItemsPerPage: 8,
+			erc: productsDataSetERC,
+		});
+
+		await page.reload();
+
+		dataSetsPage.sortBy('Modified Date');
+		await assertTableCellContent({
+			dataSetConfig: blogPostsDataSetConfig,
+			page,
+			rowIndex: 0,
+		});
+		await assertTableCellContent({
+			dataSetConfig: catalogsDataSetConfig,
+			page,
+			rowIndex: 1,
+		});
+		await assertTableCellContent({
+			dataSetConfig: skusDataSetConfig,
+			page,
+			rowIndex: 2,
+		});
+		await assertTableCellContent({
+			dataSetConfig: productsDataSetConfig,
+			page,
+			rowIndex: 3,
+		});
 	});
 });

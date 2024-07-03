@@ -142,7 +142,7 @@ export class DataSetsPage {
 			.locator('.dnd-table > .dnd-thead > .dnd-tr')
 			.getByRole('button', {name: columnName})
 			.waitFor();
-	
+
 		await Promise.all([
 			this.page
 				.locator('.dnd-table > .dnd-thead > .dnd-tr')
@@ -151,10 +151,8 @@ export class DataSetsPage {
 			this.page.waitForResponse(
 				(response) =>
 					response.status() === 200 &&
-					response
-						.url()
-						.includes('/data-set-manager/data-sets?')
+					response.url().includes('/data-set-manager/data-sets?')
 			),
-		]);		
+		]);
 	}
 }

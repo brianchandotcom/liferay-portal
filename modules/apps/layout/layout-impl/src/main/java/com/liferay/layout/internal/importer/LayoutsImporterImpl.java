@@ -2529,6 +2529,14 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		private long _getClassTypeId(
 			String className, DisplayPageTemplate displayPageTemplate) {
 
+			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemFormVariationsProvider.class, className);
+
+			if (infoItemFormVariationsProvider == null) {
+				return 0;
+			}
+
 			ContentSubtype contentSubtype =
 				displayPageTemplate.getContentSubtype();
 
@@ -2540,14 +2548,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			if (Validator.isNull(subtypeKey)) {
 				return GetterUtil.getLong(contentSubtype.getSubtypeId(), -1);
-			}
-
-			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFormVariationsProvider.class, className);
-
-			if (infoItemFormVariationsProvider == null) {
-				return -1;
 			}
 
 			InfoItemFormVariation infoItemFormVariation =

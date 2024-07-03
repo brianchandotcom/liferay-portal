@@ -57,17 +57,17 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 		String rememberMeTokenId = CookiesManagerUtil.getCookieValue(
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID, httpServletRequest,
 			false);
-		String rememberMeTokenToken = CookiesManagerUtil.getCookieValue(
+		String rememberMeTokenValue = CookiesManagerUtil.getCookieValue(
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, httpServletRequest,
 			false);
 
 		RememberMeToken rememberMeToken = null;
 
 		if (Validator.isNotNull(rememberMeTokenId) &&
-			Validator.isNotNull(rememberMeTokenToken)) {
+			Validator.isNotNull(rememberMeTokenValue)) {
 
 			rememberMeToken = _rememberMeTokenLocalService.fetchRememberMeToken(
-				GetterUtil.getLong(rememberMeTokenId), rememberMeTokenToken);
+				GetterUtil.getLong(rememberMeTokenId), rememberMeTokenValue);
 		}
 
 		// LPS-11218

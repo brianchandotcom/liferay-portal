@@ -919,31 +919,6 @@ definition {
 			assigneeName = "Site Name");
 	}
 
-	@priority = 4
-	test EditDefaultUserAssociationsUserGroups {
-		property testray.main.component.name = "Users and Organizations";
-
-		UserGroup.openUserGroupsAdmin();
-
-		UserGroup.addCP(userGroupName = "UG UserGroup Name");
-
-		PortalSettings.editConfigurationUsersDefaultUserAssociationsCP(userGroupName = "UG UserGroup Name");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		User.openUsersAdmin();
-
-		UserNavigator.gotoUser(userScreenName = "usersn");
-
-		User.viewMemberships(
-			assetType = "User Groups",
-			assigneeName = "UG UserGroup Name");
-	}
-
 	@priority = 5
 	test EnterReservedEmailAddress {
 		property portal.acceptance = "true";

@@ -52,7 +52,7 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 		HttpServletRequest httpServletRequest) {
 
 		_attributes = HashMapBuilder.<String, Object>put(
-			SAPWebKeys.TEMPLATE_DISPATCH, true
+			SAPWebKeys.LOCAL_REST_CLIENT_DISPATCH, true
 		).put(
 			WebKeys.USER,
 			() -> {

@@ -8,6 +8,7 @@ package com.liferay.portal.search.web.internal.exportimport.portlet.preferences.
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.search.test.util.exportimport.BaseExportImportPortletPreferencesProcessorTestCase;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;

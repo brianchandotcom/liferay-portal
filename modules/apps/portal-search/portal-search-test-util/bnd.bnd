@@ -1,10 +1,11 @@
 Bundle-Name: Liferay Portal Search Test Utilities
 Bundle-SymbolicName: com.liferay.portal.search.test.util
-Bundle-Version: 11.0.1
+Bundle-Version: 11.1.0
 Export-Package:\
 	com.liferay.portal.search.test.rule,\
 	com.liferay.portal.search.test.rule.logging,\
 	com.liferay.portal.search.test.util,\
+	com.liferay.portal.search.test.util.exportimport,\
 	com.liferay.portal.search.test.util.logging
 Import-Package:\
 	!com.liferay.portal.search.internal.*,\

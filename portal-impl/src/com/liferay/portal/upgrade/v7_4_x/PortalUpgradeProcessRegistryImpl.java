@@ -5,6 +5,7 @@
 
 package com.liferay.portal.upgrade.v7_4_x;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
@@ -82,7 +83,11 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(12, 0, 0), new UpgradePortalPreferences());
 
 		upgradeVersionTreeMap.put(
-			new Version(12, 0, 1), new UpgradeResourceAction());
+			new Version(12, 0, 1),
+			UpgradeProcessFactory.runSQL(
+				"update ResourceAction set actionId = 'MANAGE_COUNTRIES' " +
+					"where name='90' and actionId = " +
+						"'MANAGE_COMMERCE_COUNTRIES'"));
 
 		upgradeVersionTreeMap.put(
 			new Version(12, 0, 2), new UpgradeDLFileEntryType());
@@ -105,7 +110,13 @@ public class PortalUpgradeProcessRegistryImpl
 				"AssetEntry", "title", "TEXT null"));
 
 		upgradeVersionTreeMap.put(
-			new Version(12, 2, 2), new UpgradePortalPreferenceValue());
+			new Version(12, 2, 2),
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"update PortalPreferenceValue set namespace = ",
+					"'com.liferay.portal.kernel.util.SessionTreeJSClicks' ",
+					"where namespace = ",
+					"'com.liferay.taglib.ui.util.SessionTreeJSClicks'")));
 
 		upgradeVersionTreeMap.put(new Version(13, 0, 0), new UpgradeAccount());
 
@@ -122,7 +133,11 @@ public class PortalUpgradeProcessRegistryImpl
 			new CTModelUpgradeProcess("Repository", "RepositoryEntry"));
 
 		upgradeVersionTreeMap.put(
-			new Version(13, 3, 1), new UpgradeRepository());
+			new Version(13, 3, 1),
+			UpgradeProcessFactory.runSQL(
+				"update Repository set portletId = name where (portletId is " +
+					"null or portletId = '') and name = " +
+						"'com.liferay.portal.kernel.util.TempFileEntryUtil'"));
 
 		upgradeVersionTreeMap.put(
 			new Version(13, 3, 2), new UpgradeMappingTables());
@@ -170,7 +185,9 @@ public class PortalUpgradeProcessRegistryImpl
 			});
 
 		upgradeVersionTreeMap.put(
-			new Version(16, 1, 1), new UpgradeGroupType());
+			new Version(16, 1, 1),
+			UpgradeProcessFactory.runSQL(
+				"update Group_ set type_ = 3 where type_ = 4"));
 
 		upgradeVersionTreeMap.put(
 			new Version(16, 1, 2),

@@ -32,7 +32,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(new Version(6, 0, 2), new UpgradeLayoutSet());
 
 		upgradeVersionTreeMap.put(
-			new Version(6, 0, 3), new UpgradeClusterGroup());
+			new Version(6, 0, 3),
+			UpgradeProcessFactory.runSQL("DROP_TABLE_IF_EXISTS(ClusterGroup)"));
 
 		upgradeVersionTreeMap.put(
 			new Version(6, 0, 4), new UpgradeAssetCategory());
@@ -103,7 +104,10 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(8, 9, 0), new UpgradeRatingsMVCCVersion());
 
 		upgradeVersionTreeMap.put(
-			new Version(8, 10, 0), new UpgradeResourceAction());
+			new Version(8, 10, 0),
+			UpgradeProcessFactory.runSQL(
+				"delete from ResourceAction where name in ('136', '150', " +
+					"'151', '152', '153', '157', '158')"));
 
 		upgradeVersionTreeMap.put(
 			new Version(8, 11, 0),

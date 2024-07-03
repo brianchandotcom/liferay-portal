@@ -63,6 +63,91 @@ test.describe('Sorting in Data Set Manager', () => {
 		});
 	});
 
+	test('Sorting options can be reordered and changes are persisted @LPD-9468', async ({
+		dataSetManagerApiHelpers,
+		sortingPage,
+	}) => {
+		await test.step('Create sorting options', async () => {
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: true,
+				fieldName: 'id',
+				label_i18n: {en_US: 'ID'},
+				orderType: 'asc',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: false,
+				fieldName: 'name',
+				label_i18n: {en_US: 'Name'},
+			});
+
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: false,
+				fieldName: 'dateCreated',
+				label_i18n: {en_US: 'Date Created'},
+			});
+		});
+
+		await test.step('Navigate to Sorting section', async () => {
+			await sortingPage.goto({
+				dataSetLabel,
+			});
+		});
+
+		await test.step('Check that "Date Created" is below "Name"', async () => {
+			const tableLabelCellTexts =
+				await sortingPage.getTableLabelCellTexts();
+
+			expect(tableLabelCellTexts).toStrictEqual([
+				'ID',
+				'Name',
+				'Date Created',
+			]);
+		});
+
+		await test.step('Move the "Date Created" option above "Name"', async () => {
+			const dateCreatedRow = sortingPage.sortingTable.getByRole('row', {
+				name: 'Date Created',
+			});
+
+			const nameRow = sortingPage.sortingTable.getByRole('row', {
+				name: 'Name',
+			});
+
+			await dateCreatedRow.dragTo(nameRow);
+		});
+
+		await test.step('Check that "Date Created" is above "Name"', async () => {
+			const tableLabelCellTexts =
+				await sortingPage.getTableLabelCellTexts();
+
+			expect(tableLabelCellTexts).toStrictEqual([
+				'ID',
+				'Date Created',
+				'Name',
+			]);
+		});
+
+		await test.step('Navigate to the "Details" tab and back to "Sorting" tab', async () => {
+			await sortingPage.selectTab('Details');
+			await sortingPage.selectTab('Sorting');
+		});
+
+		await test.step('Check that the order is still the same', async () => {
+			const tableLabelCellTexts =
+				await sortingPage.getTableLabelCellTexts();
+
+			expect(tableLabelCellTexts).toStrictEqual([
+				'ID',
+				'Date Created',
+				'Name',
+			]);
+		});
+	});
+
 	test('In the New Sort modal, the Order Type input only appears when default is checked @LPD-19465', async ({
 		page,
 		sortingPage,

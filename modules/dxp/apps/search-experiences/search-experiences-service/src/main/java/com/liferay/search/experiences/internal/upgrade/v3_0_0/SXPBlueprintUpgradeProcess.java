@@ -138,7 +138,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				ResultSet resultSet2 = preparedStatement2.executeQuery();
 
 				if (!resultSet2.next()) {
-					return;
+					continue;
 				}
 
 				String newSmallValue = _updateSmallValueJSON(
@@ -187,7 +187,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				ResultSet resultSet2 = preparedStatement2.executeQuery();
 
 				if (!resultSet2.next()) {
-					return;
+					continue;
 				}
 
 				String newLargeValue = StringUtil.replace(
@@ -242,7 +242,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				ResultSet resultSet2 = preparedStatement2.executeQuery();
 
 				if (!resultSet2.next()) {
-					return;
+					continue;
 				}
 
 				preparedStatement3.setString(

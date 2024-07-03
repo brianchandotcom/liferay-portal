@@ -1,7 +1,7 @@
 definition {
 
 	var userEmailAddress = "test@liferay.com";
-	var userPassword = "test";
+	var userPassword = PropsUtil.get("default.admin.password");
 	var userPasswordReminderAnswer = "test";
 
 	@summary = "Default summary"

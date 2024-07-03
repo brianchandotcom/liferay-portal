@@ -672,7 +672,7 @@ definition {
 			User.logoutPG();
 
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://localhost:${remotePort}",
 				userEmailAddress = "test@liferay.com");
 		}
@@ -692,7 +692,7 @@ definition {
 		if (isSet(remotePort)) {
 			User.loginPG(
 				nodePort = 8080,
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com");
 		}
 

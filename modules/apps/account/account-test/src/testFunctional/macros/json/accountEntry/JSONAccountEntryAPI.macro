@@ -158,7 +158,7 @@ definition {
 		}
 
 		if (!(isSet(password))) {
-			var password = "test";
+			var password = PropsUtil.get("default.admin.password");
 		}
 
 		var companyId = JSONCompany.getCompanyId();

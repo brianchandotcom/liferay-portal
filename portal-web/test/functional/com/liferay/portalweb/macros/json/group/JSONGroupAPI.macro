@@ -347,7 +347,7 @@ definition {
 		}
 
 		if (!(isSet(creatorPassword))) {
-			var creatorPassword = "test";
+			var creatorPassword = PropsUtil.get("default.admin.password");
 		}
 
 		var companyId = JSONCompany.getCompanyId(

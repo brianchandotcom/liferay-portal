@@ -5,7 +5,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
@@ -51,7 +51,7 @@ definition {
 		SignOut.signOut();
 
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "http://www.baker.com:8080",
 			userEmailAddress = "test@www.baker.com");
 

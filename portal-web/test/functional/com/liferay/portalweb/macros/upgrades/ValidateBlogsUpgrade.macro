@@ -80,7 +80,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "user1@liferay.com");
 
 		Navigator.gotoPage(pageName = "Blogs");

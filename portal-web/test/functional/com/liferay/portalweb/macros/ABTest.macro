@@ -46,7 +46,7 @@ definition {
 		if (IsElementPresent(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD")) {
 			AnalyticsCloud.loginAnalyticsCloud(
 				emailAddress = "test@liferay.com",
-				password = "test");
+				password = PropsUtil.get("default.admin.password"));
 		}
 
 		AssertTextEquals(
@@ -72,7 +72,7 @@ definition {
 		if (IsElementPresent(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD")) {
 			AnalyticsCloud.loginAnalyticsCloud(
 				emailAddress = "test@liferay.com",
-				password = "test");
+				password = PropsUtil.get("default.admin.password"));
 		}
 
 		for (var variantNames : list ${variantNames}) {
@@ -210,7 +210,7 @@ definition {
 		if (IsElementPresent(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD")) {
 			AnalyticsCloud.loginAnalyticsCloud(
 				emailAddress = "test@liferay.com",
-				password = "test");
+				password = PropsUtil.get("default.admin.password"));
 
 			Close.closeWindow();
 

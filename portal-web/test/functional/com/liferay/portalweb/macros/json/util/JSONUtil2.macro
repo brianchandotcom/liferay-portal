@@ -180,7 +180,7 @@ definition {
 		var adminUserPassword = PropsUtil.get("default.admin.password");
 
 		if (!(isSet(adminUserPassword)) || (${adminUserPassword} == "")) {
-			var adminUserPassword = "test";
+			var adminUserPassword = PropsUtil.get("default.admin.password");
 		}
 
 		return ${adminUserPassword};
@@ -209,7 +209,7 @@ definition {
 		var customDefaultUserFirstPassword = PropsUtil.get("custom.default.user.first.password");
 
 		if (!(isSet(customDefaultUserFirstPassword))) {
-			var customDefaultUserFirstPassword = "test";
+			var customDefaultUserFirstPassword = PropsUtil.get("default.admin.password");
 		}
 
 		return ${customDefaultUserFirstPassword};
@@ -220,7 +220,7 @@ definition {
 		var customDefaultUserPassword = PropsUtil.get("custom.default.user.password");
 
 		if (!(isSet(customDefaultUserPassword))) {
-			var customDefaultUserPassword = "test";
+			var customDefaultUserPassword = PropsUtil.get("default.admin.password");
 		}
 
 		return ${customDefaultUserPassword};
@@ -253,7 +253,7 @@ definition {
 		var customSuperAdminUserPassword = PropsUtil.get("custom.super.admin.user.password");
 
 		if (!(isSet(customSuperAdminUserPassword))) {
-			var customSuperAdminUserPassword = "test";
+			var customSuperAdminUserPassword = PropsUtil.get("default.admin.password");
 		}
 
 		return ${customSuperAdminUserPassword};

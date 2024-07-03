@@ -655,7 +655,7 @@ definition {
 		}
 
 		if (!(isSet(password))) {
-			var password = "test";
+			var password = PropsUtil.get("default.admin.password");
 		}
 
 		if ((${appServerType} == "jboss") || (${appServerType} == "weblogic") || (${appServerType} == "websphere") || (${appServerType} == "wildfly")) {

@@ -5,7 +5,7 @@ definition {
 		WaitForPageLoad();
 
 		if (!(isSet(password))) {
-			var password = "test";
+			var password = PropsUtil.get("default.admin.password");
 		}
 
 		Click(locator1 = "ACLogin#EMAIL_LOGIN_FIELD");

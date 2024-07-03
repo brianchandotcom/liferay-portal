@@ -31,7 +31,7 @@ definition {
 	@summary = "Default summary"
 	macro setNewPassword() {
 		if (!(isSet(newPassword))) {
-			var newPassword = "test";
+			var newPassword = PropsUtil.get("default.admin.password");
 		}
 
 		return ${newPassword};

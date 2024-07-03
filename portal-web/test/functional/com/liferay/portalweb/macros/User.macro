@@ -1200,7 +1200,7 @@ definition {
 			User.logoutPG();
 
 			User.loginUserPG(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = ${userEmailAddress});
 
 			User.logoutPG();
@@ -1209,7 +1209,7 @@ definition {
 				authenticationMethod = ${authenticationMethod},
 				newPassword = ${newPassword},
 				nodePort = ${nodePort},
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com",
 				userScreenName = ${userScreenName});
 		}
@@ -1240,7 +1240,7 @@ definition {
 				authenticationMethod = ${authenticationMethod},
 				newPassword = ${newPassword},
 				nodePort = ${nodePort},
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				userEmailAddress = "test@liferay.com",
 				userScreenName = ${userScreenName});
 		}
@@ -1646,7 +1646,7 @@ definition {
 		User.loginPG(
 			authenticationMethod = ${authenticationMethod},
 			nodePort = ${nodePort},
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			userEmailAddress = "test@liferay.com",
 			userScreenName = ${userScreenName});
 	}
@@ -2536,7 +2536,7 @@ definition {
 				User.fillResetPasswordFields(password = ${newPassword});
 			}
 			else {
-				User.fillResetPasswordFields(password = "test");
+				User.fillResetPasswordFields(password = PropsUtil.get("default.admin.password"));
 			}
 
 			if (isSet(localizedSaveButton)) {

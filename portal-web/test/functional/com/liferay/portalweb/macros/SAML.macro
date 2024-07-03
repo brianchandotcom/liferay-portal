@@ -54,7 +54,7 @@ definition {
 
 		SAML.executeSPInitiatedSSO(
 			idpName = ${idpName},
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			samlMultiIdPs = ${samlMultiIdPs},
 			spURL = ${spURL},
 			userEmailAddress = ${newUserEmailAddress});
@@ -95,7 +95,7 @@ definition {
 
 		SAML.executeSPInitiatedSSO(
 			idpName = ${idpName},
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			samlMultiIdPs = ${samlMultiIdPs},
 			spURL = ${spURL},
 			userEmailAddress = ${newUserEmailAddress});
@@ -108,13 +108,13 @@ definition {
 	macro addIDPConfigurationsToServiceProvider(idpUserMembershipsAttributeMappingText = null, idpCustomFieldAttributeMappingText = null, userEmailAddress = null, idpUserMembershipsAttributeMapping = null, idpAttributeMappingText = null, userResolution = null, idpEntityId = null, idpCustomFieldAttributeMapping = null, idpKeepAliveURL = null, uploadMetadataXML = null, idpAttributeMapping = null, nameIdentifierFormat = null, idpMetadataURLRaw = null, userMatchingAttributeIndex = null, idpURL = null, spURL = null) {
 		if (isSet(userEmailAddress)) {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = ${spURL},
 				userEmailAddress = ${userEmailAddress});
 		}
 		else {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = ${spURL},
 				userEmailAddress = "test@liferay.com");
 		}
@@ -157,13 +157,13 @@ definition {
 
 		if (isSet(userEmailAddress)) {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = ${idpURL},
 				userEmailAddress = ${userEmailAddress});
 		}
 		else {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = ${idpURL},
 				userEmailAddress = "test@liferay.com");
 		}
@@ -286,13 +286,13 @@ definition {
 		if (isSet(idpURL)) {
 			if (isSet(userEmailAddress)) {
 				User.firstLoginUI(
-					password = "test",
+					password = PropsUtil.get("default.admin.password"),
 					specificURL = ${idpURL},
 					userEmailAddress = ${userEmailAddress});
 			}
 			else {
 				User.firstLoginUI(
-					password = "test",
+					password = PropsUtil.get("default.admin.password"),
 					specificURL = ${idpURL},
 					userEmailAddress = "test@liferay.com");
 			}
@@ -336,13 +336,13 @@ definition {
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
 			if (isSet(userEmailAddress)) {
 				User.firstLoginUI(
-					password = "test",
+					password = PropsUtil.get("default.admin.password"),
 					specificURL = ${spURL},
 					userEmailAddress = ${userEmailAddress});
 			}
 			else {
 				User.firstLoginUI(
-					password = "test",
+					password = PropsUtil.get("default.admin.password"),
 					specificURL = ${spURL},
 					userEmailAddress = "test@liferay.com");
 			}
@@ -399,13 +399,13 @@ definition {
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
 			if (isSet(sPUserEmailAddress)) {
 				User.firstLoginUI(
-					password = "test",
+					password = PropsUtil.get("default.admin.password"),
 					specificURL = ${spURL},
 					userEmailAddress = ${sPUserEmailAddress});
 			}
 			else {
 				User.firstLoginUI(
-					password = "test",
+					password = PropsUtil.get("default.admin.password"),
 					specificURL = ${spURL},
 					userEmailAddress = "test@liferay.com");
 			}
@@ -446,7 +446,7 @@ definition {
 
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = ${idpURL},
 				userEmailAddress = "test@liferay.com");
 		}
@@ -500,7 +500,7 @@ definition {
 	@summary = "Default summary"
 	macro editIdentityProviderConnection(idpMetadataURL = null, idpAttributeMappingOld = null, changeToURL = null, uploadMetadataXML = null, userEmailAddress = null, changeToXML = null, idpAttributeMappingNew = null, spURL = null, idpAttributeMappingText = null, idpEntityId = null) {
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = "${spURL}/?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin&saveLastPath=false",
 			userEmailAddress = ${userEmailAddress});
 
@@ -529,7 +529,7 @@ definition {
 	@summary = "Default summary"
 	macro editServiceProviderConnection(spEntityId = null, idpURL = null, spAttributes = null) {
 		User.firstLoginUI(
-			password = "test",
+			password = PropsUtil.get("default.admin.password"),
 			specificURL = ${idpURL},
 			userEmailAddress = "test@liferay.com");
 
@@ -549,13 +549,13 @@ definition {
 	macro enableEncryptionOnSPConnection(idpURL = null, userEmailAddress = null, samlEntityId = null) {
 		if (isSet(userEmailAddress)) {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = ${idpURL},
 				userEmailAddress = ${userEmailAddress});
 		}
 		else {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = ${idpURL},
 				userEmailAddress = "test@liferay.com");
 		}
@@ -593,13 +593,13 @@ definition {
 	macro enableSPRoles(userEmailAddress = null, spURL = null, samlEntityId = null) {
 		if (isSet(userEmailAddress)) {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = ${spURL},
 				userEmailAddress = ${userEmailAddress});
 		}
 		else {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = ${spURL},
 				userEmailAddress = "test@liferay.com");
 		}
@@ -646,7 +646,7 @@ definition {
 		else if (isSet(userEmailAddress)) {
 			User.firstLoginUI(
 				idpName = ${idpName},
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				samlMultiIdPs = ${samlMultiIdPs},
 				specificURL = ${spURL},
 				userEmailAddress = ${userEmailAddress});
@@ -654,7 +654,7 @@ definition {
 		else {
 			User.firstLoginUI(
 				idpName = ${idpName},
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				samlMultiIdPs = ${samlMultiIdPs},
 				specificURL = ${spURL},
 				userEmailAddress = "test@liferay.com");
@@ -684,7 +684,7 @@ definition {
 	macro loginIfUSerAvatarNotPresent() {
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
 			User.firstLoginUI(
-				password = "test",
+				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:9080",
 				userEmailAddress = "test@liferay.com");
 		}
@@ -852,13 +852,13 @@ definition {
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
 			if (isSet(userEmailAddress)) {
 				User.firstLoginUI(
-					password = "test",
+					password = PropsUtil.get("default.admin.password"),
 					specificURL = ${spURL},
 					userEmailAddress = ${userEmailAddress});
 			}
 			else {
 				User.firstLoginUI(
-					password = "test",
+					password = PropsUtil.get("default.admin.password"),
 					specificURL = ${spURL},
 					userEmailAddress = "test@liferay.com");
 			}

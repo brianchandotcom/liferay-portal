@@ -1488,58 +1488,43 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			false);
 
-		String originalName = PrincipalThreadLocal.getName();
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		CommerceOrder commerceOrder1 = CommerceTestUtil.addB2CCommerceOrder(
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency);
 
-		try {
-			PrincipalThreadLocal.setName(_user.getUserId());
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(_user));
+		commerceOrder1 = _commerceOrderEngine.checkoutCommerceOrder(
+			commerceOrder1, _user.getUserId());
 
-			CommerceOrder commerceOrder1 = CommerceTestUtil.addB2CCommerceOrder(
-				_user.getUserId(), _commerceChannel.getGroupId(),
-				_commerceCurrency);
+		Assert.assertEquals(
+			CommerceOrderConstants.ORDER_STATUS_PENDING,
+			commerceOrder1.getOrderStatus());
 
-			commerceOrder1 = _commerceOrderEngine.checkoutCommerceOrder(
-				commerceOrder1, _user.getUserId());
+		_commerceOrderLocalService.updatePaymentStatus(
+			commerceOrder1.getUserId(), commerceOrder1.getCommerceOrderId(),
+			CommerceOrderPaymentConstants.STATUS_COMPLETED);
 
-			Assert.assertEquals(
-				CommerceOrderConstants.ORDER_STATUS_PENDING,
-				commerceOrder1.getOrderStatus());
+		commerceOrder1 = _commerceOrderLocalService.getCommerceOrder(
+			commerceOrder1.getCommerceOrderId());
 
-			_commerceOrderLocalService.updatePaymentStatus(
-				commerceOrder1.getUserId(), commerceOrder1.getCommerceOrderId(),
-				CommerceOrderPaymentConstants.STATUS_COMPLETED);
+		Assert.assertEquals(
+			CommerceOrderConstants.ORDER_STATUS_PROCESSING,
+			commerceOrder1.getOrderStatus());
 
-			commerceOrder1 = _commerceOrderLocalService.getCommerceOrder(
-				commerceOrder1.getCommerceOrderId());
+		CommerceOrder commerceOrder2 =
+			_commerceOrderLocalService.fetchByExternalReferenceCode(
+				"newCommerceOrder", TestPropsValues.getCompanyId());
 
-			Assert.assertEquals(
-				CommerceOrderConstants.ORDER_STATUS_PROCESSING,
-				commerceOrder1.getOrderStatus());
+		Assert.assertNotNull(commerceOrder2);
 
-			CommerceOrder commerceOrder2 =
-				_commerceOrderLocalService.fetchByExternalReferenceCode(
-					"newCommerceOrder", TestPropsValues.getCompanyId());
-
-			Assert.assertNotNull(commerceOrder2);
-
-			Assert.assertEquals(
-				_accountEntry.getAccountEntryId(),
-				commerceOrder2.getCommerceAccountId());
-			Assert.assertEquals(
-				_commerceCurrency.getCommerceCurrencyId(),
-				commerceOrder2.getCommerceCurrencyId());
-			Assert.assertEquals(
-				CommerceOrderConstants.ORDER_STATUS_OPEN,
-				commerceOrder2.getOrderStatus());
-		}
-		finally {
-			PrincipalThreadLocal.setName(originalName);
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
+		Assert.assertEquals(
+			_accountEntry.getAccountEntryId(),
+			commerceOrder2.getCommerceAccountId());
+		Assert.assertEquals(
+			_commerceCurrency.getCommerceCurrencyId(),
+			commerceOrder2.getCommerceCurrencyId());
+		Assert.assertEquals(
+			CommerceOrderConstants.ORDER_STATUS_OPEN,
+			commerceOrder2.getOrderStatus());
 
 		// Organization system object
 
@@ -1640,39 +1625,28 @@ public class ObjectActionLocalServiceTest {
 
 		_publishCustomObjectDefinition();
 
-		try {
-			PrincipalThreadLocal.setName(_user.getUserId());
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(_user));
+		OrganizationTestUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(), false);
 
-			OrganizationTestUtil.addOrganization(
-				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-				RandomTestUtil.randomString(), false);
+		_assertOrganization(
+			"test1", "Organization1", organizationObjectDefinition,
+			objectField1, "Custom1");
 
-			_assertOrganization(
-				"test1", "Organization1", organizationObjectDefinition,
-				objectField1, "Custom1");
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", "John"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 
-			_objectEntryLocalService.addObjectEntry(
-				TestPropsValues.getUserId(), 0,
-				_objectDefinition.getObjectDefinitionId(),
-				HashMapBuilder.<String, Serializable>put(
-					"firstName", "John"
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
-
-			_assertOrganization(
-				"test1", "Organization1", organizationObjectDefinition,
-				objectField1, "Custom1");
-			_assertOrganization(
-				"test2", "Organization2", organizationObjectDefinition,
-				objectField1, "Custom2");
-		}
-		finally {
-			PrincipalThreadLocal.setName(originalName);
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
+		_assertOrganization(
+			"test1", "Organization1", organizationObjectDefinition,
+			objectField1, "Custom1");
+		_assertOrganization(
+			"test2", "Organization2", organizationObjectDefinition,
+			objectField1, "Custom2");
 
 		// User system object
 
@@ -1797,42 +1771,31 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			false);
 
-		try {
-			PrincipalThreadLocal.setName(_user.getUserId());
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(_user));
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", "John"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 
-			_objectEntryLocalService.addObjectEntry(
-				TestPropsValues.getUserId(), 0,
-				_objectDefinition.getObjectDefinitionId(),
-				HashMapBuilder.<String, Serializable>put(
-					"firstName", "John"
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
+		User user = _userLocalService.getUserByScreenName(
+			TestPropsValues.getCompanyId(), "ScreenName");
 
-			User user = _userLocalService.getUserByScreenName(
-				TestPropsValues.getCompanyId(), "ScreenName");
+		Assert.assertEquals("email@liferay.com", user.getEmailAddress());
+		Assert.assertEquals("FirstName", user.getFirstName());
+		Assert.assertEquals("LastName", user.getLastName());
+		Assert.assertEquals("MiddleName", user.getMiddleName());
 
-			Assert.assertEquals("email@liferay.com", user.getEmailAddress());
-			Assert.assertEquals("FirstName", user.getFirstName());
-			Assert.assertEquals("LastName", user.getLastName());
-			Assert.assertEquals("MiddleName", user.getMiddleName());
+		Map<String, Serializable> values =
+			_objectEntryLocalService.
+				getExtensionDynamicObjectDefinitionTableValues(
+					userObjectDefinition, user.getUserId());
 
-			Map<String, Serializable> values =
-				_objectEntryLocalService.
-					getExtensionDynamicObjectDefinitionTableValues(
-						userObjectDefinition, user.getUserId());
+		Assert.assertEquals("John", values.get(objectField2.getName()));
+		Assert.assertEquals("Peter", values.get(objectField3.getName()));
 
-			Assert.assertEquals("John", values.get(objectField2.getName()));
-			Assert.assertEquals("Peter", values.get(objectField3.getName()));
-
-			_userLocalService.deleteUser(user);
-		}
-		finally {
-			PrincipalThreadLocal.setName(originalName);
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
+		_userLocalService.deleteUser(user);
 
 		_objectActionLocalService.deleteObjectAction(objectAction3);
 		_objectActionLocalService.deleteObjectAction(objectAction4);
@@ -1872,7 +1835,7 @@ public class ObjectActionLocalServiceTest {
 		// While adding a user, the user is updated and it must not trigger
 		// object actions
 
-		User user = UserTestUtil.addUser();
+		user = UserTestUtil.addUser();
 
 		Assert.assertEquals(1, _argumentsList.size());
 

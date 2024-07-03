@@ -45,7 +45,7 @@ export function DefinitionInfo() {
 					<ClayTabs.TabPane key={index}>
 						<Component
 							definitionInfo={definitionInfo}
-							version={version}
+							version={Number(version)}
 						/>
 					</ClayTabs.TabPane>
 				))}

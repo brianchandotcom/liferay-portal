@@ -27,7 +27,9 @@ public class PoshiPropsUtilCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (!fileName.endsWith(".testcase") || SourceUtil.isXML(content)) {
+		if ((!fileName.endsWith(".macro") && !fileName.endsWith(".testcase")) ||
+			SourceUtil.isXML(content)) {
+
 			return content;
 		}
 

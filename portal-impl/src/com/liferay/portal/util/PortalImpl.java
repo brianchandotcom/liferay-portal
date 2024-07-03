@@ -130,6 +130,8 @@ import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
@@ -922,21 +924,21 @@ public class PortalImpl implements Portal {
 					return url;
 				}
 				else if (allowedDomain.equals("PORTAL_DOMAINS")) {
-					try {
-						if (Validator.isNotNull(
-								CompanyLocalServiceUtil.getCompanyByVirtualHost(
-									domain))) {
+					if (Validator.isNotNull(
+							CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
+								domain))) {
 
-							return url;
-						}
+						return url;
 					}
-					catch (Exception exception) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								"Unable to find portal virtual host for " +
-									"redirect URL " + url,
-								exception);
-						}
+
+					ServiceContext serviceContext =
+						ServiceContextThreadLocal.getServiceContext();
+
+					ThemeDisplay themeDisplay =
+						serviceContext.getThemeDisplay();
+
+					if (domain.equals(themeDisplay.getPortalDomain())) {
+						return url;
 					}
 				}
 			}

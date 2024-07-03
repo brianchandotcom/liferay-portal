@@ -53,5 +53,5 @@ interface WorkflowDefinition {
 	title_i18n: {
 		[key: string]: string;
 	};
-	version: number;
+	version: string;
 }

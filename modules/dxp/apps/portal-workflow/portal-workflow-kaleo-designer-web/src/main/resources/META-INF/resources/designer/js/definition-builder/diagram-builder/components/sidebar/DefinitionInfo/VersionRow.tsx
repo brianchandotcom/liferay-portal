@@ -1,17 +1,23 @@
-import React, { useContext } from "react";
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {ClayButtonWithIcon} from '@clayui/button';
-import lang from '../../../../util/lang';
+import React, {useContext} from 'react';
+
+// @ts-ignore
+
+import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
 import {
 	publishDefinitionRequest,
 	retrieveDefinitionRequest,
 	saveDefinitionRequest,
 } from '../../../../util/fetchUtil';
-
-// @ts-ignore
-import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
+import lang from '../../../../util/lang';
 
 interface DefinitionBuilderContextProps {
-	definitionName: string
+	definitionName: string;
 	setAlertMessage: (value: string) => void;
 	setAlertType: (value: string) => void;
 	setDefinitionName: (value: string) => void;
@@ -19,12 +25,20 @@ interface DefinitionBuilderContextProps {
 	setVersion: (value: number) => void;
 }
 
+interface RetrieveWorkflowDefinitionResponseProps {
+	active: boolean;
+	content: string;
+	title: string;
+	title_i18n: Liferay.Language.FullyLocalizedValue<string>;
+	version: string;
+}
+
 interface VersionRowProps {
-	versionNumber: number
+	versionNumber: number;
 }
 
 export function VersionRow({versionNumber}: VersionRowProps) {
-	const { 
+	const {
 		definitionName,
 		setAlertMessage,
 		setAlertType,
@@ -33,7 +47,7 @@ export function VersionRow({versionNumber}: VersionRowProps) {
 		setVersion,
 	} = useContext(DefinitionBuilderContext) as DefinitionBuilderContextProps;
 
-	const restoreSuccess = (response: Response) => {
+	const restoreSuccess = async (response: Response) => {
 		const alertMessage = lang.sub(
 			Liferay.Language.get('restored-to-revision-x'),
 			[String(versionNumber)]
@@ -44,10 +58,13 @@ export function VersionRow({versionNumber}: VersionRowProps) {
 
 		setShowAlert(true);
 
-		response.json().then(({name, version}) => {
-			setDefinitionName(name);
-			setVersion(parseInt(version, 10));
-		});
+		const {name, version} = (await response.json()) as {
+			name: string;
+			version: string;
+		};
+
+		setDefinitionName(name);
+		setVersion(parseInt(version, 10));
 	};
 
 	const restoreFailed = () => {
@@ -61,6 +78,55 @@ export function VersionRow({versionNumber}: VersionRowProps) {
 		setShowAlert(true);
 	};
 
+	const handleRestoreWorkflowDefinitionVersion = async () => {
+		const retrieveWorkflowDefinitionResponse =
+			await retrieveDefinitionRequest(definitionName, versionNumber);
+
+		const {active, content, title, title_i18n, version} =
+			(await retrieveWorkflowDefinitionResponse.json()) as RetrieveWorkflowDefinitionResponseProps;
+
+		if (active) {
+			const publishWorkflowDefinitionResponse =
+				await publishDefinitionRequest({
+					active,
+					content,
+					name: definitionName,
+					title,
+					title_i18n,
+					version,
+				});
+
+			if (!publishWorkflowDefinitionResponse.ok) {
+				restoreFailed();
+
+				return;
+			}
+
+			restoreSuccess(publishWorkflowDefinitionResponse);
+
+			return;
+		}
+
+		const saveWorkflowDefinitionResponse = await saveDefinitionRequest({
+			active,
+			content,
+			name: definitionName,
+			title,
+			title_i18n,
+			version,
+		});
+
+		if (!saveWorkflowDefinitionResponse.ok) {
+			restoreFailed();
+
+			return;
+		}
+
+		restoreSuccess(saveWorkflowDefinitionResponse);
+
+		return;
+	};
+
 	return (
 		<div className="info-group">
 			<div className="version-row">
@@ -72,54 +138,7 @@ export function VersionRow({versionNumber}: VersionRowProps) {
 					aria-labelledby={Liferay.Language.get('restore')}
 					className="text-secondary"
 					displayType="unstyled"
-					onClick={() => {
-						retrieveDefinitionRequest(definitionName, versionNumber)
-							.then((response) => response.json())
-							.then(
-								({
-									active,
-									content,
-									title,
-									title_i18n,
-									version,
-								}) => {
-									if (active) {
-										publishDefinitionRequest({
-											active,
-											content,
-											name: definitionName,
-											title,
-											title_i18n,
-											version,
-										}).then((response) => {
-											if (response.ok) {
-												restoreSuccess(response);
-											}
-											else {
-												restoreFailed();
-											}
-										});
-									}
-									else {
-										saveDefinitionRequest({
-											active,
-											content,
-											name: definitionName,
-											title,
-											title_i18n,
-											version,
-										}).then((response) => {
-											if (response.ok) {
-												restoreSuccess(response);
-											}
-											else {
-												restoreFailed();
-											}
-										});
-									}
-								}
-							);
-					}}
+					onClick={() => handleRestoreWorkflowDefinitionVersion()}
 					symbol="restore"
 					title={Liferay.Language.get('restore')}
 				/>
@@ -128,4 +147,4 @@ export function VersionRow({versionNumber}: VersionRowProps) {
 			<div className="sheet-subtitle" />
 		</div>
 	);
-};
+}

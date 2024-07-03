@@ -338,16 +338,8 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 	}
 
 	private String _getSubtypeKey(
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider,
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class,
-				layoutPageTemplateEntry.getClassName());
-
-		if (infoItemFormVariationsProvider == null) {
-			return null;
-		}
 
 		InfoItemFormVariation infoItemFormVariation =
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
@@ -591,6 +583,17 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 							return null;
 						}
 
+						InfoItemFormVariationsProvider<?>
+							infoItemFormVariationsProvider =
+								_infoItemServiceRegistry.
+									getFirstInfoItemService(
+										InfoItemFormVariationsProvider.class,
+										layoutPageTemplateEntry.getClassName());
+
+						if (infoItemFormVariationsProvider == null) {
+							return null;
+						}
+
 						return new ContentSubtype() {
 							{
 								setSubtypeId(
@@ -600,6 +603,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 								setSubtypeKey(
 									() -> _getSubtypeKey(
+										infoItemFormVariationsProvider,
 										layoutPageTemplateEntry));
 							}
 						};

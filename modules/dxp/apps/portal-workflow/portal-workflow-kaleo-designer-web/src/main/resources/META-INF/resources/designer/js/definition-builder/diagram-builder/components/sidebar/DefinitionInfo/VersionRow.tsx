@@ -78,6 +78,26 @@ export function VersionRow({versionNumber}: VersionRowProps) {
 		setShowAlert(true);
 	};
 
+	const restoreWorkflowDefinition = async (
+		publishOrSaveWorkflowDefinitionRequest: (
+			value: WorkflowDefinition
+		) => Promise<Response>,
+		requestBody: WorkflowDefinition
+	) => {
+		const publishOrSaveWorkflowDefinitionResponse =
+			await publishOrSaveWorkflowDefinitionRequest(requestBody);
+
+		if (!publishOrSaveWorkflowDefinitionResponse.ok) {
+			restoreFailed();
+
+			return;
+		}
+
+		restoreSuccess(publishOrSaveWorkflowDefinitionResponse);
+
+		return;
+	};
+
 	const handleRestoreWorkflowDefinitionVersion = async () => {
 		const retrieveWorkflowDefinitionResponse =
 			await retrieveDefinitionRequest(definitionName, versionNumber);
@@ -86,28 +106,17 @@ export function VersionRow({versionNumber}: VersionRowProps) {
 			(await retrieveWorkflowDefinitionResponse.json()) as RetrieveWorkflowDefinitionResponseProps;
 
 		if (active) {
-			const publishWorkflowDefinitionResponse =
-				await publishDefinitionRequest({
-					active,
-					content,
-					name: definitionName,
-					title,
-					title_i18n,
-					version,
-				});
-
-			if (!publishWorkflowDefinitionResponse.ok) {
-				restoreFailed();
-
-				return;
-			}
-
-			restoreSuccess(publishWorkflowDefinitionResponse);
-
-			return;
+			await restoreWorkflowDefinition(publishDefinitionRequest, {
+				active,
+				content,
+				name: definitionName,
+				title,
+				title_i18n,
+				version,
+			});
 		}
 
-		const saveWorkflowDefinitionResponse = await saveDefinitionRequest({
+		await restoreWorkflowDefinition(saveDefinitionRequest, {
 			active,
 			content,
 			name: definitionName,
@@ -115,16 +124,6 @@ export function VersionRow({versionNumber}: VersionRowProps) {
 			title_i18n,
 			version,
 		});
-
-		if (!saveWorkflowDefinitionResponse.ok) {
-			restoreFailed();
-
-			return;
-		}
-
-		restoreSuccess(saveWorkflowDefinitionResponse);
-
-		return;
 	};
 
 	return (

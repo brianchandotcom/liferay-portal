@@ -1357,6 +1357,8 @@ definition {
 			var index = 1;
 		}
 
+		WaitForVisible(locator1 = "Fragment#FRAGMENT_LABEL");
+
 		Click.javaScriptClick(
 			index = ${index},
 			key_fragmentName = ${fragmentName},

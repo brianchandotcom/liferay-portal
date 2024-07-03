@@ -60,6 +60,12 @@ public class PoshiPropsUtilCheck extends BaseFileCheck {
 				continue;
 			}
 
+			String line = getLine(content, getLineNumber(content, x));
+
+			if (line.contains("curl")) {
+				continue;
+			}
+
 			addMessage(
 				fileName,
 				StringBundler.concat(

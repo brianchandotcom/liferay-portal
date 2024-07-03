@@ -127,12 +127,23 @@ public class BatchEngineBundleTrackerTest {
 
 	@Test
 	public void testProcessBatchEngineBundleOnUpgrade() throws Exception {
+		boolean upgradeClient = ReflectionTestUtil.getAndSetFieldValue(
+			DBUpgrader.class, "_upgradeClient", false);
+
 		try {
 			StartupHelperUtil.setUpgrading(true);
+
+			_testProcessBatchEngineBundle("batch1", "/batch1/export.json");
+
+			ReflectionTestUtil.setFieldValue(
+				DBUpgrader.class, "_upgradeClient", true);
 
 			_testProcessBatchEngineBundle("batch1");
 		}
 		finally {
+			ReflectionTestUtil.setFieldValue(
+				DBUpgrader.class, "_upgradeClient", upgradeClient);
+
 			StartupHelperUtil.setUpgrading(false);
 		}
 	}

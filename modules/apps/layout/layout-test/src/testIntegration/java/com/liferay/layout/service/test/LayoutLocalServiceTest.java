@@ -646,11 +646,11 @@ public class LayoutLocalServiceTest {
 
 		layout = _layoutLocalService.updateLookAndFeel(
 			_group.getGroupId(), false, layout.getLayoutId(),
-			"test_WAR_testtheme", "01", StringPool.BLANK);
+			"dialect_WAR_dialecttheme", "01", StringPool.BLANK);
 
 		Assert.assertEquals(StringPool.BLANK, layout.getCss());
 		Assert.assertEquals("01", layout.getColorSchemeId());
-		Assert.assertEquals("test_WAR_testtheme", layout.getThemeId());
+		Assert.assertEquals("dialect_WAR_dialecttheme", layout.getThemeId());
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

@@ -4827,8 +4827,6 @@ definition {
 
 	@summary = "Default summary"
 	macro viewVideoPreviewGeneratingInfo() {
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
-
 		if (isSet(disabled)) {
 			AssertTextEquals.assertPartialText(
 				key_text = "No video preview available.",
@@ -4838,14 +4836,12 @@ definition {
 		else {
 			VerifyElementPresent(
 				key_text = "Generating preview will take a few minutes.",
-				locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_INFO");
+				locator1 = "Message#INFO");
 
-			while (IsElementPresent(key_text = "Generating preview will take a few minutes.", locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_INFO")) {
+			while (IsElementPresent(key_text = "Generating preview will take a few minutes.", locator1 = "Message#INFO")) {
 				WaitForElementPresent.waitForLastScript();
 
 				Refresh();
-
-				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
 			}
 		}
 

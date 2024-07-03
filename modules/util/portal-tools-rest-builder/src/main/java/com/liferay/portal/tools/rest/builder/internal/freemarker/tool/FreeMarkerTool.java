@@ -287,9 +287,8 @@ public class FreeMarkerTool {
 		if (allOfSchemas != null) {
 			for (Schema allOfSchema : allOfSchemas) {
 				if (allOfSchema.getReference() != null) {
-					String allOfSchemaReferenceName =
-						OpenAPIParserUtil.getReferenceName(
-							allOfSchema.getReference());
+					String allOfSchemaReferenceName = getReferenceName(
+						allOfSchema.getReference());
 
 					allOfSchema = schemas.get(allOfSchemaReferenceName);
 
@@ -766,6 +765,10 @@ public class FreeMarkerTool {
 		}
 
 		return null;
+	}
+
+	public String getReferenceName(String reference) {
+		return OpenAPIParserUtil.getReferenceName(reference);
 	}
 
 	public String getResourceArguments(

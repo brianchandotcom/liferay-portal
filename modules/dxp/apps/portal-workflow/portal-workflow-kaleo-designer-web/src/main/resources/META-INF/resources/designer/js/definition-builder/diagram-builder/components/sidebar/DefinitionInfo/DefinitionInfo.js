@@ -8,31 +8,7 @@ import React, {useContext, useState} from 'react';
 
 import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
 import {DetailsTab} from './DetailsTab';
-import {VersionRow} from './VersionRow';
-
-const RevisionHistory = ({version}) => {
-	const otherVersions = [];
-
-	for (let i = version - 1; i > 0; i--) {
-		otherVersions.push({versionNumber: i});
-	}
-
-	return (
-		<>
-			<div className="info-group">
-				<label>
-					{Liferay.Language.get('current-version')}: {version}
-				</label>
-
-				<div className="sheet-subtitle" />
-			</div>
-
-			{otherVersions.map(({versionNumber}, index) => (
-				<VersionRow key={index} versionNumber={versionNumber} />
-			))}
-		</>
-	);
-};
+import {RevisionHistory} from './RevisionHistory';
 
 const TABS = [
 	{

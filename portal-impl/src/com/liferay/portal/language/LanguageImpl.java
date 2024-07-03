@@ -1632,11 +1632,17 @@ public class LanguageImpl implements Language, Serializable {
 		Supplier<ResourceBundle> resourceBundleSupplier, Locale locale,
 		String content) {
 
+		Matcher matcher = _excludePattern.matcher(content);
+
+		if (matcher.find()) {
+			return content;
+		}
+
 		StringBundler sb = null;
 
 		ResourceBundle resourceBundle = null;
 
-		Matcher matcher = _pattern.matcher(content);
+		matcher = _pattern.matcher(content);
 
 		int x = 0;
 
@@ -2009,6 +2015,8 @@ public class LanguageImpl implements Language, Serializable {
 	private static final Map<Long, CompanyLocalesBag> _companyLocalesBags =
 		new ConcurrentHashMap<>();
 	private static PortalCache<Long, Serializable> _companyLocalesPortalCache;
+	private static final Pattern _excludePattern = Pattern.compile(
+		"await import\\(.@liferay/language/.+/all\\.js.\\)", Pattern.MULTILINE);
 	private static PortalCache<Long, Serializable> _groupLocalesPortalCache;
 	private static volatile long _lastModified = System.currentTimeMillis();
 	private static final Pattern _pattern = Pattern.compile(

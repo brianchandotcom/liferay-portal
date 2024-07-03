@@ -81,7 +81,7 @@ public class PortalImplEscapeRedirectTest {
 	@Test
 	public void testEscapeRedirectWithDomains() throws Exception {
 		_redirectURLSettingsImpl.allowedDomains = new String[] {
-			"google.com", "localhost"
+			"google.com", "localhost", "PORTAL_DOMAINS"
 		};
 		_redirectURLSettingsImpl.securityMode = "domain";
 
@@ -240,7 +240,7 @@ public class PortalImplEscapeRedirectTest {
 	@Test
 	public void testEscapeRedirectWithSubdomains() throws Exception {
 		_redirectURLSettingsImpl.allowedDomains = new String[] {
-			"*.test.liferay.com", "google.com"
+			"*.test.liferay.com", "google.com", "PORTAL_DOMAINS"
 		};
 		_redirectURLSettingsImpl.securityMode = "domain";
 
@@ -322,9 +322,9 @@ public class PortalImplEscapeRedirectTest {
 			return GetterUtil.getString(securityMode);
 		}
 
-		protected String[] allowedDomains;
+		protected String[] allowedDomains = {"localhost", "PORTAL_DOMAINS"};
 		protected String[] allowedIPs = {"127.0.0.1", "SERVER_IP"};
-		protected String securityMode = "ip";
+		protected String securityMode = "domain";
 
 	}
 

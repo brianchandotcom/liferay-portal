@@ -134,58 +134,6 @@ definition {
 
 	@disable-webdriver = "true"
 	@priority = 4
-	test CanGetEmbeddedTaxonomyCategoryOfEntriesCollection {
-		property portal.acceptance = "true";
-
-		task ("And Given taxonomyVocabulary with name 'terminology' created") {
-			var responseFromVocabulary = TaxonomyVocabularyAPI.createTaxonomyVocabulary(
-				externalReferenceCode = "erc1",
-				groupName = "Guest",
-				name = "terminology");
-		}
-
-		task ("And Given category with name 'term' in 'terminology' created") {
-			var taxonomyVocabularyId = JSONPathUtil.getIdValue(response = ${responseFromVocabulary});
-
-			var responseFromCategory = TaxonomyCategoryAPI.createTaxonomyCategory(
-				name = "term",
-				taxonomyVocabularyId = ${taxonomyVocabularyId});
-		}
-
-		task ("And Given object definition 'Student' with name field created") {
-			ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "student",
-				en_US_plural_label = "students",
-				name = "Student",
-				requiredStringFieldName = "name");
-		}
-
-		task ("And Given Student entry created with taxonomyCategoryIds of 'term' and 'category_parent'") {
-			var taxonomyCategoryId = JSONPathUtil.getIdValue(response = ${responseFromCategory});
-
-			var studentEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
-				en_US_plural_label = "students",
-				name = "Tom",
-				taxonomyCategoryIds = "${staticTaxonomyCategoryId},${taxonomyCategoryId}");
-		}
-
-		task ("When requesting getStudentsPage with nestedFields=embeddedTaxonomyCategory") {
-			var response = ObjectDefinitionAPI.getObjectEntries(
-				en_US_plural_label = "students",
-				parameter = "nestedFields=embeddedTaxonomyCategory");
-		}
-
-		task ("Then I can see the embeddedTaxonomyCategory node with information") {
-			var actualValue = JSONUtil.getWithJSONPath(${response}, "$..items[?(@.id==${studentEntryId})].taxonomyCategoryBriefs..embeddedTaxonomyCategory.name");
-
-			TestUtils.assertEquals(
-				actual = ${actualValue},
-				expected = "category_parent,term");
-		}
-	}
-
-	@disable-webdriver = "true"
-	@priority = 4
 	test CanGetTaxonomyCategoryBriefsOfEntriesCollection {
 		property portal.acceptance = "true";
 

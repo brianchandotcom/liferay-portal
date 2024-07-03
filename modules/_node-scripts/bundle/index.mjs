@@ -4,6 +4,7 @@
  */
 
 import getGlobalImports from '../configuration/getGlobalImports.mjs';
+import getLanguageJSON from '../configuration/getLanguageJSON.mjs';
 import getOverridenPackageSymbols from '../configuration/getOverridenPackageSymbols.mjs';
 import getProjectDescription from '../configuration/getProjectDescription.mjs';
 import getProjectEntryPoints from '../configuration/getProjectEntryPoints.mjs';
@@ -28,6 +29,7 @@ export default async function main() {
 
 	const [
 		globalImports,
+		languageJSON,
 		overridenPackageSymbols,
 		projectDescription,
 		projectEntryPoints,
@@ -36,6 +38,7 @@ export default async function main() {
 		projectWebContextPath,
 	] = await Promise.all([
 		getGlobalImports(),
+		getLanguageJSON(),
 		getOverridenPackageSymbols(),
 		getProjectDescription(),
 		getProjectEntryPoints(),
@@ -52,6 +55,7 @@ export default async function main() {
 
 		bundleJavaScriptMain(
 			globalImports,
+			languageJSON,
 			overridenPackageSymbols,
 			projectEntryPoints,
 			projectWebContextPath

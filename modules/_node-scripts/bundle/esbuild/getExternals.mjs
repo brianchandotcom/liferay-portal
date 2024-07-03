@@ -5,7 +5,11 @@
 
 import getPathPrefix from './getPathPrefix.mjs';
 
-export default function getExternals(globalImports, type) {
+export default function getExternals(
+	globalImports,
+	projectWebContextPath,
+	type
+) {
 	const prefix = getPathPrefix(type);
 
 	const externals = [
@@ -20,6 +24,10 @@ export default function getExternals(globalImports, type) {
 			)
 		),
 	];
+
+	if (type === 'main') {
+		externals.push(`@liferay/language/${projectWebContextPath}/all.js`);
+	}
 
 	return externals;
 }

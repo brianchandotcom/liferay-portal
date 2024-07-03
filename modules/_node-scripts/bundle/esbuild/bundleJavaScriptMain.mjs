@@ -3,19 +3,26 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import fs from 'fs/promises';
 import path from 'path';
 
-import {BUILD_MAIN_EXPORTS_PATH} from '../../util/constants.mjs';
+import {
+	BUILD_LANGUAGE_JSON_PATH,
+	BUILD_MAIN_EXPORTS_PATH,
+} from '../../util/constants.mjs';
+import objectSF from '../../util/objectSF.mjs';
 import getExternals from './getExternals.mjs';
 import getCssLoaderPlugin from './plugins/getCssLoaderPlugin.mjs';
 import getExactAliasPlugin from './plugins/getExactAliasPlugin.mjs';
 import getImportBridgesPlugin from './plugins/getImportBridgesPlugin.mjs';
+import getLiferayLanguageGetPlugin from './plugins/getLiferayLanguageGetPlugin.mjs';
 import getScssLoaderPlugin from './plugins/getScssLoaderPlugin.mjs';
 import relocateSourcemap from './relocateSourcemap.mjs';
 import runEsbuild from './runEsbuild.mjs';
 
 export default async function bundleJavaScriptMain(
 	globalImports,
+	languageJSON,
 	overridenPackageSymbols,
 	projectEntryPoints,
 	projectWebContextPath
@@ -30,7 +37,7 @@ export default async function bundleJavaScriptMain(
 		bundle: true,
 		entryNames: 'index',
 		entryPoints: [path.resolve(mainEntryPoint)],
-		external: getExternals(globalImports, 'main'),
+		external: getExternals(globalImports, projectWebContextPath, 'main'),
 		format: 'esm',
 		loader: {
 			'.js': 'jsx',
@@ -42,6 +49,7 @@ export default async function bundleJavaScriptMain(
 			getCssLoaderPlugin(globalImports, 'main'),
 			getExactAliasPlugin(globalImports, 'main'),
 			getImportBridgesPlugin(globalImports, overridenPackageSymbols),
+			getLiferayLanguageGetPlugin(projectWebContextPath, languageJSON),
 			getScssLoaderPlugin(projectWebContextPath),
 		],
 		sourcemap: true,
@@ -50,8 +58,24 @@ export default async function bundleJavaScriptMain(
 
 	await runEsbuild(esbuildConfig, 'main');
 
-	await relocateSourcemap(
-		path.join(BUILD_MAIN_EXPORTS_PATH, 'index.js.map'),
-		projectWebContextPath
-	);
+	await Promise.all([
+		fs.writeFile(
+			BUILD_LANGUAGE_JSON_PATH,
+			formatLanguageJSON(languageJSON),
+			'utf-8'
+		),
+		relocateSourcemap(
+			path.join(BUILD_MAIN_EXPORTS_PATH, 'index.js.map'),
+			projectWebContextPath
+		),
+	]);
+}
+
+function formatLanguageJSON(languageJSON) {
+
+	// Dedupe language keys before writing them
+
+	languageJSON.keys = [...new Set(languageJSON.keys)];
+
+	return objectSF(languageJSON);
 }

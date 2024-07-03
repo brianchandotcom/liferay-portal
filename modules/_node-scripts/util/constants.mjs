@@ -16,6 +16,7 @@ export const SRC_PATH = path.join(
 	'META-INF',
 	'resources'
 );
+export const SRC_LANGUAGE_JSON_PATH = path.join(SRC_PATH, 'language.json');
 export const SRC_TSCONFIG_PATH = path.join(SRC_PATH, 'tsconfig.json');
 
 export const BUILD_PATH = path.join('build', 'node', 'packageRunBuild');
@@ -25,6 +26,10 @@ export const BUILD_MAIN_EXPORTS_PATH = path.join(
 	'__liferay__'
 );
 export const BUILD_CSS_EXPORTS_PATH = path.join(BUILD_MAIN_EXPORTS_PATH, 'css');
+export const BUILD_LANGUAGE_JSON_PATH = path.join(
+	BUILD_RESOURCES_PATH,
+	'language.json'
+);
 export const BUILD_NPM_EXPORTS_PATH = path.join(
 	BUILD_MAIN_EXPORTS_PATH,
 	'exports'

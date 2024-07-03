@@ -1,0 +1,31 @@
+[
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal",
+		"roleName": "Recipe Creator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW",
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.portal.kernel.model.Group",
+		"roleName": "Recipe Creator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_journal_web_portlet_JournalPortlet",
+		"roleName": "Recipe Creator",
+		"scope": 1
+	}
+]

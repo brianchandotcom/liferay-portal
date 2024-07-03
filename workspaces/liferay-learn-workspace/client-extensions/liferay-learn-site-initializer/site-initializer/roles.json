@@ -22,5 +22,21 @@
 		},
 		"scope": 4,
 		"type": 1
+	},
+	{
+		"name": "Recipe Approver",
+		"name_i18n": {
+			"en-US": "Recipe Approver"
+		},
+		"scope": 4,
+		"type": 1
+	},
+	{
+		"name": "Recipe Creator",
+		"name_i18n": {
+			"en-US": "Recipe Creator"
+		},
+		"scope": 4,
+		"type": 1
 	}
 ]

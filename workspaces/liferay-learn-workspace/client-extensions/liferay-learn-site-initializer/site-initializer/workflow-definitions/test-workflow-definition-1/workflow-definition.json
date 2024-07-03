@@ -1,0 +1,9 @@
+{
+	"active": true,
+	"description": "Workflow for recipe content creation",
+	"name": "Recipe Workflow",
+	"title": "Recipe Workflow",
+	"title_i18n": {
+		"en_US": "Recipe Workflow"
+	}
+}

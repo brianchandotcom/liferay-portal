@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser.test.batch;
 
+import java.io.File;
+
 import java.util.Collections;
 import java.util.Properties;
 import java.util.Set;
@@ -19,10 +21,12 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 		"playwright.test.project";
 
 	public PlaywrightTestSelector(
-		Properties properties, String batchName, String relevantRuleName,
-		String testSuiteName) {
+		File propertiesFile, Properties properties, String batchName,
+		String relevantRuleName, String testSuiteName) {
 
-		super(properties, batchName, relevantRuleName, testSuiteName);
+		super(
+			propertiesFile, properties, batchName, relevantRuleName,
+			testSuiteName);
 
 		validate();
 

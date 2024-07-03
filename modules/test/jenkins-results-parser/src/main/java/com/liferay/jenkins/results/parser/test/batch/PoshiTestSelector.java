@@ -7,6 +7,8 @@ package com.liferay.jenkins.results.parser.test.batch;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import java.io.File;
+
 import java.util.Properties;
 
 /**
@@ -18,10 +20,12 @@ public class PoshiTestSelector extends BaseTestSelector {
 		"test.batch.run.property.query";
 
 	public PoshiTestSelector(
-		Properties properties, String batchName, String relevantRuleName,
-		String testSuiteName) {
+		File propertiesFile, Properties properties, String batchName,
+		String relevantRuleName, String testSuiteName) {
 
-		super(properties, batchName, relevantRuleName, testSuiteName);
+		super(
+			propertiesFile, properties, batchName, relevantRuleName,
+			testSuiteName);
 
 		validate();
 	}

@@ -27,7 +27,8 @@ public class TestBatchFactory {
 		try {
 			if (batchName.startsWith("functional")) {
 				PoshiTestSelector poshiTestSelector = new PoshiTestSelector(
-					properties, batchName, relevantRuleName, testSuiteName);
+					propertiesFile, properties, batchName, relevantRuleName,
+					testSuiteName);
 
 				PoshiTestBatch poshiTestBatch = new PoshiTestBatch(
 					batchName, poshiTestSelector);
@@ -55,7 +56,8 @@ public class TestBatchFactory {
 			if (batchName.startsWith("playwright-js")) {
 				PlaywrightTestSelector playwrightTestSelector =
 					new PlaywrightTestSelector(
-						properties, batchName, relevantRuleName, testSuiteName);
+						propertiesFile, properties, batchName, relevantRuleName,
+						testSuiteName);
 
 				PlaywrightTestBatch playwrightTestBatch =
 					new PlaywrightTestBatch(batchName, playwrightTestSelector);

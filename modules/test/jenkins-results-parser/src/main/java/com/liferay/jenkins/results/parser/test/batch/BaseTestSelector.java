@@ -86,7 +86,7 @@ public abstract class BaseTestSelector implements TestSelector {
 	private final String _batchName;
 	private Job _job;
 	private final Properties _properties;
-	private File _propertiesFile;
+	private final File _propertiesFile;
 	private final String _relevantRuleName;
 	private TestBatch _testBatch;
 	private final String _testSuiteName;

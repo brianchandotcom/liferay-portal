@@ -7,10 +7,19 @@ package com.liferay.object.entry.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Marcela Cunha
  */
 public class ObjectEntryThreadLocal {
+
+	public static void addValidatedObjectEntryId(long objectEntryId) {
+		Set<Long> validatedObjectEntryIds = _validatedObjectEntryIds.get();
+
+		validatedObjectEntryIds.add(objectEntryId);
+	}
 
 	public static boolean isDisassociateRelatedModels() {
 		return _disassociateRelatedModelsThreadLocal.get();
@@ -26,6 +35,12 @@ public class ObjectEntryThreadLocal {
 
 	public static boolean isSkipReadOnlyObjectFieldsValidation() {
 		return _skipReadOnlyObjectFieldsValidationThreadLocal.get();
+	}
+
+	public static boolean isValidatedObjectEntry(long objectEntryId) {
+		Set<Long> validatedObjectEntryIds = _validatedObjectEntryIds.get();
+
+		return validatedObjectEntryIds.contains(objectEntryId);
 	}
 
 	public static void setDisassociateRelatedModels(
@@ -75,5 +90,9 @@ public class ObjectEntryThreadLocal {
 				ObjectEntryThreadLocal.class +
 					"._skipReadOnlyObjectFieldsValidationThreadLocal",
 				() -> false);
+	private static final ThreadLocal<Set<Long>> _validatedObjectEntryIds =
+		new CentralizedThreadLocal<>(
+			ObjectEntryThreadLocal.class + "._validatedObjectEntryIds",
+			HashSet::new);
 
 }

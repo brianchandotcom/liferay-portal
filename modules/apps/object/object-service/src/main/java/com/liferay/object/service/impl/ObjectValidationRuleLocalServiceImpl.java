@@ -11,6 +11,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.DuplicateObjectValidationRuleExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.exception.ObjectValidationRuleNameException;
@@ -40,7 +41,6 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
-import com.liferay.object.validation.rule.util.ObjectValidationRuleThreadLocal;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.string.StringBundler;
@@ -369,7 +369,7 @@ public class ObjectValidationRuleLocalServiceImpl
 		throws PortalException {
 
 		if ((baseModel == null) ||
-			ObjectValidationRuleThreadLocal.isValidatedObjectEntry(
+			ObjectEntryThreadLocal.isValidatedObjectEntry(
 				(long)baseModel.getPrimaryKeyObj())) {
 
 			return;
@@ -497,7 +497,7 @@ public class ObjectValidationRuleLocalServiceImpl
 			}
 		}
 
-		ObjectValidationRuleThreadLocal.addValidatedObjectEntryId(
+		ObjectEntryThreadLocal.addValidatedObjectEntryId(
 			(long)baseModel.getPrimaryKeyObj());
 
 		if (ListUtil.isNotEmpty(objectValidationRuleResults)) {

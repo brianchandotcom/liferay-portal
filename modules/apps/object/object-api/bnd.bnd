@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Object API
 Bundle-SymbolicName: com.liferay.object.api
-Bundle-Version: 91.2.1
+Bundle-Version: 92.0.0
 Export-Package:\
 	com.liferay.object.action.engine,\
 	com.liferay.object.action.executor,\
@@ -46,5 +46,4 @@ Export-Package:\
 	com.liferay.object.tree.constants,\
 	com.liferay.object.util.comparator,\
 	com.liferay.object.validation.rule,\
-	com.liferay.object.validation.rule.setting.builder,\
-	com.liferay.object.validation.rule.util
+	com.liferay.object.validation.rule.setting.builder

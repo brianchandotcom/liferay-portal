@@ -52,10 +52,18 @@ public class PoshiPropsUtilCheck extends BaseFileCheck {
 		Matcher matcher = _propsUtilGetPasswordPattern.matcher(content);
 
 		while (matcher.find()) {
-			int x = content.lastIndexOf("if (", matcher.start());
+			String previousCodeBlock = content.substring(0, matcher.start());
+
+			if (!previousCodeBlock.contains("\tmacro ") &&
+				!previousCodeBlock.contains("\ttest ")) {
+
+				continue;
+			}
+
+			int x = previousCodeBlock.lastIndexOf("if (");
 
 			if (x != -1) {
-				String s = content.substring(x, matcher.start());
+				String s = previousCodeBlock.substring(x);
 
 				if (!s.contains("\tmacro ") && !s.contains("\ttest ") &&
 					(getLevel(s, "{", "}") == 1)) {

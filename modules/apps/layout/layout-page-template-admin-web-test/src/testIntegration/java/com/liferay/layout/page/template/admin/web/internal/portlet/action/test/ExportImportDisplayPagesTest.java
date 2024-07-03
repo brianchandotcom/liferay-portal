@@ -360,30 +360,30 @@ public class ExportImportDisplayPagesTest {
 			layoutsImporterResultEntries.toString(), 1,
 			layoutsImporterResultEntries.size());
 
-		LayoutsImporterResultEntry layoutPageTemplateImportEntry =
+		LayoutsImporterResultEntry layoutsImporterResultEntry =
 			layoutsImporterResultEntries.get(0);
 
 		if (Validator.isNotNull(errorMessageKey)) {
 			Assert.assertEquals(
 				LayoutsImporterResultEntry.Status.INVALID,
-				layoutPageTemplateImportEntry.getStatus());
+				layoutsImporterResultEntry.getStatus());
 
 			Assert.assertEquals(
 				_language.format(
 					LocaleUtil.getMostRelevantLocale(), errorMessageKey,
 					"display-page-templates/display-page-template-one" +
 						"/display-page-template.json"),
-				layoutPageTemplateImportEntry.getErrorMessage());
+				layoutsImporterResultEntry.getErrorMessage());
 
 			return;
 		}
 
 		Assert.assertEquals(
 			LayoutsImporterResultEntry.Status.IMPORTED,
-			layoutPageTemplateImportEntry.getStatus());
+			layoutsImporterResultEntry.getStatus());
 
 		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(
-			layoutPageTemplateImportEntry.getName());
+			layoutsImporterResultEntry.getName());
 
 		layoutPageTemplateEntryKey = StringUtil.replace(
 			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);

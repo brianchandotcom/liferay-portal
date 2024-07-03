@@ -45,4 +45,26 @@ export class SortingPage {
 	async openAddSortingModal() {
 		await this.addSortingButton.click();
 	}
+
+	async selectTab(tabLabel: string) {
+		await this.dataSetPage.selectTab(tabLabel);
+	}
+
+	async getTableLabelCellTexts(): Promise<string[]> {
+		const rows = await this.sortingTable.locator('tr').all();
+
+		rows.shift(); // Exclude the header
+
+		const labelTexts: string[] = [];
+
+		for (const row of rows) {
+			const labelCell = row.locator('td').nth(1);
+
+			const labelText = await labelCell.textContent();
+
+			labelTexts.push(labelText);
+		}
+
+		return labelTexts;
+	}
 }

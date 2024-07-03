@@ -511,11 +511,15 @@ public class AMJournalArticleStagedModelDataHandlerTest
 					"com.liferay.portal.security.iframe.sanitizer." +
 						"configuration.IFrameConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
+						"blacklist", StringPool.BLANK
+					).put(
 						"enabled", enabled
 					).put(
 						"removeIFrameTags", false
 					).put(
 						"sandboxAttributeValues", StringPool.BLANK
+					).put(
+						"whitelist", StringPool.BLANK
 					).build())) {
 
 			unsafeRunnable.run();

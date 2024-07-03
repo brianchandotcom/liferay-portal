@@ -5,7 +5,12 @@
 
 package com.liferay.jenkins.results.parser.test.suite;
 
+import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.JobFactory;
+import com.liferay.jenkins.results.parser.PortalAcceptancePullRequestJob;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestBatch;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestSelector;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
@@ -27,10 +32,17 @@ public class RelevantTestSuiteTest {
 	@Test
 	public void testPlaywrightTestSelectorMerge() {
 		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
-			_baseDir,
+			_portalAcceptancePullRequestJob);
+
+		relevantTestSuite.setModifiedFiles(
 			Arrays.asList(
 				new File(_baseDir, "modules/module-1/text_file_1.txt"),
 				new File(_baseDir, "modules/module-2/text_file_2.txt")));
+
+		RelevantRuleEngine relevantRuleEngine =
+			RelevantRuleEngine.getInstance();
+
+		relevantRuleEngine.setBaseDir(_baseDir);
 
 		PlaywrightTestBatch playwrightTestBatch = null;
 
@@ -54,7 +66,32 @@ public class RelevantTestSuiteTest {
 			playwrightTestSelector.getPlaywrightProjectNames());
 	}
 
+	private static File _getPortalDir(File file) {
+		if (file == null) {
+			file = new File(".");
+
+			file = JenkinsResultsParserUtil.getCanonicalFile(file);
+		}
+
+		String fileName = file.getName();
+
+		if (fileName.equals("liferay-portal")) {
+			return file;
+		}
+
+		file = file.getParentFile();
+
+		if (file == null) {
+			throw new RuntimeException(
+				"Unable to find portal directory from: " + file);
+		}
+
+		return _getPortalDir(file);
+	}
+
 	private static final File _baseDir;
+	private static final PortalAcceptancePullRequestJob
+		_portalAcceptancePullRequestJob;
 
 	static {
 		File baseDir = new File(
@@ -62,6 +99,21 @@ public class RelevantTestSuiteTest {
 				"/RelevantRuleEngineTest");
 
 		_baseDir = JenkinsResultsParserUtil.getCanonicalFile(baseDir);
+
+		String upstreamBranchName = "master";
+		String repositoryName = "liferay-portal";
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			(PortalGitWorkingDirectory)
+				GitWorkingDirectoryFactory.newGitWorkingDirectory(
+					upstreamBranchName, _getPortalDir(null), repositoryName);
+
+		_portalAcceptancePullRequestJob =
+			(PortalAcceptancePullRequestJob)JobFactory.newJob(
+				Job.BuildProfile.DXP,
+				"test-portal-acceptance-pullrequest(master)", null,
+				portalGitWorkingDirectory, upstreamBranchName, null,
+				repositoryName, "relevant", upstreamBranchName);
 	}
 
 }

@@ -37,6 +37,31 @@ export class HeadlessAdminTaxonomyApiHelper {
 	}
 
 	/**
+	 * It allows getting a category by vocabulary.
+	 *
+	 * @param name the name of the category
+	 * @param vocabularyId the parent vocabulary id
+	 */
+
+	async getTaxonomyCategoryByVocabularyId(vocabularyId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories`
+		);
+	}
+
+	/**
+	 * It allows getting a vocabulary by site.
+	 *
+	 * @param siteId the id of the site in which the vocabulary will be created
+	 */
+
+	async getTaxonomyVocabularyBySiteId(siteId: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/taxonomy-vocabularies`
+		);
+	}
+
+	/**
 	 * It allows creating a vocabulary inside a site.
 	 *
 	 * @param siteId the id of the site in which the vocabulary will be created

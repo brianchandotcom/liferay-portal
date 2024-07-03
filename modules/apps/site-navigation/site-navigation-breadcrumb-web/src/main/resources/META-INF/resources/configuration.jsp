@@ -29,7 +29,7 @@
 						<liferay-template:template-selector
 							className="<%= BreadcrumbEntry.class.getName() %>"
 							displayStyle="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyle() %>"
-							displayStyleGroupId="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyleGroupId() %>"
+							displayStyleGroupKey="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyleGroupKey() %>"
 							refreshURL="<%= configurationRenderURL %>"
 						/>
 					</div>

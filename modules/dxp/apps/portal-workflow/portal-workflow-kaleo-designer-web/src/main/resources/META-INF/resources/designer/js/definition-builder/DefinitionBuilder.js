@@ -87,14 +87,14 @@ export default function DefinitionBuilder(props) {
 	};
 
 	return (
-		<DefinitionBuilderContextProvider {...contextProps}>
-			<div className="definition-builder-app">
-				<ReactFlowProvider>
+		<ReactFlowProvider>
+			<DefinitionBuilderContextProvider {...contextProps}>
+				<div className="definition-builder-app">
 					<UpperToolbar {...props} />
 
 					{sourceView ? <SourceBuilder /> : <DiagramBuilder />}
-				</ReactFlowProvider>
-			</div>
-		</DefinitionBuilderContextProvider>
+				</div>
+			</DefinitionBuilderContextProvider>
+		</ReactFlowProvider>
 	);
 }

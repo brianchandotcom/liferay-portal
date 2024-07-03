@@ -11,11 +11,7 @@ import lang from '../../../../util/lang';
 moment.locale(Liferay.ThemeDisplay.getBCP47LanguageId());
 
 interface DetailsTabProps {
-	definitionInfo: {
-		dateCreated: string;
-		dateModified: string;
-		totalModifications: string;
-	};
+	definitionInfo: DefinitionInfo;
 }
 
 export function DetailsTab({definitionInfo}: DetailsTabProps) {

@@ -6,8 +6,6 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import React, {useContext} from 'react';
 
-// @ts-ignore
-
 import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
 import {
 	publishDefinitionRequest,
@@ -15,16 +13,6 @@ import {
 	saveDefinitionRequest,
 } from '../../../../util/fetchUtil';
 import lang from '../../../../util/lang';
-
-interface DefinitionBuilderContextProps {
-	definitionName: string;
-	setAlertMessage: (value: string) => void;
-	setAlertType: (value: string) => void;
-	setDefinitionName: (value: string) => void;
-	setShowAlert: (value: boolean) => void;
-	setVersion: (value: number) => void;
-}
-
 interface RetrieveWorkflowDefinitionResponseProps {
 	active: boolean;
 	content: string;
@@ -45,7 +33,7 @@ export function VersionRow({versionNumber}: VersionRowProps) {
 		setDefinitionName,
 		setShowAlert,
 		setVersion,
-	} = useContext(DefinitionBuilderContext) as DefinitionBuilderContextProps;
+	} = useContext(DefinitionBuilderContext);
 
 	const restoreSuccess = async (response: Response) => {
 		const alertMessage = lang.sub(

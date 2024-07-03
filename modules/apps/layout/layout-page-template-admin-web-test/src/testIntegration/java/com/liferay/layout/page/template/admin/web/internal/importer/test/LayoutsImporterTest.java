@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -86,6 +87,7 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -122,7 +124,7 @@ public class LayoutsImporterTest {
 	}
 
 	@Test
-	public void testImportDisplayPageTemplate() throws Exception {
+	public void testImportDisplayPageTemplates() throws Exception {
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext1);
@@ -139,23 +141,25 @@ public class LayoutsImporterTest {
 		Assert.assertNotNull(layoutsImporterResultEntries);
 
 		Assert.assertEquals(
-			layoutsImporterResultEntries.toString(), 1,
+			layoutsImporterResultEntries.toString(), 2,
 			layoutsImporterResultEntries.size());
 
-		LayoutsImporterResultEntry layoutsImporterResultEntry =
-			layoutsImporterResultEntries.get(0);
+		for (LayoutsImporterResultEntry layoutsImporterResultEntry :
+				layoutsImporterResultEntries) {
 
-		Assert.assertEquals(
-			LayoutsImporterResultEntry.Status.IMPORTED,
-			layoutsImporterResultEntry.getStatus());
-		Assert.assertEquals(
-			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
-			layoutsImporterResultEntry.getType());
+			Assert.assertEquals(
+				LayoutsImporterResultEntry.Status.IMPORTED,
+				layoutsImporterResultEntry.getStatus());
+			Assert.assertEquals(
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+				layoutsImporterResultEntry.getType());
 
-		_assertLayoutPageTemplateEntry(
-			StringUtil.replace(
-				StringUtil.toLowerCase(layoutsImporterResultEntry.getName()),
-				CharPool.SPACE, CharPool.DASH));
+			_assertLayoutPageTemplateEntry(
+				StringUtil.replace(
+					StringUtil.toLowerCase(
+						layoutsImporterResultEntry.getName()),
+					CharPool.SPACE, CharPool.DASH));
+		}
 	}
 
 	@Test
@@ -457,9 +461,11 @@ public class LayoutsImporterTest {
 			String layoutPageTemplateEntryKey)
 		throws Exception {
 
-		Assert.assertEquals(
-			"basic-web-content-display-page-template",
-			layoutPageTemplateEntryKey);
+		Assert.assertTrue(
+			layoutPageTemplateEntryKey,
+			ArrayUtil.contains(
+				_DISPLAY_PAGE_LAYOUT_PAGE_TEMPLATE_ENTRY_KEYS,
+				layoutPageTemplateEntryKey));
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
@@ -468,16 +474,28 @@ public class LayoutsImporterTest {
 		Assert.assertNotNull(
 			layoutPageTemplateEntryKey, layoutPageTemplateEntry);
 
-		long classNameId = _portal.getClassNameId(
-			"com.liferay.journal.model.JournalArticle");
+		if (Objects.equals(
+				layoutPageTemplateEntryKey,
+				"basic-web-content-display-page-template")) {
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			layoutPageTemplateEntry.getGroupId(), classNameId,
-			"BASIC-WEB-CONTENT", true);
+			long classNameId = _portal.getClassNameId(
+				"com.liferay.journal.model.JournalArticle");
 
-		_assertLayoutPageTemplateEntry(
-			classNameId, ddmStructure.getStructureId(), layoutPageTemplateEntry,
-			"JournalArticle_title");
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.fetchStructure(
+					layoutPageTemplateEntry.getGroupId(), classNameId,
+					"BASIC-WEB-CONTENT", true);
+
+			_assertLayoutPageTemplateEntry(
+				classNameId, ddmStructure.getStructureId(),
+				layoutPageTemplateEntry, "JournalArticle_title");
+		}
+		else {
+			_assertLayoutPageTemplateEntry(
+				_portal.getClassNameId(
+					"com.liferay.commerce.product.model.CPDefinition"),
+				0, layoutPageTemplateEntry, "CPDefinition_name");
+		}
 	}
 
 	private void _assertLayoutsImporterResultEntries(
@@ -849,6 +867,12 @@ public class LayoutsImporterTest {
 			expectedRowStyledLayoutStructureItem.getNumberOfColumns(),
 			actualRowStyledLayoutStructureItem.getNumberOfColumns());
 	}
+
+	private static final String[]
+		_DISPLAY_PAGE_LAYOUT_PAGE_TEMPLATE_ENTRY_KEYS = {
+			"basic-web-content-display-page-template",
+			"product-display-page-template"
+		};
 
 	private static final String _RESOURCES_PATH =
 		"com/liferay/layout/page/template/admin/web/internal/importer/test" +

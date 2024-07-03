@@ -18,11 +18,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateLayoutExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.MasterLayoutException;
+import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -649,8 +651,14 @@ public class LayoutLocalServiceTest {
 			"dialect_WAR_dialecttheme", "01", StringPool.BLANK);
 
 		Assert.assertEquals(StringPool.BLANK, layout.getCss());
-		Assert.assertEquals("01", layout.getColorSchemeId());
-		Assert.assertEquals("dialect_WAR_dialecttheme", layout.getThemeId());
+
+		ColorScheme colorScheme = layout.getColorScheme();
+
+		Assert.assertEquals("01", colorScheme.getColorSchemeId());
+
+		Theme theme = layout.getTheme();
+
+		Assert.assertEquals("dialect_WAR_dialecttheme", theme.getThemeId());
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

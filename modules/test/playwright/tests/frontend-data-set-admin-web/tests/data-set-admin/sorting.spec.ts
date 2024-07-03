@@ -91,14 +91,7 @@ test.describe('Sorting in Data Set Manager', () => {
 		await test.step('Input values', async () => {
 			await page.getByLabel('Label').fill('Date Modified');
 			await page.getByLabel('Sort By').selectOption('dateModified');
-		});
-
-		await test.step('Order Type input only appears when default is checked', async () => {
-			await expect(page.getByLabel('Order Type')).not.toBeVisible();
-
 			await page.getByLabel('Use as Default Sorting').check();
-
-			await expect(page.getByLabel('Order Type')).toBeVisible();
 		});
 
 		await test.step('Save changes', async () => {

@@ -484,12 +484,6 @@ definition {
 	@description = "LPS-188333. Confirm that changes in the sorting are not autosaved when edit and delete an entry"
 	@priority = 3
 	test SortingChangesAreAutosaved {
-		task ("And the Save and Cancel button are not present") {
-			AssertElementNotPresent(locator1 = "Button#CANCEL");
-
-			AssertElementNotPresent(locator1 = "Button#SAVE");
-		}
-
 		task ("When the user adds 3 sortings") {
 			for (var key_fieldList : list "fieldName,id,status") {
 				DataSetAdmin.createASort(

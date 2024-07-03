@@ -50,6 +50,19 @@ test.describe('Sorting in Data Set Manager', () => {
 		});
 	});
 
+	test('Save and cancel buttons are not present @LPD-9468', async ({
+		page,
+	}) => {
+		await test.step('Check that save and cancel buttons are not present', async () => {
+			await expect(
+				page.getByRole('button', {name: 'Save'})
+			).not.toBeVisible();
+			await expect(
+				page.getByRole('button', {name: 'Cancel'})
+			).not.toBeVisible();
+		});
+	});
+
 	test('In the New Sort modal, the Order Type input only appears when default is checked @LPD-19465', async ({
 		page,
 		sortingPage,

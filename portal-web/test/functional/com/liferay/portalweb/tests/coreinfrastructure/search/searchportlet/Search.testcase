@@ -3209,17 +3209,15 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		SearchPage.searchEmbedded(searchTerm = "Test Test");
+		SearchPage.searchEmbedded(searchTerm = "tree");
 
 		SearchResults.viewSearchResults(
-			searchAssetTitle = "Test Test",
-			searchAssetType = "User");
+			searchAssetTitle = "tree.png",
+			searchAssetType = "Document");
 
-		SearchPage.gotoResultDetails(searchAssetTitle = "Test Test");
+		SearchPage.gotoResultDetails(searchAssetTitle = "tree.png");
 
-		SearchPage.viewUserResultDetails(
-			pageName = "My Profile",
-			userName = "Test Test");
+		SearchPage.viewResultDetails(searchAssetTitle = "tree.png");
 	}
 
 	@priority = 4

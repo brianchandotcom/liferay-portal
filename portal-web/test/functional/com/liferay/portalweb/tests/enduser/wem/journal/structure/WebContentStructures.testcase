@@ -447,6 +447,11 @@ definition {
 		task ("When the web content designer define an expiration date as default values") {
 			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
+			Type(
+				key_fieldFieldLabel = "Text",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "Default Text");
+
 			WebContent.addExpirationDateCP(expirationDate = "01/02/3000");
 
 			PortletEntry.save();

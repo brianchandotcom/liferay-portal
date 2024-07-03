@@ -13,11 +13,11 @@ import com.liferay.commerce.frontend.model.LabelField;
 public class PaymentEntry {
 
 	public PaymentEntry(
-		LabelField paymentStatus, String amount, String createDate) {
+		String amount, String createDate, LabelField paymentStatus) {
 
-		_paymentStatus = paymentStatus;
 		_amount = amount;
 		_createDate = createDate;
+		_paymentStatus = paymentStatus;
 	}
 
 	public String getAmount() {

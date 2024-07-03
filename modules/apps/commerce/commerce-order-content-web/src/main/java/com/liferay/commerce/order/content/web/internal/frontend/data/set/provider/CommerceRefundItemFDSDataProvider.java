@@ -187,18 +187,18 @@ public class CommerceRefundItemFDSDataProvider
 		throws PortalException {
 
 		return new PaymentEntry(
+			_formatCommercePaymentEntryAmount(
+				commerceCurrency, commercePaymentEntry.getAmount(),
+				themeDisplay),
+			_formatCommercePaymentEntryCreateDate(
+				themeDisplay, commercePaymentEntry.getCreateDate()),
 			new LabelField(
 				CommercePaymentEntryConstants.getPaymentLabelStyle(
 					commercePaymentEntry.getPaymentStatus()),
 				_language.get(
 					themeDisplay.getLocale(),
 					CommercePaymentEntryConstants.getPaymentStatusLabel(
-						commercePaymentEntry.getPaymentStatus()))),
-			_formatCommercePaymentEntryAmount(
-				commerceCurrency, commercePaymentEntry.getAmount(),
-				themeDisplay),
-			_formatCommercePaymentEntryCreateDate(
-				themeDisplay, commercePaymentEntry.getCreateDate()));
+						commercePaymentEntry.getPaymentStatus()))));
 	}
 
 	@Reference

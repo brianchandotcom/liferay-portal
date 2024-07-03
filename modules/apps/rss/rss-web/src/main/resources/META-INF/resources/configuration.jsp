@@ -96,7 +96,7 @@
 						<liferay-template:template-selector
 							className="<%= RSSFeed.class.getName() %>"
 							displayStyle="<%= rssPortletInstanceConfiguration.displayStyle() %>"
-							displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>"
+							displayStyleGroupKey="<%= rssDisplayContext.getDisplayStyleGroupKey() %>"
 							label="display-template"
 							refreshURL="<%= configurationRenderURL.toString() %>"
 							showEmptyOption="<%= true %>"

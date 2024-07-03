@@ -9,8 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import ClayTabs from '@clayui/tabs';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {CSVLink} from 'react-csv';
 
 import './index.css';
@@ -46,14 +45,6 @@ interface IProps {
 }
 
 const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
-	const [openOpportunitiesFilter, setOpenOpportunitiesFilter] = useState(
-		JSON.parse(sessionStorage.getItem('openOpportunitiesFilter')!) === null
-			? true
-			: (JSON.parse(
-					sessionStorage.getItem('openOpportunitiesFilter')!
-				) as boolean)
-	);
-
 	const [opportunitiesTableSort, setOpportunitiesTableSort] =
 		useState<string>('partnerAccountName:asc');
 
@@ -63,6 +54,42 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 	);
 
 	const urlParams = useQueryParams();
+
+	const [openOpportunitiesFilter, setOpenOpportunitiesFilter] = useState(
+		urlParams.has('filter')
+			? !urlParams.get('filter')?.includes("stage eq 'Closed Lost'") &&
+					!urlParams
+						.get('filter')
+						?.includes("stage eq 'Closed Won'") &&
+					!urlParams
+						.get('filter')
+						?.includes("stage eq 'Disqualified'") &&
+					!urlParams.get('filter')?.includes("stage eq 'Rejected'") &&
+					!urlParams
+						.get('filter')
+						?.includes("stage eq 'Rolled into Opportunity'")
+			: true
+	);
+
+	useEffect(() => {
+		if (urlParams.has('filter')) {
+			setOpenOpportunitiesFilter(
+				!urlParams.get('filter')?.includes("stage eq 'Closed Lost'") &&
+					!urlParams
+						.get('filter')
+						?.includes("stage eq 'Closed Won'") &&
+					!urlParams
+						.get('filter')
+						?.includes("stage eq 'Disqualified'") &&
+					!urlParams.get('filter')?.includes("stage eq 'Rejected'") &&
+					!urlParams
+						.get('filter')
+						?.includes("stage eq 'Rolled into Opportunity'")
+			);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [urlParams.entries()]);
 
 	const {filters, onFilter, setFilters} = useFilters(
 		debouncedDealRegistrationTableSort,
@@ -262,22 +289,6 @@ const PartnerOpportunitiesList = ({isRenewalListing, name}: IProps) => {
 		<div className="border-0 my-4">
 			<div className="align-items-center d-md-flex justify-content-between mb-3 mr-4">
 				<h1>{name}</h1>
-				<ClayTabs className="h-100 nav nav-segment nav-tabs">
-					<ClayTabs.Item
-						active={openOpportunitiesFilter}
-						className="nav-item"
-						onClick={() => setOpenOpportunitiesFilter(true)}
-					>
-						Open
-					</ClayTabs.Item>
-					<ClayTabs.Item
-						active={!openOpportunitiesFilter}
-						className="nav-item"
-						onClick={() => setOpenOpportunitiesFilter(false)}
-					>
-						Closed
-					</ClayTabs.Item>
-				</ClayTabs>
 			</div>
 
 			<TableHeader>

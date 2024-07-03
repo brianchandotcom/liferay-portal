@@ -128,16 +128,16 @@ export const Filters = {
 		partnersOpen: `${mdfRequestOpenFilter}`,
 	},
 	OPPORTUNITY_LISTING: {
-		closed: `${fiscalYearFilterCloseDate} and (stage eq 'Closed Lost' or stage eq 'Closed Won' or stage eq 'Disqualified' or stage eq 'Rejected') and ((type eq 'New Business' or type eq 'New Project Existing Business') or (type eq 'Existing Business' and hasRenewal eq false))`,
-		open: `stage ne 'Closed Lost' and stage ne 'Closed Won' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity' and ((type eq 'New Business' or type eq 'New Project Existing Business') or (type eq 'Existing Business' and hasRenewal eq false))`,
+		closed: `${fiscalYearFilterCloseDate} and ((type eq 'New Business' or type eq 'New Project Existing Business') or (type eq 'Existing Business' and hasRenewal eq false))`,
+		open: `((type eq 'New Business' or type eq 'New Project Existing Business') or (type eq 'Existing Business' and hasRenewal eq false))`,
 		opportunityListStage: opportunityList,
 	},
 	RENEWAL_DASHBOARD: {
 		renewals: `stage ne 'Closed Won' and stage ne 'Closed Lost' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity' and type eq 'Existing Business' and closeDate le ${thirtyDaysFromToday}`,
 	},
 	RENEWAL_LISTING: {
-		closed: `${fiscalYearFilterCloseDate} and (stage eq 'Closed Lost' or stage eq 'Closed Won') and type eq 'Existing Business' and hasRenewal eq true`,
-		open: `stage ne 'Closed Lost' and stage ne 'Closed Won' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity' and type eq 'Existing Business' and hasRenewal eq true`,
+		closed: `${fiscalYearFilterCloseDate} and type eq 'Existing Business' and hasRenewal eq true`,
+		open: `type eq 'Existing Business' and hasRenewal eq true`,
 		renewalsListStage: renewalsList,
 	},
 	REVENUE_DASHBOARD: {

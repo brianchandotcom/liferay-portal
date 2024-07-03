@@ -169,6 +169,17 @@ public class ObjectActionLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_accountEntry = CommerceTestUtil.addAccount(
+			_group.getGroupId(), TestPropsValues.getUserId());
+
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			TestPropsValues.getCompanyId());
+
+		_commerceChannel = CommerceTestUtil.addCommerceChannel(
+			_group.getGroupId(), _commerceCurrency.getCode());
+
 		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			false, _objectDefinitionLocalService,
 			Arrays.asList(
@@ -217,6 +228,115 @@ public class ObjectActionLocalServiceTest {
 			"_objectScriptingExecutor", _originalObjectScriptingExecutor);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(_objectDefinition);
+	}
+
+	@Test
+	public void testAddNotificationObjectActionWithSystemObject()
+		throws Exception {
+
+		// Account entry system object
+
+		ObjectDefinition accountEntryObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(),
+				AccountEntry.class.getSimpleName());
+
+		// Add object action to send an email notification after updating
+		// account entry
+
+		ObjectAction objectAction1 = _addNotificationObjectAction(
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			accountEntryObjectDefinition,
+			"[%ACCOUNTENTRY_AUTHOR_EMAIL_ADDRESS%]");
+
+		User omniadminUser = UserTestUtil.addOmniadminUser();
+
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			omniadminUser.getUserId(), 0L, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, null, null,
+			RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		_accountEntryLocalService.updateAccountEntry(accountEntry);
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			_notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 1,
+			notificationQueueEntries.size());
+
+		Map<String, Object> notificationRecipientSettingsMap =
+			NotificationRecipientSettingUtil.
+				getNotificationRecipientSettingsMap(
+					notificationQueueEntries.get(0));
+
+		User user = TestPropsValues.getUser();
+
+		AssertUtils.assertEqualsSorted(
+			StringUtil.split(user.getEmailAddress()),
+			StringUtil.split(
+				String.valueOf(notificationRecipientSettingsMap.get("bcc"))));
+		Assert.assertEquals(
+			user.getEmailAddress() + ",cc@liferay.com",
+			notificationRecipientSettingsMap.get("cc"));
+		Assert.assertEquals(
+			user.getEmailAddress(),
+			notificationRecipientSettingsMap.get("from"));
+		Assert.assertEquals(
+			user.getFirstName(),
+			notificationRecipientSettingsMap.get("fromName"));
+
+		Assert.assertTrue(
+			(boolean)notificationRecipientSettingsMap.get("singleRecipient"));
+		AssertUtils.assertEqualsSorted(
+			StringUtil.split(omniadminUser.getEmailAddress()),
+			StringUtil.split(
+				String.valueOf(notificationRecipientSettingsMap.get("to"))));
+
+		// Commerce order system object
+
+		ObjectDefinition commerceOrderObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), CommerceOrder.class.getName());
+
+		// Add object action to send an email notification after updating
+		// payment status
+
+		ObjectAction objectAction2 = _addNotificationObjectAction(
+			DestinationNames.COMMERCE_PAYMENT_STATUS,
+			commerceOrderObjectDefinition, "[%CURRENT_USER_EMAIL_ADDRESS%]");
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency);
+
+		commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+			commerceOrder, _user.getUserId());
+
+		Assert.assertEquals(
+			CommerceOrderConstants.ORDER_STATUS_PENDING,
+			commerceOrder.getOrderStatus());
+
+		_commerceOrderLocalService.updatePaymentStatus(
+			commerceOrder.getUserId(), commerceOrder.getCommerceOrderId(),
+			CommerceOrderPaymentConstants.STATUS_COMPLETED);
+
+		notificationQueueEntries =
+			_notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 2,
+			notificationQueueEntries.size());
+
+		_objectActionLocalService.deleteObjectAction(objectAction1);
+		_objectActionLocalService.deleteObjectAction(objectAction2);
 	}
 
 	@Test
@@ -1268,70 +1388,6 @@ public class ObjectActionLocalServiceTest {
 	@Test
 	public void testAddObjectActionWithSystemObject() throws Exception {
 
-		// Account entry system object
-
-		ObjectDefinition accountEntryObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(),
-				AccountEntry.class.getSimpleName());
-
-		// Add object action to send an email notification after updating
-		// account entry
-
-		ObjectAction objectAction1 = _addNotificationObjectAction(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-			accountEntryObjectDefinition,
-			"[%ACCOUNTENTRY_AUTHOR_EMAIL_ADDRESS%]");
-
-		User omniadminUser = UserTestUtil.addOmniadminUser();
-
-		AccountEntry accountEntry1 = _accountEntryLocalService.addAccountEntry(
-			omniadminUser.getUserId(), 0L, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, null, null,
-			RandomTestUtil.randomString(),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
-
-		_accountEntryLocalService.updateAccountEntry(accountEntry1);
-
-		List<NotificationQueueEntry> notificationQueueEntries =
-			_notificationQueueEntryLocalService.getNotificationEntries(
-				NotificationConstants.TYPE_EMAIL,
-				NotificationQueueEntryConstants.STATUS_SENT);
-
-		Assert.assertEquals(
-			notificationQueueEntries.toString(), 1,
-			notificationQueueEntries.size());
-
-		Map<String, Object> notificationRecipientSettingsMap =
-			NotificationRecipientSettingUtil.
-				getNotificationRecipientSettingsMap(
-					notificationQueueEntries.get(0));
-
-		User user = TestPropsValues.getUser();
-
-		AssertUtils.assertEqualsSorted(
-			StringUtil.split(user.getEmailAddress()),
-			StringUtil.split(
-				String.valueOf(notificationRecipientSettingsMap.get("bcc"))));
-		Assert.assertEquals(
-			user.getEmailAddress() + ",cc@liferay.com",
-			notificationRecipientSettingsMap.get("cc"));
-		Assert.assertEquals(
-			user.getEmailAddress(),
-			notificationRecipientSettingsMap.get("from"));
-		Assert.assertEquals(
-			user.getFirstName(),
-			notificationRecipientSettingsMap.get("fromName"));
-
-		Assert.assertTrue(
-			(boolean)notificationRecipientSettingsMap.get("singleRecipient"));
-		AssertUtils.assertEqualsSorted(
-			StringUtil.split(omniadminUser.getEmailAddress()),
-			StringUtil.split(
-				String.valueOf(notificationRecipientSettingsMap.get("to"))));
-
 		// Commerce order system object
 
 		ObjectDefinition commerceOrderObjectDefinition =
@@ -1357,7 +1413,7 @@ public class ObjectActionLocalServiceTest {
 		// CommerceOrderConstants#ORDER_STATUS_PROCESSING after updating payment
 		// status if the previous value for orderStatus is 1
 
-		ObjectAction objectAction2 = _objectActionLocalService.addObjectAction(
+		ObjectAction objectAction1 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			commerceOrderObjectDefinition.getObjectDefinitionId(), true,
 			"oldValue(\"orderStatus\") == 1", RandomTestUtil.randomString(),
@@ -1383,29 +1439,10 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			false);
 
-		// Add object action to send an email notification after updating
-		// payment status
-
-		ObjectAction objectAction3 = _addNotificationObjectAction(
-			DestinationNames.COMMERCE_PAYMENT_STATUS,
-			commerceOrderObjectDefinition, "[%CURRENT_USER_EMAIL_ADDRESS%]");
-
 		// Add object action to create commerce order after updating order
 		// status to CommerceOrderConstants#ORDER_STATUS_PROCESSING
 
-		Group group = GroupTestUtil.addGroup();
-
-		AccountEntry accountEntry2 = CommerceTestUtil.addAccount(
-			group.getGroupId(), TestPropsValues.getUserId());
-
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency(
-				TestPropsValues.getCompanyId());
-
-		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
-			group.getGroupId(), commerceCurrency.getCode());
-
-		ObjectAction objectAction4 = _objectActionLocalService.addObjectAction(
+		ObjectAction objectAction2 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			commerceOrderObjectDefinition.getObjectDefinitionId(), true,
 			"orderStatus == 10", RandomTestUtil.randomString(),
@@ -1425,21 +1462,21 @@ public class ObjectActionLocalServiceTest {
 					).put(
 						"name", "accountId"
 					).put(
-						"value", accountEntry2.getAccountEntryId()
+						"value", _accountEntry.getAccountEntryId()
 					),
 					JSONUtil.put(
 						"inputAsValue", true
 					).put(
 						"name", "channelId"
 					).put(
-						"value", commerceChannel.getCommerceChannelId()
+						"value", _commerceChannel.getCommerceChannelId()
 					),
 					JSONUtil.put(
 						"inputAsValue", true
 					).put(
 						"name", "currencyCode"
 					).put(
-						"value", commerceCurrency.getCode()
+						"value", _commerceCurrency.getCode()
 					),
 					JSONUtil.put(
 						"inputAsValue", true
@@ -1490,8 +1527,8 @@ public class ObjectActionLocalServiceTest {
 				PermissionCheckerFactoryUtil.create(_user));
 
 			CommerceOrder commerceOrder1 = CommerceTestUtil.addB2CCommerceOrder(
-				_user.getUserId(), commerceChannel.getGroupId(),
-				commerceCurrency);
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency);
 
 			commerceOrder1 = _commerceOrderEngine.checkoutCommerceOrder(
 				commerceOrder1, _user.getUserId());
@@ -1518,23 +1555,14 @@ public class ObjectActionLocalServiceTest {
 			Assert.assertNotNull(commerceOrder2);
 
 			Assert.assertEquals(
-				accountEntry2.getAccountEntryId(),
+				_accountEntry.getAccountEntryId(),
 				commerceOrder2.getCommerceAccountId());
 			Assert.assertEquals(
-				commerceCurrency.getCommerceCurrencyId(),
+				_commerceCurrency.getCommerceCurrencyId(),
 				commerceOrder2.getCommerceCurrencyId());
 			Assert.assertEquals(
 				CommerceOrderConstants.ORDER_STATUS_OPEN,
 				commerceOrder2.getOrderStatus());
-
-			notificationQueueEntries =
-				_notificationQueueEntryLocalService.getNotificationEntries(
-					NotificationConstants.TYPE_EMAIL,
-					NotificationQueueEntryConstants.STATUS_SENT);
-
-			Assert.assertEquals(
-				notificationQueueEntries.toString(), 2,
-				notificationQueueEntries.size());
 		}
 		finally {
 			PrincipalThreadLocal.setName(originalName);
@@ -1564,7 +1592,7 @@ public class ObjectActionLocalServiceTest {
 				organizationObjectDefinition.getObjectDefinitionId()
 			).build());
 
-		ObjectAction objectAction5 = _objectActionLocalService.addObjectAction(
+		ObjectAction objectAction3 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			organizationObjectDefinition.getObjectDefinitionId(), true,
 			StringPool.BLANK, RandomTestUtil.randomString(),
@@ -1604,7 +1632,7 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			false);
 
-		ObjectAction objectAction6 = _addObjectAction(
+		ObjectAction objectAction4 = _addObjectAction(
 			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
@@ -1714,7 +1742,7 @@ public class ObjectActionLocalServiceTest {
 
 		// Add object action to create user after adding an object entry
 
-		ObjectAction objectAction7 = _addObjectAction(
+		ObjectAction objectAction5 = _addObjectAction(
 			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
@@ -1765,7 +1793,7 @@ public class ObjectActionLocalServiceTest {
 
 		// Add object action to update user after adding a user
 
-		ObjectAction objectAction8 = _objectActionLocalService.addObjectAction(
+		ObjectAction objectAction6 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			userObjectDefinition.getObjectDefinitionId(), true,
 			StringPool.BLANK, RandomTestUtil.randomString(),
@@ -1811,7 +1839,7 @@ public class ObjectActionLocalServiceTest {
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 
-			user = _userLocalService.getUserByScreenName(
+			User user = _userLocalService.getUserByScreenName(
 				TestPropsValues.getCompanyId(), "ScreenName");
 
 			Assert.assertEquals("email@liferay.com", user.getEmailAddress());
@@ -1835,12 +1863,12 @@ public class ObjectActionLocalServiceTest {
 				originalPermissionChecker);
 		}
 
-		_objectActionLocalService.deleteObjectAction(objectAction5);
-		_objectActionLocalService.deleteObjectAction(objectAction6);
+		_objectActionLocalService.deleteObjectAction(objectAction3);
+		_objectActionLocalService.deleteObjectAction(objectAction4);
 
 		// Add object action to execute Groovy after adding a user
 
-		objectAction5 = _objectActionLocalService.addObjectAction(
+		objectAction3 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			userObjectDefinition.getObjectDefinitionId(), true,
 			StringPool.BLANK, RandomTestUtil.randomString(),
@@ -1856,7 +1884,7 @@ public class ObjectActionLocalServiceTest {
 
 		// Add object action to execute Groovy after updating a user
 
-		objectAction6 = _objectActionLocalService.addObjectAction(
+		objectAction4 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			userObjectDefinition.getObjectDefinitionId(), true,
 			StringPool.BLANK, RandomTestUtil.randomString(),
@@ -1873,7 +1901,7 @@ public class ObjectActionLocalServiceTest {
 		// While adding a user, the user is updated and it must not trigger
 		// object actions
 
-		user = UserTestUtil.addUser();
+		User user = UserTestUtil.addUser();
 
 		Assert.assertEquals(1, _argumentsList.size());
 
@@ -1893,8 +1921,6 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(objectAction4);
 		_objectActionLocalService.deleteObjectAction(objectAction5);
 		_objectActionLocalService.deleteObjectAction(objectAction6);
-		_objectActionLocalService.deleteObjectAction(objectAction7);
-		_objectActionLocalService.deleteObjectAction(objectAction8);
 		_objectFieldLocalService.deleteObjectField(objectField1);
 		_objectFieldLocalService.deleteObjectField(objectField2);
 		_objectFieldLocalService.deleteObjectField(objectField3);
@@ -2677,10 +2703,14 @@ public class ObjectActionLocalServiceTest {
 		}
 	}
 
+	private AccountEntry _accountEntry;
+
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	private final Queue<Object[]> _argumentsList = new LinkedList<>();
+	private CommerceChannel _commerceChannel;
+	private CommerceCurrency _commerceCurrency;
 
 	@Inject
 	private CommerceOrderEngine _commerceOrderEngine;
@@ -2690,6 +2720,8 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	private Group _group;
 
 	@Inject
 	private JSONFactory _jsonFactory;

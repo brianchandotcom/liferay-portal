@@ -9,6 +9,7 @@ import {CustomerDashboardAppDetailsPage} from '../pages/customerDashboardAppDeta
 import {CustomerDashboardPage} from '../pages/customerDashboardPage';
 import {PublisherAppPage} from '../pages/publisherAppPage';
 import {PublisherDashboardPage} from '../pages/publisherDashboardPage';
+import {PublisherDashboardSolutionDetailsPage} from '../pages/publisherDashboardSolutionDetailsPage';
 import {PublisherSolutionPage} from '../pages/publisherSolutionPage';
 
 const marketplacePagesTest = test.extend<{
@@ -16,6 +17,7 @@ const marketplacePagesTest = test.extend<{
 	customerDashboardPage: CustomerDashboardPage;
 	publisherAppPage: PublisherAppPage;
 	publisherDashboardPage: PublisherDashboardPage;
+	publisherDashboardSolutionDetailsPage: PublisherDashboardSolutionDetailsPage;
 	publisherSolutionPage: PublisherSolutionPage;
 }>({
 	customerDashboardAppDetailsPage: async ({page}, use) => {
@@ -29,6 +31,9 @@ const marketplacePagesTest = test.extend<{
 	},
 	publisherDashboardPage: async ({page}, use) => {
 		await use(new PublisherDashboardPage(page));
+	},
+	publisherDashboardSolutionDetailsPage: async ({page}, use) => {
+		await use(new PublisherDashboardSolutionDetailsPage(page));
 	},
 	publisherSolutionPage: async ({page}, use) => {
 		await use(new PublisherSolutionPage(page));

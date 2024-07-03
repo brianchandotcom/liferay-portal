@@ -22,11 +22,11 @@ export const test = mergeTests(
 	marketplacePagesTest
 );
 
-const ACCOUNT_NAME = {
+export const ACCOUNT_NAME = {
 	PERSON: `Person Account${getRandomInt()}`,
 	SUPPLIER: `Supplier Account${getRandomInt()}`,
 };
-const SOLUTION_PUBLISHER_ROLE = 'Solution Publisher';
+export const SOLUTION_PUBLISHER_ROLE = 'Solution Publisher';
 
 test.describe('Can Publish and Manage Solutions', () => {
 	let _account;

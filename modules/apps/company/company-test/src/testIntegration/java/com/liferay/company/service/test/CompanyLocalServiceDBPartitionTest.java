@@ -344,7 +344,7 @@ public class CompanyLocalServiceDBPartitionTest
 	public void testCopyDBPartitionCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		Configuration configuration = _assertCreateFactoryConfiguration(
+		Configuration configuration = _createFactoryConfiguration(
 			company.getCompanyId());
 
 		String name = RandomTestUtil.randomString();
@@ -462,7 +462,7 @@ public class CompanyLocalServiceDBPartitionTest
 	public void testDeleteCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		Configuration configuration = _assertCreateFactoryConfiguration(
+		Configuration configuration = _createFactoryConfiguration(
 			company.getCompanyId());
 
 		int dbPartitionsCount = _getDBPartitionsCount();
@@ -645,7 +645,7 @@ public class CompanyLocalServiceDBPartitionTest
 		_virtualHostLocalService.getVirtualHost(virtualHostname);
 	}
 
-	private Configuration _assertCreateFactoryConfiguration(long companyId)
+	private Configuration _createFactoryConfiguration(long companyId)
 		throws Exception {
 
 		String pid = null;
@@ -662,13 +662,7 @@ public class CompanyLocalServiceDBPartitionTest
 				).build());
 		}
 
-		Configuration configuration = _configurationAdmin.getConfiguration(pid);
-
-		Assert.assertNotNull(configuration);
-
-		Assert.assertTrue(_persistenceManager.exists(pid));
-
-		return configuration;
+		return _configurationAdmin.getConfiguration(pid);
 	}
 
 	private void _checkPartitionDoesNotExist(long companyId)

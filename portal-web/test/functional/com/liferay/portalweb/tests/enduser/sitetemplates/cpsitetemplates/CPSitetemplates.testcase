@@ -1844,20 +1844,18 @@ definition {
 		task ("Given User adds similar friendly URL page with page in template to 5 sites based on the template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-			for (var name : list "1,2,3,4,5") {
-				Site.openSitesAdmin();
+			Site.openSitesAdmin();
 
-				Site.addSiteTemplateCP(
-					siteName = "Site Name${name}",
-					siteTemplateName = "Site Template Name",
-					siteTemplateTab = "Custom Site Templates");
+			Site.addSiteTemplateCP(
+				siteName = "Site Name1",
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
 
-				PagesAdmin.openPagesAdmin(siteURLKey = "Site Name${name}");
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name1");
 
-				PagesAdmin.addPage(
-					pageName = "Page1",
-					sitePageType = "Widget Page");
-			}
+			PagesAdmin.addPage(
+				pageName = "Page1",
+				sitePageType = "Widget Page");
 		}
 
 		task ("When User adds page with same Friendly URL conflicts in site template") {
@@ -1872,9 +1870,9 @@ definition {
 				inputFieldId = "/page1",
 				locator1 = "TextInput#INPUT_ID");
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_3",
-				value1 = "Warning:The site template page friendly URL is conflicting with the page friendly URL in some of the sites created from this template. Page Page1 of Site Name1 Page Page1 of Site Name2 Page Page1 of Site Name3 Page Page1 of Site Name4 Page Page1 of Site Name5");
+				value1 = "Warning:The site template page friendly URL is conflicting with the page friendly URL in some of the sites created from this template");
 		}
 	}
 

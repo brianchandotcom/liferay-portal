@@ -40,7 +40,7 @@ public class RememberMeTokenLocalServiceImpl
 
 		String generate = PortalUUIDUtil.generate();
 
-		rememberMeToken.setToken(PasswordEncryptorUtil.encrypt(generate));
+		rememberMeToken.setValue(PasswordEncryptorUtil.encrypt(generate));
 
 		rememberMeToken = rememberMeTokenPersistence.update(rememberMeToken);
 
@@ -69,9 +69,9 @@ public class RememberMeTokenLocalServiceImpl
 
 		if ((rememberMeToken == null) ||
 			!Objects.equals(
-				rememberMeToken.getToken(),
+				rememberMeToken.getValue(),
 				PasswordEncryptorUtil.encrypt(
-					token, rememberMeToken.getToken()))) {
+					token, rememberMeToken.getValue()))) {
 
 			return null;
 		}

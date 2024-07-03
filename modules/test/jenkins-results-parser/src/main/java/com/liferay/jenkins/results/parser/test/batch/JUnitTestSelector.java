@@ -6,7 +6,6 @@
 package com.liferay.jenkins.results.parser.test.batch;
 
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
-import com.liferay.jenkins.results.parser.test.suite.RelevantTestSuite;
 
 import java.io.File;
 
@@ -33,7 +32,7 @@ public class JUnitTestSelector extends BaseTestSelector {
 
 		super(
 			propertiesFile, properties, batchName, relevantRuleName,
-			testSuiteName, RelevantTestSuite.getJob());
+			testSuiteName);
 
 		validate();
 

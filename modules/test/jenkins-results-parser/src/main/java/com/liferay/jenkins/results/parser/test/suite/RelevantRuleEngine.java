@@ -6,6 +6,9 @@
 package com.liferay.jenkins.results.parser.test.suite;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PortalAcceptancePullRequestJob;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.io.File;
 
@@ -53,8 +56,23 @@ public class RelevantRuleEngine {
 		return _relevantRuleEngine;
 	}
 
+	public static RelevantRuleEngine getInstance(
+		PortalAcceptancePullRequestJob portalAcceptancePullRequestJob) {
+
+		if (_relevantRuleEngine == null) {
+			_relevantRuleEngine = new RelevantRuleEngine(
+				portalAcceptancePullRequestJob);
+		}
+
+		return _relevantRuleEngine;
+	}
+
 	public File getBaseDir() {
 		return _baseDir;
+	}
+
+	public Job getJob() {
+		return _job;
 	}
 
 	public List<RelevantRule> getMatchingRelevantRules(
@@ -95,6 +113,20 @@ public class RelevantRuleEngine {
 	private RelevantRuleEngine(File baseDir, String testSuiteName) {
 		_baseDir = baseDir;
 		_testSuiteName = testSuiteName;
+
+		_relevantRuleEngine = this;
+	}
+
+	private RelevantRuleEngine(
+		PortalAcceptancePullRequestJob portalAcceptancePullRequestJob) {
+
+		_job = portalAcceptancePullRequestJob;
+		_testSuiteName = portalAcceptancePullRequestJob.getTestSuiteName();
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			portalAcceptancePullRequestJob.getPortalGitWorkingDirectory();
+
+		_baseDir = portalGitWorkingDirectory.getWorkingDirectory();
 
 		_relevantRuleEngine = this;
 	}
@@ -225,6 +257,7 @@ public class RelevantRuleEngine {
 	private static RelevantRuleEngine _relevantRuleEngine;
 
 	private final File _baseDir;
+	private Job _job;
 	private final Map<RelevantRule, Set<File>> _relevantRuleMap =
 		new HashMap<>();
 	private String _testSuiteName = "relevant";

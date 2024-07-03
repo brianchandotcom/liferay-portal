@@ -113,12 +113,7 @@ public class PortalAcceptancePullRequestJob
 			return super.getTestBatches();
 		}
 
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			getPortalGitWorkingDirectory();
-
-		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
-			portalGitWorkingDirectory.getWorkingDirectory(),
-			portalGitWorkingDirectory.getModifiedFilesList(), this);
+		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(this);
 
 		return relevantTestSuite.getTestBatches();
 	}

@@ -9,6 +9,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
+import com.liferay.jenkins.results.parser.test.suite.RelevantRuleEngine;
 
 import java.io.File;
 
@@ -21,24 +22,18 @@ public abstract class BaseTestSelector implements TestSelector {
 
 	public BaseTestSelector(
 		File propertiesFile, Properties properties, String batchName,
-		String relevantRuleName, String testSuiteName, Job job) {
+		String relevantRuleName, String testSuiteName) {
 
 		_propertiesFile = propertiesFile;
 		_properties = properties;
 		_batchName = batchName;
 		_relevantRuleName = relevantRuleName;
 		_testSuiteName = testSuiteName;
-		_job = job;
-	}
 
-	public BaseTestSelector(
-		Properties properties, String batchName, String relevantRuleName,
-		String testSuiteName) {
+		RelevantRuleEngine relevantRuleEngine =
+			RelevantRuleEngine.getInstance();
 
-		_properties = properties;
-		_batchName = batchName;
-		_relevantRuleName = relevantRuleName;
-		_testSuiteName = testSuiteName;
+		_job = relevantRuleEngine.getJob();
 	}
 
 	public String getBatchName() {
@@ -84,7 +79,7 @@ public abstract class BaseTestSelector implements TestSelector {
 	}
 
 	private final String _batchName;
-	private Job _job;
+	private final Job _job;
 	private final Properties _properties;
 	private final File _propertiesFile;
 	private final String _relevantRuleName;

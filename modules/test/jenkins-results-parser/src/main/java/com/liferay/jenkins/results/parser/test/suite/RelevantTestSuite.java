@@ -5,7 +5,8 @@
 
 package com.liferay.jenkins.results.parser.test.suite;
 
-import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PortalAcceptancePullRequestJob;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
 
 import java.io.File;
@@ -18,23 +19,22 @@ import java.util.List;
  */
 public class RelevantTestSuite {
 
-	public static Job getJob() {
-		return _job;
-	}
-
 	public RelevantTestSuite(File baseDir, List<File> modifiedFiles) {
 		_modifiedFiles = modifiedFiles;
 
 		_relevantRuleEngine = RelevantRuleEngine.getInstance(baseDir);
 	}
 
-	public RelevantTestSuite(File baseDir, List<File> modifiedFiles, Job job) {
-		_baseDir = baseDir;
-		_modifiedFiles = modifiedFiles;
+	public RelevantTestSuite(
+		PortalAcceptancePullRequestJob portalAcceptancePullRequestJob) {
 
-		_relevantRuleEngine = RelevantRuleEngine.getInstance(baseDir);
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			portalAcceptancePullRequestJob.getPortalGitWorkingDirectory();
 
-		_job = job;
+		_modifiedFiles = portalGitWorkingDirectory.getModifiedFilesList();
+
+		_relevantRuleEngine = RelevantRuleEngine.getInstance(
+			portalAcceptancePullRequestJob);
 	}
 
 	public List<TestBatch> getTestBatches() {
@@ -60,9 +60,6 @@ public class RelevantTestSuite {
 
 		return testBatches;
 	}
-
-	private static File _baseDir = new File("");
-	private static Job _job;
 
 	private final List<File> _modifiedFiles;
 	private final RelevantRuleEngine _relevantRuleEngine;

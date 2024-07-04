@@ -204,17 +204,17 @@ public class AuthenticatedSessionManagerUtil {
 		if (rememberMe) {
 			CookiesManagerUtil.addCookie(
 				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				_buildRememberMeCookie(
+				_createRememberMeCookie(
 					CookiesConstants.NAME_LOGIN, login, domain, loginMaxAge),
 				httpServletRequest, httpServletResponse);
 			CookiesManagerUtil.addCookie(
 				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				_buildRememberMeCookie(
+				_createRememberMeCookie(
 					CookiesConstants.NAME_REMEMBER_ME, Boolean.TRUE.toString(),
 					domain, loginMaxAge),
 				httpServletRequest, httpServletResponse);
 
-			Cookie cookie = _buildRememberMeCookie(
+			Cookie cookie = _createRememberMeCookie(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, StringPool.BLANK,
 				domain, loginMaxAge);
 
@@ -228,7 +228,7 @@ public class AuthenticatedSessionManagerUtil {
 
 			CookiesManagerUtil.addCookie(
 				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				_buildRememberMeCookie(
+				_createRememberMeCookie(
 					CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 					String.valueOf(rememberMeToken.getRememberMeTokenId()),
 					domain, loginMaxAge),
@@ -384,7 +384,7 @@ public class AuthenticatedSessionManagerUtil {
 		}
 	}
 
-	private static Cookie _buildRememberMeCookie(
+	private static Cookie _createRememberMeCookie(
 		String name, String value, String domain, int maxAge) {
 
 		Cookie cookie = new Cookie(name, value);

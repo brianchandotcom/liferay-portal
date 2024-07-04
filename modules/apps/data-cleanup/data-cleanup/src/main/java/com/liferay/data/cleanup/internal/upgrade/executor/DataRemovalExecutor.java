@@ -13,11 +13,13 @@ import com.liferay.data.cleanup.internal.upgrade.DLPreviewCTSContentDataUpgradeP
 import com.liferay.data.cleanup.internal.upgrade.ExpiredJournalArticleUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.OutdatedPublishedCTCollectionUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.PublishedCTSContentDataUpgradeProcess;
+import com.liferay.data.cleanup.internal.upgrade.WidgetLayoutTypeSettingsUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationUtil;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Portal;
@@ -72,6 +74,11 @@ public class DataRemovalExecutor {
 			"com.liferay.journal.service",
 			() -> new ExpiredJournalArticleUpgradeProcess(
 				_journalArticleLocalService));
+		_removeModuleData(
+			dataRemovalConfiguration::removeWidgetLayoutTypeSettings,
+			"com.liferay.layout.service",
+			() -> new WidgetLayoutTypeSettingsUpgradeProcess(
+				_layoutLocalService));
 	}
 
 	private void _removeModuleData(
@@ -107,6 +114,9 @@ public class DataRemovalExecutor {
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private PersistenceManager _persistenceManager;

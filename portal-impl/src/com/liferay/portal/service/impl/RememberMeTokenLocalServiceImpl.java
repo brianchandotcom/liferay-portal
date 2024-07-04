@@ -61,7 +61,7 @@ public class RememberMeTokenLocalServiceImpl
 	}
 
 	public RememberMeToken fetchRememberMeToken(
-			long rememberMeTokenId, String token)
+			long rememberMeTokenId, String value)
 		throws PwdEncryptorException {
 
 		RememberMeToken rememberMeToken = fetchRememberMeToken(
@@ -71,7 +71,7 @@ public class RememberMeTokenLocalServiceImpl
 			!Objects.equals(
 				rememberMeToken.getValue(),
 				PasswordEncryptorUtil.encrypt(
-					token, rememberMeToken.getValue()))) {
+					value, rememberMeToken.getValue()))) {
 
 			return null;
 		}

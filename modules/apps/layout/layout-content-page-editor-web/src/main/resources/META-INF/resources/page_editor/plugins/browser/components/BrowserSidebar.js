@@ -8,10 +8,12 @@ import React from 'react';
 
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import PageStructureSidebar from './page_structure/components/PageStructureSidebar';
-export default function BrowserSidebar({title}) {
+export default function BrowserSidebar() {
 	return (
 		<div className={classNames('page-editor__sidebar__browser')}>
-			<SidebarPanelHeader>{title}</SidebarPanelHeader>
+			<SidebarPanelHeader>
+				{Liferay.Language.get('browser')}
+			</SidebarPanelHeader>
 
 			<PageStructureSidebar />
 		</div>

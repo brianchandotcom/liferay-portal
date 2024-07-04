@@ -35,10 +35,14 @@ export class FriendlyUrlInstanceSettingsPage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async resetSeparator(testId: string) {
-		await this.page.getByTestId(testId).waitFor();
-		await this.page.getByTestId(testId).click();
-		await this.page.getByRole('button', {name: 'Save'}).click();
+	async resetSeparator(label: string) {
+		const separatorResetButton = this.page
+			.locator('.input-group', {has: this.page.getByLabel(label)})
+			.getByLabel('Reset to Default Value');
+		await separatorResetButton.waitFor();
+		await separatorResetButton.click();
+
+		await this.saveButton.click();
 		await waitForSuccessAlert(this.page);
 	}
 }

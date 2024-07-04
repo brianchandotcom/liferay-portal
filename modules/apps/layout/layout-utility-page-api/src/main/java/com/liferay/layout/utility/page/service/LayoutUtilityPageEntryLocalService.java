@@ -139,6 +139,10 @@ public interface LayoutUtilityPageEntryLocalService
 			long LayoutUtilityPageEntryId)
 		throws PortalException;
 
+	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

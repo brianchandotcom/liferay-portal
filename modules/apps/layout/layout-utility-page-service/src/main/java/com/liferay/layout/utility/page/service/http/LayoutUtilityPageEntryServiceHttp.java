@@ -177,6 +177,50 @@ public class LayoutUtilityPageEntryServiceHttp {
 	}
 
 	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+			deleteLayoutUtilityPageEntry(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutUtilityPageEntryServiceUtil.class,
+				"deleteLayoutUtilityPageEntry",
+				_deleteLayoutUtilityPageEntryParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.layout.utility.page.model.
+				LayoutUtilityPageEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 		fetchLayoutUtilityPageEntry(
 			HttpPrincipal httpPrincipal, long layoutUtilityPageEntryId) {
 
@@ -184,7 +228,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"fetchLayoutUtilityPageEntry",
-				_fetchLayoutUtilityPageEntryParameterTypes3);
+				_fetchLayoutUtilityPageEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutUtilityPageEntryId);
@@ -220,7 +264,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"getDefaultLayoutUtilityPageEntry",
-				_getDefaultLayoutUtilityPageEntryParameterTypes4);
+				_getDefaultLayoutUtilityPageEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, type);
@@ -263,7 +307,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"getLayoutUtilityPageEntries",
-				_getLayoutUtilityPageEntriesParameterTypes5);
+				_getLayoutUtilityPageEntriesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -302,7 +346,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"getLayoutUtilityPageEntries",
-				_getLayoutUtilityPageEntriesParameterTypes6);
+				_getLayoutUtilityPageEntriesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, start, end, orderByComparator);
@@ -343,7 +387,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"getLayoutUtilityPageEntries",
-				_getLayoutUtilityPageEntriesParameterTypes7);
+				_getLayoutUtilityPageEntriesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, type, start, end, orderByComparator);
@@ -384,7 +428,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"getLayoutUtilityPageEntries",
-				_getLayoutUtilityPageEntriesParameterTypes8);
+				_getLayoutUtilityPageEntriesParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, keyword, types, start, end,
@@ -426,7 +470,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"getLayoutUtilityPageEntries",
-				_getLayoutUtilityPageEntriesParameterTypes9);
+				_getLayoutUtilityPageEntriesParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, types, start, end, orderByComparator);
@@ -461,7 +505,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"getLayoutUtilityPageEntriesCount",
-				_getLayoutUtilityPageEntriesCountParameterTypes10);
+				_getLayoutUtilityPageEntriesCountParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -494,7 +538,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"getLayoutUtilityPageEntriesCount",
-				_getLayoutUtilityPageEntriesCountParameterTypes11);
+				_getLayoutUtilityPageEntriesCountParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, keyword, types);
@@ -527,7 +571,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"getLayoutUtilityPageEntriesCount",
-				_getLayoutUtilityPageEntriesCountParameterTypes12);
+				_getLayoutUtilityPageEntriesCountParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, types);
@@ -554,6 +598,50 @@ public class LayoutUtilityPageEntryServiceHttp {
 	}
 
 	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
+			getLayoutUtilityPageEntryByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutUtilityPageEntryServiceUtil.class,
+				"getLayoutUtilityPageEntryByExternalReferenceCode",
+				_getLayoutUtilityPageEntryByExternalReferenceCodeParameterTypes14);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.layout.utility.page.model.
+				LayoutUtilityPageEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 			setDefaultLayoutUtilityPageEntry(
 				HttpPrincipal httpPrincipal, long layoutUtilityPageEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -562,7 +650,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"setDefaultLayoutUtilityPageEntry",
-				_setDefaultLayoutUtilityPageEntryParameterTypes13);
+				_setDefaultLayoutUtilityPageEntryParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutUtilityPageEntryId);
@@ -605,7 +693,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"unsetDefaultLayoutUtilityPageEntry",
-				_unsetDefaultLayoutUtilityPageEntryParameterTypes14);
+				_unsetDefaultLayoutUtilityPageEntryParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutUtilityPageEntryId);
@@ -649,7 +737,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"updateLayoutUtilityPageEntry",
-				_updateLayoutUtilityPageEntryParameterTypes15);
+				_updateLayoutUtilityPageEntryParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutUtilityPageEntryId, previewFileEntryId);
@@ -693,7 +781,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				LayoutUtilityPageEntryServiceUtil.class,
 				"updateLayoutUtilityPageEntry",
-				_updateLayoutUtilityPageEntryParameterTypes16);
+				_updateLayoutUtilityPageEntryParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutUtilityPageEntryId, name);
@@ -744,59 +832,66 @@ public class LayoutUtilityPageEntryServiceHttp {
 	private static final Class<?>[]
 		_deleteLayoutUtilityPageEntryParameterTypes2 = new Class[] {long.class};
 	private static final Class<?>[]
-		_fetchLayoutUtilityPageEntryParameterTypes3 = new Class[] {long.class};
+		_deleteLayoutUtilityPageEntryParameterTypes3 = new Class[] {
+			String.class, long.class
+		};
 	private static final Class<?>[]
-		_getDefaultLayoutUtilityPageEntryParameterTypes4 = new Class[] {
+		_fetchLayoutUtilityPageEntryParameterTypes4 = new Class[] {long.class};
+	private static final Class<?>[]
+		_getDefaultLayoutUtilityPageEntryParameterTypes5 = new Class[] {
 			long.class, String.class
 		};
 	private static final Class<?>[]
-		_getLayoutUtilityPageEntriesParameterTypes5 = new Class[] {long.class};
+		_getLayoutUtilityPageEntriesParameterTypes6 = new Class[] {long.class};
 	private static final Class<?>[]
-		_getLayoutUtilityPageEntriesParameterTypes6 = new Class[] {
+		_getLayoutUtilityPageEntriesParameterTypes7 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getLayoutUtilityPageEntriesParameterTypes7 = new Class[] {
+		_getLayoutUtilityPageEntriesParameterTypes8 = new Class[] {
 			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getLayoutUtilityPageEntriesParameterTypes8 = new Class[] {
+		_getLayoutUtilityPageEntriesParameterTypes9 = new Class[] {
 			long.class, String.class, String[].class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getLayoutUtilityPageEntriesParameterTypes9 = new Class[] {
+		_getLayoutUtilityPageEntriesParameterTypes10 = new Class[] {
 			long.class, String[].class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getLayoutUtilityPageEntriesCountParameterTypes10 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[]
 		_getLayoutUtilityPageEntriesCountParameterTypes11 = new Class[] {
-			long.class, String.class, String[].class
+			long.class
 		};
 	private static final Class<?>[]
 		_getLayoutUtilityPageEntriesCountParameterTypes12 = new Class[] {
+			long.class, String.class, String[].class
+		};
+	private static final Class<?>[]
+		_getLayoutUtilityPageEntriesCountParameterTypes13 = new Class[] {
 			long.class, String[].class
 		};
 	private static final Class<?>[]
-		_setDefaultLayoutUtilityPageEntryParameterTypes13 = new Class[] {
+		_getLayoutUtilityPageEntryByExternalReferenceCodeParameterTypes14 =
+			new Class[] {String.class, long.class};
+	private static final Class<?>[]
+		_setDefaultLayoutUtilityPageEntryParameterTypes15 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_unsetDefaultLayoutUtilityPageEntryParameterTypes14 = new Class[] {
+		_unsetDefaultLayoutUtilityPageEntryParameterTypes16 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_updateLayoutUtilityPageEntryParameterTypes15 = new Class[] {
+		_updateLayoutUtilityPageEntryParameterTypes17 = new Class[] {
 			long.class, long.class
 		};
 	private static final Class<?>[]
-		_updateLayoutUtilityPageEntryParameterTypes16 = new Class[] {
+		_updateLayoutUtilityPageEntryParameterTypes18 = new Class[] {
 			long.class, String.class
 		};
 

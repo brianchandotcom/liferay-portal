@@ -62,6 +62,10 @@ public interface LayoutUtilityPageEntryService extends BaseService {
 			long layoutUtilityPageEntryId)
 		throws PortalException;
 
+	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
 		long layoutUtilityPageEntryId);
@@ -104,6 +108,12 @@ public interface LayoutUtilityPageEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutUtilityPageEntriesCount(long groupId, String[] types);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutUtilityPageEntry
+			getLayoutUtilityPageEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

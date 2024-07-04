@@ -141,6 +141,15 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 			LayoutUtilityPageEntryId);
 	}
 
+	@Override
+	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutUtilityPageEntryLocalService.deleteLayoutUtilityPageEntry(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

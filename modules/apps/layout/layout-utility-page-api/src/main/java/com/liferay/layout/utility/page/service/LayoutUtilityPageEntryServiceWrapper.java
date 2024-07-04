@@ -63,6 +63,15 @@ public class LayoutUtilityPageEntryServiceWrapper
 	}
 
 	@Override
+	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutUtilityPageEntryService.deleteLayoutUtilityPageEntry(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
 		long layoutUtilityPageEntryId) {
 
@@ -145,6 +154,17 @@ public class LayoutUtilityPageEntryServiceWrapper
 	public int getLayoutUtilityPageEntriesCount(long groupId, String[] types) {
 		return _layoutUtilityPageEntryService.getLayoutUtilityPageEntriesCount(
 			groupId, types);
+	}
+
+	@Override
+	public LayoutUtilityPageEntry
+			getLayoutUtilityPageEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutUtilityPageEntryService.
+			getLayoutUtilityPageEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	/**

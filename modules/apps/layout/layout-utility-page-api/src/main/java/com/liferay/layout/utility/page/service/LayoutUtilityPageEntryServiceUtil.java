@@ -61,6 +61,14 @@ public class LayoutUtilityPageEntryServiceUtil {
 			layoutUtilityPageEntryId);
 	}
 
+	public static LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteLayoutUtilityPageEntry(
+			externalReferenceCode, groupId);
+	}
+
 	public static LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
 		long layoutUtilityPageEntryId) {
 
@@ -128,6 +136,15 @@ public class LayoutUtilityPageEntryServiceUtil {
 		long groupId, String[] types) {
 
 		return getService().getLayoutUtilityPageEntriesCount(groupId, types);
+	}
+
+	public static LayoutUtilityPageEntry
+			getLayoutUtilityPageEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getLayoutUtilityPageEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

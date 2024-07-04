@@ -136,6 +136,14 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 			LayoutUtilityPageEntryId);
 	}
 
+	public static LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteLayoutUtilityPageEntry(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

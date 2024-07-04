@@ -164,7 +164,7 @@ public class DatabaseTestUtil {
 		}
 	}
 
-	public static DataSource initSchemaDataSource(String schemaName)
+	public static DataSource initDataSource(String schemaName)
 		throws Exception {
 
 		return DataSourceFactoryUtil.initDataSource(

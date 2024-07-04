@@ -129,7 +129,7 @@ public class DBSchemaDefinitionExporterTest {
 		DataSource copyDataSource = null;
 
 		try {
-			copyDataSource = DatabaseTestUtil.initSchemaDataSource(
+			copyDataSource = DatabaseTestUtil.initDataSource(
 				_COPY_DB_SCHEMA_NAME);
 
 			DatabaseTestUtil.importFile(tablesSQLFile, copyDataSource);

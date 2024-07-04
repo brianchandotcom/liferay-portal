@@ -34,7 +34,7 @@ definition {
 	@description = "LPS-195984:  Upgrade client throws error when Gogo Shell is unable to connect."
 	@priority = 2
 	test CheckUpgradeClientFailedGogoShellReturnsError {
-		property custom.mysql.sql.statement = "ALTER TABLE JournalArticle DROP type_;";
+		property custom.mysql.sql.statement = "ALTER TABLE JournalArticle DROP resourcePrimKey;";
 		property custom.upgrade.properties = "module.framework.properties.osgi.console=80";
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
@@ -60,7 +60,7 @@ definition {
 	@description = "LPS-158522: Upgrade client can connect to Gogo Shell with a failed upgrade"
 	@priority = 4
 	test CheckUpgradeClientGogoShellFailedUpgrade {
-		property custom.mysql.sql.statement = "ALTER TABLE JournalArticle DROP type_;";
+		property custom.mysql.sql.statement = "ALTER TABLE JournalArticle DROP resourcePrimKey;";
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
 		property timeout.explicit.wait = "600";
@@ -117,9 +117,9 @@ definition {
 
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-status -Dupgrade.status=unresolved");
 
-		var schemaVersion = ValidateSmokeUpgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName = 'com.liferay.journal.web';");
+		var schemaVersion = ValidateSmokeUpgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName = 'com.liferay.journal.service';");
 
-		if (!(contains(${schemaVersion}, "0.0.1"))) {
+		if (!(contains(${schemaVersion}, "4.1.0"))) {
 			fail("The upgrade client upgrades core and modules.");
 		}
 	}

@@ -26,9 +26,11 @@ export class FriendlyUrlInstanceSettingsPage {
 		);
 	}
 
-	async modifySeparator(testId: string, value: string) {
-		await this.page.getByTestId(testId).click();
-		await this.page.getByTestId(testId).fill(value);
+	async modifySeparator(label: string, value: string) {
+		const separatorInput = this.page.getByLabel(label);
+		await separatorInput.click();
+		await separatorInput.fill(value);
+
 		await this.saveButton.click();
 		await waitForSuccessAlert(this.page);
 	}

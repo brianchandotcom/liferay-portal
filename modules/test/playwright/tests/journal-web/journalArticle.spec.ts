@@ -527,7 +527,7 @@ prefixUrlTest(
 		const urlSeparator = 'content';
 
 		await friendlyUrlInstanceSettingsPage.modifySeparator(
-			'_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_com.liferay.journal.model.JournalArticle',
+			'Web Content URL Separator',
 			urlSeparator
 		);
 

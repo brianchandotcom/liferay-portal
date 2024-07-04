@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
@@ -39,8 +40,10 @@ export class FriendlyUrlInstanceSettingsPage {
 		const separatorResetButton = this.page
 			.locator('.input-group', {has: this.page.getByLabel(label)})
 			.getByLabel('Reset to Default Value');
-		await separatorResetButton.waitFor();
-		await separatorResetButton.click();
+		await clickAndExpectToBeHidden({
+			target: separatorResetButton,
+			trigger: separatorResetButton,
+		});
 
 		await this.saveButton.click();
 		await waitForSuccessAlert(this.page);

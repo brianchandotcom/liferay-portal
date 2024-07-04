@@ -11,6 +11,12 @@ const dependenciesFolder = path.join(__dirname, '..', 'dependencies');
 
 export const MARKETPLACE_CHANNEL = 'Marketplace Channel';
 
+export const ORDER_ITEMS = {
+	DECIMAL_QUANTITY: 1,
+	QUANTITY: 1,
+	UNIT_PRICE: 1,
+};
+
 export const products = {
 	cloud_free: {
 		categories: ['Analytics and Optimization'],
@@ -139,6 +145,8 @@ export const solutions: {
 		},
 	},
 };
+
+export const SOLUTION_PUBLISHER_ROLE = 'Solution Publisher';
 
 export enum PAYMENT_STATUS {
 	AUTHORIZED = '2',

@@ -6,12 +6,35 @@
 import {Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import {TProduct} from '../../../../helpers/HeadlessCommerceAdminCatalogApiHelper';
 import {
 	MARKETPLACE_CHANNEL,
 	ORDER_TYPES,
 	ORDER_WORKFLOW_STATUS_CODE,
 	PAYMENT_STATUS,
 } from '../utils/constants';
+
+type AssignUserToAccountRole = {
+	accountId: number;
+	accountRole: string;
+};
+
+type CreateAccountUserCatalog = {
+	accountName: string;
+	accountType: string;
+};
+
+type CreateTestProductOrder = {
+	accountId: number;
+	orderItems: {[key: string]: number};
+	productBody: TProduct;
+};
+
+type GetVocabularyAndCategory = {
+	categoryName: string;
+	siteId: string;
+	vocabularyName: string;
+};
 
 export class MarketplaceHelper {
 	readonly apiHelpers: ApiHelpers;
@@ -20,7 +43,10 @@ export class MarketplaceHelper {
 		this.apiHelpers = new ApiHelpers(page);
 	}
 
-	async createMarketplaceAccountUserCatalog({accountName, accountType}) {
+	async createAccountUserCatalog({
+		accountName,
+		accountType,
+	}: CreateAccountUserCatalog) {
 		try {
 			const account = await this.apiHelpers.headlessAdminUser.postAccount(
 				{
@@ -55,7 +81,10 @@ export class MarketplaceHelper {
 		}
 	}
 
-	async assignMarketplaceUserToAccountRole({accountId, accountRole}) {
+	async assignUserToAccountRole({
+		accountId,
+		accountRole,
+	}: AssignUserToAccountRole) {
 		try {
 			const user =
 				await this.apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
@@ -83,11 +112,11 @@ export class MarketplaceHelper {
 		}
 	}
 
-	async createMarketplaceTestProductOrder({
+	async createTestProductOrder({
 		accountId,
 		orderItems,
 		productBody,
-	}) {
+	}: CreateTestProductOrder) {
 		try {
 			const channel =
 				await this.apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
@@ -143,11 +172,11 @@ export class MarketplaceHelper {
 		}
 	}
 
-	async getMarketplaceVocabularyAndCategory({
+	async getVocabularyAndCategory({
 		categoryName,
 		siteId,
 		vocabularyName,
-	}) {
+	}: GetVocabularyAndCategory) {
 		try {
 			const {items: vocabularies} =
 				await this.apiHelpers.headlessAdminTaxonomy.getTaxonomyVocabularyBySiteId(

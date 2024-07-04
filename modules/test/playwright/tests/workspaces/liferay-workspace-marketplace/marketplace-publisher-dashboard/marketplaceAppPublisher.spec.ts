@@ -18,21 +18,17 @@ export const test = mergeTests(
 	marketplaceHelper
 );
 
-const ACCOUNT_NAME = {
-	PERSON: `Person Account${getRandomInt()}`,
-	SUPPLIER: `Supplier Account${getRandomInt()}`,
-};
-
 test.describe('Can Publish Marketplace Apps', () => {
 	let _account;
 	let _catalog;
 	let _productId;
+	const accountName = `Supplier Account${getRandomInt()}`;
 
 	test.beforeEach(
 		async ({marketplace, marketplaceHelper, publisherSolutionPage}) => {
 			const {account, catalog} =
-				await marketplaceHelper.createMarketplaceAccountUserCatalog({
-					accountName: ACCOUNT_NAME.SUPPLIER,
+				await marketplaceHelper.createAccountUserCatalog({
+					accountName,
 					accountType: 'supplier',
 				});
 
@@ -74,14 +70,14 @@ test.describe('Can Publish Marketplace Apps', () => {
 
 			await publisherDashboardPage.goto(marketplace.friendlyUrlPath);
 
-			await publisherDashboardPage.selectAccount(ACCOUNT_NAME.SUPPLIER);
+			await publisherDashboardPage.selectAccount(accountName);
 
 			await publisherDashboardPage.gotoNewAppPage();
 
 			// Publish the app
 
 			await publisherAppPage.checkHeader({
-				accountName: ACCOUNT_NAME,
+				accountName,
 				appName: 'New App',
 			});
 			await publisherAppPage.continue();

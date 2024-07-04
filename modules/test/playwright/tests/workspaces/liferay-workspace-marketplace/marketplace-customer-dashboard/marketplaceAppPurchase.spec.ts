@@ -13,6 +13,7 @@ import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
 import {
 	MARKETPLACE_CHANNEL,
+	ORDER_ITEMS,
 	PRODUCT_WORKFLOW_STATUS_CODE,
 } from '../utils/constants';
 
@@ -22,20 +23,13 @@ export const test = mergeTests(
 	marketplaceSiteFixture
 );
 
-export const ORDER_ITEMS = {
-	DECIMAL_QUANTITY: 1,
-	QUANTITY: 1,
-	UNIT_PRICE: 1,
-};
-
-export const CUSTOMER_ACCOUNT_NAME = `Customer${getRandomInt()}`;
-export const PRODUCT_NAME = `Product${getRandomInt()}`;
-
 test.describe('Can Purchase and Manage Apps', () => {
 	let _catalog;
-	let _customerAccount;
+	let _account;
 	let _product;
 	let _order;
+	const accountName = `Customer Account${getRandomInt()}`;
+	const productName = `Product${getRandomInt()}`;
 
 	test.beforeEach(async ({apiHelpers, marketplaceHelper}) => {
 		const channel =
@@ -44,15 +38,15 @@ test.describe('Can Purchase and Manage Apps', () => {
 			);
 
 		const {account, catalog} =
-			await marketplaceHelper.createMarketplaceAccountUserCatalog({
-				accountName: CUSTOMER_ACCOUNT_NAME,
+			await marketplaceHelper.createAccountUserCatalog({
+				accountName,
 				accountType: 'person',
 			});
 
-		_customerAccount = account;
+		_account = account;
 		_catalog = catalog;
 
-		await marketplaceHelper.assignMarketplaceUserToAccountRole({
+		await marketplaceHelper.assignUserToAccountRole({
 			accountId: account.id,
 			accountRole: 'Account Buyer',
 		});
@@ -61,7 +55,7 @@ test.describe('Can Purchase and Manage Apps', () => {
 			active: true,
 			catalogId: catalog.id,
 			name: {
-				en_US: PRODUCT_NAME,
+				en_US: productName,
 			},
 			productChannels: [
 				{
@@ -104,12 +98,13 @@ test.describe('Can Purchase and Manage Apps', () => {
 			},
 		};
 
-		const {order, product} =
-			await marketplaceHelper.createMarketplaceTestProductOrder({
+		const {order, product} = await marketplaceHelper.createTestProductOrder(
+			{
 				accountId: account.id,
 				orderItems: ORDER_ITEMS,
 				productBody,
-			});
+			}
+		);
 
 		_order = order;
 		_product = product;
@@ -126,7 +121,7 @@ test.describe('Can Purchase and Manage Apps', () => {
 			_catalog.id
 		);
 
-		await apiHelpers.headlessAdminUser.deleteAccount(_customerAccount.id);
+		await apiHelpers.headlessAdminUser.deleteAccount(_account.id);
 	});
 
 	test('LPD-21740 The customer can download by using the kebab', async ({
@@ -136,23 +131,23 @@ test.describe('Can Purchase and Manage Apps', () => {
 	}) => {
 		await customerDashboardPage.goto(marketplace.friendlyUrlPath);
 
-		await customerDashboardPage.selectAccount(CUSTOMER_ACCOUNT_NAME);
+		await customerDashboardPage.selectAccount(accountName);
 
 		await expect(
-			customerDashboardPage.purchasedApp(PRODUCT_NAME)
+			customerDashboardPage.purchasedApp(productName)
 		).toBeVisible();
 
 		await expect(
-			customerDashboardPage.tableKebabButton(PRODUCT_NAME)
+			customerDashboardPage.tableKebabButton(productName)
 		).toBeVisible();
 
 		await customerDashboardPage
-			.tableKebabButton(PRODUCT_NAME)
+			.tableKebabButton(productName)
 			.waitFor({state: 'visible'});
 
 		await clickAndExpectToBeVisible({
 			target: customerDashboardPage.page.getByText('Download App'),
-			trigger: customerDashboardPage.tableKebabButton(PRODUCT_NAME),
+			trigger: customerDashboardPage.tableKebabButton(productName),
 		});
 
 		await customerDashboardPage.dropdownDownloadButton.click();
@@ -186,12 +181,12 @@ test.describe('Can Purchase and Manage Apps', () => {
 	}) => {
 		await customerDashboardPage.goto(marketplace.friendlyUrlPath);
 
-		await customerDashboardPage.selectAccount(CUSTOMER_ACCOUNT_NAME);
+		await customerDashboardPage.selectAccount(accountName);
 
 		await expect(
-			customerDashboardPage.purchasedApp(PRODUCT_NAME)
+			customerDashboardPage.purchasedApp(productName)
 		).toBeVisible();
-		await customerDashboardPage.purchasedApp(PRODUCT_NAME).click();
+		await customerDashboardPage.purchasedApp(productName).click();
 
 		await expect(customerDashboardAppDetailsPage.detailTab).toBeVisible();
 

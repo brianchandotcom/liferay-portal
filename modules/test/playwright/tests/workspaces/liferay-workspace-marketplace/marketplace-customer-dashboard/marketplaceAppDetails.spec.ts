@@ -6,18 +6,15 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../../utils/getRandomInt';
 import {marketplaceHelper} from '../fixtures/marketplaceHelper';
 import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
 import {
 	MARKETPLACE_CHANNEL,
+	ORDER_ITEMS,
 	PRODUCT_WORKFLOW_STATUS_CODE,
 } from '../utils/constants';
-import {
-	CUSTOMER_ACCOUNT_NAME,
-	ORDER_ITEMS,
-	PRODUCT_NAME,
-} from './marketplaceAppPurchase.spec';
 
 export const test = mergeTests(
 	marketplaceSiteFixture,
@@ -30,6 +27,8 @@ test.describe('Custumers Can View Marketplace App Details', () => {
 	let _account;
 	let _product;
 	let _order;
+	const accountName = `Customer Account${getRandomInt()}`;
+	const productName = `Product${getRandomInt()}`;
 
 	test.beforeEach(async ({apiHelpers, marketplaceHelper}) => {
 		const channel =
@@ -38,15 +37,15 @@ test.describe('Custumers Can View Marketplace App Details', () => {
 			);
 
 		const {account, catalog} =
-			await marketplaceHelper.createMarketplaceAccountUserCatalog({
-				accountName: CUSTOMER_ACCOUNT_NAME,
+			await marketplaceHelper.createAccountUserCatalog({
+				accountName,
 				accountType: 'person',
 			});
 
 		_account = account;
 		_catalog = catalog;
 
-		await marketplaceHelper.assignMarketplaceUserToAccountRole({
+		await marketplaceHelper.assignUserToAccountRole({
 			accountId: account.id,
 			accountRole: 'Account Buyer',
 		});
@@ -55,7 +54,7 @@ test.describe('Custumers Can View Marketplace App Details', () => {
 			active: true,
 			catalogId: catalog.id,
 			name: {
-				en_US: PRODUCT_NAME,
+				en_US: productName,
 			},
 			productChannels: [
 				{
@@ -84,13 +83,14 @@ test.describe('Custumers Can View Marketplace App Details', () => {
 			productType: 'virtual',
 		};
 
-		const {order, product} =
-			await marketplaceHelper.createMarketplaceTestProductOrder({
+		const {order, product} = await marketplaceHelper.createTestProductOrder(
+			{
 				accountId: account.id,
 
 				orderItems: ORDER_ITEMS,
 				productBody,
-			});
+			}
+		);
 
 		_order = order;
 		_product = product;
@@ -116,21 +116,19 @@ test.describe('Custumers Can View Marketplace App Details', () => {
 	}) => {
 		await customerDashboardAppDetailsPage.goto(marketplace.friendlyUrlPath);
 
-		await customerDashboardAppDetailsPage.selectAccount(
-			CUSTOMER_ACCOUNT_NAME
-		);
+		await customerDashboardAppDetailsPage.selectAccount(accountName);
 
 		await expect(
-			customerDashboardAppDetailsPage.purchasedApp(PRODUCT_NAME)
+			customerDashboardAppDetailsPage.purchasedApp(productName)
 		).toBeVisible();
 
 		await clickAndExpectToBeVisible({
 			target: customerDashboardAppDetailsPage.detailTab,
-			trigger: customerDashboardAppDetailsPage.purchasedApp(PRODUCT_NAME),
+			trigger: customerDashboardAppDetailsPage.purchasedApp(productName),
 		});
 
 		await expect(
-			customerDashboardAppDetailsPage.productTitle(PRODUCT_NAME)
+			customerDashboardAppDetailsPage.productTitle(productName)
 		).toBeVisible();
 
 		await expect(

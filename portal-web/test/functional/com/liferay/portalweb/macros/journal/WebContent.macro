@@ -745,20 +745,18 @@ definition {
 					value1 = ${webContentText});
 			}
 			else {
+				Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
+
 				Type(
 					key_fieldFieldLabel = ${webContentTextFieldLabel},
 					locator1 = "WCEditWebContent#TEXT_INPUT",
 					value1 = ${webContentText});
 			}
 
-			if (isSet(duplicateField)) {
-				Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
-
-				Type(
-					key_fieldFieldLabel = ${webContentTextFieldLabel},
-					locator1 = "WCEditWebContent#TEXT_INPUT_2",
-					value1 = "${webContentText} Duplicate Field");
-			}
+			Type(
+				key_fieldFieldLabel = ${webContentTextFieldLabel},
+				locator1 = "WCEditWebContent#TEXT_INPUT_2",
+				value1 = "${webContentText} Duplicate Field");
 		}
 
 		if (isSet(webContentUpload)) {

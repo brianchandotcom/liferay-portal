@@ -69,7 +69,8 @@ public class RememberMeTokenLocalServiceImpl
 		if ((rememberMeToken == null) ||
 			!Objects.equals(
 				rememberMeToken.getValue(),
-				PasswordEncryptorUtil.encrypt(value))) {
+				PasswordEncryptorUtil.encrypt(
+					value, rememberMeToken.getValue()))) {
 
 			return null;
 		}

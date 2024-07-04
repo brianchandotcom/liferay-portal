@@ -86,7 +86,7 @@ public class TestrayCaseResultResourceImpl
 			params.add("%" + error + "%");
 		}
 
-		if (Validator.isBoolean(String.valueOf(noError))) {
+		if (noError != null) {
 			sb.append("and (cr.errors_ is null or cr.errors_ = '') ");
 		}
 
@@ -95,7 +95,7 @@ public class TestrayCaseResultResourceImpl
 			params.add("%" + issues + "%");
 		}
 
-		if (Validator.isBoolean(String.valueOf(noIssues))) {
+		if (noIssues != null) {
 			sb.append("and (cr.issues_ is null or cr.issues_ = '') ");
 		}
 
@@ -248,7 +248,7 @@ public class TestrayCaseResultResourceImpl
 			params.add("%" + comment + "%");
 		}
 
-		if (Validator.isBoolean(String.valueOf(noComment))) {
+		if (noComment != null) {
 			sb.append("and (cr.comment_ is null or cr.comment_ = '') ");
 		}
 
@@ -257,11 +257,11 @@ public class TestrayCaseResultResourceImpl
 			params.add("%" + error + "%");
 		}
 
-		if (Validator.isBoolean(String.valueOf(noError))) {
+		if (noError != null) {
 			sb.append("and (cr.errors_ is null or cr.errors_ = '') ");
 		}
 
-		if (Validator.isBoolean(String.valueOf(flaky))) {
+		if (flaky != null) {
 			sb.append("and cx.flaky_ = ? ");
 			params.add(flaky);
 		}
@@ -271,7 +271,7 @@ public class TestrayCaseResultResourceImpl
 			params.add("%" + issues + "%");
 		}
 
-		if (Validator.isBoolean(String.valueOf(noIssues))) {
+		if (noIssues != null) {
 			sb.append("and (cr.issues_ is null or cr.issues_ = '') ");
 		}
 

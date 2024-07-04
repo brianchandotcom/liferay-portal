@@ -83,6 +83,8 @@ definition {
 	macro goToSidebarOption(sidebarOption = null) {
 		var key_sidebarOption = ${sidebarOption};
 
+		WaitForVisible(locator1 = "ACNavigation#GENERIC_SIDEBAR_OPTION");
+
 		Click(locator1 = "ACNavigation#GENERIC_SIDEBAR_OPTION");
 	}
 

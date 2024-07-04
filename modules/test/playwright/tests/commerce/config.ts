@@ -6,4 +6,7 @@
 export const config = {
 	name: 'commerce',
 	testDir: 'tests/commerce',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

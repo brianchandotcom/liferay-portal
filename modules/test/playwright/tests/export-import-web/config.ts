@@ -6,4 +6,7 @@
 export const config = {
 	name: 'export-import-web',
 	testDir: 'tests/export-import-web',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

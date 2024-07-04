@@ -99,15 +99,11 @@ public class OptionsRestController extends BaseRestController {
 		for (String code : ratingCodes) {
 			try {
 				jsonArray.put(
-					new JSONObject(
-						_postRateRequest(
-							_getBody(
-								code, depth, height, quantity,
-								shippingAddressJSONObject,
-								typeSettingsJSONObject, weight, width),
-							typeSettingsJSONObject.getString("clientId"),
-							typeSettingsJSONObject.getString("clientSecret"),
-							log)));
+					_postRate(
+						typeSettingsJSONObject.getString("clientId"),
+						typeSettingsJSONObject.getString("clientSecret"), code,
+						depth, height, log, quantity, shippingAddressJSONObject,
+						typeSettingsJSONObject, weight, width));
 			}
 			catch (Exception exception) {
 				if (log.isDebugEnabled()) {
@@ -185,12 +181,24 @@ public class OptionsRestController extends BaseRestController {
 		return StringPool.BLANK;
 	}
 
-	private String _getBody(
-		String code, double depth, double height, int quantity,
+	private WebClient _getWebClient() {
+		return WebClient.builder(
+		).baseUrl(
+			lxcDXPServerProtocol + "://" + lxcDXPMainDomain
+		).defaultHeader(
+			HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
+		).defaultHeader(
+			HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
+		).build();
+	}
+
+	private JSONObject _postRate(
+		String clientId, String clientSecret, String code, double depth,
+		double height, Log log, int quantity,
 		JSONObject shippingAddressJSONObject, JSONObject typeSettingsJSONObject,
 		double weight, double width) {
 
-		return new JSONObject(
+		String body = new JSONObject(
 		).put(
 			"RateRequest",
 			new JSONObject(
@@ -318,44 +326,30 @@ public class OptionsRestController extends BaseRestController {
 				)
 			)
 		).toString();
-	}
-
-	private WebClient _getWebClient() {
-		return WebClient.builder(
-		).baseUrl(
-			lxcDXPServerProtocol + "://" + lxcDXPMainDomain
-		).defaultHeader(
-			HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
-		).defaultHeader(
-			HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-		).build();
-	}
-
-	private String _postRateRequest(
-		String body, String clientId, String clientSecret, Log log) {
 
 		try {
-			WebClient client = WebClient.builder(
+			WebClient webClient = WebClient.builder(
 			).baseUrl(
 				"https://wwwcie.ups.com"
 			).defaultHeader(
 				HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
 			).defaultHeader(
-				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-			).defaultHeader(
 				HttpHeaders.AUTHORIZATION,
 				"Bearer " + _getAccessToken(clientId, clientSecret, log)
+			).defaultHeader(
+				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
 			).build();
 
-			return client.post(
-			).uri(
-				"/api/rating/v2403/Rate"
-			).bodyValue(
-				body
-			).retrieve(
-			).bodyToFlux(
-				String.class
-			).blockLast();
+			return new JSONObject(
+				webClient.post(
+				).uri(
+					"/api/rating/v2403/Rate"
+				).bodyValue(
+					body
+				).retrieve(
+				).bodyToFlux(
+					String.class
+				).blockLast());
 		}
 		catch (Exception exception) {
 			if (log.isDebugEnabled()) {
@@ -363,7 +357,7 @@ public class OptionsRestController extends BaseRestController {
 			}
 		}
 
-		return StringPool.BLANK;
+		return new JSONObject(StringPool.BLANK);
 	}
 
 	private JSONArray _toShippingOptionsJSONArray(JSONArray jsonArray) {
@@ -395,8 +389,6 @@ public class OptionsRestController extends BaseRestController {
 			JSONObject totalChargesJSONObject =
 				ratedShipmentJSONObject.getJSONObject("TotalCharges");
 
-			String code = serviceJSONObject.getString("Code");
-
 			shippingOptionsJSONArray.put(
 				new JSONObject(
 				).put(
@@ -405,9 +397,11 @@ public class OptionsRestController extends BaseRestController {
 					"currencyCode",
 					totalChargesJSONObject.getString("CurrencyCode")
 				).put(
-					"key", code
+					"key", serviceJSONObject.getString("Code")
 				).put(
-					"name", UPSServiceCodeConstants.getCodeName(code)
+					"name",
+					UPSServiceCodeConstants.getCodeName(
+						serviceJSONObject.getString("Code"))
 				).put(
 					"priority", i
 				));

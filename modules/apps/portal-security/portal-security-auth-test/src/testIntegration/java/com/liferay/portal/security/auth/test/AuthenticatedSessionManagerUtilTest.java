@@ -97,7 +97,7 @@ public class AuthenticatedSessionManagerUtilTest {
 	}
 
 	@Test
-	public void testRemoveRememberMeOnLogout() throws Exception {
+	public void testRememberMeLogout() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 		MockHttpServletResponse mockHttpServletResponse =

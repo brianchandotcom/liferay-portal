@@ -73,6 +73,33 @@ public class FragmentEntryLinkServiceImpl
 	}
 
 	@Override
+	public FragmentEntryLink deleteFragmentEntryLink(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentEntryLinkPersistence.findByERC_G(
+				externalReferenceCode, groupId);
+
+		_checkPermission(
+			fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(), false,
+			false);
+
+		return fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+			fragmentEntryLink);
+	}
+
+	@Override
+	public FragmentEntryLink getFragmentEntryLinkByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return fragmentEntryLinkLocalService.
+			getFragmentEntryLinkByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
+	@Override
 	public FragmentEntryLink updateDeleted(
 			long fragmentEntryLinkId, boolean deleted)
 		throws PortalException {

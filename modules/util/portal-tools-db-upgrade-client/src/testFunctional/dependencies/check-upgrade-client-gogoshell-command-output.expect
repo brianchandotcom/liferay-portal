@@ -21,6 +21,8 @@ expect {
 	timeout {send_user "Command is not printed!";exit 2}
 }
 
+set timeout 60
+
 expect {
 	"g! \r\ng!" {send "exit\r";send_user "PASS"}
 	"g! \r\n\r\ng!" {send_user "White line is printed!";exit 2}

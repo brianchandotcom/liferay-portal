@@ -73,11 +73,11 @@ public class AuthenticatedSessionManagerUtilTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		mockHttpServletRequest.setAttribute(
 			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		_cookiesManager.addSupportCookie(
 			mockHttpServletRequest, mockHttpServletResponse);
@@ -100,17 +100,16 @@ public class AuthenticatedSessionManagerUtilTest {
 	public void testRemoveRememberMeOnLogout() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
-
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
 		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-			_buildCookie(
+			_createRememberMeCookie(
 				CookiesConstants.NAME_REMEMBER_ME, Boolean.TRUE.toString(), 1),
 			mockHttpServletRequest, mockHttpServletResponse);
 
-		Cookie cookie = _buildCookie(
+		Cookie cookie = _createRememberMeCookie(
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, StringPool.BLANK, 1);
 
 		RememberMeToken rememberMeToken =
@@ -124,7 +123,7 @@ public class AuthenticatedSessionManagerUtilTest {
 
 		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-			_buildCookie(
+			_createRememberMeCookie(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 				String.valueOf(rememberMeToken.getRememberMeTokenId()), 1),
 			mockHttpServletRequest, mockHttpServletResponse);
@@ -146,7 +145,7 @@ public class AuthenticatedSessionManagerUtilTest {
 				rememberMeToken.getRememberMeTokenId()));
 	}
 
-	private Cookie _buildCookie(String name, String value, int maxAge) {
+	private Cookie _createRememberMeCookie(String name, String value, int maxAge) {
 		Cookie cookie = new Cookie(name, value);
 
 		cookie.setDomain("");

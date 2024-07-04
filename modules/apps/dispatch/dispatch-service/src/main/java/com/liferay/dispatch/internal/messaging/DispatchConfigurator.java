@@ -81,10 +81,8 @@ public class DispatchConfigurator {
 		_scheduleJobs(DispatchTaskClusterMode.ALL_NODES);
 
 		if (_clusterMasterExecutor.isMaster()) {
-			_scheduleJobs(
-				DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED);
-			_scheduleJobs(
-				DispatchTaskClusterMode.SINGLE_NODE_PERSISTED);
+			_scheduleJobs(DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED);
+			_scheduleJobs(DispatchTaskClusterMode.SINGLE_NODE_PERSISTED);
 		}
 	}
 
@@ -95,8 +93,7 @@ public class DispatchConfigurator {
 		if (_clusterMasterExecutor.isMaster()) {
 			_unscheduleJobs(
 				DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED);
-			_unscheduleJobs(
-				DispatchTaskClusterMode.SINGLE_NODE_PERSISTED);
+			_unscheduleJobs(DispatchTaskClusterMode.SINGLE_NODE_PERSISTED);
 		}
 
 		_serviceRegistration.unregister();

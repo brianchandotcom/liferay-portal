@@ -1,0 +1,80 @@
+{
+	"description_i18n": {
+		"en_US": "Boost contents in a category for the given period of time."
+	},
+	"elementDefinition": {
+		"category": "conditional",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": "${configuration.boost}",
+											"value": "${configuration.asset_category_id}"
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"range": {
+								"format": "yyyyMMdd",
+								"gte": "${configuration.start_date}",
+								"lte": "${configuration.end_date}",
+								"parameterName": "time.current_date"
+							}
+						}
+					}
+				]
+			}
+		},
+		"icon": "thumbs-up",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"label": "Asset Category ID",
+							"name": "asset_category_id",
+							"type": "number"
+						},
+						{
+							"label": "Create Date: From",
+							"name": "start_date",
+							"type": "date",
+							"typeOptions": {
+								"format": "YYYYMMDD"
+							}
+						},
+						{
+							"label": "Create Date: To",
+							"name": "end_date",
+							"type": "date",
+							"typeOptions": {
+								"format": "YYYYMMDD"
+							}
+						},
+						{
+							"defaultValue": 10,
+							"label": "Boost",
+							"name": "boost",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Boost Contents in a Category for a Period of Time"
+	}
+}

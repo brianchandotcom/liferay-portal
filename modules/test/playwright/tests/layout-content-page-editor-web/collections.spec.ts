@@ -446,7 +446,7 @@ test('checks that fragment ids used within a display collection are not repeated
 		const fragmentIds = [];
 
 		for (const fragment of fragments) {
-			await fragmentIds.push(fragment.getAttribute('id'));
+			fragmentIds.push(fragment.getAttribute('id'));
 		}
 
 		expect(Array.from(new Set(fragmentIds))).toHaveLength(4);
@@ -595,6 +595,39 @@ test('displays correct layout in other viewports', async ({
 		await expect(col).toHaveClass(/col-lg-3/);
 		await expect(col).toHaveClass(/col-md-12/);
 		await expect(col).toHaveClass(/col-sm-12/);
-		await expect(col).toHaveClass(/col-12/);
+	}
+
+	// Edit the page again and change layout to 2 columns in Tablet and Mobile
+
+	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+
+	await pageEditorPage.switchViewport('Tablet');
+
+	await pageEditorPage.changeFragmentConfiguration({
+		fieldLabel: 'Layout',
+		fragmentId: collectionId,
+		isDesktop: false,
+		tab: 'General',
+		value: '2 Columns',
+	});
+
+	await pageEditorPage.switchViewport('Portrait Phone');
+
+	await pageEditorPage.changeFragmentConfiguration({
+		fieldLabel: 'Layout',
+		fragmentId: collectionId,
+		isDesktop: false,
+		tab: 'General',
+		value: '2 Columns',
+	});
+
+	// Go to view mode again and check correct layout is displayed on each viewport
+
+	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+	for (const col of await row.locator('.col').all()) {
+		await expect(col).toHaveClass(/col-lg-3/);
+		await expect(col).toHaveClass(/col-md-6/);
+		await expect(col).toHaveClass(/col-sm-6/);
 	}
 });

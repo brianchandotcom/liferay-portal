@@ -8,6 +8,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import {liferayConfig} from '../../liferay.config';
 import getPageDefinition from '../../tests/layout-content-page-editor-web/utils/getPageDefinition';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
@@ -769,23 +770,60 @@ export class PageEditorPage {
 		await expect(editable).toBeFocused();
 	}
 
+	async setMappedItem(entity: string, entry: string) {
+		await this.selectItemMappingButton.click();
+
+		const recentItem = this.page.getByRole('menuitem', {name: entry});
+
+		if (await recentItem.isVisible()) {
+			recentItem.click();
+		}
+		else {
+			const hasRecentItems = await this.page
+				.getByRole('presentation', {
+					name: 'Recent',
+				})
+				.isVisible();
+
+			if (hasRecentItems) {
+				await this.page
+					.getByRole('menuitem', {name: 'Select item'})
+					.click();
+			}
+
+			const iframe = this.page.frameLocator('iframe[title="Select"]');
+
+			await clickAndExpectToBeVisible({
+				target: iframe.locator('.sheet-title').getByText(entity),
+				trigger: iframe.getByRole('menuitem', {name: entity}),
+			});
+
+			await clickAndExpectToBeHidden({
+				target: iframe.locator('.sheet-title').getByText(entity),
+				trigger: iframe.getByRole('paragraph').filter({hasText: entry}),
+			});
+		}
+
+		await expect(
+			this.page.locator('.page-editor__item-selector__content-input')
+		).toHaveValue(entry);
+	}
+
 	async setMappingConfiguration({
 		entity,
 		entry,
 		field,
-		recentSelectedItem,
 		relationship,
 		source,
 	}: {
 		entity?: string;
 		entry?: string;
 		field: string;
-		recentSelectedItem?: string;
 		relationship?: string;
 		source?: 'content' | 'relationship' | 'structure';
 	}) {
 
-		// Select source and relationship is needed
+		// Select source and relationship if needed
 
 		if (source) {
 			await this.page.getByLabel('Source').selectOption(source);
@@ -807,27 +845,7 @@ export class PageEditorPage {
 
 		// If source is content, select the item and the field
 
-		await this.selectItemMappingButton.click();
-
-		if (recentSelectedItem) {
-			await this.page
-				.getByRole('menuitem', {name: recentSelectedItem})
-				.click();
-		}
-		else {
-			await this.page
-				.frameLocator('iframe[title="Select"]')
-				.getByRole('menuitem', {name: entity})
-				.click();
-
-			await this.page.waitForTimeout(1500);
-
-			await this.page
-				.frameLocator('iframe[title="Select"]')
-				.getByRole('paragraph')
-				.filter({hasText: entry})
-				.click();
-		}
+		await this.setMappedItem(entity, entry);
 
 		await this.page.getByLabel('Field').selectOption(field);
 	}

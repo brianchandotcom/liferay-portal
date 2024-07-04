@@ -217,10 +217,7 @@ test.describe('Manage object entries through page templates', () => {
 
 		await page.getByTitle(displayPageTemplateName).click();
 
-		overloop: for (const [
-			index,
-			objectField,
-		] of objectDefinition.objectFields
+		overloop: for (const [_, objectField] of objectDefinition.objectFields
 			.filter((objectField) => !objectField.system)
 			.entries()) {
 			await pageEditorPage.addFragment('Basic Components', 'Heading');
@@ -233,8 +230,6 @@ test.describe('Manage object entries through page templates', () => {
 				entity: objectDefinitionLabel,
 				entry: objectEntry[titleObjectFieldName],
 				field: objectField.label.en_US,
-				recentSelectedItem:
-					index >= 1 ? objectEntry[titleObjectFieldName] : undefined,
 				source: 'content',
 			});
 

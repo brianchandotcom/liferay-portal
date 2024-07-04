@@ -6,6 +6,8 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
 
@@ -66,8 +68,10 @@ public class HttpServletEndpointServlet extends HttpServlet {
 			return;
 		}
 
-		httpServletResponse.sendError(
-			HttpServletResponse.SC_NOT_FOUND, dispatchPathInfo);
+		PortalUtil.sendError(
+			HttpServletResponse.SC_NOT_FOUND,
+			new NoSuchLayoutException("Page Not Found"), httpServletRequest,
+			httpServletResponse);
 	}
 
 	private final HttpServletEndpointController _httpServletEndpointController;

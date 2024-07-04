@@ -35,9 +35,9 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 			deployConfiguration(
 				_PID,
 				StringBundler.concat(
-					"name=T\"testName\"\nvirtualHostname=",
-					"T\"testVirtualHostname\"\nwebId=",
-					"T\"testWebId\"\nsourcePartitionCompanyId=L\"",
+					"name=\"testName\"\nvirtualHostname=",
+					"\"testVirtualHostname\"\nwebId=",
+					"\"testWebId\"\nsourcePartitionCompanyId=L\"",
 					COMPANY_IDS[0], "\"\ndestinationPartitionCompanyId=L\"",
 					COMPANY_IDS[1], "\"\n"));
 

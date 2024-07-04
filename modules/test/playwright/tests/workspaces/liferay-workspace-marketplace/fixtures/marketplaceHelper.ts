@@ -7,12 +7,12 @@ import {test} from '@playwright/test';
 
 import {MarketplaceHelper} from '../helpers/MarketplaceHelper';
 
-const marketplaceDataTest = test.extend<{
-	marketplaceHelpers: MarketplaceHelper;
+const marketplaceHelper = test.extend<{
+	marketplaceHelper: MarketplaceHelper;
 }>({
-	marketplaceHelpers: async ({page}, use) => {
+	marketplaceHelper: async ({page}, use) => {
 		await use(new MarketplaceHelper(page));
 	},
 });
 
-export {marketplaceDataTest};
+export {marketplaceHelper};

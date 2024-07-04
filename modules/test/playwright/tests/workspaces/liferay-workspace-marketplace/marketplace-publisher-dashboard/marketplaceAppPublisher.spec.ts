@@ -5,18 +5,17 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
+import {marketplaceHelper} from '../fixtures/marketplaceHelper';
 import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
-import {createMarketplaceAccountUserCatalog} from '../helpers/marketplaceHelpers';
 import {PublishProductPayload} from '../types';
 import {products} from '../utils/constants';
 
 export const test = mergeTests(
-	dataApiHelpersTest,
 	marketplaceSiteFixture,
-	marketplacePagesTest
+	marketplacePagesTest,
+	marketplaceHelper
 );
 
 const ACCOUNT_NAME = {
@@ -30,12 +29,11 @@ test.describe('Can Publish Marketplace Apps', () => {
 	let _productId;
 
 	test.beforeEach(
-		async ({apiHelpers, marketplace, publisherSolutionPage}) => {
+		async ({marketplace, marketplaceHelper, publisherSolutionPage}) => {
 			const {account, catalog} =
-				await createMarketplaceAccountUserCatalog({
+				await marketplaceHelper.createMarketplaceAccountUserCatalog({
 					accountName: ACCOUNT_NAME.SUPPLIER,
 					accountType: 'supplier',
-					apiHelpers,
 				});
 
 			_account = account;

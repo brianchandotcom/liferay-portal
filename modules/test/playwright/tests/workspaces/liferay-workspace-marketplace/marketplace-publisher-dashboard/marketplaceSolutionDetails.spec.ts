@@ -6,15 +6,9 @@
 import {mergeTests} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
-import {marketplaceDataTest} from '../fixtures/marketplaceDataTest';
+import {marketplaceHelper} from '../fixtures/marketplaceHelper';
 import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
-import {
-	assignMarketplaceUserToAccountRole,
-	createMarketplaceAccountUserCatalog,
-	createMarketplaceTestProductOrder,
-	getMarketplaceVocabularyAndCategory,
-} from '../helpers/marketplaceHelpers';
 import {
 	ORDER_ITEMS,
 	PRODUCT_NAME,
@@ -31,7 +25,7 @@ import {
 export const test = mergeTests(
 	marketplaceSiteFixture,
 	marketplacePagesTest,
-	marketplaceDataTest
+	marketplaceHelper
 );
 
 test.describe('Publishers Can View Marketplace Solution Details', () => {
@@ -40,43 +34,32 @@ test.describe('Publishers Can View Marketplace Solution Details', () => {
 	let _product;
 	let _order;
 
-	test.beforeEach(async ({apiHelpers, marketplace, marketplaceHelpers}) => {
-
-		// const testa =
-		// 	await marketplaceHelpers.createMarketplaceAccountUserCatalog({
-		// 		accountName: ACCOUNT_NAME.SUPPLIER,
-		// 		accountType: 'supplier',
-		// 		apiHelpers,
-		// 	});
-
-		// console.log('testa', testa);
-
+	test.beforeEach(async ({apiHelpers, marketplace, marketplaceHelper}) => {
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
 				`name eq ${MARKETPLACE_CHANNEL}`
 			);
 
-		const {account, catalog} = await createMarketplaceAccountUserCatalog({
-			accountName: ACCOUNT_NAME.SUPPLIER,
-			accountType: 'supplier',
-			apiHelpers,
-		});
+		const {account, catalog} =
+			await marketplaceHelper.createMarketplaceAccountUserCatalog({
+				accountName: ACCOUNT_NAME.SUPPLIER,
+				accountType: 'supplier',
+			});
 
 		_account = account;
 		_catalog = catalog;
 
-		await assignMarketplaceUserToAccountRole({
+		await marketplaceHelper.assignMarketplaceUserToAccountRole({
 			accountId: account.id,
 			accountRole: SOLUTION_PUBLISHER_ROLE,
-			apiHelpers,
 		});
 
-		const solutionCategory = await getMarketplaceVocabularyAndCategory({
-			apiHelpers,
-			categoryName: 'Solution',
-			siteId: marketplace.id,
-			vocabularyName: 'Marketplace Product Type',
-		});
+		const solutionCategory =
+			await marketplaceHelper.getMarketplaceVocabularyAndCategory({
+				categoryName: 'Solution',
+				siteId: marketplace.id,
+				vocabularyName: 'Marketplace Product Type',
+			});
 
 		const productBody = {
 			active: true,
@@ -104,12 +87,13 @@ test.describe('Publishers Can View Marketplace Solution Details', () => {
 			productType: 'virtual',
 		};
 
-		const {order, product} = await createMarketplaceTestProductOrder({
-			accountId: account.id,
-			apiHelpers,
-			orderItems: ORDER_ITEMS,
-			productBody,
-		});
+		const {order, product} =
+			await marketplaceHelper.createMarketplaceTestProductOrder({
+				accountId: account.id,
+
+				orderItems: ORDER_ITEMS,
+				productBody,
+			});
 
 		_order = order;
 		_product = product;

@@ -5,27 +5,20 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {backendPageTest} from '../../../../fixtures/backendPageTest';
-import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import {getTempDir} from '../../../../utils/temp';
+import {marketplaceHelper} from '../fixtures/marketplaceHelper';
 import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
-import {
-	assignMarketplaceUserToAccountRole,
-	createMarketplaceAccountUserCatalog,
-	createMarketplaceTestProductOrder,
-} from '../helpers/marketplaceHelpers';
 import {
 	MARKETPLACE_CHANNEL,
 	PRODUCT_WORKFLOW_STATUS_CODE,
 } from '../utils/constants';
 
 export const test = mergeTests(
-	backendPageTest,
-	dataApiHelpersTest,
 	marketplacePagesTest,
+	marketplaceHelper,
 	marketplaceSiteFixture
 );
 
@@ -44,25 +37,24 @@ test.describe('Can Purchase and Manage Apps', () => {
 	let _product;
 	let _order;
 
-	test.beforeEach(async ({apiHelpers}) => {
+	test.beforeEach(async ({apiHelpers, marketplaceHelper}) => {
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
 				`name eq ${MARKETPLACE_CHANNEL}`
 			);
 
-		const {account, catalog} = await createMarketplaceAccountUserCatalog({
-			accountName: CUSTOMER_ACCOUNT_NAME,
-			accountType: 'person',
-			apiHelpers,
-		});
+		const {account, catalog} =
+			await marketplaceHelper.createMarketplaceAccountUserCatalog({
+				accountName: CUSTOMER_ACCOUNT_NAME,
+				accountType: 'person',
+			});
 
 		_customerAccount = account;
 		_catalog = catalog;
 
-		await assignMarketplaceUserToAccountRole({
+		await marketplaceHelper.assignMarketplaceUserToAccountRole({
 			accountId: account.id,
 			accountRole: 'Account Buyer',
-			apiHelpers,
 		});
 
 		const productBody = {
@@ -112,12 +104,12 @@ test.describe('Can Purchase and Manage Apps', () => {
 			},
 		};
 
-		const {order, product} = await createMarketplaceTestProductOrder({
-			accountId: account.id,
-			apiHelpers,
-			orderItems: ORDER_ITEMS,
-			productBody,
-		});
+		const {order, product} =
+			await marketplaceHelper.createMarketplaceTestProductOrder({
+				accountId: account.id,
+				orderItems: ORDER_ITEMS,
+				productBody,
+			});
 
 		_order = order;
 		_product = product;

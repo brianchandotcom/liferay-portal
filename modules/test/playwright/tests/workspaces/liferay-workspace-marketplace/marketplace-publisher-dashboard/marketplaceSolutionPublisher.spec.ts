@@ -5,20 +5,16 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../../utils/getRandomInt';
+import {marketplaceHelper} from '../fixtures/marketplaceHelper';
 import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
-import {
-	assignMarketplaceUserToAccountRole,
-	createMarketplaceAccountUserCatalog,
-} from '../helpers/marketplaceHelpers';
 import {solutions} from '../utils/constants';
 
 export const test = mergeTests(
-	dataApiHelpersTest,
 	marketplaceSiteFixture,
+	marketplaceHelper,
 	marketplacePagesTest
 );
 
@@ -34,21 +30,19 @@ test.describe('Can Publish and Manage Solutions', () => {
 	let _productId;
 
 	test.beforeEach(
-		async ({apiHelpers, marketplace, publisherSolutionPage}) => {
+		async ({marketplace, marketplaceHelper, publisherSolutionPage}) => {
 			const {account, catalog} =
-				await createMarketplaceAccountUserCatalog({
+				await marketplaceHelper.createMarketplaceAccountUserCatalog({
 					accountName: ACCOUNT_NAME.SUPPLIER,
 					accountType: 'supplier',
-					apiHelpers,
 				});
 
 			_account = account;
 			_catalog = catalog;
 
-			await assignMarketplaceUserToAccountRole({
+			await marketplaceHelper.assignMarketplaceUserToAccountRole({
 				accountId: account.id,
 				accountRole: SOLUTION_PUBLISHER_ROLE,
-				apiHelpers,
 			});
 
 			await publisherSolutionPage.goto(
@@ -157,12 +151,11 @@ test.describe(`Supplier Accounts without ${SOLUTION_PUBLISHER_ROLE} role can not
 	let _catalog;
 
 	test.beforeEach(
-		async ({apiHelpers, marketplace, publisherSolutionPage}) => {
+		async ({marketplace, marketplaceHelper, publisherSolutionPage}) => {
 			const {account, catalog} =
-				await createMarketplaceAccountUserCatalog({
+				await marketplaceHelper.createMarketplaceAccountUserCatalog({
 					accountName: ACCOUNT_NAME.SUPPLIER,
 					accountType: 'supplier',
-					apiHelpers,
 				});
 
 			_account = account;

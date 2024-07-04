@@ -20,18 +20,16 @@ export class MarketplaceHelper {
 		this.apiHelpers = new ApiHelpers(page);
 	}
 
-	async createMarketplaceAccountUserCatalog({
-		accountName,
-		accountType,
-		apiHelpers,
-	}) {
+	async createMarketplaceAccountUserCatalog({accountName, accountType}) {
 		try {
-			const account = await apiHelpers.headlessAdminUser.postAccount({
-				name: accountName,
-				type: accountType,
-			});
+			const account = await this.apiHelpers.headlessAdminUser.postAccount(
+				{
+					name: accountName,
+					type: accountType,
+				}
+			);
 
-			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			await this.apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
 				account.id,
 				['test@liferay.com']
 			);
@@ -45,7 +43,7 @@ export class MarketplaceHelper {
 				catalogData[accountType] || catalogData.default;
 
 			const catalog =
-				await apiHelpers.headlessCommerceAdminCatalog.postCatalog(
+				await this.apiHelpers.headlessCommerceAdminCatalog.postCatalog(
 					catalogConfig
 				);
 
@@ -57,25 +55,23 @@ export class MarketplaceHelper {
 		}
 	}
 
-	async assignMarketplaceUserToAccountRole({
-		accountId,
-		accountRole,
-		apiHelpers,
-	}) {
+	async assignMarketplaceUserToAccountRole({accountId, accountRole}) {
 		try {
 			const user =
-				await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				await this.apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
 					'test@liferay.com'
 				);
 
 			const rolesResponse =
-				await apiHelpers.headlessAdminUser.getAccountRoles(accountId);
+				await this.apiHelpers.headlessAdminUser.getAccountRoles(
+					accountId
+				);
 
 			const filteredAccountRole = rolesResponse?.items?.filter(
 				(role) => role.name === accountRole
 			);
 
-			await apiHelpers.headlessAdminUser.assignUserToAccountRole(
+			await this.apiHelpers.headlessAdminUser.assignUserToAccountRole(
 				accountId,
 				filteredAccountRole[0].id,
 				user.id
@@ -89,23 +85,22 @@ export class MarketplaceHelper {
 
 	async createMarketplaceTestProductOrder({
 		accountId,
-		apiHelpers,
 		orderItems,
 		productBody,
 	}) {
 		try {
 			const channel =
-				await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
+				await this.apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
 					`name eq ${MARKETPLACE_CHANNEL}`
 				);
 
 			const product =
-				await apiHelpers.headlessCommerceAdminCatalog.postProduct(
+				await this.apiHelpers.headlessCommerceAdminCatalog.postProduct(
 					productBody
 				);
 
-			const order = await apiHelpers.headlessCommerceAdminOrder.postOrder(
-				{
+			const order =
+				await this.apiHelpers.headlessCommerceAdminOrder.postOrder({
 					accountId,
 					channelId: channel.items[0].id,
 					orderItems: [
@@ -117,20 +112,28 @@ export class MarketplaceHelper {
 						},
 					],
 					orderTypeExternalReferenceCode: ORDER_TYPES.DXPAPP,
+				});
+
+			await this.apiHelpers.headlessCommerceAdminOrder.patchOrder(
+				order.id,
+				{
+					paymentStatus: PAYMENT_STATUS.COMPLETED,
 				}
 			);
 
-			await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
-				paymentStatus: PAYMENT_STATUS.COMPLETED,
-			});
+			await this.apiHelpers.headlessCommerceAdminOrder.patchOrder(
+				order.id,
+				{
+					orderStatus: ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
+				}
+			);
 
-			await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
-				orderStatus: ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
-			});
-
-			await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
-				orderStatus: ORDER_WORKFLOW_STATUS_CODE.COMPLETED,
-			});
+			await this.apiHelpers.headlessCommerceAdminOrder.patchOrder(
+				order.id,
+				{
+					orderStatus: ORDER_WORKFLOW_STATUS_CODE.COMPLETED,
+				}
+			);
 
 			return {order, product};
 		}
@@ -141,14 +144,13 @@ export class MarketplaceHelper {
 	}
 
 	async getMarketplaceVocabularyAndCategory({
-		apiHelpers,
 		categoryName,
 		siteId,
 		vocabularyName,
 	}) {
 		try {
 			const {items: vocabularies} =
-				await apiHelpers.headlessAdminTaxonomy.getTaxonomyVocabularyBySiteId(
+				await this.apiHelpers.headlessAdminTaxonomy.getTaxonomyVocabularyBySiteId(
 					siteId
 				);
 
@@ -161,7 +163,7 @@ export class MarketplaceHelper {
 			}
 
 			const {items: categories} =
-				await apiHelpers.headlessAdminTaxonomy.getTaxonomyCategoryByVocabularyId(
+				await this.apiHelpers.headlessAdminTaxonomy.getTaxonomyCategoryByVocabularyId(
 					vocabulary.id
 				);
 

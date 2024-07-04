@@ -90,6 +90,15 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async assignAccountToOrganization(
+		accountId: number,
+		organizationId: string
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/accounts/${accountId}/organizations/${organizationId}`
+		);
+	}
+
 	async assignUserToAccountByEmailAddress(
 		accountId: number,
 		emails: string[]

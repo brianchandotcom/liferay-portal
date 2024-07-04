@@ -7,6 +7,8 @@ import {test} from '@playwright/test';
 
 import {AccountAccountGroupsPage} from '../pages/account-admin-web/AccountAccountGroupsPage';
 import {AccountContactAddressPage} from '../pages/account-admin-web/AccountContactAddressPage';
+import {AccountManagementWidgetPage} from '../pages/account-admin-web/AccountManagementWidgetPage';
+import {AccountOrganizationsPage} from '../pages/account-admin-web/AccountOrganizationsPage';
 import {AccountRolesPage} from '../pages/account-admin-web/AccountRolesPage';
 import {AccountUsersPage} from '../pages/account-admin-web/AccountUsersPage';
 import {AccountsPage} from '../pages/account-admin-web/AccountsPage';
@@ -21,6 +23,8 @@ import {EditAccountWebsitePage} from '../pages/account-admin-web/EditAccountWebs
 const accountsPagesTest = test.extend<{
 	accountAccountGroupsPage: AccountAccountGroupsPage;
 	accountContactAddressPage: AccountContactAddressPage;
+	accountManagementWidgetPage: AccountManagementWidgetPage;
+	accountOrganizationsPage: AccountOrganizationsPage;
 	accountRolesPage: AccountRolesPage;
 	accountUsersPage: AccountUsersPage;
 	accountsPage: AccountsPage;
@@ -37,6 +41,12 @@ const accountsPagesTest = test.extend<{
 	},
 	accountContactAddressPage: async ({page}, use) => {
 		await use(new AccountContactAddressPage(page));
+	},
+	accountManagementWidgetPage: async ({page}, use) => {
+		await use(new AccountManagementWidgetPage(page));
+	},
+	accountOrganizationsPage: async ({page}, use) => {
+		await use(new AccountOrganizationsPage(page));
 	},
 	accountRolesPage: async ({page}, use) => {
 		await use(new AccountRolesPage(page));

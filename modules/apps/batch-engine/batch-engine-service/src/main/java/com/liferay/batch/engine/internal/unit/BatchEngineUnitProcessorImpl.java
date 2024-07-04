@@ -24,12 +24,16 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -236,6 +240,22 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		serviceTracker.close();
 	}
 
+	private long _getAdminUserId(long companyId) throws PortalException {
+		Role role = _roleLocalService.getRole(
+			companyId, RoleConstants.ADMINISTRATOR);
+
+		long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
+
+		if (userIds.length == 0) {
+			throw new NoSuchUserException(
+				StringBundler.concat(
+					"No user exists in company ", companyId, " with role ",
+					role.getName()));
+		}
+
+		return userIds[0];
+	}
+
 	private Bundle _getBundle(BatchEngineUnit batchEngineUnit) {
 		if (!(batchEngineUnit instanceof BundleBatchEngineUnit)) {
 			return null;
@@ -405,9 +425,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 			try {
 				batchEngineUnitConfiguration.setUserId(
-					_userLocalService.getUserIdByScreenName(
-						batchEngineUnitConfiguration.getCompanyId(),
-						PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME)));
+					_getAdminUserId(
+						batchEngineUnitConfiguration.getCompanyId()));
 			}
 			catch (PortalException portalException) {
 				_log.error("Unable to get default user ID", portalException);
@@ -442,6 +461,9 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 	@Reference
 	private File _file;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

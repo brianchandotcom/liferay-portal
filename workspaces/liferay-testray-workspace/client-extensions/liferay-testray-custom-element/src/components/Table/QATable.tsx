@@ -14,7 +14,7 @@ export enum Orientation {
 type QAItem = {
 	divider?: boolean;
 	flexHeading?: boolean;
-	title: string;
+	title: string | ReactNode;
 	value: string | ReactNode;
 	visible?: boolean;
 };

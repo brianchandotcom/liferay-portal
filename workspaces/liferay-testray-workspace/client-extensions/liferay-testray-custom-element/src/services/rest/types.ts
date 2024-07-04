@@ -169,6 +169,7 @@ export type TestrayCase = {
 	description: string;
 	descriptionType: string;
 	estimatedDuration: number;
+	flaky?: boolean;
 	id: number;
 	name: string;
 	number: number;

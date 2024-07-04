@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import {useOutletContext, useParams} from 'react-router-dom';
 
 import JiraLink from '../../../components/JiraLink';
@@ -31,6 +32,18 @@ const Case = () => {
 			<Container collapsable title={i18n.translate('details')}>
 				<QATable
 					items={[
+						{
+							title: (
+								<ClayIcon
+									className="tr-qa-table__flaky-icon"
+									symbol="flag-full"
+								/>
+							),
+							value: i18n.translate(
+								'this-test-was-classified-as-flaky'
+							),
+							visible: !!testrayCase.flaky,
+						},
 						{
 							title: i18n.translate('type'),
 							value: testrayCase.caseType?.name,

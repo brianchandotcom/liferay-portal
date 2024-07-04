@@ -75,8 +75,7 @@ public class ConfigurationTestUtil {
 		String databaseType, String path) {
 
 		return StringBundler.concat(
-			"databaseType=\"", databaseType, "\"", StringPool.NEW_LINE,
-			"path=\"", path, "\"", StringPool.NEW_LINE);
+			"databaseType=\"", databaseType, "\"\npath=\"", path, "\"\n");
 	}
 
 	private static AutoCloseable

@@ -5,8 +5,6 @@
 
 package com.liferay.adyen;
 
-import java.util.Objects;
-
 import org.apache.commons.logging.Log;
 
 import org.json.JSONObject;
@@ -16,8 +14,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import reactor.core.publisher.Mono;
 
 /**
  * @author Raymond Augé
@@ -43,22 +39,19 @@ public abstract class BaseRestController {
 	}
 
 	protected JSONObject get(String authorization, String path) {
-		Mono<String> response = _getWebClient(
-		).get(
-		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
-		).retrieve(
-		).bodyToMono(
-			String.class
-		);
-
-		response.subscribe();
-
-		return new JSONObject(Objects.requireNonNull(response.block()));
+		return new JSONObject(
+			_getWebClient(
+			).get(
+			).uri(
+				uriBuilder -> uriBuilder.path(
+					path
+				).build()
+			).header(
+				HttpHeaders.AUTHORIZATION, authorization
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
 	}
 
 	protected void log(Jwt jwt, Log log, String json) {

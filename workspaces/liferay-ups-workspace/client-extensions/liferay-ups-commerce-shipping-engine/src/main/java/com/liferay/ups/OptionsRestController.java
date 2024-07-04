@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.ups.constants.UPSServiceCodeConstants;
 
 import java.util.Base64;
-import java.util.Objects;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,8 +29,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import reactor.core.publisher.Mono;
 
 /**
  * @author Alessio Antonio Rendina
@@ -86,9 +83,6 @@ public class OptionsRestController extends BaseRestController {
 			width += skuJSONObject.getDouble("width");
 		}
 
-		JSONObject shippingAddressJSONObject = orderJSONObject.getJSONObject(
-			"shippingAddress");
-
 		JSONObject typeSettingsJSONObject = jsonObject.getJSONObject(
 			"typeSettings");
 
@@ -101,7 +95,8 @@ public class OptionsRestController extends BaseRestController {
 					_postRate(
 						typeSettingsJSONObject.getString("clientId"),
 						typeSettingsJSONObject.getString("clientSecret"), code,
-						depth, height, log, quantity, shippingAddressJSONObject,
+						depth, height, log, quantity,
+						orderJSONObject.getJSONObject("shippingAddress"),
 						typeSettingsJSONObject, weight, width));
 			}
 			catch (Exception exception) {
@@ -120,22 +115,19 @@ public class OptionsRestController extends BaseRestController {
 	}
 
 	private JSONObject _get(String authorization, String path) {
-		Mono<String> response = _getWebClient(
-		).get(
-		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
-		).retrieve(
-		).bodyToMono(
-			String.class
-		);
-
-		response.subscribe();
-
-		return new JSONObject(Objects.requireNonNull(response.block()));
+		return new JSONObject(
+			_getWebClient(
+			).get(
+			).uri(
+				uriBuilder -> uriBuilder.path(
+					path
+				).build()
+			).header(
+				HttpHeaders.AUTHORIZATION, authorization
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
 	}
 
 	private String _getAccessToken(

@@ -83,9 +83,7 @@ public class DispatchConfiguratorTest {
 			true
 		);
 
-		ReflectionTestUtil.invoke(
-			_dispatchConfigurator, "activate",
-			new Class<?>[] {BundleContext.class}, _bundleContext);
+		_dispatchConfigurator.activate(_bundleContext);
 
 		Mockito.verify(
 			_dispatchTriggerLocalService, Mockito.times(1)
@@ -137,9 +135,7 @@ public class DispatchConfiguratorTest {
 			false
 		);
 
-		ReflectionTestUtil.invoke(
-			_dispatchConfigurator, "activate",
-			new Class<?>[] {BundleContext.class}, _bundleContext);
+		_dispatchConfigurator.activate(_bundleContext);
 
 		Mockito.verify(
 			_dispatchTriggerLocalService, Mockito.times(1)
@@ -199,8 +195,7 @@ public class DispatchConfiguratorTest {
 		ReflectionTestUtil.setFieldValue(
 			_dispatchConfigurator, "_serviceRegistration", serviceRegistration);
 
-		ReflectionTestUtil.invoke(
-			_dispatchConfigurator, "deactivate", new Class<?>[0]);
+		_dispatchConfigurator.deactivate();
 
 		Mockito.verify(
 			_dispatchTriggerLocalService, Mockito.times(1)
@@ -260,8 +255,7 @@ public class DispatchConfiguratorTest {
 		ReflectionTestUtil.setFieldValue(
 			_dispatchConfigurator, "_serviceRegistration", serviceRegistration);
 
-		ReflectionTestUtil.invoke(
-			_dispatchConfigurator, "deactivate", new Class<?>[0]);
+		_dispatchConfigurator.deactivate();
 
 		Mockito.verify(
 			_dispatchTriggerLocalService, Mockito.times(1)

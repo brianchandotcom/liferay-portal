@@ -67,7 +67,7 @@ async function performLogin(
 export async function performLogout(page: Page) {
 	await page.goto('/');
 
-	await page.getByTestId('userPersonalMenu').click();
+	await page.getByTitle('User Profile Menu').click();
 
 	await page.getByRole('menuitem', {name: 'Sign Out'}).click();
 }

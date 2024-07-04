@@ -26,7 +26,7 @@ public class RememberMeTokenLocalServiceImpl
 	@Override
 	public RememberMeToken addRememberMeToken(
 			long companyId, long userId, Date expirationDate,
-			Consumer<String> tokenConsumer)
+			Consumer<String> valueConsumer)
 		throws PwdEncryptorException {
 
 		RememberMeToken rememberMeToken = rememberMeTokenPersistence.create(
@@ -42,7 +42,7 @@ public class RememberMeTokenLocalServiceImpl
 
 		rememberMeToken = rememberMeTokenPersistence.update(rememberMeToken);
 
-		tokenConsumer.accept(value);
+		valueConsumer.accept(value);
 
 		return rememberMeToken;
 	}

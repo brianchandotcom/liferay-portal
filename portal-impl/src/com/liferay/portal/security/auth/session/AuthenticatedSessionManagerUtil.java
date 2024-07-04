@@ -257,9 +257,15 @@ public class AuthenticatedSessionManagerUtil {
 			domain = null;
 		}
 
-		boolean rememberMe = GetterUtil.getBoolean(
-			CookiesManagerUtil.getCookieValue(
-				CookiesConstants.NAME_REMEMBER_ME, httpServletRequest, false));
+		if (!GetterUtil.getBoolean(
+				CookiesManagerUtil.getCookieValue(
+					CookiesConstants.NAME_REMEMBER_ME, httpServletRequest,
+					false))) {
+
+			CookiesManagerUtil.deleteCookies(
+				domain, httpServletRequest, httpServletResponse,
+				CookiesConstants.NAME_LOGIN);
+		}
 
 		String rememberMeTokenId = CookiesManagerUtil.getCookieValue(
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID, httpServletRequest);
@@ -282,12 +288,6 @@ public class AuthenticatedSessionManagerUtil {
 			CookiesConstants.NAME_PASSWORD, CookiesConstants.NAME_REMEMBER_ME,
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE);
-
-		if (!rememberMe) {
-			CookiesManagerUtil.deleteCookies(
-				domain, httpServletRequest, httpServletResponse,
-				CookiesConstants.NAME_LOGIN);
-		}
 
 		RememberMeTokenLocalServiceUtil.deleteExpiredRememberMeTokens(
 			PortalUtil.getUserId(httpServletRequest));

@@ -17,6 +17,8 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -24,6 +26,8 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
@@ -118,6 +122,15 @@ public class BatchEngineBundleTrackerTest {
 			"batch9", "/batch9/data.batch-engine-data.json");
 
 		_company = CompanyTestUtil.addCompany(true);
+
+		User user = _userLocalService.getUser(
+			_userLocalService.getUserIdByScreenName(
+				_company.getCompanyId(),
+				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME)));
+
+		user.setScreenName(RandomTestUtil.randomString());
+
+		_userLocalService.updateUser(user);
 
 		_testProcessBatchEngineBundle(
 			"batch9", "/batch9/data.batch-engine-data.json",
@@ -315,6 +328,9 @@ public class BatchEngineBundleTrackerTest {
 
 	@Inject
 	private ServiceComponentRuntime _serviceComponentRuntime;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@Inject
 	private ZipWriterFactory _zipWriterFactory;

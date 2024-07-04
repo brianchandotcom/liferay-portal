@@ -151,7 +151,6 @@ public class RememberMeAutoLoginTest {
 			_cookiesManager.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE,
 				mockHttpServletRequest, false));
-
 		Assert.assertNull(
 			_rememberMeTokenLocalService.fetchRememberMeToken(
 				rememberMeToken.getRememberMeTokenId()));

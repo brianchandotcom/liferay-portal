@@ -310,6 +310,23 @@ const filterSchema = {
 				name: 'testrayCaseTypeIds',
 				type: 'multiselect',
 			}),
+			{
+				isCustomFilter: true,
+				label: i18n.translate('flaky'),
+				name: 'flaky',
+				options: [
+					{
+						label: i18n.translate('true'),
+						value: true,
+					},
+					{
+						label: i18n.translate('false'),
+						value: false,
+					},
+				],
+				removeQuoteMark: true,
+				type: 'select',
+			},
 			overrides(baseFilters.priority, {
 				isCustomFilter: true,
 				name: 'priority',
@@ -661,6 +678,22 @@ const filterSchema = {
 				name: 'name',
 				operator: 'contains',
 				type: 'text',
+			},
+			{
+				label: i18n.translate('Flaky'),
+				name: 'flaky',
+				options: [
+					{
+						label: i18n.translate('true'),
+						value: true,
+					},
+					{
+						label: i18n.translate('false'),
+						value: false,
+					},
+				],
+				removeQuoteMark: true,
+				type: 'select',
 			},
 			overrides(baseFilters.team, {
 				name: 'componentToCases/r_teamToComponents_c_teamId',

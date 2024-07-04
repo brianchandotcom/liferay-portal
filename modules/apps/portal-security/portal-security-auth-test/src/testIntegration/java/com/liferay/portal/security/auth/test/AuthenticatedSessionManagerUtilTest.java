@@ -48,8 +48,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 @RunWith(Arquillian.class)
 public class AuthenticatedSessionManagerUtilTest {
 
-	private final static String _PASSWORD = RandomTestUtil.randomString();
-
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
@@ -58,7 +56,8 @@ public class AuthenticatedSessionManagerUtilTest {
 	@Before
 	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), _PASSWORD,
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			_PASSWORD,
 			RandomTestUtil.randomString() + RandomTestUtil.nextLong() +
 				"@liferay.com",
 			RandomTestUtil.randomString(
@@ -154,6 +153,8 @@ public class AuthenticatedSessionManagerUtilTest {
 
 		return cookie;
 	}
+
+	private static final String _PASSWORD = RandomTestUtil.randomString();
 
 	@Inject
 	private CookiesManager _cookiesManager;

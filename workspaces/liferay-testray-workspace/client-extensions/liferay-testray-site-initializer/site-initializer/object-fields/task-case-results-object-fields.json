@@ -73,6 +73,54 @@
 		{
 			"DBType": "String",
 			"businessType": "Aggregation",
+			"externalReferenceCode": "SUBTASK-SCORE-SELF-COMPLETED",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Subtask Score Self Completed"
+			},
+			"name": "subtaskScoreSelfCompleted",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "taskToSubtasks"
+				},
+				{
+					"name": "function",
+					"value": "SUM"
+				},
+				{
+					"name": "objectFieldName",
+					"value": "score"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "r_userToSubtasks_userId",
+							"filterType": "currentUser",
+							"json": {
+							}
+						},
+						{
+							"filterBy": "dueStatus",
+							"filterType": "includes",
+							"json": {
+								"in": [
+									"COMPLETE"
+								]
+							}
+						}
+					]
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
 			"externalReferenceCode": "SUBTASK-SCORE-SELF-INCOMPLETE",
 			"indexed": false,
 			"indexedAsKeyword": false,

@@ -36,9 +36,9 @@ public class RememberMeTokenLocalServiceImpl
 		rememberMeToken.setUserId(userId);
 		rememberMeToken.setExpirationDate(expirationDate);
 
-		String generate = PortalUUIDUtil.generate();
+		String value = PortalUUIDUtil.generate();
 
-		rememberMeToken.setValue(PasswordEncryptorUtil.encrypt(generate));
+		rememberMeToken.setValue(PasswordEncryptorUtil.encrypt(value));
 
 		rememberMeToken = rememberMeTokenPersistence.update(rememberMeToken);
 

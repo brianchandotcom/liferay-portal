@@ -233,7 +233,7 @@ public class TestrayCaseResultResourceImpl
 		sb.append("O_[%COMPANY_ID%]_Team t where b.c_buildId_ = ? and ");
 		sb.append("cr.r_buildToCaseResult_c_buildId = b.c_buildId_ and ");
 		sb.append("c.c_caseId_ = cr.r_caseToCaseResult_c_caseId and ");
-		sb.append("cx.c_caseId_ = c.c_caseId_ and ct.c_caseTypeId_ = ");
+		sb.append("c.c_caseId_ = cx.c_caseId_ and ct.c_caseTypeId_ = ");
 		sb.append("c.r_caseTypeToCases_c_caseTypeId and co.c_componentId_ = ");
 		sb.append("cr.r_componentToCaseResult_c_componentId and r.c_runId_ = ");
 		sb.append("cr.r_runToCaseResult_c_runId and t.c_teamId_ = ");

@@ -71,10 +71,12 @@ definition {
 		}
 
 		task ("Assert permission available") {
+			var userPassword = PropsUtil.get("default.admin.password");
+
 			var curl = '''
 				${portalURL}/api/jsonws/user/get-current-user \
 					-basic \
-					-u test@liferay.com:${PropsUtil.get("default.admin.password")}
+					-u test@liferay.com:${userPassword}
 			''';
 
 			SystemSettings.getUserEmailSuccessfully(
@@ -94,10 +96,12 @@ definition {
 		}
 
 		task ("Assert permission denied") {
+			var userPassword = PropsUtil.get("default.admin.password");
+
 			var curl = '''
 				${portalURL}/api/jsonws/user/get-current-user \
 					-basic \
-					-u test@liferay.com:${PropsUtil.get("default.admin.password")}
+					-u test@liferay.com:${userPassword}
 			''';
 
 			SystemSettings.getCurrentUserEmailResquestDenied(curl = ${curl});

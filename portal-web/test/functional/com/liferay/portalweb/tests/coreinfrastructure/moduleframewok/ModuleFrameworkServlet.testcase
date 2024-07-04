@@ -29,10 +29,11 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		var curl = '''
 			${portalURL}/o/graphql \
-				-u test@liferay.com:${PropsUtil.get("default.admin.password")} \
+				-u test@liferay.com:${userPassword} \
 				-F operations={"query":"mutation($file: [Upload]) {createSiteDocument(siteKey: \"guest\", multipartBody: $file) {id}}","variables":{"file":null}} \
 				-F map={"0": ["variables.file"]} \
 				-F 0=@${dependencyFilePath}

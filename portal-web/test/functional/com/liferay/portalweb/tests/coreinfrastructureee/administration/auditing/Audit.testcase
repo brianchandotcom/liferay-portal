@@ -883,10 +883,11 @@ definition {
 
 		task ("Then: Verify that the email address of impersonated user is not present in the server log") {
 			var companyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+			var userPassword = PropsUtil.get("default.admin.password");
 
 			var curl = '''
 				http://www.able.com:8080/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/userea@liferay.com \
-					-u test@www.able.com:${PropsUtil.get("default.admin.password")}
+					-u test@www.able.com:${userPassword}
 			''';
 
 			var userId = JSONCurlUtil.get(${curl}, "$['userId']");
@@ -952,10 +953,11 @@ definition {
 
 		task ("Then: Verify that the email address of impersonated user is present in the server log") {
 			var companyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+			var userPassword = PropsUtil.get("default.admin.password");
 
 			var curl = '''
 				http://www.able.com:8080/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/userea@liferay.com \
-					-u test@www.able.com:${PropsUtil.get("default.admin.password")}
+					-u test@www.able.com:${userPassword}
 			''';
 
 			var userId = JSONCurlUtil.get(${curl}, "$['userId']");
@@ -1183,10 +1185,11 @@ definition {
 
 		task ("Then: Verify that the email address of impersonated user is present in the server log") {
 			var companyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+			var userPassword = PropsUtil.get("default.admin.password");
 
 			var curl = '''
 				http://www.able.com:8080/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/userea@liferay.com \
-					-u test@www.able.com:${PropsUtil.get("default.admin.password")}
+					-u test@www.able.com:${userPassword}
 			''';
 
 			var userId = JSONCurlUtil.get(${curl}, "$['userId']");

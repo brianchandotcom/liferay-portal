@@ -3,9 +3,10 @@ definition {
 	@summary = "Default summary"
 	macro _getPortalInstances(authenticationMethod = null) {
 		var portalURL = JSONCompany.getDefaultPortalURL();
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLoginInfo = "test:${PropsUtil.get(\"default.admin.password\")}";
+			var userLoginInfo = "test:${userPassword}";
 		}
 		else {
 			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
@@ -41,9 +42,10 @@ definition {
 			json = ${parameters},
 			key = "portalInstanceId",
 			value = "\"${portalInstanceId}\"");
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLoginInfo = "test:${PropsUtil.get(\"default.admin.password\")}";
+			var userLoginInfo = "test:${userPassword}";
 		}
 		else {
 			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
@@ -93,9 +95,10 @@ definition {
 			json = ${parameters},
 			key = "siteInitializerKey",
 			value = "\"${siteInitializerKey}\"");
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLoginInfo = "test:${PropsUtil.get(\"default.admin.password\")}";
+			var userLoginInfo = "test:${userPassword}";
 		}
 		else {
 			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
@@ -153,9 +156,10 @@ definition {
 
 		var portalURL = JSONCompany.getDefaultPortalURL();
 		var portalInstanceId = StringUtil.replace(${portalInstanceId}, " ", "%20");
+		var userPassword = PropsUtil.get("default.admin.password");
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLoginInfo = "test:${PropsUtil.get(\"default.admin.password\")}";
+			var userLoginInfo = "test:${userPassword}";
 		}
 		else {
 			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();

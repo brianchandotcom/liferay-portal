@@ -12,6 +12,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.exception.DuplicateFragmentEntryLinkExternalReferenceCodeException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -155,6 +157,9 @@ public class FragmentEntryLinkLocalServiceTest {
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId()));
 
+		Assert.assertTrue(
+			Validator.isNotNull(fragmentEntryLink.getExternalReferenceCode()));
+
 		Assert.assertEquals(_layout.getPlid(), fragmentEntryLink.getPlid());
 
 		Assert.assertEquals(
@@ -172,6 +177,32 @@ public class FragmentEntryLinkLocalServiceTest {
 		Assert.assertEquals(
 			_read("expected-editable-values-light-modified.json"),
 			fragmentEntryLink.getEditableValues());
+	}
+
+	@Test(
+		expected = DuplicateFragmentEntryLinkExternalReferenceCodeException.class
+	)
+	public void testAddFragmentEntryLinkWithExistingExternalReferenceCode()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_fragmentEntryLinkLocalService.addFragmentEntryLink(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(),
+			_defaultSegmentsExperienceId, _layout.getPlid(),
+			_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
+			_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
+			_read("editable-values-light-modified.json"), StringPool.BLANK, 0,
+			null, _fragmentEntry.getType(), _serviceContext);
+		_fragmentEntryLinkLocalService.addFragmentEntryLink(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(),
+			_defaultSegmentsExperienceId, _layout.getPlid(),
+			_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
+			_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
+			_read("editable-values-light-modified.json"), StringPool.BLANK, 0,
+			null, _fragmentEntry.getType(), _serviceContext);
 	}
 
 	@Test
@@ -350,6 +381,29 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId());
+
+		Assert.assertNull(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId()));
+	}
+
+	@Test
+	public void testDeleteFragmentEntryLinkByExternalReferenceCode()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				_fragmentEntry.getFragmentEntryId(),
+				_defaultSegmentsExperienceId, _layout.getPlid(),
+				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
+				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
+				_read("editable-values-light-modified.json"), StringPool.BLANK,
+				0, null, _fragmentEntry.getType(), _serviceContext);
+
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+			fragmentEntryLink.getExternalReferenceCode(),
+			fragmentEntryLink.getGroupId());
 
 		Assert.assertNull(
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(

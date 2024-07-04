@@ -21,13 +21,19 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -105,6 +111,32 @@ public class FragmentEntryLinkServiceTest {
 	}
 
 	@Test
+	public void testAddTemplateWithoutAddPermission() throws Exception {
+		try {
+			UserTestUtil.setUser(
+				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				null, _group.getGroupId(), 0,
+				_fragmentEntry.getFragmentEntryId(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				_layout.getPlid(), null, "<div>test</div>", null, null,
+				StringPool.BLANK, StringPool.BLANK, 0, null,
+				_fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
+
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+		}
+		finally {
+			UserTestUtil.setUser(TestPropsValues.getUser());
+		}
+	}
+
+	@Test
 	public void testDeleteFragmentEntryLink() throws Exception {
 		FragmentEntryLink fragmentEntryLink =
 			FragmentTestUtil.addFragmentEntryLink(
@@ -116,6 +148,135 @@ public class FragmentEntryLinkServiceTest {
 		Assert.assertNull(
 			_fragmentEntryLinkPersistence.fetchByPrimaryKey(
 				fragmentEntryLink.getFragmentEntryLinkId()));
+	}
+
+	@Test
+	public void testDeleteFragmentEntryLinkByExternalReferenceCode()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				null, _group.getGroupId(), 0,
+				_fragmentEntry.getFragmentEntryId(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				_layout.getPlid(), null, "<div>test</div>", null, null,
+				StringPool.BLANK, StringPool.BLANK, 0, null,
+				_fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
+
+		_fragmentEntryLinkService.deleteFragmentEntryLink(
+			fragmentEntryLink.getExternalReferenceCode(),
+			fragmentEntryLink.getGroupId());
+
+		Assert.assertNull(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId()));
+	}
+
+	@Test
+	public void testDeleteFragmentEntryLinkByExternalReferenceCodeWithoutDeletePermission()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				null, _group.getGroupId(), 0,
+				_fragmentEntry.getFragmentEntryId(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				_layout.getPlid(), null, "<div>test</div>", null, null,
+				StringPool.BLANK, StringPool.BLANK, 0, null,
+				_fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
+
+		try {
+			UserTestUtil.setUser(
+				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+
+			_fragmentEntryLinkService.deleteFragmentEntryLink(
+				fragmentEntryLink.getExternalReferenceCode(),
+				fragmentEntryLink.getGroupId());
+
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+		}
+		finally {
+			UserTestUtil.setUser(TestPropsValues.getUser());
+		}
+	}
+
+	@Test
+	public void testGetFragmentEntryLinkByExternalReferenceCode()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				null, _group.getGroupId(), 0,
+				_fragmentEntry.getFragmentEntryId(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				_layout.getPlid(), null, "<div>test</div>", null, null,
+				StringPool.BLANK, StringPool.BLANK, 0, null,
+				_fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
+
+		FragmentEntryLink curFragmentEntryLink =
+			_fragmentEntryLinkService.
+				getFragmentEntryLinkByExternalReferenceCode(
+					fragmentEntryLink.getExternalReferenceCode(),
+					fragmentEntryLink.getGroupId());
+
+		Assert.assertEquals(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			curFragmentEntryLink.getFragmentEntryLinkId());
+	}
+
+	@Test
+	public void testGetFragmentEntryLinkByExternalReferenceCodeWithoutViewPermission()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				null, _group.getGroupId(), 0,
+				_fragmentEntry.getFragmentEntryId(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				_layout.getPlid(), null, "<div>test</div>", null, null,
+				StringPool.BLANK, StringPool.BLANK, 0, null,
+				_fragmentEntry.getType(), serviceContext);
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, FragmentEntryLink.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+			ActionKeys.VIEW);
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.SITE_MEMBER, FragmentEntryLink.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+			ActionKeys.VIEW);
+
+		try {
+			UserTestUtil.setUser(
+				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+
+			Assert.assertNotNull(
+				_fragmentEntryLinkService.
+					getFragmentEntryLinkByExternalReferenceCode(
+						fragmentEntryLink.getExternalReferenceCode(),
+						fragmentEntryLink.getGroupId()));
+		}
+		finally {
+			UserTestUtil.setUser(TestPropsValues.getUser());
+		}
 	}
 
 	@Test
@@ -148,13 +309,13 @@ public class FragmentEntryLinkServiceTest {
 	private FragmentEntry _fragmentEntry;
 
 	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
 	private FragmentEntryLinkPersistence _fragmentEntryLinkPersistence;
 
 	@Inject
 	private FragmentEntryLinkService _fragmentEntryLinkService;
-
-	@Inject
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

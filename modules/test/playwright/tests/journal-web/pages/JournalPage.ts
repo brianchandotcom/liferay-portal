@@ -17,9 +17,8 @@ export class JournalPage {
 	readonly permissionsFrameLocator: FrameLocator;
 	readonly publishButton: Locator;
 	readonly templatesLink: Locator;
-	readonly webContentTitleBox: Locator;
-	readonly webContentBodyIFrame: FrameLocator;
-	readonly webContentBodyTextBox: Locator;
+	readonly articleTitleInput: Locator;
+	readonly articleContentTextBox: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -33,16 +32,14 @@ export class JournalPage {
 		);
 		this.templatesLink = page.getByRole('link', {name: 'Templates'});
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
-		this.webContentTitleBox = page
-			.locator('xpath=//input[contains(@id,"title")]')
-			.first();
-		this.webContentBodyIFrame = page
-			.getByRole('application', {
-				name: /Rich Text Editor, _com_liferay_journal_web_portlet_JournalPortlet_ddm\$\$content\$.*\$en_US/,
-			})
-			.frameLocator('iframe');
-		this.webContentBodyTextBox =
-			this.webContentBodyIFrame.getByRole('textbox');
+		this.articleTitleInput = page.locator(
+			'.article-content-title .input-group-item input'
+		);
+		this.articleContentTextBox = this.page
+			.getByLabel('Content')
+			.getByRole('textbox')
+			.frameLocator('iframe')
+			.locator('.html-editor');
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -52,9 +49,9 @@ export class JournalPage {
 	}
 
 	async fillArticleData(title: string, content: string) {
-		await this.webContentTitleBox.fill(title);
+		await this.articleTitleInput.fill(title);
 
-		await this.webContentBodyTextBox.click();
+		await this.articleContentTextBox.click();
 
 		await this.page.keyboard.press('Control+KeyA');
 		await this.page.keyboard.press('Backspace');

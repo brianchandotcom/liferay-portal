@@ -52,7 +52,7 @@ public class ConsoleRestController extends BaseRestController {
 			).build()
 		).header(
 			HttpHeaders.AUTHORIZATION,
-			"Bearer " + _consoleService.getAuthorization()
+			"Bearer " + _consoleService.getAccessToken()
 		).retrieve(
 		).bodyToMono(
 			String.class

@@ -52,7 +52,7 @@ public class ConsoleService {
 		}
 	}
 
-	public String getAuthorization() throws Exception {
+	public String getAccessToken() throws Exception {
 		if ((_accessToken != null) &&
 			(System.currentTimeMillis() < (_tokenExpirationMillis - 30000))) {
 
@@ -154,7 +154,7 @@ public class ConsoleService {
 		).baseUrl(
 			_consoleAuthURL
 		).defaultHeader(
-			HttpHeaders.AUTHORIZATION, "Bearer " + getAuthorization()
+			HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken()
 		).filter(
 			_getRetryExchangeFilterFunction()
 		).build();

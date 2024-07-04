@@ -148,34 +148,32 @@ public class OptionsRestController extends BaseRestController {
 		String clientId, String clientSecret, Log log) {
 
 		try {
+			Base64.Encoder encoder = Base64.getEncoder();
+
 			String credentials = clientId + ":" + clientSecret;
 
-			String encodedCredentials = Base64.getEncoder(
-			).encodeToString(
-				credentials.getBytes()
-			);
-
-			WebClient client = WebClient.builder(
+			WebClient webClient = WebClient.builder(
 			).baseUrl(
 				"https://wwwcie.ups.com"
 			).defaultHeader(
+				HttpHeaders.AUTHORIZATION,
+				"Basic " + encoder.encodeToString(credentials.getBytes())
+			).defaultHeader(
 				HttpHeaders.CONTENT_TYPE,
 				MediaType.APPLICATION_FORM_URLENCODED_VALUE
-			).defaultHeader(
-				HttpHeaders.AUTHORIZATION, "Basic " + encodedCredentials
 			).build();
 
-			String response = client.post(
-			).uri(
-				"/security/v1/oauth/token"
-			).body(
-				BodyInserters.fromFormData("grant_type", "client_credentials")
-			).retrieve(
-			).bodyToFlux(
-				String.class
-			).blockLast();
-
-			JSONObject jsonObject = new JSONObject(response);
+			JSONObject jsonObject = new JSONObject(
+				webClient.post(
+				).uri(
+					"/security/v1/oauth/token"
+				).body(
+					BodyInserters.fromFormData(
+						"grant_type", "client_credentials")
+				).retrieve(
+				).bodyToFlux(
+					String.class
+				).blockLast());
 
 			return jsonObject.getString("access_token");
 		}

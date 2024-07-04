@@ -185,10 +185,12 @@ export default {
 	'export-cases': 'Export Cases',
 	'export-csv': 'Export CSV',
 	'failed': 'Failed',
+	'false': 'False',
 	'filter-results': 'Filter Results',
 	'filters-pinned-successfully': 'Filters pinned successfully.',
 	'filters-unpinned-successfully': 'Filters unpinned successfully.',
 	'first-name': 'First Name',
+	'flaky': 'Flaky',
 	'git-hash': 'Git Hash',
 	'github-compare-urls': 'GitHub Compare URLs',
 	'go-to-homepage': 'Go to homepage',
@@ -431,6 +433,7 @@ export default {
 		'This role is for general Liferay employees and enables authenticated users to view test results.',
 	'this-subtask-has-been-merged-wihth-x':
 		'This subtask has been merged wihth {0}.',
+	'this-test-was-classified-as-flaky': 'This test was classified as flaky.',
 	'this-user-does-not-have-authentication-with-jira':
 		'This user does not have authentication with jira',
 	'time-x-total-issues': 'Time {0} Total Issues',
@@ -438,6 +441,7 @@ export default {
 	'total-completed': 'Total Completed',
 	'total-estimated-time': 'Total Estimated Time',
 	'total-test-cases': 'Total test cases',
+	'true': 'True',
 	'type': 'Type',
 	'type-is-a-required-field': 'Type is a required field',
 	'unable-to-find-more-than-one-run': 'Unable to find more than one run.',

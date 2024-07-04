@@ -94,6 +94,23 @@ public class LayoutUtilityPageEntryServiceImpl
 	}
 
 	@Override
+	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			layoutUtilityPageEntryLocalService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					externalReferenceCode, groupId);
+
+		_layoutUtilityPageEntryModelResourcePermission.check(
+			getPermissionChecker(), layoutUtilityPageEntry, ActionKeys.DELETE);
+
+		return layoutUtilityPageEntryLocalService.deleteLayoutUtilityPageEntry(
+			layoutUtilityPageEntry);
+	}
+
+	@Override
 	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
 		long layoutUtilityPageEntryId) {
 
@@ -174,6 +191,17 @@ public class LayoutUtilityPageEntryServiceImpl
 	public int getLayoutUtilityPageEntriesCount(long groupId, String[] types) {
 		return layoutUtilityPageEntryPersistence.filterCountByG_T(
 			groupId, types);
+	}
+
+	@Override
+	public LayoutUtilityPageEntry
+			getLayoutUtilityPageEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return layoutUtilityPageEntryLocalService.
+			getLayoutUtilityPageEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	@Override

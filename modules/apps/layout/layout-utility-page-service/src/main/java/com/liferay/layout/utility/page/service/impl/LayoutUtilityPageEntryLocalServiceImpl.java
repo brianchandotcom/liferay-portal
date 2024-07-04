@@ -228,6 +228,16 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 	}
 
 	@Override
+	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return layoutUtilityPageEntryLocalService.deleteLayoutUtilityPageEntry(
+			getLayoutUtilityPageEntryByExternalReferenceCode(
+				externalReferenceCode, groupId));
+	}
+
+	@Override
 	public LayoutUtilityPageEntry fetchDefaultLayoutUtilityPageEntry(
 		long groupId, String type) {
 

@@ -61,7 +61,7 @@ public interface RememberMeTokenLocalService
 	 */
 	public RememberMeToken addRememberMeToken(
 			long companyId, long userId, Date expirationDate,
-			Consumer<String> tokenConsumer)
+			Consumer<String> valueConsumer)
 		throws PwdEncryptorException;
 
 	/**

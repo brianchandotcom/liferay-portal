@@ -37,11 +37,11 @@ public class RememberMeTokenLocalServiceUtil {
 	 */
 	public static RememberMeToken addRememberMeToken(
 			long companyId, long userId, java.util.Date expirationDate,
-			java.util.function.Consumer<String> tokenConsumer)
+			java.util.function.Consumer<String> valueConsumer)
 		throws com.liferay.portal.kernel.exception.PwdEncryptorException {
 
 		return getService().addRememberMeToken(
-			companyId, userId, expirationDate, tokenConsumer);
+			companyId, userId, expirationDate, valueConsumer);
 	}
 
 	/**

@@ -7,6 +7,7 @@ import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 
 export class JournalPage {
 	readonly page: Page;
@@ -50,20 +51,14 @@ export class JournalPage {
 		);
 	}
 
-	async createBasicArticle(webContentName: string, text: string) {
-		await this.webContentTitleBox.fill(webContentName);
-		await this.page.waitForSelector('iframe');
-		await this.webContentBodyTextBox.fill(text);
-		await this.webContentBodyTextBox.click({button: 'left'});
-		await this.webContentBodyTextBox.press('Backspace');
-		await this.webContentTitleBox.click({button: 'left'});
-		await this.webContentTitleBox.press('Backspace');
-		await this.publishButton.click();
-		await this.page
-			.locator(
-				'[id="_com_liferay_journal_web_portlet_JournalPortlet_successMessageWithLink"]'
-			)
-			.waitFor({state: 'visible'});
+	async fillArticleData(title: string, content: string) {
+		await this.webContentTitleBox.fill(title);
+
+		await this.webContentBodyTextBox.click();
+
+		await this.page.keyboard.press('Control+KeyA');
+		await this.page.keyboard.press('Backspace');
+		await this.page.keyboard.type(content);
 	}
 
 	async goToCreateArticle(structureName?: string) {
@@ -78,6 +73,8 @@ export class JournalPage {
 			target,
 			trigger: this.newButton,
 		});
+
+		await this.page.locator('.article-content-content').waitFor();
 	}
 
 	async goToJournalArticleAction(action: string, title: string) {
@@ -141,6 +138,12 @@ export class JournalPage {
 			.waitFor();
 		await this.page.getByLabel('Select View, Currently Selected: ').click();
 		await this.page.getByRole('menuitem', {name: viewName}).click();
+	}
+
+	async publishArticle() {
+		await this.publishButton.click();
+
+		await waitForSuccessAlert(this.page, `was created successfully.`);
 	}
 
 	async setJournalArticlePermissions(

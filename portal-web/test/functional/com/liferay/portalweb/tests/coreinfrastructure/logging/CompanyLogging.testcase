@@ -100,7 +100,7 @@ definition {
 				key_virtualHost = "liferay.com",
 				locator1 = "CompanyLogging#COMPANY_LOG_TITLE");
 
-			AssertLocation.assertPartialLocation(value1 = "web/guest");
+			AssertTextPresent(value1 = "The requested resource could not be found");
 		}
 
 		task ("When the user adds a virtual instance") {

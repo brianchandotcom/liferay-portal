@@ -118,14 +118,14 @@ public class AuthenticatedSessionManagerUtilTest {
 				new Date(System.currentTimeMillis()), cookie::setValue);
 
 		_cookiesManager.addCookie(
-			CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
-			mockHttpServletRequest, mockHttpServletResponse);
-
-		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
 			_createCookie(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 				String.valueOf(rememberMeToken.getRememberMeTokenId()), 1),
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		_cookiesManager.addCookie(
+			CookiesConstants.CONSENT_TYPE_FUNCTIONAL, cookie,
 			mockHttpServletRequest, mockHttpServletResponse);
 
 		AuthenticatedSessionManagerUtil.logout(

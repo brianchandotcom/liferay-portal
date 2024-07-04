@@ -354,6 +354,7 @@ public class SegmentsExperienceUtil {
 				(FragmentEntryLink)fragmentEntryLink.clone();
 
 			newFragmentEntryLink.setUuid(PortalUUIDUtil.generate());
+			newFragmentEntryLink.setExternalReferenceCode(null);
 			newFragmentEntryLink.setFragmentEntryLinkId(
 				CounterLocalServiceUtil.increment());
 			newFragmentEntryLink.setCreateDate(new Date());

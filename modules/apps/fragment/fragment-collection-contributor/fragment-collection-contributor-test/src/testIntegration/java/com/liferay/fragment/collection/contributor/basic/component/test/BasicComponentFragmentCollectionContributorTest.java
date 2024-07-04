@@ -81,11 +81,12 @@ public class BasicComponentFragmentCollectionContributorTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(), 0,
-				layout.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				fragmentEntry.getConfiguration(), StringPool.BLANK,
-				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				null, _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), 0, layout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+				StringPool.BLANK, StringPool.BLANK, 0, null,
+				fragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Document document = Jsoup.parseBodyFragment(

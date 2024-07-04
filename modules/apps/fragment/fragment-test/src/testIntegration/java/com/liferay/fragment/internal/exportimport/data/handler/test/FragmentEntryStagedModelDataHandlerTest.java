@@ -179,7 +179,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),

@@ -193,7 +193,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 
 			FragmentEntryLink newFragmentEntryLink =
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					fragmentEntryLink.getUserId(),
+					null, fragmentEntryLink.getUserId(),
 					fragmentEntryLink.getGroupId(),
 					fragmentEntryLink.getOriginalFragmentEntryLinkId(),
 					fragmentEntryLink.getFragmentEntryId(),

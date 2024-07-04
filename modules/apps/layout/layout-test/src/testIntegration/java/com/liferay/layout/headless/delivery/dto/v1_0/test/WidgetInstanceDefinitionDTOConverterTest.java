@@ -145,8 +145,8 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-				0, 0,
+				null, _serviceContext.getUserId(),
+				_serviceContext.getScopeGroupId(), 0, 0,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
 				layout.getPlid(), StringPool.BLANK, StringPool.BLANK,

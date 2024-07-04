@@ -158,7 +158,8 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 		StagedModel stagedModel =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0, 0,
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
+				0,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
@@ -239,7 +240,8 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 		StagedModel stagedModel =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0, 0,
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
+				0,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
@@ -292,7 +294,8 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 		StagedModel stagedModel =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0, 0,
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
+				0,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
@@ -375,8 +378,8 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(), 0,
-			fragmentEntry.getFragmentEntryId(),
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			0, fragmentEntry.getFragmentEntryId(),
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid()),
 			group.getDefaultPublicPlid(), fragmentEntry.getCss(),

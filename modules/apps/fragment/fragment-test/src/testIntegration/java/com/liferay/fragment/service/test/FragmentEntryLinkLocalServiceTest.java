@@ -143,7 +143,7 @@ public class FragmentEntryLinkLocalServiceTest {
 	public void testAddFragmentEntryLink() throws Exception {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
@@ -183,7 +183,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 			FragmentEntryLink fragmentEntryLink =
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					TestPropsValues.getUserId(), _group.getGroupId(), 0,
+					null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 					_fragmentEntryWithFreeMarker.getFragmentEntryId(),
 					_defaultSegmentsExperienceId, _layout.getPlid(),
 					_fragmentEntryWithFreeMarker.getCss(),
@@ -217,7 +217,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 			FragmentEntryLink fragmentEntryLink =
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					TestPropsValues.getUserId(), _group.getGroupId(), 0,
+					null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 					_fragmentEntryWithFreeMarker.getFragmentEntryId(),
 					_defaultSegmentsExperienceId, _layout.getPlid(),
 					_fragmentEntryWithFreeMarker.getCss(),
@@ -248,7 +248,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntryWithFreeMarker.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				_fragmentEntryWithFreeMarker.getCss(),
@@ -278,7 +278,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntryWithFreeMarker.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				_fragmentEntryWithFreeMarker.getCss(),
@@ -309,7 +309,7 @@ public class FragmentEntryLinkLocalServiceTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		_fragmentEntryLinkLocalService.addFragmentEntryLink(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			_fragmentEntry.getFragmentEntryId(), _defaultSegmentsExperienceId,
 			_layout.getPlid(), _fragmentEntry.getCss(),
 			_fragmentEntry.getHtml(), _fragmentEntry.getJs(),
@@ -318,7 +318,7 @@ public class FragmentEntryLinkLocalServiceTest {
 			_serviceContext);
 
 		_fragmentEntryLinkLocalService.addFragmentEntryLink(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			_fragmentEntry.getFragmentEntryId(), _defaultSegmentsExperienceId,
 			_layout.getPlid(), _fragmentEntry.getCss(),
 			_fragmentEntry.getHtml(), _fragmentEntry.getJs(),
@@ -340,7 +340,7 @@ public class FragmentEntryLinkLocalServiceTest {
 	public void testDeleteFragmentEntryLink() throws PortalException {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
@@ -360,7 +360,7 @@ public class FragmentEntryLinkLocalServiceTest {
 	public void testDeleteFragmentEntryLinks() throws PortalException {
 		FragmentEntryLink fragmentEntryLink1 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
@@ -369,7 +369,7 @@ public class FragmentEntryLinkLocalServiceTest {
 				_fragmentEntry.getType(), _serviceContext);
 		FragmentEntryLink fragmentEntryLink2 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
@@ -392,7 +392,7 @@ public class FragmentEntryLinkLocalServiceTest {
 	public void testFragmentEntryLinksDeleted() throws PortalException {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
@@ -535,7 +535,7 @@ public class FragmentEntryLinkLocalServiceTest {
 	public void testUpdateFragmentEntryLinkPosition() throws PortalException {
 		FragmentEntryLink fragmentEntryLink1 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
@@ -544,7 +544,7 @@ public class FragmentEntryLinkLocalServiceTest {
 				_fragmentEntry.getType(), _serviceContext);
 		FragmentEntryLink fragmentEntryLink2 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
@@ -601,7 +601,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
@@ -655,7 +655,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
@@ -710,7 +710,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
@@ -756,7 +756,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
@@ -801,7 +801,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(),
 				_defaultSegmentsExperienceId, _layout.getPlid(),
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
@@ -841,7 +841,7 @@ public class FragmentEntryLinkLocalServiceTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			_fragmentEntry.getFragmentEntryId(), _defaultSegmentsExperienceId,
 			layout.getPlid(), _fragmentEntry.getCss(), _fragmentEntry.getHtml(),
 			_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
@@ -872,7 +872,7 @@ public class FragmentEntryLinkLocalServiceTest {
 				0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			_fragmentEntry.getFragmentEntryId(), _defaultSegmentsExperienceId,
 			layoutPageTemplateEntry.getPlid(), _fragmentEntry.getCss(),
 			_fragmentEntry.getHtml(), _fragmentEntry.getJs(),

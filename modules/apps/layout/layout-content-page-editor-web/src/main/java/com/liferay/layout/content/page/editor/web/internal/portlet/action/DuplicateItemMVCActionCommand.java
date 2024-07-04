@@ -359,7 +359,7 @@ public class DuplicateItemMVCActionCommand
 
 		FragmentEntryLink duplicatedFragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				fragmentEntryLink.getGroupId(), 0,
+				null, fragmentEntryLink.getGroupId(), 0,
 				fragmentEntryLink.getFragmentEntryId(),
 				fragmentEntryLink.getSegmentsExperienceId(),
 				fragmentEntryLink.getPlid(), fragmentEntryLink.getCss(),

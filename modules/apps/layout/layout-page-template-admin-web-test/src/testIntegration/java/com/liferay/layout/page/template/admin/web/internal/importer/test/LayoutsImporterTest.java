@@ -336,7 +336,7 @@ public class LayoutsImporterTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group1.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group1.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(), defaultSegmentsExperienceId,
 				layoutPageTemplateEntry.getPlid(), StringPool.BLANK, html,
 				StringPool.BLANK,

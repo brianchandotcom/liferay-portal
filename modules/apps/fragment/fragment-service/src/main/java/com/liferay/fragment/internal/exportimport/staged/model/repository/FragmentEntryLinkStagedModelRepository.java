@@ -48,7 +48,8 @@ public class FragmentEntryLinkStagedModelRepository
 		}
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			userId, fragmentEntryLink.getGroupId(),
+			fragmentEntryLink.getExternalReferenceCode(), userId,
+			fragmentEntryLink.getGroupId(),
 			fragmentEntryLink.getOriginalFragmentEntryLinkId(),
 			fragmentEntryLink.getFragmentEntryId(),
 			fragmentEntryLink.getSegmentsExperienceId(),

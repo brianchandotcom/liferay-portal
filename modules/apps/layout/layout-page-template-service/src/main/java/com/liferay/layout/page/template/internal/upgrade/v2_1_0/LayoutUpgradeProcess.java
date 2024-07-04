@@ -155,8 +155,8 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 							fragmentEntryLink);
 
 					_fragmentEntryLinkLocalService.addFragmentEntryLink(
-						draftLayout.getUserId(), draftLayout.getGroupId(), 0,
-						fragmentEntryLink.getFragmentEntryId(), 0,
+						null, draftLayout.getUserId(), draftLayout.getGroupId(),
+						0, fragmentEntryLink.getFragmentEntryId(), 0,
 						draftLayout.getPlid(), fragmentEntryLink.getCss(),
 						fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
 						fragmentEntryLink.getConfiguration(),

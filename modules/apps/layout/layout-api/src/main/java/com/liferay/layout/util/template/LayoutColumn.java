@@ -96,8 +96,8 @@ public class LayoutColumn {
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
-				0,
+				null, serviceContext.getUserId(),
+				serviceContext.getScopeGroupId(), 0, 0,
 				SegmentsExperienceLocalServiceUtil.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,

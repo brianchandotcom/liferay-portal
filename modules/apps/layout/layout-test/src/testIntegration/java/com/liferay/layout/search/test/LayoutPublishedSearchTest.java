@@ -208,7 +208,7 @@ public class LayoutPublishedSearchTest {
 
 		FragmentEntryLink inlineFragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				_group.getGroupId(), 0,
+				null, _group.getGroupId(), 0,
 				contributedFragmentEntry.getFragmentEntryId(),
 				defaultSegmentsExperienceId, draftLayout.getPlid(),
 				contributedFragmentEntry.getCss(),

@@ -247,7 +247,7 @@ public class LayoutAdaptiveMediaProcessorTest {
 					))));
 
 		_fragmentEntryLink = _fragmentEntryLinkService.addFragmentEntryLink(
-			_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
+			null, _group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
 			defaultSegmentsExperienceId, layout.getPlid(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),

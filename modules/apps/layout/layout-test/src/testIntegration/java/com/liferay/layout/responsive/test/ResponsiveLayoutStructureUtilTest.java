@@ -94,7 +94,7 @@ public class ResponsiveLayoutStructureUtilTest {
 				_layout.getPlid());
 
 		_fragmentEntryLink = _fragmentEntryLinkService.addFragmentEntryLink(
-			_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
+			null, _group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
 			_defaultSegmentsExperienceId, _layout.getPlid(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,

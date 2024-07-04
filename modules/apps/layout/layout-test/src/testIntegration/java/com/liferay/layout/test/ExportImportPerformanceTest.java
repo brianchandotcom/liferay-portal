@@ -338,7 +338,7 @@ public class ExportImportPerformanceTest {
 					"FEATURED_CONTENT-highlights-circle");
 
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(), defaultSegmentsExperienceId,
 				draftLayout.getPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getJs(),
@@ -389,7 +389,7 @@ public class ExportImportPerformanceTest {
 				PortletIdCodec.encode(JournalPortletKeys.JOURNAL, instanceId));
 
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				defaultSegmentsExperienceId, draftLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK,

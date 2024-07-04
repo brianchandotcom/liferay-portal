@@ -310,7 +310,7 @@ public class FragmentsImporterTest {
 
 			FragmentEntryLink fragmentEntryLink =
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					_user.getUserId(), _group.getGroupId(), 0,
+					null, _user.getUserId(), _group.getGroupId(), 0,
 					fragmentEntry.getFragmentEntryId(), 0, 0,
 					fragmentEntry.getCss(), fragmentEntry.getHtml(),
 					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),

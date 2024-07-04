@@ -79,7 +79,7 @@ public class LayoutStructureTest {
 
 		_fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				defaultSegmentsExperienceId, layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),

@@ -186,7 +186,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
+				null, sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
 				defaultSegmentsExperienceId, sourceLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
@@ -197,7 +197,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 			containerLayoutStructureItem.getItemId(), 0);
 
 		fragmentEntryLink = _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
+			null, sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
 			defaultSegmentsExperienceId, sourceLayout.getPlid(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
@@ -259,7 +259,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 
 		FragmentEntryLink fragmentEntryLink1 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
+				null, sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
 				defaultSegmentsExperienceId, sourceLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
@@ -272,7 +272,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 
 		FragmentEntryLink fragmentEntryLink2 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
+				null, sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
 				defaultSegmentsExperienceId, sourceLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
@@ -284,7 +284,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 
 		FragmentEntryLink fragmentEntryLink3 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
+				null, sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
 				defaultSegmentsExperienceId, sourceLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
@@ -296,7 +296,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 
 		FragmentEntryLink fragmentEntryLink4 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
+				null, sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
 				defaultSegmentsExperienceId, sourceLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
@@ -341,7 +341,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 
 		FragmentEntryLink fragmentEntryLink5 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
+				null, sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
 				defaultSegmentsExperienceId, sourceLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
@@ -353,7 +353,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 
 		FragmentEntryLink fragmentEntryLink6 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
+				null, sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
 				defaultSegmentsExperienceId, sourceLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
@@ -559,7 +559,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 
 		FragmentEntryLink widgetFragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				targetLayout.getUserId(), _group.getGroupId(), 0, 0,
+				null, targetLayout.getUserId(), _group.getGroupId(), 0, 0,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(targetLayout.getPlid()),
 				targetLayout.getPlid(), StringPool.BLANK, StringPool.BLANK,

@@ -170,11 +170,12 @@ public class AddPortletMVCActionCommand
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
-				0, segmentsExperienceId, themeDisplay.getPlid(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, editableValueJSONObject.toString(), namespace,
-				0, null, FragmentConstants.TYPE_PORTLET, serviceContext);
+				null, serviceContext.getUserId(),
+				serviceContext.getScopeGroupId(), 0, 0, segmentsExperienceId,
+				themeDisplay.getPlid(), StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK,
+				editableValueJSONObject.toString(), namespace, 0, null,
+				FragmentConstants.TYPE_PORTLET, serviceContext);
 
 		JSONObject jsonObject = _addFragmentEntryLinkToLayoutData(
 			actionRequest, fragmentEntryLink.getFragmentEntryLinkId());

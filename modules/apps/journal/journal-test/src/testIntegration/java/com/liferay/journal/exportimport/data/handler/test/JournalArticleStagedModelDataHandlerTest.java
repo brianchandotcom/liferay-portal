@@ -315,7 +315,7 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				layoutPageTemplateStructure.getUserId(),
+				null, layoutPageTemplateStructure.getUserId(),
 				stagingGroup.getGroupId(), 0, 0, defaultSegmentsExperienceId,
 				layoutPageTemplateStructure.getPlid(), StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,

@@ -226,7 +226,7 @@ public class WidgetLayoutStructureItemImporter
 			warningMessages, widgetPermissionsMaps);
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			layout.getUserId(), layout.getGroupId(), 0, 0,
+			null, layout.getUserId(), layout.getGroupId(), 0, 0,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid()),
 			layout.getPlid(), StringPool.BLANK, StringPool.BLANK,

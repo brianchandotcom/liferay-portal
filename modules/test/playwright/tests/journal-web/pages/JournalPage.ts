@@ -181,4 +181,24 @@ export class JournalPage {
 			.getByRole('button', {name: 'Cancel'})
 			.click();
 	}
+
+	async setArticleViewableBy(value: 'Anyone' | 'Site Members' | 'Owner') {
+		const permissionsGroup = this.page.getByRole('link', {
+			name: 'Permissions',
+		});
+
+		await permissionsGroup.waitFor();
+
+		const isOpen = await permissionsGroup.evaluate(
+			(element) => element.getAttribute('aria-expanded') === 'true'
+		);
+
+		if (!isOpen) {
+			await permissionsGroup.click();
+		}
+
+		await this.page.getByLabel('Viewable by').waitFor();
+
+		await this.page.getByLabel('Viewable by').selectOption(value);
+	}
 }

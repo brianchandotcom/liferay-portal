@@ -133,12 +133,21 @@ const TaskSidebar: React.FC<TaskSidebarProps> = ({expanded}) => {
 							<TaskbarProgress
 								displayTotalCompleted
 								items={[
-									[StatusesProgressScore.SELF, 0],
+									[
+										StatusesProgressScore.SELF,
+										Number(
+											task?.subtaskScoreSelfCompleted
+										) ?? 0,
+									],
 									[
 										StatusesProgressScore.OTHER,
 										Number(
 											task?.subtaskScoreCompleted ?? 0
-										),
+										) -
+											Number(
+												task?.subtaskScoreSelfCompleted ??
+													0
+											),
 									],
 									[
 										StatusesProgressScore.INCOMPLETE,

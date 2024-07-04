@@ -406,6 +406,7 @@ export type TestrayTask = {
 	r_buildToTasks_c_build?: TestrayBuild;
 	subtaskScore: string;
 	subtaskScoreCompleted: string;
+	subtaskScoreSelfCompleted: string;
 	subtaskScoreSelfIncomplete: string;
 	taskToTasksUsers: any;
 };

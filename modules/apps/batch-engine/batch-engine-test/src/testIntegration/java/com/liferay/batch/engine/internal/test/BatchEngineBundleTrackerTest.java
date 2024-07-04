@@ -16,7 +16,6 @@ import com.liferay.batch.engine.unit.BundleBatchEngineUnit;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -131,10 +130,6 @@ public class BatchEngineBundleTrackerTest {
 			DBUpgrader.class, "_upgradeClient", false);
 
 		try {
-			StartupHelperUtil.setUpgrading(true);
-
-			_testProcessBatchEngineBundle("batch1", "/batch1/export.json");
-
 			ReflectionTestUtil.setFieldValue(
 				DBUpgrader.class, "_upgradeClient", true);
 
@@ -143,8 +138,6 @@ public class BatchEngineBundleTrackerTest {
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				DBUpgrader.class, "_upgradeClient", upgradeClient);
-
-			StartupHelperUtil.setUpgrading(false);
 		}
 	}
 

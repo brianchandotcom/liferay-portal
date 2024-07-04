@@ -63,6 +63,18 @@ const CaseResult = () => {
 						<QATable
 							items={[
 								{
+									title: (
+										<ClayIcon
+											className="tr-qa-table__flaky-icon"
+											symbol="flag-full"
+										/>
+									),
+									value: i18n.translate(
+										'this-test-was-classified-as-flaky'
+									),
+									visible: !!caseResult.case?.flaky,
+								},
+								{
 									title: i18n.translate('status'),
 									value: (
 										<StatusBadge

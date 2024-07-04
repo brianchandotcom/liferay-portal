@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useParams} from 'react-router-dom';
 import Avatar from '~/components/Avatar';
 import AssignToMe from '~/components/Avatar/AssignToMe/AssignToMe';
@@ -42,6 +44,30 @@ const Build = () => {
 					columns: [
 						{
 							clickable: true,
+							key: 'flaky',
+							render: (_, {flaky, testrayCaseName}) => (
+								<>
+									{flaky && (
+										<ClayTooltipProvider>
+											<span
+												className="tr-table__row__flaky-icon"
+												data-tooltip-align="top"
+												title={i18n.translate(
+													'this-test-was-classified-as-flaky'
+												)}
+											>
+												<ClayIcon symbol="flag-full" />
+											</span>
+										</ClayTooltipProvider>
+									)}
+									{testrayCaseName}
+								</>
+							),
+
+							value: i18n.translate('case'),
+						},
+						{
+							clickable: true,
 							key: 'testrayCaseTypeName',
 							value: i18n.translate('case-type'),
 						},
@@ -59,12 +85,6 @@ const Build = () => {
 							clickable: true,
 							key: 'testrayComponentName',
 							value: i18n.translate('component'),
-						},
-						{
-							key: 'testrayCaseName',
-							selectable: true,
-							size: 'xl',
-							value: i18n.translate('case'),
 						},
 						{
 							clickable: true,

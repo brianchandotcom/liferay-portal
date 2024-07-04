@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -393,6 +394,15 @@ public class JournalConverterUtilTest {
 			_ddmStructure, content);
 
 		_assertFields(expectedFields, actualFields);
+	}
+
+	@Test
+	public void testGetFieldsFromEmptyContent() throws Exception {
+		Assert.assertEquals(
+			new Fields(), _journalConverter.getDDMFields(_ddmStructure, null));
+		Assert.assertEquals(
+			new Fields(),
+			_journalConverter.getDDMFields(_ddmStructure, StringPool.BLANK));
 	}
 
 	@Test

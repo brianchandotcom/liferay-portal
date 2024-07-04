@@ -43,4 +43,10 @@ public interface DataRemovalConfiguration {
 	)
 	public boolean removePublishedCTSContentData();
 
+	@Meta.AD(
+		deflt = "false", name = "remove-widget-layout-type-settings",
+		required = false
+	)
+	public boolean removeWidgetLayoutTypeSettings();
+
 }

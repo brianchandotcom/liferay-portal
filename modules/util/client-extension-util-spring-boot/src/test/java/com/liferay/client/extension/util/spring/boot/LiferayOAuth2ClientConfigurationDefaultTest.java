@@ -185,6 +185,9 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 				(InMemoryClientRegistrationRepository)
 					_clientRegistrationRepository;
 
+		Assert.assertNull(
+			inMemoryClientRegistrationRepository.findByRegistrationId("extra"));
+
 		List<ClientRegistration> clientRegistrations = new ArrayList<>();
 
 		inMemoryClientRegistrationRepository.forEach(clientRegistrations::add);
@@ -197,6 +200,11 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 				(InMemoryReactiveClientRegistrationRepository)
 					_reactiveClientRegistrationRepository;
 
+		Assert.assertNull(
+			inMemoryReactiveClientRegistrationRepository.findByRegistrationId(
+				"extra"
+			).block());
+
 		clientRegistrations = new ArrayList<>();
 
 		inMemoryReactiveClientRegistrationRepository.forEach(
@@ -204,14 +212,6 @@ public class LiferayOAuth2ClientConfigurationDefaultTest {
 
 		Assert.assertEquals(
 			clientRegistrations.toString(), 2, clientRegistrations.size());
-
-		Assert.assertNull(
-			inMemoryClientRegistrationRepository.findByRegistrationId("extra"));
-
-		Assert.assertNull(
-			inMemoryReactiveClientRegistrationRepository.findByRegistrationId(
-				"extra"
-			).block());
 	}
 
 	@Rule

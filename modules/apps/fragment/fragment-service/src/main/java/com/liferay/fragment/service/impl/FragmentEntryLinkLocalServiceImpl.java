@@ -83,11 +83,12 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Override
 	public FragmentEntryLink addFragmentEntryLink(
-			long userId, long groupId, long originalFragmentEntryLinkId,
-			long fragmentEntryId, long segmentsExperienceId, long plid,
-			String css, String html, String js, String configuration,
-			String editableValues, String namespace, int position,
-			String rendererKey, int type, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long originalFragmentEntryLinkId, long fragmentEntryId,
+			long segmentsExperienceId, long plid, String css, String html,
+			String js, String configuration, String editableValues,
+			String namespace, int position, String rendererKey, int type,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkUnlockedLayout(plid, userId);
@@ -100,6 +101,7 @@ public class FragmentEntryLinkLocalServiceImpl
 			fragmentEntryLinkPersistence.create(fragmentEntryLinkId);
 
 		fragmentEntryLink.setUuid(serviceContext.getUuid());
+		fragmentEntryLink.setExternalReferenceCode(externalReferenceCode);
 		fragmentEntryLink.setGroupId(groupId);
 		fragmentEntryLink.setCompanyId(user.getCompanyId());
 		fragmentEntryLink.setUserId(user.getUserId());

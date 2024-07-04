@@ -256,35 +256,6 @@ public class OptionsRestController extends BaseRestController {
 						"Code", code
 					)
 				).put(
-					"Shipper",
-					new JSONObject(
-					).put(
-						"Address",
-						new JSONObject(
-						).put(
-							"AddressLine",
-							new JSONArray(
-							).put(
-								typeSettingsJSONObject.getString(
-									"shipperAddressLine1")
-							).put(
-								typeSettingsJSONObject.getString(
-									"shipperAddressLine2")
-							).put(
-								typeSettingsJSONObject.getString(
-									"shipperAddressLine3")
-							)
-						).put(
-							"CountryCode",
-							typeSettingsJSONObject.getString(
-								"shipperCountryCode")
-						).put(
-							"PostalCode",
-							typeSettingsJSONObject.getString(
-								"shipperPostalCode")
-						)
-					)
-				).put(
 					"ShipTo",
 					new JSONObject(
 					).put(
@@ -315,6 +286,35 @@ public class OptionsRestController extends BaseRestController {
 						)
 					)
 				)
+				).put(
+					"Shipper",
+					new JSONObject(
+					).put(
+						"Address",
+						new JSONObject(
+						).put(
+							"AddressLine",
+							new JSONArray(
+							).put(
+								typeSettingsJSONObject.getString(
+									"shipperAddressLine1")
+							).put(
+								typeSettingsJSONObject.getString(
+									"shipperAddressLine2")
+							).put(
+								typeSettingsJSONObject.getString(
+									"shipperAddressLine3")
+							)
+						).put(
+							"CountryCode",
+							typeSettingsJSONObject.getString(
+								"shipperCountryCode")
+						).put(
+							"PostalCode",
+							typeSettingsJSONObject.getString(
+								"shipperPostalCode")
+						)
+					)
 			)
 		).toString();
 

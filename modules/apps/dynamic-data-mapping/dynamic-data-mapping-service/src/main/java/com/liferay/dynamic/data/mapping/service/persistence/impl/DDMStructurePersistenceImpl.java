@@ -11098,6 +11098,7 @@ public class DDMStructurePersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -11105,8 +11106,8 @@ public class DDMStructurePersistenceImpl
 		ctStrictColumnNames.add("uuid_");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("userId");
-		ctStrictColumnNames.add("userName");
+		ctMergeColumnNames.add("userId");
+		ctMergeColumnNames.add("userName");
 		ctStrictColumnNames.add("versionUserId");
 		ctStrictColumnNames.add("versionUserName");
 		ctStrictColumnNames.add("createDate");
@@ -11116,8 +11117,8 @@ public class DDMStructurePersistenceImpl
 		ctStrictColumnNames.add("structureKey");
 		ctStrictColumnNames.add("version");
 		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("definition");
+		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("definition");
 		ctStrictColumnNames.add("storageType");
 		ctStrictColumnNames.add("type_");
 		ctStrictColumnNames.add("lastPublishDate");
@@ -11126,6 +11127,7 @@ public class DDMStructurePersistenceImpl
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("structureId"));
 		_ctColumnNamesMap.put(

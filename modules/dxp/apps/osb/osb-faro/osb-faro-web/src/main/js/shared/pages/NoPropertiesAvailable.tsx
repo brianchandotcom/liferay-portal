@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
 import BasePage from 'shared/components/base-page';
+import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import Constants, {Sizes} from 'shared/util/constants';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -71,39 +72,41 @@ const NoPropertiesAvailable: React.FC<INoPropertiesAvailableProps> = ({
 									  )}
 							</p>
 
-							{admin && (
-								<ClayLink
-									button
-									className='button-root'
-									displayType='primary'
-									onClick={
-										dataSources
-											? () =>
-													setBackURL(
-														toRoute(
-															Routes.WORKSPACE_WITH_ID,
-															{
-																groupId
-															}
-														)
-													)
-											: () =>
-													open(
-														modalTypes.ONBOARDING_MODAL,
-														{
-															groupId,
-															onClose: close
-														}
-													)
-									}
-								>
-									{dataSources
-										? Liferay.Language.get(
-												'create-property'
-										  )
-										: Liferay.Language.get('start')}
-								</ClayLink>
-							)}
+							{admin &&
+								(dataSources ? (
+									<ClayLink
+										button
+										className='button-root'
+										displayType='primary'
+										onClick={() =>
+											setBackURL(
+												toRoute(
+													Routes.WORKSPACE_WITH_ID,
+													{
+														groupId
+													}
+												)
+											)
+										}
+									>
+										{Liferay.Language.get(
+											'create-property'
+										)}
+									</ClayLink>
+								) : (
+									<ClayButton
+										className='button-root'
+										displayType='primary'
+										onClick={() =>
+											open(modalTypes.ONBOARDING_MODAL, {
+												groupId,
+												onClose: close
+											})
+										}
+									>
+										{Liferay.Language.get('start')}
+									</ClayButton>
+								))}
 						</>
 					}
 					displayCard

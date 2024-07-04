@@ -1,0 +1,4137 @@
+[
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "must",
+								"query": {
+									"simple_query_string": {
+										"boost": 1,
+										"default_operator": "or",
+										"fields": [
+											"localized_title_${context.language_id}^2",
+											"content_${context.language_id}^2"
+										],
+										"query": "${keywords}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Use Query String query syntax to match one or more fields with a single operator (OR or AND)."
+			},
+			"elementDefinition": {
+				"category": "match",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "must",
+										"query": {
+											"simple_query_string": {
+												"boost": "${configuration.boost}",
+												"default_operator": "${configuration.operator}",
+												"fields": "${configuration.fields}",
+												"query": "${keywords}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "picture",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": [
+										{
+											"boost": "2",
+											"field": "localized_title",
+											"locale": "${context.language_id}"
+										},
+										{
+											"boost": "2",
+											"field": "content",
+											"locale": "${context.language_id}"
+										}
+									],
+									"label": "Fields",
+									"name": "fields",
+									"type": "fieldMappingList",
+									"typeOptions": {
+										"boost": true
+									}
+								},
+								{
+									"label": "Operator",
+									"name": "operator",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "OR",
+												"value": "or"
+											},
+											{
+												"label": "AND",
+												"value": "and"
+											}
+										]
+									}
+								},
+								{
+									"defaultValue": 1,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 36,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Search with the Lucene Syntax"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"boost": 1,
+			"fields": [
+				{
+					"boost": "2",
+					"field": "localized_title",
+					"locale": "${context.language_id}"
+				},
+				{
+					"boost": "2",
+					"field": "content",
+					"locale": "${context.language_id}"
+				}
+			],
+			"operator": "or"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "must",
+								"query": {
+									"multi_match": {
+										"boost": 1,
+										"fields": [
+											"localized_title_${context.language_id}^2",
+											"content_${context.language_id}^1"
+										],
+										"fuzziness": "AUTO",
+										"minimum_should_match": "0",
+										"operator": "or",
+										"query": "${keywords}",
+										"type": "best_fields"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Search for a text match over multiple text fields."
+			},
+			"elementDefinition": {
+				"category": "match",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "must",
+										"query": {
+											"multi_match": {
+												"boost": "${configuration.boost}",
+												"fields": "${configuration.fields}",
+												"fuzziness": "${configuration.fuzziness}",
+												"minimum_should_match": "${configuration.minimum_should_match}",
+												"operator": "${configuration.operator}",
+												"query": "${configuration.keywords}",
+												"slop": "${configuration.slop}",
+												"type": "${configuration.type}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "picture",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": [
+										{
+											"boost": "2",
+											"field": "localized_title",
+											"locale": "${context.language_id}"
+										},
+										{
+											"boost": "1",
+											"field": "content",
+											"locale": "${context.language_id}"
+										}
+									],
+									"label": "Fields",
+									"name": "fields",
+									"type": "fieldMappingList",
+									"typeOptions": {
+										"boost": true
+									}
+								},
+								{
+									"defaultValue": "or",
+									"label": "Operator",
+									"name": "operator",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "OR",
+												"value": "or"
+											},
+											{
+												"label": "AND",
+												"value": "and"
+											}
+										]
+									}
+								},
+								{
+									"defaultValue": "best_fields",
+									"label": "Match Type",
+									"name": "type",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "Best Fields",
+												"value": "best_fields"
+											},
+											{
+												"label": "Most Fields",
+												"value": "most_fields"
+											},
+											{
+												"label": "Cross Fields",
+												"value": "cross_fields"
+											},
+											{
+												"label": "Phrase",
+												"value": "phrase"
+											},
+											{
+												"label": "Phrase Prefix",
+												"value": "phrase_prefix"
+											},
+											{
+												"label": "Boolean Prefix",
+												"value": "bool_prefix"
+											}
+										]
+									}
+								},
+								{
+									"defaultValue": "AUTO",
+									"helpText": "Only use fuzziness with the following match types: most fields, best fields, bool prefix.",
+									"label": "Fuzziness",
+									"name": "fuzziness",
+									"type": "select",
+									"typeOptions": {
+										"nullable": true,
+										"options": [
+											{
+												"label": "Auto",
+												"value": "AUTO"
+											},
+											{
+												"label": "0",
+												"value": "0"
+											},
+											{
+												"label": "1",
+												"value": "1"
+											},
+											{
+												"label": "2",
+												"value": "2"
+											}
+										]
+									}
+								},
+								{
+									"defaultValue": "0",
+									"label": "Minimum Should Match",
+									"name": "minimum_should_match",
+									"type": "text",
+									"typeOptions": {
+										"nullable": true
+									}
+								},
+								{
+									"defaultValue": "",
+									"helpText": "Only use slop with the following match types: phrase, phrase prefix.",
+									"label": "Slop",
+									"name": "slop",
+									"type": "number",
+									"typeOptions": {
+										"min": 0,
+										"nullable": true,
+										"step": 1
+									}
+								},
+								{
+									"defaultValue": 1,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								},
+								{
+									"helpText": "If this is set, the search terms entered in the search bar will be replaced by this value.",
+									"label": "Text to Match",
+									"name": "keywords",
+									"type": "keywords",
+									"typeOptions": {
+										"required": false
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 38,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Text Match Over Multiple Fields"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"boost": 1,
+			"fields": [
+				{
+					"boost": "2",
+					"field": "localized_title",
+					"locale": "${context.language_id}"
+				},
+				{
+					"boost": "1",
+					"field": "content",
+					"locale": "${context.language_id}"
+				}
+			],
+			"fuzziness": "AUTO",
+			"keywords": "",
+			"minimum_should_match": "0",
+			"operator": "or",
+			"slop": "",
+			"type": "best_fields"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"must_not": [
+											{
+												"term": {
+													"accountEntryId": {
+														"value": "test"
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Hide contents with an exact term match on the given field."
+			},
+			"elementDefinition": {
+				"category": "hide",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"must_not": [
+													{
+														"term": {
+															"${configuration.field}": {
+																"value": "${configuration.value}"
+															}
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Field",
+									"name": "field",
+									"type": "fieldMapping"
+								},
+								{
+									"label": "Value",
+									"name": "value",
+									"type": "text"
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 20,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Hide by Exact Term Match"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"field": {
+				"field": "accountEntryId",
+				"languageIdPosition": -1,
+				"locale": ""
+			},
+			"value": "test"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"exists": {
+																"field": "discussion"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"discussion": false
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Do not search for comments."
+			},
+			"elementDefinition": {
+				"category": "hide",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must_not": [
+																{
+																	"exists": {
+																		"field": "discussion"
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"term": {
+																		"discussion": false
+																	}
+																}
+															]
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+				}
+			},
+			"id": 21,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Hide Comments"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"must_not": [
+											{
+												"term": {
+													"assetCategoryIds": {
+														"value": 1234
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Hide contents in the given category."
+			},
+			"elementDefinition": {
+				"category": "hide",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"must_not": [
+													{
+														"term": {
+															"assetCategoryIds": {
+																"value": "${configuration.asset_category_id}"
+															}
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 22,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Hide Contents in a Category"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"exists": {
+																"field": "hidden"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"hidden": false
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Hide assets which are marked not searchable. This Element duplicates the functionality of a Liferay Search Framework query clause."
+			},
+			"elementDefinition": {
+				"category": "hide",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must_not": [
+																{
+																	"exists": {
+																		"field": "hidden"
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"term": {
+																		"hidden": false
+																	}
+																}
+															]
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+				}
+			},
+			"id": 24,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Hide Hidden Contents"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"must_not": [
+											{
+												"term": {
+													"assetTagNames.raw": {
+														"value": ""
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						],
+						"enabled": false
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Hide contents with a given tag."
+			},
+			"elementDefinition": {
+				"category": "hide",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"must_not": [
+													{
+														"term": {
+															"assetTagNames.raw": {
+																"value": "${configuration.asset_tag}"
+															}
+														}
+													}
+												]
+											}
+										}
+									}
+								],
+								"enabled": false
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"helpText": "Add asset tag value",
+									"label": "Asset Tag",
+									"name": "asset_tag",
+									"type": "text"
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 25,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Hide Tagged Contents"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"asset_tag": ""
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"terms": {
+										"accountEntryId": [
+											"1234"
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Filter results by one or multiple terms. At least one must match."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"terms": {
+												"${configuration.field}": "${configuration.values}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Field",
+									"name": "field",
+									"type": "fieldMapping"
+								},
+								{
+									"label": "Values",
+									"name": "values",
+									"type": "multiselect"
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 19,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Filter by Exact Terms Match"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"field": {
+				"field": "accountEntryId",
+				"languageIdPosition": -1,
+				"locale": ""
+			},
+			"values": [
+				{
+					"label": "1234",
+					"value": "1234"
+				}
+			]
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"range": {
+										"createDate": {
+											"from": 20240709000700,
+											"include_lower": true,
+											"include_upper": true,
+											"to": 20240712000700
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit search to contents created within the given time range."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"range": {
+												"createDate": {
+													"from": "${configuration.start_date}",
+													"include_lower": true,
+													"include_upper": true,
+													"to": "${configuration.end_date}"
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Create Date: From",
+									"name": "start_date",
+									"type": "date"
+								},
+								{
+									"label": "Create Date: To",
+									"name": "end_date",
+									"type": "date"
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 26,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to Contents Created Within a Period of Time"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"end_date": 1720753200,
+			"start_date": 1720494000
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"term": {
+																"entryClassName": {
+																	"value": "com.liferay.journal.model.JournalArticle"
+																}
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"entryClassName": {
+																	"value": "com.liferay.journal.model.JournalArticle"
+																}
+															}
+														},
+														{
+															"term": {
+																"head": {
+																	"value": true
+																}
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search to return only the HEAD version of Web Content articles. This Element duplicates the functionality of a Liferay Search Framework query clause."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must_not": [
+																{
+																	"term": {
+																		"entryClassName": {
+																			"value": "com.liferay.journal.model.JournalArticle"
+																		}
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"term": {
+																		"entryClassName": {
+																			"value": "com.liferay.journal.model.JournalArticle"
+																		}
+																	}
+																},
+																{
+																	"term": {
+																		"head": {
+																			"value": true
+																		}
+																	}
+																}
+															]
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"id": 27,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to HEAD Version"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"term": {
+										"userId": "${user.id}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search to contents the user is an owner of."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"term": {
+												"userId": "${user.id}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"id": 28,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to My Contents"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"terms": {
+										"scopeGroupId": "${user.group_ids}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search scope to the sites that the user is a member of."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"terms": {
+												"scopeGroupId": "${user.group_ids}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"id": 29,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to My Sites"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"term": {
+										"mimeType": "application_pdf"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search to PDF files, as recorded in the mimeType field."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"term": {
+												"mimeType": "application_pdf"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"id": 30,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to PDF files"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"term": {
+										"status": 0
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search to contents that are published."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"term": {
+												"status": 0
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"id": 31,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to Published Contents"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"term": {
+										"scopeGroupId": "${context.scope_group_id}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search to the current site."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"term": {
+												"scopeGroupId": "${context.scope_group_id}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"id": 32,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to the Current Site"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"terms": {
+										"scopeGroupId": [
+											"1234"
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search scope to the given sites."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"terms": {
+												"scopeGroupId": "${configuration.scope_group_ids}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Group IDs",
+									"name": "scope_group_ids",
+									"type": "multiselect"
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 33,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to These Sites"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"scope_group_ids": [
+				{
+					"label": "1234",
+					"value": "1234"
+				}
+			]
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"exists": {
+																"field": "displayDate"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"range": {
+																"displayDate_sortable": {
+																	"from": "-9223372036854775808",
+																	"include_lower": true,
+																	"include_upper": true,
+																	"to": "${time.current_date|date_format=timestamp}"
+																}
+															}
+														}
+													],
+													"must_not": [
+														{
+															"exists": {
+																"field": "expirationDate"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"range": {
+																"displayDate_sortable": {
+																	"from": "-9223372036854775808",
+																	"include_lower": true,
+																	"include_upper": true,
+																	"to": "${time.current_date|date_format=timestamp}"
+																}
+															}
+														},
+														{
+															"range": {
+																"expirationDate_sortable": {
+																	"from": "${time.current_date|date_format=timestamp}",
+																	"include_lower": true,
+																	"include_upper": true,
+																	"to": "9223372036854775807"
+																}
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Show only contents with a display date that's not in the future. This Element duplicates the functionality of a Liferay Search Framework query clause."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must_not": [
+																{
+																	"exists": {
+																		"field": "displayDate"
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"range": {
+																		"displayDate_sortable": {
+																			"from": "-9223372036854775808",
+																			"include_lower": true,
+																			"include_upper": true,
+																			"to": "${time.current_date|date_format=timestamp}"
+																		}
+																	}
+																}
+															],
+															"must_not": [
+																{
+																	"exists": {
+																		"field": "expirationDate"
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"range": {
+																		"displayDate_sortable": {
+																			"from": "-9223372036854775808",
+																			"include_lower": true,
+																			"include_upper": true,
+																			"to": "${time.current_date|date_format=timestamp}"
+																		}
+																	}
+																},
+																{
+																	"range": {
+																		"expirationDate_sortable": {
+																			"from": "${time.current_date|date_format=timestamp}",
+																			"include_lower": true,
+																			"include_upper": true,
+																			"to": "9223372036854775807"
+																		}
+																	}
+																}
+															]
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"id": 35,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Scheduling Aware"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"exists": {
+																"field": "stagingGroup"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"stagingGroup": false
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "context.is_staging_group",
+								"value": false
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Show only published contents on live sites. Show only published and staged contents on staging sites. This Element duplicates the functionality of a Liferay Search Framework query clause."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must_not": [
+																{
+																	"exists": {
+																		"field": "stagingGroup"
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"term": {
+																		"stagingGroup": false
+																	}
+																}
+															]
+														}
+													}
+												]
+											}
+										}
+									}
+								],
+								"condition": {
+									"equals": {
+										"parameterName": "context.is_staging_group",
+										"value": false
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"id": 37,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Staging Aware"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 10,
+											"value": 1234
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"contains": {
+								"parameterName": "keywords",
+								"value": [
+									"test"
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in a category if the user's search keywords contain any of the given keywords."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"contains": {
+										"parameterName": "keywords",
+										"value": "${configuration.keywords}"
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"label": "Keywords",
+									"name": "keywords",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 5,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category by Keyword Match"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234,
+			"boost": 10,
+			"keywords": [
+				{
+					"label": "test",
+					"value": "test"
+				}
+			]
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 10,
+											"value": 1234
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"range": {
+								"format": "yyyyMMdd",
+								"gte": 20240709,
+								"lte": 20240712,
+								"parameterName": "time.current_date"
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in a category for the given period of time."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"range": {
+										"format": "yyyyMMdd",
+										"gte": "${configuration.start_date}",
+										"lte": "${configuration.end_date}",
+										"parameterName": "time.current_date"
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"label": "Create Date: From",
+									"name": "start_date",
+									"type": "date",
+									"typeOptions": {
+										"format": "YYYYMMDD"
+									}
+								},
+								{
+									"label": "Create Date: To",
+									"name": "end_date",
+									"type": "date",
+									"typeOptions": {
+										"format": "YYYYMMDD"
+									}
+								},
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 6,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category for a Period of Time"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234,
+			"boost": 10,
+			"end_date": 1720753200,
+			"start_date": 1720494000
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 20,
+											"value": 1234
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"contains": {
+								"parameterName": "user.active_segment_entry_ids",
+								"value": [
+									"1234"
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in a category for users belonging to a given user segment."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"contains": {
+										"parameterName": "user.active_segment_entry_ids",
+										"value": "${configuration.user_segment_ids}"
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"label": "User Segment IDs",
+									"name": "user_segment_ids",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 20,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 7,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category for a User Segment"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234,
+			"boost": 20,
+			"user_segment_ids": [
+				{
+					"label": "1234",
+					"value": "1234"
+				}
+			]
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 20,
+											"value": 1234
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "user.is_signed_in",
+								"value": false
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in a category if a user is not logged in."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"equals": {
+										"parameterName": "user.is_signed_in",
+										"value": false
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"defaultValue": 20,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 8,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category for Guest Users"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234,
+			"boost": 20
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 20,
+											"value": 1234
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"range": {
+								"format": "yyyyMMdd",
+								"gte": "${time.current_date|modifier=-30d,date_format=yyyyMMdd}",
+								"lte": "${time.current_date|modifier=+1d,date_format=yyyyMMdd}",
+								"parameterName": "user.create_date"
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in a category for user accounts created within the given time."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"range": {
+										"format": "yyyyMMdd",
+										"gte": "${time.current_date|modifier=-${configuration.time_range},date_format=yyyyMMdd}",
+										"lte": "${time.current_date|modifier=+1d,date_format=yyyyMMdd}",
+										"parameterName": "user.create_date"
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"defaultValue": 30,
+									"label": "Time range",
+									"name": "time_range",
+									"type": "number",
+									"typeOptions": {
+										"unit": "days",
+										"unitSuffix": "d"
+									}
+								},
+								{
+									"defaultValue": 20,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 9,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category for New User Accounts"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234,
+			"boost": 20,
+			"time_range": 30
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 20,
+											"value": 1234
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "time.time_of_day",
+								"value": "morning"
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in a category based on the time of day."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"equals": {
+										"parameterName": "time.time_of_day",
+										"value": "${configuration.time_of_day}"
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"label": "Time of Day",
+									"name": "time_of_day",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "Morning (4am - 12am)",
+												"value": "morning"
+											},
+											{
+												"label": "Afternoon (12pm - 5pm)",
+												"value": "afternoon"
+											},
+											{
+												"label": "Evening (5pm - 8pm)",
+												"value": "evening"
+											},
+											{
+												"label": "Night (8pm - 4am)",
+												"value": "night"
+											}
+										]
+									}
+								},
+								{
+									"defaultValue": 20,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 10,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category for the Time of Day"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234,
+			"boost": 20,
+			"time_of_day": "morning"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"terms": {
+										"articleId_String_sortable": [
+											"1234"
+										],
+										"boost": 20
+									}
+								}
+							}
+						],
+						"condition": {
+							"contains": {
+								"parameterName": "keywords",
+								"value": [
+									"test"
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Boost certain Web Content if the user's search keywords contain the given keywords."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"terms": {
+												"articleId_String_sortable": "${configuration.article_ids}",
+												"boost": "${configuration.boost}"
+											}
+										}
+									}
+								],
+								"condition": {
+									"contains": {
+										"parameterName": "keywords",
+										"value": "${configuration.values}"
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Article IDs",
+									"name": "article_ids",
+									"type": "multiselect"
+								},
+								{
+									"label": "Keywords",
+									"name": "values",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 20,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 18,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Web Contents by Keyword Match"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"article_ids": [
+				{
+					"label": "1234",
+					"value": "1234"
+				}
+			],
+			"boost": 20,
+			"values": [
+				{
+					"label": "test",
+					"value": "test"
+				}
+			]
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"must_not": [
+											{
+												"term": {
+													"assetCategoryIds": {
+														"value": 1234
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "user.is_signed_in",
+								"value": false
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Hide contents in a category if the user is not logged in."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"must_not": [
+													{
+														"term": {
+															"assetCategoryIds": {
+																"value": "${configuration.asset_category_id}"
+															}
+														}
+													}
+												]
+											}
+										}
+									}
+								],
+								"condition": {
+									"equals": {
+										"parameterName": "user.is_signed_in",
+										"value": false
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 23,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Hide Contents in a Category for Guest Users"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"multi_match": {
+										"boost": 10,
+										"fields": [
+											"localized_title_${context.language_id}^2",
+											"content_${context.language_id}^1"
+										],
+										"operator": "and",
+										"query": "${keywords}",
+										"type": "best_fields"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:27Z",
+			"description_i18n": {
+				"en-US": "Boost contents if the search keywords match in the given fields."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"multi_match": {
+												"boost": "${configuration.boost}",
+												"fields": "${configuration.fields}",
+												"operator": "and",
+												"query": "${configuration.keywords}",
+												"type": "${configuration.type}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": [
+										{
+											"boost": 2,
+											"field": "localized_title",
+											"locale": "${context.language_id}"
+										},
+										{
+											"boost": 1,
+											"field": "content",
+											"locale": "${context.language_id}"
+										}
+									],
+									"label": "Field",
+									"name": "fields",
+									"type": "fieldMappingList",
+									"typeOptions": {
+										"boost": true
+									}
+								},
+								{
+									"defaultValue": "best_fields",
+									"label": "Match Type",
+									"name": "type",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "Best Fields",
+												"value": "best_fields"
+											},
+											{
+												"label": "Most Fields",
+												"value": "most_fields"
+											},
+											{
+												"label": "Cross Fields",
+												"value": "cross_fields"
+											},
+											{
+												"label": "Phrase",
+												"value": "phrase"
+											},
+											{
+												"label": "Phrase Prefix",
+												"value": "phrase_prefix"
+											},
+											{
+												"label": "Boolean Prefix",
+												"value": "bool_prefix"
+											}
+										]
+									}
+								},
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								},
+								{
+									"helpText": "If this is set, the search terms entered in the search bar will be replaced by this value.",
+									"label": "Text to Match",
+									"name": "keywords",
+									"type": "keywords",
+									"typeOptions": {
+										"required": false
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 1,
+			"modifiedDate": "2024-07-09T17:30:27Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost All Keywords Match"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"boost": 10,
+			"fields": [
+				{
+					"boost": 2,
+					"field": "localized_title",
+					"locale": "${context.language_id}"
+				},
+				{
+					"boost": 1,
+					"field": "content",
+					"locale": "${context.language_id}"
+				}
+			],
+			"keywords": "",
+			"type": "best_fields"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"entryClassName": {
+											"boost": 10,
+											"value": "com.liferay.journal.model.JournalArticle"
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost the given asset type."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"entryClassName": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.entry_class_name}"
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Type",
+									"name": "entry_class_name",
+									"type": "searchableType"
+								},
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 2,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Asset Type"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"boost": 10,
+			"entry_class_name": "com.liferay.journal.model.JournalArticle"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"bool": {
+										"must": [
+											{
+												"terms": {
+													"entryClassName": [
+														"com.liferay.portal.kernel.model.Layout",
+														"com.liferay.journal.model.JournalArticle"
+													]
+												}
+											},
+											{
+												"term": {
+													"defaultLanguageId": {
+														"boost": 20,
+														"value": "${context.language_id}"
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents having a default language matching the current session language."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"bool": {
+												"must": [
+													{
+														"terms": {
+															"entryClassName": [
+																"com.liferay.portal.kernel.model.Layout",
+																"com.liferay.journal.model.JournalArticle"
+															]
+														}
+													},
+													{
+														"term": {
+															"defaultLanguageId": {
+																"boost": "${configuration.boost}",
+																"value": "${context.language_id}"
+															}
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": 20,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 3,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents for the Current Language"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"boost": 20
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"terms": {
+										"assetCategoryIds": [
+											"1234"
+										],
+										"boost": 10
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost and promote contents in a given category."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"terms": {
+												"assetCategoryIds": "${configuration.asset_category_ids}",
+												"boost": "${configuration.boost}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category IDs",
+									"name": "asset_category_ids",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 4,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"asset_category_ids": [
+				{
+					"label": "1234",
+					"value": "1234"
+				}
+			],
+			"boost": 10
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"terms": {
+										"boost": 10,
+										"groupId": "${user.group_ids}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents on sites the user is a member of."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"terms": {
+												"boost": "${configuration.boost}",
+												"groupId": "${user.group_ids}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 11,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents on My Sites"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"boost": 10
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"function_score": {
+										"boost": 10,
+										"field_value_factor": {
+											"factor": 1.2,
+											"field": "versionCount_sortable",
+											"missing": 1,
+											"modifier": "sqrt"
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents edited more often."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"function_score": {
+												"boost": "${configuration.boost}",
+												"field_value_factor": {
+													"factor": "${configuration.factor}",
+													"field": "versionCount_sortable",
+													"missing": 1,
+													"modifier": "${configuration.modifier}"
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								},
+								{
+									"defaultValue": 1.2,
+									"label": "Factor",
+									"name": "factor",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								},
+								{
+									"defaultValue": "sqrt",
+									"label": "Modifier",
+									"name": "modifier",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "None",
+												"value": "none"
+											},
+											{
+												"label": "log",
+												"value": "log"
+											},
+											{
+												"label": "log1p",
+												"value": "log1p"
+											},
+											{
+												"label": "log2p",
+												"value": "log2p"
+											},
+											{
+												"label": "ln",
+												"value": "ln"
+											},
+											{
+												"label": "ln1p",
+												"value": "ln1p"
+											},
+											{
+												"label": "ln2p",
+												"value": "ln2p"
+											},
+											{
+												"label": "Square",
+												"value": "square"
+											},
+											{
+												"label": "Square Root",
+												"value": "sqrt"
+											},
+											{
+												"label": "Reciprocal",
+												"value": "reciprocal"
+											}
+										]
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 12,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents With More Versions"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"boost": 10,
+			"factor": 1.2,
+			"modifier": "sqrt"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"function_score": {
+										"boost": 2,
+										"gauss": {
+											"modified": {
+												"decay": 0.5,
+												"offset": "0d",
+												"origin": "${time.current_date|date_format=yyyyMMddHHmmss}",
+												"scale": "10d"
+											}
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents modified recently using a Gaussian function."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"function_score": {
+												"boost": "${configuration.boost}",
+												"gauss": {
+													"modified": {
+														"decay": "${configuration.decay}",
+														"offset": "${configuration.offset}",
+														"origin": "${time.current_date|date_format=yyyyMMddHHmmss}",
+														"scale": "${configuration.scale}"
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": 0.5,
+									"label": "Decay",
+									"name": "decay",
+									"type": "slider",
+									"typeOptions": {
+										"max": 0.99,
+										"min": 0.01,
+										"step": 0.01
+									}
+								},
+								{
+									"defaultValue": 0,
+									"label": "Offset",
+									"name": "offset",
+									"type": "number",
+									"typeOptions": {
+										"min": 0,
+										"unit": "days",
+										"unitSuffix": "d"
+									}
+								},
+								{
+									"defaultValue": 10,
+									"label": "Scale",
+									"name": "scale",
+									"type": "number",
+									"typeOptions": {
+										"min": 0,
+										"unit": "days",
+										"unitSuffix": "d"
+									}
+								},
+								{
+									"defaultValue": 2,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 13,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Freshness"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"boost": 2,
+			"decay": 0.5,
+			"offset": 0,
+			"scale": 10
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"function_score": {
+										"boost": 30,
+										"field_value_factor": {
+											"factor": 1.5,
+											"field": "contentLength_${context.language_id}_sortable",
+											"missing": 1,
+											"modifier": "ln"
+										}
+									}
+								}
+							}
+						],
+						"enabled": true
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents with longer content in the user's current language."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"function_score": {
+												"boost": "${configuration.boost}",
+												"field_value_factor": {
+													"factor": "${configuration.factor}",
+													"field": "contentLength_${context.language_id}_sortable",
+													"missing": 1,
+													"modifier": "${configuration.modifier}"
+												}
+											}
+										}
+									}
+								],
+								"enabled": true
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": 30,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								},
+								{
+									"defaultValue": 1.5,
+									"label": "Factor",
+									"name": "factor",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								},
+								{
+									"defaultValue": "ln",
+									"label": "Modifier",
+									"name": "modifier",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "None",
+												"value": "none"
+											},
+											{
+												"label": "log",
+												"value": "log"
+											},
+											{
+												"label": "log1p",
+												"value": "log1p"
+											},
+											{
+												"label": "log2p",
+												"value": "log2p"
+											},
+											{
+												"label": "ln",
+												"value": "ln"
+											},
+											{
+												"label": "ln1p",
+												"value": "ln1p"
+											},
+											{
+												"label": "ln2p",
+												"value": "ln2p"
+											},
+											{
+												"label": "Square",
+												"value": "square"
+											},
+											{
+												"label": "sqrt",
+												"value": "sqrt"
+											},
+											{
+												"label": "Reciprocal",
+												"value": "reciprocal"
+											}
+										]
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 14,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Longer Contents"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"boost": 30,
+			"factor": 1.5,
+			"modifier": "ln"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"function_score": {
+										"boost": 2,
+										"gauss": {
+											"firstName": {
+												"decay": 0.3,
+												"offset": 0,
+												"origin": {
+													"lat": "${ipstack.latitude}",
+													"lon": "${ipstack.longitude}"
+												},
+												"scale": "100km"
+											}
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in closer proximity to the search user with a Gaussian function. Additional setup is required."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"function_score": {
+												"boost": "${configuration.boost}",
+												"gauss": {
+													"${configuration.field}": {
+														"decay": "${configuration.decay}",
+														"offset": 0,
+														"origin": {
+															"lat": "${ipstack.latitude}",
+															"lon": "${ipstack.longitude}"
+														},
+														"scale": "${configuration.scale}"
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": [
+										{
+											"field": "expando__keyword__custom_fields__location_geolocation",
+											"locale": ""
+										}
+									],
+									"helpText": "A geopoint field",
+									"label": "Field",
+									"name": "field",
+									"type": "fieldMapping"
+								},
+								{
+									"defaultValue": 0.3,
+									"label": "Decay",
+									"name": "decay",
+									"type": "slider",
+									"typeOptions": {
+										"max": 0.99,
+										"min": 0.01,
+										"step": 0.1
+									}
+								},
+								{
+									"defaultValue": 100,
+									"label": "Scale",
+									"name": "scale",
+									"type": "number",
+									"typeOptions": {
+										"min": 0,
+										"unit": "km",
+										"unitSuffix": "km"
+									}
+								},
+								{
+									"defaultValue": 2,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 15,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Proximity"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"boost": 2,
+			"decay": 0.3,
+			"field": {
+				"field": "firstName",
+				"languageIdPosition": -1,
+				"locale": ""
+			},
+			"scale": 100
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"terms": {
+										"assetTagNames.raw": [
+											"test"
+										],
+										"boost": 5
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents having at least one of the given tags."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"terms": {
+												"assetTagNames.raw": "${configuration.asset_tags}",
+												"boost": "${configuration.boost}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Tags",
+									"name": "asset_tags",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 5,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 16,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Tagged Contents"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"asset_tags": [
+				{
+					"label": "test",
+					"value": "test"
+				}
+			],
+			"boost": 5
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetTagNames.raw": {
+											"boost": 50,
+											"value": "${keywords}"
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents with an exact keyword match to a tag."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetTagNames.raw": {
+													"boost": "${configuration.boost}",
+													"value": "${keywords}"
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": 40,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"id": 17,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Tags Match"
+			},
+			"type": 0,
+			"userName": ""
+		},
+		"uiConfigurationValues": {
+			"boost": 50
+		}
+	}
+]

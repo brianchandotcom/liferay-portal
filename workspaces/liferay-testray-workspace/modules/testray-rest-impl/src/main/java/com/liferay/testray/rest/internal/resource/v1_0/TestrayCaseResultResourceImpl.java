@@ -86,23 +86,9 @@ public class TestrayCaseResultResourceImpl
 			params.add("%" + error + "%");
 		}
 
-		if (noError != null) {
-			sb.append("and (cr.errors_ is null or cr.errors_ = '') ");
-		}
-
 		if (Validator.isNotNull(issues)) {
 			sb.append("and cr.issues_ like ? ");
 			params.add("%" + issues + "%");
-		}
-
-		if (noIssues != null) {
-			sb.append("and (cr.issues_ is null or cr.issues_ = '') ");
-		}
-
-		if (Validator.isNotNull(status)) {
-			sb.append("and cr.dueStatus_ in (");
-			sb.append(TestrayUtil.interpolateParams(params, status));
-			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(maxExecutionDate)) {
@@ -113,6 +99,20 @@ public class TestrayCaseResultResourceImpl
 		if (Validator.isNotNull(minExecutionDate)) {
 			sb.append("and b.dueDate_ >= ?");
 			params.add(minExecutionDate);
+		}
+
+		if (noError != null) {
+			sb.append("and (cr.errors_ is null or cr.errors_ = '') ");
+		}
+
+		if (noIssues != null) {
+			sb.append("and (cr.issues_ is null or cr.issues_ = '') ");
+		}
+
+		if (Validator.isNotNull(status)) {
+			sb.append("and cr.dueStatus_ in (");
+			sb.append(TestrayUtil.interpolateParams(params, status));
+			sb.append(") ");
 		}
 
 		if (Validator.isNotNull(testrayProductVersionIds)) {
@@ -248,17 +248,9 @@ public class TestrayCaseResultResourceImpl
 			params.add("%" + comment + "%");
 		}
 
-		if (noComment != null) {
-			sb.append("and (cr.comment_ is null or cr.comment_ = '') ");
-		}
-
 		if (Validator.isNotNull(error)) {
 			sb.append("and cr.errors_ like ? ");
 			params.add("%" + error + "%");
-		}
-
-		if (noError != null) {
-			sb.append("and (cr.errors_ is null or cr.errors_ = '') ");
 		}
 
 		if (flaky != null) {
@@ -269,6 +261,14 @@ public class TestrayCaseResultResourceImpl
 		if (Validator.isNotNull(issues)) {
 			sb.append("and cr.issues_ like ? ");
 			params.add("%" + issues + "%");
+		}
+
+		if (noComment != null) {
+			sb.append("and (cr.comment_ is null or cr.comment_ = '') ");
+		}
+
+		if (noError != null) {
+			sb.append("and (cr.errors_ is null or cr.errors_ = '') ");
 		}
 
 		if (noIssues != null) {

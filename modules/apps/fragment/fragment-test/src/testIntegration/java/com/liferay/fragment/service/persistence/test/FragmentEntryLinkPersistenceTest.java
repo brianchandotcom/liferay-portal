@@ -6,6 +6,7 @@
 package com.liferay.fragment.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.exception.DuplicateFragmentEntryLinkExternalReferenceCodeException;
 import com.liferay.fragment.exception.NoSuchEntryLinkException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -122,6 +123,9 @@ public class FragmentEntryLinkPersistenceTest {
 
 		newFragmentEntryLink.setUuid(RandomTestUtil.randomString());
 
+		newFragmentEntryLink.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newFragmentEntryLink.setGroupId(RandomTestUtil.nextLong());
 
 		newFragmentEntryLink.setCompanyId(RandomTestUtil.nextLong());
@@ -185,6 +189,9 @@ public class FragmentEntryLinkPersistenceTest {
 		Assert.assertEquals(
 			existingFragmentEntryLink.getUuid(),
 			newFragmentEntryLink.getUuid());
+		Assert.assertEquals(
+			existingFragmentEntryLink.getExternalReferenceCode(),
+			newFragmentEntryLink.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingFragmentEntryLink.getFragmentEntryLinkId(),
 			newFragmentEntryLink.getFragmentEntryLinkId());
@@ -261,6 +268,28 @@ public class FragmentEntryLinkPersistenceTest {
 			Time.getShortTimestamp(
 				existingFragmentEntryLink.getLastPublishDate()),
 			Time.getShortTimestamp(newFragmentEntryLink.getLastPublishDate()));
+	}
+
+	@Test(
+		expected = DuplicateFragmentEntryLinkExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		FragmentEntryLink fragmentEntryLink = addFragmentEntryLink();
+
+		FragmentEntryLink newFragmentEntryLink = addFragmentEntryLink();
+
+		newFragmentEntryLink.setGroupId(fragmentEntryLink.getGroupId());
+
+		newFragmentEntryLink = _persistence.update(newFragmentEntryLink);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newFragmentEntryLink);
+
+		newFragmentEntryLink.setExternalReferenceCode(
+			fragmentEntryLink.getExternalReferenceCode());
+
+		_persistence.update(newFragmentEntryLink);
 	}
 
 	@Test
@@ -477,6 +506,15 @@ public class FragmentEntryLinkPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_G("null", 0L);
+
+		_persistence.countByERC_G((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		FragmentEntryLink newFragmentEntryLink = addFragmentEntryLink();
 
@@ -502,13 +540,14 @@ public class FragmentEntryLinkPersistenceTest {
 	protected OrderByComparator<FragmentEntryLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"FragmentEntryLink", "mvccVersion", true, "ctCollectionId", true,
-			"uuid", true, "fragmentEntryLinkId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "originalFragmentEntryLinkId", true,
-			"fragmentEntryId", true, "segmentsExperienceId", true,
-			"classNameId", true, "classPK", true, "plid", true, "deleted", true,
-			"namespace", true, "position", true, "rendererKey", true, "type",
-			true, "lastPropagationDate", true, "lastPublishDate", true);
+			"uuid", true, "externalReferenceCode", true, "fragmentEntryLinkId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"originalFragmentEntryLinkId", true, "fragmentEntryId", true,
+			"segmentsExperienceId", true, "classNameId", true, "classPK", true,
+			"plid", true, "deleted", true, "namespace", true, "position", true,
+			"rendererKey", true, "type", true, "lastPropagationDate", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -794,6 +833,17 @@ public class FragmentEntryLinkPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				fragmentEntryLink, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
+			fragmentEntryLink.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				fragmentEntryLink, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(fragmentEntryLink.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				fragmentEntryLink, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected FragmentEntryLink addFragmentEntryLink() throws Exception {
@@ -806,6 +856,9 @@ public class FragmentEntryLinkPersistenceTest {
 		fragmentEntryLink.setCtCollectionId(RandomTestUtil.nextLong());
 
 		fragmentEntryLink.setUuid(RandomTestUtil.randomString());
+
+		fragmentEntryLink.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		fragmentEntryLink.setGroupId(RandomTestUtil.nextLong());
 

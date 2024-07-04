@@ -266,6 +266,23 @@ public abstract class FragmentEntryLinkLocalServiceBaseImpl
 		return fragmentEntryLinkPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public FragmentEntryLink fetchFragmentEntryLinkByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return fragmentEntryLinkPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public FragmentEntryLink getFragmentEntryLinkByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return fragmentEntryLinkPersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the fragment entry link with the primary key.
 	 *

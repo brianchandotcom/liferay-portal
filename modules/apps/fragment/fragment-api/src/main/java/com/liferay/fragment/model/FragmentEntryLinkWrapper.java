@@ -39,6 +39,7 @@ public class FragmentEntryLinkWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("fragmentEntryLinkId", getFragmentEntryLinkId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -87,6 +88,13 @@ public class FragmentEntryLinkWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long fragmentEntryLinkId = (Long)attributes.get("fragmentEntryLinkId");
@@ -345,6 +353,16 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public String getEditableValues() {
 		return model.getEditableValues();
+	}
+
+	/**
+	 * Returns the external reference code of this fragment entry link.
+	 *
+	 * @return the external reference code of this fragment entry link
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -709,6 +727,16 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public void setEditableValues(String editableValues) {
 		model.setEditableValues(editableValues);
+	}
+
+	/**
+	 * Sets the external reference code of this fragment entry link.
+	 *
+	 * @param externalReferenceCode the external reference code of this fragment entry link
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

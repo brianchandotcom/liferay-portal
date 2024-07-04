@@ -320,6 +320,15 @@ public class FragmentEntryLinkLocalServiceWrapper
 			fragmentEntryLinkId);
 	}
 
+	@Override
+	public FragmentEntryLink fetchFragmentEntryLinkByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return _fragmentEntryLinkLocalService.
+			fetchFragmentEntryLinkByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the fragment entry link matching the UUID and group.
 	 *
@@ -408,6 +417,16 @@ public class FragmentEntryLinkLocalServiceWrapper
 
 		return _fragmentEntryLinkLocalService.getFragmentEntryLink(
 			groupId, originalFragmentEntryLinkId, plid);
+	}
+
+	@Override
+	public FragmentEntryLink getFragmentEntryLinkByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentEntryLinkLocalService.
+			getFragmentEntryLinkByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	/**

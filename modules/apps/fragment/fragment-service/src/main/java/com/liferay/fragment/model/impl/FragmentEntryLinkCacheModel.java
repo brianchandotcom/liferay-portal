@@ -69,7 +69,7 @@ public class FragmentEntryLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -77,6 +77,8 @@ public class FragmentEntryLinkCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", fragmentEntryLinkId=");
 		sb.append(fragmentEntryLinkId);
 		sb.append(", groupId=");
@@ -145,6 +147,14 @@ public class FragmentEntryLinkCacheModel
 		}
 		else {
 			fragmentEntryLinkImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			fragmentEntryLinkImpl.setExternalReferenceCode("");
+		}
+		else {
+			fragmentEntryLinkImpl.setExternalReferenceCode(
+				externalReferenceCode);
 		}
 
 		fragmentEntryLinkImpl.setFragmentEntryLinkId(fragmentEntryLinkId);
@@ -264,6 +274,7 @@ public class FragmentEntryLinkCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		fragmentEntryLinkId = objectInput.readLong();
 
@@ -315,6 +326,13 @@ public class FragmentEntryLinkCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(fragmentEntryLinkId);
@@ -408,6 +426,7 @@ public class FragmentEntryLinkCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long fragmentEntryLinkId;
 	public long groupId;
 	public long companyId;

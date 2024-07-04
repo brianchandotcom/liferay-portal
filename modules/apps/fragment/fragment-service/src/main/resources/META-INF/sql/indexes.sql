@@ -31,6 +31,7 @@ create index IX_6E7DE18C on FragmentEntry (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_67FF823E on FragmentEntryLink (fragmentEntryId, deleted);
 create index IX_2FB5437D on FragmentEntryLink (groupId, classNameId, classPK);
+create unique index IX_3CAD70F7 on FragmentEntryLink (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_4A9E751A on FragmentEntryLink (groupId, fragmentEntryId, classNameId, classPK);
 create index IX_3D731EF6 on FragmentEntryLink (groupId, plid, deleted);
 create index IX_A234739A on FragmentEntryLink (groupId, plid, fragmentEntryId);

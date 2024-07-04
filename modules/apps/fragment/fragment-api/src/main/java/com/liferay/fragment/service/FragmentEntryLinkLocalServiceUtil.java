@@ -284,6 +284,14 @@ public class FragmentEntryLinkLocalServiceUtil {
 		return getService().fetchFragmentEntryLink(fragmentEntryLinkId);
 	}
 
+	public static FragmentEntryLink
+		fetchFragmentEntryLinkByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		return getService().fetchFragmentEntryLinkByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the fragment entry link matching the UUID and group.
 	 *
@@ -359,6 +367,14 @@ public class FragmentEntryLinkLocalServiceUtil {
 
 		return getService().getFragmentEntryLink(
 			groupId, originalFragmentEntryLinkId, plid);
+	}
+
+	public static FragmentEntryLink getFragmentEntryLinkByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getFragmentEntryLinkByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

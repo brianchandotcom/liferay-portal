@@ -66,10 +66,11 @@ public class FragmentEntryLinkModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"fragmentEntryLinkId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"fragmentEntryLinkId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP},
 		{"originalFragmentEntryLinkId", Types.BIGINT},
 		{"fragmentEntryId", Types.BIGINT},
 		{"segmentsExperienceId", Types.BIGINT}, {"classNameId", Types.BIGINT},
@@ -89,6 +90,7 @@ public class FragmentEntryLinkModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fragmentEntryLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -117,7 +119,7 @@ public class FragmentEntryLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentEntryLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,segmentsExperienceId LONG,classNameId LONG,classPK LONG,plid LONG,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,deleted BOOLEAN,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,type_ INTEGER,lastPropagationDate DATE null,lastPublishDate DATE null,primary key (fragmentEntryLinkId, ctCollectionId))";
+		"create table FragmentEntryLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentEntryLinkId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,segmentsExperienceId LONG,classNameId LONG,classPK LONG,plid LONG,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,deleted BOOLEAN,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,type_ INTEGER,lastPropagationDate DATE null,lastPublishDate DATE null,primary key (fragmentEntryLinkId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryLink";
 
@@ -161,50 +163,56 @@ public class FragmentEntryLinkModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long FRAGMENTENTRYID_COLUMN_BITMASK = 16L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 32L;
+	public static final long FRAGMENTENTRYID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long ORIGINALFRAGMENTENTRYLINKID_COLUMN_BITMASK = 64L;
+	public static final long GROUPID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PLID_COLUMN_BITMASK = 128L;
+	public static final long ORIGINALFRAGMENTENTRYLINKID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long RENDERERKEY_COLUMN_BITMASK = 256L;
+	public static final long PLID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SEGMENTSEXPERIENCEID_COLUMN_BITMASK = 512L;
+	public static final long RENDERERKEY_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 1024L;
+	public static final long SEGMENTSEXPERIENCEID_COLUMN_BITMASK = 1024L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long POSITION_COLUMN_BITMASK = 2048L;
+	public static final long POSITION_COLUMN_BITMASK = 4096L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -322,6 +330,9 @@ public class FragmentEntryLinkModelImpl
 				"ctCollectionId", FragmentEntryLink::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", FragmentEntryLink::getUuid);
 			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				FragmentEntryLink::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"fragmentEntryLinkId",
 				FragmentEntryLink::getFragmentEntryLinkId);
 			attributeGetterFunctions.put(
@@ -400,6 +411,10 @@ public class FragmentEntryLinkModelImpl
 				"uuid",
 				(BiConsumer<FragmentEntryLink, String>)
 					FragmentEntryLink::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<FragmentEntryLink, String>)
+					FragmentEntryLink::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"fragmentEntryLinkId",
 				(BiConsumer<FragmentEntryLink, Long>)
@@ -564,6 +579,35 @@ public class FragmentEntryLinkModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1194,6 +1238,8 @@ public class FragmentEntryLinkModelImpl
 		fragmentEntryLinkImpl.setMvccVersion(getMvccVersion());
 		fragmentEntryLinkImpl.setCtCollectionId(getCtCollectionId());
 		fragmentEntryLinkImpl.setUuid(getUuid());
+		fragmentEntryLinkImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		fragmentEntryLinkImpl.setFragmentEntryLinkId(getFragmentEntryLinkId());
 		fragmentEntryLinkImpl.setGroupId(getGroupId());
 		fragmentEntryLinkImpl.setCompanyId(getCompanyId());
@@ -1238,6 +1284,8 @@ public class FragmentEntryLinkModelImpl
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		fragmentEntryLinkImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
+		fragmentEntryLinkImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		fragmentEntryLinkImpl.setFragmentEntryLinkId(
 			this.<Long>getColumnOriginalValue("fragmentEntryLinkId"));
 		fragmentEntryLinkImpl.setGroupId(
@@ -1409,6 +1457,18 @@ public class FragmentEntryLinkModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			fragmentEntryLinkCacheModel.uuid = null;
+		}
+
+		fragmentEntryLinkCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			fragmentEntryLinkCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			fragmentEntryLinkCacheModel.externalReferenceCode = null;
 		}
 
 		fragmentEntryLinkCacheModel.fragmentEntryLinkId =
@@ -1607,6 +1667,7 @@ public class FragmentEntryLinkModelImpl
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _fragmentEntryLinkId;
 	private long _groupId;
 	private long _companyId;
@@ -1667,6 +1728,8 @@ public class FragmentEntryLinkModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("fragmentEntryLinkId", _fragmentEntryLinkId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1724,55 +1787,57 @@ public class FragmentEntryLinkModelImpl
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("fragmentEntryLinkId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("fragmentEntryLinkId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("originalFragmentEntryLinkId", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("fragmentEntryId", 2048L);
+		columnBitmasks.put("originalFragmentEntryLinkId", 2048L);
 
-		columnBitmasks.put("segmentsExperienceId", 4096L);
+		columnBitmasks.put("fragmentEntryId", 4096L);
 
-		columnBitmasks.put("classNameId", 8192L);
+		columnBitmasks.put("segmentsExperienceId", 8192L);
 
-		columnBitmasks.put("classPK", 16384L);
+		columnBitmasks.put("classNameId", 16384L);
 
-		columnBitmasks.put("plid", 32768L);
+		columnBitmasks.put("classPK", 32768L);
 
-		columnBitmasks.put("css", 65536L);
+		columnBitmasks.put("plid", 65536L);
 
-		columnBitmasks.put("html", 131072L);
+		columnBitmasks.put("css", 131072L);
 
-		columnBitmasks.put("js", 262144L);
+		columnBitmasks.put("html", 262144L);
 
-		columnBitmasks.put("configuration", 524288L);
+		columnBitmasks.put("js", 524288L);
 
-		columnBitmasks.put("deleted", 1048576L);
+		columnBitmasks.put("configuration", 1048576L);
 
-		columnBitmasks.put("editableValues", 2097152L);
+		columnBitmasks.put("deleted", 2097152L);
 
-		columnBitmasks.put("namespace", 4194304L);
+		columnBitmasks.put("editableValues", 4194304L);
 
-		columnBitmasks.put("position", 8388608L);
+		columnBitmasks.put("namespace", 8388608L);
 
-		columnBitmasks.put("rendererKey", 16777216L);
+		columnBitmasks.put("position", 16777216L);
 
-		columnBitmasks.put("type_", 33554432L);
+		columnBitmasks.put("rendererKey", 33554432L);
 
-		columnBitmasks.put("lastPropagationDate", 67108864L);
+		columnBitmasks.put("type_", 67108864L);
 
-		columnBitmasks.put("lastPublishDate", 134217728L);
+		columnBitmasks.put("lastPropagationDate", 134217728L);
+
+		columnBitmasks.put("lastPublishDate", 268435456L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

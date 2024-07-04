@@ -244,6 +244,10 @@ public interface FragmentEntryLinkLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentEntryLink fetchFragmentEntryLink(long fragmentEntryLinkId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentEntryLink fetchFragmentEntryLinkByExternalReferenceCode(
+		String externalReferenceCode, long groupId);
+
 	/**
 	 * Returns the fragment entry link matching the UUID and group.
 	 *
@@ -294,6 +298,11 @@ public interface FragmentEntryLinkLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentEntryLink getFragmentEntryLink(
 		long groupId, long originalFragmentEntryLinkId, long plid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentEntryLink getFragmentEntryLinkByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
 
 	/**
 	 * Returns the fragment entry link matching the UUID and group.

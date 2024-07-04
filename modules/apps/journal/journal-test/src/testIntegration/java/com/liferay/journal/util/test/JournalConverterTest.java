@@ -65,7 +65,7 @@ import org.junit.runner.RunWith;
  * @author Marcellus Tavares
  */
 @RunWith(Arquillian.class)
-public class JournalConverterUtilTest {
+public class JournalConverterTest {
 
 	@ClassRule
 	@Rule

@@ -219,10 +219,10 @@ public class RememberMeTokenLocalServiceUtil {
 	}
 
 	public static RememberMeToken fetchRememberMeToken(
-			long rememberMeTokenId, String token)
+			long rememberMeTokenId, String value)
 		throws com.liferay.portal.kernel.exception.PwdEncryptorException {
 
-		return getService().fetchRememberMeToken(rememberMeTokenId, token);
+		return getService().fetchRememberMeToken(rememberMeTokenId, value);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

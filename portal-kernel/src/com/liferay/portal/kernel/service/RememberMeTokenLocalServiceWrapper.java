@@ -249,11 +249,11 @@ public class RememberMeTokenLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.RememberMeToken fetchRememberMeToken(
-			long rememberMeTokenId, String token)
+			long rememberMeTokenId, String value)
 		throws com.liferay.portal.kernel.exception.PwdEncryptorException {
 
 		return _rememberMeTokenLocalService.fetchRememberMeToken(
-			rememberMeTokenId, token);
+			rememberMeTokenId, value);
 	}
 
 	@Override

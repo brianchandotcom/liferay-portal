@@ -207,7 +207,7 @@ public interface RememberMeTokenLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public RememberMeToken fetchRememberMeToken(
-			long rememberMeTokenId, String token)
+			long rememberMeTokenId, String value)
 		throws PwdEncryptorException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

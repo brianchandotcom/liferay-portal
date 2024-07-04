@@ -105,9 +105,9 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			}
 		}
 
-		if ((user == null) || (guestUser.getUserId() == user.getUserId()) ||
-			!user.isActive() || !rememberMe || rememberMeToken.isExpired() ||
-			!company.isAutoLogin()) {
+		if (!company.isAutoLogin() || (user == null) ||
+			(guestUser.getUserId() == user.getUserId()) || !user.isActive() ||
+			!rememberMe || rememberMeToken.isExpired()) {
 
 			removeCookies(httpServletRequest, httpServletResponse);
 

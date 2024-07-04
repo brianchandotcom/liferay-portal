@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.cookies.CookiesManager;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.model.RememberMeToken;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.RememberMeTokenLocalServiceUtil;
+import com.liferay.portal.kernel.service.RememberMeTokenLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
@@ -113,7 +113,7 @@ public class AuthenticatedSessionManagerUtilTest {
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, StringPool.BLANK, 1);
 
 		RememberMeToken rememberMeToken =
-			RememberMeTokenLocalServiceUtil.addRememberMeToken(
+			_rememberMeTokenLocalService.addRememberMeToken(
 				_user.getCompanyId(), _user.getUserId(),
 				new Date(System.currentTimeMillis()), cookie::setValue);
 
@@ -141,7 +141,7 @@ public class AuthenticatedSessionManagerUtilTest {
 				mockHttpServletRequest, false));
 
 		Assert.assertNull(
-			RememberMeTokenLocalServiceUtil.fetchRememberMeToken(
+			_rememberMeTokenLocalService.fetchRememberMeToken(
 				rememberMeToken.getRememberMeTokenId()));
 	}
 
@@ -156,6 +156,9 @@ public class AuthenticatedSessionManagerUtilTest {
 
 	@Inject
 	private CookiesManager _cookiesManager;
+
+	@Inject
+	private RememberMeTokenLocalService _rememberMeTokenLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

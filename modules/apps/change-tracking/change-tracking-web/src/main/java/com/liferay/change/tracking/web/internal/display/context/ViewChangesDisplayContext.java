@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.util.PropsValues;
@@ -1273,6 +1274,24 @@ public class ViewChangesDisplayContext {
 		return ctDisplayRenderer.getTypeName(locale);
 	}
 
+	private List<WorkflowTask> _getWorkflowTasks(
+			CTEntry ctEntry, long classPK, long groupId)
+		throws WorkflowException {
+
+		WorkflowInstanceLink workflowInstanceLink =
+			_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
+				ctEntry.getCompanyId(), groupId,
+				_portal.getClassName(ctEntry.getModelClassNameId()), classPK);
+
+		if (workflowInstanceLink == null) {
+			return null;
+		}
+
+		return _workflowTaskManager.getWorkflowTasksByWorkflowInstance(
+			workflowInstanceLink.getCompanyId(), null,
+			workflowInstanceLink.getWorkflowInstanceId(), null, 0, 1, null);
+	}
+
 	private <T extends BaseModel<T>> boolean _isSite(T model) {
 		if (model instanceof Group) {
 			Group group = (Group)model;
@@ -1300,27 +1319,34 @@ public class ViewChangesDisplayContext {
 				modelAttributes.get("resourcePrimKey"));
 		}
 
+		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+			ctEntry.getCtCollectionId());
+
+		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			List<WorkflowTask> workflowTasks = _getWorkflowTasks(
+				ctEntry, classPK, groupId);
+
+			if (workflowTasks == null) {
+				return true;
+			}
+
+			return !workflowTasks.get(
+				0
+			).isCompleted();
+		}
+
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					ctEntry.getCtCollectionId())) {
 
-			WorkflowInstanceLink workflowInstanceLink =
-				_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
-					ctEntry.getCompanyId(), groupId,
-					_portal.getClassName(ctEntry.getModelClassNameId()),
-					classPK);
+			List<WorkflowTask> workflowTasks = _getWorkflowTasks(
+				ctEntry, classPK, groupId);
 
-			if (workflowInstanceLink == null) {
+			if (workflowTasks == null) {
 				return true;
 			}
 
-			List<WorkflowTask> workflowTasks =
-				_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
-					workflowInstanceLink.getCompanyId(), null,
-					workflowInstanceLink.getWorkflowInstanceId(), null, 0, 1,
-					null);
-
-			return workflowTasks.isEmpty();
+			return false;
 		}
 	}
 

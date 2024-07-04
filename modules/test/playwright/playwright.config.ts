@@ -153,7 +153,6 @@ export default defineConfig({
 			? process.env.PORTAL_URL
 			: 'http://localhost:8080',
 		screenshot: 'only-on-failure',
-		testIdAttribute: 'data-qa-id',
 		trace: 'retain-on-failure',
 	},
 	workers: 1,

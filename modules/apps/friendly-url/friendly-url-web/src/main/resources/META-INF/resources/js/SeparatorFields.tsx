@@ -102,7 +102,6 @@ function Field({errors, field, url}: FieldProps) {
 							aria-label={Liferay.Language.get(
 								'reset-to-default-value'
 							)}
-							data-testid={name + '-reset-to-default-value'}
 							displayType="secondary"
 							onClick={() => {
 								setValue(defaultValue);

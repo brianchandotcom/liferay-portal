@@ -51,6 +51,22 @@ public class FragmentEntryLinkServiceUtil {
 		return getService().deleteFragmentEntryLink(fragmentEntryLinkId);
 	}
 
+	public static FragmentEntryLink deleteFragmentEntryLink(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteFragmentEntryLink(
+			externalReferenceCode, groupId);
+	}
+
+	public static FragmentEntryLink getFragmentEntryLinkByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getFragmentEntryLinkByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

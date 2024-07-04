@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
 import com.liferay.fragment.service.persistence.impl.constants.FragmentPersistenceConstants;
@@ -151,6 +152,9 @@ public class FragmentEntryLinkServiceTest {
 
 	@Inject
 	private FragmentEntryLinkService _fragmentEntryLinkService;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

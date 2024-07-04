@@ -133,6 +133,10 @@ public interface FragmentEntryLinkLocalService
 	public FragmentEntryLink deleteFragmentEntryLink(long fragmentEntryLinkId)
 		throws PortalException;
 
+	public FragmentEntryLink deleteFragmentEntryLink(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	public void deleteFragmentEntryLinks(long groupId);
 
 	public void deleteFragmentEntryLinks(

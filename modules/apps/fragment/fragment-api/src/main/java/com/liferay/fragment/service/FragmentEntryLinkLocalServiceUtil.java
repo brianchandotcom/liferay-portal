@@ -125,6 +125,14 @@ public class FragmentEntryLinkLocalServiceUtil {
 		return getService().deleteFragmentEntryLink(fragmentEntryLinkId);
 	}
 
+	public static FragmentEntryLink deleteFragmentEntryLink(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteFragmentEntryLink(
+			externalReferenceCode, groupId);
+	}
+
 	public static void deleteFragmentEntryLinks(long groupId) {
 		getService().deleteFragmentEntryLinks(groupId);
 	}

@@ -259,7 +259,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			AssertElementPresent(
+			WaitForElementPresent(
 				key_entry = "Last Name LPS-185429",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}

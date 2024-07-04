@@ -211,7 +211,7 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="FragmentEntryLink" remote-service="true" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="FragmentEntryLink" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

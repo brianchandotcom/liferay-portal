@@ -54,14 +54,14 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		RememberMeToken rememberMeToken = null;
+
 		String rememberMeTokenId = CookiesManagerUtil.getCookieValue(
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID, httpServletRequest,
 			false);
 		String rememberMeTokenValue = CookiesManagerUtil.getCookieValue(
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, httpServletRequest,
 			false);
-
-		RememberMeToken rememberMeToken = null;
 
 		if (Validator.isNotNull(rememberMeTokenId) &&
 			Validator.isNotNull(rememberMeTokenValue)) {
@@ -87,12 +87,12 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 
 		// LEP-5188
 
-		String proxyPath = _portal.getPathProxy();
-		String contextPath = _portal.getPathContext();
-
 		boolean rememberMe = GetterUtil.getBoolean(
 			CookiesManagerUtil.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME, httpServletRequest, false));
+
+		String proxyPath = _portal.getPathProxy();
+		String contextPath = _portal.getPathContext();
 
 		if (proxyPath.equals(contextPath)) {
 			if (Validator.isNotNull(httpServletRequest.getContextPath())) {

@@ -42,7 +42,7 @@ public class RememberMeTokenLocalServiceImpl
 
 		rememberMeToken = rememberMeTokenPersistence.update(rememberMeToken);
 
-		tokenConsumer.accept(generate);
+		tokenConsumer.accept(value);
 
 		return rememberMeToken;
 	}

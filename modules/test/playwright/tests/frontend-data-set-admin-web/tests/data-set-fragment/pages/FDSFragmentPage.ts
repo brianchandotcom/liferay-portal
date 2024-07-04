@@ -6,7 +6,7 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../../helpers/ApiHelpers';
-import {DEFAULT_LABEL} from '../../../utils/constants';
+import {DEFAULT_LABEL} from '../../../utils/dataSetManagerConstants';
 import {VisualizationMode} from '../../../utils/types';
 
 export class FDSFragmentPage {

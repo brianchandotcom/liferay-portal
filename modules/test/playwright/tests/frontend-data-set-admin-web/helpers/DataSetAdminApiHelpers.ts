@@ -6,8 +6,8 @@
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
 import {
+	ACTION_DATA_SET_RELATIONSHIP,
 	CARDS_SECTION_DATA_SET_RELATIONSHIP,
-	CLIENT_EXTENSION_FILTER_DATA_SET_RELATIONSHIP,
 	CREATION_ACTION_DATA_SET_RELATIONSHIP,
 	DATE_FILTER_DATA_SET_RELATIONSHIP,
 	DEFAULT_LABEL,
@@ -16,7 +16,7 @@ import {
 	SELECTION_FILTER_DATA_SET_RELATIONSHIP,
 	SORT_DATA_SET_RELATIONSHIP,
 	TABLE_SECTION_DATA_SET_RELATIONSHIP,
-} from '../utils/dataSetManagerConstants';
+} from '../utils/dataSetAdminConstants';
 import {
 	AsyncActionMethod,
 	CreationActionTypes,
@@ -25,7 +25,11 @@ import {
 } from '../utils/types';
 
 const DEFAULT_DATA_SET_ERC = 'sampleDataSetERC';
-export class DataSetManagerApiHelpers extends ApiHelpers {
+
+export class DataSetAdminApiHelpers extends ApiHelpers {
+	restContextPathPrefix = 'data-set-admin/data-sets/';
+	baseUrlPath = this.baseUrl + this.restContextPathPrefix;
+
 	async createDataSet({
 		defaultItemsPerPage = 20,
 		defaultVisualizationMode,
@@ -33,9 +37,9 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		erc = 'sampleDataSetERC',
 		label = DEFAULT_LABEL.DATA_SET,
 		listOfItemsPerPage = '4, 8, 20, 40, 60',
-		restApplication = '/data-set-manager/table-sections',
+		restApplication = `${this.baseUrlPath}table-sections`,
 		restEndpoint = '/',
-		restSchema = 'FDSField',
+		restSchema = 'DataSetTableSection',
 	}: {
 		defaultItemsPerPage?: number;
 		defaultVisualizationMode?: string;
@@ -47,7 +51,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		restEndpoint?: string;
 		restSchema?: string;
 	}) {
-		const url = `${this.baseUrl}data-set-manager/data-sets`;
+		const url = `${this.baseUrlPath}`;
 
 		const data = {
 			defaultItemsPerPage,
@@ -65,18 +69,19 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async createDataSetCardsSection({
-		dataSetERC = DEFAULT_DATA_SET_ERC,
+		dataSet,
 		fieldName = 'name',
 		name = 'title',
 	}: {
-		dataSetERC?: string;
+		dataSet: any;
 		fieldName?: string;
 		name?: string;
 	}) {
-		const url = `${this.baseUrl}data-set-manager/cards-sections`;
+		const url = `${this.baseUrlPath}cards-sections`;
 
 		const data = {
-			[CARDS_SECTION_DATA_SET_RELATIONSHIP]: dataSetERC,
+			[CARDS_SECTION_DATA_SET_RELATIONSHIP.erc]:
+				dataSet.externalReferenceCode,
 			fieldName,
 			name,
 		};
@@ -84,31 +89,8 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		return this.post(url, {data});
 	}
 
-	async createDataSetClientExtensionFilter({
-		dataSetId,
-		fdsFilterClientExtensionERC,
-		fieldName,
-		label_i18n = {en_US: 'Title'},
-	}: {
-		dataSetId: string;
-		fdsFilterClientExtensionERC: string;
-		fieldName: string;
-		label_i18n?: {[key: string]: string};
-	}) {
-		const url = `${this.baseUrl}data-set-manager/client-extension-filters`;
-
-		const data = {
-			[CLIENT_EXTENSION_FILTER_DATA_SET_RELATIONSHIP]: dataSetId,
-			fdsFilterClientExtensionERC,
-			fieldName,
-			label_i18n,
-		};
-
-		return this.post(url, {data});
-	}
-
 	async createDataSetCreationAction({
-		dataSetERC = DEFAULT_DATA_SET_ERC,
+		dataSet,
 		icon,
 		label_i18n = {en_US: 'Default Creation Action'},
 		modalSize = 'full-screen',
@@ -117,7 +99,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		type = 'link',
 		url = liferayConfig.environment.baseUrl,
 	}: {
-		dataSetERC?: string;
+		dataSet: any;
 		icon?: string;
 		label_i18n?: {[key: string]: string};
 		modalSize?: ModalVariantTypes;
@@ -126,10 +108,10 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		type?: CreationActionTypes;
 		url?: string;
 	}) {
-		const endpointUrl = `${this.baseUrl}data-set-manager/actions`;
-
-		const data = {
-			[CREATION_ACTION_DATA_SET_RELATIONSHIP]: dataSetERC,
+		return this.postDataSetBaseAction({
+			[ACTION_DATA_SET_RELATIONSHIP.erc]: dataSet.externalReferenceCode,
+			context: 'creation',
+			name: 'creation', // todo remove
 			icon,
 			label_i18n,
 			modalSize,
@@ -137,36 +119,35 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			title_i18n,
 			type,
 			url,
-		};
-
-		return this.post(endpointUrl, {data});
+		});
 	}
 
-	async createDataSetField({
-		dataSetERC = DEFAULT_DATA_SET_ERC,
+	async createDataSetTableSection({
+		dataSet,
 		extraBodyParams = {},
 		label_i18n = {en_US: 'Title'},
-		name = 'title',
+		fieldName = 'title',
 		renderer = 'default',
 		rendererType = 'internal',
 		sortable = false,
 		type = 'string',
 	}: {
-		dataSetERC?: string;
+		dataSet: any;
 		extraBodyParams?: any;
+		fieldName?: string;
 		label_i18n?: {[key: string]: string};
-		name?: string;
 		renderer?: string;
 		rendererType?: string;
 		sortable?: boolean;
 		type?: string;
 	}) {
-		const url = `${this.baseUrl}data-set-manager/table-sections`;
+		const url = `${this.baseUrlPath}table-sections`;
 
 		const data = {
-			[TABLE_SECTION_DATA_SET_RELATIONSHIP]: dataSetERC,
+			[TABLE_SECTION_DATA_SET_RELATIONSHIP.erc]:
+				dataSet.externalReferenceCode,
+			fieldName,
 			label_i18n,
-			name,
 			renderer,
 			rendererType,
 			sortable,
@@ -178,28 +159,29 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async createDataSetDateFilter({
-		dataSetERC = DEFAULT_DATA_SET_ERC,
+		dataSet,
 		fieldName,
-		from = '',
+		fromDate = '',
 		label_i18n = {en_US: 'Title'},
-		to = '',
+		toDate = '',
 		type,
 	}: {
-		dataSetERC?: string;
+		dataSet: any;
 		fieldName: string;
-		from?: string;
+		fromDate?: string;
 		label_i18n?: {[key: string]: string};
-		to?: string;
+		toDate?: string;
 		type: 'date' | 'date-time';
 	}) {
-		const url = `${this.baseUrl}data-set-manager/date-filters`;
+		const url = `${this.baseUrlPath}date-filters`;
 
 		const data = {
-			[DATE_FILTER_DATA_SET_RELATIONSHIP]: dataSetERC,
+			[DATE_FILTER_DATA_SET_RELATIONSHIP.erc]:
+				dataSet.externalReferenceCode,
 			fieldName,
-			from,
+			fromDate,
 			label_i18n,
-			to,
+			toDate,
 			type,
 		};
 
@@ -207,36 +189,31 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async createDataSetSelectionFilter({
-		dataSetERC = DEFAULT_DATA_SET_ERC,
+		dataSet,
 		fieldName,
 		include = true,
-		itemKey,
-		itemLabel,
 		label_i18n,
 		multiple = false,
 		preselectedValues = '[]',
 		source,
 		sourceType,
 	}: {
-		dataSetERC?: string;
+		dataSet: any;
 		fieldName: string;
 		include?: boolean;
-		itemKey?: string;
-		itemLabel?: string;
 		label_i18n?: {[key: string]: string};
 		multiple?: boolean;
 		preselectedValues?: string;
 		source: string;
 		sourceType: string;
 	}) {
-		const url = `${this.baseUrl}data-set-manager/selection-filters`;
+		const url = `${this.baseUrlPath}selection-filters`;
 
 		const data = {
-			[SELECTION_FILTER_DATA_SET_RELATIONSHIP]: dataSetERC,
+			[SELECTION_FILTER_DATA_SET_RELATIONSHIP.erc]:
+				dataSet.externalReferenceCode,
 			fieldName,
 			include,
-			itemKey,
-			itemLabel,
 			label_i18n,
 			multiple,
 			preselectedValues,
@@ -250,7 +227,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	async createDataSetItemAction({
 		confirmationMessage_i18n,
 		confirmationMessageType,
-		dataSetERC = DEFAULT_DATA_SET_ERC,
+		dataSet,
 		errorMessage_i18n,
 		icon,
 		label_i18n = {en_US: 'Default Item Action'},
@@ -264,7 +241,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}: {
 		confirmationMessageType?: string;
 		confirmationMessage_i18n?: {[key: string]: string};
-		dataSetERC?: string;
+		dataSet: any;
 		errorMessage_i18n?: {[key: string]: string};
 		icon?: string;
 		label_i18n?: {[key: string]: string};
@@ -276,12 +253,12 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		type?: ItemActionTypes;
 		url?: string;
 	}) {
-		const endpointUrl = `${this.baseUrl}data-set-manager/actions`;
-
-		const data = {
-			[ITEM_ACTION_DATA_SET_RELATIONSHIP]: dataSetERC,
+		return this.postDataSetBaseAction({
+			[ACTION_DATA_SET_RELATIONSHIP.id]: dataSet.externalReferenceCode,
 			confirmationMessage_i18n,
 			confirmationMessageType,
+			context: 'item',
+			name: 'item', // todo remove
 			errorMessage_i18n,
 			icon,
 			label_i18n,
@@ -292,29 +269,27 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			title_i18n,
 			type,
 			url,
-		};
-
-		return this.post(endpointUrl, {data});
+		});
 	}
 
 	async createDataSetSort({
-		dataSetERC = DEFAULT_DATA_SET_ERC,
-		defaultValue = false,
+		dataSet,
+		defaultSort = false,
 		fieldName = 'dateCreated',
 		label_i18n = {en_US: 'Date Created'},
 		orderType = 'asc',
 	}: {
-		dataSetERC?: string;
-		defaultValue?: boolean;
+		dataSet: any;
+		defaultSort?: boolean;
 		fieldName?: string;
 		label_i18n?: {[key: string]: string};
 		orderType?: string;
 	}) {
-		const url = `${this.baseUrl}data-set-manager/sorts`;
+		const url = `${this.baseUrlPath}sorts`;
 
 		const data = {
-			[SORT_DATA_SET_RELATIONSHIP]: dataSetERC,
-			default: defaultValue,
+			[SORT_DATA_SET_RELATIONSHIP.erc]: dataSet.externalReferenceCode,
+			defaultSort,
 			fieldName,
 			label: label_i18n[Object.keys(label_i18n)[0]],
 			label_i18n,
@@ -325,19 +300,20 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async createDataSetListSection({
-		dataSetERC = DEFAULT_DATA_SET_ERC,
+		dataSet,
 		fieldName = 'name',
 		name = 'title',
 	}: {
-		dataSetERC?: string;
+		dataSet?: any;
 		fieldName?: string;
 		name?: string;
 		r_fdsViewFDSListSectionRelationship_c_fdsViewERC?: string;
 	}) {
-		const url = `${this.baseUrl}data-set-manager/list-sections`;
+		const url = `${this.baseUrlPath}list-sections`;
 
 		const data = {
-			[LIST_SECTION_DATA_SET_RELATIONSHIP]: dataSetERC,
+			[LIST_SECTION_DATA_SET_RELATIONSHIP.erc]:
+				dataSet.externalReferenceCode,
 			fieldName,
 			name,
 		};
@@ -346,9 +322,21 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async deleteDataSet({erc = DEFAULT_DATA_SET_ERC}: {erc?: string}) {
-		const url = `${this.baseUrl}data-set-manager/data-sets/by-external-reference-code/${erc}`;
+		const url = `${this.baseUrlPath}by-external-reference-code/${erc}`;
 
 		return this.delete(url);
+	}
+
+	async getDataSetAction(erc: string) {
+		const endpointUrl = `${this.baseUrlPath}actions/by-external-reference-code/${erc}`;
+
+		return this.get(endpointUrl);
+	}
+
+	async postDataSetBaseAction(data: Object) {
+		const endpointUrl = `${this.baseUrlPath}actions`;
+
+		return this.post(endpointUrl, {data});
 	}
 
 	async updateDataSet({
@@ -364,47 +352,13 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		label?: string;
 		listOfItemsPerPage?: string;
 	}) {
-		const url = `${this.baseUrl}data-set-manager/data-sets/by-external-reference-code/${erc}`;
+		const url = `${this.baseUrlPath}by-external-reference-code/${erc}`;
 
 		const data = {
 			defaultItemsPerPage,
 			defaultVisualizationMode,
 			label,
 			listOfItemsPerPage,
-		};
-
-		return this.patch(url, data);
-	}
-
-	async updateDataSetSelectionFilter({
-		erc,
-		fieldName,
-		include,
-		itemKey,
-		itemLabel,
-		label_i18n,
-		multiple,
-		preselectedValues,
-	}: {
-		erc: string;
-		fieldName?: string;
-		include?: boolean;
-		itemKey?: string;
-		itemLabel?: string;
-		label_i18n?: {[key: string]: string};
-		multiple?: boolean;
-		preselectedValues?: string;
-	}) {
-		const url = `${this.baseUrl}data-set-manager/selection-filters/by-external-reference-code/${erc}`;
-
-		const data = {
-			fieldName,
-			include,
-			itemKey,
-			itemLabel,
-			label_i18n,
-			multiple,
-			preselectedValues,
 		};
 
 		return this.patch(url, data);

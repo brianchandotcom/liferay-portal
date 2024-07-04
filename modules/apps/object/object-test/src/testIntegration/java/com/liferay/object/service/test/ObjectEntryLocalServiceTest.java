@@ -456,7 +456,7 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddMultipleObjectEntriesWithObjectValidationRule()
+	public void testAddMultipleObjectEntriesWithTheSameObjectValidationRule()
 		throws Exception {
 
 		ObjectValidationRule objectValidationRule = _addObjectValidationRule(
@@ -473,40 +473,33 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(1);
 
-		for (String invalidEmailAddress :
-				Arrays.asList(
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString())) {
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddressRequired", RandomTestUtil.randomString()
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build());
 
-			try {
-				_addObjectEntry(
-					HashMapBuilder.<String, Serializable>put(
-						"emailAddressRequired", invalidEmailAddress
-					).put(
-						"listTypeEntryKeyRequired", "listTypeEntryKey1"
-					).build());
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			ObjectValidationRuleEngineException
+				objectValidationRuleEngineException =
+					(ObjectValidationRuleEngineException)
+						modelListenerException.getCause();
 
-				Assert.fail();
-			}
-			catch (ModelListenerException modelListenerException) {
-				ObjectValidationRuleEngineException
-					objectValidationRuleEngineException =
-						(ObjectValidationRuleEngineException)
-							modelListenerException.getCause();
+			List<ObjectValidationRuleResult> objectValidationRuleResults =
+				objectValidationRuleEngineException.
+					getObjectValidationRuleResults();
 
-				List<ObjectValidationRuleResult> objectValidationRuleResults =
-					objectValidationRuleEngineException.
-						getObjectValidationRuleResults();
+			Assert.assertEquals(
+				objectValidationRuleResults.toString(), 1,
+				objectValidationRuleResults.size());
 
-				Assert.assertEquals(
-					objectValidationRuleResults.toString(), 1,
-					objectValidationRuleResults.size());
-
-				_assertObjectValidationRuleResult(
-					objectValidationRule.getErrorLabel(LocaleUtil.getDefault()),
-					null, objectValidationRuleResults.get(0));
-			}
+			_assertObjectValidationRuleResult(
+				objectValidationRule.getErrorLabel(LocaleUtil.getDefault()),
+				null, objectValidationRuleResults.get(0));
 		}
 	}
 

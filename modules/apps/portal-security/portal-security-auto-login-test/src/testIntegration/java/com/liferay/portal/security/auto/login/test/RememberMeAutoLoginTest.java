@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.model.RememberMeToken;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
-import com.liferay.portal.kernel.service.RememberMeTokenLocalServiceUtil;
+import com.liferay.portal.kernel.service.RememberMeTokenLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -77,7 +77,7 @@ public class RememberMeAutoLoginTest {
 			(long)PropsValues.COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE * 1000;
 
 		RememberMeToken rememberMeToken =
-			RememberMeTokenLocalServiceUtil.addRememberMeToken(
+			_rememberMeTokenLocalService.addRememberMeToken(
 				_user.getCompanyId(), _user.getUserId(),
 				new Date(System.currentTimeMillis() + loginMaxAgeMillis),
 				cookie::setValue);
@@ -125,7 +125,7 @@ public class RememberMeAutoLoginTest {
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, StringPool.BLANK, 1);
 
 		RememberMeToken rememberMeToken =
-			RememberMeTokenLocalServiceUtil.addRememberMeToken(
+			_rememberMeTokenLocalService.addRememberMeToken(
 				_user.getCompanyId(), _user.getUserId(),
 				new Date(System.currentTimeMillis()), cookie::setValue);
 
@@ -153,7 +153,7 @@ public class RememberMeAutoLoginTest {
 				mockHttpServletRequest, false));
 
 		Assert.assertNull(
-			RememberMeTokenLocalServiceUtil.fetchRememberMeToken(
+			_rememberMeTokenLocalService.fetchRememberMeToken(
 				rememberMeToken.getRememberMeTokenId()));
 	}
 
@@ -201,6 +201,9 @@ public class RememberMeAutoLoginTest {
 		filter = "component.name=com.liferay.portal.security.auto.login.remember.me.RememberMeAutoLogin"
 	)
 	private AutoLogin _rememberMeAutoLogin;
+
+	@Inject
+	private RememberMeTokenLocalService _rememberMeTokenLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

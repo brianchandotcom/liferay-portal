@@ -39,10 +39,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.knowledge.base.model.KBArticleModel;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -1298,21 +1300,28 @@ public class ViewChangesDisplayContext {
 				modelAttributes.get("resourcePrimKey"));
 		}
 
-		WorkflowInstanceLink workflowInstanceLink =
-			_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
-				ctEntry.getCompanyId(), groupId,
-				_portal.getClassName(ctEntry.getModelClassNameId()), classPK);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctEntry.getCtCollectionId())) {
 
-		if (workflowInstanceLink == null) {
-			return true;
+			WorkflowInstanceLink workflowInstanceLink =
+				_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
+					ctEntry.getCompanyId(), groupId,
+					_portal.getClassName(ctEntry.getModelClassNameId()),
+					classPK);
+
+			if (workflowInstanceLink == null) {
+				return true;
+			}
+
+			List<WorkflowTask> workflowTasks =
+				_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
+					workflowInstanceLink.getCompanyId(), null,
+					workflowInstanceLink.getWorkflowInstanceId(), null, 0, 1,
+					null);
+
+			return workflowTasks.isEmpty();
 		}
-
-		List<WorkflowTask> workflowTasks =
-			_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
-				workflowInstanceLink.getCompanyId(), null,
-				workflowInstanceLink.getWorkflowInstanceId(), null, 0, 1, null);
-
-		return workflowTasks.isEmpty();
 	}
 
 	private <T extends BaseModel<T>> void _populateEntryValues(

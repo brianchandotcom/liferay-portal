@@ -6,7 +6,7 @@
 import {Locator, Page, expect} from '@playwright/test';
 import path from 'path';
 
-import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
 
 export class PublisherSolutionPage {
 	readonly accountSearchDropdown: Locator;
@@ -158,7 +158,7 @@ export class PublisherSolutionPage {
 			.fill(details['text-images'].description);
 		await this.importFile(
 			this.selectFileButton,
-			path.join(__dirname, '../dependencies/marketplace-icon.png')
+			path.join(__dirname, '../../dependencies/marketplace-icon.png')
 		);
 	}
 
@@ -174,7 +174,7 @@ export class PublisherSolutionPage {
 
 		await this.importFile(
 			this.selectFileButton,
-			path.join(__dirname, '../dependencies/marketplace-icon.png')
+			path.join(__dirname, '../../dependencies/marketplace-icon.png')
 		);
 	}
 

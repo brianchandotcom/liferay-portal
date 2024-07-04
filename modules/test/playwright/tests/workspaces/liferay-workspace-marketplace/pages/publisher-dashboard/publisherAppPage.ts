@@ -6,8 +6,8 @@
 import {Locator, Page, expect} from '@playwright/test';
 import path from 'path';
 
-import {zipFolder} from '../../../../utils/zip';
-import {PublishProductPayload, Steps} from '../types';
+import {zipFolder} from '../../../../../utils/zip';
+import {PublishProductPayload, Steps} from '../../types';
 
 export class PublisherAppPage {
 	readonly addPackagesButton: Locator;
@@ -212,7 +212,7 @@ export class PublisherAppPage {
 				await zipFolder(
 					path.join(
 						__dirname,
-						'../dependencies/folder.marketplace.jar'
+						'../../dependencies/folder.marketplace.jar'
 					)
 				)
 			);

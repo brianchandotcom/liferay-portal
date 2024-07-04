@@ -5,12 +5,12 @@
 
 import {test} from '@playwright/test';
 
-import {CustomerDashboardAppDetailsPage} from '../pages/customerDashboardAppDetailsPage';
-import {CustomerDashboardPage} from '../pages/customerDashboardPage';
-import {PublisherAppPage} from '../pages/publisherAppPage';
-import {PublisherDashboardPage} from '../pages/publisherDashboardPage';
-import {PublisherDashboardSolutionDetailsPage} from '../pages/publisherDashboardSolutionDetailsPage';
-import {PublisherSolutionPage} from '../pages/publisherSolutionPage';
+import {CustomerDashboardAppDetailsPage} from '../pages/customer-dashboard/customerDashboardAppDetailsPage';
+import {CustomerDashboardPage} from '../pages/customer-dashboard/customerDashboardPage';
+import {PublisherAppPage} from '../pages/publisher-dashboard/publisherAppPage';
+import {PublisherDashboardPage} from '../pages/publisher-dashboard/publisherDashboardPage';
+import {PublisherDashboardSolutionDetailsPage} from '../pages/publisher-dashboard/publisherDashboardSolutionDetailsPage';
+import {PublisherSolutionPage} from '../pages/publisher-dashboard/publisherSolutionPage';
 
 const marketplacePagesTest = test.extend<{
 	customerDashboardAppDetailsPage: CustomerDashboardAppDetailsPage;

@@ -1,0 +1,7 @@
+dependencies {
+	testIntegrationImplementation project(":apps:asset:asset-categories-api")
+	testIntegrationImplementation project(":apps:asset:asset-taglib")
+	testIntegrationImplementation project(":apps:journal:journal-api")
+	testIntegrationImplementation project(":apps:journal:journal-test-util")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
+}

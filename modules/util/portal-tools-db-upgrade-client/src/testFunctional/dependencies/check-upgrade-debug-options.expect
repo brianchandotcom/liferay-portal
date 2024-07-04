@@ -2,7 +2,7 @@
 
 spawn [db.upgrade.client.home]/db_upgrade_client[file.suffix.bat] --debug
 
-set timeout 50
+set timeout 10
 
 expect {
 	"agentlib:jdwp=transport=dt_socket,address=8001,server=y,suspend=y" {}

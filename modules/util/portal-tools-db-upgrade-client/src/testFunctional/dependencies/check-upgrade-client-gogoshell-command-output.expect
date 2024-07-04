@@ -9,7 +9,7 @@ expect {
 	timeout {send_user "No Gogoshell messages display";exit 2}
 }
 
-set timeout 50
+set timeout 10
 
 expect {
 	"upgrade:check" {

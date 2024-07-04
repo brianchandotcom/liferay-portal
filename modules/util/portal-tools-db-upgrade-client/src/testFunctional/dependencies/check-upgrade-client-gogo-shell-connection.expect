@@ -14,7 +14,7 @@ expect {
 	timeout {send_user "No Gogoshell messages display";exit 2}
 }
 
-set timeout 50
+set timeout 10
 
 expect {
 	"Unable to open Gogo shell" {send_user "The Gogo shell connection failed";exit 2}

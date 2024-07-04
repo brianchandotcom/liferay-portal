@@ -13,11 +13,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Pavel Savinov
  */
 @Component(
-	property = {
-		"osgi.http.whiteboard.servlet.name=com.liferay.portal.servlet.friendly.url.PublicFriendlyURLServlet",
-		"osgi.http.whiteboard.servlet.pattern=/web/*",
-		"servlet.init.private=false", "servlet.type=friendly-url"
-	},
+	property = {"servlet.init.private=false", "servlet.type=friendly-url"},
 	service = Servlet.class
 )
 public class PublicFriendlyURLServlet extends FriendlyURLServlet {

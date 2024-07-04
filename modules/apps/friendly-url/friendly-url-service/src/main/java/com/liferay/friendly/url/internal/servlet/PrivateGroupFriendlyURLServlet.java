@@ -14,8 +14,6 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"osgi.http.whiteboard.servlet.name=com.liferay.portal.servlet.friendly.url.PrivateGroupFriendlyURLServlet",
-		"osgi.http.whiteboard.servlet.pattern=/group/*",
 		"servlet.init.private=true", "servlet.init.user=false",
 		"servlet.type=friendly-url"
 	},

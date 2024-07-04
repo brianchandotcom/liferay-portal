@@ -432,17 +432,19 @@ definition {
 					locator1 = "ACSettings#PROPERTY_CHECKBOX");
 			}
 
-			Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
+			if (IsElementPresent(propertyIndex = "2", locator1 = "ACSettings#PROPERTY_CHECKBOX_INDEX")) {
+				Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
 
-			var confirmMessage = selenium.getText("ACSettings#DELETE_CONFIRMATION_MESSAGE");
+				var confirmMessage = selenium.getText("ACSettings#DELETE_CONFIRMATION_MESSAGE");
 
-			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+				Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
 
-			Type(
-				locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
-				value1 = ${confirmMessage});
+				Type(
+					locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
+					value1 = ${confirmMessage});
 
-			Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
+				Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
+			}
 		}
 	}
 

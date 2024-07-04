@@ -169,6 +169,14 @@ public class AccountEntryModelResourcePermission
 			accountEntryGroupId = accountEntry.getAccountEntryGroupId();
 		}
 
+		if (Objects.equals(actionId, AccountActionKeys.EDIT_ORGANIZATIONS) &&
+			permissionChecker.hasPermission(
+				accountEntryGroupId, AccountEntry.class.getName(),
+				accountEntryId, AccountActionKeys.MANAGE_ORGANIZATIONS)) {
+
+			return true;
+		}
+
 		return permissionChecker.hasPermission(
 			accountEntryGroupId, AccountEntry.class.getName(), accountEntryId,
 			actionId);

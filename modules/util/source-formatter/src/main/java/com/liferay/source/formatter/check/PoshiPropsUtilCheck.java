@@ -72,27 +72,18 @@ public class PoshiPropsUtilCheck extends BaseFileCheck {
 				}
 			}
 
+			String followingCode = _getFollowingCode(content, matcher.end());
 			String variableName = matcher.group(1);
 
-			x = content.indexOf("${" + variableName + "}", matcher.end());
-
-			if ((x == -1) || _isInsideTripleQuotes(content, x)) {
-				continue;
+			if (_isUnnecessaryAssign(followingCode, variableName)) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Pass '", matcher.group(2),
+						"' directly instead of assigning value to variable '",
+						variableName, "'"),
+					getLineNumber(content, matcher.start()) + 1);
 			}
-
-			String line = getLine(content, getLineNumber(content, x));
-
-			if (line.contains("curl") || line.contains("if ")) {
-				continue;
-			}
-
-			addMessage(
-				fileName,
-				StringBundler.concat(
-					"Pass '", matcher.group(2),
-					"' directly instead of assigning value to variable '",
-					variableName, "'"),
-				getLineNumber(content, matcher.start()) + 1);
 		}
 
 		String password = properties.getProperty(
@@ -128,6 +119,12 @@ public class PoshiPropsUtilCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private String _getFollowingCode(String content, int end) {
+		int x = content.indexOf("\n\t}", end);
+
+		return content.substring(end, x);
+	}
+
 	private boolean _isInsideTripleQuotes(String content, int pos) {
 		String s = content.substring(pos);
 
@@ -144,6 +141,28 @@ public class PoshiPropsUtilCheck extends BaseFileCheck {
 		}
 
 		return false;
+	}
+
+	private boolean _isUnnecessaryAssign(String content, String variableName) {
+		int x = -1;
+
+		while (true) {
+			x = content.indexOf("${" + variableName + "}", x + 1);
+
+			if (x == -1) {
+				return true;
+			}
+
+			if (_isInsideTripleQuotes(content, x)) {
+				return false;
+			}
+
+			String line = getLine(content, getLineNumber(content, x));
+
+			if (line.contains("curl") || line.contains("if (")) {
+				return false;
+			}
+		}
 	}
 
 	private static final Pattern _propsUtilGetPasswordPattern = Pattern.compile(

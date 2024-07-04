@@ -50,25 +50,6 @@ public class OptionsRestController extends BaseRestController {
 		return post(jwt, json, _log);
 	}
 
-	protected JSONObject get(String authorization, String path) {
-		Mono<String> response = _getWebClient(
-		).get(
-		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
-		).retrieve(
-		).bodyToMono(
-			String.class
-		);
-
-		response.subscribe();
-
-		return new JSONObject(Objects.requireNonNull(response.block()));
-	}
-
 	protected ResponseEntity<String> post(Jwt jwt, String json, Log log)
 		throws Exception {
 
@@ -101,7 +82,7 @@ public class OptionsRestController extends BaseRestController {
 
 			quantity += orderItemJSONObject.getInt("quantity");
 
-			JSONObject skuJSONObject = get(
+			JSONObject skuJSONObject = _get(
 				"Bearer " + jwt.getTokenValue(),
 				"/o/headless-commerce-admin-catalog/v1.0/skus/" +
 					orderItemJSONObject.getString("skuId"));
@@ -142,6 +123,25 @@ public class OptionsRestController extends BaseRestController {
 				_toShippingOptionsJSONArray(responseJSONArray)
 			).toString(),
 			HttpStatus.OK);
+	}
+
+	private JSONObject _get(String authorization, String path) {
+		Mono<String> response = _getWebClient(
+		).get(
+		).uri(
+			uriBuilder -> uriBuilder.path(
+				path
+			).build()
+		).header(
+			HttpHeaders.AUTHORIZATION, authorization
+		).retrieve(
+		).bodyToMono(
+			String.class
+		);
+
+		response.subscribe();
+
+		return new JSONObject(Objects.requireNonNull(response.block()));
 	}
 
 	private String _getAccessToken(

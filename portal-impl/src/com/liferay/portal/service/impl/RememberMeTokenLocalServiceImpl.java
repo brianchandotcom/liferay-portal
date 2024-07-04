@@ -5,11 +5,9 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.model.RememberMeToken;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.service.base.RememberMeTokenLocalServiceBaseImpl;
 
@@ -79,8 +77,5 @@ public class RememberMeTokenLocalServiceImpl
 
 		return rememberMeToken;
 	}
-
-	@BeanReference(type = UserLocalService.class)
-	private UserLocalService _userLocalService;
 
 }

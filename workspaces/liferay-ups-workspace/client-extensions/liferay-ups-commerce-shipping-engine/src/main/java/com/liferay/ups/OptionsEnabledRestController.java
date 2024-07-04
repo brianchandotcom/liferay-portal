@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping("/options-enabled")
 @RestController
-public class OptionsEnabledRestController extends BaseRestController {
+public class OptionsEnabledRestController extends OptionsRestController {
 
 	@PostMapping
 	public ResponseEntity<String> post(

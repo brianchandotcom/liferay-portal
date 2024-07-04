@@ -429,11 +429,11 @@ export default {
 	'this-builds-task-has-been-abandoned':
 		"This build's task has been abandoned.",
 	'this-field-is-required': 'This field is required.',
+	'this-is-a-possible-flaky-test': 'This is a possible flaky test.',
 	'this-role-is-for-general-liferay-employees-and-enables-authenticated-users-to-view-test-results':
 		'This role is for general Liferay employees and enables authenticated users to view test results.',
 	'this-subtask-has-been-merged-wihth-x':
 		'This subtask has been merged wihth {0}.',
-	'this-test-was-classified-as-flaky': 'This test was classified as flaky.',
 	'this-user-does-not-have-authentication-with-jira':
 		'This user does not have authentication with jira',
 	'time-x-total-issues': 'Time {0} Total Issues',

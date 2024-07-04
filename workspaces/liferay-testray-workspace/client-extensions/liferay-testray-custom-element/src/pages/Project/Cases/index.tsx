@@ -60,7 +60,7 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 											className="tr-table__row__flaky-icon"
 											data-tooltip-align="top"
 											title={i18n.translate(
-												'this-test-was-classified-as-flaky'
+												'this-is-a-possible-flaky-test'
 											)}
 										>
 											<ClayIcon symbol="flag-full" />

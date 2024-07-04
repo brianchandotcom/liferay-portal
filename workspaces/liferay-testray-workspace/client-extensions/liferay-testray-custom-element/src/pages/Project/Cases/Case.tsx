@@ -40,7 +40,7 @@ const Case = () => {
 								/>
 							),
 							value: i18n.translate(
-								'this-test-was-classified-as-flaky'
+								'this-is-a-possible-flaky-test'
 							),
 							visible: !!testrayCase.flaky,
 						},

@@ -70,7 +70,7 @@ const CaseResult = () => {
 										/>
 									),
 									value: i18n.translate(
-										'this-test-was-classified-as-flaky'
+										'this-is-a-possible-flaky-test'
 									),
 									visible: !!caseResult.case?.flaky,
 								},

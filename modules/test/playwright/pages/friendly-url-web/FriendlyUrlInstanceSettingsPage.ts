@@ -34,6 +34,7 @@ export class FriendlyUrlInstanceSettingsPage {
 	}
 
 	async resetSeparator(testId: string) {
+		await this.page.getByTestId(testId).waitFor();
 		await this.page.getByTestId(testId).click();
 		await this.page.getByRole('button', {name: 'Save'}).click();
 		await waitForSuccessAlert(this.page);

@@ -82,6 +82,10 @@ public class JournalConverterImpl implements JournalConverter {
 		throws PortalException {
 
 		try {
+			if (Validator.isNull(content)) {
+				return new Fields();
+			}
+
 			Document document = SAXReaderUtil.read(content);
 
 			Fields ddmFields = new Fields();

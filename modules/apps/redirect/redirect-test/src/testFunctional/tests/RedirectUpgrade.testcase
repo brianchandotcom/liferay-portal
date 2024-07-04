@@ -1,4 +1,4 @@
-@component-name = "portal-wcm"
+@component-name = "portal-publications"
 definition {
 
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";

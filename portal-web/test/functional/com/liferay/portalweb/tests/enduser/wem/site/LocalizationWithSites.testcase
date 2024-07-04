@@ -1,10 +1,10 @@
-@component-name = "portal-wcm"
+@component-name = "portal-publications"
 definition {
 
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Localization";
+	property testray.main.component.name = "Sites Administration";
 
 	setUp {
 		task ("Set up instance and sign in") {

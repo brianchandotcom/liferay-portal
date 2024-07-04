@@ -1,11 +1,10 @@
-@component-name = "portal-wcm"
+@component-name = "portal-publications"
 definition {
 
 	property ci.retries.disabled = "true";
 	property portal.accessibility = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Echo Accessibility";
 	property testray.main.component.name = "Sites Administration";
 
 	setUp {

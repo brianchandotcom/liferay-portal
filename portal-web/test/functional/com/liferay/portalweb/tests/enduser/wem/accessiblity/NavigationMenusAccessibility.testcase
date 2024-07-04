@@ -1,10 +1,9 @@
-@component-name = "portal-wcm"
+@component-name = "portal-publications"
 definition {
 
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Echo Accessibility";
 	property testray.main.component.name = "Navigation Menus";
 
 	static var randomSiteName = StringUtil.randomString(8);

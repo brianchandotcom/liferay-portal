@@ -427,7 +427,8 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 	await productMenuPage.openProductMenuIfClosed();
 	await productMenuPage.goToWebContent();
 	await journalPage.goToCreateArticle();
-	await journalPage.createBasicArticle(webContentName, text);
+	await journalPage.fillArticleData(webContentName, text);
+	await journalPage.publishArticle();
 
 	await productMenuPage.goToPages();
 	await uiElementsPage.clickNewButton();
@@ -486,7 +487,8 @@ async function createSiteTemplateWithWebContentOnContentPage({
 	await productMenuPage.openProductMenuIfClosed();
 	await productMenuPage.goToWebContent();
 	await journalPage.goToCreateArticle();
-	await journalPage.createBasicArticle(webContentName, text);
+	await journalPage.fillArticleData(webContentName, text);
+	await journalPage.publishArticle();
 
 	await productMenuPage.goToPages();
 	await uiElementsPage.clickNewButton();
@@ -537,7 +539,8 @@ async function createSiteTemplateWithWebContentOnHomePage({
 	await productMenuPage.openProductMenuIfClosed();
 	await productMenuPage.goToWebContent();
 	await journalPage.goToCreateArticle();
-	await journalPage.createBasicArticle(webContentName, text);
+	await journalPage.fillArticleData(webContentName, text);
+	await journalPage.publishArticle();
 
 	await productMenuPage.goToPages();
 	await pagesAdminPage.homePageLink.click();

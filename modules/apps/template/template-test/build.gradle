@@ -16,6 +16,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:site-navigation:site-navigation-language-api")
 	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationImplementation project(":apps:template:template-api")
+	testIntegrationImplementation project(":apps:template:template-service")
 	testIntegrationImplementation project(":apps:template:template-taglib")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

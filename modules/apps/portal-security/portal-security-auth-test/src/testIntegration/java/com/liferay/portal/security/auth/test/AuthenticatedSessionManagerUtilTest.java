@@ -105,11 +105,11 @@ public class AuthenticatedSessionManagerUtilTest {
 
 		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-			_createRememberMeCookie(
+			_createCookie(
 				CookiesConstants.NAME_REMEMBER_ME, Boolean.TRUE.toString(), 1),
 			mockHttpServletRequest, mockHttpServletResponse);
 
-		Cookie cookie = _createRememberMeCookie(
+		Cookie cookie = _createCookie(
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, StringPool.BLANK, 1);
 
 		RememberMeToken rememberMeToken =
@@ -123,7 +123,7 @@ public class AuthenticatedSessionManagerUtilTest {
 
 		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-			_createRememberMeCookie(
+			_createCookie(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 				String.valueOf(rememberMeToken.getRememberMeTokenId()), 1),
 			mockHttpServletRequest, mockHttpServletResponse);
@@ -145,7 +145,7 @@ public class AuthenticatedSessionManagerUtilTest {
 				rememberMeToken.getRememberMeTokenId()));
 	}
 
-	private Cookie _createRememberMeCookie(String name, String value, int maxAge) {
+	private Cookie _createCookie(String name, String value, int maxAge) {
 		Cookie cookie = new Cookie(name, value);
 
 		cookie.setDomain("");

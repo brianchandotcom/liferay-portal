@@ -64,12 +64,12 @@ public class RememberMeAutoLoginTest {
 
 		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-			_createRememberMeCookie(
+			_createCookie(
 				CookiesConstants.NAME_REMEMBER_ME, Boolean.TRUE.toString(),
 				PropsValues.COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE),
 			mockHttpServletRequest, mockHttpServletResponse);
 
-		Cookie cookie = _createRememberMeCookie(
+		Cookie cookie = _createCookie(
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, StringPool.BLANK,
 			PropsValues.COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE);
 
@@ -84,7 +84,7 @@ public class RememberMeAutoLoginTest {
 
 		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-			_createRememberMeCookie(
+			_createCookie(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 				String.valueOf(rememberMeToken.getRememberMeTokenId()),
 				PropsValues.COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE),
@@ -117,11 +117,11 @@ public class RememberMeAutoLoginTest {
 
 		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-			_createRememberMeCookie(
+			_createCookie(
 				CookiesConstants.NAME_REMEMBER_ME, Boolean.TRUE.toString(), 1),
 			mockHttpServletRequest, mockHttpServletResponse);
 
-		Cookie cookie = _createRememberMeCookie(
+		Cookie cookie = _createCookie(
 			CookiesConstants.NAME_REMEMBER_ME_TOKEN_VALUE, StringPool.BLANK, 1);
 
 		RememberMeToken rememberMeToken =
@@ -131,7 +131,7 @@ public class RememberMeAutoLoginTest {
 
 		_cookiesManager.addCookie(
 			CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-			_createRememberMeCookie(
+			_createCookie(
 				CookiesConstants.NAME_REMEMBER_ME_TOKEN_ID,
 				String.valueOf(rememberMeToken.getRememberMeTokenId()), 1),
 			mockHttpServletRequest, mockHttpServletResponse);
@@ -183,7 +183,7 @@ public class RememberMeAutoLoginTest {
 				mockHttpServletRequest, false));
 	}
 
-	private Cookie _createRememberMeCookie(
+	private Cookie _createCookie(
 		String name, String value, int maxAge) {
 
 		Cookie cookie = new Cookie(name, value);

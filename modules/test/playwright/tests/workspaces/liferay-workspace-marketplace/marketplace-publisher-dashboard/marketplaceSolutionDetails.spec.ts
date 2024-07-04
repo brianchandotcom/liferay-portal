@@ -6,21 +6,16 @@
 import {mergeTests} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../../utils/getRandomInt';
 import {marketplaceHelper} from '../fixtures/marketplaceHelper';
 import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
 import {
-	ORDER_ITEMS,
-	PRODUCT_NAME,
-} from '../marketplace-customer-dashboard/marketplaceAppPurchase.spec';
-import {
 	MARKETPLACE_CHANNEL,
+	ORDER_ITEMS,
 	PRODUCT_WORKFLOW_STATUS_CODE,
-} from '../utils/constants';
-import {
-	ACCOUNT_NAME,
 	SOLUTION_PUBLISHER_ROLE,
-} from './marketplaceSolutionPublisher.spec';
+} from '../utils/constants';
 
 export const test = mergeTests(
 	marketplaceSiteFixture,
@@ -33,6 +28,8 @@ test.describe('Publishers Can View Marketplace Solution Details', () => {
 	let _account;
 	let _product;
 	let _order;
+	const accountName = `Supplier Account${getRandomInt()}`;
+	const productName = `Product${getRandomInt()}`;
 
 	test.beforeEach(async ({apiHelpers, marketplace, marketplaceHelper}) => {
 		const channel =
@@ -41,21 +38,21 @@ test.describe('Publishers Can View Marketplace Solution Details', () => {
 			);
 
 		const {account, catalog} =
-			await marketplaceHelper.createMarketplaceAccountUserCatalog({
-				accountName: ACCOUNT_NAME.SUPPLIER,
+			await marketplaceHelper.createAccountUserCatalog({
+				accountName,
 				accountType: 'supplier',
 			});
 
 		_account = account;
 		_catalog = catalog;
 
-		await marketplaceHelper.assignMarketplaceUserToAccountRole({
+		await marketplaceHelper.assignUserToAccountRole({
 			accountId: account.id,
 			accountRole: SOLUTION_PUBLISHER_ROLE,
 		});
 
 		const solutionCategory =
-			await marketplaceHelper.getMarketplaceVocabularyAndCategory({
+			await marketplaceHelper.getVocabularyAndCategory({
 				categoryName: 'Solution',
 				siteId: marketplace.id,
 				vocabularyName: 'Marketplace Product Type',
@@ -71,7 +68,7 @@ test.describe('Publishers Can View Marketplace Solution Details', () => {
 				},
 			],
 			name: {
-				en_US: PRODUCT_NAME,
+				en_US: productName,
 			},
 			productChannels: [
 				{
@@ -87,13 +84,14 @@ test.describe('Publishers Can View Marketplace Solution Details', () => {
 			productType: 'virtual',
 		};
 
-		const {order, product} =
-			await marketplaceHelper.createMarketplaceTestProductOrder({
+		const {order, product} = await marketplaceHelper.createTestProductOrder(
+			{
 				accountId: account.id,
 
 				orderItems: ORDER_ITEMS,
 				productBody,
-			});
+			}
+		);
 
 		_order = order;
 		_product = product;
@@ -121,13 +119,11 @@ test.describe('Publishers Can View Marketplace Solution Details', () => {
 			marketplace.friendlyUrlPath
 		);
 
-		await publisherDashboardSolutionDetailsPage.selectAccount(
-			ACCOUNT_NAME.SUPPLIER
-		);
+		await publisherDashboardSolutionDetailsPage.selectAccount(accountName);
 
 		await clickAndExpectToBeVisible({
 			target: publisherDashboardSolutionDetailsPage.publishedApp(
-				PRODUCT_NAME
+				productName
 			),
 			trigger: publisherDashboardSolutionDetailsPage.solutionsTab,
 		});
@@ -135,9 +131,7 @@ test.describe('Publishers Can View Marketplace Solution Details', () => {
 		await clickAndExpectToBeVisible({
 			target: publisherDashboardSolutionDetailsPage.detailTab,
 			trigger:
-				publisherDashboardSolutionDetailsPage.publishedApp(
-					PRODUCT_NAME
-				),
+				publisherDashboardSolutionDetailsPage.publishedApp(productName),
 		});
 	});
 });

@@ -26,12 +26,12 @@ type TChannel = {
 
 type TCategory = {
 	checked?: boolean;
-	externalReferenceCode: string;
+	externalReferenceCode?: string;
 	id: number;
 	label?: string;
 	name: string;
 	value?: string;
-	vocabulary: string;
+	vocabulary?: string;
 };
 
 export type TPin = {
@@ -49,7 +49,7 @@ export type TPin = {
 	sequence: string;
 };
 
-type TProduct = {
+export type TProduct = {
 	active?: boolean;
 	catalogId: number;
 	categories?: TCategory[];

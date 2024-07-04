@@ -10,7 +10,7 @@ import {getRandomInt} from '../../../../utils/getRandomInt';
 import {marketplaceHelper} from '../fixtures/marketplaceHelper';
 import {marketplacePagesTest} from '../fixtures/marketplacePages';
 import {marketplaceSiteFixture} from '../fixtures/marketplaceSite';
-import {solutions} from '../utils/constants';
+import {SOLUTION_PUBLISHER_ROLE, solutions} from '../utils/constants';
 
 export const test = mergeTests(
 	marketplaceSiteFixture,
@@ -18,29 +18,24 @@ export const test = mergeTests(
 	marketplacePagesTest
 );
 
-export const ACCOUNT_NAME = {
-	PERSON: `Person Account${getRandomInt()}`,
-	SUPPLIER: `Supplier Account${getRandomInt()}`,
-};
-export const SOLUTION_PUBLISHER_ROLE = 'Solution Publisher';
-
 test.describe('Can Publish and Manage Solutions', () => {
 	let _account;
 	let _catalog;
 	let _productId;
+	const accountName = `Supplier Account${getRandomInt()}`;
 
 	test.beforeEach(
 		async ({marketplace, marketplaceHelper, publisherSolutionPage}) => {
 			const {account, catalog} =
-				await marketplaceHelper.createMarketplaceAccountUserCatalog({
-					accountName: ACCOUNT_NAME.SUPPLIER,
+				await marketplaceHelper.createAccountUserCatalog({
+					accountName,
 					accountType: 'supplier',
 				});
 
 			_account = account;
 			_catalog = catalog;
 
-			await marketplaceHelper.assignMarketplaceUserToAccountRole({
+			await marketplaceHelper.assignUserToAccountRole({
 				accountId: account.id,
 				accountRole: SOLUTION_PUBLISHER_ROLE,
 			});
@@ -64,7 +59,7 @@ test.describe('Can Publish and Manage Solutions', () => {
 	test('LPD-26707 New Solution Template button should be visible for Suppliers', async ({
 		publisherSolutionPage,
 	}) => {
-		await publisherSolutionPage.selectAccount(ACCOUNT_NAME.SUPPLIER);
+		await publisherSolutionPage.selectAccount(accountName);
 		await expect(publisherSolutionPage.newSolutionButton).toBeEnabled();
 	});
 
@@ -149,12 +144,13 @@ test.describe('Can Publish and Manage Solutions', () => {
 test.describe(`Supplier Accounts without ${SOLUTION_PUBLISHER_ROLE} role can not be a solution publisher`, () => {
 	let _account;
 	let _catalog;
+	const accountName = `Supplier Account${getRandomInt()}`;
 
 	test.beforeEach(
 		async ({marketplace, marketplaceHelper, publisherSolutionPage}) => {
 			const {account, catalog} =
-				await marketplaceHelper.createMarketplaceAccountUserCatalog({
-					accountName: ACCOUNT_NAME.SUPPLIER,
+				await marketplaceHelper.createAccountUserCatalog({
+					accountName,
 					accountType: 'supplier',
 				});
 
@@ -177,7 +173,7 @@ test.describe(`Supplier Accounts without ${SOLUTION_PUBLISHER_ROLE} role can not
 	test('LPD-28486 New Solution Template button should NOT be visible', async ({
 		publisherSolutionPage,
 	}) => {
-		await publisherSolutionPage.selectAccount(ACCOUNT_NAME.SUPPLIER);
+		await publisherSolutionPage.selectAccount(accountName);
 
 		await expect(publisherSolutionPage.newSolutionButton).toBeHidden();
 

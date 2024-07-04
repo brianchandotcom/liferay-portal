@@ -115,6 +115,12 @@ public class DepotBreadcrumbEntryContributorImpl
 
 		breadcrumbEntries.addAll(originalBreadcrumbEntries);
 
+		BreadcrumbEntry breadcrumbEntry = breadcrumbEntries.get(
+			breadcrumbEntries.size() - 1);
+
+		breadcrumbEntry.setBrowsable(false);
+		breadcrumbEntry.setURL(null);
+
 		return breadcrumbEntries;
 	}
 

@@ -60,6 +60,7 @@ public class RememberMeTokenLocalServiceImpl
 		}
 	}
 
+	@Override
 	public RememberMeToken fetchRememberMeToken(
 			long rememberMeTokenId, String value)
 		throws PwdEncryptorException {

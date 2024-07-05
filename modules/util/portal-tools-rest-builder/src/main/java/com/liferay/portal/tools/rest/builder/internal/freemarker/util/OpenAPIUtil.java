@@ -208,7 +208,31 @@ public class OpenAPIUtil {
 				}
 
 				if (propertySchemas == null) {
-					continue;
+					boolean polymorphicChild = false;
+
+					List<Schema> allOfSchemas = schema.getAllOfSchemas();
+
+					if (allOfSchemas != null) {
+						for (Schema allOfSchema : allOfSchemas) {
+							if (allOfSchema.getReference() != null) {
+								Schema processedAllOfSchema = allSchemas.get(
+									OpenAPIParserUtil.getReferenceName(
+										allOfSchema.getReference()));
+
+								if (processedAllOfSchema.getDiscriminator() !=
+										null) {
+
+									polymorphicChild = true;
+
+									break;
+								}
+							}
+						}
+					}
+
+					if (!polymorphicChild) {
+						continue;
+					}
 				}
 
 				String schemaName = StringUtil.upperCaseFirstLetter(

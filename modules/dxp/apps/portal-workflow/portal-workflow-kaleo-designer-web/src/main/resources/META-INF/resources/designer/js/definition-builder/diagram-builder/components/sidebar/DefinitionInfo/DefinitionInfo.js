@@ -5,7 +5,6 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayTabs from '@clayui/tabs';
-import moment from 'moment/min/moment-with-locales';
 import React, {useContext, useState} from 'react';
 
 import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
@@ -15,59 +14,7 @@ import {
 	saveDefinitionRequest,
 } from '../../../../util/fetchUtil';
 import lang from '../../../../util/lang';
-
-moment.locale(Liferay.ThemeDisplay.getBCP47LanguageId());
-
-const Details = ({definitionInfo}) => {
-	const titleCreated = Liferay.Language.get('created');
-	const titleLastModified = Liferay.Language.get('last-modified');
-	const titleTotalModifications = Liferay.Language.get('total-modifications');
-
-	const dateCreated = moment(definitionInfo.dateCreated).format(
-		Liferay.Language.get('mmm-dd-yyyy-lt')
-	);
-
-	const dateModified = moment(definitionInfo.dateModified).format(
-		Liferay.Language.get('mmm-dd-yyyy-lt')
-	);
-
-	const totalModifications = definitionInfo.totalModifications;
-
-	const revisionMessage =
-		totalModifications > 1
-			? lang.sub(Liferay.Language.get('x-revisions'), [
-					totalModifications,
-				])
-			: `${totalModifications} ${Liferay.Language.get('revision')}`;
-
-	return (
-		<>
-			<div className="info-group">
-				<label className="text-secondary">
-					{titleCreated.toUpperCase()}
-				</label>
-
-				<span>{dateCreated}</span>
-			</div>
-
-			<div className="info-group">
-				<label className="text-secondary">
-					{titleLastModified.toUpperCase()}
-				</label>
-
-				<span>{dateModified}</span>
-			</div>
-
-			<div className="info-group">
-				<label className="text-secondary">
-					{titleTotalModifications.toUpperCase()}
-				</label>
-
-				<span>{revisionMessage}</span>
-			</div>
-		</>
-	);
-};
+import {DetailsTab} from './DetailsTab';
 
 const VersionRow = ({versionNumber}) => {
 	const {
@@ -201,7 +148,7 @@ const RevisionHistory = ({version}) => {
 
 const TABS = [
 	{
-		Component: Details,
+		Component: DetailsTab,
 		label: Liferay.Language.get('details'),
 	},
 	{

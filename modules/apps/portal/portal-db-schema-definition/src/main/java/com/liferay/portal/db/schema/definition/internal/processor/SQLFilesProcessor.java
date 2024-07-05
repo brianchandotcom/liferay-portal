@@ -29,7 +29,7 @@ public class SQLFilesProcessor {
 	public SQLFilesProcessor(DBType dbType) throws Exception {
 		_db = _getDB(dbType);
 
-		_objectsSQLHelper = new ObjectsSQLHelper(_db);
+		_objectSQLProcessor = new ObjectSQLProcessor(_db);
 
 		_generatePortalSQL();
 
@@ -38,12 +38,12 @@ public class SQLFilesProcessor {
 
 	public String getIndexesSQL() {
 		return _indexesSQLSB.toString() + StringPool.NEW_LINE +
-			_objectsSQLHelper.getIndexesSQL();
+			_objectSQLProcessor.getIndexesSQL();
 	}
 
 	public String getTablesSQL() {
 		return _tablesSQLSB.toString() + StringPool.NEW_LINE +
-			_objectsSQLHelper.getTablesSQL();
+			_objectSQLProcessor.getTablesSQL();
 	}
 
 	private void _appendSQL(String indexesSQL, String tablesSQL)
@@ -96,7 +96,7 @@ public class SQLFilesProcessor {
 
 	private final DB _db;
 	private final StringBundler _indexesSQLSB = new StringBundler();
-	private final ObjectsSQLHelper _objectsSQLHelper;
+	private final ObjectSQLProcessor _objectSQLProcessor;
 	private final StringBundler _tablesSQLSB = new StringBundler();
 
 }

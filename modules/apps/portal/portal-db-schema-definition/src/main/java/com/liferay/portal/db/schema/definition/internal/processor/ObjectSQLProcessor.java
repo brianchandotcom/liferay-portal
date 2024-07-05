@@ -41,9 +41,9 @@ import javax.sql.DataSource;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class ObjectsSQLHelper {
+public class ObjectSQLProcessor {
 
-	public ObjectsSQLHelper(DB db) throws Exception {
+	public ObjectSQLProcessor(DB db) throws Exception {
 		_db = db;
 
 		_generateSQL();

@@ -71,11 +71,11 @@ test.describe('Manage object relationships through Model Builder', () => {
 			objectFolder.label['en_US']
 		);
 
-		await viewObjectDefinitionsPage.viewInModelBuilder();
+		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
 
 		await modelBuilderPage.toggleSidebarsButton.click();
 
-		await modelBuilderPage.clickFitViewButton();
+		await modelBuilderPage.fitViewButton.click();
 
 		await modelBuilderPage.connectObjectDefinitionsNodeHandles(
 			objectDefinition1.id,
@@ -102,7 +102,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 			objectDefinition2.label['en_US']
 		);
 
-		await modelBuilderPage.clickFitViewButton();
+		await modelBuilderPage.fitViewButton.click();
 
 		await expect(
 			modelBuilderPage.objectDefinitionNodes
@@ -174,7 +174,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 			objectFolder.label['en_US']
 		);
 
-		await viewObjectDefinitionsPage.viewInModelBuilder();
+		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
 
 		await expect(
 			modelBuilderPage.objectRelationshipEdges.filter({

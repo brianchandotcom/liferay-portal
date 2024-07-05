@@ -285,7 +285,9 @@ function SegmentsExperimentsSidebar({
 					experiment &&
 					experiment.segmentsExperimentId === experimentId
 				) {
-					navigateToExperience(experiment.segmentsExperienceId);
+					navigateToExperience({
+						experienceId: experiment.segmentsExperienceId,
+					});
 				}
 			})
 			.catch((_error) => {
@@ -310,7 +312,7 @@ function SegmentsExperimentsSidebar({
 			.then(function _successCallback({
 				segmentsExperiment: {segmentsExperienceId},
 			}) {
-				navigateToExperience(segmentsExperienceId);
+				navigateToExperience({experienceId: segmentsExperienceId});
 
 				openSuccessToast();
 			})

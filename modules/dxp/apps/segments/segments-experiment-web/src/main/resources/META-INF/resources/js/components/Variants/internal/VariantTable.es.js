@@ -143,9 +143,10 @@ function VariantTable({
 										data-title={name}
 										displayType="unstyled"
 										onClick={() =>
-											navigateToExperience(
-												segmentsExperienceId
-											)
+											navigateToExperience({
+												experienceId:
+													segmentsExperienceId,
+											})
 										}
 									>
 										{control ? (
@@ -196,10 +197,12 @@ function VariantTable({
 												className="btn-monospaced"
 												displayType="secondary"
 												onClick={() =>
-													navigateToExperience(
-														segmentsExperienceId,
-														editVariantLayoutURL
-													)
+													navigateToExperience({
+														baseUrl:
+															editVariantLayoutURL,
+														experienceId:
+															segmentsExperienceId,
+													})
 												}
 											>
 												<ClayIcon symbol="pencil" />

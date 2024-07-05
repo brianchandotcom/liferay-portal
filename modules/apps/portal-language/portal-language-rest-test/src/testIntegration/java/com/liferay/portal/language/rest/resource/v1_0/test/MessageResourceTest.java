@@ -6,14 +6,176 @@
 package com.liferay.portal.language.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.language.override.service.PLOEntryLocalService;
+import com.liferay.portal.language.rest.client.dto.v1_0.Message;
+import com.liferay.portal.test.rule.Inject;
 
-import org.junit.Ignore;
+import java.io.File;
+
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Properties;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Thiago Buarque
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class MessageResourceTest extends BaseMessageResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		for (Message message : _messages) {
+			_ploEntryLocalService.deletePLOEntry(
+				testCompany.getCompanyId(), message.getKey(),
+				message.getLanguageId());
+		}
+	}
+
+	@Test
+	public void testDeleteMessage() throws Exception {
+		Message message = _createMessage();
+
+		_postMessage(message);
+
+		messageResource.deleteMessage(
+			message.getKey(), message.getLanguageId());
+
+		Assert.assertNull(
+			_ploEntryLocalService.fetchPLOEntry(
+				testCompany.getCompanyId(), message.getKey(),
+				message.getLanguageId()));
+	}
+
+	@Test
+	public void testGetMessage() throws Exception {
+		_createAndAssertExistence();
+	}
+
+	@Test
+	public void testPostMessage() throws Exception {
+		_createAndAssertExistence();
+	}
+
+	@Override
+	@Test
+	public void testPostMessageImport() throws Exception {
+		File file = FileUtil.createTempFile("Language_en_US", "properties");
+
+		try {
+			FileUtil.write(
+				file,
+				FileUtil.getBytes(
+					getClass(), "dependencies/Language_en_US.properties"));
+
+			messageResource.postMessageImport(
+				"en_US", null,
+				HashMapBuilder.<String, File>put(
+					"file", file
+				).build());
+
+			Properties properties = new Properties();
+
+			properties.load(
+				Files.newBufferedReader(
+					Paths.get(file.getPath()), Charset.defaultCharset()));
+
+			Enumeration<String> enumeration =
+				(Enumeration<String>)properties.propertyNames();
+
+			while (enumeration.hasMoreElements()) {
+				String key = enumeration.nextElement();
+
+				Message message = new Message();
+
+				message.setKey(enumeration.nextElement());
+				message.setValue(properties.getProperty(key));
+				message.setLanguageId("en_US");
+
+				_messages.add(message);
+			}
+
+			Message message1 = messageResource.getMessage(
+				"property-1", "en_US");
+
+			Assert.assertEquals("Property 1", message1.getValue());
+
+			Message message2 = messageResource.getMessage(
+				"property-2", "en_US");
+
+			Assert.assertEquals("Property 2", message2.getValue());
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
+	@Test
+	public void testPutMessage() throws Exception {
+		Message message1 = _createMessage();
+
+		_postMessage(message1);
+
+		message1.setValue(RandomTestUtil.randomString());
+
+		messageResource.putMessage(message1);
+
+		Message message2 = messageResource.getMessage(
+			message1.getKey(), message1.getLanguageId());
+
+		Assert.assertEquals(message1, message2);
+	}
+
+	private void _createAndAssertExistence() throws Exception {
+		Message message1 = _createMessage();
+
+		_postMessage(message1);
+
+		Message message2 = messageResource.getMessage(
+			message1.getKey(), message1.getLanguageId());
+
+		Assert.assertEquals(message1, message2);
+	}
+
+	private Message _createMessage() throws Exception {
+		Message message = randomMessage();
+
+		message.setLanguageId("en_US");
+
+		return message;
+	}
+
+	private void _postMessage(Message message) throws Exception {
+		messageResource.postMessage(message);
+
+		_messages.add(message);
+	}
+
+	private final List<Message> _messages = new ArrayList<>();
+
+	@Inject
+	private PLOEntryLocalService _ploEntryLocalService;
+
 }

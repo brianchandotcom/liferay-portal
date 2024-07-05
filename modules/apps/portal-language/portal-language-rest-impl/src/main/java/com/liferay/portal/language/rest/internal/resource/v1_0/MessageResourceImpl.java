@@ -97,8 +97,7 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 				FileUtil.getExtension(binaryFile.getFileName()),
 				"properties")) {
 
-			throw new BadRequestException(
-				"File name must have a \"properties\" file extension");
+			throw new BadRequestException("Please upload a *.properties file");
 		}
 
 		Properties properties = new Properties();

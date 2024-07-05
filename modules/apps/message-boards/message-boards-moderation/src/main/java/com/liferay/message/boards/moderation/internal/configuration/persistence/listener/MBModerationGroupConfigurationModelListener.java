@@ -84,7 +84,7 @@ public class MBModerationGroupConfigurationModelListener
 		}
 
 		WorkflowDefinition workflowDefinition =
-			_workflowDefinitionManager.getLatestWorkflowDefinition(
+			_workflowDefinitionManager.liberalGetLatestWorkflowDefinition(
 				companyId, MBModerationConstants.WORKFLOW_DEFINITION_NAME);
 
 		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(

@@ -95,7 +95,7 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		ThemeDisplay themeDisplay, String name) {
 
 		try {
-			return workflowDefinitionManager.getLatestWorkflowDefinition(
+			return workflowDefinitionManager.liberalGetLatestWorkflowDefinition(
 				themeDisplay.getCompanyId(), name);
 		}
 		catch (WorkflowException workflowException) {

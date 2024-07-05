@@ -57,6 +57,7 @@ export class UsersAndOrganizationsPage {
 	readonly organizationActionsMenu: (
 		organizationName: string
 	) => Promise<Locator>;
+	readonly organizationChartLink: Locator;
 	readonly organizationsLink: Locator;
 	readonly organizationsTable: Locator;
 	readonly organizationsTableRow: (
@@ -167,6 +168,10 @@ export class UsersAndOrganizationsPage {
 
 			throw new Error(`Cannot locate button with label: Show Actions`);
 		};
+		this.organizationChartLink = page.getByRole('link', {
+			exact: true,
+			name: 'Organization Chart',
+		});
 		this.organizationsLink = page.getByRole('link', {
 			name: 'Organizations',
 		});
@@ -273,6 +278,22 @@ export class UsersAndOrganizationsPage {
 					resp
 						.url()
 						.includes('screenNavigationCategoryKey=organizations')
+			),
+		]);
+	}
+
+	async goToOrganizationChart(forceReload?: boolean) {
+		await this.goto(forceReload);
+		await Promise.all([
+			this.organizationChartLink.click(),
+			this.page.waitForResponse(
+				(resp) =>
+					resp.status() === 200 &&
+					resp
+						.url()
+						.includes(
+							'screenNavigationCategoryKey=commerce-organization'
+						)
 			),
 		]);
 	}

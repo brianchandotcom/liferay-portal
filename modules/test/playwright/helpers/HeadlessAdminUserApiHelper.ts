@@ -27,8 +27,10 @@ type THoursAvailable = {
 };
 
 type TOrganization = {
+	externalReferenceCode?: string;
 	id?: string;
-	name: string;
+	name?: string;
+	parentOrganization?: TOrganization;
 	services?: TServices[];
 };
 

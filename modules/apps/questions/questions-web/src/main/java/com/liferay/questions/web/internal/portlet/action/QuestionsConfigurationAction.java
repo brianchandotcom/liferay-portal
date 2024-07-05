@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
@@ -52,6 +53,17 @@ public class QuestionsConfigurationAction
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
+
+		String rootTopicId = ParamUtil.getString(
+			actionRequest, "preferences--rootTopicId--");
+
+		modifiableSettings.setValue("rootTopicId", rootTopicId);
+
+		String showCardsForTopicNavigation = ParamUtil.getString(
+			actionRequest, "preferences--showCardsForTopicNavigation--");
+
+		modifiableSettings.setValue(
+			"showCardsForTopicNavigation", showCardsForTopicNavigation);
 
 		for (String key : _KEYS) {
 			UnicodeProperties unicodeProperties =

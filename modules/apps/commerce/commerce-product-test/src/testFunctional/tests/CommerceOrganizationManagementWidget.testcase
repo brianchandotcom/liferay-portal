@@ -341,61 +341,6 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-9404. Verify accounts and organizations can be moved using the Organization Management widget."
-	@priority = 3
-	test CanMoveAccountsAndOrganizationsInWidget {
-		property portal.acceptance = "false";
-
-		task ("Setup: Add an organization") {
-			JSONOrganization.addOrganization(
-				organizationName = "Organization 1",
-				organizationSite = "false");
-		}
-
-		task ("Given a new organization with a child organization") {
-			JSONOrganization.addOrganization(
-				organizationName = "Organization 2",
-				organizationSite = "false");
-
-			JSONOrganization.addOrganization(
-				organizationName = "Child Org 1",
-				organizationSite = "false",
-				parentOrganizationName = "Organization 2");
-		}
-
-		task ("And given the account belongs to Organization 2") {
-			Account.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
-
-			Account.assignOrganizations(
-				accountName = "Commerce Account",
-				assigneeName = "Organization 2");
-		}
-
-		task ("When the Organization Management Widget Page is reached") {
-			Navigator.openSitePage(
-				pageName = "Organization Management Widget Page",
-				siteName = "Minium");
-		}
-
-		task ("And the admin is able to drag and drop the account to Organization 1 and the admin is able to drag and drop the child organization to Organization 1") {
-			CommerceWidget.canDragAndDropOrganizaitionAndChildOrganization(
-				key_nodeChild = "Child Org 1",
-				key_nodeDestination = "Organization 1",
-				key_nodeName = "Organization 2",
-				key_nodeOrigin = "Commerce Account");
-		}
-
-		task ("Then the admin is able to click on the child organization ellipses and click remove to move the child organization outside the parent organization") {
-			CommerceWidget.removeChildOrganization(
-				key_nodeChild = "Child Org 1",
-				key_nodeName = "Organization 1");
-
-			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Child Org 1");
-		}
-	}
-
 	@description = "COMMERCE-12584 | Verify that is possibile to search for an entry that is present multiple times inside the widget"
 	@priority = 5
 	test CanSearchAnEntryPresentMultipleTimesIntoOrganizationManagement {

@@ -83,6 +83,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 	@JsonTypeInfo(include = JsonTypeInfo.As.PROPERTY, property = "childType", use = JsonTypeInfo.Id.NAME)
 </#if>
 
+<#if schema.discriminator?has_content>
+	@JsonSubTypes(
+		{
+			<#list schema.discriminator.mapping as mappingName, mappingSchema>
+				@JsonSubTypes.Type(name = "${mappingName}", value=${freeMarkerTool.getReferenceName(mappingSchema)}.class)
+
+				<#if mappingName_has_next>
+					,
+				</#if>
+			</#list>
+		}
+	)
+
+	@JsonTypeInfo(include= JsonTypeInfo.As.PROPERTY, property="${schema.discriminator.propertyName}",
+	use= JsonTypeInfo.Id.NAME)
+</#if>
+
 <#assign dtoParentClassName = freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)! />
 
 <#if dtoParentClassName?has_content>
@@ -120,27 +137,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 	)
 </#if>
 
-<#assign isPolymorphicParent = schema.discriminator?has_content />
-
-<#if isPolymorphicParent>
-	@JsonSubTypes(
-		{
-			<#list schema.discriminator.mapping as mappingName, mappingSchema>
-				@JsonSubTypes.Type(name = "${mappingName}", value=${freeMarkerTool.getReferenceName(mappingSchema)}.class)
-
-				<#if mappingName_has_next>
-					,
-				</#if>
-			</#list>
-		}
-	)
-
-	@JsonTypeInfo(include= JsonTypeInfo.As.PROPERTY, property="${schema.discriminator.propertyName}",
-	use= JsonTypeInfo.Id.NAME)
-</#if>
-
 @XmlRootElement(name = "${schemaName}")
-public <#if isPolymorphicParent>abstract</#if> class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoParentClassName}</#if> <#if !isPolymorphicParent>implements Serializable</#if> {
+public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoParentClassName}</#if> implements Serializable {
 
 	public static ${schemaName} toDTO(String json) {
 		return ObjectMapperUtil.readValue(${schemaName}.class, json);

@@ -1110,7 +1110,9 @@ definition {
 			ABTest.terminateTest();
 		}
 
-		ABTest.deleteABTest();
+		if (IsElementNotPresent(locator1 = "ABTest#IMAGE_EMPTY_STATE")) {
+			ABTest.deleteABTest();
+		}
 	}
 
 	@summary = "Default summary"

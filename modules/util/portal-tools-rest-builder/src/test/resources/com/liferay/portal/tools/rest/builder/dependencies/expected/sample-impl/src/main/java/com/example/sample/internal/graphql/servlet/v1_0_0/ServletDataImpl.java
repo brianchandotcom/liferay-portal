@@ -9,9 +9,11 @@ import com.example.sample.internal.graphql.mutation.v1_0_0.Mutation;
 import com.example.sample.internal.graphql.query.v1_0_0.Query;
 import com.example.sample.internal.resource.v1_0_0.DocumentResourceImpl;
 import com.example.sample.internal.resource.v1_0_0.FolderResourceImpl;
+import com.example.sample.internal.resource.v1_0_0.PolymorphicSchemaResourceImpl;
 import com.example.sample.internal.resource.v1_0_0.TestResourceImpl;
 import com.example.sample.resource.v1_0_0.DocumentResource;
 import com.example.sample.resource.v1_0_0.FolderResource;
+import com.example.sample.resource.v1_0_0.PolymorphicSchemaResource;
 import com.example.sample.resource.v1_0_0.TestResource;
 
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -43,6 +45,8 @@ public class ServletDataImpl implements ServletData {
 			_documentResourceComponentServiceObjects);
 		Query.setFolderResourceComponentServiceObjects(
 			_folderResourceComponentServiceObjects);
+		Query.setPolymorphicSchemaResourceComponentServiceObjects(
+			_polymorphicSchemaResourceComponentServiceObjects);
 		Query.setTestResourceComponentServiceObjects(
 			_testResourceComponentServiceObjects);
 	}
@@ -94,6 +98,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							FolderResourceImpl.class, "getFolder"));
 					put(
+						"query#polymorphicSchemas",
+						new ObjectValuePair<>(
+							PolymorphicSchemaResourceImpl.class,
+							"getPolymorphicSchemasPage"));
+					put(
 						"query#test",
 						new ObjectValuePair<>(
 							TestResourceImpl.class, "getTest"));
@@ -112,6 +121,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FolderResource>
 		_folderResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<PolymorphicSchemaResource>
+		_polymorphicSchemaResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TestResource>

@@ -17,12 +17,16 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuOption;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuUnitOfMeasure;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,6 +162,9 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 						return skuOptions.toArray(new SkuOption[0]);
 					});
+				setSkuUnitOfMeasures(
+					() -> _toSkuUnitOfMeasures(
+						cpInstance, dtoConverterContext));
 				setUnitOfMeasureKey(
 					() -> {
 						if (cpInstanceUnitOfMeasure != null) {
@@ -193,6 +200,32 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		};
 	}
 
+	private SkuUnitOfMeasure[] _toSkuUnitOfMeasures(
+			CPInstance cpInstance, DTOConverterContext dtoConverterContext)
+		throws Exception {
+
+		List<SkuUnitOfMeasure> skuUnitOfMeasures = new ArrayList<>();
+
+		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
+				cpInstance.getCPInstanceUnitOfMeasures(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			DefaultDTOConverterContext defaultDTOConverterContext =
+				new DefaultDTOConverterContext(
+					cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId(),
+					dtoConverterContext.getLocale());
+
+			defaultDTOConverterContext.setAttribute(
+				"id", cpInstance.getCPInstanceId());
+
+			skuUnitOfMeasures.add(
+				_skuUnitOfMeasureDTOConverter.toDTO(
+					defaultDTOConverterContext));
+		}
+
+		return skuUnitOfMeasures.toArray(new SkuUnitOfMeasure[0]);
+	}
+
 	@Reference
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
@@ -206,5 +239,9 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	@Reference(target = DTOConverterConstants.SKU_UNIT_OF_MEASURE_DTO_CONVERTER)
+	private DTOConverter<CPInstanceUnitOfMeasure, SkuUnitOfMeasure>
+		_skuUnitOfMeasureDTOConverter;
 
 }

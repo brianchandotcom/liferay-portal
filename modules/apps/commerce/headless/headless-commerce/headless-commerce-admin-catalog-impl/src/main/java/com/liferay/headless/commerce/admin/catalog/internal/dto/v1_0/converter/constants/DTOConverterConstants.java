@@ -31,4 +31,8 @@ public class DTOConverterConstants {
 		"(component.name=com.liferay.headless.commerce.admin.catalog." +
 			"internal.dto.v1_0.converter.SkuDTOConverter)";
 
+	public static final String SKU_UNIT_OF_MEASURE_DTO_CONVERTER =
+		"(component.name=com.liferay.headless.commerce.admin.catalog." +
+			"internal.dto.v1_0.converter.SkuUnitOfMeasureDTOConverter)";
+
 }

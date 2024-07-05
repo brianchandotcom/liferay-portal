@@ -103,7 +103,7 @@
 
 <tr>
 	<td>MESSAGE_WORKFLOW_STATUS_1</td>
-	<td>//span[@class='taglib-workflow-status']/span[contains(@class,'workflow-status')] | //span[@class='label label-info']//*[contains(.,'${value1}')]</td>
+	<td>//span[@class='taglib-workflow-status']/span[contains(@class,'workflow-status')] | //span[@class='label label-info']//*[contains(.,'${value1}')] | //span[contains(@class, 'label-item-expand') and contains(.,'${value1}')]</td>
 	<td></td>
 </tr>
 <tr>

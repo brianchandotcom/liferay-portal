@@ -5,21 +5,25 @@
 
 package com.liferay.saml.web.internal.struts;
 
-import com.liferay.petra.string.StringPool;
+import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
@@ -110,9 +114,22 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 					"redirecting-to-your-identity-provider"));
 		}
 		else if (samlSpIdpConnections.size() == 1) {
+			Layout layout = (Layout)httpServletRequest.getAttribute(
+				WebKeys.LAYOUT);
+
+			Company company = _portal.getCompany(httpServletRequest);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			String title = _layoutSEOLinkManager.getFullPageTitle(
+				layout, null, null, null, null, company.getName(),
+				themeDisplay.getLocale());
+
 			JspUtil.dispatch(
 				httpServletRequest, httpServletResponse,
-				"/portal/saml/select_idp.jsp", StringPool.BLANK, true);
+				"/portal/saml/select_idp.jsp", title, true);
 
 			return null;
 		}
@@ -170,6 +187,9 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutSEOLinkManager _layoutSEOLinkManager;
 
 	@Reference
 	private Portal _portal;

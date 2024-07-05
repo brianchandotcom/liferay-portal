@@ -136,12 +136,6 @@ async function assertTableRowsCount(page, rowsCount) {
 	});
 }
 
-async function createDataSetsSequentually(fnPromiseArr) {
-	for (let i = 0; i < fnPromiseArr.length; i++) {
-		await fnPromiseArr[i]();
-	}
-}
-
 test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	for (const DATA_SET_ERC of dataSetERCs) {
 		await dataSetManagerApiHelpers.deleteDataSet({
@@ -312,50 +306,44 @@ test('Can sort Data Set by different columns', async ({
 	const productsDataSetERC = getRandomString();
 
 	await test.step('Create collection of Data Sets', async () => {
-		const requests = [];
-
 		const blogPostDataSetERC = getRandomString();
 		dataSetERCs.push(blogPostDataSetERC);
-		requests.push(() =>
-			dataSetManagerApiHelpers.createDataSet({
-				...blogPostsDataSetConfig,
-				erc: blogPostDataSetERC,
-				label: blogPostsDataSetConfig.name,
-			})
-		);
+
+		await dataSetManagerApiHelpers.createDataSet({
+			...blogPostsDataSetConfig,
+			erc: blogPostDataSetERC,
+			label: blogPostsDataSetConfig.name,
+		});
 
 		const catalogsDataSetERC = getRandomString();
 		dataSetERCs.push(catalogsDataSetERC);
-		requests.push(() =>
-			dataSetManagerApiHelpers.createDataSet({
-				...catalogsDataSetConfig,
-				erc: catalogsDataSetERC,
-				label: catalogsDataSetConfig.name,
-			})
-		);
+
+		await dataSetManagerApiHelpers.createDataSet({
+			...catalogsDataSetConfig,
+			erc: catalogsDataSetERC,
+			label: catalogsDataSetConfig.name,
+		});
 
 		dataSetERCs.push(productsDataSetERC);
-		requests.push(() =>
-			dataSetManagerApiHelpers.createDataSet({
-				...productsDataSetConfig,
-				erc: productsDataSetERC,
-				label: productsDataSetConfig.name,
-			})
-		);
+
+		await dataSetManagerApiHelpers.createDataSet({
+			...productsDataSetConfig,
+			erc: productsDataSetERC,
+			label: productsDataSetConfig.name,
+		});
 
 		const skuDataSetERC = getRandomString();
 		dataSetERCs.push(skuDataSetERC);
-		requests.push(() =>
-			dataSetManagerApiHelpers.createDataSet({
-				...skusDataSetConfig,
-				erc: skuDataSetERC,
-				label: skusDataSetConfig.name,
-			})
-		);
 
-		return createDataSetsSequentually(requests).then(() => {
-			dataSetsPage.goto();
+		await dataSetManagerApiHelpers.createDataSet({
+			...skusDataSetConfig,
+			erc: skuDataSetERC,
+			label: skusDataSetConfig.name,
 		});
+	});
+
+	await test.step('Go to Data Sets', async () => {
+		await dataSetsPage.goto();
 	});
 
 	await assertTableRowsCount(page, 4);

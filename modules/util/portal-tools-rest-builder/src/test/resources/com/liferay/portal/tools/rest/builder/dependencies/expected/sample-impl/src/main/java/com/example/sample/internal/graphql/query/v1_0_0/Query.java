@@ -7,9 +7,11 @@ package com.example.sample.internal.graphql.query.v1_0_0;
 
 import com.example.sample.dto.v1_0_0.Document;
 import com.example.sample.dto.v1_0_0.Folder;
+import com.example.sample.dto.v1_0_0.PolymorphicSchema;
 import com.example.sample.dto.v1_0_0.Test;
 import com.example.sample.resource.v1_0_0.DocumentResource;
 import com.example.sample.resource.v1_0_0.FolderResource;
+import com.example.sample.resource.v1_0_0.PolymorphicSchemaResource;
 import com.example.sample.resource.v1_0_0.TestResource;
 
 import com.liferay.petra.function.UnsafeConsumer;
@@ -57,6 +59,14 @@ public class Query {
 
 		_folderResourceComponentServiceObjects =
 			folderResourceComponentServiceObjects;
+	}
+
+	public static void setPolymorphicSchemaResourceComponentServiceObjects(
+		ComponentServiceObjects<PolymorphicSchemaResource>
+			polymorphicSchemaResourceComponentServiceObjects) {
+
+		_polymorphicSchemaResourceComponentServiceObjects =
+			polymorphicSchemaResourceComponentServiceObjects;
 	}
 
 	public static void setTestResourceComponentServiceObjects(
@@ -108,6 +118,20 @@ public class Query {
 			_folderResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			folderResource -> folderResource.getFolder(folderId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {polymorphicSchemas{items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public PolymorphicSchemaPage polymorphicSchemas() throws Exception {
+		return _applyComponentServiceObjects(
+			_polymorphicSchemaResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			polymorphicSchemaResource -> new PolymorphicSchemaPage(
+				polymorphicSchemaResource.getPolymorphicSchemasPage()));
 	}
 
 	/**
@@ -209,6 +233,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("PolymorphicSchemaPage")
+	public class PolymorphicSchemaPage {
+
+		public PolymorphicSchemaPage(Page polymorphicSchemaPage) {
+			actions = polymorphicSchemaPage.getActions();
+
+			items = polymorphicSchemaPage.getItems();
+			lastPage = polymorphicSchemaPage.getLastPage();
+			page = polymorphicSchemaPage.getPage();
+			pageSize = polymorphicSchemaPage.getPageSize();
+			totalCount = polymorphicSchemaPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<PolymorphicSchema> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("TestPage")
 	public class TestPage {
 
@@ -287,6 +344,22 @@ public class Query {
 		folderResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			PolymorphicSchemaResource polymorphicSchemaResource)
+		throws Exception {
+
+		polymorphicSchemaResource.setContextAcceptLanguage(_acceptLanguage);
+		polymorphicSchemaResource.setContextCompany(_company);
+		polymorphicSchemaResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		polymorphicSchemaResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		polymorphicSchemaResource.setContextUriInfo(_uriInfo);
+		polymorphicSchemaResource.setContextUser(_user);
+		polymorphicSchemaResource.setGroupLocalService(_groupLocalService);
+		polymorphicSchemaResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(TestResource testResource)
 		throws Exception {
 
@@ -304,6 +377,8 @@ public class Query {
 		_documentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<FolderResource>
 		_folderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<PolymorphicSchemaResource>
+		_polymorphicSchemaResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TestResource>
 		_testResourceComponentServiceObjects;
 

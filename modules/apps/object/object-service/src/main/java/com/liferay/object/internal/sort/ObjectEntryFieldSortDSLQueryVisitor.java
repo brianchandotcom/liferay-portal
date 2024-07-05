@@ -52,6 +52,7 @@ public class ObjectEntryFieldSortDSLQueryVisitor
 
 		Expression<?> columnExpression = null;
 		Table fieldTable = null;
+		String prefix = StringPool.BLANK;
 
 		if (objectField == null) {
 			Column<?, Object> column =
@@ -71,20 +72,18 @@ public class ObjectEntryFieldSortDSLQueryVisitor
 					objectField.getName()));
 
 			columnExpression = _getColumnExpression(objectField, fieldTable);
+
+			if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
+
+				prefix = "AGGREGATION_BOOLEAN_";
+			}
 		}
 
 		if (!contains(dslQuery, fieldTable)) {
 			dslQuery = addLeftJoin(
 				getPrimaryKeyColumn(fieldTable), null, dslQuery, fieldTable);
-		}
-
-		String prefix = StringPool.BLANK;
-
-		if (Objects.equals(
-				objectField.getDBType(),
-				ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
-
-			prefix = "AGGREGATION_BOOLEAN_";
 		}
 
 		OrderByExpression orderByExpression = _getOrderByExpression(

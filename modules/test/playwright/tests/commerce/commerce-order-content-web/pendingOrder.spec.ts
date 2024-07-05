@@ -12,6 +12,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import getRandomString from '../../../utils/getRandomString';
+import {miniumSetUp} from '../utils/commerce';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -390,4 +391,53 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 			user.id
 		);
 	}
+});
+
+test('COMMERCE-7697 Verify user can download CSV template', async ({
+	apiHelpers,
+	page,
+}) => {
+	test.setTimeout(180000);
+
+	const {channel, site} = await miniumSetUp(apiHelpers);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'Download CSV',
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['test@liferay.com']
+	);
+
+	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+		{
+			accountId: account.id,
+		},
+		channel.id
+	);
+
+	await page.goto(
+		`/web/${site.name}/pending-orders/-/pending-order/${cart.id}`
+	);
+
+	await page
+		.locator(
+			"//div[contains(@class, 'dropdown')]/a[contains(@class, 'action') and contains(@class, 'btn-primary')]"
+		)
+		.click();
+	await page.getByRole('menuitem', {name: 'Import from CSV'}).click();
+
+	const downloadPromise = page.waitForEvent('download');
+
+	await page
+		.frameLocator('iframe[title="Import from CSV"]')
+		.getByRole('button', {name: 'Download Template'})
+		.click();
+
+	const download = await downloadPromise;
+	expect(download.suggestedFilename()).toEqual('csv_template.csv');
 });

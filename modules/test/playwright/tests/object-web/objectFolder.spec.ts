@@ -108,7 +108,7 @@ test.describe('manage object definitions through view object definitions', () =>
 			objectFolder.label['en_US']
 		);
 
-		await viewObjectDefinitionsPage.openObjectFolderActions();
+		await viewObjectDefinitionsPage.objectFolderActions.click();
 
 		await viewObjectDefinitionsPage.objectFolderEditLabelAndERCOption.click();
 
@@ -172,9 +172,9 @@ test.describe('manage object definitions through view object definitions', () =>
 	}) => {
 		await viewObjectDefinitionsPage.goto();
 
-		await viewObjectDefinitionsPage.clickDefaultObjectFolder();
+		await viewObjectDefinitionsPage.defaultObjectFolder.click();
 
-		await viewObjectDefinitionsPage.openObjectFolderActions();
+		await viewObjectDefinitionsPage.objectFolderActions.click();
 
 		await expect(
 			viewObjectDefinitionsPage.objectFolderDeleteFolderOption
@@ -244,11 +244,11 @@ test('object definitions from a deleted folder are moved to the default folder',
 		objectFolder.externalReferenceCode
 	);
 
-	await viewObjectDefinitionsPage.openObjectFolderActions();
+	await viewObjectDefinitionsPage.objectFolderActions.click();
 
 	await viewObjectDefinitionsPage.deleteObjectFolder(objectFolder.name);
 
-	await viewObjectDefinitionsPage.clickDefaultObjectFolder();
+	await viewObjectDefinitionsPage.defaultObjectFolder.click();
 
 	await expect(
 		viewObjectDefinitionsPage.frontendDataSetEntries.filter({

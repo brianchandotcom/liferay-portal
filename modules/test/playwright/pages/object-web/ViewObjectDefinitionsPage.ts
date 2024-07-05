@@ -78,18 +78,10 @@ export class ViewObjectDefinitionsPage {
 		await this.page.getByRole('button', {name: 'Save'}).click();
 	}
 
-	async clickDefaultObjectFolder() {
-		await this.defaultObjectFolder.click();
-	}
-
 	async clickEditObjectDefinitionLink(objectDefinitionLabel: string) {
 		await this.page
 			.getByRole('link', {exact: true, name: objectDefinitionLabel})
 			.click();
-	}
-
-	async clickDeleteObjectDefinition() {
-		await this.deleteObjectDefinitionOption.click();
 	}
 
 	async createObjectFolder(objectFolderLabel: string) {
@@ -131,18 +123,10 @@ export class ViewObjectDefinitionsPage {
 		);
 	}
 
-	async openObjectFolderActions() {
-		await this.objectFolderActions.click();
-	}
-
 	async openObjectFolder(objectFolderLabel: string) {
 		await this.page
 			.getByRole('listitem')
 			.filter({hasText: objectFolderLabel})
 			.click();
-	}
-
-	async viewInModelBuilder() {
-		this.viewInModelBuilderButton.click();
 	}
 }

@@ -77,7 +77,7 @@ test.describe('Manage object fields through Model Builder', () => {
 
 		await viewObjectDefinitionsPage.openObjectFolder('default');
 
-		await viewObjectDefinitionsPage.viewInModelBuilder();
+		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
 
 		const objectFieldLabel = 'objectFieldLabel' + getRandomInt();
 

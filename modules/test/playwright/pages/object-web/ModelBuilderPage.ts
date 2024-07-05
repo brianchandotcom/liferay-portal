@@ -140,22 +140,6 @@ export class ModelBuilderPage {
 		this.toggleSidebarsButton = page.getByLabel('Toggle Sidebars');
 	}
 
-	async clickDeleteObjectDefinition() {
-		this.deleteObjectDefinitionOption.click();
-	}
-
-	async clickDeleteObjectRelationshipButton() {
-		this.deleteObjectRelationshipButton.click();
-	}
-
-	async clickFitViewButton() {
-		this.fitViewButton.click({force: true});
-	}
-
-	async clickGoToFolderButton() {
-		this.goToFolderButton.click();
-	}
-
 	async clickHideFieldsButton(objectDefinitionName: string) {
 		await this.objectDefinitionNodes
 			.filter({hasText: objectDefinitionName})
@@ -186,7 +170,7 @@ export class ModelBuilderPage {
 	}
 
 	async clickObjectRelationshipEdge(objectRelationshipLabel: string) {
-		this.objectRelationshipEdges
+		await this.objectRelationshipEdges
 			.filter({hasText: objectRelationshipLabel})
 			.click();
 	}

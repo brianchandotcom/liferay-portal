@@ -36,7 +36,7 @@ public class WorkflowDefinitionLinkDemoDataCreatorImpl
 		throws PortalException {
 
 		WorkflowDefinition workflowDefinition =
-			_workflowDefinitionManager.getWorkflowDefinition(
+			_workflowDefinitionManager.liberalGetWorkflowDefinition(
 				companyId, "Auto Insurance Application", 1);
 
 		PermissionChecker permissionChecker =

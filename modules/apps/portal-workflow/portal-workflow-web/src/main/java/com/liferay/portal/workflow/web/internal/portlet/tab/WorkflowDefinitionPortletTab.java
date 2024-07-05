@@ -129,7 +129,7 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 
 		renderRequest.setAttribute(
 			WebKeys.WORKFLOW_DEFINITION,
-			_workflowDefinitionManager.getWorkflowDefinition(
+			_workflowDefinitionManager.liberalGetWorkflowDefinition(
 				themeDisplay.getCompanyId(), name, version));
 	}
 

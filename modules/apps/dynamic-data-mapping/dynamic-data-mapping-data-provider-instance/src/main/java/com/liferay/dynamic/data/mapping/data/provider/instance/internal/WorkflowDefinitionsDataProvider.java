@@ -61,7 +61,7 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 
 		try {
 			List<WorkflowDefinition> workflowDefinitions =
-				workflowDefinitionManager.getActiveWorkflowDefinitions(
+				workflowDefinitionManager.liberalGetActiveWorkflowDefinitions(
 					ddmDataProviderRequest.getCompanyId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 

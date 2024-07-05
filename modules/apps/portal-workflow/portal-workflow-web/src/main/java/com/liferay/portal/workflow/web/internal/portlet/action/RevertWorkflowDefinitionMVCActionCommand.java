@@ -66,7 +66,7 @@ public class RevertWorkflowDefinitionMVCActionCommand
 			actionRequest, "previousVersion");
 
 		WorkflowDefinition previousWorkflowDefinition =
-			_workflowDefinitionManager.getWorkflowDefinition(
+			_workflowDefinitionManager.liberalGetWorkflowDefinition(
 				themeDisplay.getCompanyId(), previousName, previousVersion);
 
 		actionRequest.setAttribute(

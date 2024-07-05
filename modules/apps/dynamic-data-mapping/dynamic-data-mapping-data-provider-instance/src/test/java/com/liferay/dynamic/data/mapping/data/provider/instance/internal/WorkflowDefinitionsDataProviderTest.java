@@ -110,7 +110,7 @@ public class WorkflowDefinitionsDataProviderTest {
 			workflowDefinition2, "definition2", "Definition 2");
 
 		Mockito.when(
-			_workflowDefinitionManager.getActiveWorkflowDefinitions(
+			_workflowDefinitionManager.liberalGetActiveWorkflowDefinitions(
 				1, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)
 		).thenReturn(
 			Arrays.asList(workflowDefinition1, workflowDefinition2)
@@ -179,7 +179,7 @@ public class WorkflowDefinitionsDataProviderTest {
 		).build();
 
 		Mockito.when(
-			_workflowDefinitionManager.getActiveWorkflowDefinitions(
+			_workflowDefinitionManager.liberalGetActiveWorkflowDefinitions(
 				1, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)
 		).thenThrow(
 			WorkflowException.class

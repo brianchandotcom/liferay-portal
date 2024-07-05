@@ -163,7 +163,7 @@ public class CommerceChannelDisplayContext
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions()
 		throws PortalException {
 
-		return _workflowDefinitionManager.getActiveWorkflowDefinitions(
+		return _workflowDefinitionManager.liberalGetActiveWorkflowDefinitions(
 			_commerceChannelRequestHelper.getCompanyId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}

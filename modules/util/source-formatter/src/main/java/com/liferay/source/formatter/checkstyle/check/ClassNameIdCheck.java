@@ -64,14 +64,35 @@ public class ClassNameIdCheck extends BaseCheck {
 
 			String variableName = getName(variableDefDetailAST);
 
-			if (variableName.contains("ClassNameId") ||
-				variableName.contains("classNameId")) {
+			if (!variableName.contains("ClassNameId") &&
+				!variableName.contains("classNameId")) {
 
+				continue;
+			}
+
+			if (!_isAssignedInsideConstructor(variableDefDetailAST)) {
 				log(
 					variableDefDetailAST, _MSG_AVOID_VARIABLE_NAME,
 					variableName);
 			}
 		}
+	}
+
+	private boolean _isAssignedInsideConstructor(
+		DetailAST variableDefDetailAST) {
+
+		List<DetailAST> variableCallerDetailASTList =
+			getVariableCallerDetailASTList(variableDefDetailAST);
+
+		for (DetailAST variableCallerDetailAST : variableCallerDetailASTList) {
+			if (hasParentWithTokenType(
+					variableCallerDetailAST, TokenTypes.CTOR_DEF)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String _MSG_AVOID_VARIABLE_NAME =

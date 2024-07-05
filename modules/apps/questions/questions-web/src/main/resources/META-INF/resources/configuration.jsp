@@ -144,8 +144,8 @@ catch (Exception exception) {
 					var form = document.<portlet:namespace />fm;
 
 					Liferay.Util.setFormValues(form, {
-						rootTopicName: Liferay.Util.unescape(event.name),
-						rootTopicId: event.categoryid,
+						rootTopicName: Liferay.Util.unescape(event.resourcename),
+						rootTopicId: event.resourceid,
 					});
 
 					var removeRootTopicButton = document.getElementById(

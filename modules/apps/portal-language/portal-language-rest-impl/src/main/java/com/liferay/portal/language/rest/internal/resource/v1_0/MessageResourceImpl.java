@@ -69,38 +69,38 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 	public void postMessage(String languageId, MultipartBody multipartBody)
 		throws Exception {
 
-		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+		BinaryFile file = multipartBody.getBinaryFile("file");
 
-		if (binaryFile == null) {
+		if (file == null) {
 			throw new BadRequestException("Unable to read file");
 		}
 
 		if (!Objects.equals(
-				FileUtil.getExtension(binaryFile.getFileName()),
-				"properties")) {
+				FileUtil.getExtension(file.getFileName()), "properties")) {
 
-			throw new BadRequestException("Please upload a *.properties file");
+			throw new BadRequestException(
+				"Please upload a Language.properties file");
 		}
 
-		Properties properties = new Properties();
+		Properties languageProperties = new Properties();
 
-		properties.load(
+		languageProperties.load(
 			new InputStreamReader(
-				binaryFile.getInputStream(), StandardCharsets.UTF_8));
+				file.getInputStream(), StandardCharsets.UTF_8));
 
-		if (properties.isEmpty()) {
+		if (languageProperties.isEmpty()) {
 			return;
 		}
 
 		Enumeration<String> enumeration =
-			(Enumeration<String>)properties.propertyNames();
+			(Enumeration<String>)languageProperties.propertyNames();
 
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
 
 			_ploEntryLocalService.addOrUpdatePLOEntry(
 				contextCompany.getCompanyId(), contextUser.getUserId(), key,
-				languageId, properties.getProperty(key));
+				languageId, languageProperties.getProperty(key));
 		}
 	}
 

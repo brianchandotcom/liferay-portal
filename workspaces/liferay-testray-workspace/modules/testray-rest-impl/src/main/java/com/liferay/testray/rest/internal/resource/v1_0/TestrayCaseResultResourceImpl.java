@@ -354,7 +354,8 @@ public class TestrayCaseResultResourceImpl
 						actions = _getActions(value);
 						comment = GetterUtil.getString(value.get("comment_"));
 						error = GetterUtil.getString(value.get("errors_"));
-						flaky = GetterUtil.getBoolean(value.get("flaky_"));
+						flaky = GetterUtil.getBoolean(
+							String.valueOf(value.get("flaky_")));
 						issues = GetterUtil.getString(value.get("issues_"));
 						priority = GetterUtil.getLong(value.get("priority_"));
 						status = GetterUtil.getString(value.get("dueStatus_"));

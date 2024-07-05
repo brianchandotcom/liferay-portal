@@ -105,6 +105,22 @@ function SegmentsExperimentsSidebar({
 		});
 
 	useEffect(() => {
+		const segmentsExperimentState = getSegmentsExperimentParameter(
+			'segmentsExperimentState'
+		);
+
+		if (segmentsExperimentState === 'variantPublished') {
+			const experienceName =
+				getSegmentsExperimentParameter('experienceName');
+
+			openSuccessToast(
+				sub(
+					Liferay.Language.get('x-was-published-successfully'),
+					decodeURIComponent(experienceName)
+				)
+			);
+		}
+
 		const segmentsExperimentAction = getSegmentsExperimentParameter();
 
 		if (!segmentsExperimentAction || !experiment) {
@@ -426,14 +442,19 @@ function SegmentsExperimentsSidebar({
 			winnerSegmentsExperienceId: experienceId,
 		})
 			.then(() => {
-				openSuccessToast(
-					sub(
-						Liferay.Language.get('x-was-published-successfully'),
-						experienceName
-					)
-				);
-
-				navigateToExperience(experienceId);
+				navigateToExperience({
+					experienceId,
+					params: [
+						{
+							key: 'segmentsExperimentState',
+							value: 'variantPublished',
+						},
+						{
+							key: 'experienceName',
+							value: encodeURIComponent(experienceName),
+						},
+					],
+				});
 			})
 			.catch((_error) => {
 				openErrorToast();

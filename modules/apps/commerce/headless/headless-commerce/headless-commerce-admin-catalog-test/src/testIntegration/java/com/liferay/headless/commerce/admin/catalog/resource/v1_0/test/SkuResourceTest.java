@@ -6,6 +6,7 @@
 package com.liferay.headless.commerce.admin.catalog.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -15,13 +16,16 @@ import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuOption;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuUnitOfMeasure;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuVirtualSettings;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
+import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -35,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,6 +136,7 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		_testPatchSkuExternalReferenceCode();
 		_testPatchSkuWithPricing();
 		_testPatchSkuWithShipping();
+		_testPatchSkuWithUnitOfMeasure();
 	}
 
 	@Override
@@ -359,6 +365,62 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		assertValid(patchSku);
 	}
 
+	private void _testPatchSkuWithUnitOfMeasure() throws Exception {
+		Sku sku = testPatchSku_addSku();
+
+		SkuUnitOfMeasure randomSkuUnitOfMeasure = new SkuUnitOfMeasure() {
+			{
+				active = true;
+				basePrice = BigDecimal.valueOf(RandomTestUtil.randomDouble());
+				incrementalOrderQuantity = BigDecimal.valueOf(
+					RandomTestUtil.randomInt(1, 10));
+				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				name = LanguageUtils.getLanguageIdMap(
+					RandomTestUtil.randomLocaleStringMap());
+				precision = 0;
+				primary = true;
+				priority = RandomTestUtil.randomDouble();
+				promoPrice = BigDecimal.valueOf(RandomTestUtil.randomDouble());
+				rate = BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10));
+			}
+		};
+
+		SkuUnitOfMeasure[] randomSkuUnitOfMeasureArray = {
+			randomSkuUnitOfMeasure
+		};
+
+		sku.setSkuUnitOfMeasures(randomSkuUnitOfMeasureArray);
+
+		Sku patchSku = skuResource.patchSku(sku.getId(), sku);
+
+		SkuUnitOfMeasure[] skuUnitOfMeasures = patchSku.getSkuUnitOfMeasures();
+
+		Assert.assertTrue(
+			(skuUnitOfMeasures != null) && (skuUnitOfMeasures.length == 1));
+
+		SkuUnitOfMeasure skuUnitOfMeasure = skuUnitOfMeasures[0];
+
+		Assert.assertEquals(
+			skuUnitOfMeasure.getKey(), randomSkuUnitOfMeasure.getKey());
+		Assert.assertEquals(
+			skuUnitOfMeasure.getBasePrice(),
+			randomSkuUnitOfMeasure.getBasePrice(
+			).setScale(
+				2, RoundingMode.HALF_UP
+			));
+		Assert.assertEquals(
+			skuUnitOfMeasure.getPriority(),
+			randomSkuUnitOfMeasure.getPriority());
+		Assert.assertEquals(
+			skuUnitOfMeasure.getPromoPrice(),
+			randomSkuUnitOfMeasure.getPromoPrice(
+			).setScale(
+				2, RoundingMode.HALF_UP
+			));
+
+		assertValid(patchSku);
+	}
+
 	private void _testPostProductIdSkuWithOptionId() throws Exception {
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			_cpDefinitionOptionValueRels.get(0);
@@ -509,6 +571,9 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 			randomSkuVirtualSettings.getUseSample());
 	}
 
+	@Inject
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
+
 	@DeleteAfterTestRun
 	private CPDefinition _cpDefinition;
 
@@ -525,6 +590,10 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Inject
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@DeleteAfterTestRun
 	private CPOption _cpOption;

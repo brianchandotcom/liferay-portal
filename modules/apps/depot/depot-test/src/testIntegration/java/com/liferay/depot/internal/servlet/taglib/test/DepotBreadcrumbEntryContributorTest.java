@@ -91,6 +91,9 @@ public class DepotBreadcrumbEntryContributorTest {
 			homeBreadcrumbEntry.toString(),
 			_language.get(mockHttpServletRequest, "home"),
 			homeBreadcrumbEntry.getTitle());
+
+		_assertBreadcrumbEntryNotBrowsable(
+			breadcrumbEntries.get(breadcrumbEntries.size() - 1));
 	}
 
 	@Test
@@ -155,6 +158,9 @@ public class DepotBreadcrumbEntryContributorTest {
 				breadcrumbEntry.toString(), breadcrumbEntry.getTitle(),
 				previousBreadcrumbEntry.getTitle());
 		}
+
+		_assertBreadcrumbEntryNotBrowsable(
+			breadcrumbEntries.get(breadcrumbEntries.size() - 1));
 	}
 
 	private DepotEntry _addDepotEntry(String name, String description)
@@ -191,6 +197,15 @@ public class DepotBreadcrumbEntryContributorTest {
 		Assert.assertEquals(
 			assetLibraryBreadcrumbEntry.toString(), depotName,
 			assetLibraryBreadcrumbEntry.getTitle());
+	}
+
+	private void _assertBreadcrumbEntryNotBrowsable(
+			BreadcrumbEntry breadcrumbEntry)
+		throws Exception {
+
+		Assert.assertFalse(
+			breadcrumbEntry.toString(), breadcrumbEntry.isBrowsable());
+		Assert.assertNull(breadcrumbEntry.toString(), breadcrumbEntry.getURL());
 	}
 
 	private BreadcrumbEntry _getBreadcrumbEntry() {

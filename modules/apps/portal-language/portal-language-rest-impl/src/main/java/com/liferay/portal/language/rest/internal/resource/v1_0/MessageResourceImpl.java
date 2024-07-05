@@ -5,9 +5,37 @@
 
 package com.liferay.portal.language.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.language.override.model.PLOEntry;
+import com.liferay.portal.language.override.service.PLOEntryLocalService;
+import com.liferay.portal.language.rest.dto.v1_0.Message;
 import com.liferay.portal.language.rest.resource.v1_0.MessageResource;
+import com.liferay.portal.vulcan.multipart.BinaryFile;
+import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.io.InputStreamReader;
+import java.io.Serializable;
+
+import java.nio.charset.StandardCharsets;
+
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+
+import javax.ws.rs.BadRequestException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -18,4 +46,118 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = MessageResource.class
 )
 public class MessageResourceImpl extends BaseMessageResourceImpl {
+
+	@Override
+	public void deleteMessage(String key, String languageId) {
+		if (Validator.isNull(languageId)) {
+			_ploEntryLocalService.deletePLOEntries(
+				contextCompany.getCompanyId(), key);
+		}
+		else {
+			_ploEntryLocalService.deletePLOEntry(
+				contextCompany.getCompanyId(), key, languageId);
+		}
+	}
+
+	@Override
+	public Message getMessage(String key, String languageId) {
+		Message message = new Message();
+
+		message.setKey(() -> key);
+		message.setLanguageId(() -> languageId);
+
+		PLOEntry ploEntry = _ploEntryLocalService.fetchPLOEntry(
+			contextCompany.getCompanyId(), key, languageId);
+
+		if (ploEntry != null) {
+			message.setValue(ploEntry::getValue);
+		}
+		else {
+			message.setValue(
+				() -> _language.get(
+					LocaleUtil.fromLanguageId(languageId), key));
+		}
+
+		return message;
+	}
+
+	@Override
+	public Message postMessage(Message message) throws PortalException {
+		return _addOrUpdatePLOEntry(message);
+	}
+
+	@Override
+	public void postMessageImport(
+			String languageId, MultipartBody multipartBody)
+		throws Exception {
+
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
+		if (binaryFile == null) {
+			throw new BadRequestException("Unable to read file");
+		}
+
+		if (!Objects.equals(
+				FileUtil.getExtension(binaryFile.getFileName()),
+				"properties")) {
+
+			throw new BadRequestException(
+				"File name must have a \"properties\" file extension");
+		}
+
+		Properties properties = new Properties();
+
+		properties.load(
+			new InputStreamReader(
+				binaryFile.getInputStream(), StandardCharsets.UTF_8));
+
+		if (properties.isEmpty()) {
+			return;
+		}
+
+		Enumeration<String> enumeration =
+			(Enumeration<String>)properties.propertyNames();
+
+		while (enumeration.hasMoreElements()) {
+			String key = enumeration.nextElement();
+
+			_ploEntryLocalService.addOrUpdatePLOEntry(
+				contextCompany.getCompanyId(), contextUser.getUserId(), key,
+				languageId, properties.getProperty(key));
+		}
+	}
+
+	@Override
+	public Message putMessage(Message message) throws PortalException {
+		return _addOrUpdatePLOEntry(message);
+	}
+
+	@Override
+	public Page<Message> read(
+		Filter filter, Pagination pagination, Sort[] sorts,
+		Map<String, Serializable> parameters, String search) {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	private Message _addOrUpdatePLOEntry(Message message)
+		throws PortalException {
+
+		PLOEntry ploEntry = _ploEntryLocalService.addOrUpdatePLOEntry(
+			contextCompany.getCompanyId(), contextUser.getUserId(),
+			message.getKey(), message.getLanguageId(), message.getValue());
+
+		message.setKey(ploEntry::getKey);
+		message.setValue(ploEntry::getValue);
+		message.setLanguageId(ploEntry::getLanguageId);
+
+		return message;
+	}
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private PLOEntryLocalService _ploEntryLocalService;
+
 }

@@ -23,10 +23,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -43,13 +40,25 @@ public class DispatchConfiguratorTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
+		ReflectionTestUtil.setFieldValue(
+			_dispatchConfigurator, "_clusterMasterExecutor",
+			_clusterMasterExecutor);
+		ReflectionTestUtil.setFieldValue(
+			_dispatchConfigurator, "_destinationFactory", _destinationFactory);
+		ReflectionTestUtil.setFieldValue(
+			_dispatchConfigurator, "_dispatchTriggerHelper",
+			_dispatchTriggerHelper);
+		ReflectionTestUtil.setFieldValue(
+			_dispatchConfigurator, "_dispatchTriggerLocalService",
+			_dispatchTriggerLocalService);
 
 		Mockito.when(
 			_destinationFactory.createDestination(Mockito.any())
 		).thenReturn(
 			Mockito.mock(Destination.class)
 		);
+
+		_allNodesDispatchTrigger = Mockito.mock(DispatchTrigger.class);
 
 		Mockito.when(
 			_dispatchTriggerLocalService.getDispatchTriggers(
@@ -58,12 +67,18 @@ public class DispatchConfiguratorTest {
 			ListUtil.fromArray(_allNodesDispatchTrigger)
 		);
 
+		_singleNodeMemoryClusteredDispatchTrigger = Mockito.mock(
+			DispatchTrigger.class);
+
 		Mockito.when(
 			_dispatchTriggerLocalService.getDispatchTriggers(
 				true, DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED)
 		).thenReturn(
 			ListUtil.fromArray(_singleNodeMemoryClusteredDispatchTrigger)
 		);
+
+		_singleNodePersistedDispatchTrigger = Mockito.mock(
+			DispatchTrigger.class);
 
 		Mockito.when(
 			_dispatchTriggerLocalService.getDispatchTriggers(
@@ -305,32 +320,20 @@ public class DispatchConfiguratorTest {
 		);
 	}
 
-	@Mock
 	private DispatchTrigger _allNodesDispatchTrigger;
-
 	private final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
-
-	@Mock
-	private ClusterMasterExecutor _clusterMasterExecutor;
-
-	@Mock
-	private DestinationFactory _destinationFactory;
-
-	@InjectMocks
+	private final ClusterMasterExecutor _clusterMasterExecutor = Mockito.mock(
+		ClusterMasterExecutor.class);
+	private final DestinationFactory _destinationFactory = Mockito.mock(
+		DestinationFactory.class);
 	private final DispatchConfigurator _dispatchConfigurator =
 		new DispatchConfigurator();
-
-	@Mock
-	private DispatchTriggerHelper _dispatchTriggerHelper;
-
-	@Mock
-	private DispatchTriggerLocalService _dispatchTriggerLocalService;
-
-	@Mock
+	private final DispatchTriggerHelper _dispatchTriggerHelper = Mockito.mock(
+		DispatchTriggerHelper.class);
+	private final DispatchTriggerLocalService _dispatchTriggerLocalService =
+		Mockito.mock(DispatchTriggerLocalService.class);
 	private DispatchTrigger _singleNodeMemoryClusteredDispatchTrigger;
-
-	@Mock
 	private DispatchTrigger _singleNodePersistedDispatchTrigger;
 
 }

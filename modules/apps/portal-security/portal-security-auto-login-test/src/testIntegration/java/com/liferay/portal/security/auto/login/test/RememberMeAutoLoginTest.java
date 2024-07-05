@@ -182,9 +182,7 @@ public class RememberMeAutoLoginTest {
 				mockHttpServletRequest, false));
 	}
 
-	private Cookie _createCookie(
-		String name, String value, int maxAge) {
-
+	private Cookie _createCookie(String name, String value, int maxAge) {
 		Cookie cookie = new Cookie(name, value);
 
 		cookie.setDomain("localhost");

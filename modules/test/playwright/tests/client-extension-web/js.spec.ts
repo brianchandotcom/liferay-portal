@@ -117,7 +117,10 @@ test('JS client extension does not allow "src" as a script element attribute', a
 	expect(page.getByText('Use the "JavaScript URL" field.')).toBeVisible();
 });
 
-test('Assert the help link is pointing to the correct url', async ({editJSClientExtensionsPage, page}) => {
+test('Assert the help link is pointing to the correct url', async ({
+	editJSClientExtensionsPage,
+	page,
+}) => {
 	await editJSClientExtensionsPage.goto();
 
 	const link = page.getByRole('link', {

@@ -89,6 +89,8 @@ public class OpenAPIResourceImpl {
 
 			add(FolderResourceImpl.class);
 
+			add(PolymorphicSchemaResourceImpl.class);
+
 			add(TestResourceImpl.class);
 
 			add(TestBooleanResourceImpl.class);

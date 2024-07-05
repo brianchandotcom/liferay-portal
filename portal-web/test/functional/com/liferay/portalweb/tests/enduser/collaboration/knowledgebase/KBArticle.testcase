@@ -1486,6 +1486,12 @@ definition {
 	test CanViewEmbeddedVideo {
 		property portal.release = "quarantine";
 
+		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.security.iframe.sanitizer.configuration.IFrameConfiguration");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "false",
+			settingFieldName = "Enabled");
+
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(

@@ -180,7 +180,9 @@ public class DispatchConfiguratorTest {
 	}
 
 	@Test
-	public void testOnDeactivationUnschedulesAllTypeOfJobsOnMasterNode() {
+	public void testOnDeactivationUnschedulesAllTypeOfJobsOnMasterNode()
+		throws Exception {
+
 		Mockito.when(
 			_clusterMasterExecutor.isMaster()
 		).thenReturn(
@@ -238,7 +240,9 @@ public class DispatchConfiguratorTest {
 	}
 
 	@Test
-	public void testOnDeactivationUnschedulesOnlyAllNodesJobs() {
+	public void testOnDeactivationUnschedulesOnlyAllNodesJobs()
+		throws Exception {
+
 		Mockito.when(
 			_clusterMasterExecutor.isMaster()
 		).thenReturn(

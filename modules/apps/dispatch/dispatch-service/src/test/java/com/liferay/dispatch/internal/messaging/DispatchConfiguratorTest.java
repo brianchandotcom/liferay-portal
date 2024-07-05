@@ -74,7 +74,7 @@ public class DispatchConfiguratorTest {
 	}
 
 	@Test
-	public void testOnActivationSchedulesAllTypesOfJobsOnMasterNode()
+	public void testOnActivationSchedulesAllTypeOfJobsOnMasterNode()
 		throws Exception {
 
 		Mockito.when(

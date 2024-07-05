@@ -117,6 +117,20 @@ test('JS client extension does not allow "src" as a script element attribute', a
 	expect(page.getByText('Use the "JavaScript URL" field.')).toBeVisible();
 });
 
+test('Assert the help link is pointing to the correct url', async ({editJSClientExtensionsPage, page}) => {
+	await editJSClientExtensionsPage.goto();
+
+	const link = page.getByRole('link', {
+		name: 'Learn more about browser based client extensions.',
+	});
+
+	await expect(link).toBeVisible();
+
+	expect(await link.getAttribute('href')).toBe(
+		'https://learn.liferay.com/w/dxp/liferay-development/customizing-liferays-look-and-feel'
+	);
+});
+
 const assertDefaultSelectedLoadType = async (
 	clientExtensionName: string,
 	page: Page,

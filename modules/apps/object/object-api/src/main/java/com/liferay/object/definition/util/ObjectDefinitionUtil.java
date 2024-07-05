@@ -88,6 +88,7 @@ public class ObjectDefinitionUtil {
 	private static final String[] _ALLOWED_INVOKER_BUNDLE_SYMBOLIC_NAMES = {
 		"com.liferay.commerce.service", "com.liferay.cookies.impl",
 		"com.liferay.frontend.data.set.admin.web",
+		"com.liferay.frontend.data.set.impl",
 		"com.liferay.headless.builder.impl", "com.liferay.list.type.service",
 		"com.liferay.notification.service", "com.liferay.object.service"
 	};
@@ -111,6 +112,8 @@ public class ObjectDefinitionUtil {
 			"CommerceReturn", "/commerce-returns"
 		).put(
 			"CommerceReturnItem", "/commerce-return-items"
+		).put(
+			"DataSet", "/data-set-admin/data-sets"
 		).put(
 			"FDSAction", "/data-set-manager/actions"
 		).put(

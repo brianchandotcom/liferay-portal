@@ -76,6 +76,18 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
+	@Override
+	@Test
+	public void testMissingCtCollectionId() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.journal.internal.upgrade.v5_1_1." +
+					"JournalArticleAssetEntryClassTypeIdUpgradeProcess",
+				LoggerTestUtil.WARN)) {
+
+			super.testMissingCtCollectionId();
+		}
+	}
+
 	@Test
 	public void testUpgrade() throws Exception {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(

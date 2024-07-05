@@ -39,6 +39,14 @@ public class JSONBatchEngineDataFileCheck extends BaseFileCheck {
 
 		if (configurationJSONObject != null) {
 			configurationJSONObject.remove("companyId");
+
+			boolean multiCompany = configurationJSONObject.getBoolean(
+				"multiCompany");
+
+			if (!multiCompany) {
+				configurationJSONObject.remove("multiCompany");
+			}
+
 			configurationJSONObject.remove("userId");
 			configurationJSONObject.remove("version");
 

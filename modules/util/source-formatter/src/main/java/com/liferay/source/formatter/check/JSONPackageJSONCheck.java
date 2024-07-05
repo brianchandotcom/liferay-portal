@@ -75,7 +75,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		else {
 			_checkScript(
 				fileName, scriptsJSONObject, "build", false, "build",
-				"webpack");
+				"build:custom", "webpack");
 		}
 
 		_checkScript(

@@ -7599,6 +7599,18 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	private boolean _equals(
+		LocalizedValue localizedValue1, LocalizedValue localizedValue2) {
+
+		if ((_isEmpty(localizedValue1) && _isEmpty(localizedValue2)) ||
+			Objects.equals(localizedValue1, localizedValue2)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private DDMFormValues _formatContent(
 			JournalArticle article, String content, long groupId, User user)
 		throws PortalException {
@@ -7983,6 +7995,18 @@ public class JournalArticleLocalServiceImpl
 		return urlTitleMap;
 	}
 
+	private boolean _isEmpty(LocalizedValue localizedValue) {
+		Map<Locale, String> values = localizedValue.getValues();
+
+		for (String string : values.values()) {
+			if ((string != null) && !string.isEmpty()) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private void _populateSubscriptionSender(
 		JournalArticle article, String articleURL, String emailType,
 		String fromAddress, String fromName,
@@ -8180,10 +8204,15 @@ public class JournalArticleLocalServiceImpl
 				ddmFormFieldValue.getName());
 
 			if (ddmFormField != null) {
-				ddmFormField.setPredefinedValue(
-					(LocalizedValue)ddmFormFieldValue.getValue());
+				LocalizedValue localizedValue =
+					(LocalizedValue)ddmFormFieldValue.getValue();
 
-				update = true;
+				if (!_equals(
+						ddmFormField.getPredefinedValue(), localizedValue)) {
+
+					ddmFormField.setPredefinedValue(localizedValue);
+					update = true;
+				}
 			}
 		}
 

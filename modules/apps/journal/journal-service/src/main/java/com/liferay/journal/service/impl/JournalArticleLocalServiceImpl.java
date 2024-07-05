@@ -7996,6 +7996,10 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	private boolean _isEmpty(LocalizedValue localizedValue) {
+		if (localizedValue == null) {
+			return true;
+		}
+
 		Map<Locale, String> values = localizedValue.getValues();
 
 		for (String string : values.values()) {
@@ -8197,13 +8201,19 @@ public class JournalArticleLocalServiceImpl
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		for (DDMFormFieldValue ddmFormFieldValue :
-				ddmFormValues.getDDMFormFieldValues()) {
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap(true);
 
-			DDMFormField ddmFormField = ddmFormFieldsMap.get(
-				ddmFormFieldValue.getName());
+		for (Map.Entry<String, List<DDMFormFieldValue>> entry :
+				ddmFormFieldValuesMap.entrySet()) {
+
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(entry.getKey());
 
 			if (ddmFormField != null) {
+				List<DDMFormFieldValue> ddmFormFieldValues = entry.getValue();
+
+				DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
 				LocalizedValue localizedValue =
 					(LocalizedValue)ddmFormFieldValue.getValue();
 

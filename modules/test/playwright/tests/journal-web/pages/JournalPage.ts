@@ -6,6 +6,7 @@
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {expandSection} from '../../../utils/expandSection';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 
@@ -189,13 +190,7 @@ export class JournalPage {
 
 		await permissionsGroup.waitFor();
 
-		const isOpen = await permissionsGroup.evaluate(
-			(element) => element.getAttribute('aria-expanded') === 'true'
-		);
-
-		if (!isOpen) {
-			await permissionsGroup.click();
-		}
+		await expandSection(permissionsGroup);
 
 		await this.page.getByLabel('Viewable by').waitFor();
 

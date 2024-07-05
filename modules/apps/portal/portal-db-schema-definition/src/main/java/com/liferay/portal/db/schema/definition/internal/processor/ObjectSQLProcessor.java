@@ -57,6 +57,14 @@ public class ObjectSQLProcessor {
 		return _tablesSQLSB.toString();
 	}
 
+	private void _appendTableSQL(String sql, String tableName)
+		throws Exception {
+
+		_tablesSQLSB.append(_db.buildSQL(sql));
+		_tablesSQLSB.append(StringPool.NEW_LINE);
+		_tableNames.add(tableName);
+	}
+
 	private void _generateIndexesSQL() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
@@ -77,39 +85,6 @@ public class ObjectSQLProcessor {
 				}
 			}
 		}
-	}
-
-	private void _generateRegularTables(ObjectDefinition objectDefinition)
-		throws Exception {
-
-		DynamicObjectDefinitionLocalizationTable
-			dynamicObjectDefinitionLocalizationTable =
-				DynamicObjectDefinitionLocalizationTableFactory.create(
-					objectDefinition, ObjectFieldLocalServiceUtil.getService());
-
-		if (dynamicObjectDefinitionLocalizationTable != null) {
-			_saveTableSQL(
-				dynamicObjectDefinitionLocalizationTable.getCreateTableSQL(),
-				dynamicObjectDefinitionLocalizationTable.getTableName());
-		}
-
-		if (!objectDefinition.isUnmodifiableSystemObject()) {
-			DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-				DynamicObjectDefinitionTableFactory.create(
-					objectDefinition, ObjectFieldLocalServiceUtil.getService());
-
-			_saveTableSQL(
-				dynamicObjectDefinitionTable.getCreateTableSQL(),
-				dynamicObjectDefinitionTable.getTableName());
-		}
-
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			DynamicObjectDefinitionTableFactory.createExtension(
-				objectDefinition, ObjectFieldLocalServiceUtil.getService());
-
-		_saveTableSQL(
-			dynamicObjectDefinitionTable.getCreateTableSQL(),
-			dynamicObjectDefinitionTable.getTableName());
 	}
 
 	private void _generateRelationshipTables(ObjectDefinition objectDefinition)
@@ -147,7 +122,7 @@ public class ObjectSQLProcessor {
 						pkObjectFieldDBColumnName1, pkObjectFieldDBColumnName2,
 						objectRelationship.getDBTableName());
 
-			_saveTableSQL(
+			_appendTableSQL(
 				dynamicObjectRelationshipMappingTable.getCreateTableSQL(),
 				dynamicObjectRelationshipMappingTable.getTableName());
 		}
@@ -160,12 +135,45 @@ public class ObjectSQLProcessor {
 				WorkflowConstants.STATUS_APPROVED);
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			_generateRegularTables(objectDefinition);
+			_generateTables(objectDefinition);
 
 			_generateRelationshipTables(objectDefinition);
 		}
 
 		_generateIndexesSQL();
+	}
+
+	private void _generateTables(ObjectDefinition objectDefinition)
+		throws Exception {
+
+		DynamicObjectDefinitionLocalizationTable
+			dynamicObjectDefinitionLocalizationTable =
+				DynamicObjectDefinitionLocalizationTableFactory.create(
+					objectDefinition, ObjectFieldLocalServiceUtil.getService());
+
+		if (dynamicObjectDefinitionLocalizationTable != null) {
+			_appendTableSQL(
+				dynamicObjectDefinitionLocalizationTable.getCreateTableSQL(),
+				dynamicObjectDefinitionLocalizationTable.getTableName());
+		}
+
+		if (!objectDefinition.isUnmodifiableSystemObject()) {
+			DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+				DynamicObjectDefinitionTableFactory.create(
+					objectDefinition, ObjectFieldLocalServiceUtil.getService());
+
+			_appendTableSQL(
+				dynamicObjectDefinitionTable.getCreateTableSQL(),
+				dynamicObjectDefinitionTable.getTableName());
+		}
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			DynamicObjectDefinitionTableFactory.createExtension(
+				objectDefinition, ObjectFieldLocalServiceUtil.getService());
+
+		_appendTableSQL(
+			dynamicObjectDefinitionTable.getCreateTableSQL(),
+			dynamicObjectDefinitionTable.getTableName());
 	}
 
 	private Method _getMethod(
@@ -186,12 +194,6 @@ public class ObjectSQLProcessor {
 		}
 
 		return null;
-	}
-
-	private void _saveTableSQL(String sql, String tableName) throws Exception {
-		_tablesSQLSB.append(_db.buildSQL(sql));
-		_tablesSQLSB.append(StringPool.NEW_LINE);
-		_tableNames.add(tableName);
 	}
 
 	private final DB _db;

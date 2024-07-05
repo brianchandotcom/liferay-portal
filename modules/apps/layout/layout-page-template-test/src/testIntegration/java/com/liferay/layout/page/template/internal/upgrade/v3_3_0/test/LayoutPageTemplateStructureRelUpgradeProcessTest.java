@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -46,6 +47,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -171,6 +175,24 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 	@Test
 	public void testUpgradeWithFragmentEntryLinkTypePortlet() throws Exception {
 		_assertUpgradeWithFragmentEntryLinkTypePortlet(_layout);
+	}
+
+	@Test
+	public void testUpgradeWithFragmentEntryLinkTypePortletAndDraftLayout()
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.configuration.module.configuration." +
+					"internal.model.listener.PortletPreferencesModelListener",
+				LoggerTestUtil.ERROR)) {
+
+			_assertUpgradeWithFragmentEntryLinkTypePortlet(
+				_layout.fetchDraftLayout());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(logEntries.isEmpty());
+		}
 	}
 
 	private void _addFragmentStyledLayoutStructureItem(
@@ -498,7 +520,14 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 			_assertGetFragmentEntryLinksBySegmentsExperienceId(
 				layout.getPlid());
 
-			_runUpgrade();
+			ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
+
+			try {
+				_runUpgrade();
+			}
+			finally {
+				ServiceContextThreadLocal.popServiceContext();
+			}
 
 			_assertGetFragmentEntryLinksByPlid(3, layout.getPlid());
 

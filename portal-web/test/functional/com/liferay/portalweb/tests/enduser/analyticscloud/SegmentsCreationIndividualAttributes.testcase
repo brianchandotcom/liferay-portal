@@ -750,6 +750,10 @@ definition {
 			ACUtils.closeModal();
 		}
 
+		task ("Save the segment") {
+			ACSegments.saveSegment();
+		}
+
 		task ("Check that the segment is created") {
 			ACNavigation.goToSegments();
 

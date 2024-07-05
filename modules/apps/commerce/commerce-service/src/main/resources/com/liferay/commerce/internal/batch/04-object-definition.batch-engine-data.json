@@ -26,7 +26,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
-					"externalReferenceCode": "RETURN_CHANNEL_GROUP_ID",
+					"externalReferenceCode": "CHANNEL_GROUP_ID",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -41,7 +41,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
-					"externalReferenceCode": "RETURN_CHANNEL_ID",
+					"externalReferenceCode": "CHANNEL_ID",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -56,7 +56,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "RETURN_CHANNEL_NAME",
+					"externalReferenceCode": "CHANNEL_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -71,13 +71,38 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "RETURN_NOTE",
+					"externalReferenceCode": "NOTE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
 						"en_US": "Note"
 					},
 					"name": "note",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Aggregation",
+					"externalReferenceCode": "REQUESTED_ITEMS",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Requested Items"
+					},
+					"name": "requestedItems",
+					"objectFieldSettings": [
+						{
+							"name": "objectRelationshipName",
+							"value": "commerceReturnToCommerceReturnItems"
+						},
+						{
+							"name": "function",
+							"value": "COUNT"
+						}
+					],
 					"required": false,
 					"state": false,
 					"system": true,
@@ -103,61 +128,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Aggregation",
-					"externalReferenceCode": "RETURN_REQUESTED_ITEMS",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Requested Items"
-					},
-					"name": "requestedItems",
-					"objectFieldSettings": [
-						{
-							"name": "objectRelationshipName",
-							"value": "commerceReturnToCommerceReturnItems"
-						},
-						{
-							"name": "function",
-							"value": "COUNT"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Aggregation",
-					"externalReferenceCode": "RETURN_CHANNEL_TOTAL_ACCEPTED",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Total Accepted"
-					},
-					"name": "totalAccepted",
-					"objectFieldSettings": [
-						{
-							"name": "objectRelationshipName",
-							"value": "commerceReturnToCommerceReturnItems"
-						},
-						{
-							"name": "function",
-							"value": "SUM"
-						},
-						{
-							"name": "objectFieldName",
-							"value": "accepted"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Aggregation",
-					"externalReferenceCode": "RETURN_CHANNEL_TOTAL_AMOUNT",
+					"externalReferenceCode": "TOTAL_AMOUNT",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"label": {
@@ -186,7 +157,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Aggregation",
-					"externalReferenceCode": "RETURN_CHANNEL_TOTAL_AUTHORIZED",
+					"externalReferenceCode": "TOTAL_AUTHORIZED",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"label": {
@@ -211,6 +182,97 @@
 					"state": false,
 					"system": true,
 					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Aggregation",
+					"externalReferenceCode": "TOTAL_RECEIVED",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Total Received"
+					},
+					"name": "totalReceived",
+					"objectFieldSettings": [
+						{
+							"name": "objectRelationshipName",
+							"value": "commerceReturnToCommerceReturnItems"
+						},
+						{
+							"name": "function",
+							"value": "SUM"
+						},
+						{
+							"name": "objectFieldName",
+							"value": "received"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				}
+			],
+			"objectValidationRules": [
+				{
+					"active": true,
+					"engine": "javaDelegate#CommerceReturn#accountEntryId",
+					"engineLabel": "Commerce Return Account Entry ID",
+					"errorLabel": {
+						"en_US": "The account entry ID is invalid."
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_ACCOUNT_ENTRY_ID",
+					"name": {
+						"en_US": "Account Entry ID"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN",
+					"outputType": "fullValidation",
+					"system": true
+				},
+				{
+					"active": true,
+					"engine": "javaDelegate#CommerceReturn#commerceOrderId",
+					"engineLabel": "Commerce Return Commerce Order ID",
+					"errorLabel": {
+						"en_US": "The commerce order ID is invalid."
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_COMMERCE_ORDER_ID",
+					"name": {
+						"en_US": "Commerce Order ID"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN",
+					"outputType": "fullValidation",
+					"system": true
+				},
+				{
+					"active": true,
+					"engine": "javaDelegate#CommerceReturn#commerceOrderStatus",
+					"engineLabel": "Commerce Return Commerce Order Status",
+					"errorLabel": {
+						"en_US": "The commerce order status is invalid."
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_COMMERCE_ORDER_STATUS",
+					"name": {
+						"en_US": "Commerce Order Status"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN",
+					"outputType": "fullValidation",
+					"system": true
+				},
+				{
+					"active": true,
+					"engine": "javaDelegate#CommerceReturn#returnStatus",
+					"engineLabel": "Commerce Return Return Status",
+					"errorLabel": {
+						"en_US": "The return status is invalid."
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_RETURN_STATUS",
+					"name": {
+						"en_US": "Return Status"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN",
+					"outputType": "fullValidation",
+					"system": true
 				}
 			],
 			"pluralLabel": {

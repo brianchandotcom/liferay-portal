@@ -11,6 +11,7 @@ import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortle
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -19,26 +20,31 @@ import org.junit.Test;
 public abstract class
 	BaseSearchWidgetsExportImportPortletPreferencesProcessorTestCase {
 
+	@Before
+	public void setUp() {
+		_exportImportPortletPreferencesProcessor =
+			getExportImportPortletPreferencesProcessor();
+	}
+
 	@Test
 	public void testExportImportPortletPreferencesProcessorCapabilities() {
-		ExportImportPortletPreferencesProcessor
-			exportImportPortletPreferencesProcessor =
-				getExportImportPortletPreferencesProcessor();
-
-		Assert.assertNotNull(exportImportPortletPreferencesProcessor);
+		Assert.assertNotNull(_exportImportPortletPreferencesProcessor);
 
 		List<Capability> exportCapabilities =
-			exportImportPortletPreferencesProcessor.getExportCapabilities();
+			_exportImportPortletPreferencesProcessor.getExportCapabilities();
 
 		Assert.assertFalse(exportCapabilities.isEmpty());
 
 		List<Capability> importCapabilities =
-			exportImportPortletPreferencesProcessor.getImportCapabilities();
+			_exportImportPortletPreferencesProcessor.getImportCapabilities();
 
 		Assert.assertFalse(importCapabilities.isEmpty());
 	}
 
 	protected abstract ExportImportPortletPreferencesProcessor
 		getExportImportPortletPreferencesProcessor();
+
+	private ExportImportPortletPreferencesProcessor
+		_exportImportPortletPreferencesProcessor;
 
 }

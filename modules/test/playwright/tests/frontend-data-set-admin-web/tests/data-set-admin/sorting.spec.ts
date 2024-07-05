@@ -101,11 +101,7 @@ test.describe('Sorting in Data Set Manager', () => {
 			const tableLabelCellTexts =
 				await sortingPage.getTableLabelCellTexts();
 
-			expect(tableLabelCellTexts).toStrictEqual([
-				'ID',
-				'Name',
-				'Date Created',
-			]);
+			expect(tableLabelCellTexts).toEqual(['ID', 'Name', 'Date Created']);
 		});
 
 		await test.step('Move the "Date Created" option above "Name"', async () => {
@@ -124,11 +120,7 @@ test.describe('Sorting in Data Set Manager', () => {
 			const tableLabelCellTexts =
 				await sortingPage.getTableLabelCellTexts();
 
-			expect(tableLabelCellTexts).toStrictEqual([
-				'ID',
-				'Date Created',
-				'Name',
-			]);
+			expect(tableLabelCellTexts).toEqual(['ID', 'Date Created', 'Name']);
 		});
 
 		await test.step('Navigate to the "Details" tab and back to "Sorting" tab', async () => {
@@ -140,11 +132,7 @@ test.describe('Sorting in Data Set Manager', () => {
 			const tableLabelCellTexts =
 				await sortingPage.getTableLabelCellTexts();
 
-			expect(tableLabelCellTexts).toStrictEqual([
-				'ID',
-				'Date Created',
-				'Name',
-			]);
+			expect(tableLabelCellTexts).toEqual(['ID', 'Date Created', 'Name']);
 		});
 	});
 

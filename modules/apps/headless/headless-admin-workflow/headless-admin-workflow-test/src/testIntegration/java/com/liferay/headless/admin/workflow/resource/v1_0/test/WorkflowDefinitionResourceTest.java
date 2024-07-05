@@ -17,6 +17,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -52,6 +55,10 @@ public class WorkflowDefinitionResourceTest
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		BaseWorkflowDefinitionResourceTestCase.setUpClass();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(
+				UserLocalServiceUtil.getUser(TestPropsValues.getUserId())));
 
 		_workflowDefinition =
 			_workflowDefinitionManager.getLatestWorkflowDefinition(

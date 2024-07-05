@@ -40,6 +40,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.portal.util.PortalInstances;
 
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -375,6 +376,11 @@ public class CompanyLocalServiceDBPartitionTest
 
 			_assertCopyDBPartitionCompany(
 				copiedCompany, name, virtualHostname, webId);
+
+			SafeCloseable safeCloseable =
+				PortalInstances.setCopyInProcessCompanyId(copiedCompanyId);
+
+			safeCloseable.close();
 		}
 		finally {
 			companyLocalService.deleteCompany(company.getCompanyId());
@@ -405,6 +411,11 @@ public class CompanyLocalServiceDBPartitionTest
 				ArrayUtil.contains(_getCompanyIdsBySQL(), toCompanyId));
 
 			_checkPartitionDoesNotExist(toCompanyId);
+
+			SafeCloseable safeCloseable =
+				PortalInstances.setCopyInProcessCompanyId(toCompanyId);
+
+			safeCloseable.close();
 		}
 		finally {
 			companyLocalService.deleteCompany(company);
@@ -452,6 +463,11 @@ public class CompanyLocalServiceDBPartitionTest
 				ArrayUtil.contains(_getCompanyIdsBySQL(), toCompanyId));
 
 			_checkPartitionDoesNotExist(toCompanyId);
+
+			SafeCloseable safeCloseable =
+				PortalInstances.setCopyInProcessCompanyId(toCompanyId);
+
+			safeCloseable.close();
 		}
 		finally {
 			companyLocalService.deleteCompany(company);

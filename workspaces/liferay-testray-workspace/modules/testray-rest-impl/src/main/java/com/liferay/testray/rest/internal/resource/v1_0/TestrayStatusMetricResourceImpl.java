@@ -534,22 +534,10 @@ public class TestrayStatusMetricResourceImpl
 				String testrayTaskStatus, Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(16);
 
-		sb.append("select count(cr.dueStatus_) as total, sum(case when ");
-		sb.append("cr.dueStatus_ = 'blocked' then 1 else 0 end) as blocked, ");
-		sb.append("sum(case when cr.dueStatus_ = 'failed' then 1 else 0 end ");
-		sb.append(") as failed, sum(case when cr.dueStatus_ = 'inprogress' ");
-		sb.append("then 1 else 0 end) as inprogress, sum(case when ");
-		sb.append("cr.dueStatus_ = 'passed' then 1 else 0 end) as passed, ");
-		sb.append("sum(case when cr.dueStatus_ = 'testfix' then 1 else 0 end ");
-		sb.append(") as testfix, sum(case when cr.dueStatus_ = 'untested' ");
-		sb.append("then 1 else 0 end) as untested, b.c_buildId_, b.dueDate_, ");
-		sb.append("b.gitHash_, b.name_, b.promoted_, b.archived_, pv.name_ ");
-		sb.append("as productVersionName, (select dueStatus_ from ");
-		sb.append("O_[%COMPANY_ID%]_Task t where t.r_buildToTasks_c_buildId ");
-		sb.append("= b.c_buildId_) as taskStatus from O_[%COMPANY_ID%]_Build ");
-		sb.append("b, O_[%COMPANY_ID%]_CaseResult cr, ");
+		sb.append("select b.c_buildId_ from O_[%COMPANY_ID%]_Build b, ");
+		sb.append("O_[%COMPANY_ID%]_CaseResult cr, ");
 		sb.append("O_[%COMPANY_ID%]_ProductVersion pv ");
 
 		if (Validator.isNotNull(testrayTaskStatus)) {
@@ -583,7 +571,7 @@ public class TestrayStatusMetricResourceImpl
 			sb.append(") ");
 		}
 
-		sb.append("group by b.c_buildId_ order by b.c_buildId_ desc");
+		sb.append("group by b.c_buildId_");
 
 		String sql = StringUtil.replace(
 			sb.toString(), "[%COMPANY_ID%]",
@@ -591,7 +579,61 @@ public class TestrayStatusMetricResourceImpl
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
 
-		sql += " limit ? offset ?";
+		sb = new StringBundler(29);
+
+		sb.append("select count(cr.dueStatus_) as total, sum(case when ");
+		sb.append("cr.dueStatus_ = 'blocked' then 1 else 0 end) as blocked, ");
+		sb.append("sum(case when cr.dueStatus_ = 'failed' then 1 else 0 end ");
+		sb.append(") as failed, sum(case when cr.dueStatus_ = 'inprogress' ");
+		sb.append("then 1 else 0 end) as inprogress, sum(case when ");
+		sb.append("cr.dueStatus_ = 'passed' then 1 else 0 end) as passed, ");
+		sb.append("sum(case when cr.dueStatus_ = 'testfix' then 1 else 0 end ");
+		sb.append(") as testfix, sum(case when cr.dueStatus_ = 'untested' ");
+		sb.append("then 1 else 0 end) as untested, b.c_buildId_, b.dueDate_, ");
+		sb.append("b.gitHash_, b.name_, b.promoted_, b.archived_, pv.name_ ");
+		sb.append("as productVersionName, (select dueStatus_ from ");
+		sb.append("O_[%COMPANY_ID%]_Task t where t.r_buildToTasks_c_buildId ");
+		sb.append("= b.c_buildId_) as taskStatus from O_[%COMPANY_ID%]_Build ");
+		sb.append("b, O_[%COMPANY_ID%]_CaseResult cr, ");
+		sb.append("O_[%COMPANY_ID%]_ProductVersion pv ");
+
+		if (Validator.isNotNull(testrayTaskStatus)) {
+			sb.append(", O_[%COMPANY_ID%]_Task t ");
+		}
+
+		sb.append("where b.r_routineToBuilds_c_routineId = ? and ");
+		sb.append("cr.r_buildToCaseResult_c_buildId = b.c_buildId_ and ");
+		sb.append("pv.c_productVersionId_ = ");
+		sb.append("b.r_productVersionToBuilds_c_productVersionId and ");
+		sb.append("b.template_ = 0 and b.archived_ = 0 ");
+
+		params = new ArrayList<>();
+
+		params.add(testrayRoutineId);
+
+		if (Validator.isNotNull(testrayProductVersion)) {
+			sb.append("and pv.c_productVersionId_ = ? ");
+			params.add(testrayProductVersion);
+		}
+
+		if (Validator.isNotNull(testrayBuildName)) {
+			sb.append("and b.name_ like ? ");
+			params.add("%" + testrayBuildName + "%");
+		}
+
+		if (Validator.isNotNull(testrayTaskStatus)) {
+			sb.append("and t.r_buildToTasks_c_buildId = b.c_buildId_ and ");
+			sb.append("t.dueStatus_ in (");
+			sb.append(_interpolateParams(params, testrayTaskStatus));
+			sb.append(") ");
+		}
+
+		sb.append("group by b.c_buildId_ order by b.c_buildId_ desc limit ? ");
+		sb.append("offset ?");
+
+		sql = StringUtil.replace(
+			sb.toString(), "[%COMPANY_ID%]",
+			String.valueOf(contextCompany.getCompanyId()));
 
 		params.add(pagination.getPageSize());
 		params.add(pagination.getStartPosition());

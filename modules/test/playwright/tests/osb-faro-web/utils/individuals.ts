@@ -7,22 +7,30 @@ import {ApiHelpers} from '../../../helpers/ApiHelpers';
 
 export async function createIndividuals({
 	apiHelpers,
-	names,
+	individuals,
 }: {
 	apiHelpers: ApiHelpers;
-	names: string[];
+	individuals: {dataSourceId?: number; id: string; name: string}[];
 }) {
-	const individuals = names.map((name) => ({
-		emailAddress: `${name}@liferay.com`,
-		fields: [
-			{dataSourceId: 0, name: 'givenName', value: name},
-			{dataSourceId: 0, name: 'familyName', value: name},
-			{dataSourceId: 0, name: 'email', value: `${name}@liferay.com`},
-		],
-		firstName: name,
-		id: `${name}@liferay.com`,
-		lastName: name,
-	}));
+	const formattedIndividuals = individuals.map(
+		({dataSourceId = 0, id, name}) => ({
+			emailAddress: `${name}@liferay.com`,
+			fields: [
+				{dataSourceId, name: 'firstName', value: name},
+				{dataSourceId, name: 'lastName', value: name},
+				{
+					dataSourceId,
+					name: 'emailAddress',
+					value: `${name}@liferay.com`,
+				},
+			],
+			firstName: name,
+			id,
+			lastName: name,
+		})
+	);
 
-	await apiHelpers.jsonWebServicesOSBAsah.createIndividuals(individuals);
+	await apiHelpers.jsonWebServicesOSBAsah.createIndividuals(
+		formattedIndividuals
+	);
 }

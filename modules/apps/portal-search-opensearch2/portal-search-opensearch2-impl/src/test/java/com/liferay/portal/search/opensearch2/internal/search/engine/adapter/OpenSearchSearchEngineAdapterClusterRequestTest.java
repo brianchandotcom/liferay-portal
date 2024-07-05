@@ -197,7 +197,7 @@ public class OpenSearchSearchEngineAdapterClusterRequestTest
 		_assertHealthy(statsClusterResponse.getClusterHealthStatus());
 	}
 
-	private static final String _CLUSTER_NAME = "opensearch";
+	private static final String _CLUSTER_NAME = "LiferayOpenSearchCluster";
 
 	private static final String _ELASTICSEARCH_DEFAULT_NUMBER_OF_SHARDS = "1";
 

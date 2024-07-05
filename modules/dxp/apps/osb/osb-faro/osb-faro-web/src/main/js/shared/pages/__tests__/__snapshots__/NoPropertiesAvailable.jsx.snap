@@ -77,11 +77,12 @@ exports[`NoPropertiesAvailable should render 1`] = `
               <p>
                 First, complete the onboarding to get your workspace set up.
               </p>
-              <a
+              <button
                 class="button-root btn btn-primary"
+                type="button"
               >
                 Start
-              </a>
+              </button>
             </div>
           </div>
         </div>

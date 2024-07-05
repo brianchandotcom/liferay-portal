@@ -39,15 +39,17 @@ export function navigateToExperience(
 	navigate(newUrl);
 }
 
-export function getSegmentsExperimentAction() {
+export function getSegmentsExperimentParameter(
+	paramName = EXPERIMENT_ACTION_URL_KEY
+) {
 	const url = new URL(window.location.href);
-	const action = url.searchParams.get(EXPERIMENT_ACTION_URL_KEY);
+	const action = url.searchParams.get(paramName);
 
 	if (!action) {
 		return null;
 	}
 
-	url.searchParams.delete(EXPERIMENT_ACTION_URL_KEY);
+	url.searchParams.delete(paramName);
 	window.history.replaceState(null, null, decodeURIComponent(url.href));
 
 	return action;

@@ -37,7 +37,7 @@ import {
 	SegmentsVariantType,
 } from '../types.es';
 import {
-	getSegmentsExperimentAction,
+	getSegmentsExperimentParameter,
 	navigateToExperience,
 } from '../util/navigation.es';
 import {
@@ -105,7 +105,7 @@ function SegmentsExperimentsSidebar({
 		});
 
 	useEffect(() => {
-		const segmentsExperimentAction = getSegmentsExperimentAction();
+		const segmentsExperimentAction = getSegmentsExperimentParameter();
 
 		if (!segmentsExperimentAction || !experiment) {
 			return;

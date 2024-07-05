@@ -20,6 +20,33 @@ export const test = mergeTests(
 	notificationPagesTest
 );
 
+test.afterEach(async ({notificationTemplatesPage, page}) => {
+	await notificationTemplatesPage.goto();
+
+	const frontEndDatasetItemActions =
+		await notificationTemplatesPage.frontEndDatasetItemAction.all();
+
+	for (let i = 0; i < frontEndDatasetItemActions.length; i++) {
+		try {
+			const actionButton = page
+				.getByRole('button', {name: 'Actions'})
+				.first();
+			if (actionButton) {
+				await actionButton.click();
+				const deleteButton =
+					notificationTemplatesPage.frontEndDatasetItemActionDelete;
+
+				if (deleteButton) {
+					await deleteButton.click();
+				}
+			}
+		}
+		catch (error) {
+			throw new Error(error);
+		}
+	}
+});
+
 test('can add rich text source code and verify that the source code is being persisted', async ({
 	emailNotificationTemplatePage,
 	notificationTemplatesPage,
@@ -61,14 +88,6 @@ test('can add rich text source code and verify that the source code is being per
 	await emailNotificationTemplatePage.richTextSourceButton.click();
 
 	await expect(page.getByText('<h1>Hello World</h1>')).toBeVisible();
-
-	// Clean up
-
-	await emailNotificationTemplatePage.backURLButton.click();
-
-	await notificationTemplatesPage.frontEndDatasetItemActions.click();
-
-	await notificationTemplatesPage.frontEndDatasetItemActionDelete.click();
 });
 
 test('can save recipients roles in email notification template', async ({
@@ -103,8 +122,11 @@ test('can save recipients roles in email notification template', async ({
 
 	await emailNotificationTemplatePage.goto();
 
+	const notificationTemplateName =
+		'Notification Template Name' + getRandomInt();
+
 	await emailNotificationTemplatePage.basicInfoName.fill(
-		'Notification Template Name'
+		notificationTemplateName
 	);
 
 	await emailNotificationTemplatePage.senderEmailAddress.fill(
@@ -157,7 +179,7 @@ test('can save recipients roles in email notification template', async ({
 	await emailNotificationTemplatePage.saveButton.click();
 
 	await notificationTemplatesPage
-		.getFrontEndDatasetItemLocator('Notification Template Name')
+		.getFrontEndDatasetItemLocator(notificationTemplateName)
 		.click();
 
 	await emailNotificationTemplatePage.primaryRecipientRoles.click();
@@ -183,14 +205,6 @@ test('can save recipients roles in email notification template', async ({
 			page.getByLabel(role, {exact: true}).locator('visible=true')
 		).toBeChecked();
 	}
-
-	// Clean up
-
-	await emailNotificationTemplatePage.backURLButton.click();
-
-	await notificationTemplatesPage.frontEndDatasetItemActions.click();
-
-	await notificationTemplatesPage.frontEndDatasetItemActionDelete.click();
 });
 
 test('can see all roles groups in email notification template recipients', async ({

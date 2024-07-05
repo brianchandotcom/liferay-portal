@@ -45,6 +45,14 @@ type PageDaily = {
 	views: number;
 };
 
+type Session = {
+	channelId: string;
+	id: string;
+	sessionEnd: string;
+	sessionStart: string;
+	userId: string;
+};
+
 export class JSONWebServicesOSBAsahApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -99,6 +107,17 @@ export class JSONWebServicesOSBAsahApiHelper {
 			`${asahConfig.environment.baseUrl}${this.basePath}/pagesdaily`,
 			{
 				data: pagesDaily,
+				failOnStatusCode: true,
+				headers: this.getHeaders(),
+			}
+		);
+	}
+
+	async createSessions(session: Session[]): Promise<any> {
+		return this.apiHelpers.post(
+			`${asahConfig.environment.baseUrl}${this.basePath}/sessions`,
+			{
+				data: session,
 				failOnStatusCode: true,
 				headers: this.getHeaders(),
 			}

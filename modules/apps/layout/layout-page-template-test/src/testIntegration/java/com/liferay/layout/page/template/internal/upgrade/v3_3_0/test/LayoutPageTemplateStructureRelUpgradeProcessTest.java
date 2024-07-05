@@ -172,80 +172,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeWithFragmentEntryLinkTypePortlet() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		String portletId = RandomTestUtil.randomString();
-
-		ServiceRegistration<?> serviceRegistration =
-			bundleContext.registerService(
-				Portlet.class, new TestPortlet(),
-				HashMapDictionaryBuilder.put(
-					"com.liferay.portlet.instanceable", "true"
-				).put(
-					"javax.portlet.name", portletId
-				).build());
-
-		try {
-			com.liferay.portal.kernel.model.Portlet portlet =
-				_portletLocalService.fetchPortletById(
-					TestPropsValues.getCompanyId(), portletId);
-
-			FragmentEntryLink fragmentEntryLink =
-				_addTypePortletFragmentStyledLayoutStructureItems(portletId);
-
-			String name = RandomTestUtil.randomString();
-
-			String defaultSegmentsExperienceValue =
-				RandomTestUtil.randomString();
-
-			_addPortletPreferenceValue(
-				portlet,
-				StringBundler.concat(
-					portletId, _INSTANCE_SEPARATOR,
-					fragmentEntryLink.getNamespace()),
-				name, defaultSegmentsExperienceValue);
-
-			String segmentsExperience1Value = RandomTestUtil.randomString();
-
-			_addPortletPreferenceValue(
-				portlet,
-				StringBundler.concat(
-					portletId, _INSTANCE_SEPARATOR,
-					fragmentEntryLink.getNamespace(),
-					_SEGMENTS_EXPERIENCE_SEPARATOR_1, _segmentsExperienceId1),
-				name, segmentsExperience1Value);
-
-			String segmentsExperience2Value = RandomTestUtil.randomString();
-
-			_addPortletPreferenceValue(
-				portlet,
-				StringBundler.concat(
-					portletId, _INSTANCE_SEPARATOR,
-					fragmentEntryLink.getNamespace(),
-					_SEGMENTS_EXPERIENCE_SEPARATOR_2, _segmentsExperienceId2),
-				name, segmentsExperience2Value);
-
-			_assertGetFragmentEntryLinksBySegmentsExperienceId();
-
-			_runUpgrade();
-
-			_assertGetFragmentEntryLinksByPlid(3);
-
-			_assertFragmentEntryLink(
-				defaultSegmentsExperienceValue, name, portletId,
-				_SEGMENTS_EXPERIENCE_ID_DEFAULT);
-			_assertFragmentEntryLink(
-				segmentsExperience1Value, name, portletId,
-				_segmentsExperienceId1);
-			_assertFragmentEntryLink(
-				segmentsExperience2Value, name, portletId,
-				_segmentsExperienceId2);
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
+		_assertUpgradeWithFragmentEntryLinkTypePortlet();
 	}
 
 	private void _addFragmentStyledLayoutStructureItem(
@@ -501,6 +428,85 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 
 		Assert.assertEquals(
 			expected, jxPortletPreferences.getValue(name, null));
+	}
+
+	private void _assertUpgradeWithFragmentEntryLinkTypePortlet()
+		throws Exception {
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		String portletId = RandomTestUtil.randomString();
+
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				Portlet.class, new TestPortlet(),
+				HashMapDictionaryBuilder.put(
+					"com.liferay.portlet.instanceable", "true"
+				).put(
+					"javax.portlet.name", portletId
+				).build());
+
+		try {
+			com.liferay.portal.kernel.model.Portlet portlet =
+				_portletLocalService.fetchPortletById(
+					TestPropsValues.getCompanyId(), portletId);
+
+			FragmentEntryLink fragmentEntryLink =
+				_addTypePortletFragmentStyledLayoutStructureItems(portletId);
+
+			String name = RandomTestUtil.randomString();
+
+			String defaultSegmentsExperienceValue =
+				RandomTestUtil.randomString();
+
+			_addPortletPreferenceValue(
+				portlet,
+				StringBundler.concat(
+					portletId, _INSTANCE_SEPARATOR,
+					fragmentEntryLink.getNamespace()),
+				name, defaultSegmentsExperienceValue);
+
+			String segmentsExperience1Value = RandomTestUtil.randomString();
+
+			_addPortletPreferenceValue(
+				portlet,
+				StringBundler.concat(
+					portletId, _INSTANCE_SEPARATOR,
+					fragmentEntryLink.getNamespace(),
+					_SEGMENTS_EXPERIENCE_SEPARATOR_1, _segmentsExperienceId1),
+				name, segmentsExperience1Value);
+
+			String segmentsExperience2Value = RandomTestUtil.randomString();
+
+			_addPortletPreferenceValue(
+				portlet,
+				StringBundler.concat(
+					portletId, _INSTANCE_SEPARATOR,
+					fragmentEntryLink.getNamespace(),
+					_SEGMENTS_EXPERIENCE_SEPARATOR_2, _segmentsExperienceId2),
+				name, segmentsExperience2Value);
+
+			_assertGetFragmentEntryLinksBySegmentsExperienceId();
+
+			_runUpgrade();
+
+			_assertGetFragmentEntryLinksByPlid(3);
+
+			_assertFragmentEntryLink(
+				defaultSegmentsExperienceValue, name, portletId,
+				_SEGMENTS_EXPERIENCE_ID_DEFAULT);
+			_assertFragmentEntryLink(
+				segmentsExperience1Value, name, portletId,
+				_segmentsExperienceId1);
+			_assertFragmentEntryLink(
+				segmentsExperience2Value, name, portletId,
+				_segmentsExperienceId2);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	private void _runUpgrade() throws Exception {

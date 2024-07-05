@@ -99,7 +99,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test ComparePartitionedUpgradedAndFreshDBSchemas7413 {
 		property data.archive.type = "data-archive-portal-partition";

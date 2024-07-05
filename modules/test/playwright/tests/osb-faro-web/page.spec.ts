@@ -68,29 +68,24 @@ test('shows individuals who viewed a page less than 24 hours ago', async ({
 	const individualPresentIn30Days = ['user3 user3'];
 
 	await test.step('Create 3 Individuals and their respective Identity directly in the AC database', async () => {
-		const individualNames = ['user1', 'user2', 'user3'];
+		const individuals = [
+			{id: '1', name: 'user1'},
+			{id: '2', name: 'user2'},
+			{id: '3', name: 'user3'},
+		];
+
+		const identities = individuals.map(({id}) => ({
+			createDate: date1.toISOString(),
+			id,
+			individualId: id,
+		}));
+
 		await createIndividuals({
 			apiHelpers,
-			names: individualNames,
+			individuals,
 		});
 
-		await apiHelpers.jsonWebServicesOSBAsah.createIdentities([
-			{
-				createDate: date1.toISOString(),
-				id: '1',
-				individualId: 'user1@liferay.com',
-			},
-			{
-				createDate: date1.toISOString(),
-				id: '2',
-				individualId: 'user2@liferay.com',
-			},
-			{
-				createDate: date1.toISOString(),
-				id: '3',
-				individualId: 'user3@liferay.com',
-			},
-		]);
+		await apiHelpers.jsonWebServicesOSBAsah.createIdentities(identities);
 	});
 
 	await test.step('Create events for two of the individuals to appear within the Last 24 hours period in AC', async () => {

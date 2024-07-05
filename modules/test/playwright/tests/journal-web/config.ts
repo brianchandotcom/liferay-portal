@@ -6,4 +6,7 @@
 export const config = {
 	name: 'journal-web',
 	testDir: 'tests/journal-web',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

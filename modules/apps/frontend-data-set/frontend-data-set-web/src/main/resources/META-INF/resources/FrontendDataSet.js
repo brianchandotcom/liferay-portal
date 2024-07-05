@@ -209,7 +209,7 @@ const FrontendDataSet = ({
 			[]
 		);
 
-		const activeSorts = Liferay.FeatureFlags['LPD-19465']
+		const activeSorts = Liferay.FeatureFlags['LPD-19465'] && sorts.length > 1
 			? sorts.filter((sort) => sort.active)
 			: sorts;
 

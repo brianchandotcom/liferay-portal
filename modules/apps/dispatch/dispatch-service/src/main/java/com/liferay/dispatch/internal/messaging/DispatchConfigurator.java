@@ -78,31 +78,31 @@ public class DispatchConfigurator {
 		_serviceRegistration = bundleContext.registerService(
 			Destination.class, destination, properties);
 
-		_scheduleJobs(DispatchTaskClusterMode.ALL_NODES);
+		_scheduleJobsByClusterMode(DispatchTaskClusterMode.ALL_NODES);
 
 		if (_clusterMasterExecutor.isMaster()) {
-			_scheduleJobs(
+			_scheduleJobsByClusterMode(
 				DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED);
-			_scheduleJobs(
+			_scheduleJobsByClusterMode(
 				DispatchTaskClusterMode.SINGLE_NODE_PERSISTED);
 		}
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_unscheduleJobs(DispatchTaskClusterMode.ALL_NODES);
+		_unscheduleJobsByClusterMode(DispatchTaskClusterMode.ALL_NODES);
 
 		if (_clusterMasterExecutor.isMaster()) {
-			_unscheduleJobs(
+			_unscheduleJobsByClusterMode(
 				DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED);
-			_unscheduleJobs(
+			_unscheduleJobsByClusterMode(
 				DispatchTaskClusterMode.SINGLE_NODE_PERSISTED);
 		}
 
 		_serviceRegistration.unregister();
 	}
 
-	private void _scheduleJobs(
+	private void _scheduleJobsByClusterMode(
 		DispatchTaskClusterMode dispatchTaskClusterMode) {
 
 		for (DispatchTrigger dispatchTrigger :
@@ -122,7 +122,7 @@ public class DispatchConfigurator {
 		}
 	}
 
-	private void _unscheduleJobs(
+	private void _unscheduleJobsByClusterMode(
 		DispatchTaskClusterMode dispatchTaskClusterMode) {
 
 		for (DispatchTrigger dispatchTrigger :

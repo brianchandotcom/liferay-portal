@@ -62,6 +62,15 @@ definition {
 		if (${minuteExceededValidator} == "true") {
 			var displayDateHour = ${displayDateHour} + 1;
 			var displayDateMinuteFuture = ${displayDateMinuteFuture} - 60;
+
+			if (${displayDateHour} == 12) {
+				if (${displayDateAmpm} == "AM") {
+					var displayDateAmpm = "PM";
+				}
+				else {
+					var displayDateAmpm = "AM";
+				}
+			}
 		}
 
 		var displayDateHourLength = StringUtil.length(${displayDateHour});

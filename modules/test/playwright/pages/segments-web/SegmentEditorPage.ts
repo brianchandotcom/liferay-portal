@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {expandSection} from '../../utils/expandSection';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 
@@ -76,15 +77,9 @@ export class SegmentEditorPage {
 
 		// Open panel section if it's not already open
 
-		const isOpen = await header.evaluate(
-			(element) => element.getAttribute('aria-expanded') === 'true'
-		);
+		await expandSection(header);
 
-		if (!isOpen) {
-			await header.click();
-
-			await body.waitFor();
-		}
+		await body.waitFor();
 
 		// Add property to desired dropzone
 

@@ -9,8 +9,11 @@ import {liferayConfig} from '../../liferay.config';
 import getPageDefinition from '../../tests/layout-content-page-editor-web/utils/getPageDefinition';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {collapseSection} from '../../utils/collapseSection';
+import {expandSection} from '../../utils/expandSection';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
+import {selectElement} from '../../utils/selectElement';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {SegmentEditorPage} from '../segments-web/SegmentEditorPage';
 
@@ -61,13 +64,7 @@ export class PageEditorPage {
 			name: setName,
 		});
 
-		const isOpen = await header.evaluate(
-			(element) => element.getAttribute('aria-expanded') === 'true'
-		);
-
-		if (!isOpen) {
-			await header.click();
-		}
+		await expandSection(header);
 
 		if (dropTarget) {
 			this.dragAndDropElement(
@@ -123,13 +120,7 @@ export class PageEditorPage {
 			name: category,
 		});
 
-		const isOpen = await header.evaluate(
-			(element) => element.getAttribute('aria-expanded') === 'true'
-		);
-
-		if (!isOpen) {
-			await header.click();
-		}
+		await expandSection(header);
 
 		if (dropTarget) {
 			this.dragAndDropElement(
@@ -283,17 +274,11 @@ export class PageEditorPage {
 	}
 
 	async closeExperienceSelector() {
-		const isOpen = await this.experienceSelector.evaluate(
-			(element) => element.getAttribute('aria-expanded') === 'true'
-		);
+		await collapseSection(this.experienceSelector);
 
-		if (isOpen) {
-			await this.experienceSelector.click();
-
-			await this.page
-				.getByText('Select Experience')
-				.waitFor({state: 'hidden'});
-		}
+		await this.page
+			.getByText('Select Experience')
+			.waitFor({state: 'hidden'});
 	}
 
 	async createExperience(name: string) {
@@ -608,15 +593,9 @@ export class PageEditorPage {
 	async goToSidebarTab(tab: SidebarTab) {
 		const tabElement = this.page.getByRole('tab', {exact: true, name: tab});
 
-		const isOpen = await tabElement.evaluate(
-			(element) => element.getAttribute('aria-selected') === 'true'
-		);
+		await selectElement(tabElement);
 
-		if (!isOpen) {
-			await this.page.getByRole('tab', {exact: true, name: tab}).click();
-
-			await this.page.locator('header', {hasText: tab}).waitFor();
-		}
+		await this.page.locator('header', {hasText: tab}).waitFor();
 	}
 
 	async isActive(fragmentId: string, isDesktop = true) {
@@ -660,15 +639,9 @@ export class PageEditorPage {
 	}
 
 	async openExperienceSelector() {
-		const isOpen = await this.experienceSelector.evaluate(
-			(element) => element.getAttribute('aria-expanded') === 'true'
-		);
+		await expandSection(this.experienceSelector);
 
-		if (!isOpen) {
-			await this.experienceSelector.click();
-
-			await this.page.getByText('Select Experience').waitFor();
-		}
+		await this.page.getByText('Select Experience').waitFor();
 	}
 
 	async openSpacingSelector(fragmentId: string, spacingType: SpacingType) {

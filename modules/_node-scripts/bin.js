@@ -12,6 +12,12 @@ const COMMANDS = {
 		parameters: '',
 		script: './bundle/index.mjs',
 	},
+	'build:custom': {
+		description:
+			'builds frontend stuff using a custom esbuild configuration',
+		parameters: '',
+		script: './bundle/custom.mjs',
+	},
 	'build:report': {
 		description: 'generates an aggregated report of build timings',
 		parameters:

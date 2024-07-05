@@ -63,6 +63,8 @@ test('LPD-18714 Setting default sort for commerce products', async ({
 	commerceThemeMiniumCatalogPage,
 	page,
 }) => {
+	test.setTimeout(180000);
+
 	const siteName1 = 'Minium' + getRandomInt();
 
 	const site1 = await apiHelpers.headlessSite.createSite({

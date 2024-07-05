@@ -69,9 +69,8 @@ public class HttpServletEndpointServlet extends HttpServlet {
 		}
 
 		PortalUtil.sendError(
-			HttpServletResponse.SC_NOT_FOUND,
-			new NoSuchLayoutException(), httpServletRequest,
-			httpServletResponse);
+			HttpServletResponse.SC_NOT_FOUND, new NoSuchLayoutException(),
+			httpServletRequest, httpServletResponse);
 	}
 
 	private final HttpServletEndpointController _httpServletEndpointController;

@@ -17,7 +17,7 @@ export class JournalEditArticlePage {
 	readonly propertiesTab: Locator;
 	readonly publishButton: Locator;
 	readonly submitForWorkflowButton: Locator;
-	readonly titlePlaceholder: Locator;
+	readonly titleInput: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -28,9 +28,7 @@ export class JournalEditArticlePage {
 		this.submitForWorkflowButton = page.getByRole('button', {
 			name: 'Submit for Workflow',
 		});
-		this.titlePlaceholder = page.getByPlaceholder(
-			'Untitled Basic Web Content'
-		);
+		this.titleInput = page.getByPlaceholder('Untitled ');
 	}
 
 	async goto({
@@ -126,7 +124,7 @@ export class JournalEditArticlePage {
 	}
 
 	async fillTitle(title: string) {
-		await fillAndClickOutside(this.page, this.titlePlaceholder, title);
+		await fillAndClickOutside(this.page, this.titleInput, title);
 	}
 
 	async editAndPublishExistingBasicArticle(title: string) {

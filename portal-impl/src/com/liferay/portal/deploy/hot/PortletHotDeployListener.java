@@ -321,10 +321,11 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 			CompanyLocalServiceUtil.forEachCompanyId(
 				companyId -> {
-					Portlet curPortlet = PortletLocalServiceUtil.getPortletById(
-						companyId, portlet.getPortletId());
+					Portlet companyPortletModel = (Portlet)portlet.clone();
 
-					PortletLocalServiceUtil.checkPortlet(curPortlet);
+					companyPortletModel.setCompanyId(companyId);
+
+					PortletLocalServiceUtil.checkPortlet(companyPortletModel);
 				});
 		}
 

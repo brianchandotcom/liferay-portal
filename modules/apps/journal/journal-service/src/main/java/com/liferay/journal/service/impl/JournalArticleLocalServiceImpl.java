@@ -222,6 +222,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -7600,9 +7601,14 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	private boolean _equals(
-		LocalizedValue localizedValue1, LocalizedValue localizedValue2) {
+		LocalizedValue localizedValue1, LocalizedValue localizedValue2,
+		String fieldType) {
 
-		if ((_isEmpty(localizedValue1) && _isEmpty(localizedValue2)) ||
+		Predicate<String> emptyValuePredicate = _getEmptyValuePredicate(
+			fieldType);
+
+		if ((_isEmpty(localizedValue1, emptyValuePredicate) &&
+			 _isEmpty(localizedValue2, emptyValuePredicate)) ||
 			Objects.equals(localizedValue1, localizedValue2)) {
 
 			return true;
@@ -7663,6 +7669,33 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private Predicate<String> _getEmptyValuePredicate(String fieldType) {
+		if (fieldType.equals("checkbox_multiple")) {
+			return s -> s.equals("[]") || s.isEmpty();
+		}
+
+		if (fieldType.equals("document_library") ||
+			fieldType.equals("journal_article") ||
+			fieldType.equals("link_to_layout")) {
+
+			return s -> s.equals("{}") || s.isEmpty();
+		}
+
+		if (fieldType.equals("image")) {
+			return s -> s.equals("{}") || s.equals("{\"alt\":\"\"}");
+		}
+
+		if (fieldType.equals("radio")) {
+			return s -> s.equals("[]");
+		}
+
+		if (fieldType.equals("select")) {
+			return s -> s.equals("[]") || s.equals("[\"\"]");
+		}
+
+		return String::isEmpty;
 	}
 
 	private FileEntry _getFileEntry(JSONObject valueJSONObject) {
@@ -7995,7 +8028,9 @@ public class JournalArticleLocalServiceImpl
 		return urlTitleMap;
 	}
 
-	private boolean _isEmpty(LocalizedValue localizedValue) {
+	private boolean _isEmpty(
+		LocalizedValue localizedValue, Predicate<String> emptyValuePredicate) {
+
 		if (localizedValue == null) {
 			return true;
 		}
@@ -8003,7 +8038,7 @@ public class JournalArticleLocalServiceImpl
 		Map<Locale, String> values = localizedValue.getValues();
 
 		for (String string : values.values()) {
-			if ((string != null) && !string.isEmpty()) {
+			if ((string != null) && !emptyValuePredicate.test(string)) {
 				return false;
 			}
 		}
@@ -8218,7 +8253,8 @@ public class JournalArticleLocalServiceImpl
 					(LocalizedValue)ddmFormFieldValue.getValue();
 
 				if (!_equals(
-						ddmFormField.getPredefinedValue(), localizedValue)) {
+						ddmFormField.getPredefinedValue(), localizedValue,
+						ddmFormField.getType())) {
 
 					ddmFormField.setPredefinedValue(localizedValue);
 					update = true;

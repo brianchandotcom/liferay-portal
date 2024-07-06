@@ -184,12 +184,12 @@ public class ClientExtensionTopHeadDynamicIncludeTest {
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(Layout layout) {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setLayout(layout);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);

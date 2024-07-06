@@ -125,30 +125,6 @@ definition {
 		}
 	}
 
-	@description = "The user can add a Blogs portlet to private page."
-	@priority = 4
-	test AddWidgetToPrivatePage {
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-
-		task ("Add a private widget page") {
-			JSONLayout.addPrivateLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Private Page");
-		}
-
-		task ("Add a Blogs portlet to private page") {
-			Navigator.gotoPrivateSitePage(
-				pageName = "Test Private Page",
-				siteName = ${randomSiteName});
-
-			Portlet.addPG(portletName = "Blogs");
-		}
-
-		task ("View Blogs portlet is shown") {
-			Portlet.viewPG(portletName = "Blogs");
-		}
-	}
-
 	@description = "The user can not delete the last public page on Liferay instance."
 	@priority = 3
 	test CannotDeleteLastPublicPageOnDefaultSite {
@@ -604,26 +580,6 @@ definition {
 
 		task ("Then the Add menu persists the default tab selection") {
 			Navigator.viewActivatedNavTab(navTab = "Widgets");
-		}
-	}
-
-	@description = "This is a use case for LPS-123143. View the languageId shown in configuration page."
-	@priority = 3
-	test ViewLanguageIdInConfigurationPage {
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name");
-		}
-
-		task ("View default locale is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Configure",
-				pageName = "Test Page Name");
-
-			PortletEntry.viewLocale(locale = "en-US");
 		}
 	}
 

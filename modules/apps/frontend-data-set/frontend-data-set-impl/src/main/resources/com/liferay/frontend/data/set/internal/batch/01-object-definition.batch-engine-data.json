@@ -703,23 +703,6 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "CONFIRMATION_MESSAGE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Confirmation Message"
-					},
-					"localized": true,
-					"name": "confirmationMessage",
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
 					"externalReferenceCode": "CONFIRMATION_MESSAGE_TYPE",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -745,28 +728,11 @@
 						"en_US": "Context"
 					},
 					"localized": false,
-					"name": "name",
+					"name": "context",
 					"readOnly": "false",
 					"required": true,
 					"state": false,
 					"system": true,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "ERROR_MESSAGE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Error Message"
-					},
-					"localized": true,
-					"name": "errorMessage",
-					"readOnly": "false",
-					"required": false,
-					"state": false,
 					"type": "String",
 					"unique": false
 				},
@@ -785,23 +751,6 @@
 					"required": false,
 					"state": false,
 					"system": true,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "LABEL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Label"
-					},
-					"localized": true,
-					"name": "label",
-					"readOnly": "false",
-					"required": false,
-					"state": false,
 					"type": "String",
 					"unique": false
 				},
@@ -856,40 +805,6 @@
 					"required": false,
 					"state": false,
 					"system": true,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "SUCCESS_MESSAGE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Success Message"
-					},
-					"localized": true,
-					"name": "successMessage",
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "TITLE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Title"
-					},
-					"localized": true,
-					"name": "title",
-					"readOnly": "false",
-					"required": false,
-					"state": false,
 					"type": "String",
 					"unique": false
 				},
@@ -1069,23 +984,6 @@
 					"system": true,
 					"type": "String",
 					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "LABEL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Label"
-					},
-					"localized": true,
-					"name": "label",
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"type": "String",
-					"unique": false
 				}
 			],
 			"objectFolderExternalReferenceCode": "default",
@@ -1147,23 +1045,6 @@
 					"state": false,
 					"system": true,
 					"type": "Date",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "LABEL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Label"
-					},
-					"localized": true,
-					"name": "label",
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"type": "String",
 					"unique": false
 				},
 				{
@@ -1380,23 +1261,6 @@
 					"unique": false
 				},
 				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "LABEL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Label"
-					},
-					"localized": true,
-					"name": "label",
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"type": "String",
-					"unique": false
-				},
-				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
 					"externalReferenceCode": "MULTIPLE",
@@ -1587,23 +1451,6 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "LABEL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Label"
-					},
-					"localized": true,
-					"name": "label",
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
 					"externalReferenceCode": "ORDER_TYPE",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -1643,23 +1490,6 @@
 			"modifiable": true,
 			"name": "DataSetTableSection",
 			"objectFields": [
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "COLUMN_LABEL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Column Label"
-					},
-					"localized": true,
-					"name": "label",
-					"readOnly": "false",
-					"required": false,
-					"state": false,
-					"type": "String",
-					"unique": false
-				},
 				{
 					"DBType": "String",
 					"businessType": "Text",

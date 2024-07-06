@@ -1,0 +1,109 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectField",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "INSERT",
+			"externalReferenceCode": "L_DATA_SET_ACTION",
+			"featureFlag": "LPS-164563",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "PARTIAL_UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "CONFIRMATION_MESSAGE",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Confirmation Message"
+			},
+			"localized": true,
+			"name": "confirmationMessage",
+			"readOnly": "false",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "ERROR_MESSAGE",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Error Message"
+			},
+			"localized": true,
+			"name": "errorMessage",
+			"readOnly": "false",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "LABEL",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Label"
+			},
+			"localized": true,
+			"name": "label",
+			"readOnly": "false",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "SUCCESS_MESSAGE",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Success Message"
+			},
+			"localized": true,
+			"name": "successMessage",
+			"readOnly": "false",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "TITLE",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Title"
+			},
+			"localized": true,
+			"name": "title",
+			"readOnly": "false",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String",
+			"unique": false
+		}
+	]
+}

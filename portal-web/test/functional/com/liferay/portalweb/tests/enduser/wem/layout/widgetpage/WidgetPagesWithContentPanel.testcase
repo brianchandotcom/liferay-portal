@@ -55,35 +55,6 @@ definition {
 		}
 	}
 
-	@description = "Add a web content via content panel on a widget page."
-	@priority = 4
-	@uitest
-	test AddWebContentViaContentPanel {
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name");
-		}
-
-		task ("Add a web content via content panel") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			WidgetPages.addNewContent(assetType = "Basic Web Content");
-
-			WebContent.addCP(
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
-
-			PortletEntry.publish();
-		}
-
-		task ("View web content is shown in content panel") {
-			WidgetPages.viewContentPanel(entryTitleList = "Web Content Title");
-		}
-	}
-
 	@description = "This is a test for LPS-173139. The page designer could see a tooltip for assets on the Content panel of widget page."
 	@priority = 3
 	test ViewAssetWithLongTitle {
@@ -171,6 +142,10 @@ definition {
 				webContentTitle = "Web Content Title 2");
 
 			PortletEntry.publish();
+		}
+
+		task ("View web content is shown in content panel") {
+			WidgetPages.viewContentPanel(entryTitleList = "Web Content Title 2");
 		}
 
 		task ("View the Home page shown in IFrame widget") {

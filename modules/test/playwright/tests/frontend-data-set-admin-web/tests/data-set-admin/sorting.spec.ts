@@ -99,7 +99,7 @@ test.describe('Sorting in Data Set Manager', () => {
 
 		await test.step('Check that "Date Created" is below "Name"', async () => {
 			const tableLabelCellTexts =
-				await sortingPage.getTableLabelCellTexts();
+				await sortingPage.getTableColumnInnerTexts(2);
 
 			expect(tableLabelCellTexts).toEqual(['ID', 'Name', 'Date Created']);
 		});
@@ -118,7 +118,7 @@ test.describe('Sorting in Data Set Manager', () => {
 
 		await test.step('Check that "Date Created" is above "Name"', async () => {
 			const tableLabelCellTexts =
-				await sortingPage.getTableLabelCellTexts();
+				await sortingPage.getTableColumnInnerTexts(2);
 
 			expect(tableLabelCellTexts).toEqual(['ID', 'Date Created', 'Name']);
 		});
@@ -130,7 +130,7 @@ test.describe('Sorting in Data Set Manager', () => {
 
 		await test.step('Check that the order is still the same', async () => {
 			const tableLabelCellTexts =
-				await sortingPage.getTableLabelCellTexts();
+				await sortingPage.getTableColumnInnerTexts(2);
 
 			expect(tableLabelCellTexts).toEqual(['ID', 'Date Created', 'Name']);
 		});

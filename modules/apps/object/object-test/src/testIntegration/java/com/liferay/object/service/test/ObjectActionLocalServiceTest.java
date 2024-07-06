@@ -231,7 +231,7 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
-	public void testAddNotificationObjectActionWithSystemObjectDefinition()
+	public void testAddNotificationTemplateObjectActionWithSystemObjectDefinition()
 		throws Exception {
 
 		// Account entry system object definition
@@ -244,7 +244,7 @@ public class ObjectActionLocalServiceTest {
 		// Add object action to send an email notification after updating
 		// account entry
 
-		ObjectAction objectAction1 = _addNotificationObjectAction(
+		ObjectAction objectAction1 = _addNotificationTemplateObjectAction(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 			accountEntryObjectDefinition);
 
@@ -278,7 +278,7 @@ public class ObjectActionLocalServiceTest {
 		// Add object action to send an email notification after updating
 		// payment status
 
-		ObjectAction objectAction2 = _addNotificationObjectAction(
+		ObjectAction objectAction2 = _addNotificationTemplateObjectAction(
 			DestinationNames.COMMERCE_PAYMENT_STATUS,
 			commerceOrderObjectDefinition);
 
@@ -2260,7 +2260,7 @@ public class ObjectActionLocalServiceTest {
 				_objectDefinition.getClassName()));
 	}
 
-	private ObjectAction _addNotificationObjectAction(
+	private ObjectAction _addNotificationTemplateObjectAction(
 			String objectActionTriggerKey, ObjectDefinition objectDefinition)
 		throws Exception {
 

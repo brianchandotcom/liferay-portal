@@ -50,21 +50,9 @@ export class SortingPage {
 		await this.dataSetPage.selectTab(tabLabel);
 	}
 
-	async getTableLabelCellTexts(): Promise<string[]> {
-		const rows = await this.sortingTable.locator('tr').all();
-
-		rows.shift(); // Exclude the header
-
-		const labelTexts: string[] = [];
-
-		for (const row of rows) {
-			const labelCell = row.locator('td').nth(1);
-
-			const labelText = await labelCell.textContent();
-
-			labelTexts.push(labelText);
-		}
-
-		return labelTexts;
+	async getTableColumnInnerTexts(index: number): Promise<string[]> {
+		return await this.sortingTable
+			.locator(`tbody > tr > td:nth-child(${index})`)
+			.allInnerTexts();
 	}
 }

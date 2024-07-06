@@ -231,10 +231,10 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
-	public void testAddNotificationObjectActionWithSystemObject()
+	public void testAddNotificationObjectActionWithSystemObjectDefinition()
 		throws Exception {
 
-		// Account entry system object
+		// Account entry system object definition
 
 		ObjectDefinition accountEntryObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -269,7 +269,7 @@ public class ObjectActionLocalServiceTest {
 			notificationQueueEntries.toString(), 1,
 			notificationQueueEntries.size());
 
-		// Commerce order system object
+		// Commerce order system object definition
 
 		ObjectDefinition commerceOrderObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
@@ -1357,9 +1357,10 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
-	public void testAddObjectActionWithSystemObject() throws Exception {
+	public void testAddObjectActionWithSystemObjectDefinition()
+		throws Exception {
 
-		// Commerce order system object
+		// Commerce order system object definition
 
 		ObjectDefinition commerceOrderObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
@@ -1382,7 +1383,7 @@ public class ObjectActionLocalServiceTest {
 
 		// Add object action to update commerce order status to
 		// CommerceOrderConstants#ORDER_STATUS_PROCESSING after updating payment
-		// status if the previous value for orderStatus is 1
+		// status if the old value for order status is 1
 
 		ObjectAction objectAction1 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
@@ -1526,7 +1527,7 @@ public class ObjectActionLocalServiceTest {
 			CommerceOrderConstants.ORDER_STATUS_OPEN,
 			commerceOrder2.getOrderStatus());
 
-		// Organization system object
+		// Organization system object definition
 
 		ObjectDefinition organizationObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
@@ -1648,7 +1649,7 @@ public class ObjectActionLocalServiceTest {
 			"test2", "Organization2", organizationObjectDefinition,
 			objectField1, "Custom2");
 
-		// User system object
+		// User system object definition
 
 		ObjectDefinition userObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(

@@ -143,12 +143,12 @@ public class AssetCategoriesSelectorTagTest {
 	}
 
 	private HttpServletRequest _getMockHttpServletRequest() {
+		HttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setLocale(LocaleUtil.getDefault());
-
-		HttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);

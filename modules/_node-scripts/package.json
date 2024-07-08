@@ -4,7 +4,7 @@
 		"node-scripts": "./bin.js"
 	},
 	"com.liferay": {
-		"sha256": "ddfd1fcf95c68e288d7c70ca20575cf1a143b1c92c9ee50526f57f0e09e24e16"
+		"sha256": "3494e56ef04a6024e7d218c98be65e39e23f6f093893b952058c5c51b249c75b"
 	},
 	"dependencies": {
 		"@babel/preset-env": "7.24.7",
@@ -25,6 +25,7 @@
 		"cross-env": "^7.0.3",
 		"deepmerge": "^4.3.1",
 		"esbuild": "^0.20.2",
+		"esbuild-plugin-polyfill-node": "^0.3.0",
 		"eslint": "7.32.0",
 		"execa": "^9.1.0",
 		"fast-glob": "^3.3.2",

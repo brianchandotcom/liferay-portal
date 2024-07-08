@@ -78,7 +78,6 @@ export function useLayoutKeyboardNavigation(item) {
 				return;
 			}
 
-			event.preventDefault();
 			event.stopPropagation();
 
 			// Calculate next item and set target
@@ -95,8 +94,8 @@ export function useLayoutKeyboardNavigation(item) {
 
 			else if (key === 'Enter') {
 				const editableId = event.target.dataset.lfrEditableId;
-
 				if (editableId) {
+					event.preventDefault();
 					selectItem(
 						`${item.config.fragmentEntryLinkId}-${editableId}`,
 						{

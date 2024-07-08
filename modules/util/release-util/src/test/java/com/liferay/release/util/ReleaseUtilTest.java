@@ -172,7 +172,6 @@ public class ReleaseUtilTest extends ReleaseUtil {
 
 		Assert.assertNotNull(releaseEntryMap.get("FIRST"));
 		Assert.assertNotNull(releaseEntryMap.get("SECOND"));
-
 		Assert.assertNull(releaseEntryMap.get("THIRD"));
 	}
 

@@ -17,9 +17,9 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPD-20213': true,
 	}),
-	wemSiteTest,
 	pageEditorPagesTest,
-	loginTest()
+	loginTest(),
+	wemSiteTest
 );
 
 test('allow mapping editables to fields of related object', async ({

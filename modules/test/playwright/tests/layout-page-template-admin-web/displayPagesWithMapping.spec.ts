@@ -19,9 +19,9 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPD-11377': true,
 	}),
-	wemSiteTest,
 	pageEditorPagesTest,
-	loginTest()
+	loginTest(),
+	wemSiteTest
 );
 
 test('allow mapping repeatable fields collection provider', async ({

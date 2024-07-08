@@ -22,14 +22,14 @@ import getPageDefinition from './utils/getPageDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,
-	wemSiteTest,
 	collectionsPagesTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
 	loginTest(),
 	pageEditorPagesTest,
-	pageViewModePagesTest
+	pageViewModePagesTest,
+	wemSiteTest
 );
 
 const testWithIsolatedSite = mergeTests(test, isolatedSiteTest);

@@ -19,11 +19,11 @@ import getPageDefinition from './utils/getPageDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,
-	wemSiteTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
-	loginTest()
+	loginTest(),
+	wemSiteTest
 );
 
 test('uses Tags fragment for Forms in a Content Page', async ({

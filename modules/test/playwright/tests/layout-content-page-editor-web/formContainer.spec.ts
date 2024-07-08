@@ -20,9 +20,9 @@ const test = mergeTests(
 		'LPD-20213': true,
 		'LPS-178052': true,
 	}),
-	wemSiteTest,
 	loginTest(),
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	wemSiteTest
 );
 
 test('allow selecting fields from main object and relationships in fields modal', async ({

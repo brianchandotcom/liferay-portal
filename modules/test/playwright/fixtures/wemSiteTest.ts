@@ -20,7 +20,7 @@ const wemSiteTest = test.extend<{
 
 			const apiHelpers = new ApiHelpers(backendPage);
 
-			let site;
+			let site: Site;
 
 			try {
 				site = await apiHelpers.headlessSite.getSiteByERC(WEM_SITE_ERC);
@@ -32,9 +32,23 @@ const wemSiteTest = test.extend<{
 					`Web Experience site could not be fetched, make sure this project has wem-site-setup as dependency`
 				);
 			}
+			finally {
+
+				// Delete all pages after each test
+
+				const {items} = await apiHelpers.headlessDelivery.getSitePages(
+					site.id
+				);
+
+				for (const page of items) {
+					await apiHelpers.jsonWebServicesLayout.deleteLayout(
+						page.id
+					);
+				}
+			}
 		},
 		{auto: true},
 	],
 });
 
-export {wemSiteTest, WEM_SITE_ERC};
+export {WEM_SITE_ERC, wemSiteTest};

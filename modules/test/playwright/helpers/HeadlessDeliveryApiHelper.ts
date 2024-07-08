@@ -96,6 +96,12 @@ export class HeadlessDeliveryApiHelper {
 		);
 	}
 
+	async getSitePages(siteId: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/site-pages`
+		);
+	}
+
 	async postBlog(
 		siteId: number | string,
 		blog?: {

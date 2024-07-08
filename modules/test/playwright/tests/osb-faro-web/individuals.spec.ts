@@ -11,9 +11,12 @@ import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {createChannel} from './utils/channel';
+import {
+	addBreakdownByAttribute,
+	viewBreakdownRechartsData,
+} from './utils/distribution';
 import {createIndividuals} from './utils/individuals';
 import {navigateTo, navigateToACSitesPageViaURL} from './utils/navigation';
-import {addBreakdownByAttribute, viewBreakdownRechartsData} from './utils/distribution';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -97,14 +100,14 @@ test('Add a new breakdown by an attribute and assert that correct results appear
 	await test.step('Go to Individuals Dashboard', async () => {
 		await navigateTo({page, pageName: 'Individuals'});
 	});
-	
+
 	await test.step('Add a new breakdown', async () => {
 		await addBreakdownByAttribute({
 			attributeName: 'email',
 			page,
 		});
 	});
-	
+
 	await test.step('Check if the correct results appear (email and maximum count)', async () => {
 		await viewBreakdownRechartsData({
 			attributeValue: 'test@liferay.com',

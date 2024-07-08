@@ -22,7 +22,7 @@ test('can create two job triggers and can delete them', async ({
 	await page.getByTestId('row').nth(0).getByRole('checkbox').check();
 	await page.getByTestId('row').nth(1).getByRole('checkbox').check();
 
-	await expect(page.getByText('2 of 6 Items Selected')).toBeVisible();
+	await expect(page.getByText('2 of 7 Items Selected')).toBeVisible();
 
 	page.on('dialog', async (dialogWindow) => {
 		await dialogWindow.accept();

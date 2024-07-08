@@ -4,7 +4,7 @@
  */
 
 import {asahConfig} from '../../tests/osb-faro-web/asah.config';
-import { Nanites } from '../../tests/osb-faro-web/utils/nanites';
+import {Nanites} from '../../tests/osb-faro-web/utils/nanites';
 import {ApiHelpers} from '../ApiHelpers';
 
 type Event = {

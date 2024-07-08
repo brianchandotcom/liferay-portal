@@ -15,6 +15,7 @@ import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
 import {createChannel, switchChannel} from './utils/channel';
 import {createIndividuals} from './utils/individuals';
+import {Nanites, runNanites} from './utils/nanites';
 import {
 	navigateTo,
 	navigateToACSitesPageViaURL,
@@ -34,7 +35,6 @@ import {
 import {CardSelectors, SegmentConditions} from './utils/selectors';
 import {changeTimeFilter} from './utils/time-filter';
 import {expectNotToBeVisible, expectToBeVisible} from './utils/utils';
-import {Nanites, runNanites} from './utils/nanites';
 
 export const test = mergeTests(
 	apiHelpersTest,

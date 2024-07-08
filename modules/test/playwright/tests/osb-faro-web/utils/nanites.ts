@@ -3,28 +3,28 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { Page } from "@playwright/test";
-import { ApiHelpers } from "../../../helpers/ApiHelpers";
+import {Page} from '@playwright/test';
+
+import {ApiHelpers} from '../../../helpers/ApiHelpers';
 
 export enum Nanites {
 	UpdateMembershipsNanite = 'UpdateMembershipsNanite',
-    ClearChannelsNanite = 'ClearChannelsNanite',
-    DataControlNanite = 'DataControlNanite',
-    DataExportNanite = 'DataExportNanite',
-    DeleteChannelsNanite = 'DeleteChannelsNanite',
-    ExperimentNanite = 'ExperimentNanite'
+	ClearChannelsNanite = 'ClearChannelsNanite',
+	DataControlNanite = 'DataControlNanite',
+	DataExportNanite = 'DataExportNanite',
+	DeleteChannelsNanite = 'DeleteChannelsNanite',
+	ExperimentNanite = 'ExperimentNanite',
 }
 
 export async function runNanites({
 	apiHelpers,
 	naniteNames,
-    page,
+	page,
 }: {
 	apiHelpers: ApiHelpers;
 	naniteNames: Nanites[];
-    page: Page;
+	page: Page;
 }) {
-
 	await apiHelpers.jsonWebServicesOSBAsah.runNanites(naniteNames);
-    await page.waitForTimeout(5000);
+	await page.waitForTimeout(5000);
 }

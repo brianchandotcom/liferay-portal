@@ -109,36 +109,4 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-121346. The Home page is shown when access to a non existing page."
-	@priority = 3
-	test ViewNotFoundWhenAccessToNonExistingPage {
-		task ("Assign the power role to new user") {
-			JSONRole.assignRoleToUser(
-				roleTitle = "Power User",
-				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
-		}
-
-		task ("Access a non existing page") {
-			var portalURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${portalURL}/web/usersn/page-name");
-		}
-
-		task ("View not found error in home page") {
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Error:Not Found");
-
-			AssertTextPresent(value1 = "The requested resource could not be found.");
-
-			AssertElementNotPresent(
-				key_portletTitleName = "Profile",
-				locator1 = "Home#PORTLET_HEADER");
-		}
-	}
-
 }

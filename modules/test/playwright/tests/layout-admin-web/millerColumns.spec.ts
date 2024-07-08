@@ -128,3 +128,19 @@ test('checks the correct label for restricted pages in Miller Columns', async ({
 			.getByLabel(`${pageName}. Restricted Page`)
 	).toBeVisible();
 });
+
+test('LPS-178476 View the XSS is escaped when store it in widget page name.', async ({
+	apiHelpers,
+	page,
+	pagesAdminPage,
+	site,
+}) => {
+	await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: '<script>alert(123);</script>',
+	});
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	await expect(page.getByRole('alert')).not.toBeVisible();
+});

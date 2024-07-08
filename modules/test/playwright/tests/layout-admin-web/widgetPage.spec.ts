@@ -154,3 +154,29 @@ test('View web content is shown in Web Content Display after be added via conten
 
 	await expect(page.getByText(webContentTitle)).toBeVisible();
 });
+
+test('LPS-178476 View the XSS is escaped when store it in widget page name.', async ({
+	apiHelpers,
+	page,
+	site,
+	widgetPagePage,
+}) => {
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: '<script>alert(123);</script>',
+	});
+
+	await widgetPagePage.goToSitePage(site, layout.friendlyURL);
+
+	await expect(page.getByRole('alert')).not.toBeVisible();
+
+	// Open the Product Menu
+
+	await page
+		.getByRole('tab', {
+			name: 'Product Menu',
+		})
+		.click({timeout: 3000});
+
+	await expect(page.getByRole('alert')).not.toBeVisible();
+});

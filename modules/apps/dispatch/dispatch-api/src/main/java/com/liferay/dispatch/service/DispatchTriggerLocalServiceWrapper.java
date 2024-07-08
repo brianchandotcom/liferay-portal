@@ -363,6 +363,13 @@ public class DispatchTriggerLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.dispatch.model.DispatchTrigger>
+		getDispatchTriggers(boolean active) {
+
+		return _dispatchTriggerLocalService.getDispatchTriggers(active);
+	}
+
+	@Override
+	public java.util.List<com.liferay.dispatch.model.DispatchTrigger>
 		getDispatchTriggers(
 			boolean active,
 			com.liferay.dispatch.executor.DispatchTaskClusterMode

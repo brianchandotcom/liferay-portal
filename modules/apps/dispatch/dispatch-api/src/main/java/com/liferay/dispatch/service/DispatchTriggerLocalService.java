@@ -275,6 +275,9 @@ public interface DispatchTriggerLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DispatchTrigger> getDispatchTriggers(boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DispatchTrigger> getDispatchTriggers(
 		boolean active, DispatchTaskClusterMode dispatchTaskClusterMode);
 

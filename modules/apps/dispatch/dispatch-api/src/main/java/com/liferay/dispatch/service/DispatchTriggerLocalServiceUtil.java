@@ -316,6 +316,10 @@ public class DispatchTriggerLocalServiceUtil {
 			uuid, companyId);
 	}
 
+	public static List<DispatchTrigger> getDispatchTriggers(boolean active) {
+		return getService().getDispatchTriggers(active);
+	}
+
 	public static List<DispatchTrigger> getDispatchTriggers(
 		boolean active,
 		com.liferay.dispatch.executor.DispatchTaskClusterMode

@@ -48,7 +48,7 @@ test('allows selecting specific repeatable field when mapping', async ({
 			}),
 		]),
 		siteId: wemSite.id,
-		title: 'Test Page Name',
+		title: getRandomString(),
 	});
 
 	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);

@@ -144,17 +144,17 @@ public class ResourceUtilTest extends ResourceUtil {
 	}
 
 	@Test
-	public void testReadJson() {
-		Model model = readJson(
+	public void testReadJSON() {
+		Model model = readJSON(
 			Model.class, _nullResolver,
 			getClassLoaderResolver("read-json.json"));
 
 		Assert.assertEquals("bar", model.getFoo());
 
-		Assert.assertNull(readJson(Model.class, _nullResolver));
+		Assert.assertNull(readJSON(Model.class, _nullResolver));
 
 		try {
-			readJson(Model.class, getClassLoaderResolver("read-json-bad.json"));
+			readJSON(Model.class, getClassLoaderResolver("read-json-bad.json"));
 
 			Assert.fail();
 		}

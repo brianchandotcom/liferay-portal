@@ -136,7 +136,7 @@ public class ResourceUtil {
 		return getURIResolver(cacheDir, URI.create(url));
 	}
 
-	public static <T> T readJson(Class<T> clazz, Resolver... resolvers) {
+	public static <T> T readJSON(Class<T> clazz, Resolver... resolvers) {
 		return _withInputStream(
 			inputStream -> _objectMapper.readValue(inputStream, clazz),
 			resolvers);

@@ -10,8 +10,11 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.language.rest.dto.v1_0.Message;
@@ -26,11 +29,15 @@ import java.io.Serializable;
 
 import java.nio.charset.StandardCharsets;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.ws.rs.BadRequestException;
 
@@ -137,7 +144,41 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 		Filter filter, Pagination pagination, Sort[] sorts,
 		Map<String, Serializable> parameters, String search) {
 
-		return Page.of(Collections.emptyList());
+		String languageId = GetterUtil.getString(parameters.get("languageId"));
+
+		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
+			LocaleUtil.fromLanguageId(languageId, true, true));
+
+		Set<String> keySet = resourceBundle.keySet();
+
+		keySet.addAll(_getCompanyPLOEntryKeys(contextCompany.getCompanyId()));
+
+		List<String> keys = new ArrayList<>(keySet);
+
+		Collections.sort(keys);
+
+		List<Message> messages = new ArrayList<>();
+
+		for (int i = pagination.getStartPosition();
+			 (i < keys.size()) && (i < pagination.getEndPosition()); i++) {
+
+			String key = keys.get(i);
+
+			Message message = new Message();
+
+			message.setKey(() -> key);
+			message.setLanguageId(() -> languageId);
+			message.setValue(
+				() -> ResourceBundleUtil.getString(resourceBundle, key));
+
+			messages.add(message);
+
+			if (i >= pagination.getEndPosition()) {
+				break;
+			}
+		}
+
+		return Page.of(messages, pagination, keys.size());
 	}
 
 	private Message _addOrUpdatePLOEntry(Message message)
@@ -152,6 +193,18 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 		message.setValue(ploEntry::getValue);
 
 		return message;
+	}
+
+	private List<String> _getCompanyPLOEntryKeys(long companyId) {
+		List<String> keys = new ArrayList<>();
+
+		for (PLOEntry ploEntry :
+				_ploEntryLocalService.getPLOEntries(companyId)) {
+
+			keys.add(ploEntry.getKey());
+		}
+
+		return keys;
 	}
 
 	@Reference

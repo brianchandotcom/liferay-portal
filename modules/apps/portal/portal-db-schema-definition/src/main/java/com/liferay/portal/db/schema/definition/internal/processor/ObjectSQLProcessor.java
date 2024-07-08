@@ -54,15 +54,6 @@ public class ObjectSQLProcessor {
 		return _tablesSQLSB.toString();
 	}
 
-	private void _appendTableSQL(String sql, String tableName)
-		throws Exception {
-
-		_tableNames.add(tableName);
-
-		_tablesSQLSB.append(_db.buildSQL(sql));
-		_tablesSQLSB.append(StringPool.NEW_LINE);
-	}
-
 	private void _appendIndexesSQL() throws Exception {
 		DataSource dataSource = InfrastructureUtil.getDataSource();
 
@@ -132,6 +123,15 @@ public class ObjectSQLProcessor {
 		}
 
 		_appendIndexesSQL();
+	}
+
+	private void _appendTableSQL(String sql, String tableName)
+		throws Exception {
+
+		_tableNames.add(tableName);
+
+		_tablesSQLSB.append(_db.buildSQL(sql));
+		_tablesSQLSB.append(StringPool.NEW_LINE);
 	}
 
 	private void _appendTablesSQL(ObjectDefinition objectDefinition)

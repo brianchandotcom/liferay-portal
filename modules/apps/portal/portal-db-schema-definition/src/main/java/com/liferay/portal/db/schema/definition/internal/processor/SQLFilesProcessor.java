@@ -46,18 +46,6 @@ public class SQLFilesProcessor {
 			_objectSQLProcessor.getTablesSQL();
 	}
 
-	private void _appendSQL(String indexesSQL, String tablesSQL)
-		throws Exception {
-
-		if (Validator.isNotNull(indexesSQL)) {
-			_indexesSQLSB.append(_db.buildSQL(indexesSQL));
-		}
-
-		if (Validator.isNotNull(tablesSQL)) {
-			_tablesSQLSB.append(_db.buildSQL(tablesSQL));
-		}
-	}
-
 	private void _appendModulesSQL() throws Exception {
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
@@ -79,6 +67,18 @@ public class SQLFilesProcessor {
 		_appendSQL(
 			DBResourceUtil.getPortalIndexesSQL(),
 			DBResourceUtil.getPortalTablesSQL());
+	}
+
+	private void _appendSQL(String indexesSQL, String tablesSQL)
+		throws Exception {
+
+		if (Validator.isNotNull(indexesSQL)) {
+			_indexesSQLSB.append(_db.buildSQL(indexesSQL));
+		}
+
+		if (Validator.isNotNull(tablesSQL)) {
+			_tablesSQLSB.append(_db.buildSQL(tablesSQL));
+		}
 	}
 
 	private DB _getDB(DBType dbType) {

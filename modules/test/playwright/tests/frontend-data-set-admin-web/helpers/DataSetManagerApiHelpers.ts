@@ -380,7 +380,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 			itemLabel,
 			label_i18n,
 			multiple,
-			preselectedValues
+			preselectedValues,
 		};
 
 		return this.patch(url, data);

@@ -35,16 +35,25 @@ export class FDSFragmentPage {
 		this.creationMenuButton = page.getByRole('button', {name: 'New'});
 		this.emptyStateTitle = page.getByText('No Results Found');
 		this.fdsActiveViewSelector = page.getByLabel('Show View Options');
-		this.fdsAddFilterButton = page.getByRole('button', {exact: true, name: 'Add Filter'});
+		this.fdsAddFilterButton = page.getByRole('button', {
+			exact: true,
+			name: 'Add Filter',
+		});
 		this.fdsCardsWrapper = page.locator('.cards-container');
-		this.fdsFilterButton = page.getByRole('button', {exact: true, name: 'Filter'});
+		this.fdsFilterButton = page.getByRole('button', {
+			exact: true,
+			name: 'Filter',
+		});
 		this.fdsFilterResumeButton = page.locator('.filter-resume');
 		this.fdsListWrapper = page.locator('.list-sheet');
 		this.fdsPaginationWrapper = page.locator(
 			'.data-set-pagination-wrapper'
 		);
 		this.fdsPaginationResults = page.locator('.pagination-results');
-		this.fdsResetFilterButton = page.getByRole('button', {exact: true, name:'Reset Filters'});
+		this.fdsResetFilterButton = page.getByRole('button', {
+			exact: true,
+			name: 'Reset Filters',
+		});
 		this.fdsTableWrapper = page.locator('.dnd-table');
 		this.fragmentWidgetSearchInput = page.getByLabel(
 			'Search Fragments and Widgets'
@@ -66,11 +75,15 @@ export class FDSFragmentPage {
 			node.getAttribute('aria-controls')
 		);
 		await this.fdsFilterButton.click();
-		await this.page.locator(`#${filterDropdownId}`).waitFor({state: 'visible'});
+		await this.page
+			.locator(`#${filterDropdownId}`)
+			.waitFor({state: 'visible'});
 		this.fdsFilterItem = this.page.locator(`#${filterDropdownId}`);
-		this.fdsFilterItem.getByRole('menuitem', {
-			name: filterLabel
-		}).click();
+		this.fdsFilterItem
+			.getByRole('menuitem', {
+				name: filterLabel,
+			})
+			.click();
 	}
 
 	async changeVisualizationMode(visualizationMode: VisualizationMode) {

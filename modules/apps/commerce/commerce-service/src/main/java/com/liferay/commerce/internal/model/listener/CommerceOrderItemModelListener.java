@@ -42,19 +42,17 @@ public class CommerceOrderItemModelListener
 		try {
 			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
-			boolean commerceOrderShippable = commerceOrder.isShippable();
-
-			if (!commerceOrderShippable) {
-				boolean commerceOrderItemShippable =
-					commerceOrderItem.isShippable();
-
-				if (commerceOrderItemShippable) {
-					commerceOrder.setShippable(true);
-
-					_commerceOrderLocalService.updateCommerceOrder(
-						commerceOrder);
-				}
+			if (commerceOrder.isManuallyAdjusted() && commerceOrder.isOpen()) {
+				commerceOrder.setManuallyAdjusted(false);
 			}
+
+			if (!commerceOrder.isShippable() &&
+				commerceOrderItem.isShippable()) {
+
+				commerceOrder.setShippable(true);
+			}
+
+			_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -77,6 +75,13 @@ public class CommerceOrderItemModelListener
 					public CommerceOrder call() throws Exception {
 						CommerceOrder commerceOrder =
 							commerceOrderItem.getCommerceOrder();
+
+						if (commerceOrder.isManuallyAdjusted() &&
+							commerceOrder.isOpen()) {
+
+							commerceOrder.setManuallyAdjusted(false);
+						}
+
 						boolean shippable = false;
 
 						for (CommerceOrderItem curCommerceOrderItem :
@@ -118,6 +123,13 @@ public class CommerceOrderItemModelListener
 
 		try {
 			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
+			if (commerceOrder.isManuallyAdjusted() && commerceOrder.isOpen()) {
+				commerceOrder.setManuallyAdjusted(false);
+
+				commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+					commerceOrder);
+			}
 
 			if ((commerceOrder.getOrderStatus() ==
 					CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED) ||

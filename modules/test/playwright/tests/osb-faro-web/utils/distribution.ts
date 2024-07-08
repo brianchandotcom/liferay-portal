@@ -4,46 +4,51 @@
  */
 
 import {Page, expect} from '@playwright/test';
+
 import {waitForLoading} from './loading';
 
 export async function addBreakdownByAttribute({
-    attributeName,
-    page,
+	attributeName,
+	page,
 }: {
-    attributeName: String;
-    page: Page;
+	attributeName: String;
+	page: Page;
 }) {
 	await page.getByLabel('Add').click();
-    await page.getByPlaceholder('Select Field').click();
+	await page.getByPlaceholder('Select Field').click();
 
-    await page.locator(`div.dropdown-menu span:has-text("${attributeName}")`).click();
+	await page
+		.locator(`div.dropdown-menu span:has-text("${attributeName}")`)
+		.click();
 
-    await page.getByLabel('Breakdown Name').click();
-    await page.getByLabel('Breakdown Name').fill(`Breakdown by ${attributeName}`);
-    await page.getByRole('button', {name: 'Save'}).click();
+	await page.getByLabel('Breakdown Name').click();
+	await page
+		.getByLabel('Breakdown Name')
+		.fill(`Breakdown by ${attributeName}`);
+	await page.getByRole('button', {name: 'Save'}).click();
 
-    await waitForLoading(page);
+	await waitForLoading(page);
 }
 
 export async function viewBreakdownRechartsData({
-    attributeValue,
-    maxCount,
-    page,
+	attributeValue,
+	maxCount,
+	page,
 }: {
-    attributeValue: string;
-    maxCount: number;
-    page: Page;
+	attributeValue: string;
+	maxCount: number;
+	page: Page;
 }) {
 	const card = page.locator('.distribution-card-root');
-    const ticks = card.locator(
-        '.recharts-cartesian-axis.recharts-xAxis .recharts-layer.recharts-cartesian-axis-tick'
-    );
+	const ticks = card.locator(
+		'.recharts-cartesian-axis.recharts-xAxis .recharts-layer.recharts-cartesian-axis-tick'
+	);
 
-    const ticksCount = await ticks.count();
-    const lastTick = ticks.nth(ticksCount - 1);
+	const ticksCount = await ticks.count();
+	const lastTick = ticks.nth(ticksCount - 1);
 
-    const lastTickValue = await lastTick.textContent();
+	const lastTickValue = await lastTick.textContent();
 
-    expect(card.getByText(attributeValue)).toBeVisible();
-    expect(lastTickValue).toEqual(maxCount);
+	expect(card.getByText(attributeValue)).toBeVisible();
+	expect(lastTickValue).toEqual(maxCount);
 }

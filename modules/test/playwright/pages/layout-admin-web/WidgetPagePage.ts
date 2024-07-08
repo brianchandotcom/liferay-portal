@@ -38,6 +38,16 @@ export class WidgetPagePage {
 		await this.page.getByRole('button', {name: 'Add Content'}).click();
 	}
 
+	async addContent(contentName: string) {
+		await this.clickControlMenuAddButton();
+		await this.goToControlMenuAddPanelContentTab();
+		await this.page
+			.locator('.sidebar-body__add-panel__tab-item')
+			.filter({hasText: contentName})
+			.getByRole('button', {name: 'Add Content'})
+			.click();
+	}
+
 	async clickToAddApplication() {
 		await this.addApplicationButton.click();
 	}

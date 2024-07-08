@@ -6,14 +6,28 @@
 import {Locator, Page} from '@playwright/test';
 
 export class CommerceThemeMiniumPage {
+	readonly globalSearchButton: Locator;
+	readonly globalSearchClearButton: Locator;
+	readonly globalSearchInput: Locator;
+	readonly globalSearchSuggestions: Locator;
+	readonly globalSearchSuggestionsItem: (text: string) => Promise<Locator>;
+	readonly myProfileItemMenu: Locator;
 	readonly page: Page;
 	readonly stickerUserNav: Locator;
-	readonly myProfileItemMenu: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
-		this.stickerUserNav = page.locator('.sticker').first();
+		this.globalSearchButton = page.locator('.commerce-topbar-button');
+		this.globalSearchClearButton = page.getByLabel('Clear Search');
+		this.globalSearchInput = page
+			.locator('#search-bar')
+			.getByPlaceholder('Search');
+		this.globalSearchSuggestions = page.locator('.commerce-suggestions');
+		this.globalSearchSuggestionsItem = async (text: string) => {
+			return this.globalSearchSuggestions.getByRole('link', {name: text});
+		};
 		this.myProfileItemMenu = page.getByRole('link', {name: 'My Profile'});
+		this.stickerUserNav = page.locator('.sticker').first();
 	}
 }

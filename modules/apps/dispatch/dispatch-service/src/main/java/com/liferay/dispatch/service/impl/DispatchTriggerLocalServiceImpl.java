@@ -207,6 +207,11 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	@Override
+	public List<DispatchTrigger> getDispatchTriggers(boolean active) {
+		return dispatchTriggerPersistence.findByActive(active);
+	}
+
+	@Override
 	public List<DispatchTrigger> getDispatchTriggers(
 		boolean active, DispatchTaskClusterMode dispatchTaskClusterMode) {
 

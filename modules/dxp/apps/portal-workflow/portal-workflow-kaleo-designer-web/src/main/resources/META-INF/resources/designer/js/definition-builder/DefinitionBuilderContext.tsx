@@ -50,6 +50,7 @@ interface DefinitionBuilderContextProviderProps {
 	sourceView: boolean;
 	statuses: LabelValueObject<number>[];
 	version: string;
+	versions: WorkflowDefinitionVersion[];
 }
 
 const DefinitionBuilderContext = createContext(

@@ -4,6 +4,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import moment from 'moment';
 import React, {useContext} from 'react';
 
 import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
@@ -13,6 +14,9 @@ import {
 	saveDefinitionRequest,
 } from '../../../../util/fetchUtil';
 import lang from '../../../../util/lang';
+
+import './VersionRow.scss';
+
 interface RetrieveWorkflowDefinitionResponseProps {
 	active: boolean;
 	content: string;
@@ -22,10 +26,16 @@ interface RetrieveWorkflowDefinitionResponseProps {
 }
 
 interface VersionRowProps {
+	creatorName: string;
+	dateCreated: string;
 	versionNumber: number;
 }
 
-export function VersionRow({versionNumber}: VersionRowProps) {
+export function VersionRow({
+	creatorName,
+	dateCreated,
+	versionNumber,
+}: VersionRowProps) {
 	const {
 		definitionName,
 		setAlertMessage,
@@ -115,15 +125,31 @@ export function VersionRow({versionNumber}: VersionRowProps) {
 	};
 
 	return (
-		<div className="info-group">
-			<div className="version-row">
-				<label className="text-secondary">
-					{Liferay.Language.get('version')} {versionNumber}
-				</label>
+		<>
+			<div className="lfr-workflow__version-row-container">
+				{Liferay.FeatureFlags['LPD-29635'] ? (
+					<div className="lfr-workflow__version-row-info-container">
+						<label className="lfr-workflow__version-row-info-number">
+							{Liferay.Language.get('version')} {versionNumber}
+						</label>
+
+						<span className="lfr-workflow__version-row-info-date-user">
+							{moment(dateCreated).format(
+								Liferay.Language.get('mmm-dd-yyyy-lt')
+							)}{' '}
+
+							by {creatorName}
+						</span>
+					</div>
+				) : (
+					<label className="text-secondary">
+						{Liferay.Language.get('version')} {versionNumber}
+					</label>
+				)}
 
 				<ClayButtonWithIcon
 					aria-labelledby={Liferay.Language.get('restore')}
-					className="text-secondary"
+					className="lfr-workflow__version-row-restore-button"
 					displayType="unstyled"
 					onClick={() => handleRestoreWorkflowDefinitionVersion()}
 					symbol="restore"
@@ -132,6 +158,6 @@ export function VersionRow({versionNumber}: VersionRowProps) {
 			</div>
 
 			<div className="sheet-subtitle" />
-		</div>
+		</>
 	);
 }

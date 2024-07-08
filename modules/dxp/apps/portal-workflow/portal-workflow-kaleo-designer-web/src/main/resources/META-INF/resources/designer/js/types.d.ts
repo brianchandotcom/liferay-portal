@@ -66,3 +66,9 @@ interface WorkflowDefinition {
 	};
 	version: string;
 }
+
+interface WorkflowDefinitionVersion {
+	creatorName: string;
+	dateCreated: string;
+	versionNumber: string;
+}

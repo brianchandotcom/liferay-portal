@@ -1,0 +1,41 @@
+.lfr-workflow__version-row {
+	&-container {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&-info-container {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&-info-date-user {
+		color: #6b6c7e;
+		font-size: 13px;
+		line-height: 18px;
+		word-wrap: break-word;
+	}
+
+	&-info-number {
+		color: #272833;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 21px;
+	}
+
+	&-restore-button {
+		color: #6b6c7e;
+		transition: 0.3s ease;
+
+		&:hover {
+			color: #272833;
+			transition: 0.3s ease;
+		}
+	}
+}
+
+.lexicon-icon-restore {
+	height: 24px;
+	width: 24px;
+}

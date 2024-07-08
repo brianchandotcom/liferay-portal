@@ -10,6 +10,8 @@ import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
 import {DetailsTab} from './DetailsTab';
 import {RevisionHistory} from './RevisionHistory';
 
+import './DefinitionInfo.scss';
+
 const TABS = [
 	{
 		Component: DetailsTab,
@@ -24,7 +26,9 @@ const TABS = [
 export function DefinitionInfo() {
 	const [activeIndex, setActiveIndex] = useState(0);
 
-	const {definitionInfo, version} = useContext(DefinitionBuilderContext);
+	const {definitionInfo, version, versions} = useContext(
+		DefinitionBuilderContext
+	);
 
 	return (
 		<>
@@ -42,10 +46,14 @@ export function DefinitionInfo() {
 
 			<ClayTabs.Content activeIndex={activeIndex} fade>
 				{TABS.map(({Component}, index) => (
-					<ClayTabs.TabPane key={index}>
+					<ClayTabs.TabPane
+						className="lfr-workflow__definition-info-tabs"
+						key={index}
+					>
 						<Component
 							definitionInfo={definitionInfo}
 							version={Number(version)}
+							versions={versions}
 						/>
 					</ClayTabs.TabPane>
 				))}

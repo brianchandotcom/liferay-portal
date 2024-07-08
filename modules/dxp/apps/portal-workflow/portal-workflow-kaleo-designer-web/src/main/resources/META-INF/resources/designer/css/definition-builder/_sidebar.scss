@@ -7,25 +7,6 @@
 		padding: 10px;
 	}
 
-	.info-group {
-		display: grid;
-
-		button {
-			height: 32px;
-			width: 32px;
-		}
-
-		button:hover {
-			background-color: #2728330a;
-		}
-
-		.version-row {
-			align-items: center;
-			display: flex;
-			justify-content: space-between;
-		}
-	}
-
 	.node {
 		border: none;
 		cursor: grab;

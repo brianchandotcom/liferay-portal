@@ -35,9 +35,10 @@ public class ReleaseUtilTest extends ReleaseUtil {
 		File mirrorDir = _createTempDir("releasesMirror");
 
 		_writeFile(
-			"releases.json", Paths.get(mirrorDir.getPath(), "releases.json"));
+			"dependencies/releases.json",
+			Paths.get(mirrorDir.getPath(), "releases.json"));
 		_writeFile(
-			"release.properties",
+			"dependencies/release.properties",
 			Paths.get(
 				mirrorDir.getPath(), "dxp", "second", "release.properties"));
 

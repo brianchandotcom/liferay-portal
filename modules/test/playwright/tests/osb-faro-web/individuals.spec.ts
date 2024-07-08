@@ -12,8 +12,8 @@ import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {createChannel} from './utils/channel';
 import {createIndividuals} from './utils/individuals';
-import {waitForLoading} from './utils/loading';
 import {navigateTo, navigateToACSitesPageViaURL} from './utils/navigation';
+import {addBreakdownByAttribute, viewBreakdownRechartsData} from './utils/distribution';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -41,7 +41,7 @@ test('Add a new breakdown by an attribute and assert that correct results appear
 		};
 	};
 
-	const individuals = [generateIndividual('vinicius')];
+	const individuals = [generateIndividual('ac')];
 
 	await test.step('Create new Individual', async () => {
 		await createIndividuals({
@@ -97,37 +97,21 @@ test('Add a new breakdown by an attribute and assert that correct results appear
 	await test.step('Go to Individuals Dashboard', async () => {
 		await navigateTo({page, pageName: 'Individuals'});
 	});
-
-	await page.waitForTimeout(3000);
-
-	const card = page.locator('.distribution-card-root');
-
+	
 	await test.step('Add a new breakdown', async () => {
-		await card.getByLabel('Add').click();
-		await card.getByPlaceholder('Select Field').click();
-
-		// it should get the menuitem from the page due to the element
-		// being rendered outside the card.
-
-		await page.getByRole('menuitem', {name: 'abc email'}).click();
-
-		await card.getByLabel('Breakdown Name').click();
-		await card.getByLabel('Breakdown Name').fill('breakdown by email');
-		await card.getByRole('button', {name: 'Save'}).click();
+		await addBreakdownByAttribute({
+			attributeName: 'email',
+			page,
+		});
 	});
-
-	await waitForLoading(page);
-
-	const ticks = card.locator(
-		'.recharts-cartesian-axis.recharts-xAxis .recharts-layer.recharts-cartesian-axis-tick'
-	);
-	const ticksCount = await ticks.count();
-	const lastTick = ticks.nth(ticksCount - 1);
-
-	const lastTickValue = await lastTick.textContent();
-
-	expect(card.getByText('vinicius@liferay.com')).toBeVisible();
-	expect(lastTickValue).toEqual('1');
+	
+	await test.step('Check if the correct results appear (email and maximum count)', async () => {
+		await viewBreakdownRechartsData({
+			attributeValue: 'test@liferay.com',
+			maxCount: 1,
+			page,
+		});
+	});
 
 	await test.step('Close breakdown tab', async () => {
 		await page.getByLabel('Close').click();

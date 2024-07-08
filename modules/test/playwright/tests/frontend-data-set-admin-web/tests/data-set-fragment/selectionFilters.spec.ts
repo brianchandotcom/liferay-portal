@@ -138,6 +138,7 @@ test.describe('Selection filters in Data Set fragment', () => {
 		dataSetManagerApiHelpers,
 		fdsFragmentPage,
 		layout,
+		page,
 		picklistApiHelpers,
 	}) => {
 		const filterLabel = getRandomString();
@@ -157,6 +158,21 @@ test.describe('Selection filters in Data Set fragment', () => {
 			});
 		});
 
+		await test.step('Configure Data Set fragment', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step('There are no filters in the Frontend Data Set', async() => {
+			await expect(
+				fdsFragmentPage.page.getByRole('button', {
+					name: 'Filter',
+				})
+			).not.toBeVisible();
+		});
+
 		await test.step('Create a new selection filter', async () => {
 			const picklist = await picklistApiHelpers.getPicklist(picklistName);
 
@@ -169,14 +185,8 @@ test.describe('Selection filters in Data Set fragment', () => {
 			});
 		});
 
-		await test.step('Configure Data Set fragment', async () => {
-			await fdsFragmentPage.configureDataSetFragment({
-				dataSetLabel,
-				layout,
-			});
-		});
-
 		await test.step('Check current items in the Frontend Data Set', async () => {
+			await page.reload();
 			await fdsFragmentPage.fdsPaginationResults.scrollIntoViewIfNeeded();
 
 			await expect(
@@ -263,7 +273,7 @@ test.describe('Selection filters in Data Set fragment', () => {
 	}) => {
 		const filterLabel = getRandomString();
 
-		await test.step('Add a field, so FDS has something to show', async () => {
+		await test.step('Add fields, so FDS has something to show', async () => {
 			await dataSetManagerApiHelpers.createDataSetField({
 				dataSetERC,
 				label_i18n: {en_US: 'Id'},

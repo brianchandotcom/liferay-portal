@@ -438,65 +438,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-191295. An empty filter list is displayed when there is no filter created"
-	@priority = 3
-	test ConfirmEmptyListOfFilters {
-		task ("Given a new Object entity") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Date Object",
-				objectName = "DateObject",
-				pluralLabelName = "Date Objects");
-
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Date",
-				fieldLabelName = "Date Field",
-				fieldName = "dateField",
-				fieldType = "Date",
-				isRequired = "false",
-				objectName = "DateObject");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "DateObject");
-		}
-
-		task ("And new entries in the new Object entity") {
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "dateField",
-				objectName = "DateObject",
-				value = "2023-06-06");
-
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "dateField",
-				objectName = "DateObject",
-				value = "2023-02-02");
-
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "dateField",
-				objectName = "DateObject",
-				value = "2023-03-03");
-		}
-
-		task ("And creating a Data Set entry, view and fields") {
-			DataSetAdmin.createAndConfigureDataSetEntry(
-				dataSetName = "Custom Data Set Entry",
-				dataSetViewDescription = "View Description",
-				dataSetViewName = "Date filters view",
-				key_fieldList = "dateField,id,dateCreated",
-				restApplication = "/c/dateobjects",
-				restEndpoint = "/",
-				restSchema = "DateObject");
-		}
-
-		task ("And adds the data set Fragment portlet in the page") {
-			DataSetFragment.setUpDataSetPage(
-				dataSetViewName = "Date filters view",
-				pageName = ${pageName});
-		}
-
-		task ("Then confirm that the Filters button is not shown") {
-			AssertElementNotPresent(locator1 = "FrontendDataSet#FILTER_DROPDOWN");
-		}
-	}
-
 	@description = "LPS-191295. An empty filter list is displayed when we cancel the creation of a filter"
 	@priority = 4
 	test EmptyListFiltersAfterCancellingFilterCreation {

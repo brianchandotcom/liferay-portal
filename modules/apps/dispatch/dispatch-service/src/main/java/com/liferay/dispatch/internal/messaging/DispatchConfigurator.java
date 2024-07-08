@@ -11,6 +11,7 @@ import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.internal.helper.DispatchTriggerHelper;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -77,12 +78,16 @@ public class DispatchConfigurator {
 		_serviceRegistration = bundleContext.registerService(
 			Destination.class, destination, properties);
 
-		DispatchTaskClusterMode dispatchTaskClusterMode =
-			DispatchTaskClusterMode.ALL_NODES;
-
 		for (DispatchTrigger dispatchTrigger :
-				_dispatchTriggerLocalService.getDispatchTriggers(
-					true, dispatchTaskClusterMode)) {
+				_dispatchTriggerLocalService.getDispatchTriggers(true)) {
+
+			DispatchTaskClusterMode dispatchTaskClusterMode =
+				DispatchTaskClusterMode.valueOf(
+					dispatchTrigger.getDispatchTaskClusterMode());
+
+			if (!_isSchedulable(dispatchTaskClusterMode)) {
+				continue;
+			}
 
 			try {
 				_dispatchTriggerHelper.addSchedulerJob(
@@ -99,12 +104,16 @@ public class DispatchConfigurator {
 
 	@Deactivate
 	protected void deactivate() {
-		DispatchTaskClusterMode dispatchTaskClusterMode =
-			DispatchTaskClusterMode.ALL_NODES;
-
 		for (DispatchTrigger dispatchTrigger :
-				_dispatchTriggerLocalService.getDispatchTriggers(
-					true, dispatchTaskClusterMode)) {
+				_dispatchTriggerLocalService.getDispatchTriggers(true)) {
+
+			DispatchTaskClusterMode dispatchTaskClusterMode =
+				DispatchTaskClusterMode.valueOf(
+					dispatchTrigger.getDispatchTaskClusterMode());
+
+			if (!_isSchedulable(dispatchTaskClusterMode)) {
+				continue;
+			}
 
 			_dispatchTriggerHelper.deleteSchedulerJob(
 				dispatchTrigger, dispatchTaskClusterMode.getStorageType());
@@ -113,10 +122,29 @@ public class DispatchConfigurator {
 		_serviceRegistration.unregister();
 	}
 
+	private boolean _isSchedulable(
+		DispatchTaskClusterMode dispatchTaskClusterMode) {
+
+		if ((dispatchTaskClusterMode == DispatchTaskClusterMode.ALL_NODES) ||
+			(_clusterMasterExecutor.isMaster() &&
+			 ((dispatchTaskClusterMode ==
+				 DispatchTaskClusterMode.SINGLE_NODE_MEMORY_CLUSTERED) ||
+			  (dispatchTaskClusterMode ==
+				  DispatchTaskClusterMode.SINGLE_NODE_PERSISTED)))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final int _MAXIMUM_QUEUE_SIZE = 100;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DispatchConfigurator.class);
+
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private DestinationFactory _destinationFactory;

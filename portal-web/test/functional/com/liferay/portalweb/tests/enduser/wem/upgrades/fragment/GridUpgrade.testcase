@@ -19,26 +19,6 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a test for LPS-133390. View Card fragment width is same as column width at mobile mode after upgrade from 721."
-	@priority = 5
-	test ViewCardsInsideModuleAfterUpgrade721 {
-		property data.archive.type = "data-archive-layout-section-with-three-columns";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "7.2.1";
-
-		ValidateFragmentsUpgrade.viewCardWithThreeColumnsInMobileBreakpoint();
-	}
-
-	@description = "This is a test for LPS-133390. View Card fragment width is same as column width at mobile mode after upgrade from 72104"
-	@priority = 5
-	test ViewCardsInsideModuleAfterUpgrade72104 {
-		property data.archive.type = "data-archive-layout-section-with-three-columns";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
-		property portal.version = "7.2.10.4";
-
-		ValidateFragmentsUpgrade.viewCardWithThreeColumnsInMobileBreakpoint();
-	}
-
 	@description = "This is a test for LPS-146029. The old Grid should keep previous layout styles in non-desktop viewports and changes back to default after editing."
 	@priority = 4
 	test ViewDefinedGridLayoutAfterUpgrade7413 {

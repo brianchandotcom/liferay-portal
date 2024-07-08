@@ -20,7 +20,6 @@ import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -64,14 +63,12 @@ public class ObjectSQLProcessor {
 	}
 
 	private void _generateIndexesSQL() throws Exception {
-		DB db = DBManagerUtil.getDB();
-
 		DataSource dataSource = InfrastructureUtil.getDataSource();
 
 		try (Connection connection = dataSource.getConnection()) {
 			for (String tableName : _tableNames) {
 				for (IndexMetadata indexMetadata :
-						db.getIndexes(connection, tableName, null, false)) {
+						_db.getIndexes(connection, tableName, null, false)) {
 
 					_indexesSQLSB.append(indexMetadata.getCreateSQL(null));
 					_indexesSQLSB.append(StringPool.NEW_LINE);

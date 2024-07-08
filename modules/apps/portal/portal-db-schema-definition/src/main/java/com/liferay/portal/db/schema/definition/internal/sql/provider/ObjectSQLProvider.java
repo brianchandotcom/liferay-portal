@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db.schema.definition.internal.processor;
+package com.liferay.portal.db.schema.definition.internal.sql.provider;
 
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -38,9 +38,9 @@ import javax.sql.DataSource;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class ObjectSQLProcessor {
+public class ObjectSQLProvider implements SQLProvider {
 
-	public ObjectSQLProcessor(DB db) throws Exception {
+	public ObjectSQLProvider(DB db) throws Exception {
 		_db = db;
 
 		_appendSQL();

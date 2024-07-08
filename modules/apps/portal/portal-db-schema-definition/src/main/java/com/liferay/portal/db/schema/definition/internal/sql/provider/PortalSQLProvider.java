@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db.schema.definition.internal.processor;
+package com.liferay.portal.db.schema.definition.internal.sql.provider;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -24,12 +24,12 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class SQLFilesProcessor {
+public class PortalSQLProvider implements SQLProvider {
 
-	public SQLFilesProcessor(DBType dbType) throws Exception {
+	public PortalSQLProvider(DBType dbType) throws Exception {
 		_db = _getDB(dbType);
 
-		_objectSQLProcessor = new ObjectSQLProcessor(_db);
+		_objectSQLProcessor = new ObjectSQLProvider(_db);
 
 		_appendPortalSQL();
 
@@ -96,7 +96,7 @@ public class SQLFilesProcessor {
 
 	private final DB _db;
 	private final StringBundler _indexesSQLSB = new StringBundler();
-	private final ObjectSQLProcessor _objectSQLProcessor;
+	private final ObjectSQLProvider _objectSQLProcessor;
 	private final StringBundler _tablesSQLSB = new StringBundler();
 
 }

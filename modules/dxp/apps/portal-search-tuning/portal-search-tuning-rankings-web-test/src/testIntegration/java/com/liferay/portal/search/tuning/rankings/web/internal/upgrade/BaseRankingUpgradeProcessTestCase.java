@@ -9,7 +9,6 @@ import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.json.storage.model.JSONStorageEntry;
 import com.liferay.json.storage.service.JSONStorageEntryLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -37,12 +36,12 @@ public abstract class BaseRankingUpgradeProcessTestCase
 	extends BaseCTUpgradeProcessTestCase {
 
 	@BeforeClass
-	public static void setUp() throws PortalException {
-		_companyId = TestPropsValues.getCompanyId();
+	public static void setUp() throws Exception {
+		companyId = TestPropsValues.getCompanyId();
 		rankingClassNameId = classNameLocalService.getClassNameId(
 			Ranking.class);
-		_rankingIndexName = _rankingIndexNameBuilder.getRankingIndexName(
-			_companyId);
+		rankingIndexName = _rankingIndexNameBuilder.getRankingIndexName(
+			companyId);
 	}
 
 	@After
@@ -73,11 +72,8 @@ public abstract class BaseRankingUpgradeProcessTestCase
 	}
 
 	protected void addRanking(long classNameId, long classPK) {
-		String rankingDocumentId =
-			Ranking.class.getName() + "_PORTLET_" + classPK;
-
 		jsonStorageEntryLocalService.addJSONStorageEntries(
-			_companyId, classNameId, classPK,
+			companyId, classNameId, classPK,
 			JSONUtil.put(
 				"aliases", ""
 			).put(
@@ -87,7 +83,7 @@ public abstract class BaseRankingUpgradeProcessTestCase
 			).put(
 				"inactive", "false"
 			).put(
-				"indexName", _rankingIndexName
+				"indexName", rankingIndexName
 			).put(
 				"name", "test"
 			).put(
@@ -95,7 +91,8 @@ public abstract class BaseRankingUpgradeProcessTestCase
 			).put(
 				"queryString", "test"
 			).put(
-				"rankingDocumentId", rankingDocumentId
+				"rankingDocumentId",
+				Ranking.class.getName() + "_PORTLET_" + classPK
 			).put(
 				"sxpBlueprintExternalReferenceCode", ""
 			).toString());
@@ -131,16 +128,15 @@ public abstract class BaseRankingUpgradeProcessTestCase
 	@Inject
 	protected static ClassNameLocalService classNameLocalService;
 
+	protected static long companyId;
 	protected static long rankingClassNameId;
+	protected static RankingIndexName rankingIndexName;
 
 	@Inject
 	protected CounterLocalService counterLocalService;
 
 	@Inject
 	protected JSONStorageEntryLocalService jsonStorageEntryLocalService;
-
-	private static long _companyId;
-	private static RankingIndexName _rankingIndexName;
 
 	@Inject
 	private static RankingIndexNameBuilder _rankingIndexNameBuilder;

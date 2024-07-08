@@ -54,7 +54,7 @@ public class HttpUtil {
 
 		Path path;
 
-		try (CloseableHttpClient closeableHttpClient = _getHttpClient(
+		try (CloseableHttpClient closeableHttpClient = _getCloseableHttpClient(
 				uri, userName, password, connectionTimeout)) {
 
 			path = _downloadFile(closeableHttpClient, uri, cacheDirPath);
@@ -171,7 +171,7 @@ public class HttpUtil {
 		return path;
 	}
 
-	private static CloseableHttpClient _getHttpClient(
+	private static CloseableHttpClient _getCloseableHttpClient(
 		URI uri, String userName, String password, int connectionTimeout) {
 
 		HttpClientBuilder httpClientBuilder = _getHttpClientBuilder(

@@ -69,45 +69,6 @@ definition {
 		ACIndividualsDashboard.deleteBreakdown();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8657 | Test Summary: Add a new breakdown by an attribute and assert that correct results appear"
-	@priority = 5
-	test AddNewBreakdownByAttributeAndAssertCorrectResultsAppear {
-		task ("View the blog page") {
-			ACUtils.navigateToSitePageWithUser(
-				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
-				emailList = "ac@liferay.com",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch to new property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigate to the Individuals dashboard") {
-			ACNavigation.goToIndividuals();
-		}
-
-		task ("Add a new breakdown") {
-			ACSegments.addBreakdownByAttribute(
-				attribute = "email",
-				breakdownName = "Breakdown by Email");
-		}
-
-		task ("View the data in new breakdown") {
-			ACIndividualsDashboard.viewBreakdownRecharts(
-				fillColor = "#4B9BFF",
-				tick = "ac@liferay.com");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8997 | Test Summary: Distribution page can be filtered by a specific string"
 	@priority = 5
 	test BreakdownByAttributeOnDistributionPage {

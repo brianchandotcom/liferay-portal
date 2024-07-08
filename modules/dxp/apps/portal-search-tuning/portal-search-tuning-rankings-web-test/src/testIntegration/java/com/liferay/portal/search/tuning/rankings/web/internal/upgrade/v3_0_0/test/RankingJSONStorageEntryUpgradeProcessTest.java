@@ -8,8 +8,12 @@ package com.liferay.portal.search.tuning.rankings.web.internal.upgrade.v3_0_0.te
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
+import com.liferay.portal.search.tuning.rankings.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.upgrade.BaseRankingUpgradeProcessTestCase;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -52,6 +56,13 @@ public class RankingJSONStorageEntryUpgradeProcessTest
 		Assert.assertEquals(
 			ResultRankingsConstants.STATUS_ACTIVE,
 			rankingJSONObject.getString("status"));
+
+		_indexReindexer.reindex(companyId);
+
+		Assert.assertNotNull(
+			_rankingIndexReader.fetch(
+				Ranking.class.getName() + "_PORTLET_" + classPK,
+				rankingIndexName));
 	}
 
 	@Override
@@ -59,5 +70,13 @@ public class RankingJSONStorageEntryUpgradeProcessTest
 		return "com.liferay.portal.search.tuning.rankings.web.internal." +
 			"upgrade.v3_0_0.RankingJSONStorageEntryUpgradeProcess";
 	}
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReindexer))"
+	)
+	private IndexReindexer _indexReindexer;
+
+	@Inject
+	private RankingIndexReader _rankingIndexReader;
 
 }

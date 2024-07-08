@@ -25,3 +25,25 @@ export async function addBreakdownByAttribute({
     await waitForLoading(page);
 }
 
+export async function viewBreakdownRechartsData({
+    attributeValue,
+    maxCount,
+    page,
+}: {
+    attributeValue: string;
+    maxCount: number;
+    page: Page;
+}) {
+	const card = page.locator('.distribution-card-root');
+    const ticks = card.locator(
+        '.recharts-cartesian-axis.recharts-xAxis .recharts-layer.recharts-cartesian-axis-tick'
+    );
+
+    const ticksCount = await ticks.count();
+    const lastTick = ticks.nth(ticksCount - 1);
+
+    const lastTickValue = await lastTick.textContent();
+
+    expect(card.getByText(attributeValue)).toBeVisible();
+    expect(lastTickValue).toEqual(maxCount);
+}

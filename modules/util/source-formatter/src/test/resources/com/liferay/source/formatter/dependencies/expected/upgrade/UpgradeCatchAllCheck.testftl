@@ -6,3 +6,5 @@
 --%>
 
 ${themeDisplay.getScopeGroupId()}
+
+storageEngine = staticUtil["com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil"]

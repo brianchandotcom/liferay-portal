@@ -6,3 +6,5 @@
 --%>
 
 ${themeDisplay.getPortletGroupId()}
+
+storageEngine = serviceLocator.findService("com.liferay.dynamic.data.mapping.storage.StorageEngine")

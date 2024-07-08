@@ -64,7 +64,7 @@ public class ReleaseUtil {
 	}
 
 	public static void initialize(long maxAge) {
-		ArrayList<String> releasesMirrors = new ArrayList<>(
+		List<String> releasesMirrors = new ArrayList<>(
 			StringUtil.split(System.getenv("LIFERAY_RELEASES_MIRRORS")));
 
 		releasesMirrors.add("https://releases-cdn.liferay.com");

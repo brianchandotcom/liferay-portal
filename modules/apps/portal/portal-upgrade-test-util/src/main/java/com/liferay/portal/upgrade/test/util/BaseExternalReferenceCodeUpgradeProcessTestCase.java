@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
@@ -35,6 +37,8 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -85,13 +89,20 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 			ExternalReferenceCodeModel[] externalReferenceCodeModels =
 				addExternalReferenceCodeModels(tableName);
 
-			_prepareDatabaseForUpgradeProcess(
-				externalReferenceCodeModels, tableName);
+			List<IndexMetadata> indexMetadataList = _dropIndexes(tableName);
 
-			_runUpgrade();
+			try {
+				_prepareDatabaseForUpgradeProcess(
+					externalReferenceCodeModels, tableName);
 
-			_assertDatabaseAfterUpgradeProcess(
-				externalReferenceCodeModels, tableName);
+				_runUpgrade();
+
+				_assertDatabaseAfterUpgradeProcess(
+					externalReferenceCodeModels, tableName);
+			}
+			finally {
+				_addIndexes(indexMetadataList);
+			}
 		}
 	}
 
@@ -137,6 +148,16 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 
 	protected ServiceContext serviceContext;
 
+	private void _addIndexes(List<IndexMetadata> indexMetadataList)
+		throws Exception {
+
+		try (Connection connection = _dataSource.getConnection()) {
+			if (ListUtil.isNotEmpty(indexMetadataList)) {
+				_db.addIndexes(connection, indexMetadataList);
+			}
+		}
+	}
+
 	private void _assertDatabaseAfterUpgradeProcess(
 			ExternalReferenceCodeModel[] externalReferenceCodeModels,
 			String tableName)
@@ -179,6 +200,15 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertFalse(resultSet.next());
 			}
+		}
+	}
+
+	private List<IndexMetadata> _dropIndexes(String tableName)
+		throws Exception {
+
+		try (Connection connection = _dataSource.getConnection()) {
+			return _db.dropIndexes(
+				connection, tableName, "externalReferenceCode");
 		}
 	}
 

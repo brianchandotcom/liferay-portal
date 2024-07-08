@@ -78,7 +78,7 @@ public class ObjectSQLProcessor {
 		}
 	}
 
-	private void _appendRelationshipTables(ObjectDefinition objectDefinition)
+	private void _appendRelationshipTablesSQL(ObjectDefinition objectDefinition)
 		throws Exception {
 
 		List<ObjectRelationship> objectRelationships =
@@ -126,15 +126,15 @@ public class ObjectSQLProcessor {
 				WorkflowConstants.STATUS_APPROVED);
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			_appendTables(objectDefinition);
+			_appendTablesSQL(objectDefinition);
 
-			_appendRelationshipTables(objectDefinition);
+			_appendRelationshipTablesSQL(objectDefinition);
 		}
 
 		_appendIndexesSQL();
 	}
 
-	private void _appendTables(ObjectDefinition objectDefinition)
+	private void _appendTablesSQL(ObjectDefinition objectDefinition)
 		throws Exception {
 
 		DynamicObjectDefinitionLocalizationTable

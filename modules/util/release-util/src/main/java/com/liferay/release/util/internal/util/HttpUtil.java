@@ -77,13 +77,11 @@ public class HttpUtil {
 			CloseableHttpClient closeableHttpClient, URI uri, Path cacheDirPath)
 		throws Exception {
 
-		HttpHead httpHead = new HttpHead(uri);
-
-		HttpContext httpContext = new BasicHttpContext();
-
 		String fileName = null;
-
 		Date lastModifiedDate = new Date();
+
+		HttpHead httpHead = new HttpHead(uri);
+		HttpContext httpContext = new BasicHttpContext();
 
 		try (CloseableHttpResponse closeableHttpResponse =
 				closeableHttpClient.execute(httpHead, httpContext)) {

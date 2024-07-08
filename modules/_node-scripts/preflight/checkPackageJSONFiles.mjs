@@ -49,10 +49,13 @@ export async function checkPackageJSONFiles(all) {
 
 	packages = packages.filter((packagePath) => {
 
-		// Ignore root level package.json
+		// Ignore root level package.json and _node-scripts/package.json
 
-		if (packagePath === 'package.json') {
-			return true;
+		if (
+			packagePath.endsWith('modules/package.json') ||
+			packagePath.endsWith('modules/_node-scripts/package.json')
+		) {
+			return false;
 		}
 
 		return !fs.existsSync(

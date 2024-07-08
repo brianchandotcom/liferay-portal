@@ -34,6 +34,10 @@ export class DiagramViewPage {
 		await this.sourceViewButton.click();
 	}
 
+	async publishWorkflowDefinition() {
+		await this.publishWorkflowDefinitionButton.click();
+	}
+
 	async saveWorkflowDefinition() {
 		await this.saveWorkflowDefinitionButton.click();
 	}

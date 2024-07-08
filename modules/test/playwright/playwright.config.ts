@@ -46,6 +46,7 @@ import {config as portalSearchAdminWebConfig} from './tests/portal-search-admin-
 import {config as portalSearchWebConfig} from './tests/portal-search-web/config';
 import {config as portalSecurityScriptManagementWebConfig} from './tests/portal-security-script-management-web/config';
 import {config as portalWorkflowKaleoDesignerWebConfig} from './tests/portal-workflow-kaleo-designer-web/config';
+import {config as portalWorkflowTaskWebConfig} from './tests/portal-workflow-task-web/config';
 import {config as portletConfigurationWebConfig} from './tests/portlet-configuration-web/config';
 import {config as productNavigationProductMenuWeb} from './tests/product-navigation-product-menu-web/config';
 import {config as productNavigationUserPersonalBarWebConfig} from './tests/product-navigation-user-personal-bar-web/config';
@@ -61,7 +62,6 @@ import {config as wikiWebConfig} from './tests/wiki-web/config';
 import {config as commerceWorkspaceConfig} from './tests/workspaces/liferay-workspace-commerce/config';
 import {config as jethr0Config} from './tests/workspaces/liferay-workspace-jethr0/config';
 import {config as marketplaceConfig} from './tests/workspaces/liferay-workspace-marketplace/config';
-
 const setupProjects = [wemSiteSetup, wemSiteTeardown];
 
 export default defineConfig({
@@ -113,6 +113,7 @@ export default defineConfig({
 		portalSearchWebConfig,
 		portalSecurityScriptManagementWebConfig,
 		portalWorkflowKaleoDesignerWebConfig,
+		portalWorkflowTaskWebConfig,
 		portletConfigurationWebConfig,
 		productNavigationProductMenuWeb,
 		productNavigationUserPersonalBarWebConfig,

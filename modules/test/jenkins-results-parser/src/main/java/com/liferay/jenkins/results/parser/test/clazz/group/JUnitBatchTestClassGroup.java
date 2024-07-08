@@ -715,8 +715,13 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected void setTestClasses(JUnitTestSelector jUnitTestSelector) {
+		List<JobProperty> includesJobProperties =
+			jUnitTestSelector.getIncludesJobProperties();
+
+		recordJobProperties(includesJobProperties);
+
 		List<PathMatcher> includesPathMatchers = getPathMatchers(
-			jUnitTestSelector.getIncludesJobProperties());
+			includesJobProperties);
 
 		if (includesPathMatchers.isEmpty()) {
 			return;
@@ -726,8 +731,14 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		List<PathMatcher> filterPathMatchers = getPathMatchers(
 			getFilterJobProperties());
+
+		List<JobProperty> excludesJobProperties =
+			jUnitTestSelector.getExcludesJobProperties();
+
 		List<PathMatcher> excludesPathMatchers = getPathMatchers(
-			jUnitTestSelector.getExcludesJobProperties());
+			excludesJobProperties);
+
+		recordJobProperties(excludesJobProperties);
 
 		BatchTestClassGroup batchTestClassGroup = this;
 

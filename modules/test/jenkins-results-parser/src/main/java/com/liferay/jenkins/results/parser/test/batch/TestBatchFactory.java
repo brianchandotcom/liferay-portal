@@ -50,6 +50,8 @@ public class TestBatchFactory {
 
 				jUnitTestSelector.setTestBatch(jUnitTestBatch);
 
+				jUnitTestBatch.setTestSelector(jUnitTestSelector);
+
 				return jUnitTestBatch;
 			}
 

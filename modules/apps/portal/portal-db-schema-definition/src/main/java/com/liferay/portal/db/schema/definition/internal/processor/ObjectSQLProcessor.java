@@ -57,9 +57,10 @@ public class ObjectSQLProcessor {
 	private void _appendTableSQL(String sql, String tableName)
 		throws Exception {
 
+		_tableNames.add(tableName);
+
 		_tablesSQLSB.append(_db.buildSQL(sql));
 		_tablesSQLSB.append(StringPool.NEW_LINE);
-		_tableNames.add(tableName);
 	}
 
 	private void _generateIndexesSQL() throws Exception {

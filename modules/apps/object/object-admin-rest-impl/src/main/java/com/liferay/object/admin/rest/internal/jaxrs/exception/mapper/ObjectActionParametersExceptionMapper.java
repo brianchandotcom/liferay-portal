@@ -41,10 +41,15 @@ public class ObjectActionParametersExceptionMapper
 	protected Problem getProblem(
 		ObjectActionParametersException objectActionParametersException) {
 
+		String detail = objectActionParametersException.getMessage();
+
+		if (detail == null) {
+			detail = String.valueOf(
+				_toJSONArray(objectActionParametersException.getMessageKeys()));
+		}
+
 		return new Problem(
-			String.valueOf(
-				_toJSONArray(objectActionParametersException.getMessageKeys())),
-			Response.Status.BAD_REQUEST, null,
+			detail, Response.Status.BAD_REQUEST, null,
 			ObjectActionParametersException.class.getName());
 	}
 

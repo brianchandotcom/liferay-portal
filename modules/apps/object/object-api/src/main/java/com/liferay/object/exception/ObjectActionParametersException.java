@@ -18,10 +18,14 @@ public class ObjectActionParametersException extends PortalException {
 		_messageKeys = messageKeys;
 	}
 
+	public ObjectActionParametersException(String msg) {
+		super(msg);
+	}
+
 	public Map<String, Object> getMessageKeys() {
 		return _messageKeys;
 	}
 
-	private final Map<String, Object> _messageKeys;
+	private Map<String, Object> _messageKeys;
 
 }

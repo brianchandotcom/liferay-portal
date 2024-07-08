@@ -6,6 +6,7 @@
 import {Page} from '@playwright/test';
 
 import {faroConfig} from '../faro.config';
+import {waitForLoading} from './loading';
 
 export async function navigateTo({
 	page,
@@ -15,6 +16,8 @@ export async function navigateTo({
 	pageName: string;
 }) {
 	await page.getByRole('link', {name: pageName}).first().click();
+
+	await waitForLoading(page);
 }
 
 export async function navigateToACWorkspace({

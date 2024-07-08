@@ -351,4 +351,38 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 
 		return this.patch(url, data);
 	}
+
+	async updateDataSetSelectionFilter({
+		erc,
+		fieldName,
+		include,
+		itemKey,
+		itemLabel,
+		label_i18n,
+		multiple,
+		preselectedValues,
+	}: {
+		erc: string;
+		fieldName?: string;
+		include?: boolean;
+		itemKey?: string;
+		itemLabel?: string;
+		label_i18n?: {[key: string]: string};
+		multiple?: boolean;
+		preselectedValues?: string;
+	}) {
+		const url = `${this.baseUrl}data-set-manager/selection-filters/by-external-reference-code/${erc}`;
+
+		const data = {
+			fieldName,
+			include,
+			itemKey,
+			itemLabel,
+			label_i18n,
+			multiple,
+			preselectedValues
+		};
+
+		return this.patch(url, data);
+	}
 }

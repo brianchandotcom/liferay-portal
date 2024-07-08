@@ -65,7 +65,7 @@ public class LiferayWorkspaceNodePlugin implements Plugin<Project> {
 
 		File indexJsonFile = new File(nodeCacheDir, "index.json");
 
-		_nodeInfos = ResourceUtil.readJson(
+		_nodeInfos = ResourceUtil.readJSON(
 			NodeInfos.class,
 			ResourceUtil.getLocalFileResolver(
 				indexJsonFile, maxAge, ChronoUnit.DAYS),

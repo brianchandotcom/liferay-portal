@@ -43,14 +43,14 @@ public class ReleaseProvider {
 
 		File releasesJsonFile = new File(_cacheDir, "releases.json");
 
-		ReleaseEntryList releaseEntries = ResourceUtil.readJson(
+		ReleaseEntryList releaseEntries = ResourceUtil.readJSON(
 			ReleaseEntryList.class,
 			ResourceUtil.getLocalFileResolver(
 				releasesJsonFile, maxAge, ChronoUnit.DAYS));
 
 		if (releaseEntries == null) {
 			for (String releasesMirror : _releasesMirrors) {
-				releaseEntries = ResourceUtil.readJson(
+				releaseEntries = ResourceUtil.readJSON(
 					ReleaseEntryList.class,
 					ResourceUtil.getURLResolver(
 						cacheDir, releasesMirror + "/releases.json"));
@@ -62,7 +62,7 @@ public class ReleaseProvider {
 		}
 
 		if (releaseEntries == null) {
-			releaseEntries = ResourceUtil.readJson(
+			releaseEntries = ResourceUtil.readJSON(
 				ReleaseEntryList.class,
 				ResourceUtil.getLocalFileResolver(releasesJsonFile));
 
@@ -82,7 +82,7 @@ public class ReleaseProvider {
 			ResourceUtil.Resolver classLoaderResolver =
 				ResourceUtil.getClassLoaderResolver("/releases.json");
 
-			releaseEntries = ResourceUtil.readJson(
+			releaseEntries = ResourceUtil.readJSON(
 				ReleaseEntryList.class, classLoaderResolver);
 
 			try (InputStream inputStream = classLoaderResolver.resolve()) {

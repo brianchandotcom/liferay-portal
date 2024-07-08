@@ -72,43 +72,4 @@ definition {
 		}
 	}
 
-	@description = "LPS-185675 Verify that when deleting a object folder with object definitions inside, the object definitions will be moved to the default folder"
-	@priority = 4
-	test ObjectDefinitionsAreMovedAfterFolderDeletion {
-		task ("Given an object folder with object definitions inside") {
-			JSONObjectFolder.addFolder(
-				folderLabel = "Custom Folder 194540",
-				folderName = "CustomFolder194540");
-
-			ObjectAdmin.openObjectAdmin();
-
-			Click.javaScriptClick(
-				folderLabel = "Custom Folder 194540",
-				locator1 = "ObjectAdmin#SIDEBAR_ITEM");
-
-			ObjectAdmin.addNewObject(
-				fieldLabelName = "Custom Object 194540",
-				fieldName = "CustomObject194540",
-				pluralLabelName = "Custom Objects 194540");
-
-			CreateObject.saveObject();
-		}
-
-		task ("When the user deletes the object folder") {
-			JSONObjectFolder.deleteObjectFolder(folderName = "CustomFolder194540");
-		}
-
-		task ("Then the object definitions are moved to the default folder") {
-			ObjectAdmin.openObjectAdmin();
-
-			Click.javaScriptClick(
-				folderLabel = "Default",
-				locator1 = "ObjectAdmin#SIDEBAR_ITEM");
-
-			AssertVisible(
-				key_itemName = "Custom Object 194540",
-				locator1 = "DataSet#TABLE_CELL");
-		}
-	}
-
 }

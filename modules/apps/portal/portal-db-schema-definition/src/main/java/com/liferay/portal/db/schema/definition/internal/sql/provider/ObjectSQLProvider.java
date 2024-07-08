@@ -20,6 +20,7 @@ import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -57,10 +58,13 @@ public class ObjectSQLProvider implements SQLProvider {
 	private void _appendIndexesSQL() throws Exception {
 		DataSource dataSource = InfrastructureUtil.getDataSource();
 
+		DB sourceDB = DBManagerUtil.getDB();
+
 		try (Connection connection = dataSource.getConnection()) {
 			for (String tableName : _tableNames) {
 				for (IndexMetadata indexMetadata :
-						_db.getIndexes(connection, tableName, null, false)) {
+						sourceDB.getIndexes(
+							connection, tableName, null, false)) {
 
 					_indexesSQLSB.append(indexMetadata.getCreateSQL(null));
 					_indexesSQLSB.append(StringPool.NEW_LINE);

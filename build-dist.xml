@@ -1721,11 +1721,7 @@ closeTemplate()
 
 				<local name="app.server.weblogic.java.options" />
 
-				<condition
-					else="${app.server.weblogic.jdk.java.options} ${app.server.weblogic.jvm.args} ${app.server.weblogic.jvm.mem}"
-					property="app.server.weblogic.java.options"
-					value="${app.server.weblogic.jvm.args} ${app.server.weblogic.jvm.mem}"
-				>
+				<condition else="${app.server.weblogic.jdk.java.options} ${app.server.weblogic.jvm.args} ${app.server.weblogic.jvm.mem}" property="app.server.weblogic.java.options" value="${app.server.weblogic.jvm.args} ${app.server.weblogic.jvm.mem}">
 					<isset property="env.JENKINS_HOME" />
 				</condition>
 

@@ -4,6 +4,7 @@
  */
 
 type Props = {
+	cssClasses?: string[];
 	fragmentConfig?: Record<string, any>;
 	fragmentFields?: FragmentField[];
 	id: string;
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export default function getFragmentDefinition({
+	cssClasses = [],
 	fragmentConfig = {},
 	fragmentFields,
 	id,
@@ -20,6 +22,7 @@ export default function getFragmentDefinition({
 }: Props): PageElement {
 	return {
 		definition: {
+			cssClasses,
 			fragment: {
 				key,
 			},

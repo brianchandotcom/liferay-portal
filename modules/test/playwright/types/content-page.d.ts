@@ -71,6 +71,7 @@ type PageElement = {
 	definition?: {
 		collectionConfig?: CollectionConfig;
 		collectionViewports?: Array<CollectionViewport>;
+		cssClasses?: string[];
 		formConfig?: FormConfig;
 		fragment?: {
 			key: string;

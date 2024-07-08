@@ -34,6 +34,10 @@ public class TestBatchFactory {
 					batchName, poshiTestSelector);
 
 				poshiTestSelector.setTestBatch(poshiTestBatch);
+
+				poshiTestBatch.setTestSelector(poshiTestSelector);
+
+				return poshiTestBatch;
 			}
 
 			if (batchName.startsWith("integration") ||

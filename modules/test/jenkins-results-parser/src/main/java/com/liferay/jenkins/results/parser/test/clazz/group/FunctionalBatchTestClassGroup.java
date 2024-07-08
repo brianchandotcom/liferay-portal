@@ -12,6 +12,8 @@ import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalHotfixReleaseJob;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.test.batch.PoshiTestBatch;
+import com.liferay.jenkins.results.parser.test.batch.PoshiTestSelector;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassBalancedListSplitter;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
@@ -173,6 +175,23 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		_setTestBatchRunPropertyQueries();
+
+		setAxisTestClassGroups();
+
+		setSegmentTestClassGroups();
+	}
+
+	protected FunctionalBatchTestClassGroup(
+		String batchName, PortalTestClassJob portalTestClassJob,
+		PoshiTestBatch poshiTestBatch) {
+
+		super(batchName, portalTestClassJob);
+
+		if (ignore()) {
+			return;
+		}
+
+		_setTestBatchRunPropertyQueries(poshiTestBatch.getTestSelector());
 
 		setAxisTestClassGroups();
 
@@ -730,6 +749,21 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			_testBatchRunPropertyQueries.put(
 				testBaseDir, testBatchRunPropertyQuery);
 		}
+	}
+
+	private void _setTestBatchRunPropertyQueries(
+		PoshiTestSelector poshiTestSelector) {
+
+		recordJobProperties(poshiTestSelector.getPoshiJobProperties());
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			portalTestClassJob.getPortalGitWorkingDirectory();
+
+		_testBatchRunPropertyQueries.put(
+			new File(
+				portalGitWorkingDirectory.getWorkingDirectory(),
+				"portal-web/test/functional/portalweb"),
+			poshiTestSelector.getPoshiQuery());
 	}
 
 	private static List<File> _modifiedFiles;

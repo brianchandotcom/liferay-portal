@@ -7,20 +7,27 @@ const path = require('path');
 
 module.exports = {
 	customBuild: {
-		bundle: true,
-		entryNames: 'index',
-		entryPoints: [
-			path.resolve(
-				'src',
-				'main',
-				'resources',
-				'META-INF',
-				'resources',
-				'svg4everybody.js'
+		esbuild: {
+			bundle: true,
+			entryNames: 'index',
+			entryPoints: [
+				path.resolve(
+					'src',
+					'main',
+					'resources',
+					'META-INF',
+					'resources',
+					'svg4everybody.js'
+				),
+			],
+			outdir: path.resolve(
+				'build',
+				'node',
+				'packageRunBuild',
+				'resources'
 			),
-		],
-		outdir: path.resolve('build', 'node', 'packageRunBuild', 'resources'),
-		sourcemap: true,
-		target: ['es2020'],
+			sourcemap: true,
+			target: ['es2020'],
+		},
 	},
 };

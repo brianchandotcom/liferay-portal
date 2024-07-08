@@ -34,6 +34,7 @@ import {
 import {CardSelectors, SegmentConditions} from './utils/selectors';
 import {changeTimeFilter} from './utils/time-filter';
 import {expectNotToBeVisible, expectToBeVisible} from './utils/utils';
+import {Nanites, runNanites} from './utils/nanites';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -187,10 +188,12 @@ test('Check that the Dynamic Segment does not continue to appear in the audience
 		await saveSegment(page);
 	});
 
-	await test.step('Run the Segment Nanite ', async () => {
-
-		// Wait for LPD-29615
-
+	await test.step('Run the Segment Nanite', async () => {
+		await runNanites({
+			apiHelpers,
+			naniteNames: [Nanites.UpdateMembershipsNanite],
+			page,
+		});
 	});
 
 	await test.step('Go to Sites > Go to Pages Tab', async () => {

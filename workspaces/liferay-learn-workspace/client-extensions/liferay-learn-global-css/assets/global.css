@@ -980,7 +980,7 @@ pre[class*='language-'] {
 			}
 		}
 
-		.selected a {
+		.selected {
 			background-color: var(--color-action-primary-active-20, #e6edfb);
 			color: var(--color-action-primary-active, #004ad7);
 		}

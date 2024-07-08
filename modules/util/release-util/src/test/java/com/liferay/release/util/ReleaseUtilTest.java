@@ -54,7 +54,6 @@ public class ReleaseUtilTest extends ReleaseUtil {
 			"targetPlatformVersion value",
 			getFromReleaseEntry(
 				"FIRST", ReleaseEntry::getTargetPlatformVersion));
-
 		Assert.assertNull(
 			getFromReleaseEntry(
 				"THIRD", ReleaseEntry::getTargetPlatformVersion));
@@ -86,8 +85,6 @@ public class ReleaseUtilTest extends ReleaseUtil {
 	@Test
 	public void testGetReleaseEntry() throws Exception {
 		ReleaseEntry releaseEntry1 = getReleaseEntry("FIRST");
-
-		Assert.assertNotNull(releaseEntry1);
 
 		Assert.assertEquals(
 			"appServerTomcatVersion value",
@@ -127,8 +124,6 @@ public class ReleaseUtilTest extends ReleaseUtil {
 		Assert.assertEquals("url value", releaseEntry1.getURL());
 
 		ReleaseEntry releaseEntry2 = getReleaseEntry("SECOND");
-
-		Assert.assertNotNull(releaseEntry2);
 
 		Assert.assertEquals(
 			"app.server.tomcat.version value",

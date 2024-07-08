@@ -89,7 +89,7 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 			ExternalReferenceCodeModel[] externalReferenceCodeModels =
 				addExternalReferenceCodeModels(tableName);
 
-			List<IndexMetadata> indexMetadataList = _dropIndexes(tableName);
+			List<IndexMetadata> indexMetadatas = _dropIndexes(tableName);
 
 			try {
 				_prepareDatabaseForUpgradeProcess(
@@ -101,7 +101,7 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 					externalReferenceCodeModels, tableName);
 			}
 			finally {
-				_addIndexes(indexMetadataList);
+				_addIndexes(indexMetadatas);
 			}
 		}
 	}
@@ -148,12 +148,12 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 
 	protected ServiceContext serviceContext;
 
-	private void _addIndexes(List<IndexMetadata> indexMetadataList)
+	private void _addIndexes(List<IndexMetadata> indexMetadatas)
 		throws Exception {
 
 		try (Connection connection = _dataSource.getConnection()) {
-			if (ListUtil.isNotEmpty(indexMetadataList)) {
-				_db.addIndexes(connection, indexMetadataList);
+			if (ListUtil.isNotEmpty(indexMetadatas)) {
+				_db.addIndexes(connection, indexMetadatas);
 			}
 		}
 	}
@@ -182,7 +182,7 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 		}
 	}
 
-	private void _assertSelectByExternalReferenceCodeIsEmpty(
+	private void _assertExternalReferenceCode(
 			String[] externalReferenceCodes, String tableName)
 		throws Exception {
 
@@ -221,10 +221,9 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 			externalReferenceCodeModels,
 			ExternalReferenceCodeModel::getExternalReferenceCode, String.class);
 
-		_setExternalReferenceCodeToNull(externalReferenceCodes, tableName);
+		_updateExternalReferenceCode(externalReferenceCodes, tableName);
 
-		_assertSelectByExternalReferenceCodeIsEmpty(
-			externalReferenceCodes, tableName);
+		_assertExternalReferenceCode(externalReferenceCodes, tableName);
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -236,18 +235,18 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 		_multiVMPool.clear();
 	}
 
-	private void _setExternalReferenceCodeToNull(
+	private void _updateExternalReferenceCode(
 			String[] externalReferenceCodes, String tableName)
 		throws Exception {
 
 		_db.runSQL(
 			StringBundler.concat(
 				"update ", tableName,
-				" set externalReferenceCode = NULL where ",
+				" set externalReferenceCode = null where ",
 				"externalReferenceCode in ('",
 				ArrayUtil.toString(
 					externalReferenceCodes, StringPool.BLANK, "', '"),
-				"') AND groupId =", group.getGroupId()));
+				"') and groupId =", group.getGroupId()));
 
 		_entityCache.clearCache();
 		_multiVMPool.clear();

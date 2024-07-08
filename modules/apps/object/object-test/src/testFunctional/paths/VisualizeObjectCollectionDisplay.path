@@ -62,7 +62,7 @@
 	</tr>
 	<tr>
 		<td>MAP_FRAGMENT</td>
-		<td>//select[@class='form-control']</td>
+		<td>//select[@class='form-control mb-2']</td>
 		<td></td>
 	</tr>
 	<tr>

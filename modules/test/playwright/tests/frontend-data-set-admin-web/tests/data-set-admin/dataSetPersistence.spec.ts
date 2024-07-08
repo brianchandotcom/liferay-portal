@@ -12,9 +12,7 @@ import {dataSetAdminApiHelpersTest} from '../../fixtures/dataSetAdminApiHelpersT
 import {
 	ACTION_DATA_SET_RELATIONSHIP,
 	CARDS_SECTION_DATA_SET_RELATIONSHIP,
-	CREATION_ACTION_DATA_SET_RELATIONSHIP,
 	DATE_FILTER_DATA_SET_RELATIONSHIP,
-	ITEM_ACTION_DATA_SET_RELATIONSHIP,
 	LIST_SECTION_DATA_SET_RELATIONSHIP,
 	SELECTION_FILTER_DATA_SET_RELATIONSHIP,
 	SORT_DATA_SET_RELATIONSHIP,
@@ -44,7 +42,6 @@ test.beforeEach(async ({dataSetAdminApiHelpers}) => {
 		erc: dataSetERC,
 		label: dataSetLabel,
 	});
-
 });
 
 test.afterEach(async ({dataSetAdminApiHelpers}) => {
@@ -67,10 +64,12 @@ test('Ensure Root Model relationship constraints', async ({
 	};
 
 	await test.step('Try to add creation Data Set Action with no data set associated', async () => {
-		const result = await dataSetAdminApiHelpers.createDataSetCreationAction({
-			dataSet,
-			label_i18n: {en_US: 'Invalid dangling creation action'},
-		});
+		const result = await dataSetAdminApiHelpers.createDataSetCreationAction(
+			{
+				dataSet,
+				label_i18n: {en_US: 'Invalid dangling creation action'},
+			}
+		);
 
 		assertMissingField(result, ACTION_DATA_SET_RELATIONSHIP.id);
 	});
@@ -82,9 +81,6 @@ test('Ensure Root Model relationship constraints', async ({
 		});
 
 		assertMissingField(result, ACTION_DATA_SET_RELATIONSHIP.id);
-	});
-
-		assertValidationError(result);
 	});
 
 	await test.step('Try to add table sections with no data set associated', async () => {
@@ -143,5 +139,177 @@ test('Ensure Root Model relationship constraints', async ({
 		});
 
 		assertMissingField(result, SORT_DATA_SET_RELATIONSHIP.id);
+	});
+});
+
+test('Translatable system fields persistence', async ({
+	dataSetAdminApiHelpers,
+}) => {
+	dataSet.externalReferenceCode = dataSetERC;
+
+	const assertTranslations = (translatableFields: Object, model: any) => {
+		for (const [field, translations] of Object.entries(
+			translatableFields
+		)) {
+			for (const [locale, value] of Object.entries(translations)) {
+				expect(model[field][locale]).toBe(value);
+			}
+		}
+	};
+
+	await test.step('Save an item action with several, localized labels', async () => {
+		const translatableFields = {
+			confirmationMessage_i18n: {
+				en_US: 'Are you sure you want to execute this action?',
+				es_ES: '¿Está seguro de ejecutar esta acción?',
+			},
+			errorMessage_i18n: {
+				en_US: 'Action could not be executed',
+				es_ES: 'La acción no pudo ejecutarse',
+			},
+			label_i18n: {
+				en_US: 'Test item action',
+				es_ES: 'Prueba acción de item',
+			},
+			successMessage_i18n: {
+				en_US: 'Action was executed successfully',
+				es_ES: 'La acción se ejecutó con éxito',
+			},
+			title_i18n: {
+				en_US: 'Test_item_action',
+				es_ES: 'Prueba_acción_item',
+			},
+		};
+
+		const action = await dataSetAdminApiHelpers.createDataSetItemAction({
+			dataSet,
+			...translatableFields,
+		});
+
+		assertTranslations(
+			translatableFields,
+			await dataSetAdminApiHelpers.getDataSetAction(
+				action.externalReferenceCode
+			)
+		);
+	});
+
+	await test.step('Save a client extension filter with several, localized labels', async () => {
+		const translatableFields = {
+			label_i18n: {
+				en_US: 'Test client extension filter',
+				es_ES: 'Prueba de extensión de cliente tipo filtro',
+			},
+		};
+
+		const clientExtensionFilter =
+			await dataSetAdminApiHelpers.createDataSetClientExtensionFilter({
+				dataSet,
+				fieldName: 'description',
+				filterClientExtensionERC: 'erc',
+				...translatableFields,
+			});
+
+		assertTranslations(
+			translatableFields,
+			await dataSetAdminApiHelpers.getDataSetClientExtensionFilter(
+				clientExtensionFilter.externalReferenceCode
+			)
+		);
+	});
+
+	await test.step('Save a selection filter with several, localized labels', async () => {
+		const translatableFields = {
+			label_i18n: {
+				en_US: 'Test selection filter',
+				es_ES: 'Prueba filtro de selección',
+			},
+		};
+
+		const selectionFilter =
+			await dataSetAdminApiHelpers.createDataSetSelectionFilter({
+				dataSet,
+				fieldName: 'description',
+				...translatableFields,
+				source: '',
+				sourceType: '',
+			});
+
+		assertTranslations(
+			translatableFields,
+			await dataSetAdminApiHelpers.getDataSetSelectionFilter(
+				selectionFilter.externalReferenceCode
+			)
+		);
+	});
+
+	await test.step('Save a date filter with several, localized labels', async () => {
+		const translatableFields = {
+			label_i18n: {
+				en_US: 'Test date filter',
+				es_ES: 'Prueba filtro de fecha',
+			},
+		};
+
+		const dateFilter = await dataSetAdminApiHelpers.createDataSetDateFilter(
+			{
+				dataSet,
+				fieldName: 'description',
+				...translatableFields,
+				type: 'date',
+			}
+		);
+
+		assertTranslations(
+			translatableFields,
+			await dataSetAdminApiHelpers.getDataSetDateFilter(
+				dateFilter.externalReferenceCode
+			)
+		);
+	});
+
+	await test.step('Save a sort with several, localized labels', async () => {
+		const translatableFields = {
+			label_i18n: {
+				en_US: 'Test sort',
+				es_ES: 'Prueba de ordenación',
+			},
+		};
+
+		const sort = await dataSetAdminApiHelpers.createDataSetSort({
+			dataSet,
+			fieldName: 'description',
+			...translatableFields,
+		});
+
+		assertTranslations(
+			translatableFields,
+			await dataSetAdminApiHelpers.getDataSetSort(
+				sort.externalReferenceCode
+			)
+		);
+	});
+
+	await test.step('Save a table section with several, localized labels', async () => {
+		const translatableFields = {
+			label_i18n: {
+				en_US: 'Test table section',
+				es_ES: 'Prueba sección de tabla',
+			},
+		};
+
+		const tableSection =
+			await dataSetAdminApiHelpers.createDataSetTableSection({
+				dataSet,
+				fieldName: 'description',
+				...translatableFields,
+			});
+
+		assertTranslations(
+			translatableFields,
+			await dataSetAdminApiHelpers.getDataSetTableSection(
+				tableSection.externalReferenceCode
+			)
+		);
 	});
 });

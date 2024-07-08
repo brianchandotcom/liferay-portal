@@ -7,7 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../../helpers/ApiHelpers';
 import {ApplicationsMenuPage} from '../../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
-import {DEFAULT_LABEL} from '../../../utils/constants';
+import {DEFAULT_LABEL} from '../../../utils/dataSetManagerConstants';
 
 export class DataSetsPage {
 	readonly apiHelpers: ApiHelpers;

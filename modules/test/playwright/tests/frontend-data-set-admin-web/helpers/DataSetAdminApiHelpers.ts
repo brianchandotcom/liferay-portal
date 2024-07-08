@@ -8,10 +8,9 @@ import {liferayConfig} from '../../../liferay.config';
 import {
 	ACTION_DATA_SET_RELATIONSHIP,
 	CARDS_SECTION_DATA_SET_RELATIONSHIP,
-	CREATION_ACTION_DATA_SET_RELATIONSHIP,
+	CLIENT_EXTENSION_FILTER_DATA_SET_RELATIONSHIP,
 	DATE_FILTER_DATA_SET_RELATIONSHIP,
 	DEFAULT_LABEL,
-	ITEM_ACTION_DATA_SET_RELATIONSHIP,
 	LIST_SECTION_DATA_SET_RELATIONSHIP,
 	SELECTION_FILTER_DATA_SET_RELATIONSHIP,
 	SORT_DATA_SET_RELATIONSHIP,
@@ -89,6 +88,30 @@ export class DataSetAdminApiHelpers extends ApiHelpers {
 		return this.post(url, {data});
 	}
 
+	async createDataSetClientExtensionFilter({
+		dataSet,
+		fieldName,
+		filterClientExtensionERC,
+		label_i18n = {en_US: 'Title'},
+	}: {
+		dataSet: any;
+		fieldName: string;
+		filterClientExtensionERC: string;
+		label_i18n?: {[key: string]: string};
+	}) {
+		const url = `${this.baseUrlPath}client-extension-filters`;
+
+		const data = {
+			[CLIENT_EXTENSION_FILTER_DATA_SET_RELATIONSHIP.erc]:
+				dataSet.externalReferenceCode,
+			fieldName,
+			filterClientExtensionERC,
+			label_i18n,
+		};
+
+		return this.post(url, {data});
+	}
+
 	async createDataSetCreationAction({
 		dataSet,
 		icon,
@@ -111,7 +134,6 @@ export class DataSetAdminApiHelpers extends ApiHelpers {
 		return this.postDataSetBaseAction({
 			[ACTION_DATA_SET_RELATIONSHIP.erc]: dataSet.externalReferenceCode,
 			context: 'creation',
-			name: 'creation', // todo remove
 			icon,
 			label_i18n,
 			modalSize,
@@ -254,11 +276,10 @@ export class DataSetAdminApiHelpers extends ApiHelpers {
 		url?: string;
 	}) {
 		return this.postDataSetBaseAction({
-			[ACTION_DATA_SET_RELATIONSHIP.id]: dataSet.externalReferenceCode,
+			[ACTION_DATA_SET_RELATIONSHIP.erc]: dataSet.externalReferenceCode,
 			confirmationMessage_i18n,
 			confirmationMessageType,
 			context: 'item',
-			name: 'item', // todo remove
 			errorMessage_i18n,
 			icon,
 			label_i18n,
@@ -325,6 +346,36 @@ export class DataSetAdminApiHelpers extends ApiHelpers {
 		const url = `${this.baseUrlPath}by-external-reference-code/${erc}`;
 
 		return this.delete(url);
+	}
+
+	async getDataSetClientExtensionFilter(erc: string) {
+		const endpointUrl = `${this.baseUrlPath}client-extension-filters/by-external-reference-code/${erc}`;
+
+		return this.get(endpointUrl);
+	}
+
+	async getDataSetDateFilter(erc: string) {
+		const endpointUrl = `${this.baseUrlPath}date-filters/by-external-reference-code/${erc}`;
+
+		return this.get(endpointUrl);
+	}
+
+	async getDataSetSelectionFilter(erc: string) {
+		const endpointUrl = `${this.baseUrlPath}selection-filters/by-external-reference-code/${erc}`;
+
+		return this.get(endpointUrl);
+	}
+
+	async getDataSetSort(erc: string) {
+		const endpointUrl = `${this.baseUrlPath}sorts/by-external-reference-code/${erc}`;
+
+		return this.get(endpointUrl);
+	}
+
+	async getDataSetTableSection(erc: string) {
+		const endpointUrl = `${this.baseUrlPath}table-sections/by-external-reference-code/${erc}`;
+
+		return this.get(endpointUrl);
 	}
 
 	async getDataSetAction(erc: string) {

@@ -9,12 +9,12 @@ import {VersionRow} from './VersionRow';
 
 interface RevisionHistoryProps {
 	version: number;
-	versions: WorkflowDefinitionVersions[];
+	versions: WorkflowDefinitionVersion[];
 }
 
 export function RevisionHistory({version, versions}: RevisionHistoryProps) {
 	const [workflowDefinitionVersions, setWorkflowDefinitionVersions] =
-		useState(versions);
+		useState(versions.slice(1));
 
 	const otherVersions = [];
 
@@ -24,11 +24,21 @@ export function RevisionHistory({version, versions}: RevisionHistoryProps) {
 		}
 	}
 
+	const showWorkflowDefinitionVersion = () => {
+		if (Liferay.FeatureFlags['LPD-29635']) {
+			return workflowDefinitionVersions.length + 1;
+		}
+
+		return version;
+	};
+
 	return (
 		<>
 			<div className="info-group">
 				<label>
-					{Liferay.Language.get('current-version')}: {version}
+					{Liferay.Language.get('current-version')}:{' '}
+
+					{showWorkflowDefinitionVersion()}
 				</label>
 
 				<div className="sheet-subtitle" />
@@ -41,6 +51,9 @@ export function RevisionHistory({version, versions}: RevisionHistoryProps) {
 								creatorName={creatorName}
 								dateCreated={dateCreated}
 								key={dateCreated}
+								setWorkflowDefinitionVersions={
+									setWorkflowDefinitionVersions
+								}
 								versionNumber={parseInt(versionNumber, 10)}
 							/>
 						)
@@ -50,6 +63,9 @@ export function RevisionHistory({version, versions}: RevisionHistoryProps) {
 							creatorName=""
 							dateCreated=""
 							key={index}
+							setWorkflowDefinitionVersions={
+								setWorkflowDefinitionVersions
+							}
 							versionNumber={versionNumber}
 						/>
 					))}

@@ -40,6 +40,12 @@ public abstract class BaseTestSelector implements TestSelector {
 		return _batchName;
 	}
 
+	public JobProperty getGlobalJobProperty(String basePropertyName) {
+		return JobPropertyFactory.newJobProperty(
+			basePropertyName, _testSuiteName, _batchName, _job,
+			RelevantRuleEngine.getBaseDir(), null, true);
+	}
+
 	public Job getJob() {
 		return _job;
 	}
@@ -56,6 +62,10 @@ public abstract class BaseTestSelector implements TestSelector {
 		return JenkinsResultsParserUtil.getProperty(
 			_properties, propertyName, _batchName, _relevantRuleName,
 			_testSuiteName);
+	}
+
+	public String getRelevantRuleName() {
+		return _relevantRuleName;
 	}
 
 	public TestBatch getTestBatch() {

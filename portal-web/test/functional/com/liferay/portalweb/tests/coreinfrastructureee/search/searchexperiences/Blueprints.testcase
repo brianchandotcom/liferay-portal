@@ -3373,6 +3373,10 @@ definition {
 
 		Button.click(button = "Seleccionar");
 
+		WaitForElementPresent(
+			key_blueprintTitle = "Título en Español",
+			locator1 = "Blueprints#BLUEPRINTS_OPTION_WIDGET_TITLE");
+
 		AssertTextEquals(
 			key_blueprintTitle = "Título en Español",
 			locator1 = "Blueprints#BLUEPRINTS_OPTION_WIDGET_TITLE",

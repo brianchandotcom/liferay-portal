@@ -155,6 +155,25 @@ paths:
                                     $ref: "#/components/schemas/PolymorphicSchema"
                                 type: array
             tags: ["PolymorphicSchema"]
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PolymorphicSchema"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PolymorphicSchema"
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PolymorphicSchema"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PolymorphicSchema"
+            tags: ["PolymorphicSchema"]
     /document/{documentId}:
         get:
             operationId: getDocumentForcePredictableOperationIdTest

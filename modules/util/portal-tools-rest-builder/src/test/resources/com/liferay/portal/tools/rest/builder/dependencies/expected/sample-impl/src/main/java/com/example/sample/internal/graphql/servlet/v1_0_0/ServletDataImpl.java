@@ -41,6 +41,9 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setPolymorphicSchemaResourceComponentServiceObjects(
+			_polymorphicSchemaResourceComponentServiceObjects);
+
 		Query.setDocumentResourceComponentServiceObjects(
 			_documentResourceComponentServiceObjects);
 		Query.setFolderResourceComponentServiceObjects(
@@ -86,6 +89,17 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#createPolymorphicSchema",
+						new ObjectValuePair<>(
+							PolymorphicSchemaResourceImpl.class,
+							"postPolymorphicSchema"));
+					put(
+						"mutation#createPolymorphicSchemaBatch",
+						new ObjectValuePair<>(
+							PolymorphicSchemaResourceImpl.class,
+							"postPolymorphicSchemaBatch"));
+
+					put(
 						"query#document",
 						new ObjectValuePair<>(
 							DocumentResourceImpl.class, "getDocument"));
@@ -115,16 +129,16 @@ public class ServletDataImpl implements ServletData {
 			};
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<PolymorphicSchemaResource>
+		_polymorphicSchemaResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DocumentResource>
 		_documentResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FolderResource>
 		_folderResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<PolymorphicSchemaResource>
-		_polymorphicSchemaResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TestResource>

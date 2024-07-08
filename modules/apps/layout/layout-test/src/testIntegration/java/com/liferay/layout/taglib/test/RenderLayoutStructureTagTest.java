@@ -669,6 +669,100 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	public void testRenderContainerWithBackgroundImageAndCustomPathContext()
+		throws Exception {
+
+		String pathContext = "/de";
+
+		PortalImpl portalImpl = new PortalImpl() {
+
+			@Override
+			public String getPathContext() {
+				return pathContext;
+			}
+
+		};
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(portalImpl);
+
+		try {
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				LayoutPageTemplateStructureLocalServiceUtil.
+					fetchLayoutPageTemplateStructure(
+						_group.getGroupId(), layout.getPlid());
+
+			LayoutStructure layoutStructure = LayoutStructure.of(
+				layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+			ContainerStyledLayoutStructureItem
+				containerStyledLayoutStructureItem =
+					(ContainerStyledLayoutStructureItem)
+						layoutStructure.addContainerStyledLayoutStructureItem(
+							layoutStructure.getMainItemId(), 0);
+
+			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+				FileUtil.getBytes(
+					RenderLayoutStructureTagTest.class,
+					"dependencies/liferay.jpg"),
+				null, null, null,
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
+
+			String url = _dlURLHelper.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+				false, false);
+
+			containerStyledLayoutStructureItem.updateItemConfig(
+				JSONUtil.put(
+					"styles",
+					JSONUtil.put(
+						"backgroundImage",
+						JSONUtil.put(
+							"classNameId",
+							_portal.getClassNameId(FileEntry.class)
+						).put(
+							"classPK", fileEntry.getFileEntryId()
+						).put(
+							"url", url
+						))));
+
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructureData(
+					_group.getGroupId(), layout.getPlid(),
+					_segmentsExperienceLocalService.
+						fetchDefaultSegmentsExperienceId(layout.getPlid()),
+					layoutStructure.toString());
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(layout);
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
+			RenderLayoutStructureTag renderLayoutStructureTag =
+				_getRenderLayoutStructureTagDefaultSegmentsExperience(
+					layout, mockHttpServletRequest, mockHttpServletResponse);
+
+			renderLayoutStructureTag.doTag(
+				mockHttpServletRequest, mockHttpServletResponse);
+
+			String content = mockHttpServletResponse.getContentAsString();
+
+			Assert.assertTrue(content.contains(url));
+			Assert.assertFalse(content.contains(pathContext + url));
+		}
+		finally {
+			portalUtil.setPortal(new PortalImpl());
+		}
+	}
+
+	@Test
 	public void testRenderEditionForm() throws Exception {
 		MockObject mockObject = new MockObject(RandomTestUtil.randomLong());
 
@@ -1011,100 +1105,6 @@ public class RenderLayoutStructureTagTest {
 				"<p>InputName:" + infoField.getName() + "</p>";
 
 			Assert.assertFalse(content.contains(expectedInfoFieldInput));
-		}
-	}
-
-	@Test
-	public void testRenderContainerWithBackgroundImageAndCustomPathContext()
-		throws Exception {
-
-		String pathContext = "/de";
-
-		PortalImpl portalImpl = new PortalImpl() {
-
-			@Override
-			public String getPathContext() {
-				return pathContext;
-			}
-
-		};
-
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(portalImpl);
-
-		try {
-			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				LayoutPageTemplateStructureLocalServiceUtil.
-					fetchLayoutPageTemplateStructure(
-						_group.getGroupId(), layout.getPlid());
-
-			LayoutStructure layoutStructure = LayoutStructure.of(
-				layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
-
-			ContainerStyledLayoutStructureItem
-				containerStyledLayoutStructureItem =
-					(ContainerStyledLayoutStructureItem)
-						layoutStructure.addContainerStyledLayoutStructureItem(
-							layoutStructure.getMainItemId(), 0);
-
-			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-				FileUtil.getBytes(
-					RenderLayoutStructureTagTest.class,
-					"dependencies/liferay.jpg"),
-				null, null, null,
-				ServiceContextTestUtil.getServiceContext(
-					_group, TestPropsValues.getUserId()));
-
-			String url = _dlURLHelper.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false, false);
-
-			containerStyledLayoutStructureItem.updateItemConfig(
-				JSONUtil.put(
-					"styles",
-					JSONUtil.put(
-						"backgroundImage",
-						JSONUtil.put(
-							"classNameId",
-							_portal.getClassNameId(FileEntry.class)
-						).put(
-							"classPK", fileEntry.getFileEntryId()
-						).put(
-							"url", url
-						))));
-
-			_layoutPageTemplateStructureLocalService.
-				updateLayoutPageTemplateStructureData(
-					_group.getGroupId(), layout.getPlid(),
-					_segmentsExperienceLocalService.
-						fetchDefaultSegmentsExperienceId(layout.getPlid()),
-					layoutStructure.toString());
-
-			MockHttpServletRequest mockHttpServletRequest =
-				_getMockHttpServletRequest(layout);
-			MockHttpServletResponse mockHttpServletResponse =
-				new MockHttpServletResponse();
-
-			RenderLayoutStructureTag renderLayoutStructureTag =
-				_getRenderLayoutStructureTagDefaultSegmentsExperience(
-					layout, mockHttpServletRequest, mockHttpServletResponse);
-
-			renderLayoutStructureTag.doTag(
-				mockHttpServletRequest, mockHttpServletResponse);
-
-			String content = mockHttpServletResponse.getContentAsString();
-
-			Assert.assertTrue(content.contains(url));
-			Assert.assertFalse(content.contains(pathContext + url));
-		}
-		finally {
-			portalUtil.setPortal(new PortalImpl());
 		}
 	}
 

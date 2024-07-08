@@ -6,6 +6,7 @@
 import {Page, expect} from '@playwright/test';
 
 import {waitForLoading} from './loading';
+import getRandomString from '../../../utils/getRandomString';
 
 export async function addBreakdownByAttribute({
 	attributeName,
@@ -36,7 +37,7 @@ export async function viewBreakdownRechartsData({
 	page,
 }: {
 	attributeValue: string;
-	maxCount: number;
+	maxCount: string;
 	page: Page;
 }) {
 	const card = page.locator('.distribution-card-root');

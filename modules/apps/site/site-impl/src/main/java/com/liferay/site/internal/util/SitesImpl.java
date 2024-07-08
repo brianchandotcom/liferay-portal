@@ -1140,6 +1140,9 @@ public class SitesImpl implements Sites {
 			importData);
 
 		parameterMap.put(
+			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
+			new String[] {String.valueOf(layoutSet.isPrivateLayout())});
+		parameterMap.put(
 			"anyFailedLayoutModifiedSinceLastMerge",
 			new String[] {
 				String.valueOf(
@@ -1158,10 +1161,6 @@ public class SitesImpl implements Sites {
 			new String[] {
 				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
 			});
-
-		parameterMap.put(
-			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
-			new String[] {String.valueOf(layoutSet.isPrivateLayout())});
 
 		User user = _userLocalService.getDefaultUser(layoutSet.getCompanyId());
 

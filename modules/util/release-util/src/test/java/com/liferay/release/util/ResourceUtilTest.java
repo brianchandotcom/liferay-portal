@@ -60,8 +60,12 @@ public class ResourceUtilTest extends ResourceUtil {
 
 	@Test
 	public void testGetClassLoaderResolver() throws Exception {
-		_testResolve(getClassLoaderResolver("/root.txt"));
-		_testResolve(getClassLoaderResolver(ResourceUtilTest.class, "foo.txt"));
+		_testResolve(
+			getClassLoaderResolver(
+				"/com/liferay/release/util/dependencies/foo.txt"));
+		_testResolve(
+			getClassLoaderResolver(
+				ResourceUtilTest.class, "dependencies/foo.txt"));
 
 		_testResolveThrows(
 			exception -> Assert.assertEquals(
@@ -147,14 +151,16 @@ public class ResourceUtilTest extends ResourceUtil {
 	public void testReadJSON() {
 		Model model = readJSON(
 			Model.class, _nullResolver,
-			getClassLoaderResolver("read-json.json"));
+			getClassLoaderResolver("dependencies/read-json.json"));
 
 		Assert.assertEquals("bar", model.getFoo());
 
 		Assert.assertNull(readJSON(Model.class, _nullResolver));
 
 		try {
-			readJSON(Model.class, getClassLoaderResolver("read-json-bad.json"));
+			readJSON(
+				Model.class,
+				getClassLoaderResolver("dependencies/read-json-bad.json"));
 
 			Assert.fail();
 		}
@@ -169,7 +175,7 @@ public class ResourceUtilTest extends ResourceUtil {
 	public void testReadProperties() {
 		Properties properties = readProperties(
 			_nullResolver,
-			getClassLoaderResolver("read-properties.properties"));
+			getClassLoaderResolver("dependencies/read-properties.properties"));
 
 		Assert.assertEquals("bar", properties.getProperty("foo"));
 
@@ -179,7 +185,8 @@ public class ResourceUtilTest extends ResourceUtil {
 	@Test
 	public void testReadString() {
 		String string = readString(
-			_nullResolver, getClassLoaderResolver("read-string.txt"));
+			_nullResolver,
+			getClassLoaderResolver("dependencies/read-string.txt"));
 
 		Assert.assertEquals("foo\nbar", string);
 

@@ -17,6 +17,15 @@
 		"to": "fetchCommerceCatalogByExternalReferenceCode(param#1#, param#0#)"
 	},
 	{
+		"from": "regex:serviceLocator[\\n\\s]*\\.[\\n\\s]*findService\\([\\n\\s]*\"com\\.liferay\\.dynamic\\.data\\.mapping\\.storage\\.StorageEngine\"\\)",
+		"issueKey": "LPD-7762",
+		"skipParametersValidation": true,
+		"to": "staticUtil[\"com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil\"]",
+		"validExtensions": [
+			"ftl"
+		]
+	},
+	{
 		"classNames": [
 			"AssetDisplayPageFriendlyURLProvider"
 		],

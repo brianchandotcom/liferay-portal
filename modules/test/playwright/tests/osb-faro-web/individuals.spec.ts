@@ -29,6 +29,7 @@ test('Add a new breakdown by an attribute and assert that correct results appear
 	apiHelpers,
 	page,
 }) => {
+	const individualName = 'ac';
 	const channelName = 'My Property - ' + getRandomString();
 	const {channel, project} = await createChannel({
 		apiHelpers,
@@ -44,7 +45,7 @@ test('Add a new breakdown by an attribute and assert that correct results appear
 		};
 	};
 
-	const individuals = [generateIndividual('ac')];
+	const individuals = [generateIndividual(individualName)];
 
 	await test.step('Create new Individual', async () => {
 		await createIndividuals({
@@ -110,7 +111,7 @@ test('Add a new breakdown by an attribute and assert that correct results appear
 
 	await test.step('Check if the correct results appear (email and maximum count)', async () => {
 		await viewBreakdownRechartsData({
-			attributeValue: 'test@liferay.com',
+			attributeValue: `${individualName}@liferay.com`,
 			maxCount: '1',
 			page,
 		});

@@ -5,8 +5,8 @@
 
 import {Page, expect} from '@playwright/test';
 
-import {waitForLoading} from './loading';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForLoading} from './loading';
 
 export async function addBreakdownByAttribute({
 	attributeName,
@@ -23,9 +23,7 @@ export async function addBreakdownByAttribute({
 		.click();
 
 	await page.getByLabel('Breakdown Name').click();
-	await page
-		.getByLabel('Breakdown Name')
-		.fill(`Breakdown by ${attributeName}`);
+	await page.getByLabel('Breakdown Name').fill(getRandomString());
 	await page.getByRole('button', {name: 'Save'}).click();
 
 	await waitForLoading(page);

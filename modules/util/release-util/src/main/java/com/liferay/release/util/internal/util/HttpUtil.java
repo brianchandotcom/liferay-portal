@@ -83,7 +83,7 @@ public class HttpUtil {
 
 		String fileName = null;
 
-		Date lastModifiedDate;
+		Date lastModifiedDate = new Date();
 
 		try (CloseableHttpResponse closeableHttpResponse =
 				closeableHttpClient.execute(httpHead, httpContext)) {
@@ -119,9 +119,6 @@ public class HttpUtil {
 			if (lastModifiedHeader != null) {
 				lastModifiedDate = DateUtils.parseDate(
 					lastModifiedHeader.getValue());
-			}
-			else {
-				lastModifiedDate = new Date();
 			}
 		}
 

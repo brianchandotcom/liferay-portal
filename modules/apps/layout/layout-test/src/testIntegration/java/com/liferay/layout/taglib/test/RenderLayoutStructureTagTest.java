@@ -1015,7 +1015,7 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
-	public void testRenderFragmentWithBackgroundImageAndCustomPathContext()
+	public void testRenderContainerWithBackgroundImageAndCustomPathContext()
 		throws Exception {
 
 		String pathContext = "/de";

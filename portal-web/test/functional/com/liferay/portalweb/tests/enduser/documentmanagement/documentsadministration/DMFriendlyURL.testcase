@@ -456,7 +456,7 @@ definition {
 		ContentPages.viewFragmentImage(
 			fragmentName = "image",
 			id = "image-square",
-			image = "document_1");
+			image = "Document_1");
 	}
 
 	@description = "This ensures that the friendlyURL can be used when a user accesses a document template."

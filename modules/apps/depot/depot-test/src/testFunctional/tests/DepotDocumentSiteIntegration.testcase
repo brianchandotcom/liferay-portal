@@ -967,7 +967,7 @@ definition {
 		ContentPages.viewFragmentImage(
 			fragmentName = "image",
 			id = "image-square",
-			image = "document_1");
+			image = "Document_1");
 	}
 
 	@description = "This ensures that a depot image in MG widget can be rendered correctly on a connected site after moving it to a folder."

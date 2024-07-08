@@ -105,6 +105,10 @@ function SegmentsExperimentsSidebar({
 		});
 
 	useEffect(() => {
+		if (!getSegmentsExperimentParameter) {
+			return;
+		}
+
 		const segmentsExperimentState = getSegmentsExperimentParameter(
 			'segmentsExperimentState'
 		);

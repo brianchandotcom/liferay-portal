@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getSegmentsExperimentAction} from '../../../src/main/resources/META-INF/resources/js/util/navigation.es';
+import {getSegmentsExperimentParameter} from '../../../src/main/resources/META-INF/resources/js/util/navigation.es';
 
-describe('getSegmentsExperimentAction', () => {
+describe('getSegmentsExperimentParameter', () => {
 	it('remove segmentsExperimentAction from URL and return it', () => {
 		const initialUrl =
 			'https://liferay.com/web/guest/experiment?segmentsExperimentKey=636029195608829519&segmentsExperimentAction=reviewAndRun';
@@ -16,7 +16,7 @@ describe('getSegmentsExperimentAction', () => {
 		delete window.history.replaceState;
 		window.history.replaceState = jest.fn();
 
-		const result = getSegmentsExperimentAction();
+		const result = getSegmentsExperimentParameter();
 
 		expect(window.history.replaceState).toHaveBeenCalledWith(
 			null,

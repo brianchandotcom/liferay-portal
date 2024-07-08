@@ -32,6 +32,7 @@ type TOrder = {
 	paymentStatus?: string;
 	paymentStatusInfo?: number;
 	shippingAddressId?: string;
+	shippingAmount?: number;
 };
 
 type TOrderItem = {
@@ -69,6 +70,12 @@ export class HeadlessCommerceAdminOrderApiHelper {
 	async deleteTerms(termsId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/terms/${termsId}`
+		);
+	}
+
+	async getOrder(orderId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/orders/${orderId}`
 		);
 	}
 

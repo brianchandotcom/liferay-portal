@@ -10,6 +10,7 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -108,4 +109,91 @@ test('LPD-27036 Cart shows decimal quantities', async ({
 			product.name['en_US']
 		)
 	).toHaveValue('1.22');
+});
+
+test('LPD-29864 Cart updates when order is open', async ({apiHelpers}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: 'Cart Site',
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: 'Cart Channel',
+		siteGroupId: site.id,
+	});
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+		name: 'Cart Catalog',
+	});
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: 'Product1'},
+		skus: [
+			{
+				cost: 0,
+				price: 10,
+				published: true,
+				purchasable: true,
+				sku: 'Sku' + getRandomInt(),
+			},
+		],
+	});
+
+	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+		.getProduct(product.productId)
+		.then((product) => {
+			return product.skus;
+		});
+
+	const sku = productSkus[0];
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'Cart Account',
+		type: 'person',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['test@liferay.com']
+	);
+
+	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+		{
+			accountId: account.id,
+			cartItems: [
+				{
+					quantity: 1,
+					skuId: sku.id,
+				},
+			],
+			currencyCode: 'USD',
+		},
+		channel.id
+	);
+
+	await apiHelpers.headlessCommerceAdminOrder.patchOrder(cart.id, {
+		shippingAmount: 10,
+	});
+
+	await apiHelpers.headlessCommerceDeliveryCart.patchCart(
+		{
+			accountId: account.id,
+			cartItems: [
+				{
+					quantity: 2,
+					skuId: sku.id,
+				},
+			],
+			currencyCode: 'USD',
+		},
+		cart.id
+	);
+
+	const order = await apiHelpers.headlessCommerceAdminOrder.getOrder(cart.id);
+
+	expect(order.total).toBe(30);
 });

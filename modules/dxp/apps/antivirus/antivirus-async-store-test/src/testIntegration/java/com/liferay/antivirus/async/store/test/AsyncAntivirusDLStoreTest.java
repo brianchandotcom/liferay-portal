@@ -467,7 +467,7 @@ public class AsyncAntivirusDLStoreTest {
 			() -> {
 				ServiceReference<?>[] serviceReferences =
 					_bundleContext.getServiceReferences(
-						DynamicMBean.class.toString(),
+						DynamicMBean.class.getName(),
 						"(component.name=" +
 							"com.liferay.antivirus.async.store.jmx." +
 								"AntivirusAsyncStatisticsManager)");

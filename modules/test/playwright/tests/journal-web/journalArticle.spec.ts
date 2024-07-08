@@ -259,15 +259,9 @@ autoSaveAsDraftTest(
 			'Untitled ' + structureName
 		);
 
-		await titlePlaceholder.click();
-
-		await page.waitForTimeout(200);
-
-		await titlePlaceholder.fill(title);
+		await fillAndClickOutside(page, titlePlaceholder, title);
 
 		await expect(changesSavedIndicator).toBeVisible();
-
-		await page.locator('body').click();
 
 		await fillAndClickOutside(page, localizableField, title);
 

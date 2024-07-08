@@ -51,11 +51,11 @@ public class ResourceUtilTest extends ResourceUtil {
 
 		Files.createFile(_oldFile.toPath());
 
-		Instant now = Instant.now();
+		Instant instant = Instant.now();
 
 		Files.setLastModifiedTime(
 			_oldFile.toPath(),
-			FileTime.from(now.minus(_OLD_FILE_AGE, ChronoUnit.DAYS)));
+			FileTime.from(instant.minus(_OLD_FILE_AGE, ChronoUnit.DAYS)));
 	}
 
 	@Test

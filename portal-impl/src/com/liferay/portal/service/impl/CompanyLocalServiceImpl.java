@@ -2463,7 +2463,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 
 		List<Group> groups = _groupLocalService.dslQuery(
-			DSLQueryFactoryUtil.selectDistinct(
+			DSLQueryFactoryUtil.select(
 				GroupTable.INSTANCE
 			).from(
 				GroupTable.INSTANCE

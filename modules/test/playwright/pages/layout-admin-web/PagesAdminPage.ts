@@ -193,7 +193,9 @@ export class PagesAdminPage {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: 'Configuration'}),
-			trigger: this.page.getByTestId('headerOptions'),
+			trigger: this.page
+				.locator('.control-menu-nav-item')
+				.getByTitle('Options', {exact: true}),
 		});
 	}
 

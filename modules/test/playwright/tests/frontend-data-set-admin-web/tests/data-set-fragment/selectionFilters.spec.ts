@@ -14,14 +14,16 @@ import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelp
 import {picklistApiHelpersTest} from '../../fixtures/picklistApiHelpersTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 
-const picklistBooleanOption = 'Boolean';
-const picklistDefaultOption = 'Default';
+const picklistBooleanOptionLabel = 'Boolean';
+const picklistDefaultOptionLabel = 'Default';
 
 const apiHeadlessName = 'FieldType';
 const apiHeadlessURL = `c/${apiHeadlessName.toLocaleLowerCase()}s`;
 let dataSetERC: string;
 let dataSetLabel: string;
 let objectDefinition: any;
+let picklistBooleanOption: any;
+let picklistDefaultOption: any;
 let picklistName: string;
 
 export const test = mergeTests(
@@ -52,16 +54,16 @@ test.beforeEach(
 				name: picklistName,
 			});
 
-			await picklistApiHelpers.editPicklist({
-				key: picklistBooleanOption.toLocaleLowerCase(),
+			picklistDefaultOption = await picklistApiHelpers.editPicklist({
+				key: picklistDefaultOptionLabel.toLocaleLowerCase(),
 				name: picklistName,
-				value: picklistBooleanOption,
+				value: picklistDefaultOptionLabel,
 			});
 
-			await picklistApiHelpers.editPicklist({
-				key: picklistDefaultOption.toLocaleLowerCase(),
+			picklistBooleanOption = await picklistApiHelpers.editPicklist({
+				key: picklistBooleanOptionLabel.toLocaleLowerCase(),
 				name: picklistName,
-				value: picklistDefaultOption,
+				value: picklistBooleanOptionLabel,
 			});
 		});
 
@@ -165,12 +167,8 @@ test.describe('Selection filters in Data Set fragment', () => {
 			});
 		});
 
-		await test.step('There are no filters in the Frontend Data Set', async() => {
-			await expect(
-				fdsFragmentPage.page.getByRole('button', {
-					name: 'Filter',
-				})
-			).not.toBeVisible();
+		await test.step('There are no filters in the Frontend Data Set', async () => {
+			await expect(fdsFragmentPage.fdsFilterButton).not.toBeVisible();
 		});
 
 		await test.step('Create a new selection filter', async () => {
@@ -196,46 +194,27 @@ test.describe('Selection filters in Data Set fragment', () => {
 			).toBeVisible();
 		});
 
-		await test.step('Filters are available in the fragment', async () => {
-			await expect(
-				fdsFragmentPage.page.getByRole('button', {
-					name: 'Filter',
-				})
-			).toBeVisible();
-		});
-
-		await test.step('Open filters component', async () => {
-			await fdsFragmentPage.page
-				.getByRole('button', {name: 'Filter'})
-				.click();
-		});
-
 		await test.step('Select filter', async () => {
+			await fdsFragmentPage.selectFilter(filterLabel);
+		});
+
+		await test.step('Configure and apply filter', async () => {
 			await expect(
-				fdsFragmentPage.page.getByRole('menuitem', {
-					name: filterLabel,
-				})
-			).toBeVisible();
-			await fdsFragmentPage.page
-				.getByRole('menuitem', {name: filterLabel})
-				.click();
-			await expect(
-				fdsFragmentPage.page.getByRole('radio', {
-					name: picklistDefaultOption,
+				fdsFragmentPage.fdsFilterItem.getByRole('radio', {
+					name: picklistDefaultOptionLabel,
 				})
 			).toBeVisible();
 			await expect(
-				fdsFragmentPage.page.getByRole('radio', {
-					name: picklistBooleanOption,
+				fdsFragmentPage.fdsFilterItem.getByRole('radio', {
+					name: picklistBooleanOptionLabel,
 				})
 			).toBeVisible();
 
-			await fdsFragmentPage.page
-				.getByRole('radio', {name: picklistBooleanOption})
+			await fdsFragmentPage.fdsFilterItem
+				.getByRole('radio', {name: picklistBooleanOptionLabel})
 				.check();
-			await fdsFragmentPage.page
-				.getByRole('button', {name: 'Add filter'})
-				.click();
+
+			await fdsFragmentPage.fdsAddFilterButton.click();
 
 			// Close filter
 
@@ -243,13 +222,13 @@ test.describe('Selection filters in Data Set fragment', () => {
 		});
 
 		await test.step('Check that the filter works', async () => {
-			await fdsFragmentPage.page
-				.locator('.filter-resume')
-				.waitFor({state: 'visible'});
+			await fdsFragmentPage.fdsFilterResumeButton.waitFor({
+				state: 'visible',
+			});
 
 			await expect(
 				fdsFragmentPage.page.getByRole('button', {
-					name: `${filterLabel}: ${picklistBooleanOption}`,
+					name: `${filterLabel}: ${picklistBooleanOptionLabel}`,
 				})
 			).toBeVisible();
 
@@ -262,6 +241,291 @@ test.describe('Selection filters in Data Set fragment', () => {
 
 			await expect(
 				fdsFragmentPage.page.getByText('Showing 1 to 1 of 1 entries.')
+			).toBeVisible();
+		});
+	});
+
+	test('Picklist filter can be configured to use single or multiple selection', async ({
+		dataSetManagerApiHelpers,
+		fdsFragmentPage,
+		layout,
+		page,
+		picklistApiHelpers,
+	}) => {
+		const filterLabel = getRandomString();
+		let selectionFilter;
+
+		await test.step('Add fields, so FDS has something to show', async () => {
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC,
+				label_i18n: {en_US: 'Renderer'},
+				name: 'renderer',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC,
+				label_i18n: {en_US: 'Sortable'},
+				name: 'sortable',
+				renderer: 'boolean',
+			});
+		});
+
+		await test.step('Create a new single selection filter', async () => {
+			const picklist = await picklistApiHelpers.getPicklist(picklistName);
+
+			selectionFilter =
+				await dataSetManagerApiHelpers.createDataSetSelectionFilter({
+					dataSetERC,
+					fieldName: 'renderer',
+					label_i18n: {en_US: filterLabel},
+					multiple: false,
+					source: picklist.externalReferenceCode,
+					sourceType: 'PICKLIST',
+				});
+		});
+
+		await test.step('Configure Data Set fragment', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step('Check current items in the Frontend Data Set', async () => {
+			await fdsFragmentPage.fdsPaginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				fdsFragmentPage.fdsPaginationResults.getByText(
+					'Showing 1 to 2 of 2 entries.'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Select filter', async () => {
+			await fdsFragmentPage.selectFilter(filterLabel);
+		});
+
+		await test.step('Configure and apply filter', async () => {
+			await expect(
+				fdsFragmentPage.fdsFilterItem.getByRole('radio', {
+					name: picklistDefaultOptionLabel,
+				})
+			).toBeVisible();
+			await expect(
+				fdsFragmentPage.fdsFilterItem.getByRole('radio', {
+					name: picklistBooleanOptionLabel,
+				})
+			).toBeVisible();
+
+			await fdsFragmentPage.fdsFilterItem
+				.getByRole('radio', {name: picklistBooleanOptionLabel})
+				.check();
+
+			await fdsFragmentPage.fdsAddFilterButton.click();
+
+			// Close filter
+
+			await fdsFragmentPage.page.keyboard.press('Escape');
+		});
+
+		await test.step('Check that the filter works', async () => {
+			await fdsFragmentPage.fdsFilterResumeButton.waitFor({
+				state: 'visible',
+			});
+
+			await expect(
+				fdsFragmentPage.page.getByRole('button', {
+					name: `${filterLabel}: ${picklistBooleanOptionLabel}`,
+				})
+			).toBeVisible();
+
+			await expect(
+				fdsFragmentPage.page
+					.locator('.dnd-tbody > div')
+					.first()
+					.locator('.dnd-td')
+			).toHaveText(['boolean', 'No', '']);
+
+			await expect(
+				fdsFragmentPage.page.getByText('Showing 1 to 1 of 1 entries.')
+			).toBeVisible();
+		});
+
+		await test.step('Update filter to allow multiple selection', async () => {
+			await dataSetManagerApiHelpers.updateDataSetSelectionFilter({
+				erc: selectionFilter.externalReferenceCode,
+				multiple: true,
+			});
+		});
+
+		await test.step('Check current items in the Frontend Data Set', async () => {
+			await page.reload();
+			await fdsFragmentPage.fdsPaginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				fdsFragmentPage.fdsPaginationResults.getByText(
+					'Showing 1 to 2 of 2 entries.'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Select filter', async () => {
+			await fdsFragmentPage.selectFilter(filterLabel);
+		});
+
+		await test.step('Configure and apply filter', async () => {
+			await expect(
+				fdsFragmentPage.fdsFilterItem.getByRole('checkbox', {
+					name: picklistDefaultOptionLabel,
+				})
+			).toBeVisible();
+			await expect(
+				fdsFragmentPage.fdsFilterItem.getByRole('checkbox', {
+					name: picklistBooleanOptionLabel,
+				})
+			).toBeVisible();
+
+			await fdsFragmentPage.fdsFilterItem
+				.getByRole('checkbox', {name: picklistDefaultOptionLabel})
+				.check();
+			await fdsFragmentPage.fdsFilterItem
+				.getByRole('checkbox', {name: picklistBooleanOptionLabel})
+				.check();
+
+			await fdsFragmentPage.fdsAddFilterButton.click();
+
+			// Close filter
+
+			await fdsFragmentPage.page.keyboard.press('Escape');
+		});
+
+		await test.step('Check that the filter works', async () => {
+			await fdsFragmentPage.fdsPaginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				fdsFragmentPage.fdsPaginationResults.getByText(
+					'Showing 1 to 2 of 2 entries.'
+				)
+			).toBeVisible();
+		});
+	});
+
+	test('Picklist filter can be configured to include or exclude selected values', async ({
+		dataSetManagerApiHelpers,
+		fdsFragmentPage,
+		layout,
+		page,
+		picklistApiHelpers,
+	}) => {
+		const filterLabel = getRandomString();
+		let selectionFilter;
+
+		await test.step('Add fields, so FDS has something to show', async () => {
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC,
+				label_i18n: {en_US: 'Renderer'},
+				name: 'renderer',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC,
+				label_i18n: {en_US: 'Sortable'},
+				name: 'sortable',
+				renderer: 'boolean',
+			});
+		});
+
+		await test.step('Create a new selection filter with preselected values and include mode', async () => {
+			const picklist = await picklistApiHelpers.getPicklist(picklistName);
+
+			selectionFilter =
+				await dataSetManagerApiHelpers.createDataSetSelectionFilter({
+					dataSetERC,
+					fieldName: 'renderer',
+					include: true,
+					label_i18n: {en_US: filterLabel},
+					multiple: false,
+					preselectedValues: JSON.stringify([
+						picklistDefaultOption.externalReferenceCode,
+					]),
+					source: picklist.externalReferenceCode,
+					sourceType: 'PICKLIST',
+				});
+		});
+
+		await test.step('Configure Data Set fragment', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step('Check current filter is applied in the Frontend Data Set', async () => {
+			await expect(fdsFragmentPage.fdsFilterResumeButton).toBeVisible();
+			await expect(fdsFragmentPage.fdsFilterResumeButton).toContainText(
+				`${filterLabel}: ${picklistDefaultOptionLabel}`
+			);
+			await fdsFragmentPage.fdsPaginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				fdsFragmentPage.page
+					.locator('.dnd-tbody > div')
+					.first()
+					.locator('.dnd-td')
+			).toHaveText(['default', 'No', '']);
+
+			await expect(
+				fdsFragmentPage.fdsPaginationResults.getByText(
+					'Showing 1 to 1 of 1 entries.'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Update filter to use preselected values exclude mode', async () => {
+			await dataSetManagerApiHelpers.updateDataSetSelectionFilter({
+				erc: selectionFilter.externalReferenceCode,
+				preselectedValues: JSON.stringify([
+					picklistBooleanOption.externalReferenceCode,
+				]),
+			});
+		});
+
+		await test.step('Check current items in the Frontend Data Set', async () => {
+			await page.reload();
+			await expect(fdsFragmentPage.fdsFilterResumeButton).toBeVisible();
+			await expect(fdsFragmentPage.fdsFilterResumeButton).toContainText(
+				`${filterLabel}: ${picklistBooleanOptionLabel}`
+			);
+			await fdsFragmentPage.fdsPaginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				fdsFragmentPage.page
+					.locator('.dnd-tbody > div')
+					.first()
+					.locator('.dnd-td')
+			).toHaveText(['boolean', 'No', '']);
+
+			await expect(
+				fdsFragmentPage.fdsPaginationResults.getByText(
+					'Showing 1 to 1 of 1 entries.'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Can remove the current filter', async () => {
+			await fdsFragmentPage.page
+				.getByRole('button', {exact: true, name: 'Remove Filter'})
+				.click();
+			await expect(
+				fdsFragmentPage.fdsFilterResumeButton
+			).not.toBeVisible();
+
+			await fdsFragmentPage.fdsPaginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				fdsFragmentPage.fdsPaginationResults.getByText(
+					'Showing 1 to 2 of 2 entries.'
+				)
 			).toBeVisible();
 		});
 	});
@@ -326,59 +590,41 @@ test.describe('Selection filters in Data Set fragment', () => {
 			).toBeVisible();
 		});
 
-		await test.step('Filters are available in the fragment', async () => {
-			await expect(
-				fdsFragmentPage.page.getByRole('button', {
-					name: 'Filter',
-				})
-			).toBeVisible();
-		});
-
-		await test.step('Open filters component', async () => {
-			await fdsFragmentPage.page
-				.getByRole('button', {exact: true, name: 'Filter'})
-				.click();
-		});
-
 		await test.step('Select filter', async () => {
+			await fdsFragmentPage.selectFilter(filterLabel);
+		});
+
+		await test.step('Configure and apply filter', async () => {
 			await expect(
-				fdsFragmentPage.page.getByRole('menuitem', {
-					name: filterLabel,
-				})
-			).toBeVisible();
-			await fdsFragmentPage.page
-				.getByRole('menuitem', {name: filterLabel})
-				.click();
-			await expect(
-				fdsFragmentPage.page.getByRole('checkbox', {
+				fdsFragmentPage.fdsFilterItem.getByRole('checkbox', {
 					name: 'array',
 				})
 			).toBeVisible();
 			await expect(
-				fdsFragmentPage.page.getByRole('checkbox', {
+				fdsFragmentPage.fdsFilterItem.getByRole('checkbox', {
 					name: 'boolean',
 				})
 			).toBeVisible();
 			await expect(
-				fdsFragmentPage.page.getByRole('checkbox', {
+				fdsFragmentPage.fdsFilterItem.getByRole('checkbox', {
 					name: 'integer',
 				})
 			).toBeVisible();
 			await expect(
-				fdsFragmentPage.page.getByRole('checkbox', {
+				fdsFragmentPage.fdsFilterItem.getByRole('checkbox', {
 					name: 'object',
 				})
 			).toBeVisible();
 			await expect(
-				fdsFragmentPage.page.getByRole('checkbox', {
+				fdsFragmentPage.fdsFilterItem.getByRole('checkbox', {
 					name: 'string',
 				})
 			).toBeVisible();
 
-			await fdsFragmentPage.page
+			await fdsFragmentPage.fdsFilterItem
 				.getByRole('checkbox', {name: 'integer'})
 				.check();
-			await fdsFragmentPage.page
+			await fdsFragmentPage.fdsFilterItem
 				.getByRole('button', {name: 'Add filter'})
 				.click();
 
@@ -388,9 +634,9 @@ test.describe('Selection filters in Data Set fragment', () => {
 		});
 
 		await test.step('Check that the filter works', async () => {
-			await fdsFragmentPage.page
-				.locator('.filter-resume')
-				.waitFor({state: 'visible'});
+			await fdsFragmentPage.fdsFilterResumeButton.waitFor({
+				state: 'visible',
+			});
 
 			await expect(
 				fdsFragmentPage.page.getByRole('button', {
@@ -416,22 +662,20 @@ test.describe('Selection filters in Data Set fragment', () => {
 		});
 
 		await test.step('Open filters component', async () => {
-			await fdsFragmentPage.page
-				.getByRole('button', {exact: true, name: 'Filter'})
-				.click();
+			await fdsFragmentPage.fdsFilterButton.click();
 		});
 
 		await test.step('Select filter', async () => {
 			await expect(
-				fdsFragmentPage.page.getByRole('checkbox', {name: 'boolean'})
+				fdsFragmentPage.fdsFilterItem.getByRole('checkbox', {
+					name: 'boolean',
+				})
 			).toBeVisible();
 
-			await fdsFragmentPage.page
+			await fdsFragmentPage.fdsFilterItem
 				.getByRole('checkbox', {name: 'boolean'})
 				.check();
-			await fdsFragmentPage.page
-				.getByRole('button', {name: 'Add filter'})
-				.click();
+			await fdsFragmentPage.fdsAddFilterButton.click();
 
 			// Close filter
 
@@ -439,9 +683,9 @@ test.describe('Selection filters in Data Set fragment', () => {
 		});
 
 		await test.step('Check that the filter works', async () => {
-			await fdsFragmentPage.page
-				.locator('.filter-resume')
-				.waitFor({state: 'visible'});
+			await fdsFragmentPage.fdsFilterResumeButton.waitFor({
+				state: 'visible',
+			});
 
 			await expect(
 				fdsFragmentPage.page.getByRole('button', {
@@ -463,6 +707,20 @@ test.describe('Selection filters in Data Set fragment', () => {
 
 			await expect(
 				fdsFragmentPage.page.getByText('Showing 1 to 2 of 2 entries.')
+			).toBeVisible();
+		});
+
+		await test.step('Can reset applied filters', async () => {
+			await fdsFragmentPage.fdsResetFilterButton.click();
+		});
+
+		await test.step('Check initial items in the Frontend Data Set', async () => {
+			await fdsFragmentPage.fdsPaginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				fdsFragmentPage.fdsPaginationResults.getByText(
+					'Showing 1 to 3 of 3 entries.'
+				)
 			).toBeVisible();
 		});
 	});

@@ -71,11 +71,10 @@ public class ProductMenuDisplayContext {
 
 		Collections.reverse(applicationsMenuChildPanelCategories);
 
-		List<PanelCategory> panelCategoriesWithPanelApps =
-			_filterPanelCategoriesWithPanelApps(
-				applicationsMenuChildPanelCategories);
-
-		_childPanelCategories.addAll(0, panelCategoriesWithPanelApps);
+		_childPanelCategories.addAll(
+			0,
+			_filterApplicationsMenuChildPanelCategories(
+				applicationsMenuChildPanelCategories));
 
 		return _childPanelCategories;
 	}
@@ -198,7 +197,7 @@ public class ProductMenuDisplayContext {
 		return true;
 	}
 
-	private List<PanelCategory> _filterPanelCategoriesWithPanelApps(
+	private List<PanelCategory> _filterApplicationsMenuChildPanelCategories(
 		List<PanelCategory> panelCategories) {
 
 		List<PanelCategory> filteredPanelCategories = new ArrayList<>();

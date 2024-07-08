@@ -49,8 +49,20 @@ public class ProductMenuDisplayContextTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() throws Exception {
-		_themeDisplay = Mockito.mock(ThemeDisplay.class);
+	public void setUp() {
+		_applicationsMenuInstanceConfiguration = Mockito.mock(
+			ApplicationsMenuInstanceConfiguration.class);
+
+		PanelCategory applicationMenuPanel1 = _createPanelCategory(
+			"application-panel1");
+		PanelCategory applicationMenuPanel2 = _createPanelCategory(
+			"application-panel2");
+		PanelCategory applicationMenuPanel3 = _createPanelCategory(
+			"application-panel3");
+
+		_applicationsMenuPanelCategories = Arrays.asList(
+			applicationMenuPanel1, applicationMenuPanel2,
+			applicationMenuPanel3);
 
 		_mockHttpServletRequest = new MockHttpServletRequest();
 
@@ -58,6 +70,8 @@ public class ProductMenuDisplayContextTest {
 
 		_mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST, _mockPortletRequest);
+
+		_themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		_mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _themeDisplay);
@@ -67,35 +81,21 @@ public class ProductMenuDisplayContextTest {
 
 		_mockPortletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 
-		_applicationsMenuInstanceConfiguration = Mockito.mock(
-			ApplicationsMenuInstanceConfiguration.class);
-
 		_panelCategoryHelper = Mockito.mock(PanelCategoryHelper.class);
 
 		_mockPortletRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_HELPER, _panelCategoryHelper);
 
-		PanelCategory rootPanel1 = _newPanelCategory("root-panel1");
-		PanelCategory rootPanel2 = _newPanelCategory("root-panel2");
-		PanelCategory rootPanel3 = _newPanelCategory("root-panel3");
+		PanelCategory rootPanel1 = _createPanelCategory("root-panel1");
+		PanelCategory rootPanel2 = _createPanelCategory("root-panel2");
+		PanelCategory rootPanel3 = _createPanelCategory("root-panel3");
 
 		_rootPanelCategories = new ArrayList<>(
 			Arrays.asList(rootPanel1, rootPanel2, rootPanel3));
-
-		PanelCategory applicationMenuPanel1 = _newPanelCategory(
-			"application-panel1");
-		PanelCategory applicationMenuPanel2 = _newPanelCategory(
-			"application-panel2");
-		PanelCategory applicationMenuPanel3 = _newPanelCategory(
-			"application-panel3");
-
-		_applicationsMenuPanelCategories = Arrays.asList(
-			applicationMenuPanel1, applicationMenuPanel2,
-			applicationMenuPanel3);
 	}
 
 	@Test
-	public void testShouldReturnOnlyPanelCategoriesContainsPanelApps() {
+	public void testShouldReturnOnlyPanelCategoriesThatContainPanelApps() {
 		_assertGetPanelCategories(
 			false,
 			productMenuDisplayContext -> {
@@ -121,7 +121,7 @@ public class ProductMenuDisplayContextTest {
 	}
 
 	@Test
-	public void testShouldReturnOnlyRootPanelCategoriesWhenApplicationsMenuEnabled() {
+	public void testShouldReturnOnlyRootPanelCategoriesWhenApplicationsMenuIsEnabled() {
 		_assertGetPanelCategories(
 			true,
 			productMenuDisplayContext -> {
@@ -199,7 +199,7 @@ public class ProductMenuDisplayContextTest {
 				_panelCategoryHelper.getAllPanelApps(
 					ArgumentMatchers.anyString())
 			).thenReturn(
-				Arrays.asList(Mockito.mock(PanelApp.class))
+				Collections.singletonList(Mockito.mock(PanelApp.class))
 			);
 
 			Mockito.when(
@@ -213,13 +213,13 @@ public class ProductMenuDisplayContextTest {
 		}
 	}
 
-	private PanelCategory _newPanelCategory(String panelKey) {
+	private PanelCategory _createPanelCategory(String key) {
 		PanelCategory panelCategory = Mockito.mock(PanelCategory.class);
 
 		Mockito.when(
 			panelCategory.getKey()
 		).thenReturn(
-			panelKey
+			key
 		);
 
 		return panelCategory;

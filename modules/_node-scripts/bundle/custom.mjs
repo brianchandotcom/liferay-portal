@@ -8,7 +8,12 @@ import * as esbuild from 'esbuild';
 import getCustomBuildConfig from '../configuration/getCustomBuildConfig.mjs';
 
 export default async function main() {
-	const [customBuildConfig] = await Promise.all([getCustomBuildConfig()]);
+	const customBuildConfig = await getCustomBuildConfig();
 
-	await esbuild.build(customBuildConfig);
+	await Promise.all([
+		customBuildConfig.other
+			? Promise.resolve(customBuildConfig.other())
+			: Promise.resolve(),
+		esbuild.build(customBuildConfig.esbuild),
+	]);
 }

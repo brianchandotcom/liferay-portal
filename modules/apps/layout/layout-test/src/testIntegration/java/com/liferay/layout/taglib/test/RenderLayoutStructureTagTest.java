@@ -13,6 +13,9 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
@@ -60,6 +63,7 @@ import com.liferay.layout.taglib.servlet.taglib.RenderLayoutStructureTag;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -77,6 +81,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -92,6 +97,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -104,6 +111,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.criteria.Criteria;
@@ -1006,6 +1014,101 @@ public class RenderLayoutStructureTagTest {
 		}
 	}
 
+	@Test
+	public void testRenderFragmentWithBackgroundImageAndCustomPathContext()
+		throws Exception {
+
+		String pathContext = "/de";
+
+		PortalImpl portalImpl = new PortalImpl() {
+
+			@Override
+			public String getPathContext() {
+				return pathContext;
+			}
+
+		};
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(portalImpl);
+
+		try {
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				LayoutPageTemplateStructureLocalServiceUtil.
+					fetchLayoutPageTemplateStructure(
+						_group.getGroupId(), layout.getPlid());
+
+			LayoutStructure layoutStructure = LayoutStructure.of(
+				layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+			ContainerStyledLayoutStructureItem
+				containerStyledLayoutStructureItem =
+					(ContainerStyledLayoutStructureItem)
+						layoutStructure.addContainerStyledLayoutStructureItem(
+							layoutStructure.getMainItemId(), 0);
+
+			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+				FileUtil.getBytes(
+					RenderLayoutStructureTagTest.class,
+					"dependencies/liferay.jpg"),
+				null, null, null,
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
+
+			String url = _dlURLHelper.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+				false, false);
+
+			containerStyledLayoutStructureItem.updateItemConfig(
+				JSONUtil.put(
+					"styles",
+					JSONUtil.put(
+						"backgroundImage",
+						JSONUtil.put(
+							"classNameId",
+							_portal.getClassNameId(FileEntry.class)
+						).put(
+							"classPK", fileEntry.getFileEntryId()
+						).put(
+							"url", url
+						))));
+
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructureData(
+					_group.getGroupId(), layout.getPlid(),
+					_segmentsExperienceLocalService.
+						fetchDefaultSegmentsExperienceId(layout.getPlid()),
+					layoutStructure.toString());
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(layout);
+
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
+			RenderLayoutStructureTag renderLayoutStructureTag =
+				_getRenderLayoutStructureTagDefaultSegmentsExperience(
+					layout, mockHttpServletRequest, mockHttpServletResponse);
+
+			renderLayoutStructureTag.doTag(
+				mockHttpServletRequest, mockHttpServletResponse);
+
+			String content = mockHttpServletResponse.getContentAsString();
+
+			Assert.assertTrue(content.contains(url));
+			Assert.assertFalse(content.contains(pathContext + url));
+		}
+		finally {
+			portalUtil.setPortal(new PortalImpl());
+		}
+	}
+
 	private List<AssetEntry> _addAssetEntries(AssetListEntry assetListEntry)
 		throws Exception {
 
@@ -1424,6 +1527,12 @@ public class RenderLayoutStructureTagTest {
 		filter = "info.item.capability.key=" + DisplayPageInfoItemCapability.KEY
 	)
 	private InfoItemCapability _displayPageInfoItemCapability;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLURLHelper _dlURLHelper;
 
 	@Inject(
 		filter = "info.item.capability.key=" + EditPageInfoItemCapability.KEY

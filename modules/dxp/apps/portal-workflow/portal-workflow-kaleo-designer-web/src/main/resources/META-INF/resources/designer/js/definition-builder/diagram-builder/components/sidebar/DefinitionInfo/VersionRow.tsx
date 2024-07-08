@@ -28,12 +28,16 @@ interface RetrieveWorkflowDefinitionResponseProps {
 interface VersionRowProps {
 	creatorName: string;
 	dateCreated: string;
+	setWorkflowDefinitionVersions: React.Dispatch<
+		React.SetStateAction<WorkflowDefinitionVersion[]>
+	>;
 	versionNumber: number;
 }
 
 export function VersionRow({
 	creatorName,
 	dateCreated,
+	setWorkflowDefinitionVersions,
 	versionNumber,
 }: VersionRowProps) {
 	const {
@@ -56,13 +60,26 @@ export function VersionRow({
 
 		setShowAlert(true);
 
-		const {name, version} = (await response.json()) as {
-			name: string;
-			version: string;
-		};
+		const restoredWorkflowDefinition =
+			(await response.json()) as WorkflowDefinition;
 
-		setDefinitionName(name);
-		setVersion(parseInt(version, 10));
+		setDefinitionName(restoredWorkflowDefinition.name);
+		setVersion(parseInt(restoredWorkflowDefinition.version, 10));
+
+		if (Liferay.FeatureFlags['LPD-29635']) {
+			setWorkflowDefinitionVersions((prevValues) => [
+				{
+					creatorName: restoredWorkflowDefinition.creator
+						?.name as string,
+					dateCreated:
+						restoredWorkflowDefinition.dateCreated as string,
+					versionNumber: String(
+						parseInt(restoredWorkflowDefinition.version, 10)
+					),
+				},
+				...prevValues,
+			]);
+		}
 	};
 
 	const restoreFailed = () => {

@@ -1862,6 +1862,73 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
+	public void testAddObjectActionWithUsePreferredLanguageForGuestsParameter()
+		throws Exception {
+
+		AssertUtils.assertFailure(
+			ObjectActionParametersException.class,
+			"The parameter \"usePreferredLanguageForGuests\" is not used in " +
+				"this type of request",
+			() -> _addObjectAction(
+				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_NOTIFICATION,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
+				UnicodePropertiesBuilder.put(
+					"usePreferredLanguageForGuests", "true"
+				).build(),
+				false));
+		AssertUtils.assertFailure(
+			ObjectActionParametersException.class,
+			"The parameter \"usePreferredLanguageForGuests\" is not used in " +
+				"this type of request",
+			() -> _addObjectAction(
+				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_WEBHOOK,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				UnicodePropertiesBuilder.put(
+					"usePreferredLanguageForGuests", "true"
+				).build(),
+				false));
+		AssertUtils.assertFailure(
+			ObjectActionParametersException.class,
+			"The parameter \"usePreferredLanguageForGuests\" is not used in " +
+				"this type of request",
+			() -> _addObjectAction(
+				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_WEBHOOK,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				UnicodePropertiesBuilder.put(
+					"usePreferredLanguageForGuests", "true"
+				).build(),
+				false));
+
+		Assert.assertNotNull(
+			_addObjectAction(
+				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_NOTIFICATION,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				UnicodePropertiesBuilder.put(
+					"notificationTemplateExternalReferenceCode",
+					RandomTestUtil.randomString()
+				).put(
+					"usePreferredLanguageForGuests", "true"
+				).build(),
+				false));
+		Assert.assertNotNull(
+			_addObjectAction(
+				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_NOTIFICATION,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				UnicodePropertiesBuilder.put(
+					"notificationTemplateExternalReferenceCode",
+					RandomTestUtil.randomString()
+				).put(
+					"usePreferredLanguageForGuests", "true"
+				).build(),
+				false));
+	}
+
+	@Test
 	public void testConcurrentObjectActions() throws Exception {
 		_addObjectAction(
 			RandomTestUtil.randomString(),

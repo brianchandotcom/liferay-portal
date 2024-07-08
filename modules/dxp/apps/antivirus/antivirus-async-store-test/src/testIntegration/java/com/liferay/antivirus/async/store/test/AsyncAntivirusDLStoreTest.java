@@ -560,9 +560,9 @@ public class AsyncAntivirusDLStoreTest {
 				new ConfigurationTemporarySwapper(
 					AntivirusAsyncConfiguration.class.getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
-						"maximumQueueSize", maximumQueueSize
+						"batch-scan-cron-expression", retryCronExpression
 					).put(
-						"retryCronExpression", retryCronExpression
+						"maximumQueueSize", maximumQueueSize
 					).build())) {
 
 			if (sync) {

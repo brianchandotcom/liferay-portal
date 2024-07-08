@@ -1,0 +1,27 @@
+.lfr-workflow__details-tab {
+	&-container {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	&-info-container {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+	}
+
+	&-info-details {
+		color: #6b6c7e;
+		font-size: 15px;
+		line-height: 18px;
+		word-wrap: break-word;
+	}
+
+	&-info-title {
+		color: #272833;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 21px;
+	}
+}

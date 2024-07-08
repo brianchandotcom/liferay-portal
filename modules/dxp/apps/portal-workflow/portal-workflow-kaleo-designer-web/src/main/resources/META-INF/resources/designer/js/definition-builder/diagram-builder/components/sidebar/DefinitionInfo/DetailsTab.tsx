@@ -8,6 +8,8 @@ import React from 'react';
 
 import lang from '../../../../util/lang';
 
+import './DetailsTab.scss';
+
 moment.locale(Liferay.ThemeDisplay.getBCP47LanguageId());
 
 interface DetailsTabProps {
@@ -37,30 +39,36 @@ export function DetailsTab({definitionInfo}: DetailsTabProps) {
 			: `${totalModifications} ${Liferay.Language.get('revision')}`;
 
 	return (
-		<>
-			<div className="info-group">
-				<label className="text-secondary">
+		<div className="lfr-workflow__details-tab-container">
+			<div className="lfr-workflow__details-tab-info-container">
+				<label className="lfr-workflow__details-tab-info-title">
 					{titleCreated.toUpperCase()}
 				</label>
 
-				<span>{dateCreated}</span>
+				<span className="lfr-workflow__details-tab-info-details">
+					{dateCreated}
+				</span>
 			</div>
 
-			<div className="info-group">
-				<label className="text-secondary">
+			<div className="lfr-workflow__details-tab-info-container">
+				<label className="lfr-workflow__details-tab-info-title">
 					{titleLastModified.toUpperCase()}
 				</label>
 
-				<span>{dateModified}</span>
+				<span className="lfr-workflow__details-tab-info-details">
+					{dateModified}
+				</span>
 			</div>
 
-			<div className="info-group">
-				<label className="text-secondary">
+			<div className="lfr-workflow__details-tab-info-container">
+				<label className="lfr-workflow__details-tab-info-title">
 					{titleTotalModifications.toUpperCase()}
 				</label>
 
-				<span>{revisionMessage}</span>
+				<span className="lfr-workflow__details-tab-info-details">
+					{revisionMessage}
+				</span>
 			</div>
-		</>
+		</div>
 	);
 }

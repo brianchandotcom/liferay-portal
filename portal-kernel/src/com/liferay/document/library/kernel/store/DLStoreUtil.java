@@ -6,6 +6,7 @@
 package com.liferay.document.library.kernel.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.io.File;
 import java.io.InputStream;
@@ -55,20 +56,20 @@ public class DLStoreUtil {
 	public static void addFile(DLStoreRequest dlStoreRequest, byte[] bytes)
 		throws PortalException {
 
-		_store.addFile(dlStoreRequest, bytes);
+		_getDLStore().addFile(dlStoreRequest, bytes);
 	}
 
 	public static void addFile(DLStoreRequest dlStoreRequest, File file)
 		throws PortalException {
 
-		_store.addFile(dlStoreRequest, file);
+		_getDLStore().addFile(dlStoreRequest, file);
 	}
 
 	public static void addFile(
 			DLStoreRequest dlStoreRequest, InputStream inputStream)
 		throws PortalException {
 
-		_store.addFile(dlStoreRequest, inputStream);
+		_getDLStore().addFile(dlStoreRequest, inputStream);
 	}
 
 	/**
@@ -86,7 +87,7 @@ public class DLStoreUtil {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		_store.copyFileVersion(
+		_getDLStore().copyFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
 			toVersionLabel);
 	}
@@ -103,7 +104,7 @@ public class DLStoreUtil {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException {
 
-		_store.deleteDirectory(companyId, repositoryId, dirName);
+		_getDLStore().deleteDirectory(companyId, repositoryId, dirName);
 	}
 
 	/**
@@ -119,7 +120,7 @@ public class DLStoreUtil {
 			long companyId, long repositoryId, String fileName)
 		throws PortalException {
 
-		_store.deleteFile(companyId, repositoryId, fileName);
+		_getDLStore().deleteFile(companyId, repositoryId, fileName);
 	}
 
 	/**
@@ -136,7 +137,8 @@ public class DLStoreUtil {
 			String versionLabel)
 		throws PortalException {
 
-		_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
+		_getDLStore().deleteFile(
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	/**
@@ -160,7 +162,7 @@ public class DLStoreUtil {
 			String versionLabel)
 		throws PortalException {
 
-		return _store.getFileAsStream(
+		return _getDLStore().getFileAsStream(
 			companyId, repositoryId, fileName, versionLabel);
 	}
 
@@ -177,7 +179,7 @@ public class DLStoreUtil {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException {
 
-		return _store.getFileNames(companyId, repositoryId, dirName);
+		return _getDLStore().getFileNames(companyId, repositoryId, dirName);
 	}
 
 	/**
@@ -193,7 +195,7 @@ public class DLStoreUtil {
 			long companyId, long repositoryId, String fileName)
 		throws PortalException {
 
-		return _store.getFileSize(companyId, repositoryId, fileName);
+		return _getDLStore().getFileSize(companyId, repositoryId, fileName);
 	}
 
 	/**
@@ -203,7 +205,7 @@ public class DLStoreUtil {
 	 * @return Returns the {@link DLStore} object
 	 */
 	public static DLStore getStore() {
-		return _store;
+		return _getDLStore();
 	}
 
 	/**
@@ -222,7 +224,8 @@ public class DLStoreUtil {
 			String versionLabel)
 		throws PortalException {
 
-		return _store.hasFile(companyId, repositoryId, fileName, versionLabel);
+		return _getDLStore().hasFile(
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	public static void updateFile(DLStoreRequest dlStoreRequest, File file)
@@ -235,7 +238,7 @@ public class DLStoreUtil {
 			DLStoreRequest dlStoreRequest, InputStream inputStream)
 		throws PortalException {
 
-		_store.updateFile(dlStoreRequest, inputStream);
+		_getDLStore().updateFile(dlStoreRequest, inputStream);
 	}
 
 	/**
@@ -251,7 +254,8 @@ public class DLStoreUtil {
 			String fileName)
 		throws PortalException {
 
-		_store.updateFile(companyId, repositoryId, newRepositoryId, fileName);
+		_getDLStore().updateFile(
+			companyId, repositoryId, newRepositoryId, fileName);
 	}
 
 	/**
@@ -271,7 +275,7 @@ public class DLStoreUtil {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		_store.updateFileVersion(
+		_getDLStore().updateFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
 			toVersionLabel);
 	}
@@ -280,6 +284,18 @@ public class DLStoreUtil {
 		_store = store;
 	}
 
+	private static DLStore _getDLStore() {
+		DLStore dlStore = _storeSnapshot.get();
+
+		if (dlStore != null) {
+			return dlStore;
+		}
+
+		return _store;
+	}
+
 	private static DLStore _store;
+	private static volatile Snapshot<DLStore> _storeSnapshot = new Snapshot<>(
+		DLStoreUtil.class, DLStore.class, null, true);
 
 }

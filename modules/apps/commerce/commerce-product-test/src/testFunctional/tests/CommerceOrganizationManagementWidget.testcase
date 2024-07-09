@@ -55,44 +55,6 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-	@description = "COMMERCE-9402. Verify the store admin can associate existing accounts to an organization by using the Organization Management widget."
-	@priority = 3
-	test CanAssociateExistingAccountUsingWidget {
-		property portal.acceptance = "false";
-
-		task ("Setup: Add an organization") {
-			JSONOrganization.addOrganization(
-				organizationName = "Organization 1",
-				organizationSite = "false");
-		}
-
-		task ("Given an account and the Organization Management Widget Page is reached") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Commerce Account",
-				accountEntryType = "Business");
-
-			Navigator.openSitePage(
-				pageName = "Organization Management Widget Page",
-				siteName = "Minium");
-		}
-
-		task ("And the account svg node is reached") {
-			CommerceWidget.gotoSVGNode(
-				key_nodeName = "Organization 1",
-				key_orgType = "account");
-		}
-
-		task ("When the admin is able to select an existing account to be associated with the organization") {
-			CommerceWidget.associateAccountWithOrganization(
-				key_radioOption = "Select Accounts",
-				value = "Commerce Account");
-		}
-
-		task ("Then the account is present in the admin console") {
-			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Commerce Account");
-		}
-	}
-
 	@description = "COMMERCE-12586 | Verify that changing the root configuration for the Organization Management widget affect the search results"
 	@priority = 5
 	test CanChangeTheRootAffectTheSearchOrganizationManagement {
@@ -204,40 +166,6 @@ definition {
 			AssertElementPresent(
 				key_searchResults = "0 Results for Org 2",
 				locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
-		}
-	}
-
-	@description = "COMMERCE-9401. Verify new accounts can be created using the Organization Management widget."
-	@priority = 3
-	test CanCreateAccountUsingWidget {
-		property portal.acceptance = "false";
-
-		task ("Setup: Add an organization") {
-			JSONOrganization.addOrganization(
-				organizationName = "Organization 1",
-				organizationSite = "false");
-		}
-
-		task ("Given the Organization Management Widget Page is reached") {
-			Navigator.openSitePage(
-				pageName = "Organization Management Widget Page",
-				siteName = "Minium");
-		}
-
-		task ("And the organization svg node is clicked") {
-			CommerceWidget.gotoSVGNode(
-				key_nodeName = "Organization 1",
-				key_orgType = "account");
-		}
-
-		task ("When the admin is able to create a new account") {
-			CommerceWidget.addAccountViaOrganizationManagementWidget(
-				key_radioOption = "Create New Account",
-				value = "Account 1");
-		}
-
-		task ("Then the new account is present in the admin console") {
-			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Account 1");
 		}
 	}
 

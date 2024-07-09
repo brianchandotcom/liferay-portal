@@ -108,7 +108,8 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 			Role role = _roleLocalService.getRole(
 				themeDisplay.getCompanyId(), RoleConstants.PUBLICATIONS_USER);
 
-			return _userLocalService.getRoleUsers(role.getRoleId());
+			return _userLocalService.getInheritedRoleUsers(
+				role.getRoleId(), 0, 20, new UserScreenNameComparator(true));
 		}
 
 		User user = themeDisplay.getUser();

@@ -119,7 +119,7 @@
 								<#if entry.isDocumentFormVisible()>
 									<div class="expand-details text-default">
 										<span class="list-group-text text-2">
-											<a class="shadow-none" href="javascript:void(0);">
+											<a href="javascript:void(0);" role="button">
 												<@liferay.language key="details" />...
 											</a>
 										</span>

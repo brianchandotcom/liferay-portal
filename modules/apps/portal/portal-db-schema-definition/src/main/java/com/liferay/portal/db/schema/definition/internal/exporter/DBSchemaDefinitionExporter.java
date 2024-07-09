@@ -11,6 +11,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.schema.definition.internal.configuration.DBSchemaDefinitionExporterConfiguration;
 import com.liferay.portal.db.schema.definition.internal.sql.provider.PortalSQLProvider;
 import com.liferay.portal.db.schema.definition.internal.sql.provider.SQLProvider;
+import com.liferay.portal.db.schema.definition.internal.validation.DBSchemaDefinitionExporterValidation;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -90,11 +91,11 @@ public class DBSchemaDefinitionExporter {
 						DBSchemaDefinitionExporterConfiguration.class,
 						properties);
 
-			SQLProvider sqlProvider = new PortalSQLProvider(
-				DBType.valueOf(
-					StringUtil.toUpperCase(
-						dbSchemaDefinitionExporterConfiguration.
-							databaseType())));
+			DBType targetDBType = DBType.valueOf(
+				StringUtil.toUpperCase(
+					dbSchemaDefinitionExporterConfiguration.databaseType()));
+
+			SQLProvider sqlProvider = new PortalSQLProvider(targetDBType);
 
 			File file = new File(
 				dbSchemaDefinitionExporterConfiguration.path());
@@ -109,6 +110,9 @@ public class DBSchemaDefinitionExporter {
 					"Finished database schema definition export to " +
 						file.getAbsolutePath());
 			}
+
+			DBSchemaDefinitionExporterValidation.validateSchemaExport(
+				dbSchemaDefinitionExporterConfiguration.path(), targetDBType);
 		}
 		catch (Exception exception) {
 			_log.error(

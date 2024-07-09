@@ -117,7 +117,7 @@ public class PoshiTestSelector extends BaseTestSelector {
 		if (newPQL.contains(_poshiQuery)) {
 			_poshiQuery = newPQL;
 		}
-		else {
+		else if (!_poshiQuery.contains(newPQL)) {
 			_poshiQuery += JenkinsResultsParserUtil.combine(
 				" OR (", newPQL, ")");
 		}

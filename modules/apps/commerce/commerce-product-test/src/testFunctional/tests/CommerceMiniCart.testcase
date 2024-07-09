@@ -485,7 +485,7 @@ definition {
 		}
 
 		task ("Then the product name is shown truncated") {
-			TestUtils.assertTruncatedText(element = "//div[contains(@class,'mini-cart-item-info')]//h5[contains(text(),'This Is a Product With a Very Long Name That Will Be Truncated')]");
+			TestUtils.assertTruncatedText(element = "//div[contains(@class,'mini-cart-item')]//div[contains(text(),'This Is a Product With a Very Long Name That Will Be Truncated')]");
 		}
 	}
 

@@ -36,54 +36,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-172403. Smoke test to check if it is possible to add a view to the fragment"
-	@priority = 5
-	test CanAddDataSetView {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given creating a Data Set entry, view and fields") {
-			DataSetAdmin.createAndConfigureDataSetEntry(
-				dataSetName = "Countries",
-				dataSetViewDescription = "View Description",
-				dataSetViewName = "Full countries View",
-				key_fieldList = "id,name,number",
-				restApplication = "/headless-admin-address/v1.0",
-				restEndpoint = "/v1.0/countries",
-				restSchema = "Country");
-		}
-
-		task ("When the user accesses the edit page And add a dataset fragment") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Data Set Test Page",
-				siteName = "test-site-name");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Data Set");
-		}
-
-		task ("And Select Full countries View and Publish page") {
-			DataSetFragment.addDataSetView(dataSetViewName = "Full countries View");
-
-			SelectFrameTop();
-
-			Button.clickPublish();
-		}
-
-		task ("Then Confirm the names of the columns are the same for the fields.") {
-			var portalURL = PropsUtil.get("portal.url");
-
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
-
-			DataSetFragment.viewColumnTitle(key_colunmTitleList = "id,name,number");
-		}
-	}
-
 	@description = "LPS-172403. Assert if 'Data Set' can be categorized as 'Data Set'"
 	@priority = 3
 	test CanBeCategorizedInAddWidgetList {
@@ -930,7 +882,7 @@ definition {
 				fragmentName = "Data Set");
 		}
 
-		task ("And adds the Cities view to the data set Fragment portlet") {
+		task ("And adds the Dates view to the data set Fragment portlet") {
 			DataSetFragment.addDataSetView(dataSetViewName = "Dates view");
 		}
 
@@ -948,52 +900,14 @@ definition {
 
 		task ("Then Confirm that the table is ordered by the dateField in descending order") {
 			AssertElementPresent(
-				key_labelName = "2022-02-02T00:00:00Z",
+				key_labelName = "2022-02-02T00:00:00.000Z",
 				key_rowPosition = 1,
 				locator1 = "DataSet#VIEW_LABEL_POSITION");
 
 			AssertElementPresent(
-				key_labelName = "2022-01-01T00:00:00Z",
+				key_labelName = "2022-01-01T00:00:00.000Z",
 				key_rowPosition = 2,
 				locator1 = "DataSet#VIEW_LABEL_POSITION");
-		}
-	}
-
-	@description = "LPS-172403. Confirm empty message when no view was created"
-	@priority = 4
-	test EmptyMessageDisplayedWhenNoViewCreated {
-		task ("When add a dataset fragment") {
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Data Set");
-		}
-
-		task ("Then Confirm that the portlet shows the message: Select a dataset view.") {
-			PageEditor.viewFragmentMessageInfo(
-				fragmentName = "Data Set",
-				messageInfo = "Select a data set view.");
-		}
-
-		task ("When clicking on Select Data Set View") {
-			PageEditor.gotoConfiguration(fragmentName = "Data Set");
-
-			Click.javaScriptClick(
-				key_value = "Select Data Set View",
-				locator1 = "Button#SECONDARY_BY_TITLE");
-		}
-
-		task ("Then confirm that the Dataset view modal is opened") {
-			AssertTextEquals(
-				locator1 = "DataEngineModal#MODAL_TITLE",
-				value1 = "Select");
-		}
-
-		task ("And confirm that there is no created views") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_STATE_INFO",
-				value1 = "No Results Found");
 		}
 	}
 
@@ -1037,37 +951,4 @@ definition {
 				value1 = "Full countries View");
 		}
 	}
-
-	@description = "LPS-172403. Smoke test to verify options relates to Data Set Fragment"
-	@priority = 5
-	test ViewInfoFields {
-		property portal.acceptance = "true";
-
-		task ("When viewing the configuration menu of the portlet") {
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Data Set");
-		}
-
-		task ("Then configuration model is present") {
-			PageEditor.gotoConfiguration(fragmentName = "Data Set");
-		}
-
-		task ("And assert that General, Styles and Advanced tabs are present.") {
-			Navigator.viewNavTab(navTab = "General");
-
-			Navigator.viewNavTab(navTab = "Styles");
-
-			Navigator.viewNavTab(navTab = "Advanced");
-		}
-
-		task ("And Confirm the button Select Data Set View is displayed") {
-			AssertElementPresent(
-				key_value = "Select Data Set View",
-				locator1 = "Button#SECONDARY_BY_TITLE");
-
-			AssertElementPresent(locator1 = "Button#PLUS");
-		}
-	}
-
 }

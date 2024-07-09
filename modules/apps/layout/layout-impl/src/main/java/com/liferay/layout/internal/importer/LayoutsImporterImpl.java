@@ -1030,7 +1030,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 				layoutsImporterResultEntries.add(
 					new LayoutsImporterResultEntry(
-						pageTemplate.getName(), "basic-page-collection",
+						pageTemplate.getName(),
+						LayoutsImporterResultEntry.COLLECTION,
 						LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,

@@ -40,7 +40,7 @@ const RESULTS_DATA = {
 interface Result {
 	messages: string[];
 	name: string;
-	type: string;
+	type: number;
 }
 
 export interface Results {
@@ -133,7 +133,6 @@ function ImportResultsSection({
 								: defaultMessage
 									? [defaultMessage]
 									: null;
-							const [type] = result.type.split('-').reverse();
 
 							return (
 								<li
@@ -146,7 +145,7 @@ function ImportResultsSection({
 												<ClayIcon
 													className="c-mr-2 text-secondary"
 													symbol={
-														type === 'collection'
+														result.type === 0
 															? 'folder'
 															: 'page-template'
 													}

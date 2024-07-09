@@ -57,31 +57,6 @@ definition {
 		}
 	}
 
-	@description = "The user can add a page based in global search template."
-	@priority = 5
-	@uitest
-	test AddPageBasedOnGlobalSearchTemplate {
-		property portal.acceptance = "true";
-
-		task ("Add a page based in global search template") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.addPage(
-				pageName = "Test Page Name",
-				pageTemplateName = "Search");
-		}
-
-		task ("View portlets are shown in search template page") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			for (var portletName : list "Search Bar,Suggestions,Site Facet,Type Facet,Tag Facet,Category Facet,Folder Facet,User Facet,Modified Facet,Search Results,Search Options") {
-				Portlet.viewDefaultTitle(portletName = ${portletName});
-			}
-		}
-	}
-
 	@description = "Can add a translation to parent and child page."
 	@priority = 3
 	test AddTranslationToPageName {

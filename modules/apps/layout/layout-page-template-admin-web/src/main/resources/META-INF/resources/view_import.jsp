@@ -8,8 +8,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, renderRequest, renderResponse);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
 portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
@@ -19,5 +17,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "import"));
 
 <react:component
 	module="{ImportPageTemplates} from layout-page-template-admin-web"
-	props="<%= importDisplayContext.getProps() %>"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"backURL", ParamUtil.getString(request, "backURL")
+		).put(
+			"importURL",
+			ResourceURLBuilder.createResourceURL(
+				renderResponse
+			).setParameter(
+				"layoutPageTemplateCollectionId", ParamUtil.getString(request, "layoutPageTemplateCollectionId")
+			).setResourceID(
+				"/layout_page_template_admin/import"
+			).buildString()
+		).build()
+	%>'
 />

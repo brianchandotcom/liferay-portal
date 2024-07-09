@@ -129,6 +129,8 @@ public class JournalArticleModelDocumentContributorTest {
 	private Document _getDocument() {
 		DocumentImpl documentImpl = new DocumentImpl();
 
+		Assert.assertNotNull(_journalArticle.getDDMFormValues());
+
 		_modelDocumentContributor.contribute(documentImpl, _journalArticle);
 
 		return documentImpl;

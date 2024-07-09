@@ -8,6 +8,7 @@ package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 import com.liferay.headless.admin.workflow.dto.v1_0.Node;
 import com.liferay.headless.admin.workflow.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
+import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.NodeUtil;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.TransitionUtil;
 import com.liferay.headless.admin.workflow.internal.odata.entity.v1_0.WorkflowDefinitionEntityModel;
@@ -19,12 +20,14 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -335,6 +338,11 @@ public class WorkflowDefinitionResourceImpl
 
 						return workflowDefinition.getContent();
 					});
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						_portal,
+						_userLocalService.fetchUser(
+							workflowDefinition.getUserId())));
 				setDateCreated(workflowDefinition::getCreateDate);
 				setDateModified(workflowDefinition::getModifiedDate);
 				setDescription(workflowDefinition::getDescription);
@@ -395,6 +403,12 @@ public class WorkflowDefinitionResourceImpl
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private WorkflowComparatorFactory _workflowComparatorFactory;

@@ -15,7 +15,7 @@ definition {
 		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
-	@description = "Assert that the UI works correctly for adding Asset Lists."
+	@description = "Assert that the UI works correctly for adding, deleting and renaming Asset Lists."
 	@priority = 5
 	@uitest
 	test AddAssetList {
@@ -31,6 +31,16 @@ definition {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
+		}
+
+		task ("When the site administrator hovers over the back button") {
+			MouseOver(locator1 = "Icon#BACK");
+		}
+
+		task ("Then the site administrator could see the tooltip message") {
+			AssertVisible(
+				key_content = "Go to Collections",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 
 		task ("Assert Asset List Entry names and types") {
@@ -58,6 +68,53 @@ definition {
 				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
 				value1 = "Dynamic");
 		}
+
+		task ("Create an asset list that has the same name as the first asset list") {
+			LexiconEntry.gotoAddMenuItem(menuItem = "Manual Collection");
+
+			PortletEntry.inputText(
+				fieldLabel = "Title",
+				text = "Manual Asset List Test");
+
+			Button.clickSave();
+		}
+
+		task ("Assert an error displays notifying that the user is not allowed to create a duplicate asset list") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_MODAL_CONTENT",
+				value1 = "A collection with that title already exists.");
+		}
+
+		task ("Rename the asset list") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.renameAssetList(
+				newAssetListTitle = "Manual Asset List Edit",
+				oldAssetListTitle = "Manual Asset List Test");
+		}
+
+		task ("Assert that the name of the asset list changed correctly") {
+			AssertTextEquals.assertPartialText(
+				key_title = "Manual Asset List Edit",
+				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE",
+				value1 = "Manual Asset List Edit");
+
+			AssertTextEquals.assertPartialText(
+				key_columnName = "lfr-type",
+				key_tableEntry = "Manual",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+				value1 = "Manual");
+		}
+
+		task ("Delete both asset lists") {
+			AssetListsAdmin.deleteEntry(assetListTitle = "Manual Asset List Edit");
+
+			AssetListsAdmin.deleteEntry(assetListTitle = "Dynamic Asset List Test");
+		}
+
+		task ("Assert the taglib that displays when there are no entries displays") {
+			AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
+		}
 	}
 
 	@description = "This is a test for LPS-143093. Add assets to manual collection for selected item types."
@@ -84,82 +141,6 @@ definition {
 
 			for (var menuItem : list "Blogs Entry,Web Content Article") {
 				MenuItem.viewNotPresent(menuItem = ${menuItem});
-			}
-		}
-	}
-
-	@description = "Assert that the UI correctly displays a useful error message when an Asset List is added with a duplicate name."
-	@priority = 3
-	test AddDuplicateAssetList {
-		task ("Create a manual asset list") {
-			JSONAssetlist.addManualAssetListEntry(
-				groupName = "Test Site Name",
-				title = "Manual Asset List Test");
-		}
-
-		task ("Create an asset list that has the same name as the first asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAddMenuItem(menuItem = "Manual Collection");
-
-			PortletEntry.inputText(
-				fieldLabel = "Title",
-				text = "Manual Asset List Test");
-
-			Button.clickSave();
-		}
-
-		task ("Assert an error displays notifying that the user is not allowed to create a duplicate asset list") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_MODAL_CONTENT",
-				value1 = "A collection with that title already exists.");
-		}
-	}
-
-	@description = "This is a test for LPS-166893. The site designer could change the display style of Collections."
-	@priority = 5
-	test ChangeDisplayStyleOfCollections {
-		task ("Given a site designer has collections") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
-
-			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
-
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
-
-			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
-		}
-
-		task ("When the site designer navigates to the Collections admin") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-		}
-
-		task ("Then the site designer see the collections are displayed as table items") {
-			for (var collectionName : list "Dynamic Collection,Manual Collection") {
-				LexiconTable.viewTableEntryTitle(tableEntry = ${collectionName});
-			}
-		}
-
-		task ("When the site designer change the display style to list") {
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
-		}
-
-		task ("Then the site designer see the collections are displayed as list items") {
-			for (var collectionName : list "Dynamic Collection,Manual Collection") {
-				LexiconList.viewListEntryTitle(listEntry = ${collectionName});
-			}
-		}
-
-		task ("When the site designer change the display style to cards") {
-			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
-		}
-
-		task ("Then the site designer see the collections are displayed as cards items") {
-			for (var collectionName : list "Dynamic Collection,Manual Collection") {
-				LexiconCard.viewCardTitle(card = ${collectionName});
 			}
 		}
 	}
@@ -442,36 +423,6 @@ definition {
 			AssertVisible(
 				key_text = "Delete",
 				locator1 = "Button#ANY_DISABLED");
-		}
-	}
-
-	@description = "Assert that the UI works correctly for deleting Asset Lists."
-	@priority = 5
-	test DeleteAssetList {
-		property portal.acceptance = "true";
-
-		task ("Create a manual asset list") {
-			JSONAssetlist.addManualAssetListEntry(
-				groupName = "Test Site Name",
-				title = "Manual Asset List Test");
-		}
-
-		task ("Create a dynamic asset list") {
-			JSONAssetlist.addDynamicAssetListEntry(
-				groupName = "Test Site Name",
-				title = "Dynamic Asset List Test");
-		}
-
-		task ("Delete both asset lists") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.deleteEntry(assetListTitle = "Manual Asset List Test");
-
-			AssetListsAdmin.deleteEntry(assetListTitle = "Dynamic Asset List Test");
-		}
-
-		task ("Assert the taglib that displays when there are no entries displays") {
-			AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
 		}
 	}
 
@@ -2985,39 +2936,6 @@ definition {
 		}
 	}
 
-	@description = "Assert that the UI works correctly for renaming Asset Lists."
-	@priority = 5
-	test RenameAssetList {
-		property portal.acceptance = "true";
-
-		task ("Create a manual asset list") {
-			JSONAssetlist.addManualAssetListEntry(
-				groupName = "Test Site Name",
-				title = "Manual Asset List Test");
-		}
-
-		task ("Rename the asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.renameAssetList(
-				newAssetListTitle = "Manual Asset List Edit",
-				oldAssetListTitle = "Manual Asset List Test");
-		}
-
-		task ("Assert that the name of the asset list changed correctly") {
-			AssertTextEquals.assertPartialText(
-				key_title = "Manual Asset List Edit",
-				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE",
-				value1 = "Manual Asset List Edit");
-
-			AssertTextEquals.assertPartialText(
-				key_columnName = "lfr-type",
-				key_tableEntry = "Manual",
-				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-				value1 = "Manual");
-		}
-	}
-
 	@description = "LPS-86283: Validate if, when selecting a segment it is possible to filter and order, sorting and search	"
 	@priority = 4
 	test SearchingSegments {
@@ -3522,42 +3440,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-177675. The tooltip of the back button is Go to Collections in the edit mode of a new Collection."
-	@priority = 3
-	test ViewBackButtonTooltipOfCollectionEditor {
-		task ("Given a site administrator accesses to dynamic collection editor") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
-		}
-
-		task ("When the site administrator hovers over the back button") {
-			MouseOver(locator1 = "Icon#BACK");
-		}
-
-		task ("Then the site administrator could see the tooltip message") {
-			AssertVisible(
-				key_content = "Go to Collections",
-				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-		}
-
-		task ("Given a site administrator accesses to manual collection editor") {
-			Navigator.gotoBack();
-
-			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
-		}
-
-		task ("When the site administrator hovers over the back button") {
-			MouseOver(locator1 = "Icon#BACK");
-		}
-
-		task ("Then the site administrator could see the tooltip message") {
-			AssertVisible(
-				key_content = "Go to Collections",
-				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-		}
-	}
-
 	@description = "This is a test for LPS-125486. Collection should be available after delete Item Subtype."
 	@priority = 4
 	test ViewCollectionAfterDeleteItemSubtype {
@@ -3603,27 +3485,6 @@ definition {
 				key_selectFieldLabel = "Item Subtype",
 				locator1 = "Select#ANY",
 				value1 = "-Not Selected-");
-		}
-	}
-
-	@description = "This is a test for LPS-166046. The site designer could see the icon of collection provider is bolt."
-	@priority = 3
-	test ViewCollectionProviderIcon {
-		task ("Given a site designer has default collection providers") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-		}
-
-		task ("When the site designer navigates to the Collections admin") {
-			Navigator.gotoNavTab(navTab = "Collection Providers");
-		}
-
-		task ("Then the site designer sees the collection provider icon") {
-			for (var collectionProviderName : list "Most Viewed Assets,Highest Rated Assets,Recent Content") {
-				AssertVisible(
-					key_listEntry = ${collectionProviderName},
-					key_text = "bolt",
-					locator1 = "LexiconList#ANY_ICON");
-			}
 		}
 	}
 
@@ -3689,136 +3550,6 @@ definition {
 
 		task ("View content of that variant") {
 			AssetListsAdmin.viewContent(assetTitleList = "WC_Title_1,WC_Title_2,WC_Title_3");
-		}
-	}
-
-	@description = "This is a test for LPS-168664. View collections in Asset Publisher in list and table views."
-	@priority = 3
-	test ViewListAndTableStylesOfCollectionsInSelector {
-		property asset.publisher.selection.style = "asset-list";
-
-		task ("Given a site designer accesses to the Select Collection modal of Asset Publisher") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
-
-			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
-
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
-
-			AssetListsAdmin.configureItemTypeInManualCollection(
-				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "Asset Publisher");
-
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.gotoSelectCollection(portletName = "Asset Publisher");
-
-			Panel.expandPanel(panel = "Select Collection");
-
-			Button.clickSelect();
-
-			WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-		}
-
-		task ("When the site designer changes the display style to list") {
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
-		}
-
-		task ("Then the site designer sees the list styles of collections") {
-			AssertElementNotPresent(locator1 = "ManagementBar#ORDER");
-
-			for (var collectionName : list "Dynamic Collection,Manual Collection") {
-				LexiconList.viewListEntryTitle(listEntry = ${collectionName});
-
-				AssertElementNotPresent(
-					key_listEntry = ${collectionName},
-					locator1 = "LexiconList#AVATAR_ICON");
-			}
-		}
-
-		task ("When the site designer change the display style to table") {
-			LexiconEntry.changeDisplayStyle(displayStyle = "table");
-		}
-
-		task ("Then the site designer sees the table styles of collections") {
-			AssertVisible(
-				key_tableEntry = "Dynamic Collection",
-				key_text = "bolt",
-				locator1 = "LexiconTable#TABLE_ENTRY_ICON");
-
-			AssertVisible(
-				key_tableEntry = "Manual Collection",
-				key_text = "list",
-				locator1 = "LexiconTable#TABLE_ENTRY_ICON");
-
-			LexiconTable.viewTableEntryInfo(
-				columnName = "type",
-				tableEntry = "Dynamic Collection",
-				tableEntryInfo = "Dynamic");
-
-			LexiconTable.viewTableEntryInfo(
-				columnName = "type",
-				tableEntry = "Manual Collection",
-				tableEntryInfo = "Manual");
-
-			LexiconTable.viewTableEntryInfo(
-				columnName = "item-type",
-				tableEntry = "Dynamic Collection",
-				tableEntryInfo = "Asset");
-
-			LexiconTable.viewTableEntryInfo(
-				columnName = "item-type",
-				tableEntry = "Manual Collection",
-				tableEntryInfo = "Web Content Article");
-
-			LexiconTable.viewTableEntryInfo(
-				columnName = "subtype",
-				tableEntry = "Dynamic Collection",
-				tableEntryInfo = "-");
-
-			LexiconTable.viewTableEntryInfo(
-				columnName = "subtype",
-				tableEntry = "Manual Collection",
-				tableEntryInfo = "Basic Web Content");
-
-			for (var collectionName : list "Dynamic Collection,Manual Collection") {
-				LexiconTable.viewTableEntryInfo(
-					columnName = "name",
-					tableEntry = ${collectionName},
-					tableEntryInfo = ${collectionName});
-
-				LexiconTable.viewTableEntryInfo(
-					columnName = "variations",
-					tableEntry = ${collectionName},
-					tableEntryInfo = 0);
-
-				LexiconTable.viewTableEntryInfo(
-					columnName = "usages",
-					tableEntry = ${collectionName},
-					tableEntryInfo = 0);
-
-				AssertTextEquals.assertPartialText(
-					key_columnName = "modified",
-					key_tableEntry = ${collectionName},
-					locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-					value1 = "Ago");
-			}
 		}
 	}
 

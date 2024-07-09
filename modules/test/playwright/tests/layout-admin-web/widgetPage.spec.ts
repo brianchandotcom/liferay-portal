@@ -192,14 +192,21 @@ test('LPS-178476 View the XSS is escaped when store it in widget page name.', as
 	site,
 	widgetPagePage,
 }) => {
+
+	// Add listener with expect so it fails when a browser dialog is shown
+
+	page.on('dialog', async (dialog) => {
+		dialog.accept();
+
+		expect(dialog.message(), 'This alert should not be shown').toBeNull();
+	});
+
 	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 		groupId: site.id,
 		title: '<script>alert(123);</script>',
 	});
 
 	await widgetPagePage.goToSitePage(site, layout.friendlyURL);
-
-	await expect(page.getByRole('alert')).not.toBeVisible();
 
 	// Open the Product Menu
 
@@ -208,6 +215,4 @@ test('LPS-178476 View the XSS is escaped when store it in widget page name.', as
 			name: 'Product Menu',
 		})
 		.click({timeout: 3000});
-
-	await expect(page.getByRole('alert')).not.toBeVisible();
 });

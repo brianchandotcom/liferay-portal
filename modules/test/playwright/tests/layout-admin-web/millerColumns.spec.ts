@@ -135,12 +135,19 @@ test('LPS-178476 View the XSS is escaped when store it in widget page name.', as
 	pagesAdminPage,
 	site,
 }) => {
+
+	// Add listener with expect so it fails when a browser dialog is shown
+
+	page.on('dialog', async (dialog) => {
+		dialog.accept();
+
+		expect(dialog.message(), 'This alert should not be shown').toBeNull();
+	});
+
 	await apiHelpers.jsonWebServicesLayout.addLayout({
 		groupId: site.id,
 		title: '<script>alert(123);</script>',
 	});
 
 	await pagesAdminPage.goto(site.friendlyUrlPath);
-
-	await expect(page.getByRole('alert')).not.toBeVisible();
 });

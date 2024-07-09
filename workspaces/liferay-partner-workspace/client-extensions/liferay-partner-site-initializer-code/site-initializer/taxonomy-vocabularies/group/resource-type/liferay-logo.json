@@ -1,0 +1,21 @@
+{
+	"description": "Liferay Logo",
+	"externalReferenceCode": "PRMC074",
+	"name": "Liferay Logo",
+	"name_i18n": {
+		"ar_SA": "Liferay Logo",
+		"ca_ES": "Liferay Logo",
+		"de_DE": "Liferay Logo",
+		"en_US": "Liferay Logo",
+		"es_ES": "Liferay Logo",
+		"fi_FI": "Liferay Logo",
+		"fr_FR": "Liferay Logo",
+		"hu_HU": "Liferay Logo",
+		"ja_JP": "Liferay Logo",
+		"nl_NL": "Liferay Logo",
+		"pt_BR": "Liferay Logo",
+		"sv_SE": "Liferay Logo",
+		"zh_CN": "Liferay Logo"
+	},
+	"viewableBy": "Anyone"
+}

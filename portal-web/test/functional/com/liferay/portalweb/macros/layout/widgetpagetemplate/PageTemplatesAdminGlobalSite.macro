@@ -1,32 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCP(pageTemplateActive = null, pageTemplateName = null) {
-		LexiconEntry.gotoAdd();
-
-		PortletEntry.inputName(name = ${pageTemplateName});
-
-		if (isSet(pageTemplateDescription)) {
-			PortletEntry.inputDescriptionTextInput(description = ${pageTemplateDescription});
-		}
-
-		if (${pageTemplateActive} == "Not Active") {
-			Click(locator1 = "ToggleSwitch#ACTIVE");
-		}
-
-		PortletEntry.save();
-
-		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = ${pageTemplateName});
-
-		LexiconCard.viewCardLabel(
-			card = ${pageTemplateName},
-			cardLabel = ${pageTemplateActive});
-	}
-
-	@summary = "Default summary"
 	macro deactivateAndActivate(pageTemplateName = null) {
-		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = ${pageTemplateName});
-
 		PageTemplatesAdminGlobalSite.gotoPageTemplateEllipsisItem(
 			item = "Configure",
 			pageTemplateName = ${pageTemplateName});
@@ -56,44 +31,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(pageTemplateActive = null, pageTemplateName = null) {
-		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = ${pageTemplateName});
-
-		PageTemplatesAdminGlobalSite.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = ${pageTemplateName});
-
-		PortletEntry.inputName(name = "${pageTemplateName} Edit");
-
-		if (${pageTemplateActive} == "Not Active") {
-			Click(locator1 = "ToggleSwitch#ACTIVE");
-		}
-
-		Button.clickSave();
-
-		var key_pageTemplateName = ${pageTemplateName};
-
-		Alert.viewSuccessMessage();
-
-		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "${pageTemplateName} Edit");
-
-		PageTemplatesAdminGlobalSite.viewStatus(
-			pageTemplateName = "${pageTemplateName} Edit",
-			pageTemplateStatus = ${pageTemplateActive});
-	}
-
-	@summary = "Default summary"
-	macro editDescription(pageTemplateName = null, pageTemplateDescription = null) {
-		PageTemplatesAdminGlobalSite.viewDescription(
-			pageTemplateDescription = ${pageTemplateDescription},
-			pageTemplateName = ${pageTemplateName});
-
-		PortletEntry.inputDescriptionTextInput(description = "This is a page template description edit");
-
-		PortletEntry.save();
-	}
-
-	@summary = "Default summary"
 	macro gotoPageTemplateEllipsisItem(item = null, pageTemplateName = null) {
 		LexiconCard.clickEllipsisItem(
 			card = ${pageTemplateName},
@@ -101,74 +38,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPageTemplateViaEdit(pageTemplateName = null) {
-		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = ${pageTemplateName});
-
-		LexiconCard.clickCardTitleLink(card = ${pageTemplateName});
-	}
-
-	@summary = "Default summary"
 	macro openGlobalPageTemplatesAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/global/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet");
-	}
-
-	@summary = "Default summary"
-	macro tearDownCP() {
-		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-		var pageTemplateName = "Page Template Name";
-
-		while (IsElementPresent(key_card = ${pageTemplateName}, locator1 = "Card#CARD_ELLIPSIS")) {
-			PageTemplatesAdminGlobalSite.deleteCP(pageTemplateName = ${pageTemplateName});
-		}
-	}
-
-	@summary = "Default summary"
-	macro viewCP(pageTemplateName = null) {
-		AssertTextEquals.assertPartialText(
-			key_pageTemplateName = ${pageTemplateName},
-			locator1 = "PageTemplates#PAGE_TEMPLATE_TABLE_NAME",
-			value1 = ${pageTemplateName});
-	}
-
-	@summary = "Default summary"
-	macro viewDefaultCP() {
-		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "Search");
-
-		AssertElementNotPresent(
-			index = 2,
-			locator1 = "PageTemplates#PAGE_TEMPLATE_CARD_ITEM");
-	}
-
-	@summary = "Default summary"
-	macro viewDefaultLocalizedCP(pageTemplateNameList = null, portletTitle = null) {
-		for (var pageTemplateNameTranslation : list ${pageTemplateNameList}) {
-			var key_pageTemplateName = ${pageTemplateNameTranslation};
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "PageTemplates#PAGE_TEMPLATE_TABLE_NAME",
-				value1 = ${pageTemplateNameTranslation});
-		}
-
-		SiteAdmin.viewPortletTitle(portletTitle = ${portletTitle});
-	}
-
-	@summary = "Default summary"
-	macro viewDescription(pageTemplateName = null, pageTemplateDescription = null) {
-		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = ${pageTemplateName});
-
-		PageTemplatesAdminGlobalSite.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = ${pageTemplateName});
-
-		AssertTextEquals.assertValue(
-			locator1 = "TextInput#DESCRIPTION",
-			value1 = ${pageTemplateDescription});
-	}
-
-	@summary = "Default summary"
-	macro viewPageTemplatePresent(pageTemplateName = null) {
-		LexiconCard.viewCardTitle(card = ${pageTemplateName});
 	}
 
 	@summary = "Default summary"
@@ -184,15 +55,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Home#SITE_NAME",
 			value1 = ${pageTemplateName});
-	}
-
-	@summary = "Default summary"
-	macro viewStatus(pageTemplateName = null, pageTemplateStatus = null) {
-		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = ${pageTemplateName});
-
-		LexiconCard.viewCardLabel(
-			card = ${pageTemplateName},
-			cardLabel = ${pageTemplateStatus});
 	}
 
 }

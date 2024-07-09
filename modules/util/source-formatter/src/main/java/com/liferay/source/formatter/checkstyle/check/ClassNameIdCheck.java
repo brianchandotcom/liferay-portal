@@ -117,11 +117,7 @@ public class ClassNameIdCheck extends BaseCheck {
 
 			String methodName = getName(methodDefDetailAST);
 
-			if (!StringUtil.equalsIgnoreCase(
-					methodName, "get" + trimmedVariableName) &&
-				!StringUtil.equalsIgnoreCase(
-					methodName, "set" + trimmedVariableName)) {
-
+			if (!methodName.matches("(?i)_?(get|set)" + trimmedVariableName)) {
 				return false;
 			}
 		}

@@ -1,0 +1,5 @@
+apps/headless/headless-delivery/headless-delivery-test/**/BaseBlog*Test.java,\
+apps/headless/headless-delivery/headless-delivery-test/**/Blog*Test.java,\
+apps/document-library/**/src/testIntegration/**/*Test.java,\
+apps/fragment/**/src/testIntegration/**/*Test.java,\
+apps/segments/**/src/testIntegration/**/*Test.java

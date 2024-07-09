@@ -136,7 +136,9 @@ export function ClayTable({
 
 	return (
 		<Table
-			alwaysVisibleColumns={defaultAlwaysVisibleColumns}
+			alwaysVisibleColumns={
+				selectable ? defaultAlwaysVisibleColumns : undefined
+			}
 			messages={{
 				columnsVisibility: Liferay.Language.get(
 					'manage-columns-visibility'

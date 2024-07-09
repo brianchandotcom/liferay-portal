@@ -8,11 +8,9 @@ package com.liferay.portal.db.schema.definition.internal.test.util;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
-import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
@@ -72,22 +70,12 @@ public class DatabaseTestUtil {
 		try (Connection connection = dataSource.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-			DBInspector dbInspector = new DBInspector(connection);
-
 			try (ResultSet resultSet = databaseMetaData.getTables(
 					connection.getCatalog(), connection.getSchema(), null,
 					new String[] {"TABLE"})) {
 
 				while (resultSet.next()) {
 					String tableName = resultSet.getString("TABLE_NAME");
-
-					if (dbInspector.isObjectTable(
-							Collections.singletonList(
-								PortalInstancePool.getDefaultCompanyId()),
-							tableName)) {
-
-						continue;
-					}
 
 					indexColumnNames.addAll(
 						_getIndexColumnNames(connection, db, tableName, false));
@@ -116,27 +104,16 @@ public class DatabaseTestUtil {
 		try (Connection connection = dataSource.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-			DBInspector dbInspector = new DBInspector(connection);
-
 			try (ResultSet resultSet = databaseMetaData.getColumns(
 					connection.getCatalog(), connection.getSchema(), null,
 					null)) {
 
 				while (resultSet.next()) {
-					String tableName = resultSet.getString("TABLE_NAME");
-
-					if (dbInspector.isObjectTable(
-							Collections.singletonList(
-								PortalInstancePool.getDefaultCompanyId()),
-							tableName)) {
-
-						continue;
-					}
-
 					tableColumnNames.add(
 						StringUtil.merge(
 							new Object[] {
-								tableName, resultSet.getString("COLUMN_NAME"),
+								resultSet.getString("TABLE_NAME"),
+								resultSet.getString("COLUMN_NAME"),
 								resultSet.getInt("DATA_TYPE"),
 								resultSet.getInt("COLUMN_SIZE"),
 								resultSet.getInt("DECIMAL_DIGITS"),

@@ -117,6 +117,13 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaDisplayPageInfoItemCapabilityCheck()
+		throws Exception {
+
+		test("upgrade/UpgradeJavaDisplayPageInfoItemCapabilityCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaFacetedSearcherCheck() throws Exception {
 		test("upgrade/UpgradeJavaFacetedSearcherCheck.testjava");
 	}

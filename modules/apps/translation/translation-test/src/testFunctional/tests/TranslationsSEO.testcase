@@ -76,6 +76,10 @@ definition {
 			layoutName = "Translation Content Page",
 			type = "content");
 
+		JSONLayout.publishLayout(
+			groupName = "Test Site Name",
+			layoutName = "Translation Content Page");
+
 		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/translation-widget-page");

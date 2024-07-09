@@ -76,55 +76,89 @@ test('Check that the Dynamic Segment does not continue to appear in the audience
 		channelName,
 	});
 	const date1 = new Date();
-	const individualName = ['user1'];
+	const date2 = new Date();
+	date2.setDate(date2.getDate() - 5);
+	const individualName = 'user1';
 	const pageName = 'Liferay - AC Page';
 	const dynamicSegmentName = 'Test Dynamic Segment';
 	const staticSegmentName = 'Test Static Segment';
 	const segmentsName = [dynamicSegmentName, staticSegmentName];
 
+	const generateIndividual = (name) => {
+		const id = getRandomString();
+
+		return {
+			id,
+			name,
+		};
+	};
+
+	const individuals = [generateIndividual(individualName)];
+
 	await test.step('Create an Individual and their respective Identity directly in the AC database', async () => {
+		const identities = individuals.map((individual) => ({
+			createDate: date1.toISOString(),
+			id: individual.id,
+			individualId: individual.id,
+		}));
+
 		await createIndividuals({
 			apiHelpers,
-			names: individualName,
+			individuals,
 		});
 
-		await apiHelpers.jsonWebServicesOSBAsah.createIdentities([
-			{
-				createDate: date1.toISOString(),
-				id: '1',
-				individualId: 'user1@liferay.com',
-			},
-		]);
+		await apiHelpers.jsonWebServicesOSBAsah.createIdentities(identities);
 	});
 
 	await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
-		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
-			{
-				applicationId: 'Page',
-				canonicalUrl: 'https://www.liferay.com',
-				channelId: channel.id,
-				eventDate: date1.toISOString(),
-				eventId: 'pageViewed',
-				title: pageName,
-				userId: '1',
-			},
-		]);
+		const events = individuals.map((individual) => ({
+			applicationId: 'Page',
+			canonicalUrl: 'https://www.liferay.com',
+			channelId: channel.id,
+			eventDate: date1.toISOString(),
+			eventId: 'pageViewed',
+			title: pageName,
+			userId: individual.id,
+		}));
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
+	});
+
+	await test.step('Create Individual Session within the Last 24 hours period in AC', async () => {
+		const sessions = individuals.map((individual) => ({
+			channelId: channel.id,
+			id: individual.id,
+			sessionEnd: date1.toISOString(),
+			sessionStart: date1.toISOString(),
+			userId: individual.id,
+		}));
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions(sessions);
 	});
 
 	await test.step('Create an event for the individual to appear in periods different than the Last 24 hours in AC', async () => {
-		const date2 = new Date();
-		date2.setDate(date2.getDate() - 5);
+		const pageDaily = individuals.map((individual) => ({
+			canonicalUrl: 'https://www.liferay.com',
+			channelId: channel.id,
+			eventDate: date2.toISOString(),
+			title: pageName,
+			userId: individual.id,
+			views: 1,
+		}));
 
-		await apiHelpers.jsonWebServicesOSBAsah.createPagesDaily([
-			{
-				canonicalUrl: 'https://www.liferay.com',
-				channelId: channel.id,
-				eventDate: date2.toISOString(),
-				title: pageName,
-				userId: '1',
-				views: 1,
-			},
-		]);
+		await apiHelpers.jsonWebServicesOSBAsah.createPagesDaily(pageDaily);
+	});
+
+	await test.step('Create Individual Session in periods different than the Last 24 hours in AC', async () => {
+		const sessions = individuals.map((individual) => ({
+			channelId: channel.id,
+			id: individual.id,
+			sessionEnd: date2.toISOString(),
+			sessionStart: date2.toISOString(),
+			userId: individual.id,
+		}));
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions(sessions);
 	});
 
 	await test.step('Go to Analytics Cloud and Switch the property', async () => {

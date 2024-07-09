@@ -127,7 +127,7 @@ export class JSONWebServicesOSBAsahApiHelper {
 
 	async createSessions(session: Session[]): Promise<any> {
 		return this.apiHelpers.post(
-			`${asahConfig.environment.baseUrl}${this.basePath}/sessions`,
+			`${asahConfig.environment.backendUrl}${this.basePath}/sessions`,
 			{
 				data: session,
 				failOnStatusCode: true,

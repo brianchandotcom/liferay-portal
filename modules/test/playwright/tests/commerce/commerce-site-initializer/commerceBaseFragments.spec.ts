@@ -68,7 +68,7 @@ test('LPD-23780 Commerce Classic Header main fragment is correctly displayed', a
 	);
 
 	const commerceHeaderSearchPortlet = page.locator(
-		'#commerce-header-search .portlet-search-bar'
+		'header .portlet-search-bar'
 	);
 
 	await expect(commerceHeaderSearchPortlet).toBeVisible();

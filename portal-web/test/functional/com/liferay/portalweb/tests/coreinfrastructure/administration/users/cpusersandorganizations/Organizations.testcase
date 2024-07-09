@@ -467,35 +467,6 @@ definition {
 		Organization.viewUser(userName = "userfn5 userln5");
 	}
 
-	@priority = 4
-	test AssignUser {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONOrganization.addOrganization(organizationName = "Organization Name");
-
-		Organization.openOrganizationsAdmin();
-
-		Organization.assignUser(
-			orgName = "Organization Name",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userName = "userfn userln",
-			userScreenName = "usersn");
-
-		Organization.openOrganizationsAdmin();
-
-		Organization.gotoCP(orgName = "Organization Name");
-
-		Organization.viewUser(userName = "userfn userln");
-	}
-
 	@description = "Add a site to an organization, assign user to that organization and assert it displays in My Dashboard"
 	@priority = 4
 	test AssignUserToOrganizationWithSite {

@@ -8,7 +8,6 @@ package com.liferay.portal.language.override.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -18,7 +17,6 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.test.rule.Inject;
@@ -72,19 +70,16 @@ public class ImportTranslationsMVCActionCommandTest {
 
 		Assert.assertNull(
 			_ploEntryLocalService.fetchPLOEntry(
-				TestPropsValues.getCompanyId(), key1,
-				LanguageUtil.getLanguageId(LocaleUtil.ENGLISH)));
+				TestPropsValues.getCompanyId(), key1, _LANGUAGE_ID));
 
 		Assert.assertNull(
 			_ploEntryLocalService.fetchPLOEntry(
-				TestPropsValues.getCompanyId(), key2,
-				LanguageUtil.getLanguageId(LocaleUtil.ENGLISH)));
+				TestPropsValues.getCompanyId(), key2, _LANGUAGE_ID));
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_importTranslations",
 			new Class<?>[] {ActionRequest.class, File.class, String.class},
-			new MockLiferayPortletActionRequest(), file,
-			LanguageUtil.getLanguageId(LocaleUtil.ENGLISH));
+			new MockLiferayPortletActionRequest(), file, _LANGUAGE_ID);
 
 		_assertLanguageKey(value1, key1);
 		_assertLanguageKey(value2, key2);
@@ -102,8 +97,7 @@ public class ImportTranslationsMVCActionCommandTest {
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_importTranslations",
 			new Class<?>[] {ActionRequest.class, File.class, String.class},
-			mockLiferayPortletActionRequest, file,
-			LanguageUtil.getLanguageId(LocaleUtil.ENGLISH));
+			mockLiferayPortletActionRequest, file, _LANGUAGE_ID);
 
 		Assert.assertTrue(
 			SessionErrors.contains(
@@ -124,8 +118,7 @@ public class ImportTranslationsMVCActionCommandTest {
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_importTranslations",
 			new Class<?>[] {ActionRequest.class, File.class, String.class},
-			mockLiferayPortletActionRequest, file,
-			LanguageUtil.getLanguageId(LocaleUtil.ENGLISH));
+			mockLiferayPortletActionRequest, file, _LANGUAGE_ID);
 
 		Assert.assertTrue(
 			SessionErrors.contains(
@@ -136,12 +129,13 @@ public class ImportTranslationsMVCActionCommandTest {
 		throws Exception {
 
 		PLOEntry ploEntry = _ploEntryLocalService.fetchPLOEntry(
-			TestPropsValues.getCompanyId(), key,
-			LanguageUtil.getLanguageId(LocaleUtil.ENGLISH));
+			TestPropsValues.getCompanyId(), key, _LANGUAGE_ID);
 
 		Assert.assertNotNull(ploEntry);
 		Assert.assertEquals(expectedValue, ploEntry.getValue());
 	}
+
+	private static final String _LANGUAGE_ID = "en_US";
 
 	@Inject(
 		filter = "mvc.command.name=/portal_language_override/import_translations"

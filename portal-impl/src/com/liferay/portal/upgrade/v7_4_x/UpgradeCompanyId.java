@@ -27,11 +27,7 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (TableUpdater tableUpdater : getTableUpdaters()) {
-			if (!hasColumn(tableUpdater.getTableName(), "companyId")) {
-				tableUpdater.setCreateCompanyIdColumn(true);
-			}
-		}
+		disableProcessConcurrently();
 
 		super.doUpgrade();
 	}

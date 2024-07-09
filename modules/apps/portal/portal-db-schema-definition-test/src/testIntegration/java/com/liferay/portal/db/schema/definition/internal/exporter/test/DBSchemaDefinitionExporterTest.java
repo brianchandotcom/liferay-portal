@@ -8,6 +8,7 @@ package com.liferay.portal.db.schema.definition.internal.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.db.schema.definition.internal.test.util.ConfigurationTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseTestUtil;
+import com.liferay.portal.db.schema.definition.internal.test.util.ObjectsTestUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -35,9 +36,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.cm.PersistenceManager;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,6 +65,16 @@ public class DBSchemaDefinitionExporterTest {
 
 		Assume.assumeTrue(
 			(dbType == DBType.MYSQL) || (dbType == DBType.POSTGRESQL));
+	}
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		ObjectsTestUtil.createObjectsData();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		ObjectsTestUtil.removeObjectsData();
 	}
 
 	@Before

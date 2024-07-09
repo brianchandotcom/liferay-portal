@@ -211,6 +211,11 @@ components:
                 content:
                     type: string
                     x-json-string: true
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                    description:
+                        The workflow's creator.
+                    readOnly: true
                 dateCreated:
                     format: date-time
                     readOnly: true

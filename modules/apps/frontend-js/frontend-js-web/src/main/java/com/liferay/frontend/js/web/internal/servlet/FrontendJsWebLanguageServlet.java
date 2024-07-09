@@ -5,19 +5,17 @@
 
 package com.liferay.frontend.js.web.internal.servlet;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.frontend.js.web.internal.language.LanguageState;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,8 +27,11 @@ import java.io.PrintWriter;
 
 import java.net.URL;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -40,10 +41,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Iván Zaera Avellón
@@ -60,30 +64,92 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_eTags.clear();
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, ServletContext.class,
+			new ServiceTrackerCustomizer<ServletContext, String>() {
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ServletContext.class, null,
-			(serviceReference, emitter) -> {
-				ServletContext servletContext = bundleContext.getService(
-					serviceReference);
+				@Override
+				public String addingService(
+					ServiceReference<ServletContext> serviceReference) {
 
-				try {
-					emitter.emit(servletContext.getContextPath());
+					ServletContext servletContext = bundleContext.getService(
+						serviceReference);
+
+					try {
+						String contextPath = servletContext.getContextPath();
+
+						if (!contextPath.startsWith(_WEB_CONTEXT_PATH_PREFIX)) {
+							return null;
+						}
+
+						String webContextPath = contextPath.substring(
+							_WEB_CONTEXT_PATH_PREFIX.length());
+
+						List<String> keys = _getLanguageKeys(servletContext);
+
+						if (keys != null) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(
+									StringBundler.concat(
+										"Web context path '", webContextPath,
+										"' added, contains ", keys.size(),
+										" keys"));
+							}
+
+							synchronized (this) {
+								_webContextPathKeysMap.put(
+									webContextPath, keys);
+
+								LanguageState.set(
+									new LanguageState(
+										_webContextPathKeysMap, _language));
+							}
+						}
+
+						return webContextPath;
+					}
+					finally {
+						bundleContext.ungetService(serviceReference);
+					}
 				}
-				finally {
-					bundleContext.ungetService(serviceReference);
+
+				@Override
+				public void modifiedService(
+					ServiceReference<ServletContext> serviceReference,
+					String webContextPath) {
 				}
+
+				@Override
+				public void removedService(
+					ServiceReference<ServletContext> serviceReference,
+					String webContextPath) {
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Web context path '", webContextPath,
+								"' removed"));
+					}
+
+					synchronized (this) {
+						_webContextPathKeysMap.remove(webContextPath);
+
+						LanguageState.set(
+							new LanguageState(
+								_webContextPathKeysMap, _language));
+					}
+				}
+
 			});
+
+		_serviceTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_eTags.clear();
+		_serviceTracker.close();
 
-		_serviceTrackerMap.close();
-
-		_serviceTrackerMap = null;
+		_serviceTracker = null;
 	}
 
 	@Override
@@ -98,37 +164,7 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 
 		String[] parts = pathInfo.split(StringPool.SLASH);
 
-		if ((parts.length != 4) || !parts[3].equals("all.js")) {
-			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
-
-			return;
-		}
-
-		// Check if browser cache can be used
-
-		String ifNoneMatch = httpServletRequest.getHeader(
-			HttpHeaders.IF_NONE_MATCH);
-
-		if (ifNoneMatch != null) {
-			String eTag = _eTags.get(pathInfo);
-
-			if ((eTag != null) && eTag.equals(ifNoneMatch)) {
-				httpServletResponse.setStatus(
-					HttpServletResponse.SC_NOT_MODIFIED);
-				httpServletResponse.setContentLength(0);
-
-				return;
-			}
-		}
-
-		// Check if servlet context exists
-
-		String webContextPath = parts[2];
-
-		ServletContext servletContext = _serviceTrackerMap.getService(
-			Portal.PATH_MODULE + StringPool.SLASH + webContextPath);
-
-		if (servletContext == null) {
+		if ((parts.length != 5) || !parts[4].equals("all.js")) {
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
@@ -136,9 +172,11 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 
 		// Send response
 
-		Locale locale = LocaleUtil.fromLanguageId(parts[1]);
+		LanguageState languageState = LanguageState.get();
+		Locale locale = LocaleUtil.fromLanguageId(parts[2]);
+		String webContextPath = parts[3];
 
-		String content = _getContent(locale, servletContext);
+		String content = _getContent(languageState, locale, webContextPath);
 
 		if (content == null) {
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -146,15 +184,28 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 			return;
 		}
 
-		String etag =
-			StringPool.QUOTE + DigesterUtil.digestBase64("SHA-1", content) +
-				StringPool.QUOTE;
-
-		_eTags.put(pathInfo, etag);
-
 		httpServletResponse.setCharacterEncoding(StringPool.UTF8);
 		httpServletResponse.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
-		httpServletResponse.setHeader(HttpHeaders.ETAG, etag);
+
+		String cacheControl = "max-age=315360000, public, immutable";
+
+		// If the hash is different from the current hash we are using return
+		// a the current translations as fallback, but tell agents not to cache
+		// it since that would break HTTP semantics.
+
+		if (!parts[1].equals(languageState.getHash())) {
+			cacheControl = HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE;
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Invalid hash received in language servlet: got '",
+						parts[1], "' but expected '", languageState.getHash(),
+						StringPool.APOSTROPHE));
+			}
+		}
+
+		httpServletResponse.setHeader(HttpHeaders.CACHE_CONTROL, cacheControl);
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
@@ -175,22 +226,25 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 		return StringPool.BLANK;
 	}
 
-	private String _getContent(Locale locale, ServletContext servletContext)
-		throws IOException {
+	private String _getContent(
+		LanguageState languageState, Locale locale, String webContextPath) {
 
-		JSONArray languageKeysJSONArray = _getLanguageKeysJSONArray(
-			servletContext);
+		Collection<String> keys = languageState.getKeys(webContextPath);
 
-		if (languageKeysJSONArray == null) {
+		if (keys == null) {
+			return null;
+		}
+
+		Map<String, String> labels = languageState.getLabels(locale);
+
+		if (labels == null) {
 			return null;
 		}
 
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < languageKeysJSONArray.length(); i++) {
-			String key = languageKeysJSONArray.getString(i);
-
-			String label = _language.get(locale, key);
+		for (String key : keys) {
+			String label = labels.get(key);
 
 			sb.append(StringPool.APOSTROPHE);
 			sb.append(key.replaceAll("'", "\\\\'"));
@@ -204,28 +258,33 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 			new String[] {sb.toString()});
 	}
 
-	private JSONArray _getLanguageKeysJSONArray(ServletContext servletContext)
-		throws IOException {
-
-		URL url = servletContext.getResource("/language.json");
-
-		if (url == null) {
-			return null;
-		}
-
+	private List<String> _getLanguageKeys(ServletContext servletContext) {
 		try {
+			URL url = servletContext.getResource("/language.json");
+
+			if (url == null) {
+				return null;
+			}
+
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				URLUtil.toString(url));
 
-			return jsonObject.getJSONArray("keys");
+			return JSONUtil.toStringList(jsonObject.getJSONArray("keys"));
 		}
-		catch (JSONException jsonException) {
-			throw new IOException(
-				"Invalid language JSON file " + url, jsonException);
+		catch (Exception exception) {
+			_log.error(
+				"Unable to get language.json keys from servlet context " +
+					servletContext.getContextPath(),
+				exception);
+
+			return null;
 		}
 	}
 
 	private static final String _TPL_JAVA_SCRIPT;
+
+	private static final String _WEB_CONTEXT_PATH_PREFIX =
+		Portal.PATH_MODULE + StringPool.SLASH;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FrontendJsWebLanguageServlet.class);
@@ -234,15 +293,14 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 		_TPL_JAVA_SCRIPT = _loadTemplate("all.js.tpl");
 	}
 
-	private final ConcurrentHashMap<String, String> _eTags =
-		new ConcurrentHashMap<>();
-
 	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;
 
-	private ServiceTrackerMap<String, ServletContext> _serviceTrackerMap;
+	private ServiceTracker<ServletContext, String> _serviceTracker;
+	private final Map<String, List<String>> _webContextPathKeysMap =
+		new HashMap<>();
 
 }

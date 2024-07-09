@@ -81,13 +81,6 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
 	}
 
 	@Test
@@ -668,17 +661,24 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
+
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(), _layoutPageTemplateEntry.getPlid());
+					_group.getGroupId(), layoutPageTemplateEntry.getPlid());
 
 		return _layoutPageTemplateStructureRelLocalService.
 			fetchLayoutPageTemplateStructureRel(
 				layoutPageTemplateStructure.getLayoutPageTemplateStructureId(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(
-						_layoutPageTemplateEntry.getPlid()));
+						layoutPageTemplateEntry.getPlid()));
 	}
 
 	@Override
@@ -982,9 +982,6 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 
 	@Inject
 	private JSONFactory _jsonFactory;
-
-	@DeleteAfterTestRun
-	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

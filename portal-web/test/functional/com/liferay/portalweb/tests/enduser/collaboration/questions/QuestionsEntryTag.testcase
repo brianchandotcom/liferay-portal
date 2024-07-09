@@ -531,6 +531,10 @@ definition {
 		task ("Then only the matching tag is displayed") {
 			Questions.viewTags(tagName = "tag1");
 
+			Questions.search(
+				searchKey = "tag1",
+				searchTag = "true");
+
 			Questions.viewNoTags(tagsList = "tag2,tag3");
 
 			Click(

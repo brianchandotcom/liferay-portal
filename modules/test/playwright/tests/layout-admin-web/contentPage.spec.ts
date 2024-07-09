@@ -31,7 +31,7 @@ test('does not show widget topper on hover in view mode', async ({
 	site,
 }) => {
 
-	// Create a page with a Dropdown fragment and an Asset Publisher below
+	// Create a page with a Dropdown fragment and a Breadcrumb widget below
 	// This case is specific to cover LPP-45872
 
 	const fragmentId = getRandomString();

@@ -8258,6 +8258,7 @@ public class JournalArticleLocalServiceImpl
 						ddmFormField.getType())) {
 
 					ddmFormField.setPredefinedValue(localizedValue);
+
 					update = true;
 				}
 			}

@@ -224,18 +224,15 @@ public class CommerceReturnObjectEntryValuesContributor
 		List<ObjectEntry> notAuthorizedReturnItemObjectEntries =
 			returnItemStatusObjectEntriesMap.getOrDefault(
 				"notAuthorizedReturnItems", Collections.emptyList());
-
-		List<ObjectEntry> toBeProcessedReturnItemObjectEntries =
-			returnItemStatusObjectEntriesMap.getOrDefault(
-				"toBeProcessedReturnItems", Collections.emptyList());
-
-		List<ObjectEntry> receivedReturnItemObjectEntries =
-			returnItemStatusObjectEntriesMap.getOrDefault(
-				"receivedReturnItems", Collections.emptyList());
-
 		List<ObjectEntry> receiptRejectedReturnItemObjectEntries =
 			returnItemStatusObjectEntriesMap.getOrDefault(
 				"receiptRejectedReturnItems", Collections.emptyList());
+		List<ObjectEntry> receivedReturnItemObjectEntries =
+			returnItemStatusObjectEntriesMap.getOrDefault(
+				"receivedReturnItems", Collections.emptyList());
+		List<ObjectEntry> toBeProcessedReturnItemObjectEntries =
+			returnItemStatusObjectEntriesMap.getOrDefault(
+				"toBeProcessedReturnItems", Collections.emptyList());
 
 		if (StringUtil.equalsIgnoreCase(
 				currentReturnStatus,

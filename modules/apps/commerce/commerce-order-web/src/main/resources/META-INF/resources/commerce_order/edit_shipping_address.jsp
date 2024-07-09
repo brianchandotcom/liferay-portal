@@ -23,12 +23,9 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 
 <portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderShippingAddressActionURL" />
 
-<commerce-ui:modal-content
-	title='<%= (shippingAddress == null) ? LanguageUtil.get(request, "add-shipping-address") : LanguageUtil.get(request, "edit-shipping-address") %>'
->
+<div class="container-fluid container-fluid-max-xl p-4">
 	<aui:form action="<%= editCommerceOrderShippingAddressActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= (shippingAddress == null) ? "addShippingAddress" : "updateShippingAddress" %>' />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
 		<aui:model-context bean="<%= shippingAddress %>" model="<%= CommerceAddress.class %>" />
@@ -51,80 +48,80 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 
 		<aui:select label="region" name="regionId" wrapperCssClass="form-group-item" />
 	</aui:form>
-</commerce-ui:modal-content>
 
-<aui:script use="liferay-dynamic-select">
-	new Liferay.DynamicSelect([
-		{
-			select: '<portlet:namespace />countryId',
-			selectData: function (callback) {
-				function injectCountryPlaceholder(list) {
-					var callbackList = [
+	<aui:script use="liferay-dynamic-select">
+		new Liferay.DynamicSelect([
+			{
+				select: '<portlet:namespace />countryId',
+				selectData: function (callback) {
+					function injectCountryPlaceholder(list) {
+						var callbackList = [
+							{
+								countryId: '0',
+								nameCurrentValue:
+									'- <liferay-ui:message key="select-country" />',
+							},
+						];
+
+						list.forEach((listElement) => {
+							callbackList.push(listElement);
+						});
+
+						callback(callbackList);
+					}
+
+					Liferay.Service(
+						'/commerce.commercecountrymanagerimpl/get-shipping-countries',
 						{
-							countryId: '0',
-							nameCurrentValue:
-								'- <liferay-ui:message key="select-country" />',
+							active: true,
+							companyId: '<%= company.getCompanyId() %>',
+							shippingAllowed: true,
 						},
-					];
-
-					list.forEach((listElement) => {
-						callbackList.push(listElement);
-					});
-
-					callback(callbackList);
-				}
-
-				Liferay.Service(
-					'/commerce.commercecountrymanagerimpl/get-shipping-countries',
-					{
-						active: true,
-						companyId: '<%= company.getCompanyId() %>',
-						shippingAllowed: true,
-					},
-					injectCountryPlaceholder
-				);
+						injectCountryPlaceholder
+					);
+				},
+				selectDesc: 'nameCurrentValue',
+				selectId: 'countryId',
+				selectNullable: <%= false %>,
+				selectSort: '<%= true %>',
+				selectVal:
+					'<%= BeanParamUtil.getLong(shippingAddress, request, "countryId") %>',
 			},
-			selectDesc: 'nameCurrentValue',
-			selectId: 'countryId',
-			selectNullable: <%= false %>,
-			selectSort: '<%= true %>',
-			selectVal:
-				'<%= BeanParamUtil.getLong(shippingAddress, request, "countryId") %>',
-		},
-		{
-			select: '<portlet:namespace />regionId',
-			selectData: function (callback, selectKey) {
-				function injectRegionPlaceholder(list) {
-					var callbackList = [
+			{
+				select: '<portlet:namespace />regionId',
+				selectData: function (callback, selectKey) {
+					function injectRegionPlaceholder(list) {
+						var callbackList = [
+							{
+								regionId: '0',
+								name: '- <liferay-ui:message key="select-region" />',
+								nameCurrentValue:
+									'- <liferay-ui:message key="select-region" />',
+							},
+						];
+
+						list.forEach((listElement) => {
+							callbackList.push(listElement);
+						});
+
+						callback(callbackList);
+					}
+
+					Liferay.Service(
+						'/region/get-regions',
 						{
-							regionId: '0',
-							name: '- <liferay-ui:message key="select-region" />',
-							nameCurrentValue:
-								'- <liferay-ui:message key="select-region" />',
+							active: true,
+							countryId: Number(selectKey),
 						},
-					];
-
-					list.forEach((listElement) => {
-						callbackList.push(listElement);
-					});
-
-					callback(callbackList);
-				}
-
-				Liferay.Service(
-					'/region/get-regions',
-					{
-						active: true,
-						countryId: Number(selectKey),
-					},
-					injectRegionPlaceholder
-				);
+						injectRegionPlaceholder
+					);
+				},
+				selectDesc: 'name',
+				selectId: 'regionId',
+				selectNullable: <%= false %>,
+				selectVal:
+					'<%= BeanParamUtil.getLong(shippingAddress, request, "regionId") %>',
 			},
-			selectDesc: 'name',
-			selectId: 'regionId',
-			selectNullable: <%= false %>,
-			selectVal:
-				'<%= BeanParamUtil.getLong(shippingAddress, request, "regionId") %>',
-		},
-	]);
-</aui:script>
+		]);
+	</aui:script>
+</div>

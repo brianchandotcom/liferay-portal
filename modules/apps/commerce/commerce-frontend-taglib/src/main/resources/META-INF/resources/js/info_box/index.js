@@ -10,10 +10,10 @@ export default function infoBoxHandler({
 	linkId,
 	modalId = null,
 	namespace,
-	size,
 	refreshOnClose,
+	size,
 	title,
-	url
+	url,
 }) {
 	const formId = `${namespace}fm`;
 	const linkElement = document.querySelector(`#${linkId}`);
@@ -37,7 +37,7 @@ export default function infoBoxHandler({
 				},
 			],
 			containerProps: {
-				className
+				className,
 			},
 			id,
 			onClose: () => {
@@ -56,9 +56,7 @@ export default function infoBoxHandler({
 
 				if (formElement) {
 					const {
-						[`${namespace}redirect`]: {
-							value: redirect = null
-						} = {}
+						[`${namespace}redirect`]: {value: redirect = null} = {},
 					} = formElement;
 
 					formElement.addEventListener('submit', () => {
@@ -69,11 +67,11 @@ export default function infoBoxHandler({
 					});
 				}
 			},
-			title,
 			size,
+			title,
 			url,
 		});
-	}
+	};
 
 	linkElement.addEventListener('click', handleOpenModal);
 

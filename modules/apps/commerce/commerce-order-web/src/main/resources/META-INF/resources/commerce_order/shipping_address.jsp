@@ -15,13 +15,9 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 
 <portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderShippingAddressActionURL" />
 
-<commerce-ui:modal-content
-	contentCssClasses="p-0"
-	title='<%= LanguageUtil.get(request, "shipping-address") %>'
->
+<div class="container-fluid container-fluid-max-xl p-4">
 	<aui:form action="<%= editCommerceOrderShippingAddressActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="selectShippingAddress" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
 		<frontend-data-set:classic-display
@@ -40,4 +36,4 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 			selectionType="single"
 		/>
 	</aui:form>
-</commerce-ui:modal-content>
+</div>

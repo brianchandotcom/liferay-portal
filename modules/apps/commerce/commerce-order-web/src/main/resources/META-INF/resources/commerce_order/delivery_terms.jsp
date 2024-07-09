@@ -19,9 +19,7 @@ long deliveryCommerceTermEntryId = commerceOrder.getDeliveryCommerceTermEntryId(
 
 <portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderDeliveryTermsActionURL" />
 
-<commerce-ui:modal-content
-	title='<%= (deliveryCommerceTermEntryId == 0) ? LanguageUtil.get(request, "delivery-terms") : LanguageUtil.get(request, "edit-delivery-terms") %>'
->
+<div class="container-fluid container-fluid-max-xl p-4">
 	<c:choose>
 		<c:when test="<%= deliveryTermsEntries.isEmpty() %>">
 			<clay:row>
@@ -51,7 +49,6 @@ long deliveryCommerceTermEntryId = commerceOrder.getDeliveryCommerceTermEntryId(
 
 			<aui:form action="<%= editCommerceOrderDeliveryTermsActionURL %>" method="post" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateDeliveryTerms" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
 				<aui:select label='<%= LanguageUtil.get(request, "title") %>' name="commerceDeliveryTermId" showEmptyOption="<%= true %>">
@@ -88,4 +85,4 @@ long deliveryCommerceTermEntryId = commerceOrder.getDeliveryCommerceTermEntryId(
 			/>
 		</c:otherwise>
 	</c:choose>
-</commerce-ui:modal-content>
+</div>

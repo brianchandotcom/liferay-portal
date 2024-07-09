@@ -8,11 +8,11 @@ package com.liferay.commerce.frontend.taglib.servlet.taglib;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
-import java.util.Map;
-import java.util.Map;
 
 /**
  * @author Fabio Diego Mastrorilli
@@ -41,6 +41,10 @@ public class InfoBoxTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public Map<String, Object> getActionContext() {
+		return _actionContext;
+	}
+
 	public String getActionLabel() {
 		return _actionLabel;
 	}
@@ -59,6 +63,10 @@ public class InfoBoxTag extends IncludeTag {
 
 	public String getTitle() {
 		return _title;
+	}
+
+	public void setActionContext(Map<String, Object> actionContext) {
+		_actionContext = actionContext;
 	}
 
 	public void setActionLabel(String actionLabel) {
@@ -113,15 +121,6 @@ public class InfoBoxTag extends IncludeTag {
 	private static final String _END_PAGE = "/info_box/end.jsp";
 
 	private static final String _START_PAGE = "/info_box/start.jsp";
-
-	public Map<String, Object> getActionContext() {
-		return _actionContext;
-	}
-
-	public void setActionContext(
-		Map<String, Object> actionContext) {
-		_actionContext = actionContext;
-	}
 
 	private Map<String, Object> _actionContext;
 	private String _actionLabel;

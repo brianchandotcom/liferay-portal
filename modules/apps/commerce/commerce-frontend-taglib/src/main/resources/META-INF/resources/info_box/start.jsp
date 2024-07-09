@@ -18,13 +18,15 @@ String linkId = HtmlUtil.escape(PortalUtil.generateRandomKey(request, "info-box"
 		</c:if>
 
 		<c:if test="<%= Validator.isNotNull(actionLabel) %>">
+
 			<%
 			String href = Validator.isNotNull(actionUrl) ? actionUrl : "#";
 			%>
 
-			<c:if test="<%= Validator.isNotNull(actionTargetId)%>">
+			<c:if test="<%= Validator.isNotNull(actionTargetId) %>">
+
 				<%
-					href = "#";
+				href = "#";
 				%>
 
 				<aui:script>
@@ -43,6 +45,7 @@ String linkId = HtmlUtil.escape(PortalUtil.generateRandomKey(request, "info-box"
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(actionContext) %>">
+
 				<%
 				href = "#";
 				%>

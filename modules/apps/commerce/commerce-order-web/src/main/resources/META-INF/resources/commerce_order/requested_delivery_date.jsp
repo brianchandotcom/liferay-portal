@@ -17,10 +17,9 @@ Date requestedDeliveryDate = commerceOrder.getRequestedDeliveryDate();
 
 <portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderRequesedDeliveryDateActionURL" />
 
-<commerce-ui:modal-content>
+<div class="container-fluid container-fluid-max-xl p-4">
 	<aui:form action="<%= editCommerceOrderRequesedDeliveryDateActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="requestedDeliveryDate" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
 		<liferay-ui:error exception="<%= CommerceOrderRequestedDeliveryDateException.class %>" message="please-enter-a-valid-requested-delivery-date" />
@@ -58,4 +57,4 @@ Date requestedDeliveryDate = commerceOrder.getRequestedDeliveryDate();
 			/>
 		</div>
 	</aui:form>
-</commerce-ui:modal-content>
+</div>

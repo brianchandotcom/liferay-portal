@@ -19,9 +19,7 @@ long paymentCommerceTermEntryId = commerceOrder.getPaymentCommerceTermEntryId();
 
 <portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderPaymentTermsActionURL" />
 
-<commerce-ui:modal-content
-	title='<%= (paymentCommerceTermEntryId == 0) ? LanguageUtil.get(request, "payment-terms") : LanguageUtil.get(request, "edit-payment-terms") %>'
->
+<div class="container-fluid container-fluid-max-xl p-4">
 	<c:choose>
 		<c:when test="<%= paymentCommerceTermEntries.isEmpty() %>">
 			<clay:row>
@@ -51,7 +49,6 @@ long paymentCommerceTermEntryId = commerceOrder.getPaymentCommerceTermEntryId();
 
 			<aui:form action="<%= editCommerceOrderPaymentTermsActionURL %>" method="post" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="updatePaymentTerms" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
 				<aui:select label='<%= LanguageUtil.get(request, "title") %>' name="commercePaymentTermId" showEmptyOption="<%= true %>">
@@ -88,4 +85,4 @@ long paymentCommerceTermEntryId = commerceOrder.getPaymentCommerceTermEntryId();
 			/>
 		</c:otherwise>
 	</c:choose>
-</commerce-ui:modal-content>
+</div>

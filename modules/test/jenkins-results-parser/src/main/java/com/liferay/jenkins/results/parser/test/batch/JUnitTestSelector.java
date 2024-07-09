@@ -72,8 +72,19 @@ public class JUnitTestSelector extends BaseTestSelector {
 
 		JUnitTestSelector jUnitTestSelector = (JUnitTestSelector)testSelector;
 
-		_excludesJobProperties.add(jUnitTestSelector.getExcludesJobProperty());
-		_includesJobProperties.add(jUnitTestSelector.getIncludesJobProperty());
+		if (!_includesJobProperties.contains(
+				jUnitTestSelector.getIncludesJobProperty())) {
+
+			_includesJobProperties.add(
+				jUnitTestSelector.getIncludesJobProperty());
+		}
+
+		if (!_excludesJobProperties.contains(
+				jUnitTestSelector.getExcludesJobProperty())) {
+
+			_excludesJobProperties.add(
+				jUnitTestSelector.getExcludesJobProperty());
+		}
 	}
 
 	@Override

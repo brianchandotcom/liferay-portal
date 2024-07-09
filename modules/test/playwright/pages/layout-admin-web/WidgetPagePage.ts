@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 export class WidgetPagePage {
 	readonly addApplicationButton: Locator;
 	readonly controlMenuAddButton: Locator;
+	readonly controlMenuToggleControlsButton: Locator;
 	readonly controlMenuAddPanelContentTab: Locator;
 	readonly page: Page;
 
@@ -24,6 +25,12 @@ export class WidgetPagePage {
 				exact: true,
 				name: 'Add',
 			});
+		this.controlMenuToggleControlsButton = page
+			.locator('.control-menu-nav-item')
+			.getByRole('button', {
+				exact: true,
+				name: 'Toggle Controls',
+			});
 		this.controlMenuAddPanelContentTab = page.getByText('Content', {
 			exact: true,
 		});
@@ -34,8 +41,11 @@ export class WidgetPagePage {
 		await this.page
 			.getByRole('textbox', {name: 'Search Form'})
 			.fill(portletName);
-		await this.page.getByLabel('Widgets').getByText(portletName).click();
-		await this.page.getByRole('button', {name: 'Add Content'}).click();
+		await this.page
+			.locator('.sidebar-body__add-panel__tab-item')
+			.filter({hasText: portletName})
+			.getByRole('button', {name: 'Add Content'})
+			.click();
 	}
 
 	async addContent(contentName: string) {
@@ -54,6 +64,10 @@ export class WidgetPagePage {
 
 	async clickControlMenuAddButton() {
 		await this.controlMenuAddButton.click();
+	}
+
+	async clickControlMenuToggleControlsButton() {
+		await this.controlMenuToggleControlsButton.click();
 	}
 
 	async goToControlMenuAddPanelContentTab() {

@@ -101,9 +101,9 @@
 		button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
 
 		const courseModuleNumber = button.querySelector('.course-module-number');
-		
+
 		courseModuleNumber.classList.toggle('highlighted');
-		
+
 		const liferayNavItem = button.querySelector('.liferay-nav-item');
 
 		liferayNavItem.classList.toggle('highlightedNavItem');

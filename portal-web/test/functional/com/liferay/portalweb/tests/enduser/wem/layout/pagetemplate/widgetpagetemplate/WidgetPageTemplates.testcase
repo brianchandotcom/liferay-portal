@@ -21,7 +21,9 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			PageTemplatesAdminGlobalSite.tearDownCP();
+			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+
+			PageTemplatesAdminGlobalSite.deleteCP(pageTemplateName = "Page Template Name");
 
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
@@ -36,10 +38,19 @@ definition {
 		}
 
 		task ("Add an active page template") {
-			PageTemplatesAdminGlobalSite.addCP(
-				pageTemplateActive = "Active",
-				pageTemplateDescription = "This is a page template description",
-				pageTemplateName = "Page Template Name");
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.inputName(name = "Page Template Name");
+
+			PortletEntry.inputDescriptionTextInput(description = "This is a page template description");
+
+			PortletEntry.save();
+
+			LexiconCard.viewCardTitle(card = "Page Template Name");
+
+			LexiconCard.viewCardLabel(
+				card = "Page Template Name",
+				cardLabel = "Active");
 		}
 	}
 
@@ -170,9 +181,9 @@ definition {
 				pageTemplateName = "Page Template Name",
 				pageTemplateStatus = "Not Active");
 
-			PageTemplatesAdminGlobalSite.viewStatus(
-				pageTemplateName = "Page Template Name",
-				pageTemplateStatus = "Not Active");
+			LexiconCard.viewCardLabel(
+				card = "Page Template Name",
+				cardLabel = "Not Active");
 		}
 
 		task ("View inactive page template doesn't display") {
@@ -192,9 +203,9 @@ definition {
 				pageTemplateName = "Page Template Name",
 				pageTemplateStatus = "Active");
 
-			PageTemplatesAdminGlobalSite.viewStatus(
-				pageTemplateName = "Page Template Name",
-				pageTemplateStatus = "Active");
+			LexiconCard.viewCardLabel(
+				card = "Page Template Name",
+				cardLabel = "Active");
 		}
 
 		task ("View active page template displays") {
@@ -226,7 +237,11 @@ definition {
 		}
 
 		task ("View no new page template") {
-			PageTemplatesAdminGlobalSite.viewDefaultCP();
+			LexiconCard.viewCardTitle(card = "Search");
+
+			AssertElementNotPresent(
+				index = 2,
+				locator1 = "PageTemplates#PAGE_TEMPLATE_CARD_ITEM");
 		}
 	}
 
@@ -288,31 +303,6 @@ definition {
 			CalendarConfiguration.selectWeekStartsOn(weekStartDay = "Saturday");
 
 			CalendarConfiguration.save();
-		}
-	}
-
-	@description = "Edit page template description in global site."
-	@priority = 4
-	test EditGlobalPageTemplateDescription {
-		task ("Add an active page template with description") {
-			JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
-				pageTemplateEntryActive = "true",
-				pageTemplateEntryDescription = "This is a page template description",
-				pageTemplateEntryName = "Page Template Name");
-		}
-
-		task ("Edit page template description") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-			PageTemplatesAdminGlobalSite.editDescription(
-				pageTemplateDescription = "This is a page template description",
-				pageTemplateName = "Page Template Name");
-		}
-
-		task ("View edited page template description") {
-			PageTemplatesAdminGlobalSite.viewDescription(
-				pageTemplateDescription = "This is a page template description edit",
-				pageTemplateName = "Page Template Name");
 		}
 	}
 
@@ -423,9 +413,15 @@ definition {
 
 			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
-			PageTemplatesAdminGlobalSite.viewCP(pageTemplateName = "College Landing Page");
+			AssertTextEquals.assertPartialText(
+				key_pageTemplateName = "College Landing Page",
+				locator1 = "PageTemplates#PAGE_TEMPLATE_TABLE_NAME",
+				value1 = "College Landing Page");
 
-			PageTemplatesAdminGlobalSite.viewCP(pageTemplateName = "Department Landing Page");
+			AssertTextEquals.assertPartialText(
+				key_pageTemplateName = "Department Landing Page",
+				locator1 = "PageTemplates#PAGE_TEMPLATE_TABLE_NAME",
+				value1 = "Department Landing Page");
 
 			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -529,26 +525,30 @@ definition {
 				pageTemplateEntryName = "Page Template Name");
 		}
 
-		task ("View added page template") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-			var siteName = TestCase.getSiteName(siteName = ${siteName});
-
-			PageTemplatesAdminGlobalSite.viewPG(
-				pageTemplateName = "Page Template Name",
-				siteName = ${siteName});
-		}
-
 		task ("Rename page template and view change") {
 			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
-			PageTemplatesAdminGlobalSite.editCP(
-				pageTemplateActive = "Active",
+			PageTemplatesAdminGlobalSite.gotoPageTemplateEllipsisItem(
+				item = "Configure",
 				pageTemplateName = "Page Template Name");
 
-			PageTemplatesAdminGlobalSite.viewPG(
-				pageTemplateName = "Page Template Name Edit",
-				siteName = ${siteName});
+			PortletEntry.inputName(name = "Page Template Name Edit");
+
+			PortletEntry.inputDescriptionTextInput(description = "This is a page template description edit");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			LexiconCard.viewCardTitle(card = "Page Template Name Edit");
+
+			PageTemplatesAdminGlobalSite.gotoPageTemplateEllipsisItem(
+				item = "Configure",
+				pageTemplateName = "Page Template Name Edit");
+
+			AssertTextEquals.assertValue(
+				locator1 = "TextInput#DESCRIPTION",
+				value1 = "This is a page template description edit");
 		}
 	}
 

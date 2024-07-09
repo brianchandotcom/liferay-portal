@@ -358,10 +358,19 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 			Job job = getJob();
 
-			GitRepositoryJob gitRepositoryJob = (GitRepositoryJob)job;
+			GitWorkingDirectory gitWorkingDirectory = null;
 
-			GitWorkingDirectory gitWorkingDirectory =
-				gitRepositoryJob.getGitWorkingDirectory();
+			if (job instanceof PortalTestClassJob) {
+				PortalTestClassJob portalReleaseJob = (PortalTestClassJob)job;
+
+				gitWorkingDirectory =
+					portalReleaseJob.getPortalGitWorkingDirectory();
+			}
+			else {
+				GitRepositoryJob gitRepositoryJob = (GitRepositoryJob)job;
+
+				gitWorkingDirectory = gitRepositoryJob.getGitWorkingDirectory();
+			}
 
 			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
 

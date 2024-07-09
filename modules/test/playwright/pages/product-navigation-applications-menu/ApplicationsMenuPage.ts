@@ -182,11 +182,13 @@ export class ApplicationsMenuPage {
 		});
 	}
 
-	async goto() {
+	async goto(checkTabVisibility = true) {
 		await this.homePage.goto();
 		await this.homePage.openApplicationMenu();
 
-		await expect(this.applicationsMenuTabButton).toBeVisible();
+		if (checkTabVisibility) {
+			await expect(this.applicationsMenuTabButton).toBeVisible();
+		}
 	}
 
 	async goToAccounts() {
@@ -285,8 +287,8 @@ export class ApplicationsMenuPage {
 		await this.jobSchedulerMenuItem.click();
 	}
 
-	async goToCommerceChannels() {
-		await this.goToCommercePanel();
+	async goToCommerceChannels(checkTabVisibility = true) {
+		await this.goToCommercePanel(checkTabVisibility);
 		await this.commerceChannelsMenuItem.click();
 	}
 
@@ -295,8 +297,8 @@ export class ApplicationsMenuPage {
 		await this.commerceDiscountsMenuItem.click();
 	}
 
-	async goToCommercePanel() {
-		await this.goto();
+	async goToCommercePanel(checkTabVisibility = true) {
+		await this.goto(checkTabVisibility);
 		await this.commercePanelButton.click();
 	}
 

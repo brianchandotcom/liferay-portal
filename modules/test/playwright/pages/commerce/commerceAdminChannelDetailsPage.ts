@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 export class CommerceAdminChannelDetailsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly channelNameLink: (channelName: string) => Locator;
 	readonly countryTab: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
@@ -15,6 +16,11 @@ export class CommerceAdminChannelDetailsPage {
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.channelNameLink = (channelName: string) =>
+			page.getByRole('link', {
+				exact: true,
+				name: channelName,
+			});
 		this.countryTab = page.getByRole('link', {name: 'Countries'});
 		this.saveButton = page.getByRole('link', {name: 'Save'});
 		this.showSeparateOrderItemsToggle = page.getByLabel(
@@ -23,8 +29,10 @@ export class CommerceAdminChannelDetailsPage {
 		this.page = page;
 	}
 
-	async goto() {
-		await this.applicationsMenuPage.goToCommerceChannels();
+	async goto(checkTabVisibility = true) {
+		await this.applicationsMenuPage.goToCommerceChannels(
+			checkTabVisibility
+		);
 	}
 
 	async goToCountries() {

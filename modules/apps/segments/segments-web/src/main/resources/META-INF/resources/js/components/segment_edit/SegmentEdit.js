@@ -405,6 +405,7 @@ function SegmentEdit({
 
 							<div className="clay-localized-input">
 								<ClayLocalizedInput
+									data-testid="localized-input-button"
 									label=""
 									locales={Object.keys(availableLocales)
 										.sort((languageId) =>

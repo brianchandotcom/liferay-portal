@@ -153,6 +153,25 @@ public class DBSchemaDefinitionExporterTest {
 		}
 	}
 
+	@Test
+	public void testExportImportValidationWithMissingTable() throws Exception {
+		DatabaseTestUtil.createExtraTable();
+
+		try {
+			ConfigurationTestUtil.deployConfiguration(
+				_configurationAdmin, _databaseType, _folder.getAbsolutePath(),
+				_PID);
+
+			String content = FileUtil.read(
+				new File(_folder, "db_export_report.info"));
+
+			Assert.assertTrue(content.contains("Missing tables: test"));
+		}
+		finally {
+			DatabaseTestUtil.dropExtraTable();
+		}
+	}
+
 	private void _assertImportDBSchemaDefinition(
 			File tablesSQLFile, File indexesSQLFile)
 		throws Exception {

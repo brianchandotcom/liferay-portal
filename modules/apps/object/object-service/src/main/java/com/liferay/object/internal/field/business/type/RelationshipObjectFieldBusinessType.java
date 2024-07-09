@@ -125,7 +125,8 @@ public class RelationshipObjectFieldBusinessType
 			}
 
 			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-				valueLong);
+				_objectEntryLocalService.getObjectEntry(valueLong),
+				objectDefinition.getCompanyId());
 
 			return objectEntry.getObjectEntryId();
 		}

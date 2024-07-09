@@ -908,6 +908,15 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public ObjectEntry getObjectEntry(ObjectEntry objectEntry, long companyId)
+		throws PortalException {
+
+		return objectEntryPersistence.findByERC_C_ODI(
+			objectEntry.getExternalReferenceCode(), companyId,
+			objectEntry.getObjectDefinitionId());
+	}
+
+	@Override
 	public ObjectEntry getObjectEntry(
 			String externalReferenceCode, long objectDefinitionId)
 		throws PortalException {

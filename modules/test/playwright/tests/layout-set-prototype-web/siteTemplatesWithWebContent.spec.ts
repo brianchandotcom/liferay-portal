@@ -440,7 +440,7 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 	await pagesAdminPage.addWidgetPage(templateName);
 
 	await productMenuPage.clickSpecificPage(templateName);
-	await widgetPagePage.clickToAddApplication();
+	await widgetPagePage.addButton.click();
 	await webContentDisplayPage.addWebContentWithWidget();
 	await uiElementsPage.setupUpdatedAlert.waitFor({state: 'hidden'});
 	await uiElementsPage.closeClickable.click();

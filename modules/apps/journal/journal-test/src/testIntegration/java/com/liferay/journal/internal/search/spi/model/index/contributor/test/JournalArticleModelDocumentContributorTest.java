@@ -116,12 +116,13 @@ public class JournalArticleModelDocumentContributorTest {
 		com.liferay.portal.kernel.xml.Document document =
 			_journalArticle.getDocument();
 
+		DDMStructure ddmStructure = _journalArticle.getDDMStructure();
+
 		return _ddmIndexer.extractIndexableAttributes(
-			_journalArticle.getDDMStructure(),
+			ddmStructure,
 			_fieldsToDDMFormValuesConverter.convert(
-				_journalArticle.getDDMStructure(),
-				_journalConverter.getDDMFields(
-					_journalArticle.getDDMStructure(), document.asXML())),
+				ddmStructure,
+				_journalConverter.getDDMFields(ddmStructure, document.asXML())),
 			LocaleUtil.fromLanguageId(languageId));
 	}
 

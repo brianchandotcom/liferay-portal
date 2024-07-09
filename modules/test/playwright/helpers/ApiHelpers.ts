@@ -338,6 +338,16 @@ export class DataApiHelpers extends ApiHelpers {
 					await this.headlessAdminUser.deleteOrganization(item.id);
 
 					break;
+				case 'organizationUserAccountAssociation': {
+					const [organizationId, emailAddress] = item.id.split('_');
+
+					await this.headlessAdminUser.deleteOrganizationUserAccountAssociation(
+						organizationId,
+						emailAddress
+					);
+
+					break;
+				}
 				case 'payment':
 					await this.headlessCommerceAdminPaymentApiHelper.deletePayment(
 						item.id

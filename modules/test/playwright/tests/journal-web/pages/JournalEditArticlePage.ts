@@ -121,8 +121,8 @@ export class JournalEditArticlePage {
 	}
 
 	async fillContent(content: string) {
-		await this.journalPage.webContentBodyTextBox.fill(content);
-		await this.journalPage.webContentBodyTextBox.press('Backspace');
+		await this.journalPage.articleContentTextBox.fill(content);
+		await this.journalPage.articleContentTextBox.press('Backspace');
 	}
 
 	async fillTitle(title: string) {

@@ -193,6 +193,99 @@ export default function UpperToolbar({
 		window.location.replace(definitionURL);
 	};
 
+	const saveOrPublishDefinition = async (
+		localStorageKeyName,
+		saveOrPublishDefinitionRequest,
+		successAlertMessage
+	) => {
+		if (blockingError.errorType !== '') {
+			setAlert(blockingError.errorMessage, 'danger', true);
+
+			return;
+		}
+
+		const validXMLDefinition = getXMLContent();
+
+		if (!validXMLDefinition) {
+			handleInvalidXMLBlockingError();
+
+			return;
+		}
+
+		const {
+			metadata: {name, version},
+			xmlDefinition,
+		} = validXMLDefinition;
+
+		const publishedOrSavedDefinitionResponse =
+			await saveOrPublishDefinitionRequest({
+				active,
+				content: xmlDefinition,
+				name,
+				title: definitionTitle,
+				title_i18n: definitionTitleTranslations,
+				version,
+			});
+
+		const publishedOrSavedDefinitionResponseJSON =
+			await publishedOrSavedDefinitionResponse.json();
+
+		if (!publishedOrSavedDefinitionResponse.ok) {
+			setAlert(
+				publishedOrSavedDefinitionResponseJSON.title,
+				'danger',
+				true
+			);
+
+			return;
+		}
+
+		if (!allowScriptContentToBeExecutedOrIncluded) {
+			setHadGroovyOrJavaScriptBefore(false);
+		}
+
+		setDefinitionName(publishedOrSavedDefinitionResponseJSON.name);
+		setVersion(
+			parseInt(publishedOrSavedDefinitionResponseJSON.version, 10)
+		);
+
+		if (Liferay.FeatureFlags['LPD-29635']) {
+			setWorkflowDefinitionVersions((prevValues) => [
+				{
+					creatorName:
+						publishedOrSavedDefinitionResponseJSON.creator?.name,
+					dateCreated:
+						publishedOrSavedDefinitionResponseJSON.dateCreated,
+					versionNumber: String(
+						parseInt(
+							publishedOrSavedDefinitionResponseJSON.version,
+							10
+						)
+					),
+				},
+				...prevValues,
+			]);
+		}
+
+		if (publishedOrSavedDefinitionResponseJSON.version === '1') {
+			localStorage.setItem(
+				localStorageKeyName,
+				true,
+				localStorage.TYPES.FUNCTIONAL
+			);
+			redirectToSavedDefinition(
+				publishedOrSavedDefinitionResponseJSON.name,
+				publishedOrSavedDefinitionResponseJSON.version
+			);
+
+			return;
+		}
+
+		setAlert(successAlertMessage, 'success', true);
+
+		return;
+	};
+
 	const publishDefinition = async () => {
 		if (
 			!allowScriptContentToBeExecutedOrIncluded &&
@@ -213,87 +306,13 @@ export default function UpperToolbar({
 			return;
 		}
 
-		if (blockingError.errorType !== '') {
-			setAlert(blockingError.errorMessage, 'danger', true);
-
-			return;
-		}
-
-		const validXMLDefinition = getXMLContent();
-
-		if (!validXMLDefinition) {
-			handleInvalidXMLBlockingError();
-
-			return;
-		}
-
-		const {
-			metadata: {name, version},
-			xmlDefinition,
-		} = validXMLDefinition;
-
-		const publishedDefinitionResponse = await publishDefinitionRequest({
-			active,
-			content: xmlDefinition,
-			name,
-			title: definitionTitle,
-			title_i18n: definitionTitleTranslations,
-			version,
-		});
-
-		const publishedDefinitionResponseJSON =
-			await publishedDefinitionResponse.json();
-
-		if (!publishedDefinitionResponse.ok) {
-			setAlert(publishedDefinitionResponseJSON.title, 'danger', true);
-
-			return;
-		}
-
-		if (!allowScriptContentToBeExecutedOrIncluded) {
-			setHadGroovyOrJavaScriptBefore(false);
-		}
-
-		setDefinitionName(publishedDefinitionResponseJSON.name);
-		setVersion(parseInt(publishedDefinitionResponseJSON.version, 10));
-
-		if (Liferay.FeatureFlags['LPD-29635']) {
-			setWorkflowDefinitionVersions((prevValues) => [
-				{
-					creatorName: publishedDefinitionResponseJSON.creator?.name,
-					dateCreated: publishedDefinitionResponseJSON.dateCreated,
-					versionNumber: String(
-						parseInt(publishedDefinitionResponseJSON.version, 10) -
-							1
-					),
-				},
-				...prevValues,
-			]);
-		}
-
-		if (publishedDefinitionResponseJSON.version === '1') {
-			localStorage.setItem(
-				'firstPublished',
-				true,
-				localStorage.TYPES.FUNCTIONAL
-			);
-			redirectToSavedDefinition(
-				publishedDefinitionResponseJSON.name,
-				publishedDefinitionResponseJSON.version
-			);
-
-			return;
-		}
-
-		setAlert(
+		saveOrPublishDefinition(
+			'firstPublished',
+			publishDefinitionRequest,
 			definitionNotPublished
 				? Liferay.Language.get('workflow-published-successfully')
-				: Liferay.Language.get('workflow-updated-successfully'),
-			'success',
-			true
+				: Liferay.Language.get('workflow-updated-successfully')
 		);
-
-		return;
 	};
 
 	const saveDefinition = async () => {
@@ -306,77 +325,11 @@ export default function UpperToolbar({
 			return;
 		}
 
-		if (blockingError.errorType !== '') {
-			setAlert(blockingError.errorMessage, 'danger', true);
-
-			return;
-		}
-
-		const validXMLDefinition = getXMLContent();
-
-		if (!validXMLDefinition) {
-			handleInvalidXMLBlockingError();
-
-			return;
-		}
-
-		const {
-			metadata: {name, version},
-			xmlDefinition,
-		} = validXMLDefinition;
-
-		const savedDefinitionResponse = await saveDefinitionRequest({
-			active,
-			content: xmlDefinition,
-			name,
-			title: definitionTitle,
-			title_i18n: definitionTitleTranslations,
-			version,
-		});
-
-		if (savedDefinitionResponse.ok) {
-			if (!allowScriptContentToBeExecutedOrIncluded) {
-				setHadGroovyOrJavaScriptBefore(false);
-			}
-
-			const savedDefinitionResponseJSON =
-				await savedDefinitionResponse.json();
-
-			setDefinitionName(savedDefinitionResponseJSON.name);
-			setVersion(parseInt(savedDefinitionResponseJSON.version, 10));
-
-			if (Liferay.FeatureFlags['LPD-29635']) {
-				setWorkflowDefinitionVersions((prevValues) => [
-					{
-						creatorName: savedDefinitionResponseJSON.creator?.name,
-						dateCreated: savedDefinitionResponseJSON.dateCreated,
-						versionNumber: String(
-							parseInt(savedDefinitionResponseJSON.version, 10) -
-								1
-						),
-					},
-					...prevValues,
-				]);
-			}
-
-			if (savedDefinitionResponseJSON.version === '1') {
-				localStorage.setItem(
-					'firstSaved',
-					true,
-					localStorage.TYPES.FUNCTIONAL
-				);
-				redirectToSavedDefinition(
-					savedDefinitionResponseJSON.name,
-					savedDefinitionResponseJSON.version
-				);
-
-				return;
-			}
-
-			setAlert(Liferay.Language.get('workflow-saved'), 'success', true);
-
-			return;
-		}
+		saveOrPublishDefinition(
+			'firstSaved',
+			saveDefinitionRequest,
+			Liferay.Language.get('workflow-saved')
+		);
 	};
 
 	useEffect(() => {

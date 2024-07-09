@@ -6,10 +6,16 @@
 package com.liferay.portal.language.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.language.override.model.PLOEntry;
+import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -78,6 +84,97 @@ public class LanguageResourcesTest {
 
 		Assert.assertEquals(
 			"Year", _language.get(new Locale("ps", "AF"), "year", null));
+	}
+
+	@Test
+	public void testGetMessage() throws PortalException {
+		PLOEntry ploEntry = null;
+
+		try {
+			Assert.assertNull(
+				LanguageResources.getMessage(
+					_locale, TestResourceBundle.class.getName()));
+
+			_serviceRegistration1 = _register(_VALUE_1, 0);
+
+			Assert.assertEquals(
+				_VALUE_1,
+				LanguageResources.getMessage(
+					_locale, TestResourceBundle.class.getName()));
+
+			ploEntry = _ploEntryLocalService.addOrUpdatePLOEntry(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				TestResourceBundle.class.getName(), _languageId, _VALUE_2);
+
+			Assert.assertEquals(
+				_VALUE_2,
+				LanguageResources.getMessage(
+					_locale, TestResourceBundle.class.getName()));
+
+			_ploEntryLocalService.deletePLOEntry(ploEntry);
+
+			Assert.assertEquals(
+				_VALUE_1,
+				LanguageResources.getMessage(
+					_locale, TestResourceBundle.class.getName()));
+
+			_serviceRegistration1 = _unregister(_serviceRegistration1);
+
+			Assert.assertNull(
+				LanguageResources.getMessage(
+					_locale, TestResourceBundle.class.getName()));
+		}
+		finally {
+			_ploEntryLocalService.deletePLOEntry(ploEntry);
+		}
+	}
+
+	@Test
+	public void testGetResourceBundle() throws PortalException {
+		PLOEntry ploEntry = null;
+
+		try {
+			ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
+				_locale);
+
+			Assert.assertNull(
+				ResourceBundleUtil.getString(
+					resourceBundle, TestResourceBundle.class.getName()));
+
+			_serviceRegistration1 = _register(_VALUE_1, 0);
+
+			Assert.assertEquals(
+				_VALUE_1,
+				ResourceBundleUtil.getString(
+					resourceBundle, TestResourceBundle.class.getName()));
+
+			ploEntry = _ploEntryLocalService.addOrUpdatePLOEntry(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				TestResourceBundle.class.getName(), _languageId, _VALUE_2);
+
+			Assert.assertEquals(
+				_VALUE_2,
+				ResourceBundleUtil.getString(
+					resourceBundle, TestResourceBundle.class.getName()));
+
+			_ploEntryLocalService.deletePLOEntry(ploEntry);
+
+			Assert.assertEquals(
+				_VALUE_1,
+				ResourceBundleUtil.getString(
+					resourceBundle, TestResourceBundle.class.getName()));
+
+			_serviceRegistration1 = _unregister(_serviceRegistration1);
+
+			Assert.assertNull(
+				ResourceBundleUtil.getString(
+					resourceBundle, TestResourceBundle.class.getName()));
+		}
+		finally {
+			if (ploEntry != null) {
+				_ploEntryLocalService.deletePLOEntry(ploEntry);
+			}
+		}
 	}
 
 	@Test
@@ -176,6 +273,10 @@ public class LanguageResourcesTest {
 	private BundleContext _bundleContext;
 	private String _languageId;
 	private Locale _locale;
+
+	@Inject
+	private PLOEntryLocalService _ploEntryLocalService;
+
 	private ServiceRegistration<?> _serviceRegistration1;
 	private ServiceRegistration<?> _serviceRegistration2;
 	private ServiceRegistration<?> _serviceRegistration3;

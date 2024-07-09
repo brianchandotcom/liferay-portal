@@ -71,15 +71,9 @@ public class FacetDiscounterTest {
 			facetDiscounter,
 			_createDocument(
 				new String[] {
-					StringBundler.concat(
-						"{fieldName=", filterValue, StringPool.COMMA_AND_SPACE,
-						_FIELD_NAME, "=a}"),
-					StringBundler.concat(
-						"{fieldName=", RandomTestUtil.randomString(),
-						StringPool.COMMA_AND_SPACE, _FIELD_NAME, "=b}"),
-					StringBundler.concat(
-						"{fieldName=", filterValue, StringPool.COMMA_AND_SPACE,
-						_FIELD_NAME, "=c}")
+					_createFieldValue(filterValue, "a"),
+					_createFieldValue(RandomTestUtil.randomString(), "b"),
+					_createFieldValue(filterValue, "c")
 				}));
 
 		_assertFrequencies(nestedFacetImpl, "[a=9, b=5, c=1]");
@@ -176,6 +170,12 @@ public class FacetDiscounterTest {
 
 		return new SimpleFacetCollector(
 			_FIELD_NAME, Arrays.asList(termCollectors));
+	}
+
+	private String _createFieldValue(String filterValue, String term) {
+		return StringBundler.concat(
+			"{fieldName=", filterValue, StringPool.COMMA_AND_SPACE, _FIELD_NAME,
+			"=", term, "}");
 	}
 
 	private void _discount(

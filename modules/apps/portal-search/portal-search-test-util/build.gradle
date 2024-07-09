@@ -11,6 +11,7 @@ dependencies {
 	compileOnly group: "org.springframework", name: "spring-test", version: "5.3.33"
 	compileOnly project(":apps:change-tracking:change-tracking-api")
 	compileOnly project(":apps:expando:expando-test-util")
+	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:layout:layout-test-util")
 	compileOnly project(":apps:portal-search:portal-search")
 	compileOnly project(":apps:portal-search:portal-search-api")

@@ -266,13 +266,10 @@ public class CommerceReturnObjectEntryValuesContributor
 				currentReturnStatus,
 				CommerceReturnConstants.RETURN_STATUS_PENDING)) {
 
-			int toBeProcessedReturnItemsSize =
-				toBeProcessedReturnItemObjectEntries.size();
-
-			if ((toBeProcessedReturnItemsSize > 0) &&
+			if (!toBeProcessedReturnItemObjectEntries.isEmpty() &&
 				(commerceReturnItemsSize ==
 					(notAuthorizedReturnItemObjectEntries.size() +
-						toBeProcessedReturnItemsSize))) {
+						toBeProcessedReturnItemObjectEntries.size()))) {
 
 				return CommerceReturnConstants.RETURN_STATUS_PROCESSING;
 			}
@@ -287,17 +284,11 @@ public class CommerceReturnObjectEntryValuesContributor
 				returnItemStatusObjectEntriesMap.getOrDefault(
 					"authorizedReturnItems", Collections.emptyList());
 
-			int authorizedReturnItemsSize =
-				authorizedReturnItemObjectEntries.size();
-
-			int receivedReturnItemsSize =
-				receivedReturnItemObjectEntries.size();
-
 			if (commerceReturnItemsSize ==
-					(authorizedReturnItemsSize +
+					(authorizedReturnItemObjectEntries.size() +
 						notAuthorizedReturnItemObjectEntries.size() +
-							receivedReturnItemsSize +
-								toBeProcessedReturnItemsSize)) {
+							receivedReturnItemObjectEntries.size() +
+								toBeProcessedReturnItemObjectEntries.size())) {
 
 				return CommerceReturnConstants.RETURN_STATUS_AUTHORIZED;
 			}

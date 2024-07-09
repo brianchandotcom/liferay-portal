@@ -19,6 +19,8 @@ test('LPD-26435 Icon menu should close when another icon menu is open', async ({
 
 	await wikiPage.createNewWikiNode('Wiki Node Title');
 
+	await page.getByLabel('Order').waitFor();
+
 	const wikiNodeMenu = await page.locator(
 		'[id="_com_liferay_wiki_web_portlet_WikiAdminPortlet_wikiNodes_1_menu"]'
 	);

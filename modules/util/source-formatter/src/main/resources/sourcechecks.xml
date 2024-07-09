@@ -1744,6 +1744,10 @@
 			<category name="Upgrade" />
 			<description name="Replaces the references of `DDMFormValuesSerializerTracker` class and also its methods usages." />
 		</check>
+		<check name="UpgradeJavaDisplayPageInfoItemCapabilityCheck">
+			<category name="Upgrade" />
+			<description name="Replace all references of DisplayPageInfoItemCapability to InfoItemCapability" />
+		</check>
 		<check name="UpgradeJavaFacetedSearcherCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of the `Indexer indexer = FacetedSearcher.getInstance();` declaration and `indexer.search` method call." />

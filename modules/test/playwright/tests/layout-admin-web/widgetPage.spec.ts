@@ -101,6 +101,37 @@ test('LPD-15256 Approved and scheduled web contents should be displayed in the "
 	await _verifyVisibleWebContents();
 });
 
+test('LPS-108216 Can hide and show portlet header of existing visible portlets on widget page via switch Toggle Controls', async ({
+	apiHelpers,
+	page,
+	site,
+	widgetPagePage,
+}) => {
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
+
+	await widgetPagePage.goToSitePage(site, layout.friendlyURL);
+	await widgetPagePage.addPortlet('Blogs Aggregator');
+
+	const blogsWidget = await page.locator(
+		'#p_p_id_com_liferay_blogs_web_portlet_BlogsAggregatorPortlet'
+	);
+
+	await blogsWidget.getByText('There are no blogs.').waitFor();
+
+	await blogsWidget.hover();
+
+	await expect(blogsWidget.locator('.portlet-name-text')).toBeVisible();
+
+	await widgetPagePage.clickControlMenuToggleControlsButton();
+
+	await blogsWidget.hover();
+
+	await expect(blogsWidget.locator('.portlet-name-text')).not.toBeVisible();
+});
+
 test('View web content is shown in Web Content Display after be added via content panel', async ({
 	apiHelpers,
 	page,

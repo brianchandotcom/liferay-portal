@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaUpgradeMissingTestCheck" files="data-cleanup/src/main/java/com/liferay/data/cleanup/internal/upgrade/WidgetLayoutTypeSettingsUpgradeProcess\.java" />
+	</source-check>
+</suppressions>

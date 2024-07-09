@@ -467,6 +467,13 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static ObjectEntry getObjectEntry(
+			ObjectEntry objectEntry, long companyId)
+		throws PortalException {
+
+		return getService().getObjectEntry(objectEntry, companyId);
+	}
+
+	public static ObjectEntry getObjectEntry(
 			String externalReferenceCode, long objectDefinitionId)
 		throws PortalException {
 

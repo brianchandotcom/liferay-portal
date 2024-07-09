@@ -64,15 +64,9 @@ public class FacetBucketUtilTest {
 		Field field = new Field(
 			_FIELD_NAME,
 			new String[] {
-				StringBundler.concat(
-					"{fieldName=", filterValue, StringPool.COMMA_AND_SPACE,
-					_FIELD_NAME, "=a}"),
-				StringBundler.concat(
-					"{fieldName=", RandomTestUtil.randomString(),
-					StringPool.COMMA_AND_SPACE, _FIELD_NAME, "=b}"),
-				StringBundler.concat(
-					"{fieldName=", filterValue, StringPool.COMMA_AND_SPACE,
-					_FIELD_NAME, "=c}")
+				_createFieldValue(filterValue, "a"),
+				_createFieldValue(RandomTestUtil.randomString(), "b"),
+				_createFieldValue(filterValue, "c")
 			});
 
 		Assert.assertTrue(
@@ -112,6 +106,12 @@ public class FacetBucketUtilTest {
 		Facet facet = new SimpleFacet(null);
 
 		Assert.assertTrue(FacetBucketUtil.isFieldInBucket(field, "foo", facet));
+	}
+
+	private String _createFieldValue(String filterValue, String term) {
+		return StringBundler.concat(
+			"{fieldName=", filterValue, StringPool.COMMA_AND_SPACE, _FIELD_NAME,
+			"=", term, "}");
 	}
 
 	private static final String _FIELD_NAME = RandomTestUtil.randomString();

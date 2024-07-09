@@ -42,7 +42,7 @@ public class DynamicObjectRelationshipMappingTable
 			"create table ", _tableName, " (", _primaryKeyColumnName1,
 			" LONG not null,", _primaryKeyColumnName2,
 			" LONG not null, primary key (", _primaryKeyColumnName1, ", ",
-			_primaryKeyColumnName2, "));");
+			_primaryKeyColumnName2, "))");
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("SQL: " + sql);

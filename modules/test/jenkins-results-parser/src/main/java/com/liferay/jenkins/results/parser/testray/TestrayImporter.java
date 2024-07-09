@@ -1219,7 +1219,7 @@ public class TestrayImporter {
 			callables, _executorService, "recordTestrayCaseResults");
 
 		try {
-			parallelExecutor.execute();
+			parallelExecutor.execute(60L * 180L);
 		}
 		catch (TimeoutException timeoutException) {
 			throw new RuntimeException(timeoutException);

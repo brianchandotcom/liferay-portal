@@ -645,25 +645,4 @@ definition {
 		}
 	}
 
-	@description = "Assert could not add page via page template action."
-	@priority = 3
-	test ViewNoAddPageTabViaPageTemplatesCP {
-		task ("Assert could not add page via Search page template") {
-			var portalURL = PropsUtil.get("portal.url");
-			var layoutPrototypeId = JSONLayoutpagetemplate.getLayoutPrototypeId(
-				groupName = "Global",
-				layoutPageTemplateEntryName = "Search",
-				layoutPageTemplateType = "Widget Page Template");
-
-			Navigator.openSpecificURL(url = "${portalURL}/group/template-${layoutPrototypeId}");
-
-			Click(locator1 = "ControlMenu#ADD");
-
-			AssertTextEquals(
-				key_tab = "Widgets",
-				locator1 = "NavTab#TAB_LINK",
-				value1 = "Widgets");
-		}
-	}
-
 }

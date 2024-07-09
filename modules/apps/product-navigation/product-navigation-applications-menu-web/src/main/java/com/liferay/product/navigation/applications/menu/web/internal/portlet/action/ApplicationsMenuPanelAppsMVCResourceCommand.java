@@ -46,6 +46,7 @@ import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -62,14 +63,15 @@ import org.osgi.service.component.annotations.Reference;
 public class ApplicationsMenuPanelAppsMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
+	@Activate
+	protected void activate() {
+		_panelCategoryHelper = new PanelCategoryHelper(_panelAppRegistry);
+	}
+
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
-
-		if (_panelCategoryHelper == null) {
-			_panelCategoryHelper = new PanelCategoryHelper(_panelAppRegistry);
-		}
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,

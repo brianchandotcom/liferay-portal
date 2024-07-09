@@ -151,7 +151,7 @@ public class LayoutsImporterTest {
 				LayoutsImporterResultEntry.Status.IMPORTED,
 				layoutsImporterResultEntry.getStatus());
 			Assert.assertEquals(
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
+				LayoutsImporterResultEntry.ENTRY,
 				layoutsImporterResultEntry.getType());
 
 			_assertLayoutPageTemplateEntry(

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -190,7 +189,7 @@ public class PublicationsDisplayContext {
 
 				return !CTCollectionPermission.contains(
 					_themeDisplay.getPermissionChecker(), ctCollectionId,
-					ActionKeys.PERMISSIONS);
+					CTActionKeys.INVITE_USERS);
 			}
 		).put(
 			"roles",

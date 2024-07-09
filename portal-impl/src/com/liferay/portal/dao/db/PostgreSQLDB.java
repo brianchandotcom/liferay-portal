@@ -432,6 +432,7 @@ public class PostgreSQLDB extends BaseDB {
 						createRulesSQLSB.append(StringPool.NEW_LINE);
 						createRulesSQLSB.append(
 							getCreateRulesSQL(tableName, tokens[0]));
+						createRulesSQLSB.append(StringPool.NEW_LINE);
 					}
 				}
 				else if (line.contains("\\\'")) {

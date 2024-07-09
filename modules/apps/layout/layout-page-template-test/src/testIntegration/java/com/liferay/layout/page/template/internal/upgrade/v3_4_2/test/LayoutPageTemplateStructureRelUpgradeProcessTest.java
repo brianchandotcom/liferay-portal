@@ -23,6 +23,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -84,6 +85,61 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
 				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
+	}
+
+	@Test
+	public void testUpgradeBorderRadius() throws Exception {
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("borderRadius", "lg")),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("borderRadius", "0.375rem")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"borderRadius", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("borderRadius", "none")),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("borderRadius", StringPool.BLANK)
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"borderRadius", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("borderRadius", "sm")),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("borderRadius", "0.1875rem")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"borderRadius", RandomTestUtil.randomString()
+			).build());
+
+		String expectedBorderRadious = RandomTestUtil.randomString();
+
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("borderRadius", RandomTestUtil.randomString())),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("borderRadius", expectedBorderRadious)
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"borderRadius", expectedBorderRadious
+			).build());
 	}
 
 	@Test

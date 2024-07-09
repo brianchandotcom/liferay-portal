@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -247,8 +246,7 @@ public class DBSchemaDefinitionExporterTest {
 		}
 	}
 
-	private static final String _COPY_DB_SCHEMA_NAME =
-		RandomTestUtil.randomString();
+	private static final String _COPY_DB_SCHEMA_NAME = "testschema";
 
 	private static final String _PID =
 		"com.liferay.portal.db.schema.definition.internal.configuration." +

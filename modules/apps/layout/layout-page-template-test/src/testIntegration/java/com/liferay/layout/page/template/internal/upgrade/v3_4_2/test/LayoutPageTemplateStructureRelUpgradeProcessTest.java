@@ -18,8 +18,10 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
+import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -51,6 +53,7 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -630,6 +633,39 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 			).build());
 	}
 
+	@Test
+	public void testUpgradeViewportConfigurationSize() throws Exception {
+		_assertUpgradeWithViewportConfigurationSize(
+			HashMapBuilder.put(
+				ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId(), "12"
+			).build(),
+			Collections.emptyMap());
+		_assertUpgradeWithViewportConfigurationSize(
+			HashMapBuilder.put(
+				ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId(),
+				String.valueOf(RandomTestUtil.randomInt(1, 10))
+			).put(
+				ViewportSize.PORTRAIT_MOBILE.getViewportSizeId(),
+				String.valueOf(RandomTestUtil.randomInt(1, 10))
+			).put(
+				ViewportSize.TABLET.getViewportSizeId(),
+				String.valueOf(RandomTestUtil.randomInt(1, 10))
+			).build());
+		_assertUpgradeWithViewportConfigurationSize(
+			HashMapBuilder.put(
+				ViewportSize.PORTRAIT_MOBILE.getViewportSizeId(),
+				String.valueOf(RandomTestUtil.randomInt(1, 10))
+			).put(
+				ViewportSize.TABLET.getViewportSizeId(),
+				String.valueOf(RandomTestUtil.randomInt(1, 10))
+			).build());
+		_assertUpgradeWithViewportConfigurationSize(
+			HashMapBuilder.put(
+				ViewportSize.TABLET.getViewportSizeId(),
+				String.valueOf(RandomTestUtil.randomInt(1, 10))
+			).build());
+	}
+
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -668,6 +704,40 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 		return _layoutPageTemplateStructureRelLocalService.
 			updateLayoutPageTemplateStructureRel(
 				layoutPageTemplateStructureRel);
+	}
+
+	private String _addColumnStructureItem(
+			Layout layout, Map<String, String> map, long segmentsExperienceId)
+		throws Exception {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		ColumnLayoutStructureItem columnLayoutStructureItem =
+			(ColumnLayoutStructureItem)
+				layoutStructure.addColumnLayoutStructureItem(
+					layoutStructure.getMainItemId(), 0);
+
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			columnLayoutStructureItem.setViewportConfiguration(
+				entry.getKey(), JSONUtil.put("size", entry.getValue()));
+		}
+
+		_layoutPageTemplateStructureRelLocalService.
+			updateLayoutPageTemplateStructureRel(
+				layoutPageTemplateStructure.getLayoutPageTemplateStructureId(),
+				segmentsExperienceId, layoutStructure.toString());
+
+		_assertViewportSizeConfiguration(
+			map, columnLayoutStructureItem.getItemId(), layout,
+			segmentsExperienceId);
+
+		return columnLayoutStructureItem.getItemId();
 	}
 
 	private String _addFragmentStyledLayoutStructureItem(
@@ -774,6 +844,60 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 			expectedMap, draftLayoutItemId, draftLayout, segmentsExperienceId);
 		_assertItemConfigJSONObject(
 			expectedMap, layoutItemId, layout, segmentsExperienceId);
+	}
+
+	private void _assertUpgradeWithViewportConfigurationSize(
+			Map<String, String> viewPortsMap)
+		throws Exception {
+
+		_assertUpgradeWithViewportConfigurationSize(viewPortsMap, viewPortsMap);
+	}
+
+	private void _assertUpgradeWithViewportConfigurationSize(
+			Map<String, String> expectedMap, Map<String, String> map)
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		String draftLayoutItemId = _addColumnStructureItem(
+			draftLayout, map, segmentsExperienceId);
+
+		String layoutItemId = _addColumnStructureItem(
+			layout, map, segmentsExperienceId);
+
+		_runUpgrade();
+
+		_assertViewportSizeConfiguration(
+			expectedMap, draftLayoutItemId, draftLayout, segmentsExperienceId);
+		_assertViewportSizeConfiguration(
+			expectedMap, layoutItemId, layout, segmentsExperienceId);
+	}
+
+	private void _assertViewportSizeConfiguration(
+			Map<String, String> expectedMap, String itemId, Layout layout,
+			long segmentsExperienceId)
+		throws Exception {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), layout.getPlid());
+
+		JSONObject configJSONObject = _getItemConfigJSONObject(
+			itemId, layoutPageTemplateStructure, segmentsExperienceId);
+
+		for (Map.Entry<String, String> entry : expectedMap.entrySet()) {
+			JSONObject jsonObject = configJSONObject.getJSONObject(
+				entry.getKey());
+
+			Assert.assertEquals(entry.getValue(), jsonObject.getString("size"));
+		}
 	}
 
 	private JSONObject _getItemConfigJSONObject(

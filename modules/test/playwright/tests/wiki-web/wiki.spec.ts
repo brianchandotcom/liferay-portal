@@ -5,10 +5,11 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
 
-export const test = mergeTests(loginTest(), wikiPagesTest);
+export const test = mergeTests(isolatedSiteTest, loginTest(), wikiPagesTest);
 
 test('LPD-26435 Icon menu should close when another icon menu is open', async ({
 	page,

@@ -65,13 +65,11 @@ public class CommerceReturnObjectEntryValuesContributor
 				_commerceOrderLocalService.getCommerceOrder(
 					GetterUtil.getLong(values.get("commerceOrderId")));
 
-			long groupId = commerceOrder.getGroupId();
-
-			values.put("channelGroupId", groupId);
+			values.put("channelGroupId", commerceOrder.getGroupId());
 
 			CommerceChannel commerceChannel =
 				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-					groupId);
+					commerceOrder.getGroupId());
 
 			values.put("channelId", commerceChannel.getCommerceChannelId());
 			values.put("channelName", commerceChannel.getName());

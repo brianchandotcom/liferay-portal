@@ -301,6 +301,51 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 	}
 
 	@Test
+	public void testUpgradeShadow() throws Exception {
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("boxShadow", "lg")),
+			HashMapBuilder.<String, Object>put(
+				"styles",
+				JSONUtil.put("shadow", "0 1rem 3rem rgba(0, 0, 0, .175)")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"shadow", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("boxShadow", "sm")),
+			HashMapBuilder.<String, Object>put(
+				"styles",
+				JSONUtil.put("shadow", "0 .125rem .25rem rgba(0, 0, 0, .075)")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"shadow", RandomTestUtil.randomString()
+			).build());
+
+		String expectedShadow = RandomTestUtil.randomString();
+
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("boxShadow", RandomTestUtil.randomString())),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("shadow", expectedShadow)
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"shadow", expectedShadow
+			).build());
+	}
+
+	@Test
 	public void testUpgradeTextAlign() throws Exception {
 		String expectedTextAlign = RandomTestUtil.randomString();
 

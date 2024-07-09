@@ -194,10 +194,6 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 			return _tableName;
 		}
 
-		public void setCreateCompanyIdColumn(boolean createCompanyIdColumn) {
-			_createCompanyIdColumn = createCompanyIdColumn;
-		}
-
 		public void update(Connection connection) throws Exception {
 			for (String[] foreignNames : _foreignNamesArray) {
 				runSQL(
@@ -260,7 +256,6 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 		}
 
 		private final String _columnName;
-		private boolean _createCompanyIdColumn;
 		private final String[][] _foreignNamesArray;
 		private final String _tableName;
 

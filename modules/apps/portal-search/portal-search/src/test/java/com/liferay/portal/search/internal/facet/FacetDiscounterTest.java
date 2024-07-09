@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.internal.facet;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -46,6 +48,41 @@ public class FacetDiscounterTest {
 		_discount(facetDiscounter, _createDocument(new String[] {"a", "c"}));
 
 		_assertFrequencies(facet, "[a=9, b=5, c=1]");
+	}
+
+	@Test
+	public void testNestedFacet() {
+		NestedFacetImpl nestedFacetImpl = new NestedFacetImpl(null, null);
+
+		nestedFacetImpl.setPath(_FIELD_NAME);
+		nestedFacetImpl.setFilterField(_FIELD_NAME + ".fieldName");
+
+		String filterValue = RandomTestUtil.randomString();
+
+		nestedFacetImpl.setFilterValue(filterValue);
+
+		_populate(
+			nestedFacetImpl, _toTerm("a", 10), _toTerm("b", 5),
+			_toTerm("c", 2));
+
+		FacetDiscounter facetDiscounter = new FacetDiscounter(nestedFacetImpl);
+
+		_discount(
+			facetDiscounter,
+			_createDocument(
+				new String[] {
+					StringBundler.concat(
+						"{fieldName=", filterValue, StringPool.COMMA_AND_SPACE,
+						_FIELD_NAME, "=a}"),
+					StringBundler.concat(
+						"{fieldName=", RandomTestUtil.randomString(),
+						StringPool.COMMA_AND_SPACE, _FIELD_NAME, "=b}"),
+					StringBundler.concat(
+						"{fieldName=", filterValue, StringPool.COMMA_AND_SPACE,
+						_FIELD_NAME, "=c}")
+				}));
+
+		_assertFrequencies(nestedFacetImpl, "[a=9, b=5, c=1]");
 	}
 
 	@Test

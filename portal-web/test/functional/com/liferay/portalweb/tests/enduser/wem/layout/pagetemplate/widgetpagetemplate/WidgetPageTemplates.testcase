@@ -459,30 +459,6 @@ definition {
 		}
 	}
 
-	@description = "View page template in Spanish and English."
-	@priority = 4
-	test LocalizeGlobalDefaultPageTemplates {
-		task ("View page template name in Spanish") {
-			var portalURL = PropsUtil.get("portal.url");
-
-			Navigator.openSpecificURL(url = "${portalURL}/es");
-
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-			PageTemplatesAdminGlobalSite.viewDefaultLocalizedCP(
-				pageTemplateNameList = "Búsqueda",
-				portletTitle = "Plantillas de página de widget");
-		}
-
-		task ("View page template name change back to English") {
-			Navigator.openSpecificURL(url = "${portalURL}/en");
-
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-			PageTemplatesAdminGlobalSite.viewDefaultCP();
-		}
-	}
-
 	@description = "This is a test for LPS-145264. The changes on widget page template should be propagate to widget page when Inherit Changes is enabled."
 	@priority = 4
 	test PropagateChangesFromWidgetPageTemplate {

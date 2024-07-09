@@ -59,6 +59,8 @@ import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionA
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionModifiedDateComparator;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionTitleComparator;
 
+import java.text.SimpleDateFormat;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -195,6 +197,34 @@ public class KaleoDesignerDisplayContext {
 			kaleoDefinitionVersionSearch, status);
 
 		return kaleoDefinitionVersionSearch;
+	}
+
+	public JSONArray getKaleoDefinitionVersionsJSONArray(
+			KaleoDefinitionVersion currentKaleoDefinitionVersion)
+		throws Exception {
+
+		return JSONUtil.toJSONArray(
+			getKaleoDefinitionVersions(currentKaleoDefinitionVersion),
+			kaleoDefinitionVersion -> JSONUtil.put(
+				"creatorName",
+				() -> {
+					User user = _userLocalService.getUser(
+						kaleoDefinitionVersion.getUserId());
+
+					return user.getFullName();
+				}
+			).put(
+				"dateCreated",
+				() -> {
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+						"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+					return simpleDateFormat.format(
+						kaleoDefinitionVersion.getCreateDate());
+				}
+			).put(
+				"version", kaleoDefinitionVersion.getVersion()
+			));
 	}
 
 	public String getManageSubmissionsLink() {

@@ -1230,6 +1230,8 @@ pre[class*='language-'] {
 .learn-search {
 	.input-group-item {
 		.input-group {
+			z-index: 1;
+			
 			.input-group-inset-item .btn {
 				padding-right: 1rem;
 			}

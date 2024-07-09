@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.override.exception.PLOEntryKeyException;
+import com.liferay.portal.language.override.exception.PLOEntryLanguageIdException;
 import com.liferay.portal.language.override.exception.PLOEntryValueException;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
@@ -46,8 +47,10 @@ public class PLOEntryLocalServiceTest {
 
 		_assertTranslationValue(newKey, null);
 
+		String languageId = LanguageUtil.getLanguageId(LocaleUtil.getDefault());
+
 		PLOEntry ploEntry = _addOrUpdatePLOEntry(
-			newKey, RandomTestUtil.randomString());
+			newKey, languageId, RandomTestUtil.randomString());
 
 		_assertTranslationValue(newKey, ploEntry.getValue());
 
@@ -57,7 +60,7 @@ public class PLOEntryLocalServiceTest {
 			LanguageResources.getMessage(LocaleUtil.getDefault(), existingKey));
 
 		ploEntry = _addOrUpdatePLOEntry(
-			existingKey, RandomTestUtil.randomString());
+			existingKey, languageId, RandomTestUtil.randomString());
 
 		_assertTranslationValue(existingKey, ploEntry.getValue());
 
@@ -68,25 +71,31 @@ public class PLOEntryLocalServiceTest {
 					PLOEntry.class.getName(), "key");
 
 				_addOrUpdatePLOEntry(
-					RandomTestUtil.randomString(keyMaxLength + 1),
+					RandomTestUtil.randomString(keyMaxLength + 1), languageId,
 					RandomTestUtil.randomString());
 			});
 		_assertException(
 			PLOEntryKeyException.MustNotBeNull.class,
 			() -> _addOrUpdatePLOEntry(
-				StringPool.BLANK, RandomTestUtil.randomString()));
+				StringPool.BLANK, languageId, RandomTestUtil.randomString()));
+		_assertException(
+			PLOEntryLanguageIdException.MustBeAvailable.class,
+			() -> _addOrUpdatePLOEntry(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK));
 		_assertException(
 			PLOEntryValueException.MustNotBeNull.class,
 			() -> _addOrUpdatePLOEntry(
-				RandomTestUtil.randomString(), StringPool.BLANK));
+				RandomTestUtil.randomString(), languageId, StringPool.BLANK));
 	}
 
-	private PLOEntry _addOrUpdatePLOEntry(String key, String value)
+	private PLOEntry _addOrUpdatePLOEntry(
+			String key, String languageId, String value)
 		throws PortalException {
 
 		return _ploEntryLocalService.addOrUpdatePLOEntry(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), key,
-			LanguageUtil.getLanguageId(LocaleUtil.getDefault()), value);
+			languageId, value);
 	}
 
 	private void _assertException(

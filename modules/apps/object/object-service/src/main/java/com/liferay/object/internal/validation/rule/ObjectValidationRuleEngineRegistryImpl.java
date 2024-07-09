@@ -15,7 +15,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collection;
@@ -46,11 +45,7 @@ public class ObjectValidationRuleEngineRegistryImpl
 				_getCompanyScopedKey(companyId, key));
 		}
 
-		if ((objectValidationRuleEngine == null) ||
-			((objectValidationRuleEngine instanceof
-				UniqueCompositeKeyObjectValidationRuleEngineImpl) &&
-			 !FeatureFlagManagerUtil.isEnabled("LPS-187854"))) {
-
+		if (objectValidationRuleEngine == null) {
 			throw new ObjectValidationRuleEngineException.NoSuchEngine(key);
 		}
 

@@ -46,7 +46,6 @@ import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -719,13 +718,9 @@ public class ObjectValidationRuleLocalServiceImpl
 		}
 
 		Set<String> allowedObjectValidationRuleSettingNames = SetUtil.fromArray(
-			ObjectValidationRuleSettingConstants.NAME_OUTPUT_OBJECT_FIELD_ID);
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-187854")) {
-			allowedObjectValidationRuleSettingNames.add(
-				ObjectValidationRuleSettingConstants.
-					NAME_COMPOSITE_KEY_OBJECT_FIELD_ID);
-		}
+			ObjectValidationRuleSettingConstants.NAME_OUTPUT_OBJECT_FIELD_ID,
+			ObjectValidationRuleSettingConstants.
+				NAME_COMPOSITE_KEY_OBJECT_FIELD_ID);
 
 		int count = 0;
 

@@ -79,17 +79,9 @@ public class LanguageResources {
 	}
 
 	public static ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle resourceBundle = new LanguageResourcesBundle(locale);
-
-		ResourceBundle overrideResourceBundle = _getOverrideResourceBundle(
-			locale);
-
-		if (overrideResourceBundle != null) {
-			resourceBundle = new AggregateResourceBundle(
-				overrideResourceBundle, resourceBundle);
-		}
-
-		return resourceBundle;
+		return new AggregateResourceBundle(
+			new DynamicOverrideResourceBundle(locale),
+			new LanguageResourcesBundle(locale));
 	}
 
 	public static Locale getSuperLocale(Locale locale) {
@@ -220,6 +212,57 @@ public class LanguageResources {
 	private static final Locale _nullLocale = new Locale(StringPool.BLANK);
 	private static final Map<Long, Map<Locale, Locale>> _superLocalesMap =
 		new ConcurrentHashMap<>();
+
+	private static class DynamicOverrideResourceBundle extends ResourceBundle {
+
+		@Override
+		public Enumeration<String> getKeys() {
+			ResourceBundle overrideResourceBundle = _getOverrideResourceBundle(
+				_locale);
+
+			if (overrideResourceBundle != null) {
+				return overrideResourceBundle.getKeys();
+			}
+
+			return Collections.emptyEnumeration();
+		}
+
+		@Override
+		public Locale getLocale() {
+			return _locale;
+		}
+
+		@Override
+		protected Object handleGetObject(String key) {
+			ResourceBundle overrideResourceBundle = _getOverrideResourceBundle(
+				_locale);
+
+			if (overrideResourceBundle != null) {
+				return overrideResourceBundle.getObject(key);
+			}
+
+			return null;
+		}
+
+		@Override
+		protected Set<String> handleKeySet() {
+			ResourceBundle overrideResourceBundle = _getOverrideResourceBundle(
+				_locale);
+
+			if (overrideResourceBundle != null) {
+				return overrideResourceBundle.keySet();
+			}
+
+			return Collections.emptySet();
+		}
+
+		private DynamicOverrideResourceBundle(Locale locale) {
+			_locale = locale;
+		}
+
+		private final Locale _locale;
+
+	}
 
 	private static class LanguageResourcesBundle extends ResourceBundle {
 

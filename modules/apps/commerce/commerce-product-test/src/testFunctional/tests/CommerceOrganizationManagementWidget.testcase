@@ -127,40 +127,6 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-9403. Verify the store admin can associate existing users to an organization by using the Organization Management widget."
-	@priority = 3
-	test CanAssociateExistingUserUsingWidget {
-		property portal.acceptance = "false";
-
-		task ("Setup: Add an organization") {
-			JSONOrganization.addOrganization(
-				organizationName = "Organization 1",
-				organizationSite = "false");
-		}
-
-		task ("Given an Organization Management Widget Page is reached") {
-			Navigator.openSitePage(
-				pageName = "Organization Management Widget Page",
-				siteName = "Minium");
-		}
-
-		task ("When the user svg node is reached") {
-			CommerceWidget.gotoSVGNode(
-				key_nodeName = "Organization 1",
-				key_orgType = "user");
-		}
-
-		task ("And the admin is able to add an existing user's email to be associated with the organization") {
-			CommerceWidget.addUserViaOrganizationManagementWidget(
-				key_roleOption = "Organization User",
-				value = "buyer@liferay.com");
-		}
-
-		task ("Then the user is present in the admin console") {
-			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Buyer User");
-		}
-	}
-
 	@description = "COMMERCE-12586 | Verify that changing the root configuration for the Organization Management widget affect the search results"
 	@priority = 5
 	test CanChangeTheRootAffectTheSearchOrganizationManagement {

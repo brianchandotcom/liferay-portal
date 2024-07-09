@@ -8,8 +8,13 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {objectPagesTest} from '../../fixtures/objectPagesTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {wemSiteTest} from '../../fixtures/wemSiteTest';
-import {LEMON_OBJECT_ERC} from '../../setup/wem-site/constants';
+import {
+	LEMON_BASKET_OBJECT_ERC,
+	LEMON_OBJECT_ERC,
+} from '../../setup/wem-site/constants';
 import getGlobalSiteId from '../../utils/getGlobalSiteId';
 import getRandomString from '../../utils/getRandomString';
 import {PORTLET_URLS} from '../../utils/portletUrls';
@@ -23,7 +28,9 @@ const test = mergeTests(
 		'LPS-178052': true,
 	}),
 	loginTest(),
-	wemSiteTest
+	wemSiteTest,
+	objectPagesTest,
+	pageEditorPagesTest
 );
 
 test('uses Tags fragment for Forms in a Content Page', async ({
@@ -140,5 +147,68 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 
 	await apiHelpers.headlessAdminTaxonomy.deleteKeyword({
 		id: globalTag.id,
+	});
+});
+
+test('checks that an info message appears when categorization is disabled', async ({
+	apiHelpers,
+	objectDetailsPage,
+	page,
+	pageEditorPage,
+	wemSite,
+}) => {
+
+	// Get Lemon Basket object id from the site initializer
+
+	const {id: objectId} =
+		await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+			LEMON_BASKET_OBJECT_ERC
+		);
+
+	// Set the "Enable Categorization of Object entries" configuration to false
+
+	await objectDetailsPage.goto('Lemon Basket');
+
+	await objectDetailsPage.updateConfiguration({
+		fieldLabel: 'Enable Categorization of Object entries',
+		value: false,
+	});
+
+	// Create a Form Container with a Tags fragment
+
+	const formDefinition = getFormContainerDefinition({
+		id: getRandomString(),
+		objectId,
+		pageElements: [
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'com.liferay.fragment.renderer.categorization.inputs.internal.TagsInputFragmentRenderer',
+			}),
+		],
+	});
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([formDefinition]),
+		siteId: wemSite.id,
+		title: getRandomString(),
+	});
+
+	// Go to edit mode and check the info message
+
+	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+
+	await expect(
+		page.getByText(
+			'Categorization is disabled for the selected content. To show categories in this fragment, categorization must be enabled.'
+		)
+	).toBeVisible();
+
+	// Reset initial configuration
+
+	await objectDetailsPage.goto('Lemon Basket');
+
+	await objectDetailsPage.updateConfiguration({
+		fieldLabel: 'Enable Categorization of Object entries',
+		value: true,
 	});
 });

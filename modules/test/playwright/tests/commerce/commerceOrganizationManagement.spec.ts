@@ -210,3 +210,63 @@ test('LPD-31011 Can associate existing user using the widget', async ({
 		1
 	);
 });
+
+test('LPD-31026 Can add new user using the widget', async ({
+	apiHelpers,
+	organizationManagementPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	const organization = await apiHelpers.headlessAdminUser.postOrganization({
+		name: `Org${getRandomInt()}`,
+	});
+
+	await usersAndOrganizationsPage.goToOrganizationChart();
+
+	await expect(organizationManagementPage.chart).toBeVisible();
+
+	await waitForAnimationEnd(
+		organizationManagementPage.organizationNode(organization.name)
+	);
+	await organizationManagementPage
+		.organizationNode(organization.name)
+		.click();
+	await waitForAnimationEnd(organizationManagementPage.addNode);
+
+	const userEmailAddress = `${getRandomInt()}@liferay.com`;
+
+	await organizationManagementPage.addUserToOrganization({
+		email: userEmailAddress,
+	});
+	await waitForSuccessAlert(page, `1 user was added to ${organization.name}`);
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			userEmailAddress
+		);
+
+	apiHelpers.data.push({
+		id: user.id,
+		type: 'userAccount',
+	});
+	apiHelpers.data.push({
+		id: `${organization.id}_${userEmailAddress}`,
+		type: 'organizationUserAccountAssociation',
+	});
+
+	await page.reload();
+
+	await waitForAnimationEnd(
+		organizationManagementPage.organizationNode(organization.name)
+	);
+	await organizationManagementPage
+		.organizationNode(organization.name)
+		.click();
+	await waitForAnimationEnd(organizationManagementPage.addNode);
+
+	await expect(
+		organizationManagementPage.userNode(
+			userEmailAddress.substr(0, userEmailAddress.indexOf('@'))
+		)
+	).toHaveCount(1);
+});

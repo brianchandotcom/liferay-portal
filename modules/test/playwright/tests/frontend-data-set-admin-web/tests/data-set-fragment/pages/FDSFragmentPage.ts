@@ -105,7 +105,7 @@ export class FDSFragmentPage {
 		dataSetLabel?: string;
 		layout: Layout;
 	}) {
-		await this.setupPageAndFragment(layout)
+		await this.setupPageAndFragment(layout);
 
 		await this.page
 			.frameLocator('iframe[title="Select"]')
@@ -133,11 +133,7 @@ export class FDSFragmentPage {
 			.waitFor({state: 'visible'});
 	}
 
-	async configureEmptyDataSetFragment({
-		layout,
-	}: {
-		layout: Layout;
-	}) {
+	async configureEmptyDataSetFragment({layout}: {layout: Layout}) {
 		await this.setupPageAndFragment(layout);
 
 		await this.page

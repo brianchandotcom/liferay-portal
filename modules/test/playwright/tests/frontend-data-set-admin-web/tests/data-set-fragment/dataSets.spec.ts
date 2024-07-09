@@ -43,13 +43,13 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 });
 
 test.describe('Data Set Fragment', () => {
-    test('Data Set can be added to the fragment', async({
+	test('Data Set can be added to the fragment', async ({
 		dataSetManagerApiHelpers,
-        fdsFragmentPage,
+		fdsFragmentPage,
 		layout,
-        page
-    }) => {
-        await test.step('Add fields, so data is displayed', async () => {
+		page,
+	}) => {
+		await test.step('Add fields, so data is displayed', async () => {
 			await dataSetManagerApiHelpers.createDataSetField({
 				dataSetERC,
 				label_i18n: {
@@ -69,15 +69,15 @@ test.describe('Data Set Fragment', () => {
 			});
 		});
 
-        await test.step('Configure Data Set fragment', async () => {
+		await test.step('Configure Data Set fragment', async () => {
 			await fdsFragmentPage.configureDataSetFragment({
 				dataSetLabel,
 				layout,
 			});
 		});
 
-        await test.step('Assert that the Data Set is available on the page', async() => {
-            await fdsFragmentPage.fdsTableWrapper.waitFor({
+		await test.step('Assert that the Data Set is available on the page', async () => {
+			await fdsFragmentPage.fdsTableWrapper.waitFor({
 				state: 'visible',
 			});
 
@@ -92,31 +92,31 @@ test.describe('Data Set Fragment', () => {
 					.locator('.dnd-th')
 					.allInnerTexts()
 			).toEqual(['ID', 'Name', '']);
-        });
-    });
+		});
+	});
 
-    test('Data Set selection modal shows a "No results found" message when there are no Data Sets created', async({
-        dataSetManagerApiHelpers,
+	test('Data Set selection modal shows a "No results found" message when there are no Data Sets created', async ({
+		dataSetManagerApiHelpers,
 		fdsFragmentPage,
 		layout,
-    }) => {
-        test.step('Remove Data Set', async() => {
-            await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
-        });
+	}) => {
+		test.step('Remove Data Set', async () => {
+			await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
+		});
 
-        await test.step('Configure Data Set fragment', async () => {
+		await test.step('Configure Data Set fragment', async () => {
 			await fdsFragmentPage.configureEmptyDataSetFragment({
 				dataSetLabel,
 				layout,
 			});
 		});
 
-        test.step('Assert that there are no Data Sets available to select', async() => {
-            await expect(
-                fdsFragmentPage.page
-                .frameLocator('iframe[title="Select"]')
-                .locator('.c-empty-state-title')
-            ).toContainText('No Results Found');
-        });
-    });
+		test.step('Assert that there are no Data Sets available to select', async () => {
+			await expect(
+				fdsFragmentPage.page
+					.frameLocator('iframe[title="Select"]')
+					.locator('.c-empty-state-title')
+			).toContainText('No Results Found');
+		});
+	});
 });

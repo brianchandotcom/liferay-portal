@@ -1,0 +1,21 @@
+{
+	"description": "Newsletters",
+	"externalReferenceCode": "PRMC075",
+	"name": "Newsletters",
+	"name_i18n": {
+		"ar_SA": "Newsletters",
+		"ca_ES": "Newsletters",
+		"de_DE": "Newsletters",
+		"en_US": "Newsletters",
+		"es_ES": "Newsletters",
+		"fi_FI": "Newsletters",
+		"fr_FR": "Newsletters",
+		"hu_HU": "Newsletters",
+		"ja_JP": "Newsletters",
+		"nl_NL": "Newsletters",
+		"pt_BR": "Newsletters",
+		"sv_SE": "Newsletters",
+		"zh_CN": "Newsletters"
+	},
+	"viewableBy": "Anyone"
+}

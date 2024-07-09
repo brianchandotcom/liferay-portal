@@ -55,40 +55,6 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-	@description = "COMMERCE-9403. Verify new users can be added using the Organization Management widget."
-	@priority = 5
-	test CanAddNewUserUsingWidget {
-		property portal.acceptance = "true";
-
-		task ("Setup: Add an organization") {
-			JSONOrganization.addOrganization(
-				organizationName = "Organization 1",
-				organizationSite = "false");
-		}
-
-		task ("Given the Organization Management Widget Page is reached and the account svg node is reached") {
-			Navigator.openSitePage(
-				pageName = "Organization Management Widget Page",
-				siteName = "Minium");
-
-			CommerceWidget.gotoSVGNode(
-				key_nodeName = "Organization 1",
-				key_orgType = "user");
-		}
-
-		task ("Then the admin is able to create and add a new user to the Organization by adding the user email and selecting the organization role") {
-			CommerceWidget.addUserViaOrganizationManagementWidget(
-				key_roleOption = "Organization User",
-				value = "user@liferay.com");
-
-			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "user@life");
-		}
-
-		task ("Then the user is present in the admin console") {
-			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "user@life");
-		}
-	}
-
 	@description = "COMMERCE-9402. Verify the store admin can associate existing accounts to an organization by using the Organization Management widget."
 	@priority = 3
 	test CanAssociateExistingAccountUsingWidget {

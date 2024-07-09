@@ -5,76 +5,102 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+
 export class WidgetPagePage {
-	readonly addApplicationButton: Locator;
-	readonly controlMenuAddButton: Locator;
-	readonly controlMenuToggleControlsButton: Locator;
-	readonly controlMenuAddPanelContentTab: Locator;
 	readonly page: Page;
+
+	readonly addButton: Locator;
+	readonly contentTab: Locator;
+	readonly toggleControlsButton: Locator;
+	readonly widgetsTab: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
-		this.addApplicationButton = page
-			.locator('ul')
-			.filter({hasText: 'Open Applications MenuCtrl+Alt+A'})
-			.getByLabel('Add');
-		this.controlMenuAddButton = page
+		this.addButton = page
 			.locator('.control-menu-nav-item')
 			.getByRole('button', {
 				exact: true,
 				name: 'Add',
 			});
-		this.controlMenuToggleControlsButton = page
+
+		this.contentTab = page.getByText('Content', {
+			exact: true,
+		});
+
+		this.toggleControlsButton = page
 			.locator('.control-menu-nav-item')
 			.getByRole('button', {
 				exact: true,
 				name: 'Toggle Controls',
 			});
-		this.controlMenuAddPanelContentTab = page.getByText('Content', {
+
+		this.widgetsTab = page.getByText('Widgets', {
 			exact: true,
 		});
 	}
 
 	async addPortlet(portletName: string) {
-		await this.clickControlMenuAddButton();
+		await this.addButton.click();
+
+		await this.widgetsTab.click();
+
 		await this.page
 			.getByRole('textbox', {name: 'Search Form'})
 			.fill(portletName);
+
 		await this.page
 			.locator('.sidebar-body__add-panel__tab-item')
 			.filter({hasText: portletName})
 			.getByRole('button', {name: 'Add Content'})
 			.click();
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:The application was added to the page.'
+		);
 	}
 
 	async addContent(contentName: string) {
-		await this.clickControlMenuAddButton();
-		await this.goToControlMenuAddPanelContentTab();
+		await this.addButton.click();
+
+		await this.contentTab.click();
+
 		await this.page
 			.locator('.sidebar-body__add-panel__tab-item')
 			.filter({hasText: contentName})
 			.getByRole('button', {name: 'Add Content'})
 			.click();
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:The application was added to the page.'
+		);
 	}
 
-	async clickToAddApplication() {
-		await this.addApplicationButton.click();
+	async openAddPanel() {
+		const isOpen = await this.addButton.evaluate((element) =>
+			element.classList.contains('open')
+		);
+
+		if (!isOpen) {
+			await this.addButton.click();
+		}
 	}
 
-	async clickControlMenuAddButton() {
-		await this.controlMenuAddButton.click();
-	}
+	async toggleControls(state: 'visible' | 'hidden') {
+		const isOpen = await this.toggleControlsButton
+			.locator('svg')
+			.evaluate((element) =>
+				element.classList.contains('lexicon-icon-view')
+			);
 
-	async clickControlMenuToggleControlsButton() {
-		await this.controlMenuToggleControlsButton.click();
-	}
-
-	async goToControlMenuAddPanelContentTab() {
-		await this.page.getByText('Content', {exact: true}).click();
-	}
-
-	async goToSitePage(site: Site, layoutFriendlyURL: string) {
-		await this.page.goto(`/web${site.friendlyUrlPath}${layoutFriendlyURL}`);
+		if (
+			(state === 'visible' && !isOpen) ||
+			(state === 'hidden' && isOpen)
+		) {
+			await this.toggleControlsButton.click();
+		}
 	}
 }

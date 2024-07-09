@@ -5,7 +5,6 @@
 
 package com.liferay.portlet.internal;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletConstants;
@@ -240,16 +239,13 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		String resourceBundleClassName = _portlet.getResourceBundle();
 
 		if (Validator.isNull(resourceBundleClassName)) {
-			String resourceBundleId = _portlet.getPortletId();
-
-			ResourceBundle resourceBundle = _resourceBundles.get(
-				resourceBundleId);
+			ResourceBundle resourceBundle = _resourceBundles.get(locale);
 
 			if (resourceBundle == null) {
 				resourceBundle = new PortletResourceBundle(
 					LanguageResources.getResourceBundle(locale), _portletInfos);
 
-				_resourceBundles.put(resourceBundleId, resourceBundle);
+				_resourceBundles.put(locale, resourceBundle);
 			}
 
 			return resourceBundle;
@@ -261,17 +257,13 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 			resourceBundleClassName.equals(
 				StrutsResourceBundle.class.getName())) {
 
-			String resourceBundleId = StringBundler.concat(
-				_portlet.getPortletId(), locale.getLanguage(),
-				locale.getCountry(), locale.getVariant());
-
-			resourceBundle = _resourceBundles.get(resourceBundleId);
+			resourceBundle = _resourceBundles.get(locale);
 
 			if (resourceBundle == null) {
 				resourceBundle = new StrutsResourceBundle(_portletName, locale);
 			}
 
-			_resourceBundles.put(resourceBundleId, resourceBundle);
+			_resourceBundles.put(locale, resourceBundle);
 		}
 		else {
 			PortletBag portletBag = PortletBagPool.get(
@@ -351,7 +343,7 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 	private final PortletContext _portletContext;
 	private final Map<String, String> _portletInfos;
 	private final String _portletName;
-	private final Map<String, ResourceBundle> _resourceBundles =
+	private final Map<Locale, ResourceBundle> _resourceBundles =
 		new ConcurrentHashMap<>();
 
 }

@@ -185,6 +185,14 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async getAccountByName(accountName: string): Promise<TAccount> {
+		const accountResponse = await this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/accounts?filter=name eq '${accountName}'`
+		);
+
+		return accountResponse?.items?.at(0);
+	}
+
 	async getSiteByFriendlyUrlPath(friendlyUrlPath: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/by-friendly-url-path/${friendlyUrlPath}`

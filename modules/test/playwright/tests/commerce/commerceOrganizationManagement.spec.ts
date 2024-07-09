@@ -270,3 +270,108 @@ test('LPD-31026 Can add new user using the widget', async ({
 		)
 	).toHaveCount(1);
 });
+
+test('LPD-31052 Can associate existing account using the widget', async ({
+	apiHelpers,
+	organizationManagementPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: `Acc${getRandomInt()}`,
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const organization = await apiHelpers.headlessAdminUser.postOrganization({
+		name: `Org${getRandomInt()}`,
+	});
+
+	await usersAndOrganizationsPage.goToOrganizationChart();
+
+	await expect(organizationManagementPage.chart).toBeVisible();
+
+	await waitForAnimationEnd(
+		organizationManagementPage.organizationNode(organization.name)
+	);
+	await organizationManagementPage
+		.organizationNode(organization.name)
+		.click();
+	await waitForAnimationEnd(organizationManagementPage.addNode);
+
+	await organizationManagementPage.addAccountToOrganization({
+		accountName: account.name,
+		isNew: false,
+	});
+	await waitForSuccessAlert(
+		page,
+		`1 account was added to ${organization.name}`
+	);
+
+	await page.reload();
+
+	await waitForAnimationEnd(
+		organizationManagementPage.organizationNode(organization.name)
+	);
+	await organizationManagementPage
+		.organizationNode(organization.name)
+		.click();
+	await waitForAnimationEnd(organizationManagementPage.addNode);
+
+	await expect(
+		organizationManagementPage.accountNode(account.name)
+	).toHaveCount(1);
+});
+
+test('LPD-31052 Can add new account using the widget', async ({
+	apiHelpers,
+	organizationManagementPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	const organization = await apiHelpers.headlessAdminUser.postOrganization({
+		name: `Org${getRandomInt()}`,
+	});
+
+	await usersAndOrganizationsPage.goToOrganizationChart();
+
+	await expect(organizationManagementPage.chart).toBeVisible();
+
+	await waitForAnimationEnd(
+		organizationManagementPage.organizationNode(organization.name)
+	);
+	await organizationManagementPage
+		.organizationNode(organization.name)
+		.click();
+	await waitForAnimationEnd(organizationManagementPage.addNode);
+
+	const accountName = `Acc${getRandomInt()}`;
+
+	await organizationManagementPage.addAccountToOrganization({
+		accountName,
+		isNew: true,
+	});
+	await waitForSuccessAlert(
+		page,
+		`1 account was added to ${organization.name}`
+	);
+
+	const account =
+		await apiHelpers.headlessAdminUser.getAccountByName(accountName);
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await page.reload();
+
+	await waitForAnimationEnd(
+		organizationManagementPage.organizationNode(organization.name)
+	);
+	await organizationManagementPage
+		.organizationNode(organization.name)
+		.click();
+	await waitForAnimationEnd(organizationManagementPage.addNode);
+
+	await expect(
+		organizationManagementPage.accountNode(accountName)
+	).toHaveCount(1);
+});

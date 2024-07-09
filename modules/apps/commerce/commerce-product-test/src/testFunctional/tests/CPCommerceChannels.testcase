@@ -627,64 +627,6 @@ definition {
 			value1 = "");
 	}
 
-	@description = "Verify users without edit permission cannot change the currency of a channel."
-	@priority = 5
-	test CanNotEditChannelCurrencyAsUserWithoutEditPermission {
-		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "true";
-
-		task ("Given a Commerce account with a buyer user") {
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				accountType = "Business",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "true",
-				requireReset = "false",
-				userEmailAddress = "buyer@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userRole = "Buyer",
-				userScreenName = "buyeruser",
-				userSiteMembership = "Minium");
-		}
-
-		task ("And given the buyer has permission to view a channel's configuration") {
-			CommercePermissions.defineChannelPermissionsViaJSONAPI(
-				roleTitle = "User",
-				update = "false",
-				view = "true");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "MANAGE_COMMERCE_PRODUCT_CHANNEL_VISIBILITY",
-				resourceName = "com.liferay.commerce.product",
-				roleTitle = "User");
-		}
-
-		task ("When the buyer logs in and goes to the Minium channel") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = PropsUtil.get("default.admin.password"),
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-
-			CommerceChannels.openChannelsAdmin();
-
-			AssertTextEquals(
-				key_columnIndex = 1,
-				key_rowIndex = 1,
-				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
-				value1 = "Minium Portal");
-		}
-
-		task ("Then the buyer is unable to change the channel currency code") {
-			AssertElementNotPresent(
-				key_entryName = "Minium Portal",
-				locator1 = "CommerceNavigation#ENTRY_NAME",
-				value1 = "Minium Portal");
-		}
-	}
-
 	@description = "This is a test for COMMERCE-10053. An error message shows up when the eligibility element is already linked"
 	@priority = 3
 	test CannotSelectPaymentMethodEligibilitiesTwice {

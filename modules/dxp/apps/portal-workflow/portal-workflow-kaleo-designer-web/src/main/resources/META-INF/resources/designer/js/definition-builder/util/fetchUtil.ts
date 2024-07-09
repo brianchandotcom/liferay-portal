@@ -17,8 +17,10 @@ export const HEADERS = new Headers({
 	'x-csrf-token': Liferay.authToken,
 });
 
-export function publishDefinitionRequest(requestBody: WorkflowDefinition) {
-	return fetch(`${workflowBaseURL}/workflow-definitions/deploy`, {
+export async function publishDefinitionRequest(
+	requestBody: WorkflowDefinition
+) {
+	return await fetch(`${workflowBaseURL}/workflow-definitions/deploy`, {
 		body: JSON.stringify(requestBody),
 		headers: HEADERS,
 		method: 'POST',
@@ -87,8 +89,8 @@ export function retrieveUsersBy(filterType: string, keywords: string[]) {
 	);
 }
 
-export function saveDefinitionRequest(requestBody: WorkflowDefinition) {
-	return fetch(`${workflowBaseURL}/workflow-definitions/save`, {
+export async function saveDefinitionRequest(requestBody: WorkflowDefinition) {
+	return await fetch(`${workflowBaseURL}/workflow-definitions/save`, {
 		body: JSON.stringify(requestBody),
 		headers: HEADERS,
 		method: 'POST',

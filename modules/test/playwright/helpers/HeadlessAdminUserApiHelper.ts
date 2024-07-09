@@ -176,6 +176,15 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async deleteUserFromOrganizationByEmailAddress(
+		organizationId: string,
+		emailAddress: string
+	) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/organizations/${organizationId}/user-accounts/by-email-address/${emailAddress}`
+		);
+	}
+
 	async deleteRoleUserAccountAssociation(
 		roleId: number,
 		userAccountId: number

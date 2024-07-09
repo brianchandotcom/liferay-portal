@@ -9,9 +9,12 @@ import {PORTLET_URLS} from '../../utils/portletUrls';
 
 export class WikiPage {
 	readonly page: Page;
+	readonly publishButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
+
+		this.publishButton = page.getByRole('button', {name: 'Publish'});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -68,5 +71,9 @@ export class WikiPage {
 
 	async goToWikiNode(title: string) {
 		await this.page.getByRole('link', {exact: true, name: title}).click();
+	}
+
+	async publishPage() {
+		await this.publishButton.click();
 	}
 }

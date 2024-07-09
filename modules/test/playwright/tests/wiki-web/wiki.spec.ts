@@ -77,6 +77,8 @@ test('LPD-28898 Image added via rich text editor on Wiki tool losing reference',
 		image
 	);
 
+	await wikiPage.publishPage();
+
 	await wikiPage.goto();
 
 	await wikiPage.goToWikiNode('Main');

@@ -48,173 +48,176 @@ public class CommerceReturnObjectEntryValuesContributor
 
 	@Override
 	public void contribute(ObjectEntryContext objectEntryContext) {
-		Map<String, Serializable> values = objectEntryContext.getValues();
-
 		try {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntryContext.getObjectDefinitionId());
-
-			if (!StringUtil.equals(
-					objectDefinition.getName(), "CommerceReturn")) {
-
-				return;
-			}
-
-			CommerceOrder commerceOrder =
-				_commerceOrderLocalService.getCommerceOrder(
-					GetterUtil.getLong(values.get("commerceOrderId")));
-
-			values.put("channelGroupId", commerceOrder.getGroupId());
-
-			CommerceChannel commerceChannel =
-				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-					commerceOrder.getGroupId());
-
-			values.put("channelId", commerceChannel.getCommerceChannelId());
-			values.put("channelName", commerceChannel.getName());
-
-			if (!values.containsKey("c_commerceReturnId") &&
-				!values.containsKey("externalReferenceCode")) {
-
-				return;
-			}
-
-			ObjectEntry originalObjectEntry =
-				_objectEntryLocalService.fetchObjectEntry(
-					GetterUtil.getLong(values.get("c_commerceReturnId")));
-
-			if (originalObjectEntry == null) {
-				originalObjectEntry = _objectEntryLocalService.fetchObjectEntry(
-					GetterUtil.getString(values.get("externalReferenceCode")),
-					objectDefinition.getObjectDefinitionId());
-			}
-
-			Map<String, Serializable> originalValues =
-				originalObjectEntry.getValues();
-
-			String currentReturnStatus = GetterUtil.getString(
-				originalValues.get("returnStatus"));
-
-			String newReturnStatus = GetterUtil.getString(
-				values.get("returnStatus"));
-
-			if (StringUtil.equalsIgnoreCase(
-					currentReturnStatus,
-					CommerceReturnConstants.RETURN_STATUS_DRAFT) &&
-				StringUtil.equalsIgnoreCase(
-					newReturnStatus,
-					CommerceReturnConstants.RETURN_STATUS_PENDING)) {
-
-				return;
-			}
-
-			List<ObjectEntry> objectEntries =
-				_objectEntryLocalService.getOneToManyObjectEntries(
-					originalObjectEntry.getGroupId(),
-					_objectRelationshipLocalService.getObjectRelationship(
-						originalObjectEntry.getObjectDefinitionId(),
-						"commerceReturnToCommerceReturnItems"
-					).getObjectRelationshipId(),
-					originalObjectEntry.getObjectEntryId(), true, null,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			Map<String, List<ObjectEntry>> returnItemStatusObjectEntriesMap =
-				_toReturnItemStatusObjectEntriesMap(objectEntries);
-
-			if (CommerceReturnThreadLocal.isMarkAsCompleted()) {
-				CommerceReturnThreadLocal.setMarkAsCompleted(false);
-
-				for (ObjectEntry objectEntry :
-						returnItemStatusObjectEntriesMap.getOrDefault(
-							"processedReturnItems", Collections.emptyList())) {
-
-					Map<String, Serializable> objectEntryValues =
-						objectEntry.getValues();
-
-					objectEntryValues.put(
-						"returnItemStatus",
-						CommerceReturnConstants.RETURN_ITEM_STATUS_COMPLETED);
-
-					CommerceReturnThreadLocal.
-						setSkipCommerceReturnItemContributor(true);
-
-					_objectEntryLocalService.updateObjectEntry(
-						objectEntry.getUserId(), objectEntry.getObjectEntryId(),
-						objectEntryValues, new ServiceContext());
-				}
-
-				values.put(
-					"returnStatus",
-					CommerceReturnConstants.RETURN_STATUS_COMPLETED);
-
-				return;
-			}
-
-			if (CommerceReturnThreadLocal.isMarkAsProcessed()) {
-				CommerceReturnThreadLocal.setMarkAsProcessed(false);
-
-				for (ObjectEntry objectEntry :
-						returnItemStatusObjectEntriesMap.getOrDefault(
-							"toBeProcessedReturnItems",
-							Collections.emptyList())) {
-
-					Map<String, Serializable> objectEntryValues =
-						objectEntry.getValues();
-
-					objectEntryValues.put(
-						"returnItemStatus",
-						CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED);
-
-					CommerceReturnThreadLocal.
-						setSkipCommerceReturnItemContributor(true);
-
-					_objectEntryLocalService.updateObjectEntry(
-						objectEntry.getUserId(), objectEntry.getObjectEntryId(),
-						objectEntryValues, new ServiceContext());
-				}
-
-				return;
-			}
-
-			String nextReturnStatus = _getNextReturnStatus(
-				objectEntries.size(), currentReturnStatus,
-				returnItemStatusObjectEntriesMap);
-
-			if (StringUtil.equals(currentReturnStatus, nextReturnStatus)) {
-				return;
-			}
-
-			if (StringUtil.equals(
-					nextReturnStatus,
-					CommerceReturnConstants.RETURN_STATUS_AUTHORIZED)) {
-
-				for (ObjectEntry objectEntry :
-						returnItemStatusObjectEntriesMap.getOrDefault(
-							"authorizedReturnItems", Collections.emptyList())) {
-
-					Map<String, Serializable> objectEntryValues =
-						objectEntry.getValues();
-
-					objectEntryValues.put(
-						"returnItemStatus",
-						CommerceReturnConstants.
-							RETURN_ITEM_STATUS_AWAITING_RECEIPT);
-
-					CommerceReturnThreadLocal.
-						setSkipCommerceReturnItemContributor(true);
-
-					_objectEntryLocalService.updateObjectEntry(
-						objectEntry.getUserId(), objectEntry.getObjectEntryId(),
-						objectEntryValues, new ServiceContext());
-				}
-			}
-
-			values.put("returnStatus", nextReturnStatus);
+			_contribute(objectEntryContext);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+	}
+
+	private void _contribute(ObjectEntryContext objectEntryContext)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntryContext.getObjectDefinitionId());
+
+		if (!StringUtil.equals(objectDefinition.getName(), "CommerceReturn")) {
+			return;
+		}
+
+		Map<String, Serializable> values = objectEntryContext.getValues();
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.getCommerceOrder(
+				GetterUtil.getLong(values.get("commerceOrderId")));
+
+		values.put("channelGroupId", commerceOrder.getGroupId());
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
+				commerceOrder.getGroupId());
+
+		values.put("channelId", commerceChannel.getCommerceChannelId());
+		values.put("channelName", commerceChannel.getName());
+
+		if (!values.containsKey("c_commerceReturnId") &&
+			!values.containsKey("externalReferenceCode")) {
+
+			return;
+		}
+
+		ObjectEntry originalObjectEntry =
+			_objectEntryLocalService.fetchObjectEntry(
+				GetterUtil.getLong(values.get("c_commerceReturnId")));
+
+		if (originalObjectEntry == null) {
+			originalObjectEntry = _objectEntryLocalService.fetchObjectEntry(
+				GetterUtil.getString(values.get("externalReferenceCode")),
+				objectDefinition.getObjectDefinitionId());
+		}
+
+		Map<String, Serializable> originalValues =
+			originalObjectEntry.getValues();
+
+		String currentReturnStatus = GetterUtil.getString(
+			originalValues.get("returnStatus"));
+
+		String newReturnStatus = GetterUtil.getString(
+			values.get("returnStatus"));
+
+		if (StringUtil.equalsIgnoreCase(
+				currentReturnStatus,
+				CommerceReturnConstants.RETURN_STATUS_DRAFT) &&
+			StringUtil.equalsIgnoreCase(
+				newReturnStatus,
+				CommerceReturnConstants.RETURN_STATUS_PENDING)) {
+
+			return;
+		}
+
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getOneToManyObjectEntries(
+				originalObjectEntry.getGroupId(),
+				_objectRelationshipLocalService.getObjectRelationship(
+					originalObjectEntry.getObjectDefinitionId(),
+					"commerceReturnToCommerceReturnItems"
+				).getObjectRelationshipId(),
+				originalObjectEntry.getObjectEntryId(), true, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Map<String, List<ObjectEntry>> returnItemStatusObjectEntriesMap =
+			_toReturnItemStatusObjectEntriesMap(objectEntries);
+
+		if (CommerceReturnThreadLocal.isMarkAsCompleted()) {
+			CommerceReturnThreadLocal.setMarkAsCompleted(false);
+
+			for (ObjectEntry objectEntry :
+					returnItemStatusObjectEntriesMap.getOrDefault(
+						"processedReturnItems", Collections.emptyList())) {
+
+				Map<String, Serializable> objectEntryValues =
+					objectEntry.getValues();
+
+				objectEntryValues.put(
+					"returnItemStatus",
+					CommerceReturnConstants.RETURN_ITEM_STATUS_COMPLETED);
+
+				CommerceReturnThreadLocal.setSkipCommerceReturnItemContributor(
+					true);
+
+				_objectEntryLocalService.updateObjectEntry(
+					objectEntry.getUserId(), objectEntry.getObjectEntryId(),
+					objectEntryValues, new ServiceContext());
+			}
+
+			values.put(
+				"returnStatus",
+				CommerceReturnConstants.RETURN_STATUS_COMPLETED);
+
+			return;
+		}
+
+		if (CommerceReturnThreadLocal.isMarkAsProcessed()) {
+			CommerceReturnThreadLocal.setMarkAsProcessed(false);
+
+			for (ObjectEntry objectEntry :
+					returnItemStatusObjectEntriesMap.getOrDefault(
+						"toBeProcessedReturnItems", Collections.emptyList())) {
+
+				Map<String, Serializable> objectEntryValues =
+					objectEntry.getValues();
+
+				objectEntryValues.put(
+					"returnItemStatus",
+					CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED);
+
+				CommerceReturnThreadLocal.setSkipCommerceReturnItemContributor(
+					true);
+
+				_objectEntryLocalService.updateObjectEntry(
+					objectEntry.getUserId(), objectEntry.getObjectEntryId(),
+					objectEntryValues, new ServiceContext());
+			}
+
+			return;
+		}
+
+		String nextReturnStatus = _getNextReturnStatus(
+			objectEntries.size(), currentReturnStatus,
+			returnItemStatusObjectEntriesMap);
+
+		if (StringUtil.equals(currentReturnStatus, nextReturnStatus)) {
+			return;
+		}
+
+		if (StringUtil.equals(
+				nextReturnStatus,
+				CommerceReturnConstants.RETURN_STATUS_AUTHORIZED)) {
+
+			for (ObjectEntry objectEntry :
+					returnItemStatusObjectEntriesMap.getOrDefault(
+						"authorizedReturnItems", Collections.emptyList())) {
+
+				Map<String, Serializable> objectEntryValues =
+					objectEntry.getValues();
+
+				objectEntryValues.put(
+					"returnItemStatus",
+					CommerceReturnConstants.
+						RETURN_ITEM_STATUS_AWAITING_RECEIPT);
+
+				CommerceReturnThreadLocal.setSkipCommerceReturnItemContributor(
+					true);
+
+				_objectEntryLocalService.updateObjectEntry(
+					objectEntry.getUserId(), objectEntry.getObjectEntryId(),
+					objectEntryValues, new ServiceContext());
+			}
+		}
+
+		values.put("returnStatus", nextReturnStatus);
 	}
 
 	private String _getNextReturnStatus(

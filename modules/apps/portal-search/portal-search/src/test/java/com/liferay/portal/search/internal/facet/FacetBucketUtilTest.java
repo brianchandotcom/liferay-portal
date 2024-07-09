@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.internal.facet;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
@@ -45,6 +47,40 @@ public class FacetBucketUtilTest {
 		Facet facet = new MultiValueFacet(null);
 
 		Assert.assertTrue(FacetBucketUtil.isFieldInBucket(field, "bar", facet));
+	}
+
+	@Test
+	public void testNestedFacet() {
+		NestedFacetImpl nestedFacetImpl = new NestedFacetImpl(
+			_FIELD_NAME, null);
+
+		nestedFacetImpl.setPath(_FIELD_NAME);
+		nestedFacetImpl.setFilterField(_FIELD_NAME + ".fieldName");
+
+		String filterValue = RandomTestUtil.randomString();
+
+		nestedFacetImpl.setFilterValue(filterValue);
+
+		Field field = new Field(
+			_FIELD_NAME,
+			new String[] {
+				StringBundler.concat(
+					"{fieldName=", filterValue, StringPool.COMMA_AND_SPACE,
+					_FIELD_NAME, "=a}"),
+				StringBundler.concat(
+					"{fieldName=", RandomTestUtil.randomString(),
+					StringPool.COMMA_AND_SPACE, _FIELD_NAME, "=b}"),
+				StringBundler.concat(
+					"{fieldName=", filterValue, StringPool.COMMA_AND_SPACE,
+					_FIELD_NAME, "=c}")
+			});
+
+		Assert.assertTrue(
+			FacetBucketUtil.isFieldInBucket(field, "a", nestedFacetImpl));
+		Assert.assertFalse(
+			FacetBucketUtil.isFieldInBucket(field, "b", nestedFacetImpl));
+		Assert.assertTrue(
+			FacetBucketUtil.isFieldInBucket(field, "c", nestedFacetImpl));
 	}
 
 	@Test

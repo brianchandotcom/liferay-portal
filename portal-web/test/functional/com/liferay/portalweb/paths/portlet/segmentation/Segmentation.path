@@ -178,12 +178,12 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[@placeholder='Untitled Segment']</td>
+	<td>//input[@data-testid='localized-input-button']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD_READ_ONLY</td>
-	<td>//input[@placeholder='Untitled Segment' and @readonly]</td>
+	<td>//input[@data-testid='localized-input-button' and @readonly]</td>
 	<td></td>
 </tr>
 <tr>

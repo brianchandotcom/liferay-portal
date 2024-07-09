@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
@@ -36,7 +36,16 @@ export const searchTableRowByValue = async function (
 
 export class UsersAndOrganizationsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly assignUsersIFrame: FrameLocator;
 	readonly assignUsersMenuItem: Locator;
+	readonly assignUsersTable: Locator;
+	readonly assignUsersTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly assignUsersCheckbox: (userName: string) => Promise<Locator>;
+	readonly assignUsersDoneButton: Locator;
 	readonly deletePersonalDataMenuItem: Locator;
 	readonly optionsMenu: Locator;
 	readonly page: Page;
@@ -92,6 +101,25 @@ export class UsersAndOrganizationsPage {
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.assignUsersIFrame = page.frameLocator('iframe[id="modalIframe"]');
+		this.assignUsersMenuItem = page.getByRole('menuitem', {
+			name: 'Assign Users',
+		});
+		this.assignUsersTable = this.assignUsersIFrame.locator(
+			'#_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_entriesSearchContainer'
+		);
+		this.assignUsersTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean = false
+		) => {
+			return await searchTableRowByValue(
+				this.assignUsersTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
 		this.assignUsersMenuItem = page.getByRole('menuitem', {
 			name: 'Assign Users',
 		});
@@ -200,6 +228,17 @@ export class UsersAndOrganizationsPage {
 				strictEqual
 			);
 		};
+		this.assignUsersCheckbox = async (userName: string) => {
+			const assignUsersTableRow = await this.assignUsersTableRow(
+				1,
+				userName
+			);
+
+			if (assignUsersTableRow && assignUsersTableRow.row) {
+				return assignUsersTableRow.row.getByRole('checkbox');
+			}
+		};
+		this.assignUsersDoneButton = page.getByRole('button', {name: 'Done'});
 		this.organizationUsersTableRowLink = async (screenName: string) => {
 			const organizationUsersTableRow =
 				await this.organizationUsersTableRow(1, screenName, true);

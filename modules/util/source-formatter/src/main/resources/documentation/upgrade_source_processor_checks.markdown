@@ -17,6 +17,7 @@ UpgradeJavaBasePanelAppExtendedClassesCheck | [Upgrade](upgrade_checks.markdown#
 UpgradeJavaCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Performs upgrade checks for `java` files. |
 UpgradeJavaCommerceOrderValidatorCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace the parameter Int for BigDecimal of method validate of 'CommerceOrderValidator' interface. |
 UpgradeJavaDDMFormValuesSerializerTrackerCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the references of `DDMFormValuesSerializerTracker` class and also its methods usages. |
+UpgradeJavaDisplayPageInfoItemCapabilityCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace all references of DisplayPageInfoItemCapability to InfoItemCapability |
 UpgradeJavaFDSActionProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Reorder parameters in the getDropdownItems method of the FDSDataProvider interface. |
 UpgradeJavaFDSDataProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Reorder parameters in the getItems and getItemsCount methods of the FDSDataProvider interface. |
 UpgradeJavaFacetedSearcherCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the references of the `Indexer indexer = FacetedSearcher.getInstance();` declaration and `indexer.search` method call. |

@@ -1,5 +1,3 @@
-@import 'atlas-variables';
-
 .lfr-object__action-builder {
 	&-notification-option {
 		align-items: center;
@@ -28,9 +26,5 @@
 		.custom-control.custom-checkbox {
 			margin: 0;
 		}
-	}
-
-	&-tooltip-icon {
-		color: $secondary-l1;
 	}
 }

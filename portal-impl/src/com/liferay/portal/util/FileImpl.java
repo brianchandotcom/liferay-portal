@@ -272,7 +272,13 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			File curDirectory;
 
 			while ((curDirectory = visitQueue.poll()) != null) {
-				for (File file : curDirectory.listFiles()) {
+				File[] files = curDirectory.listFiles();
+
+				if (files == null) {
+					continue;
+				}
+
+				for (File file : files) {
 					if (file.isFile()) {
 						file.delete();
 					}

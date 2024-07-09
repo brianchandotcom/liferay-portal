@@ -7352,6 +7352,60 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPostRelatedObjectEntryInDifferentCompany()
+		throws Exception {
+
+		ObjectRelationship objectRelationship1 = _addObjectRelationship(
+			TestPropsValues.getCompanyId());
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship1.getObjectDefinitionId1()),
+			_OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString());
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"domain", "able.com"
+			).put(
+				"portalInstanceId", "able.com"
+			).put(
+				"virtualHost", "www.able.com"
+			).toString(),
+			"headless-portal-instances/v1.0/portal-instances",
+			Http.Method.POST);
+
+		ObjectRelationship objectRelationship2 = _addObjectRelationship(
+			jsonObject.getLong("companyId"));
+
+		HTTPTestUtil.customize(
+		).withBaseURL(
+			"http://www.able.com:8080"
+		).withCredentials(
+			"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).apply(
+			() -> {
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship2.getObjectDefinitionId2());
+
+				ObjectField objectField =
+					_objectFieldLocalService.getObjectField(
+						objectRelationship2.getObjectFieldId2());
+
+				Assert.assertEquals(
+					400,
+					HTTPTestUtil.invokeToHttpCode(
+						JSONUtil.put(
+							objectField.getName(),
+							objectEntry.getObjectEntryId()
+						).toString(),
+						objectDefinition.getRESTContextPath(),
+						Http.Method.POST));
+			}
+		);
+	}
+
+	@Test
 	public void testPostSiteScopedObjectDefinitionInUserGroup()
 		throws Exception {
 
@@ -11059,6 +11113,39 @@ public class ObjectEntryResourceTest {
 				"url", "https://standalone.com"
 			).build(),
 			false);
+	}
+
+	private ObjectRelationship _addObjectRelationship(long companyId)
+		throws Exception {
+
+		User user = UserTestUtil.getAdminUser(companyId);
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						_OBJECT_FIELD_NAME_TEXT
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY, user.getUserId());
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						_OBJECT_FIELD_NAME_TEXT
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY, user.getUserId());
+
+		return ObjectRelationshipTestUtil.addObjectRelationship(
+			objectDefinition1, objectDefinition2, user.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	private ObjectRelationship _addObjectRelationshipAndRelateObjectEntries(

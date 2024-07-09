@@ -65,6 +65,7 @@ export default function UpperToolbar({
 		setShowDefinitionInfo,
 		setSourceView,
 		setVersion,
+		setWorkflowDefinitionVersions,
 		showAlert,
 		sourceView,
 		version,
@@ -256,6 +257,20 @@ export default function UpperToolbar({
 		setDefinitionName(publishedDefinitionResponseJSON.name);
 		setVersion(parseInt(publishedDefinitionResponseJSON.version, 10));
 
+		if (Liferay.FeatureFlags['LPD-29635']) {
+			setWorkflowDefinitionVersions((prevValues) => [
+				{
+					creatorName: publishedDefinitionResponseJSON.creator?.name,
+					dateCreated: publishedDefinitionResponseJSON.dateCreated,
+					versionNumber: String(
+						parseInt(publishedDefinitionResponseJSON.version, 10) -
+							1
+					),
+				},
+				...prevValues,
+			]);
+		}
+
 		if (publishedDefinitionResponseJSON.version === '1') {
 			localStorage.setItem(
 				'firstPublished',
@@ -329,6 +344,20 @@ export default function UpperToolbar({
 
 			setDefinitionName(savedDefinitionResponseJSON.name);
 			setVersion(parseInt(savedDefinitionResponseJSON.version, 10));
+
+			if (Liferay.FeatureFlags['LPD-29635']) {
+				setWorkflowDefinitionVersions((prevValues) => [
+					{
+						creatorName: savedDefinitionResponseJSON.creator?.name,
+						dateCreated: savedDefinitionResponseJSON.dateCreated,
+						versionNumber: String(
+							parseInt(savedDefinitionResponseJSON.version, 10) -
+								1
+						),
+					},
+					...prevValues,
+				]);
+			}
 
 			if (savedDefinitionResponseJSON.version === '1') {
 				localStorage.setItem(

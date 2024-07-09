@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Dictionary;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -61,14 +59,12 @@ public class DataRemovalTest {
 		JournalTestUtil.expireArticle(
 			expiredJournalArticle2.getGroupId(), expiredJournalArticle2);
 
-		Dictionary<String, Object> properties =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"removeExpiredJournalArticles", true
-			).build();
-
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					_CONFIGURATION_PID, properties)) {
+					_CONFIGURATION_PID,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"removeExpiredJournalArticles", true
+					).build())) {
 
 			FinderCacheUtil.clearLocalCache();
 

@@ -630,7 +630,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			Layout layout = _layoutLocalService.getLayout(
 				portletPreferences.getPlid());
 
-			if (layout.isTypeContent() || layout.isTypeControlPanel()) {
+			if (layout.isTypeAssetDisplay() || layout.isTypeContent() ||
+				layout.isTypeControlPanel()) {
+
 				return;
 			}
 

@@ -925,7 +925,7 @@ public class PortalImpl implements Portal {
 				}
 				else if (allowedDomain.equals("PORTAL_DOMAINS")) {
 					if (Validator.isNotNull(
-							CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
+							VirtualHostLocalServiceUtil.fetchVirtualHost(
 								domain))) {
 
 						return url;

@@ -436,6 +436,200 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 			).build());
 	}
 
+	@Test
+	public void testUpgradeTextColor() throws Exception {
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("textColor", JSONUtil.put("cssClass", "danger"))),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", "#DA1414")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("textColor", JSONUtil.put("cssClass", "dark"))),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", "#272833")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"textColor", JSONUtil.put("cssClass", "gray-dark"))),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", "#393A4A")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("textColor", JSONUtil.put("cssClass", "info"))),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", "#2E5AAC")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("textColor", JSONUtil.put("cssClass", "light"))),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", "#F1F2F5")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("textColor", JSONUtil.put("cssClass", "lighter"))),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", "#F7F8F9")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("textColor", JSONUtil.put("cssClass", "primary"))),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", "#0B5FFF")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"textColor", JSONUtil.put("cssClass", "secondary"))),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", "#6B6C7E")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("textColor", JSONUtil.put("cssClass", "success"))),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", "#287D3C")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("textColor", JSONUtil.put("cssClass", "warning"))),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", "#B95000")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("textColor", JSONUtil.put("cssClass", "white"))),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", "#FFFFFF")
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", RandomTestUtil.randomString()
+			).build());
+
+		String expectedTextColor = RandomTestUtil.randomString();
+
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"textColor", JSONUtil.put("cssClass", expectedTextColor))),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", expectedTextColor)
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"textColor",
+					JSONUtil.put(
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString()))),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", expectedTextColor)
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", expectedTextColor
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("textColor", RandomTestUtil.randomString())),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", expectedTextColor)
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", expectedTextColor
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				_jsonFactory.createJSONObject()),
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textColor", expectedTextColor)
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				"textColor", expectedTextColor
+			).build());
+	}
+
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =

@@ -381,7 +381,7 @@ export class PageEditorPage {
 		);
 	}
 
-	async dragAndDropElement(dragTarget, dropTarget) {
+	async dragAndDropElement(dragTarget: Locator, dropTarget: Locator) {
 		await dragTarget.hover();
 
 		await this.page.mouse.down();

@@ -961,6 +961,7 @@ public class LayoutLocalServiceWrapper
 					(FragmentEntryLink)sourceLayoutfragmentEntryLink.clone();
 
 				newFragmentEntryLink.setUuid(serviceContext.getUuid());
+				newFragmentEntryLink.setExternalReferenceCode(null);
 				newFragmentEntryLink.setFragmentEntryLinkId(
 					_counterLocalService.increment());
 				newFragmentEntryLink.setUserId(user.getUserId());

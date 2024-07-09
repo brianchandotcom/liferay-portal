@@ -166,7 +166,7 @@ public class EditServerMVCActionCommandTest {
 	}
 
 	@Test
-	public void testCleanUpOrphanedPortletPreferencesForDisplayPage()
+	public void testCleanUpOrphanedPortletPreferencesForLayoutTypeAssetDisplay()
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =

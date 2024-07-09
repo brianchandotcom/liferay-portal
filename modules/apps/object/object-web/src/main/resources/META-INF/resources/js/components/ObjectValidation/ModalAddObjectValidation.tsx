@@ -56,14 +56,6 @@ export function ModalAddObjectValidation({
 				);
 		}
 
-		if (!Liferay.FeatureFlags['LPS-187854']) {
-			newObjectValidationRuleEngines =
-				newObjectValidationRuleEngines.filter(
-					(objectValidationRuleEngine) =>
-						objectValidationRuleEngine.value !== 'compositeKey'
-				);
-		}
-
 		return newObjectValidationRuleEngines;
 	};
 

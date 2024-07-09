@@ -7,7 +7,6 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {editObjectDefinitionPagesTest} from '../../fixtures/editObjectDefinitionPagesTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import getRandomString from '../../utils/getRandomString';
@@ -16,9 +15,6 @@ import getRandomObjectFieldText from './utils/getRandomObjectFieldText';
 export const test = mergeTests(
 	apiHelpersTest,
 	editObjectDefinitionPagesTest,
-	featureFlagsTest({
-		'LPS-187854': true,
-	}),
 	loginTest(),
 	objectPagesTest
 );

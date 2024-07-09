@@ -6,19 +6,11 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 
-export const test = mergeTests(
-	apiHelpersTest,
-	featureFlagsTest({
-		'LPS-187854': true,
-	}),
-	loginTest(),
-	objectPagesTest
-);
+export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
 
 const createdEntities = {
 	listTypeDefinitionIds: [],

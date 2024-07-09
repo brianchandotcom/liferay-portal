@@ -51,11 +51,9 @@ public class CleanUpPDFPreviewsUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long ctCollectionId = resultSet.getLong(
-					"CTEntry.ctCollectionId");
-				long classNameId = resultSet.getLong(
-					"CTEntry.modelClassNameId");
-				long classPK = resultSet.getLong("CTEntry.modelClassPK");
+				long ctCollectionId = resultSet.getLong("ctCollectionId");
+				long classNameId = resultSet.getLong("modelClassNameId");
+				long classPK = resultSet.getLong("modelClassPK");
 
 				_ctCollectionLocalService.discardCTEntry(
 					ctCollectionId, classNameId, classPK, true);

@@ -244,6 +244,97 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 			).build());
 	}
 
+	@Test
+	public void testUpgradeTextAlign() throws Exception {
+		String expectedTextAlign = RandomTestUtil.randomString();
+
+		HashMap<String, Object> expectedMap =
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("textAlign", expectedTextAlign)
+			).build();
+
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"buttonAlign", expectedTextAlign
+				).put(
+					"contentAlign", RandomTestUtil.randomString()
+				).put(
+					"imageAlign", RandomTestUtil.randomString()
+				).put(
+					"textAlign", RandomTestUtil.randomString()
+				).put(
+					RandomTestUtil.randomString(), RandomTestUtil.randomString()
+				)),
+			expectedMap,
+			HashMapBuilder.<String, Object>put(
+				"textAlign", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"contentAlign", expectedTextAlign
+				).put(
+					"imageAlign", RandomTestUtil.randomString()
+				).put(
+					"textAlign", RandomTestUtil.randomString()
+				).put(
+					RandomTestUtil.randomString(), RandomTestUtil.randomString()
+				)),
+			expectedMap,
+			HashMapBuilder.<String, Object>put(
+				"textAlign", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"imageAlign", expectedTextAlign
+				).put(
+					"textAlign", RandomTestUtil.randomString()
+				).put(
+					RandomTestUtil.randomString(), RandomTestUtil.randomString()
+				)),
+			expectedMap,
+			HashMapBuilder.<String, Object>put(
+				"textAlign", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"textAlign", expectedTextAlign
+				).put(
+					RandomTestUtil.randomString(), RandomTestUtil.randomString()
+				)),
+			expectedMap,
+			HashMapBuilder.<String, Object>put(
+				"textAlign", RandomTestUtil.randomString()
+			).build());
+		_assertUpgradeWithItemConfig(
+			null,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString())),
+			expectedMap,
+			HashMapBuilder.<String, Object>put(
+				"textAlign", expectedTextAlign
+			).build());
+	}
+
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -295,11 +386,14 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 				editableValuesJSONObject.toString(), layout,
 				segmentsExperienceId);
 
-		fragmentEntryLink.setConfiguration(configurationJSONObject.toString());
+		if (configurationJSONObject != null) {
+			fragmentEntryLink.setConfiguration(
+				configurationJSONObject.toString());
 
-		fragmentEntryLink =
-			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-				fragmentEntryLink);
+			fragmentEntryLink =
+				_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+					fragmentEntryLink);
+		}
 
 		LayoutStructure layoutStructure =
 			_layoutStructureProvider.getLayoutStructure(

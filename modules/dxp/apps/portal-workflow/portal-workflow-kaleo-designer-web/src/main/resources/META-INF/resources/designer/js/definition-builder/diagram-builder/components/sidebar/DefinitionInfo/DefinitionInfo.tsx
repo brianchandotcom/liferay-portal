@@ -26,9 +26,12 @@ const TABS = [
 export function DefinitionInfo() {
 	const [activeIndex, setActiveIndex] = useState(0);
 
-	const {definitionInfo, version, versions} = useContext(
-		DefinitionBuilderContext
-	);
+	const {
+		definitionInfo,
+		setWorkflowDefinitionVersions,
+		version,
+		workflowDefinitionVersions,
+	} = useContext(DefinitionBuilderContext);
 
 	return (
 		<>
@@ -52,8 +55,13 @@ export function DefinitionInfo() {
 					>
 						<Component
 							definitionInfo={definitionInfo}
+							setWorkflowDefinitionVersions={
+								setWorkflowDefinitionVersions
+							}
 							version={Number(version)}
-							versions={versions}
+							workflowDefinitionVersions={
+								workflowDefinitionVersions
+							}
 						/>
 					</ClayTabs.TabPane>
 				))}

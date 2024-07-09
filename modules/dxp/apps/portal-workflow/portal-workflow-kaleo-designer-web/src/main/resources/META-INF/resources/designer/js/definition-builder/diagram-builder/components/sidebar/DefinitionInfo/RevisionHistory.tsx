@@ -3,19 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useState} from 'react';
+import React from 'react';
 
 import {VersionRow} from './VersionRow';
 
 interface RevisionHistoryProps {
+	setWorkflowDefinitionVersions: React.Dispatch<
+		React.SetStateAction<WorkflowDefinitionVersion[]>
+	>;
 	version: number;
-	versions: WorkflowDefinitionVersion[];
+	workflowDefinitionVersions: WorkflowDefinitionVersion[];
 }
 
-export function RevisionHistory({version, versions}: RevisionHistoryProps) {
-	const [workflowDefinitionVersions, setWorkflowDefinitionVersions] =
-		useState(versions.slice(1));
-
+export function RevisionHistory({
+	setWorkflowDefinitionVersions,
+	version,
+	workflowDefinitionVersions,
+}: RevisionHistoryProps) {
 	const otherVersions = [];
 
 	if (!Liferay.FeatureFlags['LPD-29635']) {

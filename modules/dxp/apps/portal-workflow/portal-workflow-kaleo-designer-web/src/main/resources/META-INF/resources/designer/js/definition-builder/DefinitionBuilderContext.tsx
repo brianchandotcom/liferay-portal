@@ -45,12 +45,15 @@ interface DefinitionBuilderContextProviderProps {
 	setScriptManagementConfigurationPortletURL: () => void;
 	setShowAlert: (value: boolean) => void;
 	setVersion: (value: number) => void;
+	setWorkflowDefinitionVersions: React.Dispatch<
+		React.SetStateAction<WorkflowDefinitionVersion[]>
+	>;
 	showAlert: boolean;
 	showDefinitionInfo: boolean;
 	sourceView: boolean;
 	statuses: LabelValueObject<number>[];
 	version: string;
-	versions: WorkflowDefinitionVersion[];
+	workflowDefinitionVersions: WorkflowDefinitionVersion[];
 }
 
 const DefinitionBuilderContext = createContext(

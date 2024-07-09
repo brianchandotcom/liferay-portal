@@ -706,7 +706,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 				layoutPageTemplateStructureRel);
 	}
 
-	private String _addColumnStructureItem(
+	private String _addColumnLayoutStructureItem(
 			Layout layout, Map<String, String> map, long segmentsExperienceId)
 		throws Exception {
 
@@ -865,10 +865,10 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid());
 
-		String draftLayoutItemId = _addColumnStructureItem(
+		String draftLayoutItemId = _addColumnLayoutStructureItem(
 			draftLayout, map, segmentsExperienceId);
 
-		String layoutItemId = _addColumnStructureItem(
+		String layoutItemId = _addColumnLayoutStructureItem(
 			layout, map, segmentsExperienceId);
 
 		_runUpgrade();

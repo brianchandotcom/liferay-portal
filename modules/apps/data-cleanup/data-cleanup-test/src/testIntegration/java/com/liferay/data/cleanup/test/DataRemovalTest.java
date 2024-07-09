@@ -13,7 +13,6 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -122,8 +121,6 @@ public class DataRemovalTest {
 					HashMapDictionaryBuilder.<String, Object>put(
 						"removeExpiredJournalArticles", true
 					).build())) {
-
-			FinderCacheUtil.clearLocalCache();
 
 			Assert.assertNull(
 				_journalArticleLocalService.fetchArticle(

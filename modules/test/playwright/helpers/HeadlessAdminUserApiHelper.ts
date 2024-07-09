@@ -193,6 +193,15 @@ export class HeadlessAdminUserApiHelper {
 		return accountResponse?.items?.at(0);
 	}
 
+	async deleteUserFromOrganizationByEmailAddress(
+		organizationId: string,
+		emailAddress: string
+	) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/organizations/${organizationId}/user-accounts/by-email-address/${emailAddress}`
+		);
+	}
+
 	async getSiteByFriendlyUrlPath(friendlyUrlPath: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/by-friendly-url-path/${friendlyUrlPath}`

@@ -5,6 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {PORTLET_URLS} from '../../utils/portletUrls';
+
 export class ProductMenuPage {
 	readonly closeProductMenuButton: Locator;
 	readonly configurationButton: Locator;
@@ -100,6 +102,12 @@ export class ProductMenuPage {
 	async goToSiteSettings() {
 		await this.configurationButton.click();
 		await this.siteSettingsButton.click();
+	}
+
+	async goToTeams(siteUrl?: string) {
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.teams}`
+		);
 	}
 
 	async goToWebContent() {

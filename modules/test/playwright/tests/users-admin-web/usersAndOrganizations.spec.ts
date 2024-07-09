@@ -10,6 +10,7 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -133,5 +134,64 @@ test('LPD-28908 update user information', async ({
 					'Success:Your email verification code has been sent'
 				)
 			)
+	).toBeVisible();
+});
+
+test('LPD-30589 Add Organization Team', async ({
+	apiHelpers,
+	editOrganizationPage,
+	page,
+	siteConfigurationDetailsPage,
+	siteSettingsPage,
+	teamsPage,
+	usersAndOrganizationsPage,
+}) => {
+	const organization = await apiHelpers.headlessAdminUser.postOrganization();
+
+	await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+		organization.id,
+		'test@liferay.com'
+	);
+
+	apiHelpers.data.push({
+		id: `${organization.id}_test@liferay.com`,
+		type: 'organizationUserAccountAssociation',
+	});
+
+	await usersAndOrganizationsPage.goToOrganizations();
+
+	await (
+		await usersAndOrganizationsPage.organizationActionsMenu(
+			organization.name
+		)
+	).click();
+	await editOrganizationPage.organizationEditMenuItem.click();
+	await editOrganizationPage.organizationSiteLink.click();
+	await editOrganizationPage.createSiteToggle.check();
+	await editOrganizationPage.organizationSiteSaveButton.click();
+
+	await siteSettingsPage.goToSiteSetting(
+		'Site Configuration',
+		'Details',
+		'/' + organization.name
+	);
+
+	await siteConfigurationDetailsPage.allowManualMembershipManagementToggle.check();
+	await siteConfigurationDetailsPage.saveButton.click();
+
+	await waitForSuccessAlert(page);
+
+	await teamsPage.goTo('/' + organization.name);
+
+	const newTeamName = 'Team' + getRandomInt();
+
+	await teamsPage.newTeamButton.click();
+	await teamsPage.nameInput.fill(newTeamName);
+	await teamsPage.saveButton.click();
+
+	await waitForSuccessAlert(page);
+
+	await expect(
+		(await teamsPage.teamsTableRow(1, newTeamName, true)).row
 	).toBeVisible();
 });

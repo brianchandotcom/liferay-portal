@@ -7,6 +7,9 @@ package com.liferay.layout.page.template.internal.upgrade.v3_4_2.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -14,7 +17,19 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
+import com.liferay.layout.provider.LayoutStructureProvider;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
@@ -24,6 +39,9 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -32,9 +50,14 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -61,6 +84,164 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
 				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
+	}
+
+	@Test
+	public void testUpgradeMarginBottom() throws Exception {
+		String expectedMarginBottom = String.valueOf(
+			RandomTestUtil.randomInt());
+
+		HashMap<String, Object> expectedMap =
+			HashMapBuilder.<String, Object>put(
+				"styles", JSONUtil.put("marginBottom", expectedMarginBottom)
+			).build();
+
+		_assertUpgradeWithItemConfig(
+			JSONUtil.put(
+				"fieldSets",
+				JSONUtil.put(
+					JSONUtil.put(
+						"fields",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"dataType", "int"
+							).put(
+								"defaultValue",
+								String.valueOf(RandomTestUtil.randomInt())
+							).put(
+								"name", "bottomSpacing"
+							).put(
+								"type", "text"
+							),
+							JSONUtil.put(
+								"dataType", "int"
+							).put(
+								"defaultValue",
+								String.valueOf(RandomTestUtil.randomInt())
+							).put(
+								"name", "marginBottom"
+							).put(
+								"type", "text"
+							))
+					).put(
+						"label", "Configuration"
+					))),
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"bottomSpacing", expectedMarginBottom
+				).put(
+					"marginBottom", String.valueOf(RandomTestUtil.randomInt())
+				)),
+			expectedMap,
+			HashMapBuilder.<String, Object>put(
+				"marginBottom", String.valueOf(RandomTestUtil.randomInt())
+			).build());
+		_assertUpgradeWithItemConfig(
+			JSONUtil.put(
+				"fieldSets",
+				JSONUtil.put(
+					JSONUtil.put(
+						"fields",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"dataType", "int"
+							).put(
+								"defaultValue", expectedMarginBottom
+							).put(
+								"name", "bottomSpacing"
+							).put(
+								"type", "text"
+							),
+							JSONUtil.put(
+								"dataType", "int"
+							).put(
+								"defaultValue",
+								String.valueOf(RandomTestUtil.randomInt())
+							).put(
+								"name", "marginBottom"
+							).put(
+								"type", "text"
+							))
+					).put(
+						"label", "Configuration"
+					))),
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"marginBottom",
+					String.valueOf(RandomTestUtil.randomInt()))),
+			expectedMap,
+			HashMapBuilder.<String, Object>put(
+				"marginBottom", String.valueOf(RandomTestUtil.randomInt())
+			).build());
+		_assertUpgradeWithItemConfig(
+			JSONUtil.put(
+				"fieldSets",
+				JSONUtil.put(
+					JSONUtil.put(
+						"fields",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"dataType", "int"
+							).put(
+								"defaultValue",
+								String.valueOf(RandomTestUtil.randomInt())
+							).put(
+								"name", "marginBottom"
+							).put(
+								"type", "text"
+							))
+					).put(
+						"label", "Configuration"
+					))),
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("marginBottom", expectedMarginBottom)),
+			expectedMap,
+			HashMapBuilder.<String, Object>put(
+				"marginBottom", String.valueOf(RandomTestUtil.randomInt())
+			).build());
+		_assertUpgradeWithItemConfig(
+			JSONUtil.put(
+				"fieldSets",
+				JSONUtil.put(
+					JSONUtil.put(
+						"fields",
+						JSONUtil.put(
+							JSONUtil.put(
+								"dataType", "int"
+							).put(
+								"defaultValue", expectedMarginBottom
+							).put(
+								"name", "marginBottom"
+							).put(
+								"type", "text"
+							))
+					).put(
+						"label", "Configuration"
+					))),
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				_jsonFactory.createJSONObject()),
+			expectedMap,
+			HashMapBuilder.<String, Object>put(
+				"marginBottom", String.valueOf(RandomTestUtil.randomInt())
+			).build());
+		_assertUpgradeWithItemConfig(
+			_jsonFactory.createJSONObject(),
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				_jsonFactory.createJSONObject()),
+			expectedMap,
+			HashMapBuilder.<String, Object>put(
+				"marginBottom", expectedMarginBottom
+			).build());
 	}
 
 	@Override
@@ -103,6 +284,174 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 				layoutPageTemplateStructureRel);
 	}
 
+	private String _addFragmentStyledLayoutStructureItem(
+			JSONObject configurationJSONObject,
+			JSONObject editableValuesJSONObject, Layout layout,
+			Map<String, Object> map, long segmentsExperienceId)
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				editableValuesJSONObject.toString(), layout,
+				segmentsExperienceId);
+
+		fragmentEntryLink.setConfiguration(configurationJSONObject.toString());
+
+		fragmentEntryLink =
+			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				fragmentEntryLink);
+
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				layout.getPlid(), segmentsExperienceId);
+
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
+
+		Assert.assertEquals(
+			MapUtil.toString(fragmentLayoutStructureItems), 1,
+			fragmentLayoutStructureItems.size());
+
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)fragmentLayoutStructureItems.get(
+				fragmentEntryLink.getFragmentEntryLinkId());
+
+		_updateItemConfig(
+			fragmentStyledLayoutStructureItem.getItemId(), layout, map,
+			segmentsExperienceId);
+
+		return fragmentStyledLayoutStructureItem.getItemId();
+	}
+
+	private void _assertItemConfigJSONObject(
+			Map<String, Object> expectedMap, String itemId, Layout layout,
+			long segmentsExperienceId)
+		throws Exception {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), layout.getPlid());
+
+		JSONObject configJSONObject = _getItemConfigJSONObject(
+			itemId, layoutPageTemplateStructure, segmentsExperienceId);
+
+		for (Map.Entry<String, Object> entry : expectedMap.entrySet()) {
+			if (Validator.isNull(entry.getValue())) {
+				Assert.assertTrue(
+					entry.getKey(),
+					Validator.isNull(configJSONObject.get(entry.getKey())));
+			}
+			else if (entry.getValue() instanceof JSONObject) {
+				Assert.assertTrue(
+					JSONUtil.toString(
+						configJSONObject.getJSONObject(entry.getKey())),
+					JSONUtil.equals(
+						(JSONObject)entry.getValue(),
+						configJSONObject.getJSONObject(entry.getKey())));
+			}
+			else {
+				Assert.assertEquals(
+					entry.getValue(), configJSONObject.get(entry.getKey()));
+			}
+		}
+	}
+
+	private void _assertUpgradeWithItemConfig(
+			JSONObject configurationJSONObject,
+			JSONObject editableValuesJSONObject,
+			Map<String, Object> expectedMap, Map<String, Object> map)
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		String draftLayoutItemId = _addFragmentStyledLayoutStructureItem(
+			configurationJSONObject, editableValuesJSONObject, draftLayout, map,
+			segmentsExperienceId);
+
+		String layoutItemId = _addFragmentStyledLayoutStructureItem(
+			configurationJSONObject, editableValuesJSONObject, layout, map,
+			segmentsExperienceId);
+
+		_runUpgrade();
+
+		_assertItemConfigJSONObject(
+			expectedMap, draftLayoutItemId, draftLayout, segmentsExperienceId);
+		_assertItemConfigJSONObject(
+			expectedMap, layoutItemId, layout, segmentsExperienceId);
+	}
+
+	private JSONObject _getItemConfigJSONObject(
+		String itemId, JSONObject jsonObject) {
+
+		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
+
+		JSONObject itemJSONObject = itemsJSONObject.getJSONObject(itemId);
+
+		return itemJSONObject.getJSONObject("config");
+	}
+
+	private JSONObject _getItemConfigJSONObject(
+			String itemId,
+			LayoutPageTemplateStructure layoutPageTemplateStructure,
+			long segmentsExperienceId)
+		throws Exception {
+
+		return _getItemConfigJSONObject(
+			itemId,
+			JSONFactoryUtil.createJSONObject(
+				layoutPageTemplateStructure.getData(segmentsExperienceId)));
+	}
+
+	private void _runUpgrade() throws Exception {
+		runUpgrade();
+
+		_multiVMPool.clear();
+	}
+
+	private void _updateItemConfig(
+			String itemId, Layout layout, Map<String, Object> map,
+			long segmentsExperienceId)
+		throws Exception {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), layout.getPlid());
+
+		JSONObject layoutStructureJSONObject = JSONFactoryUtil.createJSONObject(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		JSONObject itemConfigJSONObject = _getItemConfigJSONObject(
+			itemId, layoutStructureJSONObject);
+
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			itemConfigJSONObject.put(entry.getKey(), entry.getValue());
+		}
+
+		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+			_layoutPageTemplateStructureRelLocalService.
+				fetchLayoutPageTemplateStructureRel(
+					layoutPageTemplateStructure.
+						getLayoutPageTemplateStructureId(),
+					segmentsExperienceId);
+
+		layoutPageTemplateStructureRel.setData(
+			layoutStructureJSONObject.toString());
+
+		_layoutPageTemplateStructureRelLocalService.
+			updateLayoutPageTemplateStructureRel(
+				layoutPageTemplateStructureRel);
+
+		_assertItemConfigJSONObject(map, itemId, layout, segmentsExperienceId);
+	}
+
 	private static final String _CLASS_NAME =
 		"com.liferay.layout.page.template.internal.upgrade.v3_4_2." +
 			"LayoutPageTemplateStructureRelUpgradeProcess";
@@ -112,8 +461,14 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@DeleteAfterTestRun
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
@@ -129,6 +484,12 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 	@Inject
 	private LayoutPageTemplateStructureRelLocalService
 		_layoutPageTemplateStructureRelLocalService;
+
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

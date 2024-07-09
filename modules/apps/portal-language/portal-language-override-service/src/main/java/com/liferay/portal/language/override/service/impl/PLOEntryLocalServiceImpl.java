@@ -5,6 +5,7 @@
 
 package com.liferay.portal.language.override.service.impl;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -12,12 +13,15 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.override.exception.PLOEntryKeyException;
+import com.liferay.portal.language.override.exception.PLOEntryLanguageIdException;
 import com.liferay.portal.language.override.exception.PLOEntryValueException;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.base.PLOEntryLocalServiceBaseImpl;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 import java.util.Locale;
@@ -43,7 +47,9 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 			String value)
 		throws PortalException {
 
-		_validate(key, value);
+		languageId = _getStandardizedLanguageId(languageId);
+
+		_validate(key, languageId, value);
 
 		PLOEntry ploEntry = fetchPLOEntry(companyId, key, languageId);
 
@@ -131,7 +137,30 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 		}
 	}
 
-	private void _validate(String key, String value) throws PortalException {
+	private String _getStandardizedLanguageId(String languageId) {
+		languageId = StringUtil.replace(
+			languageId, CharPool.DASH, CharPool.UNDERLINE);
+
+		String[] languageParts = languageId.split(StringPool.UNDERLINE);
+
+		if (languageParts.length < 2) {
+			return languageId;
+		}
+
+		languageId =
+			StringUtil.lowerCase(languageParts[0]) + StringPool.UNDERLINE +
+				StringUtil.upperCase(languageParts[1]);
+
+		if (languageParts.length == 3) {
+			return languageId + StringPool.UNDERLINE + languageParts[2];
+		}
+
+		return languageId;
+	}
+
+	private void _validate(String key, String languageId, String value)
+		throws PortalException {
+
 		if (Validator.isBlank(key)) {
 			throw new PLOEntryKeyException.MustNotBeNull();
 		}
@@ -141,6 +170,10 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 
 		if (key.length() > keyMaxLength) {
 			throw new PLOEntryKeyException.MustBeShorter(keyMaxLength);
+		}
+
+		if (!ArrayUtil.contains(PropsValues.LOCALES, languageId)) {
+			throw new PLOEntryLanguageIdException.MustBeAvailable(languageId);
 		}
 
 		if (Validator.isBlank(value)) {

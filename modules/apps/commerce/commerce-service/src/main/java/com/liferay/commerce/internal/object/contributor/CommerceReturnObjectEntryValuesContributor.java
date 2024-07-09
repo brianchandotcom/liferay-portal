@@ -224,9 +224,6 @@ public class CommerceReturnObjectEntryValuesContributor
 			returnItemStatusMap.getOrDefault(
 				"notAuthorizedReturnItems", Collections.emptyList());
 
-		int notAuthorizedReturnItemsSize =
-			notAuthorizedReturnItemObjectEntries.size();
-
 		List<ObjectEntry> toBeProcessedReturnItemObjectEntries =
 			returnItemStatusMap.getOrDefault(
 				"toBeProcessedReturnItems", Collections.emptyList());
@@ -239,16 +236,13 @@ public class CommerceReturnObjectEntryValuesContributor
 			returnItemStatusMap.getOrDefault(
 				"receiptRejectedReturnItems", Collections.emptyList());
 
-		int receiptRejectedReturnItemsSize =
-			receiptRejectedReturnItemObjectEntries.size();
-
 		if (StringUtil.equalsIgnoreCase(
 				currentReturnStatus,
 				CommerceReturnConstants.RETURN_STATUS_AUTHORIZED)) {
 
 			if (commerceReturnItemsSize ==
-					(notAuthorizedReturnItemsSize +
-						receiptRejectedReturnItemsSize)) {
+					(notAuthorizedReturnItemObjectEntries.size() +
+						receiptRejectedReturnItemObjectEntries.size())) {
 
 				return CommerceReturnConstants.RETURN_STATUS_REJECTED;
 			}
@@ -279,13 +273,15 @@ public class CommerceReturnObjectEntryValuesContributor
 
 			if ((toBeProcessedReturnItemsSize > 0) &&
 				(commerceReturnItemsSize ==
-					(notAuthorizedReturnItemsSize +
+					(notAuthorizedReturnItemObjectEntries.size() +
 						toBeProcessedReturnItemsSize))) {
 
 				return CommerceReturnConstants.RETURN_STATUS_PROCESSING;
 			}
 
-			if (commerceReturnItemsSize == notAuthorizedReturnItemsSize) {
+			if (commerceReturnItemsSize ==
+					notAuthorizedReturnItemObjectEntries.size()) {
+
 				return CommerceReturnConstants.RETURN_STATUS_REJECTED;
 			}
 
@@ -300,9 +296,10 @@ public class CommerceReturnObjectEntryValuesContributor
 				receivedReturnItemObjectEntries.size();
 
 			if (commerceReturnItemsSize ==
-					(authorizedReturnItemsSize + notAuthorizedReturnItemsSize +
-						receivedReturnItemsSize +
-							toBeProcessedReturnItemsSize)) {
+					(authorizedReturnItemsSize +
+						notAuthorizedReturnItemObjectEntries.size() +
+							receivedReturnItemsSize +
+								toBeProcessedReturnItemsSize)) {
 
 				return CommerceReturnConstants.RETURN_STATUS_AUTHORIZED;
 			}
@@ -312,8 +309,8 @@ public class CommerceReturnObjectEntryValuesContributor
 				currentReturnStatus,
 				CommerceReturnConstants.RETURN_STATUS_PROCESSING) &&
 			(commerceReturnItemsSize ==
-				(notAuthorizedReturnItemsSize +
-					receiptRejectedReturnItemsSize))) {
+				(notAuthorizedReturnItemObjectEntries.size() +
+					receiptRejectedReturnItemObjectEntries.size()))) {
 
 			return CommerceReturnConstants.RETURN_STATUS_REJECTED;
 		}

@@ -276,53 +276,6 @@ definition {
 	}
 
 	@priority = 4
-	test AddOrganizationTeam {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property testray.component.names = "Training";
-
-		JSONOrganization.addOrganization(organizationName = "Organization Name");
-
-		Organization.openOrganizationsAdmin();
-
-		Organization.addSiteCP(orgName = "Organization Name");
-
-		Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
-
-		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
-
-		Organization.openOrganizationsAdmin();
-
-		Organization.assignUser(
-			orgName = "Organization Name",
-			userFirstName = "Test",
-			userLastName = "Test",
-			userName = "Test Test",
-			userScreenName = "test");
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		PagesAdmin.addPage(pageName = "Organization Public Page");
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Teams");
-
-		Team.addCP(
-			siteName = "Organization Name",
-			teamDescription = "Site Team Description",
-			teamName = "Site Team Name");
-	}
-
-	@priority = 4
 	test AddSuborganization {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";

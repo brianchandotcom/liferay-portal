@@ -297,7 +297,7 @@ public interface MessageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/portal-language/v1.0/messages");
+						"/o/language/v1.0/messages");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -406,7 +406,7 @@ public interface MessageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/portal-language/v1.0/messages/batch");
+						"/o/language/v1.0/messages/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -515,7 +515,7 @@ public interface MessageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/portal-language/v1.0/messages");
+						"/o/language/v1.0/messages");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -615,7 +615,7 @@ public interface MessageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/portal-language/v1.0/messages");
+						"/o/language/v1.0/messages");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -712,7 +712,7 @@ public interface MessageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/portal-language/v1.0/messages/batch");
+						"/o/language/v1.0/messages/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -812,7 +812,7 @@ public interface MessageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/portal-language/v1.0/messages");
+						"/o/language/v1.0/messages");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -909,7 +909,7 @@ public interface MessageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/portal-language/v1.0/messages/batch");
+						"/o/language/v1.0/messages/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1026,7 +1026,7 @@ public interface MessageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/portal-language/v1.0/messages/import");
+						"/o/language/v1.0/messages/import");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

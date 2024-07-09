@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/portal-language/v1.0/Message",
+	property = "resource.locator.key=/language/v1.0/Message",
 	service = MessageResource.Factory.class
 )
 @Generated("")

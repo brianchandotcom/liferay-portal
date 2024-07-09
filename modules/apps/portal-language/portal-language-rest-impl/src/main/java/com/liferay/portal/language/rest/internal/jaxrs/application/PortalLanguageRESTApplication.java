@@ -17,7 +17,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"liferay.jackson=false", "osgi.jaxrs.application.base=/portal-language",
+		"liferay.jackson=false", "osgi.jaxrs.application.base=/language",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
 		"osgi.jaxrs.name=Liferay.Portal.Language.REST"
 	},

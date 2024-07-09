@@ -105,6 +105,66 @@ export class FDSFragmentPage {
 		dataSetLabel?: string;
 		layout: Layout;
 	}) {
+		await this.setupPageAndFragment(layout)
+
+		await this.page
+			.frameLocator('iframe[title="Select"]')
+			.locator('.fds-admin-item-selector')
+			.waitFor({state: 'visible'});
+
+		await this.page
+			.frameLocator('iframe[title="Select"]')
+			.locator('li')
+			.filter({hasText: dataSetLabel})
+			.first()
+			.click();
+
+		await this.page
+			.frameLocator('iframe[title="Select"]')
+			.getByRole('button', {name: 'Save'})
+			.click();
+
+		await this.publishPage();
+
+		await this.goToPage({layout});
+
+		await this.page
+			.locator('.data-set-content-wrapper')
+			.waitFor({state: 'visible'});
+	}
+
+	async configureEmptyDataSetFragment({
+		layout,
+	}: {
+		layout: Layout;
+	}) {
+		await this.setupPageAndFragment(layout);
+
+		await this.page
+			.frameLocator('iframe[title="Select"]')
+			.locator('.c-empty-state-title')
+			.waitFor({state: 'visible'});
+	}
+
+	async editPage({layout}: {layout: Layout}) {
+		await this.page.goto(`/web/guest${layout.friendlyURL}?p_l_mode=edit`);
+	}
+
+	async goToPage({layout}: {layout: Layout}) {
+		await this.page.goto(`/web/guest${layout.friendlyURL}`);
+	}
+
+	async publishPage() {
+		await this.publishPageButton.click();
+
+		await this.publishPageButton.isEnabled();
+	}
+
+	async searchFragmentOrWidget(itemName: string) {
+		await this.fragmentWidgetSearchInput.fill(itemName);
+	}
+
+	async setupPageAndFragment(layout: Layout) {
 		await this.editPage({layout});
 
 		await this.searchFragmentOrWidget('Data Set');
@@ -133,48 +193,5 @@ export class FDSFragmentPage {
 		await this.page.getByRole('dialog').isVisible();
 
 		await this.page.getByRole('heading', {name: 'Select'}).isVisible();
-
-		await this.page
-			.frameLocator('iframe[title="Select"]')
-			.locator('.fds-admin-item-selector')
-			.waitFor({state: 'visible'});
-
-		await this.page
-			.frameLocator('iframe[title="Select"]')
-			.locator('li')
-			.filter({hasText: dataSetLabel})
-			.first()
-			.click();
-
-		await this.page
-			.frameLocator('iframe[title="Select"]')
-			.getByRole('button', {name: 'Save'})
-			.click();
-
-		await this.publishPage();
-
-		await this.goToPage({layout});
-
-		await this.page
-			.locator('.data-set-content-wrapper')
-			.waitFor({state: 'visible'});
-	}
-
-	async editPage({layout}: {layout: Layout}) {
-		await this.page.goto(`/web/guest${layout.friendlyURL}?p_l_mode=edit`);
-	}
-
-	async goToPage({layout}: {layout: Layout}) {
-		await this.page.goto(`/web/guest${layout.friendlyURL}`);
-	}
-
-	async publishPage() {
-		await this.publishPageButton.click();
-
-		await this.publishPageButton.isEnabled();
-	}
-
-	async searchFragmentOrWidget(itemName: string) {
-		await this.fragmentWidgetSearchInput.fill(itemName);
 	}
 }

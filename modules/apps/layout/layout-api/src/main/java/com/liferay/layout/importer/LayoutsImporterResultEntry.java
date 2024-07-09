@@ -5,12 +5,38 @@
 
 package com.liferay.layout.importer;
 
-import com.liferay.petra.string.StringPool;
-
 /**
  * @author Rubén Pulido
  */
 public class LayoutsImporterResultEntry {
+
+	public static final int COLLECTION = 0;
+
+	public static final int ENTRY = 1;
+
+	public LayoutsImporterResultEntry(String name, int type, Status status) {
+		_name = name;
+		_type = type;
+		_status = status;
+	}
+
+	public LayoutsImporterResultEntry(
+		String name, int type, Status status, String errorMessage) {
+
+		_name = name;
+		_type = type;
+		_status = status;
+		_errorMessage = errorMessage;
+	}
+
+	public LayoutsImporterResultEntry(
+		String name, int type, Status status, String[] warningMessages) {
+
+		_name = name;
+		_type = type;
+		_status = status;
+		_warningMessages = warningMessages;
+	}
 
 	public LayoutsImporterResultEntry(
 		String name, Status status, String errorMessage) {
@@ -28,30 +54,6 @@ public class LayoutsImporterResultEntry {
 		_warningMessages = warningMessages;
 	}
 
-	public LayoutsImporterResultEntry(String name, String type, Status status) {
-		_name = name;
-		_type = type;
-		_status = status;
-	}
-
-	public LayoutsImporterResultEntry(
-		String name, String type, Status status, String errorMessage) {
-
-		_name = name;
-		_type = type;
-		_status = status;
-		_errorMessage = errorMessage;
-	}
-
-	public LayoutsImporterResultEntry(
-		String name, String type, Status status, String[] warningMessages) {
-
-		_name = name;
-		_type = type;
-		_status = status;
-		_warningMessages = warningMessages;
-	}
-
 	public String getErrorMessage() {
 		return _errorMessage;
 	}
@@ -64,7 +66,7 @@ public class LayoutsImporterResultEntry {
 		return _status;
 	}
 
-	public String getType() {
+	public int getType() {
 		return _type;
 	}
 
@@ -91,7 +93,7 @@ public class LayoutsImporterResultEntry {
 	private String _errorMessage;
 	private final String _name;
 	private final Status _status;
-	private String _type = StringPool.BLANK;
+	private int _type = ENTRY;
 	private String[] _warningMessages;
 
 }

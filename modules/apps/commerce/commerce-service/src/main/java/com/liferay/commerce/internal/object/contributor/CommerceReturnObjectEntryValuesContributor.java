@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -324,19 +324,16 @@ public class CommerceReturnObjectEntryValuesContributor
 		Map<String, List<ObjectEntry>> commerceReturnItemMap = new HashMap<>();
 
 		for (ObjectEntry objectEntry : objectEntries) {
-			Map<String, Serializable> commerceReturnItemValues =
-				objectEntry.getValues();
+			Map<String, Serializable> values = objectEntry.getValues();
 
 			String returnItemStatus = GetterUtil.getString(
-				commerceReturnItemValues.get("returnItemStatus"));
+				values.get("returnItemStatus"));
 
 			String key = null;
 
-			if (Arrays.asList(
-					CommerceReturnConstants.RETURN_ITEM_STATUSES_AUTHORIZED
-				).contains(
-					returnItemStatus
-				)) {
+			if (ArrayUtil.contains(
+					CommerceReturnConstants.RETURN_ITEM_STATUSES_AUTHORIZED,
+					returnItemStatus)) {
 
 				key = "authorizedReturnItems";
 			}
@@ -360,11 +357,9 @@ public class CommerceReturnObjectEntryValuesContributor
 
 				key = "receiptRejectedReturnItems";
 			}
-			else if (Arrays.asList(
-						CommerceReturnConstants.RETURN_ITEM_STATUSES_RECEIVED
-					).contains(
-						returnItemStatus
-					)) {
+			else if (ArrayUtil.contains(
+						CommerceReturnConstants.RETURN_ITEM_STATUSES_RECEIVED,
+						returnItemStatus)) {
 
 				key = "receivedReturnItems";
 			}

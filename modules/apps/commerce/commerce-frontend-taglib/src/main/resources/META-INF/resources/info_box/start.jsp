@@ -8,23 +8,32 @@
 <%@ include file="/info_box/init.jsp" %>
 
 <%
-String linkId = PortalUtil.generateRandomKey(request, "info-box") + "_action-link";
+String linkId = HtmlUtil.escape(PortalUtil.generateRandomKey(request, "info-box") + "_action-link");
 %>
 
 <div class="info-box<%= Validator.isNotNull(elementClasses) ? StringPool.SPACE + elementClasses : StringPool.BLANK %>">
-	<header class="header pb-2">
+	<header class="align-items-center d-flex header justify-content-between pb-2">
 		<c:if test="<%= Validator.isNotNull(title) %>">
 			<div class="h5 mb-0 title"><%= HtmlUtil.escape(title) %></div>
 		</c:if>
 
 		<c:if test="<%= Validator.isNotNull(actionLabel) %>">
-			<c:if test="<%= Validator.isNotNull(actionTargetId) %>">
+			<%
+			String href = Validator.isNotNull(actionUrl) ? actionUrl : "#";
+			%>
+
+			<c:if test="<%= Validator.isNotNull(actionTargetId)%>">
+				<%
+					href = "#";
+				%>
+
 				<aui:script>
-					var link = document.getElementById('<%= HtmlUtil.escapeJS(linkId) %>');
+					var link = document.getElementById('<%= linkId %>');
 
 					if (link) {
 						link.addEventListener('click', (e) => {
 							e.preventDefault();
+
 							Liferay.fire('open-modal', {
 								id: '<%= HtmlUtil.escapeJS(actionTargetId) %>',
 							});
@@ -33,9 +42,30 @@ String linkId = PortalUtil.generateRandomKey(request, "info-box") + "_action-lin
 				</aui:script>
 			</c:if>
 
+			<c:if test="<%= Validator.isNotNull(actionContext) %>">
+				<%
+				href = "#";
+				%>
+
+				<liferay-frontend:component
+					context='<%=
+						HashMapBuilder.<String, Object>put(
+							"title", title
+						).put(
+							"url", actionUrl
+						).putAll(
+							actionContext
+						).put(
+							"linkId", linkId
+						).build()
+					%>'
+					module="{infoBoxHandler} from commerce-frontend-taglib"
+				/>
+			</c:if>
+
 			<clay:link
-				href='<%= Validator.isNotNull(actionUrl) ? actionUrl : "#" %>'
-				id="<%= HtmlUtil.escape(linkId) %>"
+				href="<%= href %>"
+				id="<%= linkId %>"
 				label="<%= HtmlUtil.escape(actionLabel) %>"
 			/>
 		</c:if>

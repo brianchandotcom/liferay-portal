@@ -272,6 +272,11 @@
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.InfoBoxTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>actionContext</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>actionLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

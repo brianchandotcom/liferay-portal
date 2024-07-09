@@ -11,6 +11,8 @@ import com.liferay.taglib.util.IncludeTag;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
+import java.util.Map;
+import java.util.Map;
 
 /**
  * @author Fabio Diego Mastrorilli
@@ -22,15 +24,17 @@ public class InfoBoxTag extends IncludeTag {
 		HttpServletRequest httpServletRequest = getRequest();
 
 		httpServletRequest.setAttribute(
-			"liferay-commerce:info-box:actionLabel", _actionLabel);
+			"liferay-commerce:info-box:actionContext", getActionContext());
 		httpServletRequest.setAttribute(
-			"liferay-commerce:info-box:actionTargetId", _actionTargetId);
+			"liferay-commerce:info-box:actionLabel", getActionLabel());
 		httpServletRequest.setAttribute(
-			"liferay-commerce:info-box:actionUrl", _actionUrl);
+			"liferay-commerce:info-box:actionTargetId", getActionTargetId());
 		httpServletRequest.setAttribute(
-			"liferay-commerce:info-box:elementClasses", _elementClasses);
+			"liferay-commerce:info-box:actionUrl", getActionUrl());
 		httpServletRequest.setAttribute(
-			"liferay-commerce:info-box:title", _title);
+			"liferay-commerce:info-box:elementClasses", getElementClasses());
+		httpServletRequest.setAttribute(
+			"liferay-commerce:info-box:title", getTitle());
 
 		super.doStartTag();
 
@@ -88,6 +92,7 @@ public class InfoBoxTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_actionContext = null;
 		_actionLabel = null;
 		_actionTargetId = null;
 		_actionUrl = null;
@@ -109,6 +114,16 @@ public class InfoBoxTag extends IncludeTag {
 
 	private static final String _START_PAGE = "/info_box/start.jsp";
 
+	public Map<String, Object> getActionContext() {
+		return _actionContext;
+	}
+
+	public void setActionContext(
+		Map<String, Object> actionContext) {
+		_actionContext = actionContext;
+	}
+
+	private Map<String, Object> _actionContext;
 	private String _actionLabel;
 	private String _actionTargetId;
 	private String _actionUrl;

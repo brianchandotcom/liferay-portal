@@ -11,14 +11,19 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.JobFactory;
 import com.liferay.jenkins.results.parser.PortalAcceptancePullRequestJob;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.test.batch.JUnitTestBatch;
+import com.liferay.jenkins.results.parser.test.batch.JUnitTestSelector;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestBatch;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestSelector;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -28,6 +33,56 @@ import org.junit.Test;
  * @author Kenji Heigel
  */
 public class RelevantTestSuiteTest {
+
+	@Test
+	public void testJUnitTestSelectorMerge() throws IOException {
+		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
+			_portalAcceptancePullRequestJob);
+
+		relevantTestSuite.setModifiedFiles(
+			Arrays.asList(
+				new File(_baseDir, "text_file_0.txt"),
+				new File(_baseDir, "modules/module-1/text_file_1.txt")));
+
+		RelevantRuleEngine relevantRuleEngine =
+			RelevantRuleEngine.getInstance();
+
+		relevantRuleEngine.setBaseDir(_baseDir);
+
+		JUnitTestBatch jUnitTestBatch = null;
+
+		for (TestBatch testBatch : relevantTestSuite.getTestBatches()) {
+			if (testBatch instanceof JUnitTestBatch) {
+				jUnitTestBatch = (JUnitTestBatch)testBatch;
+
+				break;
+			}
+		}
+
+		JUnitTestSelector jUnitTestSelector = jUnitTestBatch.getTestSelector();
+
+		List<JobProperty> includesJobProperties =
+			jUnitTestSelector.getIncludesJobProperties();
+
+		String globs = JenkinsResultsParserUtil.read(
+			new File(_baseDir, "modules/module-1/text_file_1.txt"));
+
+		int globCount = 0;
+
+		for (JobProperty jobProperty : includesJobProperties) {
+			for (String glob :
+					jobProperty.getValue(
+					).split(
+						","
+					)) {
+
+				Assert.assertTrue(globs.contains(glob));
+				globCount++;
+			}
+		}
+
+		Assert.assertEquals(5, globCount);
+	}
 
 	@Test
 	public void testPlaywrightTestSelectorMerge() {

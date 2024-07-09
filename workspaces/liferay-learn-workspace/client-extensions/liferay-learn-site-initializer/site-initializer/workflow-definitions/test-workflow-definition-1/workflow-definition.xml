@@ -65,8 +65,7 @@
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Your submission was approved by ${userName}
-]]>
+					<![CDATA[Your submission was approved by ${userName}.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
@@ -115,8 +114,7 @@
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Your submission was rejected by ${userName}, please modify and resubmit.
-]]>
+					<![CDATA[Your submission was rejected by ${userName}, please modify and resubmit.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
@@ -165,8 +163,7 @@
 			<notification>
 				<name>Review Notification</name>
 				<template>
-					<![CDATA[${userName} sent you a ${entryType} for review in the workflow.
-]]>
+					<![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
@@ -179,8 +176,7 @@
 			<notification>
 				<name>Review Completion Notification</name>
 				<template>
-					<![CDATA[Your submission was reviewed<#if taskComments?has_content> and the reviewer applied the following ${taskComments}</#if>.
-]]>
+					<![CDATA[Your submission was reviewed<#if taskComments?has_content> and the reviewer applied the following ${taskComments}</#if>.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>

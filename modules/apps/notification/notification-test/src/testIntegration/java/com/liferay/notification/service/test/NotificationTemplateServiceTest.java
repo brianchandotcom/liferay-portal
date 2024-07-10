@@ -10,7 +10,7 @@ import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.service.NotificationTemplateService;
-import com.liferay.notification.service.test.util.NotificationTemplateUtil;
+import com.liferay.notification.test.util.NotificationTemplateUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;

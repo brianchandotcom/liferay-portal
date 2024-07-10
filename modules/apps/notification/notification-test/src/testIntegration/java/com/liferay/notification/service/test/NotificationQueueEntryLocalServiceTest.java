@@ -15,7 +15,7 @@ import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
-import com.liferay.notification.service.test.util.NotificationTemplateUtil;
+import com.liferay.notification.test.util.NotificationTemplateUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

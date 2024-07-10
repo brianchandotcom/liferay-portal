@@ -20,6 +20,7 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
+import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationQueueEntry;
@@ -28,6 +29,7 @@ import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.NotificationRecipientLocalServiceUtil;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalServiceUtil;
+import com.liferay.notification.test.util.NotificationTemplateUtil;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
@@ -35,6 +37,7 @@ import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
@@ -76,6 +79,8 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -86,6 +91,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
@@ -104,6 +110,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -1874,6 +1881,28 @@ public class ObjectActionLocalServiceTest {
 				ObjectActionExecutorConstants.KEY_NOTIFICATION,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
 				UnicodePropertiesBuilder.put(
+					"notificationTemplateExternalReferenceCode",
+					RandomTestUtil.randomString()
+				).put(
+					"type", NotificationConstants.TYPE_EMAIL
+				).put(
+					"usePreferredLanguageForGuests", "true"
+				).build(),
+				false));
+		AssertUtils.assertFailure(
+			ObjectActionParametersException.class,
+			"The parameter \"usePreferredLanguageForGuests\" is invalid for " +
+				"this object action",
+			() -> _addObjectAction(
+				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_NOTIFICATION,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				UnicodePropertiesBuilder.put(
+					"notificationTemplateExternalReferenceCode",
+					RandomTestUtil.randomString()
+				).put(
+					"type", NotificationConstants.TYPE_USER_NOTIFICATION
+				).put(
 					"usePreferredLanguageForGuests", "true"
 				).build(),
 				false));
@@ -1886,6 +1915,11 @@ public class ObjectActionLocalServiceTest {
 				ObjectActionExecutorConstants.KEY_WEBHOOK,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 				UnicodePropertiesBuilder.put(
+					"notificationTemplateExternalReferenceCode",
+					RandomTestUtil.randomString()
+				).put(
+					"type", NotificationConstants.TYPE_EMAIL
+				).put(
 					"usePreferredLanguageForGuests", "true"
 				).build(),
 				false));
@@ -1898,6 +1932,11 @@ public class ObjectActionLocalServiceTest {
 				ObjectActionExecutorConstants.KEY_WEBHOOK,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 				UnicodePropertiesBuilder.put(
+					"notificationTemplateExternalReferenceCode",
+					RandomTestUtil.randomString()
+				).put(
+					"type", NotificationConstants.TYPE_EMAIL
+				).put(
 					"usePreferredLanguageForGuests", "true"
 				).build(),
 				false));
@@ -1911,6 +1950,8 @@ public class ObjectActionLocalServiceTest {
 					"notificationTemplateExternalReferenceCode",
 					RandomTestUtil.randomString()
 				).put(
+					"type", NotificationConstants.TYPE_EMAIL
+				).put(
 					"usePreferredLanguageForGuests", "true"
 				).build(),
 				false));
@@ -1922,6 +1963,8 @@ public class ObjectActionLocalServiceTest {
 				UnicodePropertiesBuilder.put(
 					"notificationTemplateExternalReferenceCode",
 					RandomTestUtil.randomString()
+				).put(
+					"type", NotificationConstants.TYPE_EMAIL
 				).put(
 					"usePreferredLanguageForGuests", "true"
 				).build(),
@@ -2041,6 +2084,115 @@ public class ObjectActionLocalServiceTest {
 				systemObjectAction));
 
 		_objectActionLocalService.deleteObjectAction(systemObjectAction);
+	}
+
+	@Test
+	public void testExecuteObjectActionWithUsePreferredLanguageForGuestsParameter()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build()));
+
+		_objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_NOTIFICATION,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"notificationTemplateId",
+				() -> {
+					NotificationTemplate notificationTemplate =
+						_notificationTemplateLocalService.
+							addNotificationTemplate(
+								NotificationTemplateUtil.
+									createNotificationContext(
+										TestPropsValues.getUser(),
+										objectDefinition.
+											getObjectDefinitionId(),
+										RandomTestUtil.randomString(),
+										RandomTestUtil.randomString(),
+										NotificationTemplateConstants.
+											EDITOR_TYPE_RICH_TEXT,
+										Arrays.asList(
+											NotificationRecipientSettingUtil.
+												createNotificationRecipientSetting(
+													NotificationRecipientSettingConstants.NAME_FROM,
+													_user.getEmailAddress()),
+											NotificationRecipientSettingUtil.
+												createNotificationRecipientSetting(
+													NotificationRecipientSettingConstants.NAME_FROM_NAME,
+													LocalizedMapUtil.
+														getLocalizedMap(
+															RandomTestUtil.
+																randomString())),
+											NotificationRecipientSettingUtil.
+												createNotificationRecipientSetting(
+													NotificationRecipientSettingConstants.NAME_TO,
+													_user.getEmailAddress())),
+										LocalizationUtil.updateLocalization(
+											HashMapBuilder.put(
+												LocaleUtil.BRAZIL, "Assunto"
+											).put(
+												LocaleUtil.US, "Subject"
+											).build(),
+											null, "Subject", "en_US"),
+										NotificationConstants.TYPE_EMAIL,
+										Collections.emptyList()));
+
+					return String.valueOf(
+						notificationTemplate.getNotificationTemplateId());
+				}
+			).put(
+				"usePreferredLanguageForGuests", "true"
+			).build(),
+			false);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setLanguageId(LocaleUtil.BRAZIL.toLanguageTag());
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		User guestUser = _userLocalService.getGuestUser(
+			TestPropsValues.getCompanyId());
+
+		_resourcePermissionLocalService.addResourcePermission(
+			guestUser.getCompanyId(), objectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(guestUser.getCompanyId()), role.getRoleId(),
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		_objectEntryLocalService.addObjectEntry(
+			guestUser.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap(), serviceContext);
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			_notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 1,
+			notificationQueueEntries.size());
+
+		NotificationQueueEntry notificationQueueEntry =
+			notificationQueueEntries.get(0);
+
+		Assert.assertEquals("Assunto", notificationQueueEntry.getSubject());
 	}
 
 	/**
@@ -2766,6 +2918,9 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	private User _user;
 

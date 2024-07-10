@@ -152,6 +152,8 @@ journalEditArticleDisplayContext.setViewAttributes();
 											HashMapBuilder.<String, Object>put(
 												"initialDefaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
 											).put(
+												"initialFields", journalEditArticleDisplayContext.getFieldMap()
+											).put(
 												"languageId", journalEditArticleDisplayContext.getSelectedLanguageId()
 											).build()
 										%>'

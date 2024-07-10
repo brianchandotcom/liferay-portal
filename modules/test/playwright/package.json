@@ -22,6 +22,8 @@
 	"name": "@liferay/playwright",
 	"private": true,
 	"scripts": {
+		"checkFormat": "tsc",
+		"format": "tsc",
 		"local:setup": "ts-node ./scripts/localSetup.ts",
 		"local:teardown": "ts-node ./scripts/localTeardown.ts",
 		"playwright": "playwright",

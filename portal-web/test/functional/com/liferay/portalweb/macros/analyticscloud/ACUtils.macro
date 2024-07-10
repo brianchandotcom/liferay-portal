@@ -528,9 +528,9 @@ definition {
 	macro closeAllSessionsAndWait() {
 		ACUtils.closeAllSessions();
 
-		// It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518
+		// It needs a 60 second pause which is the time required for the command to be executed. For more information about pause see LPD-29602
 
-		Pause(value1 = 30000);
+		Pause(value1 = 60000);
 	}
 
 	@summary = "Default summary"

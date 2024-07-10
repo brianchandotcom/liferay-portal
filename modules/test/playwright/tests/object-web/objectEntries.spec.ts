@@ -7,11 +7,13 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {collectionsPagesTest} from '../../fixtures/CollectionsPageTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
@@ -21,6 +23,7 @@ import {mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	applicationsMenuPageTest,
 	collectionsPagesTest,
 	isolatedSiteTest,
 	featureFlagsTest({
@@ -29,7 +32,8 @@ export const test = mergeTests(
 	journalPagesTest,
 	loginTest(),
 	objectPagesTest,
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	workflowPagesTest
 );
 
 const createdEntities = {
@@ -54,7 +58,7 @@ test.afterEach(async ({apiHelpers}) => {
 	}
 });
 
-test.describe('Manage object entries through page templates', () => {
+test.describe('Manage object entries through Page Templates', () => {
 	test('can view all entries related to an object in the relationship field', async ({
 		apiHelpers,
 		page,
@@ -553,4 +557,63 @@ test('can view success message entirely in arabic', async ({
 	// Verify the success message
 
 	await expect(viewObjectEntriesPage.successMessageArabic).toBeVisible();
+});
+
+test.describe('Manage object entries through Workflow Metrics', () => {
+	test('can view Asset Title, Asset Type and Item Subject of an entry on metrics page', async ({
+		apiHelpers,
+		applicationsMenuPage,
+		configurationTabPage,
+		metricsPage,
+		page,
+	}) => {
+		const {objectDefinitions} = createdEntities;
+
+		const assetType = 'Single Approver';
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+				titleObjectFieldName: 'textField',
+			});
+
+		objectDefinitions.push(objectDefinition);
+
+		await applicationsMenuPage.goToProcessBuilder();
+
+		await configurationTabPage.configurationTabLink.click();
+
+		await configurationTabPage.assignWorkflowToAssetType(
+			assetType,
+			objectDefinition.label['en_US']
+		);
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'entry'},
+			applicationName
+		);
+
+		await applicationsMenuPage.goToMetrics();
+
+		await metricsPage.chooseProcess(assetType);
+
+		await metricsPage.viewAllPendingItems();
+
+		const itemSubject =
+			objectDefinition.label['en_US'] + ': ' + objectEntry.textField;
+
+		await expect(page.getByLabel(itemSubject)).toBeVisible();
+
+		await page.locator('.link-text').click();
+
+		await expect(
+			page.getByText(objectDefinition.label['en_US'])
+		).toBeVisible();
+
+		await expect(page.getByText(objectEntry.textField)).toBeVisible();
+	});
 });

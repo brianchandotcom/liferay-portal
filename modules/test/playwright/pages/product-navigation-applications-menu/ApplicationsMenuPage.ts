@@ -30,6 +30,7 @@ export class ApplicationsMenuPage {
 	private readonly jobSchedulerMenuItem: Locator;
 	private readonly oAuth2Administration: Locator;
 	private readonly objectsMenuItem: Locator;
+	private readonly metricsItem: Locator;
 	private readonly page: Page;
 	private readonly paymentsMenuItem: Locator;
 	private readonly picklistsMenuItem: Locator;
@@ -118,6 +119,10 @@ export class ApplicationsMenuPage {
 		this.jobSchedulerMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Job Scheduler',
+		});
+		this.metricsItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Metrics',
 		});
 		this.oAuth2Administration = page.getByRole('menuitem', {
 			exact: true,
@@ -240,6 +245,11 @@ export class ApplicationsMenuPage {
 	async goToGogoShell() {
 		await this.goToControlPanel();
 		await this.gogoShellItem.click();
+	}
+
+	async goToMetrics() {
+		await this.goToApplicationsMenu();
+		await this.metricsItem.click();
 	}
 
 	async goToObjects() {

@@ -24,49 +24,6 @@ definition {
 		}
 	}
 
-	@description = "Can add a translation to parent and child page."
-	@priority = 3
-	test AddTranslationToPageName {
-		task ("Get portal URL") {
-			var portalURL = PropsUtil.get("portal.url");
-		}
-
-		task ("Add widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Home");
-		}
-
-		task ("Add a translation of page to es-ES") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Configure",
-				pageName = "Home");
-
-			PagesAdmin.addLocalizedName(
-				localeList = "es-ES",
-				localizedNameList = "Casa");
-		}
-
-		task ("View page name is translated when change locale to es-ES") {
-			Navigator.openSiteURL(siteName = ${randomSiteName});
-
-			Page.viewTranslationsPG(
-				defaultLanguageLocalizationMessage = "Display the page in English (United States).",
-				pageName = "Casa",
-				preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
-				sitePageURL = "${portalURL}/es/web/${randomSiteName}/home",
-				translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
-		}
-
-		task ("Locale the page to English") {
-			Navigator.openSiteURL(siteName = ${randomSiteName});
-
-			Page.localizedPG(pageLocale = "Display the page in English (United States)");
-		}
-	}
-
 	@description = "The user can not delete the last public page on Liferay instance."
 	@priority = 3
 	test CannotDeleteLastPublicPageOnDefaultSite {

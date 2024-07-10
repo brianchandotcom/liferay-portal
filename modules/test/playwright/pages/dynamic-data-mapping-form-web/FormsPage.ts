@@ -8,27 +8,28 @@ import {Locator, Page} from '@playwright/test';
 import {ProductMenuPage} from '../../pages/product-navigation-control-menu-web/ProductMenuPage';
 
 export class FormsPage {
-	readonly page: Page;
+	readonly emptyResultNewFormButton: Locator;
+	readonly formsHeader: Locator;
 	readonly managementToolbarNewButton: Locator;
 	readonly managementToolbarSearchForButton: Locator;
-	readonly emptyResultNewFormButton: Locator;
+	readonly page: Page;
 	readonly productMenuPage: ProductMenuPage;
-	readonly formsHeader: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
+		this.emptyResultNewFormButton = page.getByText('New Form', {
+			exact: true,
+		});
+		this.formsHeader = page.getByRole('heading', {
+			exact: true,
+			name: 'Forms',
+		});
 		this.managementToolbarNewButton = page.getByText('New', {exact: true});
 		this.managementToolbarSearchForButton = page.getByRole('button', {
 			name: 'Search for',
 		});
-		this.emptyResultNewFormButton = page.getByText('New Form', {
-			exact: true,
-		});
+		this.page = page;
+
 		this.productMenuPage = new ProductMenuPage(page);
-		this.formsHeader = this.page.getByRole('heading', {
-			exact: true,
-			name: 'Forms',
-		});
 	}
 
 	async clickManagementToolbarNewButton() {

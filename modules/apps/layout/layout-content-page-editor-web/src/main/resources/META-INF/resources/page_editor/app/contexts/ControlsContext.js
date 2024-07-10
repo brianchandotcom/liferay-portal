@@ -8,9 +8,7 @@ import React, {useCallback, useContext, useReducer} from 'react';
 import {fromControlsId} from '../components/layout_data_items/Collection';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
-import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import {useToControlsId} from './CollectionItemContext';
-import {useDispatch, useSelector} from './StoreContext';
 
 const ACTIVE_INITIAL_STATE = {
 	activationOrigin: null,
@@ -180,11 +178,6 @@ const useIsHovered = () => {
 
 const useSelectItem = () => {
 	const activeDispatch = useContext(ActiveDispatchContext);
-	const sidebarPanelId = useSelector((state) =>
-		state.sidebar?.open ? state.sidebar?.panelId : null
-	);
-	const sidebarHidden = useSelector((state) => state.sidebar?.hidden);
-	const storeDispatch = useDispatch();
 	const toControlsId = useToControlsId();
 
 	return useCallback(
@@ -203,30 +196,8 @@ const useSelectItem = () => {
 				origin,
 				type: SELECT_ITEM,
 			});
-
-			if (
-				!sidebarHidden &&
-				itemId &&
-				sidebarPanelId &&
-				!['browser', 'comments', 'page_content'].includes(
-					sidebarPanelId
-				)
-			) {
-				storeDispatch(
-					switchSidebarPanel({
-						sidebarOpen: true,
-						sidebarPanelId: 'browser',
-					})
-				);
-			}
 		},
-		[
-			activeDispatch,
-			sidebarHidden,
-			sidebarPanelId,
-			storeDispatch,
-			toControlsId,
-		]
+		[activeDispatch, toControlsId]
 	);
 };
 

@@ -103,9 +103,21 @@ export default async function format(
 		filepaths = [filePath];
 	}
 	else {
-		filepaths = (await getGitModifiedFiles()).filter((filepath) =>
-			EXTENSIONS.includes(path.extname(filepath))
-		);
+		filepaths = (await getGitModifiedFiles())
+			.filter((filepath) =>
+				EXTENSIONS.includes(
+
+					// path.extname includes the '.'
+
+					path.extname(filepath).replace('.', '')
+				)
+			)
+			.map(
+
+				// make sure the path is absolute
+
+				(filepath) => path.join(rootDir, '..', filepath)
+			);
 	}
 
 	if (!filepaths.length) {

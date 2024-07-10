@@ -32,11 +32,14 @@ export class SiteSettingsPage {
 				name: categoryKey,
 			})
 			.click();
-		await this.page
-			.getByRole('menuitem', {
-				exact: true,
-				name: configurationName,
-			})
-			.click();
+
+		if (configurationName) {
+			await this.page
+				.getByRole('menuitem', {
+					exact: true,
+					name: configurationName,
+				})
+				.click();
+		}
 	}
 }

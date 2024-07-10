@@ -172,7 +172,7 @@ test('LPD-30589 Add Organization Team', async ({
 
 	await siteSettingsPage.goToSiteSetting(
 		'Site Configuration',
-		'Details',
+		null,
 		'/' + organization.name
 	);
 

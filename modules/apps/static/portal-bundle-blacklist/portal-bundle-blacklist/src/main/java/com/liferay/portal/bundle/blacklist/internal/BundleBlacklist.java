@@ -168,7 +168,7 @@ public class BundleBlacklist {
 		}
 	}
 
-	private boolean _processBundle(Bundle bundle) {
+	private synchronized boolean _processBundle(Bundle bundle) {
 		String symbolicName = bundle.getSymbolicName();
 
 		if (_blacklistBundleSymbolicNames.contains(symbolicName)) {

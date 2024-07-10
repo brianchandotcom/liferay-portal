@@ -17,7 +17,7 @@ export class MessageBoardsEditThreadPage {
 	readonly page: Page;
 	readonly publishButton: Locator;
 	readonly subjectSelector: Locator;
-	readonly successMessage: Locator;
+	readonly submitForWorkflowButton: Locator;
 
 	constructor(page: Page) {
 		this.allFilesReadyToBeSavedMessage = page.getByText(
@@ -36,6 +36,10 @@ export class MessageBoardsEditThreadPage {
 			name: 'Publish',
 		});
 		this.subjectSelector = page.getByLabel('Subject');
+		this.submitForWorkflowButton = page.getByRole('button', {
+			exact: true,
+			name: 'Submit for Workflow',
+		});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -60,6 +64,13 @@ export class MessageBoardsEditThreadPage {
 		}
 
 		await this.publishButton.click();
+	}
+
+	async publishNewThreadForWorkflow(subject: string, body: string) {
+		await this.messageBoardsPage.newThreadButton.click();
+		await this.subjectSelector.fill(subject);
+		await this.bodyTextBox.fill(body);
+		await this.submitForWorkflowButton.click();
 	}
 
 	async selectFile(filePath: string) {

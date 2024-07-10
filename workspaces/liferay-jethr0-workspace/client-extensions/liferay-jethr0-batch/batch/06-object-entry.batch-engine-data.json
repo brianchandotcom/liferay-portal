@@ -11,16 +11,6 @@
 	},
 	"items": [
 		{
-			"cron": "0 0 0/8 ? * *",
-			"externalReferenceCode": "archiveCIBuildDataController",
-			"jobName": "Archive CI Build Data - $[current_date]",
-			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"master\"}]",
-			"jobPriority": 1,
-			"jobType": "archiveCIBuildData",
-			"name": "Archive CI Build Data Controller",
-			"type": "cron"
-		},
-		{
 			"cron": "0 0 16 ? * * *",
 			"externalReferenceCode": "analyticsCloudAcceptanceController",
 			"jobName": "ci:test:analytics-cloud-acceptance - master - $[current_date]",
@@ -75,6 +65,16 @@
 			"type": "cron"
 		},
 		{
+			"cron": "0 0 0/8 ? * *",
+			"externalReferenceCode": "archiveCIBuildDataController",
+			"jobName": "Archive CI Build Data - $[current_date]",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"master\"}]",
+			"jobPriority": 1,
+			"jobType": "archiveCIBuildData",
+			"name": "Archive CI Build Data Controller",
+			"type": "cron"
+		},
+		{
 			"cron": "0 0 0 ? * *",
 			"externalReferenceCode": "forwardBranchesCleanupDailyController",
 			"jobName": "Forward Branches Cleanup Daily - $[current_date]",
@@ -82,46 +82,6 @@
 			"jobPriority": 1,
 			"jobType": "forwardBranchesCleanupDaily",
 			"name": "Forward Branches Cleanup Daily Controller",
-			"type": "cron"
-		},
-		{
-			"cron": "0 0 0 ? * *",
-			"externalReferenceCode": "generateReportsController",
-			"jobName": "Generate Reports - $[current_date]",
-			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"}]",
-			"jobPriority": 1,
-			"jobType": "generateReports",
-			"name": "Generate Reports Controller",
-			"type": "cron"
-		},
-		{
-			"cron": "0 0 0 ? * *",
-			"externalReferenceCode": "generateFlakyTestReportControllerEE61x",
-			"jobName": "Generate Flaky Test Report (ee-6.1.x) - $[current_date]",
-			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"ee-6.1.x\"}]",
-			"jobPriority": 1,
-			"jobType": "generateFlakyTestReport",
-			"name": "Generate Flaky Test Report Controller (ee-6.1.x)",
-			"type": "cron"
-		},
-		{
-			"cron": "0 0 0 ? * *",
-			"externalReferenceCode": "generateFlakyTestReportControllerEE62x",
-			"jobName": "Generate Flaky Test Report (ee-6.2.x) - $[current_date]",
-			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"ee-6.2.x\"}]",
-			"jobPriority": 1,
-			"jobType": "generateFlakyTestReport",
-			"name": "Generate Flaky Test Report Controller (ee-6.2.x)",
-			"type": "cron"
-		},
-		{
-			"cron": "0 0 0 ? * *",
-			"externalReferenceCode": "generateFlakyTestReportControllerMaster",
-			"jobName": "Generate Flaky Test Report (master) - $[current_date]",
-			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"}]",
-			"jobPriority": 1,
-			"jobType": "generateFlakyTestReport",
-			"name": "Generate Flaky Test Report Controller (master)",
 			"type": "cron"
 		},
 		{
@@ -165,13 +125,43 @@
 			"type": "cron"
 		},
 		{
-			"cron": "0 */10 * ? * *",
-			"externalReferenceCode": "generateReportsControllerEvery10Mins",
-			"jobName": "Generate Reports (Every 10 Mins) - $[current_date]",
-			"jobParameters": "[{\"key\":\"reportNames\",\"value\":\"CI System Status\"}]",
-			"jobPriority": 3,
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "generateFlakyTestReportControllerEE61x",
+			"jobName": "Generate Flaky Test Report (ee-6.1.x) - $[current_date]",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"ee-6.1.x\"}]",
+			"jobPriority": 1,
+			"jobType": "generateFlakyTestReport",
+			"name": "Generate Flaky Test Report Controller (ee-6.1.x)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "generateFlakyTestReportControllerEE62x",
+			"jobName": "Generate Flaky Test Report (ee-6.2.x) - $[current_date]",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"ee-6.2.x\"}]",
+			"jobPriority": 1,
+			"jobType": "generateFlakyTestReport",
+			"name": "Generate Flaky Test Report Controller (ee-6.2.x)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "generateFlakyTestReportControllerMaster",
+			"jobName": "Generate Flaky Test Report (master) - $[current_date]",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"}]",
+			"jobPriority": 1,
+			"jobType": "generateFlakyTestReport",
+			"name": "Generate Flaky Test Report Controller (master)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 0 0 ? * *",
+			"externalReferenceCode": "generateReportsController",
+			"jobName": "Generate Reports - $[current_date]",
+			"jobParameters": "[{\"key\":\"jenkinsSlaveLabel\",\"value\":\"!master\"}]",
+			"jobPriority": 1,
 			"jobType": "generateReports",
-			"name": "Generate Reports Controller (Every 10 Mins)",
+			"name": "Generate Reports Controller",
 			"type": "cron"
 		},
 		{
@@ -182,6 +172,16 @@
 			"jobPriority": 3,
 			"jobType": "generateReports",
 			"name": "Generate Reports Controller (Daily)",
+			"type": "cron"
+		},
+		{
+			"cron": "0 */10 * ? * *",
+			"externalReferenceCode": "generateReportsControllerEvery10Mins",
+			"jobName": "Generate Reports (Every 10 Mins) - $[current_date]",
+			"jobParameters": "[{\"key\":\"reportNames\",\"value\":\"CI System Status\"}]",
+			"jobPriority": 3,
+			"jobType": "generateReports",
+			"name": "Generate Reports Controller (Every 10 Mins)",
 			"type": "cron"
 		},
 		{
@@ -630,23 +630,23 @@
 		},
 		{
 			"cron": "0 0 0 ? * * *",
-			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterDataEngine",
-			"jobName": "ci:test:data-engine - master - $[current_date]",
-			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal/tree/master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"},{\"key\":\"testSuiteName\",\"value\":\"data-engine\"}]",
-			"jobPriority": 5,
-			"jobType": "portalUpstreamTestSuite",
-			"name": "ci:test:data-engine - master",
-			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalMaster",
-			"type": "upstreamBranchCron"
-		},
-		{
-			"cron": "0 0 0 ? * * *",
 			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterDBPartition",
 			"jobName": "ci:test:db-partition - master - $[current_date]",
 			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal/tree/master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"},{\"key\":\"testSuiteName\",\"value\":\"db-partition\"}]",
 			"jobPriority": 5,
 			"jobType": "portalUpstreamTestSuite",
 			"name": "ci:test:db-partition - master",
+			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalMaster",
+			"type": "upstreamBranchCron"
+		},
+		{
+			"cron": "0 0 0 ? * * *",
+			"externalReferenceCode": "portalUpstreamTestSuiteControllerMasterDataEngine",
+			"jobName": "ci:test:data-engine - master - $[current_date]",
+			"jobParameters": "[{\"key\":\"portalBranchURL\",\"value\":\"https://github.com/liferay/liferay-portal/tree/master\"},{\"key\":\"portalUpstreamBranchName\",\"value\":\"master\"},{\"key\":\"testSuiteName\",\"value\":\"data-engine\"}]",
+			"jobPriority": 5,
+			"jobType": "portalUpstreamTestSuite",
+			"name": "ci:test:data-engine - master",
 			"r_gitBranchToRoutines_c_gitBranchERC": "liferayPortalMaster",
 			"type": "upstreamBranchCron"
 		},

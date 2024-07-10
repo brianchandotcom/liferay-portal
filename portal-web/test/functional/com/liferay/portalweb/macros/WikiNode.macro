@@ -170,6 +170,10 @@ definition {
 	macro viewImageIsPresent(wikiPageTitle = null, contentImageName = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
+		AssertElementPresent(
+			key_wikiNodeName = ${wikiPageTitle},
+			locator1 = "Wiki#NODE_TABLE_WIKI_NAME");
+
 		Click(
 			key_wikiNodeName = ${wikiPageTitle},
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME");

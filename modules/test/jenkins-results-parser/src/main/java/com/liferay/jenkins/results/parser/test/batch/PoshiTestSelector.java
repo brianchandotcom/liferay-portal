@@ -54,6 +54,10 @@ public class PoshiTestSelector extends BaseTestSelector {
 	}
 
 	public String getGlobalPoshiQuery() {
+		if (_globalPoshiQuery != null) {
+			return _globalPoshiQuery;
+		}
+
 		JobProperty globalJobProperty = getGlobalJobProperty(
 			TEST_BATCH_RUN_PROPERTY_GLOBAL_QUERY);
 
@@ -63,7 +67,9 @@ public class PoshiTestSelector extends BaseTestSelector {
 			_poshiJobProperties.add(globalJobProperty);
 		}
 
-		return globalJobProperty.getValue();
+		_globalPoshiQuery = globalJobProperty.getValue();
+
+		return _globalPoshiQuery;
 	}
 
 	public List<JobProperty> getPoshiJobProperties() {
@@ -71,6 +77,20 @@ public class PoshiTestSelector extends BaseTestSelector {
 	}
 
 	public String getPoshiQuery() {
+		return getPoshiQuery(true);
+	}
+
+	public String getPoshiQuery(boolean includeGlobalPoshiQuery) {
+		String globalPoshiQuery = getGlobalPoshiQuery();
+
+		if (includeGlobalPoshiQuery &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(globalPoshiQuery) &&
+			!_poshiQuery.contains(globalPoshiQuery)) {
+
+			return JenkinsResultsParserUtil.combine(
+				"(", globalPoshiQuery, ") AND (", _poshiQuery, ")");
+		}
+
 		return _poshiQuery;
 	}
 
@@ -80,41 +100,27 @@ public class PoshiTestSelector extends BaseTestSelector {
 			throw new RuntimeException("Unable to merge test selectors");
 		}
 
-		_mergePQL(testSelector);
+		PoshiTestSelector poshiTestSelector = (PoshiTestSelector)testSelector;
 
-		String globalPQL = getGlobalPoshiQuery();
+		String newPoshiQuery = poshiTestSelector.getPoshiQuery(false);
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(globalPQL) &&
-			!_poshiQuery.contains(globalPQL)) {
+		_poshiJobProperties.addAll(poshiTestSelector.getPoshiJobProperties());
 
-			_globalPoshiQuery = globalPQL;
+		JenkinsResultsParserUtil.validatePQL(
+			newPoshiQuery, getPropertiesFile());
 
-			_poshiQuery = JenkinsResultsParserUtil.combine(
-				"(", globalPQL, ") AND (", _poshiQuery, ")");
+		if (newPoshiQuery.contains(_poshiQuery)) {
+			_poshiQuery = newPoshiQuery;
+		}
+		else if (!_poshiQuery.contains(newPoshiQuery)) {
+			_poshiQuery += JenkinsResultsParserUtil.combine(
+				" OR (", newPoshiQuery, ")");
 		}
 	}
 
 	@Override
 	public void validate() {
 		validate(TEST_BATCH_RUN_PROPERTY_QUERY);
-	}
-
-	private void _mergePQL(TestSelector testSelector) {
-		PoshiTestSelector poshiTestSelector = (PoshiTestSelector)testSelector;
-
-		String newPQL = poshiTestSelector.getPoshiQuery();
-
-		_poshiJobProperties.addAll(poshiTestSelector.getPoshiJobProperties());
-
-		JenkinsResultsParserUtil.validatePQL(newPQL, getPropertiesFile());
-
-		if (newPQL.contains(_poshiQuery)) {
-			_poshiQuery = newPQL;
-		}
-		else if (!_poshiQuery.contains(newPQL)) {
-			_poshiQuery += JenkinsResultsParserUtil.combine(
-				" OR (", newPQL, ")");
-		}
 	}
 
 	private String _globalPoshiQuery;

@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTracker;
@@ -633,21 +632,7 @@ public class PortalRequestProcessor {
 				// Authenticated users must have a current password
 
 				if (user.isPasswordReset()) {
-					try {
-						PasswordPolicy passwordPolicy =
-							user.getPasswordPolicy();
-
-						if ((passwordPolicy == null) ||
-							passwordPolicy.isChangeable()) {
-
-							return _PATH_PORTAL_UPDATE_PASSWORD;
-						}
-					}
-					catch (Exception exception) {
-						_log.error(exception);
-
-						return _PATH_PORTAL_UPDATE_PASSWORD;
-					}
+					return _PATH_PORTAL_UPDATE_PASSWORD;
 				}
 				else if (path.equals(_PATH_PORTAL_UPDATE_PASSWORD)) {
 					return _PATH_PORTAL_LAYOUT;

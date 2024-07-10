@@ -95,9 +95,9 @@ test('checks that the Slider fragment works correctly', async ({
 
 	// Change the number of slides
 
-	const slide = await page.locator('[aria-roledescription="slide"]');
+	const slide = page.locator('[aria-roledescription="slide"]');
 
-	await expect(await slide.all()).toHaveLength(3);
+	expect(await slide.all()).toHaveLength(3);
 
 	await pageEditorPage.changeFragmentConfiguration({
 		fieldLabel: 'Number of Slides',
@@ -106,7 +106,7 @@ test('checks that the Slider fragment works correctly', async ({
 		value: '2',
 	});
 
-	await expect(await slide.all()).toHaveLength(2);
+	expect(await slide.all()).toHaveLength(2);
 
 	// Check Auto Hide Play button
 

@@ -667,6 +667,11 @@ public class WorkflowTaskDisplayContext {
 		return false;
 	}
 
+	public boolean isReadOnly() {
+		return (boolean)_liferayPortletRequest.getAttribute(
+			WebKeys.WORKFLOW_TASK_READ_ONLY);
+	}
+
 	public boolean isShowEditURL(WorkflowTask workflowTask) {
 		boolean showEditURL = false;
 
@@ -696,11 +701,6 @@ public class WorkflowTaskDisplayContext {
 		}
 
 		return _showExtraInfo;
-	}
-
-	public boolean isWorkflowTaskReadOnly() {
-		return (boolean)_liferayPortletRequest.getAttribute(
-			WebKeys.WORKFLOW_TASK_READ_ONLY);
 	}
 
 	private String _getActorName(WorkflowLog workflowLog) {

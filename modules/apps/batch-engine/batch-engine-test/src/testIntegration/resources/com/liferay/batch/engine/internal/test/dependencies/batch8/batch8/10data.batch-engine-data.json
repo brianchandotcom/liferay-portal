@@ -1,9 +1,20 @@
 {
 	"configuration": {
-		"className": "com.liferay.headless.admin.user.dto.v1_0.Account",
-		"version": "v1.0"
+		"className": "com.liferay.headless.admin.user.dto.v1_0.Account"
 	},
 	"items": [
+		{
+			"description": "G01 Account 001 - We Test guest in Zip Files",
+			"externalReferenceCode": "ERC-G01-A001",
+			"name": "G0-01 Name",
+			"type": "guest"
+		},
+		{
+			"description": "G02 Account 002 - We Test guest in Zip Files",
+			"externalReferenceCode": "ERC-G02-A002",
+			"name": "G0-02 Name",
+			"type": "guest"
+		},
 		{
 			"description": "G03 Account 003 - We Test guest in Zip Files",
 			"externalReferenceCode": "ERC-G03-A003",
@@ -26,18 +37,6 @@
 			"description": "G06 Account 006 - We Test guest in Zip Files",
 			"externalReferenceCode": "ERC-G06-A006",
 			"name": "G0-06 Name",
-			"type": "guest"
-		},
-		{
-			"description": "G01 Account 001 - We Test guest in Zip Files",
-			"externalReferenceCode": "ERC-G01-A001",
-			"name": "G0-01 Name",
-			"type": "guest"
-		},
-		{
-			"description": "G02 Account 002 - We Test guest in Zip Files",
-			"externalReferenceCode": "ERC-G02-A002",
-			"name": "G0-02 Name",
 			"type": "guest"
 		},
 		{

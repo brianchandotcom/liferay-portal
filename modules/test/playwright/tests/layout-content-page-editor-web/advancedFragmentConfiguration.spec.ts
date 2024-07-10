@@ -191,11 +191,13 @@ test('checks that the advanced configuration of a fragment appears in its corres
 		key: 'my-fragment',
 	});
 
-	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
-		apiHelpers,
-		fragment: fragmentDefinition,
-		site,
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([fragmentDefinition]),
+		siteId: site.id,
+		title: getRandomString(),
 	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	await page.getByTitle('Browser').click();
 

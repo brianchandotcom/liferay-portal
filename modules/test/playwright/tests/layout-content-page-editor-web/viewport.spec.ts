@@ -79,11 +79,13 @@ test('shows correct sections on each configuration panel when viewport is not De
 		key: 'BASIC_COMPONENT-heading',
 	});
 
-	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
-		apiHelpers,
-		fragment: headingFragment,
-		site,
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingFragment]),
+		siteId: site.id,
+		title: getRandomString(),
 	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	// Switch to Tablet viewport and select the fragment
 
@@ -121,11 +123,13 @@ test('shows only Image Source field when the viewport is Desktop', async ({
 		key: 'BASIC_COMPONENT-heading',
 	});
 
-	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
-		apiHelpers,
-		fragment: headingFragment,
-		site,
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingFragment]),
+		siteId: site.id,
+		title: getRandomString(),
 	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(headingId);
 
@@ -158,11 +162,13 @@ test('Background Image field is disabled for non-desktop viewports', async ({
 		key: 'BASIC_COMPONENT-heading',
 	});
 
-	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
-		apiHelpers,
-		fragment: headingFragment,
-		site,
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingFragment]),
+		siteId: site.id,
+		title: getRandomString(),
 	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(headingId);
 
@@ -197,11 +203,13 @@ test('checks that the layout can be resized', async ({
 		key: 'BASIC_COMPONENT-heading',
 	});
 
-	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
-		apiHelpers,
-		fragment: headingFragment,
-		site,
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingFragment]),
+		siteId: site.id,
+		title: getRandomString(),
 	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(headingId);
 
@@ -257,11 +265,13 @@ test('checks that the value of a field is propagated to smaller viewports', asyn
 		key: 'BASIC_COMPONENT-heading',
 	});
 
-	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
-		apiHelpers,
-		fragment: headingFragment,
-		site,
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingFragment]),
+		siteId: site.id,
+		title: getRandomString(),
 	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(headingId);
 

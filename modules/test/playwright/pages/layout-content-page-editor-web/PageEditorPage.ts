@@ -5,14 +5,11 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {liferayConfig} from '../../liferay.config';
-import getPageDefinition from '../../tests/layout-content-page-editor-web/utils/getPageDefinition';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {collapseSection} from '../../utils/collapseSection';
 import {expandSection} from '../../utils/expandSection';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
-import getRandomString from '../../utils/getRandomString';
 import {selectElement} from '../../utils/selectElement';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {SegmentEditorPage} from '../segments-web/SegmentEditorPage';
@@ -303,22 +300,6 @@ export class PageEditorPage {
 			'Success:The experience was created successfully.',
 			{autoClose: false}
 		);
-	}
-
-	async createPageWithFragmentAndGoToEditMode({apiHelpers, fragment, site}) {
-		await this.page.goto(liferayConfig.environment.baseUrl);
-
-		// Create a page with a fragment
-
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([fragment]),
-			siteId: site.id,
-			title: getRandomString(),
-		});
-
-		// Go to edit mode of page
-
-		await this.goto(layout, site.friendlyUrlPath);
 	}
 
 	async deleteExperience(name: string) {

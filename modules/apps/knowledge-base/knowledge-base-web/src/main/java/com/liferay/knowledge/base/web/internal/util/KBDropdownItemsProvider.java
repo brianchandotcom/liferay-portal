@@ -34,9 +34,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
@@ -549,23 +547,20 @@ public class KBDropdownItemsProvider {
 						portletDisplay.getRootPortletId(),
 						KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
 
-					LiferayPortletURL liferayPortletURL =
-						PortletURLFactoryUtil.create(
-							_liferayPortletRequest,
-							PortalUtil.getPortletId(_liferayPortletRequest),
-							_themeDisplay.getPlid(),
-							PortletRequest.RENDER_PHASE);
+					return PortletURLBuilder.createActionURL(
+						_liferayPortletResponse
+					).setParameter(
+						"resourcePrimKey",
+						() -> {
+							if (kbArticle.getParentResourcePrimKey() ==
+									kbArticle.getKbFolderId()) {
 
-					if (kbArticle.getParentResourcePrimKey() !=
-							kbArticle.getKbFolderId()) {
+								return null;
+							}
 
-						liferayPortletURL.setParameter(
-							"resourcePrimKey",
-							String.valueOf(
-								kbArticle.getParentResourcePrimKey()));
-					}
-
-					return liferayPortletURL.toString();
+							return kbArticle.getParentResourcePrimKey();
+						}
+					).buildString();
 				}
 
 				if (((selectedItemAncestorIds == null) &&

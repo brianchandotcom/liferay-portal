@@ -35,8 +35,6 @@ public class TestBatchFactory {
 
 				poshiTestSelector.setTestBatch(poshiTestBatch);
 
-				poshiTestBatch.setTestSelector(poshiTestSelector);
-
 				return poshiTestBatch;
 			}
 

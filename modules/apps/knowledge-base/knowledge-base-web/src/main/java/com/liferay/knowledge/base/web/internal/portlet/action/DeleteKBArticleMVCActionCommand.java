@@ -67,6 +67,9 @@ public class DeleteKBArticleMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getScopeGroupId(), resourcePrimKey);
 		}
 
+		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
+			resourcePrimKey);
+
 		try {
 			if (cmd.equals(Constants.MOVE_TO_TRASH) &&
 				FeatureFlagManagerUtil.isEnabled("LPS-188058")) {
@@ -105,8 +108,6 @@ public class DeleteKBArticleMVCActionCommand extends BaseMVCActionCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
-				resourcePrimKey);
 
 			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 				actionRequest, _portal.getPortletId(actionRequest),

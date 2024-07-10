@@ -464,6 +464,9 @@ export default function UpperToolbar({
 						{version !== 0 && (
 							<ClayToolbar.Item>
 								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'definition-info'
+									)}
 									displayType="secondary"
 									onClick={() =>
 										setShowDefinitionInfo(
@@ -471,16 +474,21 @@ export default function UpperToolbar({
 										)
 									}
 									symbol="info-circle-open"
+									title={Liferay.Language.get(
+										'definition-info'
+									)}
 								/>
 							</ClayToolbar.Item>
 						)}
 
 						<ClayToolbar.Item>
 							<ClayButton
+								aria-label={Liferay.Language.get('cancel')}
 								displayType="secondary"
 								onClick={() => {
 									window.history.back();
 								}}
+								title={Liferay.Language.get('cancel')}
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
@@ -489,9 +497,11 @@ export default function UpperToolbar({
 						{definitionNotPublished && (
 							<ClayToolbar.Item>
 								<ClayButton
+									aria-label="save"
 									disabled={isView}
 									displayType="secondary"
 									onClick={saveDefinition}
+									title="save"
 								>
 									{Liferay.Language.get('save')}
 								</ClayButton>
@@ -500,9 +510,19 @@ export default function UpperToolbar({
 
 						<ClayToolbar.Item>
 							<ClayButton
+								aria-label={
+									definitionNotPublished
+										? Liferay.Language.get('publish')
+										: Liferay.Language.get('update')
+								}
 								disabled={isView}
 								displayType="primary"
 								onClick={publishDefinition}
+								title={
+									definitionNotPublished
+										? Liferay.Language.get('publish')
+										: Liferay.Language.get('update')
+								}
 							>
 								{definitionNotPublished
 									? Liferay.Language.get('publish')
@@ -513,6 +533,9 @@ export default function UpperToolbar({
 						<ClayToolbar.Item>
 							{sourceView ? (
 								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'diagram-view'
+									)}
 									displayType="secondary"
 									onClick={() => {
 										if (
@@ -532,6 +555,9 @@ export default function UpperToolbar({
 								/>
 							) : (
 								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'source-view'
+									)}
 									displayType="secondary"
 									onClick={() => setSourceView(true)}
 									symbol="code"

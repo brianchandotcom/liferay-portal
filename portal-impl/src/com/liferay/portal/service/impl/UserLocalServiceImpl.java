@@ -96,7 +96,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.Authenticator;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.EmailAddressGenerator;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.security.auth.FullNameDefinition;
@@ -765,10 +764,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public void addPasswordPolicyUsers(long passwordPolicyId, long[] userIds) {
-		_checkPasswordReset(
-			_passwordPolicyLocalService.fetchPasswordPolicy(passwordPolicyId),
-			userIds);
-
 		_passwordPolicyRelLocalService.addPasswordPolicyRels(
 			passwordPolicyId, User.class.getName(), userIds);
 	}
@@ -4321,19 +4316,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public void unsetPasswordPolicyUsers(
 		long passwordPolicyId, long[] userIds) {
 
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		try {
-			_checkPasswordReset(
-				_passwordPolicyLocalService.getDefaultPasswordPolicy(companyId),
-				userIds);
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
-
 		_passwordPolicyRelLocalService.deletePasswordPolicyRels(
 			passwordPolicyId, User.class.getName(), userIds);
 	}
@@ -7288,29 +7270,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		return user;
-	}
-
-	private void _checkPasswordReset(
-		PasswordPolicy passwordPolicy, long[] userIds) {
-
-		// Check password policy to see if changing the password is allowed. If
-		// it is not allowed, set the user's passwordReset field to false to
-		// prevent issues while logging in. See LPS-76504.
-
-		if ((passwordPolicy == null) || passwordPolicy.isChangeable()) {
-			return;
-		}
-
-		for (long userId : userIds) {
-			try {
-				updatePasswordReset(userId, false);
-			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(portalException);
-				}
-			}
-		}
 	}
 
 	private long[] _collectDefaultAndRequiredRoleId(long userId, long[] roleIds)

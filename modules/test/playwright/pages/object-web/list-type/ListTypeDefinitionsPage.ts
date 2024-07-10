@@ -9,13 +9,18 @@ import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/A
 
 export class ListTypeDefinitionsPage {
 	readonly addPicklistButton: Locator;
-	readonly addPickListEntryButton: Locator;
+	readonly addPicklistItemButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly basicInfoHeading: Locator;
 	readonly frameLocator: FrameLocator;
+	readonly modalNameInput: Locator;
+	readonly modalSaveButton: Locator;
 	readonly page: Page;
-	readonly picklistNameInput: Locator;
-	readonly picklistEntryKey: Locator;
-	readonly savePicklistButton: Locator;
+	readonly picklistItemKey: Locator;
+	readonly picklistItemTranslationButton: Locator;
+	readonly picklistTranslationButton: Locator;
+	readonly sidebarNameInput: Locator;
+	readonly sidebarSaveButton: Locator;
 
 	constructor(page: Page) {
 		this.addPicklistButton = page
@@ -23,24 +28,30 @@ export class ListTypeDefinitionsPage {
 				name: 'Add Picklist',
 			})
 			.first();
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.page = page;
-		this.picklistNameInput = page.getByLabel('Name');
-		this.savePicklistButton = page.getByRole('button', {
-			name: 'Save',
-		});
-		this.frameLocator = page.frameLocator('iframe');
-		this.picklistEntryKey = page.getByLabel('Key');
-		this.addPickListEntryButton = page
+		this.addPicklistItemButton = page
 			.frameLocator('iframe')
 			.getByLabel('Add Item');
-	}
-
-	async createPicklist(picklistName: string) {
-		await this.addPicklistButton.click();
-		await this.picklistNameInput.click();
-		await this.picklistNameInput.fill(picklistName);
-		await this.savePicklistButton.click();
+		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.basicInfoHeading = page
+			.frameLocator('iframe')
+			.getByRole('heading', {name: 'Basic Info'});
+		this.frameLocator = page.frameLocator('iframe');
+		this.modalNameInput = page.getByLabel('Name');
+		this.modalSaveButton = page.getByRole('button', {
+			name: 'Save',
+		});
+		this.page = page;
+		this.picklistItemKey = page.getByLabel('Key');
+		this.picklistItemTranslationButton = page.getByRole('button', {
+			name: 'en_US',
+		});
+		this.picklistTranslationButton = page
+			.frameLocator('iframe')
+			.getByRole('button', {name: 'en_US'});
+		this.sidebarNameInput = page.frameLocator('iframe').getByLabel('Name');
+		this.sidebarSaveButton = page
+			.frameLocator('iframe')
+			.getByRole('button', {name: 'Save'});
 	}
 
 	async addPicklistItem(
@@ -49,17 +60,80 @@ export class ListTypeDefinitionsPage {
 		picklistKeyEntry?: string
 	) {
 		await this.page.getByRole('link', {name: picklistName}).click();
-		await this.addPickListEntryButton.click();
-		await this.picklistNameInput.fill(picklistNameEntry);
+		await this.addPicklistItemButton.click();
+		await this.modalNameInput.fill(picklistNameEntry);
 
 		if (picklistKeyEntry) {
-			await this.picklistEntryKey.fill(picklistKeyEntry);
+			await this.picklistItemKey.fill(picklistKeyEntry);
 		}
 
-		await this.savePicklistButton.click();
+		await this.modalSaveButton.click();
+	}
+
+	async createPicklist(picklistName: string) {
+		await this.addPicklistButton.click();
+		await this.modalNameInput.click();
+		await this.modalNameInput.fill(picklistName);
+		await this.modalSaveButton.click();
 	}
 
 	async goto() {
 		await this.applicationsMenuPage.goToPicklists();
+	}
+
+	async translatePicklist(
+		listTypeDefinitionName: string,
+		locationCode: string
+	) {
+		await this.getPicklistLinkLocator(listTypeDefinitionName).click();
+
+		await this.picklistTranslationButton.click();
+
+		await this.page
+			.frameLocator('iframe')
+			.getByRole('menuitem', {name: `${locationCode} Untranslated`})
+			.click();
+
+		await this.sidebarNameInput.click();
+
+		await this.sidebarNameInput.fill(
+			listTypeDefinitionName + ' translated'
+		);
+
+		await this.sidebarSaveButton.click();
+	}
+
+	async translatePicklistItem(
+		listTypeDefinitionName: string,
+		listTypeItemName: string,
+		locationCode: string
+	) {
+		await this.getPicklistLinkLocator(listTypeDefinitionName).click();
+
+		await this.getPicklistItemLinkLocator(listTypeItemName).click();
+
+		await this.modalSaveButton.waitFor({state: 'visible'});
+
+		await this.picklistItemTranslationButton.click();
+
+		await this.page
+			.getByRole('menuitem', {name: `${locationCode} Untranslated`})
+			.click();
+
+		await this.modalNameInput.click();
+
+		await this.modalNameInput.fill(listTypeItemName + ' translated');
+
+		await this.modalSaveButton.click();
+	}
+
+	getPicklistItemLinkLocator(listTypeItemName: string) {
+		return this.page
+			.frameLocator('iframe')
+			.getByRole('link', {name: listTypeItemName});
+	}
+
+	getPicklistLinkLocator(listTypeDefinitionName: string) {
+		return this.page.getByRole('link', {name: listTypeDefinitionName});
 	}
 }

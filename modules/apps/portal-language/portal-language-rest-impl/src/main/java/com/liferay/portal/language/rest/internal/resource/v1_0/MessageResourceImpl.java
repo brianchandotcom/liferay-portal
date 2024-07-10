@@ -161,11 +161,12 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 		for (int i = pagination.getStartPosition();
 			 (i < keys.size()) && (i < pagination.getEndPosition()); i++) {
 
-			String key = keys.get(i);
-
 			Message message = new Message();
 
+			String key = keys.get(i);
+
 			message.setKey(() -> key);
+
 			message.setLanguageId(() -> languageId);
 			message.setValue(
 				() -> ResourceBundleUtil.getString(resourceBundle, key));

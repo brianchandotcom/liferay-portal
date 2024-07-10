@@ -1,18 +1,4 @@
 .lfr-object__action-builder {
-	&-notification-option {
-		align-items: center;
-		display: flex;
-		justify-content: space-between;
-
-		&-label {
-			width: min-content;
-		}
-	}
-
-	&-notification-then {
-		width: 320px;
-	}
-
 	&-then {
 		align-items: center;
 		display: flex;

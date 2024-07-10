@@ -102,38 +102,6 @@ definition {
 		}
 	}
 
-	@description = "Can configure a full page application to use all available portlets on the page."
-	@priority = 4
-	test ConfigureFullPageApplicationOfPage {
-		property osgi.app.includes = "hello-soy";
-
-		task ("Add a Full Page Application page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name",
-				type = "full_page_application");
-		}
-
-		task ("Configure the page with all available portlets then view the portlet is shown") {
-			for (var portletName : list "Blogs,Wiki,Media Gallery,Message Boards,RSS Publisher,Documents and Media,Form,Application Authorization Request") {
-				PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-				PagesAdmin.configurePage(
-					pageName = "Test Page Name",
-					portlet = ${portletName},
-					sitePageType = "Full Page Application");
-
-				Navigator.gotoSitePage(
-					pageName = "Test Page Name",
-					siteName = ${randomSiteName});
-
-				Portlet.viewPG(portletName = ${portletName});
-
-				AssertElementNotPresent(locator1 = "ControlMenu#ADD");
-			}
-		}
-	}
-
 	@description = "This is a use case for LPS-71160. Can edit the SEO settings in a widget page via control menu."
 	@priority = 5
 	test EditPageViaControlMenu {

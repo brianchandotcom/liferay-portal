@@ -42,7 +42,7 @@ export interface IDateRangeFilter extends IBaseFilter {
 }
 
 export interface ISelectionFilter extends IBaseFilter {
-	filterMode: 'Include' | 'Exclude';
+	filterMode?: 'Include' | 'Exclude';
 	preselectedValues: string[];
 	selectionType: 'Multiple' | 'Single';
 }

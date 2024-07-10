@@ -2499,46 +2499,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-183621. Confirm that it is possible to create the filter without filling out the Preselected field."
-	@priority = 3
-	test SelectionTypeWithoutPreselectionValues {
-		task ("And creating a picklist And Add items to the created picklist") {
-			DataSetAdmin.setUpPicklistforDataSet(
-				picklistItemList = "bike,car,bus",
-				picklistName = "Transport");
-		}
-
-		task ("And create a new Selection filter ") {
-			DataSetAdmin.selectFilterType(key_filterType = "Selection");
-
-			PortletEntry.inputText(
-				fieldLabel = "Name",
-				text = "Custom Filter");
-
-			Click(
-				dropdownLabel = "Select",
-				locator1 = "Dropdown#ANY_DROPDOWN_LABEL");
-
-			DropdownMenuItem.click(menuItem = "creator");
-		}
-
-		task ("And the user selects the created picklist in the Source Options field") {
-			Select(
-				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
-				value1 = "Transport");
-		}
-
-		task ("When the user clicks on Save button ") {
-			Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
-		}
-
-		task ("Then is possible to save the filter without selecting an option in the Preselected Values") {
-			DataSetAdmin.assertFieldsOnTable(
-				key_position = 1,
-				keyName = "Custom Filter");
-		}
-	}
-
 	@description = "LPS-183621. Confirm that by selecting the radio button Multiple and selecting more than one item, the filter can be saved ."
 	@priority = 4
 	test SelectionTypeWithSelectionMultipleField {

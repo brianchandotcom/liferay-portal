@@ -14,8 +14,9 @@ import {picklistApiHelpersTest} from '../../fixtures/picklistApiHelpersTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
 
-const SELECTION_PICKLIST_FILTER_NAME = 'Selection Picklist filter';
 const SELECTION_API_HEADLESS_FILTER_NAME = 'Selection API Headless filter';
+const SELECTION_PICKLIST_FILTER_NAME = 'Selection Picklist filter';
+const SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME = 'Selection Picklist filter without preselected values';
 const PICKLIST_VALUE_KEY = 'sampleValue';
 const PICKLIST_VALUE_NAME = 'Sample Value';
 
@@ -92,6 +93,26 @@ test.describe('Filters in Data Set Manager', () => {
 				page.getByRole('cell', {
 					exact: true,
 					name: SELECTION_PICKLIST_FILTER_NAME,
+				})
+			).toBeVisible();
+		});
+
+		await test.step('Create a selection filter from picklist source without preselected values', async () => {
+			await filtersPage.createSelectionFilterPicklist({
+				filterBy: 'name',
+				name: SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME,
+				preselectedValues: [],
+				selectionType: 'Single',
+				source: picklistName,
+				sourceType: 'Object Picklist',
+			});
+		});
+
+		await test.step('Check that the selection filter is also the list', async () => {
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME,
 				})
 			).toBeVisible();
 		});

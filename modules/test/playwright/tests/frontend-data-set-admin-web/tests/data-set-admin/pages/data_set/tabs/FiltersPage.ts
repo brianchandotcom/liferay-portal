@@ -115,7 +115,7 @@ export class FiltersPage {
 			filterModeRadioButtons: page.getByText('Filter ModeIncludeExclude'),
 			itemKey: page.locator('.fds-filter-item-key'),
 			itemLabel: page.locator('.fds-filter-item-label'),
-			picklistDropdown: page.getByLabel('Picklist'),
+			picklistDropdown: page.locator('label').filter({hasText: 'PicklistRequired'}),
 			preselectedValuesMultiSelect: page.getByPlaceholder(
 				'Select a default value for your filter.'
 			),
@@ -128,7 +128,7 @@ export class FiltersPage {
 			restSchemaField: page.getByLabel('REST SchemaRequired'),
 			restSchemaOptions: page.locator('.fds-filter-rest-schema-menu'),
 			selectionRadioButtons: page.getByText('SelectionMultipleSingle'),
-			sourceTypeDropdown: page.getByLabel('Choose an Option'),
+			sourceTypeDropdown: page.locator('label').filter({hasText: 'SourceRequired'}),
 		};
 		this.page = page;
 	}
@@ -276,18 +276,24 @@ export class FiltersPage {
 		await this.newSelectionFilterModal.nameInput.fill(name);
 		await this.newSelectionFilterModal.filterBySelect.click();
 		await this.page.getByRole('option', {name: filterBy}).click();
+		await this.newSelectionFilterModal.sourceTypeDropdown.click();
 		await this.newSelectionFilterModal.sourceTypeDropdown.selectOption(
 			sourceType
 		);
+		await this.newSelectionFilterModal.picklistDropdown.click();
 		await this.newSelectionFilterModal.picklistDropdown.selectOption(
 			source
 		);
 		await this.newSelectionFilterModal.preselectedValuesMultiSelect.click();
-		await this.page
+
+		if (preselectedValues.length) {
+			await this.page
 			.getByRole('option', {name: preselectedValues[0]})
 			.click();
+			await this.page.locator('label').filter({hasText: filterMode}).click();
+		}
 		await this.page.getByText(selectionType).click();
-		await this.page.locator('label').filter({hasText: filterMode}).click();
+
 		await this.saveAddFilterModal();
 	}
 
@@ -329,5 +335,6 @@ export class FiltersPage {
 
 	async saveAddFilterModal() {
 		await this.newFilterModal.saveButton.click();
+		await this.newFilterModal.saveButton.waitFor({state: 'hidden'});
 	}
 }

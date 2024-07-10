@@ -157,6 +157,7 @@ const ObjectField = ({
 			readOnly={readOnly}
 			showEmptyOption={!!options.length}
 			spritemap={spritemap}
+			type="select"
 			value={getSelectedValue(value)}
 			visible={visible}
 		/>
@@ -208,6 +209,7 @@ const ObjectDefinitionObjectField = ({
 			readOnly={readOnly}
 			showEmptyOption={!!options.length}
 			spritemap={spritemap}
+			type="select"
 			value={value}
 			visible={visible}
 		/>

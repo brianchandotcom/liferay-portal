@@ -147,12 +147,7 @@ public class UpdateThread implements Runnable
      * the worker thread is not currently active.
      * <p>
      * If the worker thread does not terminate within 5 seconds it is killed
-     * by calling the (deprecated) <code>Thread.stop()</code> method. It may
-     * be that the worker thread may be blocked by a deadlock (it should not,
-     * though). In this case hope is that <code>Thread.stop()</code> will be
-     * able to released that deadlock at the expense of one or more tasks to
-     * not be executed any longer.... In any case an ERROR message is logged
-     * with the LogService in this situation.
+     * by calling the <code>Thread.interrupt()</code> method.
      */
     synchronized void terminate()
     {
@@ -178,7 +173,7 @@ public class UpdateThread implements Runnable
                 Log.logger.log( LogService.LOG_ERROR,
                     "Worker thread {0} did not terminate within 5 seconds; trying to kill", new Object[]
                         { workerBaseName } );
-                workerThread.stop();
+                workerThread.interrupt();
             }
         }
     }
@@ -194,3 +189,4 @@ public class UpdateThread implements Runnable
         updateTasks.offer( update );
     }
 }
+/* @generated */

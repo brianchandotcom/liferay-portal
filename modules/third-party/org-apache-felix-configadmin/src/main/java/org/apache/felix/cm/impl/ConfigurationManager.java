@@ -27,6 +27,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -976,7 +977,7 @@ public class ConfigurationManager implements BundleListener
         StringBuilder buf = new StringBuilder( factoryPid.length() + 1 + 36 );
 
         // prefix the new pid with the factory pid
-        buf.append( factoryPid ).append( "." );
+        buf.append( factoryPid ).append( "~" );
 
         // serialize the UUID into the buffer
         for ( int i = 0; i < randomBytes.length; i++ )
@@ -1622,6 +1623,8 @@ public class ConfigurationManager implements BundleListener
             }
             else
             {
+				Arrays.sort(srs, Comparator.reverseOrder());
+
                 this.listenerReferences = srs;
                 this.listeners = new ConfigurationListener[srs.length];
                 this.listenerProvider = new Bundle[srs.length];
@@ -1749,4 +1752,4 @@ public class ConfigurationManager implements BundleListener
         }
     }
 }
-
+/* @generated */

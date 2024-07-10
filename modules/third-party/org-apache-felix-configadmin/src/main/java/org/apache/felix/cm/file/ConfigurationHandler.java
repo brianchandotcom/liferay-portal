@@ -69,6 +69,8 @@ public class ConfigurationHandler
     protected static final int TOKEN_EQ = '=';
     protected static final int TOKEN_ARR_OPEN = '[';
     protected static final int TOKEN_ARR_CLOS = ']';
+    protected static final int TOKEN_BRACE_OPEN = '{';
+    protected static final int TOKEN_BRACE_CLOS = '}';
     protected static final int TOKEN_VEC_OPEN = '(';
     protected static final int TOKEN_VEC_CLOS = ')';
     protected static final int TOKEN_COMMA = ',';
@@ -821,6 +823,8 @@ public class ConfigurationHandler
                 case TOKEN_VAL_CLOS:
                 case ' ':
                 case TOKEN_EQ:
+                case TOKEN_BRACE_CLOS:
+                case TOKEN_BRACE_OPEN:
                     out.write( '\\' );
                     out.write( c );
                     break;
@@ -857,3 +861,4 @@ public class ConfigurationHandler
         }
     }
 }
+/* @generated */

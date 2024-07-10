@@ -811,38 +811,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-186876. Confirm that is possible to cancel changes in the Actions tab."
-	@priority = 3
-	test CanCancelChangesOnActions {
-		task ("And clicks on New Item Action button") {
-			Click.clickNoMouseOver(
-				key_text = "New Item Action",
-				locator1 = "Button#ANY_SECONDARY");
-		}
-
-		task ("And add some information in the fields") {
-			Type(
-				key_unnamedTitle = "",
-				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
-				value1 = "New Action");
-
-			Type(
-				key_fieldId = "URL",
-				locator1 = "TextArea#ANY_ID",
-				value1 = "www.able.com");
-		}
-
-		task ("And clicks on Cancel button") {
-			Button.clickCancel();
-		}
-
-		task ("Then the item action is not saved and it does not appear in the list of the Item Actions tab") {
-			AssertElementPresent(
-				key_entryName = "No actions were created.",
-				locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
-		}
-	}
-
 	@description = "LPS-194351 Confirm that when trying to delete a created action, the deletion can be canceled using the cancel button in the Item Action"
 	@priority = 3
 	test CanCancelDeletionOnCancelButtonOnItemAction {

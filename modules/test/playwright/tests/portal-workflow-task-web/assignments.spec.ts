@@ -5,24 +5,39 @@
 
 import {expect, mergeTests} from '@playwright/test';
 import {readFileSync} from 'fs';
+import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {messageBoardsPagesTest} from '../../fixtures/messageBoardsTest';
+import {userPersonalBarPagesTest} from '../../fixtures/userPersonalBarPagesTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
+import performLogin, {
+	performLogout,
+	performUserSwitch,
+	userData,
+} from '../../utils/performLogin';
 import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	blogsPagesTest,
+	isolatedSiteTest,
 	loginTest(),
+	messageBoardsPagesTest,
+	userPersonalBarPagesTest,
 	workflowPagesTest
 );
 
 let assetType: string;
 let blogTitle: string;
+let demoUserId: number;
+let roleId: number;
 let workflowDefinitionId: number;
 let workflowDefinitionName: string;
 let workflowXMLDefinition: string;
@@ -47,6 +62,13 @@ test.afterEach(
 			await blogsPage.deleteAllBlogEntries();
 		}
 
+		if (roleId && demoUserId) {
+			await apiHelpers.headlessAdminUser.deleteRoleUserAccountAssociation(
+				roleId,
+				demoUserId
+			);
+		}
+
 		if (workflowDefinitionId) {
 			await apiHelpers.headlessAdminWorkflow.deleteWorkflowDefinition(
 				workflowDefinitionId
@@ -55,6 +77,8 @@ test.afterEach(
 
 		assetType = null;
 		blogTitle = null;
+		demoUserId = null;
+		roleId = null;
 		workflowDefinitionId = null;
 		workflowDefinitionName = null;
 		workflowXMLDefinition = null;
@@ -165,4 +189,163 @@ test('send user back to my workflow tasks page after assign another user to revi
 	await workflowTaskDetailsPage.doneAssigneeButton.click();
 
 	await expect(workflowTasksPage.assignedToMyRolesLink).toBeVisible();
+});
+
+test('logged user must be able to see workflow task at least from a read-only perspective', async ({
+	apiHelpers,
+	configurationTabPage,
+	diagramViewPage,
+	messageBoardsEditThreadPage,
+	messageBoardsPage,
+	messageBoardsWidgetPage,
+	page,
+	processBuilderPage,
+	site,
+	userPersonalBarPage,
+	workflowTaskDetailsPage,
+	workflowTasksPage,
+}) => {
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+
+	demoUserId = user.id;
+
+	const defaultUser =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'test@liferay.com'
+		);
+
+	const rolesPermissionsJSON = await JSON.parse(
+		readFileSync(
+			path.join(
+				__dirname,
+				'../message-boards-web/dependencies/message-board-permissions.json'
+			),
+			'utf-8'
+		)
+	);
+
+	const role = await apiHelpers.headlessAdminUser.postRole({
+		name: 'MessageBoardAdmin' + getRandomInt(),
+		rolePermissions: rolesPermissionsJSON,
+		roleType: 'regular',
+	});
+
+	roleId = role.id;
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(role.name, user.id);
+
+	const messageBoardWidget = getWidgetDefinition({
+		id: getRandomString(),
+		widgetName: 'com_liferay_message_boards_web_portlet_MBPortlet',
+	});
+
+	await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([messageBoardWidget]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	const messageBoardPage =
+		await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
+
+	await messageBoardsPage.setRoleCategoryPermissions(
+		role.name.toLowerCase(),
+		site.friendlyUrlPath
+	);
+
+	workflowDefinitionName = 'MBWorkflowDefinition' + getRandomInt();
+	workflowXMLDefinition = readFileSync(
+		__dirname +
+			'/dependencies/administrator-role-assignments-workflow-definition.xml',
+		'utf-8'
+	);
+
+	const workflowDefinition =
+		await apiHelpers.headlessAdminWorkflow.postWorkflowDefinitionSave(
+			workflowDefinitionName,
+			{content: workflowXMLDefinition}
+		);
+
+	workflowDefinitionId = workflowDefinition.id;
+
+	await processBuilderPage.goto();
+
+	await processBuilderPage.clickWorkflowDefinitionName(
+		workflowDefinitionName
+	);
+
+	await diagramViewPage.publishWorkflowDefinition();
+
+	await configurationTabPage.goTo();
+
+	await configurationTabPage.assignWorkflowToAssetType(
+		workflowDefinitionName,
+		'Message Boards Message'
+	);
+
+	await performUserSwitch(page, user.alternateName);
+
+	const threadTitle = 'ThreadTitle' + getRandomInt();
+
+	await page.goto(
+		`/web${site.friendlyUrlPath}${messageBoardPage.friendlyURL}`
+	);
+
+	await messageBoardsEditThreadPage.publishNewThreadForWorkflow(
+		threadTitle,
+		'ThreadContent' + getRandomInt()
+	);
+
+	await performUserSwitch(page, defaultUser.alternateName);
+
+	await workflowTasksPage.goToAssignedToMyRoles();
+
+	await workflowTasksPage.assignToMe(threadTitle);
+
+	await workflowTasksPage.reject(threadTitle);
+
+	await performUserSwitch(page, user.alternateName);
+
+	await userPersonalBarPage.notificationBadge.click();
+
+	await page
+		.getByRole('link', {
+			name: `Your submission was rejected by ${defaultUser.name}, please modify and resubmit.`,
+		})
+		.first()
+		.click();
+
+	await workflowTaskDetailsPage.commentSectionButton.click();
+
+	await workflowTaskDetailsPage.subscribeButton.click();
+
+	await performUserSwitch(page, defaultUser.alternateName);
+
+	await workflowTasksPage.goto();
+
+	await workflowTaskDetailsPage.writeTaskComment(
+		threadTitle,
+		getRandomString()
+	);
+
+	await performUserSwitch(page, user.alternateName);
+
+	await userPersonalBarPage.notificationBadge.click();
+
+	await page
+		.getByRole('link', {
+			name: `${defaultUser.name} added a new comment to ${threadTitle}.`,
+		})
+		.click();
+
+	await expect(workflowTaskDetailsPage.activitiesButton).toBeVisible();
+	await expect(workflowTaskDetailsPage.previewMessageBoards).toBeVisible();
+	await expect(workflowTaskDetailsPage.reviewActionMenu).toBeHidden();
+	await expect(workflowTaskDetailsPage.viewButton).toBeHidden();
+	await expect(workflowTaskDetailsPage.viewUsagesButton).toBeHidden();
+
+	await performUserSwitch(page, defaultUser.alternateName);
 });

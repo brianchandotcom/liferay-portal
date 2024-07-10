@@ -15,6 +15,7 @@ export class MessageBoardsEditThreadPage {
 	readonly publishButton: Locator;
 	readonly subjectSelector: Locator;
 	readonly successMessage: Locator;
+	readonly submitForWorkflowButton: Locator;
 
 	constructor(page: Page) {
 		this.bodyFrameLocator = page.frameLocator('iframe');
@@ -26,6 +27,10 @@ export class MessageBoardsEditThreadPage {
 			name: 'Publish',
 		});
 		this.subjectSelector = page.getByLabel('Subject');
+		this.submitForWorkflowButton = page.getByRole('button', {
+			exact: true,
+			name: 'Submit for Workflow',
+		});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -34,7 +39,7 @@ export class MessageBoardsEditThreadPage {
 		await this.messageBoardsPage.goToCreateNewThread();
 	}
 
-	async publishNewBasicTread(
+	async publishNewBasicThread(
 		subject: string,
 		body: string,
 		siteUrl?: Site['friendlyUrlPath']
@@ -45,5 +50,12 @@ export class MessageBoardsEditThreadPage {
 		await this.bodyTextBox.fill(body);
 
 		await this.publishButton.click();
+	}
+
+	async publishNewThreadForWorkflow(subject: string, body: string) {
+		await this.messageBoardsPage.newThreadButton.click();
+		await this.subjectSelector.fill(subject);
+		await this.bodyTextBox.fill(body);
+		await this.submitForWorkflowButton.click();
 	}
 }

@@ -1,0 +1,103 @@
+[
+	{
+		"actionIds": [
+			"PERMISSIONS",
+			"DELETE",
+			"ADD_FILE",
+			"REPLY_TO_MESSAGE",
+			"LOCK_THREAD",
+			"UPDATE",
+			"VIEW",
+			"SUBSCRIBE",
+			"ADD_MESSAGE",
+			"MOVE_THREAD",
+			"ADD_SUBCATEGORY",
+			"UPDATE_THREAD_PRIORITY"
+		],
+		"primaryKey": "0",
+		"resourceName": "com.liferay.message.boards.model.MBCategory",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"VIEW",
+			"SUBSCRIBE"
+		],
+		"primaryKey": "0",
+		"resourceName": "com.liferay.message.boards.model.MBThread",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"CONFIG",
+			"PERMISSIONS",
+			"PREFERENCES",
+			"CONFIGURATION",
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primaryKey": "0",
+		"resourceName": "com_liferay_message_boards_web_portlet_MBAdminPortlet",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"primaryKey": "0",
+		"resourceName": "com.liferay.depot.model.DepotEntry",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"primaryKey": "0",
+		"resourceName": "com.liferay.portal.kernel.model.Group",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW",
+			"SUBSCRIBE"
+		],
+		"primaryKey": "0",
+		"resourceName": "com.liferay.message.boards.model.MBMessage",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"PERMISSIONS",
+			"ADD_FILE",
+			"BAN_USER",
+			"ADD_CATEGORY",
+			"REPLY_TO_MESSAGE",
+			"LOCK_THREAD",
+			"VIEW",
+			"SUBSCRIBE",
+			"ADD_MESSAGE",
+			"MOVE_THREAD",
+			"UPDATE_THREAD_PRIORITY"
+		],
+		"primaryKey": "0",
+		"resourceName": "com.liferay.message.boards",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"PERMISSIONS",
+			"PREFERENCES",
+			"CONFIGURATION",
+			"VIEW",
+			"ADD_TO_PAGE"
+		],
+		"primaryKey": "0",
+		"resourceName": "com_liferay_message_boards_web_portlet_MBPortlet",
+		"scope": 1
+	}
+]

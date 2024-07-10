@@ -82,4 +82,13 @@ export async function performLogout(page: Page) {
 	await page.getByRole('menuitem', {name: 'Sign Out'}).click();
 }
 
+export async function performUserSwitch(
+	page: Page,
+	screenName: LoginScreenName | string
+) {
+	await performLogout(page);
+
+	await performLogin(page, screenName);
+}
+
 export default performLogin;

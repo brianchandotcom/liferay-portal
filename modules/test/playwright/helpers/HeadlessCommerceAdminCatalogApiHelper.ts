@@ -188,6 +188,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async deleteRelatedProduct(relatedProductId: string) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/relatedProducts/${relatedProductId}`
+		);
+	}
+
 	async deleteSkuUnitOfMeasure(skuUnitOfMeasureId: string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sku-unit-of-measures/${skuUnitOfMeasureId}`
@@ -477,7 +483,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		productId: number,
 		relatedProduct: TRelatedProduct
 	): Promise<TRelatedProduct> {
-		return await this.apiHelpers.post(
+		relatedProduct = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/relatedProducts`,
 			{
 				data: {
@@ -487,6 +493,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 				},
 			}
 		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({id: relatedProduct.id, type: 'relatedProduct'});
+		}
+
+		return relatedProduct;
 	}
 
 	async postSkuUnitOfMeasure(

@@ -59,7 +59,7 @@ test('LPD-22572 Picklist on product specifications page', async ({
 
 	await commerceAdminProductPage.gotoProduct(product.name['en_US']);
 
-	await productDetailsPage.addSPecificationToProduct(
+	await productDetailsPage.addSpecificationToProduct(
 		'Add an Existing Specification',
 		specification.title.en_US,
 		'item1'

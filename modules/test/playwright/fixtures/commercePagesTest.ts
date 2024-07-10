@@ -35,6 +35,7 @@ import {CommerceChannelDefaultsPage} from '../pages/commerce/commerceChannelDefa
 import {CommerceLayoutsPage} from '../pages/commerce/commerceLayoutsPage';
 import {CommerceMiniCartPage} from '../pages/commerce/commerceMiniCartPage';
 import {CommercePaymentsPage} from '../pages/commerce/commercePaymentsPage';
+import {CommerceInstanceSettingsPage} from "../pages/commerce/commerceInstanceSettingsPage";
 
 const commercePagesTest = test.extend<{
 	attachmentsPage: AttachmentsPage;
@@ -56,6 +57,7 @@ const commercePagesTest = test.extend<{
 	commerceCartSummaryPage: CommerceCartSummaryPage;
 	commerceCatalogSystemSettingsPage: CommerceCatalogSystemSettingsPage;
 	commerceChannelDefaultsPage: CommerceChannelDefaultsPage;
+	commerceInstanceSettingsPage: CommerceInstanceSettingsPage;
 	commerceLayoutsPage: CommerceLayoutsPage;
 	commerceMiniCartPage: CommerceMiniCartPage;
 	commercePaymentsPage: CommercePaymentsPage;
@@ -124,6 +126,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceChannelDefaultsPage: async ({page}, use) => {
 		await use(new CommerceChannelDefaultsPage(page));
+	},
+	commerceInstanceSettingsPage: async ({page}, use) => {
+		await use(new CommerceInstanceSettingsPage(page));
 	},
 	commerceLayoutsPage: async ({page}, use) => {
 		await use(new CommerceLayoutsPage(page));

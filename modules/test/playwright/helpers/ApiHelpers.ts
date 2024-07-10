@@ -373,6 +373,12 @@ export class DataApiHelpers extends ApiHelpers {
 					);
 
 					break;
+				case 'relatedProduct':
+					await this.headlessCommerceAdminCatalog.deleteRelatedProduct(
+						item.id
+					);
+
+					break;
 				case 'roleUserAccountAssociation': {
 					const [roleId, userId] = item.id.split('_');
 

@@ -8,6 +8,7 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 import {CommerceLayoutsPage} from '../commerceLayoutsPage';
 
 export class ProductDetailsPage {
+	readonly addToCartButton: Locator;
 	readonly addSpecification: Locator;
 	readonly addSpecificationFrame: FrameLocator;
 	readonly checkSpecificationProduct: (text: string) => Promise<Locator>;
@@ -68,6 +69,7 @@ export class ProductDetailsPage {
 	readonly waitForEditScuccessMessage: Locator;
 
 	constructor(page: Page) {
+		this.addToCartButton = page.getByRole('button', {exact: true, name: 'Add to Cart'}).first();
 		this.addSpecification = page
 			.getByTestId('management-toolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
@@ -176,7 +178,7 @@ export class ProductDetailsPage {
 		await this.layoutsPage.addWidgetToPage('Product Details');
 	}
 
-	async addSPecificationToProduct(
+	async addSpecificationToProduct(
 		chooseAddOrEdit: string,
 		specificationName: string,
 		specificationValue: string

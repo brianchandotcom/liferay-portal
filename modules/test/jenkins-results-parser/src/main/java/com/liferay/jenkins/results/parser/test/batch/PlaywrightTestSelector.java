@@ -9,11 +9,9 @@ import com.liferay.jenkins.results.parser.job.property.JobProperty;
 
 import java.io.File;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * @author Kenji Heigel
@@ -33,27 +31,13 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 
 		validate();
 
-		String playwrightProjectNamesValue = getPlaywrightProjectNamesValue();
-
-		Collections.addAll(
-			_playwrightProjectNames, playwrightProjectNamesValue.split(","));
+		_playwrightJobProperties.add(
+			getJobProperty(
+				PLAYWRIGHT_TEST_PROJECT, JobProperty.Type.MODULE_TEST_DIR));
 	}
 
 	public Set<JobProperty> getPlaywrightJobProperties() {
 		return _playwrightJobProperties;
-	}
-
-	public Set<String> getPlaywrightProjectNames() {
-		return _playwrightProjectNames;
-	}
-
-	public String getPlaywrightProjectNamesValue() {
-		JobProperty playwrightJobProperty = getJobProperty(
-			PLAYWRIGHT_TEST_PROJECT, JobProperty.Type.MODULE_TEST_DIR);
-
-		_playwrightJobProperties.add(playwrightJobProperty);
-
-		return playwrightJobProperty.getValue();
 	}
 
 	@Override
@@ -65,9 +49,6 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 		PlaywrightTestSelector playwrightTestSelector =
 			(PlaywrightTestSelector)testSelector;
 
-		_playwrightProjectNames.addAll(
-			playwrightTestSelector.getPlaywrightProjectNames());
-
 		_playwrightJobProperties.addAll(
 			playwrightTestSelector.getPlaywrightJobProperties());
 	}
@@ -77,6 +58,5 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 	}
 
 	private final Set<JobProperty> _playwrightJobProperties = new HashSet<>();
-	private final Set<String> _playwrightProjectNames = new TreeSet<>();
 
 }

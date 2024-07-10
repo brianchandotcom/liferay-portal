@@ -87,12 +87,21 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		_playwrightRelativeDirPath = _DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH;
 
-		_projectNames.addAll(
-			playwrightTestSelector.getPlaywrightProjectNames());
+		Set<JobProperty> playwrightJobProperties =
+			playwrightTestSelector.getPlaywrightJobProperties();
 
-		recordJobProperties(
-			new ArrayList<>(
-				playwrightTestSelector.getPlaywrightJobProperties()));
+		playwrightJobProperties.removeAll(Collections.singleton(null));
+
+		for (JobProperty jobProperty : playwrightJobProperties) {
+			Collections.addAll(
+				_projectNames,
+				jobProperty.getValue(
+				).split(
+					","
+				));
+		}
+
+		recordJobProperties(new ArrayList<>(playwrightJobProperties));
 
 		setTestClasses();
 	}

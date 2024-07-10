@@ -229,11 +229,12 @@
 		</or>
 	</condition>
 
-	<fail message="Please use Java 1.8 or 21.">
+	<fail message="Please use Java 1.8, 17, or 21.">
 		<condition>
 			<not>
 				<or>
 					<equals arg1="${java.specification.version}" arg2="1.8" />
+					<equals arg1="${java.specification.version}" arg2="17" />
 					<equals arg1="${java.specification.version}" arg2="21" />
 					<isset property="env.JENKINS_HOME" />
 				</or>

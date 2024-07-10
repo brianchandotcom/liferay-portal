@@ -105,6 +105,66 @@ public class FileImplTest {
 	}
 
 	@Test
+	public void testCopyAndDeltreeConcurrently() throws Exception {
+		File directory1 = new File(
+			System.getProperty("java.io.tmpdir"), "tempDir1");
+
+		directory1.mkdir();
+
+		File file1 = new File(directory1, "testFile1");
+
+		file1.createNewFile();
+
+		CountDownLatch countDownLatch1 = new CountDownLatch(1);
+		CountDownLatch countDownLatch2 = new CountDownLatch(1);
+
+		Thread concurrentDeleteThread = new Thread(
+			() -> {
+				try {
+					countDownLatch2.await();
+				}
+				catch (InterruptedException interruptedException) {
+					throw new RuntimeException(interruptedException);
+				}
+
+				_fileImpl.deltree(directory1);
+
+				countDownLatch1.countDown();
+			});
+
+		concurrentDeleteThread.start();
+
+		File newDirectory1 = new File(
+			System.getProperty("java.io.tmpdir"), "newTempDir1");
+
+		_fileImpl.copyDirectory(
+			new File(directory1.getPath()) {
+
+				@Override
+				public File[] listFiles() {
+					countDownLatch2.countDown();
+
+					try {
+						countDownLatch1.await();
+
+						return super.listFiles();
+					}
+					catch (InterruptedException interruptedException) {
+						throw new RuntimeException(interruptedException);
+					}
+				}
+
+			},
+			newDirectory1);
+
+		concurrentDeleteThread.join();
+
+		File newFile1 = new File(newDirectory1, "testFile1");
+
+		Assert.assertFalse(newFile1.exists());
+	}
+
+	@Test
 	public void testCopyDirectory() throws IOException {
 		File directory1 = new File(
 			System.getProperty("java.io.tmpdir"), "tempDir1");

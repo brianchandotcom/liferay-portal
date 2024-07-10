@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -238,6 +239,49 @@ public class LayoutLocalServiceTest {
 	public void testDeleteLayouts() throws Exception {
 		_testDeleteLayouts(false);
 		_testDeleteLayouts(true);
+	}
+
+	@Test
+	public void testEditWidgetLayoutWithEmptyDefaultFriendlyURL()
+		throws Exception {
+
+		String name = RandomTestUtil.randomString();
+
+		Layout layout = _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
+			Collections.singletonMap(LocaleUtil.US, name),
+			Collections.singletonMap(LocaleUtil.US, name),
+			Collections.emptyMap(), null, null, LayoutConstants.TYPE_PORTLET,
+			StringPool.BLANK, false, false,
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, "/spanishurl"
+			).put(
+				LocaleUtil.US, "/englishurl"
+			).build(),
+			0, _serviceContext);
+
+		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
+
+		Assert.assertEquals("/englishurl", friendlyURLMap.get(LocaleUtil.US));
+
+		friendlyURLMap.remove(LocaleUtil.US);
+
+		layout = _layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
+			layout.isHidden(), friendlyURLMap, layout.isIconImage(), null,
+			layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
+			layout.getMasterLayoutPlid(), _serviceContext);
+
+		friendlyURLMap = layout.getFriendlyURLMap();
+
+		Assert.assertEquals(
+			StringPool.SLASH +
+				FriendlyURLNormalizerUtil.normalizeWithEncoding(name),
+			friendlyURLMap.get(LocaleUtil.US));
 	}
 
 	@Test

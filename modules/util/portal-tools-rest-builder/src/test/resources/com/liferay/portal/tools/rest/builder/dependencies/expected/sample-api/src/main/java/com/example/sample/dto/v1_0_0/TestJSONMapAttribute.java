@@ -370,6 +370,7 @@ public class TestJSONMapAttribute implements Serializable {
 
 			synchronized (_unsafeSupplier) {
 				_value = _unsafeSupplier.get();
+
 				_set = true;
 			}
 

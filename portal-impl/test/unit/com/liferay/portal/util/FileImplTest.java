@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -195,6 +196,56 @@ public class FileImplTest {
 		file4.createNewFile();
 
 		_fileImpl.deltree(directory1);
+
+		Assert.assertFalse(directory1.exists());
+	}
+
+	@Test
+	public void testDeltreeConcurrently() throws Exception {
+		File directory1 = new File(
+			System.getProperty("java.io.tmpdir"), "tempDir1");
+
+		directory1.mkdir();
+
+		CountDownLatch countDownLatch1 = new CountDownLatch(1);
+		CountDownLatch countDownLatch2 = new CountDownLatch(1);
+
+		Thread concurrentDeleteThread = new Thread(
+			() -> {
+				try {
+					countDownLatch2.await();
+				}
+				catch (InterruptedException interruptedException) {
+					throw new RuntimeException(interruptedException);
+				}
+
+				directory1.delete();
+
+				countDownLatch1.countDown();
+			});
+
+		concurrentDeleteThread.start();
+
+		_fileImpl.deltree(
+			new File(directory1.getPath()) {
+
+				@Override
+				public File[] listFiles() {
+					countDownLatch2.countDown();
+
+					try {
+						countDownLatch1.await();
+
+						return super.listFiles();
+					}
+					catch (InterruptedException interruptedException) {
+						throw new RuntimeException(interruptedException);
+					}
+				}
+
+			});
+
+		concurrentDeleteThread.join();
 
 		Assert.assertFalse(directory1.exists());
 	}

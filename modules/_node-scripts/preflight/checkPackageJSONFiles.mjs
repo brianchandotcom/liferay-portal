@@ -53,7 +53,8 @@ export async function checkPackageJSONFiles(all) {
 
 		if (
 			packagePath.endsWith('modules/package.json') ||
-			packagePath.endsWith('modules/_node-scripts/package.json')
+			packagePath.endsWith('modules/_node-scripts/package.json') ||
+			packagePath.endsWith('modules/test/playwright/package.json')
 		) {
 			return false;
 		}

@@ -772,7 +772,15 @@ export class PageEditorPage {
 		await expect(editable).toHaveClass(/page-editor__editable--active/);
 	}
 
-	async setMappedItem(entity: string, entry: string) {
+	async setMappedItem({
+		entity,
+		entry,
+		folder,
+	}: {
+		entity: string;
+		entry: string;
+		folder?: string;
+	}) {
 		await this.selectItemMappingButton.click();
 
 		const recentItem = this.page.getByRole('menuitem', {name: entry});
@@ -800,6 +808,15 @@ export class PageEditorPage {
 				trigger: iframe.getByRole('menuitem', {name: entity}),
 			});
 
+			if (folder) {
+				await clickAndExpectToBeVisible({
+					target: iframe
+						.getByRole('paragraph')
+						.filter({hasText: entry}),
+					trigger: iframe.getByRole('link').filter({hasText: folder}),
+				});
+			}
+
 			await clickAndExpectToBeHidden({
 				target: iframe.locator('.sheet-title').getByText(entity),
 				trigger: iframe.getByRole('paragraph').filter({hasText: entry}),
@@ -812,18 +829,20 @@ export class PageEditorPage {
 	}
 
 	async setMappingConfiguration({
-		entity,
-		entry,
-		field,
+		mapping,
 		relationship,
 		source,
 	}: {
-		entity?: string;
-		entry?: string;
-		field: string;
+		mapping: {
+			entity?: string;
+			entry?: string;
+			field: string;
+			folder?: string;
+		};
 		relationship?: string;
 		source?: 'content' | 'relationship' | 'structure';
 	}) {
+		const {entity, entry, field, folder} = mapping;
 
 		// Select source and relationship if needed
 
@@ -839,7 +858,7 @@ export class PageEditorPage {
 
 		// If source is not content, just select the field
 
-		if (source !== 'content') {
+		if (source && source !== 'content') {
 			await this.page.getByLabel('Field').selectOption(field);
 
 			return;
@@ -847,7 +866,7 @@ export class PageEditorPage {
 
 		// If source is content, select the item and the field
 
-		await this.setMappedItem(entity, entry);
+		await this.setMappedItem({entity, entry, folder});
 
 		await this.page.getByLabel('Field').selectOption(field);
 	}

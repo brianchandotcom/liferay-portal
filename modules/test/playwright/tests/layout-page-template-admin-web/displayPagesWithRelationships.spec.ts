@@ -52,7 +52,9 @@ test('allow mapping editables to fields of related object', async ({
 	// Map to field from related Lemon Basket object
 
 	await pageEditorPage.setMappingConfiguration({
-		field: 'Lemon Basket Color',
+		mapping: {
+			field: 'Lemon Basket Color',
+		},
 		relationship: 'Lemon Basket',
 		source: 'relationship',
 	});

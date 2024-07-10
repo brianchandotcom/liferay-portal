@@ -223,9 +223,11 @@ test.describe('Manage object entries through page templates', () => {
 			await page.getByLabel('Select element-text').click();
 
 			await pageEditorPage.setMappingConfiguration({
-				entity: objectDefinitionLabel,
-				entry: objectEntry[titleObjectFieldName],
-				field: objectField.label.en_US,
+				mapping: {
+					entity: objectDefinitionLabel,
+					entry: objectEntry[titleObjectFieldName],
+					field: objectField.label.en_US,
+				},
 				source: 'content',
 			});
 

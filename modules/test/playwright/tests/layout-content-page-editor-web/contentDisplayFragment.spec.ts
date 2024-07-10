@@ -79,7 +79,10 @@ test('does not show alert when accessing a page with a web content display mappe
 
 	await pageEditorPage.selectFragment(contentDisplayId);
 
-	await pageEditorPage.setMappedItem('Web Content', articleTitle);
+	await pageEditorPage.setMappedItem({
+		entity: 'Web Content',
+		entry: articleTitle,
+	});
 
 	await pageEditorPage.publishPage();
 

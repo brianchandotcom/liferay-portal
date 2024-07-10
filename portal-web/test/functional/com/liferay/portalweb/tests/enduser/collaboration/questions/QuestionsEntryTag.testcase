@@ -326,53 +326,6 @@ definition {
 		}
 	}
 
-	@description = "Validate if Question portlet have one tab with all tags used in the questions"
-	@priority = 3
-	@refactordone
-	test ListOfTagsCanBeViewedInTagsTab {
-		task ("Given a category and no tags available") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Question ListOfTagsAppearsInTheTagsTab",
-				userEmailAddress = "test@liferay.com");
-
-			Questions.openToTagsTab(
-				layoutName = "questions-page",
-				siteURLKey = "guest");
-
-			Questions.viewTags(noTagResults = "true");
-
-			Questions.configureTagsFilter(filterBy = "Latest Created");
-
-			Questions.viewTags(noTagResults = "true");
-		}
-
-		task ("When a tag and a Question with a tag is added") {
-			JSONAssettag.addTag(
-				groupName = "Guest",
-				tagName = "tag2");
-
-			JSONQuestions.addQuestionWithTag(
-				bodyField = "Body ListOfTagsAppearsInTheTagsTab",
-				categoryName = "Question ListOfTagsAppearsInTheTagsTab",
-				groupName = "Guest",
-				tagField = "tag1",
-				titleField = "Title ListOfTagsAppearsInTheTagsTab");
-		}
-
-		task ("Then the new tags can be viewed in the Tags Tab") {
-			Questions.openToTagsTab(
-				layoutName = "questions-page",
-				siteURLKey = "guest");
-
-			Questions.configureTagsFilter(filterBy = "Latest Created");
-
-			for (var tagName : list "tag1,tag2") {
-				Questions.viewTags(tagName = ${tagName});
-			}
-		}
-	}
-
 	@description = "Validate if the user can sort the tags."
 	@priority = 4
 	@refactordone

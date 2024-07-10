@@ -13,51 +13,11 @@
 	},
 	"items": [
 		{
-			"expiration": "Forever (Local Storage)",
-			"externalReferenceCode": "87fcbcb0-1e6f-4e7a-9737-be62ec0d8a45",
+			"expiration": "",
+			"externalReferenceCode": "06faf1c5-b3c7-4dea-a3f3-f4cb35218df0",
 			"host": "Liferay",
-			"name": "ACCESSIBILITY_SETTING_EXPANDED_TEXT",
-			"purpose": "Stores the value (true/false) of the Expanded Text accessibility menu setting to remember a guest user's choice. Preferences.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "Forever (Local Storage)",
-			"externalReferenceCode": "2ed1a7ca-2d49-47eb-98f0-5fccc6ed6140",
-			"host": "Liferay",
-			"name": "ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING",
-			"purpose": "Stores the value (true/false) of the Increased Text Spacing accessibility menu setting to remember a guest user's choice. Preferences.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "Forever (Local Storage)",
-			"externalReferenceCode": "aed2afc1-81d5-4dc2-83c1-ebacdedc2e95",
-			"host": "Liferay",
-			"name": "ACCESSIBILITY_SETTING_REDUCED_MOTION",
-			"purpose": "Stores the value (true/false) of the Reduced Motion accessibility menu setting to remember a guest user's choice. Preferences.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "Forever (Local Storage)",
-			"externalReferenceCode": "3a82e14e-0697-4861-b98b-57c31f1a7cd8",
-			"host": "Liferay",
-			"name": "ACCESSIBILITY_SETTING_UNDERLINED_LINKS1",
-			"purpose": "Stores the value (true/false) of the Underlined Links accessibility menu setting to remember a guest user's choice. Preferences.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "Session Time",
-			"externalReferenceCode": "37aac8d4-3cf1-4261-80b4-c47b7e60e136",
-			"host": "Liferay",
-			"name": "COMMERCE_COMPARE_cpDefinitionIds_commerceChannelGroupId",
-			"purpose": "Stores the product's IDs appended to the channel ID for comparing products. Preferences.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "365 Days",
-			"externalReferenceCode": "8d2b5ace-d988-4dfd-be79-bc12585d2436",
-			"host": "Liferay",
-			"name": "GUEST_LANGUAGE_ID",
-			"purpose": "Stores the preferred language ID to use when the user's language ID is not available to display content in the appropriate language. Preferences.",
+			"name": "OAUTH2_REMEMBER_DEVICE_",
+			"purpose": "Stores the authorization grant of a registered OAuth2 application to skip the authorization flow from a previously authorized device. Preferences.",
 			"type": "First Party"
 		},
 		{
@@ -70,11 +30,11 @@
 			"type": "First Party"
 		},
 		{
-			"expiration": "",
-			"externalReferenceCode": "06faf1c5-b3c7-4dea-a3f3-f4cb35218df0",
+			"expiration": "20 Seconds",
+			"externalReferenceCode": "17fceb56-de87-4382-a698-c7cdec280cbf",
 			"host": "Liferay",
-			"name": "OAUTH2_REMEMBER_DEVICE_",
-			"purpose": "Stores the authorization grant of a registered OAuth2 application to skip the authorization flow from a previously authorized device. Preferences.",
+			"name": "SELECTED_CATEGORIES_COOKIE_",
+			"purpose": "Stores the selected categories for facilitating adding more than 400 categories in the categories selector popup. Preferences.",
 			"type": "First Party"
 		},
 		{
@@ -87,6 +47,46 @@
 			"type": "First Party"
 		},
 		{
+			"expiration": "",
+			"externalReferenceCode": "24c26339-318a-4c99-ba28-5b25e796cc73",
+			"host": "Liferay",
+			"name": "liferay.cookie.consent",
+			"purpose": "Stores the end user's consent option (true/false) for the use of cookies. Preferences.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Forever (Local Storage)",
+			"externalReferenceCode": "2ed1a7ca-2d49-47eb-98f0-5fccc6ed6140",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING",
+			"purpose": "Stores the value (true/false) of the Increased Text Spacing accessibility menu setting to remember a guest user's choice. Preferences.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "336a227c-eb20-481a-9160-deb1cbd96e83",
+			"host": "Liferay",
+			"name": "maintenanceSeen",
+			"purpose": "Stores whether the user has frequently dismissed the server maintenance message (true/false) so Analytics Cloud stops displaying it. Preferences.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session Time",
+			"externalReferenceCode": "37aac8d4-3cf1-4261-80b4-c47b7e60e136",
+			"host": "Liferay",
+			"name": "COMMERCE_COMPARE_cpDefinitionIds_commerceChannelGroupId",
+			"purpose": "Stores the product's IDs appended to the channel ID for comparing products. Preferences.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Forever (Local Storage)",
+			"externalReferenceCode": "3a82e14e-0697-4861-b98b-57c31f1a7cd8",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_UNDERLINED_LINKS1",
+			"purpose": "Stores the value (true/false) of the Underlined Links accessibility menu setting to remember a guest user's choice. Preferences.",
+			"type": "First Party"
+		},
+		{
 			"expiration": "365 Days",
 			"externalReferenceCode": "3ee4d150-0de5-49dd-a16a-089783b66f6c",
 			"host": "Liferay",
@@ -96,34 +96,10 @@
 		},
 		{
 			"expiration": "Session Time",
-			"externalReferenceCode": "cc9f932e-7d0f-4fe7-855b-933638b1c249",
-			"host": "Liferay",
-			"name": "SAML_SP_SESSION_KEY",
-			"purpose": "Stores a randomly generated string for keeping the SAML Service Provider session alive and allowing it to participate in SAML SLO (Single Log Out). Preferences.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "Session Time",
 			"externalReferenceCode": "49dc2f48-91ed-440c-af10-5ff27781a3ef",
 			"host": "Liferay",
 			"name": "SAML_SSO_SESSION_ID",
 			"purpose": "Stores the session ID for the user to stay logged in with the SAML Identity Provider. Preferences.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "20 Seconds",
-			"externalReferenceCode": "17fceb56-de87-4382-a698-c7cdec280cbf",
-			"host": "Liferay",
-			"name": "SELECTED_CATEGORIES_COOKIE_",
-			"purpose": "Stores the selected categories for facilitating adding more than 400 categories in the categories selector popup. Preferences.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "",
-			"externalReferenceCode": "5d32ec64-b1da-4315-89e6-faa9670a58d1",
-			"host": "Liferay",
-			"name": "_com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet_userID_hideReindexConfirmationModal",
-			"purpose": "Stores the value (true/false) of the user's decision whether to hide the reindex confirmation dialog permanently. Preferences.",
 			"type": "First Party"
 		},
 		{
@@ -136,26 +112,18 @@
 		},
 		{
 			"expiration": "",
-			"externalReferenceCode": "61778df1-0112-4474-9fc3-9d01a4432787",
+			"externalReferenceCode": "5d32ec64-b1da-4315-89e6-faa9670a58d1",
 			"host": "Liferay",
-			"name": "com.liferay.search.experiences.web_addSXPElementSidebar",
-			"purpose": "Stores the open/close state of the Add Query Elements sidebar in Search Blueprints for the user's convenience. Preferences.",
+			"name": "_com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet_userID_hideReindexConfirmationModal",
+			"purpose": "Stores the value (true/false) of the user's decision whether to hide the reindex confirmation dialog permanently. Preferences.",
 			"type": "First Party"
 		},
 		{
 			"expiration": "",
-			"externalReferenceCode": "24c26339-318a-4c99-ba28-5b25e796cc73",
+			"externalReferenceCode": "61778df1-0112-4474-9fc3-9d01a4432787",
 			"host": "Liferay",
-			"name": "liferay.cookie.consent",
-			"purpose": "Stores the end user's consent option (true/false) for the use of cookies. Preferences.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "365 Days",
-			"externalReferenceCode": "336a227c-eb20-481a-9160-deb1cbd96e83",
-			"host": "Liferay",
-			"name": "maintenanceSeen",
-			"purpose": "Stores whether the user has frequently dismissed the server maintenance message (true/false) so Analytics Cloud stops displaying it. Preferences.",
+			"name": "com.liferay.search.experiences.web_addSXPElementSidebar",
+			"purpose": "Stores the open/close state of the Add Query Elements sidebar in Search Blueprints for the user's convenience. Preferences.",
 			"type": "First Party"
 		},
 		{
@@ -167,11 +135,43 @@
 			"type": "First Party"
 		},
 		{
+			"expiration": "Forever (Local Storage)",
+			"externalReferenceCode": "87fcbcb0-1e6f-4e7a-9737-be62ec0d8a45",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_EXPANDED_TEXT",
+			"purpose": "Stores the value (true/false) of the Expanded Text accessibility menu setting to remember a guest user's choice. Preferences.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "8d2b5ace-d988-4dfd-be79-bc12585d2436",
+			"host": "Liferay",
+			"name": "GUEST_LANGUAGE_ID",
+			"purpose": "Stores the preferred language ID to use when the user's language ID is not available to display content in the appropriate language. Preferences.",
+			"type": "First Party"
+		},
+		{
 			"expiration": "",
 			"externalReferenceCode": "a07a3dc7-4763-4289-8e7b-1012ca2e98cc",
 			"host": "Liferay",
 			"name": "userTokenName",
 			"purpose": "Stores a unique token to maintain the user session while using token based Single Sign-On. Functional.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Forever (Local Storage)",
+			"externalReferenceCode": "aed2afc1-81d5-4dc2-83c1-ebacdedc2e95",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_REDUCED_MOTION",
+			"purpose": "Stores the value (true/false) of the Reduced Motion accessibility menu setting to remember a guest user's choice. Preferences.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session Time",
+			"externalReferenceCode": "cc9f932e-7d0f-4fe7-855b-933638b1c249",
+			"host": "Liferay",
+			"name": "SAML_SP_SESSION_KEY",
+			"purpose": "Stores a randomly generated string for keeping the SAML Service Provider session alive and allowing it to participate in SAML SLO (Single Log Out). Preferences.",
 			"type": "First Party"
 		}
 	]

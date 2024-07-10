@@ -14,18 +14,34 @@
 	"items": [
 		{
 			"expiration": "365 Days",
-			"externalReferenceCode": "a01f9aa5-7f03-4600-8d96-0fba22ec891e",
+			"externalReferenceCode": "0e86dedb-3cad-4d0d-b06e-606afdc13d33",
 			"host": "Liferay",
-			"name": "COMMERCE_CONTINUE_AS_GUEST",
-			"purpose": "Stores the user's preference (true/false) to continue checking out an order as a guest. Strictly necessary.",
+			"name": "COOKIE_SUPPORT",
+			"purpose": "Stores the user's preference (true/false) to store cookies in the browser. Strictly necessary.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "15367faf-4404-4d79-a91c-bce191b25973",
+			"host": "Liferay",
+			"name": "HIGHLIGHTED_COMMENT_ID_KEY",
+			"purpose": "Stores the highlighted fragment comment's ID when entering the page editor from a comment notification. Strictly necessary.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "4222c0a9-8877-4c4d-a8a7-d1e846b8bf4b",
+			"host": "Liferay",
+			"name": "SERVER_ID",
+			"purpose": "Stores the web server ID to keep the user connected to the same Liferay instance with access to the session and cached data. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
 			"expiration": "365 Days",
-			"externalReferenceCode": "e640a012-4a2c-4413-ac2f-a4436080e637",
+			"externalReferenceCode": "57a36b90-89d3-437c-8093-7eada10d4d5d",
 			"host": "Liferay",
-			"name": "COMPANY_ID",
-			"purpose": "Stores the company ID to associate the user with an instance. Strictly necessary.",
+			"name": "CONSENT_TYPE_PERFORMANCE",
+			"purpose": "Stores the end user's consent option (true/false) for performance cookies to manage performance-related preferences. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -45,11 +61,11 @@
 			"type": "First Party"
 		},
 		{
-			"expiration": "365 Days",
-			"externalReferenceCode": "57a36b90-89d3-437c-8093-7eada10d4d5d",
+			"expiration": "",
+			"externalReferenceCode": "78b8182b-e9bf-457e-9afc-5c3fdd6485ed",
 			"host": "Liferay",
-			"name": "CONSENT_TYPE_PERFORMANCE",
-			"purpose": "Stores the end user's consent option (true/false) for performance cookies to manage performance-related preferences. Strictly necessary.",
+			"name": "modalExperienceState",
+			"purpose": "Stores the state of the modal when creating a new experience. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -61,36 +77,35 @@
 			"type": "First Party"
 		},
 		{
-			"expiration": "365 Days",
-			"externalReferenceCode": "0e86dedb-3cad-4d0d-b06e-606afdc13d33",
-			"host": "Liferay",
-			"name": "COOKIE_SUPPORT",
-			"purpose": "Stores the user's preference (true/false) to store cookies in the browser. Strictly necessary.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "",
-			"externalReferenceCode": "15367faf-4404-4d79-a91c-bce191b25973",
-			"host": "Liferay",
-			"name": "HIGHLIGHTED_COMMENT_ID_KEY",
-			"purpose": "Stores the highlighted fragment comment's ID when entering the page editor from a comment notification. Strictly necessary.",
-			"type": "First Party"
-		},
-		{
-			"collectedData": "User ID (Encrypted)",
-			"expiration": "365 Days",
-			"externalReferenceCode": "cf6fcb94-ca9b-4301-93a7-16ffaf1488cb",
-			"host": "Liferay",
-			"name": "ID",
-			"purpose": "Stores the encrypted user ID to remember the user's login details when the 'Remember Me' option is enabled. Strictly necessary.",
-			"type": "First Party"
-		},
-		{
 			"expiration": "Session Time",
 			"externalReferenceCode": "9903020c-e43c-46fa-9ed5-828b1ac6d56c",
 			"host": "Liferay",
 			"name": "JSESSIONID",
 			"purpose": "Stores a unique identifier to maintain the user's session on the server. Strictly necessary.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "9bfb8f39-0483-4a70-9e0f-b08c17b4b56c",
+			"host": "Liferay",
+			"name": "com.liferay.commerce.model.CommerceOrder#groupId",
+			"purpose": "Stores an order ID to link it to the account the guest creates later. Strictly necessary.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "a01f9aa5-7f03-4600-8d96-0fba22ec891e",
+			"host": "Liferay",
+			"name": "COMMERCE_CONTINUE_AS_GUEST",
+			"purpose": "Stores the user's preference (true/false) to continue checking out an order as a guest. Strictly necessary.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "adfcd410-727d-4e25-b9ed-c472ccaa556f",
+			"host": "Liferay",
+			"name": "com.liferay.search.experiences.web_successMessage",
+			"purpose": "Stores a localized success message briefly when a Search Blueprints blueprint or element is saved, so the message can be displayed on a different page. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -103,43 +118,20 @@
 			"type": "First Party"
 		},
 		{
-			"expiration": "",
-			"externalReferenceCode": "4222c0a9-8877-4c4d-a8a7-d1e846b8bf4b",
+			"collectedData": "User ID (Encrypted)",
+			"expiration": "365 Days",
+			"externalReferenceCode": "cf6fcb94-ca9b-4301-93a7-16ffaf1488cb",
 			"host": "Liferay",
-			"name": "SERVER_ID",
-			"purpose": "Stores the web server ID to keep the user connected to the same Liferay instance with access to the session and cached data. Strictly necessary.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "Session Time",
-			"externalReferenceCode": "f60d0a0c-ba65-4b17-8c7d-c5b995447305",
-			"host": "Liferay",
-			"name": "access_token",
-			"purpose": "Stores a unique access token to identify the logged-in user in the Liferay Cloud console. Strictly necessary.",
+			"name": "ID",
+			"purpose": "Stores the encrypted user ID to remember the user's login details when the 'Remember Me' option is enabled. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
 			"expiration": "365 Days",
-			"externalReferenceCode": "9bfb8f39-0483-4a70-9e0f-b08c17b4b56c",
+			"externalReferenceCode": "e640a012-4a2c-4413-ac2f-a4436080e637",
 			"host": "Liferay",
-			"name": "com.liferay.commerce.model.CommerceOrder#groupId",
-			"purpose": "Stores an order ID to link it to the account the guest creates later. Strictly necessary.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "Session Time",
-			"externalReferenceCode": "ff2d8782-3198-4d36-817c-7cfeb6c02e11",
-			"host": "Liferay",
-			"name": "com.liferay.commerce.model.CommerceOrder#groupId",
-			"purpose": "Stores the order ID of the contextual order to use while punching out. Strictly necessary.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "",
-			"externalReferenceCode": "adfcd410-727d-4e25-b9ed-c472ccaa556f",
-			"host": "Liferay",
-			"name": "com.liferay.search.experiences.web_successMessage",
-			"purpose": "Stores a localized success message briefly when a Search Blueprints blueprint or element is saved, so the message can be displayed on a different page. Strictly necessary.",
+			"name": "COMPANY_ID",
+			"purpose": "Stores the company ID to associate the user with an instance. Strictly necessary.",
 			"type": "First Party"
 		},
 		{
@@ -151,11 +143,19 @@
 			"type": "First Party"
 		},
 		{
-			"expiration": "",
-			"externalReferenceCode": "78b8182b-e9bf-457e-9afc-5c3fdd6485ed",
+			"expiration": "Session Time",
+			"externalReferenceCode": "f60d0a0c-ba65-4b17-8c7d-c5b995447305",
 			"host": "Liferay",
-			"name": "modalExperienceState",
-			"purpose": "Stores the state of the modal when creating a new experience. Strictly necessary.",
+			"name": "access_token",
+			"purpose": "Stores a unique access token to identify the logged-in user in the Liferay Cloud console. Strictly necessary.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "Session Time",
+			"externalReferenceCode": "ff2d8782-3198-4d36-817c-7cfeb6c02e11",
+			"host": "Liferay",
+			"name": "com.liferay.commerce.model.CommerceOrder#groupId",
+			"purpose": "Stores the order ID of the contextual order to use while punching out. Strictly necessary.",
 			"type": "First Party"
 		}
 	]

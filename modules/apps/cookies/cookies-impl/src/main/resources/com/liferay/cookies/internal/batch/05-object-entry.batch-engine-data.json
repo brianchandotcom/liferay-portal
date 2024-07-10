@@ -14,18 +14,26 @@
 	"items": [
 		{
 			"expiration": "",
-			"externalReferenceCode": "b739c129-37f0-4803-b498-dbcb18b8ec38",
+			"externalReferenceCode": "2171285c-08b1-4531-9067-7688eece3829",
 			"host": "Liferay",
-			"name": "FRAGMENTS_DISPLAY_STYLE_KEY",
-			"purpose": "Stores the end user's display style preference (cards or list) for fragments and widgets panels. Marketing.",
+			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet_scrollPosition",
+			"purpose": "Stores the scroll position for fragments and widget panels in the page editor for the user's convenience. Marketing.",
 			"type": "First Party"
 		},
 		{
 			"expiration": "",
-			"externalReferenceCode": "c1b7e721-78c7-452d-a56b-f568731c32ca",
+			"externalReferenceCode": "3850f785-6b1a-428f-a63f-5d934f9f5642",
 			"host": "Liferay",
-			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__fragment-collection_collectionId_open",
-			"purpose": "Stores the open/close state of fragment and widget panels for the user's convenience. Marketing.",
+			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___selectedMenuItemId",
+			"purpose": "Stores the selected item's ID in the navigation menu administration for the user's convenience. Marketing.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "365 Days",
+			"externalReferenceCode": "524c3049-b6d0-488c-b8a1-777708af9527",
+			"host": "Liferay",
+			"name": "ab_test_variant_id",
+			"purpose": "Stores the current experience's ID to gather information from A/B tests. Marketing.",
 			"type": "First Party"
 		},
 		{
@@ -38,10 +46,34 @@
 		},
 		{
 			"expiration": "",
-			"externalReferenceCode": "2171285c-08b1-4531-9067-7688eece3829",
+			"externalReferenceCode": "863e24f5-b14e-4ec9-9ab8-45f5a8e9a0c2",
 			"host": "Liferay",
-			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet_scrollPosition",
-			"purpose": "Stores the scroll position for fragments and widget panels in the page editor for the user's convenience. Marketing.",
+			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___itemAdded",
+			"purpose": "Stores the scroll position in the navigation menu item admin when a new item is created for the user's convenience. Marketing.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "b739c129-37f0-4803-b498-dbcb18b8ec38",
+			"host": "Liferay",
+			"name": "FRAGMENTS_DISPLAY_STYLE_KEY",
+			"purpose": "Stores the end user's display style preference (cards or list) for fragments and widgets panels. Marketing.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "b9e9b45d-af18-461a-857c-35239d636471",
+			"host": "Liferay",
+			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___scrollPosition",
+			"purpose": "Stores the scroll position for the info panel in the navigation menu item admin for the user's convenience. Marketing.",
+			"type": "First Party"
+		},
+		{
+			"expiration": "",
+			"externalReferenceCode": "c1b7e721-78c7-452d-a56b-f568731c32ca",
+			"host": "Liferay",
+			"name": "_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__fragment-collection_collectionId_open",
+			"purpose": "Stores the open/close state of fragment and widget panels for the user's convenience. Marketing.",
 			"type": "First Party"
 		},
 		{
@@ -58,38 +90,6 @@
 			"host": "Liferay",
 			"name": "_com_liferay_product_navigation_control_menu_web_portlet_ProductNavigationControlMenuPortlet_active-tab-id",
 			"purpose": "Stores the selected tab's ID in the add panel of a widget page for the user's convenience. Marketing.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "365 Days",
-			"externalReferenceCode": "524c3049-b6d0-488c-b8a1-777708af9527",
-			"host": "Liferay",
-			"name": "ab_test_variant_id",
-			"purpose": "Stores the current experience's ID to gather information from A/B tests. Marketing.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "",
-			"externalReferenceCode": "863e24f5-b14e-4ec9-9ab8-45f5a8e9a0c2",
-			"host": "Liferay",
-			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___itemAdded",
-			"purpose": "Stores the scroll position in the navigation menu item admin when a new item is created for the user's convenience. Marketing.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "",
-			"externalReferenceCode": "b9e9b45d-af18-461a-857c-35239d636471",
-			"host": "Liferay",
-			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___scrollPosition",
-			"purpose": "Stores the scroll position for the info panel in the navigation menu item admin for the user's convenience. Marketing.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "",
-			"externalReferenceCode": "3850f785-6b1a-428f-a63f-5d934f9f5642",
-			"host": "Liferay",
-			"name": "portlet_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet___selectedMenuItemId",
-			"purpose": "Stores the selected item's ID in the navigation menu administration for the user's convenience. Marketing.",
 			"type": "First Party"
 		}
 	]

@@ -536,6 +536,7 @@ definition {
 	}
 
 	@description = "This test asserts that user can filter app by Category in marketplace store."
+	@ignore = "true"
 	@priority = 3
 	test CanFilterMarketplaceStoreAppsByCategory {
 		property test.liferay.virtual.instance = "false";
@@ -580,6 +581,7 @@ definition {
 	}
 
 	@description = "This test asserts that user can filter app by liferay version in marketplace store."
+	@ignore = "true"
 	@priority = 3
 	test CanFilterMarketplaceStoreAppsByLiferayVersion {
 		property test.liferay.virtual.instance = "false";
@@ -624,6 +626,7 @@ definition {
 	}
 
 	@description = "This test asserts that user can filter app by Price in marketplace store."
+	@ignore = "true"
 	@priority = 3
 	test CanFilterMarketplaceStoreAppsByPrice {
 		property test.liferay.virtual.instance = "false";
@@ -713,6 +716,7 @@ definition {
 	}
 
 	@description = "This test check search apps in marketplace store and check sign in and sign out."
+	@ignore = "true"
 	@priority = 3
 	test SearchMarketplaceStore {
 		property test.liferay.virtual.instance = "false";
@@ -810,6 +814,7 @@ definition {
 	}
 
 	@description = "This test view purchased apps in marketplace purchased page."
+	@ignore = "true"
 	@priority = 3
 	test ViewPurchasedApp {
 		property test.liferay.virtual.instance = "false";

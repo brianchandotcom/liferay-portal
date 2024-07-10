@@ -70,13 +70,11 @@ public class RelevantTestSuiteTest {
 		int globCount = 0;
 
 		for (JobProperty jobProperty : includesJobProperties) {
-			for (String glob :
-					jobProperty.getValue(
-					).split(
-						","
-					)) {
+			String jobPropertyValue = jobProperty.getValue();
 
+			for (String glob : jobPropertyValue.split(",")) {
 				Assert.assertTrue(globs.contains(glob));
+
 				globCount++;
 			}
 		}

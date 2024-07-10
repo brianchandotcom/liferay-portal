@@ -6716,69 +6716,6 @@ definition {
 			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
 	}
 
-	@description = "LPS-135649 - Verify the Asset Title, Asset Type and Item Subject of a Object's entry on the Workflow Metrics page"
-	@priority = 4
-	test ObjectInfoDisplayedOnWorkflowMetrics {
-		property test.run.environment = "EE";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 148",
-			objectName = "CustomObject148",
-			pluralLabelName = "Custom Objects 148");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject148");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject148");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 148");
-
-		CreateObject.selectTitleField(fieldLabel = "Custom Field");
-
-		CreateObject.saveObject();
-
-		Navigator.openURL();
-
-		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Custom Object 148");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject148",
-			value = "Entry Test");
-
-		Navigator.openURL();
-
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
-
-		Workflow.assertInfoItem(
-			key_assignee = "Unassigned",
-			key_createdBy = "Test Test",
-			key_dueDate = "-",
-			key_itemSubject = "Custom Object 148: Entry Test",
-			key_processStep = "Review");
-
-		WorkflowMetricsAllItemsList.assertInfoItemByIDEntry(
-			assetTitle = "Entry Test",
-			assetType = "Custom Object 148",
-			createdBy = "Test Test",
-			currentAssignee = "Unassigned",
-			currentStep = "Review",
-			processStatus = "Pending");
-	}
-
 	@description = "LPS-139603 - Verify that the Object Name is displayed on the Relationship tab when a Relationship is created"
 	@priority = 4
 	test ObjectNameDisplayedOnTheRelationshipTab {

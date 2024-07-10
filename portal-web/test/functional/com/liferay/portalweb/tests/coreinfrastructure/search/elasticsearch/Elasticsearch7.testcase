@@ -743,6 +743,8 @@ definition {
 
 			WaitForElementNotPresent(locator1 = "Search#REINDEX_IN_PROGRESS_INDICATOR");
 
+			SearchPage.openSearchPage();
+
 			var postSyncReindexTimestamp = JSONCurlUtil.get(${curl}, "$.hits.hits[0]._source.timestamp");
 
 			if (${preSyncReindexTimestamp} != ${postSyncReindexTimestamp}) {

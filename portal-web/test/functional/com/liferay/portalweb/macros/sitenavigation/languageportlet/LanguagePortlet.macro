@@ -154,14 +154,14 @@ definition {
 				AssertElementPresent(
 					locator1 = "Select#SELECT_VALUE_ID",
 					option = ${availableLanguage},
-					selectFieldId = "LanguagePortlet");
+					selectFieldId = "languageIdfm");
 			}
 
 			for (var unavailableLanguage : list ${unavailableLanguageList}) {
 				AssertElementNotPresent(
 					locator1 = "Select#SELECT_VALUE_ID",
 					option = ${unavailableLanguage},
-					selectFieldId = "LanguagePortlet");
+					selectFieldId = "languageIdfm");
 			}
 		}
 		else if (${displayTemplate} == "Short Text") {

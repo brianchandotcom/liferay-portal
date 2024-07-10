@@ -463,8 +463,6 @@ public class ConfigurationImpl
         // finally assign the configuration for use
         configure( newProperties );
 
-        configurationManager.removeConfiguration(this);
-
         // update the service and fire an CM_UPDATED event
         configurationManager.updated( this, true );
     }
@@ -910,4 +908,3 @@ public class ConfigurationImpl
         return this.configurationManager;
     }
 }
-/* @generated */

@@ -86,6 +86,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -670,8 +671,9 @@ public class CompanyLocalServiceTest {
 			_transactionConfig,
 			() -> {
 				Assert.assertNull(
-					_portalPreferencesLocalService.
-						fetchCompanyPortalPreferences(company.getCompanyId()));
+					_portalPreferencesLocalService.fetchPortalPreferences(
+						company.getCompanyId(),
+						PortletKeys.PREFS_OWNER_TYPE_COMPANY));
 
 				return null;
 			});

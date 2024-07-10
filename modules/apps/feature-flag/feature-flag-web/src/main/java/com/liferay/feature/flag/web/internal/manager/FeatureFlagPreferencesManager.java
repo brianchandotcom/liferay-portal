@@ -24,8 +24,8 @@ public class FeatureFlagPreferencesManager {
 
 	public Boolean isEnabled(long companyId, String key) {
 		if (Validator.isNull(
-				_portalPreferencesLocalService.fetchCompanyPortalPreferences(
-					companyId))) {
+				_portalPreferencesLocalService.fetchPortalPreferences(
+					companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY))) {
 
 			return null;
 		}

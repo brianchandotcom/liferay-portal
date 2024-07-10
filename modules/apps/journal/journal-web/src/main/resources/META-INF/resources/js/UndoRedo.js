@@ -14,6 +14,7 @@ const META_FIELD_NAMES = {
 
 export default function UndoRedo({
 	initialDefaultLanguageId,
+	initialFields,
 	languageId,
 	portletNamespace,
 }) {
@@ -24,9 +25,27 @@ export default function UndoRedo({
 		setState,
 	] = useState({
 		defaultLanguageId: initialDefaultLanguageId,
-		history: [],
+		history: [
+			{
+				defaultLanguageId: initialDefaultLanguageId,
+				descriptionInputComponent:
+					initialFields[`${META_FIELD_NAMES.description}`][
+						`${initialDefaultLanguageId}`
+					] || '',
+				friendlyURLInputComponent:
+					initialFields[`${META_FIELD_NAMES.friendlyURL}`][
+						`${initialDefaultLanguageId}`
+					] || '',
+				name: 'Reset',
+				selectedLanguageId: languageId,
+				titleInputComponent:
+					initialFields[`${META_FIELD_NAMES.title}`][
+						`${initialDefaultLanguageId}`
+					] || '',
+			},
+		],
 		selectedLanguageId: languageId,
-		step: -1,
+		step: 0,
 	});
 
 	const handleUndoRedo = (newStep) => {
@@ -174,14 +193,6 @@ export default function UndoRedo({
 			Liferay.detach('journal:storeState', handleStoreState);
 		};
 	}, [handleStoreState]);
-
-	useEffect(() => {
-		setTimeout(() => {
-			Liferay.fire('journal:storeState', {fieldName: 'Reset'});
-		}, 1000);
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	return (
 		<>

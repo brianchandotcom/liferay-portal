@@ -22,8 +22,8 @@
 				class="lexicon-icon lexicon-icon-order-arrow-right"
 				role="presentation"
 				viewBox="0 0 512 512"
-				>
-					<use xlink:href="/o/admin-theme/images/clay/icons.svg#order-arrow-right"></use>
+			>
+				<use xlink:href="/o/admin-theme/images/clay/icons.svg#order-arrow-right"></use>
 			</svg>
 		</div>
 	</div>

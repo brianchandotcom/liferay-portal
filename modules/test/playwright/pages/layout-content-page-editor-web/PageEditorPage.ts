@@ -17,6 +17,7 @@ import {SegmentEditorPage} from '../segments-web/SegmentEditorPage';
 export class PageEditorPage {
 	readonly page: Page;
 
+	readonly editModeButton: Locator;
 	readonly experienceSelector: Locator;
 	readonly languageSelector: Locator;
 	readonly publishButton: Locator;
@@ -31,6 +32,7 @@ export class PageEditorPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.editModeButton = page.getByLabel('Select edit mode').first();
 		this.experienceSelector = page.locator(
 			'.page-editor__experience-selector'
 		);
@@ -133,6 +135,20 @@ export class PageEditorPage {
 		}
 
 		await this.waitForChangesSaved();
+	}
+
+	async changeEditMode(mode: 'Page Design' | 'Content Editing') {
+		const currentMode = await this.editModeButton.evaluate(
+			(element) => element.textContent
+		);
+
+		if (currentMode === mode) {
+			return;
+		}
+
+		await this.editModeButton.click();
+
+		await this.page.getByRole('option', {name: mode}).click();
 	}
 
 	async changeFragmentConfiguration({

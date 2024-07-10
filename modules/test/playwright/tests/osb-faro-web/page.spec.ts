@@ -290,6 +290,10 @@ test('Check that the Dynamic Segment does not continue to appear in the audience
 		});
 	});
 
+	await test.step('Reload the page to clear the Audience card cache', async () => {
+		await page.reload();
+	});
+
 	await test.step('Go to Sites > Go to Pages Tab', async () => {
 		await navigateTo({
 			page,

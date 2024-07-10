@@ -7866,8 +7866,8 @@ ${docker.start.error}</fail>
 
 			<local name="env.portal.url.arg" />
 
-			<condition else="" property="env.portal.url.arg" value="--env=PORTAL_URL=http://${env.HOSTNAME}:8080">
-				<isset property="env.HOSTNAME" />
+			<condition else="" property="env.portal.url.arg" value="--env=PORTAL_URL=http://${env.NODE_NAME}:8080">
+				<isset property="env.NODE_NAME" />
 			</condition>
 
 			<local name="env.testray.cloud.storage.base.url" />

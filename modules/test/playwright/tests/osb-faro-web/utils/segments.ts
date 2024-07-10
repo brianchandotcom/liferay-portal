@@ -50,12 +50,12 @@ export async function addStaticMember({
 }
 
 export async function createDynamicSegment(page: Page) {
-	await page.getByLabel('Menu').click();
+	await page.getByRole('banner').getByLabel('Menu').click();
 	await page.getByRole('menuitem', {name: 'Dynamic Segment'}).click();
 }
 
 export async function createStaticSegment(page: Page) {
-	await page.getByLabel('Menu').click();
+	await page.getByRole('banner').getByLabel('Menu').click();
 	await page.getByRole('menuitem', {name: 'Static Segment'}).click();
 }
 

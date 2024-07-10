@@ -1,9 +1,19 @@
+.custom-control {
+	margin-bottom: 0;
+}
+
 .lfr-object__action-builder {
 	&-then {
 		align-items: center;
 		display: flex;
 		gap: 1rem;
 		justify-content: center;
+
+		&-container {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+		}
 
 		.form-control {
 			width: 100%;

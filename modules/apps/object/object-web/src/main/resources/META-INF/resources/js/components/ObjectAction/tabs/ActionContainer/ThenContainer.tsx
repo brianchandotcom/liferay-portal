@@ -4,7 +4,6 @@
  */
 
 import {Option, Text} from '@clayui/core';
-import ClayLabel from '@clayui/label';
 import {API, Card, SingleSelect} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
@@ -15,10 +14,11 @@ import {
 	fetchObjectDefinitionFields,
 	fetchObjectDefinitions,
 } from '../../fetchUtil';
-
-import './ThenContainer.scss';
+import {CheckboxParameter} from './CheckboxParameter';
 import {SingleSelectAddObjectEntry} from './SingleSelectAddObjectEntry';
 import {SingleSelectNotification} from './SingleSelectNotification';
+
+import './ThenContainer.scss';
 
 interface ThenContainerProps {
 	disabled: boolean;
@@ -127,58 +127,67 @@ export function ThenContainer({
 
 	return (
 		<Card title={Liferay.Language.get('then[object]')} viewMode="inline">
-			<div className="lfr-object__action-builder-then">
-				<SingleSelect
-					disabled={values.system || disabled}
-					error={errors.objectActionExecutorKey}
-					items={
-						Liferay.FeatureFlags['LPS-153714']
-							? newObjectActionExecutors
-							: objectActionExecutors
-					}
-					onSelectionChange={(value) => {
-						if (values.objectActionExecutorKey !== value) {
-							return setValues({
-								objectActionExecutorKey: value as string,
-								parameters: {},
-							});
+			<div className="lfr-object__action-builder-then-container">
+				<div className="lfr-object__action-builder-then">
+					<SingleSelect
+						disabled={values.system || disabled}
+						error={errors.objectActionExecutorKey}
+						items={
+							Liferay.FeatureFlags['LPS-153714']
+								? newObjectActionExecutors
+								: objectActionExecutors
 						}
-					}}
-					placeholder={Liferay.Language.get('choose-an-action')}
-					selectedKey={values.objectActionExecutorKey}
-				>
-					{(item) => (
-						<Option key={item.value} textValue={item.label}>
-							<div className="lfr-objects__object-action-builder-when-option">
-								<Text size={3} weight="semi-bold">
-									{item.label}
-								</Text>
+						onSelectionChange={(value) => {
+							if (values.objectActionExecutorKey !== value) {
+								return setValues({
+									objectActionExecutorKey: value as string,
+									parameters: {},
+								});
+							}
+						}}
+						placeholder={Liferay.Language.get('choose-an-action')}
+						selectedKey={values.objectActionExecutorKey}
+					>
+						{(item) => (
+							<Option key={item.value} textValue={item.label}>
+								<div className="lfr-objects__object-action-builder-when-option">
+									<Text size={3} weight="semi-bold">
+										{item.label}
+									</Text>
 
-								<Text aria-hidden color="secondary" size={2}>
-									{item.description}
-								</Text>
-							</div>
-						</Option>
+									<Text
+										aria-hidden
+										color="secondary"
+										size={2}
+									>
+										{item.description}
+									</Text>
+								</div>
+							</Option>
+						)}
+					</SingleSelect>
+
+					{values.objectActionExecutorKey === 'add-object-entry' && (
+						<SingleSelectAddObjectEntry
+							errors={errors}
+							objectsOptions={objectsOptions}
+							updateParameters={updateParameters}
+							values={values}
+						/>
 					)}
-				</SingleSelect>
 
-				{values.objectActionExecutorKey === 'add-object-entry' && (
-					<SingleSelectAddObjectEntry
-						errors={errors}
-						objectsOptions={objectsOptions}
-						setValues={setValues}
-						updateParameters={updateParameters}
-						values={values}
-					/>
-				)}
+					{values.objectActionExecutorKey === 'notification' && (
+						<SingleSelectNotification
+							errors={errors}
+							notificationTemplates={notificationTemplates}
+							setValues={setValues}
+							values={values}
+						/>
+					)}
+				</div>
 
-				{values.objectActionExecutorKey === 'notification' && (
-					<SingleSelectNotification
-						errors={errors}
-						notificationTemplates={notificationTemplates}
-						setValues={setValues}
-						values={values}
-					/>
+				{values.parameters?.relatedObjectEntries !== undefined && (
+					<CheckboxParameter setValues={setValues} values={values} />
 				)}
 			</div>
 		</Card>

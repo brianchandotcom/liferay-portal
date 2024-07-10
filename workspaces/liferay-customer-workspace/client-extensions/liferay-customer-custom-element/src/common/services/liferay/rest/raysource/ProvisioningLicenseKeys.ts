@@ -71,7 +71,7 @@ class ProvisioningLicenseKeys {
 		);
 	}
 
-	public async associateContactRoleNameByEmailByProject({
+	public async addContactRoleNameByEmailByProject({
 		accountKey,
 		emailURI,
 		firstName,

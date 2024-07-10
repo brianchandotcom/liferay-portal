@@ -10,99 +10,11 @@ import {
 	getAccountAccountRolesByExternalReferenceCode,
 } from '~/common/services/liferay/graphql/queries';
 import {
-	associateContactRoleNameByEmailByProject,
+	addContactRoleNameByEmailByProject,
 	deleteContactRoleNameByEmailByProject,
 } from '../../../common/services/liferay/rest/raysource/LicenseKeys';
 
-const HIGH_PRIORITY_CONTACT_CATEGORIES = {
-	criticalIncident: i18n.translate('critical-incident'),
-	privacyBreach: i18n.translate('privacy-breach'),
-	securityBreach: i18n.translate('security-breach'),
-};
-
-const getContactRoleByFilter = (filter) => {
-	if (filter.includes('privacy')) {
-		return 'Data Breach Contact';
-	}
-
-	if (filter.includes('security')) {
-		return 'Security Incident Contact';
-	}
-
-	if (filter.includes('critical')) {
-		return 'Critical Incident Contact';
-	}
-};
-
-const rolesHighPriorityContacts = [
-	'Data Breach Contact',
-	'Security Incident Contact',
-	'Critical Incident Contact',
-];
-
-const actRaysourceContact = (
-	fn,
-	contacts,
-	project,
-	sessionId,
-	provisioningServerAPI
-) =>
-	Promise.all(
-		contacts?.map((item) =>
-			fn(item, project, sessionId, provisioningServerAPI)
-		)
-	);
-
-const actLiferayContact = (items, fn, project, client) =>
-	Promise.all(items?.map((item) => fn(item, project, client)));
-
-const removeContactRoleRaysource = async (
-	item,
-	project,
-	sessionId,
-	provisioningServerAPI
-) => {
-	return await deleteContactRoleNameByEmailByProject({
-		accountKey: project.accountKey,
-		emailURI: encodeURI(item.email),
-		provisioningServerAPI,
-		rolesToDelete: item.filter,
-		sessionId,
-	});
-};
-
-const associateContactRoleRaysource = (
-	item,
-	project,
-	sessionId,
-	provisioningServerAPI
-) => {
-	return associateContactRoleNameByEmailByProject({
-		accountKey: project.accountKey,
-		emailURI: encodeURI(item.email),
-		firstName: item.label,
-		lastName: item.label,
-		provisioningServerAPI,
-		roleName: item.category.role,
-		sessionId,
-	});
-};
-
-const removeContactRoleLiferay = async (item, project, client) => {
-	return client.mutate({
-		context: {
-			displaySuccess: false,
-		},
-		mutation: deleteAccountUserRoles,
-		variables: {
-			accountKey: project.accountKey,
-			accountRoleId: item.filterId,
-			emailAddress: item.email,
-		},
-	});
-};
-
-const associateContactRoleLiferay = async (item, project, client) => {
+const addContactRoleLiferay = async (item, project, client) => {
 	return client.mutate({
 		context: {
 			displaySuccess: false,
@@ -113,6 +25,23 @@ const associateContactRoleLiferay = async (item, project, client) => {
 			emailAddress: item.email,
 			externalReferenceCode: project.accountKey,
 		},
+	});
+};
+
+const addContactRoleRaysource = (
+	item,
+	project,
+	sessionId,
+	provisioningServerAPI
+) => {
+	return addContactRoleNameByEmailByProject({
+		accountKey: project.accountKey,
+		emailURI: encodeURI(item.email),
+		firstName: item.label,
+		lastName: item.label,
+		provisioningServerAPI,
+		roleName: item.category.role,
+		sessionId,
 	});
 };
 
@@ -130,15 +59,86 @@ const getAccountRolesId = async (project, client) => {
 	return result.data.accountAccountRolesByExternalReferenceCode.items;
 };
 
+const getContactRoleByFilter = (filter) => {
+	if (filter.includes('privacy')) {
+		return 'Data Breach Contact';
+	}
+
+	if (filter.includes('security')) {
+		return 'Security Incident Contact';
+	}
+
+	if (filter.includes('critical')) {
+		return 'Critical Incident Contact';
+	}
+};
+
+const HIGH_PRIORITY_CONTACT_CATEGORIES = {
+	criticalIncident: i18n.translate('critical-incident'),
+	privacyBreach: i18n.translate('privacy-breach'),
+	securityBreach: i18n.translate('security-breach'),
+};
+
+const removeContactRoleLiferay = async (item, project, client) => {
+	return client.mutate({
+		context: {
+			displaySuccess: false,
+		},
+		mutation: deleteAccountUserRoles,
+		variables: {
+			accountKey: project.accountKey,
+			accountRoleId: item.filterId,
+			emailAddress: item.email,
+		},
+	});
+};
+
+const removeContactRoleRaysource = async (
+	item,
+	project,
+	sessionId,
+	provisioningServerAPI
+) => {
+	return await deleteContactRoleNameByEmailByProject({
+		accountKey: project.accountKey,
+		emailURI: encodeURI(item.email),
+		provisioningServerAPI,
+		rolesToDelete: item.filter,
+		sessionId,
+	});
+};
+
+const rolesHighPriorityContacts = [
+	'Data Breach Contact',
+	'Security Incident Contact',
+	'Critical Incident Contact',
+];
+
+const updateLiferayContact = (items, fn, project, client) =>
+	Promise.all(items?.map((item) => fn(item, project, client)));
+
+const updateRaysourceContact = (
+	fn,
+	contacts,
+	project,
+	sessionId,
+	provisioningServerAPI
+) =>
+	Promise.all(
+		contacts?.map((item) =>
+			fn(item, project, sessionId, provisioningServerAPI)
+		)
+	);
+
 export {
-	removeContactRoleRaysource,
-	associateContactRoleRaysource,
-	associateContactRoleLiferay,
-	actRaysourceContact,
-	actLiferayContact,
-	HIGH_PRIORITY_CONTACT_CATEGORIES,
-	removeContactRoleLiferay,
+	addContactRoleLiferay,
+	addContactRoleRaysource,
 	getAccountRolesId,
 	getContactRoleByFilter,
+	HIGH_PRIORITY_CONTACT_CATEGORIES,
+	removeContactRoleLiferay,
+	removeContactRoleRaysource,
 	rolesHighPriorityContacts,
+	updateLiferayContact,
+	updateRaysourceContact,
 };

@@ -6,12 +6,12 @@
 import {useMutation} from '@apollo/client';
 import SearchBuilder from '~/common/core/SearchBuilder';
 import {
-	actLiferayContact,
-	actRaysourceContact,
-	associateContactRoleLiferay,
-	associateContactRoleRaysource,
+	addContactRoleLiferay,
+	addContactRoleRaysource,
 	removeContactRoleLiferay,
 	removeContactRoleRaysource,
+	updateLiferayContact,
+	updateRaysourceContact,
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import {useOnboarding} from '~/routes/onboarding/context';
 import {useAppPropertiesContext} from '../../../../../../../../../../../../common/contexts/AppPropertiesContext';
@@ -178,28 +178,32 @@ export default function useSubmitLXCEnvironment(
 
 			try {
 				handleLoadingSubmitButton(true);
+
 				if (featureFlags.includes('LPS-159127')) {
-					await actRaysourceContact(
+					await updateRaysourceContact(
 						removeContactRoleRaysource,
 						removeHighPriorityContactList,
 						project,
 						sessionId,
 						provisioningServerAPI
 					);
-					await actRaysourceContact(
-						associateContactRoleRaysource,
+
+					await updateRaysourceContact(
+						addContactRoleRaysource,
 						addHighPriorityContactList,
 						project,
 						sessionId,
 						provisioningServerAPI
 					);
-					await actLiferayContact(
+
+					await updateLiferayContact(
 						addHighPriorityContactList,
-						associateContactRoleLiferay,
+						addContactRoleLiferay,
 						project,
 						client
 					);
-					await actLiferayContact(
+
+					await updateLiferayContact(
 						removeHighPriorityContactList,
 						removeContactRoleLiferay,
 						project,
@@ -214,13 +218,14 @@ export default function useSubmitLXCEnvironment(
 			catch (error) {
 				if (error.cause === STATUS_CODE.conflict) {
 					try {
-						await actLiferayContact(
+						await updateLiferayContact(
 							addHighPriorityContactList,
-							associateContactRoleLiferay,
+							addContactRoleLiferay,
 							project,
 							client
 						);
-						await actLiferayContact(
+
+						await updateLiferayContact(
 							removeHighPriorityContactList,
 							removeContactRoleLiferay,
 							project,

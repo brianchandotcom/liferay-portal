@@ -15,13 +15,13 @@ import {Button} from '../../../../../../common/components';
 import getKebabCase from '../../../../../../common/utils/getKebabCase';
 import {useCustomerPortal} from '../../../../context';
 import {
+	addContactRoleLiferay,
+	addContactRoleRaysource,
 	HIGH_PRIORITY_CONTACT_CATEGORIES,
-	actLiferayContact,
-	actRaysourceContact,
-	associateContactRoleLiferay,
-	associateContactRoleRaysource,
 	removeContactRoleLiferay,
 	removeContactRoleRaysource,
+	updateLiferayContact,
+	updateRaysourceContact
 } from '../../../../utils/getHighPriorityContacts';
 
 const IncidentContactEditModal = ({
@@ -69,27 +69,31 @@ const IncidentContactEditModal = ({
 
 		try {
 			setIsLoadingSaveButton(true);
-			await actRaysourceContact(
+
+			await updateRaysourceContact(
 				removeContactRoleRaysource,
 				removeHighPriorityContacts,
 				project,
 				sessionId,
 				provisioningServerAPI
 			);
-			await actRaysourceContact(
-				associateContactRoleRaysource,
+
+			await updateRaysourceContact(
+				addContactRoleRaysource,
 				addHighPriorityContact,
 				project,
 				sessionId,
 				provisioningServerAPI
 			);
-			await actLiferayContact(
+
+			await updateLiferayContact(
 				addHighPriorityContact,
-				associateContactRoleLiferay,
+				addContactRoleLiferay,
 				project,
 				client
 			);
-			await actLiferayContact(
+
+			await updateLiferayContact(
 				removeHighPriorityContacts,
 				removeContactRoleLiferay,
 				project,
@@ -101,16 +105,18 @@ const IncidentContactEditModal = ({
 
 			setIsLoadingSaveButton(false);
 			close();
-		} catch (error) {
+		}
+		catch (error) {
 			if (error.cause === STATUS_CODE.conflict) {
 				try {
-					await actLiferayContact(
+					await updateLiferayContact(
 						addHighPriorityContact,
-						associateContactRoleLiferay,
+						addContactRoleLiferay,
 						project,
 						client
 					);
-					await actLiferayContact(
+
+					await updateLiferayContact(
 						removeHighPriorityContacts,
 						removeContactRoleLiferay,
 						project,
@@ -122,13 +128,15 @@ const IncidentContactEditModal = ({
 
 					setIsLoadingSaveButton(false);
 					close();
-				} catch (error) {
+				}
+				catch (error) {
 					setIsLoadingSaveButton(false);
 					openToast('error', 'an-unexpected-error-occurred', {
 						type: 'danger',
 					});
 				}
-			} else {
+			}
+			else {
 				setIsLoadingSaveButton(false);
 				openToast('error', 'an-unexpected-error-occurred', {
 					type: 'danger',

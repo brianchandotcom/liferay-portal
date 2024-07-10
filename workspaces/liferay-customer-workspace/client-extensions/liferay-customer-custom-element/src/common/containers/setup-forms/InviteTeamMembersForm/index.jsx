@@ -19,7 +19,7 @@ import {
 	getUserAccountByEmail,
 	patchUserAccount,
 } from '../../../services/liferay/graphql/queries';
-import {associateContactRoleNameByEmailByProject} from '../../../services/liferay/rest/raysource/LicenseKeys';
+import {addContactRoleNameByEmailByProject} from '../../../services/liferay/rest/raysource/LicenseKeys';
 import {ROLE_TYPES, SLA_TYPES} from '../../../utils/constants';
 import getInitialInvite from '../../../utils/getInitialInvite';
 import getProjectRoles from '../../../utils/getProjectRoles';
@@ -290,14 +290,14 @@ const InviteTeamMembersPage = ({
 						},
 					});
 
-					await associateContactRoleNameByEmailByProject({
+					await addContactRoleNameByEmailByProject({
 						accountKey: project.accountKey,
 						emailURI: encodeURI(inviteMember.email),
 						firstName: inviteMember.givenName,
 						lastName: inviteMember.familyName,
 						provisioningServerAPI,
 						roleName: inviteRole.raysourceName,
-						sessionId,
+						sessionId
 					});
 				}
 

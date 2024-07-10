@@ -473,6 +473,7 @@ function Body({
 										aria-label={Liferay.Language.get(
 											'choose-an-option'
 										)}
+										id={sourceOptionFormElementId}
 										name={sourceOptionFormElementId}
 										onChange={(event) => {
 											const newSourceType = event.target

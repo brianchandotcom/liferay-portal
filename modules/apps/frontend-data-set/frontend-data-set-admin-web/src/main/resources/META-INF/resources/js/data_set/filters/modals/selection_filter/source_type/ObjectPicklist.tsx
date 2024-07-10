@@ -73,6 +73,7 @@ function ObjectPicklist({
 					{picklists && (
 						<ClaySelectWithOption
 							aria-label={Liferay.Language.get('picklist')}
+							id={objectPicklistFormElementId}
 							name={objectPicklistFormElementId}
 							onChange={(event) => {
 								const picklist = picklists?.find(

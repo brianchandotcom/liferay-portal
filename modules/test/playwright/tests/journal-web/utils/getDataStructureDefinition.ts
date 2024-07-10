@@ -12,8 +12,8 @@ interface Props {
 interface Field {
 	localizable?: boolean;
 	name: string;
-	required?: boolean;
 	repeatable?: boolean;
+	required?: boolean;
 }
 
 export default function getDataStructureDefinition({
@@ -36,6 +36,7 @@ export default function getDataStructureDefinition({
 						displayStyle: 'singleline',
 						fieldReference: fieldName,
 					},
+					defaultValue: {},
 					fieldType: 'text',
 					indexType: 'keyword',
 					label: {
@@ -43,8 +44,8 @@ export default function getDataStructureDefinition({
 					},
 					localizable,
 					name: fieldName,
-					required,
 					repeatable,
+					required,
 					showLabel: true,
 				};
 			}
@@ -76,6 +77,7 @@ export default function getDataStructureDefinition({
 			paginationMode: 'single-page',
 		},
 		defaultLanguageId,
+		id: '',
 		name: {
 			[defaultLanguageId]: name,
 		},

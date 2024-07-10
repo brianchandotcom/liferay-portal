@@ -555,9 +555,7 @@ test('LPD-28970 Error when viewing data tab after viewing Workflow tab', async (
 
 	await changeTrackingPage.selectTab('Data');
 
-	await expect(page.locator('.alert-danger')).not.toBeVisible(
-		'Unable to display content due to an unexpected error.'
-	);
+	await expect(page.locator('.alert-danger')).not.toBeVisible();
 
 	await expect(
 		page.getByRole('cell', {exact: true, name: journalName})

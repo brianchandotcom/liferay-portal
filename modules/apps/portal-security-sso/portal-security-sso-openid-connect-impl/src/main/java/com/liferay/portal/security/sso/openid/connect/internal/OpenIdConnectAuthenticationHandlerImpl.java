@@ -12,10 +12,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler;
@@ -67,6 +69,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -365,7 +368,8 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		}
 
 		try {
-			return Collections.singletonList(new LangTag(locale.getLanguage()));
+			return Collections.singletonList(
+				LangTag.parse(_language.getBCP47LanguageTag(locale)));
 		}
 		catch (LangTagException langTagException) {
 			if (_log.isDebugEnabled()) {
@@ -480,6 +484,9 @@ public class OpenIdConnectAuthenticationHandlerImpl
 	@Reference
 	private AuthorizationServerMetadataResolver
 		_authorizationServerMetadataResolver;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;

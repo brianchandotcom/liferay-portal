@@ -65,7 +65,6 @@ public class ProductMenuDisplayContextTest {
 	@Test
 	public void testShouldReturnOnlyPanelCategoriesThatContainPanelApps() {
 		_assertGetPanelCategories(
-			false,
 			productMenuDisplayContext -> {
 				List<PanelCategory> childPanelCategories =
 					productMenuDisplayContext.getChildPanelCategories();
@@ -85,13 +84,13 @@ public class ProductMenuDisplayContextTest {
 				).getAllPanelApps(
 					ArgumentMatchers.matches("application-panel*")
 				);
-			});
+			},
+			false);
 	}
 
 	@Test
 	public void testShouldReturnOnlyRootPanelCategoriesWhenApplicationsMenuIsEnabled() {
 		_assertGetPanelCategories(
-			true,
 			productMenuDisplayContext -> {
 				List<PanelCategory> childPanelCategories =
 					productMenuDisplayContext.getChildPanelCategories();
@@ -117,12 +116,13 @@ public class ProductMenuDisplayContextTest {
 				).getAllPanelApps(
 					ArgumentMatchers.matches("application-panel*")
 				);
-			});
+			},
+			true);
 	}
 
 	private void _assertGetPanelCategories(
-		boolean enableApplicationsMenu,
-		Consumer<ProductMenuDisplayContext> consumer) {
+		Consumer<ProductMenuDisplayContext> consumer,
+		boolean enableApplicationsMenu) {
 
 		try (MockedStatic<PortalUtil> portalUtilMockedStatic =
 				Mockito.mockStatic(PortalUtil.class);

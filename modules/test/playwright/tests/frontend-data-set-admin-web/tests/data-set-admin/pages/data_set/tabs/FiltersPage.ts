@@ -6,6 +6,7 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {
+	IClientExtensionFilter,
 	IDateRangeFilter,
 	ISelectionFilterApiHeadless,
 	ISelectionFilterPicklist,
@@ -21,6 +22,10 @@ interface NewFilterModal {
 	modalBody: Locator;
 	nameInput: Locator;
 	saveButton: Locator;
+}
+
+interface NewClientExtensionFilterModal extends NewFilterModal {
+	noClientExtensionsAvailableAlert: Locator;
 }
 
 interface NewSelectionFilterModal extends NewFilterModal {
@@ -52,8 +57,9 @@ export class FiltersPage {
 
 	private readonly filterTable: Locator;
 
+	readonly newClientExtensionFilterModal: NewClientExtensionFilterModal;
 	readonly newDateRangeFilterModal: NewDateRangeFilterModal;
-	private readonly newFilterButton: Locator;
+	readonly newFilterButton: Locator;
 	private readonly newFilterModal: NewFilterModal;
 	private readonly newSelectionFilterModal: NewSelectionFilterModal;
 	readonly page: Page;
@@ -76,6 +82,13 @@ export class FiltersPage {
 			modalBody: page.locator('.modal-body'),
 			nameInput: page.getByPlaceholder('Add a name'),
 			saveButton: page.getByRole('button', {name: 'Save'}),
+		};
+		this.newClientExtensionFilterModal = {
+			...this.newFilterModal,
+			noClientExtensionsAvailableAlert: page.getByLabel('New Client Extension Filter')
+				.locator('div')
+				.filter({ hasText: 'InfoNo frontend data set filter client extensions are available. Add a client ex' })
+				.first(),
 		};
 		this.newDateRangeFilterModal = {
 			...this.newFilterModal,

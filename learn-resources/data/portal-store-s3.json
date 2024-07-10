@@ -1,6 +1,66 @@
 {
 	"general": {
+		"ar_SA": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"ca_ES": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"de_DE": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
 		"en_US": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"es_ES": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"fi_FI": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"fr_CA": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"fr_FR": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"gl_ES": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"hu_HU": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"ja_JP": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"nl_NL": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"pt_BR": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"sv_SE": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"zh_CN": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+		},
+		"zh_TW": {
 			"message": "Tell me about this store.",
 			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
 		}

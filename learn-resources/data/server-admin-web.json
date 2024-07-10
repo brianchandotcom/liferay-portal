@@ -1,12 +1,132 @@
 {
 	"mail": {
+		"ar_SA": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"ca_ES": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"de_DE": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
 		"en_US": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"es_ES": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"fi_FI": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"fr_CA": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"fr_FR": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"gl_ES": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"hu_HU": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"ja_JP": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"nl_NL": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"pt_BR": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"sv_SE": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"zh_CN": {
+			"message": "Help me connect to a mail server.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+		},
+		"zh_TW": {
 			"message": "Help me connect to a mail server.",
 			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
 		}
 	},
 	"script-console": {
+		"ar_SA": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"ca_ES": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"de_DE": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
 		"en_US": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"es_ES": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"fi_FI": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"fr_CA": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"fr_FR": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"gl_ES": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"hu_HU": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"ja_JP": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"nl_NL": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"pt_BR": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"sv_SE": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"zh_CN": {
+			"message": "What can I do in the Script Console?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+		},
+		"zh_TW": {
 			"message": "What can I do in the Script Console?",
 			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
 		}

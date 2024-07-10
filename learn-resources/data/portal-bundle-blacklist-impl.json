@@ -1,6 +1,66 @@
 {
 	"general": {
+		"ar_SA": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"ca_ES": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"de_DE": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
 		"en_US": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"es_ES": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"fi_FI": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"fr_CA": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"fr_FR": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"gl_ES": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"hu_HU": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"ja_JP": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"nl_NL": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"pt_BR": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"sv_SE": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"zh_CN": {
+			"message": "How does bundle blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
+		},
+		"zh_TW": {
 			"message": "How does bundle blacklisting work?",
 			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps"
 		}

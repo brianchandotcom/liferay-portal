@@ -1,6 +1,66 @@
 {
 	"general": {
+		"ar_SA": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"ca_ES": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"de_DE": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
 		"en_US": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"es_ES": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"fi_FI": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"fr_CA": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"fr_FR": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"gl_ES": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"hu_HU": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"ja_JP": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"nl_NL": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"pt_BR": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"sv_SE": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"zh_CN": {
+			"message": "Tell me about this store.",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
+		},
+		"zh_TW": {
 			"message": "Tell me about this store.",
 			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types"
 		}

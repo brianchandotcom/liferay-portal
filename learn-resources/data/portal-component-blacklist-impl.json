@@ -1,6 +1,66 @@
 {
 	"general": {
+		"ar_SA": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"ca_ES": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"de_DE": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
 		"en_US": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"es_ES": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"fi_FI": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"fr_CA": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"fr_FR": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"gl_ES": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"hu_HU": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"ja_JP": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"nl_NL": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"pt_BR": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"sv_SE": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"zh_CN": {
+			"message": "How does component blacklisting work?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
+		},
+		"zh_TW": {
 			"message": "How does component blacklisting work?",
 			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/blacklisting-osgi-components"
 		}

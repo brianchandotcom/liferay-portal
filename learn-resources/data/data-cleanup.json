@@ -1,6 +1,66 @@
 {
 	"general": {
+		"ar_SA": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"ca_ES": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"de_DE": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
 		"en_US": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"es_ES": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"fi_FI": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"fr_CA": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"fr_FR": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"gl_ES": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"hu_HU": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"ja_JP": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"nl_NL": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"pt_BR": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"sv_SE": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"zh_CN": {
+			"message": "Tell me about data cleanup.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
+		},
+		"zh_TW": {
 			"message": "Tell me about data cleanup.",
 			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/upgrading-liferay/reference/data-cleanup"
 		}

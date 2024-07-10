@@ -1,6 +1,66 @@
 {
 	"general": {
+		"ar_SA": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"ca_ES": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"de_DE": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
 		"en_US": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"es_ES": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"fi_FI": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"fr_CA": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"fr_FR": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"gl_ES": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"hu_HU": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"ja_JP": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"nl_NL": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"pt_BR": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"sv_SE": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"zh_CN": {
+			"message": "How do I configure the scanner?",
+			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
+		},
+		"zh_TW": {
 			"message": "How do I configure the scanner?",
 			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/enabling-antivirus-scanning-for-uploaded-files"
 		}

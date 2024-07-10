@@ -1,6 +1,66 @@
 {
 	"general": {
+		"ar_SA": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"ca_ES": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"de_DE": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
 		"en_US": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"es_ES": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"fi_FI": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"fr_CA": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"fr_FR": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"gl_ES": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"hu_HU": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"ja_JP": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"nl_NL": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"pt_BR": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"sv_SE": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"zh_CN": {
+			"message": "Help me configure a CDN.",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+		},
+		"zh_TW": {
 			"message": "Help me configure a CDN.",
 			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
 		}

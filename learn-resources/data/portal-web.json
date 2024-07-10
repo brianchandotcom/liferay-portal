@@ -1,12 +1,132 @@
 {
 	"basic-configuration": {
+		"ar_SA": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"ca_ES": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"de_DE": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
 		"en_US": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"es_ES": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"fi_FI": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"fr_CA": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"fr_FR": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"gl_ES": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"hu_HU": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"ja_JP": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"nl_NL": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"pt_BR": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"sv_SE": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"zh_CN": {
+			"message": "Want some tips?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+		},
+		"zh_TW": {
 			"message": "Want some tips?",
 			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
 		}
 	},
 	"database-configuration": {
+		"ar_SA": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"ca_ES": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"de_DE": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
 		"en_US": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"es_ES": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"fi_FI": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"fr_CA": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"fr_FR": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"gl_ES": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"hu_HU": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"ja_JP": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"nl_NL": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"pt_BR": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"sv_SE": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"zh_CN": {
+			"message": "Need to set up a database?",
+			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+		},
+		"zh_TW": {
 			"message": "Need to set up a database?",
 			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
 		}

@@ -304,7 +304,7 @@ public class LanguageTag extends IncludeTag {
 					HashMapBuilder.<String, Object>put(
 						"formAction", formAction
 					).put(
-						"formName", getFormAction()
+						"formName", getFormName()
 					).put(
 						"languageId",
 						() -> {

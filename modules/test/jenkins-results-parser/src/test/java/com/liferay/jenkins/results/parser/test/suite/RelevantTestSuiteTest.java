@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,6 +34,11 @@ import org.junit.Test;
  * @author Kenji Heigel
  */
 public class RelevantTestSuiteTest {
+
+	@After
+	public void tearDown() {
+		RelevantRuleEngine.clear();
+	}
 
 	@Test
 	public void testJUnitTestSelectorMerge() throws IOException {
@@ -102,9 +108,9 @@ public class RelevantTestSuiteTest {
 		for (TestBatch testBatch : relevantTestSuite.getTestBatches()) {
 			if (testBatch instanceof PlaywrightTestBatch) {
 				playwrightTestBatch = (PlaywrightTestBatch)testBatch;
-			}
 
-			break;
+				break;
+			}
 		}
 
 		PlaywrightTestSelector playwrightTestSelector =

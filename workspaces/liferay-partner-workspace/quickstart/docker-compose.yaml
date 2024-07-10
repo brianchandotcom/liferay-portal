@@ -27,7 +27,3 @@ services:
         image: liferay/dxp:2024.q2.3
         ports:
             - 8080:8080
-        volumes:
-            - liferay-data:/opt/liferay/data
-volumes:
-    liferay-data:

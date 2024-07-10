@@ -29,10 +29,6 @@ public class RelevantRuleEngine {
 		_relevantRuleEngine = null;
 	}
 
-	public static File getBaseDir() {
-		return _baseDir;
-	}
-
 	public static RelevantRuleEngine getInstance() {
 		if (_relevantRuleEngine == null) {
 			throw new IllegalStateException("Relevant rule engine is null");
@@ -69,6 +65,10 @@ public class RelevantRuleEngine {
 		}
 
 		return _relevantRuleEngine;
+	}
+
+	public File getBaseDir() {
+		return _baseDir;
 	}
 
 	public Job getJob() {
@@ -258,9 +258,9 @@ public class RelevantRuleEngine {
 		}
 	}
 
-	private static File _baseDir;
 	private static RelevantRuleEngine _relevantRuleEngine;
 
+	private File _baseDir;
 	private Job _job;
 	private final Map<RelevantRule, Set<File>> _relevantRuleMap =
 		new HashMap<>();

@@ -33,6 +33,7 @@ public abstract class BaseTestSelector implements TestSelector {
 		RelevantRuleEngine relevantRuleEngine =
 			RelevantRuleEngine.getInstance();
 
+		_baseDir = relevantRuleEngine.getBaseDir();
 		_job = relevantRuleEngine.getJob();
 	}
 
@@ -42,8 +43,8 @@ public abstract class BaseTestSelector implements TestSelector {
 
 	public JobProperty getGlobalJobProperty(String basePropertyName) {
 		return JobPropertyFactory.newJobProperty(
-			basePropertyName, _testSuiteName, _batchName, _job,
-			RelevantRuleEngine.getBaseDir(), null, true);
+			basePropertyName, _testSuiteName, _batchName, _job, _baseDir, null,
+			true);
 	}
 
 	public Job getJob() {
@@ -88,6 +89,7 @@ public abstract class BaseTestSelector implements TestSelector {
 		}
 	}
 
+	private final File _baseDir;
 	private final String _batchName;
 	private final Job _job;
 	private final Properties _properties;

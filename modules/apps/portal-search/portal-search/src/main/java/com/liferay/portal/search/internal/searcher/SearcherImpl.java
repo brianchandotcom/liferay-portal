@@ -145,7 +145,9 @@ public class SearcherImpl implements Searcher {
 	private Collection<Function<SearchRequest, SearchRequest>> _getContributors(
 		SearchRequest searchRequest) {
 
-		List<String> contributors = searchRequest.getIncludeContributors();
+		List<String> contributors = new ArrayList<>();
+
+		contributors.addAll(searchRequest.getIncludeContributors());
 
 		if (ListUtil.isEmpty(contributors)) {
 			contributors = new ArrayList<>(_serviceTrackerMap.keySet());

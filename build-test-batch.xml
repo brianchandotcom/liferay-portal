@@ -2819,7 +2819,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 									<exec executable="/bin/bash">
 										<arg value="modules/test/playwright/env/set_up.sh" />
 										<env key="LIFERAY_HOME" value="${liferay.home}" />
-										<env key="LIFERAY_PORTAL_URL" value="http://${env.HOSTNAME}:8080" />
+										<env key="LIFERAY_PORTAL_URL" value="http://${env.NODE_NAME}:8080" />
 										<env key="PLAYWRIGHT_PROJECT_NAME" value="${playwright.project.name}" />
 									</exec>
 

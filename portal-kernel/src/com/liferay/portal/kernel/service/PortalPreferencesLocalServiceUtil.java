@@ -209,12 +209,6 @@ public class PortalPreferencesLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static PortalPreferences fetchCompanyPortalPreferences(
-		long companyId) {
-
-		return getService().fetchCompanyPortalPreferences(companyId);
-	}
-
 	public static PortalPreferences fetchPortalPreferences(
 		long portalPreferencesId) {
 

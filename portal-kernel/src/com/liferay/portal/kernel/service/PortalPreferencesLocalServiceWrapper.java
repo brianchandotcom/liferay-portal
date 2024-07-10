@@ -240,14 +240,6 @@ public class PortalPreferencesLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.PortalPreferences
-		fetchCompanyPortalPreferences(long companyId) {
-
-		return _portalPreferencesLocalService.fetchCompanyPortalPreferences(
-			companyId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PortalPreferences
 		fetchPortalPreferences(long portalPreferencesId) {
 
 		return _portalPreferencesLocalService.fetchPortalPreferences(

@@ -16,6 +16,7 @@ export class ActionsPage {
 	readonly newCreationActionPlusButton: Locator;
 	readonly newActionForm: {
 		addIconButton: Locator;
+		cancelButton: Locator;
 		confirmationMessageInput: Locator;
 		headlessPermissionKeyInput: Locator;
 		methodSelect: Locator;
@@ -47,6 +48,7 @@ export class ActionsPage {
 		);
 		this.newActionForm = {
 			addIconButton: page.getByLabel('add-icon'),
+			cancelButton: page.getByRole('button', {name: 'Cancel'}),
 			confirmationMessageInput: page.getByLabel('Confirmation Message', {
 				exact: true,
 			}),

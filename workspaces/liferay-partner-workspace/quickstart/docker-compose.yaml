@@ -14,7 +14,7 @@ services:
             interval: 5s
             retries: 10
             start_period: 5s
-            test: mysql -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --protocol tcp -e 'select 1' 2>&1 | grep -qvF "Can't connect"
+            test: mysql -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --protocol=tcp -e 'select 1' 2>&1 | grep -qvF "Can't connect"
         image: mysql:5.7
         ports:
             - 3306:3306

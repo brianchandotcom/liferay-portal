@@ -213,6 +213,9 @@ function Body({
 										aria-labelledby={`${namespace}cellRenderersLabel`}
 										className="form-control form-control-select form-control-select-secondary"
 										displayType="secondary"
+										id={
+											fdsFilterClientExtensionFormElementId
+										}
 										name={
 											fdsFilterClientExtensionFormElementId
 										}

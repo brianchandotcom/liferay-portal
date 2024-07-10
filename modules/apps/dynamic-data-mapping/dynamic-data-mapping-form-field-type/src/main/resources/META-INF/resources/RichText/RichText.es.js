@@ -180,6 +180,10 @@ const RichText = ({
 	};
 
 	function sanitezeHTML(html) {
+		if (Liferay.FeatureFlags['LPD-31212']) {
+			return html;
+		}
+
 		const sanitizedHtml = html
 			.replace(HTML_TAG_WITH_ON_ATTRIBUTE_REGEX, (match) => {
 				return match.replace(ON_ATTRIBUTE_REGEX, '');

@@ -115,10 +115,12 @@ public class ViewCountEntryLocalServiceImpl
 	public void incrementViewCount(
 		long companyId, long classNameId, long classPK, int increment) {
 
-		if (isViewCountEnabled(classNameId)) {
-			viewCountEntryFinder.incrementViewCount(
-				companyId, classNameId, classPK, increment);
+		if (!isViewCountEnabled(classNameId)) {
+			return;
 		}
+
+		viewCountEntryFinder.incrementViewCount(
+			companyId, classNameId, classPK, increment);
 
 		ClassName className = _classNameLocalService.fetchClassName(
 			classNameId);

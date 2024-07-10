@@ -64,6 +64,10 @@ public abstract class BaseTestSelector implements TestSelector {
 			_job, _propertiesFile.getParentFile(), type, true);
 	}
 
+	public File getPropertiesFile() {
+		return _propertiesFile;
+	}
+
 	public String getProperty(String propertyName) {
 		return JenkinsResultsParserUtil.getProperty(
 			_properties, propertyName, _batchName, _relevantRuleName,

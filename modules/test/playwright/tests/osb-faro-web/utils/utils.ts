@@ -14,9 +14,9 @@ export async function expectNotToBeVisible({
 	itemNames: string[] | string;
 	page: Page;
 }) {
-	const namesArray = Array.isArray(itemNames) ? itemNames : [itemNames];
+	const itemNamesArray = Array.isArray(itemNames) ? itemNames : [itemNames];
 
-	for (const itemName of namesArray) {
+	for (const itemName of itemNamesArray) {
 		await expect(page.getByText(itemName)).toBeHidden({
 			timeout: 100 * 1000,
 		});
@@ -30,9 +30,9 @@ export async function expectToBeVisible({
 	itemNames: string[] | string;
 	page: Page;
 }) {
-	const namesArray = Array.isArray(itemNames) ? itemNames : [itemNames];
+	const itemNamesArray = Array.isArray(itemNames) ? itemNames : [itemNames];
 
-	for (const itemName of namesArray) {
+	for (const itemName of itemNamesArray) {
 		await expect(page.getByText(itemName)).toBeVisible({
 			timeout: 100 * 1000,
 		});

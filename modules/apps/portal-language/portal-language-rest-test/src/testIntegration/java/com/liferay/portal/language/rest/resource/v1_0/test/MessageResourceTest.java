@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.language.rest.client.dto.v1_0.Message;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import java.io.File;
@@ -32,6 +33,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Thiago Buarque
  */
+@FeatureFlags("LPD-27222")
 @RunWith(Arquillian.class)
 public class MessageResourceTest extends BaseMessageResourceTestCase {
 

@@ -6,6 +6,7 @@
 package com.liferay.portal.language.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -54,7 +55,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class MessageResourceImpl extends BaseMessageResourceImpl {
 
 	@Override
-	public void deleteMessage(String key, String languageId) {
+	public void deleteMessage(String key, String languageId) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-27222")) {
+			throw new UnsupportedOperationException();
+		}
+
 		if (Validator.isNull(languageId)) {
 			_ploEntryLocalService.deletePLOEntries(
 				contextCompany.getCompanyId(), key);
@@ -66,7 +71,11 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 	}
 
 	@Override
-	public Message getMessage(String key, String languageId) {
+	public Message getMessage(String key, String languageId) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-27222")) {
+			throw new UnsupportedOperationException();
+		}
+
 		Message message = new Message();
 
 		message.setKey(() -> key);
@@ -89,6 +98,10 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 
 	@Override
 	public Message postMessage(Message message) throws PortalException {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-27222")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _addOrUpdatePLOEntry(message);
 	}
 
@@ -96,6 +109,10 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 	public void postMessageImport(
 			String languageId, MultipartBody multipartBody)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-27222")) {
+			throw new UnsupportedOperationException();
+		}
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
 
@@ -135,13 +152,22 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 
 	@Override
 	public Message putMessage(Message message) throws PortalException {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-27222")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _addOrUpdatePLOEntry(message);
 	}
 
 	@Override
 	public Page<Message> read(
-		Filter filter, Pagination pagination, Sort[] sorts,
-		Map<String, Serializable> parameters, String search) {
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-27222")) {
+			throw new UnsupportedOperationException();
+		}
 
 		List<String> keys = transform(
 			_ploEntryLocalService.getPLOEntries(contextCompany.getCompanyId()),

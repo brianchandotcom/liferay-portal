@@ -1,3 +1,6 @@
 {
+	"dependencies": [
+		"liferaypartnersiteinitializercode"
+	],
 	"deploy": false
 }

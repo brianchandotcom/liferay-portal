@@ -1,11 +1,9 @@
 #!/bin/bash
 
-docker compose up -d
+pushd .. > /dev/null
 
-pushd ..
+./gradlew clean deploy
 
-./gradlew clean deploy "-Ddeploy.docker.container.id=liferay"
+popd > /dev/null
 
-popd
-
-docker logs --follow liferay
+docker compose up

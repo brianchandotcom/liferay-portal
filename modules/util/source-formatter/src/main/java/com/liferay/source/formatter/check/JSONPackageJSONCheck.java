@@ -82,8 +82,10 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		}
 
 		_checkScript(
-			fileName, scriptsJSONObject, "checkFormat", true, "--check");
-		_checkScript(fileName, scriptsJSONObject, "format", true, "format");
+			fileName, scriptsJSONObject, "checkFormat", true, "--check",
+			"check");
+		_checkScript(
+			fileName, scriptsJSONObject, "format", true, "fix", "format");
 
 		return content;
 	}

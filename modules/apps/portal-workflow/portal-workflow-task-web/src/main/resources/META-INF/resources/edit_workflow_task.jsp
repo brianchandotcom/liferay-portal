@@ -69,7 +69,7 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				%>
 
-				<c:if test="<%= workflowTaskDisplayContext.isWorkflowTaskReadOnly() == false %>">
+				<c:if test="<%= !workflowTaskDisplayContext.isReadOnly() %>">
 					<liferay-util:include page="/workflow_task_action.jsp" servletContext="<%= application %>">
 						<liferay-util:param name="mvcPath" value="/edit_workflow_task.jsp" />
 					</liferay-util:include>
@@ -180,7 +180,7 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 										<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 									</portlet:renderURL>
 
-									<c:if test="<%= workflowTaskDisplayContext.isWorkflowTaskReadOnly() == false %>">
+									<c:if test="<%= !workflowTaskDisplayContext.isReadOnly() %>">
 										<liferay-ui:icon
 											data='<%= Collections.singletonMap("title", "View") %>'
 											icon="view"

@@ -21,9 +21,9 @@ export class HeadlessAdminWorkflowApiHelper {
 	}
 
 	async getWorkflowDefinitionByName(name: string) {
-		return this.apiHelpers.get(
+		return (await this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/workflow-definitions/by-name/${name}`
-		);
+		)) as WorkflowDefinition;
 	}
 
 	async postWorkflowDefinitionSave(

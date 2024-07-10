@@ -135,6 +135,7 @@ export default function SidebarHeader({
 											? deleteContent
 											: deleteItem
 									}
+									title={Liferay.Language.get('delete')}
 								>
 									{Liferay.Language.get('delete')}
 								</ClayButton>

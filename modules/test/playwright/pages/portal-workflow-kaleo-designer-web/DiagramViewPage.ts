@@ -3,18 +3,25 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 export class DiagramViewPage {
 	readonly backButton: Locator;
+	readonly definitionInfoButton: Locator;
+	readonly deleteButton: Locator;
 	readonly diagramArea: Locator;
 	readonly diagramNodes: Locator;
 	readonly publishWorkflowDefinitionButton: Locator;
 	readonly saveWorkflowDefinitionButton: Locator;
 	readonly sourceViewButton: Locator;
+	readonly page: Page;
 
 	constructor(page: Page) {
 		this.backButton = page.getByRole('link', {name: 'Back'});
+		this.definitionInfoButton = page.getByRole('button', {
+			name: 'Definition Info',
+		});
+		this.deleteButton = page.getByTitle('Delete').last();
 		this.diagramArea = page.locator('.react-flow');
 		this.diagramNodes = page.locator('.react-flow__node');
 		this.publishWorkflowDefinitionButton = page.getByRole('button', {
@@ -24,6 +31,7 @@ export class DiagramViewPage {
 			name: 'Save',
 		});
 		this.sourceViewButton = page.locator('button[title="Source View"]');
+		this.page = page;
 	}
 
 	async clickNode(nodeLabel: string) {
@@ -32,6 +40,15 @@ export class DiagramViewPage {
 
 	async clickSourceViewButton() {
 		await this.sourceViewButton.click();
+	}
+
+	async deleteNode(nodeLabel: string) {
+		await this.clickNode(nodeLabel);
+
+		await this.page.keyboard.press('Delete');
+
+		await expect(this.page.getByText('Delete Task Node')).toBeVisible();
+		await this.deleteButton.click();
 	}
 
 	async publishWorkflowDefinition() {

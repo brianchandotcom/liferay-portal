@@ -110,6 +110,7 @@ export default function KeyboardMovementManager() {
 								portletId: source.portletId,
 								portletItemId: source.portletItemId,
 								position,
+								selectItem,
 							});
 						}
 						else {
@@ -118,6 +119,7 @@ export default function KeyboardMovementManager() {
 								groupId: source.groupId,
 								parentItemId: dropItemId,
 								position,
+								selectItem,
 								type: source.type,
 							});
 						}
@@ -127,6 +129,7 @@ export default function KeyboardMovementManager() {
 							itemType: source.type,
 							parentItemId: dropItemId,
 							position,
+							selectItem,
 						});
 					}
 				}

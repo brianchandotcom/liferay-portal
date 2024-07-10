@@ -109,14 +109,6 @@ public class TemplateInfoItemFieldSetProviderTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	public boolean isHTMLInfoFieldType(InfoField infoField) {
-		if (infoField.getInfoFieldType() instanceof HTMLInfoFieldType) {
-			return true;
-		}
-
-		return false;
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		_originalServiceContext = ServiceContextThreadLocal.getServiceContext();

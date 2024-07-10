@@ -37,25 +37,6 @@ public class RelevantRuleEngine {
 		return _relevantRuleEngine;
 	}
 
-	public static RelevantRuleEngine getInstance(File baseDir) {
-		if (_relevantRuleEngine == null) {
-			_relevantRuleEngine = new RelevantRuleEngine(baseDir);
-		}
-
-		return _relevantRuleEngine;
-	}
-
-	public static RelevantRuleEngine getInstance(
-		File baseDir, String testSuiteName) {
-
-		if (_relevantRuleEngine == null) {
-			_relevantRuleEngine = new RelevantRuleEngine(
-				baseDir, testSuiteName);
-		}
-
-		return _relevantRuleEngine;
-	}
-
 	public static RelevantRuleEngine getInstance(
 		PortalAcceptancePullRequestJob portalAcceptancePullRequestJob) {
 
@@ -106,19 +87,6 @@ public class RelevantRuleEngine {
 
 	public void setBaseDir(File baseDir) {
 		_baseDir = baseDir;
-	}
-
-	private RelevantRuleEngine(File baseDir) {
-		_baseDir = baseDir;
-
-		_relevantRuleEngine = this;
-	}
-
-	private RelevantRuleEngine(File baseDir, String testSuiteName) {
-		_baseDir = baseDir;
-		_testSuiteName = testSuiteName;
-
-		_relevantRuleEngine = this;
 	}
 
 	private RelevantRuleEngine(
@@ -261,9 +229,9 @@ public class RelevantRuleEngine {
 	private static RelevantRuleEngine _relevantRuleEngine;
 
 	private File _baseDir;
-	private Job _job;
+	private final Job _job;
 	private final Map<RelevantRule, Set<File>> _relevantRuleMap =
 		new HashMap<>();
-	private String _testSuiteName = "relevant";
+	private final String _testSuiteName;
 
 }

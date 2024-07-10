@@ -19,12 +19,6 @@ import java.util.List;
  */
 public class RelevantTestSuite {
 
-	public RelevantTestSuite(File baseDir, List<File> modifiedFiles) {
-		_modifiedFiles = modifiedFiles;
-
-		_relevantRuleEngine = RelevantRuleEngine.getInstance(baseDir);
-	}
-
 	public RelevantTestSuite(
 		PortalAcceptancePullRequestJob portalAcceptancePullRequestJob) {
 

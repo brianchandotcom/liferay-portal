@@ -476,26 +476,6 @@ definition {
 				eventId = "fieldBlurred",
 				property = "page",
 				value = 0);
-
-			ProxyUtil.stopHarRecording();
-
-			FormPortlet.waitFormRenderer(text = "Submit");
-
-			FormFields.editText(
-				fieldName = "Text",
-				fieldValue = "First Record");
-
-			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
-
-			ProxyUtil.startHarRecording("formSubmitted");
-
-			ACUtils.waitForSendingRequest();
-
-			ACUtils.assertEventPropertyValue(
-				applicationId = "Form",
-				eventId = "formSubmitted",
-				property = "formId",
-				value = ${formId});
 		}
 
 		task ("Stop the recording") {

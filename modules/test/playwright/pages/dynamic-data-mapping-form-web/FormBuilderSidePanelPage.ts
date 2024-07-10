@@ -6,19 +6,25 @@
 import {Locator, Page} from '@playwright/test';
 
 export class FormBuilderSidePanelPage {
+	readonly addSelectOptionButton: Locator;
 	readonly advancedTab: Locator;
 	readonly backButton: Locator;
 	readonly htmlAutocompleteAttributeField: Locator;
+	readonly objectFieldSelect: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
 		this.advancedTab = page.getByRole('tab', {
 			name: 'Advanced',
 		});
+		this.addSelectOptionButton = page.getByRole('button', {
+			name: 'Add Option',
+		});
 		this.backButton = page.getByRole('button', {name: 'Back'});
 		this.htmlAutocompleteAttributeField = page.getByLabel(
 			'HTML Autocomplete Attribute'
 		);
+		this.objectFieldSelect = page.getByLabel('Object Field');
 		this.page = page;
 	}
 
@@ -34,5 +40,16 @@ export class FormBuilderSidePanelPage {
 
 	async clickBackButton() {
 		await this.backButton.click();
+	}
+
+	async selectObjectField(objectFieldLabel: string) {
+		await this.objectFieldSelect.click();
+
+		const option = this.getSelectOptionLocator(objectFieldLabel);
+		await option.click();
+	}
+
+	getSelectOptionLocator(optionLabel: string) {
+		return this.page.getByRole('option', {name: optionLabel});
 	}
 }

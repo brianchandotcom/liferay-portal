@@ -9,6 +9,7 @@ import {FormsPage} from './FormsPage';
 
 export class FormBuilderPage {
 	readonly formPage: FormsPage;
+	readonly formSettingsButton: Locator;
 	readonly formTitle: Locator;
 	readonly page: Page;
 	readonly previewButton: Locator;
@@ -17,8 +18,9 @@ export class FormBuilderPage {
 	readonly newPageButton: Locator;
 
 	constructor(page: Page) {
-		this.formTitle = page.getByPlaceholder('Untitled Form');
 		this.formPage = new FormsPage(page);
+		this.formSettingsButton = page.getByRole('button', {name: 'Settings'});
+		this.formTitle = page.getByPlaceholder('Untitled Form');
 		this.page = page;
 		this.previewButton = page.getByRole('button', {name: 'Preview'});
 		this.publishButton = page.getByRole('button', {name: 'Publish'});

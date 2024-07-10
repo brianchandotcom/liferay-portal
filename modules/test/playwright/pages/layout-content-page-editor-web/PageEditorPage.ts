@@ -575,11 +575,17 @@ export class PageEditorPage {
 		const tabElement = this.page.getByRole('tab', {exact: true, name: tab});
 
 		await selectElement(tabElement);
-
-		await this.page.locator('header', {hasText: tab}).waitFor();
 	}
 
 	async isActive(fragmentId: string, isDesktop = true) {
+		const editMode = await this.editModeButton.evaluate(
+			(element) => element.textContent
+		);
+
+		if (editMode === 'Content Editing') {
+			return false;
+		}
+
 		const topper = this.getTopper(fragmentId, isDesktop);
 
 		return await topper.evaluate((element) =>
@@ -698,16 +704,22 @@ export class PageEditorPage {
 
 		await fragment.click();
 
-		const treeNode = this.page.locator(
-			`.treeview-link[data-id*="${fragmentId}"]`
+		// Click the tree node again to make sure we activate it
+		// if it's a collection
+
+		const isCollection = await fragment.evaluate((element) =>
+			element.classList.contains('page-editor__collection')
 		);
 
-		// Click the tree node again to make sure we activate it
-		// This is specific for Collection Display fragment
+		if (isCollection) {
+			const treeNode = this.page.locator(
+				`.treeview-link[data-id*="${fragmentId}"]`
+			);
 
-		await treeNode.click();
+			await treeNode.click();
 
-		await expect(treeNode).toHaveClass(/focus/);
+			await expect(treeNode).toHaveClass(/focus/);
+		}
 	}
 
 	async selectEditable(
@@ -721,7 +733,7 @@ export class PageEditorPage {
 
 		await editable.click();
 
-		await expect(editable).toBeFocused();
+		await expect(editable).toHaveClass(/page-editor__editable--active/);
 	}
 
 	async setMappedItem(entity: string, entry: string) {

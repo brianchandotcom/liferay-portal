@@ -36,25 +36,23 @@ export default function getLiferayLanguageGetPlugin(
 				async (args) => {
 					let contents = await fs.readFile(args.path, 'utf-8');
 
-					const matches = contents.matchAll(REGEXP);
+					for (const match of contents.matchAll(REGEXP)) {
+						languageJSON.keys.push(
+							match[1]
+								.trim()
+								.replaceAll("'", '')
+								.replaceAll('"', '')
+								.replaceAll('`', '')
+						);
+					}
 
-					if ([...matches].length) {
+					if (languageJSON.keys.length) {
 						contents =
 							'await import(`@liferay/language/' +
 							'${Liferay.ThemeDisplay.getLanguageId()}' +
 							projectWebContextPath +
 							'/all.js`);\n' +
 							contents;
-
-						for (const match of matches) {
-							languageJSON.keys.push(
-								match[1]
-									.trim()
-									.replaceAll("'", '')
-									.replaceAll('"', '')
-									.replaceAll('`', '')
-							);
-						}
 					}
 
 					let loader = 'jsx';

@@ -51,6 +51,7 @@ exports[`SegmentEdit renders 1`] = `
                 >
                   <input
                     class="form-control"
+                    data-testid="localized-input-button"
                     placeholder="untitled-segment"
                     readonly=""
                     type="text"
@@ -160,6 +161,7 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
                 >
                   <input
                     class="form-control"
+                    data-testid="localized-input-button"
                     placeholder="untitled-segment"
                     readonly=""
                     type="text"
@@ -318,6 +320,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                 >
                   <input
                     class="form-control"
+                    data-testid="localized-input-button"
                     placeholder="untitled-segment"
                     type="text"
                     value="Segment title"
@@ -898,6 +901,7 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
                 >
                   <input
                     class="form-control"
+                    data-testid="localized-input-button"
                     placeholder="untitled-segment"
                     readonly=""
                     type="text"

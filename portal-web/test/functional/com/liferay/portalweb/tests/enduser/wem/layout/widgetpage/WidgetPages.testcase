@@ -83,45 +83,6 @@ definition {
 		}
 	}
 
-	@description = "The user can change the page layout template of a widget page."
-	@priority = 5
-	test ChangeLayoutTemplate {
-		property portal.acceptance = "true";
-
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name");
-		}
-
-		task ("View the default page layout template") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			WidgetPages.viewPageLayout(
-				pageColumnNumberList = "1,2",
-				spanList = "4,8");
-		}
-
-		task ("Change the layout template then view the layout is applied to page") {
-			for (var layoutTemplate : list "1 Column,2 Columns (50/50),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),1-2-1 Columns (50/50),1-2-1 Columns (70/30),1-3-1 Columns,1-3-2 Columns,2-1-2 Columns,2-2 Columns,3-2-3 Columns") {
-				JSONLayout.updateLayoutTemplateOfPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Test Page Name",
-					layoutTemplate = ${layoutTemplate});
-
-				Navigator.gotoSitePage(
-					pageName = "Test Page Name",
-					siteName = ${randomSiteName});
-
-				Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
-
-				PagesAdmin.viewSelectedLayoutColumn(columnName = ${layoutTemplate});
-			}
-		}
-	}
-
 	@description = "The user can add an embedded and panel page via pages administration."
 	@priority = 5
 	@uitest

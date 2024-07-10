@@ -24,39 +24,6 @@ definition {
 		}
 	}
 
-	@description = "Can add and delete a web content display widget on page."
-	@priority = 5
-	@uitest
-	test AddAndDeleteWidget {
-		property portal.acceptance = "true";
-
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name");
-		}
-
-		task ("Add a Web Content Display widget to page") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			Portlet.addPG(portletName = "Web Content Display");
-		}
-
-		task ("View Web Content Display is shown") {
-			Portlet.viewPG(portletName = "Web Content Display");
-		}
-
-		task ("Delete Web Content Display widget") {
-			Portlet.deletePG(portletName = "Web Content Display");
-		}
-
-		task ("View Web Content Display is not shown") {
-			Portlet.viewNoSpecificPG(portletName = "Web Content Display");
-		}
-	}
-
 	@description = "Can add a translation to parent and child page."
 	@priority = 3
 	test AddTranslationToPageName {

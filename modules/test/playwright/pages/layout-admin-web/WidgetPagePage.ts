@@ -79,6 +79,23 @@ export class WidgetPagePage {
 		);
 	}
 
+	async deletePortlet(portletName: string) {
+		this.page.on('dialog', async (dialog) => {
+			await dialog.accept();
+		});
+
+		await this.page
+			.locator('.portlet-topper', {hasText: portletName})
+			.getByLabel('Options')
+			.click();
+
+		await this.page
+			.getByRole('menuitem', {
+				name: 'Remove',
+			})
+			.click();
+	}
+
 	async openAddPanel() {
 		const isOpen = await this.addButton.evaluate((element) =>
 			element.classList.contains('open')

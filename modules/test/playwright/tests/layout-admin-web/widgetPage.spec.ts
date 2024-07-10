@@ -151,6 +151,14 @@ test('LPS-108216 Can hide and show portlet header of existing visible portlets o
 	// Recover original state
 
 	await widgetPagePage.toggleControls('visible');
+
+	// Delete Web Content Display and check it's not displayed
+
+	await widgetPagePage.deletePortlet('Blogs Aggregator');
+
+	await expect(
+		page.locator('.portlet-topper', {hasText: 'Blogs Aggregator'})
+	).not.toBeVisible();
 });
 
 test('View web content is shown in Web Content Display after be added via content panel', async ({

@@ -54,31 +54,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-176184. Confirm that when 'Name Field' is not provided, it is filled with the same name as field name."
-	@ignore = "true"
-	@priority = 3
-	test AssertNameIsFilledByDefault {
-		task ("And adds a new filter") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("And Choose an ID in the Filter By field") {
-			DataSetAdmin.selectFilters(filterType = "id");
-		}
-
-		task ("And Clicks Save") {
-			Button.clickSave();
-		}
-
-		task ("Then Confirm that the name of the saved filter is the same name as the chosen field") {
-			AssertElementPresent(
-				chosenFilter = "id",
-				key_tableColumn = 1,
-				key_tableRow = 1,
-				locator1 = "DataSet#FILTER_TABLE_CELL");
-		}
-	}
-
 	@description = "LPS-186878 Confirm that the translated option appears when selecting pt_BR in the translation modal"
 	@ignore = "true"
 	@priority = 3
@@ -339,84 +314,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-176187. Confirm that the fields Name and Filter by are present in the New Filter modal."
-	@ignore = "true"
-	@priority = 3
-	test CanAssertFieldsIsPresent {
-		task ("And Clicks Save") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("When the new filter modal is displayed") {
-			AssertElementPresent(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "New Filter");
-		}
-
-		task ("Then asserts the "Name" and "Filter By" fields are present") {
-			AssertElementPresent(
-				key_label = "Name",
-				locator1 = "DataSet#LABEL");
-
-			AssertElementPresent(
-				key_label = "Filter By",
-				locator1 = "DataSet#LABEL");
-		}
-
-		task ("And Asserts the Source options field is not present") {
-			AssertElementNotPresent(
-				key_label = "Source Options",
-				locator1 = "DataSet#LABEL");
-		}
-	}
-
-	@description = "LPS-183056. Confirm that the "Filter by" field is not editable after the filter is created."
-	@ignore = "true"
-	@priority = 4
-	test CanAssertFilterByIsNotEditable {
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bike",
-				itemName = "bike",
-				picklistName = "Custom Picklist");
-		}
-
-		task ("And go to the filters tab inside the View test and create a new filter") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Type(
-					locator1 = "DataSet#NEW_FILTER_NAME",
-					value1 = "TestFilter");
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
-
-		task ("And Preselected Values: bike") {
-			DataSetAdmin.selectPreselectedValue(
-				key_sortOption = "bike",
-				picklist = "Custom Picklist",
-				preselectType = "bike");
-		}
-
-		task ("When the user tries to edit the filter") {
-			Click(
-				key_fieldName = "creator",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("Then Assert the Filter by field is not editable") {
-			AssertNotEditable(locator1 = "DataSet#FILTER_BY_SELECT");
-		}
-	}
-
 	@description = "LPS-176188. Confirm that the field is deleted and a successful message is displayed."
 	@ignore = "true"
 	@priority = 5
@@ -670,27 +567,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-176187. Confirm that the Source Option is displayed in the New Filter Modal."
-	@ignore = "true"
-	@priority = 3
-	test CanAssertSourceOption {
-		task ("And selects the option "creator" in the Filter By field") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
-
-		task ("Then asserts the source options field is displayed // is labeled as "Select" ") {
-			AssertElementPresent(
-				key_label = "Source Options",
-				locator1 = "DataSet#LABEL");
-		}
-	}
-
 	@description = "LPS-183056. Confirm the change of the Source Options from Cars to Names."
 	@ignore = "true"
 	@priority = 4
@@ -762,40 +638,6 @@ definition {
 			AssertElementPresent(
 				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
 				value1 = "Names");
-		}
-	}
-
-	@description = "LPS-176187. Confirm the text message in the Source Option Tooltip."
-	@ignore = "true"
-	@priority = 3
-	test CanAssertSourceOptionTooltip {
-		task ("And selects an option "creator" in the Filter By field") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
-
-		task ("Then asserts there is a tooltip icon next to the Source Option field name") {
-			AssertElementPresent(
-				key_label = "Source Options",
-				locator1 = "CommerceEntry#LABEL_TOOLTIP_ICON");
-		}
-
-		task ("When the mouse is over the tooltip icon") {
-			MouseOver(
-				key_label = "Source Options",
-				locator1 = "CommerceEntry#LABEL_TOOLTIP_ICON");
-		}
-
-		task ("Then the tooltip message is shown: "Choose a Picklist to associate to this filter."") {
-			AssertHTMLSourceTextPresent(
-				key_title = "Choose a picklist to associate with this filter",
-				locator1 = "DataSet#FILTER_TOOLTIP",
-				value1 = "Choose a picklist to associate with this filter");
 		}
 	}
 
@@ -1192,25 +1034,6 @@ definition {
 		task ("Then confirm that the filter name has no changed") {
 			AssertElementPresent(
 				chosenFilter = "Test Filter",
-				key_tableColumn = 1,
-				key_tableRow = 1,
-				locator1 = "DataSet#FILTER_TABLE_CELL");
-		}
-	}
-
-	@description = "LPS-176184. Confirm that the text Select is labeling the  Filter By Field"
-	@ignore = "true"
-	@priority = 5
-	test CanCreateFilters {
-		task ("And adds a new filter") {
-			DataSetAdmin.createFilters(
-				filterName = "Test Filter",
-				key_filterList = "id");
-		}
-
-		task ("Then asserts the selected option is actually displayed") {
-			AssertElementPresent(
-				chosenFilter = "id",
 				key_tableColumn = 1,
 				key_tableRow = 1,
 				locator1 = "DataSet#FILTER_TABLE_CELL");
@@ -1909,69 +1732,6 @@ definition {
 			AssertElementPresent(
 				key_text = "Save",
 				locator1 = "DataSet#ANY_BUTTON_DISABLED");
-		}
-	}
-
-	@description = "LPS-183056. Confirm that the Name field cannot be empty."
-	@ignore = "true"
-	@priority = 4
-	test TheNameFieldCannotBeEmpty {
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bike",
-				itemName = "bike",
-				picklistName = "Custom Picklist");
-		}
-
-		task ("And go to the filters tab inside the View test") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Type(
-					locator1 = "DataSet#NEW_FILTER_NAME",
-					value1 = "TestFilter");
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
-
-		task ("And Preselected Values: bike") {
-			DataSetAdmin.selectPreselectedValue(
-				key_sortOption = "bike",
-				picklist = "Custom Picklist",
-				preselectType = "bike");
-		}
-
-		task ("When the user tries to edit the filter") {
-			Click(
-				key_fieldName = "creator",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("And leaves the name field blank and saved") {
-			DoubleClick(locator1 = "DataSet#NEW_FILTER_NAME");
-
-			KeyPress(
-				locator1 = "DataSet#NEW_FILTER_NAME",
-				value1 = "\BACK_SPACE");
-
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-		}
-
-		task ("Then the filter's name is changed, receiving the value "creator"") {
-			AssertElementPresent(
-				chosenFilter = "creator",
-				key_tableColumn = 1,
-				key_tableRow = 1,
-				locator1 = "DataSet#FILTER_TABLE_CELL");
 		}
 	}
 

@@ -34,7 +34,12 @@ public abstract class BaseTestSelector implements TestSelector {
 			RelevantRuleEngine.getInstance();
 
 		_baseDir = relevantRuleEngine.getBaseDir();
+
 		_job = relevantRuleEngine.getJob();
+
+		if (_job == null) {
+			throw new RuntimeException("Job is not set for test selector");
+		}
 	}
 
 	public String getBatchName() {

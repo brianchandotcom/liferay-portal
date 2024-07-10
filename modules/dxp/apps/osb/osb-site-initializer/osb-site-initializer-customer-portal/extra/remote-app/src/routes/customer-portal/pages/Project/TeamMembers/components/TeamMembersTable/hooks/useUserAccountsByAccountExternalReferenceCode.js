@@ -5,7 +5,7 @@
 
 import {NetworkStatus} from '@apollo/client';
 import {useEffect, useMemo, useState} from 'react';
-import {associateContactRoleNameByEmailByProject} from '~/common/services/liferay/rest/raysource/LicenseKeys';
+import {addContactRoleNameByEmailByProject} from '~/common/services/liferay/rest/raysource/LicenseKeys';
 import useSearchTerm from '../../../../../../../../common/hooks/useSearchTerm';
 import {useGetUserAccountsByAccountExternalReferenceCode} from '../../../../../../../../common/services/liferay/graphql/user-accounts';
 import {
@@ -322,7 +322,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 									accountRole.raysourceName
 								);
 
-							await associateContactRoleNameByEmailByProject({
+							await addContactRoleNameByEmailByProject({
 								accountKey: project.accountKey,
 								emailURI: encodeURI(userAccount.emailAddress),
 								firstName,

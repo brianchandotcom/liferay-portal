@@ -149,7 +149,7 @@ export async function getExportedSelectedLicenseKeys(
 	return response;
 }
 
-export async function associateContactRoleNameByEmailByProject({
+export async function addContactRoleNameByEmailByProject({
 	accountKey,
 	emailURI,
 	firstName,

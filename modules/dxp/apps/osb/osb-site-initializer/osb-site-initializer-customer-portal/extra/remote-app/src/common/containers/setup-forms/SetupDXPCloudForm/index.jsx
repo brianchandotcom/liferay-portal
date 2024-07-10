@@ -13,13 +13,13 @@ import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import SearchBuilder from '~/common/core/SearchBuilder';
 import NotificationQueueService from '~/common/services/actions/notificationAction';
 import {
+	addContactRoleLiferay,
+	addContactRoleRaysource,
 	HIGH_PRIORITY_CONTACT_CATEGORIES,
-	actLiferayContact,
-	actRaysourceContact,
-	associateContactRoleLiferay,
-	associateContactRoleRaysource,
 	removeContactRoleLiferay,
 	removeContactRoleRaysource,
+	updateLiferayContact,
+	updateRaysourceContact
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import {useOnboarding} from '~/routes/onboarding/context';
 import {
@@ -287,27 +287,30 @@ const SetupDXPCloudPage = ({
 		if (!alreadySubmitted && dxp) {
 			try {
 				if (featureFlags.includes('LPS-159127')) {
-					await actRaysourceContact(
+					await updateRaysourceContact(
 						removeContactRoleRaysource,
 						removeHighPriorityContact,
 						project,
 						sessionId,
 						provisioningServerAPI
 					);
-					await actRaysourceContact(
-						associateContactRoleRaysource,
+
+					await updateRaysourceContact(
+						addContactRoleRaysource,
 						addHighPriorityContact,
 						project,
 						sessionId,
 						provisioningServerAPI
 					);
-					await actLiferayContact(
+
+					await updateLiferayContact(
 						addHighPriorityContact,
-						associateContactRoleLiferay,
+						addContactRoleLiferay,
 						project,
 						client
 					);
-					await actLiferayContact(
+
+					await updateLiferayContact(
 						removeHighPriorityContact,
 						removeContactRoleLiferay,
 						project,
@@ -319,16 +322,18 @@ const SetupDXPCloudPage = ({
 				setIsLoadingSubmitButton(false);
 
 				handlePage(true);
-			} catch (error) {
+			}
+			catch (error) {
 				if (error.cause === STATUS_CODE.conflict) {
 					try {
-						await actLiferayContact(
+						await updateLiferayContact(
 							addHighPriorityContact,
-							associateContactRoleLiferay,
+							addContactRoleLiferay,
 							project,
 							client
 						);
-						await actLiferayContact(
+
+						await updateLiferayContact(
 							removeHighPriorityContact,
 							removeContactRoleLiferay,
 							project,
@@ -339,10 +344,12 @@ const SetupDXPCloudPage = ({
 						setIsLoadingSubmitButton(false);
 
 						handlePage(true);
-					} catch (error) {
+					}
+					catch (error) {
 						setIsLoadingSubmitButton(false);
 					}
-				} else {
+				}
+				else {
 					setIsLoadingSubmitButton(false);
 				}
 			}

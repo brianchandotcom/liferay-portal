@@ -14,6 +14,8 @@ import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.io.File;
 
+import java.util.List;
+
 import org.junit.After;
 
 /**
@@ -61,6 +63,13 @@ public abstract class BaseRelevantRuleTestCase {
 				"test-portal-acceptance-pullrequest(master)", null,
 				portalGitWorkingDirectory, upstreamBranchName, null,
 				repositoryName, "relevant", upstreamBranchName);
+
+		List<File> jobPropertiesFiles =
+			_portalAcceptancePullRequestJob.getJobPropertiesFiles();
+
+		jobPropertiesFiles.clear();
+
+		jobPropertiesFiles.add(new File(getBaseDir(), "test.properties"));
 
 		return _portalAcceptancePullRequestJob;
 	}

@@ -76,6 +76,16 @@ test.describe('Filters in Data Set Manager', () => {
 		filtersPage,
 		page,
 	}) => {
+		await test.step('Can not create a selection filter without filling mandatory fields', async () => {
+			await filtersPage.openNewFilterModal({dropdownItemLabel: 'Selection'});
+
+			await filtersPage.saveAddFilterModal();
+
+			await expect(page.getByText('This field is required.')).toHaveCount(3);
+
+			await filtersPage.cancelAddFilterModal();
+		});
+
 		await test.step('Create a selection filter from picklist source', async () => {
 			await filtersPage.createSelectionFilterPicklist({
 				filterBy: 'externalReferenceCode',
@@ -86,6 +96,8 @@ test.describe('Filters in Data Set Manager', () => {
 				source: picklistName,
 				sourceType: 'Object Picklist',
 			});
+
+			await filtersPage.saveAddFilterModal();
 		});
 
 		await test.step('Check that the selection filter is in the list', async () => {
@@ -106,6 +118,8 @@ test.describe('Filters in Data Set Manager', () => {
 				source: picklistName,
 				sourceType: 'Object Picklist',
 			});
+
+			await filtersPage.saveAddFilterModal();
 		});
 
 		await test.step('Check that the selection filter is also the list', async () => {
@@ -136,6 +150,8 @@ test.describe('Filters in Data Set Manager', () => {
 				selectionType: 'Single',
 				sourceType: 'API REST Application',
 			});
+
+			await filtersPage.saveAddFilterModal();
 		});
 
 		await test.step('Check that the selection filter is in the list', async () => {
@@ -163,6 +179,8 @@ test.describe('Filters in Data Set Manager', () => {
 				source: picklistName,
 				sourceType: 'Object Picklist',
 			});
+
+			await filtersPage.saveAddFilterModal();
 		});
 
 		await test.step('Open the edit filter modal', async () => {

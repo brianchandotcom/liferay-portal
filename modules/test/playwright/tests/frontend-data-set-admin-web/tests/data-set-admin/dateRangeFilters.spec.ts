@@ -107,6 +107,8 @@ test.describe('Date range filter creation, edition and cancel', () => {
 				filterBy: DATE_FIELD_NAME,
 				name: filterName,
 			});
+
+			await filtersPage.saveAddFilterModal();
 		});
 
 		await test.step('Assert filter is saved', async () => {

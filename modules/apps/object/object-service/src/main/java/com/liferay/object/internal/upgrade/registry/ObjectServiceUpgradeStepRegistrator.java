@@ -5,6 +5,7 @@
 
 package com.liferay.object.internal.upgrade.registry;
 
+import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
@@ -459,10 +460,18 @@ public class ObjectServiceUpgradeStepRegistrator
 			"9.1.1", "9.2.0",
 			new com.liferay.object.internal.upgrade.v9_2_0.
 				ObjectDefinitionUpgradeProcess());
+
+		registry.register(
+			"9.2.0", "9.2.1",
+			new com.liferay.object.internal.upgrade.v9_2_1.
+				ObjectActionUpgradeProcess(_notificationTemplateLocalService));
 	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

@@ -10,9 +10,9 @@ package com.liferay.layout.importer;
  */
 public class LayoutsImporterResultEntry {
 
-	public static final int COLLECTION = 0;
+	public static final int TYPE_COLLECTION = 0;
 
-	public static final int ENTRY = 1;
+	public static final int TYPE_ENTRY = 1;
 
 	public LayoutsImporterResultEntry(String name, int type, Status status) {
 		_name = name;
@@ -93,7 +93,7 @@ public class LayoutsImporterResultEntry {
 	private String _errorMessage;
 	private final String _name;
 	private final Status _status;
-	private int _type = ENTRY;
+	private int _type = TYPE_ENTRY;
 	private String[] _warningMessages;
 
 }

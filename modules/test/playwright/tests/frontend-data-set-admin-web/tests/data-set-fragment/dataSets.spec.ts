@@ -106,7 +106,6 @@ test.describe('Data Set Fragment', () => {
 
 		await test.step('Configure Data Set fragment', async () => {
 			await fdsFragmentPage.configureEmptyDataSetFragment({
-				dataSetLabel,
 				layout,
 			});
 		});

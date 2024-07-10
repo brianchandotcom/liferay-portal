@@ -54,6 +54,11 @@ export class PageConfigurationPage {
 
 	async save() {
 		await this.saveButton.click();
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:The page was updated successfully.'
+		);
 	}
 
 	async setFriendlyURL(friendlyURL: string, language: 'spanish' | 'english') {

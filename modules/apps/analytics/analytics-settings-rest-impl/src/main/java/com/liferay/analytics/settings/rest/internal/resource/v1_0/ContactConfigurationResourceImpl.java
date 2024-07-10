@@ -32,6 +32,10 @@ public class ContactConfigurationResourceImpl
 
 	@Override
 	public ContactConfiguration getContactConfiguration() throws Exception {
+		if (_contactConfiguration != null) {
+			return _contactConfiguration;
+		}
+
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsSettingsManager.getAnalyticsConfiguration(
 				contextCompany.getCompanyId());
@@ -96,6 +100,8 @@ public class ContactConfigurationResourceImpl
 				"syncedUserGroupIds",
 				contactConfiguration.getSyncedUserGroupIds()
 			).build());
+
+		_contactConfiguration = contactConfiguration;
 	}
 
 	@Activate
@@ -110,6 +116,8 @@ public class ContactConfigurationResourceImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	private ContactConfiguration _contactConfiguration;
 
 	@Reference
 	private Http _http;

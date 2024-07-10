@@ -1,0 +1,15 @@
+.lfr-object__action-builder-notification {
+	&-option {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+
+		&-label {
+			width: min-content;
+		}
+	}
+
+	&-then {
+		width: 320px;
+	}
+}

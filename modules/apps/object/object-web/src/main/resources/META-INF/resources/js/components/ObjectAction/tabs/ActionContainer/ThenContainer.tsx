@@ -18,6 +18,7 @@ import {
 
 import './ThenContainer.scss';
 import {SingleSelectAddObjectEntry} from './SingleSelectAddObjectEntry';
+import {SingleSelectNotification} from './SingleSelectNotification';
 
 interface ThenContainerProps {
 	disabled: boolean;
@@ -39,7 +40,7 @@ interface ThenContainerProps {
 	values: Partial<ObjectAction>;
 }
 
-type NotificationTemplateAction = {
+export type NotificationTemplateAction = {
 	label: string;
 	type: string;
 	value: string;
@@ -172,51 +173,12 @@ export function ThenContainer({
 				)}
 
 				{values.objectActionExecutorKey === 'notification' && (
-					<SingleSelect<NotificationTemplateAction>
-						className="lfr-object__action-builder-notification-then"
-						disabled={values.system}
-						error={errors.objectActionExecutorKey}
-						items={notificationTemplates}
-						onSelectionChange={(value) => {
-							setValues({
-								parameters: {
-									...values.parameters,
-									notificationTemplateExternalReferenceCode:
-										value as string,
-								},
-							});
-						}}
-						required
-						selectedKey={
-							values.parameters
-								?.notificationTemplateExternalReferenceCode
-						}
-					>
-						{(item) => (
-							<Option key={item.value} textValue={item.label}>
-								<div className="lfr-object__action-builder-notification-option">
-									<Text size={3} weight="semi-bold">
-										{item.label}
-									</Text>
-
-									<ClayLabel
-										className="lfr-object__action-builder-notification-option-label"
-										displayType={
-											item.type === 'email'
-												? 'success'
-												: 'info'
-										}
-									>
-										{item.type === 'email'
-											? Liferay.Language.get('email')
-											: Liferay.Language.get(
-													'user-notification'
-												)}
-									</ClayLabel>
-								</div>
-							</Option>
-						)}
-					</SingleSelect>
+					<SingleSelectNotification
+						errors={errors}
+						notificationTemplates={notificationTemplates}
+						setValues={setValues}
+						values={values}
+					/>
 				)}
 			</div>
 		</Card>

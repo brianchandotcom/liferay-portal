@@ -78,6 +78,7 @@ export default function EditListTypeDefinition({
 				<>
 					<Card title={Liferay.Language.get('basic-info')}>
 						<InputLocalized
+							aria-label={Liferay.Language.get('name')}
 							disabled={readOnly}
 							error={errors.name_i18n}
 							label={Liferay.Language.get('name')}
@@ -89,6 +90,9 @@ export default function EditListTypeDefinition({
 						/>
 
 						<Input
+							aria-label={Liferay.Language.get(
+								'external-reference-code'
+							)}
 							autoComplete="off"
 							disabled={values?.system}
 							error={errors.externalReferenceCode}

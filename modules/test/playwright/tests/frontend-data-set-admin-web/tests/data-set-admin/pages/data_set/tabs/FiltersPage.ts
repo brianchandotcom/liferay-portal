@@ -25,6 +25,7 @@ interface NewFilterModal {
 }
 
 interface NewClientExtensionFilterModal extends NewFilterModal {
+	clientExtensionDropdown: Locator;
 	noClientExtensionsAvailableAlert: Locator;
 }
 
@@ -85,6 +86,7 @@ export class FiltersPage {
 		};
 		this.newClientExtensionFilterModal = {
 			...this.newFilterModal,
+			clientExtensionDropdown: page.locator('label').filter({hasText: 'Client ExtensionRequired'}),
 			noClientExtensionsAvailableAlert: page.getByLabel('New Client Extension Filter')
 				.locator('div')
 				.filter({ hasText: 'InfoNo frontend data set filter client extensions are available. Add a client ex' })
@@ -161,6 +163,27 @@ export class FiltersPage {
 		await this.newFilterModal.cancelButton.click();
 	}
 
+	async closeAddFilterModal() {
+		await this.newFilterModal.closeButton.click();
+	}
+
+	async createClientExtensionFilter({
+		filterBy,
+		name,
+		clientExtension
+	}: IClientExtensionFilter) {
+		await this.openNewFilterModal({
+			dropdownItemLabel: 'Client Extension',
+		});
+
+		await this.newClientExtensionFilterModal.nameInput.click();
+		await this.newClientExtensionFilterModal.nameInput.fill(name);
+		await this.newClientExtensionFilterModal.filterBySelect.click();
+		await this.page.getByRole('option', {name: filterBy}).click();
+		await this.newClientExtensionFilterModal.clientExtensionDropdown.click();
+		await this.page.getByRole('option', {name: clientExtension}).click();
+	}
+
 	async createDateRangeFilter({filterBy, from, name, to}: IDateRangeFilter) {
 		await this.openNewFilterModal({
 			dropdownItemLabel: 'Date Range',
@@ -184,8 +207,6 @@ export class FiltersPage {
 		if (to) {
 			await this.newDateRangeFilterModal.toInput.fill(to);
 		}
-
-		await this.saveAddFilterModal();
 	}
 
 	async createSelectionFilterApiHeadless({
@@ -256,7 +277,6 @@ export class FiltersPage {
 
 		await this.page.getByText(selectionType).click();
 		await this.page.locator('label').filter({hasText: filterMode}).click();
-		await this.saveAddFilterModal();
 	}
 
 	async createSelectionFilterPicklist({
@@ -293,8 +313,6 @@ export class FiltersPage {
 			await this.page.locator('label').filter({hasText: filterMode}).click();
 		}
 		await this.page.getByText(selectionType).click();
-
-		await this.saveAddFilterModal();
 	}
 
 	getRowByText(text: string) {
@@ -335,6 +353,5 @@ export class FiltersPage {
 
 	async saveAddFilterModal() {
 		await this.newFilterModal.saveButton.click();
-		await this.newFilterModal.saveButton.waitFor({state: 'hidden'});
 	}
 }

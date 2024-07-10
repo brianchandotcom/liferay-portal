@@ -68,7 +68,7 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
 		});
 	});
 
-    test('Can create a Client Extension Filter in DSM', async({
+    test('Can not create a Client Extension Filter in DSM', async({
         dataSetManagerApiHelpers,
         filtersPage,
         page,
@@ -91,7 +91,7 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
             });
         });
 
-        await test.step('Can not create a client extension filter without mandatory fields', async () => {
+        await test.step('Check that mandatory missing fields display an error message', async () => {
 			await expect(filtersPage.newFilterButton).toBeVisible();
 
 		    await filtersPage.newFilterButton.click();

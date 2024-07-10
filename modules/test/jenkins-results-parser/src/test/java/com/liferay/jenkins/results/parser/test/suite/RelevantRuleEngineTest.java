@@ -70,7 +70,8 @@ public class RelevantRuleEngineTest {
 					new File(_baseDir, "modules/module-1/text_file_1.txt")));
 
 		List<String> expectedRelevantRuleNames = Arrays.asList(
-			"modules-integration-0-rule", "playwright-1-rule");
+			"modules-integration-0-rule", "modules-integration-1-rule",
+			"playwright-1-rule");
 
 		List<String> actualRelevantRuleNames = new ArrayList<>();
 
@@ -141,7 +142,7 @@ public class RelevantRuleEngineTest {
 
 		List<String> expectedRelevantRuleNames = Arrays.asList(
 			"functional-smoke-0-rule", "modules-integration-0-rule",
-			"playwright-1-rule");
+			"modules-integration-1-rule", "playwright-1-rule");
 
 		List<String> actualRelevantRuleNames = new ArrayList<>();
 

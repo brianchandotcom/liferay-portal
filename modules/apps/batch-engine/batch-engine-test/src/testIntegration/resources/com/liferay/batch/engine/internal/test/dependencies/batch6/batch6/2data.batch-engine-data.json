@@ -2,10 +2,7 @@
 	"configuration": {
 		"callbackURL": null,
 		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-		"companyId": 11110,
-		"parameters": null,
-		"userId": 11111,
-		"version": "v1.0"
+		"parameters": null
 	},
 	"items": [
 		{

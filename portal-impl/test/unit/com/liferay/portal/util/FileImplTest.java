@@ -106,19 +106,19 @@ public class FileImplTest {
 
 	@Test
 	public void testCopyAndDeltreeConcurrently() throws Exception {
-		File directory1 = new File(
-			System.getProperty("java.io.tmpdir"), "tempDir1");
+		File directory = new File(
+			System.getProperty("java.io.tmpdir"), "tempDir");
 
-		directory1.mkdir();
+		directory.mkdir();
 
-		File file1 = new File(directory1, "testFile1");
+		File file = new File(directory, "testFile");
 
-		file1.createNewFile();
+		file.createNewFile();
 
 		CountDownLatch countDownLatch1 = new CountDownLatch(1);
 		CountDownLatch countDownLatch2 = new CountDownLatch(1);
 
-		Thread concurrentDeleteThread = new Thread(
+		Thread thread = new Thread(
 			() -> {
 				try {
 					countDownLatch2.await();
@@ -127,18 +127,18 @@ public class FileImplTest {
 					throw new RuntimeException(interruptedException);
 				}
 
-				_fileImpl.deltree(directory1);
+				_fileImpl.deltree(directory);
 
 				countDownLatch1.countDown();
 			});
 
-		concurrentDeleteThread.start();
+		thread.start();
 
-		File newDirectory1 = new File(
-			System.getProperty("java.io.tmpdir"), "newTempDir1");
+		File newDirectory = new File(
+			System.getProperty("java.io.tmpdir"), "newTempDir");
 
 		_fileImpl.copyDirectory(
-			new File(directory1.getPath()) {
+			new File(directory.getPath()) {
 
 				@Override
 				public File[] listFiles() {
@@ -155,13 +155,13 @@ public class FileImplTest {
 				}
 
 			},
-			newDirectory1);
+			newDirectory);
 
-		concurrentDeleteThread.join();
+		thread.join();
 
-		File newFile1 = new File(newDirectory1, "testFile1");
+		File newFile = new File(newDirectory, "testFile");
 
-		Assert.assertFalse(newFile1.exists());
+		Assert.assertFalse(newFile.exists());
 	}
 
 	@Test
@@ -262,15 +262,15 @@ public class FileImplTest {
 
 	@Test
 	public void testDeltreeConcurrently() throws Exception {
-		File directory1 = new File(
-			System.getProperty("java.io.tmpdir"), "tempDir1");
+		File directory = new File(
+			System.getProperty("java.io.tmpdir"), "tempDir");
 
-		directory1.mkdir();
+		directory.mkdir();
 
 		CountDownLatch countDownLatch1 = new CountDownLatch(1);
 		CountDownLatch countDownLatch2 = new CountDownLatch(1);
 
-		Thread concurrentDeleteThread = new Thread(
+		Thread thread = new Thread(
 			() -> {
 				try {
 					countDownLatch2.await();
@@ -279,15 +279,15 @@ public class FileImplTest {
 					throw new RuntimeException(interruptedException);
 				}
 
-				directory1.delete();
+				directory.delete();
 
 				countDownLatch1.countDown();
 			});
 
-		concurrentDeleteThread.start();
+		thread.start();
 
 		_fileImpl.deltree(
-			new File(directory1.getPath()) {
+			new File(directory.getPath()) {
 
 				@Override
 				public File[] listFiles() {
@@ -305,9 +305,9 @@ public class FileImplTest {
 
 			});
 
-		concurrentDeleteThread.join();
+		thread.join();
 
-		Assert.assertFalse(directory1.exists());
+		Assert.assertFalse(directory.exists());
 	}
 
 	@Test

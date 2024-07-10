@@ -141,18 +141,18 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 		languageId = StringUtil.replace(
 			languageId, CharPool.DASH, CharPool.UNDERLINE);
 
-		String[] languageParts = languageId.split(StringPool.UNDERLINE);
+		String[] parts = languageId.split(StringPool.UNDERLINE);
 
-		if (languageParts.length < 2) {
+		if (parts.length < 2) {
 			return languageId;
 		}
 
 		languageId =
-			StringUtil.lowerCase(languageParts[0]) + StringPool.UNDERLINE +
-				StringUtil.upperCase(languageParts[1]);
+			StringUtil.lowerCase(parts[0]) + StringPool.UNDERLINE +
+				StringUtil.upperCase(parts[1]);
 
-		if (languageParts.length == 3) {
-			return languageId + StringPool.UNDERLINE + languageParts[2];
+		if (parts.length == 3) {
+			return languageId + StringPool.UNDERLINE + parts[2];
 		}
 
 		return languageId;

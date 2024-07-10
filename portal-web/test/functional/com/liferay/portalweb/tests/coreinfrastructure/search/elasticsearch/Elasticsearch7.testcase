@@ -705,7 +705,7 @@ definition {
 								"must": [
 									{
 										"match": {
-											"userName": "test test"
+											"screenName": "default-service-account"
 										}
 									},
 									{
@@ -729,13 +729,13 @@ definition {
 		}
 
 		task ("Assert that search results are still returned during the reindex") {
-			SearchPage.openSearchPage(searchTerm = "test");
+			SearchPage.openSearchPage(searchTerm = "tree");
 
 			AssertElementPresent(locator1 = "Search#REINDEX_IN_PROGRESS_INDICATOR");
 
 			SearchResults.viewSearchResults(
-				searchAssetTitle = "Test Test",
-				searchAssetType = "User");
+				searchAssetTitle = "tree.png",
+				searchAssetType = "Document");
 		}
 
 		task ("After the reindex is complete, assert the timestamp value for the 'Test Test' user document has updated in the index") {

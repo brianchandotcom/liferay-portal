@@ -72,9 +72,7 @@ public class ProductMenuDisplayContext {
 		Collections.reverse(applicationsMenuChildPanelCategories);
 
 		_childPanelCategories.addAll(
-			0,
-			_filterPanelCategories(
-				applicationsMenuChildPanelCategories));
+			0, _filterPanelCategories(applicationsMenuChildPanelCategories));
 
 		return _childPanelCategories;
 	}

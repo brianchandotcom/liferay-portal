@@ -7,6 +7,7 @@ package com.liferay.object.service.impl;
 
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
+import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.action.executor.ObjectActionExecutor;
@@ -427,6 +428,39 @@ public class ObjectActionLocalServiceImpl
 		}
 	}
 
+	private boolean _isUsePreferredLanguageForGuestsSupported(
+			String objectActionExecutorKey, String objectActionTriggerKey,
+			UnicodeProperties parametersUnicodeProperties)
+		throws PortalException {
+
+		if (!Objects.equals(
+				objectActionExecutorKey,
+				ObjectActionExecutorConstants.KEY_NOTIFICATION)) {
+
+			return false;
+		}
+
+		NotificationTemplate notificationTemplate =
+			_notificationTemplateLocalService.getNotificationTemplate(
+				GetterUtil.getLong(
+					parametersUnicodeProperties.get("notificationTemplateId")));
+
+		if (Objects.equals(
+				notificationTemplate.getType(),
+				NotificationConstants.TYPE_EMAIL) &&
+			(Objects.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD) ||
+			 Objects.equals(
+				 objectActionTriggerKey,
+				 ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _validateErrorMessage(
 			Map<Locale, String> errorMessageMap, String objectActionTriggerKey)
 		throws PortalException {
@@ -788,6 +822,17 @@ public class ObjectActionLocalServiceImpl
 								getNotificationTemplateId()));
 				}
 			}
+
+			if (Objects.isNull(
+					parametersUnicodeProperties.get(
+						"usePreferredLanguageForGuests")) &&
+				_isUsePreferredLanguageForGuestsSupported(
+					objectActionExecutorKey, objectActionTriggerKey,
+					parametersUnicodeProperties)) {
+
+				parametersUnicodeProperties.put(
+					"usePreferredLanguageForGuests", "true");
+			}
 		}
 		else if (Objects.equals(
 					objectActionExecutorKey,
@@ -798,17 +843,12 @@ public class ObjectActionLocalServiceImpl
 			}
 		}
 
-		if ((parametersUnicodeProperties.get("usePreferredLanguageForGuests") !=
-				null) &&
-			!(Objects.equals(
-				objectActionExecutorKey,
-				ObjectActionExecutorConstants.KEY_NOTIFICATION) &&
-			  (Objects.equals(
-				  objectActionTriggerKey,
-				  ObjectActionTriggerConstants.KEY_ON_AFTER_ADD) ||
-			   Objects.equals(
-				   objectActionTriggerKey,
-				   ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE)))) {
+		if (!Objects.isNull(
+				parametersUnicodeProperties.get(
+					"usePreferredLanguageForGuests")) &&
+			!_isUsePreferredLanguageForGuestsSupported(
+				objectActionExecutorKey, objectActionTriggerKey,
+				parametersUnicodeProperties)) {
 
 			throw new ObjectActionParametersException(
 				"The parameter \"usePreferredLanguageForGuests\" is invalid " +

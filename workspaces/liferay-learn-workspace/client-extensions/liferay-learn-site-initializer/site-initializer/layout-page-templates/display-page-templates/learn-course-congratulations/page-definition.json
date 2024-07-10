@@ -656,7 +656,7 @@
 													"value": {
 														"html": {
 															"mapping": {
-																"fieldKey": "_ddmTemplate_LEARN_COURSE_INTRO_BOTTOM_NAV",
+																"fieldKey": "_ddmTemplate_LEARN_COURSE_INTRO_CONGRATS_BOTTOM_NAV",
 																"itemReference": {
 																	"contextSource": "DisplayPageItem"
 																}

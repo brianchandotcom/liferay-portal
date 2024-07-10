@@ -4,18 +4,18 @@
 	hrefLink = ""
 	navigationJSONObject = jsonFactoryUtil.createJSONObject(navigation.getData())
 
-	child = navigationJSONObject.getJSONArray("children").getJSONObject(0)
+	firstModule = navigationJSONObject.getJSONArray("modules").getJSONObject(0)
 />
 
 <#if currentURL?contains("congratulations")>
 	<#assign hrefLink = "/education/courses/index" />
 <#else>
-	<#assign hrefLink = child.url?html />
+	<#assign hrefLink = firstModule.url?html />
 </#if>
 
 <ul class="m-0 p-2">
 	<li class="course-bottom-nav-item">
-		<a class="d-flex justify-content-between" ${(navigationJSONObject.getJSONObject("self").url == child.url)?then("selected", "")} href="${hrefLink}">
+		<a class="d-flex justify-content-between" ${(navigationJSONObject.getJSONObject("self").url == firstModule.url)?then("selected", "")} href="${hrefLink}">
 			<#if currentURL?contains("congratulations")>
 				<div>
 					<span>View All Available Courses</span>
@@ -23,7 +23,7 @@
 			<#else>
 				<div>
 					<span class="course-bottom-nav-cta">Start the Course!</span>
-					<span>${child.getString("title")}</span>
+					<span>${firstModule.getString("title")}</span>
 				</div>
 			</#if>
 

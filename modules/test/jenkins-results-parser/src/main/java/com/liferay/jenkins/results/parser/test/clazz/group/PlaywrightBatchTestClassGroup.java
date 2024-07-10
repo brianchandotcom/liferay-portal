@@ -80,15 +80,19 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		String batchName, PlaywrightTestBatch playwrightTestBatch,
 		PortalTestClassJob portalTestClassJob) {
 
-		this(
-			batchName, _DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH,
-			portalTestClassJob);
+		super(batchName, portalTestClassJob);
 
 		PlaywrightTestSelector playwrightTestSelector =
 			playwrightTestBatch.getTestSelector();
 
+		_playwrightRelativeDirPath = _DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH;
+
 		_projectNames.addAll(
 			playwrightTestSelector.getPlaywrightProjectNames());
+
+		recordJobProperties(
+			new ArrayList<>(
+				playwrightTestSelector.getPlaywrightJobProperties()));
 
 		setTestClasses();
 	}

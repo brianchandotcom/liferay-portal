@@ -1245,16 +1245,9 @@ definition {
 
 	@summary = "Default summary"
 	macro viewTags(tagName = null, amountOfUsedTimes = null) {
-		if (isSet(noTagResults)) {
-			AssertTextEquals(
-				locator1 = "Questions#TAGS_LIST_TAB_NO_RESULTS",
-				value1 = "There are no results.");
-		}
-		else {
-			AssertElementPresent(
-				key_tagName = ${tagName},
-				locator1 = "Questions#TAGS_LIST_TAB_NAMES");
-		}
+		AssertElementPresent(
+			key_tagName = ${tagName},
+			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
 
 		if (isSet(amountOfUsedTimes)) {
 			AssertElementPresent(

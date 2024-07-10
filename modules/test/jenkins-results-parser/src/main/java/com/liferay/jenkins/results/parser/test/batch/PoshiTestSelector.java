@@ -37,9 +37,7 @@ public class PoshiTestSelector extends BaseTestSelector {
 
 		addPoshiQuery();
 
-		_propertiesFile = propertiesFile;
-
-		JenkinsResultsParserUtil.validatePQL(_poshiQuery, _propertiesFile);
+		JenkinsResultsParserUtil.validatePQL(_poshiQuery, propertiesFile);
 	}
 
 	public void addPoshiQuery() {
@@ -76,10 +74,6 @@ public class PoshiTestSelector extends BaseTestSelector {
 		return _poshiQuery;
 	}
 
-	public File getPropertiesFile() {
-		return _propertiesFile;
-	}
-
 	@Override
 	public void merge(TestSelector testSelector) {
 		if (!(testSelector instanceof PoshiTestSelector)) {
@@ -112,7 +106,7 @@ public class PoshiTestSelector extends BaseTestSelector {
 
 		_poshiJobProperties.addAll(poshiTestSelector.getPoshiJobProperties());
 
-		JenkinsResultsParserUtil.validatePQL(newPQL, _propertiesFile);
+		JenkinsResultsParserUtil.validatePQL(newPQL, getPropertiesFile());
 
 		if (newPQL.contains(_poshiQuery)) {
 			_poshiQuery = newPQL;
@@ -126,6 +120,5 @@ public class PoshiTestSelector extends BaseTestSelector {
 	private String _globalPoshiQuery;
 	private final List<JobProperty> _poshiJobProperties = new ArrayList<>();
 	private String _poshiQuery;
-	private final File _propertiesFile;
 
 }

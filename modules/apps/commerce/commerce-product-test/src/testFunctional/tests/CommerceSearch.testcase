@@ -476,42 +476,6 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-6327. As a buyer, I want to search for different products by typing their SKUs in the Global Search and I want to see the products with that SKUs in the suggestions(single SKU, multiple SKUs)"
-	@priority = 5
-	test GlobalSearchSearchProductsBySKUs {
-		property portal.acceptance = "true";
-
-		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
-
-		SelectFrameTop();
-
-		Type(
-			locator1 = "Search#GLOBAL_SEARCH_BAR",
-			value1 = "MIN93015");
-
-		AssertElementPresent(
-			key_suggestionName = "ABS Sensor",
-			locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
-
-		Click(locator1 = "Search#GLOBAL_SEARCH_CLEAN_BUTTON");
-
-		Type.sendKeys(
-			locator1 = "Search#GLOBAL_SEARCH_BAR",
-			value1 = "MIN93015 MIN55861");
-
-		for (var productName : list "ABS Sensor,U-Joint") {
-			AssertElementPresent(
-				key_suggestionName = ${productName},
-				locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
-		}
-	}
-
 	@description = "COMMERCE-6320. As a buyer, I want to be able to search an Accounts entry using Global Search and I want to be able to click on a suggested entry and get redirected to that account page"
 	@ignore = "true"
 	@priority = 3

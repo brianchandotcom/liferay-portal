@@ -230,6 +230,7 @@ function ListTypeEntriesModal() {
 				)}
 
 				<InputLocalized
+					aria-label={Liferay.Language.get('item-name')}
 					disabled={readOnly}
 					error={errors.name_i18n}
 					id="locale"
@@ -240,6 +241,7 @@ function ListTypeEntriesModal() {
 				/>
 
 				<Input
+					aria-label={Liferay.Language.get('item-key')}
 					disabled={modalType === 'edit'}
 					error={errors.name}
 					id="listTypeEntriesModalKeyInputField"

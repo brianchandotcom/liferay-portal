@@ -81,6 +81,26 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
+	async addFragmentComment(fragmentId: string, comment: string) {
+		await this.selectFragment(fragmentId);
+
+		await this.goToSidebarTab('Comments');
+
+		const commentButton = this.page.getByRole('button', {
+			exact: true,
+			name: 'Comment',
+		});
+
+		await this.page.getByLabel('Add Comment').click();
+
+		await this.page.keyboard.type(comment);
+
+		await expect(commentButton).toBeEnabled();
+
+		await commentButton.click();
+		await commentButton.waitFor({state: 'hidden'});
+	}
+
 	async addRuleAction() {
 		await this.page.getByLabel('Select Action').press('Enter');
 		await this.page.keyboard.press('Tab');

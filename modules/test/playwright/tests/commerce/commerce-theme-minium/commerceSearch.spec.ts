@@ -57,3 +57,35 @@ test('LPD-29997 Search for products by typing different specification values in 
 		)
 	).toBeVisible();
 });
+
+test('LPD-30191 Search for products by typing different SKUs in global search', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceThemeMiniumPage,
+}) => {
+	const {site} = await miniumSetUp(apiHelpers);
+
+	await applicationsMenuPage.goToSite(site.name);
+
+	await commerceThemeMiniumPage.globalSearchButton.click();
+
+	await commerceThemeMiniumPage.globalSearchInput.click();
+
+	await commerceThemeMiniumPage.globalSearchInput.fill('MIN93015');
+
+	await expect(
+		await commerceThemeMiniumPage.globalSearchSuggestionsItem('ABS Sensor')
+	).toBeVisible();
+
+	await commerceThemeMiniumPage.globalSearchClearButton.click();
+
+	await commerceThemeMiniumPage.globalSearchInput.fill('MIN93015 MIN55861');
+
+	await expect(
+		await commerceThemeMiniumPage.globalSearchSuggestionsItem('ABS Sensor')
+	).toBeVisible();
+
+	await expect(
+		await commerceThemeMiniumPage.globalSearchSuggestionsItem('U-Joint')
+	).toBeVisible();
+});

@@ -1,37 +1,14 @@
 {
-	"actions": {
-		"create": {
-			"href": "http://localhost:8080/o/c/FooModels/",
-			"method": "POST"
-		},
-		"createBatch": {
-			"href": "http://localhost:8080/o/c/FooModels/batch",
-			"method": "POST"
-		},
-		"deleteBatch": {
-			"href": "http://localhost:8080/o/c/FooModels/batch",
-			"method": "DELETE"
-		},
-		"updateBatch": {
-			"href": "http://localhost:8080/o/c/FooModels/batch",
-			"method": "PUT"
-		}
-	},
 	"configuration": {
 		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
-		"companyId": 0,
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
 			"onErrorFail": "false",
 			"updateStrategy": "UPDATE"
 		},
-		"taskItemDelegateName": "C_FooModel",
-		"userId": 0,
-		"version": "v1.0"
+		"taskItemDelegateName": "C_FooModel"
 	},
-	"facets": [
-	],
 	"items": [
 		{
 			"attachment": {

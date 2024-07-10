@@ -46,8 +46,8 @@ public class PortalPreferencesLocalServiceImpl
 	public PortalPreferences addPortalPreferences(
 		long ownerId, int ownerType, String defaultPreferences) {
 
-		PortalPreferences previousPortalPreferences =
-			portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
+		PortalPreferences previousPortalPreferences = fetchPortalPreferences(
+			ownerId, ownerType);
 
 		if (previousPortalPreferences != null) {
 			throw new IllegalArgumentException(
@@ -150,6 +150,10 @@ public class PortalPreferencesLocalServiceImpl
 	public PortalPreferences fetchPortalPreferences(
 		long ownerId, int ownerType) {
 
+		if (ownerType == PortletKeys.PREFS_OWNER_TYPE_COMPANY) {
+			return fetchCompanyPortalPreferences(ownerId);
+		}
+
 		return portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
 	}
 
@@ -162,8 +166,8 @@ public class PortalPreferencesLocalServiceImpl
 	public PortletPreferences getPreferences(
 		long ownerId, int ownerType, String defaultPreferences) {
 
-		PortalPreferences portalPreferences =
-			portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
+		PortalPreferences portalPreferences = fetchPortalPreferences(
+			ownerId, ownerType);
 
 		if (portalPreferences == null) {
 			portalPreferences =
@@ -207,8 +211,8 @@ public class PortalPreferencesLocalServiceImpl
 		long ownerId, int ownerType,
 		Map<PortalPreferenceKey, String[]> preferencesMap) {
 
-		PortalPreferences portalPreferencesModel =
-			portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
+		PortalPreferences portalPreferencesModel = fetchPortalPreferences(
+			ownerId, ownerType);
 
 		Map<PortalPreferenceKey, List<PortalPreferenceValue>>
 			portalPreferenceValuesMap = Collections.emptyMap();

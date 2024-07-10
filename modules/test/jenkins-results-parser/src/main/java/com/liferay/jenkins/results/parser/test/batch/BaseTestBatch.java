@@ -20,6 +20,11 @@ public abstract class BaseTestBatch<T extends BaseTestSelector>
 		_testSelector = testSelector;
 	}
 
+	@Override
+	public int compareTo(TestBatch<T> testBatch) {
+		return _name.compareTo(testBatch.getName());
+	}
+
 	public boolean equals(Object object) {
 		if (object instanceof TestBatch) {
 			TestBatch testBatch = (TestBatch)object;

@@ -8,7 +8,8 @@ package com.liferay.jenkins.results.parser.test.batch;
 /**
  * @author Kenji Heigel
  */
-public interface TestBatch<T extends TestSelector> {
+public interface TestBatch<T extends TestSelector>
+	extends Comparable<TestBatch<T>> {
 
 	public String getName();
 

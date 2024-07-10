@@ -21,12 +21,17 @@ import java.util.Properties;
 /**
  * @author Kenji Heigel
  */
-public class RelevantRule {
+public class RelevantRule implements Comparable<RelevantRule> {
 
 	public RelevantRule(String filePath, String name, Properties properties) {
 		_filePath = filePath;
 		_name = name;
 		_properties = properties;
+	}
+
+	@Override
+	public int compareTo(RelevantRule relevantRule) {
+		return _name.compareTo(relevantRule.getName());
 	}
 
 	public String getFilePath() {

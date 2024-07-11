@@ -81,7 +81,7 @@ const SubtaskCompleteModal: React.FC<SubtaskCompleteModalProps> = ({
 
 	const issues = getUniqueList([
 		...subtaskIssues,
-		...subtask.caseResultIssues,
+		...(subtask?.caseResultIssues || []),
 	]).join(', ');
 
 	const statusMode = useMemo(() => {

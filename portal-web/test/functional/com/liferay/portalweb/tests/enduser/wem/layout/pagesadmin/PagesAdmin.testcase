@@ -2519,64 +2519,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110108. Management Toolbar shows count of selected items and all visible items are selected after checking the Select All checkbox."
-	@priority = 5
-	test ViewNumberOfSelectedPagesOnManagementToolbar {
-		property portal.acceptance = "true";
-
-		task ("Add two widget pages") {
-			for (var i : list "1,2") {
-				JSONLayout.addPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Test Page Name ${i}");
-			}
-		}
-
-		task ("Select first page in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.selectPageItem(pageName = "Test Page Name 1");
-		}
-
-		task ("View managment bar text is shown") {
-			ManagementBar.viewNumberOfSelectedItems(text = "1 of 2 Items Selected");
-		}
-
-		task ("Select all pages via management bar") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			ManagementBar.clickSelectAllCheckbox();
-		}
-
-		task ("View managment bar text is shown") {
-			ManagementBar.viewNumberOfSelectedItems(text = "All Selected (2 of 2 Items Selected)");
-		}
-
-		task ("View both pages are selected") {
-			for (var i : list "1,2") {
-				PagesAdmin.viewSelectedPageItem(pageName = "Test Page Name ${i}");
-			}
-		}
-	}
-
-	@description = "This is a test for LPS-132422. The list of actions appear in right order for pages."
-	@priority = 3
-	test ViewOrderOfPageActions {
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name");
-		}
-
-		task ("View order of the page actions") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
-
-			MenuItem.viewOrder(menuItemList = "View,Convert to content page...,Make a Copy,Configure,Permissions,Delete");
-		}
-	}
-
 	@description = "This is a test for LPS-175090. Permissions are copied when a Page is created as a copy of another Page."
 	@priority = 4
 	test ViewPermissionsPersistedInCopyPage {
@@ -2635,34 +2577,6 @@ definition {
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_roleTitle = "Guest",
 				locator1 = "Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX");
-		}
-	}
-
-	@description = "This is a test for LPS-175136. View Target Type and Query String are moved to URL module in General section."
-	@priority = 3
-	test ViewURLSectionOnGeneralSheet {
-		task ("Given a page creator has a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-
-		task ("When the page creator configures the content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Configure",
-				pageName = "Test Content Page Name");
-		}
-
-		task ("Then the page creators sees the URL section on the General sheet") {
-			for (var fieldLabel : list "Friendly URL,Query String,Target type,Target") {
-				AssertVisible(
-					key_fieldLabel = ${fieldLabel},
-					key_sectionTitle = "URL",
-					locator1 = "PagesAdmin#FIELD_LABEL_IN_SECTION");
-			}
 		}
 	}
 

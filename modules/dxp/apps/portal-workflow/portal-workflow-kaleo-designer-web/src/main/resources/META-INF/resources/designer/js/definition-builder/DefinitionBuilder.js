@@ -37,7 +37,7 @@ export default function DefinitionBuilder(props) {
 	const [showAlert, setShowAlert] = useState(false);
 	const [version, setVersion] = useState(parseInt(props.version, 10));
 	const [workflowDefinitionVersions, setWorkflowDefinitionVersions] =
-		useState(props.versions ? props.versions : []);
+		useState(props.definitionVersions ? props.definitionVersions : []);
 
 	const contextProps = {
 		accountEntryId,

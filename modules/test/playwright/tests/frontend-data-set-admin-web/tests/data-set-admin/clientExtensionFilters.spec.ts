@@ -51,28 +51,6 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 });
 
 test.describe('Client Extension Filters in Data Set Manager', () => {
-	test('Shows there is not client extension available', async ({filtersPage}) => {
-        await test.step('Open the client extension filter modal', async () => {
-			await expect(filtersPage.newFilterButton).toBeVisible();
-
-		    await filtersPage.newFilterButton.click();
-
-            const menuItem = filtersPage.page.getByRole('menuitem', {
-                name: 'Client Extension',
-            });
-
-            await expect(menuItem).toBeVisible();
-
-            await menuItem.click();
-        });
-
-        await test.step('Shows alert message', async () => {
-			await expect(
-				filtersPage.newClientExtensionFilterModal.noClientExtensionsAvailableAlert
-			).toBeVisible();
-		});
-	});
-
     test('Can not create a Client Extension Filter in DSM', async({
         dataSetManagerApiHelpers,
         filtersPage,

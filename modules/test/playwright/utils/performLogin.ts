@@ -50,6 +50,7 @@ async function performLogin(
 
 	await signInButton.click();
 
+	await page.waitForTimeout(500);
 	await page.getByLabel('Email Address').fill(`${screenName}${domain}`);
 	await page.getByLabel('Password').fill(password);
 	await page.getByLabel('Remember Me').check();

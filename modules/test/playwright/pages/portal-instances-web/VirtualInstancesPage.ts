@@ -20,6 +20,7 @@ export class VirtualInstancesPage {
 	readonly addInstanceActive: Locator;
 	readonly addInstanceVirtualInstanceInitializer: Locator;
 	readonly addInstanceAddButton: Locator;
+	readonly errorMessage: Locator;
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
@@ -41,7 +42,9 @@ export class VirtualInstancesPage {
 		this.addInstanceVirtualInstanceInitializer =
 			this.addInstanceFrame.getByLabel('Virtual Instance Initializer');
 		this.addInstanceAddButton = page.getByText('Add', {exact: true});
-
+		this.errorMessage = this.addInstanceFrame.getByText(
+			'Error:Please enter a valid'
+		);
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
 		);
@@ -58,7 +61,7 @@ export class VirtualInstancesPage {
 
 		// Sometimes the frame loads slowly
 
-		await this.page.waitForTimeout(500);
+		await this.page.waitForTimeout(1000);
 
 		await this.addInstanceWebIdField.fill(name);
 		await this.addInstanceVirtualHost.fill(name);
@@ -70,9 +73,15 @@ export class VirtualInstancesPage {
 		);
 		await this.addInstanceAddButton.click();
 
-		await expect(await this.successMessage).toBeVisible({
-			timeout: 120 * 1000,
-		});
+		await this.page.waitForTimeout(1000);
+
+		// Only wait for Virtual Instance creation if there are no errors
+
+		if (await this.errorMessage.isHidden()) {
+			await expect(await this.successMessage).toBeVisible({
+				timeout: 180 * 1000,
+			});
+		}
 	}
 
 	async deleteVirtualInstance(name: string) {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {collectionsPagesTest} from '../../fixtures/CollectionsPageTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
@@ -54,7 +54,7 @@ const test = mergeTests(
 
 const testWithIsolatedSite = mergeTests(test, isolatedSiteTest);
 
-const configureFilter = async (page, option: 'category' | 'keywords') => {
+const configureFilter = async (page: Page, option: 'category' | 'keywords') => {
 	await page.getByLabel('Select', {exact: true}).click();
 
 	await page.getByLabel(ANIMALS_COLLECTION_NAME).check();
@@ -465,12 +465,14 @@ test('filters the collection content by keywords using two filters', async ({
 	await pageEditorPage.selectFragment(firstCollectionFilterId);
 
 	await configureFilter(page, 'keywords');
+	await pageEditorPage.waitForChangesSaved();
 
 	// Configure the second filter by keywords
 
 	await pageEditorPage.selectFragment(secondCollectionFilterId);
 
 	await configureFilter(page, 'keywords');
+	await pageEditorPage.waitForChangesSaved();
 
 	// Publish the page
 

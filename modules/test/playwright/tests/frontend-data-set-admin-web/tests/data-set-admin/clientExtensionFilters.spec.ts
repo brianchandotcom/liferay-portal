@@ -8,16 +8,21 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
 import getRandomString from '../../../../utils/getRandomString';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 
 export const test = mergeTests(
     dataSetManagerApiHelpersTest,
 	filtersPageTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
 	loginTest(),
+	dataSetManagerSetupTest,
 );
 
 let dataSetERC: string;
-let dataSet: any;
 let dataSetLabel: string;
 const clientExtensionName = 'Liferay Sample FDS Filter';
 const DATE_FIELD_NAME = 'dateCreated';

@@ -82,21 +82,6 @@ public class PortletConfigImplTest {
 		_testGetResourceBundle("content.Language");
 	}
 
-	private Portlet _registerPortlet(String resourceBundle) {
-		String portletId = RandomTestUtil.randomString();
-
-		_serviceRegistrations.add(
-			_bundleContext.registerService(
-				javax.portlet.Portlet.class, new TestPortlet(),
-				HashMapDictionaryBuilder.put(
-					"javax.portlet.name", portletId
-				).put(
-					"javax.portlet.resource-bundle", resourceBundle
-				).build()));
-
-		return PortletLocalServiceUtil.getPortletById(portletId);
-	}
-
 	private void _registerResourceBundle(Locale locale, String value) {
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
@@ -109,7 +94,18 @@ public class PortletConfigImplTest {
 	}
 
 	private void _testGetResourceBundle(String resourceBundle) {
-		Portlet portlet = _registerPortlet(resourceBundle);
+		String portletId = RandomTestUtil.randomString();
+
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				javax.portlet.Portlet.class, new TestPortlet(),
+				HashMapDictionaryBuilder.put(
+					"javax.portlet.name", portletId
+				).put(
+					"javax.portlet.resource-bundle", resourceBundle
+				).build()));
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
 		Assert.assertEquals(resourceBundle, portlet.getResourceBundle());
 

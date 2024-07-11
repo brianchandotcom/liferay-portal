@@ -1051,21 +1051,25 @@ const filterSchema = {
 	subtasks: {
 		fields: [
 			{
+				isCustomFilter: true,
 				label: i18n.translate('subtask-name'),
 				name: 'name',
-				operator: 'contains',
 				type: 'text',
 			},
 			{
+				isCustomFilter: true,
 				label: i18n.translate('errors'),
-				name: 'errors',
-				operator: 'contains',
+				name: 'error',
 				type: 'text',
 			},
-			overrides(baseFilters.assignee, {name: 'userId'}),
+			overrides(baseFilters.assignee, {
+				isCustomFilter: true,
+				name: 'userId',
+			}),
 			{
+				isCustomFilter: true,
 				label: i18n.translate('status'),
-				name: 'dueStatus',
+				name: 'status',
 				options: [
 					{
 						label: i18n.translate('complete'),
@@ -1083,16 +1087,17 @@ const filterSchema = {
 				type: 'checkbox',
 			},
 			overrides(baseFilters.issues, {
-				name: 'subtaskToCaseResults/issues',
-				operator: 'contains',
-				optionalOperator: 'ne',
+				isCustomFilter: true,
+				name: 'issues',
 			}),
 			overrides(baseFilters.team, {
-				name: 'subtaskToCaseResults/componentToCaseResult/r_teamToComponents_c_teamId',
+				isCustomFilter: true,
+				name: 'testrayTeamIds',
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.component, {
-				name: 'subtaskToCaseResults/r_componentToCaseResult_c_componentId',
+				isCustomFilter: true,
+				name: 'testrayComponentIds',
 				type: 'multiselect',
 			}),
 		] as RendererFields[],

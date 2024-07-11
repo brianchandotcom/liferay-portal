@@ -345,11 +345,15 @@ export type TestraySubtask = {
 	r_userToSubtasks_userId: number;
 	score: number;
 	splitFromSubtask: TestraySubtask;
+	status: string;
 	statusUpdateDate: string;
+	subtaskId: string;
 	subtaskToCaseResults?: TestrayCaseResult[];
 	subtaskToSubtasksCasesResults: TestraySubtaskCaseResult[];
 	task: TestrayTask;
+	taskId: number;
 	user: UserAccount;
+	userId: number;
 };
 
 export type TestraySubtaskCaseResult = {

@@ -5,6 +5,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
+import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -99,6 +100,29 @@ public class NavigationMenuItemSerDes {
 			sb.append("\"creator\": ");
 
 			sb.append(String.valueOf(navigationMenuItem.getCreator()));
+		}
+
+		if (navigationMenuItem.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < navigationMenuItem.getCustomFields().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(navigationMenuItem.getCustomFields()[i]));
+
+				if ((i + 1) < navigationMenuItem.getCustomFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (navigationMenuItem.getDateCreated() != null) {
@@ -328,6 +352,15 @@ public class NavigationMenuItemSerDes {
 			map.put("creator", String.valueOf(navigationMenuItem.getCreator()));
 		}
 
+		if (navigationMenuItem.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put(
+				"customFields",
+				String.valueOf(navigationMenuItem.getCustomFields()));
+		}
+
 		if (navigationMenuItem.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -462,6 +495,9 @@ public class NavigationMenuItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
@@ -530,6 +566,22 @@ public class NavigationMenuItemSerDes {
 				if (jsonParserFieldValue != null) {
 					navigationMenuItem.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					CustomField[] customFieldsArray =
+						new CustomField[jsonParserFieldValues.length];
+
+					for (int i = 0; i < customFieldsArray.length; i++) {
+						customFieldsArray[i] = CustomFieldSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					navigationMenuItem.setCustomFields(customFieldsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

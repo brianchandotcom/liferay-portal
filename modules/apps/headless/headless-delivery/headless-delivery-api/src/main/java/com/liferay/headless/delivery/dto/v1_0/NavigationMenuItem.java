@@ -187,6 +187,52 @@ public class NavigationMenuItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
+	@Schema(
+		description = "A list of the custom fields associated with the navigation menu item."
+	)
+	@Valid
+	public CustomField[] getCustomFields() {
+		if (_customFieldsSupplier != null) {
+			customFields = _customFieldsSupplier.get();
+
+			_customFieldsSupplier = null;
+		}
+
+		return customFields;
+	}
+
+	public void setCustomFields(CustomField[] customFields) {
+		this.customFields = customFields;
+
+		_customFieldsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCustomFields(
+		UnsafeSupplier<CustomField[], Exception> customFieldsUnsafeSupplier) {
+
+		_customFieldsSupplier = () -> {
+			try {
+				return customFieldsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "A list of the custom fields associated with the navigation menu item."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected CustomField[] customFields;
+
+	@JsonIgnore
+	private Supplier<CustomField[]> _customFieldsSupplier;
+
 	@Schema(description = "The navigation menu item's creation date.")
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
@@ -808,6 +854,28 @@ public class NavigationMenuItem implements Serializable {
 			sb.append("\"creator\": ");
 
 			sb.append(String.valueOf(creator));
+		}
+
+		CustomField[] customFields = getCustomFields();
+
+		if (customFields != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < customFields.length; i++) {
+				sb.append(String.valueOf(customFields[i]));
+
+				if ((i + 1) < customFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		Date dateCreated = getDateCreated();

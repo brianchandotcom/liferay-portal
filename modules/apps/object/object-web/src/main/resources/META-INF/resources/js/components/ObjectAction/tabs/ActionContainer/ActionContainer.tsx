@@ -94,7 +94,7 @@ export function ActionContainer({
 					!system;
 	};
 
-	const updateParameters = useCallback(
+	const updateObjectDefinitionParameters = useCallback(
 		async (value: ObjectOptionsListItem) => {
 			const {
 				isSystemObjectDefinition,
@@ -189,7 +189,7 @@ export function ActionContainer({
 
 	useEffect(() => {
 		if (values.objectActionExecutorKey === 'update-object-entry') {
-			updateParameters({
+			updateObjectDefinitionParameters({
 				isSystemObjectDefinition: systemObject,
 				objectDefinitionExternalReferenceCode,
 				objectDefinitionId,
@@ -248,7 +248,9 @@ export function ActionContainer({
 				}
 				setValues={setValues}
 				systemObject={systemObject}
-				updateParameters={updateParameters}
+				updateObjectDefinitionParameters={
+					updateObjectDefinitionParameters
+				}
 				values={values}
 			/>
 

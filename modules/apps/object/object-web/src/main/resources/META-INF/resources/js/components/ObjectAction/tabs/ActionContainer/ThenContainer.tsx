@@ -36,7 +36,9 @@ interface ThenContainerProps {
 	setCurrentObjectDefinitionFields: (values: ObjectField[]) => void;
 	setValues: (values: Partial<ObjectAction>) => void;
 	systemObject: boolean;
-	updateParameters: (value: ObjectOptionsListItem) => Promise<void>;
+	updateObjectDefinitionParameters: (
+		value: ObjectOptionsListItem
+	) => Promise<void>;
 	values: Partial<ObjectAction>;
 }
 
@@ -59,7 +61,7 @@ export function ThenContainer({
 	setCurrentObjectDefinitionFields,
 	setValues,
 	systemObject,
-	updateParameters,
+	updateObjectDefinitionParameters,
 	values,
 }: ThenContainerProps) {
 	const [notificationTemplates, setNotificationTemplates] = useState<
@@ -171,7 +173,9 @@ export function ThenContainer({
 						<SingleSelectAddObjectEntry
 							errors={errors}
 							objectsOptions={objectsOptions}
-							updateParameters={updateParameters}
+							updateObjectDefinitionParameters={
+								updateObjectDefinitionParameters
+							}
 							values={values}
 						/>
 					)}

@@ -351,7 +351,7 @@ export type TestraySubtask = {
 	subtaskToCaseResults?: TestrayCaseResult[];
 	subtaskToSubtasksCasesResults: TestraySubtaskCaseResult[];
 	task: TestrayTask;
-	taskId: number;
+	testrayTaskId: number;
 	user: UserAccount;
 	userId: number;
 };

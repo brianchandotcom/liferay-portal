@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -50,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockServletConfig;
 
 /**
  * @author Eudaldo Alonso
@@ -80,6 +83,8 @@ public class PrivateGroupFriendlyURLServletTest {
 				"$Redirect");
 
 		_redirectConstructor = clazz.getConstructor(String.class);
+
+		_initPrivateGroupFriendlyURLServlet();
 	}
 
 	@After
@@ -259,6 +264,22 @@ public class PrivateGroupFriendlyURLServletTest {
 			"&p_v_l_s_g_id=0";
 	}
 
+	private void _initPrivateGroupFriendlyURLServlet() throws Exception {
+		if (_privateGroupFriendlyURLServlet.getServletConfig() != null) {
+			return;
+		}
+
+		MockServletConfig mockServletConfig = new MockServletConfig(
+			ServletContextPool.get(_portal.getServletContextName()));
+
+		mockServletConfig.addInitParameter(
+			"servlet.init.private", Boolean.TRUE.toString());
+		mockServletConfig.addInitParameter(
+			"servlet.init.user", Boolean.FALSE.toString());
+
+		_privateGroupFriendlyURLServlet.init(mockServletConfig);
+	}
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -266,6 +287,9 @@ public class PrivateGroupFriendlyURLServletTest {
 	private Group _group;
 
 	private Layout _layout;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject(
 		filter = "component.name=com.liferay.friendly.url.internal.servlet.PrivateGroupFriendlyURLServlet"

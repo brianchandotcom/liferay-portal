@@ -3316,6 +3316,13 @@ components:
                     description:
                         The navigation menu item's creator.
                     readOnly: true
+                customFields:
+                    # @review
+                    description:
+                        A list of the custom fields associated with the navigation menu item.
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
                 dateCreated:
                     # @review
                     description:

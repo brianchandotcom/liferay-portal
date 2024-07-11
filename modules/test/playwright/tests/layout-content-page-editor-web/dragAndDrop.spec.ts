@@ -52,6 +52,12 @@ test('Checks that a widget can be added and dragged to another part of the page'
 
 	await pageEditorPage.addWidget('Commerce', 'Sort', gridColumn.first());
 
+	// Check that the Sort widget is selected
+
+	const widgetId = await pageEditorPage.getFragmentId('Sort');
+
+	await expect(await pageEditorPage.isActive(widgetId)).toBe(true);
+
 	await pageEditorPage.publishPage();
 
 	// Edit the page and move the widget to the third column of the grid

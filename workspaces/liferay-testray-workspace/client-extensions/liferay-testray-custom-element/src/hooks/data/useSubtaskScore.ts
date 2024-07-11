@@ -4,15 +4,9 @@
  */
 
 import {useAtomValue} from 'jotai';
-import SearchBuilder from '~/core/SearchBuilder';
 
-import {
-	APIResponse,
-	TestraySubtask,
-	TestrayTask,
-	testraySubtaskImpl,
-} from '../../services/rest';
-import {TaskStatuses} from '../../util/statuses';
+import {APIResponse, TestraySubtask, TestrayTask} from '../../services/rest';
+import {SubtaskStatuses} from '../../util/statuses';
 import {useFetch} from '../useFetch';
 import {taskSidebarRefresh} from '../useSidebarTask';
 
@@ -24,12 +18,6 @@ const useSubtaskScore = ({
 	userId: number;
 }) => {
 	const refresh = useAtomValue(taskSidebarRefresh);
-	const searchBuilder = new SearchBuilder({useURIEncode: false});
-
-	const subtaskFilter = searchBuilder
-		.eq('taskId', testrayTask?.id)
-		.and()
-		.build();
 
 	const progressScore = {
 		completed: testrayTask?.subtaskScoreCompleted,
@@ -39,25 +27,21 @@ const useSubtaskScore = ({
 	};
 
 	const {data: testraySubtasks} = useFetch<APIResponse<TestraySubtask>>(
-		testraySubtaskImpl.resource + '&t=' + refresh,
+		`/testray-testflow/testray-subtask?testrayTaskId=${testrayTask?.id}&t=${refresh}`,
 		{
 			params: {
-				fields: 'r_userToSubtasks_userId,dueStatus,score',
-				filter: subtaskFilter,
-				pageSize: 999,
+				pageSize: -1,
 			},
 		}
 	);
 
 	for (const subtask of testraySubtasks?.items ?? []) {
-		if (subtask?.dueStatus?.key !== TaskStatuses.COMPLETE) {
+		if (subtask?.status !== SubtaskStatuses.COMPLETE) {
 			continue;
 		}
 
 		const property =
-			subtask.r_userToSubtasks_userId === userId
-				? 'selfCompleted'
-				: 'othersCompleted';
+			subtask.userId === userId ? 'selfCompleted' : 'othersCompleted';
 
 		progressScore[property] += subtask.score;
 	}

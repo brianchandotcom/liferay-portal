@@ -54,13 +54,12 @@ const useSubtasksActions = () => {
 						revalidateSubtask();
 					})
 					.then(() => setTaskSidebarRefresh(new Date().getTime())),
-			hidden: ({dueStatus}) =>
-				dueStatus?.key === SubtaskStatuses.IN_ANALYSIS,
+			hidden: ({status}) => status === SubtaskStatuses.IN_ANALYSIS,
 			icon: 'user',
-			name: ({dueStatus}) =>
+			name: ({status}) =>
 				i18n.sub(
 					'assign-to-me-and-x',
-					dueStatus.key === SubtaskStatuses.OPEN
+					status === SubtaskStatuses.OPEN
 						? 'begin-analysis'
 						: 'reanalyze'
 				),
@@ -107,16 +106,16 @@ const useSubtasksActions = () => {
 					title: i18n.translate('users'),
 				}),
 			icon: 'user',
-			name: ({dueStatus}) => {
-				if (dueStatus.key === SubtaskStatuses.IN_ANALYSIS) {
+			name: ({status}) => {
+				if (status === SubtaskStatuses.IN_ANALYSIS) {
 					return i18n.translate('assign');
 				}
 
-				if (dueStatus.key === SubtaskStatuses.OPEN) {
+				if (status === SubtaskStatuses.OPEN) {
 					return i18n.translate('assign-and-begin-analysis');
 				}
 
-				if (dueStatus.key === SubtaskStatuses.COMPLETE) {
+				if (status === SubtaskStatuses.COMPLETE) {
 					return i18n.translate('assign-and-reanalyze');
 				}
 			},
@@ -124,9 +123,9 @@ const useSubtasksActions = () => {
 		},
 		{
 			action: (subtask) => completeModal.open(subtask),
-			hidden: ({dueStatus, user}) =>
-				user?.id !== Number(Liferay.ThemeDisplay.getUserId()) ||
-				dueStatus.key !== SubtaskStatuses.IN_ANALYSIS,
+			hidden: ({status, userId}) =>
+				userId !== Number(Liferay.ThemeDisplay.getUserId()) ||
+				status !== SubtaskStatuses.IN_ANALYSIS,
 			icon: 'polls',
 			name: i18n.sub('complete-x', ''),
 			permission: 'UPDATE',
@@ -148,7 +147,7 @@ const useSubtasksActions = () => {
 						revalidateSubtask();
 					})
 					.then(() => setTaskSidebarRefresh(new Date().getTime())),
-			hidden: ({dueStatus}) => dueStatus.key !== SubtaskStatuses.COMPLETE,
+			hidden: ({status}) => status === SubtaskStatuses.OPEN,
 			icon: 'polls',
 			name: i18n.translate('return-to-open'),
 			permission: 'UPDATE',

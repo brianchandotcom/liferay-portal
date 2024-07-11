@@ -22,7 +22,6 @@ import {StatusBadgeType} from '~/components/StatusBadge/StatusBadge';
 import QATable from '~/components/Table/QATable';
 import {ListViewTypes} from '~/context/ListViewContext';
 import {TestrayContext} from '~/context/TestrayContext';
-import SearchBuilder from '~/core/SearchBuilder';
 import useCaseResultGroupBy from '~/hooks/data/useCaseResultGroupBy';
 import useSubtaskScore from '~/hooks/data/useSubtaskScore';
 import useHeader from '~/hooks/useHeader';
@@ -31,7 +30,6 @@ import {taskSidebarRefresh} from '~/hooks/useSidebarTask';
 import i18n from '~/i18n';
 import {Liferay} from '~/services/liferay';
 import {
-	PickList,
 	TestraySubtask,
 	TestrayTask,
 	TestrayTaskUser,
@@ -41,7 +39,6 @@ import {testraySubtaskImpl} from '~/services/rest/TestraySubtask';
 import {StatusesProgressScore, chartClassNames} from '~/util/constants';
 import {getTimeFromNow} from '~/util/date';
 import {getTruncateText} from '~/util/getTruncateText';
-import {SubtaskStatuses} from '~/util/statuses';
 
 import SubtaskCompleteModal from './Subtask/SubtaskCompleteModal';
 import useSubtasksActions from './Subtask/useSubtasksActions';
@@ -114,8 +111,8 @@ const TestFlowTasks = () => {
 		const subtasksWithDifferentAssignedUsers = subtasks
 			?.filter(
 				(subtask) =>
-					subtask?.user?.id.toString() &&
-					subtask?.user?.id.toString() !==
+					subtask?.userId.toString() &&
+					subtask?.userId.toString() !==
 						Liferay.ThemeDisplay.getUserId()
 			)
 			?.map((subtask) => ({
@@ -171,14 +168,6 @@ const TestFlowTasks = () => {
 			},
 		});
 	};
-
-	const searchBuilder = new SearchBuilder({useURIEncode: false});
-
-	const subtaskFilter = searchBuilder
-		.eq('taskId', taskId as string)
-		.and()
-		.ne('dueStatus', SubtaskStatuses.MERGED)
-		.build();
 
 	return (
 		<>
@@ -323,7 +312,7 @@ const TestFlowTasks = () => {
 						filterSchema: 'subtasks',
 						title: i18n.translate('subtasks'),
 					}}
-					resource={testraySubtaskImpl.resource}
+					resource={`/testray-testflow/testray-subtask?testrayTaskId=${taskId}`}
 					tableProps={{
 						actions,
 						bodyVerticalAlignment: 'top',
@@ -336,14 +325,12 @@ const TestFlowTasks = () => {
 							},
 							{
 								clickable: true,
-								key: 'dueStatus',
-								render: (dueStatus: PickList) => (
+								key: 'status',
+								render: (dueStatus) => (
 									<StatusBadge
-										type={
-											dueStatus?.key.toLowerCase() as StatusBadgeType
-										}
+										type={dueStatus as StatusBadgeType}
 									>
-										{dueStatus?.name}
+										{dueStatus}
 									</StatusBadge>
 								),
 								sorteable: true,
@@ -361,14 +348,16 @@ const TestFlowTasks = () => {
 								value: i18n.translate('tests'),
 							},
 							{
-								key: 'errors',
-								render: (value) => (
-									<Code title={value as string}>
-										{getTruncateText(value)}
-									</Code>
-								),
+								key: 'error',
+								render: (errors: string) =>
+									errors && (
+										<Code title={errors as string}>
+											{getTruncateText(errors)}
+										</Code>
+									),
 								size: 'xl',
 								value: i18n.translate('errors'),
+								width: '400',
 							},
 							{
 								key: 'issues',
@@ -384,30 +373,21 @@ const TestFlowTasks = () => {
 							},
 							{
 								key: 'user',
-								render: (
-									_: any,
-									subtask: TestraySubtask & {
-										actions: {
-											[key: string]: string;
-										};
-									},
-									mutate
-								) => {
-									if (subtask.user) {
+								render: (_: any, subtask, mutate) => {
+									if (subtask.userName) {
 										return (
 											<Avatar
 												className="text-capitalize"
 												displayName
-												name={subtask?.user?.name}
+												name={subtask?.userName}
 												size="sm"
-												url={subtask.user.image}
+												url={subtask.userImgUrl}
 											/>
 										);
 									}
 
 									return (
 										<AssignToMe
-											hidden={!subtask.actions.update}
 											onClick={() =>
 												testraySubtaskImpl
 													.assignToMe(subtask)
@@ -434,15 +414,9 @@ const TestFlowTasks = () => {
 								value: i18n.translate('assignee'),
 							},
 						],
-						navigateTo: (subtask) => `subtasks/${subtask.id}`,
+						navigateTo: ({id}) => `subtasks/${id}`,
 						rowSelectable: true,
 						rowWrap: true,
-					}}
-					transformData={(response) =>
-						testraySubtaskImpl.transformDataFromList(response)
-					}
-					variables={{
-						filter: subtaskFilter,
 					}}
 				>
 					{(

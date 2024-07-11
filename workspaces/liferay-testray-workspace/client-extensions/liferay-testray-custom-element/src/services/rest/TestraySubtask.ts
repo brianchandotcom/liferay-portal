@@ -110,10 +110,13 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubtask> {
 	}
 
 	public async assignToMe(subtask: TestraySubtask) {
-		const assignToMeUpdate = await this.update(subtask.id, {
-			dueStatus: SubtaskStatuses.IN_ANALYSIS,
-			userId: Number(Liferay.ThemeDisplay.getUserId()),
-		});
+		const assignToMeUpdate = await this.update(
+			subtask.id || Number(subtask.subtaskId),
+			{
+				dueStatus: SubtaskStatuses.IN_ANALYSIS,
+				userId: Number(Liferay.ThemeDisplay.getUserId()),
+			}
+		);
 
 		return assignToMeUpdate;
 	}
@@ -223,7 +226,9 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubtask> {
 		}
 
 		await this.update(parentTestraySubtask.id, {
-			dueStatus: parentTestraySubtask.dueStatus.key,
+			dueStatus:
+				parentTestraySubtask.dueStatus?.key ||
+				parentTestraySubtask.status,
 			score: sumScore,
 		});
 

@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 
 const test = mergeTests(
@@ -127,6 +128,62 @@ test('checks the correct label for restricted pages in Miller Columns', async ({
 			.locator('.miller-columns-item')
 			.getByLabel(`${pageName}. Restricted Page`)
 	).toBeVisible();
+});
+
+test('Can add and delete a child page.', async ({
+	apiHelpers,
+	page,
+	pagesAdminPage,
+	site,
+}) => {
+	const title = getRandomString();
+
+	await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title,
+	});
+
+	// Can add a child page
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Add Page'}),
+		trigger: page.getByTitle('Add Child Page'),
+	});
+
+	await pagesAdminPage.createSelectTemplate('Child Page', 'Blank');
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	await page.getByRole('button', {name: title}).click();
+
+	await expect(page.getByRole('link', {name: 'Child Page'})).toBeVisible();
+
+	// Can view the draft label of a page in pages admin
+
+	await expect(
+		page.locator('.miller-columns-item').getByText('Draft')
+	).toBeVisible();
+
+	// View alert message when delete a page
+
+	await pagesAdminPage.clickOnAction('Delete', 'Child Page');
+
+	await expect(
+		page.getByText(
+			'Are you sure you want to delete the page "Child Page"? It will be removed immediately.'
+		)
+	).toBeVisible();
+
+	// Delete page
+
+	await page.getByRole('button', {name: 'Delete'}).click();
+
+	await expect(
+		page.getByRole('link', {name: 'Child Page'})
+	).not.toBeVisible();
 });
 
 test('LPS-178476 View the XSS is escaped when store it in widget page name.', async ({

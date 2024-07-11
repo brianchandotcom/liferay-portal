@@ -12,17 +12,30 @@ import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
-import {switchChannel} from './utils/channel';
+import {createChannel, switchChannel} from './utils/channel';
 import {changeEventDisplayName} from './utils/event-definitions';
-import {navigateTo, navigateToACWorkspace} from './utils/navigation';
+import {
+	navigateTo,
+	navigateToACSitesPageViaURL,
+	navigateToACWorkspace,
+} from './utils/navigation';
 import {
 	addSegmentField,
+	addStaticMember,
 	createDynamicSegment,
+	createStaticSegment,
 	editCriteriaAttributeValue,
 	editSegment,
 	saveSegment,
 	setSegmentName,
 } from './utils/segments';
+import {createIndividuals} from './utils/individuals';
+import {
+	viewNameNotPresentOnTableList,
+	viewNameOnTableList,
+	searchByTerm,
+} from './utils/utils';
+import {goToDistributionTabAndSelectAttribute} from './utils/distribution';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -183,5 +196,169 @@ test('check if updated custom event displayName is shown on segment criteria car
 		expect(
 			page.locator('li').filter({hasText: `/^${newCustomEventName}$/`})
 		).toBeTruthy();
+	});
+});
+
+test('Search the Segment Profile Distribution', async ({apiHelpers, page}) => {
+	const channelName = 'My Property - ' + getRandomString();
+
+	const firstIndividualsName = 'ac';
+	const secondIndividualsName = 'dxp';
+
+	const {channel, project} = await createChannel({
+		apiHelpers,
+		channelName,
+	});
+
+	const date1 = new Date();
+
+	const generateIndividual = (name) => {
+		const id = getRandomString();
+
+		return {
+			id,
+			name,
+		};
+	};
+
+	const firstIndividuals = [generateIndividual(firstIndividualsName)];
+
+	const secondIndividuals = [generateIndividual(secondIndividualsName)];
+
+	await test.step('Create the first and second Individuals', async () => {
+		await createIndividuals({
+			apiHelpers,
+			individuals: firstIndividuals,
+		});
+
+		await createIndividuals({
+			apiHelpers,
+			individuals: secondIndividuals,
+		});
+	});
+
+	await test.step('Create the first and second Individuals Events', async () => {
+		const firstIndividualsEvents = firstIndividuals.map((individual) => ({
+			applicationId: 'Page',
+			canonicalUrl: 'https://www.liferay.com',
+			channelId: channel.id,
+			eventDate: date1.toISOString(),
+			eventId: 'pageViewed',
+			title: 'Liferay',
+			userId: individual.id,
+		}));
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+			firstIndividualsEvents
+		);
+
+		const secondEvents = secondIndividuals.map((individual) => ({
+			applicationId: 'Page',
+			canonicalUrl: 'https://www.liferay.com',
+			channelId: channel.id,
+			eventDate: date1.toISOString(),
+			eventId: 'pageViewed',
+			title: 'Liferay',
+			userId: individual.id,
+		}));
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents(secondEvents);
+	});
+
+	await test.step('Create the first and second Individual Session', async () => {
+		const firstSessions = firstIndividuals.map((individual) => ({
+			channelId: channel.id,
+			id: individual.id,
+			sessionEnd: date1.toISOString(),
+			sessionStart: date1.toISOString(),
+			userId: individual.id,
+		}));
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions(firstSessions);
+
+		const secondSessions = secondIndividuals.map((individual) => ({
+			channelId: channel.id,
+			id: individual.id,
+			sessionEnd: date1.toISOString(),
+			sessionStart: date1.toISOString(),
+			userId: individual.id,
+		}));
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions(secondSessions);
+	});
+
+	await test.step('Go to Analytics Cloud and Switch the property', async () => {
+		await navigateToACSitesPageViaURL({
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+	});
+
+	await test.step('Go to Segments Dashboard and create a Static Segment', async () => {
+		await navigateTo({page, pageName: 'Segments'});
+
+		await createStaticSegment(page);
+
+		await setSegmentName({page, segmentName: 'Test Static Segment'});
+	});
+
+	await test.step('Add static member and save segment', async () => {
+		await addStaticMember({
+			memberNames: [
+				`${firstIndividualsName}@liferay.com`,
+				`${secondIndividualsName}@liferay.com`,
+			],
+			page,
+		});
+
+		await saveSegment(page);
+	});
+
+	await test.step('Click on distribution tab and select birthDate attribute', async () => {
+		await goToDistributionTabAndSelectAttribute({
+			attributeName: 'familyName',
+			page,
+		});
+	});
+
+	await test.step('Click on attribute result row', async () => {
+		await page.locator('g.recharts-layer .recharts-bar-rectangle').click();
+	});
+
+	await test.step('Check on side modal if a individual matches the attribute selected', async () => {
+		await searchByTerm({
+			page,
+			searchTerm: `${firstIndividualsName} Smith`,
+		});
+
+		await viewNameOnTableList({
+			itemNames: `${firstIndividualsName} Smith`,
+			page,
+		});
+	});
+
+	await test.step('Check on side modal if second individual is not visible after search', async () => {
+		await viewNameNotPresentOnTableList({
+			itemNames: `${secondIndividualsName} Smith`,
+			page,
+		});
+	});
+
+	await test.step('Do a search with random user and assert there are no results found', async () => {
+		await searchByTerm({page, searchTerm: 'lorem'});
+
+		expect(
+			page.getByText(
+				'There are no results found.Please try a different search term.'
+			)
+		).toBeVisible();
+	});
+
+	await test.step('delete channel', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
 	});
 });

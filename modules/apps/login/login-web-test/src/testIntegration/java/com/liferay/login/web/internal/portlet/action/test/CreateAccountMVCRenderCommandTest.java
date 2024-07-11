@@ -1,0 +1,141 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.login.web.internal.portlet.action.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Eva Budai
+ */
+@RunWith(Arquillian.class)
+public class CreateAccountMVCRenderCommandTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() {
+		_companySecurityStrangers = PropsUtil.get(
+			PropsKeys.COMPANY_SECURITY_STRANGERS);
+	}
+
+	@After
+	public void tearDown() {
+		PropsUtil.set(
+			PropsKeys.COMPANY_SECURITY_STRANGERS, _companySecurityStrangers);
+	}
+
+	@Test
+	public void testRedirectToCreateAccountWhenCompanyStrangersTrue()
+		throws Exception {
+
+		MockLiferayPortletRenderResponse mockLiferayPortletRenderResponse =
+			new MockLiferayPortletRenderResponse();
+
+		PropsUtil.set(
+			PropsKeys.COMPANY_SECURITY_STRANGERS, Boolean.TRUE.toString());
+
+		String response = _mvcRenderCommand.render(
+			_getMockLiferayPortletRenderRequest(),
+			mockLiferayPortletRenderResponse);
+
+		Assert.assertEquals("/create_account.jsp", response);
+	}
+
+	@Test
+	public void testRedirectToLoginWhenCompanyStrangersFalse()
+		throws Exception {
+
+		MockLiferayPortletRenderResponse mockLiferayPortletRenderResponse =
+			new MockLiferayPortletRenderResponse();
+
+		PropsUtil.set(
+			PropsKeys.COMPANY_SECURITY_STRANGERS, Boolean.FALSE.toString());
+
+		String response = _mvcRenderCommand.render(
+			_getMockLiferayPortletRenderRequest(),
+			mockLiferayPortletRenderResponse);
+
+		Assert.assertEquals("/login.jsp", response);
+	}
+
+	private MockLiferayPortletRenderRequest
+			_getMockLiferayPortletRenderRequest()
+		throws Exception {
+
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			new MockLiferayPortletRenderRequest() {
+
+				@Override
+				public Portlet getPortlet() {
+					return _portletLocalService.getPortletById(
+						LoginPortletKeys.CREATE_ACCOUNT);
+				}
+
+				@Override
+				public String getPortletName() {
+					return LoginPortletKeys.CREATE_ACCOUNT;
+				}
+
+				{
+					Portlet portlet = getPortlet();
+
+					PortletApp portletApp = portlet.getPortletApp();
+
+					portletApp.setSpecMajorVersion(2);
+				}
+			};
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			CompanyLocalServiceUtil.fetchCompany(
+				TestPropsValues.getCompanyId()));
+
+		mockLiferayPortletRenderRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockLiferayPortletRenderRequest;
+	}
+
+	private static String _companySecurityStrangers;
+
+	@Inject(
+		filter = "mvc.command.name=/login/create_account",
+		type = MVCRenderCommand.class
+	)
+	private MVCRenderCommand _mvcRenderCommand;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
+
+}

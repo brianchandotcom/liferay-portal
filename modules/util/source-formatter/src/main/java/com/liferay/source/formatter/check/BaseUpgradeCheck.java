@@ -157,6 +157,20 @@ public abstract class BaseUpgradeCheck extends BaseFileCheck {
 		return false;
 	}
 
+	protected String joinLines(String... lines) {
+		StringBundler sb = new StringBundler((lines.length * 2) - 1);
+
+		for (String line : lines) {
+			if (sb.index() > 0) {
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			sb.append(line);
+		}
+
+		return sb.toString();
+	}
+
 	private static final Pattern _copyrightPattern = Pattern.compile(
 		"(<%--\\s*(\\/\\*)+(\\n|.)*(\\*\\/)+\\s*--%>)");
 	private static final Pattern _includesPattern = Pattern.compile(

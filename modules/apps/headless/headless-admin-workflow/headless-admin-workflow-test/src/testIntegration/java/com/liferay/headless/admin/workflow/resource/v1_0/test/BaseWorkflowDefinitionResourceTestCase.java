@@ -1219,6 +1219,14 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (workflowDefinition.getCreator() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (workflowDefinition.getDescription() == null) {
 					valid = false;
@@ -1422,6 +1430,17 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						workflowDefinition1.getContent(),
 						workflowDefinition2.getContent())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						workflowDefinition1.getCreator(),
+						workflowDefinition2.getCreator())) {
 
 					return false;
 				}
@@ -1701,6 +1720,11 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("dateCreated")) {

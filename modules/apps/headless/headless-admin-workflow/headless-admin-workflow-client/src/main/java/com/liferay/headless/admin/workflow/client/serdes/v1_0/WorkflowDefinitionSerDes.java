@@ -88,6 +88,16 @@ public class WorkflowDefinitionSerDes {
 			sb.append("\"");
 		}
 
+		if (workflowDefinition.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(workflowDefinition.getCreator()));
+		}
+
 		if (workflowDefinition.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -284,6 +294,13 @@ public class WorkflowDefinitionSerDes {
 			map.put("content", String.valueOf(workflowDefinition.getContent()));
 		}
 
+		if (workflowDefinition.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(workflowDefinition.getCreator()));
+		}
+
 		if (workflowDefinition.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -393,6 +410,9 @@ public class WorkflowDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "content")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
@@ -446,6 +466,12 @@ public class WorkflowDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "content")) {
 				if (jsonParserFieldValue != null) {
 					workflowDefinition.setContent((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					workflowDefinition.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

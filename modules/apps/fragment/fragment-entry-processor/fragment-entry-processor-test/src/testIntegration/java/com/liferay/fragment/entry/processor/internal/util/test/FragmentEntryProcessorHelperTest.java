@@ -115,6 +115,12 @@ public class FragmentEntryProcessorHelperTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_layout = LayoutTestUtil.addTypePortletLayout(_group.getGroupId());
+
+		_themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
+			_companyLocalService.getCompany(_group.getCompanyId()), _group,
+			_layout);
 	}
 
 	@Test
@@ -277,40 +283,33 @@ public class FragmentEntryProcessorHelperTest {
 		DDMFormField ddmFormField = _createDDMFormField(
 			DDMFormFieldTypeConstants.LINK_TO_LAYOUT);
 
-		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			_group.getGroupId());
-
 		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
 			_dataDefinitionResourceFactory, ddmFormField,
 			_ddmFormValuesToFieldsConverter,
 			JSONUtil.put(
-				"groupId", layout.getGroupId()
+				"groupId", _layout.getGroupId()
 			).put(
-				"id", layout.getUuid()
+				"id", _layout.getUuid()
 			).put(
-				"layoutId", layout.getLayoutId()
+				"layoutId", _layout.getLayoutId()
 			).put(
-				"name", layout.getName()
+				"name", _layout.getName()
 			).put(
-				"privateLayout", layout.isPrivateLayout()
+				"privateLayout", _layout.isPrivateLayout()
 			).put(
 				"returnType",
 				"com.liferay.item.selector.criteria.UUIDItemSelectorReturnType"
 			).put(
-				"title", layout.getTitle()
+				"title", _layout.getTitle()
 			).toString(),
 			_group.getGroupId(), _journalConverter);
 
-		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
-			_companyLocalService.getCompany(_group.getCompanyId()), _group,
-			layout);
-
 		try {
-			_pushServiceContext(layout, themeDisplay);
+			_pushServiceContext(_layout, _themeDisplay);
 
 			Assert.assertEquals(
 				_portal.getLayoutFriendlyURL(
-					layout, themeDisplay, LocaleUtil.SPAIN),
+					_layout, _themeDisplay, LocaleUtil.SPAIN),
 				_getFieldValue(
 					JSONUtil.put(
 						"className", JournalArticle.class.getName()
@@ -894,7 +893,11 @@ public class FragmentEntryProcessorHelperTest {
 	@Inject
 	private JournalConverter _journalConverter;
 
+	private Layout _layout;
+
 	@Inject
 	private Portal _portal;
+
+	private ThemeDisplay _themeDisplay;
 
 }

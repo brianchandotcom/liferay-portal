@@ -5,6 +5,8 @@
 
 package com.liferay.portal.security.auth.registry;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -14,6 +16,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.AuthVerifierPipeline;
 
+import java.util.List;
 import java.util.Properties;
 
 import org.osgi.framework.BundleContext;
@@ -29,6 +32,10 @@ public class AuthVerifierRegistry {
 
 	public static AuthVerifier getAuthVerifier(String simpleClassName) {
 		return _serviceTrackerMap.getService(simpleClassName);
+	}
+
+	public static List<AuthVerifier> getAuthVerifiersByPriority() {
+		return _serviceTrackerList.toList();
 	}
 
 	private static AuthVerifierConfiguration _buildAuthVerifierConfiguration(
@@ -65,6 +72,9 @@ public class AuthVerifierRegistry {
 		return authVerifierConfiguration;
 	}
 
+	private static final ServiceTrackerList<AuthVerifier> _serviceTrackerList =
+		ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), AuthVerifier.class);
 	private static final ServiceTrackerMap<String, AuthVerifier>
 		_serviceTrackerMap;
 

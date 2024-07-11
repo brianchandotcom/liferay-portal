@@ -109,17 +109,14 @@ public class PortletConfigImplTest {
 
 		Assert.assertEquals(resourceBundle, portlet.getResourceBundle());
 
-		Locale locale1 = LocaleUtil.US;
-		Locale locale2 = LocaleUtil.SPAIN;
-
-		_registerResourceBundle(locale1, "value1");
-		_registerResourceBundle(locale2, "value2");
+		_registerResourceBundle(LocaleUtil.US, "value1");
+		_registerResourceBundle(LocaleUtil.SPAIN, "value2");
 
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, null);
 
-		_testResourceBundle(portletConfig, locale1, "value1");
-		_testResourceBundle(portletConfig, locale2, "value2");
+		_testResourceBundle(portletConfig, LocaleUtil.US, "value1");
+		_testResourceBundle(portletConfig, LocaleUtil.SPAIN, "value2");
 	}
 
 	private void _testResourceBundle(

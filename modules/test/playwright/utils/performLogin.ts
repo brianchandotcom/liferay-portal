@@ -46,16 +46,23 @@ async function performLogin(
 
 	await page.goto(baseUrl);
 
-	await page.getByRole('button', {name: 'Sign In'}).click();
+	const signInButton = await page.getByRole('button', {name: 'Sign In'});
+
+	await signInButton.click();
 
 	await page.getByLabel('Email Address').fill(`${screenName}${domain}`);
 	await page.getByLabel('Password').fill(password);
 	await page.getByLabel('Remember Me').check();
 
-	await page
-		.getByLabel('Sign In- Loading')
-		.getByRole('button', {name: 'Sign In'})
-		.click();
+	if ((await signInButton.count()) === 1) {
+		await signInButton.click();
+	}
+	else {
+		await page
+			.getByLabel('Sign In- Loading')
+			.getByRole('button', {name: 'Sign In'})
+			.click();
+	}
 
 	await expect(
 		page.getByLabel(`${name} ${surname} User Profile`)

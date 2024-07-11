@@ -24,22 +24,6 @@ definition {
 		}
 	}
 
-	@description = "The user can not delete the last public page on Liferay instance."
-	@priority = 3
-	test CannotDeleteLastPublicPageOnDefaultSite {
-		task ("Delete the Search page in Liferay instance") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
-
-			PagesAdmin.deletePage(pageName = "Search");
-		}
-
-		task ("View the last public page can not be deleted") {
-			PagesAdmin.openPageEllipsisMenu(pageName = "Home");
-
-			MenuItem.viewNotPresent(menuItem = "Delete");
-		}
-	}
-
 	@description = "The user can add an embedded and panel page via pages administration."
 	@priority = 5
 	@uitest

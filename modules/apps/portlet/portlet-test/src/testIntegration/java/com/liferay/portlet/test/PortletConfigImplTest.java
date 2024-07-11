@@ -82,6 +82,17 @@ public class PortletConfigImplTest {
 		_testGetResourceBundle("content.Language");
 	}
 
+	private void _assertResourceBundle(
+		ResourceBundle resourceBundle, Locale locale, String expectedValue) {
+
+		Assert.assertEquals(locale, resourceBundle.getLocale());
+
+		Assert.assertEquals(
+			expectedValue,
+			ResourceBundleUtil.getString(
+				resourceBundle, TestResourceBundle.class.getName()));
+	}
+
 	private void _registerResourceBundle(Locale locale, String value) {
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
@@ -112,27 +123,22 @@ public class PortletConfigImplTest {
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, null);
 
-		_testResourceBundle(portletConfig, LocaleUtil.US, null);
-		_testResourceBundle(portletConfig, LocaleUtil.SPAIN, null);
+		_assertResourceBundle(
+			portletConfig.getResourceBundle(LocaleUtil.US), LocaleUtil.US,
+			null);
+		_assertResourceBundle(
+			portletConfig.getResourceBundle(LocaleUtil.SPAIN), LocaleUtil.SPAIN,
+			null);
 
 		_registerResourceBundle(LocaleUtil.US, "value1");
 		_registerResourceBundle(LocaleUtil.SPAIN, "value2");
 
-		_testResourceBundle(portletConfig, LocaleUtil.US, "value1");
-		_testResourceBundle(portletConfig, LocaleUtil.SPAIN, "value2");
-	}
-
-	private void _testResourceBundle(
-		PortletConfig portletConfig, Locale locale, String expectedValue) {
-
-		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
-
-		Assert.assertEquals(locale, resourceBundle.getLocale());
-
-		Assert.assertEquals(
-			expectedValue,
-			ResourceBundleUtil.getString(
-				resourceBundle, TestResourceBundle.class.getName()));
+		_assertResourceBundle(
+			portletConfig.getResourceBundle(LocaleUtil.US), LocaleUtil.US,
+			"value1");
+		_assertResourceBundle(
+			portletConfig.getResourceBundle(LocaleUtil.SPAIN), LocaleUtil.SPAIN,
+			"value2");
 	}
 
 	private static BundleContext _bundleContext;

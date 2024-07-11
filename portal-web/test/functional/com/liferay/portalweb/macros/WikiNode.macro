@@ -178,7 +178,11 @@ definition {
 			key_wikiNodeName = ${wikiPageTitle},
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME");
 
-		AssertElementPresent(
+		WaitForSPARefresh();
+
+		WaitForPageLoad();
+
+		WaitForElementPresent(
 			key_contentImageName = ${contentImageName},
 			locator1 = "Wiki#CONTENT_IMAGE_NAME");
 	}

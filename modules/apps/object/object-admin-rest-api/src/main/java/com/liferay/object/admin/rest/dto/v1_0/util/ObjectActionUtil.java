@@ -146,6 +146,11 @@ public class ObjectActionUtil {
 			else if (Objects.equals(entry.getKey(), "relatedObjectEntries")) {
 				value = GetterUtil.getBoolean(value);
 			}
+			else if (Objects.equals(
+						entry.getKey(), "usePreferredLanguageForGuests")) {
+
+				value = GetterUtil.getBoolean(value);
+			}
 
 			parameters.put(entry.getKey(), value);
 		}

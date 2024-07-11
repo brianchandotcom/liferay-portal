@@ -5,15 +5,23 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.redirect.RedirectURLSettings;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
+import com.liferay.portal.kernel.service.VirtualHostLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.impl.VirtualHostImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Set;
@@ -31,6 +39,8 @@ import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Tomas Polesovsky
@@ -67,6 +77,38 @@ public class PortalImplEscapeRedirectTest {
 		).thenReturn(
 			PropsValues.CDN_HOST_HTTPS
 		);
+
+		ReflectionTestUtil.setFieldValue(
+			VirtualHostLocalServiceUtil.class, "_service",
+			new VirtualHostLocalServiceWrapper() {
+
+				@Override
+				public VirtualHost fetchVirtualHost(String hostname) {
+					if (hostname.equals("site-virtual-host")) {
+						return new VirtualHostImpl();
+					}
+
+					return null;
+				}
+
+			});
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setRequest(
+			new MockHttpServletRequest() {
+				{
+					setAttribute(
+						WebKeys.THEME_DISPLAY,
+						new ThemeDisplay() {
+							{
+								setPortalDomain("request-host");
+							}
+						});
+				}
+			});
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 	}
 
 	@After
@@ -76,6 +118,8 @@ public class PortalImplEscapeRedirectTest {
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
+
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -105,6 +149,12 @@ public class PortalImplEscapeRedirectTest {
 			_portalImpl.escapeRedirect(
 				"https://liferay.com:8080/a/b;c=d?e=f&g=h#x=y"));
 
+		// Allow request host header
+
+		Assert.assertEquals(
+			"https://request-host:8080",
+			_portalImpl.escapeRedirect("https://request-host:8080"));
+
 		// Disabled domains
 
 		Assert.assertNull(
@@ -128,6 +178,12 @@ public class PortalImplEscapeRedirectTest {
 		Assert.assertNull(_portalImpl.escapeRedirect("http:web"));
 		Assert.assertNull(
 			_portalImpl.escapeRedirect("https://google.com\uFFFD@localhost"));
+
+		// VirtualHosts of sites
+
+		Assert.assertEquals(
+			"https://site-virtual-host:8080",
+			_portalImpl.escapeRedirect("https://site-virtual-host:8080"));
 	}
 
 	@Test

@@ -212,7 +212,7 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Model",
-				text = "facebook");
+				text = "facebook/bart-base");
 
 			Click(
 				key_itemName = "facebook/bart-base",
@@ -474,7 +474,7 @@ definition {
 
 		PortletEntry.inputText(
 			fieldLabel = "Model",
-			text = "facebook");
+			text = "facebook/bart-base");
 
 		FormFields.viewFieldDropdownItem(itemName = "facebook/bart-base");
 
@@ -531,7 +531,7 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Model",
-				text = "facebook");
+				text = "facebook/bart-base");
 
 			Click(
 				key_itemName = "facebook/bart-base",
@@ -660,7 +660,7 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Model",
-				text = "facebook");
+				text = "facebook/bart-base");
 
 			Click(
 				key_itemName = "facebook/bart-base",

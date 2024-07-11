@@ -34,7 +34,10 @@ import {
 } from './utils/segments';
 import {CardSelectors, SegmentConditions} from './utils/selectors';
 import {changeTimeFilter} from './utils/time-filter';
-import {expectNotToBeVisible, expectToBeVisible} from './utils/utils';
+import {
+	viewNameNotPresentOnTableList,
+	viewNameOnTableList,
+} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -95,19 +98,11 @@ test('Check that the Dynamic Segment does not continue to appear in the audience
 
 	const individuals = [generateIndividual(individualName)];
 
-	await test.step('Create an Individual and their respective Identity directly in the AC database', async () => {
-		const identities = individuals.map((individual) => ({
-			createDate: date1.toISOString(),
-			id: individual.id,
-			individualId: individual.id,
-		}));
-
+	await test.step('Create an Individual directly in the AC database', async () => {
 		await createIndividuals({
 			apiHelpers,
 			individuals,
 		});
-
-		await apiHelpers.jsonWebServicesOSBAsah.createIdentities(identities);
 	});
 
 	await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
@@ -250,10 +245,11 @@ test('Check that the Dynamic Segment does not continue to appear in the audience
 	});
 
 	await test.step('Check that the created segment appears on the Audience card', async () => {
-		await expectToBeVisible({
-			itemNames: segmentsName,
-			page,
-		});
+		for (const itemName of segmentsName) {
+			await expect(page.getByText(itemName)).toBeVisible({
+				timeout: 100 * 1000,
+			});
+		}
 	});
 
 	await test.step('Change the time filter of the Audience card to Last 24 hours', async () => {
@@ -265,10 +261,11 @@ test('Check that the Dynamic Segment does not continue to appear in the audience
 	});
 
 	await test.step('Check that the created segment appears on the Audience card', async () => {
-		await expectToBeVisible({
-			itemNames: segmentsName,
-			page,
-		});
+		for (const itemName of segmentsName) {
+			await expect(page.getByText(itemName)).toBeVisible({
+				timeout: 100 * 1000,
+			});
+		}
 	});
 
 	await test.step('Go to Segments', async () => {
@@ -351,28 +348,20 @@ test('shows individuals who viewed a page less than 24 hours ago', async ({
 		channelName,
 	});
 	const date1 = new Date();
-	const individualsPresentIn24Hours = ['user1 user1', 'user2 user2'];
-	const individualPresentIn30Days = ['user3 user3'];
+	const individualsPresentIn24Hours = ['user1', 'user2'];
+	const individualPresentIn30Days = ['user3'];
 
-	await test.step('Create 3 Individuals and their respective Identity directly in the AC database', async () => {
+	await test.step('Create 3 Individuals directly in the AC database', async () => {
 		const individuals = [
 			{id: '1', name: 'user1'},
 			{id: '2', name: 'user2'},
 			{id: '3', name: 'user3'},
 		];
 
-		const identities = individuals.map(({id}) => ({
-			createDate: date1.toISOString(),
-			id,
-			individualId: id,
-		}));
-
 		await createIndividuals({
 			apiHelpers,
 			individuals,
 		});
-
-		await apiHelpers.jsonWebServicesOSBAsah.createIdentities(identities);
 	});
 
 	await test.step('Create events for two of the individuals to appear within the Last 24 hours period in AC', async () => {
@@ -441,7 +430,7 @@ test('shows individuals who viewed a page less than 24 hours ago', async ({
 	});
 
 	await test.step('Check that User3 User3 is appearing in the list', async () => {
-		await expectToBeVisible({
+		await viewNameOnTableList({
 			itemNames: individualPresentIn30Days,
 			page,
 		});
@@ -455,14 +444,14 @@ test('shows individuals who viewed a page less than 24 hours ago', async ({
 	});
 
 	await test.step('Check that User1 User1 and User2 User2 are appearing in the list', async () => {
-		await expectToBeVisible({
+		await viewNameOnTableList({
 			itemNames: individualsPresentIn24Hours,
 			page,
 		});
 	});
 
 	await test.step('Check that User3 User3 is appearing in the list', async () => {
-		await expectNotToBeVisible({
+		await viewNameNotPresentOnTableList({
 			itemNames: individualPresentIn30Days,
 			page,
 		});

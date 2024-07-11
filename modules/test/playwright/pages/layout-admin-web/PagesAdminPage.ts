@@ -157,6 +157,12 @@ export class PagesAdminPage {
 			.getByText('Page', {exact: true})
 			.click();
 
+		await this.createSelectTemplate(name, template);
+
+		await this.pageEditorPage.publishPage();
+	}
+
+	async createSelectTemplate(name: string, template?: string) {
 		await this.page
 			.locator('.card-page-item')
 			.filter({hasText: template})
@@ -175,8 +181,6 @@ export class PagesAdminPage {
 		await inputName.fill(name);
 
 		await modalFrame.getByRole('button', {name: 'Add'}).click();
-
-		await this.pageEditorPage.publishPage();
 	}
 
 	async editPage(name: string) {

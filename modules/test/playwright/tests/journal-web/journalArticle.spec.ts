@@ -548,6 +548,87 @@ prefixUrlTest(
 	}
 );
 
+baseTest(
+	'LPD-30412: This is a test for deleting multiple translations from a web content',
+	async ({journalEditArticlePage, journalPage, page, site}) => {
+		await journalPage.goto(site.friendlyUrlPath);
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		await journalEditArticlePage.fillTitle(title);
+
+		const translationButton = page.locator(
+			'[id="_com_liferay_journal_web_portlet_JournalPortlet__com_liferay_journal_web_portlet_JournalPortlet_titleMapAsXMLMenu"]'
+		);
+
+		for (const language of ['Finnish', 'French', 'German']) {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					name:
+						'Not translated into ' +
+						language +
+						'. Press enter to edit ' +
+						language +
+						' translation.',
+				}),
+				trigger: translationButton,
+			});
+
+			await expect(async () => {
+				await fillAndClickOutside(
+					page,
+					journalEditArticlePage.titleInput
+				);
+
+				await translationButton.click();
+
+				await expect(
+					page.getByRole('menuitem', {
+						exact: true,
+						name:
+							'Translated into ' +
+							language +
+							'. Press enter to edit ' +
+							language +
+							' translation.',
+					})
+				).toBeVisible();
+			}).toPass();
+		}
+
+		await journalEditArticlePage.publishButton.click();
+
+		await waitForSuccessAlert(
+			page,
+			`Success:${title} was created successfully.`
+		);
+
+		await journalPage.goToJournalArticleAction(
+			'Delete Translations',
+			title
+		);
+
+		await page
+			.frameLocator('iframe[title="Delete Translations"]')
+			.getByLabel('français')
+			.check();
+
+		await page
+			.frameLocator('iframe[title="Delete Translations"]')
+			.getByLabel('Deutsch')
+			.check();
+
+		page.on('dialog', (dialog) => dialog.accept());
+
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForSuccessAlert(page);
+	}
+);
+
 translationTest(
 	'LPD-13732: This is a test for reset translations button in web content',
 	async ({journalEditArticlePage, journalPage, page, site}) => {

@@ -6199,11 +6199,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Check if user should be forced to change password on first login
 
-		if (passwordPolicy.isChangeable() &&
-			passwordPolicy.isChangeRequired() &&
-			(user.getLastLoginDate() == null)) {
+		if (passwordPolicy.isChangeable()) {
+			if (passwordPolicy.isChangeRequired() &&
+				(user.getLastLoginDate() == null)) {
 
-			user.setPasswordReset(true);
+				user.setPasswordReset(true);
+
+				user = userPersistence.update(user);
+			}
+		}
+		else if (user.isPasswordReset()) {
+			user.setPasswordReset(false);
 
 			user = userPersistence.update(user);
 		}

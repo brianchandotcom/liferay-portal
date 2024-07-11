@@ -10,7 +10,7 @@ import {
 	MDFRequestLiferayBusinessSalesGoals,
 	MDFRequestTargetAudienceRoles,
 	MDFRequestTargetMarkets,
-} from '../../utils/enums';
+} from '../../../../utils/enums';
 
 export type MDFRequestFormGoalsContent = {
 	additionalOptions?: MDFRequestAdditionalOptions[];

@@ -9,7 +9,7 @@ import {
 	MDFRequestActivityBudgetExpense,
 	MDFRequestActivityTactics,
 	MDFRequestTypeOfActivity,
-} from '../../utils/enums';
+} from '../../../../utils/enums';
 
 type ExpenseOption = {type: MDFRequestActivityBudgetExpense; value: number};
 
@@ -141,7 +141,8 @@ export class MDFRequestFormActivities {
 			typeOfActivity,
 		}: MDFRequestFormActivitiesContent
 	) {
-		await this.addActivity.click();
+		const activityButton = await this.addActivity;
+		await activityButton.click();
 
 		await this.activityName(activityIndex).fill(activityName);
 

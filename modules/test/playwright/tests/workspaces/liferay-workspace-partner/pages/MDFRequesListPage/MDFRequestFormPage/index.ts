@@ -8,11 +8,11 @@ import {Locator, Page} from '@playwright/test';
 import {
 	MDFRequestFormActivities,
 	MDFRequestFormActivitiesContent,
-} from './MDFRequestFormActivities';
+} from './Forms/mdfRequestFormActivities';
 import {
 	MDFRequestFormGoals,
 	MDFRequestFormGoalsContent,
-} from './MDFRequestFormGoals';
+} from './Forms/mdfRequestFormGoals';
 
 type FormContent = {
 	activities: MDFRequestFormActivitiesContent[];
@@ -20,6 +20,7 @@ type FormContent = {
 };
 
 export class MDFRequestFormPage {
+	readonly backButton: Locator;
 	readonly cancelButton: Locator;
 	readonly continueButton: Locator;
 	readonly form: {
@@ -32,10 +33,12 @@ export class MDFRequestFormPage {
 	readonly previousButton: Locator;
 	readonly saveAsDraftButton: Locator;
 	readonly seeMDFHomeButton: Locator;
+	readonly statusDropdown: Locator;
 	readonly submitButton: Locator;
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
+		this.backButton = page.getByText('← Back');
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
 		this.form = {
@@ -54,6 +57,9 @@ export class MDFRequestFormPage {
 		this.seeMDFHomeButton = page.getByRole('button', {
 			name: 'See MDF Home',
 		});
+		this.statusDropdown = page
+			.locator('liferay-partner-custom-element div')
+			.nth(2);
 		this.submitButton = page.getByRole('button', {
 			name: 'Submit',
 		});
@@ -62,9 +68,7 @@ export class MDFRequestFormPage {
 
 	async createNewRequest(form: FormContent) {
 		await this.newRequestButton.click();
-
 		await this.form.goals.fillForm(form.goals);
-
 		await this.continueButton.click();
 
 		for (const [index, activity] of form.activities.entries()) {
@@ -74,5 +78,13 @@ export class MDFRequestFormPage {
 		}
 
 		await this.continueButton.click();
+	}
+
+	async statusDropDownOption(option: string) {
+		const statusOption = await this.page.getByRole('menuitem', {
+			name: option,
+		});
+
+		statusOption.click();
 	}
 }

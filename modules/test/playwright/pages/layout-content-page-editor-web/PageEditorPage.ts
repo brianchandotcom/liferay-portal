@@ -757,6 +757,8 @@ export class PageEditorPage {
 		);
 
 		if (isCollection) {
+			await this.goToSidebarTab('Browser');
+
 			const treeNode = this.page.locator(
 				`.treeview-link[data-id*="${fragmentId}"]`
 			);

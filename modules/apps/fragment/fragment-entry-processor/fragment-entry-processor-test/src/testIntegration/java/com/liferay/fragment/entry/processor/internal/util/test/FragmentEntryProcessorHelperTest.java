@@ -98,6 +98,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Rubén Pulido
@@ -794,9 +795,17 @@ public class FragmentEntryProcessorHelperTest {
 			JSONObject editableValuesJSONObject, Locale locale)
 		throws Exception {
 
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
+
 		FragmentEntryProcessorContext fragmentEntryProcessorContext =
 			new DefaultFragmentEntryProcessorContext(
-				null, null, FragmentEntryLinkConstants.EDIT, locale);
+				mockHttpServletRequest, new MockHttpServletResponse(),
+				FragmentEntryLinkConstants.EDIT, locale);
 
 		return _fragmentEntryProcessorHelper.getFieldValue(
 			editableValuesJSONObject, new HashMap<>(),

@@ -7,6 +7,7 @@ import {Page, expect} from '@playwright/test';
 
 import getRandomString from '../../../utils/getRandomString';
 import {waitForLoading} from './loading';
+import {navigateTo} from './navigation';
 
 export async function addBreakdownByAttribute({
 	attributeName,
@@ -25,6 +26,26 @@ export async function addBreakdownByAttribute({
 	await page.getByLabel('Breakdown Name').click();
 	await page.getByLabel('Breakdown Name').fill(getRandomString());
 	await page.getByRole('button', {name: 'Save'}).click();
+
+	await waitForLoading(page);
+}
+
+export async function goToDistributionTabAndSelectAttribute({
+	attributeName,
+	page,
+}: {
+	attributeName: string;
+	page: Page;
+}) {
+	await navigateTo({page, pageName: 'Distribution'});
+
+	await waitForLoading(page);
+
+	await page.locator('.selected-item-container').click();
+
+	await page
+		.locator(`div.dropdown-menu span:has-text("${attributeName}")`)
+		.click();
 
 	await waitForLoading(page);
 }

@@ -828,6 +828,7 @@ public class LayoutServiceContextHelperImpl
 			serviceContext.setCompanyId(_company.getCompanyId());
 
 			serviceContext.setRequest(_httpServletRequest);
+			serviceContext.setScopeGroupId(_group.getGroupId());
 			serviceContext.setUserId(_user.getUserId());
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);

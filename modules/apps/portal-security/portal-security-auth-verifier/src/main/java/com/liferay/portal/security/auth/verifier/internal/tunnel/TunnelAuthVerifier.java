@@ -32,7 +32,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Zsolt Berentey
  */
-@Component(service = AuthVerifier.class)
+@Component(
+	property = "service.ranking:Integer=60", service = AuthVerifier.class
+)
 public class TunnelAuthVerifier implements AuthVerifier {
 
 	@Override

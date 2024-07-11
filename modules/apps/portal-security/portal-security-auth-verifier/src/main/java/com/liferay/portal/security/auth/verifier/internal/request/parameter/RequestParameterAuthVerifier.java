@@ -20,7 +20,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tomas Polesovsky
  */
-@Component(service = AuthVerifier.class)
+@Component(
+	property = "service.ranking:Integer=80", service = AuthVerifier.class
+)
 public class RequestParameterAuthVerifier implements AuthVerifier {
 
 	@Override

@@ -30,7 +30,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tomas Polesovsky
  */
-@Component(service = AuthVerifier.class)
+@Component(
+	property = "service.ranking:Integer=70", service = AuthVerifier.class
+)
 public class PortalSessionAuthVerifier implements AuthVerifier {
 
 	public static final String AUTH_TYPE = HttpServletRequest.FORM_AUTH;

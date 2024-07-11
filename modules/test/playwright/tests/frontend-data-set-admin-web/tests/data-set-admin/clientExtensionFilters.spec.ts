@@ -52,7 +52,6 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 
 test.describe('Client Extension Filters in Data Set Manager', () => {
     test('Can not create a Client Extension Filter in DSM', async({
-        dataSetManagerApiHelpers,
         filtersPage,
         page,
     }) => {
@@ -63,15 +62,6 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
             await expect(
                 page.getByText('No default filters were created')
             ).toBeVisible();
-        });
-
-        await test.step('Add a field, so FDS has something to show', async () => {
-            await dataSetManagerApiHelpers.createDataSetField({
-                dataSetERC,
-                label_i18n: {en_US: fieldLabel},
-                name: 'rendererType',
-                type: 'string',
-            });
         });
 
         await test.step('Check that mandatory missing fields display an error message', async () => {
@@ -115,21 +105,11 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
     });
 
     test('Can create a Client Extension Filter in DSM', async({
-        dataSetManagerApiHelpers,
         filtersPage,
         page,
     }) => {
         const fieldLabel = getRandomString();
         const filterLabel = getRandomString();
-
-        await test.step('Add a field, so FDS has something to show', async () => {
-            await dataSetManagerApiHelpers.createDataSetField({
-                dataSetERC,
-                label_i18n: {en_US: fieldLabel},
-                name: 'rendererType',
-                type: 'string',
-            });
-        });
 
         await test.step('Create a client extension filter', async () => {
             await filtersPage.createClientExtensionFilter({
@@ -148,7 +128,7 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
 					name: DATE_FIELD_NAME,
 				})
 			).toBeVisible();
-		}); 
+		});
 
         await test.step('Fill a client extension filter modal and close without saving', async () => {
             await filtersPage.createClientExtensionFilter({

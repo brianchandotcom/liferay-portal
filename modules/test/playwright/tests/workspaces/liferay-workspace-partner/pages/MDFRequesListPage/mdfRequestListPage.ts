@@ -12,6 +12,7 @@ export class MDFRequestListPage {
 	readonly activityPeriodButton: Locator;
 	readonly activityStatusButton: Locator;
 	readonly applyFilterButton: Locator;
+	readonly cleanSearch: Locator;
 	readonly clearAllFilters: Locator;
 	readonly completedTab: Locator;
 	readonly exportRequestButton: Locator;
@@ -40,6 +41,7 @@ export class MDFRequestListPage {
 		});
 		this.activityStatusButton = page.getByRole('button', {name: 'Status'});
 		this.applyFilterButton = page.getByRole('button', {name: 'Apply'});
+		this.cleanSearch = page.getByLabel('Clean Search');
 		this.clearAllFilters = page.getByText('Clear All Filters');
 		this.completedTab = page.getByRole('tab', {
 			exact: true,
@@ -93,6 +95,12 @@ export class MDFRequestListPage {
 		await this.page.getByLabel(status).check();
 		await this.applyFilterButton.click();
 	}
+
+	async filterUsingSearchInput(text: string) {
+		await this.searchInput.click();
+		await this.searchInput.fill(text);
+		await this.searchInput.press('Enter');
+	} 
 
 	async getCampaignName() {
 		return this.page.locator('td:nth-child(4)').first();

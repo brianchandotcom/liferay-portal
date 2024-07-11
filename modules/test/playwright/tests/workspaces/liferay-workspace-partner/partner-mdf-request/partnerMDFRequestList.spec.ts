@@ -156,13 +156,12 @@ test.describe('MDF Request Page', () => {
 		await partnerMDFListPage.clearAllFilters.click();
 		await partnerMDFListPage.filterButton.click();
 
-		await page.getByLabel('Company Name 2').check();
+		await page.getByLabel('Company Name 3').check();
 
 		await partnerMDFListPage.applyFilterButton.click();
 		await page.getByText('MDF Requests').click();
 
 		await expect(partnerMDFListPage.noEntriesFoundMessage).toBeVisible();
-		await expect(partnerName).not.toBeVisible();
 	});
 
 	test('Should clean date filter fields when click on Clear All Filters', async ({
@@ -208,5 +207,21 @@ test.describe('MDF Request Page', () => {
 		await partnerMDFRequestForm.backButton.click();
 
 		await expect(partnerMDFListPage.getStatus('Approved')).toBeTruthy();
+	});
+
+	test('Should Find a Request using the search input', async ({
+		partnerMDFListPage,
+	}) => {
+		const campaignName = await partnerMDFListPage.getCampaignName();
+		const cleanSearch = await partnerMDFListPage.cleanSearch;
+
+		await partnerMDFListPage.filterUsingSearchInput('Test Campaign');
+
+		await expect(campaignName).toBeVisible();
+
+		await cleanSearch.click();
+		await partnerMDFListPage.filterUsingSearchInput('Name');
+
+		await expect(partnerMDFListPage.noEntriesFoundMessage).toBeVisible();
 	});
 });

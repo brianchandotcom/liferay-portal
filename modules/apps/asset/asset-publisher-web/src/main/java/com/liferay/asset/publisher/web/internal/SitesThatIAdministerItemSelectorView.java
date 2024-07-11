@@ -59,7 +59,7 @@ public class SitesThatIAdministerItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return ResourceBundleUtil.getString(
-			_portal.getResourceBundle(locale), "sites-that-i-administer");
+			_portal.getResourceBundle(locale), "sites-of-which-i-am-a-member");
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 dependencies {
-	compileOnly project(":dxp:apps:portal-search-similar-results:portal-search-similar-results-web")
-
 	testIntegrationImplementation project(":apps:export-import:export-import-api")
 	testIntegrationImplementation project(":apps:portal-search:portal-search-test-util")
+	testIntegrationImplementation project(":dxp:apps:portal-search-similar-results:portal-search-similar-results-web")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

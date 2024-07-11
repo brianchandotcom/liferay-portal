@@ -1906,6 +1906,19 @@ public class DLFileEntryLocalServiceImpl
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
+				if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+					DLFolder folder = _dlFolderLocalService.fetchDLFolder(
+						folderId);
+
+					if (folder != null) {
+						Property groupIdProperty = PropertyFactoryUtil.forName(
+							"groupId");
+
+						dynamicQuery.add(
+							groupIdProperty.eq(folder.getGroupId()));
+					}
+				}
+
 				Property folderIdProperty = PropertyFactoryUtil.forName(
 					"folderId");
 

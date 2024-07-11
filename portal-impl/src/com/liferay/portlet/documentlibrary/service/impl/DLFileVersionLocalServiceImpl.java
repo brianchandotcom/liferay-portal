@@ -8,6 +8,8 @@ package com.liferay.portlet.documentlibrary.service.impl;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.util.comparator.DLFileVersionVersionComparator;
@@ -187,6 +189,19 @@ public class DLFileVersionLocalServiceImpl
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
+				if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+					DLFolder folder = _dlFolderLocalService.fetchDLFolder(
+						folderId);
+
+					if (folder != null) {
+						Property groupIdProperty = PropertyFactoryUtil.forName(
+							"groupId");
+
+						dynamicQuery.add(
+							groupIdProperty.eq(folder.getGroupId()));
+					}
+				}
+
 				Property folderIdProperty = PropertyFactoryUtil.forName(
 					"folderId");
 

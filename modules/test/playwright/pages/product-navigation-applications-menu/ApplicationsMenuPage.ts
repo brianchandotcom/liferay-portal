@@ -38,6 +38,7 @@ export class ApplicationsMenuPage {
 	private readonly productsMenuItem: Locator;
 	private readonly queueMenuItem: Locator;
 	private readonly rolesItem: Locator;
+	private readonly samlAdminItem: Locator;
 	private readonly searchItem: Locator;
 	private readonly serviceAccountsItem: Locator;
 	private readonly sitesItem: Locator;
@@ -157,6 +158,10 @@ export class ApplicationsMenuPage {
 		this.rolesItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Roles',
+		});
+		this.samlAdminItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'SAML Admin',
 		});
 		this.searchItem = page.getByRole('menuitem', {
 			exact: true,
@@ -371,6 +376,12 @@ export class ApplicationsMenuPage {
 		await this.goto();
 		await this.controlPanelButton.click();
 		await this.rolesItem.click();
+	}
+
+	async goToSamlAdmin() {
+		await this.goto();
+		await this.controlPanelButton.click();
+		await this.samlAdminItem.click();
 	}
 
 	async goToServiceAccounts() {

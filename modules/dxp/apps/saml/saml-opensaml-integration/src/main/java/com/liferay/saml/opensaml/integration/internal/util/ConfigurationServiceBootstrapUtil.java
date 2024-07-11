@@ -8,7 +8,9 @@ package com.liferay.saml.opensaml.integration.internal.util;
 import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import java.lang.reflect.Method;
 
@@ -90,8 +92,10 @@ public class ConfigurationServiceBootstrapUtil {
 			() -> {
 				try (SafeCloseable safeCloseable =
 						ThreadContextClassLoaderUtil.swap(
-							ConfigurationServiceBootstrapUtil.class.
-								getClassLoader())) {
+							AggregateClassLoader.getAggregateClassLoader(
+								ConfigurationServiceBootstrapUtil.class.
+									getClassLoader(),
+								PortalClassLoaderUtil.getClassLoader()))) {
 
 					InitializationService.initialize();
 

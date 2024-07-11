@@ -42,6 +42,105 @@
 			"sortConfiguration": {
 			}
 		},
+		"elementInstances":[
+			{
+				"configurationEntry": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"terms": {
+												"assetCategoryIds": [
+													"[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/test-asset-vocabulary-2/test-asset-category-3.json$]"
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"sxpElement": {
+					"description": "Filter results by one or multiple terms. At least one must match.",
+					"description_i18n": {
+						"en-US": "filter-by-exact-terms-match-description"
+					},
+					"elementDefinition": {
+						"category": "filter",
+						"configuration": {
+							"queryConfiguration": {
+								"queryEntries": [
+									{
+										"clauses": [
+											{
+												"context": "query",
+												"occur": "filter",
+												"query": {
+													"terms": {
+														"${configuration.field}": "${configuration.values}"
+													}
+												}
+											}
+										]
+									}
+								]
+							}
+						},
+						"icon": "filter",
+						"uiConfiguration": {
+							"fieldSets": [
+								{
+									"fields": [
+										{
+											"label": "Field",
+											"labelLocalized": "Field",
+											"name": "field",
+											"type": "fieldMapping"
+										},
+										{
+											"label": "Values",
+											"labelLocalized": "Values",
+											"name": "values",
+											"type": "multiselect"
+										}
+									]
+								}
+							]
+						}
+					},
+					"externalReferenceCode": "FILTER_BY_EXACT_TERMS_MATCH_1",
+					"fallbackDescription": "filter-by-exact-terms-match-description",
+					"fallbackTitle": "filter-by-exact-terms-match",
+					"readOnly": true,
+					"schemaVersion": "1.0",
+					"title": "Filter by Exact Terms Match",
+					"title_i18n": {
+						"en-US": "filter-by-exact-terms-match"
+					},
+					"type": 0,
+					"userName": "",
+					"version": "1.0"
+				},
+				"uiConfigurationValues": {
+					"field": {
+						"field": "assetCategoryIds",
+						"languageIdPosition": -1,
+						"locale": ""
+					},
+					"values": [
+						{
+							"label": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/test-asset-vocabulary-2/test-asset-category-3.json$]",
+							"value": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/test-asset-vocabulary-2/test-asset-category-3.json$]"
+						}
+					]
+				}
+			}
+		],
 		"externalReferenceCode": "TESTSXPBLUEPRINT1",
 		"title": "Test SXBlueprint 1"
 	},
@@ -88,6 +187,105 @@
 			"sortConfiguration": {
 			}
 		},
+		"elementInstances":[
+			{
+				"configurationEntry": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"terms": {
+												"assetCategoryIds": [
+													"[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/test-asset-vocabulary-2/test-asset-category-3.json$]"
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"sxpElement": {
+					"description": "Filter results by one or multiple terms. At least one must match.",
+					"description_i18n": {
+						"en-US": "filter-by-exact-terms-match-description"
+					},
+					"elementDefinition": {
+						"category": "filter",
+						"configuration": {
+							"queryConfiguration": {
+								"queryEntries": [
+									{
+										"clauses": [
+											{
+												"context": "query",
+												"occur": "filter",
+												"query": {
+													"terms": {
+														"${configuration.field}": "${configuration.values}"
+													}
+												}
+											}
+										]
+									}
+								]
+							}
+						},
+						"icon": "filter",
+						"uiConfiguration": {
+							"fieldSets": [
+								{
+									"fields": [
+										{
+											"label": "Field",
+											"labelLocalized": "Field",
+											"name": "field",
+											"type": "fieldMapping"
+										},
+										{
+											"label": "Values",
+											"labelLocalized": "Values",
+											"name": "values",
+											"type": "multiselect"
+										}
+									]
+								}
+							]
+						}
+					},
+					"externalReferenceCode": "FILTER_BY_EXACT_TERMS_MATCH_2",
+					"fallbackDescription": "filter-by-exact-terms-match-description",
+					"fallbackTitle": "filter-by-exact-terms-match",
+					"readOnly": true,
+					"schemaVersion": "1.0",
+					"title": "Filter by Exact Terms Match",
+					"title_i18n": {
+						"en-US": "filter-by-exact-terms-match"
+					},
+					"type": 0,
+					"userName": "",
+					"version": "1.0"
+				},
+				"uiConfigurationValues": {
+					"field": {
+						"field": "assetCategoryIds",
+						"languageIdPosition": -1,
+						"locale": ""
+					},
+					"values": [
+						{
+							"label": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/test-asset-vocabulary-2/test-asset-category-3.json$]",
+							"value": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/test-asset-vocabulary-2/test-asset-category-3.json$]"
+						}
+					]
+				}
+			}
+		],
 		"externalReferenceCode": "TESTSXPBLUEPRINT2",
 		"title": "Test SXBlueprint 2"
 	}

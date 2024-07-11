@@ -10,11 +10,14 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.site.initializer.extender.OSBSiteInitializer;
 import com.liferay.site.initializer.extender.SiteInitializerUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -40,6 +43,8 @@ public class OSBSiteInitializerImpl implements OSBSiteInitializer {
 		if (json == null) {
 			return;
 		}
+
+		json = _replace(json, stringUtilReplaceValues);
 
 		SXPBlueprintResource.Builder builder =
 			_sxpBlueprintResourceFactory.create();
@@ -72,6 +77,21 @@ public class OSBSiteInitializerImpl implements OSBSiteInitializer {
 				"SXP_BLUEPRINT_ID:" + sxpBlueprint.getExternalReferenceCode(),
 				String.valueOf(sxpBlueprint.getId()));
 		}
+	}
+
+	private String _replace(
+		String s, Map<String, String> stringUtilReplaceValues) {
+
+		HashMap<String, String> aggregatedStringUtilReplaceValues =
+			HashMapBuilder.putAll(
+				stringUtilReplaceValues
+			).build();
+
+		s = StringUtil.replace(
+			s, "\"[#", "#]\"", aggregatedStringUtilReplaceValues);
+
+		return StringUtil.replace(
+			s, "[$", "$]", aggregatedStringUtilReplaceValues);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

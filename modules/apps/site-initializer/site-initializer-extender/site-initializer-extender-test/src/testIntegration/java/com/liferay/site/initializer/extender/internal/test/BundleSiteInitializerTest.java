@@ -3828,6 +3828,7 @@ public class BundleSiteInitializerTest {
 				"TESTSXPBLUEPRINT1");
 
 		Assert.assertNotNull(sxpBlueprint);
+		Assert.assertFalse(sxpBlueprint.toString().contains("[$"));
 		_assertSearchableAssetTypes(
 			new String[] {"com.liferay.journal.model.JournalArticle"},
 			sxpBlueprint.getConfiguration());
@@ -3838,6 +3839,7 @@ public class BundleSiteInitializerTest {
 				"TESTSXPBLUEPRINT2");
 
 		Assert.assertNotNull(sxpBlueprint);
+		Assert.assertFalse(sxpBlueprint.toString().contains("[$"));
 		_assertSearchableAssetTypes(
 			new String[] {
 				"com.liferay.document.library.kernel.model.DLFileEntry"
@@ -3860,6 +3862,7 @@ public class BundleSiteInitializerTest {
 				"TESTSXPBLUEPRINT1");
 
 		Assert.assertNotNull(sxpBlueprint);
+		Assert.assertFalse(sxpBlueprint.toString().contains("[$"));
 		_assertSearchableAssetTypes(
 			new String[] {"com.liferay.journal.model.JournalArticle"},
 			sxpBlueprint.getConfiguration());
@@ -3870,6 +3873,7 @@ public class BundleSiteInitializerTest {
 				"TESTSXPBLUEPRINT2");
 
 		Assert.assertNotNull(sxpBlueprint);
+		Assert.assertFalse(sxpBlueprint.toString().contains("[$"));
 		_assertSearchableAssetTypes(
 			new String[] {
 				"com.liferay.document.library.kernel.model.DLFileEntry",
@@ -3884,6 +3888,7 @@ public class BundleSiteInitializerTest {
 				"TESTSXPBLUEPRINT3");
 
 		Assert.assertNotNull(sxpBlueprint);
+		Assert.assertFalse(sxpBlueprint.toString().contains("[$"));
 		_assertSearchableAssetTypes(
 			new String[] {"com.liferay.portal.kernel.model.User"},
 			sxpBlueprint.getConfiguration());

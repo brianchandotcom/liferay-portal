@@ -5250,7 +5250,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			addOrUpdateSegmentsEntriesR,
 			_dependsOn(addOrUpdateRolesR, addUserAccountsR)
 		).put(
-			addOrUpdateSXPBlueprintR, _dependsOn()
+			addOrUpdateSXPBlueprintR, _dependsOn(addOrUpdateTaxonomyVocabulariesR)
 		).put(
 			addOrUpdateTaxonomyVocabulariesR,
 			_dependsOn(addOrUpdateDDMStructuresR)

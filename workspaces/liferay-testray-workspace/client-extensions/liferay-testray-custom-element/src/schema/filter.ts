@@ -975,39 +975,84 @@ const filterSchema = {
 	subtaskCaseResults: {
 		fields: [
 			overrides(baseFilters.caseType, {
-				name: 'caseToCaseResult/r_caseTypeToCases_c_caseTypeId',
+				isCustomFilter: true,
+				name: 'testrayCaseTypeIds',
 				type: 'multiselect',
 			}),
+			{
+				isCustomFilter: true,
+				label: i18n.translate('flaky'),
+				name: 'flaky',
+				options: [
+					{
+						label: i18n.translate('true'),
+						value: true,
+					},
+					{
+						label: i18n.translate('false'),
+						value: false,
+					},
+				],
+				removeQuoteMark: true,
+				type: 'select',
+			},
 			overrides(baseFilters.priority, {
-				name: 'caseToCaseResult/priority',
+				isCustomFilter: true,
+				name: 'priority',
 				removeQuoteMark: true,
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.team, {
-				name: 'componentToCaseResult/r_teamToComponents_c_teamId',
+				isCustomFilter: true,
+				name: 'testrayTeamIds',
+				resource: ({buildId}) => {
+					const filter = `${SearchBuilder.eq(
+						'teamToComponents/componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
+						buildId as string
+					)}`;
+
+					return `/teams?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
+				},
 				type: 'multiselect',
 			}),
 			overrides(baseFilters.component, {
-				name: 'componentToCaseResult/id',
+				isCustomFilter: true,
+				name: 'testrayComponentIds',
+				resource: ({buildId}) => {
+					const filter = `${SearchBuilder.eq(
+						'componentToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
+						buildId as string
+					)}`;
+
+					return `/components?fields=id,name&filter=${filter}&pageSize=-1&sort=name:asc`;
+				},
 				type: 'multiselect',
 			}),
 			{
+				isCustomFilter: true,
 				label: i18n.translate('environment'),
-				name: 'runToCaseResult/name',
-				operator: 'contains',
+				name: 'testrayRunName',
+
 				type: 'text',
 			},
 			overrides(baseFilters.run, {
-				name: 'runToCaseResult/id',
+				isCustomFilter: true,
+				name: 'testrayRunId',
 				type: 'select',
 			}),
 			{
+				isCustomFilter: true,
 				label: i18n.translate('case-name'),
-				name: 'caseToCaseResult/name',
-				operator: 'contains',
+				name: 'testrayCaseName',
 				type: 'text',
 			},
+			overrides(baseFilters.assignee, {
+				isCustomFilter: true,
+				name: 'userId',
+			}),
 			overrides(baseFilters.dueStatus, {
+				isCustomFilter: true,
+				name: 'status',
 				options: [
 					{
 						label: i18n.translate('blocked'),
@@ -1035,14 +1080,18 @@ const filterSchema = {
 					},
 				],
 			}),
+			overrides(baseFilters.issues, {
+				isCustomFilter: true,
+				name: 'issues',
+			}),
 			overrides(baseFilters.erros, {
-				operator: 'contains',
+				isCustomFilter: true,
+				name: 'error',
 			}),
 			{
+				isCustomFilter: true,
 				label: i18n.translate('comments'),
 				name: 'comment',
-				operator: 'contains',
-				optionalOperator: 'ne',
 				type: 'textarea',
 			},
 		] as RendererFields[],

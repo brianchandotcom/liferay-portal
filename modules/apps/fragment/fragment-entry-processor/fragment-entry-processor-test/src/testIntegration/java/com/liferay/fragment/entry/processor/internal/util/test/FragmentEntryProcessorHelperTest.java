@@ -410,6 +410,23 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	@Test
+	public void testGetFieldValueWithNonexistingInfoItem() throws Exception {
+		Assert.assertNull(
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", RandomTestUtil.randomLong()
+				).put(
+					"fieldId", "AssetTag_tagNames"
+				),
+				LocaleUtil.SPAIN));
+	}
+
+	@Test
 	public void testGetFileEntryIdClassNameClassPKDLImage() throws Exception {
 		FileEntry fileEntry = _addImageFileEntry();
 

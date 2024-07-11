@@ -54,16 +54,6 @@ test('Add a new breakdown by an attribute and assert that correct results appear
 		});
 	});
 
-	await test.step('Create Individual Identity', async () => {
-		const identities = individuals.map((individual) => ({
-			createDate: date.toISOString(),
-			id: individual.id,
-			individualId: individual.id,
-		}));
-
-		await apiHelpers.jsonWebServicesOSBAsah.createIdentities(identities);
-	});
-
 	await test.step('Create Individual Event', async () => {
 		const events = individuals.map((individual) => ({
 			applicationId: 'Page',

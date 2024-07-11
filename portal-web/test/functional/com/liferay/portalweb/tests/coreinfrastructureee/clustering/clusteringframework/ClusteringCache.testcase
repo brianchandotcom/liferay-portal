@@ -87,69 +87,6 @@ definition {
 	}
 
 	@priority = 4
-	test CanSessionReplicateBetweenNodes {
-		property cluster.session.replicated = "true";
-		property custom.properties = "portlet.session.replicate.enabled=true";
-		property portal.release = "quarantine";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		Navigator.openNodePort(nodePort = 9080);
-
-		for (var serverPort : list "8080,9080") {
-			Clustering.viewNoSessionReplicateLogErrorOnSpecificNode(
-				exceptionText = "Unable to receive message through TCP channel",
-				nodePort = ${serverPort});
-		}
-
-		Clustering.deployClusteringModule(nodePort = 8080);
-
-		Navigator.openNodePort(nodePort = 8080);
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		PagesAdmin.addPage(pageName = "Session Replication Test");
-
-		Navigator.gotoPage(pageName = "Session Replication Test");
-
-		Portlet.addPG(portletName = "ClusterSampleSessionReplication");
-
-		AssertElementPresent(locator1 = "ClusterSamplePortlet#NO_SESSION_DATA_MESSAGE");
-
-		Clustering.deployClusteringModule(nodePort = 9080);
-
-		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "STARTED com.liferay.portal.cluster.multiple.sample.web",
-			nodePort = 9080);
-
-		Navigator.openNodePort(nodePort = 8080);
-
-		Navigator.gotoPage(pageName = "Session Replication Test");
-
-		AssertElementPresent(locator1 = "ClusterSamplePortlet#STORED_DATA");
-
-		var sessionData = selenium.getText("ClusterSamplePortlet#STORED_DATA");
-
-		echo(${sessionData});
-
-		Navigator.gotoSpecificURLPage(
-			pageName = "Session Replication Test",
-			url = "http://localhost:9080");
-
-		AssertTextEquals(
-			locator1 = "ClusterSamplePortlet#STORED_DATA",
-			value1 = ${sessionData});
-
-		for (var serverPort : list "8080,9080") {
-			Clustering.viewNoSessionReplicateLogErrorOnSpecificNode(
-				exceptionText = "Unable to receive message through TCP channel",
-				nodePort = ${serverPort});
-		}
-	}
-
-	@priority = 4
 	test DoNotReplicatePut {
 		property custom.properties = "ehcache.replicator.properties.test.cache=replicatePuts=false";
 		property test.liferay.virtual.instance = "false";

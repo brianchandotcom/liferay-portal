@@ -313,6 +313,11 @@ public class ObjectActionLocalServiceTest {
 			notificationQueueEntries.toString(), 2,
 			notificationQueueEntries.size());
 
+		_notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+			notificationQueueEntries.get(0));
+		_notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+			notificationQueueEntries.get(1));
+
 		_objectActionLocalService.deleteObjectAction(objectAction1);
 		_objectActionLocalService.deleteObjectAction(objectAction2);
 	}
@@ -2101,6 +2106,38 @@ public class ObjectActionLocalServiceTest {
 						"a" + RandomTestUtil.randomString()
 					).build()));
 
+		NotificationTemplate notificationTemplate =
+			_notificationTemplateLocalService.addNotificationTemplate(
+				NotificationTemplateUtil.createNotificationContext(
+					TestPropsValues.getUser(),
+					objectDefinition.getObjectDefinitionId(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
+					Arrays.asList(
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_FROM,
+								_user.getEmailAddress()),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_FROM_NAME,
+								LocalizedMapUtil.getLocalizedMap(
+									RandomTestUtil.randomString())),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_TO,
+								_user.getEmailAddress())),
+					LocalizationUtil.updateLocalization(
+						HashMapBuilder.put(
+							LocaleUtil.BRAZIL, "Assunto"
+						).put(
+							LocaleUtil.US, "Subject"
+						).build(),
+						null, "Subject", "en_US"),
+					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
+
 		_objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
@@ -2112,48 +2149,7 @@ public class ObjectActionLocalServiceTest {
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 			UnicodePropertiesBuilder.put(
 				"notificationTemplateId",
-				() -> {
-					NotificationTemplate notificationTemplate =
-						_notificationTemplateLocalService.
-							addNotificationTemplate(
-								NotificationTemplateUtil.
-									createNotificationContext(
-										TestPropsValues.getUser(),
-										objectDefinition.
-											getObjectDefinitionId(),
-										RandomTestUtil.randomString(),
-										RandomTestUtil.randomString(),
-										NotificationTemplateConstants.
-											EDITOR_TYPE_RICH_TEXT,
-										Arrays.asList(
-											NotificationRecipientSettingUtil.
-												createNotificationRecipientSetting(
-													NotificationRecipientSettingConstants.NAME_FROM,
-													_user.getEmailAddress()),
-											NotificationRecipientSettingUtil.
-												createNotificationRecipientSetting(
-													NotificationRecipientSettingConstants.NAME_FROM_NAME,
-													LocalizedMapUtil.
-														getLocalizedMap(
-															RandomTestUtil.
-																randomString())),
-											NotificationRecipientSettingUtil.
-												createNotificationRecipientSetting(
-													NotificationRecipientSettingConstants.NAME_TO,
-													_user.getEmailAddress())),
-										LocalizationUtil.updateLocalization(
-											HashMapBuilder.put(
-												LocaleUtil.BRAZIL, "Assunto"
-											).put(
-												LocaleUtil.US, "Subject"
-											).build(),
-											null, "Subject", "en_US"),
-										NotificationConstants.TYPE_EMAIL,
-										Collections.emptyList()));
-
-					return String.valueOf(
-						notificationTemplate.getNotificationTemplateId());
-				}
+				String.valueOf(notificationTemplate.getNotificationTemplateId())
 			).put(
 				"usePreferredLanguageForGuests", "true"
 			).build(),

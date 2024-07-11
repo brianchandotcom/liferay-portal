@@ -79,6 +79,15 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaBaseFragmentCollectionContributorExtendedClassesCheck()
+		throws Exception {
+
+		test(
+			"upgrade/UpgradeJavaBaseFragmentCollectionContributor" +
+				"ExtendedClassesCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaBaseModelListenerCheck() throws Exception {
 		test("upgrade/UpgradeJavaBaseModelListenerCheck.testjava");
 	}

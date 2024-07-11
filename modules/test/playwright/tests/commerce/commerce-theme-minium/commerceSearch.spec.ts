@@ -10,6 +10,7 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
 import {miniumSetUp} from '../utils/commerce';
 
 export const test = mergeTests(
@@ -87,5 +88,90 @@ test('LPD-30191 Search for products by typing different SKUs in global search', 
 
 	await expect(
 		await commerceThemeMiniumPage.globalSearchSuggestionsItem('U-Joint')
+	).toBeVisible();
+});
+
+test('LPD-30370 Search for all orders by typing user email in global search', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceThemeMiniumPage,
+}) => {
+	const {channel, site} = await miniumSetUp(apiHelpers);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['test@liferay.com']
+	);
+
+	const openOrder = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+		{
+			accountId: account.id,
+		},
+		channel.id
+	);
+
+	const product = (
+		await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+			new URLSearchParams({
+				filter: `name eq 'ABS Sensor'`,
+			})
+		)
+	).items[0];
+
+	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+		.getProduct(product.productId)
+		.then((product) => {
+			return product.skus;
+		});
+
+	const sku = productSkus[0];
+
+	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
+		account.id,
+		{phoneNumber: '12345', regionISOCode: 'AL'}
+	);
+
+	const placedOrder = await apiHelpers.headlessCommerceAdminOrder.postOrder({
+		accountId: account.id,
+		billingAddressId: address.id,
+		channelId: channel.id,
+		orderItems: [
+			{
+				decimalQuantity: 10,
+				quantity: 2,
+				skuId: sku.id,
+			},
+		],
+		orderStatus: '0',
+		paymentMethod: 'paypal',
+		paymentStatus: '0',
+		shippingAddressId: address.id,
+	});
+
+	await applicationsMenuPage.goToSite(site.name);
+
+	await commerceThemeMiniumPage.globalSearchButton.click();
+
+	await commerceThemeMiniumPage.globalSearchInput.click();
+
+	await commerceThemeMiniumPage.globalSearchInput.fill('test@liferay.com');
+
+	await expect(
+		await commerceThemeMiniumPage.globalSearchSuggestionsItem(
+			String(openOrder.id)
+		)
+	).toBeVisible();
+
+	await expect(
+		await commerceThemeMiniumPage.globalSearchSuggestionsItem(
+			String(placedOrder.id)
+		)
 	).toBeVisible();
 });

@@ -9,14 +9,12 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlParser;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
@@ -88,13 +86,11 @@ public class RichTextObjectFieldBusinessType
 			return value;
 		}
 
-		ObjectDefinition objectDefinition = objectField.getObjectDefinition();
-
-		return SanitizerUtil.sanitize(
-			objectField.getCompanyId(), 0, objectField.getUserId(),
-			objectDefinition.getClassName(), 0, ContentTypes.TEXT_HTML,
-			Sanitizer.MODE_ALL, String.valueOf(value), null);
+		return _htmlParser.extractText(HtmlUtil.escape(String.valueOf(value)));
 	}
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 	@Reference
 	private Language _language;

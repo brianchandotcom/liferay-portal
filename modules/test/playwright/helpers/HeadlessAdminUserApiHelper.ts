@@ -357,9 +357,10 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
-	async postUserAccount(userAccount?: TUserAccount): Promise<TUserAccount> {
-		const randomNumber = getRandomInt();
-
+	async postUserAccount(
+		userAccount?: TUserAccount,
+		randomNumber = getRandomInt()
+	): Promise<TUserAccount> {
 		userAccount = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/user-accounts`,
 			{

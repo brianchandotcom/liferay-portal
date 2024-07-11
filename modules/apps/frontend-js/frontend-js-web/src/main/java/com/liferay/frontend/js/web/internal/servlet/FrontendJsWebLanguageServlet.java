@@ -9,27 +9,19 @@ import com.liferay.frontend.js.web.internal.language.LanguageState;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.URLUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
-import java.net.URL;
-
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -41,13 +33,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Iván Zaera Avellón
@@ -64,92 +54,19 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTracker = new ServiceTracker<>(
+		_servletContextServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletContext.class,
-			new ServiceTrackerCustomizer<ServletContext, String>() {
+			new ServletContextServiceTrackerCustomizer(
+				bundleContext, _jsonFactory, _language));
 
-				@Override
-				public String addingService(
-					ServiceReference<ServletContext> serviceReference) {
-
-					ServletContext servletContext = bundleContext.getService(
-						serviceReference);
-
-					try {
-						String contextPath = servletContext.getContextPath();
-
-						if (!contextPath.startsWith(_WEB_CONTEXT_PATH_PREFIX)) {
-							return null;
-						}
-
-						String webContextPath = contextPath.substring(
-							_WEB_CONTEXT_PATH_PREFIX.length());
-
-						List<String> keys = _getLanguageKeys(servletContext);
-
-						if (keys != null) {
-							if (_log.isDebugEnabled()) {
-								_log.debug(
-									StringBundler.concat(
-										"Web context path '", webContextPath,
-										"' added, contains ", keys.size(),
-										" keys"));
-							}
-
-							synchronized (this) {
-								_webContextPathKeysMap.put(
-									webContextPath, keys);
-
-								LanguageState.set(
-									new LanguageState(
-										_webContextPathKeysMap, _language));
-							}
-						}
-
-						return webContextPath;
-					}
-					finally {
-						bundleContext.ungetService(serviceReference);
-					}
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<ServletContext> serviceReference,
-					String webContextPath) {
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<ServletContext> serviceReference,
-					String webContextPath) {
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"Web context path '", webContextPath,
-								"' removed"));
-					}
-
-					synchronized (this) {
-						_webContextPathKeysMap.remove(webContextPath);
-
-						LanguageState.set(
-							new LanguageState(
-								_webContextPathKeysMap, _language));
-					}
-				}
-
-			});
-
-		_serviceTracker.open();
+		_servletContextServiceTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
+		_servletContextServiceTracker.close();
 
-		_serviceTracker = null;
+		_servletContextServiceTracker = null;
 	}
 
 	@Override
@@ -258,33 +175,7 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 			new String[] {sb.toString()});
 	}
 
-	private List<String> _getLanguageKeys(ServletContext servletContext) {
-		try {
-			URL url = servletContext.getResource("/language.json");
-
-			if (url == null) {
-				return null;
-			}
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				URLUtil.toString(url));
-
-			return JSONUtil.toStringList(jsonObject.getJSONArray("keys"));
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to get language.json keys from servlet context " +
-					servletContext.getContextPath(),
-				exception);
-
-			return null;
-		}
-	}
-
 	private static final String _TPL_JAVA_SCRIPT;
-
-	private static final String _WEB_CONTEXT_PATH_PREFIX =
-		Portal.PATH_MODULE + StringPool.SLASH;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FrontendJsWebLanguageServlet.class);
@@ -299,8 +190,7 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 	@Reference
 	private Language _language;
 
-	private ServiceTracker<ServletContext, String> _serviceTracker;
-	private final Map<String, List<String>> _webContextPathKeysMap =
-		new HashMap<>();
+	private ServiceTracker<ServletContext, String>
+		_servletContextServiceTracker;
 
 }

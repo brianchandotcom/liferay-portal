@@ -236,34 +236,22 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
-		String resourceBundleClassName = _portlet.getResourceBundle();
+		ResourceBundle resourceBundle = _resourceBundles.get(locale);
 
-		if (Validator.isNull(resourceBundleClassName)) {
-			ResourceBundle resourceBundle = _resourceBundles.get(locale);
-
-			if (resourceBundle == null) {
-				resourceBundle = new PortletResourceBundle(
-					LanguageResources.getResourceBundle(locale), _portletInfos);
-
-				_resourceBundles.put(locale, resourceBundle);
-			}
-
+		if (resourceBundle != null) {
 			return resourceBundle;
 		}
 
-		ResourceBundle resourceBundle = null;
+		String portletResourceBundle = _portlet.getResourceBundle();
 
-		if (!_portletApp.isWARFile() &&
-			resourceBundleClassName.equals(
-				StrutsResourceBundle.class.getName())) {
+		if (Validator.isNull(portletResourceBundle)) {
+			resourceBundle = LanguageResources.getResourceBundle(locale);
+		}
+		else if (!_portletApp.isWARFile() &&
+				 portletResourceBundle.equals(
+					 StrutsResourceBundle.class.getName())) {
 
-			resourceBundle = _resourceBundles.get(locale);
-
-			if (resourceBundle == null) {
-				resourceBundle = new StrutsResourceBundle(_portletName, locale);
-
-				_resourceBundles.put(locale, resourceBundle);
-			}
+			resourceBundle = new StrutsResourceBundle(_portletName, locale);
 		}
 		else {
 			PortletBag portletBag = PortletBagPool.get(
@@ -274,7 +262,12 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 			}
 		}
 
-		return new PortletResourceBundle(resourceBundle, _portletInfos);
+		resourceBundle = new PortletResourceBundle(
+			resourceBundle, _portletInfos);
+
+		_resourceBundles.put(locale, resourceBundle);
+
+		return resourceBundle;
 	}
 
 	@Override

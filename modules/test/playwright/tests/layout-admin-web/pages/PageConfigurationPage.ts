@@ -45,11 +45,6 @@ export class PageConfigurationPage {
 		await this.customCanonicalURLSettings.fill(canonicalURL);
 
 		await this.save();
-
-		await waitForSuccessAlert(
-			this.page,
-			'The page was updated successfully.'
-		);
 	}
 
 	async save() {
@@ -85,21 +80,11 @@ export class PageConfigurationPage {
 		});
 
 		await this.save();
-
-		await waitForSuccessAlert(
-			this.page,
-			'The page was updated successfully.'
-		);
 	}
 
 	async setHTMLTitle(title: string) {
 		await this.page.getByLabel('HTML Title').fill(title);
 
 		await this.save();
-
-		await waitForSuccessAlert(
-			this.page,
-			'The page was updated successfully.'
-		);
 	}
 }

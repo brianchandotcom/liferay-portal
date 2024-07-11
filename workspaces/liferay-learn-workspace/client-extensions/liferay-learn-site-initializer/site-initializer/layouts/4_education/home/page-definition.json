@@ -432,7 +432,7 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/w/courses/building-enterprise-websites-with-liferay"
+																"en_US": "/w/education/courses/building-enterprise-websites-with-liferay"
 															}
 														}
 													},
@@ -1013,7 +1013,7 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/w/courses/selling-liferay/level-0"
+																"en_US": "/w/education/courses/selling-liferay/level-0"
 															}
 														}
 													},
@@ -1471,7 +1471,7 @@
 															"value": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "/w/courses/index"
+																		"en_US": "/w/education/courses/index"
 																	}
 																}
 															}
@@ -1560,7 +1560,7 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/w/courses/selling-liferay/level-0"
+																"en_US": "/w/education/courses/selling-liferay/level-0"
 															}
 														}
 													},
@@ -1808,7 +1808,7 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/w/courses/selling-liferay/level-1-business"
+																"en_US": "/w/education/courses/selling-liferay/level-1-business"
 															}
 														}
 													},
@@ -2056,7 +2056,7 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/w/courses/selling-liferay/level-1-business"
+																"en_US": "/w/education/courses/selling-liferay/level-1-business"
 															}
 														}
 													},
@@ -2471,7 +2471,7 @@
 															"value": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "/w/courses/index"
+																		"en_US": "/w/education/courses/index"
 																	}
 																}
 															}

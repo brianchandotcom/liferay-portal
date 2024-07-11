@@ -7,16 +7,30 @@ import {expect, mergeTests} from '@playwright/test';
 import moment from 'moment';
 
 import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
+import { partnerHelper } from '../fixtures/partnerHelper';
 import {partnerPagesTest} from '../fixtures/partnerPages';
 import {partnerSiteFixture} from '../fixtures/partnerSite';
 import {generateMDFRequestData} from '../utils/mdfRequestData';
 
-const test = mergeTests(apiHelpersTest, partnerSiteFixture, partnerPagesTest);
+const test = mergeTests(apiHelpersTest, partnerHelper, partnerSiteFixture, partnerPagesTest);
 
 test.describe('MDF Request Form', () => {
-	test.beforeEach(async ({partnerMDFListPage}) => {
+	const accountName = 'Deathray, Inc.*';
+	const accountRole = '[Account] Partner Manager (PM)';
+	let accountUser;
+
+	test.beforeEach(async ({partnerHelper, partnerMDFListPage}) => {
+		const { account } = await partnerHelper.createAccountUser({accountName, accountType: 'business'});
+		await partnerHelper.assignUserToAccountRole({accountId: account.id, accountRole});
+
+		accountUser = account;
+
 		await partnerMDFListPage.goto();
 	});
+
+	test.afterEach(async ({apiHelpers}) => {
+		await apiHelpers.headlessAdminUser.deleteAccount(accountUser.id);
+	})
 
 	test('Should Create a New MDF Request', async ({
 		page,

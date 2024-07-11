@@ -81,5 +81,5 @@ interface WorkflowDefinition {
 interface WorkflowDefinitionVersion {
 	creatorName: string;
 	dateCreated: string;
-	versionNumber: string;
+	version: string;
 }

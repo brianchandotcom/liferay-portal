@@ -256,7 +256,7 @@ export default function UpperToolbar({
 						publishedOrSavedDefinitionResponseJSON.creator?.name,
 					dateCreated:
 						publishedOrSavedDefinitionResponseJSON.dateCreated,
-					versionNumber: String(
+					version: String(
 						parseInt(
 							publishedOrSavedDefinitionResponseJSON.version,
 							10

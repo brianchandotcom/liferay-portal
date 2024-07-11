@@ -50,7 +50,7 @@ export function RevisionHistory({
 
 			{Liferay.FeatureFlags['LPD-29635']
 				? workflowDefinitionVersions.map(
-						({creatorName, dateCreated, versionNumber}) => (
+						({creatorName, dateCreated, version}) => (
 							<VersionRow
 								creatorName={creatorName}
 								dateCreated={dateCreated}
@@ -58,7 +58,7 @@ export function RevisionHistory({
 								setWorkflowDefinitionVersions={
 									setWorkflowDefinitionVersions
 								}
-								versionNumber={parseInt(versionNumber, 10)}
+								versionNumber={parseInt(version, 10)}
 							/>
 						)
 					)

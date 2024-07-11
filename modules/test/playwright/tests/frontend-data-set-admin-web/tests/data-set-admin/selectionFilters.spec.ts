@@ -16,7 +16,8 @@ import {filtersPageTest} from './fixtures/filtersPageTest';
 
 const SELECTION_API_HEADLESS_FILTER_NAME = 'Selection API Headless filter';
 const SELECTION_PICKLIST_FILTER_NAME = 'Selection Picklist filter';
-const SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME = 'Selection Picklist filter without preselected values';
+const SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME =
+	'Selection Picklist filter without preselected values';
 const PICKLIST_VALUE_KEY = 'sampleValue';
 const PICKLIST_VALUE_NAME = 'Sample Value';
 
@@ -77,11 +78,15 @@ test.describe('Filters in Data Set Manager', () => {
 		page,
 	}) => {
 		await test.step('Can not create a selection filter without filling mandatory fields', async () => {
-			await filtersPage.openNewFilterModal({dropdownItemLabel: 'Selection'});
+			await filtersPage.openNewFilterModal({
+				dropdownItemLabel: 'Selection',
+			});
 
 			await filtersPage.saveAddFilterModal();
 
-			await expect(page.getByText('This field is required.')).toHaveCount(3);
+			await expect(page.getByText('This field is required.')).toHaveCount(
+				3
+			);
 
 			await filtersPage.cancelAddFilterModal();
 		});

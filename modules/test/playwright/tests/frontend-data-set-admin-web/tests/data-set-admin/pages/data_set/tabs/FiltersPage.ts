@@ -86,10 +86,16 @@ export class FiltersPage {
 		};
 		this.newClientExtensionFilterModal = {
 			...this.newFilterModal,
-			clientExtensionDropdown: page.locator('label').filter({hasText: 'Client ExtensionRequired'}),
-			noClientExtensionsAvailableAlert: page.getByLabel('New Client Extension Filter')
+			clientExtensionDropdown: page
+				.locator('label')
+				.filter({hasText: 'Client ExtensionRequired'}),
+			noClientExtensionsAvailableAlert: page
+				.getByLabel('New Client Extension Filter')
 				.locator('div')
-				.filter({ hasText: 'InfoNo frontend data set filter client extensions are available. Add a client ex' })
+				.filter({
+					hasText:
+						'InfoNo frontend data set filter client extensions are available. Add a client ex',
+				})
 				.first(),
 		};
 		this.newDateRangeFilterModal = {
@@ -117,7 +123,9 @@ export class FiltersPage {
 			filterModeRadioButtons: page.getByText('Filter ModeIncludeExclude'),
 			itemKey: page.locator('.fds-filter-item-key'),
 			itemLabel: page.locator('.fds-filter-item-label'),
-			picklistDropdown: page.locator('label').filter({hasText: 'PicklistRequired'}),
+			picklistDropdown: page
+				.locator('label')
+				.filter({hasText: 'PicklistRequired'}),
 			preselectedValuesMultiSelect: page.getByPlaceholder(
 				'Select a default value for your filter.'
 			),
@@ -130,7 +138,9 @@ export class FiltersPage {
 			restSchemaField: page.getByLabel('REST SchemaRequired'),
 			restSchemaOptions: page.locator('.fds-filter-rest-schema-menu'),
 			selectionRadioButtons: page.getByText('SelectionMultipleSingle'),
-			sourceTypeDropdown: page.locator('label').filter({hasText: 'SourceRequired'}),
+			sourceTypeDropdown: page
+				.locator('label')
+				.filter({hasText: 'SourceRequired'}),
 		};
 		this.page = page;
 	}
@@ -168,9 +178,9 @@ export class FiltersPage {
 	}
 
 	async createClientExtensionFilter({
+		clientExtension,
 		filterBy,
 		name,
-		clientExtension
 	}: IClientExtensionFilter) {
 		await this.openNewFilterModal({
 			dropdownItemLabel: 'Client Extension',
@@ -308,9 +318,12 @@ export class FiltersPage {
 
 		if (preselectedValues.length) {
 			await this.page
-			.getByRole('option', {name: preselectedValues[0]})
-			.click();
-			await this.page.locator('label').filter({hasText: filterMode}).click();
+				.getByRole('option', {name: preselectedValues[0]})
+				.click();
+			await this.page
+				.locator('label')
+				.filter({hasText: filterMode})
+				.click();
 		}
 		await this.page.getByText(selectionType).click();
 	}

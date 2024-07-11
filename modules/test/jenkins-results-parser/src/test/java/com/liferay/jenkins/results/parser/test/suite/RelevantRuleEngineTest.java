@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.suite;
 
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestBatch;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestSelector;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
@@ -14,7 +15,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -86,12 +89,20 @@ public class RelevantRuleEngineTest extends BaseRelevantRuleTestCase {
 			}
 		}
 
+		Set<String> actualPlaywrightProjectNames = new HashSet<>();
+
 		PlaywrightTestSelector playwrightTestSelector =
 			playwrightTestBatch.getTestSelector();
 
+		for (JobProperty jobProperty :
+				playwrightTestSelector.getPlaywrightJobProperties()) {
+
+			actualPlaywrightProjectNames.add(jobProperty.getValue());
+		}
+
 		Assert.assertEquals(
 			Collections.singleton("module-3-playwright-project"),
-			playwrightTestSelector.getPlaywrightProjectNames());
+			actualPlaywrightProjectNames);
 	}
 
 	@Test

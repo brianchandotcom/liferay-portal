@@ -104,16 +104,23 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 			}
 		}
 
+		Set<String> actualPlaywrightProjectNames = new HashSet<>();
+
 		PlaywrightTestSelector playwrightTestSelector =
 			playwrightTestBatch.getTestSelector();
+
+		for (JobProperty jobProperty :
+				playwrightTestSelector.getPlaywrightJobProperties()) {
+
+			actualPlaywrightProjectNames.add(jobProperty.getValue());
+		}
 
 		Set<String> expectedPlaywrightProjectNames = new HashSet<>(
 			Arrays.asList(
 				"module-1-playwright-project", "module-2-playwright-project"));
 
 		Assert.assertEquals(
-			expectedPlaywrightProjectNames,
-			playwrightTestSelector.getPlaywrightProjectNames());
+			expectedPlaywrightProjectNames, actualPlaywrightProjectNames);
 	}
 
 	@Test

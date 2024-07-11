@@ -14,14 +14,16 @@ import {ObjectOptionsListItem, ObjectsOptionsList} from '../../fetchUtil';
 interface SingleSelectAddObjectEntryProps {
 	errors: ActionError;
 	objectsOptions: ObjectsOptionsList;
-	updateParameters: (value: ObjectOptionsListItem) => Promise<void>;
+	updateObjectDefinitionParameters: (
+		value: ObjectOptionsListItem
+	) => Promise<void>;
 	values: Partial<ObjectAction>;
 }
 
 export function SingleSelectAddObjectEntry({
 	errors,
 	objectsOptions,
-	updateParameters,
+	updateObjectDefinitionParameters,
 	values,
 }: SingleSelectAddObjectEntryProps) {
 	return (
@@ -49,7 +51,9 @@ export function SingleSelectAddObjectEntry({
 					);
 
 					if (selectedObjectDefinition) {
-						updateParameters(selectedObjectDefinition);
+						updateObjectDefinitionParameters(
+							selectedObjectDefinition
+						);
 					}
 				}}
 				placeholder={Liferay.Language.get('choose-an-object')}

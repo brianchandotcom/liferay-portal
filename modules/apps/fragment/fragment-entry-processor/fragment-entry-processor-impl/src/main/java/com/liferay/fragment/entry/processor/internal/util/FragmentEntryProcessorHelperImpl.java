@@ -247,6 +247,10 @@ public class FragmentEntryProcessorHelperImpl
 		FragmentEntryProcessorContext fragmentEntryProcessorContext,
 		InfoItemFieldValues infoItemFieldValues) {
 
+		if (infoItemFieldValues == null) {
+			return null;
+		}
+
 		InfoFieldValue<Object> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue(fieldName);
 

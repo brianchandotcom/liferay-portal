@@ -36,6 +36,42 @@ test('checks the accessibility of the General page configuration', async ({
 	});
 });
 
+test('Can configure an embedded page.', async ({
+	apiHelpers,
+	page,
+	pageConfigurationPage,
+	pagesAdminPage,
+	site,
+}) => {
+	await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		options: {
+			type: 'embedded',
+		},
+		title: 'Embedded',
+	});
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	await pageConfigurationPage.goToSection('Embedded', 'General');
+
+	await expect(page.getByLabel('URL').first()).toHaveValue('');
+
+	await pageConfigurationPage.fillURL('https://www.google.com');
+
+	await pageConfigurationPage.save();
+
+	// Check URL was updated
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	await pageConfigurationPage.goToSection('Embedded', 'General');
+
+	await expect(page.getByLabel('URL').first()).toHaveValue(
+		'https://www.google.com'
+	);
+});
+
 test('Can configure a full page application.', async ({
 	apiHelpers,
 	page,
@@ -67,6 +103,41 @@ test('Can configure a full page application.', async ({
 	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
 	await expect(page.getByRole('heading', {name: 'Wiki'})).toBeVisible();
+});
+
+test('Can configure a panel page.', async ({
+	apiHelpers,
+	page,
+	pageConfigurationPage,
+	pagesAdminPage,
+	site,
+}) => {
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		options: {
+			type: 'panel',
+		},
+		title: 'Panel',
+	});
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	await pageConfigurationPage.goToSection('Panel', 'General');
+
+	await page
+		.locator('.treeview-link[data-id*="collaboration"]')
+		.getByRole('checkbox')
+		.check();
+
+	await pageConfigurationPage.save();
+
+	// Go to view mode of page
+
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+	await expect(
+		page.getByRole('link', {exact: true, name: 'Blogs'})
+	).toBeVisible();
 });
 
 test('Can edit the page name and layout template via pages administration.', async ({

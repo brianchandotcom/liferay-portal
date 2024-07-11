@@ -19,6 +19,7 @@ export class PageConfigurationPage {
 	readonly name: Locator;
 	readonly pagesAdminPage: PagesAdminPage;
 	readonly saveButton: Locator;
+	readonly url: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -31,6 +32,7 @@ export class PageConfigurationPage {
 		this.name = page.getByLabel('Name');
 		this.pagesAdminPage = new PagesAdminPage(page);
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
+		this.url = page.getByLabel('URL').first();
 	}
 
 	async goToSection(pageTitle: string, section: string) {
@@ -61,6 +63,10 @@ export class PageConfigurationPage {
 
 	async fillName(name: string) {
 		await fillAndClickOutside(this.page, this.name, name);
+	}
+
+	async fillURL(url: string) {
+		await fillAndClickOutside(this.page, this.url, url);
 	}
 
 	async setFriendlyURL(friendlyURL: string, language: 'spanish' | 'english') {

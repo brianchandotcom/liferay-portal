@@ -52,7 +52,9 @@ export function useSidebarTask() {
 			(tasksUserResponse?.items || []).map(({task}) => ({
 				...task,
 				subtasks: subtasksResponse?.items.filter((subtask) => {
-					return subtask?.taskId === task?.id ? subtask : undefined;
+					return subtask?.testrayTaskId === task?.id
+						? subtask
+						: undefined;
 				}),
 			})),
 		[subtasksResponse?.items, tasksUserResponse?.items]

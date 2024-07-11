@@ -344,7 +344,7 @@ const TestFlowTasks = () => {
 							},
 							{
 								clickable: true,
-								key: 'tests',
+								key: 'caseResultAmount',
 								value: i18n.translate('tests'),
 							},
 							{
@@ -381,7 +381,7 @@ const TestFlowTasks = () => {
 												displayName
 												name={subtask?.userName}
 												size="sm"
-												url={subtask.userImgUrl}
+												url={subtask.userPortraitUrl}
 											/>
 										);
 									}

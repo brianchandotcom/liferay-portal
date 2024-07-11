@@ -7,7 +7,7 @@ import {Page, expect} from '@playwright/test';
 
 import {waitForLoading} from './loading';
 
-export async function expectNotToBeVisible({
+export async function viewNameNotPresentOnTableList({
 	itemNames,
 	page,
 }: {
@@ -17,13 +17,15 @@ export async function expectNotToBeVisible({
 	const itemNamesArray = Array.isArray(itemNames) ? itemNames : [itemNames];
 
 	for (const itemName of itemNamesArray) {
-		await expect(page.getByText(itemName)).toBeHidden({
+		await expect(
+			page.locator('.table-title').getByText(itemName)
+		).toBeHidden({
 			timeout: 100 * 1000,
 		});
 	}
 }
 
-export async function expectToBeVisible({
+export async function viewNameOnTableList({
 	itemNames,
 	page,
 }: {
@@ -33,7 +35,9 @@ export async function expectToBeVisible({
 	const itemNamesArray = Array.isArray(itemNames) ? itemNames : [itemNames];
 
 	for (const itemName of itemNamesArray) {
-		await expect(page.getByText(itemName)).toBeVisible({
+		await expect(
+			page.locator('.table-title').getByText(itemName)
+		).toBeVisible({
 			timeout: 100 * 1000,
 		});
 	}
@@ -51,6 +55,5 @@ export async function searchByTerm({
 	await page.getByPlaceholder('Search').first().click();
 	await page.getByPlaceholder('Search').first().fill(searchTerm);
 	await page.getByPlaceholder('Search').first().press('Enter');
-
 	await waitForLoading(page);
 }

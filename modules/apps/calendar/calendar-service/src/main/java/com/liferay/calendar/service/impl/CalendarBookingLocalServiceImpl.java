@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -1205,13 +1206,9 @@ public class CalendarBookingLocalServiceImpl
 		}
 
 		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
-			String sanitizedDescription = SanitizerUtil.sanitize(
-				calendar.getCompanyId(), calendar.getGroupId(), userId,
-				CalendarBooking.class.getName(), calendarBookingId,
-				ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, entry.getValue(),
-				null);
-
-			descriptionMap.put(entry.getKey(), sanitizedDescription);
+			descriptionMap.put(
+				entry.getKey(),
+				_htmlParser.extractText(HtmlUtil.escape(entry.getValue())));
 		}
 
 		TimeZone timeZone = _getTimeZone(calendar, allDay);

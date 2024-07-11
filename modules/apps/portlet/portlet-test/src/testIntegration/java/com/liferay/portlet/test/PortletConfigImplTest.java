@@ -73,44 +73,16 @@ public class PortletConfigImplTest {
 	}
 
 	@Test
-	public void testGetResourceBundleWithoutProperty() {
-		Portlet portlet = _registerPortlet(false);
-
-		Assert.assertNull(portlet.getResourceBundle());
-
-		Locale locale1 = LocaleUtil.US;
-		Locale locale2 = LocaleUtil.SPAIN;
-
-		_registerResourceBundle(locale1, "value1");
-		_registerResourceBundle(locale2, "value2");
-
-		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-			portlet, null);
-
-		_testResourceBundle(portletConfig, locale1, "value1");
-		_testResourceBundle(portletConfig, locale2, "value2");
+	public void testGetResourceBundleWithoutResourceBundleProperty() {
+		_testGetResourceBundle(null);
 	}
 
 	@Test
-	public void testGetResourceBundleWithProperty() {
-		Portlet portlet = _registerPortlet(true);
-
-		Assert.assertNotNull(portlet.getResourceBundle());
-
-		Locale locale1 = LocaleUtil.US;
-		Locale locale2 = LocaleUtil.SPAIN;
-
-		_registerResourceBundle(locale1, "value1");
-		_registerResourceBundle(locale2, "value2");
-
-		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-			portlet, null);
-
-		_testResourceBundle(portletConfig, locale1, "value1");
-		_testResourceBundle(portletConfig, locale2, "value2");
+	public void testGetResourceBundleWithResourceBundleProperty() {
+		_testGetResourceBundle("content.Language");
 	}
 
-	private Portlet _registerPortlet(boolean hasResourceBundle) {
+	private Portlet _registerPortlet(String resourceBundle) {
 		String portletId = RandomTestUtil.randomString();
 
 		_serviceRegistrations.add(
@@ -119,14 +91,7 @@ public class PortletConfigImplTest {
 				HashMapDictionaryBuilder.put(
 					"javax.portlet.name", portletId
 				).put(
-					"javax.portlet.resource-bundle",
-					() -> {
-						if (hasResourceBundle) {
-							return "content.Language";
-						}
-
-						return null;
-					}
+					"javax.portlet.resource-bundle", resourceBundle
 				).build()));
 
 		return PortletLocalServiceUtil.getPortletById(portletId);
@@ -141,6 +106,24 @@ public class PortletConfigImplTest {
 				).put(
 					"language.id", _language.getLanguageId(locale)
 				).build()));
+	}
+
+	private void _testGetResourceBundle(String resourceBundle) {
+		Portlet portlet = _registerPortlet(resourceBundle);
+
+		Assert.assertEquals(resourceBundle, portlet.getResourceBundle());
+
+		Locale locale1 = LocaleUtil.US;
+		Locale locale2 = LocaleUtil.SPAIN;
+
+		_registerResourceBundle(locale1, "value1");
+		_registerResourceBundle(locale2, "value2");
+
+		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+			portlet, null);
+
+		_testResourceBundle(portletConfig, locale1, "value1");
+		_testResourceBundle(portletConfig, locale2, "value2");
 	}
 
 	private void _testResourceBundle(

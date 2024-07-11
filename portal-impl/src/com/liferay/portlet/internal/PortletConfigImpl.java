@@ -261,9 +261,9 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 			if (resourceBundle == null) {
 				resourceBundle = new StrutsResourceBundle(_portletName, locale);
-			}
 
-			_resourceBundles.put(locale, resourceBundle);
+				_resourceBundles.put(locale, resourceBundle);
+			}
 		}
 		else {
 			PortletBag portletBag = PortletBagPool.get(

@@ -4,6 +4,7 @@
  */
 
 import fs from 'fs/promises';
+import path from 'path';
 
 import {SRC_PATH} from '../../../util/constants.mjs';
 
@@ -27,7 +28,9 @@ export default function getLiferayLanguageGetPlugin(
 			build.onLoad(
 				{
 					filter: new RegExp(
-						`.*\\/${SRC_PATH.replaceAll('/', '\\/')}.*\\.[jt]sx?$`
+						`.*\\/${SRC_PATH.split(path.sep)
+							.join(path.posix.sep)
+							.replaceAll('/', '\\/')}.*\\.[jt]sx?$`
 					),
 				},
 				async (args) => {

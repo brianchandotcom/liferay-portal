@@ -183,6 +183,7 @@ interface ObjectActionParameters {
 	secret?: string;
 	system?: boolean;
 	url?: string;
+	usePreferredLanguageForGuests?: boolean;
 }
 
 interface ObjectDefinition {

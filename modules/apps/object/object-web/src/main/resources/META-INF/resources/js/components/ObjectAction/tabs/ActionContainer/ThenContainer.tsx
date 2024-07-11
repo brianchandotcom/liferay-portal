@@ -17,6 +17,7 @@ import {
 import {CheckboxParameter} from './CheckboxParameter';
 import {SingleSelectAddObjectEntry} from './SingleSelectAddObjectEntry';
 import {SingleSelectNotification} from './SingleSelectNotification';
+import {updateUsePreferredLanguageForGuestsParameter} from './updateUsePreferredLanguageForGuestsParameter';
 
 import './ThenContainer.scss';
 
@@ -68,7 +69,25 @@ export function ThenContainer({
 		NotificationTemplateAction[]
 	>([]);
 
+	const [selectedNotificationTemplate, setSelectedNotificationTemplate] =
+		useState<Partial<NotificationTemplateAction>>();
+
 	const [objectsOptions, setObjectOptions] = useState<ObjectsOptionsList>([]);
+
+	useEffect(() => {
+		if (selectedNotificationTemplate) {
+			const parameters = updateUsePreferredLanguageForGuestsParameter(
+				values,
+				selectedNotificationTemplate.type
+			);
+
+			setValues({
+				parameters,
+			});
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [values.objectActionTriggerKey]);
 
 	useEffect(() => {
 		if (values.objectActionExecutorKey === 'notification') {
@@ -184,15 +203,23 @@ export function ThenContainer({
 						<SingleSelectNotification
 							errors={errors}
 							notificationTemplates={notificationTemplates}
+							setSelectedNotificationTemplate={
+								setSelectedNotificationTemplate
+							}
 							setValues={setValues}
 							values={values}
 						/>
 					)}
 				</div>
 
-				{values.parameters?.relatedObjectEntries !== undefined && (
-					<CheckboxParameter setValues={setValues} values={values} />
-				)}
+				{values.parameters?.relatedObjectEntries !== undefined ||
+					(values.parameters?.usePreferredLanguageForGuests !==
+						undefined && (
+						<CheckboxParameter
+							setValues={setValues}
+							values={values}
+						/>
+					))}
 			</div>
 		</Card>
 	);

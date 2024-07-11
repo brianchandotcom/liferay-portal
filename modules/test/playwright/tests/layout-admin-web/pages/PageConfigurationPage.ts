@@ -7,6 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 
 export class PageConfigurationPage {
@@ -15,6 +16,7 @@ export class PageConfigurationPage {
 	readonly canonicalURLCheckbox: Locator;
 	readonly customCanonicalURLSettings: Locator;
 	readonly friendlyURL: Locator;
+	readonly name: Locator;
 	readonly pagesAdminPage: PagesAdminPage;
 	readonly saveButton: Locator;
 
@@ -26,6 +28,7 @@ export class PageConfigurationPage {
 		this.customCanonicalURLSettings = page.getByLabel('Canonical URL', {
 			exact: true,
 		});
+		this.name = page.getByLabel('Name');
 		this.pagesAdminPage = new PagesAdminPage(page);
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
 	}
@@ -54,6 +57,10 @@ export class PageConfigurationPage {
 			this.page,
 			'Success:The page was updated successfully.'
 		);
+	}
+
+	async fillName(name: string) {
+		await fillAndClickOutside(this.page, this.name, name);
 	}
 
 	async setFriendlyURL(friendlyURL: string, language: 'spanish' | 'english') {

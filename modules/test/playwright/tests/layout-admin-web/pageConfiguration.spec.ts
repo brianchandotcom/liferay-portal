@@ -68,3 +68,36 @@ test('Can configure a full page application.', async ({
 
 	await expect(page.getByRole('heading', {name: 'Wiki'})).toBeVisible();
 });
+
+test('Can edit the page name and layout template via pages administration.', async ({
+	apiHelpers,
+	page,
+	pageConfigurationPage,
+	pagesAdminPage,
+	site,
+}) => {
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: 'Test Page Title',
+	});
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	await pageConfigurationPage.goToSection('Test Page Title', 'General');
+
+	await pageConfigurationPage.fillName('Test Page Title Edit');
+
+	await page.getByTitle('1 Column', {exact: true}).click();
+
+	await pageConfigurationPage.save();
+
+	// Go to view mode of page
+
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+	await expect(
+		page.getByRole('heading', {name: 'Test Page Title Edit'})
+	).toBeVisible();
+
+	await expect(page.locator('#layout-column_column-1')).toBeAttached();
+});

@@ -13,7 +13,9 @@ import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
 import {createChannel, switchChannel} from './utils/channel';
+import {goToDistributionTabAndSelectAttribute} from './utils/distribution';
 import {changeEventDisplayName} from './utils/event-definitions';
+import {createIndividuals} from './utils/individuals';
 import {
 	navigateTo,
 	navigateToACSitesPageViaURL,
@@ -29,13 +31,11 @@ import {
 	saveSegment,
 	setSegmentName,
 } from './utils/segments';
-import {createIndividuals} from './utils/individuals';
 import {
+	searchByTerm,
 	viewNameNotPresentOnTableList,
 	viewNameOnTableList,
-	searchByTerm,
 } from './utils/utils';
-import {goToDistributionTabAndSelectAttribute} from './utils/distribution';
 
 export const test = mergeTests(
 	apiHelpersTest,

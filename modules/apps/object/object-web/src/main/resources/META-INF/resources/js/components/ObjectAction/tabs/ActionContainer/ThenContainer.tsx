@@ -146,6 +146,31 @@ export function ThenContainer({
 		values.objectActionExecutorKey,
 	]);
 
+	const parameterDetails =
+		values.parameters?.usePreferredLanguageForGuests !== undefined
+			? {
+					checked: values.parameters?.usePreferredLanguageForGuests,
+					disabled: false,
+					key: 'usePreferredLanguageForGuests',
+					label: Liferay.Language.get(
+						'send-email-notifications-in-the-guest-users-preferred-language'
+					),
+					title: Liferay.Language.get(
+						'send-email-notifications-to-guest-users-in-the-form-submission-language.-If-a-translation-does-not-exist,-use-the-instance-language'
+					),
+				}
+			: values.parameters?.relatedObjectEntries !== undefined
+				? {
+						checked: values.parameters?.relatedObjectEntries,
+						disabled: values.system ?? false,
+						key: 'relatedObjectEntries',
+						label: Liferay.Language.get('also-relate-entries'),
+						title: Liferay.Language.get(
+							'automatically-relate-object-entries-involved-in-the-action'
+						),
+					}
+				: undefined;
+
 	return (
 		<Card title={Liferay.Language.get('then[object]')} viewMode="inline">
 			<div className="lfr-object__action-builder-then-container">
@@ -212,14 +237,22 @@ export function ThenContainer({
 					)}
 				</div>
 
-				{values.parameters?.relatedObjectEntries !== undefined ||
-					(values.parameters?.usePreferredLanguageForGuests !==
-						undefined && (
-						<CheckboxParameter
-							setValues={setValues}
-							values={values}
-						/>
-					))}
+				{parameterDetails && (
+					<CheckboxParameter
+						checked={parameterDetails.checked}
+						disabled={parameterDetails.disabled}
+						label={parameterDetails.label}
+						onChange={(checked) => {
+							setValues({
+								parameters: {
+									...values.parameters,
+									[parameterDetails.key]: checked,
+								},
+							});
+						}}
+						title={parameterDetails.title}
+					/>
+				)}
 			</div>
 		</Card>
 	);

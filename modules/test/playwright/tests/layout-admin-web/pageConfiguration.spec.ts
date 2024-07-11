@@ -160,6 +160,10 @@ test('Can edit the page name and layout template via pages administration.', asy
 
 	await page.getByTitle('1 Column', {exact: true}).click();
 
+	await expect(
+		page.locator('.lfr-layout-template .layout-template-entry').first()
+	).toHaveAttribute('src', '/layouttpl/custom/1_column.png');
+
 	await pageConfigurationPage.save();
 
 	// Go to view mode of page

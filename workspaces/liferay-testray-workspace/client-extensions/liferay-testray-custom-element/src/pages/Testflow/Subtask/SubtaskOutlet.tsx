@@ -27,6 +27,8 @@ type OutletContext = {
 	};
 };
 
+const uri = '/subtasks';
+
 const SubtaskOutlet = () => {
 	const {setHeading} = useHeader();
 	const {subtaskId} = useParams();
@@ -35,6 +37,7 @@ const SubtaskOutlet = () => {
 	} = useOutletContext<OutletContext>();
 
 	const buildId = String(testrayTask?.build?.id);
+	const routineId = String(testrayTask?.build?.routine?.id);
 	const projectId = String(testrayTask?.build?.project?.id);
 
 	const {
@@ -51,7 +54,7 @@ const SubtaskOutlet = () => {
 
 	const {data: testraySubtaskToMerged} = useFetch<
 		APIResponse<TestraySubtask>
-	>(testraySubtaskImpl.resource, {
+	>(uri, {
 		params: {
 			fields: 'name',
 			filter: SearchBuilder.eq(
@@ -73,7 +76,7 @@ const SubtaskOutlet = () => {
 	);
 
 	const {data: testraySubtaskToSplit} = useFetch<APIResponse<TestraySubtask>>(
-		testraySubtaskImpl.resource,
+		uri,
 		{
 			params: {
 				fields: 'name',
@@ -122,6 +125,7 @@ const SubtaskOutlet = () => {
 					mbMessage,
 					mergedSubtaskNames,
 					projectId,
+					routineId,
 					splitSubtaskNames,
 					testraySubtask,
 					testrayTask,

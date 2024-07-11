@@ -110,7 +110,7 @@ const Build = () => {
 											displayName
 											name={caseResult.userName}
 											size="sm"
-											url={caseResult.userImgUrl}
+											url={caseResult.userPortraitUrl}
 										/>
 									);
 								}

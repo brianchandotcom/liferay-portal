@@ -84,10 +84,10 @@ const Subtasks = () => {
 									value: (
 										<StatusBadge
 											type={
-												testraySubtask.dueStatus.key.toLowerCase() as StatusBadgeType
+												testraySubtask.dueStatus?.key.toLowerCase() as StatusBadgeType
 											}
 										>
-											{testraySubtask.dueStatus.name}
+											{testraySubtask.dueStatus?.name}
 										</StatusBadge>
 									),
 								},

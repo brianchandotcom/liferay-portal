@@ -68,7 +68,7 @@ const SubtaskHeaderActions: React.FC<SubtaskHeaderActionsProps> = ({
 			/>
 
 			{[SubtaskStatuses.COMPLETE, SubtaskStatuses.OPEN].includes(
-				testraySubtask.dueStatus.key as SubtaskStatuses
+				testraySubtask.dueStatus?.key as SubtaskStatuses
 			) ? (
 				<ClayButton
 					className="mb-3 ml-3"
@@ -76,7 +76,7 @@ const SubtaskHeaderActions: React.FC<SubtaskHeaderActionsProps> = ({
 					onClick={() => assignUserModal.open()}
 				>
 					{i18n.translate(
-						testraySubtask.dueStatus.key === SubtaskStatuses.OPEN
+						testraySubtask.dueStatus?.key === SubtaskStatuses.OPEN
 							? 'assign-and-begin-analysis'
 							: 'assign-and-reanalyze'
 					)}

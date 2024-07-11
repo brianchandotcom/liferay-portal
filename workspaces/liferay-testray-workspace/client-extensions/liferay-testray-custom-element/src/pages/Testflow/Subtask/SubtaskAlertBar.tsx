@@ -18,15 +18,15 @@ const SubtaskAlertBar: React.FC<SubtaskAlertBarProps> = ({testraySubtask}) => {
 			className="build-alert-bar w-100"
 			title={i18n.sub(
 				'this-subtask-has-been-merged-wihth-x',
-				testraySubtask?.mergedToSubtask.name
+				testraySubtask?.mergedToSubtask?.name
 			)}
 			variant="inline"
 		>
 			<Link
 				className="font-weight-bold"
-				to={`../subtasks/${testraySubtask?.mergedToSubtask.id}`}
+				to={`../subtasks/${testraySubtask?.mergedToSubtask?.id}`}
 			>
-				{i18n.sub('view-x', testraySubtask?.mergedToSubtask.name)}
+				{i18n.sub('view-x', testraySubtask?.mergedToSubtask?.name)}
 			</Link>
 		</ClayAlert>
 	);

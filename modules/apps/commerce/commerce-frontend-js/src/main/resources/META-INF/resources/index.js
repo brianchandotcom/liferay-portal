@@ -80,4 +80,5 @@ export {
 } from './utilities/index';
 export * as modalUtils from './utilities/modals/index';
 
+export {default as PriceComponent} from './components/price/Price';
 export {default as PriceRenderer} from './components/data_renderers/PriceRenderer';

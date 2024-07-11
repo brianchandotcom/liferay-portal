@@ -405,6 +405,7 @@ String navSpecificationsId = liferayPortletResponse.getNamespace() + "navSpecifi
 				dataProviderKey="<%= CPContentFDSNames.REPLACEMENT_CP_INSTANCES %>"
 				id="<%= CPContentFDSNames.REPLACEMENT_CP_INSTANCES %>"
 				itemsPerPage="<%= 10 %>"
+				propsTransformer="{replacementCPInstancePropsTransformer} from commerce-product-content-web"
 				style="stacked"
 			/>
 		</div>

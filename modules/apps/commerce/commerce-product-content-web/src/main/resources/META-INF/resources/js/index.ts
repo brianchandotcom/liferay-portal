@@ -27,3 +27,7 @@ export {TagSelector} from './TagSelector';
 // @ts-ignore
 
 export {default as miniCompare} from './miniCompare';
+
+// @ts-ignore
+
+export {default as replacementCPInstancePropsTransformer} from './replacementCPInstancePropsTransformer';

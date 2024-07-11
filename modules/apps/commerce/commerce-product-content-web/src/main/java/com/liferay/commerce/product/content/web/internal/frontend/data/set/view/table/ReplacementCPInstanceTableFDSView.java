@@ -11,10 +11,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.util.Locale;
 
@@ -43,27 +39,10 @@ public class ReplacementCPInstanceTableFDSView extends BaseTableFDSView {
 			"name", "name"
 		).add(
 			"priceModel", "price",
-			fdsTableSchemaField -> {
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
-
-				AbsolutePortalURLBuilder absolutePortalURLBuilder =
-					_absolutePortalURLBuilderFactory.
-						getAbsolutePortalURLBuilder(
-							serviceContext.getRequest());
-
-				String moduleURL = absolutePortalURLBuilder.forESModule(
-					"commerce-frontend-js", "index.js"
-				).build();
-
-				fdsTableSchemaField.setContentRendererModuleURL(
-					"{PriceRenderer} from " + moduleURL);
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"priceRenderer")
 		).build();
 	}
-
-	@Reference
-	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;

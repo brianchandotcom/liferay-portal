@@ -248,7 +248,6 @@ public class TestrayTestFlowResourceImpl
 									GetterUtil.getString(
 										value.get("lastName")));
 							});
-
 						setUserPortraitUrl(
 							() -> {
 								long portraitId = GetterUtil.getLong(

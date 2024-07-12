@@ -21,6 +21,26 @@ type CreateMDFRequest = {
     data: {};
 }
 
+type TAccount = {
+	externalReferenceCode?: string;
+	id?: number;
+	name: string;
+	type?: string;
+};
+
+type TMyAccountType = TAccount & {
+		currency: string,
+		externalReferenceCode: string,
+		marketingPerformance: number,
+		marketingPlan: boolean,
+		name: string,
+		newProjectExistingBusiness: number,
+		partnerCountry: string,
+		r_prtLvlToAcc_c_partnerLevelERC: string,
+		solutionDeliveryCertification: boolean,
+		type: string
+};
+
 export class PartnerHelper {
 	readonly apiHelpers: ApiHelpers;
 
@@ -60,16 +80,28 @@ export class PartnerHelper {
 		}
 	}
 
+
 	async createAccountUser({
 		accountName,
 		accountType,
 	}: CreateAccount) {
+
+		const partnerAccount: TMyAccountType = {
+			currency: "USD",
+			externalReferenceCode: "0017000000b3ScRAAU",
+			marketingPerformance: 3,
+			marketingPlan: true,
+			name: accountName,
+			newProjectExistingBusiness: 1,
+			partnerCountry: "US",
+			r_prtLvlToAcc_c_partnerLevelERC: "GOLD-PRTLVL",
+			solutionDeliveryCertification: true,
+			type: accountType
+		};
+
 		try {
 			const account = await this.apiHelpers.headlessAdminUser.postAccount(
-				{
-					name: accountName,
-					type: accountType,
-				}
+				partnerAccount
 			);
 
 			await this.apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(

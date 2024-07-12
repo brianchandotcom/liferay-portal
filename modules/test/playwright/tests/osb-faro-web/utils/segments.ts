@@ -83,7 +83,9 @@ export async function dragAndDropCriteriaItem({
 	page: Page;
 	segmentField: string;
 }) {
-	const source = page.getByText(segmentField);
+	const source = page.locator(`[data-testid*="criteria-item-"]`, {
+		hasText: segmentField,
+	});
 	const target = page.locator('div.drop-zone-target').last();
 
 	return await source.dragTo(target);

@@ -8,8 +8,10 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageSelectorPagesTest} from '../../fixtures/pageSelectorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {checkAccessibility} from '../../utils/checkAccessibility';
+import getRandomString from '../../utils/getRandomString';
 import {selectAndExpectToHaveValue} from '../../utils/selectAndExpectToHaveValue';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
@@ -17,6 +19,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
 	loginTest(),
+	pageSelectorPagesTest,
 	pagesAdminPagesTest,
 	pagesPagesTest
 );
@@ -103,6 +106,41 @@ test('Can configure a full page application.', async ({
 	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
 	await expect(page.getByRole('heading', {name: 'Wiki'})).toBeVisible();
+});
+
+test('Can not select pages from other sites for Link to a Page of This Site.', async ({
+	apiHelpers,
+	page,
+	pageConfigurationPage,
+	pageSelectorPage,
+	pagesAdminPage,
+	site,
+}) => {
+	await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
+
+	await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		options: {
+			type: 'link_to_layout',
+		},
+		title: 'Link To Layout',
+	});
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	await pageConfigurationPage.goToSection('Link To Layout', 'General');
+
+	await page
+		.locator('.layout-type')
+		.getByRole('button', {name: 'Select'})
+		.click();
+
+	const modal = await pageSelectorPage.getModal();
+
+	await expect(modal.getByText('Sites and Libraries')).not.toBeVisible();
 });
 
 test('Can configure a panel page.', async ({

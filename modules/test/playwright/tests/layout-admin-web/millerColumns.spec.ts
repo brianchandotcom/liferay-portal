@@ -167,6 +167,18 @@ test('Can add and delete a child page.', async ({
 		page.locator('.miller-columns-item').getByText('Draft')
 	).toBeVisible();
 
+	// Can view preview draft action
+
+	await clickAndExpectToBeVisible({
+		target: page.getByRole('menuitem', {
+			exact: true,
+			name: 'Child Page',
+		}),
+		trigger: page
+			.locator('li', {has: page.getByText('Preview Draft')})
+			.getByRole('button', {name: 'Open Page Options Menu'}),
+	});
+
 	// View alert message when delete a page
 
 	await pagesAdminPage.clickOnAction('Delete', 'Child Page');

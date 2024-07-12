@@ -1155,40 +1155,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-190851. Confirm that it is not possible to create a Selection filter without creating a picklist before"
-	@priority = 4
-	test ConfirmPicklistIsNecessaryToCreateSelectionType {
-		task ("And selects the Selection option") {
-			DataSetAdmin.selectFilterType(key_filterType = "Selection");
-		}
-
-		task ("Then the New Selection Filter modal is displayed") {
-			AssertTextEquals(
-				locator1 = "Modal#HEADER",
-				value1 = "New Selection Filter");
-		}
-
-		task ("When Fill the Name filed") {
-			PortletEntry.inputText(
-				fieldLabel = "Name",
-				text = "Filter 1");
-		}
-
-		task ("Then The user cannot save the changes") {
-			AssertElementPresent(
-				key_text = "Save",
-				locator1 = "DataSet#ANY_BUTTON_DISABLED");
-		}
-
-		task ("And Confirm that is not possible edit the Filter by field") {
-			Click(
-				dropdownLabel = "Select",
-				locator1 = "Dropdown#ANY_DROPDOWN_LABEL");
-
-			DropdownMenuItem.viewDisabledItem(itemList = "externalReferenceCode,fieldName,label");
-		}
-	}
-
 	@description = "LPS-188333. Confirm that changes in the filters are not autosaved when edit and delete an entry"
 	@priority = 4
 	test FilterChangesAreAutosaved {

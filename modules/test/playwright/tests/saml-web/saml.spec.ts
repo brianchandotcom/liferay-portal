@@ -8,11 +8,18 @@ import {expect, mergeTests} from '@playwright/test';
 import {loginTest} from '../../fixtures/loginTest';
 import {samlAdminPagesTest} from '../../fixtures/samlAdminPagesTest';
 import {virtualInstancesPagesTest} from '../../fixtures/virtualInstancesPagesTest';
+import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
-import {connectSpAndIdp} from './utils/samlProviderConnectionUtil';
+import {performLogout} from '../../utils/performLogin';
 import {
-	createIdentityProviderVirtualInstance,
-	createServiceProviderVirtualInstance,
+	DEFAULT_IDP_NAME,
+	DEFAULT_IDP_URL,
+	DEFAULT_SP_NAME,
+	DEFAULT_SP_URL,
+	createSpAndIdpUser,
+	deleteVirtualInstance,
+	setupSamlInstances,
+	updateSamlKeystoreManagerTarget,
 } from './utils/samlVirtualInstanceUtil';
 
 export const test = mergeTests(
@@ -44,7 +51,7 @@ test('Create, edit, and delete a new virtual instance', async ({
 		newName
 	);
 
-	await expect(
+	expect(
 		await virtualInstancesPage.page
 			.getByRole('row')
 			.getByText(name + ' ' + newName + ' ' + newName + '.com 0 100 No')
@@ -53,45 +60,103 @@ test('Create, edit, and delete a new virtual instance', async ({
 	await virtualInstancesPage.deleteVirtualInstance(name);
 });
 
-test('Create a new virtual instance, configure it for SAML IdP', async ({
-	identityProviderConnectionsPage,
+test('Create two virtual instances, one IdP and one SP, connect them, perform SP initiated SSO, perform SP initiated SLO', async ({
+	browser,
 	page,
-	samlAdminPage,
-	serviceProviderConnectionsPage,
-	virtualInstancesPage,
 }) => {
 
-	// Create new idp virtual instance
+	// Set the Keystore Manager Target to Doc Lib, so we can store multiple
+	// certificates in one instance
 
-	const idpVirtualInstanceName = 'idp';
-
-	await createIdentityProviderVirtualInstance(
-	    idpVirtualInstanceName, idpVirtualInstanceName,
-		{page, samlAdminPage, virtualInstancesPage});
-
-	// Create new sp virtual instance
-
-	const spVirtualInstanceName = 'sp';
-
-	await createServiceProviderVirtualInstance(
-	    spVirtualInstanceName, spVirtualInstanceName,
-		{page, samlAdminPage, virtualInstancesPage});
-
-	// Add a new connection for each provider, of the opposite provider
-
-	await connectSpAndIdp(
-		idpVirtualInstanceName,
-		spVirtualInstanceName,
-		undefined,
-		undefined,
+	await updateSamlKeystoreManagerTarget(
+		'Document Library Keystore Manager',
 		page
 	);
 
-	// Next, attempt auth from SP, to IdP, then redirected back to SP
+	await setupSamlInstances(undefined, undefined, undefined, undefined, page);
 
+	// Create a user with identical credentials on each instance
 
-	//Lastly, delete both virtual instances
-	await virtualInstancesPage.deleteVirtualInstance(idpVirtualInstanceName);
+	const userId = getRandomInt();
 
-	await virtualInstancesPage.deleteVirtualInstance(spVirtualInstanceName);
+	const userAccount = await createSpAndIdpUser(
+		DEFAULT_IDP_NAME,
+		DEFAULT_SP_NAME,
+		userId,
+		page,
+		browser
+	);
+
+	// Create new page on SP virtual instance
+
+	const spInstancePage = await browser.newPage({
+		baseURL: DEFAULT_SP_URL,
+	});
+
+	// Login as the new user from SP
+
+	await spInstancePage.goto('/');
+
+	const signInButton = await spInstancePage.getByRole('button', {
+		name: 'Sign In',
+	});
+
+	await signInButton.click();
+
+	// Verify user is redirected to the IdP instance
+
+	expect(
+		await spInstancePage.getByText(
+			'Redirecting to your identity provider...'
+		)
+	).toBeVisible();
+
+	// Wait a few seconds for redirection, otherwise the expect clause will fail
+
+	await spInstancePage.waitForTimeout(4000);
+
+	// Verify user has been successfully redirected
+
+	expect(await spInstancePage.url()).toContain(DEFAULT_IDP_URL);
+
+	// Sign in
+
+	await spInstancePage
+		.getByLabel('Email Address')
+		.fill(userAccount.emailAddress);
+	await spInstancePage.getByLabel('Password').fill('test');
+	await spInstancePage.getByLabel('Remember Me').check();
+	await spInstancePage.getByRole('button', {name: 'Sign In'}).click();
+
+	// Wait for authentication to complete, verify user is redirected back to SP
+
+	await spInstancePage.waitForTimeout(4000);
+
+	expect(await spInstancePage.url()).toContain(DEFAULT_SP_URL);
+
+	// Verify user is logged in
+
+	await expect(await page.getByTitle('User Profile Menu')).toBeVisible();
+
+	// Logout, verify user is also logged out of IdP
+
+	await performLogout(spInstancePage);
+
+	expect(
+		await spInstancePage.getByRole('button', {name: 'Sign In'})
+	).toBeVisible();
+
+	await spInstancePage.goto(DEFAULT_IDP_URL);
+
+	expect(
+		await spInstancePage.getByRole('button', {name: 'Sign In'})
+	).toBeVisible();
+
+	// Lastly, delete both virtual instances and reset the keystore target
+
+	await deleteVirtualInstance(DEFAULT_IDP_NAME, page);
+
+	await deleteVirtualInstance(DEFAULT_SP_NAME, page);
+
+	await updateSamlKeystoreManagerTarget('Choose an Option', page);
 });

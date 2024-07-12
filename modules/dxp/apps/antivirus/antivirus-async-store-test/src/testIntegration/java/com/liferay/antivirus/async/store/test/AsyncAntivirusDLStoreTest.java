@@ -552,7 +552,7 @@ public class AsyncAntivirusDLStoreTest {
 	}
 
 	private void _withAsyncAntivirusConfiguration(
-			int maximumQueueSize, String retryCronExpression, boolean sync,
+			int maximumQueueSize, String batchScanCronExpression, boolean sync,
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
@@ -560,7 +560,7 @@ public class AsyncAntivirusDLStoreTest {
 				new ConfigurationTemporarySwapper(
 					AntivirusAsyncConfiguration.class.getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
-						"batch-scan-cron-expression", retryCronExpression
+						"batch-scan-cron-expression", batchScanCronExpression
 					).put(
 						"maximumQueueSize", maximumQueueSize
 					).build())) {

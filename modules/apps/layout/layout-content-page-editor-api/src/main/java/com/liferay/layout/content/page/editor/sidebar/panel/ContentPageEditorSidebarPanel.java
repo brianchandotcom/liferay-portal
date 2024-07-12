@@ -9,8 +9,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Eudaldo Alonso
  */
@@ -21,18 +19,6 @@ public interface ContentPageEditorSidebarPanel {
 	public String getId();
 
 	public String getLabel(Locale locale);
-
-	public default String getURL(HttpServletRequest httpServletRequest) {
-		return null;
-	}
-
-	public default boolean includeSeparator() {
-		return false;
-	}
-
-	public default boolean isLink() {
-		return false;
-	}
 
 	public default boolean isVisible(
 		PermissionChecker permissionChecker, long plid, int layoutType) {

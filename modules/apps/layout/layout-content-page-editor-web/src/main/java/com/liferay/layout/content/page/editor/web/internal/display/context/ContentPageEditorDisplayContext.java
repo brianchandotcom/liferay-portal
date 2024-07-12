@@ -1039,29 +1039,15 @@ public class ContentPageEditorDisplayContext {
 				continue;
 			}
 
-			if (contentPageEditorSidebarPanel.includeSeparator() &&
-				!sidebarPanels.isEmpty()) {
-
-				sidebarPanels.add(
-					HashMapBuilder.<String, Object>put(
-						"sidebarPanelId", "separator"
-					).build());
-			}
-
 			sidebarPanels.add(
 				HashMapBuilder.<String, Object>put(
 					"icon", contentPageEditorSidebarPanel.getIcon()
-				).put(
-					"isLink", contentPageEditorSidebarPanel.isLink()
 				).put(
 					"label",
 					contentPageEditorSidebarPanel.getLabel(
 						themeDisplay.getLocale())
 				).put(
 					"sidebarPanelId", contentPageEditorSidebarPanel.getId()
-				).put(
-					"url",
-					contentPageEditorSidebarPanel.getURL(httpServletRequest)
 				).build());
 		}
 

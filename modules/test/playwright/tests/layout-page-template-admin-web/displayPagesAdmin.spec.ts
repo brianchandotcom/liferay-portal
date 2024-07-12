@@ -193,3 +193,81 @@ test('LPS-121199 can assign usage to default even if the default display page te
 		})
 	).toBeVisible();
 });
+
+test('LPS-121199 can assign multiple usages to default', async ({
+	apiHelpers,
+	displayPageTemplatesPage,
+	journalEditArticlePage,
+	journalPage,
+	page,
+	site,
+}) => {
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+	const displayPageTemplateName = 'dpt' + getRandomInt();
+
+	await displayPageTemplatesPage.publishNewTemplate({
+		contentSubtype: 'Basic Web Content',
+		contentType: 'Web Content Article',
+		name: displayPageTemplateName,
+	});
+
+	const contentStructureId = await getBasicWebContentStructureId(apiHelpers);
+
+	for (let i = 1; i < 4; i++) {
+		const webContentTitle = 'specificDPT' + i + getRandomInt();
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: contentStructureId,
+			groupId: site.id,
+			titleMap: {en_US: webContentTitle},
+		});
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await journalEditArticlePage.editArticle(webContentTitle);
+
+		await journalEditArticlePage.selectSpecificDisplayPage(
+			displayPageTemplateName
+		);
+
+		await page.getByRole('button', {name: 'Publish'}).click();
+
+		await waitForSuccessAlert(
+			page,
+			`Success:${webContentTitle} was updated successfully.`
+		);
+	}
+
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+	await displayPageTemplatesPage.goToDisplayPageTemplateAction(
+		'View Usages',
+		'1'
+	);
+
+	for (let i = 1; i < 4; i++) {
+		const rowCheckbox = page.locator(
+			`[aria-labelledby="_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_assetDisplayPageEntries_${i}"]`
+		);
+		await expect(rowCheckbox).toBeVisible();
+		await rowCheckbox.click();
+	}
+
+	await page.getByRole('button', {name: 'Actions'}).click();
+
+	const assignToDefaultMenuItem = page.getByRole('menuitem', {
+		exact: true,
+		name: `Assign to Default`,
+	});
+
+	await expect(assignToDefaultMenuItem).toBeVisible();
+
+	page.on('dialog', async (dialog) => {
+		dialog.accept();
+	});
+
+	await assignToDefaultMenuItem.click();
+
+	await expect(page.locator('.taglib-empty-result-message')).toBeVisible();
+});

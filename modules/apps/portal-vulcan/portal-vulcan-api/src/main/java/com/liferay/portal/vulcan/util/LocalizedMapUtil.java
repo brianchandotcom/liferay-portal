@@ -108,6 +108,12 @@ public class LocalizedMapUtil {
 	public static Map<Locale, String> getLocalizedMap(
 		Map<String, String> i18nMap) {
 
+		return getLocalizedMap(i18nMap, false);
+	}
+
+	public static Map<Locale, String> getLocalizedMap(
+		Map<String, String> i18nMap, boolean useDefault) {
+
 		Map<Locale, String> localizedMap = new HashMap<>();
 
 		if (i18nMap == null) {
@@ -115,7 +121,7 @@ public class LocalizedMapUtil {
 		}
 
 		for (Map.Entry<String, String> entry : i18nMap.entrySet()) {
-			Locale locale = _getLocale(entry.getKey());
+			Locale locale = _getLocale(entry.getKey(), useDefault);
 			String value = entry.getValue();
 
 			if ((locale != null) && (value != null)) {
@@ -211,7 +217,7 @@ public class LocalizedMapUtil {
 		}
 
 		for (Map.Entry<String, String> entry : i18nMap.entrySet()) {
-			Locale locale = _getLocale(entry.getKey());
+			Locale locale = _getLocale(entry.getKey(), false);
 
 			if (locale != null) {
 				resultLocalizedMap = patchLocalizedMap(
@@ -254,8 +260,8 @@ public class LocalizedMapUtil {
 		}
 	}
 
-	private static Locale _getLocale(String languageId) {
-		return LocaleUtil.fromLanguageId(languageId, true, false);
+	private static Locale _getLocale(String languageId, boolean useDefault) {
+		return LocaleUtil.fromLanguageId(languageId, true, useDefault);
 	}
 
 }

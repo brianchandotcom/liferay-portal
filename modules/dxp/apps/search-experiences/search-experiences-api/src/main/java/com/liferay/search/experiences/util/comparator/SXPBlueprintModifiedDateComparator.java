@@ -27,12 +27,14 @@ public class SXPBlueprintModifiedDateComparator
 		"modifiedDate", "sxpBlueprintId"
 	};
 
-	public SXPBlueprintModifiedDateComparator() {
-		this(false);
-	}
+	public static SXPBlueprintModifiedDateComparator getInstance(
+		boolean ascending) {
 
-	public SXPBlueprintModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -83,6 +85,16 @@ public class SXPBlueprintModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private SXPBlueprintModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final SXPBlueprintModifiedDateComparator
+		_INSTANCE_ASCENDING = new SXPBlueprintModifiedDateComparator(true);
+
+	private static final SXPBlueprintModifiedDateComparator
+		_INSTANCE_DESCENDING = new SXPBlueprintModifiedDateComparator(false);
 
 	private static final long serialVersionUID = 1L;
 

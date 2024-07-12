@@ -9,7 +9,6 @@ import com.liferay.frontend.js.web.internal.language.LanguageState;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -24,6 +23,7 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -54,10 +54,16 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_resourceBundleServiceTracker = new ServiceTracker<>(
+			bundleContext, ResourceBundle.class,
+			new ResourceBundleServiceTrackerCustomizer());
+
+		_resourceBundleServiceTracker.open();
+
 		_servletContextServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletContext.class,
 			new ServletContextServiceTrackerCustomizer(
-				bundleContext, _jsonFactory, _language));
+				bundleContext, _jsonFactory));
 
 		_servletContextServiceTracker.open();
 	}
@@ -67,6 +73,10 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 		_servletContextServiceTracker.close();
 
 		_servletContextServiceTracker = null;
+
+		_resourceBundleServiceTracker.close();
+
+		_resourceBundleServiceTracker = null;
 	}
 
 	@Override
@@ -187,9 +197,8 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	@Reference
-	private Language _language;
-
+	private ServiceTracker<ResourceBundle, String>
+		_resourceBundleServiceTracker;
 	private ServiceTracker<ServletContext, String>
 		_servletContextServiceTracker;
 

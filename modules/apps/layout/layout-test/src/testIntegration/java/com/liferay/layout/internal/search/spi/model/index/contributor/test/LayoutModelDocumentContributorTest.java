@@ -12,6 +12,7 @@ import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
@@ -20,6 +21,8 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -49,6 +52,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,7 +67,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.ThemeFactoryUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.template.test.util.TemplateTestUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -144,6 +150,58 @@ public class LayoutModelDocumentContributorTest {
 	@Test
 	public void testReindexPublishedLayout() throws Exception {
 		_assertReindexPublishedLayout(null);
+	}
+
+	@Test
+	public void testReindexPublishedLayoutFragmentEntryLinkWithInformationTemplate()
+		throws Exception {
+
+		String content = RandomTestUtil.randomString();
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				DDMStructureTestUtil.getSampleStructuredContent(
+					"content",
+					Collections.singletonList(
+						HashMapBuilder.put(
+							_locale, content
+						).build()),
+					_languageId),
+				"BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT");
+
+		InfoField infoField = TemplateTestUtil.addTemplateEntryInfoField(
+			"DDMStructure_content", JournalArticle.class.getName(),
+			String.valueOf(journalArticle.getDDMStructureId()),
+			_infoItemServiceRegistry, _serviceContext);
+
+		_addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"classNameId",
+						String.valueOf(
+							_portal.getClassNameId(
+								JournalArticle.class.getName()))
+					).put(
+						"classPK",
+						String.valueOf(journalArticle.getResourcePrimKey())
+					).put(
+						"classTypeId",
+						String.valueOf(journalArticle.getDDMStructureId())
+					).put(
+						"fieldId", infoField.getUniqueId()
+					))
+			).toString(),
+			_draftLayout);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		_assertReindex(content);
 	}
 
 	@Test
@@ -611,6 +669,9 @@ public class LayoutModelDocumentContributorTest {
 
 	@Inject
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Inject
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Inject
 	private JournalConverter _journalConverter;

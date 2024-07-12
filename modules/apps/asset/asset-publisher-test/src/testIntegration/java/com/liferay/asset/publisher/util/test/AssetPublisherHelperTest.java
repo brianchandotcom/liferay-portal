@@ -6,23 +6,29 @@
 package com.liferay.asset.publisher.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.asset.publisher.test.util.AssetPublisherTestUtil;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.util.AssetQueryRule;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.info.pagination.InfoPage;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -282,6 +288,78 @@ public class AssetPublisherHelperTest {
 
 		Assert.assertEquals(
 			Arrays.toString(assetCategoryIds), 0, assetCategoryIds.length);
+	}
+
+	@Test
+	public void testGetAssetEntriesForManualCollectionWithPagination()
+		throws Exception {
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group1.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group1.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		JournalArticle journalArticle3 = JournalTestUtil.addArticle(
+			_group1.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		PortletPreferences portletPreferences = new MockPortletPreferences();
+
+		portletPreferences.setValue("selectionStyle", "manual");
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				JournalArticle.class.getName());
+
+		AssetEntry assetEntry1 = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle1.getResourcePrimKey());
+		AssetEntry assetEntry2 = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle2.getResourcePrimKey());
+		AssetEntry assetEntry3 = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle3.getResourcePrimKey());
+
+		portletPreferences.setValues(
+			"assetEntryXml",
+			AssetPublisherTestUtil.getAssetEntryXml(assetEntry1),
+			AssetPublisherTestUtil.getAssetEntryXml(assetEntry2));
+
+		InfoPage<AssetEntry> infoPage = _assetPublisherHelper.getAssetEntries(
+			null, portletPreferences,
+			PermissionThreadLocal.getPermissionChecker(),
+			new long[] {_group1.getGroupId()}, null, null, false, false, 0, 2);
+
+		Assert.assertEquals(2, infoPage.getTotalCount());
+
+		List<AssetEntry> assetEntries =
+			(List<AssetEntry>)infoPage.getPageItems();
+
+		Assert.assertTrue(assetEntries.contains(assetEntry1));
+		Assert.assertTrue(assetEntries.contains(assetEntry2));
+		Assert.assertFalse(assetEntries.contains(assetEntry3));
+
+		portletPreferences.setValues(
+			"assetEntryXml",
+			AssetPublisherTestUtil.getAssetEntryXml(assetEntry1),
+			AssetPublisherTestUtil.getAssetEntryXml(assetEntry2),
+			AssetPublisherTestUtil.getAssetEntryXml(assetEntry3));
+
+		infoPage = _assetPublisherHelper.getAssetEntries(
+			null, portletPreferences,
+			PermissionThreadLocal.getPermissionChecker(),
+			new long[] {_group1.getGroupId()}, null, null, false, false,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(3, infoPage.getTotalCount());
+
+		assetEntries = (List<AssetEntry>)infoPage.getPageItems();
+
+		Assert.assertTrue(assetEntries.contains(assetEntry1));
+		Assert.assertTrue(assetEntries.contains(assetEntry2));
+		Assert.assertTrue(assetEntries.contains(assetEntry3));
 	}
 
 	@Test

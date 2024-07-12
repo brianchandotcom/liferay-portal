@@ -14,8 +14,8 @@ import {Badge, Button} from '../../../components';
 import {useAppPropertiesContext} from '../../../contexts/AppPropertiesContext';
 import {
 	addTeamMembersInvitation,
-	associateUserAccountWithAccount,
-	associateUserAccountWithAccountAndAccountRole,
+	assignUserAccountWithAccount,
+	assignUserAccountWithAccountAndAccountRole,
 	getUserAccountByEmail,
 	patchUserAccount,
 } from '../../../services/liferay/graphql/queries';
@@ -58,11 +58,11 @@ const InviteTeamMembersPage = ({
 
 	const [addTeamMemberInvitation] = useMutation(addTeamMembersInvitation);
 	const [updateUserAccount] = useMutation(patchUserAccount);
-	const [associateUserWithAccount] = useMutation(
-		associateUserAccountWithAccount
+	const [assignUserWithAccount] = useMutation(
+		assignUserAccountWithAccount
 	);
-	const [associateUserAccountWithAccountRole] = useMutation(
-		associateUserAccountWithAccountAndAccountRole,
+	const [assignUserAccountWithAccountRole] = useMutation(
+		assignUserAccountWithAccountAndAccountRole,
 		{
 			awaitRefetchQueries: true,
 			refetchQueries: ['getUserAccountsByAccountExternalReferenceCode'],
@@ -234,7 +234,7 @@ const InviteTeamMembersPage = ({
 
 		for (const inviteMember of inviteMembers) {
 			try {
-				await associateUserWithAccount({
+				await assignUserWithAccount({
 					context,
 					variables: {
 						accountKey: project.accountKey,
@@ -281,7 +281,7 @@ const InviteTeamMembersPage = ({
 				});
 
 				for (const inviteRole of inviteMemberRolesSelected) {
-					await associateUserAccountWithAccountRole({
+					await assignUserAccountWithAccountRole({
 						context,
 						variables: {
 							accountKey: project.accountKey,

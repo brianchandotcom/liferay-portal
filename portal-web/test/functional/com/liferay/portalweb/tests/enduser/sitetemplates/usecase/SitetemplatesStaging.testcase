@@ -92,44 +92,6 @@ definition {
 		}
 	}
 
-	@description = "User can enable local staging on site which is based on Raylife site template."
-	@priority = 4
-	test CanEnableLocalStagingOnRaylifeSiteTemplate {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given: Add a new site based on Raylife site template") {
-			Site.openSitesAdmin();
-
-			Site.addSiteTemplateCP(
-				siteName = "Test Raylife Site",
-				siteTemplateName = "Raylife D2C");
-		}
-
-		task ("When: Enable local staging on the new site with page versioning") {
-			JSONStaging.enableLocalStaging(
-				branchingPrivate = "true",
-				branchingPublic = "true",
-				groupName = "Test Raylife Site");
-		}
-
-		task ("Then: User can publish the staging site") {
-			Navigator.openSiteURL(siteName = "Test Raylife Site");
-
-			var key_tabName = "Staging";
-
-			while (IsElementNotPresent(locator1 = "StagingPublishToLive#TAB_NAME")) {
-				Refresh();
-			}
-
-			Click(locator1 = "StagingPublishToLive#TAB_NAME");
-
-			Staging.gotoPublishToLive();
-
-			Staging.publishToLive();
-		}
-	}
-
 	@description = "User can enable local staging on site which is based on Speedwell site template."
 	@priority = 4
 	test CanEnableLocalStagingOnSpeedwellSiteTemplate {
@@ -156,6 +118,44 @@ definition {
 			WaitForElementPresent(locator1 = "Staging#PROCESS_SUCCESSFUL");
 
 			Staging.publishCustomPublication();
+		}
+	}
+
+	@description = "User can enable local staging on site which is based on Team Extranet site template."
+	@priority = 4
+	test CanEnableLocalStagingOnTeamExtranetSiteTemplate {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Add a new site based on Raylife site template") {
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				siteName = "Test Team Extranet Site",
+				siteTemplateName = "Team Extranet");
+		}
+
+		task ("When: Enable local staging on the new site with page versioning") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Test Team Extranet Site");
+		}
+
+		task ("Then: User can publish the staging site") {
+			Navigator.openSiteURL(siteName = "Test Team Extranet Site");
+
+			var key_tabName = "Staging";
+
+			while (IsElementNotPresent(locator1 = "StagingPublishToLive#TAB_NAME")) {
+				Refresh();
+			}
+
+			Click(locator1 = "StagingPublishToLive#TAB_NAME");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
 		}
 	}
 

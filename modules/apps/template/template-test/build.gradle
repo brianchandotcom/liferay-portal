@@ -18,5 +18,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:template:template-api")
 	testIntegrationImplementation project(":apps:template:template-service")
 	testIntegrationImplementation project(":apps:template:template-taglib")
+	testIntegrationImplementation project(":apps:template:template-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

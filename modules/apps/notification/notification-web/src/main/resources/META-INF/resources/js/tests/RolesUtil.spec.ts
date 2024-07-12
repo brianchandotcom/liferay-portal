@@ -10,6 +10,7 @@ import {
 	getCheckedChildren,
 	getUserNotificationRoles,
 	handleMultiSelectRoleItemsChange,
+	uncheckMultiSelectItemChildrens,
 } from '../components/SettingsContainer/rolesUtil';
 
 it('Assert role names checked items', () => {
@@ -213,6 +214,68 @@ it('verify that handleMultiSelectRoleItemsChange generates new recipients in the
 		},
 		{
 			roleName: 'Supplier',
+		},
+	]);
+});
+
+it('verify that uncheckMultiSelectItemChildrens is unchecking the items', () => {
+	const itemsGroupMock = [
+		{
+			children: [
+				{
+					checked: true,
+					label: 'Account Administrator',
+					value: 'Account Administrator',
+				},
+				{
+					checked: false,
+					label: 'Account Member',
+					value: 'Account Member',
+				},
+				{
+					checked: false,
+					label: 'Account Supplier',
+					value: 'Account Supplier',
+				},
+				{
+					checked: true,
+					label: 'Buyer',
+					value: 'Buyer',
+				},
+			],
+			label: 'Account Roles',
+			value: 'accountRoles',
+		},
+	] as MultiSelectItem[];
+
+	const newRecipients = uncheckMultiSelectItemChildrens(itemsGroupMock);
+
+	expect(newRecipients).toStrictEqual([
+		{
+			children: [
+				{
+					checked: false,
+					label: 'Account Administrator',
+					value: 'Account Administrator',
+				},
+				{
+					checked: false,
+					label: 'Account Member',
+					value: 'Account Member',
+				},
+				{
+					checked: false,
+					label: 'Account Supplier',
+					value: 'Account Supplier',
+				},
+				{
+					checked: false,
+					label: 'Buyer',
+					value: 'Buyer',
+				},
+			],
+			label: 'Account Roles',
+			value: 'accountRoles',
 		},
 	]);
 });

@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Tools REST Builder Test API
+Bundle-SymbolicName: com.liferay.portal.tools.rest.builder.test.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.tools.rest.builder.test.dto.v1_0_0,\
+	com.liferay.portal.tools.rest.builder.test.resource.v1_0_0

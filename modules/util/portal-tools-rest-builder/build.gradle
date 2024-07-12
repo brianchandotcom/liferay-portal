@@ -63,15 +63,6 @@ liferayOSGi {
 	expandCompileInclude = true
 }
 
-test {
-	doLast {
-		copy {
-			from "test-classes/actual"
-			into "src/test/resources/com/liferay/portal/tools/rest/builder/dependencies/expected"
-		}
-	}
-}
-
 updateFileVersions {
 	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
 	match(/com\.liferay\.portal\.tools\.rest\.builder=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")

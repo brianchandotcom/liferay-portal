@@ -52,6 +52,8 @@ public class ServletDataImpl implements ServletData {
 			_testrayRunComparisonResourceComponentServiceObjects);
 		Query.setTestrayStatusMetricResourceComponentServiceObjects(
 			_testrayStatusMetricResourceComponentServiceObjects);
+		Query.setTestrayTestFlowResourceComponentServiceObjects(
+			_testrayTestFlowResourceComponentServiceObjects);
 	}
 
 	public String getApplicationName() {
@@ -184,6 +186,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							TestrayStatusMetricResourceImpl.class,
 							"getTestrayStatusMetricByTestrayRoutineIdTestrayRoutineTestrayBuildsMetricsPage"));
+					put(
+						"query#testrayTestFlowTestraySubtask",
+						new ObjectValuePair<>(
+							TestrayTestFlowResourceImpl.class,
+							"getTestrayTestFlowTestraySubtaskPage"));
 				}
 			};
 

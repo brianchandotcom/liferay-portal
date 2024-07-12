@@ -90,6 +90,8 @@ test('allows selecting specific repeatable field when mapping', async ({
 		.getByLabel('Field')
 		.selectOption({value: 'DDMStructure_Country'});
 
+	await pageEditorPage.waitForChangesSaved();
+
 	// Check that all iteration to display option works
 
 	const fragment = page.locator('.component-heading');

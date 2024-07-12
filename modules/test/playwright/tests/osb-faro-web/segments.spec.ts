@@ -409,7 +409,6 @@ test('Segment Composition shows Active and Known individuals', async ({
 			{
 				createDate: date1.toISOString(),
 				id: anonymousIdentityID,
-				individualId: anonymousIdentityID,
 			},
 		];
 

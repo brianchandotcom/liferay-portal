@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -64,33 +62,25 @@ public class SXPElementUtil {
 				continue;
 			}
 
-			String fallbackDescription = sxpElement.getDescription_i18n(
-			).get(
-				LocaleUtil.US.toString()
-			);
-
-			Map<Locale, String> descriptionMap = _getLocalizedMap(
-				LocalizedMapUtil.getLocalizedMap(
-					sxpElement.getDescription_i18n()),
-				fallbackDescription);
-
-			String fallbackTitle = sxpElement.getTitle_i18n(
-			).get(
-				LocaleUtil.US.toString()
-			);
-
-			Map<Locale, String> titleMap = _getLocalizedMap(
-				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()),
-				fallbackTitle);
-
 			User user = company.getGuestUser();
 
 			sxpElementLocalService.addSXPElement(
 				sxpElement.getExternalReferenceCode(), user.getUserId(),
-				descriptionMap,
+				LocalizedMapUtil.getLocalizedMap(
+					sxpElement.getDescription_i18n(), true),
 				String.valueOf(sxpElement.getElementDefinition()),
-				fallbackDescription, fallbackTitle, true, _SCHEMA_VERSION,
-				titleMap, 0,
+				sxpElement.getDescription_i18n(
+				).get(
+					LocaleUtil.US.toString()
+				),
+				sxpElement.getTitle_i18n(
+				).get(
+					LocaleUtil.US.toString()
+				),
+				true, _SCHEMA_VERSION,
+				LocalizedMapUtil.getLocalizedMap(
+					sxpElement.getTitle_i18n(), true),
+				0,
 				new ServiceContext() {
 					{
 						setAddGuestPermissions(true);
@@ -128,16 +118,6 @@ public class SXPElementUtil {
 		}
 
 		return sxpElements;
-	}
-
-	private static Map<Locale, String> _getLocalizedMap(
-		Map<Locale, String> map, String field) {
-
-		if (map.isEmpty()) {
-			map = LocalizedMapUtil.getLocalizedMap(field);
-		}
-
-		return map;
 	}
 
 	private static List<SXPElement> _getOrCreateSXPElements() {

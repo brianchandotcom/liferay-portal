@@ -1,0 +1,217 @@
+components:
+    schemas:
+        ChildTestObject1:
+            allOf:
+                - $ref: "#/components/schemas/TestObject"
+            type: object
+        ChildTestObject2:
+            allOf:
+                - $ref: "#/components/schemas/TestObject"
+                - properties:
+                      text:
+                          type: string
+            type: object
+        JSONMapAttributeTestObject:
+            description:
+                Test Component to test the generation of getValue method on DTOs when one or multiple JSON Maps are
+                present.
+            properties:
+                description:
+                    type: string
+                name:
+                    type: string
+                properties1:
+                    additionalProperties:
+                        type: object
+                    type: object
+                    x-json-map: true
+                properties2:
+                    additionalProperties:
+                        type: object
+                    type: object
+                    x-json-map: true
+            title: JSONMapAttributeTestObject
+            type: object
+        NestedArrayItemsTestObject:
+            description:
+                Test Component to test the REST Builder support for nested array items
+            properties:
+                name:
+                    type: string
+                values:
+                    items:
+                        items:
+                            type: string
+                        type: array
+                    type: array
+            title: NestedArrayItemsTestObject
+            type: object
+        NestedTestObject:
+            description:
+                "https://www.schema.org/Folder"
+            properties:
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                testObject:
+                    $ref: "#/components/schemas/TestObject"
+            type: object
+        TestObject:
+            description:
+                "https://www.schema.org/Document"
+            discriminator:
+                mapping:
+                    ChildTestObject1: "#/components/schemas/ChildTestObject1"
+                    ChildTestObject2: "#/components/schemas/ChildTestObject2"
+                propertyName: type
+            properties:
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                documentId:
+                    format: int64
+                    type: integer
+                jsonProperty:
+                    type: string
+                    xml:
+                        name: xmlProperty
+                name:
+                    type: string
+                nestedTestObject:
+                    $ref: "#/components/schemas/NestedTestObject"
+                self:
+                    type: string
+                testObjects:
+                    $ref: "#/components/schemas/TestObject"
+                type:
+                    enum:
+                        - ChildTestObject1
+                        - ChildTestObject2
+                    type: string
+            type: object
+        UnreferencedTestObject:
+            properties:
+                description:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                property-with-hyphens:
+                    type: string
+info:
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: ""
+    version: "1.0.0"
+openapi: "3.0.1"
+paths:
+    /reserved-word:
+        post:
+            operationId: postReservedWord
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: boolean
+                    application/xml:
+                        schema:
+                            type: boolean
+                required: true
+            responses:
+                "200":
+                    description:
+                        "OK"
+            tags: ["TestObject"]
+    /test-objects:
+        get:
+            operationId: getTestObjectsPage
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestObject"
+                                type: array
+                        "application/xml":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestObject"
+                                type: array
+                    description:
+                        "OK"
+            tags: ["TestObject"]
+        post:
+            operationId: postTestObject
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TestObject"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/TestObject"
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TestObject"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TestObject"
+            tags: ["TestObject"]
+    /test-objects/count:
+        get:
+            description:
+                Retrieves the count.
+            operationId: getTestObjectCount
+            responses:
+                200:
+                    content:
+                        text/plain:
+                            schema:
+                                example: 0
+                                format: int32
+                                type: integer
+                    description:
+                        "OK"
+            tags: ["TestObject"]
+    /test-objects/{testObjectId}:
+        get:
+            operationId: getTestObject
+            parameters:
+                - in: path
+                  name: testObjectId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/TestObject"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/TestObject"
+                    description:
+                        "OK"
+            tags: ["TestObject"]

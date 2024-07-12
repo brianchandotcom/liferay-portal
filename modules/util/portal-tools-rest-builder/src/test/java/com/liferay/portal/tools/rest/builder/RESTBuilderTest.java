@@ -36,6 +36,8 @@ public class RESTBuilderTest {
 		restBuilder.build();
 
 		_assertDirectoryEquals(
+			_getActualPath(), dependenciesPath.resolve("expected"));
+		_assertDirectoryEquals(
 			dependenciesPath.resolve("expected"), _getActualPath());
 	}
 

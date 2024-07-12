@@ -76,6 +76,20 @@ export async function getRoles() {
 	return ((await response.json()) as Roles).items;
 }
 
+export function uncheckMultiSelectItemChildrens(items: MultiSelectItem[]) {
+	return items.map((item) => {
+		return {
+			...item,
+			children: item.children.map((child) => {
+				return {
+					...child,
+					checked: false,
+				};
+			}),
+		};
+	});
+}
+
 export function getUserNotificationRoles(
 	rolesItems: Role[],
 	recipients: {roleName: string}[]

@@ -101,6 +101,7 @@ test.describe('Can Purchase and Manage Apps', () => {
 		const {order, product} = await marketplaceHelper.createTestProductOrder(
 			{
 				accountId: account.id,
+				channelId: channel.items[0].id,
 				orderItems: ORDER_ITEMS,
 				productBody,
 			}

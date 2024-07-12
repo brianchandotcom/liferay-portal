@@ -8,7 +8,6 @@ import {Page} from '@playwright/test';
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {TProduct} from '../../../../helpers/HeadlessCommerceAdminCatalogApiHelper';
 import {
-	MARKETPLACE_CHANNEL,
 	ORDER_TYPES,
 	ORDER_WORKFLOW_STATUS_CODE,
 	PAYMENT_STATUS,
@@ -26,6 +25,7 @@ type CreateAccountUserCatalog = {
 
 type CreateTestProductOrder = {
 	accountId: number;
+	channelId: number;
 	orderItems: {[key: string]: number};
 	productBody: TProduct;
 };
@@ -114,15 +114,11 @@ export class MarketplaceHelper {
 
 	async createTestProductOrder({
 		accountId,
+		channelId,
 		orderItems,
 		productBody,
 	}: CreateTestProductOrder) {
 		try {
-			const channel =
-				await this.apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
-					`name eq ${MARKETPLACE_CHANNEL}`
-				);
-
 			const product =
 				await this.apiHelpers.headlessCommerceAdminCatalog.postProduct(
 					productBody
@@ -131,7 +127,7 @@ export class MarketplaceHelper {
 			const order =
 				await this.apiHelpers.headlessCommerceAdminOrder.postOrder({
 					accountId,
-					channelId: channel.items[0].id,
+					channelId,
 					orderItems: [
 						{
 							decimalQuantity: orderItems.DECIMAL_QUANTITY,

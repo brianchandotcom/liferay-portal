@@ -6,7 +6,6 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade.v3_10_2;
 
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_10_2.util.DDMFormFieldUpgradeProcessUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -30,19 +29,17 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
-					StringBundler.concat(
-						"select DDMFormInstanceReport.data_, ",
-						"DDMFormInstanceReport.formInstanceReportId from ",
-						"DDMFormInstanceReport"));
+					"select ctCollectionId, data_, formInstanceReportId from " +
+						"DDMFormInstanceReport");
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMFormInstanceReport set data_ = ? where " +
-						"formInstanceReportId = ?")) {
+						"ctCollectionId = ? and formInstanceReportId = ?")) {
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					String data = resultSet.getString(1);
+					String data = resultSet.getString("data_");
 
 					String newData = upgradeDDMFormInstanceReportData(data);
 
@@ -51,7 +48,10 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 					}
 
 					updatePreparedStatement.setString(1, newData);
-					updatePreparedStatement.setLong(2, resultSet.getLong(2));
+					updatePreparedStatement.setLong(
+						2, resultSet.getLong("ctCollectionId"));
+					updatePreparedStatement.setLong(
+						3, resultSet.getLong("formInstanceReportId"));
 
 					updatePreparedStatement.addBatch();
 				}

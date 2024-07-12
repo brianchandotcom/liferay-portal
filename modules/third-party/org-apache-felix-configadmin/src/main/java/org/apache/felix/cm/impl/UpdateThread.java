@@ -162,17 +162,17 @@ public class UpdateThread implements Runnable
             try
             {
                 workerThread.join( 5000 );
+
+                if ( workerThread.isAlive() )
+                {
+                    Log.logger.log( LogService.LOG_ERROR,
+                        "Worker thread {0} did not terminate within 5 seconds; trying to kill", new Object[]
+                            { workerBaseName } );
+                    workerThread.interrupt();
+                }
             }
             catch ( InterruptedException ie )
             {
-                // don't really care
-            }
-
-            if ( workerThread.isAlive() )
-            {
-                Log.logger.log( LogService.LOG_ERROR,
-                    "Worker thread {0} did not terminate within 5 seconds; trying to kill", new Object[]
-                        { workerBaseName } );
                 workerThread.interrupt();
             }
         }

@@ -375,3 +375,57 @@ test('LPD-31052 Can add new account using the widget', async ({
 		organizationManagementPage.accountNode(accountName)
 	).toHaveCount(1);
 });
+
+test('LPD-31403 Can add new organization using the widget', async ({
+	apiHelpers,
+	organizationManagementPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	const organization1 = await apiHelpers.headlessAdminUser.postOrganization({
+		name: `Org${getRandomInt()}`,
+	});
+
+	await usersAndOrganizationsPage.goToOrganizationChart();
+
+	await expect(organizationManagementPage.chart).toBeVisible();
+
+	await waitForAnimationEnd(
+		organizationManagementPage.organizationNode(organization1.name)
+	);
+	await organizationManagementPage
+		.organizationNode(organization1.name)
+		.click();
+	await waitForAnimationEnd(organizationManagementPage.addNode);
+
+	const organizationName = `Org${getRandomInt()}`;
+
+	await organizationManagementPage.addOrganizationToOrganization({
+		organizationName,
+	});
+	await waitForSuccessAlert(
+		page,
+		`1 organization was added to ${organization1.name}`
+	);
+
+	const organization2 =
+		await apiHelpers.headlessAdminUser.getOrganizationByName(
+			organizationName
+		);
+
+	apiHelpers.data.push({id: organization2.id, type: 'organization'});
+
+	await page.reload();
+
+	await waitForAnimationEnd(
+		organizationManagementPage.organizationNode(organization1.name)
+	);
+	await organizationManagementPage
+		.organizationNode(organization1.name)
+		.click();
+	await waitForAnimationEnd(organizationManagementPage.addNode);
+
+	await expect(
+		organizationManagementPage.organizationNode(organization2.name)
+	).toHaveCount(1);
+});

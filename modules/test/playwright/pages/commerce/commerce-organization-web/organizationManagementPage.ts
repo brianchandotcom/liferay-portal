@@ -5,6 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {getRandomInt} from '../../../utils/getRandomInt';
+
 export class OrganizationManagementPage {
 	readonly accountNode: (accountName: string) => Locator;
 	readonly addAccountNode: Locator;
@@ -14,6 +16,9 @@ export class OrganizationManagementPage {
 	readonly addAccountModalSearchOption: (accountName: string) => Locator;
 	readonly addAccountModalSave: Locator;
 	readonly addNode: Locator;
+	readonly addOrganizationModalName: Locator;
+	readonly addOrganizationModalSave: Locator;
+	readonly addOrganizationNode: Locator;
 	readonly addUserModalRoles: Locator;
 	readonly addUserModalSave: Locator;
 	readonly addUserModalUsersEmails: Locator;
@@ -33,6 +38,11 @@ export class OrganizationManagementPage {
 			return page.getByRole('option', {exact: true, name: accountName});
 		};
 		this.addAccountModalSave = page.getByRole('button', {
+			exact: true,
+			name: 'Save',
+		});
+		this.addOrganizationModalName = page.getByLabel('Name');
+		this.addOrganizationModalSave = page.getByRole('button', {
 			exact: true,
 			name: 'Save',
 		});
@@ -61,6 +71,9 @@ export class OrganizationManagementPage {
 			.locator('g.actions-wrapper.menu-open')
 			.locator('g.add-action-wrapper.account');
 		this.addNode = this.chart.locator('g.chart-item-add');
+		this.addOrganizationNode = this.chart
+			.locator('g.actions-wrapper.menu-open')
+			.locator('g.add-action-wrapper.organization');
 		this.addUserNode = this.chart
 			.locator('g.actions-wrapper.menu-open')
 			.locator('g.add-action-wrapper.user');
@@ -96,6 +109,20 @@ export class OrganizationManagementPage {
 			await this.addAccountModalSearchOption(accountName).click();
 		}
 		await this.addAccountModalSave.click();
+	}
+
+	async addOrganizationToOrganization(
+		{
+			organizationName,
+		}: {
+			organizationName: string;
+		} = {organizationName: `Organization ${getRandomInt()}`}
+	) {
+		await this.addNode.click();
+		await this.addOrganizationNode.click();
+		await this.addOrganizationModalName.click();
+		await this.addOrganizationModalName.fill(organizationName);
+		await this.addOrganizationModalSave.click();
 	}
 
 	async addUserToOrganization(

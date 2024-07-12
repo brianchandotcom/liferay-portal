@@ -193,6 +193,14 @@ export class HeadlessAdminUserApiHelper {
 		return accountResponse?.items?.at(0);
 	}
 
+	async getOrganizationByName(organizationName: string): Promise<TAccount> {
+		const organizationResponse = await this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/organizations?filter=name eq '${organizationName}'&flatten=true`
+		);
+
+		return organizationResponse?.items?.at(0);
+	}
+
 	async getSiteByFriendlyUrlPath(friendlyUrlPath: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/by-friendly-url-path/${friendlyUrlPath}`

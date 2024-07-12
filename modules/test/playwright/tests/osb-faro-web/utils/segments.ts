@@ -35,7 +35,9 @@ export async function addStaticMember({
 }) {
 	await page.getByRole('button', {name: 'Add Members'}).click();
 
-	const memberNamesArray = Array.isArray(memberNames) ? memberNames : [memberNames];
+	const memberNamesArray = Array.isArray(memberNames)
+		? memberNames
+		: [memberNames];
 
 	for (const memberName of memberNamesArray) {
 		await searchByTerm({

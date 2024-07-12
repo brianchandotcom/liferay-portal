@@ -10,14 +10,11 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.site.initializer.extender.OSBSiteInitializer;
 import com.liferay.site.initializer.extender.SiteInitializerUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -53,7 +50,9 @@ public class OSBSiteInitializerImpl implements OSBSiteInitializer {
 			serviceContext.fetchUser()
 		).build();
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray(SiteInitializerUtil.replace(json, stringUtilReplaceValues, null, null));
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
+			SiteInitializerUtil.replace(
+				json, stringUtilReplaceValues, null, null));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			SXPBlueprint sxpBlueprint = SXPBlueprint.toDTO(

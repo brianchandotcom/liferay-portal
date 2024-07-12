@@ -119,6 +119,23 @@ export async function editSegment(page: Page) {
 	await page.waitForSelector('text=Edit Individuals Segment');
 }
 
+export async function includeAnonymousToggle({
+	enable,
+	page,
+}: {
+	enable: boolean;
+	page: Page;
+}) {
+	const toggle = page.getByTestId('toggle-switch-input');
+
+	if (enable) {
+		await toggle.check();
+	}
+	else {
+		await toggle.uncheck();
+	}
+}
+
 export async function saveSegment(page: Page) {
 	await page.locator('button[type="submit"]').click();
 	await page.waitForSelector('div.alert-success', {state: 'visible'});

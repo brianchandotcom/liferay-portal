@@ -9,12 +9,14 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 export class BlogsPage {
+	readonly blogName: (title: string) => Locator;
 	readonly deleteAllBlogEntriesButton: Locator;
 	readonly page: Page;
 	readonly permissionsFrameLocator: FrameLocator;
 	readonly selectAllBlogEntriesCheckBox: Locator;
 
 	constructor(page: Page) {
+		this.blogName = (title: string) => page.getByText(`${title}`);
 		this.deleteAllBlogEntriesButton = page.getByRole('button', {
 			name: 'Delete',
 		});

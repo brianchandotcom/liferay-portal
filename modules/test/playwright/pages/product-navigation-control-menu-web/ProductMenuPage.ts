@@ -21,6 +21,7 @@ export class ProductMenuPage {
 	readonly publishingButton: Locator;
 	readonly siteBuilderButton: Locator;
 	readonly siteSettingsButton: Locator;
+	readonly stagingMenuItem: Locator;
 	readonly webContentButton: Locator;
 
 	constructor(page: Page) {
@@ -57,6 +58,9 @@ export class ProductMenuPage {
 		this.siteSettingsButton = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Site Settings',
+		});
+		this.stagingMenuItem = page.getByRole('menuitem', {
+			name: 'Staging',
 		});
 		this.webContentButton = page.getByRole('menuitem', {
 			name: 'Web Content',

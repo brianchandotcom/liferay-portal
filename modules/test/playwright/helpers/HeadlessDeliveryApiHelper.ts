@@ -278,4 +278,26 @@ export class HeadlessDeliveryApiHelper {
 			}
 		);
 	}
+
+	async putBlog(
+		blogPostingId: number | string,
+		blog?: {
+			articleBody?: string;
+			headline?: string;
+		}
+	): Promise<any> {
+		blog = {
+			articleBody: getRandomString(),
+			headline: getRandomString(),
+			...(blog || {}),
+		};
+
+		return this.apiHelpers.put(
+			`${this.apiHelpers.baseUrl}${this.basePath}/blog-postings/${blogPostingId}`,
+			{
+				data: blog,
+				failOnStatusCode: true,
+			}
+		);
+	}
 }

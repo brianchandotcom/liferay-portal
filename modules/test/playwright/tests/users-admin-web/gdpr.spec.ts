@@ -11,11 +11,15 @@ import {contactsCenterPagesTest} from '../../fixtures/contactsCenterPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
+import {siteStagingPageTest} from '../../fixtures/siteStagingPageTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
+import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
+import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
 
 export const test = mergeTests(
 	contactsCenterPagesTest,
@@ -28,12 +32,15 @@ export const test = mergeTests(
 );
 
 export const testAdmin = mergeTests(
+	blogsPagesTest,
 	contactsCenterPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
 	loginTest(),
+	productMenuPageTest,
+	siteStagingPageTest,
 	usersAndOrganizationsPagesTest
 );
 
@@ -299,3 +306,130 @@ testAdmin.describe('LPD-27068 Refactor of GDPR#CanAnonymizeAllEntries', () => {
 		}
 	);
 });
+
+testAdmin(
+	'LPD-31206 - Can delete a single staged and live blogs entry',
+	async ({
+		apiHelpers,
+		blogsPage,
+		page,
+		personalDataErasurePage,
+		productMenuPage,
+		siteStagingPage,
+		usersAndOrganizationsPage,
+	}) => {
+		page.on('dialog', (dialog) => {
+			dialog.accept();
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: 'Site' + getRandomInt(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: 'Page' + getRandomInt(),
+		});
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			'Administrator',
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLogin(page, userAccount.alternateName);
+
+		const blog1NameStaging = 'Blog1 Staging';
+		const blog2NameStaging = 'Blog2 Staging';
+		const blog3Name = 'Blog3';
+
+		const blog1 = await apiHelpers.headlessDelivery.postBlog(site.id, {
+			headline: blog1NameStaging,
+		});
+		const blog2 = await apiHelpers.headlessDelivery.postBlog(site.id, {
+			headline: blog2NameStaging,
+		});
+		await apiHelpers.headlessDelivery.postBlog(site.id, {
+			headline: blog3Name,
+		});
+
+		await page.goto(`/group/${site.name}/${layout.friendlyUrlPath}`);
+
+		await productMenuPage.openProductMenuButton.click();
+		await productMenuPage.publishingButton.click();
+		await productMenuPage.stagingMenuItem.click();
+
+		await siteStagingPage.localStagingCheckbox.check();
+		await siteStagingPage.blogsCheckbox.check();
+		await siteStagingPage.saveButton.click();
+
+		await performLogout(page);
+		await performLogin(page, 'test');
+
+		const blog1NameLive = 'Blog1 Live';
+		const blog2NameLive = 'Blog2 Live';
+
+		await apiHelpers.headlessDelivery.putBlog(blog1.id, {
+			headline: blog1NameLive,
+		});
+		await apiHelpers.headlessDelivery.putBlog(blog2.id, {
+			headline: blog2NameLive,
+		});
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+
+		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+
+		await personalDataErasurePage.blogCountLink('6').click();
+
+		await (
+			await personalDataErasurePage.userAssociatedDataTableRowCheckBox(
+				blog1NameStaging
+			)
+		).check();
+		await (
+			await personalDataErasurePage.userAssociatedDataTableRowCheckBox(
+				blog2NameLive
+			)
+		).check();
+
+		await personalDataErasurePage.actionsButton.click();
+		await personalDataErasurePage.menuItemDelete.click();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+
+		await page.goto(`/group/${site.name}-staging${PORTLET_URLS.blogs}`);
+
+		await expect(blogsPage.blogName(blog1NameStaging)).toHaveCount(0);
+		await expect(blogsPage.blogName(blog2NameStaging)).toHaveCount(1);
+		await expect(blogsPage.blogName(blog3Name)).toHaveCount(1);
+
+		await page.goto(`/group/${site.name}${PORTLET_URLS.blogs}`);
+
+		await expect(blogsPage.blogName(blog1NameLive)).toHaveCount(1);
+		await expect(blogsPage.blogName(blog2NameLive)).toHaveCount(0);
+		await expect(blogsPage.blogName(blog3Name)).toHaveCount(1);
+	}
+);

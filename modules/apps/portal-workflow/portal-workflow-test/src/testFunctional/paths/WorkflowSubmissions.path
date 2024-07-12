@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>SUBMISSION_CLEAR_SEARCH_BUTTON</td>
-	<td>//div//a[text()='Clear']</td>
+	<td>//div//a[text()='Clear']|//div//button[text()='Clear']</td>
 	<td></td>
 </tr>
 <tr>

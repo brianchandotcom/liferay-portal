@@ -34,8 +34,8 @@ public class SAPEntryUpgradeProcess extends UpgradeProcess {
 						connection.prepareStatement(
 							StringBundler.concat(
 								"select count(*) from SAPEntry where name = ",
-								"'SYSTEM_LOCAL_REST_CLIENT' and companyId = ",
-								companyId))) {
+								"'SYSTEM_REST_CLIENT_TEMPLATE_OBJECT' and ",
+								"companyId = ", companyId))) {
 
 					ResultSet resultSet = preparedStatement1.executeQuery();
 
@@ -48,8 +48,8 @@ public class SAPEntryUpgradeProcess extends UpgradeProcess {
 							System.currentTimeMillis());
 
 						String title =
-							"System Service Access Policy for Local " +
-								"RESTClient Requests";
+							"System Service Access Policy for REST Client " +
+								"Template Object Requests";
 
 						String titleMapString =
 							LocalizationUtil.updateLocalization(
@@ -87,7 +87,7 @@ public class SAPEntryUpgradeProcess extends UpgradeProcess {
 						preparedStatement2.setBoolean(8, false);
 						preparedStatement2.setBoolean(9, true);
 						preparedStatement2.setString(
-							10, "SYSTEM_LOCAL_REST_CLIENT");
+							10, "SYSTEM_REST_CLIENT_TEMPLATE_OBJECT");
 						preparedStatement2.setString(11, titleMapString);
 
 						preparedStatement2.execute();

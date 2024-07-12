@@ -27,7 +27,7 @@ export const test = mergeTests(
 	serviceAccessPolicyPageTest
 );
 
-test('LPD-26931 Verify the new System Local REST Client SAP entry allows guest access for restClient services accessed locally', async ({
+test('LPD-26931 Verify the new System REST Client Template Object SAP entry allows access for headless API accessed locally', async ({
 	apiHelpers,
 	editServiceAccessPolicyPage,
 	fragmentEditorPage,
@@ -92,14 +92,14 @@ test('LPD-26931 Verify the new System Local REST Client SAP entry allows guest a
 
 	await expect(await page.getByText('LPD-26931 ')).toBeVisible();
 
-	// Log back in, disable System Local REST Client SAP entry
+	// Log back in, disable System REST Client Template Object SAP entry
 
 	await performLogin(page, 'test');
 
 	await serviceAccessPolicyPage.goto(site.friendlyUrlPath);
 
 	await (
-		await page.getByRole('link', {name: 'SYSTEM_LOCAL_REST_CLIENT'})
+		await page.getByRole('link', {name: 'SYSTEM_REST_CLIENT_TEMPLATE_OBJECT'})
 	).click();
 
 	await editServiceAccessPolicyPage.enabledButton.setChecked(false);
@@ -116,7 +116,7 @@ test('LPD-26931 Verify the new System Local REST Client SAP entry allows guest a
 
 	await expect(await page.getByText('LPD-26931 ')).toBeVisible();
 
-	// Verify guest user receives template error
+	// Verify guest user receives freemarker error
 
 	await performLogout(page);
 
@@ -126,14 +126,14 @@ test('LPD-26931 Verify the new System Local REST Client SAP entry allows guest a
 		await page.getByText('FreeMarker syntax is invalid.')
 	).toBeVisible();
 
-	// Restore System Local REST Client SAP entry
+	// Restore System REST Client Template Object SAP entry
 
 	await performLogin(page, 'test');
 
 	await serviceAccessPolicyPage.goto(site.friendlyUrlPath);
 
 	await (
-		await page.getByRole('link', {name: 'SYSTEM_LOCAL_REST_CLIENT'})
+		await page.getByRole('link', {name: 'SYSTEM_REST_CLIENT_TEMPLATE_OBJECT'})
 	).click();
 
 	await editServiceAccessPolicyPage.enabledButton.setChecked(true);

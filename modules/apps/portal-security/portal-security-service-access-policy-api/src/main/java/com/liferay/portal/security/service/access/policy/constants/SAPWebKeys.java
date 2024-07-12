@@ -10,8 +10,8 @@ package com.liferay.portal.security.service.access.policy.constants;
  */
 public class SAPWebKeys {
 
-	public static final String LOCAL_REST_CLIENT_DISPATCH =
-		"LOCAL_REST_CLIENT_DISPATCH";
+	public static final String REST_CLIENT_HTTP_REQUEST =
+		"REST_CLIENT_HTTP_REQUEST";
 
 	public static final String SERVICE_CLASS_NAMES_TO_CONTEXT_NAMES =
 		"SERVICE_CLASS_NAMES_TO_CONTEXT_NAMES";

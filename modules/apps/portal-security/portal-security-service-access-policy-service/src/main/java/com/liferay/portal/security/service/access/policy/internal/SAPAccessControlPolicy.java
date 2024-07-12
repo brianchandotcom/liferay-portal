@@ -293,11 +293,12 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 
 			boolean localRestClientDispatch = GetterUtil.getBoolean(
 				httpServletRequest.getAttribute(
-					SAPWebKeys.LOCAL_REST_CLIENT_DISPATCH));
+					SAPWebKeys.REST_CLIENT_HTTP_REQUEST));
 
 			if (localRestClientDispatch) {
 				systemServiceAccessPolicyNames.add(
-					sapConfiguration.systemLocalRestClientSAPEntryName());
+					sapConfiguration.
+						systemRestClientTemplateObjectSAPEntryName());
 			}
 		}
 

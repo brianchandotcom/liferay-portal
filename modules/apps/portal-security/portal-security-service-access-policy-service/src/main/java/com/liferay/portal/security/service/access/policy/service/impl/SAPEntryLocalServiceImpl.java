@@ -108,13 +108,15 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 	public void checkSystemSAPEntries(long companyId) throws PortalException {
 		SAPEntry systemDefaultSAPEntry = sapEntryPersistence.fetchByC_N(
 			companyId, _sapConfiguration.systemDefaultSAPEntryName());
-		SAPEntry systemLocalRestClientSAPEntry = sapEntryPersistence.fetchByC_N(
-			companyId, _sapConfiguration.systemLocalRestClientSAPEntryName());
+		SAPEntry systemRestClientTemplateObjectSAPEntry =
+			sapEntryPersistence.fetchByC_N(
+				companyId,
+				_sapConfiguration.systemRestClientTemplateObjectSAPEntryName());
 		SAPEntry systemUserPasswordSAPEntry = sapEntryPersistence.fetchByC_N(
 			companyId, _sapConfiguration.systemUserPasswordSAPEntryName());
 
 		if ((systemDefaultSAPEntry != null) &&
-			(systemLocalRestClientSAPEntry != null) &&
+			(systemRestClientTemplateObjectSAPEntry != null) &&
 			(systemUserPasswordSAPEntry != null)) {
 
 			return;
@@ -143,24 +145,26 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 				guestRole.getRoleId(), new String[] {ActionKeys.VIEW});
 		}
 
-		if (systemLocalRestClientSAPEntry == null) {
+		if (systemRestClientTemplateObjectSAPEntry == null) {
 			Map<Locale, String> titleMap = HashMapBuilder.put(
 				LocaleUtil.getDefault(),
-				_sapConfiguration.systemLocalRestClientSAPEntryDescription()
+				_sapConfiguration.
+					systemRestClientTemplateObjectSAPEntryDescription()
 			).build();
 
-			systemLocalRestClientSAPEntry = addSAPEntry(
+			systemRestClientTemplateObjectSAPEntry = addSAPEntry(
 				guestUserId,
 				_sapConfiguration.
-					systemLocalRestClientSAPEntryServiceSignatures(),
+					systemRestClientTemplateObjectSAPEntryServiceSignatures(),
 				false, true,
-				_sapConfiguration.systemLocalRestClientSAPEntryName(), titleMap,
-				new ServiceContext());
+				_sapConfiguration.systemRestClientTemplateObjectSAPEntryName(),
+				titleMap, new ServiceContext());
 
 			_resourcePermissionLocalService.setResourcePermissions(
-				systemLocalRestClientSAPEntry.getCompanyId(),
+				systemRestClientTemplateObjectSAPEntry.getCompanyId(),
 				SAPEntry.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(systemLocalRestClientSAPEntry.getSapEntryId()),
+				String.valueOf(
+					systemRestClientTemplateObjectSAPEntry.getSapEntryId()),
 				guestRole.getRoleId(), new String[] {ActionKeys.VIEW});
 		}
 

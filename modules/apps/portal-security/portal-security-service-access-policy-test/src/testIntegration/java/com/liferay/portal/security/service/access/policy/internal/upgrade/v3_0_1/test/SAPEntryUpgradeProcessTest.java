@@ -44,18 +44,19 @@ public class SAPEntryUpgradeProcessTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testUpgradeProcessSystemFreemarkerTemplateSAPEntry()
+	public void testUpgradeProcessSystemRestClientTemplateObjectSAPEntry()
 		throws Exception {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		SAPEntry systemLocalRestClientSAPEntry =
+		SAPEntry systemRestClientTemplateObjectSAPEntry =
 			_sapEntryLocalService.fetchSAPEntry(
 				company.getCompanyId(),
-				_sapConfiguration.systemLocalRestClientSAPEntryName());
+				_sapConfiguration.systemRestClientTemplateObjectSAPEntryName());
 
-		if (systemLocalRestClientSAPEntry != null) {
-			_sapEntryLocalService.deleteSAPEntry(systemLocalRestClientSAPEntry);
+		if (systemRestClientTemplateObjectSAPEntry != null) {
+			_sapEntryLocalService.deleteSAPEntry(
+				systemRestClientTemplateObjectSAPEntry);
 		}
 
 		_runUpgrade();
@@ -63,7 +64,8 @@ public class SAPEntryUpgradeProcessTest {
 		Assert.assertNotNull(
 			_sapEntryLocalService.fetchSAPEntry(
 				company.getCompanyId(),
-				_sapConfiguration.systemLocalRestClientSAPEntryName()));
+				_sapConfiguration.
+					systemRestClientTemplateObjectSAPEntryName()));
 	}
 
 	private void _runUpgrade() throws Exception {

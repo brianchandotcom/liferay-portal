@@ -41,24 +41,25 @@ public interface SAPConfiguration {
 	public String systemDefaultSAPEntryServiceSignatures();
 
 	@Meta.AD(
-		deflt = "SYSTEM_LOCAL_REST_CLIENT",
-		name = "system-local-rest-client-sap-entry-name", required = false
+		deflt = "SYSTEM_REST_CLIENT_TEMPLATE_OBJECT",
+		name = "system-rest-client-template-object-sap-entry-name",
+		required = false
 	)
-	public String systemLocalRestClientSAPEntryName();
+	public String systemRestClientTemplateObjectSAPEntryName();
 
 	@Meta.AD(
 		deflt = "System Service Access Policy for Local RESTClient Requests",
-		name = "system-local-rest-client-sap-entry-description",
+		name = "system-rest-client-template-object-sap-entry-description",
 		required = false
 	)
-	public String systemLocalRestClientSAPEntryDescription();
+	public String systemRestClientTemplateObjectSAPEntryDescription();
 
 	@Meta.AD(
 		deflt = "*",
-		name = "system-local-rest-client-sap-entry-service-signatures",
+		name = "system-rest-client-template-object-sap-entry-service-signatures",
 		required = false
 	)
-	public String systemLocalRestClientSAPEntryServiceSignatures();
+	public String systemRestClientTemplateObjectSAPEntryServiceSignatures();
 
 	@Meta.AD(
 		deflt = "SYSTEM_USER_PASSWORD",

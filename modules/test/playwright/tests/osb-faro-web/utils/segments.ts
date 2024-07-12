@@ -104,6 +104,16 @@ export async function editCriteriaAttributeValue({
 		.fill(attributeValue);
 }
 
+export async function editCriteriaConjunction({
+	index = 0,
+	page,
+}: {
+	index?: number;
+	page: Page;
+}) {
+	await page.locator('.conjunction-button').nth(index).click();
+}
+
 export async function editSegment(page: Page) {
 	await page.getByRole('link', {name: 'Edit Segment'}).click();
 	await page.waitForSelector('text=Edit Individuals Segment');

@@ -288,7 +288,7 @@ public class FragmentCollectionLocalServiceTest {
 
 		FragmentCollectionCreateDateComparator
 			fragmentCollectionCreateDateComparator =
-				new FragmentCollectionCreateDateComparator(true);
+				FragmentCollectionCreateDateComparator.getInstance(true);
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionLocalService.getFragmentCollections(
@@ -325,7 +325,7 @@ public class FragmentCollectionLocalServiceTest {
 
 		FragmentCollectionCreateDateComparator
 			fragmentCollectionCreateDateComparator =
-				new FragmentCollectionCreateDateComparator(false);
+				FragmentCollectionCreateDateComparator.getInstance(false);
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionLocalService.getFragmentCollections(
@@ -350,7 +350,7 @@ public class FragmentCollectionLocalServiceTest {
 			_group.getGroupId(), "AB Fragment Collection");
 
 		FragmentCollectionNameComparator fragmentCollectionNameComparator =
-			new FragmentCollectionNameComparator(true);
+			FragmentCollectionNameComparator.getInstance(true);
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionLocalService.getFragmentCollections(
@@ -376,7 +376,7 @@ public class FragmentCollectionLocalServiceTest {
 			_group.getGroupId(), "AB Fragment Collection");
 
 		FragmentCollectionNameComparator fragmentCollectionNameComparator =
-			new FragmentCollectionNameComparator(false);
+			FragmentCollectionNameComparator.getInstance(false);
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionLocalService.getFragmentCollections(

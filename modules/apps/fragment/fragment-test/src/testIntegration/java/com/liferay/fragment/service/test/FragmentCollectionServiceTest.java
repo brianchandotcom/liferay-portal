@@ -327,7 +327,7 @@ public class FragmentCollectionServiceTest {
 
 		FragmentCollectionCreateDateComparator
 			fragmentCollectionCreateDateComparator =
-				new FragmentCollectionCreateDateComparator(true);
+				FragmentCollectionCreateDateComparator.getInstance(true);
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionService.getFragmentCollections(
@@ -364,7 +364,7 @@ public class FragmentCollectionServiceTest {
 
 		FragmentCollectionCreateDateComparator
 			fragmentCollectionCreateDateComparator =
-				new FragmentCollectionCreateDateComparator(false);
+				FragmentCollectionCreateDateComparator.getInstance(false);
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionService.getFragmentCollections(
@@ -392,7 +392,7 @@ public class FragmentCollectionServiceTest {
 			_group.getGroupId(), "AC Fragment Collection");
 
 		FragmentCollectionNameComparator fragmentCollectionNameComparator =
-			new FragmentCollectionNameComparator(true);
+			FragmentCollectionNameComparator.getInstance(true);
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionService.getFragmentCollections(
@@ -421,7 +421,7 @@ public class FragmentCollectionServiceTest {
 			_group.getGroupId(), "AC Fragment Collection");
 
 		FragmentCollectionNameComparator fragmentCollectionNameComparator =
-			new FragmentCollectionNameComparator(false);
+			FragmentCollectionNameComparator.getInstance(false);
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionService.getFragmentCollections(
@@ -448,7 +448,7 @@ public class FragmentCollectionServiceTest {
 			_group.getGroupId(), "AB Fragment Collection");
 
 		FragmentCollectionNameComparator fragmentCollectionNameComparator =
-			new FragmentCollectionNameComparator(true);
+			FragmentCollectionNameComparator.getInstance(true);
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionService.getFragmentCollections(
@@ -474,7 +474,7 @@ public class FragmentCollectionServiceTest {
 			_group.getGroupId(), "AB Fragment Collection");
 
 		FragmentCollectionNameComparator fragmentCollectionNameComparator =
-			new FragmentCollectionNameComparator(false);
+			FragmentCollectionNameComparator.getInstance(false);
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionService.getFragmentCollections(

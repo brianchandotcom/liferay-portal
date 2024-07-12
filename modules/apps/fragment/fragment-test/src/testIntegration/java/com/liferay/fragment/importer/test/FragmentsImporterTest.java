@@ -912,7 +912,7 @@ public class FragmentsImporterTest {
 				_group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(), "resource",
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new FragmentEntryCreateDateComparator(true));
+				FragmentEntryCreateDateComparator.getInstance(true));
 
 		FragmentEntry fragmentEntry = fragmentEntries.get(0);
 

@@ -4718,7 +4718,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.apache.commons.jar!xz.jar</file-name>
-				<version>1.8</version>
+				<version>1.9</version>
 				<project-name>XZ data compression</project-name>
 				<project-url>https://tukaani.org/xz/java.html</project-url>
 				<licenses>

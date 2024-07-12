@@ -774,28 +774,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSegmentComposition(individualsPercent = null, individualsNumber = null, individualsType = null) {
-		if (${individualsType} == "Active Last 30 Days") {
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_COMPOSITION_COUNT",
-				value1 = ${individualsNumber});
-
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_COMPOSITION_PERCENT",
-				value1 = ${individualsPercent});
-		}
-		else if (${individualsType} == "Known Members") {
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_COMPOSITION_COUNT",
-				value1 = ${individualsNumber});
-
-			AssertTextEquals(
-				locator1 = "ACSegments#SEGMENT_COMPOSITION_PERCENT",
-				value1 = ${individualsPercent});
-		}
-	}
-
-	@summary = "Default summary"
 	macro viewSegmentCriteriaIndividualAttributes(condition = null, conjunction = null, attributeValue = null, attributeName = null) {
 		if (!(isSet(index))) {
 			var index = 1;

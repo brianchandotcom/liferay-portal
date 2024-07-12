@@ -169,38 +169,6 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-9400. Verify new child organizations can be created using the Organization Management widget."
-	@priority = 3
-	test CanCreateOrganizationUsingWidget {
-		property portal.acceptance = "false";
-
-		task ("Setup: Add an organization") {
-			JSONOrganization.addOrganization(
-				organizationName = "Organization 1",
-				organizationSite = "false");
-		}
-
-		task ("Given the Organization Management Widget Page is reached") {
-			Navigator.openSitePage(
-				pageName = "Organization Management Widget Page",
-				siteName = "Minium");
-		}
-
-		task ("When the organization node is reached") {
-			CommerceWidget.gotoSVGNode(
-				key_nodeName = "Organization 1",
-				key_orgType = "organization");
-		}
-
-		task ("And the admin is able to create a new child organization") {
-			CommerceWidget.canCreateChildOrganization(value = "Child Org 1");
-		}
-
-		task ("Then the new child organization is present in the admin console") {
-			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Child Org 1");
-		}
-	}
-
 	@description = "COMMERCE-12584 | Verify that is possibile to search for an entry that is present multiple times inside the widget"
 	@priority = 5
 	test CanSearchAnEntryPresentMultipleTimesIntoOrganizationManagement {

@@ -34,11 +34,7 @@ JournalPreviewArticleContentTemplateDisplayContext journalPreviewArticleContentT
 				<div class="form-group-sm journal-article-button-row mb-0 tbar-section text-right">
 					<clay:button
 						cssClass="selector-button"
-						data-id='<%=
-							HashMapBuilder.<String, Object>put(
-								"ddmtemplateid", journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId()
-							).build()
-						%>'
+						data-value="<%= journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateJSON() %>"
 						displayType="secondary"
 						label="apply"
 						type="submit"

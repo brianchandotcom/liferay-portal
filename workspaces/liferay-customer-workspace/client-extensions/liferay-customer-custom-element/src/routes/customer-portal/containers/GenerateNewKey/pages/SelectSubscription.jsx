@@ -56,7 +56,7 @@ const SelectSubscription = ({
 	const navigate = useNavigate();
 	const [
 		availableActivationKeysTotal,
-		setAvailableActivationKeysTotal,
+		setAvailableActivationKeysTotal
 	] = useState();
 
 	useEffect(() => {
@@ -108,6 +108,8 @@ const SelectSubscription = ({
 
 		return filteredTypes?.productKey;
 	}, [typesProduct, productGroupName, selectedKeyType]);
+
+	const isSingleComplimentaryKey = hasComplimentaryKey && state?.activationKeys.length === 1;
 
 	const mockedValuesForComplimentaryKeys = useMemo(() => {
 		return {
@@ -214,7 +216,7 @@ const SelectSubscription = ({
 
 	const productKey = typesProduct?.find(
 		(item) =>
-			item.licenseEntryDisplayName
+			item.licenseEntryName
 				.toLowerCase()
 				.replace(/[- ]+/g, '-') ===
 			uniqueSelectedProductName
@@ -583,9 +585,7 @@ const SelectSubscription = ({
 							}));
 						}}
 					>
-						{!hasComplimentaryKey &&
-						state.id === 'renew' &&
-						state.activationKeys?.length > 1
+						{state.id === 'renew' && state.activationKeys?.length > 1
 							? i18n.sub('generate-x-keys', [
 									state.activationKeys?.length,
 							  ])
@@ -870,7 +870,7 @@ const SelectSubscription = ({
 								'choose-this-option-if-you-want-an-activation-key-for-60-days'
 							)}
 							value={
-								state.id === 'renew'
+								!isSingleComplimentaryKey && state.id === 'renew'
 									? mockedValuesForComplimentaryKeysOfTheSelectedKeys
 									: mockedValuesForComplimentaryKeys
 							}

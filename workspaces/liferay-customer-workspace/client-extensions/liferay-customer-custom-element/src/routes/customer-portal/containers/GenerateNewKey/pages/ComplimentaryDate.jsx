@@ -247,7 +247,7 @@ const ComplimentaryDate = ({
 								displayType="primary"
 								isLoading={isLoadingGenerateKey}
 								onClick={() => {
-									if (state.id === 'renew') {
+									if (state.activationKeys.length > 1 && state.id === 'renew') {
 										submitKey();
 									} else {
 										setSelectedKeyData(
@@ -261,11 +261,9 @@ const ComplimentaryDate = ({
 									}
 								}}
 							>
-								{state.id === 'renew'
+								{state.activationKeys.length > 1 && state.id === 'renew'
 									? i18n.sub(
-											state.activationKeys.length > 1
-												? 'generate-x-keys'
-												: 'generate-x-key',
+										'generate-x-keys',
 											[state.activationKeys.length]
 									  )
 									: i18n.translate('next')}

@@ -40,10 +40,6 @@ const RenewButton = ({
 				}
 			}
 
-			if (isComplimentaryKey) {
-				return setIsDisable(true);
-			}
-
 			return setIsDisable(false);
 		};
 

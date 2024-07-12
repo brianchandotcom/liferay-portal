@@ -352,6 +352,7 @@ const RequiredInformation = ({
 			);
 		}
 	};
+
 	const HandleButtonValue = () => {
 		if (isRenew) {
 			return state?.activationKeys.length === 1 ? i18n.sub('renew-x-key', [state?.activationKeys.length]) : i18n.sub('renew-x-keys', [state?.activationKeys.length]);
@@ -406,7 +407,7 @@ const RequiredInformation = ({
 								displayType="primary"
 								isLoading={isLoadingGenerateKey}
 								onClick={() => {
-									if (isRenew) {
+									if (!hasComplimentaryKey && isRenew) {
 										setIsLoadingGenerateKey(true);
 
 										return submitKeyAction.submitKey();

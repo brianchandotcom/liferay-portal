@@ -292,10 +292,10 @@ export default async function format(
 			console.log(`🚨 ${filepath}: ${error}`);
 		}
 
-		if (transformedContent !== source) {
+		if (transformedContent !== source || errMessages[filepath]) {
 			badFiles.push(filepath);
 
-			if (fix) {
+			if (fix && transformedContent !== source) {
 				fixed++;
 			}
 		}
@@ -318,7 +318,7 @@ export default async function format(
 		summary.push(`fixed ${fixed} ${files(fixed)}`);
 	}
 
-	if (!fixed && badFiles.length) {
+	if (badFiles.length !== fixed) {
 		const totalBad = badFiles.length;
 
 		summary.push(

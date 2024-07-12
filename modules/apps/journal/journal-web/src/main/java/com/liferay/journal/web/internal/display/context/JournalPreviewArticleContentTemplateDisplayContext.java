@@ -13,10 +13,12 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -102,6 +104,23 @@ public class JournalPreviewArticleContentTemplateDisplayContext {
 		_ddmTemplateId = ParamUtil.getLong(_renderRequest, "ddmTemplateId");
 
 		return _ddmTemplateId;
+	}
+
+	public String getDDMTemplateJSON() {
+		if (getDDMTemplateId() <= 0) {
+			return null;
+		}
+
+		DDMTemplate ddmTemplate = getDDMTemplate();
+
+		return JSONUtil.put(
+			"ddmtemplateid", ddmTemplate.getTemplateId()
+		).put(
+			"ddmtemplatekey", ddmTemplate.getTemplateKey()
+		).put(
+			"name",
+			HtmlUtil.escape(ddmTemplate.getName(_themeDisplay.getLocale()))
+		).toString();
 	}
 
 	public List<DDMTemplate> getDDMTemplates() throws PortalException {

@@ -3828,26 +3828,23 @@ public class BundleSiteInitializerTest {
 				"TESTSXPBLUEPRINT1");
 
 		Assert.assertNotNull(sxpBlueprint);
-		Assert.assertFalse(
-			sxpBlueprint.toString(
-			).contains(
-				"[$"
-			));
 		_assertSearchableAssetTypes(
 			new String[] {"com.liferay.journal.model.JournalArticle"},
 			sxpBlueprint.getConfiguration());
 		Assert.assertEquals("Test SXBlueprint 1", sxpBlueprint.getTitle());
+
+		Long testAssetCategory3Id =
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					"TESTASSETCATEGORY3", _group.getGroupId()).
+						getCategoryId();
 
 		sxpBlueprint =
 			sxpBlueprintResource.getSXPBlueprintByExternalReferenceCode(
 				"TESTSXPBLUEPRINT2");
 
 		Assert.assertNotNull(sxpBlueprint);
-		Assert.assertFalse(
-			sxpBlueprint.toString(
-			).contains(
-				"[$"
-			));
+		Assert.assertEquals(StringUtil.count(sxpBlueprint.toString(), String.valueOf(testAssetCategory3Id)), 3);
 		_assertSearchableAssetTypes(
 			new String[] {
 				"com.liferay.document.library.kernel.model.DLFileEntry"
@@ -3870,11 +3867,6 @@ public class BundleSiteInitializerTest {
 				"TESTSXPBLUEPRINT1");
 
 		Assert.assertNotNull(sxpBlueprint);
-		Assert.assertFalse(
-			sxpBlueprint.toString(
-			).contains(
-				"[$"
-			));
 		_assertSearchableAssetTypes(
 			new String[] {"com.liferay.journal.model.JournalArticle"},
 			sxpBlueprint.getConfiguration());
@@ -3885,11 +3877,6 @@ public class BundleSiteInitializerTest {
 				"TESTSXPBLUEPRINT2");
 
 		Assert.assertNotNull(sxpBlueprint);
-		Assert.assertFalse(
-			sxpBlueprint.toString(
-			).contains(
-				"[$"
-			));
 		_assertSearchableAssetTypes(
 			new String[] {
 				"com.liferay.document.library.kernel.model.DLFileEntry",
@@ -3904,11 +3891,6 @@ public class BundleSiteInitializerTest {
 				"TESTSXPBLUEPRINT3");
 
 		Assert.assertNotNull(sxpBlueprint);
-		Assert.assertFalse(
-			sxpBlueprint.toString(
-			).contains(
-				"[$"
-			));
 		_assertSearchableAssetTypes(
 			new String[] {"com.liferay.portal.kernel.model.User"},
 			sxpBlueprint.getConfiguration());

@@ -1461,6 +1461,58 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testAddObjectEntryWithRichTextObjectField() throws Exception {
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			Collections.singletonList(
+				new RichTextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"richTextObjectFieldName"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		try {
+			ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				new ObjectEntry() {
+					{
+						properties = Collections.emptyMap();
+					}
+				},
+				null);
+
+			Assert.assertEquals(
+				MapUtil.getString(
+					objectEntry.getProperties(), "richTextObjectFieldName"),
+				StringPool.BLANK);
+
+			String value = RandomTestUtil.randomString();
+
+			objectEntry = _defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, objectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"richTextObjectFieldName", value
+						).build();
+					}
+				},
+				null);
+
+			Assert.assertEquals(
+				MapUtil.getString(
+					objectEntry.getProperties(), "richTextObjectFieldName"),
+				value);
+		}
+		finally {
+			objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+	}
+
+	@Test
 	public void testAddOrUpdateObjectEntryWithPicklistObjectField()
 		throws Exception {
 

@@ -24,6 +24,7 @@ import {NotificationTemplateError} from '../EditNotificationTemplate';
 import {
 	getCheckedChildren,
 	handleMultiSelectRoleItemsChange,
+	uncheckMultiSelectItemChildrens,
 } from './rolesUtil';
 
 interface PrimaryRecipientProps {
@@ -89,6 +90,11 @@ export function PrimaryRecipient({
 				items={recipientOptions}
 				label={Liferay.Language.get('type')}
 				onSelectionChange={(value) => {
+					if (value === 'email') {
+						const newToRoleList =
+							uncheckMultiSelectItemChildrens(toRolesList);
+						setToRolesList(newToRoleList);
+					}
 					setValues({
 						...values,
 						recipients: [

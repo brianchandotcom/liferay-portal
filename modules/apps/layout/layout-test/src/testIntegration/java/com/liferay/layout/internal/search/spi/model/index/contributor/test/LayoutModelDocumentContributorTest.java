@@ -100,8 +100,10 @@ public class LayoutModelDocumentContributorTest {
 
 		_layoutIndexerFixture = new IndexerFixture<>(Layout.class);
 
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	@After
@@ -208,9 +210,6 @@ public class LayoutModelDocumentContributorTest {
 	public void testReindexPublishedLayoutWithFragmentEntryLinkTypePortlet()
 		throws Exception {
 
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		Layout draftLayout = layout.fetchDraftLayout();
@@ -263,8 +262,7 @@ public class LayoutModelDocumentContributorTest {
 				JSONUtil.put(
 					"element-text", JSONUtil.put(_languageId, elementText))
 			).toString(),
-			html, layout,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			html, layout);
 
 		_reindexLogEntries(layout);
 
@@ -286,9 +284,6 @@ public class LayoutModelDocumentContributorTest {
 	@Test
 	public void testReindexPublishedLayoutWithPortletDisplayingJournalArticleWithGeolocationDDMFormField()
 		throws Exception {
-
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -339,14 +334,13 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(
-			String editableValues, String html, Layout layout,
-			ServiceContext serviceContext)
+			String editableValues, String html, Layout layout)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), null, serviceContext);
+				RandomTestUtil.randomString(), null, _serviceContext);
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
@@ -354,7 +348,7 @@ public class LayoutModelDocumentContributorTest {
 				fragmentCollection.getFragmentCollectionId(), null,
 				RandomTestUtil.randomString(), null, html, null, false, null,
 				null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			editableValues, fragmentEntry.getCss(),
@@ -381,8 +375,7 @@ public class LayoutModelDocumentContributorTest {
 				JSONUtil.put(
 					"element-text", JSONUtil.put(_languageId, elementText))
 			).toString(),
-			html, draftLayout,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			html, draftLayout);
 
 		return draftLayout;
 	}
@@ -507,9 +500,6 @@ public class LayoutModelDocumentContributorTest {
 	private void _assertReindexPublishedLayoutFragmentEntryLinkWithPortlet()
 		throws Exception {
 
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
 		String html = "<lfr-widget-web-content>";
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
@@ -519,8 +509,7 @@ public class LayoutModelDocumentContributorTest {
 		Assert.assertNotNull(draftLayout);
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLinkToLayout(
-			"{}", html, draftLayout,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			"{}", html, draftLayout);
 
 		String portletId = PortletIdCodec.encode(
 			JournalContentPortletKeys.JOURNAL_CONTENT,
@@ -686,5 +675,7 @@ public class LayoutModelDocumentContributorTest {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	private ServiceContext _serviceContext;
 
 }

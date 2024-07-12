@@ -1,9 +1,28 @@
 #!/bin/bash
 
-pushd ..
+docker compose up -d
 
-./gradlew clean deploy
+pushd .. > /dev/null
 
-popd
+if [ -f "quickstart/deploy.list" ]
+then
+	for line in $(cat "quickstart/deploy.list")
+	do
+		if [ -z "${line}" ]
+		then
+			continue
+		fi
 
-docker compose up
+		echo "Deploying ${line}"
+
+		./gradlew ${line}:clean ${line}:deploy
+	done
+else
+	echo "Deploying $(ls client-extensions)"
+
+	./gradlew clean deploy
+fi
+
+popd > /dev/null
+
+docker compose up --no-recreate 

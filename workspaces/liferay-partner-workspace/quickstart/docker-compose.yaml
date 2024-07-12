@@ -24,7 +24,7 @@ services:
             database:
                 condition: service_healthy
         env_file: liferay.env
-        image: liferay/dxp:2024.q2.3
+        image: liferay/dxp:2024.q2.4
         ports:
             - 8080:8080
         volumes:

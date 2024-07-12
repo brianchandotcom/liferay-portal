@@ -1,0 +1,7 @@
+:client-extensions:liferay-partner-custom-element
+:client-extensions:liferay-partner-etc-cron
+:client-extensions:liferay-partner-etc-spring-boot
+
+:client-extensions:liferay-partner-site-initializer-code
+
+:client-extensions:liferay-partner-site-initializer-quickstart

@@ -89,7 +89,8 @@ export default function ({
 
 			openSelectionModal({
 				iframeBodyCssClass: '',
-				onSelect: (selectedItem) => changeDDMTemplate(selectedItem),
+				onSelect: (selectedItem) =>
+					changeDDMTemplate(JSON.parse(selectedItem.value)),
 				selectEventName: namespaceId('preview'),
 				title: Liferay.Language.get('title'),
 				url: url.href,

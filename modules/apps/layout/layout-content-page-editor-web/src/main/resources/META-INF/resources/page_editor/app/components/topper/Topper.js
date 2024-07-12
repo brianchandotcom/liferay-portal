@@ -95,7 +95,7 @@ function TopperContent({
 	itemElement,
 }) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
-	const commentsPanelId = config.sidebarPanels?.comments?.sidebarPanelId;
+	const commentsPanelId = config.sidebarPanelsMap?.comments?.sidebarPanelId;
 	const dispatch = useDispatch();
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const hoverItem = useHoverItem();

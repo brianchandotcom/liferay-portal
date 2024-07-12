@@ -34,8 +34,7 @@ export function initializeConfig(backendConfig: Config) {
 	const syntheticItems: Partial<Config> = {
 		commonStyles: getCommonStyles(commonStyles),
 		commonStylesFields: getCommonStylesFields(commonStyles),
-		panels: generatePanels(sidebarPanels as SidebarPanel[]),
-		sidebarPanels: partitionPanels(sidebarPanels as SidebarPanel[]),
+		sidebarPanelsMap: generatePanels(sidebarPanels as SidebarPanel[]),
 		toolbarId,
 	};
 
@@ -46,22 +45,6 @@ export function initializeConfig(backendConfig: Config) {
 	};
 
 	return config;
-}
-
-function generatePanels(sidebarPanels: SidebarPanel[]): Config['panels'] {
-	return sidebarPanels.reduce<SidebarPanel['sidebarPanelId'][][]>(
-		(groups, panel) => {
-			if (isSeparator(panel)) {
-				groups.push([]);
-			}
-			else {
-				groups[groups.length - 1].push(panel.sidebarPanelId);
-			}
-
-			return groups;
-		},
-		[[]]
-	);
 }
 
 function getCommonStyles(commonStyles: Config['commonStyles']) {
@@ -93,26 +76,12 @@ function getCommonStylesFields(
 	return commonStylesFields;
 }
 
-function isSeparator(panel: SidebarPanel) {
-	return panel.sidebarPanelId === 'separator';
-}
+function generatePanels(sidebarPanels: SidebarPanel[]) {
+	const map: Record<string, SidebarPanel> = {};
 
-/**
- * Instead of using fake panels with an ID of `separator`, partition the panels
- * array into an array of arrays; we'll draw a separator between each group.
- */
-type PartitionedSidebarPanels = Record<
-	SidebarPanel['sidebarPanelId'],
-	SidebarPanel
->;
+	sidebarPanels.forEach((panel) => {
+		map[panel.sidebarPanelId] = panel;
+	});
 
-function partitionPanels(panels: SidebarPanel[]): PartitionedSidebarPanels {
-	return panels.reduce<PartitionedSidebarPanels>((map, panel) => {
-		const {sidebarPanelId} = panel;
-		if (!isSeparator(panel)) {
-			map[sidebarPanelId] = panel;
-		}
-
-		return map;
-	}, {});
+	return map;
 }

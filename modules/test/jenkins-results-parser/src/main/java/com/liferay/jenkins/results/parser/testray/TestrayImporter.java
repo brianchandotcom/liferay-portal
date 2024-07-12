@@ -1567,6 +1567,11 @@ public class TestrayImporter {
 		TestrayRoutine testrayRoutine = testrayProject.getTestrayRoutineByName(
 			testrayRoutineName);
 
+		if (testrayRoutine == null) {
+			testrayRoutine = testrayProject.createTestrayRoutine(
+				testrayRoutineName);
+		}
+
 		TestrayProductVersion testrayProductVersion =
 			testrayProject.getTestrayProductVersionByName(
 				testrayProductVersionName);

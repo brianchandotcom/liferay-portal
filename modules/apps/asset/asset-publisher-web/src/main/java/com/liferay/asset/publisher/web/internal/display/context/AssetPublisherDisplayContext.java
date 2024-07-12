@@ -2194,20 +2194,12 @@ public class AssetPublisherDisplayContext {
 		throws Exception {
 
 		if (isSelectionStyleManual()) {
-			List<AssetEntry> assetEntries =
-				_assetPublisherHelper.getAssetEntries(
-					_portletRequest, _portletPreferences,
-					_themeDisplay.getPermissionChecker(), getGroupIds(),
-					getAllAssetCategoryIds(), getAllAssetTagNames(), false,
-					isEnablePermissions());
-
-			return InfoPage.of(
-				ListUtil.subList(
-					assetEntries, searchContainer.getStart(),
-					searchContainer.getEnd()),
-				Pagination.of(
-					searchContainer.getEnd(), searchContainer.getStart()),
-				assetEntries.size());
+			return _assetPublisherHelper.getAssetEntries(
+				_portletRequest, _portletPreferences,
+				_themeDisplay.getPermissionChecker(), getGroupIds(),
+				getAllAssetCategoryIds(), getAllAssetTagNames(), false,
+				isEnablePermissions(), searchContainer.getStart(),
+				searchContainer.getEnd());
 		}
 
 		if (!isSelectionStyleAssetList()) {

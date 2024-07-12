@@ -1,0 +1,5 @@
+workspaces/liferay-partner-workspace/client-extensions/liferay-partner-custom-element
+workspaces/liferay-partner-workspace/client-extensions/liferay-partner-etc-cron
+workspaces/liferay-partner-workspace/client-extensions/liferay-partner-etc-spring-boot
+workspaces/liferay-partner-workspace/client-extensions/liferay-partner-site-initializer-code
+workspaces/liferay-partner-workspace/client-extensions/liferay-partner-site-initializer-quickstart

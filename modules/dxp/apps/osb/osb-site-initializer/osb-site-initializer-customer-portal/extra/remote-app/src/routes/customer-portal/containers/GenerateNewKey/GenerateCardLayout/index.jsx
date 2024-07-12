@@ -15,9 +15,10 @@ const GenerateCardLayout = ({
 	licenseEntryTypeName,
 	selectedKeyData,
 }) => {
-	const startDate = selectedKeyData?.selectedSubscription?.startDate;
 	const endDate = selectedKeyData?.selectedSubscription?.endDate;
+	const isComplimentaryKey = selectedKeyData?.selectedSubscription?.complimentary;
 	const licenseEndDate = getLicenseKeyEndDatesByLicenseType(selectedKeyData);
+	const startDate = selectedKeyData?.selectedSubscription?.startDate;
 
 	const formatDate = (
 		date,
@@ -36,7 +37,7 @@ const GenerateCardLayout = ({
 			return i18n.translate('not-applicable');
 		}
 
-		if (isRenew) {
+		if (!isComplimentaryKey && isRenew) {
 			return renewalDates;
 		}
 

@@ -369,7 +369,7 @@ definition {
 
 						AssertElementPresent(
 							key_cartItemSku = "MIN55861",
-							key_messageError = "The specified quantity is not a multiple of 0.5",
+							key_messageError = "The specified quantity is not a multiple of 1.5",
 							locator1 = "CommerceAccelerators#MINI_CART_ITEM_GENERIC_ERROR");
 
 						AssertElementPresent(
@@ -766,7 +766,7 @@ definition {
 
 						AssertTextEquals.assertPartialText(
 							locator1 = "Message#ERROR_DISMISSIBLE",
-							value1 = "The specified quantity is not a multiple of 0.5");
+							value1 = "The specified quantity is not a multiple of 1.5");
 
 						Click(
 							key_productName = "U-Joint",
@@ -1140,7 +1140,7 @@ definition {
 
 						AssertTextEquals.assertPartialText(
 							locator1 = "Message#ERROR_DISMISSIBLE",
-							value1 = "The specified quantity is not a multiple of 0.5");
+							value1 = "The specified quantity is not a multiple of 1.5");
 
 						Click(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD");
 					}

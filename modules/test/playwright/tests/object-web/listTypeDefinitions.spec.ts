@@ -5,6 +5,7 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
+import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
 import {listTypeDefinitionsPagesTest} from '../../fixtures/listTypeDefinitionsPagesTest';
@@ -14,6 +15,7 @@ import {siteSettingsPageTests} from '../../fixtures/siteSettingsPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(
+	accountSettingsPagesTest,
 	apiHelpersTest,
 	formsPagesTest,
 	listTypeDefinitionsPagesTest,
@@ -24,6 +26,7 @@ export const test = mergeTests(
 
 let customDefaultSiteLanguage: string;
 let siteLanguage: string;
+let userLanguage: string;
 
 const createdEntities = {
 	listTypeDefinitions: [],
@@ -33,34 +36,58 @@ const createdEntities = {
 	objectDefinitions: ObjectDefinition[];
 };
 
-test.afterEach(async ({apiHelpers, page, siteSettingsLocalizationPage}) => {
-	if (siteLanguage !== 'en') {
-		await page.goto('en');
-	}
-	if (customDefaultSiteLanguage) {
-		await page.goto('/');
-		await siteSettingsLocalizationPage.goto();
-		await siteSettingsLocalizationPage.selectDefaultLanguageOption();
-		await siteSettingsLocalizationPage.saveConfiguration();
-		customDefaultSiteLanguage = '';
-	}
+test.afterEach(
+	async ({
+		accountSettingsPage,
+		apiHelpers,
+		page,
+		siteSettingsLocalizationPage,
+	}) => {
+		for (const objectDefinition of createdEntities.objectDefinitions) {
+			await apiHelpers.objectAdmin.deleteObjectDefinition(
+				objectDefinition.id
+			);
+		}
 
-	for (const objectDefinition of createdEntities.objectDefinitions) {
-		await apiHelpers.objectAdmin.deleteObjectDefinition(
-			objectDefinition.id
-		);
+		createdEntities.objectDefinitions = [];
+
+		for (const listTypeDefinition of createdEntities.listTypeDefinitions) {
+			await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
+				listTypeDefinition.id
+			);
+		}
+
+		createdEntities.listTypeDefinitions = [];
+
+		if (siteLanguage !== 'en') {
+			await page.goto('en');
+
+			siteLanguage = 'en';
+		}
+
+		if (userLanguage === 'pt_BR') {
+			await page.goto('en');
+
+			await page.locator('button[data-qa-id="userPersonalMenu"]').click();
+
+			await page
+				.getByRole('menuitem', {name: 'Account Settings'})
+				.click();
+
+			await accountSettingsPage.selectAccountLanguage('en_US');
+
+			userLanguage = 'en_US';
+		}
+
+		if (customDefaultSiteLanguage) {
+			await page.goto('/');
+			await siteSettingsLocalizationPage.goto();
+			await siteSettingsLocalizationPage.selectDefaultLanguageOption();
+			await siteSettingsLocalizationPage.saveConfiguration();
+			customDefaultSiteLanguage = '';
+		}
 	}
-
-	createdEntities.objectDefinitions = [];
-
-	for (const listTypeDefinition of createdEntities.listTypeDefinitions) {
-		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
-			listTypeDefinition.id
-		);
-	}
-
-	createdEntities.listTypeDefinitions = [];
-});
+);
 
 test.describe('manage picklists inside the picklists portlet', () => {
 	test('can create a picklist', async ({
@@ -178,6 +205,81 @@ test.describe('manage picklists inside the picklists portlet', () => {
 });
 
 test.describe('ensure picklist translation', () => {
+	test('verify if translated picklist will be displayed on object admin', async ({
+		accountSettingsPage,
+		apiHelpers,
+		listTypeDefinitionPage,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+
+		// Create a picklist
+
+		const listTypeDefinition: ListTypeDefinition =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		createdEntities.listTypeDefinitions.push(listTypeDefinition);
+
+		const listTypeDefinitionName: string = listTypeDefinition.name;
+
+		// Translate picklist
+
+		await listTypeDefinitionPage.goto();
+
+		await listTypeDefinitionPage.translatePicklist(
+			listTypeDefinitionName,
+			'pt_BR'
+		);
+
+		// Create custom object with the picklist
+
+		const objectDefinition: ObjectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		createdEntities.objectDefinitions.push(objectDefinition);
+
+		await page.goto('/');
+
+		await page.locator('button[data-qa-id="userPersonalMenu"]').click();
+
+		await page.getByRole('menuitem', {name: 'Account Settings'}).click();
+
+		await accountSettingsPage.selectAccountLanguage('pt_BR');
+
+		userLanguage = 'pt_BR';
+
+		await page.waitForLoadState('networkidle');
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+			objectDefinition.label['en_US']
+		);
+
+		await page.getByRole('link', {name: 'Campos'}).click();
+
+		await page
+			.getByRole('button', {name: 'Adicionar campo de objeto'})
+			.click();
+
+		await page.getByText('Selecione uma opção').click();
+
+		await page
+			.getByRole('option', {exact: true, name: 'Lista de seleção'})
+			.click();
+
+		await page.getByLabel('Lista de seleção').click();
+
+		await expect(
+			page.getByRole('option', {
+				name: listTypeDefinitionName + ' translated',
+			})
+		).toBeVisible();
+	});
+
 	test('verify if translated picklist item will be displayed on forms', async ({
 		apiHelpers,
 		editObjectDetailsPage,

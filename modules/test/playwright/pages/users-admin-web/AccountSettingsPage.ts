@@ -11,6 +11,7 @@ export class AccountSettingsPage {
 	readonly rolesMenuItem: Locator;
 	readonly saveButton: Locator;
 	readonly userPersonalMenuButton: Locator;
+	readonly languageSelect: Locator;
 
 	constructor(page: Page) {
 		this.accountSettingsMenuItem = page.getByRole('menuitem', {
@@ -24,6 +25,7 @@ export class AccountSettingsPage {
 			name: 'Save',
 		});
 		this.userPersonalMenuButton = page.getByTestId('userPersonalMenu');
+		this.languageSelect = page.getByLabel('Language');
 	}
 
 	async goToAccountSettings() {
@@ -41,5 +43,10 @@ export class AccountSettingsPage {
 					resp.url().includes('screenNavigationEntryKey=roles')
 			),
 		]);
+	}
+
+	async selectAccountLanguage(option: string) {
+		await this.languageSelect.selectOption(option);
+		await this.saveButton.click();
 	}
 }

@@ -6,6 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 export class MDFRequestListPage {
+	readonly actionButton: Locator;
 	readonly activityAfterDateInput: Locator;
 	readonly activityBeforeDateInput: Locator;
 	readonly activityPartnerButton: Locator;
@@ -15,6 +16,7 @@ export class MDFRequestListPage {
 	readonly cleanSearch: Locator;
 	readonly clearAllFilters: Locator;
 	readonly completedTab: Locator;
+	readonly completeMenuItem: Locator;
 	readonly exportRequestButton: Locator;
 	readonly filterButton: Locator;
 	readonly mdfRequestHeading: Locator;
@@ -25,6 +27,7 @@ export class MDFRequestListPage {
 	readonly searchInput: Locator;
 
 	constructor(page: Page) {
+		this.actionButton = page.getByRole('cell', { name: 'Action Button' }).first();
 		this.activityAfterDateInput = page
 			.locator('div')
 			.filter({hasText: /^Activity Date On Or After$/})
@@ -47,6 +50,7 @@ export class MDFRequestListPage {
 			exact: true,
 			name: 'Completed',
 		});
+		this.completeMenuItem = page.getByRole('menuitem', { name: 'Complete' });
 		this.exportRequestButton = page.getByRole('link', {
 			name: 'Export MDF Report',
 		});
@@ -62,7 +66,7 @@ export class MDFRequestListPage {
 		this.page = page;
 		this.searchInput = page.getByPlaceholder('Search');
 	}
-
+	
 	async createNewMDFRequestButton() {
 		await this.newRequestButton.click();
 	}

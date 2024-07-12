@@ -81,10 +81,8 @@ export class MDFRequestFormPage {
 	}
 
 	async statusDropDownOption(option: string) {
-		const statusOption = await this.page.getByRole('menuitem', {
+		await this.page.getByRole('menuitem', {
 			name: option,
-		});
-
-		statusOption.click();
+		}).click();
 	}
 }

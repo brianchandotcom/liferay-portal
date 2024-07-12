@@ -176,6 +176,20 @@ export class JournalEditArticlePage {
 		await this.page.getByRole('menuitem', {name: assetType}).click();
 	}
 
+	async selectSpecificDisplayPage(name: string) {
+		await this.openFieldSet('Display Page', 'displayPage');
+		await this.page
+			.getByLabel('Select Display Page Type')
+			.selectOption('Specific');
+		await this.page
+			.getByRole('button', {name: 'Select Display Page'})
+			.click();
+		const selectDisplayPageModal = await this.page.frameLocator(
+			'iframe[title*="Select Display Page"]'
+		);
+		await selectDisplayPageModal.getByLabel('Select ' + name).click();
+	}
+
 	async scheduleArticle(
 		title: string,
 		publishDate: string,

@@ -25,13 +25,16 @@ exports[`CompositionLegend should render 1`] = `
       </div>
       <div
         class="legend-template-column justify-content-end"
+        data-testid="active-count"
       >
         25
       </div>
       <div
         class="legend-template-column justify-content-end"
       >
-        <b>
+        <b
+          data-testid="active-porcentage"
+        >
           25%
         </b>
       </div>
@@ -56,13 +59,16 @@ exports[`CompositionLegend should render 1`] = `
       </div>
       <div
         class="legend-template-column justify-content-end"
+        data-testid="active-count"
       >
         75
       </div>
       <div
         class="legend-template-column justify-content-end"
       >
-        <b>
+        <b
+          data-testid="active-porcentage"
+        >
           75%
         </b>
       </div>

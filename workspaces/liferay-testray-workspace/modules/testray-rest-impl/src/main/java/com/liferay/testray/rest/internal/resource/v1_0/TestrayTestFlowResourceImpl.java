@@ -17,18 +17,30 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.security.auth.FullNameGenerator;
+import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.testray.rest.dto.v1_0.TestraySubtask;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestFlow;
 import com.liferay.testray.rest.internal.util.TestrayUtil;
 import com.liferay.testray.rest.resource.v1_0.TestrayTestFlowResource;
 
 import java.io.Serializable;
 
+import java.net.URI;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +57,217 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class TestrayTestFlowResourceImpl
 	extends BaseTestrayTestFlowResourceImpl {
+
+	@Override
+	public Page<TestraySubtask> getTestrayTestFlowTestraySubtaskPage(
+			String error, String issues, String name, Boolean noIssues,
+			String status, String testrayComponentIds, Long testrayTaskId,
+			String testrayTeamIds, String testrayUserId, Pagination pagination)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(65);
+
+		sb.append("select * from ( select count( ");
+		sb.append("cr.r_subtaskToCaseResults_c_subtaskId) as ");
+		sb.append("caseResultAmount, s.c_subtaskId_, s.dueStatus_, s.errors_,");
+		sb.append("s.issues_, s.score_, s.name_, null as firstName, null as ");
+		sb.append("userId, null as lastName, null as middleName, null as ");
+		sb.append("uuid_, null as portraitId, ta.c_taskId_ from ");
+		sb.append("O_[%COMPANY_ID%]_CaseResult cr, ");
+		sb.append("O_[%COMPANY_ID%]_Component c, O_[%COMPANY_ID%]_Team t, ");
+		sb.append("O_[%COMPANY_ID%]_Task ta, O_[%COMPANY_ID%]_Subtask s  ");
+		sb.append("where cr.r_componentToCaseResult_c_componentId = ");
+		sb.append("c.c_componentId_ and c.r_teamToComponents_c_teamId = ");
+		sb.append("t.c_teamId_ and cr.r_subtaskToCaseResults_c_subtaskId = ");
+		sb.append("s.c_subtaskId_ and s.dueStatus_ <> 'merged' and ");
+		sb.append("s.r_userToSubtasks_userId = 0 and ta.c_taskId_ = ");
+		sb.append("s.r_taskToSubtasks_c_taskId ");
+
+		List<Object> params = new ArrayList<>();
+
+		if (Validator.isNotNull(error)) {
+			sb.append("and s.errors_ like ? ");
+			params.add("%" + error + "%");
+		}
+
+		if (Validator.isNotNull(issues)) {
+			sb.append("and s.issues_ like ? ");
+			params.add("%" + issues + "%");
+		}
+
+		if (Validator.isNotNull(name)) {
+			sb.append("and s.name_ = ? ");
+			params.add(name);
+		}
+
+		if (noIssues != null) {
+			sb.append("and (s.issues_ is null or s.issues_ = '') ");
+		}
+
+		if (Validator.isNotNull(status)) {
+			sb.append("and s.dueStatus_ in (");
+			sb.append(TestrayUtil.interpolateParams(params, status));
+			sb.append(") ");
+		}
+
+		if (Validator.isNotNull(testrayComponentIds)) {
+			sb.append("and c.c_componentId_ in (");
+			sb.append(
+				TestrayUtil.interpolateParams(params, testrayComponentIds));
+			sb.append(") ");
+		}
+
+		if (Validator.isNotNull(testrayTaskId)) {
+			sb.append("and ta.c_taskId_ = ? ");
+			params.add(testrayTaskId);
+		}
+
+		if (Validator.isNotNull(testrayTeamIds)) {
+			sb.append("and t.c_teamId_ in (");
+			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
+			sb.append(") ");
+		}
+
+		if (Validator.isNotNull(testrayUserId)) {
+			sb.append("and s.r_userToSubtasks_userId = ? ");
+			params.add(testrayUserId);
+		}
+
+		sb.append("group by s.c_subtaskId_, s.dueStatus_, s.errors_, ");
+		sb.append("s.issues_, s.score_, s.name_ union all select ");
+		sb.append("count(cr.r_subtaskToCaseResults_c_subtaskId) as ");
+		sb.append("caseResultAmount, s.c_subtaskId_, s.dueStatus_, ");
+		sb.append("s.errors_, s.issues_, s.score_, s.name_, u.firstName, ");
+		sb.append("u.userId, u.lastName, u.middleName, u.uuid_, ");
+		sb.append("u.portraitId, ta.c_taskId_ from ");
+		sb.append("O_[%COMPANY_ID%]_CaseResult cr, ");
+		sb.append("O_[%COMPANY_ID%]_Component c, O_[%COMPANY_ID%]_Team t, ");
+		sb.append("O_[%COMPANY_ID%]_Task ta, O_[%COMPANY_ID%]_Subtask s, ");
+		sb.append("User_ u where cr.r_componentToCaseResult_c_componentId = ");
+		sb.append("c.c_componentId_ and c.r_teamToComponents_c_teamId = ");
+		sb.append("t.c_teamId_ and cr.r_subtaskToCaseResults_c_subtaskId = ");
+		sb.append("s.c_subtaskId_ and s.dueStatus_ <> 'merged' and ");
+		sb.append("ta.c_taskId_ = s.r_taskToSubtasks_c_taskId and u.userId = ");
+		sb.append("s.r_userToSubtasks_userId ");
+
+		if (Validator.isNotNull(error)) {
+			sb.append("and s.errors_ like ? ");
+			params.add("%" + error + "%");
+		}
+
+		if (Validator.isNotNull(issues)) {
+			sb.append("and s.issues_ like ? ");
+			params.add("%" + issues + "%");
+		}
+
+		if (Validator.isNotNull(name)) {
+			sb.append("and s.name_ = ? ");
+			params.add(name);
+		}
+
+		if (noIssues != null) {
+			sb.append("and (s.issues_ is null or s.issues_ = '') ");
+		}
+
+		if (Validator.isNotNull(status)) {
+			sb.append("and s.dueStatus_ in (");
+			sb.append(TestrayUtil.interpolateParams(params, status));
+			sb.append(") ");
+		}
+
+		if (Validator.isNotNull(testrayComponentIds)) {
+			sb.append("and c.c_componentId_ in (");
+			sb.append(
+				TestrayUtil.interpolateParams(params, testrayComponentIds));
+			sb.append(") ");
+		}
+
+		if (Validator.isNotNull(testrayTaskId)) {
+			sb.append("and ta.c_taskId_ = ? ");
+			params.add(testrayTaskId);
+		}
+
+		if (Validator.isNotNull(testrayTeamIds)) {
+			sb.append("and t.c_teamId_ in (");
+			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
+			sb.append(") ");
+		}
+
+		if (Validator.isNotNull(testrayUserId)) {
+			sb.append("and s.r_userToSubtasks_userId = ? ");
+			params.add(testrayUserId);
+		}
+
+		sb.append("group by s.c_subtaskId_, s.dueStatus_, s.errors_, ");
+		sb.append("s.issues_, s.score_, s.name_, u.firstName, u.lastName, ");
+		sb.append("u.middleName, u.userId, u.uuid_, u.portraitId ) as ");
+		sb.append("subtasks order by c_subtaskId_ asc ");
+
+		String sql = StringUtil.replace(
+			sb.toString(), "[%COMPANY_ID%]",
+			String.valueOf(contextCompany.getCompanyId()));
+
+		long totalCount = TestrayUtil.getTotalCount(sql, params);
+
+		sql += " limit ? offset ?";
+
+		params.add(pagination.getPageSize());
+		params.add(pagination.getStartPosition());
+
+		List<Map<String, Object>> values = TestrayUtil.executeQuery(
+			sql, params);
+
+		return Page.of(
+			transform(
+				values,
+				value -> new TestraySubtask() {
+					{
+						actions = _getActions(value);
+						caseResultAmount = GetterUtil.getLong(
+							value.get("caseResultAmount"));
+						error = GetterUtil.getString(value.get("errors_"));
+						id = GetterUtil.getLong(value.get("c_subtaskId_"));
+						issues = GetterUtil.getString(value.get("issues_"));
+						name = GetterUtil.getString(value.get("name_"));
+						score = GetterUtil.getLong(value.get("score_"));
+						status = GetterUtil.getString(value.get("dueStatus_"));
+						testrayTaskId = GetterUtil.getLong(
+							value.get("c_taskId_"));
+						userId = GetterUtil.getLong(value.get("userId"));
+
+						setUserName(
+							() -> {
+								FullNameGenerator fullNameGenerator =
+									FullNameGeneratorFactory.getInstance();
+
+								return fullNameGenerator.getFullName(
+									GetterUtil.getString(
+										value.get("firstName")),
+									GetterUtil.getString(
+										value.get("middleName")),
+									GetterUtil.getString(
+										value.get("lastName")));
+							});
+
+						setUserPortraitUrl(
+							() -> {
+								long portraitId = GetterUtil.getLong(
+									value.get("portraitId"));
+
+								if ((portraitId == 0) ||
+									(value.get("portraitId") == null)) {
+
+									return null;
+								}
+
+								return UserConstants.getPortraitURL(
+									"/image", true, portraitId,
+									GetterUtil.getString(value.get("uuid_")));
+							});
+					}
+				}),
+			pagination, totalCount);
+	}
 
 	@Override
 	public TestrayTestFlow postTestrayTestFlow(Long testrayTaskId)
@@ -181,6 +404,57 @@ public class TestrayTestFlowResourceImpl
 		return testrayTestFlow;
 	}
 
+	private Map<String, Map<String, String>> _getActions(
+		Map<String, Object> value) {
+
+		try {
+			if (!ArrayUtil.contains(
+					contextUser.getRoleIds(),
+					_roleLocalService.getRole(
+						contextUser.getCompanyId(), "Testray Administrator"
+					).getRoleId()) &&
+				!ArrayUtil.contains(
+					contextUser.getRoleIds(),
+					_roleLocalService.getRole(
+						contextUser.getCompanyId(), "Testray Analyst"
+					).getRoleId()) &&
+				!ArrayUtil.contains(
+					contextUser.getRoleIds(),
+					_roleLocalService.getRole(
+						contextUser.getCompanyId(), "Testray Lead"
+					).getRoleId())) {
+
+				return null;
+			}
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+
+		URI baseURI = contextUriInfo.getBaseUri();
+
+		String href =
+			baseURI.getScheme() + "://" + baseURI.getAuthority() +
+				"/o/c/subtasks/" + value.get("c_subtaskId_");
+
+		return new HashMap<>(
+			HashMapBuilder.put(
+				"delete",
+				HashMapBuilder.put(
+					"href", href
+				).put(
+					"method", "DELETE"
+				).build()
+			).put(
+				"update",
+				HashMapBuilder.put(
+					"href", href
+				).put(
+					"method", "PUT"
+				).build()
+			).build());
+	}
+
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
 	)
@@ -191,6 +465,9 @@ public class TestrayTestFlowResourceImpl
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

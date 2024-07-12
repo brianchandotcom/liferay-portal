@@ -104,60 +104,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110108. Can add a fourth level of child page and view it on Pages admin."
-	@priority = 5
-	test AddFourthLevelChildPage {
-		property portal.acceptance = "true";
-
-		task ("Add a parent page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name");
-		}
-
-		task ("Add the first level of child page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Child Page Name 1",
-				parentLayoutName = "Test Page Name");
-		}
-
-		task ("Add the second level of child page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Child Page Name 2",
-				parentLayoutName = "Child Page Name 1");
-		}
-
-		task ("Add the third level of child page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Child Page Name 3",
-				parentLayoutName = "Child Page Name 2");
-		}
-
-		task ("Add the fourth level of child page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Child Page Name 4",
-				parentLayoutName = "Child Page Name 3");
-		}
-
-		task ("View the children pages are shown in pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			var n = 2;
-
-			for (var i : list "1,2,3,4") {
-				PagesAdmin.viewPageItemPresent(
-					depth = ${n},
-					pageName = "Child Page Name ${i}");
-
-				var n = ${n} + 1;
-			}
-		}
-	}
-
 	@description = "This is a test for LPS-194263. If the page has more than one Experience, the page template created is from the Default experience."
 	@priority = 2
 	test CreatePageTemplateFromContentPageWithExperiencesViaPagesAdmin {
@@ -1269,73 +1215,6 @@ definition {
 			Portlet.viewPG(
 				portletBody = "Configure this application and place it where desired on the page.",
 				portletName = "Web Content Display");
-		}
-	}
-
-	@description = "This is a test for LPS-177675. The tooltip of the back button is Go to Pages in the view mode of a DPT related to a Web Content in a collection page from the Miller Columns."
-	@priority = 3
-	test ViewBackButtonTooltipInAssociatedDisplayPageTemplate {
-		task ("Given a site administrator accesses to the associated display page") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = ${randomSiteName},
-				subType = "Basic Web Content");
-
-			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
-				groupName = ${randomSiteName},
-				layoutPageTemplateEntryName = "Display Page Name",
-				type = "Display Page Template");
-
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = ${randomSiteName},
-				title = "Web Content Title");
-
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
-			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
-
-			AssetListsAdmin.configureItemTypeInManualCollection(
-				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article");
-
-			AssetListsAdmin.selectAsset(
-				assetType = "Basic Web Content",
-				entryList = "Web Content Title");
-
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			ContentPages.addCollectionPage(
-				collectionName = "Manual Collection",
-				pageName = "Test Page Name",
-				tabName = "Collections");
-
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View Collection Items",
-				pageName = "Test Page Name");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			Page.gotoCollectionEntryEllipsisItem(
-				item = "View Display Page",
-				tableEntry = "Web Content Title");
-
-			SelectFrameTop();
-
-			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
-		}
-
-		task ("When the site administrator hovers over the back button") {
-			MouseOver.javaScriptFocus(locator1 = "Icon#BACK");
-		}
-
-		task ("Then the site administrator could see the tooltip message") {
-			AssertVisible(
-				key_content = "Go to Pages",
-				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 	}
 

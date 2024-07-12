@@ -52,6 +52,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectFolderResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -151,13 +152,14 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 			_objectEntryLocalService, _objectEntryManager,
 			_objectFieldLocalService, _objectFieldResourceFactory,
-			_objectRelationshipLocalService, _objectRelationshipResourceFactory,
-			_organizationLocalService, _organizationResourceFactory,
-			_ploEntryLocalService, _portal, _portletPreferencesLocalService,
-			_resourceActionLocalService, _resourcePermissionLocalService,
-			_roleLocalService, _sapEntryLocalService,
-			_segmentsEntryLocalService, _segmentsExperienceLocalService,
-			_archivedSettingsFactory, _siteNavigationMenuItemLocalService,
+			_objectfolderResourceFactory, _objectRelationshipLocalService,
+			_objectRelationshipResourceFactory, _organizationLocalService,
+			_organizationResourceFactory, _ploEntryLocalService, _portal,
+			_portletPreferencesLocalService, _resourceActionLocalService,
+			_resourcePermissionLocalService, _roleLocalService,
+			_sapEntryLocalService, _segmentsEntryLocalService,
+			_segmentsExperienceLocalService, _archivedSettingsFactory,
+			_siteNavigationMenuItemLocalService,
 			_siteNavigationMenuItemTypeRegistry,
 			_siteNavigationMenuLocalService,
 			_structuredContentFolderResourceFactory,
@@ -355,6 +357,9 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 
 	@Reference
 	private ObjectFieldResource.Factory _objectFieldResourceFactory;
+
+	@Reference
+	private ObjectFolderResource.Factory _objectfolderResourceFactory;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

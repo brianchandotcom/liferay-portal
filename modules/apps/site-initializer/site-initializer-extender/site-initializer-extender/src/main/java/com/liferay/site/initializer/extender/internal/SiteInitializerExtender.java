@@ -52,6 +52,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectFolderResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -167,7 +168,7 @@ public class SiteInitializerExtender
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectEntryLocalService, _objectEntryManager,
 				_objectFieldLocalService, _objectFieldResourceFactory,
-				_objectRelationshipLocalService,
+				_objectFolderResourceFactory, _objectRelationshipLocalService,
 				_objectRelationshipResourceFactory, _organizationLocalService,
 				_organizationResourceFactory, _ploEntryLocalService, _portal,
 				_portletPreferencesLocalService, _resourceActionLocalService,
@@ -292,7 +293,7 @@ public class SiteInitializerExtender
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectEntryLocalService, _objectEntryManager,
 				_objectFieldLocalService, _objectFieldResourceFactory,
-				_objectRelationshipLocalService,
+				_objectFolderResourceFactory, _objectRelationshipLocalService,
 				_objectRelationshipResourceFactory, _organizationLocalService,
 				_organizationResourceFactory, _ploEntryLocalService, _portal,
 				_portletPreferencesLocalService, _resourceActionLocalService,
@@ -499,6 +500,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private ObjectFieldResource.Factory _objectFieldResourceFactory;
+
+	@Reference
+	private ObjectFolderResource.Factory _objectFolderResourceFactory;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

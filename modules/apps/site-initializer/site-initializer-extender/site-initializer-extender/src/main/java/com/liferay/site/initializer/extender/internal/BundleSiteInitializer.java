@@ -108,10 +108,12 @@ import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectFolder;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectFolderResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -310,6 +312,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ObjectEntryManager objectEntryManager,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFieldResource.Factory objectFieldResourceFactory,
+		ObjectFolderResource.Factory objectFolderResourceFactory,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
 		OrganizationLocalService organizationLocalService,
@@ -402,6 +405,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectEntryManager = objectEntryManager;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectFieldResourceFactory = objectFieldResourceFactory;
+		_objectFolderResourceFactory = objectFolderResourceFactory;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectRelationshipResourceFactory = objectRelationshipResourceFactory;
 		_organizationLocalService = organizationLocalService;
@@ -3336,6 +3340,42 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addOrUpdateObjectFolders(ServiceContext serviceContext)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/object-folders");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		ObjectFolderResource.Builder objectFoldResourceBuilder =
+			_objectFolderResourceFactory.create();
+
+		ObjectFolderResource objectFolderResource =
+			objectFoldResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		for (String resourcePath : resourcePaths) {
+			String json = SiteInitializerUtil.read(
+				resourcePath, _servletContext);
+
+			ObjectFolder objectFolder = ObjectFolder.toDTO(json);
+
+			if (objectFolder == null) {
+				_log.error(
+					"Unable to transform object folder from JSON: " + json);
+
+				continue;
+			}
+
+			objectFolderResource.putObjectFolderByExternalReferenceCode(
+				objectFolder.getExternalReferenceCode(), objectFolder);
+		}
+	}
+
 	private void _addOrUpdateObjectRelationships(
 			ServiceContext serviceContext,
 			Map<String, String> stringUtilReplaceValues)
@@ -5027,6 +5067,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"addOrUpdateObjectFields",
 			() -> _addOrUpdateObjectFields(
 				serviceContext, stringUtilReplaceValues));
+		R addOrUpdateObjectFoldersR = new R(
+			"addOrUpdateObjectFolders",
+			() -> _addOrUpdateObjectFolders(serviceContext));
 		R addOrUpdateObjectRelationshipsR = new R(
 			"addOrUpdateObjectRelationships",
 			() -> _addOrUpdateObjectRelationships(
@@ -5134,7 +5177,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateSXPBlueprintR)
 		).put(
 			addObjectDefinitionsR,
-			_dependsOn(addOrUpdateListTypeDefinitionsR, addUserAccountsR)
+			_dependsOn(
+				addOrUpdateListTypeDefinitionsR, addOrUpdateObjectFoldersR,
+				addUserAccountsR)
 		).put(
 			addOrUpdateAccountEntryRestrictionsR,
 			_dependsOn(publishObjectDefinitionsR)
@@ -5188,6 +5233,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).put(
 			addOrUpdateObjectFieldsR,
 			_dependsOn(addOrUpdateObjectRelationshipsR)
+		).put(
+			addOrUpdateObjectFoldersR, _dependsOn()
 		).put(
 			addOrUpdateObjectRelationshipsR, _dependsOn(addObjectDefinitionsR)
 		).put(
@@ -5908,6 +5955,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ObjectEntryManager _objectEntryManager;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectFieldResource.Factory _objectFieldResourceFactory;
+	private final ObjectFolderResource.Factory _objectFolderResourceFactory;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final ObjectRelationshipResource.Factory

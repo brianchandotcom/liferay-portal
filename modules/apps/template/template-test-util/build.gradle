@@ -3,6 +3,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:info:info-api")
+	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
 	compileOnly project(":apps:template:template-api")
 	compileOnly project(":core:petra:petra-string")
 }

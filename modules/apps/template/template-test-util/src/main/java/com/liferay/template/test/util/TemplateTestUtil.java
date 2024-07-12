@@ -8,9 +8,12 @@ package com.liferay.template.test.util;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -20,6 +23,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalServiceUtil;
@@ -114,6 +118,31 @@ public class TemplateTestUtil {
 			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			ddmTemplate.getTemplateId(), infoItemClassName,
 			infoItemFormVariationKey, serviceContext);
+	}
+
+	public static InfoField addTemplateEntryInfoField(
+			String fieldName, String infoItemClassName,
+			String infoItemFormVariationKey,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		TemplateEntry templateEntry = addTemplateEntry(
+			infoItemClassName, infoItemFormVariationKey,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			getSampleScriptFTL(fieldName), serviceContext);
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			(InfoItemFormProvider<?>)
+				infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemFormProvider.class, infoItemClassName);
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			infoItemFormVariationKey, serviceContext.getScopeGroupId());
+
+		return infoForm.getInfoField(
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				templateEntry.getTemplateEntryId());
 	}
 
 	public static InfoItemFormVariation getFirstInfoItemFormVariation(

@@ -23,6 +23,45 @@ export function getMinQuantity(
 	);
 }
 
+export function getMultiple(
+	incrementalOrderQuantity = 1,
+	multipleQuantity = 1,
+	precision = 0
+) {
+	let precisionAdjustment = 0;
+
+	if (!Number.isInteger(incrementalOrderQuantity)) {
+		precisionAdjustment = incrementalOrderQuantity
+			.toString()
+			.split('.')[1].length;
+	}
+
+	if (!Number.isInteger(multipleQuantity)) {
+		const multipleAdjustment = multipleQuantity
+			.toString()
+			.split('.')[1].length;
+		precisionAdjustment = Math.max(precisionAdjustment, multipleAdjustment);
+	}
+
+	if (precisionAdjustment > 0) {
+		const scale = Math.pow(10, precisionAdjustment);
+		incrementalOrderQuantity *= scale;
+		multipleQuantity *= scale;
+	}
+
+	const small = Math.min(incrementalOrderQuantity, multipleQuantity);
+	const large = Math.max(incrementalOrderQuantity, multipleQuantity);
+
+	let multiple = large;
+	while (multiple % small !== 0) {
+		multiple += large;
+	}
+
+	const result = multiple / Math.pow(10, precisionAdjustment);
+
+	return Number(result.toFixed(precision));
+}
+
 export function getProductMaxQuantity(
 	maxQuantity,
 	multipleQuantity = 1,

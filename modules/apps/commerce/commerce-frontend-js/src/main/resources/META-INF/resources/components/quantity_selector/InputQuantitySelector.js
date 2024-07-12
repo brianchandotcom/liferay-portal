@@ -12,6 +12,7 @@ import React, {forwardRef, useEffect, useRef, useState} from 'react';
 import {CP_UNIT_OF_MEASURE_SELECTOR_CHANGED} from '../../utilities/eventsDefinitions';
 import {
 	getMinQuantity,
+	getMultiple,
 	getNumberOfDecimals,
 	getProductMaxQuantity,
 	isMultiple,
@@ -75,7 +76,11 @@ const InputQuantitySelector = forwardRef(
 				: getMinQuantity(Math.ceil(min), Math.ceil(step)),
 			quantity,
 			step: unitOfMeasure
-				? unitOfMeasure.incrementalOrderQuantity
+				? getMultiple(
+						unitOfMeasure.incrementalOrderQuantity,
+						step,
+						unitOfMeasure.precision
+					)
 				: Math.ceil(step),
 		});
 		const [showPopover, setShowPopover] = useState(false);
@@ -85,7 +90,11 @@ const InputQuantitySelector = forwardRef(
 				unitOfMeasure ? min : Math.ceil(min),
 				unitOfMeasure ? max : Math.ceil(max),
 				unitOfMeasure
-					? unitOfMeasure.incrementalOrderQuantity
+					? getMultiple(
+							unitOfMeasure.incrementalOrderQuantity,
+							step,
+							unitOfMeasure.precision
+						)
 					: Math.ceil(step)
 			)
 		);
@@ -146,7 +155,14 @@ const InputQuantitySelector = forwardRef(
 					min,
 					precision: unitOfMeasure.precision,
 					quantity,
-					step: unitOfMeasure.incrementalOrderQuantity,
+					step:
+						unitOfMeasure.incrementalOrderQuantity === step
+							? unitOfMeasure.incrementalOrderQuantity
+							: getMultiple(
+									unitOfMeasure.incrementalOrderQuantity,
+									step,
+									unitOfMeasure.precision
+								),
 					unitOfMeasure,
 				});
 			}

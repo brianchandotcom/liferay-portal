@@ -77,13 +77,16 @@ exports[`CompositionCard should render 1`] = `
             </div>
             <div
               class="legend-template-column justify-content-end"
+              data-testid="active-count"
             >
               20
             </div>
             <div
               class="legend-template-column justify-content-end"
             >
-              <b>
+              <b
+                data-testid="active-porcentage"
+              >
                 20%
               </b>
             </div>
@@ -108,13 +111,16 @@ exports[`CompositionCard should render 1`] = `
             </div>
             <div
               class="legend-template-column justify-content-end"
+              data-testid="active-count"
             >
               50
             </div>
             <div
               class="legend-template-column justify-content-end"
             >
-              <b>
+              <b
+                data-testid="active-porcentage"
+              >
                 50%
               </b>
             </div>

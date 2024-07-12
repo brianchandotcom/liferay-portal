@@ -16,6 +16,8 @@ import {createChannel, switchChannel} from './utils/channel';
 import {goToDistributionTabAndSelectAttribute} from './utils/distribution';
 import {changeEventDisplayName} from './utils/event-definitions';
 import {createIndividuals} from './utils/individuals';
+import {waitForLoading} from './utils/loading';
+import {Nanites, runNanites} from './utils/nanites';
 import {
 	navigateTo,
 	navigateToACSitesPageViaURL,
@@ -34,14 +36,12 @@ import {
 	selectOperator,
 	setSegmentName,
 } from './utils/segments';
+import {SegmentConditions} from './utils/selectors';
 import {
 	searchByTerm,
 	viewNameNotPresentOnTableList,
 	viewNameOnTableList,
 } from './utils/utils';
-import {runNanites, Nanites} from './utils/nanites';
-import {SegmentConditions} from './utils/selectors';
-import {waitForLoading} from './utils/loading';
 
 export const test = mergeTests(
 	apiHelpersTest,

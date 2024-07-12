@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.Locale;
@@ -80,16 +81,19 @@ public class RichTextObjectFieldBusinessType
 			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
+		Object value = ObjectFieldBusinessType.super.getValue(
+			objectField, userId, values);
+
+		if (Validator.isNull(value)) {
+			return value;
+		}
+
 		ObjectDefinition objectDefinition = objectField.getObjectDefinition();
 
 		return SanitizerUtil.sanitize(
 			objectField.getCompanyId(), 0, objectField.getUserId(),
 			objectDefinition.getClassName(), 0, ContentTypes.TEXT_HTML,
-			Sanitizer.MODE_ALL,
-			String.valueOf(
-				ObjectFieldBusinessType.super.getValue(
-					objectField, userId, values)),
-			null);
+			Sanitizer.MODE_ALL, String.valueOf(value), null);
 	}
 
 	@Reference

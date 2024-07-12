@@ -199,7 +199,7 @@ export interface Config {
 		styleBookEntryId: string;
 	}>;
 	stylebookEntryId: string;
-	themeColorCssClasses: string[];
+	themeColorsCssClasses: string[];
 	toolbarId: string;
 
 	toolbarPlugins: Array<{

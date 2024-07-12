@@ -1,7 +1,6 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.acceptance = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";

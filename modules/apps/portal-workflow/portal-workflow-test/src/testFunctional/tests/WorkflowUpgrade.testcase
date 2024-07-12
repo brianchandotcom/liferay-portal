@@ -1,7 +1,6 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "true";
 	property test.liferay.virtual.instance = "false";
 	property test.run.type = "single";
@@ -60,7 +59,6 @@ definition {
 	@priority = 5
 	test SubmitAndApproveWorkflowBlogAfterUpgrade72101 {
 		property data.archive.type = "data-archive-portal";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		ValidateWorkflowUpgrade.submitNewWorkflow();
@@ -69,7 +67,6 @@ definition {
 	@priority = 5
 	test SubmitAndApproveWorkflowBlogAfterUpgrade73101 {
 		property data.archive.type = "data-archive-workflow";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10.1";
 
 		ValidateWorkflowUpgrade.submitNewWorkflow();
@@ -78,7 +75,6 @@ definition {
 	@priority = 5
 	test SubmitAndApproveWorkflowBlogAfterUpgrade621015 {
 		property data.archive.type = "data-archive-portal";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.15";
 
 		ValidateWorkflowUpgrade.submitNewWorkflow();
@@ -87,7 +83,6 @@ definition {
 	@priority = 5
 	test SubmitAndApproveWorkflowBlogAfterUpgrade621021 {
 		property data.archive.type = "data-archive-portal";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
 
 		ValidateWorkflowUpgrade.submitNewWorkflow();
@@ -118,7 +113,6 @@ definition {
 	@priority = 5
 	test ViewAndApproveWorkflowBlogsAfterUpgrade7110 {
 		property data.archive.type = "data-archive-workflow";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.1.10";
 
 		ValidateWorkflowUpgrade.approveBlogsWorkflow();
@@ -127,7 +121,6 @@ definition {
 	@priority = 5
 	test ViewAndApproveWorkflowBlogsAfterUpgrade70106 {
 		property data.archive.type = "data-archive-workflow";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.0.10.6";
 
 		ValidateWorkflowUpgrade.approveWebContentWorkflow();
@@ -138,7 +131,6 @@ definition {
 	@priority = 5
 	test ViewAndApproveWorkflowBlogsAfterUpgrade72101 {
 		property data.archive.type = "data-archive-workflow";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.2.10.1";
 
 		ValidateWorkflowUpgrade.approveBlogsWorkflow();
@@ -147,7 +139,6 @@ definition {
 	@priority = 5
 	test ViewAndApproveWorkflowBlogsAfterUpgrade73101 {
 		property data.archive.type = "data-archive-workflow";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "7.3.10.1";
 
 		ValidateWorkflowUpgrade.approveBlogsWorkflow();
@@ -156,7 +147,6 @@ definition {
 	@priority = 5
 	test ViewAndApproveWorkflowBlogsAfterUpgrade621015 {
 		property data.archive.type = "data-archive-workflow";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.15";
 
 		ValidateWorkflowUpgrade.approveWebContentWorkflow();
@@ -167,7 +157,6 @@ definition {
 	@priority = 5
 	test ViewAndApproveWorkflowBlogsAfterUpgrade621021 {
 		property data.archive.type = "data-archive-workflow";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
 
 		ValidateWorkflowUpgrade.approveWebContentWorkflow();

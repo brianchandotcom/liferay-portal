@@ -18,7 +18,6 @@ definition {
 	@priority = 5
 	test CreateNewSpecificationOptions {
 		property environment.acceptance = "true";
-		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
@@ -55,7 +54,6 @@ definition {
 	@priority = 3
 	test PublishSimpleProduct {
 		property environment.acceptance = "true";
-		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(

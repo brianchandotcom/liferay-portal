@@ -1258,11 +1258,8 @@ definition {
 	@description = "This is a use case for LPS-90078."
 	@priority = 4
 	test ModifyPaginationPortalProperties {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "search.container.page.default.delta=1";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property environment.acceptance = "true";
-		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(

@@ -31,11 +31,8 @@ definition {
 
 	@priority = 3
 	test ActivateDeactivateRemoteStagingInOnePortal {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunneling.servlet.shared.secret=1234567890123456";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property environment.acceptance = "true";
-		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

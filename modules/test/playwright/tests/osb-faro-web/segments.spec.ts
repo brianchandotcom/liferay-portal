@@ -41,6 +41,7 @@ import {
 } from './utils/utils';
 import {runNanites, Nanites} from './utils/nanites';
 import {SegmentConditions} from './utils/selectors';
+import {waitForLoading} from './utils/loading';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -584,6 +585,12 @@ test('Segment Composition shows Active and Known individuals', async ({
 			page,
 			pageName: dynamicSegmentName,
 		});
+	});
+
+	await test.step('Reload the segment page to clear the cache', async () => {
+		await page.reload();
+
+		await waitForLoading(page);
 	});
 
 	await test.step('Check the Segment Composition card data for the Dynamic Segment', async () => {

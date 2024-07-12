@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.js.web.internal.servlet;
 
-import com.liferay.frontend.js.web.internal.language.LanguageState;
+import com.liferay.frontend.js.web.internal.LanguageState;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;

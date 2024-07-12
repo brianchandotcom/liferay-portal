@@ -6,7 +6,7 @@
 package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 
 import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributor;
-import com.liferay.frontend.js.web.internal.language.LanguageState;
+import com.liferay.frontend.js.web.internal.LanguageState;
 
 import java.io.PrintWriter;
 

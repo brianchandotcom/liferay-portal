@@ -432,8 +432,6 @@ definition {
 	@description = "Verify that the Clear option cleans the search results"
 	@priority = 3
 	test ClearSearchResults {
-		property portal.upstream = "quarantine";
-
 		Workflow.openWorkflowListView();
 
 		ProcessBuilderListView.searchForWorkflow(workflowName = "Approver");

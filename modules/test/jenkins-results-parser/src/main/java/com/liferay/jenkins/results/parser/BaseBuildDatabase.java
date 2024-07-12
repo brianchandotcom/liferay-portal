@@ -72,7 +72,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 	@Override
 	public JSONObject getJSONObject() {
-		return new JSONObject(_jsonObject);
+		return new JSONObject(_jsonObject.toString());
 	}
 
 	@Override
@@ -329,6 +329,9 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 					_buildDatabaseFile.getName()));
 
 			try {
+				JenkinsResultsParserUtil.write(
+					_buildDatabaseFile, _jsonObject.toString());
+
 				JenkinsResultsParserUtil.copy(
 					_buildDatabaseFile, tempBuildDatabaseFile);
 

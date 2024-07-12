@@ -228,7 +228,7 @@ const RedirectPattern = ({
 				</div>
 
 				<div className="sheet-section">
-					<p className="text-muted">{description}</p>
+					<p className="text-secondary">{description}</p>
 
 					{patterns.map((item, index) => (
 						<PatternField

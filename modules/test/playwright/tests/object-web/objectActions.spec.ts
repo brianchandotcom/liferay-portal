@@ -152,6 +152,64 @@ test.describe('Manage object actions through object actions tab', () => {
 			await expect(page.getByText(objectAction)).toBeVisible();
 		}
 	});
+
+	test('can create an email notification object action using user preferred language', async ({
+		apiHelpers,
+		editObjectActionPage,
+		page,
+		viewObjectActionsPage,
+	}) => {
+		const {objectDefinition} = createdEntities;
+
+		const notificationTemplateName =
+			'notification template test ' + getRandomInt();
+
+		const notificationTemplate =
+			await apiHelpers.notification.postRandomNotificationTemplate(
+				notificationTemplateName,
+				'test' + getRandomInt() + '@liferay.com'
+			);
+
+		createdEntities.notificationTemplatesId = [notificationTemplate.id];
+
+		await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+		await editObjectActionPage.addNewAction(
+			'Notification',
+			'On After Add',
+			notificationTemplateName
+		);
+
+		await page.waitForLoadState('networkidle');
+
+		await viewObjectActionsPage.frontendDataSetItems
+			.filter({
+				hasText: 'On After Add',
+			})
+			.click();
+
+		await editObjectActionPage.openActionBuilderTab();
+
+		await expect(editObjectActionPage.userPreferredLanguage).toBeChecked();
+
+		await editObjectActionPage.checkbox.uncheck();
+
+		await editObjectActionPage.saveButton.click();
+
+		await page.waitForLoadState('networkidle');
+
+		await viewObjectActionsPage.frontendDataSetItems
+			.filter({
+				hasText: 'On After Add',
+			})
+			.click();
+
+		await editObjectActionPage.openActionBuilderTab();
+
+		await expect(
+			editObjectActionPage.userPreferredLanguage
+		).not.toBeChecked();
+	});
 });
 
 test('can send notification email via download action', async ({

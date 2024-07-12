@@ -10,6 +10,7 @@ import {ViewObjectActionsPage} from './ViewObjectActionsPage';
 export class EditObjectActionPage {
 	readonly actionBuilderTab: Locator;
 	readonly actionLabelInput: Locator;
+	readonly checkbox: Locator;
 	readonly iframeLocator: FrameLocator;
 	readonly inputNotificationsCombo: Locator;
 	readonly inputThenCombo: Locator;
@@ -17,6 +18,8 @@ export class EditObjectActionPage {
 	readonly optionNotification: Locator;
 	readonly page: Page;
 	readonly viewObjectActionsPage: ViewObjectActionsPage;
+	readonly saveButton: Locator;
+	readonly userPreferredLanguage: Locator;
 
 	constructor(page: Page) {
 		this.actionBuilderTab = page
@@ -25,6 +28,7 @@ export class EditObjectActionPage {
 		this.actionLabelInput = page
 			.frameLocator('iframe')
 			.getByPlaceholder('Text to translate');
+		this.checkbox = page.frameLocator('iframe').getByRole('checkbox');
 		this.iframeLocator = page.frameLocator('iframe');
 		this.inputNotificationsCombo = page
 			.frameLocator('iframe')
@@ -41,6 +45,14 @@ export class EditObjectActionPage {
 		this.optionNotification = page
 			.frameLocator('iframe')
 			.getByRole('option', {name: 'Notification'});
+		this.saveButton = page
+			.frameLocator('iframe')
+			.getByRole('button', {name: 'Save'});
+		this.userPreferredLanguage = page
+			.frameLocator('iframe')
+			.getByText(
+				`Send email notifications in a guest user's preferred language.`
+			);
 		this.viewObjectActionsPage = new ViewObjectActionsPage(page);
 	}
 
@@ -57,7 +69,11 @@ export class EditObjectActionPage {
 		await this.actionBuilderTab.click();
 	}
 
-	async addNewAction(thenOption: string, whenOption: string) {
+	async addNewAction(
+		thenOption: string,
+		whenOption: string,
+		notificationTemplateName?: string
+	) {
 		await this.viewObjectActionsPage.openObjectActionSidePanel();
 
 		await this.actionLabelInput.fill(whenOption);
@@ -74,6 +90,14 @@ export class EditObjectActionPage {
 			.getByRole('option', {name: thenOption})
 			.click();
 
-		await this.iframeLocator.getByRole('button', {name: 'Save'}).click();
+		if (thenOption === 'Notification') {
+			await this.inputNotificationsCombo.click();
+
+			await this.iframeLocator
+				.getByRole('option', {name: notificationTemplateName})
+				.click();
+		}
+
+		await this.saveButton.click();
 	}
 }

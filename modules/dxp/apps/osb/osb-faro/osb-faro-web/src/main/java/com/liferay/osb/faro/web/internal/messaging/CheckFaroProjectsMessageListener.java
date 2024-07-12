@@ -205,7 +205,7 @@ public class CheckFaroProjectsMessageListener extends BaseMessageListener {
 
 		MailMessage mailMessage = new MailMessage(from, subject, body, false);
 
-		mailMessage.setBCC((InternetAddress[])bcc.toArray());
+		mailMessage.setBCC(bcc.toArray(new InternetAddress[0]));
 
 		_mailService.sendEmail(mailMessage);
 	}

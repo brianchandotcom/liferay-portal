@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.osgi.web.portlet.container.test.BasePortletContainerTestCase;
@@ -131,6 +132,7 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 		themeDisplay.setLookAndFeel(
 			layoutSet.getTheme(), layoutSet.getColorScheme());
 
+		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 		themeDisplay.setRealUser(TestPropsValues.getUser());

@@ -44,8 +44,6 @@ public class OSBSiteInitializerImpl implements OSBSiteInitializer {
 			return;
 		}
 
-		json = _replace(json, stringUtilReplaceValues);
-
 		SXPBlueprintResource.Builder builder =
 			_sxpBlueprintResourceFactory.create();
 
@@ -55,7 +53,7 @@ public class OSBSiteInitializerImpl implements OSBSiteInitializer {
 			serviceContext.fetchUser()
 		).build();
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(SiteInitializerUtil.replace(json, stringUtilReplaceValues, null, null));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			SXPBlueprint sxpBlueprint = SXPBlueprint.toDTO(
@@ -77,21 +75,6 @@ public class OSBSiteInitializerImpl implements OSBSiteInitializer {
 				"SXP_BLUEPRINT_ID:" + sxpBlueprint.getExternalReferenceCode(),
 				String.valueOf(sxpBlueprint.getId()));
 		}
-	}
-
-	private String _replace(
-		String s, Map<String, String> stringUtilReplaceValues) {
-
-		HashMap<String, String> aggregatedStringUtilReplaceValues =
-			HashMapBuilder.putAll(
-				stringUtilReplaceValues
-			).build();
-
-		s = StringUtil.replace(
-			s, "\"[#", "#]\"", aggregatedStringUtilReplaceValues);
-
-		return StringUtil.replace(
-			s, "[$", "$]", aggregatedStringUtilReplaceValues);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

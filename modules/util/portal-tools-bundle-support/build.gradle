@@ -29,7 +29,7 @@ dependencies {
 	compileInclude group: "org.apache.commons", name: "commons-compress", version: "1.26.0"
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
-	compileInclude group: "org.tukaani", name: "xz", version: "1.6"
+	compileInclude group: "org.tukaani", name: "xz", version: "1.9"
 
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.11"
 	compileOnly group: "org.apache.maven", name: "maven-core", transitive: false, version: "3.8.1"

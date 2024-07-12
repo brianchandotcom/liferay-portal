@@ -14,7 +14,7 @@ export interface Marketplace {
 	marketplace: Site;
 }
 
-const SITE_EXTERNAL_REFERENCE_CODE = 'marketplace-site-initializer';
+const SITE_EXTERNAL_REFERENCE_CODE = 'LIFERAY_MARKETPLACE';
 const SITE_NAME = 'Marketplace';
 
 export const marketplaceSiteFixture = test.extend<Marketplace>({

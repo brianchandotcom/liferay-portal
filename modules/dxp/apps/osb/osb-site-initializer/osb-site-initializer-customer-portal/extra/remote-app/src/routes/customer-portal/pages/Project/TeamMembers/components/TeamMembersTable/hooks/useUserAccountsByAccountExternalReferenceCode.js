@@ -136,7 +136,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		provisioningServerAPI,
 		sessionId,
 		project,
-		associateUserAccountWithAccountRole,
+		assignUserAccountWithAccountRole,
 		setCurrentUserEditing
 	) => {
 		const newContactRoleNameURLParameter =
@@ -332,7 +332,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 								sessionId,
 							});
 
-							await associateUserAccountWithAccountRole({
+							await assignUserAccountWithAccountRole({
 								context,
 								variables: {
 									accountKey: project.accountKey,

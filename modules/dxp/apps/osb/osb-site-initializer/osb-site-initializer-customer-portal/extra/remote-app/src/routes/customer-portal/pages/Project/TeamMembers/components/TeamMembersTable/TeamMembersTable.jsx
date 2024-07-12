@@ -9,7 +9,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useState} from 'react';
 import useProvisioningLicenseKeys from '~/common/hooks/useProvisioningLicenseKeys';
-import {associateUserAccountWithAccountAndAccountRole} from '~/common/services/liferay/graphql/queries';
+import {assignUserAccountWithAccountAndAccountRole} from '~/common/services/liferay/graphql/queries';
 import {getRolesFiltered} from '~/common/utils/getProjectRoles';
 import {rolesHighPriorityContacts} from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import i18n from '../../../../../../../common/I18n';
@@ -49,8 +49,8 @@ const TeamMembersTable = ({
 
 	const [{project, sessionId}] = useCustomerPortal();
 
-	const [associateUserAccountWithAccountRole] = useMutation(
-		associateUserAccountWithAccountAndAccountRole,
+	const [assignUserAccountWithAccountRole] = useMutation(
+		assignUserAccountWithAccountAndAccountRole,
 		{
 			awaitRefetchQueries: true,
 			refetchQueries: ['getUserAccountsByAccountExternalReferenceCode'],
@@ -267,7 +267,7 @@ const TeamMembersTable = ({
 			provisioningServerAPI,
 			sessionId,
 			project,
-			associateUserAccountWithAccountRole,
+			assignUserAccountWithAccountRole,
 			setCurrentUserEditing
 		);
 	};

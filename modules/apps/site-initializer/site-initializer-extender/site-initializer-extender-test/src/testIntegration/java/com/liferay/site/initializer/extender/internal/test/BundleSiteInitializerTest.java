@@ -3836,15 +3836,18 @@ public class BundleSiteInitializerTest {
 		Long testAssetCategory3Id =
 			_assetCategoryLocalService.
 				fetchAssetCategoryByExternalReferenceCode(
-					"TESTASSETCATEGORY3", _group.getGroupId()).
-						getCategoryId();
+					"TESTASSETCATEGORY3", _group.getGroupId()
+				).getCategoryId();
 
 		sxpBlueprint =
 			sxpBlueprintResource.getSXPBlueprintByExternalReferenceCode(
 				"TESTSXPBLUEPRINT2");
 
 		Assert.assertNotNull(sxpBlueprint);
-		Assert.assertEquals(StringUtil.count(sxpBlueprint.toString(), String.valueOf(testAssetCategory3Id)), 3);
+		Assert.assertEquals(
+			3,
+			StringUtil.count(
+				sxpBlueprint.toString(), String.valueOf(testAssetCategory3Id)));
 		_assertSearchableAssetTypes(
 			new String[] {
 				"com.liferay.document.library.kernel.model.DLFileEntry"

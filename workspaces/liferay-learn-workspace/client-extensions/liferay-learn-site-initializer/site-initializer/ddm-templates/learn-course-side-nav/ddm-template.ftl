@@ -32,31 +32,33 @@
 						</#list>
 						<div class="panel-group">
 							<div class="panel panel-secondary">
+							<a href="${modulesJSONObject.url}" style="display: contents !important;">
+								<div
+									class="liferay-nav-item ${(moduleLessonIsSelected)?then("highlightedNavItem", "")} ${(navigationJSONObject.getJSONObject("self").url == modulesJSONObject.url)?then("selected", "")}"
+									href="${modulesJSONObject.url}"
+									style="display: flex; justify-content: space-between; padding-top: 0; padding-bottom: 0;"
+								>
+									<div class="nav-item-number-title panel-header panel-header-link">
+										<div>
+											<span class="course-module-number ${(moduleLessonIsSelected)?then("highlighted", "")}">${i+1}</span>
+										</div>
+
+										<span class="course-module-title">${modulesJSONObject.getString("title")}</span>
+									</div>
+								</div>
+							</a>
 								<button
 									aria-controls= "collapsePanel${i}"
 									aria-expanded="false"
-									class="btn btn-unstyled panel-header panel-header-link collapse-icon collapse-icon-middle collapsed"
+									class="btn btn-unstyled collapse-icon collapse-icon-middle collapsed"
 									data-target= "#collapsePanel${i}"
 									data-toggle="liferay-collapse"
 									onclick="togglePanel(this)"
+									style="left: 16.7rem; position: absolute; top: 1.6rem; width: 10%;"
 								>
 									<span class="panel-title">
 										<li class="learn-course-nav-item">
-											<div
-												class="liferay-nav-item ${(moduleLessonIsSelected)?then("highlightedNavItem", "")} ${(navigationJSONObject.getJSONObject("self").url == modulesJSONObject.url)?then("selected", "")}"
-												href="${modulesJSONObject.url}"
-												style="display: flex; justify-content: space-between;"
-											>
-												<div class="nav-item-number-title">
-													<div>
-														<span class="course-module-number ${(moduleLessonIsSelected)?then("highlighted", "")}">${i+1}</span>
-													</div>
-
-													<span class="course-module-title">${modulesJSONObject.getString("title")}</span>
-												</div>
-											</div>
-
-											<span class="collapse-icon-closed">
+											<span class="arrow collapse-icon-closed">
 												<svg
 													class="lexicon-icon lexicon-icon-angle-right"
 													role="presentation"
@@ -64,7 +66,7 @@
 													<use xlink:href="/o/admin-theme/images/clay/icons.svg#angle-right" />
 												</svg>
 											</span>
-											<span class="collapse-icon-open">
+											<span class="arrow collapse-icon-open">
 												<svg
 													class="lexicon-icon lexicon-icon-angle-down"
 													role="presentation"

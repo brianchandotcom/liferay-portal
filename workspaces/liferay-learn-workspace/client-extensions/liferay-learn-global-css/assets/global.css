@@ -1005,7 +1005,13 @@ pre[class*='language-'] {
 		align-content: center;
 		align-items: center;
 		display: flex;
+		font-family: 'Source Sans 3' !important;
+		font-size: 15px;
+		font-weight: 600;
 		gap: 10px;
+		padding-bottom: 8px;
+		padding-left: 0;
+		padding-top: 8px;
 		width: 100%;
 	}
 
@@ -1035,6 +1041,9 @@ pre[class*='language-'] {
 	.panel-secondary {
 		background-color: #F7F7F8;
 		border: none;
+		margin-bottom: 12px !important;
+		margin-top: 12px !important;
+		position: relative;
 
 		.btn {
 			padding-left: 0;
@@ -1048,6 +1057,18 @@ pre[class*='language-'] {
 
 	.panel-title {
 		text-transform: none !important;
+
+		.arrow {
+			align-content: center;
+			border-radius: 6px;
+			height: 32px !important;
+			padding-left: 0.5rem !important;
+			width: 32px !important;
+		}
+
+		.arrow:hover {
+			background-color: #EDF3FE;
+		}
 	}
 }
 

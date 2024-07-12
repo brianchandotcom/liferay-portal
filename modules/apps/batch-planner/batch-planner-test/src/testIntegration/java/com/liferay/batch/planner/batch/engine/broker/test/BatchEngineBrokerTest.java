@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
@@ -88,6 +89,7 @@ import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewFilterColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
@@ -128,6 +130,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
+import com.liferay.portal.vulcan.jaxrs.serializer.UnsafeSupplierJsonSerializer;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.ByteArrayInputStream;
@@ -1639,6 +1642,15 @@ public class BatchEngineBrokerTest {
 			disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 			enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
 			enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS);
+			registerModule(
+				new SimpleModule() {
+					{
+						addSerializer(
+							(Class<UnsafeSupplier<Object, Exception>>)
+								(Class<?>)UnsafeSupplier.class,
+							new UnsafeSupplierJsonSerializer());
+					}
+				});
 			setDateFormat(new ISO8601DateFormat());
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}

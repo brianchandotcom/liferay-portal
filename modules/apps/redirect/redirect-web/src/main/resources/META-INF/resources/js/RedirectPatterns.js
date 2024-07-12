@@ -14,6 +14,8 @@ import {v4 as uuidv4} from 'uuid';
 
 import '../css/redirect_pattern.scss';
 
+import ClayAlert from '@clayui/alert';
+
 const REGEX_URL_ALLOW_RELATIVE =
 	/((([A-Za-z]{3,9}:(?:\/\/)?)|\/(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
 
@@ -226,6 +228,15 @@ const RedirectPattern = ({
 						)}
 					</h2>
 				</div>
+
+				<ClayAlert
+					displayType="warning"
+					title={`${Liferay.Language.get('warning')}:`}
+				>
+					{Liferay.Language.get(
+						'redirect-functionality-may-not-work-as-expected-in-this-staging-environment'
+					)}
+				</ClayAlert>
 
 				<div className="sheet-section">
 					<p className="text-secondary">{description}</p>

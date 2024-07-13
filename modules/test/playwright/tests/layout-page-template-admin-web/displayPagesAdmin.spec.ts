@@ -21,6 +21,39 @@ const test = mergeTests(
 	loginTest()
 );
 
+async function addBasicJournalArticleWithSpecificDisplayPageTemplate(
+	apiHelpers,
+	displayPageTemplateName,
+	journalArticleTitle,
+	journalEditArticlePage,
+	journalPage,
+	page,
+	site
+) {
+	const contentStructureId = await getBasicWebContentStructureId(apiHelpers);
+
+	await apiHelpers.jsonWebServicesJournal.addWebContent({
+		ddmStructureId: contentStructureId,
+		groupId: site.id,
+		titleMap: {en_US: journalArticleTitle},
+	});
+
+	await journalPage.goto(site.friendlyUrlPath);
+
+	await journalEditArticlePage.editArticle(journalArticleTitle);
+
+	await journalEditArticlePage.selectSpecificDisplayPage(
+		displayPageTemplateName
+	);
+
+	await page.getByRole('button', {name: 'Publish'}).click();
+
+	await waitForSuccessAlert(
+		page,
+		`Success:${journalArticleTitle} was updated successfully.`
+	);
+}
+
 test('Checks that the card checkbox has the correct aria label', async ({
 	displayPageTemplatesPage,
 	page,
@@ -64,29 +97,16 @@ test('LPS-121199 can assign usage to default even if the default display page te
 		name: displayPageTemplateName,
 	});
 
-	const contentStructureId = await getBasicWebContentStructureId(apiHelpers);
+	const journalArticleTitle = 'specificDPT' + getRandomInt();
 
-	const webContentTitle = 'specificDPT' + getRandomInt();
-
-	await apiHelpers.jsonWebServicesJournal.addWebContent({
-		ddmStructureId: contentStructureId,
-		groupId: site.id,
-		titleMap: {en_US: webContentTitle},
-	});
-
-	await journalPage.goto(site.friendlyUrlPath);
-
-	await journalEditArticlePage.editArticle(webContentTitle);
-
-	await journalEditArticlePage.selectSpecificDisplayPage(
-		displayPageTemplateName
-	);
-
-	await page.getByRole('button', {name: 'Publish'}).click();
-
-	await waitForSuccessAlert(
+	await addBasicJournalArticleWithSpecificDisplayPageTemplate(
+		apiHelpers,
+		displayPageTemplateName,
+		journalArticleTitle,
+		journalEditArticlePage,
+		journalPage,
 		page,
-		`Success:${webContentTitle} was updated successfully.`
+		site
 	);
 
 	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
@@ -96,7 +116,7 @@ test('LPS-121199 can assign usage to default even if the default display page te
 		'1'
 	);
 
-	await expect(page.getByText(webContentTitle)).toBeVisible();
+	await expect(page.getByText(journalArticleTitle)).toBeVisible();
 
 	const firstRowCheckbox = page.locator(
 		'[aria-labelledby="_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_assetDisplayPageEntries_1"]'
@@ -144,29 +164,16 @@ test('LPS-121199 can assign usage to default even if the default display page te
 		name: displayPageTemplateName,
 	});
 
-	const contentStructureId = await getBasicWebContentStructureId(apiHelpers);
+	const journalArticleTitle = 'specificDPT' + getRandomInt();
 
-	const webContentTitle = 'specificDPT' + getRandomInt();
-
-	await apiHelpers.jsonWebServicesJournal.addWebContent({
-		ddmStructureId: contentStructureId,
-		groupId: site.id,
-		titleMap: {en_US: webContentTitle},
-	});
-
-	await journalPage.goto(site.friendlyUrlPath);
-
-	await journalEditArticlePage.editArticle(webContentTitle);
-
-	await journalEditArticlePage.selectSpecificDisplayPage(
-		displayPageTemplateName
-	);
-
-	await page.getByRole('button', {name: 'Publish'}).click();
-
-	await waitForSuccessAlert(
+	await addBasicJournalArticleWithSpecificDisplayPageTemplate(
+		apiHelpers,
+		displayPageTemplateName,
+		journalArticleTitle,
+		journalEditArticlePage,
+		journalPage,
 		page,
-		`Success:${webContentTitle} was updated successfully.`
+		site
 	);
 
 	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
@@ -176,7 +183,7 @@ test('LPS-121199 can assign usage to default even if the default display page te
 		'2'
 	);
 
-	await expect(page.getByText(webContentTitle)).toBeVisible();
+	await expect(page.getByText(journalArticleTitle)).toBeVisible();
 
 	const firstRowCheckbox = page.locator(
 		'[aria-labelledby="_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_assetDisplayPageEntries_1"]'
@@ -212,30 +219,17 @@ test('LPS-121199 can assign multiple usages to default', async ({
 		name: displayPageTemplateName,
 	});
 
-	const contentStructureId = await getBasicWebContentStructureId(apiHelpers);
-
 	for (let i = 1; i < 4; i++) {
-		const webContentTitle = 'specificDPT' + i + getRandomInt();
+		const journalArticleTitle = 'specificDPT' + i + getRandomInt();
 
-		await apiHelpers.jsonWebServicesJournal.addWebContent({
-			ddmStructureId: contentStructureId,
-			groupId: site.id,
-			titleMap: {en_US: webContentTitle},
-		});
-
-		await journalPage.goto(site.friendlyUrlPath);
-
-		await journalEditArticlePage.editArticle(webContentTitle);
-
-		await journalEditArticlePage.selectSpecificDisplayPage(
-			displayPageTemplateName
-		);
-
-		await page.getByRole('button', {name: 'Publish'}).click();
-
-		await waitForSuccessAlert(
+		await addBasicJournalArticleWithSpecificDisplayPageTemplate(
+			apiHelpers,
+			displayPageTemplateName,
+			journalArticleTitle,
+			journalEditArticlePage,
+			journalPage,
 			page,
-			`Success:${webContentTitle} was updated successfully.`
+			site
 		);
 	}
 

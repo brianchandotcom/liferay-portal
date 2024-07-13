@@ -37,6 +37,7 @@ UpgradeJavaLocalServiceImplCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jsp
 UpgradeJavaMultiVMPoolUtilCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replaces the references of the MultiVMPoolUtil class and also its methods usages. |
 UpgradeJavaPortletIdMethodCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace the 'document.get(Field.PORTLET_ID)' by the new interface 'PortletProviderUtil.getPortletId'. |
 UpgradeJavaPortletSharedSearchSettingsCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replaces the Optional return type of the methods `getParameterValues` and `getPortletPreferences` of `PortletSharedSearchSettings` class. |
+UpgradeJavaProductDTOConverterReferenceCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Updates references of `ProductDTOConverter` to `DTOConverter` |
 UpgradeJavaSchedulerEntryImplConstructorCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace constructors that use the empty constructor of the SchedulerEntryImpl class. |
 UpgradeJavaScreenContributorClassCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace class `PortalSettingsConfigurationScreenContributor` by `ConfigurationScreenWrapper` and create an inner class. |
 UpgradeJavaServiceImplCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Add Component annotation to `*ServiceImpl.java` file. |

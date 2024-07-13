@@ -263,5 +263,5 @@ test('LPS-121199 can assign multiple usages to default', async ({
 
 	await assignToDefaultMenuItem.click();
 
-	await expect(page.locator('.taglib-empty-result-message')).toBeVisible();
+	await expect(page.getByText('There are no display page template usages.')).toBeVisible();
 });

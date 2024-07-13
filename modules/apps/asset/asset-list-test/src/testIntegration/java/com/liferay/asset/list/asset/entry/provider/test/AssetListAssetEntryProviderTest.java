@@ -32,7 +32,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -75,7 +75,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
@@ -104,332 +103,379 @@ public class AssetListAssetEntryProviderTest {
 	public void testCombineSegmentsEntriesOfDynamicCollection()
 		throws Exception {
 
-		_setCombinedAssetForDynamicCollections(true);
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.asset.list.internal.configuration." +
+						"AssetListConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"combineAssetsFromAllSegmentsDynamic", true
+					).build())) {
 
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.addAssetListEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_DYNAMIC, null,
-				_serviceContext);
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.addAssetListEntry(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_group.getGroupId(), RandomTestUtil.randomString(),
+					AssetListEntryTypeConstants.TYPE_DYNAMIC, null,
+					_serviceContext);
 
-		User userTest = TestPropsValues.getUser();
+			User userTest = TestPropsValues.getUser();
 
-		String userName = "RandomName";
+			String userName = "RandomName";
 
-		User user = UserTestUtil.addUser(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			StringPool.BLANK, userName + "@liferay.com", userName,
-			LocaleUtil.getDefault(), userName, RandomTestUtil.randomString(),
-			null, ServiceContextTestUtil.getServiceContext());
+			User user = UserTestUtil.addUser(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, userName + "@liferay.com", userName,
+				LocaleUtil.getDefault(), userName,
+				RandomTestUtil.randomString(), null,
+				ServiceContextTestUtil.getServiceContext());
 
-		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), userTest.getFirstName());
-		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), user.getFirstName());
+			SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
+				_group.getGroupId(), userTest.getFirstName());
+			SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
+				_group.getGroupId(), user.getFirstName());
 
-		JournalArticle journalArticle1 = _addJournalArticle(
-			new long[0], TestPropsValues.getUserId());
-		JournalArticle journalArticle2 = _addJournalArticle(
-			new long[0], TestPropsValues.getUserId());
-		JournalArticle journalArticle3 = _addJournalArticle(
-			new long[0], user.getUserId());
+			JournalArticle journalArticle1 = _addJournalArticle(
+				new long[0], TestPropsValues.getUserId());
+			JournalArticle journalArticle2 = _addJournalArticle(
+				new long[0], TestPropsValues.getUserId());
+			JournalArticle journalArticle3 = _addJournalArticle(
+				new long[0], user.getUserId());
 
-		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-			_group.getGroupId(), assetListEntry,
-			segmentsEntry1.getSegmentsEntryId(),
-			_getTypeSettings(userTest.getFirstName()));
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry,
+				segmentsEntry1.getSegmentsEntryId(),
+				_getTypeSettings(userTest.getFirstName()));
 
-		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-			_group.getGroupId(), assetListEntry,
-			segmentsEntry2.getSegmentsEntryId(), _getTypeSettings(userName));
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry,
+				segmentsEntry2.getSegmentsEntryId(),
+				_getTypeSettings(userName));
 
-		long[] segmentsEntryIds = {
-			segmentsEntry1.getSegmentsEntryId(),
-			segmentsEntry2.getSegmentsEntryId()
-		};
+			long[] segmentsEntryIds = {
+				segmentsEntry1.getSegmentsEntryId(),
+				segmentsEntry2.getSegmentsEntryId()
+			};
 
-		_assertAssetListEntryResults(
-			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
-				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
-				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			3, _getAssetEntry(journalArticle1), _getAssetEntry(journalArticle2),
-			_getAssetEntry(journalArticle3));
+			_assertAssetListEntryResults(
+				_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+					assetListEntry, segmentsEntryIds, null, null,
+					StringPool.BLANK, StringPool.BLANK, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
+				3, _getAssetEntry(journalArticle1),
+				_getAssetEntry(journalArticle2),
+				_getAssetEntry(journalArticle3));
+		}
 	}
 
 	@Test
 	public void testCombineSegmentsEntriesOfDynamicCollectionWithCategoryFilter()
 		throws Exception {
 
-		_setCombinedAssetForDynamicCollections(true);
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.asset.list.internal.configuration." +
+						"AssetListConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"combineAssetsFromAllSegmentsDynamic", true
+					).build())) {
 
-		Company company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
+			Company company = _companyLocalService.getCompany(
+				TestPropsValues.getCompanyId());
 
-		Group globalGroup = company.getGroup();
+			Group globalGroup = company.getGroup();
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			globalGroup.getGroupId(),
-			_portal.getClassNameId(JournalArticle.class), "BASIC-WEB-CONTENT");
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.fetchStructure(
+					globalGroup.getGroupId(),
+					_portal.getClassNameId(JournalArticle.class),
+					"BASIC-WEB-CONTENT");
 
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.addAssetListEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_DYNAMIC,
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"anyAssetType",
-					String.valueOf(_portal.getClassNameId(JournalArticle.class))
-				).put(
-					"anyClassTypeJournalArticleAssetRendererFactory",
-					ddmStructure.getStructureId()
-				).buildString(),
-				_serviceContext);
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.addAssetListEntry(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_group.getGroupId(), RandomTestUtil.randomString(),
+					AssetListEntryTypeConstants.TYPE_DYNAMIC,
+					UnicodePropertiesBuilder.create(
+						true
+					).put(
+						"anyAssetType",
+						String.valueOf(
+							_portal.getClassNameId(JournalArticle.class))
+					).put(
+						"anyClassTypeJournalArticleAssetRendererFactory",
+						ddmStructure.getStructureId()
+					).buildString(),
+					_serviceContext);
 
-		User user = TestPropsValues.getUser();
+			User user = TestPropsValues.getUser();
 
-		AssetVocabulary globalAssetVocabulary = AssetTestUtil.addVocabulary(
-			globalGroup.getGroupId());
+			AssetVocabulary globalAssetVocabulary = AssetTestUtil.addVocabulary(
+				globalGroup.getGroupId());
 
-		AssetCategory globalAssetCategory = AssetTestUtil.addCategory(
-			globalGroup.getGroupId(), globalAssetVocabulary.getVocabularyId());
+			AssetCategory globalAssetCategory = AssetTestUtil.addCategory(
+				globalGroup.getGroupId(),
+				globalAssetVocabulary.getVocabularyId());
 
-		long[] assetCategoryIds = {globalAssetCategory.getCategoryId()};
+			long[] assetCategoryIds = {globalAssetCategory.getCategoryId()};
 
-		_userLocalService.updateAsset(
-			user.getUserId(), user, assetCategoryIds, null);
+			_userLocalService.updateAsset(
+				user.getUserId(), user, assetCategoryIds, null);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
 
-		serviceContext.setAssetCategoryIds(assetCategoryIds);
+			serviceContext.setAssetCategoryIds(assetCategoryIds);
 
-		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), user.getFirstName());
-		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByCategoryId(
-			_group.getGroupId(), globalAssetCategory.getCategoryId());
+			SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
+				_group.getGroupId(), user.getFirstName());
+			SegmentsEntry segmentsEntry2 = _addSegmentsEntryByCategoryId(
+				_group.getGroupId(), globalAssetCategory.getCategoryId());
 
-		JournalArticle journalArticle = _addJournalArticle(
-			assetCategoryIds, TestPropsValues.getUserId());
+			JournalArticle journalArticle = _addJournalArticle(
+				assetCategoryIds, TestPropsValues.getUserId());
 
-		_addJournalArticle(new long[0], TestPropsValues.getUserId());
+			_addJournalArticle(new long[0], TestPropsValues.getUserId());
 
-		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-			_group.getGroupId(), assetListEntry,
-			segmentsEntry1.getSegmentsEntryId(),
-			_getTypeSettings(user.getFirstName()));
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry,
+				segmentsEntry1.getSegmentsEntryId(),
+				_getTypeSettings(user.getFirstName()));
 
-		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-			_group.getGroupId(), assetListEntry,
-			segmentsEntry2.getSegmentsEntryId(),
-			_getTypeSettings(user.getFirstName()));
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry,
+				segmentsEntry2.getSegmentsEntryId(),
+				_getTypeSettings(user.getFirstName()));
 
-		long[] segmentsEntryIds = {
-			segmentsEntry1.getSegmentsEntryId(),
-			segmentsEntry2.getSegmentsEntryId()
-		};
+			long[] segmentsEntryIds = {
+				segmentsEntry1.getSegmentsEntryId(),
+				segmentsEntry2.getSegmentsEntryId()
+			};
 
-		_assertAssetListEntryResults(
-			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
-				assetListEntry, segmentsEntryIds,
-				new long[][] {{globalAssetCategory.getCategoryId()}}, null,
-				StringPool.BLANK, StringPool.BLANK, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS),
-			1, _getAssetEntry(journalArticle));
+			_assertAssetListEntryResults(
+				_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+					assetListEntry, segmentsEntryIds,
+					new long[][] {{globalAssetCategory.getCategoryId()}}, null,
+					StringPool.BLANK, StringPool.BLANK, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
+				1, _getAssetEntry(journalArticle));
+		}
 	}
 
 	@Test
 	public void testCombineSegmentsEntriesOfDynamicCollectionWithoutDuplications()
 		throws Exception {
 
-		_setCombinedAssetForDynamicCollections(true);
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.asset.list.internal.configuration." +
+						"AssetListConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"combineAssetsFromAllSegmentsDynamic", true
+					).build())) {
 
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.addAssetListEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_DYNAMIC, null,
-				_serviceContext);
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.addAssetListEntry(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_group.getGroupId(), RandomTestUtil.randomString(),
+					AssetListEntryTypeConstants.TYPE_DYNAMIC, null,
+					_serviceContext);
 
-		User user = TestPropsValues.getUser();
+			User user = TestPropsValues.getUser();
 
-		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), user.getFirstName());
-		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), user.getFirstName());
+			SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
+				_group.getGroupId(), user.getFirstName());
+			SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
+				_group.getGroupId(), user.getFirstName());
 
-		JournalArticle journalArticle1 = _addJournalArticle(
-			new long[0], TestPropsValues.getUserId());
-		JournalArticle journalArticle2 = _addJournalArticle(
-			new long[0], TestPropsValues.getUserId());
-		JournalArticle journalArticle3 = _addJournalArticle(
-			new long[0], TestPropsValues.getUserId());
+			JournalArticle journalArticle1 = _addJournalArticle(
+				new long[0], TestPropsValues.getUserId());
+			JournalArticle journalArticle2 = _addJournalArticle(
+				new long[0], TestPropsValues.getUserId());
+			JournalArticle journalArticle3 = _addJournalArticle(
+				new long[0], TestPropsValues.getUserId());
 
-		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-			_group.getGroupId(), assetListEntry,
-			segmentsEntry1.getSegmentsEntryId(),
-			_getTypeSettings(user.getFirstName()));
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry,
+				segmentsEntry1.getSegmentsEntryId(),
+				_getTypeSettings(user.getFirstName()));
 
-		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-			_group.getGroupId(), assetListEntry,
-			segmentsEntry2.getSegmentsEntryId(),
-			_getTypeSettings(user.getFirstName()));
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry,
+				segmentsEntry2.getSegmentsEntryId(),
+				_getTypeSettings(user.getFirstName()));
 
-		long[] segmentsEntryIds = {
-			segmentsEntry1.getSegmentsEntryId(),
-			segmentsEntry2.getSegmentsEntryId()
-		};
+			long[] segmentsEntryIds = {
+				segmentsEntry1.getSegmentsEntryId(),
+				segmentsEntry2.getSegmentsEntryId()
+			};
 
-		_assertAssetListEntryResults(
-			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
-				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
-				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			3, _getAssetEntry(journalArticle1), _getAssetEntry(journalArticle2),
-			_getAssetEntry(journalArticle3));
+			_assertAssetListEntryResults(
+				_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+					assetListEntry, segmentsEntryIds, null, null,
+					StringPool.BLANK, StringPool.BLANK, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
+				3, _getAssetEntry(journalArticle1),
+				_getAssetEntry(journalArticle2),
+				_getAssetEntry(journalArticle3));
+		}
 	}
 
 	@Test
 	public void testCombineSegmentsEntriesOfManualCollection()
 		throws Exception {
 
-		_setCombinedAssetForManualCollections(true);
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.asset.list.internal.configuration." +
+						"AssetListConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"combineAssetsFromAllSegmentsManual", true
+					).build())) {
 
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.addAssetListEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_MANUAL,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.addAssetListEntry(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_group.getGroupId(), RandomTestUtil.randomString(),
+					AssetListEntryTypeConstants.TYPE_MANUAL,
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId()));
 
-		User user = TestPropsValues.getUser();
+			User user = TestPropsValues.getUser();
 
-		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), user.getFirstName());
+			SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
+				_group.getGroupId(), user.getFirstName());
 
-		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-			_group.getGroupId(), assetListEntry,
-			segmentsEntry1.getSegmentsEntryId());
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry,
+				segmentsEntry1.getSegmentsEntryId());
 
-		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		AssetEntry assetEntry1 = _getAssetEntry(journalArticle1);
+			AssetEntry assetEntry1 = _getAssetEntry(journalArticle1);
 
-		AssetListTestUtil.addAssetListEntryAssetEntryRel(
-			_group.getGroupId(), assetEntry1, assetListEntry,
-			segmentsEntry1.getSegmentsEntryId(), 0);
+			AssetListTestUtil.addAssetListEntryAssetEntryRel(
+				_group.getGroupId(), assetEntry1, assetListEntry,
+				segmentsEntry1.getSegmentsEntryId(), 0);
 
-		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByLastName(
-			_group.getGroupId(), user.getLastName());
+			SegmentsEntry segmentsEntry2 = _addSegmentsEntryByLastName(
+				_group.getGroupId(), user.getLastName());
 
-		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-			_group.getGroupId(), assetListEntry,
-			segmentsEntry2.getSegmentsEntryId());
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry,
+				segmentsEntry2.getSegmentsEntryId());
 
-		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		AssetEntry assetEntry2 = _getAssetEntry(journalArticle2);
+			AssetEntry assetEntry2 = _getAssetEntry(journalArticle2);
 
-		AssetListTestUtil.addAssetListEntryAssetEntryRel(
-			_group.getGroupId(), assetEntry2, assetListEntry,
-			segmentsEntry2.getSegmentsEntryId(), 0);
+			AssetListTestUtil.addAssetListEntryAssetEntryRel(
+				_group.getGroupId(), assetEntry2, assetListEntry,
+				segmentsEntry2.getSegmentsEntryId(), 0);
 
-		JournalArticle journalArticle3 = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			JournalArticle journalArticle3 = JournalTestUtil.addArticle(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		AssetEntry assetEntry3 = _getAssetEntry(journalArticle3);
+			AssetEntry assetEntry3 = _getAssetEntry(journalArticle3);
 
-		AssetListTestUtil.addAssetListEntryAssetEntryRel(
-			_group.getGroupId(), assetEntry3, assetListEntry,
-			segmentsEntry2.getSegmentsEntryId(), 1);
+			AssetListTestUtil.addAssetListEntryAssetEntryRel(
+				_group.getGroupId(), assetEntry3, assetListEntry,
+				segmentsEntry2.getSegmentsEntryId(), 1);
 
-		InfoPage<AssetEntry> infoPage =
-			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
-				assetListEntry,
-				new long[] {
-					segmentsEntry1.getSegmentsEntryId(),
-					segmentsEntry2.getSegmentsEntryId()
-				},
-				null, null, StringPool.BLANK, StringPool.BLANK, 0, 2);
+			InfoPage<AssetEntry> infoPage =
+				_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+					assetListEntry,
+					new long[] {
+						segmentsEntry1.getSegmentsEntryId(),
+						segmentsEntry2.getSegmentsEntryId()
+					},
+					null, null, StringPool.BLANK, StringPool.BLANK, 0, 2);
 
-		Assert.assertEquals(3, infoPage.getTotalCount());
-		Assert.assertTrue(
-			ListUtil.exists(
-				infoPage.getPageItems(),
-				assetEntry ->
-					assetEntry.getEntryId() == assetEntry1.getEntryId()));
-		Assert.assertTrue(
-			ListUtil.exists(
-				infoPage.getPageItems(),
-				assetEntry ->
-					assetEntry.getEntryId() == assetEntry2.getEntryId()));
-		Assert.assertFalse(
-			ListUtil.exists(
-				infoPage.getPageItems(),
-				assetEntry ->
-					assetEntry.getEntryId() == assetEntry3.getEntryId()));
+			Assert.assertEquals(3, infoPage.getTotalCount());
+			Assert.assertTrue(
+				ListUtil.exists(
+					infoPage.getPageItems(),
+					assetEntry ->
+						assetEntry.getEntryId() == assetEntry1.getEntryId()));
+			Assert.assertTrue(
+				ListUtil.exists(
+					infoPage.getPageItems(),
+					assetEntry ->
+						assetEntry.getEntryId() == assetEntry2.getEntryId()));
+			Assert.assertFalse(
+				ListUtil.exists(
+					infoPage.getPageItems(),
+					assetEntry ->
+						assetEntry.getEntryId() == assetEntry3.getEntryId()));
+		}
 	}
 
 	@Test
 	public void testCombineSegmentsEntriesOfManualCollectionWithoutDuplications()
 		throws Exception {
 
-		_setCombinedAssetForManualCollections(true);
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.asset.list.internal.configuration." +
+						"AssetListConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"combineAssetsFromAllSegmentsManual", true
+					).build())) {
 
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.addAssetListEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_MANUAL,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.addAssetListEntry(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_group.getGroupId(), RandomTestUtil.randomString(),
+					AssetListEntryTypeConstants.TYPE_MANUAL,
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId()));
 
-		User user = TestPropsValues.getUser();
+			User user = TestPropsValues.getUser();
 
-		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-			_group.getGroupId(), user.getFirstName());
+			SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
+				_group.getGroupId(), user.getFirstName());
 
-		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-			_group.getGroupId(), assetListEntry,
-			segmentsEntry1.getSegmentsEntryId());
-
-		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByLastName(
-			_group.getGroupId(), user.getLastName());
-
-		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-			_group.getGroupId(), assetListEntry,
-			segmentsEntry2.getSegmentsEntryId());
-
-		for (int i = 0; i < 4; i++) {
-			JournalArticle journalArticle = JournalTestUtil.addArticle(
-				_group.getGroupId(),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-			AssetEntry assetEntry = _getAssetEntry(journalArticle);
-
-			AssetListTestUtil.addAssetListEntryAssetEntryRel(
-				_group.getGroupId(), assetEntry, assetListEntry,
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry,
 				segmentsEntry1.getSegmentsEntryId());
-			AssetListTestUtil.addAssetListEntryAssetEntryRel(
-				_group.getGroupId(), assetEntry, assetListEntry,
-				segmentsEntry2.getSegmentsEntryId());
-		}
 
-		_assertAssetListEntryResults(
-			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
-				assetListEntry,
-				new long[] {
-					segmentsEntry1.getSegmentsEntryId(),
-					segmentsEntry2.getSegmentsEntryId()
-				},
-				null, null, StringPool.BLANK, StringPool.BLANK,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			4);
+			SegmentsEntry segmentsEntry2 = _addSegmentsEntryByLastName(
+				_group.getGroupId(), user.getLastName());
+
+			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+				_group.getGroupId(), assetListEntry,
+				segmentsEntry2.getSegmentsEntryId());
+
+			for (int i = 0; i < 4; i++) {
+				JournalArticle journalArticle = JournalTestUtil.addArticle(
+					_group.getGroupId(),
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+				AssetEntry assetEntry = _getAssetEntry(journalArticle);
+
+				AssetListTestUtil.addAssetListEntryAssetEntryRel(
+					_group.getGroupId(), assetEntry, assetListEntry,
+					segmentsEntry1.getSegmentsEntryId());
+				AssetListTestUtil.addAssetListEntryAssetEntryRel(
+					_group.getGroupId(), assetEntry, assetListEntry,
+					segmentsEntry2.getSegmentsEntryId());
+			}
+
+			_assertAssetListEntryResults(
+				_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+					assetListEntry,
+					new long[] {
+						segmentsEntry1.getSegmentsEntryId(),
+						segmentsEntry2.getSegmentsEntryId()
+					},
+					null, null, StringPool.BLANK, StringPool.BLANK,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				4);
+		}
 	}
 
 	@Test
@@ -1574,8 +1620,6 @@ public class AssetListAssetEntryProviderTest {
 	public void testNotCombineSegmentsEntriesOfDynamicCollection()
 		throws Exception {
 
-		_setCombinedAssetForDynamicCollections(false);
-
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
@@ -1630,8 +1674,6 @@ public class AssetListAssetEntryProviderTest {
 	@Test
 	public void testNotCombineSegmentsEntriesOfManualCollection()
 		throws Exception {
-
-		_setCombinedAssetForManualCollections(false);
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
@@ -1872,40 +1914,6 @@ public class AssetListAssetEntryProviderTest {
 			"queryValues0", queryValue
 		).buildString();
 	}
-
-	private void _setCombinedAssetForDynamicCollections(boolean active)
-		throws Exception {
-
-		_assetListAssetEntryConfiguration =
-			_configurationAdmin.getConfiguration(
-				"com.liferay.asset.list.internal.configuration." +
-					"AssetListConfiguration",
-				StringPool.QUESTION);
-
-		ConfigurationTestUtil.saveConfiguration(
-			_assetListAssetEntryConfiguration,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"combineAssetsFromAllSegmentsDynamic", active
-			).build());
-	}
-
-	private void _setCombinedAssetForManualCollections(boolean active)
-		throws Exception {
-
-		_assetListAssetEntryConfiguration =
-			_configurationAdmin.getConfiguration(
-				"com.liferay.asset.list.internal.configuration." +
-					"AssetListConfiguration",
-				StringPool.QUESTION);
-
-		ConfigurationTestUtil.saveConfiguration(
-			_assetListAssetEntryConfiguration,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"combineAssetsFromAllSegmentsManual", active
-			).build());
-	}
-
-	private static Configuration _assetListAssetEntryConfiguration;
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;

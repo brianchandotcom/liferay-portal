@@ -210,6 +210,13 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaProductDTOConverterReferenceCheck()
+		throws Exception {
+
+		test("upgrade/UpgradeJavaProductDTOConverterReferenceCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaSchedulerEntryImplConstructorCheck()
 		throws Exception {
 

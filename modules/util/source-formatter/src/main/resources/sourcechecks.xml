@@ -1572,6 +1572,10 @@
 			<category name="Bug Prevention" />
 			<description name="Verifies property value of `build.include.dirs` in `build.properties`." />
 		</check>
+		<check name="PropertiesPlaywrightTestCheck">
+			<category name="Bug Prevention" />
+			<description name="Performs several checks on `test.properties` for Playwright test." />
+		</check>
 		<check name="PropertiesReleaseBuildCheck">
 			<category name="Bug Prevention" />
 			<description name="Verifies that the information in `release.properties` matches the information in `ReleaseInfo.java`." />

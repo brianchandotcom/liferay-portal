@@ -11,7 +11,6 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -128,11 +126,12 @@ public class AssetListAssetEntryProviderTest {
 		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
 			_group.getGroupId(), user.getFirstName());
 
-		JournalArticle journalArticle = _addJournalArticle(
+		JournalArticle journalArticle1 = _addJournalArticle(
 			new long[0], TestPropsValues.getUserId());
-
-		_addJournalArticle(new long[0], TestPropsValues.getUserId());
-		_addJournalArticle(new long[0], user.getUserId());
+		JournalArticle journalArticle2 = _addJournalArticle(
+			new long[0], TestPropsValues.getUserId());
+		JournalArticle journalArticle3 = _addJournalArticle(
+			new long[0], user.getUserId());
 
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry,
@@ -148,21 +147,12 @@ public class AssetListAssetEntryProviderTest {
 			segmentsEntry2.getSegmentsEntryId()
 		};
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
-				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(3, infoPage.getTotalCount());
-
-		List<AssetEntry> assetEntries =
-			(List<AssetEntry>)infoPage.getPageItems();
-
-		AssetEntry assetEntry = assetEntries.get(0);
-
-		Assert.assertEquals(
-			assetEntry.getTitle(LocaleUtil.US),
-			journalArticle.getTitle(LocaleUtil.US));
+				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			3, _getAssetEntry(journalArticle1), _getAssetEntry(journalArticle2),
+			_getAssetEntry(journalArticle3));
 	}
 
 	@Test
@@ -239,23 +229,13 @@ public class AssetListAssetEntryProviderTest {
 			segmentsEntry2.getSegmentsEntryId()
 		};
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, segmentsEntryIds,
 				new long[][] {{globalAssetCategory.getCategoryId()}}, null,
 				StringPool.BLANK, StringPool.BLANK, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		Assert.assertEquals(1, infoPage.getTotalCount());
-
-		List<AssetEntry> assetEntries =
-			(List<AssetEntry>)infoPage.getPageItems();
-
-		AssetEntry assetEntry = assetEntries.get(0);
-
-		Assert.assertEquals(
-			assetEntry.getTitle(LocaleUtil.US),
-			journalArticle.getTitle(LocaleUtil.US));
+				QueryUtil.ALL_POS),
+			1, _getAssetEntry(journalArticle));
 	}
 
 	@Test
@@ -278,11 +258,12 @@ public class AssetListAssetEntryProviderTest {
 		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
 			_group.getGroupId(), user.getFirstName());
 
-		JournalArticle journalArticle = _addJournalArticle(
+		JournalArticle journalArticle1 = _addJournalArticle(
 			new long[0], TestPropsValues.getUserId());
-
-		_addJournalArticle(new long[0], TestPropsValues.getUserId());
-		_addJournalArticle(new long[0], TestPropsValues.getUserId());
+		JournalArticle journalArticle2 = _addJournalArticle(
+			new long[0], TestPropsValues.getUserId());
+		JournalArticle journalArticle3 = _addJournalArticle(
+			new long[0], TestPropsValues.getUserId());
 
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry,
@@ -299,21 +280,12 @@ public class AssetListAssetEntryProviderTest {
 			segmentsEntry2.getSegmentsEntryId()
 		};
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
-				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(3, infoPage.getTotalCount());
-
-		List<AssetEntry> assetEntries =
-			(List<AssetEntry>)infoPage.getPageItems();
-
-		AssetEntry assetEntry = assetEntries.get(0);
-
-		Assert.assertEquals(
-			assetEntry.getTitle(LocaleUtil.US),
-			journalArticle.getTitle(LocaleUtil.US));
+				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			3, _getAssetEntry(journalArticle1), _getAssetEntry(journalArticle2),
+			_getAssetEntry(journalArticle3));
 	}
 
 	@Test
@@ -342,9 +314,7 @@ public class AssetListAssetEntryProviderTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle1.getResourcePrimKey());
+		AssetEntry assetEntry1 = _getAssetEntry(journalArticle1);
 
 		AssetListTestUtil.addAssetListEntryAssetEntryRel(
 			_group.getGroupId(), assetEntry1, assetListEntry,
@@ -361,9 +331,7 @@ public class AssetListAssetEntryProviderTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle2.getResourcePrimKey());
+		AssetEntry assetEntry2 = _getAssetEntry(journalArticle2);
 
 		AssetListTestUtil.addAssetListEntryAssetEntryRel(
 			_group.getGroupId(), assetEntry2, assetListEntry,
@@ -373,9 +341,7 @@ public class AssetListAssetEntryProviderTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		AssetEntry assetEntry3 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle3.getResourcePrimKey());
+		AssetEntry assetEntry3 = _getAssetEntry(journalArticle3);
 
 		AssetListTestUtil.addAssetListEntryAssetEntryRel(
 			_group.getGroupId(), assetEntry3, assetListEntry,
@@ -438,12 +404,11 @@ public class AssetListAssetEntryProviderTest {
 			segmentsEntry2.getSegmentsEntryId());
 
 		for (int i = 0; i < 4; i++) {
-			JournalArticle article = JournalTestUtil.addArticle(
+			JournalArticle journalArticle = JournalTestUtil.addArticle(
 				_group.getGroupId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-				JournalArticle.class.getName(), article.getResourcePrimKey());
+			AssetEntry assetEntry = _getAssetEntry(journalArticle);
 
 			AssetListTestUtil.addAssetListEntryAssetEntryRel(
 				_group.getGroupId(), assetEntry, assetListEntry,
@@ -453,7 +418,7 @@ public class AssetListAssetEntryProviderTest {
 				segmentsEntry2.getSegmentsEntryId());
 		}
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry,
 				new long[] {
@@ -461,9 +426,8 @@ public class AssetListAssetEntryProviderTest {
 					segmentsEntry2.getSegmentsEntryId()
 				},
 				null, null, StringPool.BLANK, StringPool.BLANK,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(4, infoPage.getTotalCount());
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			4);
 	}
 
 	@Test
@@ -493,16 +457,14 @@ public class AssetListAssetEntryProviderTest {
 						true, false, "keywords", new String[] {"Fruit"})),
 				_serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				null, null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		_assertAssetListEntryResults(
-			infoPage, 3, _getAssetEntry(journalArticle1),
-			_getAssetEntry(journalArticle2), _getAssetEntry(journalArticle3));
+				QueryUtil.ALL_POS),
+			3, _getAssetEntry(journalArticle1), _getAssetEntry(journalArticle2),
+			_getAssetEntry(journalArticle3));
 
 		assetListEntry = _assetListEntryLocalService.addAssetListEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
@@ -513,14 +475,13 @@ public class AssetListAssetEntryProviderTest {
 					true, true, "keywords", new String[] {"Apple", "Fruit"})),
 			_serviceContext);
 
-		infoPage = _assetListAssetEntryProvider.getAssetEntriesInfoPage(
-			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-			new long[0][], null, StringPool.BLANK,
-			String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
 		_assertAssetListEntryResults(
-			infoPage, 1, _getAssetEntry(journalArticle1));
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				new long[0][], null, StringPool.BLANK,
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS),
+			1, _getAssetEntry(journalArticle1));
 	}
 
 	@Test
@@ -552,15 +513,13 @@ public class AssetListAssetEntryProviderTest {
 						true, false, "keywords", new String[] {"Apple"})),
 				_serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				null, null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		_assertAssetListEntryResults(
-			infoPage, 1, _getAssetEntry(journalArticle1));
+				QueryUtil.ALL_POS),
+			1, _getAssetEntry(journalArticle1));
 
 		assetListEntry = _assetListEntryLocalService.addAssetListEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
@@ -571,14 +530,13 @@ public class AssetListAssetEntryProviderTest {
 					true, false, "keywords", new String[] {"Apple", "Orange"})),
 			_serviceContext);
 
-		infoPage = _assetListAssetEntryProvider.getAssetEntriesInfoPage(
-			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-			new long[0][], null, StringPool.BLANK,
-			String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
 		_assertAssetListEntryResults(
-			infoPage, 2, _getAssetEntry(journalArticle1),
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				new long[0][], null, StringPool.BLANK,
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS),
+			2, _getAssetEntry(journalArticle1),
 			_getAssetEntry(journalArticle3));
 	}
 
@@ -609,15 +567,13 @@ public class AssetListAssetEntryProviderTest {
 						false, true, "keywords", new String[] {"Apple"})),
 				_serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				null, null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		_assertAssetListEntryResults(
-			infoPage, 2, _getAssetEntry(journalArticle2),
+				QueryUtil.ALL_POS),
+			2, _getAssetEntry(journalArticle2),
 			_getAssetEntry(journalArticle3));
 
 		assetListEntry = _assetListEntryLocalService.addAssetListEntry(
@@ -629,15 +585,14 @@ public class AssetListAssetEntryProviderTest {
 					false, true, "keywords", new String[] {"Apple", "Orange"})),
 			_serviceContext);
 
-		infoPage = _assetListAssetEntryProvider.getAssetEntriesInfoPage(
-			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-			new long[0][], null, StringPool.BLANK,
-			String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
 		_assertAssetListEntryResults(
-			infoPage, 3, _getAssetEntry(journalArticle1),
-			_getAssetEntry(journalArticle2), _getAssetEntry(journalArticle3));
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				new long[0][], null, StringPool.BLANK,
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS),
+			3, _getAssetEntry(journalArticle1), _getAssetEntry(journalArticle2),
+			_getAssetEntry(journalArticle3));
 	}
 
 	@Test
@@ -701,15 +656,15 @@ public class AssetListAssetEntryProviderTest {
 
 	@Test
 	public void testGetDynamicAssetEntriesByKeywords() throws Exception {
-		JournalTestUtil.addArticle(
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "title1",
 			RandomTestUtil.randomString());
-		JournalTestUtil.addArticle(
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "title2",
 			RandomTestUtil.randomString());
-		JournalTestUtil.addArticle(
+		JournalArticle journalArticle3 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "title3",
 			RandomTestUtil.randomString());
@@ -720,22 +675,21 @@ public class AssetListAssetEntryProviderTest {
 				_group.getGroupId(), RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				null, null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		Assert.assertEquals(3, infoPage.getTotalCount());
-
-		infoPage = _assetListAssetEntryProvider.getAssetEntriesInfoPage(
-			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-			new long[0][], null, "title1",
-			String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(1, infoPage.getTotalCount());
+				QueryUtil.ALL_POS),
+			3, _getAssetEntry(journalArticle1), _getAssetEntry(journalArticle2),
+			_getAssetEntry(journalArticle3));
+		_assertAssetListEntryResults(
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				new long[0][], null, "title1",
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS),
+			1, _getAssetEntry(journalArticle1));
 	}
 
 	@Test
@@ -750,11 +704,11 @@ public class AssetListAssetEntryProviderTest {
 		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
-		_addJournalArticle(
+		JournalArticle journalArticle1 = _addJournalArticle(
 			new long[] {
 				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
 			});
-		_addJournalArticle(
+		JournalArticle journalArticle2 = _addJournalArticle(
 			new long[] {
 				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
 			});
@@ -770,7 +724,7 @@ public class AssetListAssetEntryProviderTest {
 				_group.getGroupId(), RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {
@@ -779,9 +733,9 @@ public class AssetListAssetEntryProviderTest {
 				},
 				null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		Assert.assertEquals(2, infoPage.getTotalCount());
+				QueryUtil.ALL_POS),
+			2, _getAssetEntry(journalArticle1),
+			_getAssetEntry(journalArticle2));
 	}
 
 	@Test
@@ -794,12 +748,14 @@ public class AssetListAssetEntryProviderTest {
 		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
-		_addJournalArticle(new long[] {assetCategory1.getCategoryId()});
+		JournalArticle journalArticle1 = _addJournalArticle(
+			new long[] {assetCategory1.getCategoryId()});
 
 		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
-		_addJournalArticle(new long[] {assetCategory2.getCategoryId()});
+		JournalArticle journalArticle2 = _addJournalArticle(
+			new long[] {assetCategory2.getCategoryId()});
 
 		AssetCategory assetCategory3 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
@@ -812,7 +768,7 @@ public class AssetListAssetEntryProviderTest {
 				_group.getGroupId(), RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {
@@ -823,9 +779,9 @@ public class AssetListAssetEntryProviderTest {
 				},
 				null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		Assert.assertEquals(2, infoPage.getTotalCount());
+				QueryUtil.ALL_POS),
+			2, _getAssetEntry(journalArticle1),
+			_getAssetEntry(journalArticle2));
 	}
 
 	@Test
@@ -838,7 +794,8 @@ public class AssetListAssetEntryProviderTest {
 		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
-		_addJournalArticle(new long[] {assetCategory1.getCategoryId()});
+		JournalArticle journalArticle = _addJournalArticle(
+			new long[] {assetCategory1.getCategoryId()});
 
 		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
@@ -856,14 +813,13 @@ public class AssetListAssetEntryProviderTest {
 				_group.getGroupId(), RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {{assetCategory1.getCategoryId()}}, null,
 				StringPool.BLANK, String.valueOf(TestPropsValues.getUserId()),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(1, infoPage.getTotalCount());
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			1, _getAssetEntry(journalArticle));
 	}
 
 	@Test
@@ -897,14 +853,13 @@ public class AssetListAssetEntryProviderTest {
 		AssetCategory assetCategory4 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {{assetCategory4.getCategoryId()}}, null,
 				StringPool.BLANK, String.valueOf(TestPropsValues.getUserId()),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(0, infoPage.getTotalCount());
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			0);
 	}
 
 	@Test
@@ -940,13 +895,12 @@ public class AssetListAssetEntryProviderTest {
 				).buildString(),
 				_serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				null, null, StringPool.BLANK, StringPool.BLANK,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(3, infoPage.getTotalCount());
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			3);
 	}
 
 	@Test
@@ -999,13 +953,12 @@ public class AssetListAssetEntryProviderTest {
 				).buildString(),
 				_serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				null, null, StringPool.BLANK, StringPool.BLANK,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(3, infoPage.getTotalCount());
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			3);
 	}
 
 	@Test
@@ -1014,25 +967,19 @@ public class AssetListAssetEntryProviderTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, _serviceContext);
 
-		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle1.getResourcePrimKey());
+		AssetEntry assetEntry1 = _getAssetEntry(journalArticle1);
 
 		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, _serviceContext);
 
-		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle2.getResourcePrimKey());
+		AssetEntry assetEntry2 = _getAssetEntry(journalArticle2);
 
 		JournalArticle journalArticle3 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, _serviceContext);
 
-		AssetEntry assetEntry3 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle3.getResourcePrimKey());
+		AssetEntry assetEntry3 = _getAssetEntry(journalArticle3);
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
@@ -1049,19 +996,14 @@ public class AssetListAssetEntryProviderTest {
 			assetListEntry.getAssetListEntryId(), assetEntryIds,
 			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				null, null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		Assert.assertEquals(3, infoPage.getTotalCount());
-
-		for (AssetEntry assetEntry : infoPage.getPageItems()) {
-			Assert.assertTrue(
-				ArrayUtil.contains(assetEntryIds, assetEntry.getEntryId()));
-		}
+				QueryUtil.ALL_POS),
+			3, _getAssetEntry(journalArticle1), _getAssetEntry(journalArticle2),
+			_getAssetEntry(journalArticle3));
 	}
 
 	@Test
@@ -1071,27 +1013,21 @@ public class AssetListAssetEntryProviderTest {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "title1",
 			RandomTestUtil.randomString());
 
-		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle1.getResourcePrimKey());
+		AssetEntry assetEntry1 = _getAssetEntry(journalArticle1);
 
 		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "title2",
 			RandomTestUtil.randomString());
 
-		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle2.getResourcePrimKey());
+		AssetEntry assetEntry2 = _getAssetEntry(journalArticle2);
 
 		JournalArticle journalArticle3 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "title3",
 			RandomTestUtil.randomString());
 
-		AssetEntry assetEntry3 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle3.getResourcePrimKey());
+		AssetEntry assetEntry3 = _getAssetEntry(journalArticle3);
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
@@ -1108,22 +1044,22 @@ public class AssetListAssetEntryProviderTest {
 			assetListEntry.getAssetListEntryId(), assetEntryIds,
 			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				null, null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS),
+			3, _getAssetEntry(journalArticle1), _getAssetEntry(journalArticle2),
+			_getAssetEntry(journalArticle3));
 
-		Assert.assertEquals(3, infoPage.getTotalCount());
-
-		infoPage = _assetListAssetEntryProvider.getAssetEntriesInfoPage(
-			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-			new long[0][], null, "title1",
-			String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(1, infoPage.getTotalCount());
+		_assertAssetListEntryResults(
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				new long[0][], null, "title1",
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS),
+			1, _getAssetEntry(journalArticle1));
 	}
 
 	@Test
@@ -1143,18 +1079,14 @@ public class AssetListAssetEntryProviderTest {
 				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
 			});
 
-		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle1.getResourcePrimKey());
+		AssetEntry assetEntry1 = _getAssetEntry(journalArticle1);
 
 		JournalArticle journalArticle2 = _addJournalArticle(
 			new long[] {
 				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
 			});
 
-		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle2.getResourcePrimKey());
+		AssetEntry assetEntry2 = _getAssetEntry(journalArticle2);
 
 		AssetCategory assetCategory3 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
@@ -1162,9 +1094,7 @@ public class AssetListAssetEntryProviderTest {
 		JournalArticle journalArticle3 = _addJournalArticle(
 			new long[] {assetCategory3.getCategoryId()});
 
-		AssetEntry assetEntry3 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle3.getResourcePrimKey());
+		AssetEntry assetEntry3 = _getAssetEntry(journalArticle3);
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
@@ -1181,7 +1111,7 @@ public class AssetListAssetEntryProviderTest {
 			assetListEntry.getAssetListEntryId(), assetEntryIds,
 			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {
@@ -1190,14 +1120,9 @@ public class AssetListAssetEntryProviderTest {
 				},
 				null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		Assert.assertEquals(2, infoPage.getTotalCount());
-
-		for (AssetEntry assetEntry : infoPage.getPageItems()) {
-			Assert.assertTrue(
-				ArrayUtil.contains(assetEntryIds, assetEntry.getEntryId()));
-		}
+				QueryUtil.ALL_POS),
+			2, _getAssetEntry(journalArticle1),
+			_getAssetEntry(journalArticle2));
 	}
 
 	@Test
@@ -1213,9 +1138,7 @@ public class AssetListAssetEntryProviderTest {
 		JournalArticle journalArticle1 = _addJournalArticle(
 			new long[] {assetCategory1.getCategoryId()});
 
-		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle1.getResourcePrimKey());
+		AssetEntry assetEntry1 = _getAssetEntry(journalArticle1);
 
 		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
@@ -1223,9 +1146,7 @@ public class AssetListAssetEntryProviderTest {
 		JournalArticle journalArticle2 = _addJournalArticle(
 			new long[] {assetCategory2.getCategoryId()});
 
-		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle2.getResourcePrimKey());
+		AssetEntry assetEntry2 = _getAssetEntry(journalArticle2);
 
 		AssetCategory assetCategory3 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
@@ -1233,9 +1154,7 @@ public class AssetListAssetEntryProviderTest {
 		JournalArticle journalArticle3 = _addJournalArticle(
 			new long[] {assetCategory3.getCategoryId()});
 
-		AssetEntry assetEntry3 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle3.getResourcePrimKey());
+		AssetEntry assetEntry3 = _getAssetEntry(journalArticle3);
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
@@ -1252,7 +1171,7 @@ public class AssetListAssetEntryProviderTest {
 			assetListEntry.getAssetListEntryId(), assetEntryIds,
 			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {
@@ -1263,17 +1182,9 @@ public class AssetListAssetEntryProviderTest {
 				},
 				null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		Assert.assertEquals(2, infoPage.getTotalCount());
-
-		List<AssetEntry> assetEntries =
-			(List<AssetEntry>)infoPage.getPageItems();
-
-		for (AssetEntry assetEntry : assetEntries) {
-			Assert.assertTrue(
-				ArrayUtil.contains(assetEntryIds, assetEntry.getEntryId()));
-		}
+				QueryUtil.ALL_POS),
+			2, _getAssetEntry(journalArticle1),
+			_getAssetEntry(journalArticle2));
 	}
 
 	@Test
@@ -1289,9 +1200,7 @@ public class AssetListAssetEntryProviderTest {
 		JournalArticle journalArticle1 = _addJournalArticle(
 			new long[] {assetCategory1.getCategoryId()});
 
-		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle1.getResourcePrimKey());
+		AssetEntry assetEntry1 = _getAssetEntry(journalArticle1);
 
 		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
@@ -1299,9 +1208,7 @@ public class AssetListAssetEntryProviderTest {
 		JournalArticle journalArticle2 = _addJournalArticle(
 			new long[] {assetCategory2.getCategoryId()});
 
-		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle2.getResourcePrimKey());
+		AssetEntry assetEntry2 = _getAssetEntry(journalArticle2);
 
 		AssetCategory assetCategory3 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
@@ -1309,9 +1216,7 @@ public class AssetListAssetEntryProviderTest {
 		JournalArticle journalArticle3 = _addJournalArticle(
 			new long[] {assetCategory3.getCategoryId()});
 
-		AssetEntry assetEntry3 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle3.getResourcePrimKey());
+		AssetEntry assetEntry3 = _getAssetEntry(journalArticle3);
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
@@ -1328,14 +1233,13 @@ public class AssetListAssetEntryProviderTest {
 			assetListEntry.getAssetListEntryId(), assetEntryIds,
 			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {{assetCategory1.getCategoryId()}}, null,
 				StringPool.BLANK, String.valueOf(TestPropsValues.getUserId()),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(1, infoPage.getTotalCount());
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			1, _getAssetEntry(journalArticle1));
 	}
 
 	@Test
@@ -1351,9 +1255,7 @@ public class AssetListAssetEntryProviderTest {
 		JournalArticle journalArticle1 = _addJournalArticle(
 			new long[] {assetCategory1.getCategoryId()});
 
-		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle1.getResourcePrimKey());
+		AssetEntry assetEntry1 = _getAssetEntry(journalArticle1);
 
 		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
@@ -1361,9 +1263,7 @@ public class AssetListAssetEntryProviderTest {
 		JournalArticle journalArticle2 = _addJournalArticle(
 			new long[] {assetCategory2.getCategoryId()});
 
-		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle2.getResourcePrimKey());
+		AssetEntry assetEntry2 = _getAssetEntry(journalArticle2);
 
 		AssetCategory assetCategory3 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
@@ -1371,9 +1271,7 @@ public class AssetListAssetEntryProviderTest {
 		JournalArticle journalArticle3 = _addJournalArticle(
 			new long[] {assetCategory3.getCategoryId()});
 
-		AssetEntry assetEntry3 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle3.getResourcePrimKey());
+		AssetEntry assetEntry3 = _getAssetEntry(journalArticle3);
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
@@ -1393,14 +1291,13 @@ public class AssetListAssetEntryProviderTest {
 		AssetCategory assetCategory4 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
-		InfoPage<AssetEntry> infoPage =
+		_assertAssetListEntryResults(
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {{assetCategory4.getCategoryId()}}, null,
 				StringPool.BLANK, String.valueOf(TestPropsValues.getUserId()),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(0, infoPage.getTotalCount());
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			0);
 	}
 
 	@Test
@@ -1456,16 +1353,8 @@ public class AssetListAssetEntryProviderTest {
 				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
 				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(2, infoPage.getTotalCount());
-
-		List<AssetEntry> assetEntries =
-			(List<AssetEntry>)infoPage.getPageItems();
-
-		AssetEntry assetEntry = assetEntries.get(0);
-
-		Assert.assertEquals(
-			assetEntry.getTitle(LocaleUtil.US),
-			journalArticle.getTitle(LocaleUtil.US));
+		_assertAssetListEntryResults(
+			infoPage, 2, _getAssetEntry(journalArticle));
 	}
 
 	@Test
@@ -1494,9 +1383,7 @@ public class AssetListAssetEntryProviderTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle1.getResourcePrimKey());
+		AssetEntry assetEntry1 = _getAssetEntry(journalArticle1);
 
 		AssetListTestUtil.addAssetListEntryAssetEntryRel(
 			_group.getGroupId(), assetEntry1, assetListEntry,
@@ -1513,9 +1400,7 @@ public class AssetListAssetEntryProviderTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle2.getResourcePrimKey());
+		AssetEntry assetEntry2 = _getAssetEntry(journalArticle2);
 
 		AssetListTestUtil.addAssetListEntryAssetEntryRel(
 			_group.getGroupId(), assetEntry2, assetListEntry,
@@ -1525,9 +1410,7 @@ public class AssetListAssetEntryProviderTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		AssetEntry assetEntry3 = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(),
-			journalArticle3.getResourcePrimKey());
+		AssetEntry assetEntry3 = _getAssetEntry(journalArticle3);
 
 		AssetListTestUtil.addAssetListEntryAssetEntryRel(
 			_group.getGroupId(), assetEntry3, assetListEntry,
@@ -1744,9 +1627,6 @@ public class AssetListAssetEntryProviderTest {
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
 	private AssetListAssetEntryProvider _assetListAssetEntryProvider;

@@ -6,8 +6,10 @@
 package com.liferay.asset.list.asset.entry.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
@@ -15,6 +17,7 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.test.util.AssetListTestUtil;
+import com.liferay.asset.publisher.util.AssetQueryRule;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
@@ -45,11 +48,13 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -459,6 +464,239 @@ public class AssetListAssetEntryProviderTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(4, infoPage.getTotalCount());
+	}
+
+	@Test
+	public void testGetDynamicAssetEntriesByContainsAllKeywords()
+		throws Exception {
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Apple Fruit",
+			RandomTestUtil.randomString());
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Banana Fruit",
+			RandomTestUtil.randomString());
+		JournalArticle journalArticle3 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Orange Fruit",
+			RandomTestUtil.randomString());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_DYNAMIC,
+				_getTypeSettings(
+					new AssetQueryRule(
+						true, false, "keywords", new String[] {"Fruit"})),
+				_serviceContext);
+
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null, null, StringPool.BLANK,
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		_assertAssetListEntryResults(
+			infoPage, 3, _getAssetEntry(journalArticle1),
+			_getAssetEntry(journalArticle2), _getAssetEntry(journalArticle3));
+
+		assetListEntry = _assetListEntryLocalService.addAssetListEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			AssetListEntryTypeConstants.TYPE_DYNAMIC,
+			_getTypeSettings(
+				new AssetQueryRule(
+					true, true, "keywords", new String[] {"Apple", "Fruit"})),
+			_serviceContext);
+
+		infoPage = _assetListAssetEntryProvider.getAssetEntriesInfoPage(
+			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+			new long[0][], null, StringPool.BLANK,
+			String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		_assertAssetListEntryResults(
+			infoPage, 1, _getAssetEntry(journalArticle1));
+	}
+
+	@Test
+	public void testGetDynamicAssetEntriesByContainsAnyKeywords()
+		throws Exception {
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Apple Fruit",
+			RandomTestUtil.randomString());
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Banana Fruit",
+			RandomTestUtil.randomString());
+
+		JournalArticle journalArticle3 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Orange Fruit",
+			RandomTestUtil.randomString());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_DYNAMIC,
+				_getTypeSettings(
+					new AssetQueryRule(
+						true, false, "keywords", new String[] {"Apple"})),
+				_serviceContext);
+
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null, null, StringPool.BLANK,
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		_assertAssetListEntryResults(
+			infoPage, 1, _getAssetEntry(journalArticle1));
+
+		assetListEntry = _assetListEntryLocalService.addAssetListEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			AssetListEntryTypeConstants.TYPE_DYNAMIC,
+			_getTypeSettings(
+				new AssetQueryRule(
+					true, false, "keywords", new String[] {"Apple", "Orange"})),
+			_serviceContext);
+
+		infoPage = _assetListAssetEntryProvider.getAssetEntriesInfoPage(
+			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+			new long[0][], null, StringPool.BLANK,
+			String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		_assertAssetListEntryResults(
+			infoPage, 2, _getAssetEntry(journalArticle1),
+			_getAssetEntry(journalArticle3));
+	}
+
+	@Test
+	public void testGetDynamicAssetEntriesByDoesNotContainsAllKeywords()
+		throws Exception {
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Apple Fruit",
+			RandomTestUtil.randomString());
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Banana Fruit",
+			RandomTestUtil.randomString());
+		JournalArticle journalArticle3 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Orange Fruit",
+			RandomTestUtil.randomString());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_DYNAMIC,
+				_getTypeSettings(
+					new AssetQueryRule(
+						false, true, "keywords", new String[] {"Apple"})),
+				_serviceContext);
+
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null, null, StringPool.BLANK,
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		_assertAssetListEntryResults(
+			infoPage, 2, _getAssetEntry(journalArticle2),
+			_getAssetEntry(journalArticle3));
+
+		assetListEntry = _assetListEntryLocalService.addAssetListEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			AssetListEntryTypeConstants.TYPE_DYNAMIC,
+			_getTypeSettings(
+				new AssetQueryRule(
+					false, true, "keywords", new String[] {"Apple", "Orange"})),
+			_serviceContext);
+
+		infoPage = _assetListAssetEntryProvider.getAssetEntriesInfoPage(
+			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+			new long[0][], null, StringPool.BLANK,
+			String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		_assertAssetListEntryResults(
+			infoPage, 3, _getAssetEntry(journalArticle1),
+			_getAssetEntry(journalArticle2), _getAssetEntry(journalArticle3));
+	}
+
+	@Test
+	public void testGetDynamicAssetEntriesByDoesNotContainsAnyKeywords()
+		throws Exception {
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Apple Fruit",
+			RandomTestUtil.randomString());
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Banana Fruit",
+			RandomTestUtil.randomString());
+		JournalArticle journalArticle3 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Orange Fruit",
+			RandomTestUtil.randomString());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_DYNAMIC,
+				_getTypeSettings(
+					new AssetQueryRule(
+						false, false, "keywords", new String[] {"Apple"})),
+				_serviceContext);
+
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null, null, StringPool.BLANK,
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		_assertAssetListEntryResults(
+			infoPage, 2, _getAssetEntry(journalArticle2),
+			_getAssetEntry(journalArticle3));
+
+		assetListEntry = _assetListEntryLocalService.addAssetListEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			AssetListEntryTypeConstants.TYPE_DYNAMIC,
+			_getTypeSettings(
+				new AssetQueryRule(
+					false, false, "keywords",
+					new String[] {"Apple", "Orange"})),
+			_serviceContext);
+
+		infoPage = _assetListAssetEntryProvider.getAssetEntriesInfoPage(
+			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+			new long[0][], null, StringPool.BLANK,
+			String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		_assertAssetListEntryResults(
+			infoPage, 1, _getAssetEntry(journalArticle2));
 	}
 
 	@Test
@@ -1374,6 +1612,73 @@ public class AssetListAssetEntryProviderTest {
 
 		return _addSegmentsEntry(
 			groupId, String.format("(lastName eq '%s')", lastName));
+	}
+
+	private void _assertAssetListEntryResults(
+		InfoPage<AssetEntry> infoPage, int expectedTotalCount,
+		AssetEntry... expectedAssetEntries) {
+
+		Assert.assertEquals(expectedTotalCount, infoPage.getTotalCount());
+
+		List<AssetEntry> assetEntries =
+			(List<AssetEntry>)infoPage.getPageItems();
+
+		for (AssetEntry expectedAssetEntry : expectedAssetEntries) {
+			Assert.assertTrue(assetEntries.contains(expectedAssetEntry));
+		}
+	}
+
+	private AssetEntry _getAssetEntry(JournalArticle journalArticle)
+		throws Exception {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				JournalArticle.class.getName());
+
+		return assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+	}
+
+	private String _getTypeSettings(AssetQueryRule... assetQueryRules) {
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"anyAssetType",
+			String.valueOf(_portal.getClassNameId(JournalArticle.class))
+		).put(
+			"classNameIds", JournalArticle.class.getName()
+		).put(
+			"groupIds", String.valueOf(_group.getGroupId())
+		).put(
+			"orderByColumn1", "modifiedDate"
+		).put(
+			"orderByColumn2", "title"
+		).put(
+			"orderByType1", "ASC"
+		).put(
+			"orderByType2", "ASC"
+		).build();
+
+		for (int i = 0; i < assetQueryRules.length; i++) {
+			AssetQueryRule assetQueryRule = assetQueryRules[i];
+
+			unicodeProperties.putAll(
+				HashMapBuilder.put(
+					"queryAndOperator" + i,
+					String.valueOf(assetQueryRule.isAndOperator())
+				).put(
+					"queryContains" + i,
+					String.valueOf(assetQueryRule.isContains())
+				).put(
+					"queryName" + i, assetQueryRule.getName()
+				).put(
+					"queryValues" + i,
+					StringUtil.merge(assetQueryRule.getValues())
+				).build());
+		}
+
+		return unicodeProperties.toString();
 	}
 
 	private String _getTypeSettings(String queryValue) {

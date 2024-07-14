@@ -61,6 +61,15 @@ public class LayoutPublishedSearchTest {
 	}
 
 	@Test
+	public void testContentLayoutWithoutPublishedVersion() throws Exception {
+		String name = RandomTestUtil.randomString();
+
+		LayoutTestUtil.addTypeContentLayout(_group, name);
+
+		_layoutIndexerFixture.searchNoOne(name);
+	}
+
+	@Test
 	public void testPrivateContentLayoutWithInlineContent() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(
 			_group, true, false);

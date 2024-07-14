@@ -61,21 +61,7 @@ public class LayoutPublishedSearchTest {
 	}
 
 	@Test
-	public void testPublishedPageSearch() throws Exception {
-		String name = RandomTestUtil.randomString();
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group, name);
-
-		_layoutIndexerFixture.searchNoOne(name);
-
-		ContentLayoutTestUtil.publishLayout(
-			layout.fetchDraftLayout(), layout);
-
-		_layoutIndexerFixture.searchOnlyOne(name);
-	}
-
-	@Test
-	public void testPublishedPrivatePageSearch() throws Exception {
+	public void testPrivateContentLayoutWithInlineContent() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(
 			_group, true, false);
 
@@ -85,10 +71,22 @@ public class LayoutPublishedSearchTest {
 
 		_layoutIndexerFixture.searchNoOne(content);
 
-		ContentLayoutTestUtil.publishLayout(
-			layout.fetchDraftLayout(), layout);
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
 		_layoutIndexerFixture.searchOnlyOne(content);
+	}
+
+	@Test
+	public void testPublicContentLayoutWithInlineContent() throws Exception {
+		String name = RandomTestUtil.randomString();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group, name);
+
+		_layoutIndexerFixture.searchNoOne(name);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		_layoutIndexerFixture.searchOnlyOne(name);
 	}
 
 	private void _setUpLayoutIndexerFixture() {

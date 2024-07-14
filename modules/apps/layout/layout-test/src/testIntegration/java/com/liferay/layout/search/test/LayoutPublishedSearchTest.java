@@ -13,6 +13,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -22,40 +23,22 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.servlet.PortletServlet;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Ricardo Couso
@@ -85,7 +68,8 @@ public class LayoutPublishedSearchTest {
 
 		_layoutIndexerFixture.searchNoOne(name);
 
-		_publishLayout(layout);
+		ContentLayoutTestUtil.publishLayout(
+			layout.fetchDraftLayout(), layout);
 
 		_layoutIndexerFixture.searchOnlyOne(name);
 	}
@@ -101,79 +85,10 @@ public class LayoutPublishedSearchTest {
 
 		_layoutIndexerFixture.searchNoOne(content);
 
-		_publishLayout(layout);
+		ContentLayoutTestUtil.publishLayout(
+			layout.fetchDraftLayout(), layout);
 
 		_layoutIndexerFixture.searchOnlyOne(content);
-	}
-
-	private HttpServletRequest _getHttpServletRequest(
-		ThemeDisplay themeDisplay) {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE,
-			new MockLiferayPortletRenderResponse());
-
-		themeDisplay.setRequest(mockHttpServletRequest);
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return mockHttpServletRequest;
-	}
-
-	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(layout.getCompanyId()));
-		themeDisplay.setLayout(layout);
-
-		LayoutSet layoutSet = _group.getPublicLayoutSet();
-
-		themeDisplay.setLayoutSet(layoutSet);
-		themeDisplay.setLookAndFeel(
-			layoutSet.getTheme(), layoutSet.getColorScheme());
-
-		themeDisplay.setRealUser(TestPropsValues.getUser());
-		themeDisplay.setResponse(new MockHttpServletResponse());
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		return themeDisplay;
-	}
-
-	private void _publishLayout(Layout layout) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				layout.getGroup(), TestPropsValues.getUserId());
-
-		ThemeDisplay themeDisplay = _getThemeDisplay(layout);
-
-		HttpServletRequest httpServletRequest = _getHttpServletRequest(
-			themeDisplay);
-
-		serviceContext.setRequest(httpServletRequest);
-
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
-
-		mockLiferayPortletActionRequest.setAttribute(
-			PortletServlet.PORTLET_SERVLET_REQUEST, httpServletRequest);
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "_publishLayout",
-			new Class<?>[] {
-				Layout.class, Layout.class, ServiceContext.class, long.class
-			},
-			layout.fetchDraftLayout(), layout, serviceContext,
-			TestPropsValues.getUserId());
 	}
 
 	private void _setUpLayoutIndexerFixture() {
@@ -247,9 +162,6 @@ public class LayoutPublishedSearchTest {
 	}
 
 	@Inject
-	private CompanyLocalService _companyLocalService;
-
-	@Inject
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
 
@@ -264,11 +176,6 @@ public class LayoutPublishedSearchTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Inject(
-		filter = "mvc.command.name=/layout_content_page_editor/publish_layout"
-	)
-	private MVCActionCommand _mvcActionCommand;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(service = FragmentRenderer.class)
-public class CategoriesInputFragmentRenderer implements FragmentRenderer {
+public class CategoriesInputFragmentRenderer extends BaseInputFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -170,6 +170,8 @@ public class CategoriesInputFragmentRenderer implements FragmentRenderer {
 				new AssetCategoriesSelectorTag();
 
 			assetCategoriesSelectorTag.setClassName(className);
+			assetCategoriesSelectorTag.setClassPK(
+				getClassPK(className, httpServletRequest));
 			assetCategoriesSelectorTag.setClassTypePK(
 				formStyledLayoutStructureItem.getClassTypeId());
 

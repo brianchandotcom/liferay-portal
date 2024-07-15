@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(service = FragmentRenderer.class)
-public class TagsInputFragmentRenderer implements FragmentRenderer {
+public class TagsInputFragmentRenderer extends BaseInputFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -136,6 +136,8 @@ public class TagsInputFragmentRenderer implements FragmentRenderer {
 				new AssetTagsSelectorTag();
 
 			assetTagsSelectorTag.setClassName(className);
+			assetTagsSelectorTag.setClassPK(
+				getClassPK(className, httpServletRequest));
 
 			InfoItemScopeProvider<Object> infoItemScopeProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(

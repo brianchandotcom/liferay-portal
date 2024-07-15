@@ -181,10 +181,7 @@ public class CommerceFrontendJsDynamicInclude extends BaseDynamicInclude {
 						showUnselectableOptions();
 				}
 			),
-			";</script><link href=\"",
-			_portal.getPathProxy() + httpServletRequest.getContextPath(),
-			"/o/commerce-frontend-js/styles/main.css\" rel=\"stylesheet\" ",
-			"type=\"text/css\" />");
+			";</script>");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

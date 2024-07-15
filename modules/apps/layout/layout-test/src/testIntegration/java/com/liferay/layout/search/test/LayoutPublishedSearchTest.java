@@ -19,7 +19,6 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -98,6 +97,34 @@ public class LayoutPublishedSearchTest {
 		_layoutIndexerFixture.searchOnlyOne(name);
 	}
 
+	private void _addFragmentEntryLinkToLayout(
+			long fragmentEntryLinkId, long plid, long segmentsExperienceId)
+		throws Exception {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(_group.getGroupId(), plid);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		LayoutStructureItem rowStyledLayoutStructureItem =
+			layoutStructure.addRowStyledLayoutStructureItem(
+				layoutStructure.getMainItemId(), 0, 1);
+
+		LayoutStructureItem columnLayoutStructureItem =
+			layoutStructure.addColumnLayoutStructureItem(
+				rowStyledLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addFragmentStyledLayoutStructureItem(
+			fragmentEntryLinkId, columnLayoutStructureItem.getItemId(), 0);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), plid, segmentsExperienceId,
+				layoutStructure.toString());
+	}
+
 	private void _setUpLayoutIndexerFixture() {
 		_layoutIndexerFixture = new IndexerFixture<>(Layout.class);
 	}
@@ -135,35 +162,16 @@ public class LayoutPublishedSearchTest {
 							"defaultValue", "default value"
 						).put(
 							layout.getDefaultLanguageId(), value
-						))).toString(), StringPool.BLANK, 0,
+						))
+				).toString(),
+				StringPool.BLANK, 0,
 				contributedFragmentEntry.getFragmentEntryKey(),
 				contributedFragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(), draftLayout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
-
-		LayoutStructureItem rowStyledLayoutStructureItem =
-			layoutStructure.addRowStyledLayoutStructureItem(
-				layoutStructure.getMainItemId(), 0, 1);
-
-		LayoutStructureItem columnLayoutStructureItem =
-			layoutStructure.addColumnLayoutStructureItem(
-				rowStyledLayoutStructureItem.getItemId(), 0);
-
-		layoutStructure.addFragmentStyledLayoutStructureItem(
+		_addFragmentEntryLinkToLayout(
 			inlineFragmentEntryLink.getFragmentEntryLinkId(),
-			columnLayoutStructureItem.getItemId(), 0);
-
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), draftLayout.getPlid(),
-				defaultSegmentsExperienceId, layoutStructure.toString());
+			draftLayout.getPlid(), defaultSegmentsExperienceId);
 	}
 
 	@Inject

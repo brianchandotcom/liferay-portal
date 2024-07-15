@@ -17,6 +17,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -52,6 +53,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -68,6 +70,57 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Lourdes Fernández Besada
  */
 public class ContentLayoutTestUtil {
+
+	public static String addCollectionDisplayToLayout(
+			JSONObject collectionJSONObject, Layout layout,
+			LayoutStructureProvider layoutStructureProvider,
+			String parentItemId, int position, long segmentsExperienceId,
+			FragmentEntryLink... fragmentEntryLinks)
+		throws Exception {
+
+		LayoutStructure layoutStructure =
+			layoutStructureProvider.getLayoutStructure(
+				layout.getPlid(), segmentsExperienceId);
+
+		if (Validator.isNull(parentItemId)) {
+			parentItemId = layoutStructure.getMainItemId();
+		}
+
+		JSONObject addItemJSONObject = addItemToLayout(
+			JSONUtil.put(
+				"collection", collectionJSONObject
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_COLLECTION, layout, parentItemId,
+			position, segmentsExperienceId);
+
+		layoutStructure = layoutStructureProvider.getLayoutStructure(
+			layout.getPlid(), segmentsExperienceId);
+
+		String itemId = addItemJSONObject.getString("addedItemId");
+
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)
+					layoutStructure.getLayoutStructureItem(itemId);
+
+		List<String> childrenItemIds =
+			collectionStyledLayoutStructureItem.getChildrenItemIds();
+
+		for (int i = 0; i < fragmentEntryLinks.length; i++) {
+			FragmentEntryLink fragmentEntryLink = fragmentEntryLinks[i];
+
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				childrenItemIds.get(0), i);
+		}
+
+		LayoutPageTemplateStructureLocalServiceUtil.
+			updateLayoutPageTemplateStructureData(
+				layout.getGroupId(), layout.getPlid(), segmentsExperienceId,
+				layoutStructure.toString());
+
+		return itemId;
+	}
 
 	public static JSONObject addFormToLayout(
 			boolean addCaptcha, String classNameId, String classTypeId,

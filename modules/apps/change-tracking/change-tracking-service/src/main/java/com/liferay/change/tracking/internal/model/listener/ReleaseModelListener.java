@@ -10,6 +10,7 @@ import com.liferay.change.tracking.internal.conflict.MissingRequirementConflictI
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.model.CTSchemaVersion;
+import com.liferay.change.tracking.model.CTSchemaVersionTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -63,6 +65,28 @@ public class ReleaseModelListener extends BaseModelListener<Release> {
 
 				_expireCTCollections();
 			}
+		}
+	}
+
+	@Activate
+	protected void activate() {
+		List<CTSchemaVersion> ctSchemaVersions =
+			_ctSchemaVersionLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					CTSchemaVersionTable.INSTANCE
+				).from(
+					CTSchemaVersionTable.INSTANCE
+				).orderBy(
+					CTSchemaVersionTable.INSTANCE.schemaVersionId.descending()
+				).limit(
+					0, 1
+				));
+
+		if (!ctSchemaVersions.isEmpty() &&
+			!_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
+				ctSchemaVersions.get(0), false)) {
+
+			_expireCTCollections();
 		}
 	}
 
@@ -121,8 +145,11 @@ public class ReleaseModelListener extends BaseModelListener<Release> {
 					).from(
 						CTCollectionTable.INSTANCE
 					).where(
-						CTCollectionTable.INSTANCE.status.eq(
-							WorkflowConstants.STATUS_DRAFT)
+						CTCollectionTable.INSTANCE.status.in(
+							new Integer[] {
+								WorkflowConstants.STATUS_DRAFT,
+								WorkflowConstants.STATUS_PENDING
+							})
 					))) {
 
 			_expireCTCollection(ctCollection);

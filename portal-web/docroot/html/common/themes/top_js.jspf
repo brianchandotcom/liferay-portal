@@ -134,8 +134,14 @@
 			}
 			%>
 
+			let _cache = {};
+
+			if (Liferay && Liferay.Language && Liferay.Language._cache) {
+				_cache = Liferay.Language._cache;
+			}
+
 			Liferay.Language = {
-				_cache: {},
+				_cache,
 				available,
 				direction,
 				get: function(key) {

@@ -14,6 +14,8 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Locale;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -47,6 +49,25 @@ public class NumericDDMFormFieldValueValidatorTest {
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"integer", localizedValue);
+
+		_numericDDMFormFieldValueValidator.validate(
+			ddmFormField, ddmFormFieldValue.getValue());
+	}
+
+	@Test
+	public void testValidationWithNegativeNumber() throws Exception {
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			"double", "double", "numeric", "double", true, false, false);
+
+		Locale locale = new Locale("eu", "ES");
+
+		LocalizedValue localizedValue = new LocalizedValue(locale);
+
+		localizedValue.addString(locale, "-2,505");
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"double", localizedValue);
 
 		_numericDDMFormFieldValueValidator.validate(
 			ddmFormField, ddmFormFieldValue.getValue());

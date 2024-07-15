@@ -89,7 +89,7 @@ test('LPS-121199 can assign usage to default even if the default display page te
 }) => {
 	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	const displayPageTemplateName = 'dpt' + getRandomInt();
+	const displayPageTemplateName = 'basicWebContentDpt' + getRandomInt();
 
 	await displayPageTemplatesPage.publishNewTemplate({
 		contentSubtype: 'Basic Web Content',
@@ -156,7 +156,7 @@ test('LPS-121199 can assign usage to default even if the default display page te
 		defaultDisplayPageTemplateName
 	);
 
-	const displayPageTemplateName = 'dpt' + getRandomInt();
+	const displayPageTemplateName = 'basicWebContentDpt' + getRandomInt();
 
 	await displayPageTemplatesPage.publishNewTemplate({
 		contentSubtype: 'Basic Web Content',
@@ -211,7 +211,7 @@ test('LPS-121199 can assign multiple usages to default', async ({
 }) => {
 	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	const displayPageTemplateName = 'dpt' + getRandomInt();
+	const displayPageTemplateName = 'basicWebContentDpt' + getRandomInt();
 
 	await displayPageTemplatesPage.publishNewTemplate({
 		contentSubtype: 'Basic Web Content',
@@ -263,5 +263,52 @@ test('LPS-121199 can assign multiple usages to default', async ({
 
 	await assignToDefaultMenuItem.click();
 
-	await expect(page.getByText('There are no display page template usages.')).toBeVisible();
+	await expect(
+		page.getByText('There are no display page template usages.')
+	).toBeVisible();
+});
+
+test('LPS-123480 view usages for blogs entry', async ({
+	blogsEditBlogEntryPage,
+	displayPageTemplatesPage,
+	page,
+	site,
+}) => {
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+	const displayPageTemplateName = 'blogsEntryDpt' + getRandomInt();
+
+	await displayPageTemplatesPage.publishNewTemplate({
+		contentType: 'Blogs Entry',
+		name: displayPageTemplateName,
+	});
+
+	await blogsEditBlogEntryPage.goto(site.friendlyUrlPath);
+
+	const title = getRandomString();
+	const content = getRandomString();
+
+	await blogsEditBlogEntryPage.editBlogEntry({
+		content,
+		publish: false,
+		title,
+	});
+
+	await blogsEditBlogEntryPage.selectSpecificDisplayPage(
+		displayPageTemplateName
+	);
+
+	await blogsEditBlogEntryPage.publishBlogEntry();
+
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+	await displayPageTemplatesPage.goToDisplayPageTemplateAction(
+		'View Usages',
+		'1'
+	);
+
+	const rowCheckbox = page.locator(
+		`[aria-labelledby="_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_assetDisplayPageEntries_1"]`
+	);
+	await expect(rowCheckbox).toBeVisible();
 });

@@ -289,13 +289,10 @@ public class GroupImpl extends GroupBaseImpl {
 		boolean controlPanel) {
 
 		try {
-			Layout firstPublishedLayout = LayoutServiceUtil.fetchFirstLayout(
-				getGroupId(), privateLayout, true);
-
-			if ((firstPublishedLayout != null) ||
-				(isUser() &&
+			if ((isUser() &&
 				 (LayoutLocalServiceUtil.getLayoutsCount(this, privateLayout) >
-					 0))) {
+					 0)) ||
+				_hasPublishedLayout(privateLayout)) {
 
 				String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
 					LayoutSetLocalServiceUtil.getLayoutSet(
@@ -1287,6 +1284,17 @@ public class GroupImpl extends GroupBaseImpl {
 		}
 
 		return LayoutConstants.DEFAULT_PLID;
+	}
+
+	private boolean _hasPublishedLayout(boolean privateLayout) {
+		Layout layout = LayoutServiceUtil.fetchFirstLayout(
+			getGroupId(), privateLayout, true);
+
+		if (layout != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Group _NULL_STAGING_GROUP = new GroupImpl();

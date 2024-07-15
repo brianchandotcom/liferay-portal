@@ -73,7 +73,8 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 			absolutePath.endsWith("frontend-theme-unstyled/package.json")) {
 
 			_checkScript(
-				fileName, scriptsJSONObject, "build", false, "theme:build");
+				fileName, scriptsJSONObject, "build", false, "theme build",
+				"theme:build");
 		}
 		else {
 			_checkScript(

@@ -16,6 +16,8 @@ import {
 	compareCheckbox,
 } from 'commerce-frontend-js';
 
+import '../css/main.scss';
+
 export {default as searchBar} from './search_bar/SearchBar';
 export {default as searchResults} from './search_results/SearchResults';
 export {default as discontinuedLabelCPInstanceChangeHandler} from './discontinued_label/DiscontinuedLabelCPInstanceChangeHandler';

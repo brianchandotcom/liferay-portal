@@ -149,7 +149,9 @@ public class NewEnvTestRule implements TestRule {
 		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
 
 		for (String jvmArg : runtimeMXBean.getInputArguments()) {
-			if (jvmArg.startsWith("--add-opens")) {
+			if (jvmArg.startsWith("--add-opens") ||
+				jvmArg.contains("java.locale.providers")) {
+
 				arguments.add(jvmArg);
 			}
 		}

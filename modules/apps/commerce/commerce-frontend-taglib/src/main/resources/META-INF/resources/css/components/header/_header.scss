@@ -1,0 +1,28 @@
+.commerce-header {
+	position: sticky;
+	top: var(--control-menu-container-height);
+	z-index: 900;
+
+	.header-details {
+		max-width: 300px;
+
+		@media screen and (max-width: 576px) {
+			flex-grow: 1;
+			width: 0;
+		}
+
+		@media screen and (min-width: 576px) {
+			min-width: 100px;
+		}
+	}
+
+	.header-assign-label {
+		font-size: 0.625rem;
+		left: 13px;
+		top: -7px;
+	}
+
+	.header-assign-button {
+		min-width: 100px;
+	}
+}

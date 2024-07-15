@@ -28,6 +28,10 @@ public class UpgradeJavaBaseFragmentCollectionContributorExtendedClassesCheck
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (!fileName.endsWith(".java")) {
+			return content;
+		}
+
 		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 
 		List<String> extendedClassNames = javaClass.getExtendedClassNames();

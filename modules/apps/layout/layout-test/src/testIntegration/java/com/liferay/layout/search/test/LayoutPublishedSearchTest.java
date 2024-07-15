@@ -29,12 +29,16 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -69,6 +73,32 @@ public class LayoutPublishedSearchTest {
 		_group = GroupTestUtil.addGroup();
 
 		_setUpLayoutIndexerFixture();
+	}
+
+	@Test
+	public void testContentLayoutAfterRemoveViewPermissionForGuest()
+		throws Exception {
+
+		String name = RandomTestUtil.randomString();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group, name);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_layoutIndexerFixture.searchNoOne(name);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_layoutIndexerFixture.searchOnlyOne(name);
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, AssetCategory.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(layout.getPlid()), ActionKeys.VIEW);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_layoutIndexerFixture.searchOnlyOne(name);
 	}
 
 	@Test

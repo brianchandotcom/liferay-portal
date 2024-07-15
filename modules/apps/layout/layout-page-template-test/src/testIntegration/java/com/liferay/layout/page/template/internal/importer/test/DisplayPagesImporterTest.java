@@ -107,10 +107,8 @@ public class DisplayPagesImporterTest {
 
 		_importLayoutPageTemplateEntry(testCaseName, 1, 0);
 
-		File file = _generateZipFile(testCaseName);
-
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
-			_getLayoutsImporterResultEntries(file);
+			_getLayoutsImporterResultEntries(testCaseName);
 
 		LayoutsImporterResultEntry layoutsImporterResultEntry =
 			layoutsImporterResultEntries.get(0);
@@ -129,10 +127,8 @@ public class DisplayPagesImporterTest {
 
 	@Test
 	public void testImportDisplayPages() throws Exception {
-		File file = _generateZipFile("display-page-template-multiple");
-
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
-			_getLayoutsImporterResultEntries(file);
+			_getLayoutsImporterResultEntries("display-page-template-multiple");
 
 		Assert.assertEquals(
 			layoutsImporterResultEntries.toString(), 2,
@@ -286,8 +282,10 @@ public class DisplayPagesImporterTest {
 	}
 
 	private List<LayoutsImporterResultEntry> _getLayoutsImporterResultEntries(
-			File file)
+			String testCaseName)
 		throws Exception {
+
+		File file = _generateZipFile(testCaseName);
 
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
 
@@ -313,10 +311,8 @@ public class DisplayPagesImporterTest {
 			int indexImporterResultEntry)
 		throws Exception {
 
-		File file = _generateZipFile(testCaseName);
-
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
-			_getLayoutsImporterResultEntries(file);
+			_getLayoutsImporterResultEntries(testCaseName);
 
 		Assert.assertEquals(
 			layoutsImporterResultEntries.toString(),

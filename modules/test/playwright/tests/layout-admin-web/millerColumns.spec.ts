@@ -136,65 +136,57 @@ test('Can add and delete a child page.', async ({
 	pagesAdminPage,
 	site,
 }) => {
-	const title = getRandomString();
+
+	// Create parent page
+
+	const parentPageName = getRandomString();
 
 	await apiHelpers.jsonWebServicesLayout.addLayout({
 		groupId: site.id,
-		title,
+		title: parentPageName,
 	});
 
-	// Can add a child page
+	// Create child page and check it actually appears as child
+
+	const childPageName = getRandomString();
 
 	await pagesAdminPage.goto(site.friendlyUrlPath);
 
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: page.getByRole('menuitem', {name: 'Add Page'}),
-		trigger: page.getByTitle('Add Child Page'),
+	await pagesAdminPage.createNewPage({
+		draft: true,
+		name: childPageName,
+		parent: parentPageName,
 	});
-
-	await pagesAdminPage.createSelectTemplate('Child Page', 'Blank');
 
 	await pagesAdminPage.goto(site.friendlyUrlPath);
 
-	await page.getByRole('button', {name: title}).click();
+	await page.getByRole('button', {name: parentPageName}).click();
 
-	await expect(page.getByRole('link', {name: 'Child Page'})).toBeVisible();
+	await expect(page.getByRole('link', {name: childPageName})).toBeVisible();
 
-	// Can view the draft label of a page in pages admin
+	// Check Draft label is shown and we can preview the draft
 
 	await expect(
-		page.locator('.miller-columns-item').getByText('Draft')
+		page
+			.locator('li', {has: page.getByText(childPageName)})
+			.getByText('Draft')
 	).toBeVisible();
-
-	// Can view preview draft action
 
 	await clickAndExpectToBeVisible({
 		target: page.getByRole('menuitem', {
-			exact: true,
-			name: 'Child Page',
+			name: 'Preview Draft',
 		}),
 		trigger: page
-			.locator('li', {has: page.getByText('Preview Draft')})
+			.locator('li', {has: page.getByText(childPageName)})
 			.getByRole('button', {name: 'Open Page Options Menu'}),
 	});
 
-	// View alert message when delete a page
+	// Delete child page
 
-	await pagesAdminPage.clickOnAction('Delete', 'Child Page');
-
-	await expect(
-		page.getByText(
-			'Are you sure you want to delete the page "Child Page"? It will be removed immediately.'
-		)
-	).toBeVisible();
-
-	// Delete page
-
-	await page.getByRole('button', {name: 'Delete'}).click();
+	await pagesAdminPage.deletePage(childPageName);
 
 	await expect(
-		page.getByRole('link', {name: 'Child Page'})
+		page.getByRole('link', {name: childPageName})
 	).not.toBeVisible();
 });
 

@@ -101,7 +101,7 @@
 										"query": {
 											"terms": {
 												"assetCategoryIds": [
-													"[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/test-asset-vocabulary-2/test-asset-category-3.json$]"
+													"[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/company/test-asset-vocabulary-1/test-asset-category-1.json$]"
 												]
 											}
 										}
@@ -180,8 +180,8 @@
 					},
 					"values": [
 						{
-							"label": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/test-asset-vocabulary-2/test-asset-category-3.json$]",
-							"value": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/test-asset-vocabulary-2/test-asset-category-3.json$]"
+							"label": "TESTASSETCATEGORY1",
+							"value": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/company/test-asset-vocabulary-1/test-asset-category-1.json$]"
 						}
 					]
 				}

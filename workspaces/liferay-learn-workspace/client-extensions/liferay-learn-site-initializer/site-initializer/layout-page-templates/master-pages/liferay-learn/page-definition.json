@@ -99,6 +99,7 @@
 										"id": "e74bf2e8-9727-f437-287e-34b2bdccb8c0",
 										"pageElements": [
 											{
+												"customCSS": ".[$FRAGMENT_CLASS$] {\nwidth: auto !important;\n}",
 												"definition": {
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
@@ -120,6 +121,7 @@
 													"fragmentStyle": {
 														"backgroundColor": "colorBrandPrimary",
 														"borderRadius": "4px",
+														"height": "23px",
 														"paddingLeft": "1",
 														"paddingRight": "1"
 													},
@@ -225,6 +227,7 @@
 										"id": "92466448-ebb6-32f3-54ca-ec8d837b7e9b",
 										"pageElements": [
 											{
+												"customCSS": ".[$FRAGMENT_CLASS$] {\nwidth: auto !important;\n}",
 												"definition": {
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
@@ -246,6 +249,7 @@
 													"fragmentStyle": {
 														"backgroundColor": "colorAccent4",
 														"borderRadius": "4px",
+														"height": "23px",
 														"paddingLeft": "1",
 														"paddingRight": "1"
 													},
@@ -289,7 +293,8 @@
 														}
 													],
 													"fragmentStyle": {
-														"marginLeft": "2"
+														"marginLeft": "2",
+														"width": "150%"
 													},
 													"indexed": true
 												},
@@ -351,6 +356,7 @@
 										"id": "5f0a7b90-9438-4e12-1733-88b27771ceca",
 										"pageElements": [
 											{
+												"customCSS": ".[$FRAGMENT_CLASS$] {\nwidth: auto !important;\n}",
 												"definition": {
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
@@ -372,6 +378,7 @@
 													"fragmentStyle": {
 														"backgroundColor": "colorAccent5",
 														"borderRadius": "4px",
+														"height": "23px",
 														"paddingLeft": "1",
 														"paddingRight": "1"
 													},
@@ -476,6 +483,7 @@
 										"id": "3d6ea5e1-6a6f-947e-6883-67340160c11a",
 										"pageElements": [
 											{
+												"customCSS": ".[$FRAGMENT_CLASS$] {\nwidth: auto !important;\n}",
 												"definition": {
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
@@ -497,6 +505,7 @@
 													"fragmentStyle": {
 														"backgroundColor": "colorAccent1",
 														"borderRadius": "4px",
+														"height": "23px",
 														"paddingLeft": "1",
 														"paddingRight": "1"
 													},

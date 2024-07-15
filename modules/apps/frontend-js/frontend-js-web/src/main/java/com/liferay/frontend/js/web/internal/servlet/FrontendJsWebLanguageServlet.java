@@ -174,7 +174,7 @@ public class FrontendJsWebLanguageServlet extends HttpServlet {
 			String label = labels.get(key);
 
 			sb.append(StringPool.APOSTROPHE);
-			sb.append(key);
+			sb.append(key.replaceAll("'", "\\\\'"));
 			sb.append("':'");
 			sb.append(label.replaceAll("'", "\\\\'"));
 			sb.append("',\n");

@@ -37,13 +37,27 @@ export default function getLiferayLanguageGetPlugin(
 					let contents = await fs.readFile(args.path, 'utf-8');
 
 					for (const match of contents.matchAll(REGEXP)) {
-						languageJSON.keys.push(
-							match[1]
-								.trim()
-								.replaceAll("'", '')
-								.replaceAll('"', '')
-								.replaceAll('`', '')
-						);
+						let key = match[1].trim();
+
+						if (
+							(!key.startsWith('"') &&
+								!key.startsWith("'") &&
+								!key.startsWith('`')) ||
+							(!key.endsWith('"') &&
+								!key.endsWith("'") &&
+								!key.endsWith('`'))
+						) {
+							console.warn(`
+⚠️ Liferay.Language.get key cannot be parsed, it will be ignored and won't show up at runtime: ${key}
+     in file: ${args.path}
+
+`);
+							continue;
+						}
+
+						key = key.slice(1, key.length - 1);
+
+						languageJSON.keys.push(key);
 					}
 
 					if (languageJSON.keys.length) {

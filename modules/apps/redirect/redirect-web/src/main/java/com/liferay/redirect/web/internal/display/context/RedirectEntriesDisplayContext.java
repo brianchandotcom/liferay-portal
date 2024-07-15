@@ -220,6 +220,22 @@ public class RedirectEntriesDisplayContext {
 			redirectEntry.getSourceURL();
 	}
 
+	public boolean isLiveGroup() {
+		if (_liveGroup != null) {
+			return _liveGroup;
+		}
+
+		boolean liveGroup = false;
+
+		if (_stagingGroupHelper.isLiveGroup(_themeDisplay.getScopeGroupId())) {
+			liveGroup = true;
+		}
+
+		_liveGroup = liveGroup;
+
+		return _liveGroup;
+	}
+
 	public boolean isStagingGroup() {
 		if (_stagingGroup != null) {
 			return _stagingGroup;
@@ -376,6 +392,7 @@ public class RedirectEntriesDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private Boolean _liveGroup;
 	private final ModelResourcePermission<RedirectEntry>
 		_modelResourcePermission;
 	private final PortletResourcePermission _portletResourcePermission;

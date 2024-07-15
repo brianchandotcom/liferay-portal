@@ -9,6 +9,8 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.info.field.InfoField;
@@ -21,6 +23,7 @@ import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -242,6 +245,70 @@ public class ContentLayoutTestUtil {
 		return jsonObject.getString("addedItemId");
 	}
 
+	public static String addFragmentEntryLinkToLayout(
+			FragmentEntryLink fragmentEntryLink, Layout layout,
+			String parentItemId, int position, long segmentsExperienceId)
+		throws Exception {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		LayoutStructureItem layoutStructureItem = null;
+
+		if (Validator.isNull(parentItemId)) {
+			layoutStructureItem =
+				layoutStructure.addFragmentStyledLayoutStructureItem(
+					fragmentEntryLink.getFragmentEntryLinkId(),
+					layoutStructure.getMainItemId(), position);
+		}
+		else {
+			layoutStructureItem =
+				layoutStructure.addFragmentStyledLayoutStructureItem(
+					fragmentEntryLink.getFragmentEntryLinkId(), parentItemId,
+					position);
+		}
+
+		LayoutPageTemplateStructureLocalServiceUtil.
+			updateLayoutPageTemplateStructureData(
+				layout.getGroupId(), layout.getPlid(), segmentsExperienceId,
+				layoutStructure.toString());
+
+		return layoutStructureItem.getItemId();
+	}
+
+	public static FragmentEntryLink addFragmentEntryLinkToLayout(
+			String editableValues, FragmentRenderer fragmentRenderer,
+			Layout layout, String parentItemId, int position,
+			long segmentsExperienceId)
+		throws Exception {
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(null);
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkServiceUtil.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), layout.getGroupId(), 0,
+				segmentsExperienceId, layout.getPlid(), StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK,
+				fragmentRenderer.getConfiguration(
+					defaultFragmentRendererContext),
+				editableValues, StringPool.BLANK, 0, fragmentRenderer.getKey(),
+				fragmentRenderer.getType(),
+				ServiceContextTestUtil.getServiceContext(
+					layout.getGroupId(), TestPropsValues.getUserId()));
+
+		addFragmentEntryLinkToLayout(
+			fragmentEntryLink, layout, parentItemId, position,
+			segmentsExperienceId);
+
+		return fragmentEntryLink;
+	}
+
 	public static FragmentEntryLink addFragmentEntryLinkToLayout(
 			String editableValues, Layout layout, long segmentsExperienceId)
 		throws Exception {
@@ -291,29 +358,9 @@ public class ContentLayoutTestUtil {
 				ServiceContextTestUtil.getServiceContext(
 					layout.getGroupId(), TestPropsValues.getUserId()));
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), layout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
-
-		if (Validator.isNull(parentItemId)) {
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				layoutStructure.getMainItemId(), position);
-		}
-		else {
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				fragmentEntryLink.getFragmentEntryLinkId(), parentItemId,
-				position);
-		}
-
-		LayoutPageTemplateStructureLocalServiceUtil.
-			updateLayoutPageTemplateStructureData(
-				layout.getGroupId(), layout.getPlid(), segmentsExperienceId,
-				layoutStructure.toString());
+		addFragmentEntryLinkToLayout(
+			fragmentEntryLink, layout, parentItemId, position,
+			segmentsExperienceId);
 
 		return fragmentEntryLink;
 	}

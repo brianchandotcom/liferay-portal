@@ -19,7 +19,10 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
@@ -30,6 +33,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -43,6 +47,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
+import com.liferay.portal.kernel.model.PortletPreferencesTable;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -65,10 +70,12 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -1050,6 +1057,10 @@ public class LayoutLocalServiceWrapper
 	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
 
 	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
@@ -1120,6 +1131,8 @@ public class LayoutLocalServiceWrapper
 
 				_copyPortletPreferences(
 					portletIds, _sourceLayout, _targetLayout);
+
+				_deleteOrphanPortletPreferences(portletIds);
 			}
 
 			// Copy classedModelUsages after copying the structure
@@ -1195,6 +1208,71 @@ public class LayoutLocalServiceWrapper
 					clientExtensionEntryRel.getTypeSettings(),
 					ServiceContextThreadLocal.getServiceContext());
 			}
+		}
+
+		private void _deleteOrphanPortletPreferences(List<String> portletIds) {
+			List<String> oldPortletIds = _getLayoutPortletIds(
+				_targetLayout, _sourceSegmentsExperiencesIds);
+
+			String[] deletedPortletIds = TransformUtil.transformToArray(
+				oldPortletIds,
+				portletId -> {
+					if (portletIds.contains(portletId)) {
+						return null;
+					}
+
+					return portletId;
+				},
+				String.class);
+
+			if (ArrayUtil.isEmpty(deletedPortletIds)) {
+				return;
+			}
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(_targetLayout.getPlid());
+
+			if ((layoutPageTemplateEntry == null) ||
+				!Objects.equals(
+					layoutPageTemplateEntry.getType(),
+					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
+
+				return;
+			}
+
+			for (long portletPreferencesId :
+					_getPortletPreferencesIds(deletedPortletIds)) {
+
+				try {
+					_portletPreferencesLocalService.deletePortletPreferences(
+						portletPreferencesId);
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+				}
+			}
+		}
+
+		private List<Long> _getPortletPreferencesIds(String[] portletIds) {
+			return dslQuery(
+				DSLQueryFactoryUtil.selectDistinct(
+					PortletPreferencesTable.INSTANCE.portletPreferencesId
+				).from(
+					PortletPreferencesTable.INSTANCE
+				).where(
+					PortletPreferencesTable.INSTANCE.plid.notIn(
+						new Long[] {
+							PortletKeys.PREFS_PLID_SHARED,
+							_sourceLayout.getPlid(), _targetLayout.getPlid()
+						}
+					).and(
+						PortletPreferencesTable.INSTANCE.portletId.in(
+							portletIds)
+					)
+				));
 		}
 
 		private final boolean _copySegmentsExperience;

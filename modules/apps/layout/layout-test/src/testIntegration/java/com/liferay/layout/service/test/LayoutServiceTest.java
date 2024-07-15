@@ -192,12 +192,11 @@ public class LayoutServiceTest {
 	public void testFetchFirstLayoutPublishedNoLayoutPublished()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
 		LayoutTestUtil.addTypeContentLayout(_group);
 		LayoutTestUtil.addTypeContentLayout(_group);
+		LayoutTestUtil.addTypeContentLayout(_group);
 
-		_assertFetchFirstLayoutAsGuestUser(layout);
+		_assertFetchFirstLayoutAsGuestUser(null);
 	}
 
 	@Test

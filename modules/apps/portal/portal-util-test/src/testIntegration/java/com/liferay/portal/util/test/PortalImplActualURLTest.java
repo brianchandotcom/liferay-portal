@@ -198,12 +198,22 @@ public class PortalImplActualURLTest {
 
 	@Test
 	public void testNullFriendlyURLNoLayoutPublished() throws Exception {
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
 		LayoutTestUtil.addTypeContentLayout(_group);
 		LayoutTestUtil.addTypeContentLayout(_group);
+		LayoutTestUtil.addTypeContentLayout(_group);
 
-		_assertGetActualURLAsGuestUser(layout);
+		try {
+			_getActualURLAsGuestUserParameterMap();
+
+			Assert.fail();
+		}
+		catch (NoSuchLayoutException noSuchLayoutException) {
+			Assert.assertEquals(
+				noSuchLayoutException.getMessage(),
+				StringBundler.concat(
+					"{groupId=", _group.getGroupId(), ", privateLayout=false}"),
+				noSuchLayoutException.getMessage());
+		}
 	}
 
 	@Test

@@ -253,6 +253,8 @@ definition {
 
 			PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			var n = 1;
 
 			for (var title : list "Third,Second,First") {

@@ -278,6 +278,8 @@ definition {
 
 			PageEditor.clickConfigurableField(fragmentName = "Container");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			SelectFrameTop();
 
 			Navigator.gotoNavTab(navTab = "Styles");

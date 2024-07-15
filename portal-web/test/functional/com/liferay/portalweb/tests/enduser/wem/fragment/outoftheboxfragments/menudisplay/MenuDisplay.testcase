@@ -129,6 +129,8 @@ definition {
 		task ("Assert the All is shown in Sublevels field") {
 			PageEditor.clickConfigurableField(fragmentName = "Menu Display");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			AssertVisible(
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
@@ -258,6 +260,8 @@ definition {
 
 		task ("Assert the Horizontal is shown in Display Style field") {
 			PageEditor.clickConfigurableField(fragmentName = "Menu Display");
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			AssertVisible(
 				key_sidebarButton = "Browser",
@@ -457,6 +461,8 @@ definition {
 
 		task ("Assert the Public Pages Hierarchy is shown in Source field") {
 			PageEditor.clickConfigurableField(fragmentName = "Menu Display");
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			AssertTextEquals(
 				key_fieldLabel = "Source",

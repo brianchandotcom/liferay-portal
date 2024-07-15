@@ -5086,6 +5086,8 @@ definition {
 				fragmentName = "Collection Display",
 				index = 1);
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			AssertVisible(
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");

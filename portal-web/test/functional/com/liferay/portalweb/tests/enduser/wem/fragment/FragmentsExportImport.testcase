@@ -1478,6 +1478,8 @@ definition {
 
 			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			AssertTextEquals(
 				key_fieldLabel = "Button Text",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",

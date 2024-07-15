@@ -569,6 +569,8 @@ definition {
 				fragmentName = "Container",
 				index = 2);
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_dragFragmentName = "Container",
 				key_elementType = "Container",

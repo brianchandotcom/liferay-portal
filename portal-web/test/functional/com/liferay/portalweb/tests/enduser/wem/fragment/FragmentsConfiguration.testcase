@@ -1834,6 +1834,8 @@ main();
 		task ("View alert message is shown when type t@liferay.com in Email Address field") {
 			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			Type(
 				key_text = "Email Address",
 				locator1 = "TextInput#ANY",
@@ -1848,6 +1850,8 @@ main();
 			PageEditor.clickManagementBar();
 
 			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			Type.sendKeys(
 				key_text = "Email Address",
@@ -1940,6 +1944,8 @@ main();
 
 		task ("View alert message is shown when type 10 in Age field") {
 			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			Type(
 				key_text = "Age",
@@ -2039,6 +2045,8 @@ main();
 		task ("View alert message is shown when type https://w.liferay.com in URL field") {
 			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			Type(
 				key_text = "URL",
 				locator1 = "TextInput#ANY",
@@ -2053,6 +2061,8 @@ main();
 			PageEditor.clickManagementBar();
 
 			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			Type.sendKeys(
 				key_text = "URL",

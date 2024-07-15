@@ -30,6 +30,8 @@ definition {
 	macro changeConfigSelection(fragmentName = null, fieldLabel = null, optionValue = null) {
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
 
+		PageEditor.gotoTab(tabName = "Browser");
+
 		AssertVisible(
 			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
@@ -49,6 +51,8 @@ definition {
 		var key_fragmentName = ${fragmentName};
 
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -74,6 +78,8 @@ definition {
 		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
 
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",

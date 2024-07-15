@@ -567,7 +567,6 @@ definition {
 	@description = "LRQA-57667 - Automate LPS-108138: As a Operation Manager, I want to transition a multi-task workflow instance while analyzing my process metrics"
 	@priority = 5
 	test BulkTransitionWorkflowTasks {
-		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

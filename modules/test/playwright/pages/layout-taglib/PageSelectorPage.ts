@@ -13,7 +13,7 @@ export class PageSelectorPage {
 	constructor(page: Page) {
 		this.page = page;
 
-		this.modal = page.frameLocator('iframe[title="Select Pages"]');
+		this.modal = page.frameLocator('iframe[title*="Select Page"]');
 	}
 
 	async getModal(): Promise<FrameLocator> {

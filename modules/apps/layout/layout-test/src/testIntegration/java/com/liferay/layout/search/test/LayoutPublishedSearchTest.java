@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -73,6 +74,27 @@ public class LayoutPublishedSearchTest {
 		_group = GroupTestUtil.addGroup();
 
 		_setUpLayoutIndexerFixture();
+	}
+
+	@Test
+	public void testContentLayoutAfterExecuteReindexAll() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		String content = RandomTestUtil.randomString();
+
+		_addFragmentEntryLinkWithNoEditableTextToLayout(draftLayout, content);
+
+		_layoutIndexerFixture.searchNoOne(content);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_layoutIndexerFixture.searchOnlyOne(content);
+
+		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
+
+		_layoutIndexerFixture.searchOnlyOne(content);
 	}
 
 	@Test
@@ -126,8 +148,7 @@ public class LayoutPublishedSearchTest {
 			assetCategory.getTitle(LocaleUtil.getDefault()));
 
 		_layoutLocalService.updateAsset(
-			TestPropsValues.getUserId(), layout, new long[0],
-			new String[0]);
+			TestPropsValues.getUserId(), layout, new long[0], new String[0]);
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
@@ -190,6 +211,11 @@ public class LayoutPublishedSearchTest {
 
 		_layoutIndexerFixture.searchOnlyOne(name);
 	}
+
+	@Inject(
+		filter = "indexer.class.name=com.liferay.portal.kernel.model.Layout"
+	)
+	protected Indexer<Layout> indexer;
 
 	private void _addFragmentEntryLinkToLayout(
 			long fragmentEntryLinkId, long plid, long segmentsExperienceId)

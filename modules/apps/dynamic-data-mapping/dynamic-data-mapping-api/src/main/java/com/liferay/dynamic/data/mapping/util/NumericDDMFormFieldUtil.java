@@ -5,6 +5,7 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -32,6 +33,7 @@ public class NumericDDMFormFieldUtil {
 
 		decimalFormat.setGroupingUsed(false);
 		decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+		decimalFormat.setNegativePrefix(StringPool.DASH);
 		decimalFormat.setParseBigDecimal(true);
 
 		return decimalFormat;

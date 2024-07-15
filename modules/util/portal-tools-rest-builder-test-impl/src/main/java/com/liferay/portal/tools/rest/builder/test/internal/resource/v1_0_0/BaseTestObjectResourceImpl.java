@@ -30,6 +30,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortField;
 import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.ChildTestObject1;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.TestObject;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0_0.TestObjectResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -121,7 +122,7 @@ public abstract class BaseTestObjectResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public TestObject postTestObject(TestObject testObject) throws Exception {
-		return new TestObject();
+		return new ChildTestObject1();
 	}
 
 	/**
@@ -214,7 +215,7 @@ public abstract class BaseTestObjectResourceImpl
 			Long testObjectId)
 		throws Exception {
 
-		return new TestObject();
+		return new ChildTestObject1();
 	}
 
 	@Override

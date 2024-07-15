@@ -202,15 +202,13 @@ autoSaveAsDraftTest(
 
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
-		await journalEditArticlePage.titleInput.click();
-
-		await page.waitForTimeout(200);
-
-		await journalEditArticlePage.titleInput.fill(title);
+		await fillAndClickOutside(
+			page,
+			journalEditArticlePage.titleInput,
+			title
+		);
 
 		await expect(changesSavedIndicator).toBeVisible();
-
-		await page.locator('body').click();
 
 		await undobutton.click();
 

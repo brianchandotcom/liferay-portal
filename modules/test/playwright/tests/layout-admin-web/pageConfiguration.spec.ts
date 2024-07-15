@@ -116,6 +116,11 @@ test('Can not select pages from other sites for Link to a Page of This Site.', a
 	pagesAdminPage,
 	site,
 }) => {
+
+	// Create a widget page and a link to layout page
+
+	const name = getRandomString();
+
 	await apiHelpers.jsonWebServicesLayout.addLayout({
 		groupId: site.id,
 		title: getRandomString(),
@@ -126,12 +131,15 @@ test('Can not select pages from other sites for Link to a Page of This Site.', a
 		options: {
 			type: 'link_to_layout',
 		},
-		title: 'Link To Layout',
+		title: name,
 	});
+
+	// Try to select linked page and check Sites and Libraries
+	// section is not shown
 
 	await pagesAdminPage.goto(site.friendlyUrlPath);
 
-	await pageConfigurationPage.goToSection('Link To Layout', 'General');
+	await pageConfigurationPage.goToSection(name, 'General');
 
 	await page
 		.locator('.layout-type')
@@ -139,6 +147,8 @@ test('Can not select pages from other sites for Link to a Page of This Site.', a
 		.click();
 
 	const modal = await pageSelectorPage.getModal();
+
+	await modal.locator('.treeview').waitFor();
 
 	await expect(modal.getByText('Sites and Libraries')).not.toBeVisible();
 });

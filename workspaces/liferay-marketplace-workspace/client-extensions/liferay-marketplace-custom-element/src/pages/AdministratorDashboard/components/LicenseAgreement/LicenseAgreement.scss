@@ -12,7 +12,17 @@
 
 		.text-agreement {
 			border-top: 1px solid #e2e2e4;
-			font-size: 13px;
+			color: #3f404b;
+			font-size: 0.813rem;
+			line-height: 1rem;
+
+			&-text-primary {
+				margin-bottom: 0.625rem;
+			}
+
+			&-text-secondary {
+				font-weight: 400;
+			}
 		}
 	}
 }

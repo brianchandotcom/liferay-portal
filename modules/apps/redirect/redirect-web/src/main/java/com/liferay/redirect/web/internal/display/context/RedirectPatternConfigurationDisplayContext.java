@@ -17,6 +17,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
 import com.liferay.redirect.constants.RedirectConstants;
 import com.liferay.redirect.model.RedirectPatternEntry;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,17 +34,24 @@ public class RedirectPatternConfigurationDisplayContext {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		RedirectPatternConfigurationProvider
-			redirectPatternConfigurationProvider) {
+			redirectPatternConfigurationProvider,
+		StagingGroupHelper stagingGroupHelper) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_redirectPatternConfigurationProvider =
 			redirectPatternConfigurationProvider;
+		_stagingGroupHelper = stagingGroupHelper;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public Map<String, Object> getRedirectPatterns() {
 		return HashMapBuilder.<String, Object>put(
 			"actionUrl", _getRedirectPatternConfigurationURL()
+		).put(
+			"isStagingEnvironment", isStagingGroup() || isLiveGroup()
 		).put(
 			"patterns",
 			() -> {
@@ -115,6 +123,42 @@ public class RedirectPatternConfigurationDisplayContext {
 		).build();
 	}
 
+	public boolean isLiveGroup() {
+		if (_liveGroup != null) {
+			return _liveGroup;
+		}
+
+		boolean liveGroup = false;
+
+		if (_stagingGroupHelper.isLiveGroup(_themeDisplay.getScopeGroupId())) {
+			liveGroup = true;
+		}
+
+		_liveGroup = liveGroup;
+
+		return _liveGroup;
+	}
+
+	public boolean isStagingGroup() {
+		if (_stagingGroup != null) {
+			return _stagingGroup;
+		}
+
+		boolean stagingGroup = false;
+
+		if (_stagingGroupHelper.isLocalStagingGroup(
+				_themeDisplay.getScopeGroup()) ||
+			_stagingGroupHelper.isRemoteStagingGroup(
+				_themeDisplay.getScopeGroup())) {
+
+			stagingGroup = true;
+		}
+
+		_stagingGroup = stagingGroup;
+
+		return _stagingGroup;
+	}
+
 	private String _getRedirectPatternConfigurationURL() {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
@@ -127,7 +171,11 @@ public class RedirectPatternConfigurationDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private Boolean _liveGroup;
 	private final RedirectPatternConfigurationProvider
 		_redirectPatternConfigurationProvider;
+	private Boolean _stagingGroup;
+	private final StagingGroupHelper _stagingGroupHelper;
+	private final ThemeDisplay _themeDisplay;
 
 }

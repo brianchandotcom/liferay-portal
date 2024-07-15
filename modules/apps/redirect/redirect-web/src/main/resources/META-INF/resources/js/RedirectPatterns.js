@@ -177,6 +177,7 @@ const RedirectPattern = ({
 	portletNamespace,
 	strings,
 	userAgents,
+	isStagingEnvironment,
 }) => {
 	const emptyRow = () => ({
 		destinationURL: '',
@@ -229,14 +230,16 @@ const RedirectPattern = ({
 					</h2>
 				</div>
 
-				<ClayAlert
-					displayType="warning"
-					title={`${Liferay.Language.get('warning')}:`}
-				>
-					{Liferay.Language.get(
-						'redirect-functionality-may-not-work-as-expected-in-this-staging-environment'
-					)}
-				</ClayAlert>
+				{isStagingEnvironment && (
+					<ClayAlert
+						displayType="warning"
+						title={`${Liferay.Language.get('warning')}:`}
+					>
+						{Liferay.Language.get(
+							'redirect-functionality-may-not-work-as-expected-in-this-staging-environment'
+						)}
+					</ClayAlert>
+				)}
 
 				<div className="sheet-section">
 					<p className="text-secondary">{description}</p>
@@ -274,6 +277,7 @@ const RedirectPattern = ({
 
 RedirectPattern.propTypes = {
 	description: PropTypes.string,
+	isStagingEnvironment: PropTypes.bool.isRequired,
 	patterns: PropTypes.arrayOf(
 		PropTypes.shape({
 			destinationURL: PropTypes.string,

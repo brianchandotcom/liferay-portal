@@ -104,7 +104,8 @@ public class RedirectPortlet extends MVCPortlet {
 				new RedirectPatternConfigurationDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
-					_redirectPatternConfigurationProvider));
+					_redirectPatternConfigurationProvider,
+					_stagingGroupHelper));
 		}
 
 		super.render(renderRequest, renderResponse);

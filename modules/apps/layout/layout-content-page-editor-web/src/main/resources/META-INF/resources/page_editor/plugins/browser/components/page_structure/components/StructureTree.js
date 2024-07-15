@@ -32,7 +32,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layout
 import {LAYOUT_TYPES} from '../../../../../app/config/constants/layoutTypes';
 import {config} from '../../../../../app/config/index';
 import {
-	useActiveItemId,
+	useActiveItemIds,
 	useHoverItem,
 	useHoveredItemId,
 	useSelectItem,
@@ -86,7 +86,7 @@ const LAYOUT_DATA_ITEM_TYPE_ICONS = {
 };
 
 export default function PageStructureSidebar() {
-	const activeItemId = useActiveItemId();
+	const activeItemIds = useActiveItemIds();
 	const canUpdateEditables = useSelector(selectCanUpdateEditables);
 	const canUpdateItemConfiguration = useSelector(
 		selectCanUpdateItemConfiguration
@@ -129,7 +129,7 @@ export default function PageStructureSidebar() {
 	const nodes = useMemo(
 		() =>
 			visit(data.items[data.rootItems.main], data.items, {
-				activeItemId,
+				activeItemIds,
 				canUpdateEditables,
 				canUpdateItemConfiguration,
 				editingNodeId,
@@ -147,7 +147,7 @@ export default function PageStructureSidebar() {
 			}).children,
 
 		[
-			activeItemId,
+			activeItemIds,
 			canUpdateEditables,
 			canUpdateItemConfiguration,
 			data.items,
@@ -199,10 +199,12 @@ export default function PageStructureSidebar() {
 	};
 
 	const ItemActions = ({item}) => {
-		const activeItemId = useActiveItemId();
+		const activeItemIds = useActiveItemIds();
 		const dispatch = useDispatch();
 		const hoveredItemId = useHoveredItemId();
-		const isSelected = item.id === fromControlsId(activeItemId);
+		const isSelected = Liferay.FeatureFlags['LPD-18221']
+			? fromControlsId(activeItemIds).includes(item.id)
+			: item.id === fromControlsId(activeItemIds);
 		const isHovered = item.id === fromControlsId(hoveredItemId);
 		const canUpdatePageStructure = useSelector(
 			selectCanUpdatePageStructure
@@ -284,21 +286,48 @@ export default function PageStructureSidebar() {
 	);
 
 	useEffect(() => {
-		if (activeItemId) {
-			const layoutDataActiveItem = layoutData.items[activeItemId];
+		if (Liferay.FeatureFlags['LPD-18221']) {
+			if (activeItemIds.length) {
+				let layoutDataActiveItem = null;
 
-			if (!layoutDataActiveItem) {
-				return;
+				activeItemIds.forEach((itemId) => {
+					if (layoutData.items[itemId]) {
+						layoutDataActiveItem = layoutData.items[itemId];
+					}
+
+					if (!layoutDataActiveItem) {
+						return;
+					}
+
+					setExpandedKeys((previousExpanedKeys) => [
+						...new Set([
+							...previousExpanedKeys,
+							...getAncestorsIds(
+								layoutDataActiveItem,
+								layoutData
+							),
+						]),
+					]);
+				});
 			}
-
-			setExpandedKeys((previousExpanedKeys) => [
-				...new Set([
-					...previousExpanedKeys,
-					...getAncestorsIds(layoutDataActiveItem, layoutData),
-				]),
-			]);
 		}
-	}, [activeItemId, getAncestorsIds, layoutData, masterLayoutData]);
+		else {
+			if (activeItemIds) {
+				const layoutDataActiveItem = layoutData.items[activeItemIds];
+
+				if (!layoutDataActiveItem) {
+					return;
+				}
+
+				setExpandedKeys((previousExpanedKeys) => [
+					...new Set([
+						...previousExpanedKeys,
+						...getAncestorsIds(layoutDataActiveItem, layoutData),
+					]),
+				]);
+			}
+		}
+	}, [activeItemIds, getAncestorsIds, layoutData, masterLayoutData]);
 
 	useEffect(() => {
 		if (dragAndDropHoveredItemId) {
@@ -612,7 +641,7 @@ function visit(
 	item,
 	items,
 	{
-		activeItemId,
+		activeItemIds,
 		canUpdateEditables,
 		canUpdateItemConfiguration,
 		editingNodeId,
@@ -696,7 +725,9 @@ function visit(
 					activable:
 						canUpdateEditables &&
 						canActivateEditable(selectedViewportSize, type),
-					active: childId === activeItemId,
+					active: Liferay.FeatureFlags['LPD-18221']
+						? activeItemIds.includes(childId)
+						: childId === activeItemIds,
 					children: [],
 					draggable: false,
 					hidable: false,
@@ -720,7 +751,7 @@ function visit(
 
 				children.push({
 					...visit(items[mainItemId], items, {
-						activeItemId,
+						activeItemIds,
 						canUpdateEditables,
 						canUpdateItemConfiguration,
 						editingNodeId,
@@ -766,7 +797,7 @@ function visit(
 					layoutData.items[layoutData.rootItems.main],
 					layoutData.items,
 					{
-						activeItemId,
+						activeItemIds,
 						canUpdateEditables,
 						canUpdateItemConfiguration,
 						editingNodeId,
@@ -789,7 +820,7 @@ function visit(
 			}
 			else {
 				const child = visit(childItem, items, {
-					activeItemId,
+					activeItemIds,
 					canUpdateEditables,
 					canUpdateItemConfiguration,
 					editingNodeId,
@@ -818,7 +849,9 @@ function visit(
 			item.type !== LAYOUT_DATA_ITEM_TYPES.collectionItem &&
 			item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
 			canUpdateItemConfiguration,
-		active: item.itemId === activeItemId,
+		active: Liferay.FeatureFlags['LPD-18221']
+			? activeItemIds.includes(item.itemId)
+			: item.itemId === activeItemIds,
 		children,
 		config: layoutDataRef?.current?.items[item.itemId]?.config,
 		draggable: true,

@@ -26,7 +26,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layout
 import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes';
 import {
 	useActivationOrigin,
-	useActiveItemId,
+	useActiveItemIds,
 	useSelectItem,
 } from '../../../../../app/contexts/ControlsContext';
 import {
@@ -101,9 +101,11 @@ const loadCollectionFields = (
 
 export default function StructureTreeNode({node, setEditingNodeId}) {
 	const activationOrigin = useActivationOrigin();
-	const activeItemId = useActiveItemId();
+	const activeItemIds = useActiveItemIds();
 	const dispatch = useDispatch();
-	const isSelected = node.id === fromControlsId(activeItemId);
+	const isSelected = Liferay.FeatureFlags['LPD-18221']
+		? activeItemIds.includes(node.id)
+		: node.id === fromControlsId(activeItemIds);
 
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);

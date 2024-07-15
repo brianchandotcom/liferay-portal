@@ -202,11 +202,15 @@ autoSaveAsDraftTest(
 
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
-		await fillAndClickOutside(
-			page,
-			journalEditArticlePage.titleInput,
-			title
-		);
+		await expect(async () => {
+			await fillAndClickOutside(
+				page,
+				journalEditArticlePage.titleInput,
+				title
+			);
+
+			await expect(undobutton).toBeEnabled();
+		}).toPass();
 
 		await expect(changesSavedIndicator).toBeVisible();
 
@@ -253,11 +257,16 @@ autoSaveAsDraftTest(
 		const localizableField = await page.getByRole('textbox', {
 			name: localizableFieldName,
 		});
-		const titlePlaceholder = await page.getByPlaceholder(
-			'Untitled ' + structureName
-		);
 
-		await fillAndClickOutside(page, titlePlaceholder, title);
+		await expect(async () => {
+			await fillAndClickOutside(
+				page,
+				journalEditArticlePage.titleInput,
+				title
+			);
+
+			await expect(undoButton).toBeEnabled();
+		}).toPass();
 
 		await expect(changesSavedIndicator).toBeVisible();
 

@@ -184,7 +184,7 @@ definition {
 		Translations.viewTargetFields(
 			webContentContent = "これはWeb記事の内容です",
 			webContentDescription = "WC description",
-			webContentTitle = "これはWeb記事のタイトルです");
+			webContentTitle = "これはウェブ記事のタイトルです");
 
 		PortletEntry.publish();
 
@@ -198,7 +198,7 @@ definition {
 		Translations.viewTargetFields(
 			webContentContent = "これはWeb記事の内容です",
 			webContentDescription = "WC description",
-			webContentTitle = "これはWeb記事のタイトルです");
+			webContentTitle = "これはウェブ記事のタイトルです");
 	}
 
 }

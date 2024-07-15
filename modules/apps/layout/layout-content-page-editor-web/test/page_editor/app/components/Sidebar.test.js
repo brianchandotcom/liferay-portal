@@ -11,7 +11,7 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import Sidebar, {
 	MAX_SIDEBAR_WIDTH,
-	MIN_SIZEBAR_WIDTH,
+	MIN_SIDEBAR_WIDTH,
 	SIDEBAR_WIDTH_RESIZE_STEP,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/Sidebar';
 import {DragAndDropContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/drag_and_drop/useDragAndDrop';
@@ -71,7 +71,7 @@ describe('Sidebar', () => {
 			});
 
 			expect(handler.getAttribute('aria-valuenow')).toBe(
-				(MIN_SIZEBAR_WIDTH + 100).toString()
+				(MIN_SIDEBAR_WIDTH + 100).toString()
 			);
 		});
 
@@ -94,7 +94,7 @@ describe('Sidebar', () => {
 			});
 
 			expect(handler.getAttribute('aria-valuenow')).toBe(
-				(MIN_SIZEBAR_WIDTH + SIDEBAR_WIDTH_RESIZE_STEP).toString()
+				(MIN_SIDEBAR_WIDTH + SIDEBAR_WIDTH_RESIZE_STEP).toString()
 			);
 
 			act(() => {
@@ -124,7 +124,7 @@ describe('Sidebar', () => {
 			});
 
 			expect(handler.getAttribute('aria-valuenow')).toBe(
-				MIN_SIZEBAR_WIDTH.toString()
+				MIN_SIDEBAR_WIDTH.toString()
 			);
 		});
 	});

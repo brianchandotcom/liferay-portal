@@ -30,7 +30,7 @@ import isSmallResolution from '../utils/isSmallResolution';
 const {useEffect} = React;
 
 export const MAX_SIDEBAR_WIDTH = 500;
-export const MIN_SIZEBAR_WIDTH = 280;
+export const MIN_SIDEBAR_WIDTH = 280;
 export const SIDEBAR_WIDTH_RESIZE_STEP = 20;
 
 function getActiveSidebarPanel({
@@ -60,7 +60,7 @@ export default function Sidebar() {
 
 	const [sidebarWidth, setSidebarWidth] = useSessionState(
 		`${config.portletNamespace}_sidebar-width`,
-		MIN_SIZEBAR_WIDTH
+		MIN_SIDEBAR_WIDTH
 	);
 
 	const sidebarWidthRef = useRef(sidebarWidth);
@@ -134,7 +134,7 @@ export default function Sidebar() {
 					Math.min(
 						MAX_SIDEBAR_WIDTH,
 						Math.max(
-							MIN_SIZEBAR_WIDTH,
+							MIN_SIDEBAR_WIDTH,
 							initialSidebarWidth - cursorDelta
 						)
 					)
@@ -145,7 +145,7 @@ export default function Sidebar() {
 					Math.min(
 						MAX_SIDEBAR_WIDTH,
 						Math.max(
-							MIN_SIZEBAR_WIDTH,
+							MIN_SIDEBAR_WIDTH,
 							initialSidebarWidth + cursorDelta
 						)
 					)
@@ -246,13 +246,13 @@ export default function Sidebar() {
 			else if (event.key === 'ArrowRight') {
 				setSidebarWidth(
 					Math.max(
-						MIN_SIZEBAR_WIDTH,
+						MIN_SIDEBAR_WIDTH,
 						sidebarWidth - SIDEBAR_WIDTH_RESIZE_STEP
 					)
 				);
 			}
 			else if (event.key === 'Home') {
-				setSidebarWidth(MIN_SIZEBAR_WIDTH);
+				setSidebarWidth(MIN_SIDEBAR_WIDTH);
 			}
 			else if (event.key === 'End') {
 				setSidebarWidth(MAX_SIDEBAR_WIDTH);
@@ -262,7 +262,7 @@ export default function Sidebar() {
 			if (event.key === 'ArrowLeft') {
 				setSidebarWidth(
 					Math.max(
-						MIN_SIZEBAR_WIDTH,
+						MIN_SIDEBAR_WIDTH,
 						sidebarWidth - SIDEBAR_WIDTH_RESIZE_STEP
 					)
 				);
@@ -276,7 +276,7 @@ export default function Sidebar() {
 				);
 			}
 			else if (event.key === 'Home') {
-				setSidebarWidth(MIN_SIZEBAR_WIDTH);
+				setSidebarWidth(MIN_SIDEBAR_WIDTH);
 			}
 			else if (event.key === 'End') {
 				setSidebarWidth(MAX_SIDEBAR_WIDTH);
@@ -390,7 +390,7 @@ export default function Sidebar() {
 						aria-label={Liferay.Language.get('resize-sidebar')}
 						aria-orientation="vertical"
 						aria-valuemax={MAX_SIDEBAR_WIDTH}
-						aria-valuemin={MIN_SIZEBAR_WIDTH}
+						aria-valuemin={MIN_SIDEBAR_WIDTH}
 						aria-valuenow={sidebarWidth}
 						className={classNames('page-editor__sidebar__resizer', {
 							'page-editor__sidebar__resizer--resizing': resizing,

@@ -1586,12 +1586,13 @@ definition {
 				productName = "Simple Product",
 				type = "images");
 
-			// TODO Clean up after CLDR update is finished
+			var imageDisplayDate = DateUtil.format(${imageDisplayDate}, "yyyy-MM-dd'T'HH:mm:ss'Z'", "MMM d, yy");
 
-			var imageDisplayDateYYYY = DateUtil.format(${imageDisplayDate}, "yyyy-MM-dd'T'HH:mm:ss'Z'", "MMM d, yyyy");
-			var imageDisplayDateYY = DateUtil.format(${imageDisplayDate}, "yyyy-MM-dd'T'HH:mm:ss'Z'", "MMM d, yy");
-
-			AssertElementPresent(locator1 = "//div[@class='dnd-td' and contains(.,'Commerce_Black')]/following-sibling::div[3][contains(text(),'${imageDisplayDateYYYY}') or contains(text(), '${imageDisplayDateYY}')]");
+			AssertElementPresent(
+				key_columnNumber = 3,
+				key_productName = "Commerce_Black",
+				key_value = ${imageDisplayDate},
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 		}
 
 		task ("And a new attachment is added") {
@@ -1599,25 +1600,26 @@ definition {
 		}
 
 		task ("Then the date of the new entry is using the correct format") {
+			var imageDiplayDate = CommerceJSONProductsAPI.getCommerceProductMediaFieldValues(
+				jsonPath = "$..['displayDate']",
+				productName = "Simple Product",
+				type = "images");
+
+			var imageDiplayDate = DateUtil.format(${imageDiplayDate}, "yyyy-MM-dd'T'HH:mm:ss'Z'", "MMM d, yy");
+
 			for (var dateKeyWords : list "Seconds,Minutes,Hours,Days,Months") {
 				AssertElementNotPresent(
 					key_columnNumber = 3,
-					key_productName = "Commerce_White",
+					key_productName = "Commerce_Black",
 					key_value = "${dateKeyWords} Ago",
 					locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 			}
 
-			var attachmentDisplayDate = CommerceJSONProductsAPI.getCommerceProductMediaFieldValues(
-				jsonPath = "$..['displayDate']",
-				productName = "Simple Product",
-				type = "attachment");
-
-			// TODO Clean up after CLDR update is finished
-
-			var attachmentDisplayDateYYYY = DateUtil.format(${attachmentDisplayDate}, "yyyy-MM-dd'T'HH:mm:ss'Z'", "MMM d, yyyy");
-			var attachmentDisplayDateYY = DateUtil.format(${attachmentDisplayDate}, "yyyy-MM-dd'T'HH:mm:ss'Z'", "MMM d, yy");
-
-			AssertElementPresent(locator1 = "//div[@class='dnd-td' and contains(.,'Commerce_White')]/following-sibling::div[3][contains(text(),'${attachmentDisplayDateYYYY}') or contains(text(),'${attachmentDisplayDateYY}')]");
+			AssertElementPresent(
+				key_columnNumber = 3,
+				key_productName = "Commerce_Black",
+				key_value = ${imageDiplayDate},
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
 		}
 
 		task ("And during the process to add a new product relation") {

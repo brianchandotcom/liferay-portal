@@ -63,13 +63,12 @@ definition {
 		}
 
 		task ("Then the order date and time is shown") {
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yy K", "UTC");
 
-			// TODO Clean up after CLDR update is finished
-
-			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy h", "UTC");
-			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yy h", "UTC");
-
-			AssertElementPresent(locator1 = "//div[contains(@class,'table-list-title')]/a[contains(.,'')]/following::div[4 and (contains(text(),'${currentDateYYYY}') or contains(text(),'${currentDateYY}'))]");
+			AssertTextEquals.assertPartialText(
+				key_orderId = "",
+				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_DATE",
+				value1 = ${currentDate});
 		}
 
 		task ("When the user views the order from the placed orders details page") {
@@ -77,13 +76,9 @@ definition {
 		}
 
 		task ("Then the order date and time is shown") {
-
-			// TODO Clean up after CLDR update is finished
-
-			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy h", "UTC");
-			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yy h", "UTC");
-
-			AssertElementPresent(locator1 = "//dt[contains(.,'Order Date')]/following-sibling::dd | //div[contains(@class,'commerce-panel')]//div[4]//dd[contains(., '${currentDateYYYY}') or contains(., '${currentDateYY}')]");
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
+				value1 = ${currentDate});
 		}
 	}
 
@@ -136,13 +131,12 @@ definition {
 		}
 
 		task ("Then the order date is shown without the time") {
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yy", "UTC");
 
-			// TODO Clean up after CLDR update is finished
-
-			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy", "UTC");
-			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yy", "UTC");
-
-			AssertElementPresent(locator1 = "//div[contains(@class,'table-list-title')]/a[contains(.,'')]/following::div[4 and (contains(text(),'${currentDateYYYY}') or contains(text(),'${currentDateYY}'))]");
+			AssertTextEquals(
+				key_orderId = "",
+				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_DATE",
+				value1 = ${currentDate});
 		}
 
 		task ("When the user views the order from the placed orders details page") {
@@ -150,13 +144,9 @@ definition {
 		}
 
 		task ("Then the order date is shown without the time") {
-
-			// TODO Clean up after CLDR update is finished
-
-			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy", "UTC");
-			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yy", "UTC");
-
-			AssertElementPresent(locator1 = "//dt[contains(.,'Order Date')]/following-sibling::dd | //div[contains(@class,'commerce-panel')]//div[4]//dd[contains(., '${currentDateYYYY}') or contains(., '${currentDateYY}')]");
+			AssertTextEquals(
+				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
+				value1 = ${currentDate});
 		}
 	}
 
@@ -1265,13 +1255,11 @@ definition {
 		}
 
 		task ("Then the order date and time is shown") {
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yy K", "UTC");
 
-			// TODO Clean up after CLDR update is finished
-
-			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy h", "UTC");
-			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy h", "UTC");
-
-			AssertElementPresent(locator1 = "//dt[contains(.,'Order Date')]/following-sibling::dd | //div[contains(@class,'commerce-panel')]//div[4]//dd[contains(., '${currentDateYYYY}') or contains(., '${currentDateYY}')]");
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
+				value1 = ${currentDate});
 		}
 
 		task ("Given the Show Order Creation Time checkbox is unchecked in global settings") {
@@ -1307,13 +1295,11 @@ definition {
 		}
 
 		task ("Then the order date is shown without the time") {
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yy", "UTC");
 
-			// TODO Clean up after CLDR update is finished
-
-			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy", "UTC");
-			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy", "UTC");
-
-			AssertElementPresent(locator1 = "//dt[contains(.,'Order Date')]/following-sibling::dd | //div[contains(@class,'commerce-panel')]//div[4]//dd[contains(., '${currentDateYYYY}') or contains(., '${currentDateYY}')]");
+			AssertTextEquals(
+				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
+				value1 = ${currentDate});
 		}
 	}
 
@@ -1444,28 +1430,23 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 		}
 
-		task ("Then the order date is shown in MMM d, yyyy format") {
+		task ("Then the order date is shown in MMM d, yy format") {
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yy", "UTC");
 
-			// TODO Clean up after CLDR update is finished
-
-			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy", "UTC");
-			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yy", "UTC");
-
-			AssertElementPresent(locator1 = "//div[contains(@class,'table-list-title')]/a[contains(.,'')]/following::div[4 and (contains(text(),'${currentDateYYYY}') or contains(text(),'${currentDateYY}'))]");
+			AssertTextEquals(
+				key_orderId = "",
+				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_DATE",
+				value1 = ${currentDate});
 		}
 
 		task ("When the buyer views the order from the placed orders details page") {
 			Button.click(button = "View");
 		}
 
-		task ("Then the order date is shown in MMM d, yyyy format") {
-
-			// TODO Clean up after CLDR update is finished
-
-			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy", "UTC");
-			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yy", "UTC");
-
-			AssertElementPresent(locator1 = "//dt[contains(.,'Order Date')]/following-sibling::dd | //div[contains(@class,'commerce-panel')]//div[4]//dd[contains(., '${currentDateYYYY}') or contains(., '${currentDateYY}')]");
+		task ("Then the order date is shown in MMM d, yy format") {
+			AssertTextEquals(
+				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
+				value1 = ${currentDate});
 		}
 	}
 

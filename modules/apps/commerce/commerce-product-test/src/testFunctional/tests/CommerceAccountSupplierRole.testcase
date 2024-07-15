@@ -2416,8 +2416,8 @@ definition {
 				carrierName = "Test Carrier",
 				carrierShippingMethod = "Variable Rate",
 				carrierTrackingNumber = 123456789,
-				estimatedDeliveryDate = "Jul 6, 2023",
-				estimatedShippingDate = "Jul 6, 2023");
+				estimatedDeliveryDate = "Jul 6, 23",
+				estimatedShippingDate = "Jul 6, 23");
 		}
 	}
 

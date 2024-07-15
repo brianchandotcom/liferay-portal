@@ -22,11 +22,11 @@ const LicenseAgreement = () => {
 	);
 
 	return (
-		<>
+		<div className="license-agreement-container">
 			<div className="border-details mb-4">
 				<div className="align-items-baseline d-flex justify-content-between p-5">
 					<div className="align-items-baseline d-flex justify-content-star">
-						<div className="align-items-center d-flex icon-background justify-content-center mx-3">
+						<div className="align-items-center d-flex icon-background justify-content-center mr-3">
 							<ClayIcon symbol="document-text" />
 						</div>
 
@@ -47,10 +47,12 @@ const LicenseAgreement = () => {
 					</ClayButton>
 				</div>
 
-				<div className="p-4 text-agreement">
-					<strong>LIFERAY MARKETPLACE DEVELOPER AGREEMENT</strong>
+				<div className="p-5 text-agreement">
+					<strong className="text-agreement-text-primary">
+						LIFERAY MARKETPLACE DEVELOPER AGREEMENT
+					</strong>
 
-					<div className="mt-4">
+					<div className="mt-4 text-agreement-text-secondary">
 						PLEASE READ THIS AGREEMENT CAREFULLY BEFORE USING THE
 						MARKETPLACE TO MARKET OR DISTRIBUTE YOUR DEVELOPER
 						PRODUCTS, DOWNLOADING AND/OR USING THE LIFERAY
@@ -76,12 +78,12 @@ const LicenseAgreement = () => {
 					<strong>
 						Liferay Publisher Program License Agreement.
 					</strong>
-				</a>{' '}
-				I also confirm that I am of the legal age of majority in the
-				jurisdiction where I reside (at least 18 years of age in many
-				countries).
+				</a>
+				&nbsp; I also confirm that I am of the legal age of majority in
+				the jurisdiction where I reside (at least 18 years of age in
+				many countries).
 			</small>
-		</>
+		</div>
 	);
 };
 

@@ -55,16 +55,20 @@ const Download = () => {
 		);
 
 		const virtualItemsWithVersion = virtualProducts[0].virtualItems?.map(
-			(virtualItem: VirtualItem) => ({
-				...virtualItem,
-				productVersion: hasVersionSpecification
-					? hasVersionSpecification.value
-					: hasSkuVersion?.customValue.data,
-			})
+			(virtualItem: VirtualItem) => {
+				return {
+					...virtualItem,
+					productVersion: !hasVersionSpecification
+						? hasSkuVersion?.customValue.data
+						: hasVersionSpecification.value,
+				};
+			}
 		);
 
-		return virtualItemsWithVersion?.filter((item: VirtualItem) =>
-			item.version?.toLowerCase()?.includes(search)
+		return virtualItemsWithVersion?.filter(
+			(item: VirtualItem) =>
+				item.version?.toLowerCase()?.includes(search) ||
+				item.productVersion?.toLowerCase()?.includes(search)
 		);
 	}, [hasVersionSpecification, search, skus, virtualProducts]);
 

@@ -3,17 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
-
 import {Header} from '../../../../../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 
 import './CreateNewAppPage.scss';
-import i18n from '../../../../../../i18n';
-import {getSiteName} from '../../../../../../utils/getSite';
+import LicenseAgreement from '../../../../../AdministratorDashboard/components/LicenseAgreement/LicenseAgreement';
 
 type CreateNewAppPageProps = {
 	catalogId: string;
@@ -24,7 +20,6 @@ export function CreateNewAppPage({
 	catalogId,
 	onClickContinue,
 }: CreateNewAppPageProps) {
-	const siteName = getSiteName();
 	const [_, dispatch] = useAppContext();
 
 	return (
@@ -36,74 +31,7 @@ export function CreateNewAppPage({
 				/>
 			</div>
 
-			<div className="create-new-app-card-container">
-				<div className="create-new-app-card-header">
-					<div className="create-new-app-card-header-left-content">
-						<div className="create-new-app-card-header-icon-container">
-							<ClayIcon
-								aria-label="Document Icon"
-								className="create-new-app-card-header-icon"
-								symbol="document-text"
-							/>
-						</div>
-
-						<span className="create-new-app-card-header-text">
-							Liferay Publisher License Agreement
-						</span>
-					</div>
-
-					<ClayButton
-						className="border border-dark rounded-lg text-dark"
-						displayType="secondary"
-						onClick={() =>
-							window.open(
-								`/documents/d/${siteName}/developer_agreement_marketplace-pdf`
-							)
-						}
-					>
-						{i18n.translate('download')}
-						<ClayIcon className="ml-2" symbol="download" />
-					</ClayButton>
-				</div>
-
-				<div className="create-new-app-card-body">
-					<span className="create-new-app-card-body-text-primary">
-						PLEASE READ THE FOLLOWING LIFERAY PUBLISHER PROGRAM
-						LICENSE AGREEMENT TERMS AND CONDITIONS CAREFULLY BEFORE
-						DONLOADING OR USING THE LIFERAY SOFTWARE OR LIFERAY
-						SERVICES. THESE TERMS AND CONDITIONS CONSTITUTE A LEGAL
-						AGREEMENT BETWEEN YOU AND LIFERAY.
-					</span>
-
-					<span className="create-new-app-card-body-text-secondary">
-						Duis aute irure dolor in reprehenderit in voluptate
-						velit esse cillum dolore eu fugiat nulla pariatur.
-						Excepteur sint occaecat cupidatat non proident, sunt in
-						culpa qui officia deserunt mollit anim id est laborum.
-						Cras mattis consectetur purus sit amet fermentum.
-						Integer posuere erat a ante venenatis dapibus posuere
-						velit aliquet. Fusce dapibus, tellus ac cursus commodo,
-						tortor mauris condimentum nibh, ut fermentum massa justo
-						sit amet risus. Fusce dapibus, tellus ac cursus commodo,
-						tortor mauris condimentum nibh, ut fermentum massa justo
-						sit amet risus. Lorem ipsum dolor sit amet, consectetur
-						adipiscing elit. Integer posuere erat a ante venenatis
-						dapibus posuere velit aliquet. Cras justo odio, dapibus
-						ac facilisis in, egestas eget quam.
-					</span>
-				</div>
-			</div>
-
-			<div className="create-new-app-info-footer-container">
-				<span className="create-new-app-info-footer">
-					By clicking on the button &quot;continue&quot; below, I
-					confirm that I have read and agree to be bound by the{' '}
-					<a href="#">Liferay Publisher Program License Agreement.</a>{' '}
-					I also confirm that I am of the legal age of majority in the
-					jurisdiction where I reside (at least 18 years of age in
-					many countries).
-				</span>
-			</div>
+			<LicenseAgreement />
 
 			<NewAppPageFooterButtons
 				onClickContinue={() => {

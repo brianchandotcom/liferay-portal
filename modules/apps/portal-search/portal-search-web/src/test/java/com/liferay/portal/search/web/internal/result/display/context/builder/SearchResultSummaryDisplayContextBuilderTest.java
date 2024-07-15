@@ -108,7 +108,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	@NewEnv(type = NewEnv.Type.JVM)
-	@NewEnv.JVMArgsLine("-Djava.locale.providers=CLDR")
 	@Test
 	public void testCreationDate() throws Exception {
 		String entryClassName = RandomTestUtil.randomString();

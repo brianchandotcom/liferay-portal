@@ -46,12 +46,7 @@ public class SaveFormInstanceMVCResourceCommandTest {
 
 		Date date = calendar.getTime();
 
-		String javaLocaleProviders = System.getProperty(
-			"java.locale.providers");
-
-		// TODO Clean up after CLDR update is finished
-
-		if (!JavaDetector.isJDK8() && javaLocaleProviders.equals("CLDR")) {
+		if (!JavaDetector.isJDK8()) {
 			Assert.assertEquals(
 				"Apr 18, 2018, 11:00 AM",
 				_saveFormInstanceMVCResourceCommand.formatDate(

@@ -33,7 +33,6 @@ import org.junit.Test;
  * @author Bruno Basto
  */
 @NewEnv(type = NewEnv.Type.JVM)
-@NewEnv.JVMArgsLine("-Djava.locale.providers=CLDR")
 public class DateDDMFormFieldValueRendererTest {
 
 	@ClassRule

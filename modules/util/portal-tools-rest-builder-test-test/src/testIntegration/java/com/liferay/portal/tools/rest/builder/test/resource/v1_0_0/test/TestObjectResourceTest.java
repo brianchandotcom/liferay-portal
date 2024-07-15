@@ -6,14 +6,52 @@
 package com.liferay.portal.tools.rest.builder.test.resource.v1_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.TestObject;
 
-import org.junit.Ignore;
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Alejandro Tardín
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class TestObjectResourceTest extends BaseTestObjectResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetTestObject() throws Exception {
+		Assert.assertNotNull(
+			testObjectResource.getTestObject(RandomTestUtil.nextLong()));
+	}
+
+	@Override
+	@Test
+	public void testGetTestObjectCount() throws Exception {
+		Assert.assertEquals(
+			Integer.valueOf(0), testObjectResource.getTestObjectCount());
+	}
+
+	@Override
+	@Test
+	public void testPostReservedWord() throws Exception {
+		testObjectResource.postReservedWord(true);
+	}
+
+	@Override
+	protected TestObject testGetTestObjectsPage_addTestObject(
+			TestObject testObject)
+		throws Exception {
+
+		return testObjectResource.postTestObject(testObject);
+	}
+
+	@Override
+	protected TestObject testPostTestObject_addTestObject(TestObject testObject)
+		throws Exception {
+
+		return testGetTestObjectsPage_addTestObject(testObject);
+	}
+
 }

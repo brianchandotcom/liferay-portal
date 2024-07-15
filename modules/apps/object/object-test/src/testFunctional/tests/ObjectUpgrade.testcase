@@ -620,7 +620,7 @@ definition {
 
 		task ("Delete items from both Picklists") {
 			Picklist.optionsPicklistItem(
-				itemKey = "picklistAfterUpgradeItem2",
+				itemKey = "PicklistAfterUpgradeItem2",
 				menuItem = "Delete");
 
 			PortletEntry.save();

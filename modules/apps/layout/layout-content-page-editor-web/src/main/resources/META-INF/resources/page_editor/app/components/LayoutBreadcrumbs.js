@@ -12,7 +12,7 @@ import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {
-	useActiveItemId,
+	useActiveItemIds,
 	useActiveItemType,
 	useSelectItem,
 } from '../contexts/ControlsContext';
@@ -31,6 +31,16 @@ const DROP_ZONE_BASE_LABEL = Liferay.Language.get('drop-zone');
 const ELLIPSIS_BUFFER_MARGIN = 4;
 
 export function LayoutBreadcrumbs() {
+	const activeItemIds = useActiveItemIds();
+
+	if (Liferay.FeatureFlags['LPD-18221'] && activeItemIds.length > 1) {
+		return null;
+	}
+
+	return <LayoutBreadcrumbsContent />;
+}
+
+function LayoutBreadcrumbsContent() {
 	const wrapperElement = useMemo(
 		() => document.getElementById('wrapper'),
 		[]
@@ -78,7 +88,14 @@ export function LayoutBreadcrumbs() {
 }
 
 function useBreadcrumbItems() {
-	const activeItemId = useActiveItemId();
+	const activeItemIds = useActiveItemIds();
+
+	let activeItemId = activeItemIds;
+
+	if (Liferay.FeatureFlags['LPD-18221']) {
+		[activeItemId] = activeItemIds;
+	}
+
 	const activeItemType = useActiveItemType();
 	const globalContext = useGlobalContext();
 	const selectItem = useSelectItem();

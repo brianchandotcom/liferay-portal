@@ -26,10 +26,13 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.constants.LayoutPortletKeys;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -44,6 +47,7 @@ import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporaryS
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
@@ -58,6 +62,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -76,6 +81,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -719,6 +725,97 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 	}
 
 	@Test
+	public void testCopyMasterLayoutContentWithOrphanPortletPreferences()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		JSONObject processAddPortletJSONObject =
+			ContentLayoutTestUtil.addPortletToLayout(
+				draftLayout, LayoutPortletKeys.LAYOUT_TEST_PORTLET);
+
+		JSONObject fragmentEntryLinkJSONObject =
+			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLinkJSONObject.getJSONObject("editableValues");
+
+		String portletId1 = PortletIdCodec.encode(
+			editableValuesJSONObject.getString("portletId"),
+			editableValuesJSONObject.getString("instanceId"));
+
+		_assertPortletPreferences(1, portletId1);
+
+		String portletId2 = _addPortletToLayout(
+			draftLayout, LayoutPortletKeys.LAYOUT_TEST_PORTLET);
+
+		_assertPortletPreferences(1, portletId2);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_assertPortletPreferences(2, portletId1);
+		_assertPortletPreferences(2, portletId2);
+
+		Map<Long, String> layoutPlidMap = _addContentLayouts(layout.getPlid());
+
+		for (Long plid : layoutPlidMap.keySet()) {
+			ContentLayoutTestUtil.getRenderLayoutHTML(
+				_layoutLocalService.getLayout(plid),
+				_layoutServiceContextHelper, _layoutStructureProvider,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(plid));
+		}
+
+		int count = layoutPlidMap.size() + 3;
+
+		_assertPortletPreferences(count, portletId1);
+		_assertPortletPreferences(count, portletId2);
+
+		_entityCache.clearCache();
+		_multiVMPool.clear();
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			ContentLayoutTestUtil.markItemForDeletionFromLayout(
+				processAddPortletJSONObject.getString("addedItemId"),
+				draftLayout, portletId1);
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+		}
+
+		List<com.liferay.portal.kernel.model.PortletPreferences>
+			portletPreferences =
+				_portletPreferencesLocalService.
+					getPortletPreferencesByPortletId(portletId1);
+
+		Assert.assertEquals(
+			portletPreferences.toString(), 2, portletPreferences.size());
+
+		for (com.liferay.portal.kernel.model.PortletPreferences
+				portletPreference : portletPreferences) {
+
+			Assert.assertTrue(
+				portletPreference.toString(),
+				ArrayUtil.contains(
+					new long[] {
+						layout.getPlid(), PortletKeys.PREFS_PLID_SHARED
+					},
+					portletPreference.getPlid()));
+		}
+
+		_assertPortletPreferences(count, portletId2);
+	}
+
+	@Test
 	public void testCopyTypeSettings() throws Exception {
 		Layout sourceLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(),
@@ -760,6 +857,12 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 	}
 
 	private Map<Long, String> _addContentLayouts() throws Exception {
+		return _addContentLayouts(0);
+	}
+
+	private Map<Long, String> _addContentLayouts(long masterLayoutPlid)
+		throws Exception {
+
 		Map<Long, String> map = new HashMap<>();
 
 		FragmentEntry fragmentEntry = _addFragmentEntry();
@@ -769,7 +872,8 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 		String languageId = LocaleUtil.toLanguageId(locale);
 
 		for (int i = 0; i < _NUMBER_PAGES; i++) {
-			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+			Layout layout = LayoutTestUtil.addTypeContentLayout(
+				_group, false, false, masterLayoutPlid);
 
 			Layout draftLayout = layout.fetchDraftLayout();
 
@@ -918,6 +1022,23 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 		return _layoutLocalService.getLayout(layout.getPlid());
 	}
 
+	private String _addPortletToLayout(Layout layout, String portletId)
+		throws Exception {
+
+		JSONObject processAddPortletJSONObject =
+			ContentLayoutTestUtil.addPortletToLayout(layout, portletId);
+
+		JSONObject fragmentEntryLinkJSONObject =
+			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLinkJSONObject.getJSONObject("editableValues");
+
+		return PortletIdCodec.encode(
+			editableValuesJSONObject.getString("portletId"),
+			editableValuesJSONObject.getString("instanceId"));
+	}
+
 	private long[] _assertFragmentEntryLinksAndGetOriginalFragmentEntryLinkIds(
 		List<FragmentEntryLink> copiedFragmentEntryLinks,
 		List<FragmentEntryLink> sourceFragmentEntryLinks) {
@@ -1023,6 +1144,16 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 			_getLayoutContent(_layoutLocalService.getLayout(plid), locale));
 	}
 
+	private void _assertPortletPreferences(long count, String portletId) {
+		List<com.liferay.portal.kernel.model.PortletPreferences>
+			portletPreferences =
+				_portletPreferencesLocalService.
+					getPortletPreferencesByPortletId(portletId);
+
+		Assert.assertEquals(
+			portletPreferences.toString(), count, portletPreferences.size());
+	}
+
 	private String _getLayoutContent(Layout layout, Locale locale)
 		throws Exception {
 
@@ -1083,6 +1214,10 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Inject
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Inject
@@ -1091,6 +1226,9 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 
 	@Inject
 	private LayoutServiceContextHelper _layoutServiceContextHelper;
+
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
 
 	@Inject
 	private MultiVMPool _multiVMPool;
@@ -1102,6 +1240,9 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 		filter = "javax.portlet.name=" + LayoutPortletKeys.LAYOUT_TEST_PORTLET
 	)
 	private final Portlet _portlet = null;
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

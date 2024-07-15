@@ -108,6 +108,7 @@ Object {
   "SITES": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/sites",
   "SITES_INTERESTS": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/sites/interests",
   "SITES_INTEREST_DETAILS": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/sites/interests/:interestId",
+  "SITES_SEARCH_TERMS": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/sites/search-terms",
   "SITES_TOUCHPOINTS": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/sites/pages",
   "SITES_TOUCHPOINTS_KNOWN_INDIVIDUALS": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/sites/pages/known-individuals/:touchpoint/:title?",
   "SITES_TOUCHPOINTS_OVERVIEW": "/workspace/:groupId([\\\\w._-]+)/:channelId(\\\\d+)?/sites/pages/overview/:touchpoint/:title?",

@@ -362,6 +362,24 @@ exports[`Sites Dashboard Overview render 1`] = `
               />
             </div>
           </div>
+          <div
+            class="card-footer"
+          >
+            <a
+              class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
+              href="/workspace/23/123123/sites/search-terms?rangeKey=30"
+            >
+              All Search Terms
+              <svg
+                class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
+                role="presentation"
+              >
+                <use
+                  href="#angle-right-small"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
       <div

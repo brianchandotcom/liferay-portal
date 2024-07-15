@@ -262,6 +262,8 @@ definition {
 		task ("Move master page template drop zone to Tab1 of Tab Fragment") {
 			PageEditor.clickConfigurableField(fragmentName = "Drop Zone");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_dragFragmentName = "Drop Zone",
 				key_index = 2,

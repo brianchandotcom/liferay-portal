@@ -8,6 +8,8 @@ definition {
 
 		if (IsElementNotPresent(key_fragmentName = ${fragmentName}, locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME")) {
 			PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
+
+			PageEditor.gotoTab(tabName = "Browser");
 		}
 
 		AssertElementPresent(
@@ -214,6 +216,8 @@ definition {
 
 			Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
 		}
+
+		PageEditor.gotoTab(tabName = "Browser");
 	}
 
 	@summary = "Default summary"
@@ -443,6 +447,8 @@ definition {
 				Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
 			}
 		}
+
+		PageEditor.gotoTab(tabName = "Browser");
 	}
 
 	@summary = "Default summary"
@@ -828,6 +834,8 @@ definition {
 				fragmentName = ${fragmentName},
 				position = ${position});
 		}
+
+		PageEditor.gotoTab(tabName = "Browser");
 	}
 
 	@summary = "Default summary"
@@ -1379,6 +1387,8 @@ definition {
 				fragmentName = ${fragmentName},
 				index = ${index});
 		}
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		if (isSet(className)) {
 			var fragmentName = ${className};
@@ -2068,6 +2078,8 @@ definition {
 		}
 		else {
 			PageEditor.clickConfigurableField(fragmentName = "Applied Filters");
+
+			PageEditor.gotoTab(tabName = "Browser");
 		}
 
 		WaitForVisible(
@@ -2137,11 +2149,15 @@ definition {
 			PageEditor.clickConfigurableField(
 				fragmentName = ${fragmentName},
 				index = ${index});
+
+			PageEditor.gotoTab(tabName = "Browser");
 		}
 
 		if (isSet(deviceType) && (${deviceType} != "Desktop")) {
 			SelectFrame(value1 = "relative=top");
 		}
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -2283,6 +2299,8 @@ definition {
 				PageEditor.clickConfigurableField(
 					fragmentName = ${fragmentName},
 					index = ${index});
+
+				PageEditor.gotoTab(tabName = "Browser");
 
 				PageEditor.viewItemSelectorText(
 					fieldLabel = "Collection",
@@ -2536,6 +2554,8 @@ definition {
 			PageEditor.clickConfigurableField(
 				fragmentName = ${fragmentName},
 				index = ${index});
+
+			PageEditor.gotoTab(tabName = "Browser");
 		}
 
 		AssertVisible(
@@ -2702,6 +2722,8 @@ definition {
 		var key_fragmentName = ${fragmentName};
 
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -2937,6 +2959,8 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Dropdown");
 
+		PageEditor.gotoTab(tabName = "Browser");
+
 		AssertVisible(
 			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
@@ -3010,11 +3034,15 @@ definition {
 			PageEditor.clickConfigurableField(
 				fragmentName = "Form Container",
 				index = ${index});
+
+			PageEditor.gotoTab(tabName = "Browser");
 		}
 
 		if (isSet(deviceType) && (${deviceType} != "Desktop")) {
 			SelectFrame(value1 = "relative=top");
 		}
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -3559,6 +3587,8 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Knowledge Base Navigation");
 
+		PageEditor.gotoTab(tabName = "Browser");
+
 		AssertVisible(
 			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
@@ -3585,6 +3615,8 @@ definition {
 		PageEditor.clickConfigurableField(
 			fragmentName = "Container",
 			index = ${index});
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -3950,6 +3982,8 @@ definition {
 			fragmentName = "Grid",
 			index = ${index});
 
+		PageEditor.gotoTab(tabName = "Browser");
+
 		AssertVisible(
 			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
@@ -4210,6 +4244,8 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Menu Display");
 
+		PageEditor.gotoTab(tabName = "Browser");
+
 		AssertVisible(
 			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
@@ -4362,6 +4398,8 @@ definition {
 	macro editTabs(persistSelectedTab = null, panel = null, numberOfTabs = null) {
 		PageEditor.clickConfigurableField(fragmentName = "Tabs");
 
+		PageEditor.gotoTab(tabName = "Browser");
+
 		AssertVisible(
 			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
@@ -4502,6 +4540,8 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 			fragmentName = ${fragmentName},
 			index = ${index});
 
+		PageEditor.gotoTab(tabName = "Browser");
+
 		AssertVisible(
 			key_sidebarButton = "Browser",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
@@ -4524,12 +4564,16 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 
 		if (IsElementNotPresent(locator1 = "Fragment#FRAGMENT_COMMENT_ICON")) {
 			PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
+
+			PageEditor.gotoTab(tabName = "Browser");
 		}
 
 		Click(locator1 = "Fragment#FRAGMENT_COMMENT_ICON");
 
 		if (IsElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME")) {
 			PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
+
+			PageEditor.gotoTab(tabName = "Browser");
 		}
 	}
 
@@ -4538,6 +4582,8 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 		PageEditor.clickConfigurableField(
 			fragmentName = ${fragmentName},
 			index = ${index});
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -4555,6 +4601,8 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 		var key_fragmentName = ${fragmentName};
 
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		Click.waitForMenuToggleJSClick(locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
 
@@ -4652,6 +4700,8 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
 
+		PageEditor.gotoTab(tabName = "Browser");
+
 		Click.waitForMenuToggleJSClick(locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Save Composition");
@@ -4660,6 +4710,8 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 	@summary = "Default summary"
 	macro gotoSelectPanel(fragmentName = null) {
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",
@@ -4690,6 +4742,8 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 		}
 
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		if (isSet(deviceType) && (${deviceType} != "Desktop")) {
 			SelectFrame(value1 = "relative=top");
@@ -4738,6 +4792,8 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 		var key_fragmentName = ${fragmentName};
 
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		Click.waitForMenuToggleJSClick(locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
 
@@ -4920,6 +4976,8 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 			fragmentName = ${fragmentName},
 			index = ${index});
 
+		PageEditor.gotoTab(tabName = "Browser");
+
 		Click.waitForMenuToggleJSClick(locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Delete");
@@ -5065,6 +5123,8 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 	@summary = "Default summary"
 	macro resizeConfigurationPanel(fragmentName = null, position = null) {
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		AssertElementPresent(
 			key_nodeName = ${fragmentName},

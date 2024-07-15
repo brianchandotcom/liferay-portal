@@ -174,6 +174,8 @@ definition {
 		task ("Assert the fragment name is localized") {
 			PageEditor.clickConfigurableField(fragmentName = "Título");
 
+			PageEditor.gotoTab(tabName = "Navegador");
+
 			PageEditor.viewFragmentHeaderVisible(fragmentName = "Título");
 		}
 

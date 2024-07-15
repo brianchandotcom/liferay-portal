@@ -390,6 +390,8 @@ definition {
 
 			PageEditor.clickConfigurableField(fragmentName = "Container");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			Click(
 				key_navItem = "Styles",
 				locator1 = "PageEditor#NAV_ITEM_BUTTON");
@@ -442,6 +444,8 @@ definition {
 			PageEditor.clickConfigurableField(
 				fragmentName = "Container",
 				index = 3);
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			Click(
 				key_navItem = "Styles",

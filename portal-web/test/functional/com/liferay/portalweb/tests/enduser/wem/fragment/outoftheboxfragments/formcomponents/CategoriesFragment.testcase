@@ -557,6 +557,8 @@ definition {
 				fragmentName = "Categories",
 				index = 1);
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			PageEditor.configureFragment(vocabularyType = "Public");
 
 			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName1});
@@ -571,6 +573,8 @@ definition {
 			PageEditor.clickConfigurableField(
 				fragmentName = "Categories",
 				index = 2);
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			PageEditor.configureFragment(vocabularyType = "Internal");
 
@@ -868,6 +872,8 @@ definition {
 				fragmentName = "Categories",
 				index = 1);
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			PageEditor.configureFragment(vocabularyType = "Public");
 
 			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName1});
@@ -885,6 +891,8 @@ definition {
 				fragmentName = "Categories",
 				index = 2);
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			PageEditor.configureFragment(vocabularyType = "Internal");
 
 			AssertElementNotPresent(
@@ -901,6 +909,8 @@ definition {
 			PageEditor.clickConfigurableField(
 				fragmentName = "Categories",
 				index = 3);
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			PageEditor.configureFragment(vocabularyType = "All");
 

@@ -115,19 +115,6 @@ public class LayoutPublishedSearchTest {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		JSONObject inlineValueJSONObject = JSONUtil.put(
-			FragmentEntryProcessorConstants.
-				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-			JSONUtil.put(
-				"element-text",
-				JSONUtil.put(
-					"config", JSONFactoryUtil.createJSONObject()
-				).put(
-					"defaultValue", "default value"
-				).put(
-					layout.getDefaultLanguageId(), value
-				)));
-
 		FragmentEntryLink inlineFragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				null, _group.getGroupId(), 0,
@@ -137,7 +124,18 @@ public class LayoutPublishedSearchTest {
 				contributedFragmentEntry.getHtml(),
 				contributedFragmentEntry.getJs(),
 				contributedFragmentEntry.getConfiguration(),
-				inlineValueJSONObject.toString(), StringPool.BLANK, 0,
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text",
+						JSONUtil.put(
+							"config", JSONFactoryUtil.createJSONObject()
+						).put(
+							"defaultValue", "default value"
+						).put(
+							layout.getDefaultLanguageId(), value
+						))).toString(), StringPool.BLANK, 0,
 				contributedFragmentEntry.getFragmentEntryKey(),
 				contributedFragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

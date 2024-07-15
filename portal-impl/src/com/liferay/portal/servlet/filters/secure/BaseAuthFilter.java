@@ -8,6 +8,7 @@ package com.liferay.portal.servlet.filters.secure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -165,10 +166,13 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 			}
 
 			if (userId > 0) {
+				user1 = UserLocalServiceUtil.getUser(userId);
+
 				httpServletRequest = setCredentials(
-					httpServletRequest, httpSession,
-					UserLocalServiceUtil.getUser(userId),
+					httpServletRequest, httpSession, user1,
 					HttpServletRequest.DIGEST_AUTH);
+
+				httpSession.setAttribute("DIGEST", user1.getDigest());
 			}
 			else {
 				HttpAuthManagerUtil.generateChallenge(
@@ -182,7 +186,7 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 		else {
 			User user2 = UserLocalServiceUtil.getUser(user1.getUserId());
 
-			if (!user2.isActive()) {
+			if (isDigestModified(httpSession) || !user2.isActive()) {
 				httpSession.invalidate();
 
 				HttpAuthManagerUtil.generateChallenge(
@@ -214,6 +218,24 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 		}
 
 		PermissionThreadLocal.getPermissionChecker(user, true);
+	}
+
+	protected boolean isDigestModified(HttpSession httpSession)
+		throws PortalException {
+
+		User user = (User)httpSession.getAttribute(WebKeys.USER);
+
+		if (user != null) {
+			String digest = (String)httpSession.getAttribute("DIGEST");
+
+			user = UserLocalServiceUtil.getUser(user.getUserId());
+
+			if (!digest.equals(user.getDigest())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

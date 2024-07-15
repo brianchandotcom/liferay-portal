@@ -756,10 +756,6 @@ public class DLFileEntryLocalServiceImpl
 	public DLFileEntry deleteFileEntry(DLFileEntry dlFileEntry)
 		throws PortalException {
 
-		// File entry
-
-		dlFileEntryPersistence.remove(dlFileEntry);
-
 		// Resources
 
 		_resourceLocalService.deleteResource(
@@ -788,14 +784,14 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.getFileEntryId());
 
 		for (DLFileVersion dlFileVersion : dlFileVersions) {
-			_dlFileVersionPersistence.remove(dlFileVersion);
-
 			_expandoRowLocalService.deleteRows(
 				dlFileVersion.getFileVersionId());
 
 			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
 				DLFileEntry.class.getName(), dlFileVersion.getFileVersionId());
+
+			_dlFileVersionPersistence.remove(dlFileVersion);
 		}
 
 		// Expando
@@ -819,6 +815,10 @@ public class DLFileEntryLocalServiceImpl
 		// Lock
 
 		unlockFileEntry(dlFileEntry.getFileEntryId());
+
+		// File entry
+
+		dlFileEntryPersistence.remove(dlFileEntry);
 
 		// File
 

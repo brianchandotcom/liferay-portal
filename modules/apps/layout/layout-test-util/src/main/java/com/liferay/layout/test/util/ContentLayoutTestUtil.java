@@ -16,6 +16,8 @@ import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.provider.LayoutStructureProvider;
+import com.liferay.layout.taglib.servlet.taglib.RenderLayoutStructureTag;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -59,12 +61,16 @@ import java.util.Locale;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockPageContext;
 
 /**
  * @author Lourdes Fernández Besada
@@ -497,6 +503,46 @@ public class ContentLayoutTestUtil {
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
+		}
+	}
+
+	public static String getRenderLayoutHTML(
+			Layout layout,
+			LayoutServiceContextHelper layoutServiceContextHelper,
+			LayoutStructureProvider layoutStructureProvider,
+			long segmentsExperienceId)
+		throws Exception {
+
+		try (AutoCloseable autoCloseable =
+				layoutServiceContextHelper.getServiceContextAutoCloseable(
+					layout)) {
+
+			RenderLayoutStructureTag renderLayoutStructureTag =
+				new RenderLayoutStructureTag();
+
+			renderLayoutStructureTag.setLayoutStructure(
+				layoutStructureProvider.getLayoutStructure(
+					layout.getPlid(), segmentsExperienceId));
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+			httpServletRequest.setAttribute(
+				"ORIGINAL_HTTP_SERVLET_REQUEST", httpServletRequest);
+
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
+			renderLayoutStructureTag.setPageContext(
+				new MockPageContext(
+					null, httpServletRequest, mockHttpServletResponse));
+
+			renderLayoutStructureTag.doTag(
+				httpServletRequest, mockHttpServletResponse);
+
+			return mockHttpServletResponse.getContentAsString();
 		}
 	}
 

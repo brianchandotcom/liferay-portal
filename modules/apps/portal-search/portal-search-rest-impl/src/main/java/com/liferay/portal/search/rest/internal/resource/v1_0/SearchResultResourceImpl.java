@@ -107,6 +107,10 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-11232")) {
+			throw new NotFoundException();
+		}
+
 		SearchRequestBody searchRequestBody = new SearchRequestBody();
 
 		searchRequestBody.setAttributes(
@@ -117,7 +121,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 				blueprintExternalReferenceCode
 			).build());
 
-		return postSearchPage(
+		return _postSearchPage(
 			entryClassNames, scope, search, filter, pagination, sorts,
 			searchRequestBody);
 	}
@@ -133,53 +137,9 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			throw new NotFoundException();
 		}
 
-		SearchRequestBuilder searchRequestBuilder =
-			_searchRequestBuilderFactory.builder(
-			).companyId(
-				contextCompany.getCompanyId()
-			).fetchSourceIncludes(
-				new String[] {
-					_localization.getLocalizedName(
-						com.liferay.portal.kernel.search.Field.CONTENT,
-						contextAcceptLanguage.getPreferredLanguageId()),
-					com.liferay.portal.kernel.search.Field.CREATE_DATE,
-					_localization.getLocalizedName(
-						com.liferay.portal.kernel.search.Field.DESCRIPTION,
-						contextAcceptLanguage.getPreferredLanguageId()),
-					com.liferay.portal.kernel.search.Field.MODIFIED_DATE
-				}
-			).from(
-				pagination.getStartPosition()
-			).size(
-				pagination.getPageSize()
-			).withSearchContext(
-				searchContext -> _populateSearchContext(
-					searchRequestBody.getAttributes(), filter, scope, search,
-					searchContext, sorts)
-			);
-
-		String[] entryClassNamesArray = ValueUtil.toArray(entryClassNames);
-
-		if (!ArrayUtil.isEmpty(entryClassNamesArray)) {
-			searchRequestBuilder.entryClassNames(entryClassNamesArray);
-			searchRequestBuilder.modelIndexerClassNames(entryClassNamesArray);
-		}
-
-		if (!Validator.isBlank(search)) {
-			searchRequestBuilder.queryString(search);
-		}
-
-		if (ArrayUtil.isNotEmpty(searchRequestBody.getFacetConfigurations())) {
-			_facetRequestContributor.contribute(
-				searchRequestBody.getFacetConfigurations(),
-				searchRequestBuilder);
-		}
-
-		return _toSearchPage(
-			searchRequestBody.getFacetConfigurations(),
-			Arrays.asList(
-				ParamUtil.getStringValues(contextHttpServletRequest, "fields")),
-			pagination, _searcher.search(searchRequestBuilder.build()));
+		return _postSearchPage(
+			entryClassNames, scope, search, filter, pagination, sorts,
+			searchRequestBody);
 	}
 
 	private Object _fetchObject(String entryClassName, Long entryClassPK) {
@@ -419,6 +379,60 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 		searchContext.setTimeZone(contextUser.getTimeZone());
 		searchContext.setUserId(contextUser.getUserId());
+	}
+
+	private Page<SearchResult> _postSearchPage(
+		String entryClassNames, String scope, String search, Filter filter,
+		Pagination pagination, Sort[] sorts,
+		SearchRequestBody searchRequestBody) {
+
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder(
+			).companyId(
+				contextCompany.getCompanyId()
+			).fetchSourceIncludes(
+				new String[] {
+					_localization.getLocalizedName(
+						com.liferay.portal.kernel.search.Field.CONTENT,
+						contextAcceptLanguage.getPreferredLanguageId()),
+					com.liferay.portal.kernel.search.Field.CREATE_DATE,
+					_localization.getLocalizedName(
+						com.liferay.portal.kernel.search.Field.DESCRIPTION,
+						contextAcceptLanguage.getPreferredLanguageId()),
+					com.liferay.portal.kernel.search.Field.MODIFIED_DATE
+				}
+			).from(
+				pagination.getStartPosition()
+			).size(
+				pagination.getPageSize()
+			).withSearchContext(
+				searchContext -> _populateSearchContext(
+					searchRequestBody.getAttributes(), filter, scope, search,
+					searchContext, sorts)
+			);
+
+		String[] entryClassNamesArray = ValueUtil.toArray(entryClassNames);
+
+		if (!ArrayUtil.isEmpty(entryClassNamesArray)) {
+			searchRequestBuilder.entryClassNames(entryClassNamesArray);
+			searchRequestBuilder.modelIndexerClassNames(entryClassNamesArray);
+		}
+
+		if (!Validator.isBlank(search)) {
+			searchRequestBuilder.queryString(search);
+		}
+
+		if (ArrayUtil.isNotEmpty(searchRequestBody.getFacetConfigurations())) {
+			_facetRequestContributor.contribute(
+				searchRequestBody.getFacetConfigurations(),
+				searchRequestBuilder);
+		}
+
+		return _toSearchPage(
+			searchRequestBody.getFacetConfigurations(),
+			Arrays.asList(
+				ParamUtil.getStringValues(contextHttpServletRequest, "fields")),
+			pagination, _searcher.search(searchRequestBuilder.build()));
 	}
 
 	private void _setDateCreated(

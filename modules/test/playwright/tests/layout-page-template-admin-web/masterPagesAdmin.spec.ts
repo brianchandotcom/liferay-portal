@@ -90,7 +90,10 @@ test('Add a page based on custom master', async ({
 	await test.step('Assert custom masters as an option when add a new page', async () => {
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
-		await pagesAdminPage.createNewPage(pageName, masterName);
+		await pagesAdminPage.createNewPage({
+			name: pageName,
+			template: masterName,
+		});
 	});
 
 	await test.step('Assert the new page inherits elements from custom masters', async () => {
@@ -146,7 +149,10 @@ test('Fragments hidden in master pages are hidden in pages that use it and visib
 
 		const pageName = getRandomString();
 
-		await pagesAdminPage.createNewPage(pageName, masterName);
+		await pagesAdminPage.createNewPage({
+			name: pageName,
+			template: masterName,
+		});
 
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 

@@ -38,7 +38,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
-		Navigator.gotoNavTab(navTab = "Sites of which I am a member");
+		Navigator.gotoNavTab(navTab = "Sites of Which I Am a Member");
 
 		SiteSelector.viewSite(site = ${siteName});
 	}
@@ -571,7 +571,7 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
-			Navigator.gotoNavTab(navTab = "Sites of which I am a member");
+			Navigator.gotoNavTab(navTab = "Sites of Which I Am a Member");
 
 			SiteSelector.selectSite(site = ${otherSite});
 		}
@@ -704,7 +704,7 @@ definition {
 				LexiconEntry.changeDisplayStyle(displayStyle = "table");
 			}
 			else {
-				Navigator.gotoNavTab(navTab = "Sites of which I am a member");
+				Navigator.gotoNavTab(navTab = "Sites of Which I Am a Member");
 
 				LexiconEntry.changeDisplayStyle(displayStyle = "table");
 			}
@@ -1344,12 +1344,12 @@ definition {
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
 			AssertClick.assertPartialTextClickAt(
-				key_tab = "Sites of which I am a member",
+				key_tab = "Sites of Which I Am a Member",
 				locator1 = "NavTab#TAB_LINK",
-				value1 = "Sites of which I am a member");
+				value1 = "Sites of Which I Am a Member");
 
 			AssertElementPresent(
-				key_tab = "Sites of which I am a member",
+				key_tab = "Sites of Which I Am a Member",
 				locator1 = "NavTab#ACTIVE_TAB_LINK");
 
 			var key_siteName = ${liferaySiteName};

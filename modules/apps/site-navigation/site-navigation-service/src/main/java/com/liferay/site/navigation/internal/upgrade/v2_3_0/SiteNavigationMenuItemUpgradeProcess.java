@@ -23,13 +23,14 @@ public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select siteNavigationMenuItemId, typeSettings from " +
-					"SiteNavigationMenuItem where type_ = 'display_page'");
+				"select ctCollectionId, siteNavigationMenuItemId, " +
+					"typeSettings from SiteNavigationMenuItem where type_ = " +
+						"'display_page'");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update SiteNavigationMenuItem set type_ = ? where " +
-						"siteNavigationMenuItemId = ?");
+						"ctCollectionId = ? and siteNavigationMenuItemId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -45,7 +46,10 @@ public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
 					1, PortalUtil.getClassName(classNameId));
 
 				preparedStatement2.setLong(
-					2, resultSet.getLong("siteNavigationMenuItemId"));
+					2, resultSet.getLong("ctCollectionId"));
+
+				preparedStatement2.setLong(
+					3, resultSet.getLong("siteNavigationMenuItemId"));
 
 				preparedStatement2.addBatch();
 			}

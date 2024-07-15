@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -288,16 +289,18 @@ public class GroupImpl extends GroupBaseImpl {
 		boolean controlPanel) {
 
 		try {
-			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				getGroupId(), privateLayout);
+			Layout firstPublishedLayout = LayoutServiceUtil.fetchFirstLayout(
+				getGroupId(), privateLayout, true);
 
-			if ((layoutSet.getPageCount() > 0) ||
+			if ((firstPublishedLayout != null) ||
 				(isUser() &&
 				 (LayoutLocalServiceUtil.getLayoutsCount(this, privateLayout) >
 					 0))) {
 
 				String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-					layoutSet, themeDisplay, false, controlPanel);
+					LayoutSetLocalServiceUtil.getLayoutSet(
+						getGroupId(), privateLayout),
+					themeDisplay, false, controlPanel);
 
 				if (isUser()) {
 					return PortalUtil.addPreservedParameters(

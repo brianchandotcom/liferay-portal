@@ -78,7 +78,7 @@ const NumberBreakdown: React.FC<IBreakdownProps> = ({
 							displayType='primary'
 							type='submit'
 						>
-							{Liferay.Language.get('done')}
+							{Liferay.Language.get('apply')}
 						</ClayButton>
 					</div>
 				</Form.Form>

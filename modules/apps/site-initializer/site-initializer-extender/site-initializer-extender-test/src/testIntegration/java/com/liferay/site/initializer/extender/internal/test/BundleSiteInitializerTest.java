@@ -3847,12 +3847,15 @@ public class BundleSiteInitializerTest {
 				"TESTSXPBLUEPRINT2");
 
 		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray(
-			sxpBlueprint.getElementInstances()[0].
-			getUiConfigurationValues().
-			get("values").toString()
-		);
+			sxpBlueprint.getElementInstances()[0].getUiConfigurationValues(
+			).get(
+				"values"
+			).toString());
 
-		JSONObject valueJSONObject = JSONFactoryUtil.createJSONObject(valuesJSONArray.get(0).toString());
+		JSONObject valueJSONObject = JSONFactoryUtil.createJSONObject(
+			valuesJSONArray.get(
+				0
+			).toString());
 
 		Assert.assertNotNull(sxpBlueprint);
 		Assert.assertEquals(

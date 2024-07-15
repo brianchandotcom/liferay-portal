@@ -223,6 +223,10 @@ export const Routes = buildRoutes({
 												'/:interestId'
 										}
 									},
+									SITES_SEARCH_TERMS: {
+										path: '/search-terms',
+										routes: {}
+									},
 									SITES_TOUCHPOINTS: {
 										path: '/pages',
 										routes: {

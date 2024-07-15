@@ -473,23 +473,13 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		Layout layout = layouts.get(0);
 
-		boolean viewPermission = _hasViewPermission(layout);
+		if ((!published || layout.isPublished()) &&
+			_hasViewPermission(layout)) {
 
-		if ((!published || layout.isPublished()) && viewPermission) {
 			return layout;
 		}
 
-		Layout firstLayout = _getFirstLayout(groupId, privateLayout, published);
-
-		if (firstLayout != null) {
-			return firstLayout;
-		}
-
-		if (viewPermission) {
-			return layout;
-		}
-
-		return null;
+		return _getFirstLayout(groupId, privateLayout, published);
 	}
 
 	@Override

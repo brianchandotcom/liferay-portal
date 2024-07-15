@@ -15,6 +15,7 @@ import com.liferay.gradle.plugins.js.transpiler.JSTranspilerBasePlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.rest.builder.RESTBuilderPlugin;
+import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.soy.SoyTranslationPlugin;
@@ -52,6 +53,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
+import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.ConfigurableFileCollection;
@@ -215,6 +217,14 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				public void execute(Project project) {
 					TaskContainer taskContainer = project.getTasks();
 
+					Task buildServiceTask = taskContainer.findByName(
+						ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME);
+
+					if (buildServiceTask != null) {
+						_configureTaskBuildService(
+							(BuildServiceTask)buildServiceTask);
+					}
+
 					Task deployFastTask = taskContainer.findByName(
 						LiferayOSGiPlugin.DEPLOY_FAST_TASK_NAME);
 
@@ -368,6 +378,28 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		copy.dependsOn(buildTask);
 
 		copy.into("osgi/modules", _copyJarClosure(project, buildTask));
+	}
+
+	private void _configureTaskBuildService(BuildServiceTask buildServiceTask) {
+		JavaVersion javaVersion = buildServiceTask.getJavaVersion();
+
+		if (javaVersion.isJava11()) {
+			buildServiceTask.jvmArgs(
+				"--add-opens", "java.base/java.lang=ALL-UNNAMED");
+			buildServiceTask.jvmArgs(
+				"--add-opens", "java.base/java.lang.invoke=ALL-UNNAMED");
+			buildServiceTask.jvmArgs(
+				"--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED");
+			buildServiceTask.jvmArgs(
+				"--add-opens", "java.base/java.net=ALL-UNNAMED");
+			buildServiceTask.jvmArgs(
+				"--add-opens",
+				"java.base/sun.net.www.protocol.http=ALL-UNNAMED");
+			buildServiceTask.jvmArgs(
+				"--add-opens", "java.base/sun.util.calendar=ALL-UNNAMED");
+			buildServiceTask.jvmArgs(
+				"--add-opens", "jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED");
+		}
 	}
 
 	private void _configureTaskDeployFast(

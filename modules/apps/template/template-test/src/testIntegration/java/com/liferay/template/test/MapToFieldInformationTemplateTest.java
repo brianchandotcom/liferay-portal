@@ -18,6 +18,7 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -50,6 +51,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.test.util.TemplateTestUtil;
 
 import java.util.Date;
@@ -103,6 +105,22 @@ public class MapToFieldInformationTemplateTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testMapToContentDisplay() throws Exception {
+		_mapToContentDisplay(
+			BlogsEntry.class.getName(),
+			_portal.getClassNameId(BlogsEntry.class.getName()), 0,
+			_blogsEntry.getEntryId(), "content");
+		_mapToContentDisplay(
+			JournalArticle.class.getName(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			_journalArticle.getDDMStructureId(),
+			_journalArticle.getResourcePrimKey(),
+			"DDMStructure_" + _ddmFormField.getName());
+
+		_assertRenderLayoutHTML(_blogsEntry.getContent(), _fieldContent);
 	}
 
 	@Test
@@ -225,6 +243,50 @@ public class MapToFieldInformationTemplateTest {
 		return ddmFormField;
 	}
 
+	private void _mapToContentDisplay(
+			String className, long classNameId, long classTypeId, long classPK,
+			String fieldName)
+		throws Exception {
+
+		TemplateEntry templateEntry = TemplateTestUtil.addTemplateEntry(
+			className, String.valueOf(classTypeId),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			TemplateTestUtil.getSampleScriptFTL(fieldName), _serviceContext);
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"itemSelector",
+					JSONUtil.put(
+						"className", className
+					).put(
+						"classNameId", String.valueOf(classNameId)
+					).put(
+						"classPK", String.valueOf(classPK)
+					).put(
+						"classTypeId", String.valueOf(classTypeId)
+					).put(
+						"template",
+						JSONUtil.put(
+							"infoItemRendererKey",
+							"com.liferay.template.internal.info.item." +
+								"renderer.TemplateInfoItemTemplatedRenderer"
+						).put(
+							"templateKey",
+							String.valueOf(templateEntry.getTemplateEntryId())
+						)
+					))
+			).toString(),
+			_fragmentRendererRegistry.getFragmentRenderer(
+				"com.liferay.fragment.internal.renderer." +
+					"ContentObjectFragmentRenderer"),
+			_draftLayout, null, 0, _segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+	}
+
 	private void _mapToEditableField(
 			String className, long classTypeId, long classPK, String fieldName,
 			String infoItemFormVariationKey)
@@ -288,6 +350,9 @@ public class MapToFieldInformationTemplateTest {
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
+	private FragmentRendererRegistry _fragmentRendererRegistry;
 
 	@DeleteAfterTestRun
 	private Group _group;

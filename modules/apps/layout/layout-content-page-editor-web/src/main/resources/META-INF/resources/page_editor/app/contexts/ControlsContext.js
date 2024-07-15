@@ -14,7 +14,7 @@ import {useDispatch, useSelector} from './StoreContext';
 
 const ACTIVE_INITIAL_STATE = {
 	activationOrigin: null,
-	activeItemId: null,
+	activeItemIds: Liferay.FeatureFlags['LPD-18221'] ? [] : null,
 	activeItemType: null,
 };
 
@@ -43,11 +43,19 @@ const reducer = (state, action) => {
 			hoveredItemType: itemType,
 		};
 	}
-	else if (type === SELECT_ITEM && itemId !== nextState.activeItemId) {
+	else if (
+		type === SELECT_ITEM &&
+		(Liferay.FeatureFlags['LPD-18221'] ||
+			itemId !== nextState.activeItemIds)
+	) {
 		nextState = {
 			...nextState,
 			activationOrigin: origin,
-			activeItemId: itemId,
+			activeItemIds: Liferay.FeatureFlags['LPD-18221']
+				? itemId
+					? [itemId]
+					: []
+				: itemId,
 			activeItemType: itemType,
 		};
 	}
@@ -96,8 +104,8 @@ const ControlsProvider = ({
 const useActivationOrigin = () =>
 	useContext(ActiveStateContext).activationOrigin;
 
-const useActiveItemId = () =>
-	fromControlsId(useContext(ActiveStateContext).activeItemId);
+const useActiveItemIds = () =>
+	fromControlsId(useContext(ActiveStateContext).activeItemIds);
 
 const useActiveItemType = () => useContext(ActiveStateContext).activeItemType;
 
@@ -133,12 +141,15 @@ const useHoverItem = () => {
 };
 
 const useIsActive = () => {
-	const {activeItemId} = useContext(ActiveStateContext);
+	const {activeItemIds} = useContext(ActiveStateContext);
 	const toControlsId = useToControlsId();
 
 	return useCallback(
-		(itemId) => activeItemId === toControlsId(itemId),
-		[activeItemId, toControlsId]
+		(itemId) =>
+			Liferay.FeatureFlags['LPD-18221']
+				? activeItemIds.includes(toControlsId(itemId))
+				: activeItemIds === toControlsId(itemId),
+		[activeItemIds, toControlsId]
 	);
 };
 
@@ -208,7 +219,7 @@ export {
 	ControlsProvider,
 	reducer,
 	useActivationOrigin,
-	useActiveItemId,
+	useActiveItemIds,
 	useActiveItemType,
 	useHoveredItemId,
 	useHoveredItemType,

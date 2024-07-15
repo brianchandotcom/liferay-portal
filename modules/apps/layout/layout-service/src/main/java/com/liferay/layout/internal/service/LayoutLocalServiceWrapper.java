@@ -604,13 +604,14 @@ public class LayoutLocalServiceWrapper
 		}
 	}
 
-	private void _deletePortletPermissions(
+	private List<String> _deletePortletPermissions(
 			Layout layout, long[] segmentsExperiencesIds)
 		throws Exception {
 
-		for (String portletId :
-				_getLayoutPortletIds(layout, segmentsExperiencesIds)) {
+		List<String> portletIds = _getLayoutPortletIds(
+			layout, segmentsExperiencesIds);
 
+		for (String portletId : portletIds) {
 			_resourcePermissionLocalService.deleteResourcePermissions(
 				layout.getCompanyId(),
 				PortletIdCodec.decodePortletName(portletId),
@@ -618,6 +619,8 @@ public class LayoutLocalServiceWrapper
 				PortletPermissionUtil.getPrimaryKey(
 					layout.getPlid(), portletId));
 		}
+
+		return portletIds;
 	}
 
 	private Layout _fetchLayoutByFriendlyURL(
@@ -1107,7 +1110,7 @@ public class LayoutLocalServiceWrapper
 				_sites.copyPortletPermissions(_targetLayout, _sourceLayout);
 			}
 			else {
-				_deletePortletPermissions(
+				List<String> oldPortletIds = _deletePortletPermissions(
 					_targetLayout, _targetSegmentsExperiencesIds);
 
 				// LPS-108378 Copy structure before permissions and preferences
@@ -1132,7 +1135,7 @@ public class LayoutLocalServiceWrapper
 				_copyPortletPreferences(
 					portletIds, _sourceLayout, _targetLayout);
 
-				_deleteOrphanPortletPreferences(portletIds);
+				_deleteOrphanPortletPreferences(portletIds, oldPortletIds);
 			}
 
 			// Copy classedModelUsages after copying the structure
@@ -1210,9 +1213,8 @@ public class LayoutLocalServiceWrapper
 			}
 		}
 
-		private void _deleteOrphanPortletPreferences(List<String> portletIds) {
-			List<String> oldPortletIds = _getLayoutPortletIds(
-				_targetLayout, _sourceSegmentsExperiencesIds);
+		private void _deleteOrphanPortletPreferences(
+			List<String> portletIds, List<String> oldPortletIds) {
 
 			String[] deletedPortletIds = TransformUtil.transformToArray(
 				oldPortletIds,

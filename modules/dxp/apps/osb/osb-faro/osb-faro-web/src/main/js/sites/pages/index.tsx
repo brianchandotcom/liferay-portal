@@ -30,6 +30,12 @@ const Interests = lazy(
 const Overview = lazy(
 	() => import(/* webpackChunkName: "SitesDashboardOverview" */ './Overview')
 );
+const SearchTermsPage = lazy(
+	() =>
+		import(
+			/* webpackChunkName: "SitesDashboardSearchTerms" */ './SearchTermsPage'
+		)
+);
 const Touchpoints = lazy(
 	() =>
 		import(
@@ -52,6 +58,11 @@ const NAV_ITEMS = [
 		exact: false,
 		label: Liferay.Language.get('interests'),
 		route: Routes.SITES_INTERESTS
+	},
+	{
+		exact: true,
+		label: Liferay.Language.get('search-terms'),
+		route: Routes.SITES_SEARCH_TERMS
 	}
 ];
 
@@ -109,27 +120,30 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 				/>
 			</BasePage.Header>
 
-			{matchedRoute !== Routes.SITES_INTERESTS && (
-				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
-						{matchedRoute === Routes.SITES && (
-							<DownloadPDFReport
-								disabled={dataSourceStates.empty}
-								subtitle={selectedChannelName}
-								title={Liferay.Language.get('sites-dashboard')}
-							/>
-						)}
+			{matchedRoute !== Routes.SITES_INTERESTS &&
+				matchedRoute !== Routes.SITES_SEARCH_TERMS && (
+					<BasePage.SubHeader>
+						<div className='d-flex justify-content-end w-100'>
+							{matchedRoute === Routes.SITES && (
+								<DownloadPDFReport
+									disabled={dataSourceStates.empty}
+									subtitle={selectedChannelName}
+									title={Liferay.Language.get(
+										'sites-dashboard'
+									)}
+								/>
+							)}
 
-						{matchedRoute === Routes.SITES_TOUCHPOINTS && (
-							<DownloadCSVReport
-								disabled={dataSourceStates.empty}
-								type={CSVType.Page}
-								typeLang={Liferay.Language.get('pages')}
-							/>
-						)}
-					</div>
-				</BasePage.SubHeader>
-			)}
+							{matchedRoute === Routes.SITES_TOUCHPOINTS && (
+								<DownloadCSVReport
+									disabled={dataSourceStates.empty}
+									type={CSVType.Page}
+									typeLang={Liferay.Language.get('pages')}
+								/>
+							)}
+						</div>
+					</BasePage.SubHeader>
+				)}
 
 			<BasePage.Context.Provider
 				value={{
@@ -216,6 +230,13 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 										destructured={false}
 										exact
 										path={Routes.SITES}
+									/>
+
+									<BundleRouter
+										data={SearchTermsPage}
+										destructured={false}
+										exact
+										path={Routes.SITES_SEARCH_TERMS}
 									/>
 
 									<RouteNotFound />

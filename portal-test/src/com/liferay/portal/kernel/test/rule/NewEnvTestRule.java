@@ -146,6 +146,14 @@ public class NewEnvTestRule implements TestRule {
 	protected List<String> createArguments(Description description) {
 		List<String> arguments = new ArrayList<>();
 
+		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+
+		for (String jvmArg : runtimeMXBean.getInputArguments()) {
+			if (jvmArg.startsWith("--add-opens")) {
+				arguments.add(jvmArg);
+			}
+		}
+
 		Class<?> testClass = description.getTestClass();
 
 		NewEnv.JVMArgsLine jvmArgsLine = testClass.getAnnotation(
@@ -159,14 +167,6 @@ public class NewEnvTestRule implements TestRule {
 
 		if (jvmArgsLine != null) {
 			arguments.addAll(processJVMArgsLine(jvmArgsLine));
-		}
-
-		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
-
-		for (String jvmArg : runtimeMXBean.getInputArguments()) {
-			if (jvmArg.startsWith("--add-opens")) {
-				arguments.add(jvmArg);
-			}
 		}
 
 		arguments.add("-Djava.net.preferIPv4Stack=true");

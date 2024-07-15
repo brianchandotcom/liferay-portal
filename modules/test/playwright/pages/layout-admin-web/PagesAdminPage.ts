@@ -216,6 +216,22 @@ export class PagesAdminPage {
 		}
 	}
 
+	async deletePage(name: string) {
+		await this.clickOnAction('Delete', name);
+
+		await this.page
+			.locator('.modal-title')
+			.getByText('Delete Page')
+			.waitFor();
+
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:Your request completed successfully.'
+		);
+	}
+
 	async editPage(name: string) {
 		await this.clickOnAction('Edit', name);
 

@@ -186,6 +186,7 @@ const ProjectSelection = () => {
 				<a
 					className="font-weight-bold project-selection-page-link"
 					href={properties.contactSupportUrl}
+					target="_blank"
 				>
 					{i18n.translate('contact-support')}
 				</a>

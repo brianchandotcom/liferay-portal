@@ -407,6 +407,7 @@ interface PlacedOrderItems {
 }
 
 interface VirtualItem {
+	productVersion?: String;
 	url: string;
 	usages: number;
 	version: string;

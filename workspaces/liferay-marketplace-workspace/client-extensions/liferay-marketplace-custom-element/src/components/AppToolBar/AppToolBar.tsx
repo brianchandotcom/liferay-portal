@@ -41,7 +41,7 @@ const AppToolbar: React.FC<AppToolbarProps> = ({
 	saveAsDraftProps,
 	submitProps,
 }) => (
-	<div className="new-app-tool-bar-container">
+	<div className="new-app-tool-bar-container pb-4">
 		<ClayManagementToolbar.ItemList expand>
 			<div className="d-flex justify-content-between">
 				<div className="d-flex">

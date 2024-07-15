@@ -465,6 +465,8 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Grid");
 
+		PageEditor.gotoTab(tabName = "Browser");
+
 		DragAndDrop.dragAndDrop(
 			key_position = 2,
 			locator1 = "PageEditor#GRID_COLUMN_RESIZER",

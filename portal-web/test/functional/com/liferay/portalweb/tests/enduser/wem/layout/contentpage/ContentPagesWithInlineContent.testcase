@@ -488,6 +488,8 @@ definition {
 
 		task ("Select the body of Heading") {
 			PageEditor.clickConfigurableField(fragmentName = "Heading");
+
+			PageEditor.gotoTab(tabName = "Browser");
 		}
 
 		task ("Mouse over the editable field of Heading") {

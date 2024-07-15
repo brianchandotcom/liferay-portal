@@ -95,6 +95,8 @@ definition {
 			fragmentName = ${fragmentName},
 			index = ${index});
 
+		PageEditor.gotoTab(tabName = "Browser");
+
 		Navigator.gotoNavTab(navTab = "General");
 
 		if (isSet(checkList)) {
@@ -138,6 +140,8 @@ definition {
 			PageEditor.clickConfigurableField(
 				fragmentName = ${fragmentName},
 				index = ${index});
+
+			PageEditor.gotoTab(tabName = "Browser");
 		}
 
 		if (isSet(deviceType) && (${deviceType} != "Desktop")) {
@@ -200,6 +204,8 @@ definition {
 					fragmentName = ${fragmentName},
 					index = ${index});
 
+				PageEditor.gotoTab(tabName = "Browser");
+
 				PageEditor.viewItemSelectorText(
 					fieldLabel = "Collection",
 					text = ${infoListProviderName});
@@ -261,6 +267,8 @@ definition {
 		PageEditor.clickConfigurableField(
 			fragmentName = ${fragmentName},
 			index = ${index});
+
+		PageEditor.gotoTab(tabName = "Browser");
 
 		Navigator.gotoNavTab(navTab = "General");
 

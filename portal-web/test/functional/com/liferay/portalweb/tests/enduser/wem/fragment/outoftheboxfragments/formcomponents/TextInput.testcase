@@ -274,6 +274,8 @@ definition {
 
 		task ("When the page designer accesses to the General panel of Text Input fragment") {
 			PageEditor.clickConfigurableField(fragmentName = "Text");
+
+			PageEditor.gotoTab(tabName = "Browser");
 		}
 
 		task ("Then the page designer could not view the Hide fragment checkbox on general tab") {

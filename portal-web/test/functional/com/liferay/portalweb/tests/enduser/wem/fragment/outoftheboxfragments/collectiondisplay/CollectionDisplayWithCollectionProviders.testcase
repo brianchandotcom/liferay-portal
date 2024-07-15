@@ -352,6 +352,8 @@ definition {
 
 			PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			AssertSelectedLabel(
 				key_fieldLabel = "Flex Wrap",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -470,6 +472,8 @@ definition {
 				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_JUSTIFY_CONTENT");
 
 			PageEditor.clickConfigurableField(fragmentName = "Collection Display");
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Flex Wrap",

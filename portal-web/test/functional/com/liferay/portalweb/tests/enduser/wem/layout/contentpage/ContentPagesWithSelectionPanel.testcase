@@ -356,6 +356,8 @@ definition {
 		task ("Assert elements information is organized in Selection panel") {
 			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			WaitForVisible(
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
@@ -433,6 +435,8 @@ definition {
 
 		task ("Assert elements information is organized in Selection panel") {
 			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			WaitForVisible(
 				key_sidebarButton = "Browser",
@@ -1202,6 +1206,8 @@ definition {
 		task ("Assert elements information is organized in Selection panel") {
 			PageEditor.clickConfigurableField(fragmentName = "Slider");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			WaitForVisible(
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
@@ -1237,6 +1243,8 @@ definition {
 		task ("Assert elements information is organized in Selection panel") {
 			PageEditor.clickConfigurableField(fragmentName = "Tabs");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			WaitForVisible(
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
@@ -1262,6 +1270,8 @@ definition {
 		task ("Assert elements information is organized in Selection panel") {
 			PageEditor.clickConfigurableField(fragmentName = "Tabs");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			WaitForVisible(
 				key_sidebarButton = "Browser",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
@@ -1286,6 +1296,8 @@ definition {
 
 		task ("Assert elements information is organized in Selection panel") {
 			PageEditor.clickConfigurableField(fragmentName = "Tabs");
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			WaitForVisible(
 				key_sidebarButton = "Browser",

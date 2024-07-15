@@ -774,6 +774,8 @@ definition {
 
 			PageEditor.clickConfigurableField(fragmentName = "Heading");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			PageEditor.viewFragmentHeaderVisible(fragmentName = "Heading");
 
 			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Asset Publisher");
@@ -788,6 +790,8 @@ definition {
 
 		task ("Assert only header of Asset Publisher shown when Asset Publisher selected") {
 			PageEditor.clickConfigurableField(fragmentName = "Asset Publisher");
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			PageEditor.viewFragmentHeaderVisible(fragmentName = "Asset Publisher");
 
@@ -985,6 +989,8 @@ definition {
 
 		task ("Move the fragment") {
 			PageEditor.clickConfigurableField(fragmentName = "Button");
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			DragAndDrop.javaScriptDragAndDropToUp(
 				fragmentName = "heading",
@@ -1446,6 +1452,8 @@ definition {
 			for (var fragmentName : list "Heading,Button,Paragraph") {
 				PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
 
+				PageEditor.gotoTab(tabName = "Browser");
+
 				AssertVisible(
 					key_fragmentName = ${fragmentName},
 					locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
@@ -1515,6 +1523,8 @@ definition {
 
 			PageEditor.clickConfigurableField(fragmentName = "Card");
 
+			PageEditor.gotoTab(tabName = "Browser");
+
 			AssertElementNotPresent(
 				key_fragmentName = "Card",
 				locator1 = "Fragment#FRAGMENT_HEADER_INSET_STYLE");
@@ -1563,6 +1573,8 @@ definition {
 				locator1 = "Fragment#FRAGMENT_LABEL");
 
 			PageEditor.clickConfigurableField(fragmentName = "Blogs");
+
+			PageEditor.gotoTab(tabName = "Browser");
 
 			AssertElementNotPresent(
 				key_fragmentName = "Blogs",

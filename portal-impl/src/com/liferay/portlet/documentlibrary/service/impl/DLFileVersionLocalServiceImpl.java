@@ -190,15 +190,15 @@ public class DLFileVersionLocalServiceImpl
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
 				if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-					DLFolder folder = _dlFolderLocalService.fetchDLFolder(
+					DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(
 						folderId);
 
-					if (folder != null) {
+					if (dlFolder != null) {
 						Property groupIdProperty = PropertyFactoryUtil.forName(
 							"groupId");
 
 						dynamicQuery.add(
-							groupIdProperty.eq(folder.getGroupId()));
+							groupIdProperty.eq(dlFolder.getGroupId()));
 					}
 				}
 

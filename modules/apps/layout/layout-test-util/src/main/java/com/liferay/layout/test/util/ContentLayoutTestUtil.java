@@ -54,9 +54,11 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -513,6 +515,18 @@ public class ContentLayoutTestUtil {
 			long segmentsExperienceId)
 		throws Exception {
 
+		return getRenderLayoutHTML(
+			Collections.emptyMap(), layout, layoutServiceContextHelper,
+			layoutStructureProvider, segmentsExperienceId);
+	}
+
+	public static String getRenderLayoutHTML(
+			Map<String, Object> attributes, Layout layout,
+			LayoutServiceContextHelper layoutServiceContextHelper,
+			LayoutStructureProvider layoutStructureProvider,
+			long segmentsExperienceId)
+		throws Exception {
+
 		try (AutoCloseable autoCloseable =
 				layoutServiceContextHelper.getServiceContextAutoCloseable(
 					layout)) {
@@ -528,6 +542,11 @@ public class ContentLayoutTestUtil {
 				ServiceContextThreadLocal.getServiceContext();
 
 			HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+			for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+				httpServletRequest.setAttribute(
+					entry.getKey(), entry.getValue());
+			}
 
 			httpServletRequest.setAttribute(
 				"ORIGINAL_HTTP_SERVLET_REQUEST", httpServletRequest);

@@ -4057,7 +4057,7 @@ public class JenkinsResultsParserUtil {
 	public static void pullDockerImageDependencies(
 		File baseDir, String[] excludedDockerImageNames) {
 
-		String dockerEnabled = System.getenv("DOCKER_ENABLED");
+		String dockerEnabled = System.getenv("LIFERAY_DOCKER_ENABLED");
 
 		if (isNullOrEmpty(dockerEnabled) || !dockerEnabled.equals("true")) {
 			return;

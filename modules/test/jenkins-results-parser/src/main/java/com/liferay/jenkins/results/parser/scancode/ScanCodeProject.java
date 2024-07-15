@@ -224,7 +224,7 @@ public class ScanCodeProject {
 		}
 		else if (_pipelineName.equals("analyze_docker_image")) {
 			String dockerTag = JenkinsResultsParserUtil.getBuildParameter(
-				_buildURL, "DOCKER_TAG");
+				_buildURL, "LIFERAY_DOCKER_TAG");
 
 			jsonObject = getAnalyzeDockerImageJSONObject(dockerTag);
 		}

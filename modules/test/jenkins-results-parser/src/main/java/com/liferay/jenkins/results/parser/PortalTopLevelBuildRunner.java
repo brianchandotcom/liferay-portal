@@ -33,7 +33,7 @@ public abstract class PortalTopLevelBuildRunner
 			workspaceGitRepository.addPropertyOption(
 				workspaceGitRepository.getUpstreamBranchName());
 
-			String dockerEnabled = System.getenv("DOCKER_ENABLED");
+			String dockerEnabled = System.getenv("LIFERAY_DOCKER_ENABLED");
 
 			if ((dockerEnabled != null) && dockerEnabled.equals("true")) {
 				workspaceGitRepository.addPropertyOption("docker");

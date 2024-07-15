@@ -2285,9 +2285,17 @@ definition {
 
 		var dmDocumentURL = selenium.getAttribute("//img[contains(@class,'preview-file-image') and contains(@src,'${dmDocumentFileName}')]@src");
 
+		echo("## * Document URL: ${dmDocumentURL}");
+
 		var curl = '''${dmDocumentURL} -I''';
 
 		var responseHeader = JSONCurlUtil.post(${curl});
+
+		if (${responseHeader} == "") {
+			fail("FAIL. Cannot get document.");
+		}
+
+		echo("## * Headers: ${responseHeader}");
 
 		return ${responseHeader};
 	}

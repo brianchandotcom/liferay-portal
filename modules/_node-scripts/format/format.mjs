@@ -11,6 +11,7 @@ import prettier from 'prettier';
 import stylelint from 'stylelint';
 
 import {getRootDir} from '../util/constants.mjs';
+import fileExists from '../util/fileExists.mjs';
 import getGitModifiedFiles from '../util/getGitModifiedFiles.mjs';
 import {readIgnoreFile} from '../util/readIgnoreFile.mjs';
 import {ID_END, ID_START} from './jsp/getPaddedReplacement.mjs';
@@ -206,6 +207,10 @@ export default async function format(
 	}
 
 	for (const filepath of filepaths) {
+		if (!(await fileExists(filepath))) {
+			continue;
+		}
+
 		checked++;
 
 		const source = await fs.readFile(filepath, 'utf8');

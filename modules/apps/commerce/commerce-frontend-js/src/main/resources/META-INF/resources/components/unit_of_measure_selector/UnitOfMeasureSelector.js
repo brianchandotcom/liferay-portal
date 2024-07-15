@@ -19,6 +19,8 @@ import {
 import {getMinQuantity} from '../../utilities/quantities';
 import Asterisk from '../product_options/Asterisk';
 
+import './unit_of_measure_selector.scss';
+
 function UnitOfMeasureSelector({
 	accountId,
 	channelId,

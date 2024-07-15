@@ -15,6 +15,8 @@ import {
 } from '../../utilities/notifications';
 import AddOrCreate from './AddOrCreate';
 
+import './item_finder.scss';
+
 function ItemFinder(props) {
 	const [items, setItems] = useState([]);
 	const [pageSize, setPageSize] = useState(props.pageSize);

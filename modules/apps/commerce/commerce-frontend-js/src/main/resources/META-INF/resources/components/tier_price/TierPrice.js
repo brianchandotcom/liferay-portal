@@ -11,6 +11,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import ServiceProvider from '../../ServiceProvider/index';
 import {CP_INSTANCE_CHANGED} from '../../utilities/eventsDefinitions';
 
+import './tier_price.scss';
+
 function TierPrice({
 	accountId,
 	alwaysVisible,

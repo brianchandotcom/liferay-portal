@@ -8,6 +8,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import './step_tracker.scss';
 function Step(props) {
 	return (
 		<div className={classnames(`step`, props.state || 'inactive')}>

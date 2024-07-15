@@ -8,6 +8,7 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import './account_selector.scss';
 import ServiceProvider from '../../ServiceProvider/index';
 import {
 	CURRENT_ACCOUNT_UPDATED,

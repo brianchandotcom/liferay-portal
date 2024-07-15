@@ -14,6 +14,8 @@ import {
 	isNonnull,
 } from './util/index';
 
+import './price.scss';
+
 function Price({
 	compact,
 	displayDiscountLevels,

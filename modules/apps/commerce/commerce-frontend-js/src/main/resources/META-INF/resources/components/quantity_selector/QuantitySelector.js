@@ -10,6 +10,8 @@ import React, {forwardRef, useRef} from 'react';
 import InputQuantitySelector from './InputQuantitySelector';
 import ListQuantitySelector from './ListQuantitySelector';
 
+import './quantity_selector.scss';
+
 const QuantitySelector = forwardRef(
 	(
 		{

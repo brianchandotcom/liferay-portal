@@ -11,6 +11,7 @@ import {COOKIE_TYPES, checkConsent} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import './mini_compare.scss';
 import CommerceCookie from '../../utilities/cookies';
 import {
 	ITEM_REMOVED_FROM_COMPARE,

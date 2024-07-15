@@ -12,6 +12,8 @@ import Overlay from './Overlay';
 import Thumbnails from './Thumbnails';
 import {fetchImage, updateGallery} from './util/index';
 
+import './gallery.scss';
+
 export default class Gallery extends React.Component {
 	constructor(props) {
 		super(props);

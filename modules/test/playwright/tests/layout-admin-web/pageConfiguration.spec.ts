@@ -185,6 +185,9 @@ test('Can edit the page name and layout template via pages administration.', asy
 	pagesAdminPage,
 	site,
 }) => {
+
+	// Create page and go to page configuration
+
 	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 		groupId: site.id,
 		title: 'Test Page Title',
@@ -194,17 +197,21 @@ test('Can edit the page name and layout template via pages administration.', asy
 
 	await pageConfigurationPage.goToSection('Test Page Title', 'General');
 
+	// Fill name and change layout to 1 column
+
 	await pageConfigurationPage.fillName('Test Page Title Edit');
 
 	await page.getByTitle('1 Column', {exact: true}).click();
 
-	await expect(
-		page.locator('.lfr-layout-template .layout-template-entry').first()
-	).toHaveAttribute('src', '/layouttpl/custom/1_column.png');
+	// Check card is selected and save
+
+	const card = page.locator('.card.card-interactive').first();
+
+	await expect(card).toHaveClass(/active/);
 
 	await pageConfigurationPage.save();
 
-	// Go to view mode of page
+	// Go to view mode of page and check layout
 
 	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 

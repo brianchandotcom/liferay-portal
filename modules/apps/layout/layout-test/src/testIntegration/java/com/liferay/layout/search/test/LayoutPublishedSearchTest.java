@@ -6,11 +6,15 @@
 package com.liferay.layout.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -22,11 +26,14 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -57,6 +64,23 @@ public class LayoutPublishedSearchTest {
 		_group = GroupTestUtil.addGroup();
 
 		_setUpLayoutIndexerFixture();
+	}
+
+	@Test
+	public void testContentLayoutWithNoEditableText() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		String content = RandomTestUtil.randomString();
+
+		_addFragmentEntryLinkWithNoEditableTextToLayout(draftLayout, content);
+
+		_layoutIndexerFixture.searchNoOne(content);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_layoutIndexerFixture.searchOnlyOne(content);
 	}
 
 	@Test
@@ -170,6 +194,52 @@ public class LayoutPublishedSearchTest {
 			draftLayout.getPlid(), defaultSegmentsExperienceId);
 	}
 
+	private void _addFragmentEntryLinkWithNoEditableTextToLayout(
+			Layout draftLayout, String value)
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), null,
+				ServiceContextTestUtil.getServiceContext());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				fragmentCollection.getGroupId());
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(),
+				fragmentCollection.getFragmentCollectionId(), StringPool.BLANK,
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				"<div>" + value + "</div>", StringPool.BLANK, false,
+				StringPool.BLANK, null, 0, false,
+				FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext());
+
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		FragmentEntryLink inlineFragmentEntryLink =
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				null, _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), defaultSegmentsExperienceId,
+				draftLayout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(), StringPool.BLANK,
+				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+				fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_addFragmentEntryLinkToLayout(
+			inlineFragmentEntryLink.getFragmentEntryLinkId(),
+			draftLayout.getPlid(), defaultSegmentsExperienceId);
+	}
+
 	private void _setUpLayoutIndexerFixture() {
 		_layoutIndexerFixture = new IndexerFixture<>(Layout.class);
 	}
@@ -179,7 +249,13 @@ public class LayoutPublishedSearchTest {
 		_fragmentCollectionContributorRegistry;
 
 	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
 	private FragmentEntryLinkService _fragmentEntryLinkService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

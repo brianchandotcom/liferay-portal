@@ -48,67 +48,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-78928. Search content page by not editable text."
-	@priority = 5
-	test SearchByNotEditableText {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Add a fragment collection") {
-			JSONFragment.addFragmentCollection(
-				groupName = ${randomSiteName},
-				name = "Collection Name");
-		}
-
-		task ("Add a fragment in new collection") {
-			var newLine = '''
-''';
-			var htmlSnippet = '''
-<div class="fragment-static-text">
-	<div class="static-text">This is static text.</div>
-</div>
-			''';
-
-			var htmlSnippet = StringUtil.regexReplaceAll(${htmlSnippet}, ${newLine}, "");
-
-			JSONFragment.addSection(
-				collectionName = "Collection Name",
-				fragmentStatus = "Approved",
-				groupName = ${randomSiteName},
-				html = ${htmlSnippet},
-				name = "Fragment Name");
-		}
-
-		task ("Add a new fragment to content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Fragment Name");
-		}
-
-		task ("Publish the content page") {
-			PageEditor.publish();
-		}
-
-		task ("Navigate to the content page") {
-			Navigator.gotoSitePage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-		}
-
-		task ("Search by non editable text") {
-			Search.searchCP(searchTerm = "static");
-		}
-
-		task ("View the content page shown in the search results") {
-			SearchResults.viewSearchResults(searchAssetTitle = "Test Content Page Name");
-		}
-	}
-
 	@description = "This is a use case for LPS-120198. Search page in page select modal when map it to editable field."
 	@priority = 4
 	test SearchPageInSelectModalWhenMapPageToEditableField {

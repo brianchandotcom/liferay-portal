@@ -75,7 +75,7 @@ public class LayoutPublishedSearchTest {
 
 		String content = RandomTestUtil.randomString();
 
-		_updateDraftLayout(layout, content);
+		_updateDraftLayout(layout.fetchDraftLayout(), content);
 
 		_layoutIndexerFixture.searchNoOne(content);
 
@@ -129,7 +129,7 @@ public class LayoutPublishedSearchTest {
 		_layoutIndexerFixture = new IndexerFixture<>(Layout.class);
 	}
 
-	private void _updateDraftLayout(Layout layout, String value)
+	private void _updateDraftLayout(Layout draftLayout, String value)
 		throws Exception {
 
 		FragmentEntry contributedFragmentEntry =
@@ -138,9 +138,7 @@ public class LayoutPublishedSearchTest {
 
 		long defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
-
-		Layout draftLayout = layout.fetchDraftLayout();
+				draftLayout.getPlid());
 
 		FragmentEntryLink inlineFragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
@@ -161,7 +159,7 @@ public class LayoutPublishedSearchTest {
 						).put(
 							"defaultValue", "default value"
 						).put(
-							layout.getDefaultLanguageId(), value
+							draftLayout.getDefaultLanguageId(), value
 						))
 				).toString(),
 				StringPool.BLANK, 0,

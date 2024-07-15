@@ -6,10 +6,17 @@
 package com.liferay.template.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -36,6 +43,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -44,6 +52,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -89,7 +98,9 @@ public class MapToFieldInformationTemplateTest {
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
+		_assetCategory = _addAssetCategory();
 		_blogsEntry = _addBlogsEntry();
+		_dlFileEntry = _addDLFileEntry();
 		_fragmentEntry = _addFragmentEntry();
 		_journalArticle = _addJournalArticle();
 
@@ -110,9 +121,18 @@ public class MapToFieldInformationTemplateTest {
 	@Test
 	public void testMapToContentDisplay() throws Exception {
 		_mapToContentDisplay(
+			AssetCategory.class.getName(),
+			_portal.getClassNameId(AssetCategory.class.getName()), 0,
+			_assetCategory.getCategoryId(), "name");
+		_mapToContentDisplay(
 			BlogsEntry.class.getName(),
 			_portal.getClassNameId(BlogsEntry.class.getName()), 0,
 			_blogsEntry.getEntryId(), "content");
+		_mapToContentDisplay(
+			FileEntry.class.getName(),
+			_portal.getClassNameId(DLFileEntry.class.getName()),
+			_dlFileEntry.getFileEntryTypeId(), _dlFileEntry.getFileEntryId(),
+			"title");
 		_mapToContentDisplay(
 			JournalArticle.class.getName(),
 			_portal.getClassNameId(JournalArticle.class.getName()),
@@ -120,21 +140,32 @@ public class MapToFieldInformationTemplateTest {
 			_journalArticle.getResourcePrimKey(),
 			"DDMStructure_" + _ddmFormField.getName());
 
-		_assertRenderLayoutHTML(_blogsEntry.getContent(), _fieldContent);
+		_assertRenderLayoutHTML(
+			_assetCategory.getName(), _blogsEntry.getContent(), _fieldContent,
+			_dlFileEntry.getTitle());
 	}
 
 	@Test
 	public void testMapToEditableField() throws Exception {
 		_mapToEditableField(
+			AssetCategory.class.getName(), 0, _assetCategory.getCategoryId(),
+			"name", StringPool.BLANK);
+		_mapToEditableField(
 			BlogsEntry.class.getName(), 0, _blogsEntry.getEntryId(), "content",
 			StringPool.BLANK);
+		_mapToEditableField(
+			FileEntry.class.getName(), _dlFileEntry.getFileEntryTypeId(),
+			_dlFileEntry.getFileEntryId(), "title",
+			String.valueOf(_dlFileEntry.getFileEntryTypeId()));
 		_mapToEditableField(
 			JournalArticle.class.getName(), _journalArticle.getDDMStructureId(),
 			_journalArticle.getResourcePrimKey(),
 			"DDMStructure_" + _ddmFormField.getName(),
 			String.valueOf(_journalArticle.getDDMStructureId()));
 
-		_assertRenderLayoutHTML(_blogsEntry.getContent(), _fieldContent);
+		_assertRenderLayoutHTML(
+			_assetCategory.getName(), _blogsEntry.getContent(), _fieldContent,
+			_dlFileEntry.getTitle());
 	}
 
 	@Test
@@ -174,7 +205,16 @@ public class MapToFieldInformationTemplateTest {
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
 		_assertRenderLayoutHTML(
-			_blogsEntry.getTitle(), _journalArticle.getTitle());
+			_blogsEntry.getTitle(), _dlFileEntry.getTitle(),
+			_journalArticle.getTitle());
+	}
+
+	private AssetCategory _addAssetCategory() throws Exception {
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		return AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
 	}
 
 	private BlogsEntry _addBlogsEntry() throws Exception {
@@ -183,6 +223,18 @@ public class MapToFieldInformationTemplateTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new Date(), true, true,
 			new String[0], StringPool.BLANK, null, null, _serviceContext);
+	}
+
+	private DLFileEntry _addDLFileEntry() throws Exception {
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, null, 0, null, null, null, _serviceContext);
+
+		return _dlFileEntryLocalService.getFileEntry(
+			fileEntry.getFileEntryId());
 	}
 
 	private FragmentEntry _addFragmentEntry() throws Exception {
@@ -324,6 +376,7 @@ public class MapToFieldInformationTemplateTest {
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 	}
 
+	private AssetCategory _assetCategory;
 	private BlogsEntry _blogsEntry;
 
 	@Inject
@@ -336,6 +389,14 @@ public class MapToFieldInformationTemplateTest {
 
 	@Inject
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+
+	@Inject
+	private DLAppService _dlAppService;
+
+	private DLFileEntry _dlFileEntry;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	private Layout _draftLayout;
 	private String _fieldContent;

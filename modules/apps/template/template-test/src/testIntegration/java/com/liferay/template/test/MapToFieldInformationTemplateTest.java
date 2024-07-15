@@ -106,6 +106,20 @@ public class MapToFieldInformationTemplateTest {
 	}
 
 	@Test
+	public void testMapToEditableField() throws Exception {
+		_mapToEditableField(
+			BlogsEntry.class.getName(), 0, _blogsEntry.getEntryId(), "content",
+			StringPool.BLANK);
+		_mapToEditableField(
+			JournalArticle.class.getName(), _journalArticle.getDDMStructureId(),
+			_journalArticle.getResourcePrimKey(),
+			"DDMStructure_" + _ddmFormField.getName(),
+			String.valueOf(_journalArticle.getDDMStructureId()));
+
+		_assertRenderLayoutHTML(_blogsEntry.getContent(), _fieldContent);
+	}
+
+	@Test
 	public void testMapToEditableFieldInCollectionDisplay() throws Exception {
 		InfoField infoField = TemplateTestUtil.addTemplateEntryInfoField(
 			"AssetEntry_title", AssetEntry.class.getName(), StringPool.BLANK,
@@ -173,11 +187,12 @@ public class MapToFieldInformationTemplateTest {
 
 	private JournalArticle _addJournalArticle() throws Exception {
 		_ddmFormField = _createDDMFormField();
+		_fieldContent = RandomTestUtil.randomString();
 
 		return JournalTestUtil.addJournalArticle(
 			_dataDefinitionResourceFactory, _ddmFormField,
-			_ddmFormValuesToFieldsConverter, RandomTestUtil.randomString(),
-			_group.getGroupId(), _journalConverter);
+			_ddmFormValuesToFieldsConverter, _fieldContent, _group.getGroupId(),
+			_journalConverter);
 	}
 
 	private void _assertRenderLayoutHTML(String... strings) throws Exception {
@@ -210,6 +225,43 @@ public class MapToFieldInformationTemplateTest {
 		return ddmFormField;
 	}
 
+	private void _mapToEditableField(
+			String className, long classTypeId, long classPK, String fieldName,
+			String infoItemFormVariationKey)
+		throws Exception {
+
+		InfoField infoField = TemplateTestUtil.addTemplateEntryInfoField(
+			fieldName, className, infoItemFormVariationKey,
+			_infoItemServiceRegistry, _serviceContext);
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"className", className
+					).put(
+						"classNameId",
+						String.valueOf(_portal.getClassNameId(className))
+					).put(
+						"classPK", String.valueOf(classPK)
+					).put(
+						"classTypeId", String.valueOf(classTypeId)
+					).put(
+						"fieldId", infoField.getUniqueId()
+					))
+			).toString(),
+			_fragmentEntry.getCss(), _fragmentEntry.getConfiguration(),
+			_fragmentEntry.getFragmentEntryId(), _fragmentEntry.getHtml(),
+			_fragmentEntry.getJs(), _draftLayout,
+			_fragmentEntry.getFragmentEntryKey(), _fragmentEntry.getType(),
+			null, 0, _segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+	}
+
 	private BlogsEntry _blogsEntry;
 
 	@Inject
@@ -224,6 +276,7 @@ public class MapToFieldInformationTemplateTest {
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 	private Layout _draftLayout;
+	private String _fieldContent;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

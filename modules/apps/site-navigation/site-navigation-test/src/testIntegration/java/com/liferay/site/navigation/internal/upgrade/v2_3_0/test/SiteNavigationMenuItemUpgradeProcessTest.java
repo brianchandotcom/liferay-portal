@@ -6,15 +6,19 @@
 package com.liferay.site.navigation.internal.upgrade.v2_3_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -47,7 +51,8 @@ import org.junit.runner.RunWith;
  * @author Lourdes Fernández Besada
  */
 @RunWith(Arquillian.class)
-public class SiteNavigationMenuItemUpgradeProcessTest {
+public class SiteNavigationMenuItemUpgradeProcessTest
+	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -112,7 +117,7 @@ public class SiteNavigationMenuItemUpgradeProcessTest {
 
 		Assert.assertFalse(siteNavigationMenuItemIdsMap.isEmpty());
 
-		_runUpgrade();
+		runUpgrade();
 
 		siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItem(
@@ -137,7 +142,19 @@ public class SiteNavigationMenuItemUpgradeProcessTest {
 		}
 	}
 
-	private void _runUpgrade() throws Exception {
+	@Override
+	protected CTModel<?> addCTModel() throws Exception {
+		return SiteNavigationMenuItemTestUtil.addSiteNavigationMenuItem(
+			_siteNavigationMenu);
+	}
+
+	@Override
+	protected CTService<?> getCTService() {
+		return _siteNavigationMenuItemLocalService;
+	}
+
+	@Override
+	protected void runUpgrade() throws Exception {
 		UpgradeProcess[] upgradeProcesses = UpgradeTestUtil.getUpgradeSteps(
 			_upgradeStepRegistrator, new Version(2, 3, 0));
 
@@ -146,6 +163,20 @@ public class SiteNavigationMenuItemUpgradeProcessTest {
 		}
 
 		_entityCache.clearCache();
+	}
+
+	@Override
+	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			(SiteNavigationMenuItem)ctModel;
+
+		siteNavigationMenuItem.setTypeSettings(
+			UnicodePropertiesBuilder.put(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()
+			).buildString());
+
+		return _siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(
+			siteNavigationMenuItem);
 	}
 
 	@Inject(

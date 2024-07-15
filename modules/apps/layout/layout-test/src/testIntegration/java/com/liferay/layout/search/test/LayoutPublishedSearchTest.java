@@ -6,6 +6,9 @@
 package com.liferay.layout.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -33,6 +37,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
@@ -64,6 +69,40 @@ public class LayoutPublishedSearchTest {
 		_group = GroupTestUtil.addGroup();
 
 		_setUpLayoutIndexerFixture();
+	}
+
+	@Test
+	public void testContentLayoutWithAndWithoutCategory() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		_layoutIndexerFixture.searchNoOne(
+			assetCategory.getTitle(LocaleUtil.getDefault()));
+
+		_layoutLocalService.updateAsset(
+			TestPropsValues.getUserId(), layout,
+			new long[] {assetCategory.getCategoryId()}, new String[0]);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_layoutIndexerFixture.searchOnlyOne(
+			assetCategory.getTitle(LocaleUtil.getDefault()));
+
+		_layoutLocalService.updateAsset(
+			TestPropsValues.getUserId(), layout, new long[0],
+			new String[0]);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		_layoutIndexerFixture.searchNoOne(
+			assetCategory.getTitle(LocaleUtil.getDefault()));
 	}
 
 	@Test
@@ -261,6 +300,9 @@ public class LayoutPublishedSearchTest {
 	private Group _group;
 
 	private IndexerFixture<Layout> _layoutIndexerFixture;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService

@@ -75,7 +75,8 @@ public class LayoutPublishedSearchTest {
 
 		String content = RandomTestUtil.randomString();
 
-		_updateDraftLayout(layout.fetchDraftLayout(), content);
+		_addFragmentEntryLinkWithInlineContentToLayout(
+			layout.fetchDraftLayout(), content);
 
 		_layoutIndexerFixture.searchNoOne(content);
 
@@ -125,11 +126,8 @@ public class LayoutPublishedSearchTest {
 				layoutStructure.toString());
 	}
 
-	private void _setUpLayoutIndexerFixture() {
-		_layoutIndexerFixture = new IndexerFixture<>(Layout.class);
-	}
-
-	private void _updateDraftLayout(Layout draftLayout, String value)
+	private void _addFragmentEntryLinkWithInlineContentToLayout(
+			Layout draftLayout, String value)
 		throws Exception {
 
 		FragmentEntry contributedFragmentEntry =
@@ -170,6 +168,10 @@ public class LayoutPublishedSearchTest {
 		_addFragmentEntryLinkToLayout(
 			inlineFragmentEntryLink.getFragmentEntryLinkId(),
 			draftLayout.getPlid(), defaultSegmentsExperienceId);
+	}
+
+	private void _setUpLayoutIndexerFixture() {
+		_layoutIndexerFixture = new IndexerFixture<>(Layout.class);
 	}
 
 	@Inject

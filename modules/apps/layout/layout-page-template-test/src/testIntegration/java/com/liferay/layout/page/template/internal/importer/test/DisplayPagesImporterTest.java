@@ -83,7 +83,7 @@ public class DisplayPagesImporterTest {
 	@Test
 	public void testImportDisplayPage() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_importLayoutPageTemplateEntry("display-page-template-one", 1, 0);
+			_importLayoutPageTemplateEntry(1, 0, "display-page-template-one");
 
 		String className =
 			"com.liferay.portal.kernel.repository.model.FileEntry";
@@ -105,7 +105,7 @@ public class DisplayPagesImporterTest {
 	public void testImportDisplayPageExistingNameNoOvewrite() throws Exception {
 		String testCaseName = "display-page-template-one";
 
-		_importLayoutPageTemplateEntry(testCaseName, 1, 0);
+		_importLayoutPageTemplateEntry(1, 0, testCaseName);
 
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
 			_getLayoutsImporterResultEntries(testCaseName);
@@ -158,7 +158,7 @@ public class DisplayPagesImporterTest {
 	public void testImportDisplayPageWithCollectionDisplay() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_importLayoutPageTemplateEntry(
-				"display-page-template-with-collection-display", 1, 0);
+				1, 0, "display-page-template-with-collection-display");
 
 		Assert.assertEquals(
 			"com.liferay.portal.kernel.repository.model.FileEntry",
@@ -307,8 +307,8 @@ public class DisplayPagesImporterTest {
 	}
 
 	private LayoutPageTemplateEntry _importLayoutPageTemplateEntry(
-			String testCaseName, long expectedImporterResultEntries,
-			int indexImporterResultEntry)
+			long expectedImporterResultEntries, int indexImporterResultEntry,
+			String testCaseName)
 		throws Exception {
 
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =

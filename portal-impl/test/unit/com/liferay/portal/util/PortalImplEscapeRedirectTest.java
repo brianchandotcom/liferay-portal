@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -84,7 +85,7 @@ public class PortalImplEscapeRedirectTest {
 
 				@Override
 				public VirtualHost fetchVirtualHost(String hostname) {
-					if (hostname.equals("site-virtual-host")) {
+					if (hostname.equals(_HOSTNAME_VIRTUAL_HOST)) {
 						return new VirtualHostImpl();
 					}
 
@@ -102,7 +103,7 @@ public class PortalImplEscapeRedirectTest {
 						WebKeys.THEME_DISPLAY,
 						new ThemeDisplay() {
 							{
-								setPortalDomain("request-host");
+								setPortalDomain(_HOSTNAME_PORTAL_DOMAIN);
 							}
 						});
 				}
@@ -129,6 +130,20 @@ public class PortalImplEscapeRedirectTest {
 		};
 		_redirectURLSettingsImpl.securityMode = "domain";
 
+		// Allow request Host header
+
+		Assert.assertEquals(
+			"https://" + _HOSTNAME_PORTAL_DOMAIN + ":8080",
+			_portalImpl.escapeRedirect(
+				"https://" + _HOSTNAME_PORTAL_DOMAIN + ":8080"));
+
+		// Allow Virtual Hosts
+
+		Assert.assertEquals(
+			"https://" + _HOSTNAME_VIRTUAL_HOST + ":8080",
+			_portalImpl.escapeRedirect(
+				"https://" + _HOSTNAME_VIRTUAL_HOST + ":8080"));
+
 		// Allowed domains
 
 		Assert.assertEquals(
@@ -148,12 +163,6 @@ public class PortalImplEscapeRedirectTest {
 		Assert.assertNull(
 			_portalImpl.escapeRedirect(
 				"https://liferay.com:8080/a/b;c=d?e=f&g=h#x=y"));
-
-		// Allow request host header
-
-		Assert.assertEquals(
-			"https://request-host:8080",
-			_portalImpl.escapeRedirect("https://request-host:8080"));
 
 		// Disabled domains
 
@@ -178,12 +187,6 @@ public class PortalImplEscapeRedirectTest {
 		Assert.assertNull(_portalImpl.escapeRedirect("http:web"));
 		Assert.assertNull(
 			_portalImpl.escapeRedirect("https://google.com\uFFFD@localhost"));
-
-		// VirtualHosts of sites
-
-		Assert.assertEquals(
-			"https://site-virtual-host:8080",
-			_portalImpl.escapeRedirect("https://site-virtual-host:8080"));
 	}
 
 	@Test
@@ -331,9 +334,6 @@ public class PortalImplEscapeRedirectTest {
 			"http://google.com",
 			_portalImpl.escapeRedirect("http://google.com"));
 		Assert.assertEquals(
-			"http://google.com",
-			_portalImpl.escapeRedirect("http://google.com"));
-		Assert.assertEquals(
 			"https://google.com:8080/a/b;c=d?e=f&g=h#x=y",
 			_portalImpl.escapeRedirect(
 				"https://google.com:8080/a/b;c=d?e=f&g=h#x=y"));
@@ -348,6 +348,12 @@ public class PortalImplEscapeRedirectTest {
 		Assert.assertNull(
 			_portalImpl.escapeRedirect("http://prefixtest.liferay.com"));
 	}
+
+	private static final String _HOSTNAME_PORTAL_DOMAIN =
+		RandomTestUtil.randomString();
+
+	private static final String _HOSTNAME_VIRTUAL_HOST =
+		RandomTestUtil.randomString();
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();

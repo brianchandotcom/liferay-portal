@@ -35,6 +35,8 @@ import {regenerateOrderDetailURL, summaryDataMapper} from './util/index';
 import {DEFAULT_LABELS} from './util/labels';
 import {resolveCartViews} from './util/views';
 
+import './mini_cart.scss';
+
 const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
 function MiniCart({

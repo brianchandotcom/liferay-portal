@@ -10,6 +10,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import AJAX from '../../utilities/AJAX/index';
 
+import './summary.scss';
 function SummaryItemDividerVariant() {
 	return (
 		<div className="col-12">

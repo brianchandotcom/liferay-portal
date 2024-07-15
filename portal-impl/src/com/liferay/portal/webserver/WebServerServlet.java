@@ -554,7 +554,7 @@ public class WebServerServlet extends HttpServlet {
 
 				try {
 					FileEntry fileEntry =
-						DLAppServiceUtil.getFileEntryByUuidAndGroupId(
+						DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
 							uuid, groupId);
 
 					image = convertFileEntry(igSmallImage, fileEntry);
@@ -925,7 +925,7 @@ public class WebServerServlet extends HttpServlet {
 			String name = pathArray[i];
 
 			try {
-				Folder folder = DLAppServiceUtil.getFolder(
+				Folder folder = DLAppLocalServiceUtil.getFolder(
 					groupId, folderId, URLCodec.decodeURL(name));
 
 				folderId = folder.getFolderId();
@@ -1243,7 +1243,7 @@ public class WebServerServlet extends HttpServlet {
 			long folderId, String title)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
+		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			groupId, folderId, title);
 
 		httpServletResponse.addHeader(
@@ -1809,10 +1809,10 @@ public class WebServerServlet extends HttpServlet {
 		if (pathArray.length == 1) {
 			long fileShortcutId = GetterUtil.getLong(pathArray[0]);
 
-			FileShortcut dlFileShortcut = DLAppServiceUtil.getFileShortcut(
+			FileShortcut dlFileShortcut = DLAppLocalServiceUtil.getFileShortcut(
 				fileShortcutId);
 
-			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 				dlFileShortcut.getToFileEntryId());
 
 			_checkFileEntry(fileEntry, httpServletRequest);
@@ -1822,8 +1822,9 @@ public class WebServerServlet extends HttpServlet {
 		else if (pathArray.length == 2) {
 			long groupId = GetterUtil.getLong(pathArray[0]);
 
-			FileEntry fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
-				pathArray[1], groupId);
+			FileEntry fileEntry =
+				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+					pathArray[1], groupId);
 
 			_checkFileEntry(fileEntry, httpServletRequest);
 
@@ -1855,8 +1856,9 @@ public class WebServerServlet extends HttpServlet {
 			}
 
 			try {
-				FileEntry fileEntry = DLAppServiceUtil.getFileEntryByFileName(
-					groupId, folderId, fileName);
+				FileEntry fileEntry =
+					DLAppLocalServiceUtil.getFileEntryByFileName(
+						groupId, folderId, fileName);
 
 				_checkFileEntry(fileEntry, httpServletRequest);
 
@@ -1867,7 +1869,7 @@ public class WebServerServlet extends HttpServlet {
 					_log.debug(noSuchFileEntryException);
 				}
 
-				FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
+				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 					groupId, folderId, fileName);
 
 				_checkFileEntry(fileEntry, httpServletRequest);
@@ -1880,8 +1882,9 @@ public class WebServerServlet extends HttpServlet {
 
 			String uuid = pathArray[3];
 
-			FileEntry fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
-				uuid, groupId);
+			FileEntry fileEntry =
+				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+					uuid, groupId);
 
 			_checkFileEntry(fileEntry, httpServletRequest);
 

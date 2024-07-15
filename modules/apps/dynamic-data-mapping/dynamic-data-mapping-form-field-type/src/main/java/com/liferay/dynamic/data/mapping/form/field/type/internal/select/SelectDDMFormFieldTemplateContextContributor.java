@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.text.Collator;
 
@@ -297,8 +298,17 @@ public class SelectDDMFormFieldTemplateContextContributor
 						"reference", listTypeEntry.getKey()
 					).put(
 						"value",
-						ddmFormFieldOptions.getOptionValue(
-							listTypeEntry.getKey())
+						() -> {
+							String optionValue =
+								ddmFormFieldOptions.getOptionValue(
+									listTypeEntry.getKey());
+
+							if (Validator.isNotNull(optionValue)) {
+								return optionValue;
+							}
+
+							return listTypeEntry.getKey();
+						}
 					).build());
 			}
 

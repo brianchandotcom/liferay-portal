@@ -272,7 +272,8 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			(DDMFormFieldOptions)ddmFormField.getProperty(propertyName);
 
 		return MapUtil.getString(
-			ddmFormFieldOptions.getOptionsReferences(), optionValue);
+			ddmFormFieldOptions.getOptionsReferences(), optionValue,
+			optionValue);
 	}
 
 	private String _getScopeKey(

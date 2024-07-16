@@ -37,10 +37,11 @@ public class CommerceProductDefinitionTableFDSView extends BaseTableFDSView {
 				"image")
 		).add(
 			"name.LANG", "name",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("actionLink");
-				fdsTableSchemaField.setSortable(true);
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink"
+			).setSortable(
+				true
+			)
 		).add(
 			"catalog.name", "catalog"
 		).add(
@@ -51,10 +52,11 @@ public class CommerceProductDefinitionTableFDSView extends BaseTableFDSView {
 				"status")
 		).add(
 			"modifiedDate", "modified-date",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("dateTime");
-				fdsTableSchemaField.setSortable(true);
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dateTime"
+			).setSortable(
+				true
+			)
 		).build();
 	}
 

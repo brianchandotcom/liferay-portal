@@ -38,10 +38,11 @@ public class CommerceProductOptionValueStaticTableFDSView
 				"actionLink")
 		).add(
 			"preselected", "default",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setActionId("updatePreselected");
-				fdsTableSchemaField.setContentRenderer("actionLink");
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
+				"updatePreselected"
+			).setContentRenderer(
+				"actionLink"
+			)
 		).add(
 			"key", "key"
 		).add(

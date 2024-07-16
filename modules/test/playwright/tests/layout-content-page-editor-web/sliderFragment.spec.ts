@@ -110,7 +110,7 @@ test('Checks that the Slider fragment works correctly', async ({
 
 	// Check Auto Hide Play button
 
-	const playButton = await page.locator('.stopped');
+	const playButton = page.locator('.stopped');
 
 	await expect(playButton).not.toHaveClass(
 		/carousel-toggle-button--always-visible/

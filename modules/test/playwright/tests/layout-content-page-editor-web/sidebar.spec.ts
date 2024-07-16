@@ -51,7 +51,7 @@ test('Renders all panel buttons in the vertical bar', async ({
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	for (const panel of PANELS) {
-		const panelButton = await page.getByLabel(panel, {exact: true});
+		const panelButton = page.getByLabel(panel, {exact: true});
 
 		await expect(panelButton).toBeVisible();
 		await expect(panelButton).toHaveAttribute(
@@ -76,8 +76,8 @@ test('Renders sidebars visible at desktop size and sidebars not visible at small
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-	const panel = await page.getByLabel('Fragments and Widgets Panel');
-	const configurationPanel = await page.getByLabel('Configuration Panel', {
+	const panel = page.getByLabel('Fragments and Widgets Panel');
+	const configurationPanel = page.getByLabel('Configuration Panel', {
 		exact: true,
 	});
 
@@ -111,8 +111,8 @@ test('Checks if sidebars are open or closed depending on Product Menu', async ({
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-	const panel = await page.getByLabel('Fragments and Widgets Panel');
-	const configurationPanel = await page.getByLabel('Configuration Panel', {
+	const panel = page.getByLabel('Fragments and Widgets Panel');
+	const configurationPanel = page.getByLabel('Configuration Panel', {
 		exact: true,
 	});
 

@@ -482,9 +482,7 @@ test('Filters the collection content by keywords using two filters', async ({
 
 	// Filter by keywords
 
-	const firstFilter = await page
-		.getByPlaceholder('Search', {exact: true})
-		.first();
+	const firstFilter = page.getByPlaceholder('Search', {exact: true}).first();
 
 	await firstFilter.fill('category categories');
 	await firstFilter.press('Enter');
@@ -494,9 +492,7 @@ test('Filters the collection content by keywords using two filters', async ({
 	).toBeVisible();
 	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
 
-	const secondFilter = await page
-		.getByPlaceholder('Search', {exact: true})
-		.nth(1);
+	const secondFilter = page.getByPlaceholder('Search', {exact: true}).nth(1);
 
 	await secondFilter.fill('Animal');
 	await secondFilter.press('Enter');

@@ -61,7 +61,7 @@ test('Grid background image can be customized', async ({
 
 	await page.getByLabel('Select Image').click();
 
-	const card = await page
+	const card = page
 		.frameLocator('iframe[title="Select"]')
 		.locator('[data-title="echo-logo.png"]');
 
@@ -144,11 +144,9 @@ test('Can nest grids', async ({apiHelpers, pageEditorPage, wemSite}) => {
 
 	// Check nested grid is rendered properly
 
-	const parentGridTopper = await pageEditorPage.getTopper(parentGridId);
+	const parentGridTopper = pageEditorPage.getTopper(parentGridId);
 
-	const firstColumn = await parentGridTopper
-		.locator('.page-editor__col')
-		.first();
+	const firstColumn = parentGridTopper.locator('.page-editor__col').first();
 
 	await expect(firstColumn.locator('.page-editor__col')).toHaveCount(3);
 });
@@ -232,7 +230,7 @@ test('Can duplicate a grid inside a container', async ({
 
 	await pageEditorPage.duplicateFragment(gridId);
 
-	const containerTopper = await pageEditorPage.getTopper(containerId);
+	const containerTopper = pageEditorPage.getTopper(containerId);
 
 	await expect(containerTopper.locator('.page-editor__row')).toHaveCount(2);
 });

@@ -351,9 +351,7 @@ export class PagesAdminPage {
 		// Check the permissions
 
 		for (const permissionId of permissionIds) {
-			const permission = await permissionsFrame.locator(
-				`#${permissionId}`
-			);
+			const permission = permissionsFrame.locator(`#${permissionId}`);
 
 			await permission.uncheck({trial: true});
 			await permission.uncheck({timeout: 1000});

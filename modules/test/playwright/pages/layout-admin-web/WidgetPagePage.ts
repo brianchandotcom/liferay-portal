@@ -24,21 +24,35 @@ export class WidgetPagePage {
 				exact: true,
 				name: 'Add',
 			});
-
 		this.contentTab = page.getByText('Content', {
 			exact: true,
 		});
-
 		this.toggleControlsButton = page
 			.locator('.control-menu-nav-item')
 			.getByRole('button', {
 				exact: true,
 				name: 'Toggle Controls',
 			});
-
 		this.widgetsTab = page.getByText('Widgets', {
 			exact: true,
 		});
+	}
+
+	async addContent(contentName: string) {
+		await this.addButton.click();
+
+		await this.contentTab.click();
+
+		await this.page
+			.locator('.sidebar-body__add-panel__tab-item')
+			.filter({hasText: contentName})
+			.getByRole('button', {name: 'Add Content'})
+			.click();
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:The application was added to the page.'
+		);
 	}
 
 	async addPortlet(portletName: string) {
@@ -53,23 +67,6 @@ export class WidgetPagePage {
 		await this.page
 			.locator('.sidebar-body__add-panel__tab-item')
 			.filter({hasText: portletName})
-			.getByRole('button', {name: 'Add Content'})
-			.click();
-
-		await waitForSuccessAlert(
-			this.page,
-			'Success:The application was added to the page.'
-		);
-	}
-
-	async addContent(contentName: string) {
-		await this.addButton.click();
-
-		await this.contentTab.click();
-
-		await this.page
-			.locator('.sidebar-body__add-panel__tab-item')
-			.filter({hasText: contentName})
 			.getByRole('button', {name: 'Add Content'})
 			.click();
 

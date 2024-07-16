@@ -15,6 +15,8 @@ import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
 import {UIElementsPage} from '../uielements/UIElementsPage';
 
 export class PagesAdminPage {
+	readonly page: Page;
+
 	readonly addButton: Locator;
 	readonly addPageIFrame: FrameLocator;
 	readonly addTemplatePageButton: Locator;
@@ -22,41 +24,46 @@ export class PagesAdminPage {
 	readonly configurationSaveButton: Locator;
 	readonly homePageLink: Locator;
 	readonly javaScriptClientExtensionsTab: Locator;
+	readonly newButton: Locator;
 	readonly oneColumnButton: Locator;
-	readonly page: Page;
+	readonly pageEditorPage: PageEditorPage;
 	readonly pageTitleBox: Locator;
 	readonly uiElementsPage: UIElementsPage;
 	readonly widgetPageButton: Locator;
-	readonly newButton: Locator;
-	readonly pageEditorPage: PageEditorPage;
 
 	constructor(page: Page) {
+		this.page = page;
+
+		this.addPageIFrame = page.frameLocator('iframe[title="Add Page"]');
+		this.addButton = this.addPageIFrame.getByRole('button', {name: 'Add'});
+		this.addTemplatePageButton = page.getByRole('menuitem', {
+			name: 'Add Site Template Page',
+		});
+		this.blankTypeButton = page.getByRole('button', {name: 'Blank'});
 		this.configurationSaveButton = page.getByRole('button', {
 			exact: true,
 			name: 'Save',
 		});
+		this.homePageLink = page.getByLabel('Home', {exact: true});
 		this.javaScriptClientExtensionsTab = page.getByRole('tab', {
 			name: 'JavaScript',
 		});
-		this.page = page;
-		this.uiElementsPage = new UIElementsPage(page);
-
-		this.addPageIFrame = page.frameLocator('iframe[title="Add Page"]');
-		this.addTemplatePageButton = page.getByRole('menuitem', {
-			name: 'Add Site Template Page',
-		});
-		this.addButton = this.addPageIFrame.getByRole('button', {name: 'Add'});
-		this.blankTypeButton = page.getByRole('button', {name: 'Blank'});
-		this.homePageLink = page.getByLabel('Home', {exact: true});
-		this.oneColumnButton = page.getByText('1 Column', {exact: true});
-		this.pageTitleBox = this.addPageIFrame.locator(
-			'input[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_name"]'
-		);
-		this.widgetPageButton = page.getByRole('button', {name: 'Widget Page'});
 		this.newButton = page
 			.locator('.management-bar')
 			.getByRole('button', {name: 'New'});
+		this.oneColumnButton = page.getByText('1 Column', {exact: true});
 		this.pageEditorPage = new PageEditorPage(this.page);
+		this.pageTitleBox = this.addPageIFrame.locator(
+			'input[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_name"]'
+		);
+		this.uiElementsPage = new UIElementsPage(page);
+		this.widgetPageButton = page.getByRole('button', {name: 'Widget Page'});
+	}
+
+	async goto(siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.pages}`
+		);
 	}
 
 	async addContentPage(pageName: string) {
@@ -141,12 +148,6 @@ export class PagesAdminPage {
 				.locator('li', {has: this.page.getByText(title)})
 				.getByRole('button', {name: 'Open Page Options Menu'}),
 		});
-	}
-
-	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(
-			`/group${siteUrl || '/guest'}${PORTLET_URLS.pages}`
-		);
 	}
 
 	async createNewPage({

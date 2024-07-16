@@ -28,18 +28,6 @@ export class NavigationMenusPage {
 		);
 	}
 
-	async openAddPageModal() {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: 'Page'}),
-			trigger: this.addItemButton,
-		});
-
-		const modal = this.page.frameLocator('iframe[title="Select Pages"]');
-
-		await modal.getByPlaceholder('Search').waitFor();
-	}
-
 	async createNavigationMenu(name: string) {
 		await this.newButton.click();
 
@@ -52,5 +40,17 @@ export class NavigationMenusPage {
 		await this.page.getByRole('button', {name: 'Save'}).click();
 
 		await waitForSuccessAlert(this.page);
+	}
+
+	async openAddPageModal() {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Page'}),
+			trigger: this.addItemButton,
+		});
+
+		const modal = this.page.frameLocator('iframe[title="Select Pages"]');
+
+		await modal.getByPlaceholder('Search').waitFor();
 	}
 }

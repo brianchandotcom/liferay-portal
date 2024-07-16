@@ -9,14 +9,17 @@ import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {SiteSettingsPage} from './SiteSettingsPage';
 
 export class SiteSettingsLocalizationPage {
+	readonly page: Page;
+
 	readonly customDefaultLanguageOption: Locator;
 	readonly defaultLanguageOption: Locator;
 	readonly defaultLanguageSingleSelect: Locator;
-	readonly page: Page;
 	readonly saveButton: Locator;
 	readonly siteSettingsPage: SiteSettingsPage;
 
 	constructor(page: Page) {
+		this.page = page;
+
 		this.customDefaultLanguageOption = page.getByLabel(
 			'Define a custom default language and additional available languages for this site.'
 		);
@@ -26,7 +29,6 @@ export class SiteSettingsLocalizationPage {
 		this.defaultLanguageSingleSelect = page.locator(
 			`select[name="_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_TypeSettingsProperties--languageId--"]`
 		);
-		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.siteSettingsPage = new SiteSettingsPage(page);
 	}

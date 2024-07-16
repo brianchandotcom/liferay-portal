@@ -48,7 +48,9 @@ test('Checks the correct label for restricted pages in the preview selector', as
 
 	const styleBookName = getRandomString();
 
-	await styleBooksPage.createStyleBook(styleBookName, site.friendlyUrlPath);
+	await styleBooksPage.goto(site.friendlyUrlPath);
+
+	await styleBooksPage.createStyleBook(styleBookName);
 
 	// Check the restricted page label in the preview selector
 

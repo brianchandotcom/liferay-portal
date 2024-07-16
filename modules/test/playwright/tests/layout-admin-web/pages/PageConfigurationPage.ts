@@ -35,21 +35,20 @@ export class PageConfigurationPage {
 		this.url = page.getByLabel('URL').first();
 	}
 
+	async fillName(name: string) {
+		await fillAndClickOutside(this.page, this.name, name);
+	}
+
+	async fillURL(url: string) {
+		await fillAndClickOutside(this.page, this.url, url);
+	}
+
 	async goToSection(pageTitle: string, section: string) {
 		await this.pagesAdminPage.clickOnAction('Configure', pageTitle);
 
 		await this.page
 			.locator('li', {has: this.page.getByText(section)})
 			.click();
-	}
-
-	async setCanonicalURL(canonicalURL: string) {
-		await this.canonicalURLCheckbox.waitFor();
-
-		await this.canonicalURLCheckbox.check();
-		await this.customCanonicalURLSettings.fill(canonicalURL);
-
-		await this.save();
 	}
 
 	async save() {
@@ -61,12 +60,13 @@ export class PageConfigurationPage {
 		);
 	}
 
-	async fillName(name: string) {
-		await fillAndClickOutside(this.page, this.name, name);
-	}
+	async setCanonicalURL(canonicalURL: string) {
+		await this.canonicalURLCheckbox.waitFor();
 
-	async fillURL(url: string) {
-		await fillAndClickOutside(this.page, this.url, url);
+		await this.canonicalURLCheckbox.check();
+		await this.customCanonicalURLSettings.fill(canonicalURL);
+
+		await this.save();
 	}
 
 	async setFriendlyURL(friendlyURL: string, language: 'spanish' | 'english') {

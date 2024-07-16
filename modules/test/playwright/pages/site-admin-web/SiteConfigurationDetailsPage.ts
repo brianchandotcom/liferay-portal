@@ -6,15 +6,17 @@
 import {Locator, Page} from '@playwright/test';
 
 export class SiteConfigurationDetailsPage {
-	readonly allowManualMembershipManagementToggle: Locator;
 	readonly page: Page;
+
+	readonly allowManualMembershipManagementToggle: Locator;
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
+		this.page = page;
+
 		this.allowManualMembershipManagementToggle = page.getByLabel(
 			'Allow Manual Membership Management'
 		);
-		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 	}
 }

@@ -30,11 +30,7 @@ definition {
 		ListUtil.remove(${portalInstanceNames}, ${portalInstanceName});
 
 		for (var additionalPortalInstanceName : list ${portalInstanceNames}) {
-			var groupId = JSONCompany.getCompanyGroupIdByGroupKey(
-				groupKey = "Guest",
-				portalInstanceName = ${additionalPortalInstanceName});
-
-			if (contains(${logContent}, "for group ${groupId}")) {
+			if (contains(${logContent}, "Begin initializing company with web ID ${additionalPortalInstanceName}")) {
 				fail("The ${portalInstanceName} company log file contains logs from the ${additionalPortalInstanceName} company");
 			}
 		}

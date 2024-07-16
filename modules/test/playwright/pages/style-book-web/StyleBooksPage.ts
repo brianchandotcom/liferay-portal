@@ -14,12 +14,13 @@ export class StyleBooksPage {
 		this.page = page;
 	}
 
-	async createStyleBook(
-		styleBookName: string,
-		siteUrl?: Site['friendlyUrlPath']
-	) {
-		await this.goto(siteUrl);
+	async goto(siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.styleBooks}`
+		);
+	}
 
+	async createStyleBook(styleBookName: string) {
 		await this.page.getByRole('button', {exact: true, name: 'Add'}).click();
 
 		await this.page.getByPlaceholder('Name').fill(styleBookName);
@@ -58,11 +59,5 @@ export class StyleBooksPage {
 		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
 
 		await this.page.getByRole('button', {name: 'Delete'}).click();
-	}
-
-	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(
-			`/group${siteUrl || '/guest'}${PORTLET_URLS.styleBooks}`
-		);
 	}
 }

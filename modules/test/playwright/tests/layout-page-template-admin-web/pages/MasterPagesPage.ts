@@ -11,16 +11,14 @@ import {PORTLET_URLS} from '../../../utils/portletUrls';
 export class MasterPagesPage {
 	readonly page: Page;
 
-	readonly pageEditorPage: PageEditorPage;
-
 	readonly newButton: Locator;
+	readonly pageEditorPage: PageEditorPage;
 
 	constructor(page: Page) {
 		this.page = page;
 
-		this.pageEditorPage = new PageEditorPage(this.page);
-
 		this.newButton = page.getByText('New', {exact: true});
+		this.pageEditorPage = new PageEditorPage(this.page);
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {

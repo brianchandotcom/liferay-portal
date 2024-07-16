@@ -9,10 +9,12 @@ import {ProductMenuPage} from '../../pages/product-navigation-control-menu-web/P
 
 export class SiteSettingsPage {
 	readonly page: Page;
+
 	readonly productMenuPage: ProductMenuPage;
 
 	constructor(page: Page) {
 		this.page = page;
+
 		this.productMenuPage = new ProductMenuPage(page);
 	}
 

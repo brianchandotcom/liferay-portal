@@ -14,6 +14,13 @@ import {selectElement} from '../../utils/selectElement';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {SegmentEditorPage} from '../segments-web/SegmentEditorPage';
 
+const VIEWPORTS_CLASSNAMES = {
+	'Desktop': 'desktop',
+	'Landscape Phone': 'landscapeMobile',
+	'Portrait Phone': 'portraitMobile',
+	'Tablet': 'tablet',
+};
+
 export class PageEditorPage {
 	readonly page: Page;
 
@@ -23,18 +30,10 @@ export class PageEditorPage {
 	readonly publishButton: Locator;
 	readonly publishMasterButton: Locator;
 	readonly redoButton: Locator;
+	readonly segmentEditorPage: SegmentEditorPage;
+	readonly selectItemMappingButton: Locator;
 	readonly undoButton: Locator;
 	readonly undoHistory: Locator;
-	readonly selectItemMappingButton: Locator;
-
-	readonly segmentEditorPage: SegmentEditorPage;
-
-	readonly VIEWPORTS_CLASSNAMES = {
-		'Desktop': 'desktop',
-		'Landscape Phone': 'landscapeMobile',
-		'Portrait Phone': 'portraitMobile',
-		'Tablet': 'tablet',
-	};
 
 	constructor(page: Page) {
 		this.page = page;
@@ -49,11 +48,10 @@ export class PageEditorPage {
 			exact: true,
 		});
 		this.redoButton = page.getByTitle('Redo');
+		this.segmentEditorPage = new SegmentEditorPage(page);
+		this.selectItemMappingButton = page.getByLabel('Select Item');
 		this.undoButton = page.getByTitle('Undo');
 		this.undoHistory = page.locator('.page-editor__undo-history');
-		this.selectItemMappingButton = page.getByLabel('Select Item');
-
-		this.segmentEditorPage = new SegmentEditorPage(page);
 	}
 
 	async goto(layout: Layout, siteUrl?: Site['friendlyUrlPath']) {
@@ -267,7 +265,7 @@ export class PageEditorPage {
 
 			await this.page.getByRole('menuitem', {name: unit}).click();
 
-			const input = await this.page.getByRole('spinbutton', {
+			const input = this.page.getByRole('spinbutton', {
 				name: spacingType,
 			});
 
@@ -622,6 +620,22 @@ export class PageEditorPage {
 		await selectElement(tabElement);
 	}
 
+	async hideFragment(fragmentId: string, isDesktop = true) {
+		await this.selectFragment(fragmentId, isDesktop);
+
+		await this.page
+			.locator('.page-editor__topper__item')
+			.getByRole('button', {name: 'Options'})
+			.click();
+
+		await this.page
+			.locator('.dropdown-menu.show')
+			.getByText('Hide Fragment')
+			.click();
+
+		await this.waitForChangesSaved();
+	}
+
 	async isActive(fragmentId: string, isDesktop = true) {
 		const editMode = await this.editModeButton.evaluate(
 			(element) => element.textContent
@@ -718,22 +732,6 @@ export class PageEditorPage {
 			await resetButton.click();
 			await resetButton.waitFor({state: 'hidden'});
 		}
-
-		await this.waitForChangesSaved();
-	}
-
-	async hideFragment(fragmentId: string, isDesktop = true) {
-		await this.selectFragment(fragmentId, isDesktop);
-
-		await this.page
-			.locator('.page-editor__topper__item')
-			.getByRole('button', {name: 'Options'})
-			.click();
-
-		await this.page
-			.locator('.dropdown-menu.show')
-			.getByText('Hide Fragment')
-			.click();
 
 		await this.waitForChangesSaved();
 	}
@@ -910,7 +908,7 @@ export class PageEditorPage {
 		await this.page.getByLabel(viewport, {exact: true}).click();
 		await this.page
 			.locator(
-				`.page-editor__layout-viewport--size-${this.VIEWPORTS_CLASSNAMES[viewport]}`
+				`.page-editor__layout-viewport--size-${VIEWPORTS_CLASSNAMES[viewport]}`
 			)
 			.waitFor();
 	}
@@ -925,6 +923,12 @@ export class PageEditorPage {
 			.waitFor();
 	}
 
+	getEditable(fragmentId: string, editableId: string, isDesktop = true) {
+		return this.getFragment(fragmentId, isDesktop)
+			.locator(`[data-lfr-editable-id="${editableId}"]`)
+			.first();
+	}
+
 	getFragment(fragmentId: string, isDesktop = true) {
 		if (isDesktop) {
 			return this.page
@@ -937,12 +941,6 @@ export class PageEditorPage {
 				.locator(`.lfr-layout-structure-item-${fragmentId}`)
 				.first();
 		}
-	}
-
-	getEditable(fragmentId: string, editableId: string, isDesktop = true) {
-		return this.getFragment(fragmentId, isDesktop)
-			.locator(`[data-lfr-editable-id="${editableId}"]`)
-			.first();
 	}
 
 	getTopper(fragmentId: string, isDesktop = true) {

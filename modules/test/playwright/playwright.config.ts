@@ -26,6 +26,7 @@ import {config as featureFlagWebConfig} from './tests/feature-flag-web/config';
 import {config as frontendDataSetAdminWebConfig} from './tests/frontend-data-set-admin-web/config';
 import {config as frontendDataSetWebConfig} from './tests/frontend-data-set-web/config';
 import {config as frontendJsSpaWebConfig} from './tests/frontend-js-spa-web/config';
+import {config as frontendJsWebConfig} from './tests/frontend-js-web/config';
 import {config as frontendTaglibClayConfig} from './tests/frontend-taglib-clay/config';
 import {config as headlessBuilderImplConfig} from './tests/headless-builder-impl/config';
 import {config as headlessBuilderWebConfig} from './tests/headless-builder-web/config';
@@ -95,6 +96,7 @@ export default defineConfig({
 		featureFlagWebConfig,
 		frontendDataSetAdminWebConfig,
 		frontendDataSetWebConfig,
+		frontendJsWebConfig,
 		frontendJsSpaWebConfig,
 		frontendTaglibClayConfig,
 		headlessBuilderImplConfig,

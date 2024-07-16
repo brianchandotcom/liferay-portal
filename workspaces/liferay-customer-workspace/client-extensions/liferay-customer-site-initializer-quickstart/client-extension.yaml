@@ -1,0 +1,13 @@
+liferay-customer-site-initializer-quickstart:
+    name: Liferay Customer Site Initializer Quickstart
+    oAuthApplicationHeadlessServer: liferay-customer-site-initializer-quickstart-oauth-application-headless-server
+    siteExternalReferenceCode: LIFERAY_CUSTOMER
+    siteName: Liferay Customer
+    type: siteInitializer
+liferay-customer-site-initializer-quickstart-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Customer Site Initializer Quickstart OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Site.everything
+    type: oAuthApplicationHeadlessServer

@@ -1046,6 +1046,11 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
+	public String getBCP47LangTag(Locale locale) {
+		return LocaleUtil.toBCP47LangTag(locale);
+	}
+
+	@Override
 	public String getBCP47LanguageId(HttpServletRequest httpServletRequest) {
 		return getBCP47LanguageId(PortalUtil.getLocale(httpServletRequest));
 	}
@@ -1058,11 +1063,6 @@ public class LanguageImpl implements Language, Serializable {
 	@Override
 	public String getBCP47LanguageId(PortletRequest portletRequest) {
 		return getBCP47LanguageId(PortalUtil.getLocale(portletRequest));
-	}
-
-	@Override
-	public String getBCP47LangTag(Locale locale) {
-		return LocaleUtil.toBCP47LangTag(locale);
 	}
 
 	@Override

@@ -57,7 +57,10 @@ export function GlobalContextFrame({children, useIframe}) {
 
 			const element =
 				iframeElement.contentDocument &&
-				iframeElement.contentDocument.getElementById('content');
+				(iframeElement.contentDocument.getElementById('content') ||
+					iframeElement.contentDocument.getElementById(
+						'main-content'
+					));
 
 			if (element) {
 				element.innerHTML = '';

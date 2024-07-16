@@ -61,6 +61,7 @@ public class CompanyViewPortalDefaultPermissionsConfigurationDisplayContext
 				JavaConstants.JAVAX_PORTLET_RESPONSE));
 	}
 
+	@Override
 	public List<DropdownItem> getActionDropdownItems(
 		PortalDefaultPermissionsSearchEntry
 			portalDefaultPermissionsSearchEntry) {
@@ -79,6 +80,7 @@ public class CompanyViewPortalDefaultPermissionsConfigurationDisplayContext
 		).build();
 	}
 
+	@Override
 	public String getEditURL(String className) {
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
@@ -97,6 +99,7 @@ public class CompanyViewPortalDefaultPermissionsConfigurationDisplayContext
 		).buildString();
 	}
 
+	@Override
 	public PortletURL getPortletURL() {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
@@ -126,6 +129,7 @@ public class CompanyViewPortalDefaultPermissionsConfigurationDisplayContext
 		).buildPortletURL();
 	}
 
+	@Override
 	public SearchContainer<PortalDefaultPermissionsSearchEntry>
 		getSearchContainer() {
 

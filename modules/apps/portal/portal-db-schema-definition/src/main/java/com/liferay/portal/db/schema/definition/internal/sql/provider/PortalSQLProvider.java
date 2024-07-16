@@ -36,11 +36,13 @@ public class PortalSQLProvider implements SQLProvider {
 		_appendModulesSQL();
 	}
 
+	@Override
 	public String getIndexesSQL() {
 		return _indexesSQLSB.toString() + StringPool.NEW_LINE +
 			_objectSQLProcessor.getIndexesSQL();
 	}
 
+	@Override
 	public String getTablesSQL() {
 		return _tablesSQLSB.toString() + StringPool.NEW_LINE +
 			_objectSQLProcessor.getTablesSQL();

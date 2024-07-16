@@ -47,10 +47,12 @@ public class ObjectSQLProvider implements SQLProvider {
 		_appendSQL();
 	}
 
+	@Override
 	public String getIndexesSQL() {
 		return _indexesSQLSB.toString();
 	}
 
+	@Override
 	public String getTablesSQL() {
 		return _tablesSQLSB.toString();
 	}

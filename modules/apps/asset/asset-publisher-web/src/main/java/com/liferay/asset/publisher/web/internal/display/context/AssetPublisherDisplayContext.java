@@ -2241,7 +2241,7 @@ public class AssetPublisherDisplayContext {
 		throws Exception {
 
 		if (isSelectionStyleManual()) {
-			return _assetPublisherHelper.getAssetEntries(
+			return _assetPublisherHelper.getInfoPage(
 				_portletRequest, _portletPreferences,
 				_themeDisplay.getPermissionChecker(), getGroupIds(),
 				getAllAssetCategoryIds(), getAllAssetTagNames(), false,

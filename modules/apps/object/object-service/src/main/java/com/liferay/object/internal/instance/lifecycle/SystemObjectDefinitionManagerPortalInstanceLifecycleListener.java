@@ -49,6 +49,8 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.ObjectStateFlowLocalService;
+import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
@@ -254,7 +256,8 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					_objectDefinitionLocalService, _objectFieldLocalService,
 					_objectFieldSettingLocalService,
 					_objectRelationshipLocalService,
-					_objectScopeProviderRegistry, _portal,
+					_objectScopeProviderRegistry, _objectStateFlowLocalService,
+					_objectStateLocalService, _portal,
 					_restContextPathResolverRegistry, _userLocalService);
 
 			_bundleContext.registerService(
@@ -457,6 +460,12 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+
+	@Reference
+	private ObjectStateFlowLocalService _objectStateFlowLocalService;
+
+	@Reference
+	private ObjectStateLocalService _objectStateLocalService;
 
 	@Reference
 	private Portal _portal;

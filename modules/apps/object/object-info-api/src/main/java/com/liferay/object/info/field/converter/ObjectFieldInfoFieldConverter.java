@@ -16,6 +16,9 @@ import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -23,9 +26,12 @@ import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.info.field.type.util.ObjectFieldInfoFieldTypeUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.model.ObjectState;
+import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -34,6 +40,8 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.ObjectStateFlowLocalService;
+import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,11 +52,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.math.BigDecimal;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -66,7 +77,9 @@ public class ObjectFieldInfoFieldConverter {
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFieldSettingLocalService objectFieldSettingLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
-		ObjectScopeProviderRegistry objectScopeProviderRegistry, Portal portal,
+		ObjectScopeProviderRegistry objectScopeProviderRegistry,
+		ObjectStateFlowLocalService objectStateFlowLocalService,
+		ObjectStateLocalService objectStateLocalService, Portal portal,
 		RESTContextPathResolverRegistry restContextPathResolverRegistry,
 		UserLocalService userLocalService) {
 
@@ -77,6 +90,8 @@ public class ObjectFieldInfoFieldConverter {
 		_objectFieldSettingLocalService = objectFieldSettingLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
+		_objectStateFlowLocalService = objectStateFlowLocalService;
+		_objectStateLocalService = objectStateLocalService;
 		_portal = portal;
 		_restContextPathResolverRegistry = restContextPathResolverRegistry;
 		_userLocalService = userLocalService;
@@ -201,18 +216,9 @@ public class ObjectFieldInfoFieldConverter {
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
-			if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
-				finalStep.attribute(
-					MultiselectInfoFieldType.OPTIONS,
-					_getOptionInfoFieldTypes(objectField));
-			}
-			else {
-				finalStep.attribute(
-					SelectInfoFieldType.OPTIONS,
-					_getOptionInfoFieldTypes(objectField));
-			}
+			finalStep.attribute(
+				SelectInfoFieldType.OPTIONS,
+				_getOptionInfoFieldTypes(objectField));
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
@@ -315,6 +321,27 @@ public class ObjectFieldInfoFieldConverter {
 		}
 	}
 
+	private LayoutDisplayPageObjectProvider
+		_getLayoutDisplayPageObjectProvider() {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return null;
+		}
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		if (httpServletRequest == null) {
+			return null;
+		}
+
+		return (LayoutDisplayPageObjectProvider<?>)
+			httpServletRequest.getAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+	}
+
 	private long _getMaximumFileSize(ObjectField objectField) {
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
@@ -355,15 +382,69 @@ public class ObjectFieldInfoFieldConverter {
 	private List<OptionInfoFieldType> _getOptionInfoFieldTypes(
 		ObjectField objectField) {
 
+		String defaultValue = ObjectFieldSettingUtil.getDefaultValueAsString(
+			null, objectField.getObjectFieldId(),
+			_objectFieldSettingLocalService, null);
+
+		if (!objectField.isState()) {
+			return _getOptionInfoFieldTypes(
+				defaultValue,
+				_listTypeEntryLocalService.getListTypeEntries(
+					objectField.getListTypeDefinitionId()));
+		}
+
+		String listTypeEntryKey = defaultValue;
+
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			_getLayoutDisplayPageObjectProvider();
+
+		if (layoutDisplayPageObjectProvider != null) {
+			ObjectEntry objectEntry =
+				(ObjectEntry)layoutDisplayPageObjectProvider.getDisplayObject();
+
+			if (objectEntry != null) {
+				listTypeEntryKey = MapUtil.getString(
+					objectEntry.getValues(), objectField.getName(),
+					listTypeEntryKey);
+			}
+		}
+
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.fetchListTypeEntry(
+				objectField.getListTypeDefinitionId(), listTypeEntryKey);
+
+		if (listTypeEntry == null) {
+			return Collections.emptyList();
+		}
+
+		ObjectStateFlow objectStateFlow =
+			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
+				objectField.getObjectFieldId());
+
+		ObjectState objectState =
+			_objectStateLocalService.fetchObjectStateFlowObjectState(
+				listTypeEntry.getListTypeEntryId(),
+				objectStateFlow.getObjectStateFlowId());
+
+		return _getOptionInfoFieldTypes(
+			defaultValue,
+			ListUtil.concat(
+				Collections.singletonList(listTypeEntry),
+				TransformUtil.transform(
+					_objectStateLocalService.getNextObjectStates(
+						objectState.getObjectStateId()),
+					nextObjectState ->
+						_listTypeEntryLocalService.fetchListTypeEntry(
+							nextObjectState.getListTypeEntryId()))));
+	}
+
+	private List<OptionInfoFieldType> _getOptionInfoFieldTypes(
+		String defaultValue, List<ListTypeEntry> listTypeEntries) {
+
 		return TransformUtil.transform(
-			_listTypeEntryLocalService.getListTypeEntries(
-				objectField.getListTypeDefinitionId()),
+			listTypeEntries,
 			listTypeEntry -> new OptionInfoFieldType(
-				Objects.equals(
-					ObjectFieldSettingUtil.getDefaultValueAsString(
-						null, objectField.getObjectFieldId(),
-						_objectFieldSettingLocalService, null),
-					listTypeEntry.getKey()),
+				Objects.equals(defaultValue, listTypeEntry.getKey()),
 				new FunctionInfoLocalizedValue<>(listTypeEntry::getName),
 				listTypeEntry.getKey()));
 	}
@@ -460,6 +541,8 @@ public class ObjectFieldInfoFieldConverter {
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+	private final ObjectStateFlowLocalService _objectStateFlowLocalService;
+	private final ObjectStateLocalService _objectStateLocalService;
 	private final Portal _portal;
 	private final RESTContextPathResolverRegistry
 		_restContextPathResolverRegistry;

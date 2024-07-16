@@ -25,7 +25,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
@@ -86,7 +82,9 @@ public abstract class BaseInputFragmentRendererTestCase {
 	@Test
 	public void testRenderWithInfoItemDetails() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest();
+			ContentLayoutTestUtil.getMockHttpServletRequest(
+				companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+				group, layout);
 
 		InfoItemDetailsProvider<ObjectEntry> infoItemDetailsProvider =
 			infoItemServiceRegistry.getFirstInfoItemService(
@@ -108,7 +106,9 @@ public abstract class BaseInputFragmentRendererTestCase {
 	@Test
 	public void testRenderWithoutInfoItemDetails() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest();
+			ContentLayoutTestUtil.getMockHttpServletRequest(
+				companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+				group, layout);
 
 		FragmentRenderer fragmentRenderer = getFragmentRenderer();
 
@@ -166,28 +166,6 @@ public abstract class BaseInputFragmentRendererTestCase {
 				defaultSegmentsExperienceId, layoutStructure.toString());
 
 		return fragmentEntryLink;
-	}
-
-	protected MockHttpServletRequest getMockHttpServletRequest()
-		throws Exception {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			companyLocalService.getCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setLanguageId(LanguageUtil.getLanguageId(LocaleUtil.US));
-		themeDisplay.setLayout(layout);
-		themeDisplay.setScopeGroupId(group.getGroupId());
-		themeDisplay.setSiteGroupId(group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return mockHttpServletRequest;
 	}
 
 	@Inject

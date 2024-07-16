@@ -111,7 +111,7 @@ export default function Sidebar() {
 			wrapper.classList.remove('page-editor__wrapper--padded-start');
 			wrapper.classList.remove('page-editor__wrapper--padded-end');
 		};
-	}, [sidebarOpen, itemConfigurationOpen]);
+	}, [sidebarHidden, sidebarOpen, itemConfigurationOpen]);
 
 	useEffect(() => {
 		const separatorElement = separatorRef.current;

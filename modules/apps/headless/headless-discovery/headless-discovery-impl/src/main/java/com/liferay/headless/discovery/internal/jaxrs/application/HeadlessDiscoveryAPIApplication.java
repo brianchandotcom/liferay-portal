@@ -110,6 +110,10 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 					html, "href=\"main.css\"",
 					"href=\"" + _portal.getPathContext() + "/o/api/main.css\"");
 				html = StringUtil.replace(
+					html, "href=\"headless-discovery-web-min.css\"",
+					"href=\"" + _portal.getPathContext() +
+						"/o/api/headless-discovery-web-min.css\"");
+				html = StringUtil.replace(
 					html, "src=\"headless-discovery-web-min.js\"",
 					"src=\"" + _portal.getPathContext() +
 						"/o/api/headless-discovery-web-min.js\"");
@@ -185,7 +189,7 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 				}
 			});
 
-		if (parameter.contains("main.css")) {
+		if (parameter.endsWith(".css")) {
 			responseBuilder.type("text/css");
 		}
 		else {

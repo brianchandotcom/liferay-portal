@@ -21,7 +21,12 @@ test('Checks that the card checkbox has the correct aria label', async ({
 	page,
 	site,
 }) => {
+
+	// Go to display pages administration
+
 	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+	// Create new DPT and check checkbox aria-label
 
 	const displayPageTemplateName = getRandomString();
 

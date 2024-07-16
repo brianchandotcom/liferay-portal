@@ -25,7 +25,7 @@ const test = mergeTests(
 );
 
 test(
-	'Approved and scheduled web contents should be displayed in the "Content" tab of the "Add" panel of a widget page, whereas draft, expired and in-trash web contents should not',
+	'Check correct web contents are displayed in Content tab of the Add panel',
 	{
 		tag: '@LPD-15256',
 	},
@@ -77,6 +77,10 @@ test(
 			scheduledWebContentTitle
 		);
 
+		// Method to verify correct web contents are visible
+		// Approved and scheduled web contents should be displayed,
+		// whereas draft, expired and in-trash web contents should not
+
 		async function verifyVisibleWebContents() {
 			await expect(page.getByText(approvedWebContentTitle)).toBeVisible();
 			await expect(
@@ -105,6 +109,8 @@ test(
 		await widgetPagePage.openAddPanel();
 
 		await widgetPagePage.contentTab.click();
+
+		// Verify correct web contents are displayed
 
 		await verifyVisibleWebContents();
 

@@ -160,6 +160,9 @@ test('Can configure a panel page', async ({
 	pagesAdminPage,
 	site,
 }) => {
+
+	// Create page and go to General configuration
+
 	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
 		groupId: site.id,
 		options: {
@@ -171,6 +174,8 @@ test('Can configure a panel page', async ({
 	await pagesAdminPage.goto(site.friendlyUrlPath);
 
 	await pageConfigurationPage.goToSection('Panel', 'General');
+
+	// Select Collaboration application
 
 	await page
 		.locator('.treeview-link[data-id*="collaboration"]')

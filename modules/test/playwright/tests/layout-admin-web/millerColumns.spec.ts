@@ -208,6 +208,8 @@ test(
 			).toBeNull();
 		});
 
+		// Create page and go to view mode to check dialog is not shown
+
 		await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
 			title: '<script>alert(123);</script>',

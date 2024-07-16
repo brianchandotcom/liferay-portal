@@ -32,6 +32,9 @@ test('Checks the accessibility of the rule modal by filling out a condition and 
 	pageEditorPage,
 	site,
 }) => {
+
+	// Create content page with a Heading fragment and go to edit mode
+
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
 			getFragmentDefinition({
@@ -44,6 +47,8 @@ test('Checks the accessibility of the rule modal by filling out a condition and 
 	});
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Add rule and check accessibility of modal
 
 	await pageEditorPage.goToSidebarTab('Page Rules');
 

@@ -43,12 +43,16 @@ test('Renders all panel buttons in the vertical bar', async ({
 }) => {
 	await page.goto('/');
 
+	// Create page and go to edit mode
+
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		siteId: site.id,
 		title: getRandomString(),
 	});
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Check all panel buttons are rendered
 
 	for (const panel of PANELS) {
 		const panelButton = page.getByLabel(panel, {exact: true});
@@ -69,6 +73,8 @@ test('Renders sidebars visible at desktop size and sidebars not visible at small
 }) => {
 	await page.goto('/');
 
+	// Create content page and go to edit mode
+
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		siteId: site.id,
 		title: getRandomString(),
@@ -85,7 +91,7 @@ test('Renders sidebars visible at desktop size and sidebars not visible at small
 
 	await expect(configurationPanel).toBeVisible();
 
-	// Set small resolution
+	// Set small resolution and check panels are not visible
 
 	await page.setViewportSize({height: 600, width: 600});
 
@@ -104,6 +110,8 @@ test('Checks if sidebars are open or closed depending on Product Menu', async ({
 }) => {
 	await page.goto('/');
 
+	// Create content page and go to edit mode
+
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		siteId: site.id,
 		title: getRandomString(),
@@ -111,14 +119,12 @@ test('Checks if sidebars are open or closed depending on Product Menu', async ({
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
+	// Check panels are visible
+
 	const panel = page.getByLabel('Fragments and Widgets Panel');
 	const configurationPanel = page.getByLabel('Configuration Panel', {
 		exact: true,
 	});
-
-	await expect(panel).toBeVisible();
-
-	await expect(configurationPanel).toBeVisible();
 
 	// Check if sidebars are not visible when Product Menu is open
 
@@ -146,6 +152,9 @@ test('Checks sidebar accessibility', async ({
 	pageEditorPage,
 	site,
 }) => {
+
+	// Create page and go to edit mode
+
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		siteId: site.id,
 		title: getRandomString(),

@@ -74,6 +74,9 @@ test('Check dropdown menu is displayed correctly in all resolutions', async ({
 	pageEditorPage,
 	site,
 }) => {
+
+	// Create content page with a Dropdown fragment and go to edit mode
+
 	const dropdownId = getRandomString();
 
 	const fragmentDefinition = getFragmentDefinition({
@@ -89,6 +92,8 @@ test('Check dropdown menu is displayed correctly in all resolutions', async ({
 	});
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Check dropdown style in all viewports
 
 	await openDropdownAndCheckStyle(
 		pageEditorPage,

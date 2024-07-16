@@ -28,6 +28,9 @@ test('Checks that the Tabs fragment works correctly and has the correct semantic
 	page,
 	site,
 }) => {
+
+	// Create page with a Tabs fragment
+
 	const tabsDefinition = getFragmentDefinition({
 		fragmentConfig: {
 			numberOfTabs: 2,

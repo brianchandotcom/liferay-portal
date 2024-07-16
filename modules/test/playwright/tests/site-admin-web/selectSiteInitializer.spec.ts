@@ -21,13 +21,20 @@ test('Check select site initializers accessibility', async ({
 	selectSiteInitializerPage,
 	site,
 }) => {
+
+	// Go to site initializers selection page
+
 	await selectSiteInitializerPage.goto(site.friendlyUrlPath);
+
+	// Check all of them have correct label
 
 	const cards = await page.locator('.card').all();
 
 	for (const card of cards) {
 		await expect(card.getByLabel('Select Template:')).toBeVisible();
 	}
+
+	// Check accessibility
 
 	await checkAccessibility({
 		page,

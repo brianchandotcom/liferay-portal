@@ -321,7 +321,7 @@ test('Allows editing and deleting an experience', async ({
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-	// Create new experienc
+	// Create new experience
 
 	await pageEditorPage.createExperience('E1');
 

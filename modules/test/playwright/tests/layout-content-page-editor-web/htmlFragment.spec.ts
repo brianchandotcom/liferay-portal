@@ -30,6 +30,9 @@ test('Can edit html editable', async ({
 	pageEditorPage,
 	site,
 }) => {
+
+	// Create page with a heading fragment and go to edit mode
+
 	const headingId = getRandomString();
 
 	const headingFragment = getFragmentDefinition({
@@ -44,6 +47,8 @@ test('Can edit html editable', async ({
 	});
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Check html editable can be edited
 
 	await pageEditorPage.editHTMLEditable(
 		headingId,

@@ -28,6 +28,16 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "sequential";
 
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.portal.util.PortalInstances");
+
+		ServerAdministration.viewCategoryLogLevels(
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.portal.util.PortalInstances");
+
 		for (var portalInstanceName : list "www.able.com,www.baker.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = ${portalInstanceName},

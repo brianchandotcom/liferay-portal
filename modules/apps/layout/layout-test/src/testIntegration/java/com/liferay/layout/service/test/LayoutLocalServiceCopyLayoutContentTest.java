@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ImageLocalService;
@@ -781,6 +782,11 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 		_assertPortletPreferences(count, portletId1);
 		_assertPortletPreferences(count, portletId2);
 
+		String name = RandomTestUtil.randomString();
+		String value = RandomTestUtil.randomString();
+
+		_addPortletPreferenceValue(name, draftLayout, portletId2, value);
+
 		_entityCache.clearCache();
 		_multiVMPool.clear();
 
@@ -813,6 +819,8 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 		}
 
 		_assertPortletPreferences(count, portletId2);
+
+		_assertPortletPreferences(value, name, portletId2, draftLayout, layout);
 	}
 
 	@Test
@@ -1022,6 +1030,20 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 		return _layoutLocalService.getLayout(layout.getPlid());
 	}
 
+	private void _addPortletPreferenceValue(
+			String name, Layout layout, String portletId, String value)
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesFactory.getPortletSetup(layout, portletId, null);
+
+		portletPreferences.setValue(name, value);
+
+		portletPreferences.store();
+
+		_assertPortletPreferences(value, name, portletId, layout);
+	}
+
 	private String _addPortletToLayout(Layout layout, String portletId)
 		throws Exception {
 
@@ -1154,6 +1176,20 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 			portletPreferences.toString(), count, portletPreferences.size());
 	}
 
+	private void _assertPortletPreferences(
+		String expectedValue, String name, String portletId,
+		Layout... layouts) {
+
+		for (Layout layout : layouts) {
+			PortletPreferences portletPreferences =
+				_portletPreferencesFactory.getPortletSetup(
+					layout, portletId, null);
+
+			Assert.assertEquals(
+				expectedValue, portletPreferences.getValue(name, null));
+		}
+	}
+
 	private String _getLayoutContent(Layout layout, Locale locale)
 		throws Exception {
 
@@ -1240,6 +1276,9 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 		filter = "javax.portlet.name=" + LayoutPortletKeys.LAYOUT_TEST_PORTLET
 	)
 	private final Portlet _portlet = null;
+
+	@Inject
+	private PortletPreferencesFactory _portletPreferencesFactory;
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

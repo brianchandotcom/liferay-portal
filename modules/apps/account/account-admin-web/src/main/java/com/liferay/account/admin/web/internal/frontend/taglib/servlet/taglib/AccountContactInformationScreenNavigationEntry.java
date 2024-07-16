@@ -8,7 +8,6 @@ package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 
 import java.util.Locale;
@@ -49,9 +48,7 @@ public class AccountContactInformationScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, AccountEntry accountEntry) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-10855") ||
-			accountEntry.isNew()) {
-
+		if (accountEntry.isNew()) {
 			return false;
 		}
 

@@ -71,8 +71,7 @@ public class ObjectStateLocalServiceImpl
 
 	@Override
 	public ObjectState fetchObjectStateFlowObjectState(
-			long listTypeEntryId, long objectStateFlowId)
-		throws PortalException {
+		long listTypeEntryId, long objectStateFlowId) {
 
 		return objectStatePersistence.fetchByLTEI_OSFI(
 			listTypeEntryId, objectStateFlowId);

@@ -149,11 +149,7 @@ autoSaveAsDraftTest(
 			structureName,
 		});
 
-		await fillAndClickOutside(
-			page,
-			page.getByPlaceholder('Untitled ' + structureName),
-			title
-		);
+		await journalEditArticlePage.fillTitle(title);
 
 		const localizableField = page.getByRole('textbox', {
 			name: localizableFieldName,
@@ -190,17 +186,13 @@ autoSaveAsDraftTest(
 
 autoSaveAsDraftTest(
 	'LPD-26863: Undo/Redo buttons work with metadata fields',
-	async ({journalEditArticlePage, page, site}) => {
+	async ({journalEditArticlePage, site}) => {
 		const title = getRandomString();
 
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
 		await expect(async () => {
-			await fillAndClickOutside(
-				page,
-				journalEditArticlePage.titleInput,
-				title
-			);
+			await journalEditArticlePage.fillTitle(title);
 
 			await expect(journalEditArticlePage.undoButton).toBeEnabled();
 		}).toPass();
@@ -249,11 +241,7 @@ autoSaveAsDraftTest(
 		});
 
 		await expect(async () => {
-			await fillAndClickOutside(
-				page,
-				journalEditArticlePage.titleInput,
-				title
-			);
+			await journalEditArticlePage.fillTitle(title);
 
 			await expect(journalEditArticlePage.undoButton).toBeEnabled();
 		}).toPass();
@@ -1114,11 +1102,7 @@ baseTest(
 			structureName,
 		});
 
-		await fillAndClickOutside(
-			page,
-			journalEditArticlePage.titleInput,
-			title
-		);
+		await journalEditArticlePage.fillTitle(title);
 
 		await fillAndClickOutside(
 			page,
@@ -1145,7 +1129,7 @@ baseTest(
 		});
 
 		await expect(async () => {
-			await fillAndClickOutside(page, journalEditArticlePage.titleInput);
+			await journalEditArticlePage.fillTitle(title);
 
 			await translationButton.click();
 
@@ -1215,7 +1199,7 @@ scheduleTest(
 
 		const title = getRandomString();
 
-		await journalEditArticlePage.titleInput.fill(title);
+		await journalEditArticlePage.fillTitle(title);
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,

@@ -867,7 +867,7 @@ const SelectSubscription = ({
 							}}
 							selected={hasComplimentaryKey}
 							subtitle={i18n.translate(
-								'choose-this-option-if-you-want-an-activation-key-for-60-days'
+								'choose-this-option-if-you-want-an-activation-key-for-30-days'
 							)}
 							value={
 								state.id === 'renew'

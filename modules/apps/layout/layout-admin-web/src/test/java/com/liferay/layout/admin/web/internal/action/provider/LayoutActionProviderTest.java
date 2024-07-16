@@ -57,7 +57,7 @@ public class LayoutActionProviderTest {
 	}
 
 	@Test
-	public void testGetMessageKeyWhenDeletePageWithChildPage()
+	public void testGetMessageKeyWhenDeletLayoutWithChildLayout()
 		throws PortalException {
 
 		_setUpLayout(true, false);
@@ -77,7 +77,7 @@ public class LayoutActionProviderTest {
 	}
 
 	@Test
-	public void testGetMessageKeyWhenDeletePageWithScopedContent()
+	public void testGetMessageKeyWhenDeleteLayoutWithScopedContent()
 		throws PortalException {
 
 		_setUpLayout(false, true);
@@ -97,7 +97,7 @@ public class LayoutActionProviderTest {
 	}
 
 	@Test
-	public void testGetMessageKeyWhenDeletePageWithScopedContentAndChildPage()
+	public void testGetMessageKeyWhenDeleteLayoutWithScopedContentAndChildLayout()
 		throws PortalException {
 
 		_setUpLayout(true, true);

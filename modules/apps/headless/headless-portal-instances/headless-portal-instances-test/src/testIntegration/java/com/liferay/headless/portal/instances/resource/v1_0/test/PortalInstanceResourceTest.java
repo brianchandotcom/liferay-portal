@@ -88,6 +88,7 @@ public class PortalInstanceResourceTest
 		_testPatchPortalInstanceUpdateVirtualHost();
 	}
 
+	@Override
 	@Test
 	public void testPostPortalInstance() throws Exception {
 		_testPostPortalInstanceWithoutAdmin();

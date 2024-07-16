@@ -11,7 +11,6 @@ import com.liferay.content.dashboard.item.filter.provider.ContentDashboardItemFi
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -35,7 +33,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -47,8 +44,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -88,14 +83,8 @@ public class FileSizeContentDashboardItemFilterProviderTest {
 		FileEntry smallSizeFileEntry = _addDLFileEntry(
 			new byte[_FILE_SIZE_SMALL]);
 
-		HttpServletRequest httpServletRequest = new TestMockHttpServletRequest(
-			"fileSize", null);
-
-		httpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY,
-			_getThemeDisplay(new MockHttpServletRequest()));
-
-		List<Document> documents = _getDocuments(httpServletRequest);
+		List<Document> documents = _getDocuments(
+			_getMockHttpServletRequest(null));
 
 		Assert.assertEquals(documents.toString(), 3, documents.size());
 
@@ -116,17 +105,11 @@ public class FileSizeContentDashboardItemFilterProviderTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
-	private void _assertGetDocuments(FileEntry fileEntry, String type)
+	private void _assertGetDocuments(FileEntry fileEntry, String fileSize)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = new TestMockHttpServletRequest(
-			"fileSize", type);
-
-		httpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY,
-			_getThemeDisplay(new MockHttpServletRequest()));
-
-		List<Document> documents = _getDocuments(httpServletRequest);
+		List<Document> documents = _getDocuments(
+			_getMockHttpServletRequest(fileSize));
 
 		Assert.assertEquals(documents.toString(), 1, documents.size());
 
@@ -177,6 +160,29 @@ public class FileSizeContentDashboardItemFilterProviderTest {
 		return searchResponse.getDocuments71();
 	}
 
+	private MockHttpServletRequest _getMockHttpServletRequest()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		return mockHttpServletRequest;
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest(String fileSize)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest();
+
+		mockHttpServletRequest.addParameter("fileSize", fileSize);
+
+		return mockHttpServletRequest;
+	}
+
 	private SearchResponse _getSearchResponse(SearchContext searchContext) {
 		return _searcher.search(
 			_searchRequestBuilderFactory.builder(
@@ -193,22 +199,12 @@ public class FileSizeContentDashboardItemFilterProviderTest {
 			).build());
 	}
 
-	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)
-		throws Exception {
-
+	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setLayout(
-			LayoutTestUtil.addTypePortletLayout(_group.getGroupId()));
-		themeDisplay.setLocale(LocaleUtil.getDefault());
-		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
-		themeDisplay.setTimeZone(TimeZone.getDefault());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
@@ -240,27 +236,5 @@ public class FileSizeContentDashboardItemFilterProviderTest {
 
 	@Inject
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	private static class TestMockHttpServletRequest
-		extends MockHttpServletRequest {
-
-		public TestMockHttpServletRequest(String parameter, String value) {
-			_parameter = parameter;
-			_value = value;
-		}
-
-		@Override
-		public String[] getParameterValues(String name) {
-			if (Objects.equals(name, _parameter)) {
-				return new String[] {_value};
-			}
-
-			return super.getParameterValues(name);
-		}
-
-		private final String _parameter;
-		private final String _value;
-
-	}
 
 }

@@ -204,6 +204,15 @@ public class DLFileShortcutLocalServiceImpl
 	}
 
 	@Override
+	public void deleteFileShortcut(String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		dlFileShortcutLocalService.deleteFileShortcut(
+			dlFileShortcutPersistence.findByERC_G(
+				externalReferenceCode, groupId));
+	}
+
+	@Override
 	public void deleteFileShortcuts(long toFileEntryId) throws PortalException {
 		List<DLFileShortcut> fileShortcuts =
 			dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);

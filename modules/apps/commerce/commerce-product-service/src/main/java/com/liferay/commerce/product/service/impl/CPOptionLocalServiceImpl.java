@@ -17,7 +17,6 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -402,11 +401,9 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		allowedCommerceOptionTypes = ArrayUtil.filter(
 			allowedCommerceOptionTypes,
-			commerceOptionType ->
-				!Objects.equals(
-					CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
-					commerceOptionType) ||
-				FeatureFlagManagerUtil.isEnabled("LPD-10887"));
+			commerceOptionType -> !Objects.equals(
+				CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+				commerceOptionType));
 
 		if (ArrayUtil.contains(
 				allowedCommerceOptionTypes, commerceOptionTypeKey)) {

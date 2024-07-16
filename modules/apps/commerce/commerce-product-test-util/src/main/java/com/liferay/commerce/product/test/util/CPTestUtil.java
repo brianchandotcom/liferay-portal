@@ -43,7 +43,6 @@ import com.liferay.commerce.service.CPDefinitionInventoryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -757,11 +756,9 @@ public class CPTestUtil {
 
 		return ArrayUtil.filter(
 			cpOptionConfiguration.allowedCommerceOptionTypes(),
-			commerceOptionType ->
-				!Objects.equals(
-					CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
-					commerceOptionType) ||
-				FeatureFlagManagerUtil.isEnabled("LPD-10887"));
+			commerceOptionType -> !Objects.equals(
+				CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+				commerceOptionType));
 	}
 
 	public static String getDefaultCommerceOptionTypeKey(boolean skuContributor)
@@ -780,11 +777,9 @@ public class CPTestUtil {
 
 		allowedCommerceOptionTypes = ArrayUtil.filter(
 			allowedCommerceOptionTypes,
-			commerceOptionType ->
-				!Objects.equals(
-					CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
-					commerceOptionType) ||
-				FeatureFlagManagerUtil.isEnabled("LPD-10887"));
+			commerceOptionType -> !Objects.equals(
+				CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+				commerceOptionType));
 
 		return allowedCommerceOptionTypes[0];
 	}

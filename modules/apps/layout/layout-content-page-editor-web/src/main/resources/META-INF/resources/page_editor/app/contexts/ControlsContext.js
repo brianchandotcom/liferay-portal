@@ -16,6 +16,7 @@ const ACTIVE_INITIAL_STATE = {
 	activationOrigin: null,
 	activeItemIds: Liferay.FeatureFlags['LPD-18221'] ? [] : null,
 	activeItemType: null,
+	multiSelectIsActive: false,
 };
 
 const HOVER_INITIAL_STATE = {
@@ -23,6 +24,7 @@ const HOVER_INITIAL_STATE = {
 };
 
 const HOVER_ITEM = 'HOVER_ITEM';
+const MULTI_SELECT = 'MULTI_SELECT';
 const SELECT_ITEM = 'SELECT_ITEM';
 
 const ActiveStateContext = React.createContext(ACTIVE_INITIAL_STATE);
@@ -32,7 +34,7 @@ const HoverStateContext = React.createContext(HOVER_INITIAL_STATE);
 const HoverDispatchContext = React.createContext(() => {});
 
 const reducer = (state, action) => {
-	const {itemId, itemType, origin, type} = action;
+	const {itemId, itemType, multiSelectIsActive, origin, type} = action;
 	let nextState = state;
 
 	if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
@@ -52,11 +54,19 @@ const reducer = (state, action) => {
 			...nextState,
 			activationOrigin: origin,
 			activeItemIds: Liferay.FeatureFlags['LPD-18221']
-				? itemId
-					? [itemId]
-					: []
+				? nextState.multiSelectIsActive
+					? [...nextState.activeItemIds, itemId]
+					: itemId
+						? [itemId]
+						: []
 				: itemId,
 			activeItemType: itemType,
+		};
+	}
+	else if (type === MULTI_SELECT) {
+		nextState = {
+			...nextState,
+			multiSelectIsActive,
 		};
 	}
 
@@ -215,9 +225,27 @@ const useSelectItem = () => {
 	);
 };
 
+const useActivateMultiSelect = () => {
+	const activeDispatch = useContext(ActiveDispatchContext);
+
+	return useCallback(
+		(multiSelectIsActive = false) => {
+			activeDispatch({
+				multiSelectIsActive,
+				type: MULTI_SELECT,
+			});
+		},
+		[activeDispatch]
+	);
+};
+
+const useMultiSelectIsActivated = () =>
+	useContext(ActiveStateContext).multiSelectIsActive;
+
 export {
 	ControlsProvider,
 	reducer,
+	useActivateMultiSelect,
 	useActivationOrigin,
 	useActiveItemIds,
 	useActiveItemType,
@@ -227,5 +255,6 @@ export {
 	useHoverItem,
 	useIsActive,
 	useIsHovered,
+	useMultiSelectIsActivated,
 	useSelectItem,
 };

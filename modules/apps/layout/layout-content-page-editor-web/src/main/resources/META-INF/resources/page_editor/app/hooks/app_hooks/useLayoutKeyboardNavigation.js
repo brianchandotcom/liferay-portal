@@ -8,34 +8,16 @@ import {useContext, useEffect, useRef} from 'react';
 
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
-import {
-	useActivationOrigin,
-	useHoverItem,
-	useIsActive,
-	useSelectItem,
-} from '../../contexts/ControlsContext';
+import {useHoverItem, useSelectItem} from '../../contexts/ControlsContext';
 import {LayoutKeyboardContext} from '../../contexts/LayoutKeyboardContext';
 
 export function useLayoutKeyboardNavigation(item) {
 	const elementRef = useRef(null);
 
-	const activationOrigin = useActivationOrigin();
-	const isActive = useIsActive()(item.itemId);
 	const hoverItem = useHoverItem();
 	const selectItem = useSelectItem();
 
 	const {itemList, setTargetId, targetId} = useContext(LayoutKeyboardContext);
-
-	// Set target when selecting an item
-
-	useEffect(() => {
-		if (
-			isActive &&
-			activationOrigin === ITEM_ACTIVATION_ORIGINS.pageEditor
-		) {
-			setTargetId(item.itemId);
-		}
-	}, [activationOrigin, isActive, item, setTargetId]);
 
 	// Focus and hover when changing target
 

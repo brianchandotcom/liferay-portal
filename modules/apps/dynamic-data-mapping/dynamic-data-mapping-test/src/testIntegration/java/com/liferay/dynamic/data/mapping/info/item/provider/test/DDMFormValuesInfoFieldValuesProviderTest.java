@@ -74,6 +74,7 @@ public class DDMFormValuesInfoFieldValuesProviderTest
 		new LiferayIntegrationTestRule();
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 

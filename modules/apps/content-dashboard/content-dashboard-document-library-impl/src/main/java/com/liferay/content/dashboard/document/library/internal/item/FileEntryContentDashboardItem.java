@@ -21,7 +21,12 @@ import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.model.DDMField;
+import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -30,6 +35,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -84,7 +90,9 @@ public class FileEntryContentDashboardItem
 		ContentDashboardItemVersionActionProviderRegistry
 			contentDashboardItemVersionActionProviderRegistry,
 		ContentDashboardItemSubtype contentDashboardItemSubtype,
+		DDMFieldLocalService ddmFieldLocalService,
 		DLDisplayContextProvider dlDisplayContextProvider,
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
 		DLURLHelper dlURLHelper, FileEntry fileEntry, Group group,
 		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider,
 		Language language, Portal portal) {
@@ -108,7 +116,9 @@ public class FileEntryContentDashboardItem
 		_contentDashboardItemVersionActionProviderRegistry =
 			contentDashboardItemVersionActionProviderRegistry;
 		_contentDashboardItemSubtype = contentDashboardItemSubtype;
+		_ddmFieldLocalService = ddmFieldLocalService;
 		_dlDisplayContextProvider = dlDisplayContextProvider;
+		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 		_dlURLHelper = dlURLHelper;
 		_fileEntry = fileEntry;
 		_group = group;
@@ -376,6 +386,9 @@ public class FileEntryContentDashboardItem
 
 		return Arrays.asList(
 			new SpecificInformation<>(
+				"content-dashboard-aspect-ratio",
+				SpecificInformation.Type.STRING, _getAspectRatio(locale)),
+			new SpecificInformation<>(
 				"extension", SpecificInformation.Type.STRING, _getExtension()),
 			new SpecificInformation<>(
 				"file-name", SpecificInformation.Type.STRING, _getFileName()),
@@ -481,6 +494,64 @@ public class FileEntryContentDashboardItem
 			_fileEntry, httpServletRequest);
 	}
 
+	private String _getAspectRatio(Locale locale) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_fileEntry.getCompanyId(), "LPD-30087")) {
+
+			return null;
+		}
+
+		FileVersion fileVersion;
+
+		try {
+			fileVersion = _fileEntry.getFileVersion();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return null;
+		}
+
+		if (fileVersion == null) {
+			return null;
+		}
+
+		List<DLFileEntryMetadata> dlFileEntryMetadatas =
+			_dlFileEntryMetadataLocalService.getFileVersionFileEntryMetadatas(
+				fileVersion.getFileVersionId());
+
+		if (ListUtil.isEmpty(dlFileEntryMetadatas)) {
+			return null;
+		}
+
+		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
+			Long tiffImageLength = _getDDMFormFieldsValueValue(
+				dlFileEntryMetadata.getDDMStorageId(), "TIFF_IMAGE_LENGTH");
+
+			if (tiffImageLength == null) {
+				continue;
+			}
+
+			Long tiffImageWidth = _getDDMFormFieldsValueValue(
+				dlFileEntryMetadata.getDDMStorageId(), "TIFF_IMAGE_WIDTH");
+
+			if (tiffImageWidth == null) {
+				continue;
+			}
+
+			if (tiffImageLength > tiffImageWidth) {
+				return _language.get(locale, "tall");
+			}
+			else if (tiffImageLength < tiffImageWidth) {
+				return _language.get(locale, "wide");
+			}
+
+			return _language.get(locale, "square");
+		}
+
+		return null;
+	}
+
 	private ContentDashboardItemAction _getContentDashboardItemAction(
 		HttpServletRequest httpServletRequest) {
 
@@ -549,6 +620,29 @@ public class FileEntryContentDashboardItem
 		}
 
 		return contentDashboardItemVersionActions;
+	}
+
+	private Long _getDDMFormFieldsValueValue(
+		long ddmStorageId, String fieldName) {
+
+		List<DDMField> ddmFields = _ddmFieldLocalService.getDDMFields(
+			ddmStorageId, fieldName);
+
+		if (ListUtil.isEmpty(ddmFields)) {
+			return null;
+		}
+
+		DDMField ddmField = ddmFields.get(0);
+
+		DDMFieldAttribute ddmFieldAttribute =
+			_ddmFieldLocalService.fetchDDMFieldAttribute(
+				ddmField.getFieldId(), StringPool.BLANK, StringPool.BLANK);
+
+		if (ddmFieldAttribute == null) {
+			return null;
+		}
+
+		return Long.valueOf(ddmFieldAttribute.getAttributeValue());
 	}
 
 	private String _getExtension() {
@@ -711,7 +805,10 @@ public class FileEntryContentDashboardItem
 	private final ContentDashboardItemSubtype _contentDashboardItemSubtype;
 	private final ContentDashboardItemVersionActionProviderRegistry
 		_contentDashboardItemVersionActionProviderRegistry;
+	private final DDMFieldLocalService _ddmFieldLocalService;
 	private final DLDisplayContextProvider _dlDisplayContextProvider;
+	private final DLFileEntryMetadataLocalService
+		_dlFileEntryMetadataLocalService;
 	private final DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;
 	private final Group _group;

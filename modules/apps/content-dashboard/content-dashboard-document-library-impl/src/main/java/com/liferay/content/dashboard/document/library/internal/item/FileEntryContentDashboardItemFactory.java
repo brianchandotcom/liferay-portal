@@ -17,7 +17,9 @@ import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -71,7 +73,8 @@ public class FileEntryContentDashboardItemFactory
 			_contentDashboardItemVersionActionProviderRegistry,
 			contentDashboardItemSubtypeFactory.create(
 				dlFileEntry.getFileEntryTypeId(), dlFileEntry.getFileEntryId()),
-			_dlDisplayContextProvider, _dlURLHelper, fileEntry,
+			_ddmFieldLocalService, _dlDisplayContextProvider,
+			_dlFileEntryMetadataLocalService, _dlURLHelper, fileEntry,
 			_groupLocalService.fetchGroup(fileEntry.getGroupId()),
 			infoItemFieldValuesProvider, _language, _portal);
 	}
@@ -104,10 +107,16 @@ public class FileEntryContentDashboardItemFactory
 		_contentDashboardItemVersionActionProviderRegistry;
 
 	@Reference
+	private DDMFieldLocalService _ddmFieldLocalService;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DLDisplayContextProvider _dlDisplayContextProvider;
+
+	@Reference
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

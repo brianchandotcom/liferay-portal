@@ -288,27 +288,42 @@ const SetupAnalyticsCloudPage = ({
 			setIsLoadingSubmitButton(true);
 
 			if (featureFlags.includes('LPS-159127')) {
+				try {
+					await updateRaysourceContact(
+						addContactRoleRaysource,
+						addHighPriorityContact,
+						project,
+						sessionId,
+						provisioningServerAPI
+					);
+
+					await updateLiferayContact(
+						addHighPriorityContact,
+						addContactRoleLiferay,
+						project,
+						client
+					);
+				}
+				catch (error) {
+					if (error.cause === STATUS_CODE.conflict) {
+						await updateLiferayContact(
+							addHighPriorityContact,
+							addContactRoleLiferay,
+							project,
+							client
+						);
+					}
+					else {
+						throw new Error('Error', {cause: error.cause});
+					}
+				}
+
 				await updateRaysourceContact(
 					removeContactRoleRaysource,
 					removeHighPriorityContact,
 					project,
 					sessionId,
 					provisioningServerAPI
-				);
-
-				await updateRaysourceContact(
-					addContactRoleRaysource,
-					addHighPriorityContact,
-					project,
-					sessionId,
-					provisioningServerAPI
-				);
-
-				await updateLiferayContact(
-					addHighPriorityContact,
-					addContactRoleLiferay,
-					project,
-					client
 				);
 
 				await updateLiferayContact(
@@ -325,34 +340,7 @@ const SetupAnalyticsCloudPage = ({
 			handlePage(true);
 		}
 		catch (error) {
-			if (error.cause === STATUS_CODE.conflict) {
-				try {
-					await updateLiferayContact(
-						addHighPriorityContact,
-						addContactRoleLiferay,
-						project,
-						client
-					);
-
-					await updateLiferayContact(
-						removeHighPriorityContact,
-						removeContactRoleLiferay,
-						project,
-						client
-					);
-
-					handleDataSubmit();
-					setIsLoadingSubmitButton(false);
-
-					handlePage(true);
-				}
-				catch (error) {
-					setIsLoadingSubmitButton(false);
-				}
-			}
-			else {
-				setIsLoadingSubmitButton(false);
-			}
+			setIsLoadingSubmitButton(false);
 		}
 	};
 

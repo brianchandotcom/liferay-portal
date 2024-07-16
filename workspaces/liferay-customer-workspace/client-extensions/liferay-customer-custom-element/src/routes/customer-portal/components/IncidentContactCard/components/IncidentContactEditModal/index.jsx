@@ -70,27 +70,42 @@ const IncidentContactEditModal = ({
 		try {
 			setIsLoadingSaveButton(true);
 
+			try {
+				await updateRaysourceContact(
+					addContactRoleRaysource,
+					addHighPriorityContact,
+					project,
+					sessionId,
+					provisioningServerAPI
+				);
+
+				await updateLiferayContact(
+					addHighPriorityContact,
+					addContactRoleLiferay,
+					project,
+					client
+				);
+			}
+			catch (error) {
+				if (error.cause === STATUS_CODE.conflict) {
+					await updateLiferayContact(
+						addHighPriorityContact,
+						addContactRoleLiferay,
+						project,
+						client
+					);
+				}
+				else {
+					throw new Error('Error', {cause: error.cause});
+				}
+			}
+
 			await updateRaysourceContact(
 				removeContactRoleRaysource,
 				removeHighPriorityContacts,
 				project,
 				sessionId,
 				provisioningServerAPI
-			);
-
-			await updateRaysourceContact(
-				addContactRoleRaysource,
-				addHighPriorityContact,
-				project,
-				sessionId,
-				provisioningServerAPI
-			);
-
-			await updateLiferayContact(
-				addHighPriorityContact,
-				addContactRoleLiferay,
-				project,
-				client
 			);
 
 			await updateLiferayContact(
@@ -100,48 +115,18 @@ const IncidentContactEditModal = ({
 				client
 			);
 
-			handleToastOpening(removeHighPriorityContacts, 'removed');
 			handleToastOpening(addHighPriorityContact, 'added');
+			handleToastOpening(removeHighPriorityContacts, 'removed');
 
 			setIsLoadingSaveButton(false);
 			close();
 		}
 		catch (error) {
-			if (error.cause === STATUS_CODE.conflict) {
-				try {
-					await updateLiferayContact(
-						addHighPriorityContact,
-						addContactRoleLiferay,
-						project,
-						client
-					);
+			setIsLoadingSaveButton(false);
 
-					await updateLiferayContact(
-						removeHighPriorityContacts,
-						removeContactRoleLiferay,
-						project,
-						client
-					);
-
-					handleToastOpening(removeHighPriorityContacts, 'removed');
-					handleToastOpening(addHighPriorityContact, 'added');
-
-					setIsLoadingSaveButton(false);
-					close();
-				}
-				catch (error) {
-					setIsLoadingSaveButton(false);
-					openToast('error', 'an-unexpected-error-occurred', {
-						type: 'danger',
-					});
-				}
-			}
-			else {
-				setIsLoadingSaveButton(false);
-				openToast('error', 'an-unexpected-error-occurred', {
-					type: 'danger',
-				});
-			}
+			openToast('error', 'an-unexpected-error-occurred', {
+				type: 'danger'
+			});
 		}
 	};
 

@@ -196,10 +196,6 @@ export async function deleteContactRoleNameByEmailByProject({
 		}
 	);
 
-	if (!response.ok) {
-		throw new Error('Error', {cause: response.status});
-	}
-
 	return response;
 }
 

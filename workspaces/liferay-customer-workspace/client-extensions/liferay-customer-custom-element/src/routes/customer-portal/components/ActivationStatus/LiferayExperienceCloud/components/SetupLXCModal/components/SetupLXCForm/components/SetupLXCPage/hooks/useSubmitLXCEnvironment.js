@@ -180,27 +180,42 @@ export default function useSubmitLXCEnvironment(
 				handleLoadingSubmitButton(true);
 
 				if (featureFlags.includes('LPS-159127')) {
+					try {
+						await updateRaysourceContact(
+							addContactRoleRaysource,
+							addHighPriorityContactList,
+							project,
+							sessionId,
+							provisioningServerAPI
+						);
+
+						await updateLiferayContact(
+							addHighPriorityContactList,
+							addContactRoleLiferay,
+							project,
+							client
+						);
+					}
+					catch (error) {
+						if (error.cause === STATUS_CODE.conflict) {
+							await updateLiferayContact(
+								addHighPriorityContactList,
+								addContactRoleLiferay,
+								project,
+								client
+							);
+						}
+						else {
+							throw new Error('Error', {cause: error.cause});
+						}
+					}
+
 					await updateRaysourceContact(
 						removeContactRoleRaysource,
 						removeHighPriorityContactList,
 						project,
 						sessionId,
 						provisioningServerAPI
-					);
-
-					await updateRaysourceContact(
-						addContactRoleRaysource,
-						addHighPriorityContactList,
-						project,
-						sessionId,
-						provisioningServerAPI
-					);
-
-					await updateLiferayContact(
-						addHighPriorityContactList,
-						addContactRoleLiferay,
-						project,
-						client
 					);
 
 					await updateLiferayContact(
@@ -216,30 +231,7 @@ export default function useSubmitLXCEnvironment(
 				handleChangeForm(true);
 			}
 			catch (error) {
-				if (error.cause === STATUS_CODE.conflict) {
-					try {
-						await updateLiferayContact(
-							addHighPriorityContactList,
-							addContactRoleLiferay,
-							project,
-							client
-						);
-
-						await updateLiferayContact(
-							removeHighPriorityContactList,
-							removeContactRoleLiferay,
-							project,
-							client
-						);
-
-						handleDataSubmit();
-						handleLoadingSubmitButton(false);
-						handleChangeForm(true);
-					}
-					catch (error) {
-						handleLoadingSubmitButton(false);
-					}
-				}
+				handleLoadingSubmitButton(false);
 			}
 		}
 	};

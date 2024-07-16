@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useState} from 'react';
 import SearchBuilder from '~/common/core/SearchBuilder';
+import {STATUS_CODE} from '../../../../routes/customer-portal/utils/constants';
 import i18n from '../../../I18n';
 import {Badge, Button} from '../../../components';
 import {useAppPropertiesContext} from '../../../contexts/AppPropertiesContext';
@@ -281,30 +282,50 @@ const InviteTeamMembersPage = ({
 				});
 
 				for (const inviteRole of inviteMemberRolesSelected) {
-					await assignUserAccountWithAccountRole({
-						context,
-						variables: {
+					try {
+						await addContactRoleNameByEmailByProject({
 							accountKey: project.accountKey,
-							accountRoleId: inviteRole.id,
-							emailAddress: inviteMember.email,
-						},
-					});
+							emailURI: encodeURI(inviteMember.email),
+							firstName: inviteMember.givenName,
+							lastName: inviteMember.familyName,
+							provisioningServerAPI,
+							roleName: inviteRole.raysourceName,
+							sessionId
+						});
 
-					await addContactRoleNameByEmailByProject({
-						accountKey: project.accountKey,
-						emailURI: encodeURI(inviteMember.email),
-						firstName: inviteMember.givenName,
-						lastName: inviteMember.familyName,
-						provisioningServerAPI,
-						roleName: inviteRole.raysourceName,
-						sessionId
-					});
+						await assignUserAccountWithAccountRole({
+							context,
+							variables: {
+								accountKey: project.accountKey,
+								accountRoleId: inviteRole.id,
+								emailAddress: inviteMember.email,
+							},
+						});
+					}
+					catch (error) {
+						if (error.cause === STATUS_CODE.conflict) {
+							await assignUserAccountWithAccountRole({
+								context,
+								variables: {
+									accountKey: project.accountKey,
+									accountRoleId: inviteRole.id,
+									emailAddress: inviteMember.email,
+								},
+							});
+						}
+						else {
+							throw new Error('Error', {cause: error.cause});
+						}
+					}
 				}
 
 				invitedAccounts.push(inviteMember);
-			} catch (error) {
+			}
+			catch (error) {
 				console.error(error);
+
 				displaySuccess = false;
+
 				Liferay.Util.openToast({
 					...DEFAULT_WARNING,
 					message: `Unable to invite ${inviteMember.givenName}`,

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -51,6 +52,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -452,11 +454,16 @@ public class ContentLayoutTestUtil {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(company);
+
+		Locale locale = PortalUtil.getSiteDefaultLocale(group);
+
+		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
+
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
 		themeDisplay.setLayoutTypePortlet(
 			(LayoutTypePortlet)layout.getLayoutType());
-		themeDisplay.setLocale(PortalUtil.getSiteDefaultLocale(group));
+		themeDisplay.setLocale(locale);
 
 		LayoutSet layoutSet = group.getPublicLayoutSet();
 

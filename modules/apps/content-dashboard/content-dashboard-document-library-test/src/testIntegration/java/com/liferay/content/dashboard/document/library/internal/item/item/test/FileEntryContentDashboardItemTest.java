@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -444,55 +446,25 @@ public class FileEntryContentDashboardItemTest {
 				LocaleUtil.getDefault()));
 	}
 
+	@FeatureFlags("LPD-30087")
 	@Test
 	public void testGetSpecificInformationList() throws Exception {
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
-		VersionableContentDashboardItem<FileEntry>
-			versionableContentDashboardItem =
-				_getVersionableContentDashboardItem(1);
-
-		List<ContentDashboardItem.SpecificInformation<?>>
-			specificInformationList =
-				versionableContentDashboardItem.getSpecificInformationList(
-					LocaleUtil.getDefault());
-
-		ContentDashboardItem.SpecificInformation<?>
-			extensionSpecificInformation = _getSpecificInformation(
-				"extension", specificInformationList);
-
-		Assert.assertNotNull(
-			"extension not found", extensionSpecificInformation);
-
-		Assert.assertEquals("jpg", extensionSpecificInformation.getValue());
-
-		ContentDashboardItem.SpecificInformation<?> sizeSpecificInformation =
-			_getSpecificInformation("size", specificInformationList);
-
-		Assert.assertNotNull("size not found", sizeSpecificInformation);
-		Assert.assertEquals("0 B", sizeSpecificInformation.getValue());
-
-		Assert.assertTrue(
-			ListUtil.exists(
-				specificInformationList,
-				specificInformation -> Objects.equals(
-					specificInformation.getKey(), "file-name")));
-
-		ContentDashboardItem.SpecificInformation<URL>
-			webDAVSpecificInformation =
-				(ContentDashboardItem.SpecificInformation<URL>)
-					_getSpecificInformation(
-						"web-dav-url", specificInformationList);
-
-		Assert.assertNotNull(
-			"web-dav-url not found", webDAVSpecificInformation);
-
-		String url = String.valueOf(webDAVSpecificInformation.getValue());
-
-		Assert.assertTrue(url.contains("webdav"));
-
-		Assert.assertEquals(
-			"webdav-help", webDAVSpecificInformation.getHelpText());
+		_assertSpecificInformationList(
+			null, "jpg", "0 B", _getVersionableContentDashboardItem(1));
+		_assertSpecificInformationList(
+			LanguageUtil.get(LocaleUtil.getDefault(), "square"), "jpeg", "7 KB",
+			_getVersionableContentDashboardItem(
+				"dependencies/225x225.jpeg", 1));
+		_assertSpecificInformationList(
+			LanguageUtil.get(LocaleUtil.getDefault(), "tall"), "jpeg", "6 KB",
+			_getVersionableContentDashboardItem(
+				"dependencies/183x275.jpeg", 1));
+		_assertSpecificInformationList(
+			LanguageUtil.get(LocaleUtil.getDefault(), "wide"), "jpeg", "8 KB",
+			_getVersionableContentDashboardItem(
+				"dependencies/277x182.jpeg", 1));
 	}
 
 	@Test
@@ -616,14 +588,76 @@ public class FileEntryContentDashboardItemTest {
 				_getMockHttpServletRequest()));
 	}
 
-	private FileEntry _getFileEntry(int numVersions) throws Exception {
+	private void _assertSpecificInformationList(
+		String expectedAspectRatio, String expectedExtension,
+		String expectedSize,
+		VersionableContentDashboardItem<FileEntry>
+			versionableContentDashboardItem) {
+
+		List<ContentDashboardItem.SpecificInformation<?>>
+			specificInformationList =
+				versionableContentDashboardItem.getSpecificInformationList(
+					LocaleUtil.getDefault());
+
+		ContentDashboardItem.SpecificInformation<?>
+			aspectRatioSpecificInformation = _getSpecificInformation(
+				"content-dashboard-aspect-ratio", specificInformationList);
+
+		Assert.assertNotNull(
+			"aspectRatio not found", aspectRatioSpecificInformation);
+
+		Assert.assertEquals(
+			expectedAspectRatio, aspectRatioSpecificInformation.getValue());
+
+		ContentDashboardItem.SpecificInformation<?>
+			extensionSpecificInformation = _getSpecificInformation(
+				"extension", specificInformationList);
+
+		Assert.assertNotNull(
+			"extension not found", extensionSpecificInformation);
+
+		Assert.assertEquals(
+			expectedExtension, extensionSpecificInformation.getValue());
+
+		ContentDashboardItem.SpecificInformation<?> sizeSpecificInformation =
+			_getSpecificInformation("size", specificInformationList);
+
+		Assert.assertNotNull("size not found", sizeSpecificInformation);
+		Assert.assertEquals(expectedSize, sizeSpecificInformation.getValue());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				specificInformationList,
+				specificInformation -> Objects.equals(
+					specificInformation.getKey(), "file-name")));
+
+		ContentDashboardItem.SpecificInformation<URL>
+			webDAVSpecificInformation =
+				(ContentDashboardItem.SpecificInformation<URL>)
+					_getSpecificInformation(
+						"web-dav-url", specificInformationList);
+
+		Assert.assertNotNull(
+			"web-dav-url not found", webDAVSpecificInformation);
+
+		String url = String.valueOf(webDAVSpecificInformation.getValue());
+
+		Assert.assertTrue(url.contains("webdav"));
+
+		Assert.assertEquals(
+			"webdav-help", webDAVSpecificInformation.getHelpText());
+	}
+
+	private FileEntry _getFileEntry(
+			byte[] bytes, String fileName, int numVersions)
+		throws Exception {
+
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"example.jpg",
-			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
-			"example.jpg", StringPool.BLANK, "description", StringPool.BLANK,
-			new byte[0], null, null, null, _serviceContext);
+			fileName, MimeTypesUtil.getExtensionContentType(fileName), fileName,
+			StringPool.BLANK, "description", StringPool.BLANK, bytes, null,
+			null, null, _serviceContext);
 
 		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
@@ -648,6 +682,17 @@ public class FileEntryContentDashboardItemTest {
 		}
 
 		return fileEntry;
+	}
+
+	private FileEntry _getFileEntry(int numVersions) throws Exception {
+		return _getFileEntry(new byte[0], "example.jpg", numVersions);
+	}
+
+	private FileEntry _getFileEntry(String fileName, int numVersions)
+		throws Exception {
+
+		return _getFileEntry(
+			FileUtil.getBytes(getClass(), fileName), fileName, numVersions);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()
@@ -716,6 +761,17 @@ public class FileEntryContentDashboardItemTest {
 		throws Exception {
 
 		FileEntry fileEntry = _getFileEntry(numVersions);
+
+		return (VersionableContentDashboardItem<FileEntry>)
+			_contentDashboardItemFactory.create(fileEntry.getFileEntryId());
+	}
+
+	private VersionableContentDashboardItem<FileEntry>
+			_getVersionableContentDashboardItem(
+				String fileName, int numVersions)
+		throws Exception {
+
+		FileEntry fileEntry = _getFileEntry(fileName, numVersions);
 
 		return (VersionableContentDashboardItem<FileEntry>)
 			_contentDashboardItemFactory.create(fileEntry.getFileEntryId());

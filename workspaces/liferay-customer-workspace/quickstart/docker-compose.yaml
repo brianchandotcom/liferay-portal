@@ -1,0 +1,31 @@
+name: liferay-partner-workspace
+services:
+    database:
+        command: mysqld --character-set-filesystem=utf8 --character-set-server=utf8 --collation-server=utf8_general_ci --max_allowed_packet=32M
+        container_name: liferay-partner-workspace-database
+        deploy:
+            resources:
+                limits:
+                    memory: 1G
+                reservations:
+                    memory: 1G
+        env_file: database.env
+        healthcheck:
+            interval: 5s
+            retries: 10
+            start_period: 5s
+            test: mysql --execute="select 1" --host=localhost --password=$$MYSQL_ROOT_PASSWORD --protocol=tcp --user=root 2>&1 | grep -qvF "Can't connect"
+        image: mysql:5.7
+        ports:
+            - 3306:3306
+    liferay:
+        container_name: liferay-partner-workspace-liferay
+        depends_on:
+            database:
+                condition: service_healthy
+        env_file: liferay.env
+        image: liferay/dxp:2024.q2.4
+        ports:
+            - 8080:8080
+        volumes:
+            - ../build/docker/client-extensions:/opt/liferay/osgi/client-extensions

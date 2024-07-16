@@ -31,7 +31,7 @@ test('Checks that the Slider fragment works correctly', async ({
 	pageEditorPage,
 	site,
 }) => {
-	const expectSlideIsActive = async (name) => {
+	const expectSlideIsActive = async (name: string) => {
 		await expect(page.getByLabel(name, {exact: true})).toHaveClass(
 			/active/
 		);
@@ -41,7 +41,7 @@ test('Checks that the Slider fragment works correctly', async ({
 		);
 	};
 
-	const expectSlideIsNotActive = async (name) => {
+	const expectSlideIsNotActive = async (name: string) => {
 		await expect(page.getByLabel(name, {exact: true})).not.toHaveClass(
 			/active/
 		);

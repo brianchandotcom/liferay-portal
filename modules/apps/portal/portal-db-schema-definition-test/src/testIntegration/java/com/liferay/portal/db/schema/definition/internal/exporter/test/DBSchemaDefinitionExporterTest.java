@@ -8,7 +8,7 @@ package com.liferay.portal.db.schema.definition.internal.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.db.schema.definition.internal.test.util.ConfigurationTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseTestUtil;
-import com.liferay.portal.db.schema.definition.internal.test.util.ObjectsTestUtil;
+import com.liferay.portal.db.schema.definition.internal.test.util.ObjectTestUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -69,12 +69,12 @@ public class DBSchemaDefinitionExporterTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		ObjectsTestUtil.createObjectsData();
+		ObjectTestUtil.createObjectsData();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		ObjectsTestUtil.removeObjectsData();
+		ObjectTestUtil.removeObjectsData();
 	}
 
 	@Before

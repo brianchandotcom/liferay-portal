@@ -23,7 +23,7 @@ import java.util.Collections;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class ObjectsTestUtil {
+public class ObjectTestUtil {
 
 	public static void createObjectsData() throws Exception {
 		_objectDefinition1 = _addObjectDefinition();

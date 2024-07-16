@@ -43,6 +43,7 @@ public class DepotAppCustomizationTableReferenceDefinitionTest
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

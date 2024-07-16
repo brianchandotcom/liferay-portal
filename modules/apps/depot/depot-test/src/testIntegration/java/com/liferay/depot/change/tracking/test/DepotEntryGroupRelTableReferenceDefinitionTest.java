@@ -42,6 +42,7 @@ public class DepotEntryGroupRelTableReferenceDefinitionTest
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

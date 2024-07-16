@@ -161,11 +161,9 @@ autoSaveAsDraftTest(
 
 		await fillAndClickOutside(page, localizableField, content);
 
-		const changesSavedIndicator = await page.locator(
-			'#_com_liferay_journal_web_portlet_JournalPortlet_changesSavedIndicator'
-		);
-
-		await expect(changesSavedIndicator).toBeVisible();
+		await expect(
+			journalEditArticlePage.changesSavedIndicator
+		).toBeVisible();
 
 		await page.getByTitle('Go to Web Content').click();
 
@@ -193,12 +191,7 @@ autoSaveAsDraftTest(
 autoSaveAsDraftTest(
 	'LPD-26863: Undo/Redo buttons work with metadata fields',
 	async ({journalEditArticlePage, page, site}) => {
-		const changesSavedIndicator = await page.locator(
-			'#_com_liferay_journal_web_portlet_JournalPortlet_changesSavedIndicator'
-		);
-		const redoButton = page.getByTitle('Redo', {exact: true});
 		const title = getRandomString();
-		const undobutton = page.getByTitle('Undo', {exact: true});
 
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
@@ -209,20 +202,22 @@ autoSaveAsDraftTest(
 				title
 			);
 
-			await expect(undobutton).toBeEnabled();
+			await expect(journalEditArticlePage.undoButton).toBeEnabled();
 		}).toPass();
 
-		await expect(changesSavedIndicator).toBeVisible();
+		await expect(
+			journalEditArticlePage.changesSavedIndicator
+		).toBeVisible();
 
-		await undobutton.click();
+		await journalEditArticlePage.undoButton.click();
 
-		await expect(undobutton).toBeDisabled();
+		await expect(journalEditArticlePage.undoButton).toBeDisabled();
 
 		await expect(journalEditArticlePage.titleInput).toHaveValue('');
 
-		await redoButton.click();
+		await journalEditArticlePage.redoButton.click();
 
-		await expect(redoButton).toBeDisabled();
+		await expect(journalEditArticlePage.redoButton).toBeDisabled();
 
 		await expect(journalEditArticlePage.titleInput).toHaveValue(title);
 	}
@@ -247,12 +242,7 @@ autoSaveAsDraftTest(
 			structureName,
 		});
 
-		const changesSavedIndicator = await page.locator(
-			'#_com_liferay_journal_web_portlet_JournalPortlet_changesSavedIndicator'
-		);
-		const redoButton = await page.getByTitle('Redo', {exact: true});
 		const title = getRandomString();
-		const undoButton = await page.getByTitle('Undo', {exact: true});
 
 		const localizableField = await page.getByRole('textbox', {
 			name: localizableFieldName,
@@ -265,22 +255,26 @@ autoSaveAsDraftTest(
 				title
 			);
 
-			await expect(undoButton).toBeEnabled();
+			await expect(journalEditArticlePage.undoButton).toBeEnabled();
 		}).toPass();
 
-		await expect(changesSavedIndicator).toBeVisible();
+		await expect(
+			journalEditArticlePage.changesSavedIndicator
+		).toBeVisible();
 
 		await fillAndClickOutside(page, localizableField, title);
 
-		await expect(changesSavedIndicator).toBeVisible();
+		await expect(
+			journalEditArticlePage.changesSavedIndicator
+		).toBeVisible();
 
-		await undoButton.click();
+		await journalEditArticlePage.undoButton.click();
 
 		await expect(localizableField).toHaveValue('');
 
-		await redoButton.click();
+		await journalEditArticlePage.redoButton.click();
 
-		await expect(redoButton).toBeDisabled();
+		await expect(journalEditArticlePage.redoButton).toBeDisabled();
 
 		await expect(localizableField).toHaveValue(title);
 	}

@@ -75,7 +75,7 @@ export class PageEditorPage {
 		await expandSection(header);
 
 		if (dropTarget) {
-			this.dragAndDropElement(
+			await this.dragAndDropElement(
 				this.page.getByRole('menuitem', {name}).first(),
 				dropTarget
 			);
@@ -271,8 +271,8 @@ export class PageEditorPage {
 				name: spacingType,
 			});
 
-			await input.fill(value);
-			await input.blur();
+			await fillAndClickOutside(this.page, input, value);
+
 			await input.waitFor({state: 'hidden'});
 		}
 		else {

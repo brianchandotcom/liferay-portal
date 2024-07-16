@@ -27,6 +27,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -284,6 +285,10 @@ public class JournalTransformerTest {
 			String.valueOf(_journalArticle.getResourcePrimKey()),
 			"resource-prim-key", languageId,
 			JournalStructureConstants.RESERVED_ARTICLE_RESOURCE_PRIM_KEY,
+			journalReservedTemplateVariableGroup, transformerListeners);
+		_assertReservedVariable(
+			StringPool.BLANK, "small-image-url", languageId,
+			JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
 			journalReservedTemplateVariableGroup, transformerListeners);
 		_assertReservedVariable(
 			_journalArticle.getTitle(languageId), "title", languageId,

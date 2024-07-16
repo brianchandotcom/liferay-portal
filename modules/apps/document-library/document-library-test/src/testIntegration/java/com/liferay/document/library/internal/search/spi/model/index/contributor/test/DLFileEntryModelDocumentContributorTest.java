@@ -136,9 +136,9 @@ public class DLFileEntryModelDocumentContributorTest {
 		_testFileEntryMetadataAttributesImageFileEntry(
 			"square", 225, 225, "dependencies/225x225.jpeg");
 		_testFileEntryMetadataAttributesImageFileEntry(
-			"wide", 182, 277, "dependencies/277x182.jpeg");
-		_testFileEntryMetadataAttributesImageFileEntry(
 			"tall", 275, 183, "dependencies/183x275.jpeg");
+		_testFileEntryMetadataAttributesImageFileEntry(
+			"wide", 182, 277, "dependencies/277x182.jpeg");
 	}
 
 	@Test

@@ -34,6 +34,7 @@ public class LoginBenchmarksTask implements BenchmarksTask {
 		_port = port;
 	}
 
+	@Override
 	public List<ObjectValuePair<String, Long>> execute() throws Exception {
 		try (SafeCloseable safeCloseable =
 				ThreadLocalCookieStore.withSafeCloseable()) {

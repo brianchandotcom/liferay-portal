@@ -79,10 +79,15 @@ public class RoutesPortalK8sConfigMapModifier
 			}
 
 			if (!virtualInstanceIds.contains(directoryName)) {
-				FileUtil.deltree(new File(liferayRoutesFile, directoryName));
+				File routesDirectory = new File(
+					liferayRoutesFile, directoryName);
 
-				if (_log.isDebugEnabled()) {
-					_log.debug("Deleted custodian " + directoryName);
+				if (routesDirectory.exists()) {
+					FileUtil.deltree(routesDirectory);
+
+					if (_log.isDebugEnabled()) {
+						_log.debug("Deleted custodian " + directoryName);
+					}
 				}
 			}
 		}

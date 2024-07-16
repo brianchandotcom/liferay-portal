@@ -70,7 +70,7 @@ public abstract class BaseInputFragmentRendererTestCase {
 					"firstName")),
 			ObjectDefinitionConstants.SCOPE_SITE);
 
-		fragmentEntryLink = addFragmentEntryLinkToForm();
+		fragmentEntryLink = _addFragmentEntryLink();
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 	}
@@ -115,7 +115,9 @@ public abstract class BaseInputFragmentRendererTestCase {
 		assertRender(0, mockHttpServletRequest);
 	}
 
-	protected FragmentEntryLink addFragmentEntryLinkToForm() throws Exception {
+	protected FragmentEntryLink _addFragmentEntryLink() throws Exception {
+		FragmentRenderer fragmentRenderer = getFragmentRenderer();
+
 		Layout draftLayout = layout.fetchDraftLayout();
 		long segmentsExperienceId =
 			segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
@@ -126,8 +128,6 @@ public abstract class BaseInputFragmentRendererTestCase {
 			String.valueOf(
 				portal.getClassNameId(objectDefinition.getClassName())),
 			"0", draftLayout, layoutStructureProvider, segmentsExperienceId);
-
-		FragmentRenderer fragmentRenderer = getFragmentRenderer();
 
 		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			StringPool.BLANK, StringPool.BLANK,

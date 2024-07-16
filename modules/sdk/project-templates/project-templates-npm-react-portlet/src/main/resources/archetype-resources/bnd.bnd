@@ -3,6 +3,9 @@ Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
 Export-Package: ${package}.constants
+Provide-Capability:\
+	liferay.language.resources;\
+		resource.bundle.base.name="content.Language"
 Web-ContextPath: /${artifactId}
 #if (${buildType} != "gradle")
 -consumer-policy: ${versionPolicy}

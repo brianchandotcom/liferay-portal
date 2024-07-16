@@ -63,6 +63,7 @@ public class MultiVMEhcachePortalCacheManager
 		destroy();
 	}
 
+	@Override
 	protected String getDefaultReplicatorPropertiesString() {
 		if (clusterEnabled) {
 			return _defaultReplicatorPropertiesString;
@@ -71,6 +72,7 @@ public class MultiVMEhcachePortalCacheManager
 		return null;
 	}
 
+	@Override
 	protected Properties getReplicatorProperties() {
 		if (clusterEnabled) {
 			return _replicatorProperties;

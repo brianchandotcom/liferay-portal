@@ -57,7 +57,7 @@ public class LayoutActionProviderTest {
 	}
 
 	@Test
-	public void testGetMessageKeyWhenDeletLayoutWithChildLayout()
+	public void testGetMessageKeyWhenDeleteLayoutWithChildLayout()
 		throws PortalException {
 
 		_setUpLayout(true, false);

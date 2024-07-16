@@ -35,11 +35,9 @@ import javax.sql.DataSource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.cm.PersistenceManager;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -69,25 +67,19 @@ public class DBSchemaDefinitionExporterTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_databaseType = String.valueOf(DBManagerUtil.getDBType());
+		_folder = FileUtil.createTempFolder();
+
 		ObjectTestUtil.createObjectsData();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		ObjectTestUtil.removeObjectsData();
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		_databaseType = String.valueOf(DBManagerUtil.getDBType());
-		_folder = FileUtil.createTempFolder();
-	}
-
-	@After
-	public void tearDown() throws Exception {
 		Files.deleteIfExists(ConfigurationTestUtil.getConfigurationPath(_PID));
 
 		FileUtil.deltree(_folder);
+
+		ObjectTestUtil.removeObjectsData();
 	}
 
 	@Test
@@ -204,11 +196,11 @@ public class DBSchemaDefinitionExporterTest {
 		"com.liferay.portal.db.schema.definition.internal.configuration." +
 			"DBSchemaDefinitionExporterConfiguration";
 
+	private static String _databaseType;
+	private static File _folder;
+
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
-
-	private String _databaseType;
-	private File _folder;
 
 	@Inject
 	private PersistenceManager _persistenceManager;

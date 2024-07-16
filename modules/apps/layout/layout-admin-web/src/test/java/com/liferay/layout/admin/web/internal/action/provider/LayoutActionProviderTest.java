@@ -77,26 +77,6 @@ public class LayoutActionProviderTest {
 	}
 
 	@Test
-	public void testGetMessageKeyWhenDeleteLayoutWithScopedContent()
-		throws PortalException {
-
-		_setUpLayout(false, true);
-
-		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			new LayoutActionProvider(
-				null, _httpServletRequest, _language, null, null),
-			"_getDeleteJSONObject", new Class<?>[] {Layout.class, Layout.class},
-			null, _layout);
-
-		Map<String, Object> map = (Map<String, Object>)jsonObject.get("data");
-
-		Assert.assertEquals(
-			"are-you-sure-you-want-to-delete-the-page-x.-this-page-serves-as-" +
-				"a-scope-for-content",
-			map.get("message"));
-	}
-
-	@Test
 	public void testGetMessageKeyWhenDeleteLayoutWithChildLayoutAndScopedContent()
 		throws PortalException {
 
@@ -113,6 +93,26 @@ public class LayoutActionProviderTest {
 		Assert.assertEquals(
 			"are-you-sure-you-want-to-delete-the-page-x.-this-page-serves-as-" +
 				"a-scope-for-content-and-also-contains-child-pages",
+			map.get("message"));
+	}
+
+	@Test
+	public void testGetMessageKeyWhenDeleteLayoutWithScopedContent()
+		throws PortalException {
+
+		_setUpLayout(false, true);
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			new LayoutActionProvider(
+				null, _httpServletRequest, _language, null, null),
+			"_getDeleteJSONObject", new Class<?>[] {Layout.class, Layout.class},
+			null, _layout);
+
+		Map<String, Object> map = (Map<String, Object>)jsonObject.get("data");
+
+		Assert.assertEquals(
+			"are-you-sure-you-want-to-delete-the-page-x.-this-page-serves-as-" +
+				"a-scope-for-content",
 			map.get("message"));
 	}
 

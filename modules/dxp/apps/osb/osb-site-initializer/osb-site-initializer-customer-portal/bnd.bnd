@@ -1,5 +1,0 @@
-Bundle-Name: Liferay OSB Site Initializer Customer Portal
-Bundle-SymbolicName: com.liferay.osb.site.initializer.customer.portal
-Bundle-Version: 1.0.0
-Provide-Capability: liferay.site.initializer
-Web-ContextPath: /osb-site-initializer-customer-portal

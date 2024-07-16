@@ -59,6 +59,7 @@ public abstract class BaseJobPrioritizerEntity
 		return _name;
 	}
 
+	@Override
 	public List<Long> getPrioritizedJobIds() {
 		return _prioritizedJobIds;
 	}
@@ -99,6 +100,7 @@ public abstract class BaseJobPrioritizerEntity
 		_name = name;
 	}
 
+	@Override
 	public void setPrioritizedJobIds(List<Long> prioritizedJobIDs) {
 		_prioritizedJobIds = prioritizedJobIDs;
 	}

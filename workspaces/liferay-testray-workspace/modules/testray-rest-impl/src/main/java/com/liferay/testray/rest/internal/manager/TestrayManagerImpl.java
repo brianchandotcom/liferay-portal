@@ -98,6 +98,7 @@ public class TestrayManagerImpl implements TestrayManager {
 		return values.get(0);
 	}
 
+	@Override
 	public void loadTestrayCache(
 			long companyId, TestrayCache testrayCache, long userId)
 		throws Exception {

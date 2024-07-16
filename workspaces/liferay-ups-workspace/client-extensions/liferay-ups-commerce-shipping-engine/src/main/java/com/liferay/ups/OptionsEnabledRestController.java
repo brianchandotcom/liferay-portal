@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OptionsEnabledRestController extends OptionsRestController {
 
+	@Override
 	@PostMapping
 	public ResponseEntity<String> post(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)

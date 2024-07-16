@@ -55,6 +55,7 @@ public abstract class BaseJenkinsCohortEntity
 				getId()));
 	}
 
+	@Override
 	public int getJenkinsServerCount() {
 		return _jenkinsServerCount;
 	}
@@ -111,6 +112,7 @@ public abstract class BaseJenkinsCohortEntity
 		removeRelatedEntity(jobEntity);
 	}
 
+	@Override
 	public void setJenkinsServerCount(int jenkinsServerCount) {
 		_jenkinsServerCount = jenkinsServerCount;
 	}

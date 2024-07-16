@@ -278,6 +278,7 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		removeRelatedEntity(testSuiteEntity);
 	}
 
+	@Override
 	public void setBlessed(boolean blessed) {
 		_blessed = blessed;
 	}

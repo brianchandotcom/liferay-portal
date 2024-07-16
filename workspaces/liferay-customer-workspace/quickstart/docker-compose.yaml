@@ -1,8 +1,8 @@
-name: liferay-partner-workspace
+name: liferay-customer-workspace
 services:
     database:
         command: mysqld --character-set-filesystem=utf8 --character-set-server=utf8 --collation-server=utf8_general_ci --max_allowed_packet=32M
-        container_name: liferay-partner-workspace-database
+        container_name: liferay-customer-workspace-database
         deploy:
             resources:
                 limits:
@@ -19,7 +19,7 @@ services:
         ports:
             - 3306:3306
     liferay:
-        container_name: liferay-partner-workspace-liferay
+        container_name: liferay-customer-workspace-liferay
         depends_on:
             database:
                 condition: service_healthy

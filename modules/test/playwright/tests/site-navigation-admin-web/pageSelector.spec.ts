@@ -77,7 +77,7 @@ test('Load more works properly in search results', async ({
 
 	// Check only Lem substring is marked
 
-	const firstResult = await modal.locator('.search-result').first();
+	const firstResult = modal.locator('.search-result').first();
 
 	await expect(firstResult.locator('mark')).toHaveText('Lem');
 

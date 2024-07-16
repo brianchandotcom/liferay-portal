@@ -35,9 +35,7 @@ export class NavigationMenusPage {
 			trigger: this.addItemButton,
 		});
 
-		const modal = await this.page.frameLocator(
-			'iframe[title="Select Pages"]'
-		);
+		const modal = this.page.frameLocator('iframe[title="Select Pages"]');
 
 		await modal.getByPlaceholder('Search').waitFor();
 	}

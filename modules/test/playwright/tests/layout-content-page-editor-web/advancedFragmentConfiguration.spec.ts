@@ -90,7 +90,7 @@ test('Checks that the fragment is hidden from Site Search Results', async ({
 
 	// Check that there are results
 
-	const searchResults = await page.getByText('Suggestions');
+	const searchResults = page.getByText('Suggestions');
 
 	await expect(searchResults).toBeVisible();
 
@@ -102,7 +102,7 @@ test('Checks that the fragment is hidden from Site Search Results', async ({
 
 	await pageEditorPage.goToConfigurationTab('Advanced');
 
-	const hideFromSiteSearchResultsInput = await page.getByLabel(
+	const hideFromSiteSearchResultsInput = page.getByLabel(
 		'Hide from Site Search Results'
 	);
 

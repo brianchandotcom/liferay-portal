@@ -137,7 +137,7 @@ test('Uses Tags fragment for Forms in a Content Page', async ({
 
 	await page.locator('.table-list-title').getByRole('link').first().click();
 
-	const grid = await page.getByRole('grid');
+	const grid = page.getByRole('grid');
 
 	await grid.waitFor();
 

@@ -41,7 +41,7 @@ public class FacetBucketUtil {
 	}
 
 	private static boolean _fieldValuePairsContainsFieldValue(
-		String field, String value, String[] fieldValuePairs) {
+		String fieldName, String value, String[] fieldValuePairs) {
 
 		for (String fieldValuePair : fieldValuePairs) {
 			if (fieldValuePair.equals(field + "=" + value)) {

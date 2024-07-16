@@ -292,6 +292,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			groupId, type, start, end, orderByComparator);
 	}
 
+	@Override
 	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
 		long groupId, String keyword, String[] types, int start, int end,
 		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {

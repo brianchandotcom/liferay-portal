@@ -36,6 +36,7 @@ public class
 	ExportLayoutPageTemplateEntriesAndLayoutPageTemplateCollectionsMVCResourceCommand
 		implements MVCResourceCommand {
 
+	@Override
 	public boolean serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {

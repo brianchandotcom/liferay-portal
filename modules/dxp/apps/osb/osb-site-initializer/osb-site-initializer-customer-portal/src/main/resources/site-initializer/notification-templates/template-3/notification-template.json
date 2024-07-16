@@ -7,7 +7,7 @@
 	"recipients": [
 		{
 			"bcc": "",
-			"cc": "",
+			"cc": "sales-ops@liferay.com",
 			"from": "solutions@liferay.com",
 			"fromName": {
 				"en-US": "Customer Portal"

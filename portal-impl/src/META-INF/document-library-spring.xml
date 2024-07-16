@@ -8,7 +8,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean class="com.liferay.document.library.kernel.store.DLStoreUtil">
-		<property name="store" ref="com.liferay.portlet.documentlibrary.store.DLStoreImpl" />
+		<property name="DLStore" ref="com.liferay.portlet.documentlibrary.store.DLStoreImpl" />
 	</bean>
 	<bean class="com.liferay.document.library.kernel.util.DLUtil">
 		<property name="DL">

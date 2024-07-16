@@ -307,8 +307,8 @@ public class DLStoreUtil {
 			toVersionLabel);
 	}
 
-	public void setStore(DLStore store) {
-		_store = store;
+	public void setDLStore(DLStore dlStore) {
+		_dlStore = dlStore;
 	}
 
 	private static DLStore _getDLStore() {
@@ -318,10 +318,10 @@ public class DLStoreUtil {
 			return dlStore;
 		}
 
-		return _store;
+		return _dlStore;
 	}
 
-	private static DLStore _store;
+	private static DLStore _dlStore;
 	private static volatile Snapshot<DLStore> _storeSnapshot = new Snapshot<>(
 		DLStoreUtil.class, DLStore.class, null, true);
 

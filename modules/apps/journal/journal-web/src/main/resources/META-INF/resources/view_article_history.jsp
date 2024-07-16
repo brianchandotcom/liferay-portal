@@ -106,6 +106,12 @@ renderResponse.setTitle(article.getTitle(locale));
 				<c:when test='<%= Objects.equals(journalHistoryDisplayContext.getDisplayStyle(), "icon") %>'>
 					<liferay-ui:search-container-column-text>
 						<clay:vertical-card
+							additionalProps='<%=
+								HashMapBuilder.<String, Object>put(
+									"trashEnabled", componentContext.get("trashEnabled")
+								).build()
+							%>'
+							propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 							verticalCard="<%= new JournalArticleHistoryVerticalCard(articleVersion, renderRequest, renderResponse, searchContainer.getRowChecker(), assetDisplayPageFriendlyURLProvider, trashHelper) %>"
 						/>
 					</liferay-ui:search-container-column-text>

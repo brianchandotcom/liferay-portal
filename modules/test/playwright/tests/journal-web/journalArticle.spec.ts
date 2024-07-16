@@ -359,6 +359,42 @@ baseTest(
 	}
 );
 
+baseTest(
+	'LPD-31655: Ensure article action menu functions when viewing history in card view',
+	async ({apiHelpers, journalPage, page, site}) => {
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const title = getRandomString();
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: basicWebContentStructureId,
+			groupId: site.id,
+			titleMap: {en_US: title},
+		});
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await journalPage.changeView('list');
+
+		await page.getByLabel(`Actions for ${title}`).waitFor();
+		await page.getByLabel(`Actions for ${title}`).click();
+
+		await page.getByRole('menuitem', {name: 'View History'}).click();
+
+		await journalPage.changeView('cards');
+
+		await page.getByLabel(`More Actions`).waitFor();
+		await page.getByLabel(`More Actions`).click();
+
+		await page.getByRole('menuitem', {name: 'Compare to...'}).click();
+
+		await expect(
+			page.getByRole('heading', {name: 'Compare Versions'})
+		).toBeVisible();
+	}
+);
+
 keepTitlesUntranslated(
 	'LPD-20723: Clay link is translating asset titles/names by default in vertical card',
 	async ({apiHelpers, journalPage, page, site}) => {

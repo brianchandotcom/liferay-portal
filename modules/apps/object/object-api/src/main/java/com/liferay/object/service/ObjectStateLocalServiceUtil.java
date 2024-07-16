@@ -232,8 +232,7 @@ public class ObjectStateLocalServiceUtil {
 	}
 
 	public static ObjectState fetchObjectStateFlowObjectState(
-			long listTypeEntryId, long objectStateFlowId)
-		throws PortalException {
+		long listTypeEntryId, long objectStateFlowId) {
 
 		return getService().fetchObjectStateFlowObjectState(
 			listTypeEntryId, objectStateFlowId);

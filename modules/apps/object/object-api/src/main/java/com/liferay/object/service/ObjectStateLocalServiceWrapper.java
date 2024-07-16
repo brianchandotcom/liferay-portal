@@ -264,8 +264,7 @@ public class ObjectStateLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectState fetchObjectStateFlowObjectState(
-			long listTypeEntryId, long objectStateFlowId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long listTypeEntryId, long objectStateFlowId) {
 
 		return _objectStateLocalService.fetchObjectStateFlowObjectState(
 			listTypeEntryId, objectStateFlowId);

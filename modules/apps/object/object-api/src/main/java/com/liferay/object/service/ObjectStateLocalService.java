@@ -213,8 +213,7 @@ public interface ObjectStateLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectState fetchObjectStateFlowObjectState(
-			long listTypeEntryId, long objectStateFlowId)
-		throws PortalException;
+		long listTypeEntryId, long objectStateFlowId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

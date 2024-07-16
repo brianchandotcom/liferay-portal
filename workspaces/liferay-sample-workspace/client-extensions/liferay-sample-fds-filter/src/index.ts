@@ -18,6 +18,7 @@ function descriptionBuilder(selectedData: FilterData): string {
 }
 
 function htmlElementBuilder({
+	fieldName,
 	filter,
 	setFilter,
 }: FDSFilterHTMLElementBuilderArgs<FilterData>): HTMLElement {
@@ -25,6 +26,9 @@ function htmlElementBuilder({
 
 	if (filter.selectedData) {
 		input.value = filter.selectedData;
+	}
+	else {
+		input.value = `${fieldName} eq ...`;
 	}
 
 	input.className = 'form-control';

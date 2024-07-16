@@ -71,6 +71,7 @@ public class CommerceQuantityFormatterImpl
 			quantity);
 	}
 
+	@Override
 	public String parse(BigDecimal quantity, Locale locale) throws Exception {
 		DecimalFormat decimalFormat = _getDecimalFormat(locale);
 

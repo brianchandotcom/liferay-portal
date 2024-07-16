@@ -112,6 +112,7 @@ public class ProductDisplayPageResourceTest
 		return _commerceChannel.getExternalReferenceCode();
 	}
 
+	@Override
 	protected ProductDisplayPage
 			testGetChannelIdProductDisplayPagesPage_addProductDisplayPage(
 				Long id, ProductDisplayPage productDisplayPage)

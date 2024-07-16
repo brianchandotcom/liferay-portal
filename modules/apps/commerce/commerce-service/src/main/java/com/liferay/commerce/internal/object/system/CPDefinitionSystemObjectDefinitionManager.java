@@ -265,6 +265,7 @@ public class CPDefinitionSystemObjectDefinitionManager
 		return "name";
 	}
 
+	@Override
 	public Map<String, Object> getVariables(
 		String contentType, ObjectDefinition objectDefinition,
 		boolean oldValues, JSONObject payloadJSONObject) {

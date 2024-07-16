@@ -65,6 +65,7 @@ public class DefaultCategoryDisplayPageResourceTest
 					_commerceChannel.getCommerceChannelId());
 	}
 
+	@Override
 	@Test
 	public void testDeleteChannelByExternalReferenceCodeDefaultCategoryDisplayPage()
 		throws Exception {
@@ -116,6 +117,7 @@ public class DefaultCategoryDisplayPageResourceTest
 					_commerceChannel.getCommerceChannelId()));
 	}
 
+	@Override
 	@Test
 	public void testGetChannelByExternalReferenceCodeDefaultCategoryDisplayPage()
 		throws Exception {

@@ -288,6 +288,7 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		super.testPatchOrderByExternalReferenceCode();
 	}
 
+	@Override
 	@Test
 	public void testPostOrder() throws Exception {
 		super.testPostOrder();

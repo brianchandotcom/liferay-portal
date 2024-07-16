@@ -144,6 +144,7 @@ public class Testray1TestrayBuild extends TestrayBuild {
 		return _testrayProductVersion;
 	}
 
+	@Override
 	public TestrayProject getTestrayProject() {
 		if (_testrayProject != null) {
 			return _testrayProject;
@@ -156,6 +157,7 @@ public class Testray1TestrayBuild extends TestrayBuild {
 		return _testrayProject;
 	}
 
+	@Override
 	public TestrayRoutine getTestrayRoutine() {
 		if (_testrayRoutine != null) {
 			return _testrayRoutine;
@@ -232,6 +234,7 @@ public class Testray1TestrayBuild extends TestrayBuild {
 		super(testrayServer, jsonObject);
 	}
 
+	@Override
 	protected List<TestrayCaseResult> getTestrayCaseResults(int maxCount) {
 		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 

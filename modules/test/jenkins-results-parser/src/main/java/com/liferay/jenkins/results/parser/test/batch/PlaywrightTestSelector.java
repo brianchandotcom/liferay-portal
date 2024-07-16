@@ -55,6 +55,7 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 			playwrightTestSelector.getPlaywrightJobProperties());
 	}
 
+	@Override
 	public void validate() throws RelevantRuleConfigurationException {
 		validate(PLAYWRIGHT_TEST_PROJECT);
 	}

@@ -161,6 +161,7 @@ public class Testray1TestrayRoutine extends TestrayRoutine {
 		}
 	}
 
+	@Override
 	public TestrayBuild getTestrayBuildByName(
 		String buildName, String... names) {
 
@@ -219,10 +220,12 @@ public class Testray1TestrayRoutine extends TestrayRoutine {
 		return null;
 	}
 
+	@Override
 	public List<TestrayBuild> getTestrayBuilds() {
 		return getTestrayBuilds(_DELTA);
 	}
 
+	@Override
 	public List<TestrayBuild> getTestrayBuilds(
 		int maxSize, String... nameFilters) {
 
@@ -336,6 +339,7 @@ public class Testray1TestrayRoutine extends TestrayRoutine {
 		return _testrayProject;
 	}
 
+	@Override
 	public URL getURL() {
 		TestrayServer testrayServer = getTestrayServer();
 

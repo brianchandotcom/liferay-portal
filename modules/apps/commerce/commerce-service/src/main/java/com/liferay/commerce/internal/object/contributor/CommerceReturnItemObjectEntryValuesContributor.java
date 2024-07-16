@@ -127,9 +127,8 @@ public class CommerceReturnItemObjectEntryValuesContributor
 			return CommerceReturnConstants.RETURN_ITEM_STATUS_NOT_AUTHORIZED;
 		}
 
-		if (Boolean.parseBoolean(
-				String.valueOf(
-					values.get("authorizeReturnWithoutReturningProducts")))) {
+		if (GetterUtil.getBoolean(
+				values.get("authorizeReturnWithoutReturningProducts"))) {
 
 			if (Validator.isNotNull(
 					String.valueOf(values.get("returnResolutionMethod")))) {

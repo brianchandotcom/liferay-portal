@@ -120,6 +120,8 @@ public interface Language {
 
 	public String getBCP47LanguageId(PortletRequest portletRequest);
 
+	public String getBCP47LangTag(Locale locale);
+
 	public Set<Locale> getCompanyAvailableLocales(long companyId);
 
 	public String getLanguageId(HttpServletRequest httpServletRequest);

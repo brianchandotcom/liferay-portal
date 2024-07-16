@@ -1061,6 +1061,11 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
+	public String getBCP47LangTag(Locale locale) {
+		return LocaleUtil.toBCP47LangTag(locale);
+	}
+
+	@Override
 	public Set<Locale> getCompanyAvailableLocales(long companyId) {
 		CompanyLocalesBag companyLocalesBag = _getCompanyLocalesBag(companyId);
 

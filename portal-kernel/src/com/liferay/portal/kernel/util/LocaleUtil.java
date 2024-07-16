@@ -167,6 +167,10 @@ public class LocaleUtil {
 		return _localeUtil._toBCP47LanguageIds(languageIds);
 	}
 
+	public static String toBCP47LangTag(Locale locale) {
+		return _localeUtil._toBCP47LangTag(locale);
+	}
+
 	public static String[] toDisplayNames(
 		Collection<Locale> locales, Locale locale) {
 
@@ -500,6 +504,21 @@ public class LocaleUtil {
 		}
 
 		return bcp47LanguageIds;
+	}
+
+	private String _toBCP47LangTag(Locale locale) {
+		return _toBCP47LangTag(_toLanguageId(locale));
+	}
+
+	private String _toBCP47LangTag(String languageId) {
+		if (languageId.equals("zh_CN")) {
+			return "zh-Hans";
+		}
+		else if (languageId.equals("zh_TW")) {
+			return "zh-Hant";
+		}
+
+		return _toBCP47LanguageId(languageId);
 	}
 
 	private String[] _toDisplayNames(

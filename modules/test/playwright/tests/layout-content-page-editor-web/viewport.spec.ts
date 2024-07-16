@@ -277,7 +277,7 @@ test('Checks that the value of a field is propagated to smaller viewports', asyn
 
 	await pageEditorPage.goToConfigurationTab('General');
 
-	const hideFragmentInput = await page.getByLabel('Hide Fragment', {
+	const hideFragmentInput = page.getByLabel('Hide Fragment', {
 		exact: true,
 	});
 

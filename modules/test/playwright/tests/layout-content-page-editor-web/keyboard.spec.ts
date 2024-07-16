@@ -194,9 +194,7 @@ test('Checks the correct keyboard navigation in the experience selector', async 
 
 	// Open the experience selector
 
-	const experienceSelectorButton = await page.getByLabel(
-		'Experience: Default'
-	);
+	const experienceSelectorButton = page.getByLabel('Experience: Default');
 
 	await experienceSelectorButton.press('Enter');
 

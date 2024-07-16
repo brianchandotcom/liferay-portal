@@ -263,7 +263,7 @@ test('Changes the value in the Color Picker when the reset button is clicked', a
 
 	await pageEditorPage.goToConfigurationTab('Styles');
 
-	const backgroundColorInput = await page
+	const backgroundColorInput = page
 		.getByLabel('Background Color')
 		.locator('.layout__color-picker__input');
 

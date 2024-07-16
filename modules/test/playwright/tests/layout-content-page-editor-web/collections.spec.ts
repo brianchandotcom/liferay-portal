@@ -291,7 +291,7 @@ test('Modifies inline text on all collection items', async ({
 	// Check that the inline text changes in all items of the collection
 
 	await expect(
-		await page.locator('.page-editor').getByText('New Content')
+		page.locator('.page-editor').getByText('New Content')
 	).toHaveCount(2);
 });
 

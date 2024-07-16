@@ -39,12 +39,9 @@ async function openDropdownAndCheckStyle(
 
 	await pageEditorPage.selectFragment(dropdownId, isDesktop);
 
-	const dropdownFragment = await pageEditorPage.getFragment(
-		dropdownId,
-		isDesktop
-	);
+	const dropdownFragment = pageEditorPage.getFragment(dropdownId, isDesktop);
 
-	const dropdownButton = await dropdownFragment.locator(
+	const dropdownButton = dropdownFragment.locator(
 		'.dropdown-fragment-toggle'
 	);
 
@@ -52,9 +49,7 @@ async function openDropdownAndCheckStyle(
 
 	await dropdownButton.press(ENTER_KEY);
 
-	const dropdownMenu = await dropdownFragment.locator(
-		'.dropdown-fragment-menu'
-	);
+	const dropdownMenu = dropdownFragment.locator('.dropdown-fragment-menu');
 
 	await dropdownMenu.waitFor();
 

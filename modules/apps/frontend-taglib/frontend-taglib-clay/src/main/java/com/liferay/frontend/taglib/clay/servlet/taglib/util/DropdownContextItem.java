@@ -16,6 +16,7 @@ public class DropdownContextItem extends DropdownItem {
 		put("type", "contextual");
 	}
 
+	@Override
 	public void setDropdownItems(List<DropdownItem> dropdownItems) {
 		put("items", dropdownItems);
 	}

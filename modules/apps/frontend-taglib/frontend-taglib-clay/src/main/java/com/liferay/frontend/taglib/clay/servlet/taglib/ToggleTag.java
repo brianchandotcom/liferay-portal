@@ -46,6 +46,7 @@ public class ToggleTag extends BaseContainerTag {
 		return _helpText;
 	}
 
+	@Override
 	public String getId() {
 		return _id;
 	}
@@ -98,6 +99,7 @@ public class ToggleTag extends BaseContainerTag {
 		_helpText = helpText;
 	}
 
+	@Override
 	public void setId(String id) {
 		_id = id;
 	}

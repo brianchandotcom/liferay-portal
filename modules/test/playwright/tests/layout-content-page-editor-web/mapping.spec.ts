@@ -195,10 +195,9 @@ test('Allows selecting specific repeatable collection provider', async ({
 
 	// Select editable and map it
 
-	const headingFragment = page.locator('.component-heading').last();
+	await pageEditorPage.goToSidebarTab('Browser');
 
-	await headingFragment.click();
-	await headingFragment.click();
+	await page.getByLabel('Select element-text').click();
 
 	await page.getByLabel('Field').selectOption('Species Name');
 

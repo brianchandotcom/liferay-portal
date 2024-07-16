@@ -5,8 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {collectionsPagesTest} from '../../fixtures/CollectionsPageTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';

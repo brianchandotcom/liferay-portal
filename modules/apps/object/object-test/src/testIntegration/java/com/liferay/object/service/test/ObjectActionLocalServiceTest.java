@@ -1877,14 +1877,11 @@ public class ObjectActionLocalServiceTest {
 	public void testAddObjectActionWithUsePreferredLanguageForGuestsParameter()
 		throws Exception {
 
-		AssertUtils.assertFailure(
-			ObjectActionParametersException.class,
-			"The parameter \"usePreferredLanguageForGuests\" is invalid for " +
-				"this object action",
-			() -> _addObjectAction(
+		Assert.assertNotNull(
+			_addObjectAction(
 				RandomTestUtil.randomString(),
 				ObjectActionExecutorConstants.KEY_NOTIFICATION,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 				UnicodePropertiesBuilder.put(
 					"notificationTemplateExternalReferenceCode",
 					RandomTestUtil.randomString()
@@ -1917,6 +1914,37 @@ public class ObjectActionLocalServiceTest {
 				"this object action",
 			() -> _addObjectAction(
 				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_NOTIFICATION,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
+				UnicodePropertiesBuilder.put(
+					"notificationTemplateExternalReferenceCode",
+					RandomTestUtil.randomString()
+				).put(
+					"type", NotificationConstants.TYPE_EMAIL
+				).put(
+					"usePreferredLanguageForGuests", "true"
+				).build(),
+				false));
+		Assert.assertNotNull(
+			_addObjectAction(
+				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_NOTIFICATION,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				UnicodePropertiesBuilder.put(
+					"notificationTemplateExternalReferenceCode",
+					RandomTestUtil.randomString()
+				).put(
+					"type", NotificationConstants.TYPE_EMAIL
+				).put(
+					"usePreferredLanguageForGuests", "true"
+				).build(),
+				false));
+		AssertUtils.assertFailure(
+			ObjectActionParametersException.class,
+			"The parameter \"usePreferredLanguageForGuests\" is invalid for " +
+				"this object action",
+			() -> _addObjectAction(
+				RandomTestUtil.randomString(),
 				ObjectActionExecutorConstants.KEY_WEBHOOK,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 				UnicodePropertiesBuilder.put(
@@ -1935,35 +1963,6 @@ public class ObjectActionLocalServiceTest {
 			() -> _addObjectAction(
 				RandomTestUtil.randomString(),
 				ObjectActionExecutorConstants.KEY_WEBHOOK,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-				UnicodePropertiesBuilder.put(
-					"notificationTemplateExternalReferenceCode",
-					RandomTestUtil.randomString()
-				).put(
-					"type", NotificationConstants.TYPE_EMAIL
-				).put(
-					"usePreferredLanguageForGuests", "true"
-				).build(),
-				false));
-
-		Assert.assertNotNull(
-			_addObjectAction(
-				RandomTestUtil.randomString(),
-				ObjectActionExecutorConstants.KEY_NOTIFICATION,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-				UnicodePropertiesBuilder.put(
-					"notificationTemplateExternalReferenceCode",
-					RandomTestUtil.randomString()
-				).put(
-					"type", NotificationConstants.TYPE_EMAIL
-				).put(
-					"usePreferredLanguageForGuests", "true"
-				).build(),
-				false));
-		Assert.assertNotNull(
-			_addObjectAction(
-				RandomTestUtil.randomString(),
-				ObjectActionExecutorConstants.KEY_NOTIFICATION,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 				UnicodePropertiesBuilder.put(
 					"notificationTemplateExternalReferenceCode",

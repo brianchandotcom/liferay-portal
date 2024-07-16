@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = PublishScheduler.class)
 public class PublishSchedulerImpl implements PublishScheduler {
 
+	@Override
 	public ScheduledPublishInfo getScheduledPublishInfo(
 			CTCollection ctCollection)
 		throws PortalException {
@@ -106,6 +107,7 @@ public class PublishSchedulerImpl implements PublishScheduler {
 		return scheduledPublishInfos;
 	}
 
+	@Override
 	public void schedulePublish(
 			long ctCollectionId, long userId, Date startDate)
 		throws PortalException {
@@ -125,6 +127,7 @@ public class PublishSchedulerImpl implements PublishScheduler {
 		}
 	}
 
+	@Override
 	public void unschedulePublish(long ctCollectionId) throws PortalException {
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);

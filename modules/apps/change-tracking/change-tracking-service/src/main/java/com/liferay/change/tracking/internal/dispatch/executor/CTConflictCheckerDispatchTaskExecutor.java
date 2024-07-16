@@ -95,6 +95,7 @@ public class CTConflictCheckerDispatchTaskExecutor
 		return KEY;
 	}
 
+	@Override
 	public boolean isHiddenInUI() {
 		return true;
 	}

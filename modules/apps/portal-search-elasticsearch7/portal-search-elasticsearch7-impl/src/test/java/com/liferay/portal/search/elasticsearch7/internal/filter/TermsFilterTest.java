@@ -35,6 +35,7 @@ public class TermsFilterTest extends BaseTermsFilterTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

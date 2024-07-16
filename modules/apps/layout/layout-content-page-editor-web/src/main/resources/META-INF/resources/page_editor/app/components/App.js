@@ -35,6 +35,7 @@ import FocusManager from './FocusManager';
 import ItemConfigurationSidebar from './ItemConfigurationSidebar';
 import {LayoutBreadcrumbs} from './LayoutBreadcrumbs';
 import LayoutViewport from './LayoutViewport';
+import MultiSelectManager from './MultiSelectManager';
 import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
@@ -114,5 +115,12 @@ App.propTypes = {
 function KeyboardManager() {
 	const movementSource = useMovementSource();
 
-	return movementSource ? <KeyboardMovementManager /> : <ShortcutManager />;
+	return movementSource ? (
+		<KeyboardMovementManager />
+	) : (
+		<>
+			<ShortcutManager />
+			{Liferay.FeatureFlags['LPD-18221'] ? <MultiSelectManager /> : null}
+		</>
+	);
 }

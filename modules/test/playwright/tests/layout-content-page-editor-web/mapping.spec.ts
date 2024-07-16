@@ -38,6 +38,9 @@ test('Allows selecting specific repeatable field when mapping', async ({
 	pageEditorPage,
 	wemSite,
 }) => {
+
+	// Create page with a Heading fragment and go to edit mode
+
 	const headingId = getRandomString();
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -120,7 +123,7 @@ test('Allows selecting specific repeatable field when mapping', async ({
 
 	expect(fragment).toHaveText('Francia');
 
-	// publish and check the published page
+	// Publish and check the published page
 
 	await pageEditorPage.publishPage();
 

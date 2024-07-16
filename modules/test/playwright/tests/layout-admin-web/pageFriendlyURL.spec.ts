@@ -149,6 +149,9 @@ test('Friendly URLs Only Display Locale Once', async ({
 	pagesAdminPage,
 	site,
 }) => {
+
+	// Create page with a Heading fragment
+
 	await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([
 			getFragmentDefinition({

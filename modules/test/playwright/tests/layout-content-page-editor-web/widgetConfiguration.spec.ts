@@ -30,6 +30,9 @@ test('Allows accessing the widget configuration easily', async ({
 	pageEditorPage,
 	site,
 }) => {
+
+	// Create page with Search Bar widget and go to edit mode
+
 	const widgetId = getRandomString();
 
 	const widgetDefinition = getWidgetDefinition({
@@ -46,7 +49,9 @@ test('Allows accessing the widget configuration easily', async ({
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-	const topper = await pageEditorPage.getTopper(widgetId);
+	// Check widget configuration is accessible
+
+	const topper = pageEditorPage.getTopper(widgetId);
 
 	await topper.hover();
 

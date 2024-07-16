@@ -110,12 +110,15 @@ test('Shows correct sections on each configuration panel when viewport is not De
 	}
 });
 
-test('Shows only Image Source field when the viewport is Desktop', async ({
+test('Only shows Image Source field when the viewport is Desktop', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
 	site,
 }) => {
+
+	// Create page with a heading fragment and go to edit mode
+
 	const headingId = getRandomString();
 
 	const headingFragment = getFragmentDefinition({
@@ -130,6 +133,8 @@ test('Shows only Image Source field when the viewport is Desktop', async ({
 	});
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Go to Styles tab and check only shows Image Fragment when it's Desktop
 
 	await pageEditorPage.selectFragment(headingId);
 
@@ -155,6 +160,9 @@ test('Background Image field is disabled for non-desktop viewports', async ({
 	pageEditorPage,
 	site,
 }) => {
+
+	// Create page with a heading fragment and go to edit mode
+
 	const headingId = getRandomString();
 
 	const headingFragment = getFragmentDefinition({
@@ -169,6 +177,8 @@ test('Background Image field is disabled for non-desktop viewports', async ({
 	});
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Check Background Image field is disabled in all viewports except Desktop
 
 	await pageEditorPage.selectFragment(headingId);
 
@@ -196,6 +206,9 @@ test('Checks that the layout can be resized', async ({
 	pageEditorPage,
 	site,
 }) => {
+
+	// Create page with a heading fragment and go to edit mode
+
 	const headingId = getRandomString();
 
 	const headingFragment = getFragmentDefinition({
@@ -210,6 +223,8 @@ test('Checks that the layout can be resized', async ({
 	});
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Select fragment and change to Portrait Phone viewport
 
 	await pageEditorPage.selectFragment(headingId);
 
@@ -258,6 +273,9 @@ test('Checks that the value of a field is propagated to smaller viewports', asyn
 	pageEditorPage,
 	site,
 }) => {
+
+	// Create page with a heading fragment and go to edit mode
+
 	const headingId = getRandomString();
 
 	const headingFragment = getFragmentDefinition({
@@ -273,6 +291,8 @@ test('Checks that the value of a field is propagated to smaller viewports', asyn
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
+	// Hide fragment
+
 	await pageEditorPage.selectFragment(headingId);
 
 	await pageEditorPage.goToConfigurationTab('General');
@@ -283,6 +303,8 @@ test('Checks that the value of a field is propagated to smaller viewports', asyn
 
 	await hideFragmentInput.check();
 
+	// Check configuration is propagated to viewports
+
 	for (const viewport of VIEWPORTS) {
 		await pageEditorPage.switchViewport(viewport as Viewport);
 
@@ -290,6 +312,8 @@ test('Checks that the value of a field is propagated to smaller viewports', asyn
 	}
 
 	await pageEditorPage.switchViewport('Desktop');
+
+	// Uncheck and check again
 
 	await hideFragmentInput.uncheck();
 

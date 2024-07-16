@@ -67,6 +67,9 @@ test('Checks page title in view mode and in edit mode', async ({
 	pageEditorPage,
 	site,
 }) => {
+
+	// Create a content page
+
 	const pageName = getRandomString();
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({

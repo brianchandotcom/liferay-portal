@@ -53,7 +53,7 @@ test('Back buttons have correct title in different sections', async ({
 
 	await checkBackButtonTitle(page, 'Go to Style Books');
 
-	// Check also other places
+	// Check also other places:
 	// Journal template
 
 	await journalEditTemplatePage.goto(site.friendlyUrlPath);

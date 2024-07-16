@@ -33,21 +33,30 @@ test('Only published fragments are shown in the Fragments Sidebar', async ({
 	pageEditorPage,
 	site,
 }) => {
+
+	// Create new fragment set
+
 	await fragmentsPage.goto(site.friendlyUrlPath);
 
 	const setName = getRandomString();
 	await fragmentsPage.createFragmentSet(setName);
+
+	// Create unpublished fragment inside it
 
 	await fragmentsPage.goto(site.friendlyUrlPath);
 
 	const unpublishedFragmentName = getRandomString();
 	await fragmentsPage.createFragment(setName, unpublishedFragmentName);
 
+	// Create published fragment inside it
+
 	await fragmentsPage.goto(site.friendlyUrlPath);
 
 	const publishedFragmentName = getRandomString();
 	await fragmentsPage.createFragment(setName, publishedFragmentName);
 	await fragmentEditorPage.publish();
+
+	// Create content page and go to edit mode
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition(),
@@ -56,6 +65,9 @@ test('Only published fragments are shown in the Fragments Sidebar', async ({
 	});
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Check only published fragment is displayed
+
 	await pageEditorPage.goToSidebarTab('Fragments and Widgets');
 
 	await page

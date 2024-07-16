@@ -102,6 +102,8 @@ test('Allow mapping repeatable fields collection provider', async ({
 		trigger: articleCard,
 	});
 
+	// Check src of images
+
 	const imageFragments = page.locator('.component-image img');
 
 	expect(await imageFragments.first().getAttribute('src')).toContain(

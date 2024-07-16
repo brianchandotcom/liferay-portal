@@ -70,6 +70,8 @@ test('Grid background image can be customized', async ({
 		trigger: card,
 	});
 
+	// Check correct image is used for background
+
 	expect(
 		await pageEditorPage
 			.getFragment(gridId)

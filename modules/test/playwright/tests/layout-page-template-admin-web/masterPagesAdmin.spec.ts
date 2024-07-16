@@ -24,7 +24,12 @@ test('Validate if the Blank page template can not be edited and deleted', async 
 	masterPagesPage,
 	site,
 }) => {
+
+	// Go to master pages administration
+
 	await masterPagesPage.goto(site.friendlyUrlPath);
+
+	// Check Blank can not be edited or deleted
 
 	const templateCard = masterPagesPage.getMasterCard('Blank');
 

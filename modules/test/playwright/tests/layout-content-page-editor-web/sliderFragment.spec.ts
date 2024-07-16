@@ -51,6 +51,8 @@ test('Checks that the Slider fragment works correctly', async ({
 		);
 	};
 
+	// Create page with Slider fragment and go to edit mode
+
 	const sliderId = getRandomString();
 
 	const sliderDefinition = getFragmentDefinition({
@@ -82,8 +84,6 @@ test('Checks that the Slider fragment works correctly', async ({
 		id: sliderId,
 		key: 'BASIC_COMPONENT-slider',
 	});
-
-	// Create page and go to edit mode
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage({
 		pageDefinition: getPageDefinition([sliderDefinition]),

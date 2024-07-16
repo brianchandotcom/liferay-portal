@@ -197,6 +197,8 @@ test('Checks that the advanced configuration of a fragment appears in its corres
 		title: getRandomString(),
 	});
 
+	// Check advanced configuration appears where it should
+
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 	await page.getByTitle('Browser').click();

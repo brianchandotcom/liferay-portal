@@ -196,7 +196,7 @@ test('Renders correct sections in color picker', async ({
 }) => {
 	await page.goto('/');
 
-	// Create a page with a Heading fragment
+	// Create a page with a Heading fragment and go to edit mode
 
 	const headingId = getRandomString();
 
@@ -212,6 +212,8 @@ test('Renders correct sections in color picker', async ({
 	});
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Check correct sections are displayed
 
 	await pageEditorPage.selectFragment(headingId);
 
@@ -244,6 +246,8 @@ test('Changes the value in the Color Picker when the reset button is clicked', a
 }) => {
 	await page.goto('/');
 
+	// Create page with heading fragment and go to edit mode
+
 	const headingId = getRandomString();
 
 	const headingFragment = getFragmentDefinition({
@@ -258,6 +262,8 @@ test('Changes the value in the Color Picker when the reset button is clicked', a
 	});
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Select fragment and go to Styles configuration panel
 
 	await pageEditorPage.selectFragment(headingId);
 

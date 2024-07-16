@@ -110,6 +110,9 @@ test('Allows adding a Collection Display with a manual collection into another C
 testWithIsolatedSite(
 	'Checks the error message when trying to drag a fragment to an unmapped collection',
 	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a content page with an empty collection display
+
 		const collectionDefinition = getCollectionDefinition({
 			id: getRandomString(),
 		});
@@ -121,6 +124,8 @@ testWithIsolatedSite(
 		});
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Try to drag fragment to collection and check error alert
 
 		await page
 			.getByRole('menuitem', {

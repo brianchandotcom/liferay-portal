@@ -28,6 +28,42 @@ import org.mockito.Mockito;
 public class LocaleUtilTest {
 
 	@Test
+	public void testFromBCP47LangTag() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		Language language = Mockito.mock(Language.class);
+
+		languageUtil.setLanguage(language);
+
+		Mockito.when(
+			language.isAvailableLocale(Locale.US)
+		).thenReturn(
+			true
+		);
+
+		Assert.assertEquals(
+			Locale.US.toLanguageTag(), LocaleUtil.toBCP47LangTag(Locale.US));
+
+		Mockito.when(
+			language.isAvailableLocale(Locale.SIMPLIFIED_CHINESE)
+		).thenReturn(
+			true
+		);
+
+		Assert.assertEquals(
+			"zh-Hans", LocaleUtil.toBCP47LangTag(Locale.SIMPLIFIED_CHINESE));
+
+		Mockito.when(
+			language.isAvailableLocale(Locale.TRADITIONAL_CHINESE)
+		).thenReturn(
+			true
+		);
+
+		Assert.assertEquals(
+			"zh-Hant", LocaleUtil.toBCP47LangTag(Locale.TRADITIONAL_CHINESE));
+	}
+
+	@Test
 	public void testFromLanguageId() {
 		LanguageUtil languageUtil = new LanguageUtil();
 

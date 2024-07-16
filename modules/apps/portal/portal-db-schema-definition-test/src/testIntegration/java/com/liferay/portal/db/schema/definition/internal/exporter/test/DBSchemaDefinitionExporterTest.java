@@ -6,9 +6,14 @@
 package com.liferay.portal.db.schema.definition.internal.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.ConfigurationTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseTestUtil;
-import com.liferay.portal.db.schema.definition.internal.test.util.ObjectTestUtil;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -70,7 +75,7 @@ public class DBSchemaDefinitionExporterTest {
 		_databaseType = String.valueOf(DBManagerUtil.getDBType());
 		_folder = FileUtil.createTempFolder();
 
-		ObjectTestUtil.createObjectsData();
+		_createObjectsData();
 	}
 
 	@AfterClass
@@ -79,7 +84,7 @@ public class DBSchemaDefinitionExporterTest {
 
 		FileUtil.deltree(_folder);
 
-		ObjectTestUtil.removeObjectsData();
+		_removeObjectsData();
 	}
 
 	@Test
@@ -123,6 +128,36 @@ public class DBSchemaDefinitionExporterTest {
 				"Finished database schema definition export to " +
 					_folder.getAbsolutePath(),
 				logMessages.get(1));
+		}
+	}
+
+	private static void _createObjectsData() throws Exception {
+		_objectDefinition1 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			ObjectDefinitionTestUtil.getRandomName(),
+			ObjectDefinitionLocalServiceUtil.getService());
+		_objectDefinition2 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			ObjectDefinitionTestUtil.getRandomName(),
+			ObjectDefinitionLocalServiceUtil.getService());
+
+		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			ObjectRelationshipLocalServiceUtil.getService(), _objectDefinition1,
+			_objectDefinition2);
+	}
+
+	private static void _removeObjectsData() throws Exception {
+		if (_objectRelationship != null) {
+			ObjectRelationshipLocalServiceUtil.deleteObjectRelationship(
+				_objectRelationship.getObjectRelationshipId());
+		}
+
+		if (_objectDefinition1 != null) {
+			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+				_objectDefinition1.getObjectDefinitionId());
+		}
+
+		if (_objectDefinition2 != null) {
+			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+				_objectDefinition2.getObjectDefinitionId());
 		}
 	}
 
@@ -198,6 +233,9 @@ public class DBSchemaDefinitionExporterTest {
 
 	private static String _databaseType;
 	private static File _folder;
+	private static ObjectDefinition _objectDefinition1;
+	private static ObjectDefinition _objectDefinition2;
+	private static ObjectRelationship _objectRelationship;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

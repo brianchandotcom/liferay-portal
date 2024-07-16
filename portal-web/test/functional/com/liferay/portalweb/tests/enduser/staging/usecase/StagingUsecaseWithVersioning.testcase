@@ -45,6 +45,8 @@ definition {
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name-staging/test-page-name");
 		}
 
 		task ("Add a Navigation Menu widget to content page") {

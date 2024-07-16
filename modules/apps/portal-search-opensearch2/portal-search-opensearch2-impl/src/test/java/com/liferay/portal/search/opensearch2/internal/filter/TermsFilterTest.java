@@ -40,6 +40,7 @@ public class TermsFilterTest extends BaseTermsFilterTestCase {
 		OpenSearchTestRule.INSTANCE;
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

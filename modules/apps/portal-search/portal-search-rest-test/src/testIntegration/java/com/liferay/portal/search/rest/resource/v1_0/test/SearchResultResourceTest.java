@@ -328,6 +328,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		}
 	}
 
+	@Override
 	@Test
 	public void testGetSearchPageWithSortInteger() throws Exception {
 	}

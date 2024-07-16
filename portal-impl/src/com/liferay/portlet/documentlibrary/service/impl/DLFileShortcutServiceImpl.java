@@ -69,6 +69,30 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteFileShortcut(String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		DLFileShortcut fileShortcut =
+			dlFileShortcutLocalService.
+				fetchDLFileShortcutByExternalReferenceCode(
+					externalReferenceCode, groupId);
+
+		if (fileShortcut != null) {
+			ModelResourcePermission<FileShortcut>
+				fileShortcutModelResourcePermission =
+					ModelResourcePermissionRegistryUtil.
+						getModelResourcePermission(
+							FileShortcut.class.getName());
+
+			fileShortcutModelResourcePermission.check(
+				getPermissionChecker(), fileShortcut.getFileShortcutId(),
+				ActionKeys.DELETE);
+		}
+
+		dlFileShortcutLocalService.deleteFileShortcut(fileShortcut);
+	}
+
+	@Override
 	public DLFileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 

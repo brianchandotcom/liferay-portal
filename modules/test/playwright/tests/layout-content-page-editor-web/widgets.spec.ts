@@ -63,3 +63,57 @@ test('Allows accessing the widget configuration easily', async ({
 		page.getByRole('menuitem', {exact: true, name: 'Configuration'})
 	).toBeVisible();
 });
+
+test.describe('Menu Display Widget', () => {
+	test('Checks that the Display Menu items have a role link with display style Bar With Links', async ({
+		apiHelpers,
+		page,
+		site,
+	}) => {
+		const widgetDefinition = getWidgetDefinition({
+			id: getRandomString(),
+			widgetConfig: {
+				displayStyle: 'ddmTemplate_NAVBAR-LINKS-FTL',
+			},
+			widgetName:
+				'com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet',
+		});
+
+		// Create three pages, one of them with Menu Display widget
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: 'First page',
+		});
+
+		const secondLayout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: 'Second page',
+		});
+
+		const thirdLayout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([widgetDefinition]),
+			parentSitePage: {friendlyUrlPath: secondLayout.friendlyUrlPath},
+			siteId: site.id,
+			title: 'Third page',
+		});
+
+		await page.goto(
+			`/web${site.friendlyUrlPath}${thirdLayout.friendlyUrlPath}`
+		);
+
+		// Check that the Display Menu items have a role link
+
+		await page.getByRole('link', {name: 'Second page'}).hover();
+
+		await expect(
+			page.getByRole('link', {name: 'First page'})
+		).toBeVisible();
+		await expect(
+			page.getByRole('link', {name: 'Second page'})
+		).toBeVisible();
+		await expect(
+			page.getByRole('link', {name: 'Third page'})
+		).toBeVisible();
+	});
+});

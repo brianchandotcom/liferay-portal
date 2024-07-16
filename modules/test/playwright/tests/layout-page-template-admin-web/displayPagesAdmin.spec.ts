@@ -312,3 +312,44 @@ test('LPS-123480 view usages for blogs entry', async ({
 	);
 	await expect(rowCheckbox).toBeVisible();
 });
+
+test('LPS-123480 view usages for basic document', async ({
+	displayPageTemplatesPage,
+	documentLibraryEditFilePage,
+	page,
+	site,
+}) => {
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+	const displayPageTemplateName = 'basicDocumentDpt' + getRandomInt();
+
+	await displayPageTemplatesPage.publishNewTemplate({
+		contentSubtype: 'Basic Document',
+		contentType: 'Document',
+		name: displayPageTemplateName,
+	});
+
+	await documentLibraryEditFilePage.goto(site.friendlyUrlPath);
+
+	const title = getRandomString();
+
+	await page.getByLabel('Title').fill(title);
+
+	await documentLibraryEditFilePage.selectSpecificDisplayPage(
+		displayPageTemplateName
+	);
+
+	await documentLibraryEditFilePage.publishFileEntry();
+
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+	await displayPageTemplatesPage.goToDisplayPageTemplateAction(
+		'View Usages',
+		'1'
+	);
+
+	const rowCheckbox = page.locator(
+		`[aria-labelledby="_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_assetDisplayPageEntries_1"]`
+	);
+	await expect(rowCheckbox).toBeVisible();
+});

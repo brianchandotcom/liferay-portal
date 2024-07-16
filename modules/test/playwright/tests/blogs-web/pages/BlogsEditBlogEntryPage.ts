@@ -5,11 +5,11 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {expandSection} from '../../../utils/expandSection';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {BlogsPage} from './BlogsPage';
 
 import type {postTaxonomyVocabularyTaxonomyCategoryProps} from '../../../helpers/HeadlessAdminTaxonomyApiHelper';
-import {expandSection} from "../../../utils/expandSection";
 
 type editBlogEntryAddfriendlyUrlType = {
 	categories: Pick<postTaxonomyVocabularyTaxonomyCategoryProps, 'name'>[];
@@ -113,19 +113,21 @@ export class BlogsEditBlogEntryPage {
 	}
 
 	async selectSpecificDisplayPage(displayPageName: string) {
-		const displayPageFieldSet = this.page.locator('#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_display-page');
+		const displayPageFieldSet = this.page.locator(
+			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_display-page'
+		);
 
 		await expandSection(displayPageFieldSet);
 		await displayPageFieldSet
 			.getByLabel('Display Page Template')
 			.selectOption('Specific');
-		await displayPageFieldSet
-			.getByRole('button', {name: 'Select'})
-			.click();
+		await displayPageFieldSet.getByRole('button', {name: 'Select'}).click();
 		const selectDisplayPageModal = await this.page.frameLocator(
 			'iframe[title*="Select Page"]'
 		);
-		await selectDisplayPageModal.getByLabel('Select ' + displayPageName).click();
+		await selectDisplayPageModal
+			.getByLabel('Select ' + displayPageName)
+			.click();
 	}
 
 	async submitBlogEntryToWorkflow() {

@@ -7,6 +7,8 @@ import {Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {DocumentLibraryPage} from './DocumentLibraryPage';
+import {expandSection} from "../../utils/expandSection";
+import {waitForSuccessAlert} from "../../utils/waitForSuccessAlert";
 
 export class DocumentLibraryEditFilePage {
 	readonly documentLibraryPage: DocumentLibraryPage;
@@ -36,9 +38,8 @@ export class DocumentLibraryEditFilePage {
 		this.permissionViewSelector = page.getByLabel('Viewable by');
 	}
 
-	async goto() {
-		await this.documentLibraryPage.goto();
-
+	async goto(siteUrl?: Site['friendlyUrlPath']) {
+		await this.documentLibraryPage.goto(siteUrl);
 		await this.documentLibraryPage.goToCreateNewFile();
 	}
 
@@ -61,6 +62,18 @@ export class DocumentLibraryEditFilePage {
 			),
 		});
 	}
+
+	async publishFileEntry(){
+		if (await this.saveButton.isVisible()) {
+			await this.saveButton.click();
+		}
+		else {
+			await this.publishButton.click();
+		}
+
+		await waitForSuccessAlert(this.page);
+	}
+
 	async goBack() {
 		await this.backButton.click();
 	}
@@ -138,5 +151,21 @@ export class DocumentLibraryEditFilePage {
 		await this.page.getByRole('button', {name: 'Basic Document'}).click();
 		await this.page.getByRole('menuitem', {name: dTypeTitle}).click();
 		await this.page.getByRole('button', {name: 'Publish'}).click();
+	}
+
+	async selectSpecificDisplayPage(displayPageName: string) {
+		const displayPageFieldSet = this.page.locator('#_com_liferay_document_library_web_portlet_DLAdminPortlet_display-page');
+
+		await expandSection(displayPageFieldSet);
+		await displayPageFieldSet
+			.getByTitle('Display Page Template Type')
+			.selectOption('Specific');
+		await displayPageFieldSet
+			.getByRole('button', {name: 'Select'})
+			.click();
+		const selectDisplayPageModal = await this.page.frameLocator(
+			'iframe[title*="Select Page"]'
+		);
+		await selectDisplayPageModal.getByLabel('Select ' + displayPageName).click();
 	}
 }

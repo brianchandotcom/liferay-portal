@@ -26,6 +26,7 @@ import java.net.HttpURLConnection;
 public abstract class BaseObjectEntryManagerHttp
 	implements ObjectEntryManagerHttp {
 
+	@Override
 	public JSONObject delete(long companyId, long groupId, String location) {
 		try {
 			return _invoke(
@@ -36,6 +37,7 @@ public abstract class BaseObjectEntryManagerHttp
 		}
 	}
 
+	@Override
 	public JSONObject get(long companyId, long groupId, String location) {
 		try {
 			return _invoke(companyId, groupId, location, Http.Method.GET, null);
@@ -45,6 +47,7 @@ public abstract class BaseObjectEntryManagerHttp
 		}
 	}
 
+	@Override
 	public JSONObject patch(
 		long companyId, long groupId, String location,
 		JSONObject bodyJSONObject) {
@@ -59,6 +62,7 @@ public abstract class BaseObjectEntryManagerHttp
 		}
 	}
 
+	@Override
 	public JSONObject post(
 		long companyId, long groupId, String location,
 		JSONObject bodyJSONObject) {
@@ -72,6 +76,7 @@ public abstract class BaseObjectEntryManagerHttp
 		}
 	}
 
+	@Override
 	public JSONObject put(
 		long companyId, long groupId, String location,
 		JSONObject bodyJSONObject) {

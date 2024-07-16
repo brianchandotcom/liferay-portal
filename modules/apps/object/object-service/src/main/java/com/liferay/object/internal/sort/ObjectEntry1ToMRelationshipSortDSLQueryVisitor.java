@@ -38,6 +38,7 @@ public class ObjectEntry1ToMRelationshipSortDSLQueryVisitor
 		super(objectFieldLocalService, objectRelationshipLocalService);
 	}
 
+	@Override
 	public DSLQuery visit(DSLQuery dslQuery, Sort sort) throws PortalException {
 		RelationshipSort relationshipSort = (RelationshipSort)sort;
 

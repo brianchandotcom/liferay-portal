@@ -642,6 +642,7 @@ public class ObjectFieldLocalServiceImpl
 		return objectFieldPersistence.update(objectField);
 	}
 
+	@Override
 	public void updateUserId(long companyId, long oldUserId, long newUserId)
 		throws PortalException {
 

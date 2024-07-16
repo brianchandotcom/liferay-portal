@@ -38,6 +38,7 @@ public class ListTypeDefinitionExportImportTest
 		new LiferayIntegrationTestRule();
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		user = TestPropsValues.getUser();
 

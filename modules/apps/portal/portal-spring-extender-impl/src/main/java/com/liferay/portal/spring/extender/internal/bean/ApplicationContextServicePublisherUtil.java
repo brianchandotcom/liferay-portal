@@ -174,15 +174,20 @@ public class ApplicationContextServicePublisherUtil {
 			}
 
 			if (jsonWebService != null) {
-				properties.put("json.web.service.context.name", symbolicName);
-
-				String path = beanClass.getSimpleName();
-
-				if (path.endsWith("ServiceImpl")) {
-					path = path.substring(0, path.length() - 11);
+				if (properties.get("json.web.service.context.name") == null) {
+					properties.put(
+						"json.web.service.context.name", symbolicName);
 				}
 
-				properties.put("json.web.service.context.path", path);
+				if (properties.get("json.web.service.context.path") == null) {
+					String path = beanClass.getSimpleName();
+
+					if (path.endsWith("ServiceImpl")) {
+						path = path.substring(0, path.length() - 11);
+					}
+
+					properties.put("json.web.service.context.path", path);
+				}
 			}
 		}
 

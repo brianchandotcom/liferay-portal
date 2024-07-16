@@ -26,7 +26,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -133,7 +133,7 @@ public class FileEntryContentDashboardItemTest {
 			contentDashboardItemVersions.get(0);
 
 		Assert.assertEquals(
-			LanguageUtil.get(LocaleUtil.getDefault(), "approved"),
+			_language.get(LocaleUtil.getDefault(), "approved"),
 			contentDashboardItemVersion.getLabel());
 		Assert.assertEquals("1.0", contentDashboardItemVersion.getVersion());
 		Assert.assertEquals("success", contentDashboardItemVersion.getStyle());
@@ -159,7 +159,7 @@ public class FileEntryContentDashboardItemTest {
 			contentDashboardItemVersions.get(0);
 
 		Assert.assertEquals(
-			LanguageUtil.get(LocaleUtil.getDefault(), "approved"),
+			_language.get(LocaleUtil.getDefault(), "approved"),
 			contentDashboardItemVersion.getLabel());
 		Assert.assertEquals("1.1", contentDashboardItemVersion.getVersion());
 		Assert.assertEquals("success", contentDashboardItemVersion.getStyle());
@@ -373,7 +373,7 @@ public class FileEntryContentDashboardItemTest {
 			contentDashboardItemVersions.get(0);
 
 		Assert.assertEquals(
-			LanguageUtil.get(LocaleUtil.getDefault(), "approved"),
+			_language.get(LocaleUtil.getDefault(), "approved"),
 			contentDashboardItemVersion.getLabel());
 		Assert.assertEquals("1.1", contentDashboardItemVersion.getVersion());
 		Assert.assertEquals("success", contentDashboardItemVersion.getStyle());
@@ -412,7 +412,7 @@ public class FileEntryContentDashboardItemTest {
 			contentDashboardItemVersions.get(0);
 
 		Assert.assertEquals(
-			LanguageUtil.get(LocaleUtil.getDefault(), "approved"),
+			_language.get(LocaleUtil.getDefault(), "approved"),
 			contentDashboardItemVersion.getLabel());
 		Assert.assertEquals("1.1", contentDashboardItemVersion.getVersion());
 		Assert.assertEquals("success", contentDashboardItemVersion.getStyle());
@@ -420,7 +420,7 @@ public class FileEntryContentDashboardItemTest {
 		contentDashboardItemVersion = contentDashboardItemVersions.get(1);
 
 		Assert.assertEquals(
-			LanguageUtil.get(LocaleUtil.getDefault(), "expired"),
+			_language.get(LocaleUtil.getDefault(), "expired"),
 			contentDashboardItemVersion.getLabel());
 		Assert.assertEquals("1.2", contentDashboardItemVersion.getVersion());
 		Assert.assertEquals("danger", contentDashboardItemVersion.getStyle());
@@ -454,15 +454,15 @@ public class FileEntryContentDashboardItemTest {
 		_assertSpecificInformationList(
 			null, "jpg", "0 B", _getVersionableContentDashboardItem(1));
 		_assertSpecificInformationList(
-			LanguageUtil.get(LocaleUtil.getDefault(), "square"), "jpeg", "7 KB",
+			_language.get(LocaleUtil.getDefault(), "square"), "jpeg", "7 KB",
 			_getVersionableContentDashboardItem(
 				"dependencies/225x225.jpeg", 1));
 		_assertSpecificInformationList(
-			LanguageUtil.get(LocaleUtil.getDefault(), "tall"), "jpeg", "6 KB",
+			_language.get(LocaleUtil.getDefault(), "tall"), "jpeg", "6 KB",
 			_getVersionableContentDashboardItem(
 				"dependencies/183x275.jpeg", 1));
 		_assertSpecificInformationList(
-			LanguageUtil.get(LocaleUtil.getDefault(), "wide"), "jpeg", "8 KB",
+			_language.get(LocaleUtil.getDefault(), "wide"), "jpeg", "8 KB",
 			_getVersionableContentDashboardItem(
 				"dependencies/277x182.jpeg", 1));
 	}
@@ -485,7 +485,7 @@ public class FileEntryContentDashboardItemTest {
 				_getVersionableContentDashboardItem(1);
 
 		Assert.assertEquals(
-			LanguageUtil.get(LocaleUtil.getDefault(), "document"),
+			_language.get(LocaleUtil.getDefault(), "document"),
 			versionableContentDashboardItem.getTypeLabel(
 				LocaleUtil.getDefault()));
 	}
@@ -798,6 +798,9 @@ public class FileEntryContentDashboardItemTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private Language _language;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

@@ -13,7 +13,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Adam Brandizzi
  * @author André de Oliveira
  */
-@ExtendedObjectClassDefinition(category = "search")
+@ExtendedObjectClassDefinition(
+	category = "search", visibilityControllerKey = "search-web"
+)
 @Meta.OCD(
 	id = "com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration",
 	localization = "content/Language", name = "search-web-configuration-name"

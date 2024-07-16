@@ -66,6 +66,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SearchPortlet extends MVCPortlet {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by search pages and widgets
+	 */
+	@Deprecated
 	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)

@@ -75,7 +75,6 @@ import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -1265,15 +1264,7 @@ public class LayoutLocalServiceWrapper
 				).from(
 					PortletPreferencesTable.INSTANCE
 				).where(
-					PortletPreferencesTable.INSTANCE.plid.notIn(
-						new Long[] {
-							PortletKeys.PREFS_PLID_SHARED,
-							_sourceLayout.getPlid(), _targetLayout.getPlid()
-						}
-					).and(
-						PortletPreferencesTable.INSTANCE.portletId.in(
-							portletIds)
-					)
+					PortletPreferencesTable.INSTANCE.portletId.in(portletIds)
 				));
 		}
 

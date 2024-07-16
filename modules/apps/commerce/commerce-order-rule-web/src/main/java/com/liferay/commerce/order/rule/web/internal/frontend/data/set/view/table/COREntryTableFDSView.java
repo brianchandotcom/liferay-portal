@@ -41,16 +41,18 @@ public class COREntryTableFDSView extends BaseTableFDSView {
 				"boolean")
 		).add(
 			"displayDate", "start-date",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("dateTime");
-				fdsTableSchemaField.setSortable(true);
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dateTime"
+			).setSortable(
+				true
+			)
 		).add(
 			"expirationDate", "end-date",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("dateTime");
-				fdsTableSchemaField.setSortable(true);
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dateTime"
+			).setSortable(
+				true
+			)
 		).add(
 			"workflowStatusInfo", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

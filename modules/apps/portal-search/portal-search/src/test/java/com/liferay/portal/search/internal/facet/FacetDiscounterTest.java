@@ -54,12 +54,13 @@ public class FacetDiscounterTest {
 	public void testNestedFacet() {
 		NestedFacetImpl nestedFacetImpl = new NestedFacetImpl(null, null);
 
-		nestedFacetImpl.setPath(_FIELD_NAME);
 		nestedFacetImpl.setFilterField(_FIELD_NAME + ".fieldName");
 
 		String filterValue = RandomTestUtil.randomString();
 
 		nestedFacetImpl.setFilterValue(filterValue);
+
+		nestedFacetImpl.setPath(_FIELD_NAME);
 
 		_populate(
 			nestedFacetImpl, _toTerm("a", 10), _toTerm("b", 5),

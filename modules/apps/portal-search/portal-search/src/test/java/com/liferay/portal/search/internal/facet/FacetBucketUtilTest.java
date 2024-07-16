@@ -54,12 +54,13 @@ public class FacetBucketUtilTest {
 		NestedFacetImpl nestedFacetImpl = new NestedFacetImpl(
 			_FIELD_NAME, null);
 
-		nestedFacetImpl.setPath(_FIELD_NAME);
 		nestedFacetImpl.setFilterField(_FIELD_NAME + ".fieldName");
 
 		String filterValue = RandomTestUtil.randomString();
 
 		nestedFacetImpl.setFilterValue(filterValue);
+
+		nestedFacetImpl.setPath(_FIELD_NAME);
 
 		Field field = new Field(
 			_FIELD_NAME,

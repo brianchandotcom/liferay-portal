@@ -1,0 +1,64 @@
+{
+	"label": {
+		"en-US": "Liferay Experience Cloud Environment"
+	},
+	"name": "LiferayExperienceCloudEnvironment",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Account Key"
+			},
+			"name": "accountKey",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Incident Management Full Name"
+			},
+			"name": "incidentManagementFullName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Incident Management Email Address"
+			},
+			"name": "incidentManagementEmailAddress",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Primary Region"
+			},
+			"name": "primaryRegion",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Project ID"
+			},
+			"name": "projectId",
+			"required": true
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Liferay Experience Cloud Environments"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
+}

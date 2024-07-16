@@ -1,0 +1,27 @@
+.cp-generate-key-select {
+	width: 252px;
+}
+.cp-generate-key-card {
+	border: 1px solid #c9c9ce;
+	height: 96px;
+	width: 536px;
+}
+.cp-info-new-key-card {
+	border: 1px solid var(--color-brand-primary-lighten-5) !important;
+}
+
+.cp-button-icon-plus {
+	width: 12px;
+}
+
+.cp-input-generate-placeholder::placeholder {
+	font-weight: bold;
+}
+
+.cp-input-generate-label div {
+	margin: 0 !important;
+}
+.cp-input-generate-label div label {
+	margin: 0 !important;
+	width: 100%;
+}

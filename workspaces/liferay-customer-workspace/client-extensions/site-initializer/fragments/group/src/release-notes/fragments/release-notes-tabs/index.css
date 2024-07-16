@@ -1,0 +1,11 @@
+.loading-animation-secondary {
+	color: var(--color-neutral-5);
+}
+
+.navigation-bar-light .navbar-nav .nav-link {
+	font-size: 1rem;
+}
+
+.navigation-bar-light .navbar-nav .nav-link.active {
+	color: var(--color-action-primary-active);
+}

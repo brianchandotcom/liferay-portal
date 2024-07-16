@@ -1,0 +1,67 @@
+.container-release-feature-sidetab {
+	background: var(--color-brand-primary-lighten-6, #fbfcfe);
+	height: 100%;
+	position: fixed;
+	right: -31.875rem;
+	top: 0;
+	transition: right 0.3s ease-in-out;
+	width: 31.875rem;
+	z-index: 9999;
+
+	a.link-container:hover,
+	a.link-container.hover {
+		background-color: var(--color-action-primary-hover-10, #edf3fe);
+		border: 0.0625rem solid var(--link-hover-color, #0053f0);
+		color: var(--link-hover-color, #0053f0);
+		text-decoration: none;
+	}
+
+	.close:hover {
+		color: var(--link-hover-color, #0053f0);
+	}
+
+	.label-previous-status {
+		background-color: var(--color-neutral-2, #e1e1e4);
+		color: var(--color-neutral-7, #6c6c76);
+		text-decoration: line-through;
+	}
+
+	.link-container {
+		background-color: var(--color-brand-primary-lighten-6, #fbfcfe);
+		border: 0.0625rem solid var(--color-brand-primary-lighten-5, #e7efff);
+		border-radius: 0.625rem;
+		color: var(--color-action-neutral-default, #2b3a4b);
+		font-size: 0.875rem;
+		padding: 0.75rem;
+		word-break: break-word;
+	}
+
+	.link-container > svg {
+		fill: var(--link-color, #0b5fff);
+		height: 0.75rem;
+		width: 0.75rem;
+	}
+
+	.link-container span {
+		padding-left: 0.5rem;
+	}
+
+	.search-results .search-results-entry .search-results-entry-title {
+		color: var(--color-neutral-10, #282934);
+		font-size: 1.438rem;
+		font-style: normal;
+		font-weight: 600 !important;
+		line-height: 1.75rem;
+	}
+
+	.search-results .search-results-entry .search-results-entry-content {
+		color: var(--color-neutral-10, #282934);
+		font-size: 1rem;
+		font-style: normal;
+		font-weight: 400;
+	}
+
+	.sidebar-body {
+		text-align: left;
+	}
+}

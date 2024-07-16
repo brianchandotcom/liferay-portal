@@ -1,0 +1,9 @@
+.cp-search-bar {
+	width: 550px;
+
+	& + .cp-search-icon {
+		bottom: 21px;
+		font-size: var(--text-paragraph-lg-font-size);
+		left: 20px;
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Account Subscription Group"
+	},
+	"name": "accountEntryToAccountSubscriptionGroup",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AccountSubscriptionGroup$]",
+	"objectDefinitionName2": "AccountSubscriptionGroup",
+	"type": "oneToMany"
+}

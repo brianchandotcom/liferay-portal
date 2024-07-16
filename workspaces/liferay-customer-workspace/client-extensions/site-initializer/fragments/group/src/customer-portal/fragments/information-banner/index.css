@@ -1,0 +1,24 @@
+.cp-information-banner {
+	align-items: center;
+	display: none;
+	justify-content: space-between;
+	margin-bottom: 1.5rem;
+	padding: 0.625rem 1.5rem;
+}
+
+.cp-information-banner .cp-banner-content {
+	align-items: center;
+	display: flex;
+}
+
+.cp-information-banner .cp-icon-content > svg {
+	margin-right: 1.125rem;
+}
+
+.cp-information-banner p {
+	margin-top: 1rem;
+}
+
+.has-edit-mode-menu .cp-information-banner {
+	display: flex;
+}

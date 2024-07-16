@@ -1,0 +1,31 @@
+.cp-radio-card {
+	border: 1px solid rgba($color: #000, $alpha: 0.1);
+	cursor: pointer !important;
+	gap: 0.75rem;
+	height: 96px;
+
+	& > div {
+		> div {
+			label {
+				cursor: pointer;
+			}
+		}
+	}
+	.cp-clay-card-disabled {
+		opacity: 0.5 !important;
+	}
+
+	.cp-radio-card-label {
+		gap: 0 !important;
+	}
+
+	.cp-custom-control-label {
+		&::before {
+			top: 0.3rem;
+		}
+
+		&::after {
+			top: 0.3rem;
+		}
+	}
+}

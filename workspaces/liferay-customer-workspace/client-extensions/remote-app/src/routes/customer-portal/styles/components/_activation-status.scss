@@ -1,0 +1,22 @@
+.cp-img-activation-status {
+	&.not-active {
+		filter: opacity(0.5) saturate(0);
+	}
+	&.in-progress {
+		filter: opacity(0.5) saturate(1);
+	}
+}
+
+.cp-label-activation-status {
+	right: 0;
+	top: 0;
+}
+
+.cp-activation-status-container {
+	max-width: 496px;
+	transition: all 200ms ease-in-out;
+
+	&:hover {
+		box-shadow: $elevation-fluffy-3 !important;
+	}
+}

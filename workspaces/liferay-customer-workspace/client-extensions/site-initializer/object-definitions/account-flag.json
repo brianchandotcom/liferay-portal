@@ -1,0 +1,45 @@
+{
+	"label": {
+		"en-US": "Account Flag"
+	},
+	"name": "AccountFlag",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Account Key"
+			},
+			"name": "accountKey",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Name"
+			},
+			"name": "name",
+			"required": true
+		},
+		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Finished"
+			},
+			"name": "finished",
+			"required": false
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Account Flags"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
+}

@@ -1,0 +1,105 @@
+{
+	"label": {
+		"en-US": "Account Subscription Term"
+	},
+	"name": "AccountSubscriptionTerm",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Account Key"
+			},
+			"name": "accountKey",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Account Subscription ERC"
+			},
+			"name": "accountSubscriptionERC",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Account Subscription Group ERC"
+			},
+			"name": "accountSubscriptionGroupERC",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "End Date"
+			},
+			"name": "endDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Instance Size"
+			},
+			"name": "instanceSize",
+			"required": false
+		},
+		{
+			"DBType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Provisioned"
+			},
+			"name": "provisioned",
+			"required": false
+		},
+		{
+			"DBType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Quantity"
+			},
+			"name": "quantity",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Start Date"
+			},
+			"name": "startDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Status"
+			},
+			"name": "subscriptionTermStatus",
+			"required": false
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Account Subscription Terms"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
+}

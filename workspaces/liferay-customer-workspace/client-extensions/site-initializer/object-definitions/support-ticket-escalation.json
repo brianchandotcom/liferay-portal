@@ -1,0 +1,66 @@
+{
+	"active": true,
+	"label": {
+		"en_US": "Support Ticket Escalation"
+	},
+	"name": "SupportTicketEscalation",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Tickets ID's"
+			},
+			"name": "ticketsIDs",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Phone Number"
+			},
+			"name": "phoneNumber",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "If opening on behalf of another user, please share the appropriate email address to contact:"
+			},
+			"name": "customerEmailAddress",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Clob",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Description"
+			},
+			"name": "description",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": false
+				}
+			],
+			"required": true,
+			"type": "Clob"
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Support Ticket Escalations"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
+}

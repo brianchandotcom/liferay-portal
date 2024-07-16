@@ -1,0 +1,268 @@
+[
+	{
+		"menuItems": [
+			{
+				"friendlyURL": "/home",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"menuItems": [
+					{
+						"externalReferenceCode": "productsDocumentationMenuItem",
+						"menuItems": [
+							{
+								"externalReferenceCode": "knowledgeBaseMenuItem",
+								"name_i18n": {
+									"en_US": "Knowledge Base",
+									"es_ES": "Base de conocimientos",
+									"ja_JP": "ナレッジ・ベース",
+									"pt_BR": "Base de conhecimento"
+								},
+								"type": "url",
+								"url": "/knowledge-base",
+								"useNewTab": false
+							},
+							{
+								"externalReferenceCode": "documentationMenuItem",
+								"name_i18n": {
+									"en_US": "Documentation",
+									"es_ES": "Documentación",
+									"ja_JP": "ドキュメンテーション",
+									"pt_BR": "Documentação"
+								},
+								"type": "url",
+								"url": "/documentation",
+								"useNewTab": false
+							}
+						],
+						"name_i18n": {
+							"en_US": "Products Documentation",
+							"es_ES": "Documentación del producto",
+							"ja_JP": "製品ドキュメント",
+							"pt_BR": "Documentação do produto"
+						},
+						"title": "Products Documentation",
+						"type": "node"
+					},
+					{
+						"externalReferenceCode": "toolsMenuItem",
+						"menuItems": [
+							{
+								"externalReferenceCode": "releaseNotesMenuItem",
+								"friendlyURL": "/release-notes",
+								"type": "layout"
+							},
+							{
+								"externalReferenceCode": "downloadsMenuItem",
+								"name_i18n": {
+									"en_US": "Downloads",
+									"es_ES": "Descargas",
+									"ja_JP": "ダウンロード",
+									"pt_BR": "Transferências"
+								},
+								"type": "url",
+								"url": "/downloads",
+								"useNewTab": false
+							}
+						],
+						"name_i18n": {
+							"en_US": "Tools",
+							"es_ES": "Herramientas",
+							"ja_JP": "ツール",
+							"pt_BR": "Ferramentas"
+						},
+						"title": "Tools",
+						"type": "node"
+					},
+					{
+						"externalReferenceCode": "securitiesPoliciesMenuItem",
+						"menuItems": [
+							{
+								"externalReferenceCode": "securityOverviewMenuItem",
+								"name_i18n": {
+									"en_US": "Security Overview",
+									"es_ES": "Panorama de la seguridad",
+									"ja_JP": "セキュリティの概要",
+									"pt_BR": "Visão geral da segurança"
+								},
+								"type": "url",
+								"url": "/security-overview",
+								"useNewTab": false
+							},
+							{
+								"externalReferenceCode": "securityAdvisoriesMenuItem",
+								"name_i18n": {
+									"en_US": "Security Advisories",
+									"es_ES": "Avisos de seguridad",
+									"ja_JP": "セキュリティ情報",
+									"pt_BR": "Avisos de segurança"
+								},
+								"type": "url",
+								"url": "/security-advisories",
+								"useNewTab": false
+							}
+						],
+						"name_i18n": {
+							"en_US": "Securities & Policies",
+							"es_ES": "Seguridad y políticas",
+							"ja_JP": "セキュリティとポリシー",
+							"pt_BR": "Segurança e políticas"
+						},
+						"title": "Securities & Policies",
+						"type": "node"
+					}
+				],
+				"name_i18n": {
+					"en_US": "Resources",
+					"es_ES": "Recursos",
+					"ja_JP": "リソース",
+					"pt_BR": "Recursos"
+				},
+				"title": "Resources",
+				"type": "node"
+			},
+			{
+				"menuItems": [
+					{
+						"externalReferenceCode": "supportDocumentationMenuItem",
+						"menuItems": [
+							{
+								"externalReferenceCode": "productSupportMenuItem",
+								"name_i18n": {
+									"en_US": "Product Support",
+									"es_ES": "Soporte sobre productos",
+									"ja_JP": "製品サポート",
+									"pt_BR": "Suporte ao produto"
+								},
+								"type": "url",
+								"url": "/product-support",
+								"useNewTab": false
+							},
+							{
+								"externalReferenceCode": "accountSupportMenuItem",
+								"name_i18n": {
+									"en_US": "Account Support",
+									"es_ES": "Soporte de cuentas",
+									"ja_JP": "アカウントサポート",
+									"pt_BR": "Suporte à conta"
+								},
+								"type": "url",
+								"url": "/account-support",
+								"useNewTab": false
+							}
+						],
+						"name_i18n": {
+							"en_US": "Support Documentation",
+							"es_ES": "Documentación de soporte",
+							"ja_JP": "サポート・ドキュメント",
+							"pt_BR": "Documentação de suporte"
+						},
+						"title": "Support Documentation",
+						"type": "node"
+					},
+					{
+						"externalReferenceCode": "supportAssistanceMenuItem",
+						"menuItems": [
+							{
+								"externalReferenceCode": "supportFaqMenuItem",
+								"name_i18n": {
+									"en_US": "Support FAQ",
+									"es_ES": "Preguntas frecuentes sobre asistencia",
+									"ja_JP": "サポートに関するよくある質問",
+									"pt_BR": "Perguntas frequentes sobre suporte"
+								},
+								"type": "url",
+								"url": "/support-faq",
+								"useNewTab": false
+							},
+							{
+								"externalReferenceCode": "contactUsMenuItem",
+								"name_i18n": {
+									"en_US": "Contact Us",
+									"es_ES": "Contacte con nosotros",
+									"ja_JP": "お問い合わせ",
+									"pt_BR": "Contate-nos"
+								},
+								"type": "url",
+								"url": "/contact-us",
+								"useNewTab": false
+							}
+						],
+						"name_i18n": {
+							"en_US": "Support Assistance",
+							"es_ES": "Asistencia de apoyo",
+							"ja_JP": "サポート",
+							"pt_BR": "Assistência de suporte"
+						},
+						"title": "Support Assistance",
+						"type": "node"
+					},
+					{
+						"externalReferenceCode": "supportTicketsMenuItem",
+						"menuItems": [
+							{
+								"externalReferenceCode": "submitATicketMenuItem",
+								"name_i18n": {
+									"en_US": "Submit a Ticket",
+									"es_ES": "Envíe un billete",
+									"ja_JP": "チケットを提出する",
+									"pt_BR": "Enviar um tíquete"
+								},
+								"type": "url",
+								"url": "/submit-a-ticket",
+								"useNewTab": false
+							},
+							{
+								"externalReferenceCode": "myTicketsMenuItem",
+								"name_i18n": {
+									"en_US": "My Tickets",
+									"es_ES": "Mis billetes",
+									"ja_JP": "マイ・チケット",
+									"pt_BR": "Meus tíquetes"
+								},
+								"type": "url",
+								"url": "/my-tickets",
+								"useNewTab": false
+							},
+							{
+								"externalReferenceCode": "myTeamsTicketsMenuItem",
+								"name_i18n": {
+									"en_US": "My Team's Tickets",
+									"es_ES": "Billetes de mi equipo",
+									"ja_JP": "マイチームのチケット",
+									"pt_BR": "Tíquetes da minha equipe"
+								},
+								"type": "url",
+								"url": "/my-teams-tickets",
+								"useNewTab": false
+							},
+							{
+								"externalReferenceCode": "escalateATicketMenuItem",
+								"friendlyURL": "/support-ticket-escalation",
+								"type": "layout"
+							}
+						],
+						"name_i18n": {
+							"en_US": "Support Tickets",
+							"es_ES": "Billetes de soporte",
+							"ja_JP": "サポートチケット",
+							"pt_BR": "Tíquetes de suporte"
+						},
+						"title": "Support Tickets",
+						"type": "node"
+					}
+				],
+				"name_i18n": {
+					"en_US": "Support",
+					"es_ES": "Soporte",
+					"ja_JP": "サポート",
+					"pt_BR": "Suporte"
+				},
+				"title": "Support",
+				"type": "node"
+			}
+		],
+		"name": "Customer Portal Primary Navigation"
+	}
+]

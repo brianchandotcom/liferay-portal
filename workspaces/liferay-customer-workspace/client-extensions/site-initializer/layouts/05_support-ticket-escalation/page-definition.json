@@ -1,0 +1,266 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"marginBottom": "5",
+						"marginTop": "5"
+					},
+					"indexed": true,
+					"layout": {
+						"marginBottom": 4,
+						"marginTop": 4
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-heading"
+							},
+							"fragmentConfig": {
+								"headingLevel": "h1"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Escalate a Ticket",
+												"es_ES": "Escala un ticket",
+												"ja_JP": "チケットをエスカレーションする",
+												"pt_BR": "Escale um ticket"
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-heading"
+							},
+							"fragmentConfig": {
+								"headingLevel": "h5"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Raise an issue regarding an existing ticket.",
+												"es_ES": "Plantea una incidencia relativa a un ticket existente.",
+												"ja_JP": "既存のチケットに関する問題を提起する",
+												"pt_BR": "Levante um problema relacionado a um ticket existente."
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginBottom": "3",
+								"textColor": "colorNeutral7"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"formConfig": {
+								"formReference": {
+									"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:SupportTicketEscalation$]",
+									"classType": 0
+								},
+								"formSuccessSubmissionResult": {
+									"message": {
+										"value_i18n": {
+											"en_US": "Thank you for submitting your Support Escalation request. One of our technical managers will be reviewing your request and contacting you shortly.",
+											"es_ES": "Gracias por enviar tu petición de escalado a soporte. Uno de nuestros responsables técnicos la revisará y te contactará en breve.",
+											"ja_JP": "サポートエスカレーションのリクエストを送信していただき、ありがとうございます。テクニカルマネージャーがリクエストを確認し、折り返しご連絡させていただきます。",
+											"pt_BR": "Obrigado por enviar a sua solicitação de escalação ao suporte. Um dos nossos gerentes técnicos avaliará a sua solicitação e entrará em contato em breve."
+										}
+									},
+									"messageType": "Embedded"
+								}
+							},
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_ticketsIDs",
+										"inputHelpText": {
+											"en_US": "Provide the Ticket IDs to be prioritized.",
+											"es_ES": "Proporciona los identificadores de los tickets que quieras priorizar",
+											"ja_JP": "優先順位をつけるチケットIDを指定する",
+											"pt_BR": "Informe os IDs dos tickets a serem priorizados"
+										},
+										"inputLabel": {
+											"es_ES": "Identificador del ticket",
+											"ja_JP": "チケットID",
+											"pt_BR": "ID do ticket"
+										},
+										"inputShowHelpText": true,
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_phoneNumber",
+										"inputHelpText": {
+											"en_US": "Please include country code.",
+											"es_ES": "Por favor, incluye el código de tu país",
+											"ja_JP": "国コードを含めてください。",
+											"pt_BR": "Por favor, inclua o código do seu país"
+										},
+										"inputLabel": {
+											"es_ES": "Número de teléfono",
+											"ja_JP": "連絡先",
+											"pt_BR": "Número de telefone"
+										},
+										"inputShowHelpText": true,
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_customerEmailAddress",
+										"inputLabel": {
+											"es_ES": "Si has abierto este escalado en nombre de otro usuario, por favor indícanos el email al que debemos contactar:",
+											"ja_JP": "別のユーザーに代わって作成する場合は、連絡先となる適切なメールアドレスをご共有ください。",
+											"pt_BR": "Se a solicitação estiver sendo aberta em nome de outro usuário, por favor compartilhe o endereço de e-mail que devemos contatar:"
+										},
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-textarea"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_description",
+										"inputHelpText": {
+											"en_US": "Please describe why these tickets need to be prioritized and what you hope to achieve from this escalation.",
+											"es_ES": "Por favor, describe por qué estos tickets necesitan priorizarse y qué resultado esperas de este proceso de escalado.",
+											"ja_JP": "これらのチケットを優先する必要がある理由と、このエスカレーションによって何を達成したいかをご記入ください。",
+											"pt_BR": "Por favor, descreva o motivo destes tickets necessitarem de priorização e qual o resultado esperado com esta escalação."
+										},
+										"inputLabel": {
+											"es_ES": "Descripción",
+											"ja_JP": "説明",
+											"pt_BR": "Descrição"
+										},
+										"inputShowHelpText": true,
+										"numberOfLines": 5,
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-submit-button"
+									},
+									"fragmentConfig": {
+										"buttonSize": "nm",
+										"buttonType": "primary",
+										"submittedEntryStatus": "approved"
+									},
+									"fragmentFields": [
+										{
+											"id": "submit-button-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"es_ES": "Enviar",
+														"ja_JP": "送信",
+														"pt_BR": "Enviar"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Form"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "home"
+		}
+	},
+	"version": 1.1
+}

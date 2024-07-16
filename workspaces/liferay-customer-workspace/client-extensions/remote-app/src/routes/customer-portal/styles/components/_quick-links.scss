@@ -1,0 +1,26 @@
+.cp-link-body {
+	background: var(--color-action-primary-lighten-1, rgba(250, 251, 255, 1));
+	border: 1px solid rgba(0, 74, 215, 0.1);
+}
+
+.quick-links-card {
+	transition: all 200ms ease-in-out;
+	&:hover {
+		box-shadow: $elevation-fluffy-3;
+
+		.h5,
+		h5 {
+			color: var(--color-action-primary-hover) !important;
+		}
+	}
+	a {
+		text-decoration: none;
+	}
+}
+
+.quick-links-container {
+	height: fit-content;
+	margin-top: -20px;
+	max-width: 343px;
+	right: 0;
+}

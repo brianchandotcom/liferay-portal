@@ -1,0 +1,5 @@
+{
+	"description": "Non supported, experimental feature, that may be disabled by default, so that customers can activate it proactively.",
+	"name": "Beta",
+	"viewableBy": "Anyone"
+}

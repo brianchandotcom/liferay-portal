@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Admin DXP Cloud"
+	},
+	"name": "accountEntryToAdminDXPCloud",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AdminDXPCloud$]",
+	"objectDefinitionName2": "AdminDXPCloud",
+	"type": "oneToMany"
+}

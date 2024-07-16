@@ -1,0 +1,235 @@
+{
+	"label": {
+		"en-US": "Koroneiki Account"
+	},
+	"name": "KoroneikiAccount",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Account Key"
+			},
+			"name": "accountKey",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "AC Workspace Group ID"
+			},
+			"name": "acWorkspaceGroupId",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Allow Self Provisioning"
+			},
+			"name": "allowSelfProvisioning",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Code"
+			},
+			"name": "code",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Data Region"
+			},
+			"name": "dataRegion",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "DXP Version"
+			},
+			"name": "dxpVersion",
+			"required": false
+		},
+		{
+			"DBType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Max Requestors"
+			},
+			"name": "maxRequestors",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Name"
+			},
+			"name": "name",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Partner"
+			},
+			"name": "partner",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Region"
+			},
+			"name": "region",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "SLA Current"
+			},
+			"name": "slaCurrent",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "SLA Current Start Date"
+			},
+			"name": "slaCurrentStartDate",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "SLA Current End Date"
+			},
+			"name": "slaCurrentEndDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "SLA Expired"
+			},
+			"name": "slaExpired",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "SLA Expired Start Date"
+			},
+			"name": "slaExpiredStartDate",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "SLA Expired End Date"
+			},
+			"name": "slaExpiredEndDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "SLA Future"
+			},
+			"name": "slaFuture",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "SLA Future Start Date"
+			},
+			"name": "slaFutureStartDate",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "SLA Future End Date"
+			},
+			"name": "slaFutureEndDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Liferay Contact Name"
+			},
+			"name": "liferayContactName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Liferay Contact Role"
+			},
+			"name": "liferayContactRole",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Liferay Contact Email Address"
+			},
+			"name": "liferayContactEmailAddress",
+			"required": false
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Koroneiki Accounts"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
+}

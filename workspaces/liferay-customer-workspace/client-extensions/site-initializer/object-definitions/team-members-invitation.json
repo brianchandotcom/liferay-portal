@@ -1,0 +1,55 @@
+{
+	"label": {
+		"en-US": "Team Members Invitation"
+	},
+	"name": "TeamMembersInvitation",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Given Name"
+			},
+			"name": "givenName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Family Name"
+			},
+			"name": "familyName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Email"
+			},
+			"name": "email",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Role"
+			},
+			"name": "role",
+			"required": false
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Team Members Invitation"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
+}

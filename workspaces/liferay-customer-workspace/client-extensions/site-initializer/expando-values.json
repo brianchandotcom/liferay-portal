@@ -1,0 +1,158 @@
+[
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:productsDocumentationMenuItem#]",
+		"columnName": "Submenu Column Span",
+		"data": "4"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:toolsMenuItem#]",
+		"columnName": "Submenu Column Span",
+		"data": "4"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:securitiesPoliciesMenuItem#]",
+		"columnName": "Submenu Column Span",
+		"data": "4"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:supportDocumentationMenuItem#]",
+		"columnName": "Submenu Column Span",
+		"data": "4"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:supportAssistanceMenuItem#]",
+		"columnName": "Submenu Column Span",
+		"data": "4"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:supportTicketsMenuItem#]",
+		"columnName": "Submenu Column Span",
+		"data": "4"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:productsDocumentationMenuItem#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:toolsMenuItem#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:securitiesPoliciesMenuItem#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:supportDocumentationMenuItem#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:supportAssistanceMenuItem#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:supportTicketsMenuItem#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:knowledgeBaseMenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:documentationMenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:dxpReleaseNotesMenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:downloadsMenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:securityOverviewMenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:securityAdvisoriesMenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:MenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:productSupportMenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:accountSupportMenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:supportFaqMenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:contactUsMenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:submitATicketMenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:myTicketsMenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:myTeamsTicketsMenuItem#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	}
+]

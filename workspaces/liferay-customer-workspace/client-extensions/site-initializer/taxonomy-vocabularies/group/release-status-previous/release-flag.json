@@ -1,0 +1,5 @@
+{
+	"description": "Fully supported feature, disabled by default. Customers can activate it proactively.",
+	"name": "Release Flag (opt-in)",
+	"viewableBy": "Anyone"
+}

@@ -1,0 +1,612 @@
+[
+	{
+		"actionIds": [
+			"VIEW",
+			"VIEW_USERS"
+		],
+		"resourceName": "com.liferay.account.model.AccountEntry",
+		"roleName": "Account Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_CATEGORY",
+			"ADD_VOCABULARY",
+			"PERMISSIONS"
+		],
+		"resourceName": "com.liferay.asset.categories",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_CATEGORY",
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.asset.kernel.model.AssetCategory",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.asset.kernel.model.AssetVocabulary",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"MANAGE_TAG",
+			"PERMISSIONS",
+			"SUBSCRIBE"
+		],
+		"resourceName": "com.liferay.asset.tags",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW_COMMERCE_ORDERS",
+			"VIEW_OPEN_COMMERCE_ORDERS"
+		],
+		"resourceName": "com.liferay.commerce.order",
+		"roleName": "Account Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"resourceName": "com.liferay.depot.model.DepotEntry",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_DOCUMENT",
+			"ADD_DOCUMENT_TYPE",
+			"ADD_FOLDER",
+			"ADD_REPOSITORY",
+			"ADD_SHORTCUT",
+			"ADD_STRUCTURE",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.document.library",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_DISCUSSION",
+			"DELETE",
+			"DELETE_DISCUSSION",
+			"DOWNLOAD",
+			"OVERRIDE_CHECKOUT",
+			"PERMISSIONS",
+			"UPDATE",
+			"UPDATE_DISCUSSION",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntry",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntryMetadata-com.liferay.dynamic.data.mapping.model.DDMStructure",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntryType",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.document.library.kernel.model.DLFileShortcut",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS",
+			"ADD_DOCUMENT",
+			"ADD_SHORTCUT",
+			"ADD_SUBFOLDER",
+			"DELETE",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_ARTICLE",
+			"ADD_FEED",
+			"ADD_FOLDER",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.journal",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_DISCUSSION",
+			"DELETE",
+			"DELETE_DISCUSSION",
+			"EXPIRE",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"UPDATE_DISCUSSION",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.journal.model.JournalArticle",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"PERMISSIONS",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.journal.model.JournalFeed",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS",
+			"ADD_ARTICLE",
+			"ADD_SUBFOLDER",
+			"DELETE",
+			"PERMISSIONS",
+			"SUBSCRIBE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "com.liferay.journal.model.JournalFolder",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal.model.JournalFolder",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"resourceName": "com.liferay.list.type.model.ListTypeDefinition",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"CREATE_TOKEN"
+		],
+		"resourceName": "com.liferay.oauth2.provider.model.OAuth2Application",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AccountFlag$]",
+		"roleName": "Account Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AccountSubscription$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AccountSubscriptionGroup$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AccountSubscriptionTerm$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AdminDXPCloud$]",
+		"roleName": "Account Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AdminLiferayExperienceCloud$]",
+		"roleName": "Account Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AnalyticsCloudDataCenterLocation$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AnalyticsCloudWorkspace$]",
+		"roleName": "Account Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:BannedEmailDomain$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:DXPCDataCenterRegion$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:DXPCloudEnvironment$]",
+		"roleName": "Account Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:IncidentReportContactAnalyticsCloud$]",
+		"roleName": "Account Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:KoroneikiAccount$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LiferayExperienceCloudEnvironment$]",
+		"roleName": "Account Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LiferayExperienceCloudPrimaryRegion$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:TeamMembersInvitation$]",
+		"roleName": "Account Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:TicketAttachment$]",
+		"roleName": "Account Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:TicketAttachment$]",
+		"roleName": "Requester",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountFlag$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountSubscription$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountSubscriptionGroup$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountSubscriptionTerm$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AdminDXPCloud$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AdminLiferayExperienceCloud$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AnalyticsCloudDataCenterLocation$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AnalyticsCloudWorkspace$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:BannedEmailDomain$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:DXPCDataCenterRegion$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:DXPCloudEnvironment$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:IncidentReportContactAnalyticsCloud$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:KoroneikiAccount$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:LiferayExperienceCloudEnvironment$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:LiferayExperienceCloudPrimaryRegion$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TeamMembersInvitation$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"resourceName": "com.liferay.portal.kernel.model.Group",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"MANAGE_ACCOUNTS"
+		],
+		"resourceName": "com.liferay.portal.kernel.model.Organization",
+		"roleName": "Organization User",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"CONFIGURATION",
+			"PERMISSIONS",
+			"PREFERENCES",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_document_library_web_portlet_DLAdminPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"CONFIGURATION",
+			"PERMISSIONS",
+			"PREFERENCES",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_document_library_web_portlet_DLPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"CONFIGURATION",
+			"PERMISSIONS",
+			"PREFERENCES",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_journal_web_portlet_JournalPortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"CONFIGURATION",
+			"PERMISSIONS",
+			"PREFERENCES",
+			"VIEW"
+		],
+		"resourceName": "com_liferay_template_web_internal_portlet_TemplatePortlet",
+		"roleName": "Site Content Reviewer",
+		"scope": "3"
+	}
+]

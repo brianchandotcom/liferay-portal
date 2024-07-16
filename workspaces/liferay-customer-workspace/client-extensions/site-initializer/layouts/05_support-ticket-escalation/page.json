@@ -1,0 +1,28 @@
+{
+	"friendlyURL": "/support-ticket-escalation",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Escalate a Ticket",
+		"es_ES": "Escalar un billete",
+		"ja_JP": "チケットのエスカレーション",
+		"pt_BR": "Escalar um tíquete"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "User",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "content"
+}

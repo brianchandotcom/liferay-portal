@@ -1,0 +1,49 @@
+.cp-activation-keys-drop-down-item:hover {
+	background-color: var(--color-action-primary-hover-lighten);
+	color: var(--color-action-primary-hover) !important;
+
+	svg {
+		color: var(--color-action-primary-hover) !important;
+		opacity: 0.5;
+	}
+}
+
+.cp-activation-key-download-alert {
+	width: 25.375rem;
+}
+
+.alert-notifications-fixed {
+	bottom: 2rem;
+	left: 2rem;
+}
+
+.cp-error-alert {
+	background-color: var(--color-state-error-lighten-1);
+
+	svg {
+		height: 1.5rem;
+		width: 1.5rem;
+	}
+}
+
+.cp-deactivate-loading {
+	opacity: 0.5;
+}
+
+.cp-spinner {
+	border-right-color: transparent;
+}
+
+.cp-activation-key-icon {
+	border: 1px solid var(--color-neutral-2);
+	box-shadow: none;
+	min-width: fit-content;
+	ul li button {
+		padding: 0.75rem;
+		padding-right: 68px !important;
+	}
+}
+
+.dropdown button:focus {
+	box-shadow: none;
+}

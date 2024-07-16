@@ -1,0 +1,26 @@
+[
+	{
+		"key": "backup",
+		"name": "Backup",
+		"name_i18n": {
+			"en-US": "Backup"
+		},
+		"type": "string"
+	},
+	{
+		"key": "nonProduction",
+		"name": "Non-Production",
+		"name_i18n": {
+			"en-US": "Non-Production"
+		},
+		"type": "string"
+	},
+	{
+		"key": "production",
+		"name": "Production",
+		"name_i18n": {
+			"en-US": "Production"
+		},
+		"type": "string"
+	}
+]

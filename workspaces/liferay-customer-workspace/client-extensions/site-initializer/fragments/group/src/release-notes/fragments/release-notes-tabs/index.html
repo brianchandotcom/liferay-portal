@@ -1,0 +1,49 @@
+[#assign currentDisplayIdsParameterized = "" /]
+
+[#if themeDisplay?has_content]
+	[#assign displayPortalURLs = (themeDisplay.getURLCurrent()?split("release-notes/"))! /]
+
+	[#assign currentDisplayPaths = (displayPortalURLs?last?split("/"))! /]
+
+	[#assign currentTabId = (currentDisplayPaths?first)! /]
+
+	[#assign currentDisplayIds = (displayPortalURLs?last?split(currentTabId)?last)! /]
+
+	[#assign
+		parameter = "&start="
+		parameterValue = "1"
+	/]
+
+	[#assign paginationParameterIndex = currentDisplayIds?index_of(parameter) /]
+
+	[#if paginationParameterIndex != -1]
+		[#assign beforePaginationParameter = currentDisplayIds?substring(0, paginationParameterIndex + parameter?length) /]
+
+		[#assign currentDisplayIdsParameterized = beforePaginationParameter + parameterValue /]
+	[/#if]
+[/#if]
+
+[#macro tab key label]
+	[#assign
+		activeTab = currentTabId == key
+		inputURL = displayPortalURLs?first + "release-notes/" + key + (paginationParameterIndex != -1)?then(currentDisplayIdsParameterized, currentDisplayIds)
+	/]
+
+	<li aria-label="${activeTab?then('Current Page', '')}" class="nav-item">
+		<a class="${activeTab?then('active ', '')}nav-link" href="${inputURL}">
+			<span class="navbar-text-truncate">${label}</span>
+		</a>
+	</li>
+[/#macro]
+
+<nav class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
+	<div class="container-fluid container-fluid-max-xl p-0">
+		<ul class="navbar-nav">
+			[@tab key="release-highlights" label="Release Highlights" /]
+
+			[@tab key="all-features" label="All Features" /]
+
+			[@tab key="breaking-changes" label="Breaking Changes" /]
+		</ul>
+	</div>
+</nav>

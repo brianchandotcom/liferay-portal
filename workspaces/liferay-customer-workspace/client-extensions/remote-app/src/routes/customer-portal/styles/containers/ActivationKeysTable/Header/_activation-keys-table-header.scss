@@ -1,0 +1,13 @@
+.cp-deactivate-button {
+	background-color: white;
+	color: var(--color-state-error);
+
+	&:hover {
+		color: white;
+	}
+}
+
+.cp-drop-down-action-button {
+	min-width: max-content !important;
+	overflow: hidden !important;
+}

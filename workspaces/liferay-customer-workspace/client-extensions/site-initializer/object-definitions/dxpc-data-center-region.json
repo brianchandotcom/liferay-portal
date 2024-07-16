@@ -1,0 +1,33 @@
+{
+	"label": {
+		"en-US": "DXPC Data Center Region"
+	},
+	"name": "DXPCDataCenterRegion",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Name"
+			},
+			"name": "name",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Value"
+			},
+			"name": "value",
+			"required": true
+		}
+	],
+	"pluralLabel": {
+		"en_US": "DXPC Data Center Regions"
+	},
+	"scope": "company",
+	"system": false
+}

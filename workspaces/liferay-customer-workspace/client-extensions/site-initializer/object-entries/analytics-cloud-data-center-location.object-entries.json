@@ -1,0 +1,30 @@
+{
+	"object-entries": [
+		{
+			"externalReferenceCode": "CP-REGION-AC-01",
+			"name": "Oregon, USA",
+			"value": "Oregon, USA"
+		},
+		{
+			"externalReferenceCode": "CP-REGION-AC-02",
+			"name": "São Paulo, Brazil",
+			"value": "São Paulo, Brazil"
+		},
+		{
+			"externalReferenceCode": "CP-REGION-AC-03",
+			"name": "London, England",
+			"value": "London, England"
+		},
+		{
+			"externalReferenceCode": "CP-REGION-AC-04",
+			"name": "Frankfurt, Germany",
+			"value": "Frankfurt, Germany"
+		},
+		{
+			"externalReferenceCode": "CP-REGION-AC-05",
+			"name": "Mumbai, India",
+			"value": "Mumbai, India"
+		}
+	],
+	"objectDefinitionName": "AnalyticsCloudDataCenterLocation"
+}

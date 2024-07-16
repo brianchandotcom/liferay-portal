@@ -1,0 +1,18 @@
+.cp-sla-card {
+	filter: blur(2px);
+	position: absolute;
+	transition: all 0.4s;
+	z-index: 99;
+
+	&.active {
+		filter: blur(0);
+		position: initial;
+		transform: translate(-1rem, 1rem);
+		z-index: 100;
+	}
+
+	&.last {
+		transform: translate(1rem, -1rem);
+		z-index: 98;
+	}
+}

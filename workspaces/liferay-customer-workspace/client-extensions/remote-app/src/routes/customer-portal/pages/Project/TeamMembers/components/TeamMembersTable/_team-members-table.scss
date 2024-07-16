@@ -1,0 +1,42 @@
+.cp-team-members-table-wrapper {
+	thead {
+		top: 0;
+		z-index: 999;
+	}
+}
+
+.dropdown-menu {
+	.custom-checkbox {
+		margin-left: 0.625rem;
+	}
+
+	label {
+		font-size: 0.813rem;
+		padding-left: 0.625rem;
+	}
+
+	border-radius: 0.5rem;
+	line-height: initial;
+	min-width: 13.625rem;
+	padding: 0.75rem;
+}
+
+.page-link:hover {
+	z-index: 0;
+}
+
+.remove-user-modal {
+	.modal-header,
+	.modal-footer,
+	.modal-body {
+		border-width: 0;
+	}
+
+	a:hover {
+		text-decoration: none;
+	}
+
+	.custom-control {
+		margin-bottom: 0;
+	}
+}

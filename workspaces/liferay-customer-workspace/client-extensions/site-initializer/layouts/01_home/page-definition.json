@@ -1,0 +1,71 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"marginLeft": "5",
+						"marginTop": "3",
+						"paddingLeft": "2",
+						"paddingTop": "3"
+					},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 4,
+						"marginRight": 0,
+						"marginTop": 1,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 1,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "welcome-banner"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"fragmentStyle": {
+								"paddingBottom": "2.5rem",
+								"textColor": "#3E3F4A"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"minHeight": "52.5vh"
+							},
+							"widgetInstance": {
+								"widgetConfig": {
+									"properties": "route=home"
+								},
+								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:CUSTOMER-PORTAL$]"
+							}
+						},
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "home"
+		}
+	},
+	"version": 1.1
+}

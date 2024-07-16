@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext",
+	"ddmTemplateKey": "RELEASE-NOTES-BREAKING-CHANGE-SEARCH",
+	"name": "Release Notes Breaking Change Search",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

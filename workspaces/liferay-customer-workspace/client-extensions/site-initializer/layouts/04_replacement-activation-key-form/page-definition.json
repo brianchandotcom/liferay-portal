@@ -1,0 +1,533 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"cssClasses": [
+						"shadow-lg"
+					],
+					"fragmentStyle": {
+						"borderColor": "colorNeutral2",
+						"borderRadius": "borderRadiusLg",
+						"borderWidth": "1",
+						"maxHeight": "800px",
+						"maxWidth": "900px",
+						"paddingBottom": "3",
+						"paddingLeft": "3",
+						"paddingRight": "3",
+						"paddingTop": "3"
+					},
+					"indexed": true,
+					"layout": {
+						"borderColor": "colorNeutral2",
+						"borderWidth": 1,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 1,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 1,
+						"widthType": "Fixed"
+					},
+					"name": "Page Form Container"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "custom-dialect-text"
+							},
+							"fragmentConfig": {
+								"textType": "h1",
+								"truncateText": false
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Replacement Activation Key Acknowledgement Request"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"fontWeight": "fontWeightBold",
+								"marginBottom": "2"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "custom-dialect-text"
+							},
+							"fragmentConfig": {
+								"textType": "text-paragraph",
+								"truncateText": false
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Please fill out the information below to request a replacement activation key. If you have requests for multiple servers please label each numerically."
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-separator"
+							},
+							"fragmentConfig": {
+								"bottomSpacing": "3",
+								"separatorColor": ""
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"cssClasses": [
+								"overflow-auto"
+							],
+							"formConfig": {
+								"formReference": {
+									"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ReplacementActivationKeyRequest$]"
+								}
+							},
+							"fragmentStyle": {
+								"borderRadius": "",
+								"height": "600px",
+								"paddingLeft": "3",
+								"paddingRight": "3"
+							},
+							"indexed": true,
+							"layout": {
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"contentDisplay": "FlexRow",
+										"marginBottom": 2,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									},
+									"name": "Required Fields Container"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "custom-dialect-text"
+											},
+											"fragmentConfig": {
+												"textType": "text-paragraph-sm",
+												"truncateText": false
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "*"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginRight": "2",
+												"textColor": "colorStateError"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "custom-dialect-text"
+											},
+											"fragmentConfig": {
+												"textType": "text-paragraph-sm",
+												"truncateText": false
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Indicates Required Fields"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_contactEmailAddress",
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_companyName",
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-checkbox"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_activeLiferaySubscription"
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-select-from-list"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_supportRegion"
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_explainReplacementActivationKey",
+										"inputShowLabel": true,
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-select-from-list"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_typeOfServer"
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-select-from-list"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_clustered"
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-select-from-list"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_versionOfLiferaySoftware"
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_serverInformation",
+										"inputShowLabel": true,
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "1"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "custom-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "text-paragraph-sm",
+										"truncateText": false
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "The following server information is required depending on your specific version: Liferay Portal 4.4 - 5.2 SP4 - Server ID. Liferay Portal 5.2 SP5 - 6.0 SP2 - MAC Address. Liferay Portal 6.1 GA1 and later, Liferay DXP - Host Name, IP Address and MAC Address"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"fontWeight": "fontWeightBold",
+										"marginBottom": "4",
+										"textColor": "colorNeutral8"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "custom-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "text-paragraph",
+										"truncateText": false
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Acknowledgement"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"fontWeight": "fontWeightBold",
+										"marginBottom": "2"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-checkbox"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_acknowledgement",
+										"inputLabel": {
+											"en_US": "I agree"
+										},
+										"inputShowLabel": true
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "1"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "custom-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "text-paragraph-sm",
+										"truncateText": false
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "You acknowledge that in the event Liferay provides a replacement license key for the software as requested, regardless of whether an agreement for the provision of services for such software has been terminated, such replacement license key does not affect the scope of any license previously granted to Company by Liferay for such software. Any limitations or obligations with respect to such grant still apply, including but not limited to with respect to the number of licensed servers or other units, as applicable. You represent that, unless expressly authorized under such previously granted license, you will discontinue use of the license key intended to be replaced by this request. By selecting \"I agree\" above, you acknowledge and agree to the above requirements and representations and that you have the authority to agree to such requirements and representations."
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"fontWeight": "fontWeightBold",
+										"marginBottom": "5",
+										"textColor": "colorNeutral8"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-submit-button"
+									},
+									"fragmentConfig": {
+										"buttonSize": "nm",
+										"buttonType": "primary"
+									},
+									"fragmentFields": [
+										{
+											"id": "submit-button-text",
+											"value": {
+												"fragmentLink": {
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Form"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "home"
+		}
+	},
+	"version": 1.1
+}

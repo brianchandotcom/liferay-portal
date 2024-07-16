@@ -1,0 +1,19 @@
+<button class="d-flex p-2 sites-container" data-toggle="liferay-dropdown" id="liferay-sites-id" tabindex="6">
+	<span class="align-self-center opacity-50 pr-1 sites-icon">
+		[@clay["icon"] symbol="sites" /]
+	</span>
+
+	<div class="d-flex font-weight-semi-bold liferay-sites position-relative">
+		<div class="liferay-sites-text opacity-80">
+			${languageUtil.get(locale, "liferay-sites", "Liferay Sites")}
+		</div>
+
+		<span class="caret-bottom-icon">
+			[@clay["icon"] symbol="caret-bottom-l" /]
+		</span>
+	</div>
+</button>
+
+<div aria-labelledby="liferay-sites-id" class="dropdown-menu liferay-sites-dropdown">
+	<lfr-drop-zone></lfr-drop-zone>
+</div>

@@ -1,0 +1,21 @@
+select,
+select.form-control,
+select.form-control:active,
+select.form-control:focus,
+.has-success select.form-control,
+.has-error select.form-control {
+	-webkit-appearance: none;
+	appearance: none;
+	-moz-appearance: none;
+	background-image: none;
+}
+
+.select-icon {
+	bottom: 10px;
+	fill: grey;
+	height: 24px !important;
+	pointer-events: none;
+	position: absolute;
+	right: 12px;
+	width: 24px !important;
+}

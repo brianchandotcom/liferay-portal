@@ -1,0 +1,472 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"marginLeft": "6",
+						"marginRight": "6"
+					},
+					"indexed": true,
+					"layout": {
+						"marginLeft": 6,
+						"marginRight": 6
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"cssClasses": [
+								"rounded-xl"
+							],
+							"fragmentStyle": {
+								"backgroundFragmentImage": {
+									"title": {
+										"value": "hero.svg"
+									},
+									"url": {
+										"mapping": {
+											"fieldKey": "FileEntry_previewImage",
+											"itemReference": {
+												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/assets/hero.svg#]"
+											}
+										}
+									}
+								},
+								"height": "164px",
+								"marginBottom": "3",
+								"marginTop": "3"
+							},
+							"indexed": true,
+							"layout": {
+								"align": "Start",
+								"contentDisplay": "FlexRow",
+								"justify": "SpaceBetween",
+								"marginBottom": 2,
+								"marginTop": 1
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"marginLeft": "5",
+										"marginTop": "5"
+									},
+									"indexed": true,
+									"layout": {
+										"marginLeft": 4,
+										"marginTop": 4
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"text-small-caps"
+											],
+											"customCSS": ".[$FRAGMENT_CLASS$] p {\n    margin-bottom: var(--spacer-2, 0.5rem) !important;\n}",
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "<p>Release Notes</p>\n"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"fontWeight": "fontWeightBolder",
+												"textColor": "colorNeutral0"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "information-template-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"mapping": {
+																"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:Release Notes Dropdown$]",
+																"itemReference": {
+																	"contextSource": "DisplayPageItem"
+																}
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"height": "164px",
+										"marginRight": "5"
+									},
+									"indexed": true,
+									"layout": {
+										"align": "Center",
+										"contentDisplay": "FlexColumn",
+										"justify": "Center",
+										"marginRight": 4
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] .btn {\n    background-color: var(--color-neutral-0) !important;\n    border-color: var(--color-brand-primary) !important;\n    color: var(--color-brand-primary) !important;\n}\n\n.[$FRAGMENT_CLASS$] p {\n    margin-bottom: 0;\n}",
+											"fragment": {
+												"key": "BASIC_COMPONENT-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "nm",
+												"buttonType": "primary",
+												"type": "link"
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value_i18n": {
+																		"en_US": "https://customer.liferay.com/dxp-release-notes"
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "<p>Plan an Upgrade&nbsp; &nbsp;➜</p>\n"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"backgroundColor": "",
+												"textColor": ""
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"align": "Start",
+								"contentDisplay": "FlexColumn"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "release-notes-tabs",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 10
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginRight": "13rem",
+												"minHeight": "52.5vh"
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayInDocumentForm": "false",
+													"displayStyle": "ddmTemplate_RELEASE-NOTES-HIGHLIGHTS-SEARCH",
+													"displayStyleGroupId": "[$GROUP_ID$]",
+													"federatedSearchKey": "",
+													"fieldsToDisplay": "",
+													"highlightEnabled": "true",
+													"paginationDelta": "20",
+													"paginationDeltaParameterName": "delta",
+													"paginationStartParameterName": "start",
+													"showEmptyResultMessage": "false",
+													"showPagination": "true",
+													"viewInContext": "true"
+												},
+												"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 2
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"allowEmptySearches": "true",
+													"basicFacetSelection": "false",
+													"federatedSearchKey": ""
+												},
+												"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] \n\n.treeview.treeview-light.treeview-nested.treeview-vocabulary-display {\n    margin-top: 0;\n    padding: 0;\n}\n\n.c-mb-4, \n.c-my-4 {\n    margin-bottom: 0;\n    padding-left: 1.25rem;\n}\n\n.btn-unstyled.facet-clear-btn {\n    color: var(--action-neutral-default);   \n    font-size: var(--custom-control-label-font-size);    \n}\n\n.panel-body {\n    margin-top: -0.3125rem;\n    padding: 0;\n}\n\n.panel-title {\n    font-size: 1.125rem;    \n    text-transform: none;\n}\n\n.search-facet-display-vocabulary .treeview-vocabulary-display .tree-item-category {\n    padding-left: 1.25rem;\n}\n\n.search-facet-display-vocabulary .treeview-vocabulary-display .tree-item-category .custom-control-label-text {\n    color: var(--custom-control-label-color);\n}",
+											"fragmentStyle": {
+												"backgroundColor": "colorNeutral1",
+												"borderRadius": "borderRadiusLg",
+												"marginTop": "3"
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
+													"displayStyleGroupId": "[$GROUP_ID$]",
+													"frequenciesVisible": "false",
+													"frequencyThreshold": "1",
+													"maxTerms": "10",
+													"order": "key:asc",
+													"parameterName": "Product Capabilities",
+													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Product Capabilities$]"
+												},
+												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"boost": "",
+													"customHeading": "Custom Filter for assetCategoryIds",
+													"disabled": "false",
+													"displayStyle": "default",
+													"displayStyleGroupId": "[$GROUP_ID$]",
+													"federatedSearchKey": "",
+													"filterField": "assetCategoryIds",
+													"filterQueryType": "match",
+													"filterValue": "",
+													"immutable": "false",
+													"invisible": "true",
+													"occur": "must",
+													"parameterName": "r",
+													"parentQueryName": "",
+													"queryName": ""
+												},
+												"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"boost": "",
+													"customHeading": "Custom Filter for ddmStructureKey",
+													"disabled": "false",
+													"displayStyle": "default",
+													"displayStyleGroupId": "[$GROUP_ID$]",
+													"federatedSearchKey": "",
+													"filterField": "ddmStructureKey",
+													"filterQueryType": "match",
+													"filterValue": "RELEASE-NOTES-HIGHLIGHT-STRUCTURE",
+													"immutable": "true",
+													"invisible": "true",
+													"occur": "must",
+													"parameterName": "",
+													"parentQueryName": "",
+													"queryName": ""
+												},
+												"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"textAlign": "center"
+					},
+					"indexed": true,
+					"layout": {
+						"align": "End",
+						"contentDisplay": "FlexColumn",
+						"flexWrap": "Wrap",
+						"justify": "End"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "release-notes-sidetab",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "home"
+		},
+		"themeName": "Dialect",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

@@ -1,0 +1,11 @@
+{
+	"object-entries": [
+		{
+			"domain": "bannedtest1.com"
+		},
+		{
+			"domain": "bannedtest2.com"
+		}
+	],
+	"objectDefinitionName": "BannedEmailDomain"
+}

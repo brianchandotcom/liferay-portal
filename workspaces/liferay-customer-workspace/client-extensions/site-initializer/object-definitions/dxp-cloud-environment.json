@@ -1,0 +1,55 @@
+{
+	"label": {
+		"en-US": "DXP Cloud Environment"
+	},
+	"name": "DXPCloudEnvironment",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Account Key"
+			},
+			"name": "accountKey",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Data Center Region"
+			},
+			"name": "dataCenterRegion",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Project ID"
+			},
+			"name": "projectId",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Disaster Data Center Region"
+			},
+			"name": "disasterDataCenterRegion",
+			"required": false
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "DXP Cloud Environments"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
+}

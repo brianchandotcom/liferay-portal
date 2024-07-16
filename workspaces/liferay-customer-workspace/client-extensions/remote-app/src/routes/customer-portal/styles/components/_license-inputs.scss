@@ -1,0 +1,15 @@
+@mixin select {
+	select::placeholder {
+		font-weight: var(--font-weight-semi-bold);
+	}
+}
+
+.cp-subscription-select {
+	@include select;
+	max-width: 247px;
+}
+
+.cp-subscription-term-select {
+	@include select;
+	max-width: 360px;
+}

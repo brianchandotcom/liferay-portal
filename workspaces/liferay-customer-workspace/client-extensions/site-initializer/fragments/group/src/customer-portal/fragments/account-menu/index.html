@@ -1,0 +1,72 @@
+<div class="account position-relative" tabindex="9">
+	<button class="account-info align-items-center d-flex ${themeDisplay.isSignedIn()?then('py-1 pl-2', '')}" data-toggle="liferay-dropdown" id="account-menu-id">
+		[#if themeDisplay.isSignedIn()]
+			<div class="user-avatar">
+				<img class="h-100 mx-100" src="${user.fetchPortraitURL(themeDisplay)}" />
+			</div>
+		[#else]
+			<div class="py-2 signed-out-account">
+				<span class="opacity-50 pl-2 user-icon">
+					[@clay["icon"] symbol="user" /]
+				</span>
+				<span class="account-text font-weight-semi-bold opacity-80 user-out">
+					${languageUtil.get(locale, "account", "Account")}
+				</span>
+			</div>
+		[/#if]
+
+		<span class="account-dropdown-icon opacity-30 pr-2">
+			[@clay["icon"] symbol="caret-bottom-l" /]
+		</span>
+	</button>
+
+	<div aria-labelledby="language-selector-id" class="account-dropdown dropdown-menu position-absolute pt-2">
+		<div class="dropdown-wrapper">
+			<div class="account-content p-2">
+				<div class="create-account-settings">
+					[#if themeDisplay.isSignedIn()]
+						<div class="signed-in-account">
+							<a class="account-menu-item d-flex font-weight-bold p-3 settings text-decoration-none" data-lfr-editable-id="link_okta" data-lfr-editable-type="link" href="https://liferay.okta.com/enduser/settings" target="_blank">
+								<span class="account-menu-icon align-items-center d-flex opacity-70 pr-2 pt-1">
+									[@clay["icon"] symbol="cog" /]
+								</span>
+								<span class="account-settings dropdown-option-text">
+									${languageUtil.get(locale, "account-settings","Account Settings")}
+								</span>
+							</a>
+
+							<a class="account-menu-item d-flex font-weight-bold p-3 text-decoration-none" href="${htmlUtil.escape(themeDisplay.getURLSignOut())}">
+								<span class="account-menu-icon align-items-center d-flex opacity-70 pr-2 pt-1">
+									[@clay["icon"] symbol="logout"/]
+								</span>
+								<span class="dropdown-option-text">
+									${languageUtil.get(locale, "sign-out","Sign Out")}
+								</span>
+							</a>
+						</div>
+					[#else]
+						<div class="signed-out-account">
+							<div class="d-flex p-3 settings">
+								<span class="align-items-center create-account-icon d-flex pr-2 pt-1">
+									[@clay["icon"] symbol="user-plus"/]
+								</span>
+								<span>
+									${languageUtil.get(locale, "create-an-account", "Create An Account")}
+								</span>
+							</div>
+
+							<a class="account-menu-item d-flex p-3 sign-in text-decoration-none" href="${htmlUtil.escape(themeDisplay.getURLSignIn())}">
+								<span class="account-menu-item align-items-center d-flex opacity-70 pr-2 pt-1 sign-in-icon">
+									[@clay["icon"] symbol="user" /]
+								</span>
+								<span>
+									${languageUtil.get(locale, "sign-in", "Sign In")}
+								</span>
+							</a>
+						</div>
+					[/#if]
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

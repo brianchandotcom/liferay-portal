@@ -1,0 +1,33 @@
+{
+	"label": {
+		"en-US": "Analytics Cloud Data Center Location"
+	},
+	"name": "AnalyticsCloudDataCenterLocation",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Name"
+			},
+			"name": "name",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Value"
+			},
+			"name": "value",
+			"required": true
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Analytics Cloud Data Center Locations"
+	},
+	"scope": "company",
+	"system": false
+}

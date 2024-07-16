@@ -1,0 +1,58 @@
+[
+	{
+		"key": "asiaPacific",
+		"name": "Asia Pacific",
+		"name_i18n": {
+			"en-US": "Asia Pacific"
+		},
+		"type": "string"
+	},
+	{
+		"key": "australiaNewZealand",
+		"name": "Australia & New Zealand",
+		"name_i18n": {
+			"en-US": "Australia & New Zealand"
+		},
+		"type": "string"
+	},
+	{
+		"key": "europeMiddleEastAfrica",
+		"name": "Europe, Middle East & Africa",
+		"name_i18n": {
+			"en-US": "Europe, Middle East & Africa"
+		},
+		"type": "string"
+	},
+	{
+		"key": "latinAmerica",
+		"name": "Latin America",
+		"name_i18n": {
+			"en-US": "Latin America"
+		},
+		"type": "string"
+	},
+	{
+		"key": "northAmerica",
+		"name": "North America",
+		"name_i18n": {
+			"en-US": "North America"
+		},
+		"type": "string"
+	},
+	{
+		"key": "southAsia",
+		"name": "South Asia",
+		"name_i18n": {
+			"en-US": "South Asia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "spainPortugal",
+		"name": "Spain & Portugal",
+		"name_i18n": {
+			"en-US": "Spain & Portugal"
+		},
+		"type": "string"
+	}
+]

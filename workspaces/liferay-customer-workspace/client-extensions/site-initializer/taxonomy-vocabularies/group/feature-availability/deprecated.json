@@ -1,0 +1,5 @@
+{
+	"description": "Partially supported, enabled for existing customers, disabled by default for new customers and users.",
+	"name": "Deprecated",
+	"viewableBy": "Anyone"
+}

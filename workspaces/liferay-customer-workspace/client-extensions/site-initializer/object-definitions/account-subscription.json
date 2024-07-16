@@ -1,0 +1,117 @@
+{
+	"label": {
+		"en-US": "Account Subscription"
+	},
+	"name": "AccountSubscription",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Account Key"
+			},
+			"name": "accountKey",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Account Subscription Group ERC"
+			},
+			"name": "accountSubscriptionGroupERC",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "End Date"
+			},
+			"name": "endDate",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Has Disaster Data Center Region"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "hasDisasterDataCenterRegion",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en-US": "Instance Size"
+			},
+			"name": "instanceSize",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Name"
+			},
+			"name": "name",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Product Key"
+			},
+			"name": "productKey",
+			"required": false
+		},
+		{
+			"DBType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Quantity"
+			},
+			"name": "quantity",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Start Date"
+			},
+			"name": "startDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Status"
+			},
+			"name": "subscriptionStatus",
+			"required": false
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Account Subscriptions"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
+}

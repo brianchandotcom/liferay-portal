@@ -1,0 +1,63 @@
+.customer-portal-welcome-banner {
+	height: 286px;
+}
+
+.customer-portal-welcome-img {
+	border-bottom-left-radius: var(--border-radius-xl);
+	border-top-left-radius: var(--border-radius-xl);
+	object-fit: cover;
+	right: 0;
+}
+
+.customer-portal-welcome-banner button {
+	background: #fff;
+	border: 1px solid #0b5fff;
+	border-radius: 6px;
+	color: #0b5fff;
+	font-family: Source Sans Pro;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 600;
+	height: 32px;
+	line-height: 16px;
+	padding: 8px 16px 8px 12px;
+	width: 200px;
+}
+
+.customer-portal-img {
+	margin-bottom: 3px;
+}
+
+.customer-portal-welcome-banner .text-container {
+	align-items: center;
+	display: flex;
+	margin-top: 16px;
+}
+
+.text-container > .text-description {
+	color: #f8f8f9;
+	font-family: 'Source Sans Pro';
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 24px;
+	margin-right: 16px;
+	margin-top: 17px;
+}
+
+.customer-portal-text {
+	font-size: var(--h2-font-size);
+	z-index: 1;
+}
+
+@media (min-width: 768px) {
+	.customer-portal-text {
+		font-size: var(--h1-font-size);
+	}
+}
+
+@media (min-width: 992px) {
+	.customer-portal-text {
+		font-size: var(--display4-size);
+	}
+}

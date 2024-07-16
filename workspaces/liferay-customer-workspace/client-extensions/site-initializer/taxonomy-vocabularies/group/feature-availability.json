@@ -1,0 +1,15 @@
+{
+	"assetTypes": [
+		{
+			"required": true,
+			"subtype": "RELEASE-NOTES-FEATURE-STRUCTURE",
+			"type": "StructuredContent"
+		}
+	],
+	"externalReferenceCode": "FEATURE-AVAILABILITY",
+	"name": "Feature Availability",
+	"name_i18n": {
+		"en_US": "Feature Availability"
+	},
+	"viewableBy": "Anyone"
+}

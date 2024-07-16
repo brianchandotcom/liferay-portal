@@ -1,0 +1,7 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "RELEASE-NOTES-DROPDOWN",
+	"infoItemClassName": "com.liferay.asset.kernel.model.AssetCategory",
+	"name": "Release Notes Dropdown",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

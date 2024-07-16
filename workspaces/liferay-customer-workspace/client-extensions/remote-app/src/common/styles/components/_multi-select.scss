@@ -1,0 +1,60 @@
+.dropdown-menu {
+	z-index: 1055 !important;
+}
+
+.form-control {
+	margin-bottom: 0 !important;
+}
+
+.multi-select-container {
+	.label-secondary {
+		border-color: #6c6c76;
+		color: var(--neutral-neutral-10, #272833);
+
+		:hover {
+			border-color: #6c6c76;
+			color: var(--neutral-neutral-10, #272833);
+		}
+	}
+
+	.label[href],
+	.label[type],
+	.label[tabindex] :hover {
+		border-color: #6c6c76;
+		cursor: pointer;
+		text-decoration: none;
+	}
+
+	[href].hover.label-secondary,
+	[href].label-secondary:hover,
+	[type].hover.label-secondary,
+	[type].label-secondary:hover,
+	[tabindex].hover.label-secondary,
+	[tabindex].label-secondary :hover {
+		border-color: #6c6c76;
+		color: var(--neutral-neutral-10, #272833);
+	}
+
+	.lexicon-icon.lexicon-icon-times-circle {
+		color: #272833;
+
+		:hover {
+			color: #6c6c76;
+			cursor: pointer;
+		}
+	}
+
+	.component-action
+		.btn
+		.btn-monospaced
+		.btn-outline-borderless
+		.btn-outline-secondary
+		:hover {
+		color: #6c6c76;
+	}
+
+	.input-group-item .input-group-item-shrink :hover {
+		border-color: #6c6c76;
+		color: #6c6c76;
+	}
+}

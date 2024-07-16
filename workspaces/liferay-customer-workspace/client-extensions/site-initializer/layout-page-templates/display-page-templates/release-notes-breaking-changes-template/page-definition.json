@@ -1,0 +1,451 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"marginLeft": "6",
+						"marginRight": "6"
+					},
+					"indexed": true,
+					"layout": {
+						"marginLeft": 6,
+						"marginRight": 6
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"cssClasses": [
+								"rounded-xl"
+							],
+							"fragmentStyle": {
+								"backgroundFragmentImage": {
+									"title": {
+										"value": "hero.svg"
+									},
+									"url": {
+										"mapping": {
+											"fieldKey": "FileEntry_previewImage",
+											"itemReference": {
+												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/assets/hero.svg#]"
+											}
+										}
+									}
+								},
+								"height": "164px",
+								"marginBottom": "3",
+								"marginTop": "3"
+							},
+							"indexed": true,
+							"layout": {
+								"align": "Start",
+								"contentDisplay": "FlexRow",
+								"justify": "SpaceBetween",
+								"marginBottom": 2,
+								"marginTop": 1
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"marginLeft": "5",
+										"marginTop": "5"
+									},
+									"indexed": true,
+									"layout": {
+										"marginLeft": 4,
+										"marginTop": 4
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"text-small-caps"
+											],
+											"customCSS": ".[$FRAGMENT_CLASS$] p {\n    margin-bottom: var(--spacer-2, 0.5rem) !important;\n}",
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "<p>Release Notes</p>\n"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"fontWeight": "fontWeightBolder",
+												"textColor": "colorNeutral0"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "information-template-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"mapping": {
+																"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:Release Notes Dropdown$]",
+																"itemReference": {
+																	"contextSource": "DisplayPageItem"
+																}
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"height": "164px",
+										"marginRight": "5"
+									},
+									"indexed": true,
+									"layout": {
+										"align": "Center",
+										"contentDisplay": "FlexColumn",
+										"justify": "Center",
+										"marginRight": 4
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] .btn {\n    background-color: var(--color-neutral-0) !important;\n    border-color: var(--color-brand-primary) !important;\n    color: var(--color-brand-primary) !important;\n}\n\n.[$FRAGMENT_CLASS$] p {\n    margin-bottom: 0;\n}",
+											"fragment": {
+												"key": "BASIC_COMPONENT-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "nm",
+												"buttonType": "primary",
+												"type": "link"
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value_i18n": {
+																		"en_US": "https://customer.liferay.com/dxp-release-notes"
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "<p>Plan an Upgrade&nbsp; &nbsp;➜</p>\n"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"backgroundColor": "",
+												"textColor": ""
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"align": "Start",
+								"contentDisplay": "FlexColumn"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "release-notes-tabs",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 10
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "<p>This section contains information about breaking changes in out-of-the-box DXP features and capabilities. For breaking changes or internal code, please check <a href=\"https://github.com/liferay/liferay-portal/blob/master/readme/BREAKING_CHANGES.markdown\" rel=\"noopener noreferrer\" target=\"_blank\">this link</a>.</p>\n",
+																"es_ES": "<p>Esta sección contiene información sobre cambios rupturistas (breaking changes) en funcionalidades y capacidades de un DXP listo para usar. Para cambios rupturistas o código interno, verifica <a href=\"https://github.com/liferay/liferay-portal/blob/master/readme/BREAKING_CHANGES.markdown\" rel=\"noopener noreferrer\" target=\"_blank\">este enlace</a>.</p>\n",
+																"ja_JP": "<p>このセクションには、DXPの機能および性能の重大な変更点に関する情報が含まれています。重大な変更点または内部コードについては、こちらの<a href=\"https://github.com/liferay/liferay-portal/blob/master/readme/BREAKING_CHANGES.markdown\" rel=\"noopener noreferrer\" target=\"_blank\">リンク</a>をご覧ください。</p>\n",
+																"pt_BR": "<p>Esta seção contém informações sobre alterações importantes em recursos e capacidades DXP prontos para uso. Para alterações significativas (Breaking Changes) ou código interno, por favor acesse <a href=\"https://github.com/liferay/liferay-portal/blob/master/readme/BREAKING_CHANGES.markdown\" rel=\"noopener noreferrer\" target=\"_blank\">este link</a>.</p>\n"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "-0.5rem",
+												"marginLeft": "2",
+												"marginRight": "13rem",
+												"marginTop": "4"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginRight": "13rem",
+												"minHeight": "52.5vh"
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayInDocumentForm": "false",
+													"displayStyle": "ddmTemplate_RELEASE-NOTES-BREAKING-CHANGE-SEARCH",
+													"displayStyleGroupId": "[$GROUP_ID$]",
+													"federatedSearchKey": "",
+													"fieldsToDisplay": "",
+													"highlightEnabled": "true",
+													"paginationDelta": "20",
+													"paginationDeltaParameterName": "delta",
+													"paginationStartParameterName": "start",
+													"showEmptyResultMessage": "false",
+													"showPagination": "true",
+													"viewInContext": "true"
+												},
+												"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 2
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"allowEmptySearches": "true",
+													"basicFacetSelection": "false",
+													"federatedSearchKey": ""
+												},
+												"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"boost": "",
+													"customHeading": "Custom Filter for assetCategoryIds",
+													"disabled": "false",
+													"displayStyle": "default",
+													"displayStyleGroupId": "[$GROUP_ID$]",
+													"federatedSearchKey": "",
+													"filterField": "assetCategoryIds",
+													"filterQueryType": "match",
+													"filterValue": "",
+													"immutable": "false",
+													"invisible": "true",
+													"occur": "must",
+													"parameterName": "r",
+													"parentQueryName": "",
+													"queryName": ""
+												},
+												"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
+											"widgetInstance": {
+												"widgetConfig": {
+													"boost": "",
+													"customHeading": "Custom Filter for ddmStructureKey",
+													"disabled": "false",
+													"displayStyle": "default",
+													"displayStyleGroupId": "[$GROUP_ID$]",
+													"federatedSearchKey": "",
+													"filterField": "ddmStructureKey",
+													"filterQueryType": "match",
+													"filterValue": "RELEASE-NOTES-BREAKING-CHANGE-STRUCTURE",
+													"immutable": "true",
+													"invisible": "true",
+													"occur": "must",
+													"parameterName": "",
+													"parentQueryName": "",
+													"queryName": ""
+												},
+												"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "home"
+		},
+		"themeName": "Dialect",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>RELEASE-NOTES-FEATURE-STRUCTURE</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"definitionSchemaVersion": "2.0",
+					"fields": [
+						{
+							"dataType": "string",
+							"fieldReference": "Name",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Name"
+							},
+							"localizable": true,
+							"name": "Name",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"fieldReference": "Description",
+							"indexType": "text",
+							"label": {
+								"en_US": "Description"
+							},
+							"localizable": true,
+							"name": "Description",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text"
+						},
+						{
+							"dataType": "",
+							"fieldReference": "Ticket",
+							"label": {
+								"en_US": "Ticket"
+							},
+							"localizable": false,
+							"multiple": false,
+							"name": "Ticket",
+							"nestedFields": [
+								{
+									"dataType": "string",
+									"fieldReference": "TicketURLTitle",
+									"indexType": "keyword",
+									"label": {
+										"en_US": "URL Title"
+									},
+									"localizable": true,
+									"name": "TicketURLTitle",
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"required": true,
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"type": "text"
+								},
+								{
+									"dataType": "string",
+									"fieldReference": "TicketURL",
+									"indexType": "keyword",
+									"label": {
+										"en_US": "URL"
+									},
+									"localizable": true,
+									"name": "TicketURL",
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"required": true,
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"type": "text"
+								}
+							],
+							"options": [
+							],
+							"repeatable": true,
+							"required": false,
+							"rows": [
+								{
+									"columns": [
+										{
+											"fields": [
+												"TicketURLTitle"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fields": [
+												"TicketURL"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"showLabel": true,
+							"type": "fieldset"
+						},
+						{
+							"dataType": "",
+							"fieldReference": "MoreInfo",
+							"label": {
+								"en_US": "More Info"
+							},
+							"localizable": false,
+							"multiple": false,
+							"name": "MoreInfo",
+							"nestedFields": [
+								{
+									"dataType": "string",
+									"fieldReference": "MoreInfoURLTitle",
+									"indexType": "keyword",
+									"label": {
+										"en_US": "URL Title"
+									},
+									"localizable": true,
+									"name": "MoreInfoURLTitle",
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"type": "text"
+								},
+								{
+									"dataType": "string",
+									"fieldReference": "MoreInfoURL",
+									"indexType": "keyword",
+									"label": {
+										"en_US": "URL"
+									},
+									"localizable": true,
+									"name": "MoreInfoURL",
+									"predefinedValue": {
+										"en_US": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"tip": {
+										"en_US": ""
+									},
+									"type": "text"
+								}
+							],
+							"options": [
+							],
+							"repeatable": true,
+							"required": false,
+							"rows": [
+								{
+									"columns": [
+										{
+											"fields": [
+												"MoreInfoURLTitle"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fields": [
+												"MoreInfoURL"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"showLabel": true,
+							"type": "fieldset"
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"Name"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"Description"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"Ticket"
+											],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"MoreInfo"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": ""
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+	</structure>
+</root>

@@ -1,0 +1,28 @@
+{
+	"friendlyURL": "/release-notes",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Release Notes",
+		"es_ES": "Notas de publicación",
+		"ja_JP": "リリースノート",
+		"pt_BR": "Notas de lançamento"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "User",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "content"
+}

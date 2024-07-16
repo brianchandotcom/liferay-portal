@@ -1,0 +1,20 @@
+{
+	"assetTypes": [
+		{
+			"required": true,
+			"subtype": "RELEASE-NOTES-FEATURE-STRUCTURE",
+			"type": "StructuredContent"
+		},
+		{
+			"required": true,
+			"subtype": "RELEASE-NOTES-HIGHLIGHT-STRUCTURE",
+			"type": "StructuredContent"
+		}
+	],
+	"externalReferenceCode": "PRODUCT-CAPABILITIES",
+	"name": "Product Capabilities",
+	"name_i18n": {
+		"en_US": "Product Capabilities"
+	},
+	"viewableBy": "Anyone"
+}

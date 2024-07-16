@@ -1,0 +1,23 @@
+.common-table-checkbox {
+	max-width: 100px;
+}
+
+.cp-common-table-active-row {
+	td:first-child {
+		border-radius: 8px 0 0 8px;
+	}
+	td:last-child {
+		border-radius: 0 8px 8px 0;
+	}
+	td {
+		background-color: var(--color-action-primary-active-lighten) !important;
+	}
+}
+
+.cp-hide-pagination-activation-keys ul.pagination {
+	display: none;
+}
+
+.page-item.active .page-link {
+	z-index: 0;
+}

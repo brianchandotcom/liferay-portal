@@ -1,0 +1,65 @@
+{
+	"label": {
+		"en-US": "Admin DXP Cloud"
+	},
+	"name": "AdminDXPCloud",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "First Name"
+			},
+			"name": "firstName",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Last Name"
+			},
+			"name": "lastName",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Github Username"
+			},
+			"name": "githubUsername",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Email Address"
+			},
+			"name": "emailAddress",
+			"required": true
+		},
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "DXP Cloud Environment"
+			},
+			"name": "dxpCloudEnvironmentId",
+			"required": true
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Admins DXP Cloud"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
+}

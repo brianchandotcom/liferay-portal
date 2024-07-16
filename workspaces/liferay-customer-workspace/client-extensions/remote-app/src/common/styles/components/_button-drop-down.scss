@@ -1,0 +1,11 @@
+.cp-common-drop-down-item {
+	&:hover {
+		background-color: var(--color-action-primary-hover-lighten);
+		color: var(--color-action-primary-hover) !important;
+
+		svg {
+			color: var(--color-action-primary-hover) !important;
+			opacity: 0.5;
+		}
+	}
+}

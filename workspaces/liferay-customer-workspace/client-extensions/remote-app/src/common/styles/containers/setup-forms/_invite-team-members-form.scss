@@ -1,0 +1,37 @@
+.cp-badge-error-message {
+	width: 250px;
+}
+
+.invites-form {
+	height: 100%;
+	max-height: 355.5px;
+}
+
+.invites-helper {
+	box-shadow: 0 -2px 8px 0 rgba(0, 0, 0, 0.05);
+}
+
+.invites-project-name {
+	width: 551px;
+}
+
+.role-selector-container {
+	.dropdown-toggle {
+		border-radius: 0.5rem;
+		color: var(--color-neutral-8);
+		font-size: 1rem;
+		font-weight: 400;
+		height: 3rem;
+		margin-top: 0.063rem;
+		padding: 0.688rem 1rem !important;
+	}
+
+	.role-selector-label {
+		color: var(--color-neutral-8);
+		font-weight: 800;
+	}
+
+	.role-selector-required-icon {
+		color: var(--color-state-warning);
+	}
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US,es_ES,ja_JP,pt_BR" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="xieebayf" name="ActionTitle" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Latest Fix Packs]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[Últimas actualizaciones]]></dynamic-content>
+		<dynamic-content language-id="ja_JP"><![CDATA[最新の修正パック]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[Fix Packs mais recentes]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="kchgqfdb" name="ActionText" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Install the latest fix pack to keep your Liferay DXP instances up to date.]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[Instala las últimas actualizaciones para mantener tus instancias de Liferay DXP al día.]]></dynamic-content>
+		<dynamic-content language-id="ja_JP"><![CDATA[最新のフィックスパックをインストールし、Liferay DXPインスタンスを最新の状態に保ってください。]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[Instale o Fix Pack mais recente para manter suas instâncias do Liferay DXP atualizadas.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="iatlbelj" name="ActionUrl" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[https://customer.liferay.com/downloads?p_p_id=com_liferay_osb_customer_downloads_display_web_DownloadsDisplayPortlet&_com_liferay_osb_customer_downloads_display_web_DownloadsDisplayPortlet_productAssetCategoryId=120352759&_com_liferay_osb_customer_downloads_display_web_DownloadsDisplayPortlet_fileTypeAssetCategoryId=120352765]]></dynamic-content>
+	</dynamic-element>
+</root>

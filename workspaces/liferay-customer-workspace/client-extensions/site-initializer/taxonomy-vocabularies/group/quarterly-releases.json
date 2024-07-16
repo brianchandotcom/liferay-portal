@@ -1,0 +1,25 @@
+{
+	"assetTypes": [
+		{
+			"required": true,
+			"subtype": "RELEASE-NOTES-BREAKING-CHANGE-STRUCTURE",
+			"type": "StructuredContent"
+		},
+		{
+			"required": true,
+			"subtype": "RELEASE-NOTES-FEATURE-STRUCTURE",
+			"type": "StructuredContent"
+		},
+		{
+			"required": true,
+			"subtype": "RELEASE-NOTES-HIGHLIGHT-STRUCTURE",
+			"type": "StructuredContent"
+		}
+	],
+	"externalReferenceCode": "QUARTERLY-RELEASES",
+	"name": "Quarterly Releases",
+	"name_i18n": {
+		"en_US": "Quarterly Releases"
+	},
+	"viewableBy": "Anyone"
+}

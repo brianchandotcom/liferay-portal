@@ -1,0 +1,157 @@
+[
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
+		"name": "accountSubscriptionERC",
+		"properties": {
+			"indexType": 2
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
+		"name": "accountSubscriptionGroupERC",
+		"properties": {
+			"indexType": 2
+		}
+	},
+	{
+		"dataType": 9,
+		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
+		"name": "provisionedCount",
+		"properties": {
+			"indexType": 2
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
+		"name": "status",
+		"properties": {
+			"indexType": 2
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Menu Item Description",
+		"properties": {
+			"displayType": "text-box",
+			"height": "150",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Menu Item Image URL",
+		"properties": {
+			"displayType": "text-box",
+			"height": "150",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Menu Item Preheader",
+		"properties": {
+			"displayType": "text-box",
+			"height": "150",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 16,
+		"defaultValue": [
+			"Text",
+			"Image"
+		],
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Menu Item Type",
+		"properties": {
+			"displayType": "selection-list",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 16,
+		"defaultValue": [
+			"white",
+			"light-blue"
+		],
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Submenu Background",
+		"properties": {
+			"displayType": "selection-list",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 16,
+		"defaultValue": [
+			"1",
+			"2",
+			"3",
+			"4"
+		],
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Submenu Child Columns",
+		"properties": {
+			"displayType": "selection-list",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 16,
+		"defaultValue": [
+			"3",
+			"4",
+			"5",
+			"6",
+			"7",
+			"8",
+			"9",
+			"10",
+			"11",
+			"12"
+		],
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Submenu Column Span",
+		"properties": {
+			"displayType": "selection-list",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false
+		}
+	}
+]

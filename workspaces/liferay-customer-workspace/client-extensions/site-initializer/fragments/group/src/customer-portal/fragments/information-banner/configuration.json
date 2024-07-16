@@ -1,0 +1,21 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": true,
+					"description": "Is the banner dismissible?",
+					"label": "Dismissible",
+					"name": "dismissible",
+					"type": "checkbox"
+				},
+				{
+					"description": "Date format: MM/DD/YYYY",
+					"label": "Expiration Date",
+					"name": "expirationDate",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,54 @@
+{
+	"label": {
+		"en-US": "Admin Liferay ExperienceCloud"
+	},
+	"name": "AdminLiferayExperienceCloud",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Full Name"
+			},
+			"name": "fullName",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Github Username"
+			},
+			"name": "githubUsername",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Email Address"
+			},
+			"name": "emailAddress",
+			"required": true
+		},
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Liferay Experience Cloud Environment"
+			},
+			"name": "liferayExperienceCloudEnvironmentId",
+			"required": true
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Admins Liferay Experience Cloud"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
+}

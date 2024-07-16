@@ -1,0 +1,13 @@
+@import './components/SLACard/sla-card';
+@import './components/SLACardMessage/sla-card-message';
+@import './components/SwitchSLACardButton/switch-sla-card-button';
+
+.cp-sla-container {
+	&:hover {
+		.cp-switch-sla-card-button {
+			display: inline-block !important;
+			transform: translate(10.5rem, -2.5rem);
+			z-index: 100;
+		}
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Incident Report Contact Analytics Cloud"
+	},
+	"name": "accountEntryToIncidentReportContactAC",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:IncidentReportContactAnalyticsCloud$]",
+	"objectDefinitionName2": "IncidentReportContactAnalyticsCloud",
+	"type": "oneToMany"
+}

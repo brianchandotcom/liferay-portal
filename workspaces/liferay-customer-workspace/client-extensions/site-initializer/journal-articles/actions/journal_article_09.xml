@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US,es_ES,ja_JP,pt_BR" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="xieebayf" name="ActionTitle" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Activate Analytics Cloud]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[Activa Analytics Cloud]]></dynamic-content>
+		<dynamic-content language-id="ja_JP"><![CDATA[アナリティクスクラウドの活性化]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[Ative o Analytics Cloud]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="kchgqfdb" name="ActionText" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Connect your Liferay DXP to Analytics Cloud to gain insights into customer attributes and behavior.]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[Conecta tu Liferay DXP con Analytics Cloud para conocer mejor las características y comportamiento del cliente.]]></dynamic-content>
+		<dynamic-content language-id="ja_JP"><![CDATA[Liferay DXPをAnalytics Cloudに接続し、顧客の属性や行動に関するインサイトを得ることができます。]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[Conecte seu Liferay DXP ao Analytics Cloud para obter informações sobre atributos e o comportamento do cliente.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="iatlbelj" name="ActionUrl" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[{{projectURL}}/activation/analytics-cloud ]]></dynamic-content>
+	</dynamic-element>
+</root>

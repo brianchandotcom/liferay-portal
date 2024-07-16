@@ -1,0 +1,24 @@
+{
+	"description": "",
+	"editorType": "richText",
+	"externalReferenceCode": "CP-TEAM-MEMBERS-INVITATION-NOTIFICATION-TEMPLATE",
+	"name": "CP Team Members Invitation Notification Template",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "solutions@liferay.com",
+			"fromName": {
+				"en-US": "Customer Portal"
+			},
+			"to": {
+				"en-US": "[%TEAMMEMBERSINVITATION_EMAIL%]"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "Customer Portal email"
+	},
+	"type": "email"
+}

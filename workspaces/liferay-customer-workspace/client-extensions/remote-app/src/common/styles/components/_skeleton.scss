@@ -1,0 +1,22 @@
+.skeleton {
+	background: #f7f8f9;
+	background-image: linear-gradient(
+		to right,
+		#f8f8f8 0%,
+		rgba(206, 206, 206, 0.1) 20%,
+		#f8f8f8 40%,
+		#f8f8f8 100%
+	);
+	animation: shimmer 1s linear infinite;
+	background-repeat: no-repeat;
+	background-size: 450px 400px;
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: -450px 0;
+	}
+	100% {
+		background-position: 450px 0;
+	}
+}

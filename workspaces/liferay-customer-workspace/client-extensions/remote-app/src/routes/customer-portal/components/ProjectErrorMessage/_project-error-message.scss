@@ -1,0 +1,36 @@
+.cp-project-error-message-page {
+	height: 832px;
+
+	.cp-project-error-message-container {
+		background: var(--neutral-00, #fff);
+		border: 1px solid var(--neutral-02, #e2e2e4);
+		border-radius: 10px;
+		height: 436px;
+		width: 600px;
+
+		.cp-project-error-message-card-icon {
+			background: var(--brand-primary-lighten-lighten-5, #e7efff);
+			border-radius: 1rem;
+			height: 100px;
+			width: 100px;
+
+			.cp-project-error-message-icon {
+				height: 40px;
+				width: 40px;
+			}
+		}
+
+		.cp-project-error-message-informative {
+			width: 316px;
+		}
+
+		.cp-project-error-message-title {
+			font-size: 28px;
+			font-weight: 700;
+		}
+
+		p {
+			color: var(--neutral-10, #282934);
+		}
+	}
+}

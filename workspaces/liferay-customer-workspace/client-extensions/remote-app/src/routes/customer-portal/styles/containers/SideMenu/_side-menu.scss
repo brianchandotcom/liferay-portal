@@ -1,0 +1,53 @@
+.cp-side-menu {
+	border-radius: 10px;
+	min-height: 83.3vh;
+	min-width: 240px;
+	width: 280px !important;
+
+	.cp-menu-btn-active {
+		background-color: var(--color-action-primary-active-lighten);
+		color: var(--color-action-primary-active) !important;
+	}
+
+	.cp-products-list {
+		max-height: 0;
+		transition: max-height 0.3s ease-out;
+	}
+
+	.cp-products-list-active {
+		color: var(--color-action-primary-active) !important;
+		transition: max-height 0.3s ease-in;
+	}
+	a {
+		text-decoration: none !important;
+	}
+
+	button {
+		&:not([disabled]):hover {
+			background-color: var(--color-action-primary-hover-lighten);
+			border-color: var(--btn-default-border-color);
+			color: var(--color-action-primary-hover) !important;
+		}
+
+		&:hover rect {
+			fill: var(--color-action-primary-active);
+		}
+
+		&:focus {
+			box-shadow: none;
+			outline: none;
+		}
+
+		svg {
+			transform: rotate(0deg);
+			transition: transform 0.3s;
+		}
+
+		&.cp-product-activation-active {
+			.lexicon-icon-angle-right-small {
+				transform: rotate(90deg);
+				transition: transform 0.3s;
+			}
+		}
+	}
+}

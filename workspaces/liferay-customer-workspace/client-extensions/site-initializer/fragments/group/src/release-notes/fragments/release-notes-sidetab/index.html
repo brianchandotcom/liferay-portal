@@ -1,0 +1,33 @@
+<div class="container-release-feature-sidetab p-3 sidebar sidebar-light" id="sidetabFeature">
+	<div class="sidebar-header">
+		<div class="autofit-row sidebar-section">
+			<div class="autofit-col">
+				<span class="d-flex" id="labelProductCapabilities"></span>
+			</div>
+
+			<div class="autofit-row sidebar-section">
+				<div class="autofit-col autofit-col-expand"></div>
+			</div>
+
+			<div class="autofit-col">
+				<button aria-label="Close" class="close pr-4" id="closeSidetab" type="button">
+					<span class="pr-2">
+						${languageUtil.get(locale, "close", "Close")}
+					</span>
+					<span> [@clay["icon"] symbol="times-small" /] </span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="sidebar-body">
+		<div class="search-results" id="searchResults">
+			<div class="align-items-stretch search-results-entry">
+				<div class="font-weight-bold pb-3 search-results-entry-title text-decoration-none unstyled" id="articleTitle"></div>
+				<div class="description search-results-entry-content" id="articleContent"></div>
+				<div class="description search-results-entry-content" id="articleLink"></div>
+				<div class="ml-auto mr-5 mt-3" id="labelStatus"></div>
+			</div>
+		</div>
+	</div>
+</div>

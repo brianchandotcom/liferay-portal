@@ -1,0 +1,32 @@
+.cp-breadcrumbs-container {
+	border-radius: 0.625rem;
+	height: 4.5rem;
+	padding-right: 3.75rem !important;
+	width: 17.5rem;
+
+	.cp-breadcrumbs-popover-active {
+		.lexicon-icon {
+			fill: var(--color-state-success) !important;
+		}
+	}
+
+	.cp-breadcrumbs-popover-expired {
+		.lexicon-icon {
+			fill: var(--color-state-warning);
+		}
+	}
+
+	.cp-breadcrumbs-popover-future {
+		.lexicon-icon {
+			fill: var(--color-state-info);
+		}
+	}
+
+	.lexicon-icon-caret-bottom {
+		fill: var(--color-neutral-5);
+	}
+}
+
+.cp-breadcrumbs-container:hover {
+	background-color: rgba(0, 74, 215, 0.1) !important;
+}

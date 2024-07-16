@@ -1,0 +1,113 @@
+[
+	{
+		"key": "account-settings",
+		"value": {
+			"en-US": "Account Settings",
+			"es-ES": "Configuraciones de la cuenta",
+			"ja-JP": "アカウント設定",
+			"pt-BR": "Configurações de Conta"
+		}
+	},
+	{
+		"key": "community",
+		"value": {
+			"en-US": "Community"
+		}
+	},
+	{
+		"key": "for-more-information-please-click-x",
+		"value": {
+			"en-US": "For more information, please click {0}.",
+			"es-ES": "Para más información, haz clic {0}.",
+			"ja-JP": "詳細については、{0} をクリックしてください。",
+			"pt-BR": "Para mais informações, por favor clique {0}."
+		}
+	},
+	{
+		"key": "help-center",
+		"value": {
+			"en-US": "Help Center"
+		}
+	},
+	{
+		"key": "here",
+		"value": {
+			"en-US": "here",
+			"es-ES": "aquí",
+			"ja-JP": "こちら",
+			"pt-BR": "aqui"
+		}
+	},
+	{
+		"key": "learn-about-the-feature-availability-statuses",
+		"value": {
+			"en-US": "Learn about the feature availability statuses.",
+			"es-ES": "Más información sobre los estados de disponibilidad de las funciones.",
+			"ja-JP": "機能の利用可能状況について確認する。",
+			"pt-BR": "Saiba mais sobre os status de disponibilidade dos recursos."
+		}
+	},
+	{
+		"key": "liferay-learn",
+		"value": {
+			"en-US": "Liferay Learn"
+		}
+	},
+	{
+		"key": "liferays-commercial-offerings-have-been-renamed-from-lxc-to-liferay-saas-lxc-sm-to-liferay-paas-and-dxp-to-liferay-self-hosted",
+		"value": {
+			"en-US": "Liferay's commercial offerings have been renamed from LXC to Liferay SaaS, LXC - SM to Liferay PaaS, and DXP to Liferay Self-Hosted.",
+			"es-ES": "Hemos renombrado las ofertas comerciales de Liferay de LXC a Liferay SaaS, de LXC - SM a Liferay PaaS y de DXP a Liferay Self-Hosted.",
+			"ja-JP": "Liferayの商用製品の名前は、LXC から Liferay SaaS に、LXC - SM は Liferay PaaS に、DXP は Liferay Self-Hosted に変更されました。",
+			"pt-BR": "As ofertas comerciais da Liferay foram renomeadas de LXC para Liferay SaaS, de LXC - SM para Liferay PaaS e de DXP para Liferay Self-Hosted."
+		}
+	},
+	{
+		"key": "marketplace",
+		"value": {
+			"en-US": "Marketplace"
+		}
+	},
+	{
+		"key": "no-features-found-for-the-selected-product-capabilities-and-feature-availability",
+		"value": {
+			"en-US": "No features found for the selected product capabilities and feature availability.",
+			"es-ES": "No se encontraron funciones para las capacidades del producto seleccionado y la disponibilidad de funciones.",
+			"ja-JP": "選択した製品の機能と利用可能な機能に対応する機能が見つかりません。",
+			"pt-BR": "Nenhum recurso encontrado para os recursos e disponibilidade de recursos do produto selecionado."
+		}
+	},
+	{
+		"key": "no-highlights-found-for-the-selected-product-capabilities",
+		"value": {
+			"en-US": "No highlights found for the selected product capabilities.",
+			"es-ES": "No se encontraron aspectos destacados para las capacidades del producto seleccionado.",
+			"ja-JP": "選択した製品機能のハイライトは見つかりませんでした。",
+			"pt-BR": "Nenhum destaque encontrado para os recursos do produto selecionado."
+		}
+	},
+	{
+		"key": "notifications",
+		"value": {
+			"en-US": "Notifications",
+			"es-ES": "Notificaciones",
+			"ja-JP": "通知",
+			"pt-BR": "Notificações"
+		}
+	},
+	{
+		"key": "sites",
+		"value": {
+			"en-US": "Sites"
+		}
+	},
+	{
+		"key": "there-are-no-breaking-changes-in-out-of-the-box-features-and-capabilities-for-this-quarterly-release",
+		"value": {
+			"en-US": "There are no breaking changes in out-of-the-box features and capabilities for this quarterly release.",
+			"es-ES": "No hay cambios rupturistas (breaking changes) en funcionalidades o capacidades listas para su uso en esta versión trimestral (Quarterly Release).",
+			"ja-JP": "この四半期ごとのリリースでは、基本機能および性能に重大な変更点はありません。",
+			"pt-BR": "Não há alterações significativas nos recursos e capacidades prontos para uso nesta versão trimestral (Quarterly Release)."
+		}
+	}
+]

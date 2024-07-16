@@ -1,0 +1,18 @@
+<div class="alert-fluid alert-warning cp-information-banner">
+	<div class="cp-banner-content">
+		<div class="alert-indicator cp-icon-content">
+			[@clay.icon symbol="warning" /]
+		</div>
+
+		<p>
+			${languageUtil.get(locale, "liferays-commercial-offerings-have-been-renamed-from-lxc-to-liferay-saas-lxc-sm-to-liferay-paas-and-dxp-to-liferay-self-hosted", "Liferay's commercial offerings have been renamed from LXC to Liferay SaaS, LXC - SM to Liferay PaaS, and DXP to Liferay Self-Hosted.")}
+			${languageUtil.format(locale, "for-more-information-please-click-x", ["<a href='https://help.liferay.com/hc/articles/27114210743437' target='_blank'>" + languageUtil.get(locale, "here", "here") + "</a>"])}
+		</p>
+	</div>
+
+	[#if configuration.dismissible]
+		<button aria-label="Close" class="close" type="button">
+			<div> [@clay.icon symbol="times" /] </div>
+		</button>
+	[/#if]
+</div>

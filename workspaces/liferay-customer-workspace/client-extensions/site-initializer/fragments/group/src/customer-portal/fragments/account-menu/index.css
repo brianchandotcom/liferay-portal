@@ -1,0 +1,118 @@
+.account {
+	cursor: pointer;
+}
+
+.account .account-info {
+	background: inherit;
+	border: none;
+	border-radius: var(--border-radius-sm);
+	transition-duration: 0.2s, 0.2s, 0.2s;
+	transition-property: background-color, color, opacity;
+	transition-timing-function: ease, ease, ease;
+}
+
+.account .account-info .user-icon {
+	height: 1rem;
+	margin-top: -5px;
+	width: 1rem;
+}
+
+.account .account-info:hover .user-icon,
+.account .account-info:hover .account-dropdown-icon,
+.account .account-info:hover .account-text,
+.account .account-info:focus .user-icon,
+.account .account-info:focus .account-dropdown-icon,
+.account .account-info:focus .account-text {
+	color: #0053f0 !important;
+}
+
+.account .account-info:hover .account-text,
+.account .account-info:focus .account-text,
+.account .account-info .account-text {
+	opacity: 1;
+}
+
+.account .account-info .account-dropdown {
+	display: block;
+}
+
+.account .account-info .user-icon {
+	opacity: 0.7;
+}
+
+.account .account-info[aria-expanded='true'] .account-dropdown-icon svg {
+	opacity: 0.7;
+	transform: rotate(180deg);
+	transition: transform 0.5s;
+}
+
+.account .account-info[aria-expanded='false'] .account-dropdown-icon svg {
+	opacity: 0.7;
+	transform: rotate(360deg);
+	transition: transform 0.5s;
+}
+
+.account .account-info:hover {
+	background-color: #edf3fe !important;
+}
+
+.account .account-info:hover .user-icon,
+.account .account-info:hover .account-dropdown-icon,
+.account .account-info:focus .user-icon,
+.account .account-info:focus .account-dropdown-icon {
+	opacity: 1;
+}
+
+.account .account-info .user-avatar {
+	height: 2rem;
+	width: 2rem;
+}
+
+.account .account-info .user-avatar img {
+	border-radius: 3.5rem;
+}
+
+.account .account-info .signed-out-account .create-account-icon > svg,
+.account .account-info .signed-out-account .sign-in-icon > svg {
+	height: 16px;
+	width: 16px;
+}
+
+.account .account-dropdown {
+	left: -170px !important;
+}
+
+.account .account-dropdown .account-configurables {
+	border-bottom: 1px solid var(--color-neutral-3);
+}
+
+.account .account-dropdown .settings {
+	color: var(--color-neutral-10);
+}
+
+.account .account-dropdown .account-menu-item {
+	border-radius: var(--border-radius);
+	color: var(--color-neutral-10);
+}
+
+.account .account-dropdown .account-menu-item:hover,
+.account .account-dropdown .account-menu-item:active,
+.account .account-dropdown .account-menu-item:focus {
+	background: #edf3fe !important;
+	color: #0053f0 !important;
+}
+
+.account .account-dropdown .account-menu-item:hover .account-menu-icon,
+.account .account-dropdown .account-menu-item:active .account-menu-icon,
+.account .account-dropdown .account-menu-item:focus .account-menu-icon {
+	opacity: 1;
+}
+
+.account .account-dropdown .account-menu-icon .lexicon-icon {
+	height: 16px;
+	width: 16px;
+}
+
+.account .account-dropdown .dropdown-option-text {
+	font-size: 16px;
+}

@@ -1,0 +1,45 @@
+[#assign
+	firstName = themeDisplay.getUser().getFirstName()
+	lastName = themeDisplay.getUser().getLastName()
+	languageId = themeDisplay.getLanguageId()
+/]
+
+<div class="align-items-center customer-portal-welcome-banner d-flex position-relative">
+	<div class="customer-portal-text ml-3 pl-5 text-neutral-0">
+		<div class="mb-4 pb-2">
+			${languageUtil.get(locale, "welcome")},
+
+			[#if languageId == "ja_JP"]
+				<span class="font-weight-bold">${lastName}様!</span>
+			[#else]
+				<span class="font-weight-bold">${firstName}!</span>
+			[/#if]
+		</div>
+
+		<div>
+			<h2>
+				${languageUtil.get(locale, "projects")}
+			</h2>
+
+			<div class="text-paragraph">
+				${languageUtil.get(locale, "select-a-project-to-see-your-subscriptions-activate-your-products-and-view-team-members")}
+			</div>
+
+			<div class="text-container">
+				<div class="text-description">
+					${languageUtil.get(locale, "not-sure-how-to-start")}
+				</div>
+
+				<a href="https://help.liferay.com/hc/sections/8712397409421" target="_blank">
+					<button class="w-100">
+						<img class="customer-portal-img" src="[resources:icon_left.svg]" />
+
+						${languageUtil.get(locale, "view-our-resources")}
+					</button>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<img class="customer-portal-welcome-img h-100 position-absolute w-100" src="[resources:banner_background_customer_portal.svg]" />
+</div>

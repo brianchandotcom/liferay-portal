@@ -1,0 +1,82 @@
+[
+	{
+		"key": "liferayPortal51",
+		"name": "Liferay Portal 5.1",
+		"name_i18n": {
+			"en-US": "Liferay Portal 5.1"
+		},
+		"type": "string"
+	},
+	{
+		"key": "liferayPortal52",
+		"name": "Liferay Portal 5.2",
+		"name_i18n": {
+			"en-US": "Liferay Portal 5.2"
+		},
+		"type": "string"
+	},
+	{
+		"key": "liferayPortal60",
+		"name": "Liferay Portal 6.0",
+		"name_i18n": {
+			"en-US": "Liferay Portal 6.0"
+		},
+		"type": "string"
+	},
+	{
+		"key": "liferayPortal61",
+		"name": "Liferay Portal 6.1",
+		"name_i18n": {
+			"en-US": "Liferay Portal 6.1"
+		},
+		"type": "string"
+	},
+	{
+		"key": "liferayPortal62",
+		"name": "Liferay Portal 6.2",
+		"name_i18n": {
+			"en-US": "Liferay Portal 6.2"
+		},
+		"type": "string"
+	},
+	{
+		"key": "liferayDXP70",
+		"name": "Liferay DXP 7.0",
+		"name_i18n": {
+			"en-US": "Liferay DXP 7.0"
+		},
+		"type": "string"
+	},
+	{
+		"key": "liferayDXP71",
+		"name": "Liferay DXP 7.1",
+		"name_i18n": {
+			"en-US": "Liferay DXP 7.1"
+		},
+		"type": "string"
+	},
+	{
+		"key": "liferayDXP72",
+		"name": "Liferay DXP 7.2",
+		"name_i18n": {
+			"en-US": "Liferay DXP 7.2"
+		},
+		"type": "string"
+	},
+	{
+		"key": "liferayDXP73",
+		"name": "Liferay DXP 7.3",
+		"name_i18n": {
+			"en-US": "Liferay DXP 7.3"
+		},
+		"type": "string"
+	},
+	{
+		"key": "liferayDXP74",
+		"name": "Liferay DXP 7.4",
+		"name_i18n": {
+			"en-US": "Liferay DXP 7.4"
+		},
+		"type": "string"
+	}
+]

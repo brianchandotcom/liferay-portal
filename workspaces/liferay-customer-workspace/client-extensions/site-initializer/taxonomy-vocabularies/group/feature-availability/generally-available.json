@@ -1,0 +1,5 @@
+{
+	"description": "OOTB, Enabled by default, can't be disabled",
+	"name": "Generally Available (aka OOTB)",
+	"viewableBy": "Anyone"
+}

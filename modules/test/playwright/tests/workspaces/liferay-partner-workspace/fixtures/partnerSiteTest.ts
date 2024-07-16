@@ -6,35 +6,23 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {loginTest} from '../../../../fixtures/loginTest';
-import {liferayConfig} from '../../../../liferay.config';
 import {partnerHelperTest} from './partnerHelperTest';
 
 export const test = mergeTests(
+	loginTest({screenName: 'test'}),
 	partnerHelperTest,
-	loginTest({screenName: 'test'})
 );
 
-export interface Partner {
-	partner: Site;
+export interface PartnerSite {
+	partnerSite: Site;
 }
 
-const SITE_EXTERNAL_REFERENCE_CODE = 'LIFERAY_PARTNER';
-const SITE_NAME = 'Liferay Partner';
+export const partnerSiteTest = test.extend<PartnerSite>({
+	partnerSite: [
+		async ({partnerHelper}, use) => {
+			const site = await partnerHelper.apiHelpers.headlessSite.getSiteByERC('LIFERAY_PARTNER');
 
-export const partnerSiteTest = test.extend<Partner>({
-	partner: [
-		async ({page, partnerHelper}, use) => {
-			const site =
-				await partnerHelper.apiHelpers.headlessSite.getSiteByERC(
-					SITE_EXTERNAL_REFERENCE_CODE
-				);
-
-			expect(site.name).toBe(SITE_NAME);
 			expect(site.id).toBeGreaterThan(0);
-
-			await page.goto(
-				`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}`
-			);
 
 			use(site);
 		},

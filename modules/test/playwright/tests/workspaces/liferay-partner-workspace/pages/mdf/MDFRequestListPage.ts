@@ -5,9 +5,9 @@
 
 import {Page} from '@playwright/test';
 
-import {liferayConfig} from '../../../../liferay.config';
+import {liferayConfig} from '../../../../../liferay.config';
 
-export class HomePage {
+export class MDFRequestListPage {
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -15,7 +15,7 @@ export class HomePage {
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(`${liferayConfig.environment.baseUrl}/web${siteUrl}/home`, {
+		await this.page.goto(`${liferayConfig.environment.baseUrl}/web${siteUrl}/marketing/mdf-requests`, {
 			waitUntil: 'networkidle',
 		});
 	}

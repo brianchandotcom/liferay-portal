@@ -9,12 +9,12 @@ import {partnerPagesTest} from '../../../fixtures/partnerPagesTest';
 
 export const test = mergeTests(partnerPagesTest);
 
-test.describe('Partner Site', () => {
-	test('Open Partner Homepage', async ({homePage, page, partnerSite}) => {
-		await homePage.goto(partnerSite.friendlyUrlPath);
+test.describe('MDF Request Form', () => {
+	test('Open MDF Request Form', async ({mdfRequestFormPage, page, partnerSite}) => {
+		await mdfRequestFormPage.goto(partnerSite.friendlyUrlPath);
 
 		const heading = await page.getByRole('heading', {
-			name: 'Welcome to Partner Portal',
+			name: 'MDF Request',
 		});
 
 		expect(heading).toBeTruthy();

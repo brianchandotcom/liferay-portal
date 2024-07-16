@@ -45,10 +45,11 @@ public class AllCommerceOrderTableFDSView extends BaseTableFDSView {
 			"totalFormatted", "amount"
 		).add(
 			"orderDate", "order-date",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("dateTime");
-				fdsTableSchemaField.setSortable(true);
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dateTime"
+			).setSortable(
+				true
+			)
 		).add(
 			"orderStatusInfo", "order-status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

@@ -22,7 +22,7 @@ const test = mergeTests(
 	styleBookPageTest
 );
 
-test('checks the correct label for restricted pages in the preview selector', async ({
+test('Checks the correct label for restricted pages in the preview selector', async ({
 	apiHelpers,
 	page,
 	site,

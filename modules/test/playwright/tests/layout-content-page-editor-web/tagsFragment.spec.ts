@@ -33,7 +33,7 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('uses Tags fragment for Forms in a Content Page', async ({
+test('Uses Tags fragment for Forms in a Content Page', async ({
 	apiHelpers,
 	page,
 	wemSite,
@@ -150,7 +150,7 @@ test('uses Tags fragment for Forms in a Content Page', async ({
 	});
 });
 
-test('checks that an info message appears when categorization is disabled', async ({
+test('Checks that an info message appears when categorization is disabled', async ({
 	apiHelpers,
 	objectDetailsPage,
 	page,

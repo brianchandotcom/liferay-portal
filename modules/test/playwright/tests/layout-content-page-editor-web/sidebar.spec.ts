@@ -35,7 +35,7 @@ const PANELS: SidebarTab[] = [
 	'Comments',
 ];
 
-test('renders all panel buttons in the vertical bar', async ({
+test('Renders all panel buttons in the vertical bar', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -61,7 +61,7 @@ test('renders all panel buttons in the vertical bar', async ({
 	}
 });
 
-test('renders sidebars visible at desktop size and sidebars not visible at small resolutions', async ({
+test('Renders sidebars visible at desktop size and sidebars not visible at small resolutions', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -96,7 +96,7 @@ test('renders sidebars visible at desktop size and sidebars not visible at small
 	await expect(configurationPanel).not.toBeVisible();
 });
 
-test('checks if sidebars are open or closed depending on Product Menu', async ({
+test('Checks if sidebars are open or closed depending on Product Menu', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -140,7 +140,7 @@ test('checks if sidebars are open or closed depending on Product Menu', async ({
 	await expect(configurationPanel).toBeVisible();
 });
 
-test('checks sidebar accessibility', async ({
+test('Checks sidebar accessibility', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

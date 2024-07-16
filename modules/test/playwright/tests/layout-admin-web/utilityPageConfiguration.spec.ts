@@ -20,33 +20,39 @@ const test = mergeTests(
 	pagesPagesTest
 );
 
-test('LPD-4459: Asserts the Utility Pages configuration view.', async ({
-	page,
-	pageEditorPage,
-	site,
-	utilityPageConfigurationPage,
-	utilityPagesPage,
-}) => {
-	await page.goto('/');
+test(
+	'Asserts the Utility Pages configuration view',
+	{
+		tag: '@LPD-4459',
+	},
+	async ({
+		page,
+		pageEditorPage,
+		site,
+		utilityPageConfigurationPage,
+		utilityPagesPage,
+	}) => {
+		await page.goto('/');
 
-	// The configuration action must be available from the card
-	// The configuration view should only allow setting the htmlTitle and htmlDescription SEO fields
+		// The configuration action must be available from the card
+		// The configuration view should only allow setting the htmlTitle and htmlDescription SEO fields
 
-	await utilityPagesPage.goto(site.friendlyUrlPath);
-	await utilityPageConfigurationPage.setUtilityPageConfiguration(
-		getRandomString(),
-		getRandomString(),
-		'404 Error'
-	);
+		await utilityPagesPage.goto(site.friendlyUrlPath);
+		await utilityPageConfigurationPage.setUtilityPageConfiguration(
+			getRandomString(),
+			getRandomString(),
+			'404 Error'
+		);
 
-	// During editing the "More Page Design Options" link should not be available
+		// During editing the "More Page Design Options" link should not be available
 
-	await utilityPagesPage.goto(site.friendlyUrlPath);
-	await utilityPagesPage.goToEdit('404 Error');
-	await pageEditorPage.goToSidebarTab('Page Design Options');
+		await utilityPagesPage.goto(site.friendlyUrlPath);
+		await utilityPagesPage.goToEdit('404 Error');
+		await pageEditorPage.goToSidebarTab('Page Design Options');
 
-	await expect(page.getByText('Master', {exact: true})).toBeVisible();
-	expect(await page.getByTitle('More Page Design Options').count()).toEqual(
-		0
-	);
-});
+		await expect(page.getByText('Master', {exact: true})).toBeVisible();
+		expect(
+			await page.getByTitle('More Page Design Options').count()
+		).toEqual(0);
+	}
+);

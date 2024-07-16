@@ -34,7 +34,7 @@ const test = mergeTests(
 
 const testWithIsolatedSite = mergeTests(test, isolatedSiteTest);
 
-test('allows adding a Collection Display with a manual collection into another Collection Display with Recent Content', async ({
+test('Allows adding a Collection Display with a manual collection into another Collection Display with Recent Content', async ({
 	apiHelpers,
 	collectionsPage,
 	pageEditorPage,
@@ -108,7 +108,7 @@ test('allows adding a Collection Display with a manual collection into another C
 });
 
 testWithIsolatedSite(
-	'checks the error message when trying to drag a fragment to an unmapped collection',
+	'Checks the error message when trying to drag a fragment to an unmapped collection',
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		const collectionDefinition = getCollectionDefinition({
 			id: getRandomString(),
@@ -134,7 +134,7 @@ testWithIsolatedSite(
 	}
 );
 
-test('checks Content Flags, Content Ratings and Content Display are compatible with Collection Display', async ({
+test('Checks Content Flags, Content Ratings and Content Display are compatible with Collection Display', async ({
 	apiHelpers,
 	collectionsPage,
 	page,
@@ -243,7 +243,7 @@ test('checks Content Flags, Content Ratings and Content Display are compatible w
 	);
 });
 
-test('modifies inline text on all collection items', async ({
+test('Modifies inline text on all collection items', async ({
 	apiHelpers,
 	collectionsPage,
 	page,
@@ -295,7 +295,7 @@ test('modifies inline text on all collection items', async ({
 	).toHaveCount(2);
 });
 
-test('checks the different styles for the Display Collection', async ({
+test('Checks the different styles for the Display Collection', async ({
 	apiHelpers,
 	collectionsPage,
 	page,
@@ -425,7 +425,7 @@ test('checks the different styles for the Display Collection', async ({
 	await checkStyleDisplay();
 });
 
-test('checks that fragment ids used within a display collection are not repeated even if they are nested elements', async ({
+test('Checks that fragment ids used within a display collection are not repeated even if they are nested elements', async ({
 	apiHelpers,
 	collectionsPage,
 	page,
@@ -535,7 +535,7 @@ test('checks that fragment ids used within a display collection are not repeated
 	await checkNonRepeatedFragmentIds();
 });
 
-test('displays correct layout in other viewports', async ({
+test('Displays correct layout in other viewports', async ({
 	apiHelpers,
 	collectionsPage,
 	page,

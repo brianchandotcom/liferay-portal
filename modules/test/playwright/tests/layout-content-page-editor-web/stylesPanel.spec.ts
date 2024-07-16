@@ -57,7 +57,7 @@ const COLOR_PICKER_PALETTES = [
 	},
 ];
 
-test('allows changing and resetting spacing', async ({
+test('Allows changing and resetting spacing', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -126,7 +126,7 @@ test('allows changing and resetting spacing', async ({
 	).toBe('0px');
 });
 
-test('renders all selectors with correct default values', async ({
+test('Renders all selectors with correct default values', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -188,7 +188,7 @@ test('renders all selectors with correct default values', async ({
 	}
 });
 
-test('renders correct sections in color picker', async ({
+test('Renders correct sections in color picker', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -236,7 +236,7 @@ test('renders correct sections in color picker', async ({
 	}
 });
 
-test('changes the value in the Color Picker when the reset button is clicked', async ({
+test('Changes the value in the Color Picker when the reset button is clicked', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

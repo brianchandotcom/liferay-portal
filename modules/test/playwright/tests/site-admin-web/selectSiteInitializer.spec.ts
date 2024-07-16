@@ -16,7 +16,7 @@ const test = mergeTests(
 	selectSiteInitializerPagesTest
 );
 
-test('check select site initializers accessibility', async ({
+test('Check select site initializers accessibility', async ({
 	page,
 	selectSiteInitializerPage,
 	site,

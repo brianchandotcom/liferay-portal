@@ -23,7 +23,7 @@ const test = mergeTests(
 	loginTest()
 );
 
-test('checks that the Tabs fragment works correctly and has the correct semantics in small resolution', async ({
+test('Checks that the Tabs fragment works correctly and has the correct semantics in small resolution', async ({
 	apiHelpers,
 	page,
 	site,

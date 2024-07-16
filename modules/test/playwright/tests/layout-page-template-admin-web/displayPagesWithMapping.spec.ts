@@ -24,7 +24,7 @@ const test = mergeTests(
 	wemSiteTest
 );
 
-test('allow mapping repeatable fields collection provider', async ({
+test('Allow mapping repeatable fields collection provider', async ({
 	displayPageTemplatesPage,
 	page,
 	pageEditorPage,

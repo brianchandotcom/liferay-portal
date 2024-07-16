@@ -22,7 +22,7 @@ const test = mergeTests(
 	wemSiteTest
 );
 
-test('allow mapping editables to fields of related object', async ({
+test('Allow mapping editables to fields of related object', async ({
 	displayPageTemplatesPage,
 	pageEditorPage,
 	wemSite,

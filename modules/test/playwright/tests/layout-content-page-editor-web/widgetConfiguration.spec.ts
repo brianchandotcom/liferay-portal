@@ -24,7 +24,7 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('allows accessing the widget configuration easily', async ({
+test('Allows accessing the widget configuration easily', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

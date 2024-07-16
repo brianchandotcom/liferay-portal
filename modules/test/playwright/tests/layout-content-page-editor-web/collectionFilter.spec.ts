@@ -101,7 +101,7 @@ const selectFilter = async (page, categories) => {
 	await page.waitForURL(/(.)filter_category(.)/);
 };
 
-test('filters a web content collection by single and multiple categories', async ({
+test('Filters a web content collection by single and multiple categories', async ({
 	apiHelpers,
 	collectionsPage,
 	page,
@@ -207,7 +207,7 @@ test('filters a web content collection by single and multiple categories', async
 });
 
 testWithIsolatedSite(
-	'filters a web content collection by single and multiple tags',
+	'Filters a web content collection by single and multiple tags',
 	async ({apiHelpers, collectionsPage, page, pageEditorPage, site}) => {
 
 		// Create two tags
@@ -320,7 +320,7 @@ testWithIsolatedSite(
 	}
 );
 
-test('enables search field in dropdown list of Collection Filter', async ({
+test('Enables search field in dropdown list of Collection Filter', async ({
 	apiHelpers,
 	collectionsPage,
 	page,
@@ -400,7 +400,7 @@ test('enables search field in dropdown list of Collection Filter', async ({
 	await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 });
 
-test('filters the collection content by keywords using two filters', async ({
+test('Filters the collection content by keywords using two filters', async ({
 	apiHelpers,
 	collectionsPage,
 	page,

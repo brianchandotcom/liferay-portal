@@ -24,7 +24,7 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('can edit html editable', async ({
+test('Can edit html editable', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

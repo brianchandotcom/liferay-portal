@@ -26,7 +26,7 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('checks the accessibility of the rule modal by filling out a condition and an action', async ({
+test('Checks the accessibility of the rule modal by filling out a condition and an action', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

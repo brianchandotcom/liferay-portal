@@ -24,7 +24,7 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('allows renaming an experience', async ({
+test('Allows renaming an experience', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -51,7 +51,7 @@ test('allows renaming an experience', async ({
 	await expect(page.getByLabel('Experience: E1 edited')).toBeVisible();
 });
 
-test('allows changing the segment of an existing experience', async ({
+test('Allows changing the segment of an existing experience', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -82,7 +82,7 @@ test('allows changing the segment of an existing experience', async ({
 	await expect(row).toContainText('AudienceS1');
 });
 
-test('creates new experiences as expected', async ({
+test('Creates new experiences as expected', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -135,7 +135,7 @@ test('creates new experiences as expected', async ({
 	await expect(page.getByText('Heading Example')).toBeVisible();
 });
 
-test('keeps modal open when canceling segment creation', async ({
+test('Keeps modal open when canceling segment creation', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -172,7 +172,7 @@ test('keeps modal open when canceling segment creation', async ({
 	).toBeVisible();
 });
 
-test('styles changes affect to current experience only', async ({
+test('Styles changes affect to current experience only', async ({
 	apiHelpers,
 	pageEditorPage,
 	site,
@@ -238,7 +238,7 @@ test('styles changes affect to current experience only', async ({
 	).toBe('8px');
 });
 
-test('allows duplicating an experience', async ({
+test('Allows duplicating an experience', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -270,7 +270,7 @@ test('allows duplicating an experience', async ({
 	await expect(row).toContainText('Inactive');
 });
 
-test('allows creating experiences with different fragments', async ({
+test('Allows creating experiences with different fragments', async ({
 	apiHelpers,
 	pageEditorPage,
 	site,
@@ -305,7 +305,7 @@ test('allows creating experiences with different fragments', async ({
 	await expect(pageEditorPage.getFragment(headingId)).toBeVisible();
 });
 
-test('allows editing and deleting an experience', async ({
+test('Allows editing and deleting an experience', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

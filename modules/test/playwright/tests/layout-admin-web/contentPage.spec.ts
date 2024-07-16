@@ -25,7 +25,7 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('does not show widget topper on hover in view mode', async ({
+test('Does not show widget topper on hover in view mode', async ({
 	apiHelpers,
 	page,
 	site,

@@ -27,7 +27,7 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('checks that the fragment is hidden from Site Search Results', async ({
+test('Checks that the fragment is hidden from Site Search Results', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -131,7 +131,7 @@ test('checks that the fragment is hidden from Site Search Results', async ({
 	await expect(searchResults).not.toBeVisible();
 });
 
-test('checks that the advanced configuration of a fragment appears in its corresponding tab', async ({
+test('Checks that the advanced configuration of a fragment appears in its corresponding tab', async ({
 	apiHelpers,
 	fragmentEditorPage,
 	fragmentsPage,

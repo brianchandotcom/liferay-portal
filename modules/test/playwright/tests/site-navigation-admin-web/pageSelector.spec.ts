@@ -24,7 +24,7 @@ const test = mergeTests(
 	pageSelectorPagesTest
 );
 
-test('load more works properly in search results', async ({
+test('Load more works properly in search results', async ({
 	apiHelpers,
 	navigationMenusPage,
 	pageSelectorPage,
@@ -96,7 +96,7 @@ test('load more works properly in search results', async ({
 	await expect(modal.getByText('Load More Results')).not.toBeVisible();
 });
 
-test('checks the correct label for restricted page in the layout tree', async ({
+test('Checks the correct label for restricted page in the layout tree', async ({
 	apiHelpers,
 	navigationMenusPage,
 	pageSelectorPage,

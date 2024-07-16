@@ -1153,21 +1153,6 @@ definition {
 	@description = "This is a test for LPS-103454. When one WC displayed in multiple fields in a content page, there should be one WC entry in Contents Panel list."
 	@priority = 4
 	test ViewDisplayedWebContentInContentsPanelWithWebContentArticleUpdatePermission {
-		task ("Define the permissions of new user") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = ${randomRoleKey},
-				roleType = "site");
-		}
-
-		task ("Assign the site role to new user") {
-			JSONRole.assignSiteRoleToUser(
-				groupName = ${randomSiteName},
-				roleTitle = ${randomRoleKey},
-				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
-		}
-
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
@@ -1231,10 +1216,6 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 
 			PageEditor.publish();
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("View the displayed web content in Contents panel") {

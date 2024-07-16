@@ -278,32 +278,34 @@ public class OptionsRestController extends BaseRestController {
 							shippingAddressJSONObject.getString("regionISOCode")
 						)
 					)
-				)
-			).put(
-				"Shipper",
-				new JSONObject(
 				).put(
-					"Address",
+					"Shipper",
 					new JSONObject(
 					).put(
-						"AddressLine",
-						new JSONArray(
+						"Address",
+						new JSONObject(
 						).put(
-							typeSettingsJSONObject.getString(
-								"shipperAddressLine1")
+							"AddressLine",
+							new JSONArray(
+							).put(
+								typeSettingsJSONObject.getString(
+									"shipperAddressLine1")
+							).put(
+								typeSettingsJSONObject.getString(
+									"shipperAddressLine2")
+							).put(
+								typeSettingsJSONObject.getString(
+									"shipperAddressLine3")
+							)
 						).put(
+							"CountryCode",
 							typeSettingsJSONObject.getString(
-								"shipperAddressLine2")
+								"shipperCountryCode")
 						).put(
+							"PostalCode",
 							typeSettingsJSONObject.getString(
-								"shipperAddressLine3")
+								"shipperPostalCode")
 						)
-					).put(
-						"CountryCode",
-						typeSettingsJSONObject.getString("shipperCountryCode")
-					).put(
-						"PostalCode",
-						typeSettingsJSONObject.getString("shipperPostalCode")
 					)
 				)
 			)
@@ -339,7 +341,7 @@ public class OptionsRestController extends BaseRestController {
 			}
 		}
 
-		return new JSONObject(StringPool.BLANK);
+		return new JSONObject();
 	}
 
 	private JSONArray _toShippingOptionsJSONArray(JSONArray jsonArray) {
@@ -347,6 +349,10 @@ public class OptionsRestController extends BaseRestController {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (!jsonObject.has("RateResponse")) {
+				continue;
+			}
 
 			JSONObject rateResponseJSONObject = jsonObject.getJSONObject(
 				"RateResponse");

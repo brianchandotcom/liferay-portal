@@ -876,6 +876,7 @@ public abstract class BaseMockContactsEngineClientImpl
 		return contactsEngineClient.getPageVisited(faroProject, id);
 	}
 
+	@Override
 	public long getReportsExportCSVCount(
 			FaroProject faroProject, String path,
 			Map<String, List<String>> queryParameters)

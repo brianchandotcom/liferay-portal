@@ -458,17 +458,8 @@ public class FileEntryContentDashboardItemTest {
 					LocaleUtil.getDefault());
 
 		ContentDashboardItem.SpecificInformation<?>
-			extensionSpecificInformation = null;
-
-		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
-				specificInformationList) {
-
-			if (Objects.equals(specificInformation.getKey(), "extension")) {
-				extensionSpecificInformation = specificInformation;
-
-				break;
-			}
-		}
+			extensionSpecificInformation = _getSpecificInformation(
+				"extension", specificInformationList);
 
 		Assert.assertNotNull(
 			"extension not found", extensionSpecificInformation);
@@ -476,17 +467,7 @@ public class FileEntryContentDashboardItemTest {
 		Assert.assertEquals("jpg", extensionSpecificInformation.getValue());
 
 		ContentDashboardItem.SpecificInformation<?> sizeSpecificInformation =
-			null;
-
-		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
-				specificInformationList) {
-
-			if (Objects.equals(specificInformation.getKey(), "size")) {
-				sizeSpecificInformation = specificInformation;
-
-				break;
-			}
-		}
+			_getSpecificInformation("size", specificInformationList);
 
 		Assert.assertNotNull("size not found", sizeSpecificInformation);
 		Assert.assertEquals("0 B", sizeSpecificInformation.getValue());
@@ -498,19 +479,10 @@ public class FileEntryContentDashboardItemTest {
 					specificInformation.getKey(), "file-name")));
 
 		ContentDashboardItem.SpecificInformation<URL>
-			webDAVSpecificInformation = null;
-
-		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
-				specificInformationList) {
-
-			if (Objects.equals(specificInformation.getKey(), "web-dav-url")) {
-				webDAVSpecificInformation =
-					(ContentDashboardItem.SpecificInformation<URL>)
-						specificInformation;
-
-				break;
-			}
-		}
+			webDAVSpecificInformation =
+				(ContentDashboardItem.SpecificInformation<URL>)
+					_getSpecificInformation(
+						"web-dav-url", specificInformationList);
 
 		Assert.assertNotNull(
 			"web-dav-url not found", webDAVSpecificInformation);
@@ -703,6 +675,22 @@ public class FileEntryContentDashboardItemTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return mockHttpServletRequest;
+	}
+
+	private ContentDashboardItem.SpecificInformation<?> _getSpecificInformation(
+		String key,
+		List<ContentDashboardItem.SpecificInformation<?>>
+			specificInformationList) {
+
+		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
+				specificInformationList) {
+
+			if (Objects.equals(specificInformation.getKey(), key)) {
+				return specificInformation;
+			}
+		}
+
+		return null;
 	}
 
 	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)

@@ -41,8 +41,10 @@ import com.liferay.jenkins.results.parser.WorkspaceGitRepository;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.JSUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightAxisTestClassGroup;
 
@@ -1061,6 +1063,23 @@ public class TestrayImporter {
 									TestrayFactory.newTestrayCaseResult(
 										testrayBuild, getTopLevelBuild(),
 										axisTestClassGroup, testClass));
+							}
+						}
+						else if (axisTestClassGroup instanceof
+									JSUnitAxisTestClassGroup) {
+
+							for (TestClass testClass :
+									axisTestClassGroup.getTestClasses()) {
+
+								for (TestClassMethod testClassMethod :
+										testClass.getTestClassMethods()) {
+
+									testrayCaseResults.add(
+										TestrayFactory.newTestrayCaseResult(
+											testrayBuild, getTopLevelBuild(),
+											axisTestClassGroup, testClass,
+											testClassMethod));
+								}
 							}
 						}
 						else {

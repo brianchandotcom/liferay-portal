@@ -10,8 +10,10 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.SourceFormatBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.JSUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightAxisTestClassGroup;
 
@@ -153,6 +155,15 @@ public class TestrayFactory {
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 
+		return newTestrayCaseResult(
+			testrayBuild, topLevelBuild, axisTestClassGroup, testClass, null);
+	}
+
+	public static TestrayCaseResult newTestrayCaseResult(
+		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
+		TestClassMethod testClassMethod) {
+
 		if (testrayBuild == null) {
 			throw new RuntimeException("Testray build is null");
 		}
@@ -169,6 +180,11 @@ public class TestrayFactory {
 			if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup) {
 				return new FunctionalBatchBuildTestrayCaseResult(
 					testrayBuild, topLevelBuild, axisTestClassGroup, testClass);
+			}
+			else if (axisTestClassGroup instanceof JSUnitAxisTestClassGroup) {
+				return new JSUnitBatchBuildTestrayCaseResult(
+					testrayBuild, topLevelBuild, axisTestClassGroup,
+					testClassMethod);
 			}
 			else if (axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
 				return new JUnitBatchBuildTestrayCaseResult(

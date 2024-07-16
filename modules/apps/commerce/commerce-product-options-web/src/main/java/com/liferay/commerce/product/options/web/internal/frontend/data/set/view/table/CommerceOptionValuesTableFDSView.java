@@ -33,10 +33,11 @@ public class CommerceOptionValuesTableFDSView extends BaseTableFDSView {
 
 		return fdsTableSchemaBuilder.add(
 			"name.LANG", "name",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("actionLink");
-				fdsTableSchemaField.setSortable(true);
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink"
+			).setSortable(
+				true
+			)
 		).add(
 			"key", "key"
 		).add(

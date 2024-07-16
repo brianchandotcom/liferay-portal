@@ -22,7 +22,7 @@ const test = mergeTests(
 	loginTest()
 );
 
-test('checks that the Display Menu items have a role link with display style Bar With Links', async ({
+test('Checks that the Display Menu items have a role link with display style Bar With Links', async ({
 	apiHelpers,
 	page,
 	site,

@@ -24,7 +24,7 @@ const test = mergeTests(
 	isolatedSiteTest
 );
 
-test('checks that a widget can be added and dragged to another part of the page', async ({
+test('Checks that a widget can be added and dragged to another part of the page', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

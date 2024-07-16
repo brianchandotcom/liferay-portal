@@ -26,7 +26,7 @@ export const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('does not show alert when accessing a page with a web content display mapped to a restricted web content', async ({
+test('Does not show alert when accessing a page with a web content display mapped to a restricted web content', async ({
 	apiHelpers,
 	browser,
 	journalPage,

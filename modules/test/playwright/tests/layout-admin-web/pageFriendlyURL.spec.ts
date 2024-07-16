@@ -27,48 +27,53 @@ const test = mergeTests(
 	pagesPagesTest
 );
 
-test('This is a test for LPD-21554. Some page names result in 404 friendly URLs.', async ({
-	apiHelpers,
-	page,
-}) => {
-	const company =
-		await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
-			'liferay.com'
+test(
+	'Some page names result in 404 friendly URLs',
+	{
+		tag: '@LPD-21554',
+	},
+	async ({apiHelpers, page}) => {
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const group = await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+			company.companyId,
+			'Guest'
 		);
 
-	const group = await apiHelpers.jsonWebServicesGroup.getGroupByKey(
-		company.companyId,
-		'Guest'
-	);
+		// Create a page in Guest site with name matching a supported locale which
+		// is not an available locale for the site
 
-	// Create a page in Guest site with name matching a supported locale which
-	// is not an available locale for the site
+		const pageName = 'th';
 
-	const pageName = 'th';
+		const sitePage = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: group.groupId,
+			title: pageName,
+		});
 
-	const sitePage = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([
-			getFragmentDefinition({
-				id: getRandomString(),
-				key: 'BASIC_COMPONENT-heading',
-			}),
-		]),
-		siteId: group.groupId,
-		title: pageName,
-	});
+		await page.goto(liferayConfig.environment.baseUrl);
 
-	await page.goto(liferayConfig.environment.baseUrl);
+		if (await page.getByText(pageName, {exact: true}).isVisible()) {
+			await page.getByText(pageName, {exact: true}).click();
+		}
 
-	if (await page.getByText(pageName, {exact: true}).isVisible()) {
-		await page.getByText(pageName, {exact: true}).click();
+		await expect.soft(page.getByText('Heading Example')).toBeVisible();
+
+		await apiHelpers.jsonWebServicesLayout.deleteLayout(
+			String(sitePage.id)
+		);
 	}
+);
 
-	await expect.soft(page.getByText('Heading Example')).toBeVisible();
-
-	await apiHelpers.jsonWebServicesLayout.deleteLayout(String(sitePage.id));
-});
-
-test('Navigating to the URL of an uncreated page does not throw errors.', async ({
+test('Navigating to the URL of an uncreated page does not throw errors', async ({
 	apiHelpers,
 	page,
 	site,
@@ -93,7 +98,7 @@ test('Navigating to the URL of an uncreated page does not throw errors.', async 
 	await expect(page.getByText('Error Code: 404')).toBeVisible();
 });
 
-test('Canonical URL doesnt change with localized Friendly URL.', async ({
+test('Canonical URL doesnt change with localized Friendly URL', async ({
 	apiHelpers,
 	browser,
 	pageConfigurationPage,
@@ -137,7 +142,7 @@ test('Canonical URL doesnt change with localized Friendly URL.', async ({
 	);
 });
 
-test('Friendly URLs Only Display Locale Once.', async ({
+test('Friendly URLs Only Display Locale Once', async ({
 	apiHelpers,
 	page,
 	pageConfigurationPage,

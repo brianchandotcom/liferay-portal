@@ -23,7 +23,7 @@ const test = mergeTests(
 	pagesAdminPagesTest
 );
 
-test('changes the permissions of a group of pages', async ({
+test('Changes the permissions of a group of pages', async ({
 	apiHelpers,
 	page,
 	pagesAdminPage,
@@ -97,7 +97,7 @@ test('changes the permissions of a group of pages', async ({
 	}
 });
 
-test('checks the correct label for restricted pages in Miller Columns', async ({
+test('Checks the correct label for restricted pages in pages administration', async ({
 	apiHelpers,
 	page,
 	pagesAdminPage,
@@ -130,7 +130,7 @@ test('checks the correct label for restricted pages in Miller Columns', async ({
 	).toBeVisible();
 });
 
-test('Can add and delete a child page.', async ({
+test('Can add and delete a child page', async ({
 	apiHelpers,
 	page,
 	pagesAdminPage,
@@ -190,25 +190,29 @@ test('Can add and delete a child page.', async ({
 	).not.toBeVisible();
 });
 
-test('LPS-178476 View the XSS is escaped when store it in widget page name.', async ({
-	apiHelpers,
-	page,
-	pagesAdminPage,
-	site,
-}) => {
+test(
+	'View the XSS is escaped when store it in widget page name',
+	{
+		tag: '@LPS-178476',
+	},
+	async ({apiHelpers, page, pagesAdminPage, site}) => {
 
-	// Add listener with expect so it fails when a browser dialog is shown
+		// Add listener with expect so it fails when a browser dialog is shown
 
-	page.on('dialog', async (dialog) => {
-		dialog.accept();
+		page.on('dialog', async (dialog) => {
+			dialog.accept();
 
-		expect(dialog.message(), 'This alert should not be shown').toBeNull();
-	});
+			expect(
+				dialog.message(),
+				'This alert should not be shown'
+			).toBeNull();
+		});
 
-	await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		title: '<script>alert(123);</script>',
-	});
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: '<script>alert(123);</script>',
+		});
 
-	await pagesAdminPage.goto(site.friendlyUrlPath);
-});
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+	}
+);

@@ -27,7 +27,7 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('checks the correct label for restricted page in the page heading', async ({
+test('Checks the correct label for restricted page in the page heading', async ({
 	apiHelpers,
 	page,
 	site,
@@ -61,7 +61,7 @@ test('checks the correct label for restricted page in the page heading', async (
 	await expect(header.getByText('Restricted Page')).toBeVisible();
 });
 
-test('checks page title in view mode and in edit mode', async ({
+test('Checks page title in view mode and in edit mode', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -89,7 +89,7 @@ test('checks page title in view mode and in edit mode', async ({
 	);
 });
 
-test('checks page SEO HTML title is not shown in edit mode', async ({
+test('Checks page SEO HTML title is not shown in edit mode', async ({
 	apiHelpers,
 	page,
 	pageConfigurationPage,

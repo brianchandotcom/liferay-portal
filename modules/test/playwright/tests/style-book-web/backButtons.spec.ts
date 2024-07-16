@@ -36,7 +36,7 @@ async function checkBackButtonTitle(page: Page, title: string) {
 	).toBeVisible();
 }
 
-test('back buttons have correct title in different sections', async ({
+test('Back buttons have correct title in different sections', async ({
 	fragmentsPage,
 	journalEditTemplatePage,
 	navigationMenusPage,

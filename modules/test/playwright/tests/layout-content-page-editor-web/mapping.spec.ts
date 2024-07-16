@@ -32,7 +32,7 @@ const test = mergeTests(
 	wemSiteTest
 );
 
-test('allows selecting specific repeatable field when mapping', async ({
+test('Allows selecting specific repeatable field when mapping', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -129,7 +129,7 @@ test('allows selecting specific repeatable field when mapping', async ({
 	expect(fragment).toHaveText('France');
 });
 
-test('allows selecting specific repeatable collection provider', async ({
+test('Allows selecting specific repeatable collection provider', async ({
 	apiHelpers,
 	collectionsPage,
 	page,

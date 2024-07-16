@@ -24,142 +24,153 @@ const test = mergeTests(
 	pageViewModePagesTest
 );
 
-test('LPD-15256 Approved and scheduled web contents should be displayed in the "Content" tab of the "Add" panel of a widget page, whereas draft, expired and in-trash web contents should not', async ({
-	apiHelpers,
-	page,
-	site,
-	widgetPagePage,
-}) => {
+test(
+	'Approved and scheduled web contents should be displayed in the "Content" tab of the "Add" panel of a widget page, whereas draft, expired and in-trash web contents should not',
+	{
+		tag: '@LPD-15256',
+	},
+	async ({apiHelpers, page, site, widgetPagePage}) => {
 
-	// Add required basic web contents
+		// Add required basic web contents
 
-	const approvedWebContentTitle = getRandomString();
-	const draftWebContentTitle = getRandomString();
-	const expiredWebContentTitle = getRandomString();
-	const inTrashWebContentTitle = getRandomString();
-	const scheduledWebContentTitle = getRandomString();
+		const approvedWebContentTitle = getRandomString();
+		const draftWebContentTitle = getRandomString();
+		const expiredWebContentTitle = getRandomString();
+		const inTrashWebContentTitle = getRandomString();
+		const scheduledWebContentTitle = getRandomString();
 
-	const contentStructureId = await getBasicWebContentStructureId(apiHelpers);
+		const contentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
 
-	await addApprovedStructuredContent({
-		apiHelpers,
-		contentStructureId,
-		siteId: site.id,
-		title: approvedWebContentTitle,
-	});
+		await addApprovedStructuredContent({
+			apiHelpers,
+			contentStructureId,
+			siteId: site.id,
+			title: approvedWebContentTitle,
+		});
 
-	await addDraftStructuredContent({
-		apiHelpers,
-		contentStructureId,
-		siteId: site.id,
-		title: draftWebContentTitle,
-	});
+		await addDraftStructuredContent({
+			apiHelpers,
+			contentStructureId,
+			siteId: site.id,
+			title: draftWebContentTitle,
+		});
 
-	await addExpiredStructuredContent(
-		apiHelpers,
-		site.id,
-		contentStructureId,
-		expiredWebContentTitle
-	);
+		await addExpiredStructuredContent(
+			apiHelpers,
+			site.id,
+			contentStructureId,
+			expiredWebContentTitle
+		);
 
-	await addInTrashStructuredContent(
-		apiHelpers,
-		site.id,
-		contentStructureId,
-		inTrashWebContentTitle
-	);
+		await addInTrashStructuredContent(
+			apiHelpers,
+			site.id,
+			contentStructureId,
+			inTrashWebContentTitle
+		);
 
-	await addScheduledStructuredContent(
-		apiHelpers,
-		site.id,
-		contentStructureId,
-		scheduledWebContentTitle
-	);
+		await addScheduledStructuredContent(
+			apiHelpers,
+			site.id,
+			contentStructureId,
+			scheduledWebContentTitle
+		);
 
-	async function verifyVisibleWebContents() {
-		await expect(page.getByText(approvedWebContentTitle)).toBeVisible();
-		await expect(page.getByText(draftWebContentTitle)).not.toBeVisible();
-		await expect(page.getByText(expiredWebContentTitle)).not.toBeVisible();
-		await expect(page.getByText(inTrashWebContentTitle)).not.toBeVisible();
-		await expect(page.getByText(scheduledWebContentTitle)).toBeVisible();
+		async function verifyVisibleWebContents() {
+			await expect(page.getByText(approvedWebContentTitle)).toBeVisible();
+			await expect(
+				page.getByText(draftWebContentTitle)
+			).not.toBeVisible();
+			await expect(
+				page.getByText(expiredWebContentTitle)
+			).not.toBeVisible();
+			await expect(
+				page.getByText(inTrashWebContentTitle)
+			).not.toBeVisible();
+			await expect(
+				page.getByText(scheduledWebContentTitle)
+			).toBeVisible();
+		}
+
+		// Create page, go to view mode and open Contents panel
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await widgetPagePage.openAddPanel();
+
+		await widgetPagePage.contentTab.click();
+
+		await verifyVisibleWebContents();
+
+		await page.getByLabel('Select Label').selectOption('8');
+
+		await verifyVisibleWebContents();
+
+		await page.getByRole('button', {name: 'Display Style'}).click();
+
+		await verifyVisibleWebContents();
 	}
+);
 
-	// Create page, go to view mode and open Contents panel
+test(
+	'Can hide and show portlet header of existing visible portlets on widget page via switch Toggle Controls',
+	{
+		tag: '@LPS-108216',
+	},
+	async ({apiHelpers, page, site, widgetPagePage}) => {
 
-	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		title: getRandomString(),
-	});
+		// Create page and go to view mode
 
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
 
-	await widgetPagePage.openAddPanel();
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	await widgetPagePage.contentTab.click();
+		await widgetPagePage.addPortlet('Blogs Aggregator');
 
-	await verifyVisibleWebContents();
+		const blogsWidget = page.locator('.portlet-blogs');
 
-	await page.getByLabel('Select Label').selectOption('8');
+		// Make sure controls are visible and check topper is shown
 
-	await verifyVisibleWebContents();
+		await widgetPagePage.toggleControls('visible');
 
-	await page.getByRole('button', {name: 'Display Style'}).click();
+		const topper = page
+			.locator('.portlet-topper')
+			.getByText('Blogs Aggregator');
 
-	await verifyVisibleWebContents();
-});
+		await blogsWidget.hover();
 
-test('LPS-108216 Can hide and show portlet header of existing visible portlets on widget page via switch Toggle Controls', async ({
-	apiHelpers,
-	page,
-	site,
-	widgetPagePage,
-}) => {
+		await expect(topper).toBeVisible();
 
-	// Create page and go to view mode
+		// Toggle controls and check topper is not shown
 
-	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		title: getRandomString(),
-	});
+		await widgetPagePage.toggleControls('hidden');
 
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+		await blogsWidget.hover();
 
-	await widgetPagePage.addPortlet('Blogs Aggregator');
+		await expect(topper).not.toBeVisible();
 
-	const blogsWidget = page.locator('.portlet-blogs');
+		// Recover original state
 
-	// Make sure controls are visible and check topper is shown
+		await widgetPagePage.toggleControls('visible');
 
-	await widgetPagePage.toggleControls('visible');
+		// Delete Web Content Display and check it's not displayed
 
-	const topper = page
-		.locator('.portlet-topper')
-		.getByText('Blogs Aggregator');
+		await widgetPagePage.deletePortlet('Blogs Aggregator');
 
-	await blogsWidget.hover();
-
-	await expect(topper).toBeVisible();
-
-	// Toggle controls and check topper is not shown
-
-	await widgetPagePage.toggleControls('hidden');
-
-	await blogsWidget.hover();
-
-	await expect(topper).not.toBeVisible();
-
-	// Recover original state
-
-	await widgetPagePage.toggleControls('visible');
-
-	// Delete Web Content Display and check it's not displayed
-
-	await widgetPagePage.deletePortlet('Blogs Aggregator');
-
-	await expect(
-		page.locator('.portlet-topper', {hasText: 'Blogs Aggregator'})
-	).not.toBeVisible();
-});
+		await expect(
+			page.locator('.portlet-topper', {hasText: 'Blogs Aggregator'})
+		).not.toBeVisible();
+	}
+);
 
 test('View web content is shown in Web Content Display after be added via content panel', async ({
 	apiHelpers,
@@ -207,34 +218,39 @@ test('View web content is shown in Web Content Display after be added via conten
 	).toBeVisible();
 });
 
-test('LPS-178476 View the XSS is escaped when store it in widget page name.', async ({
-	apiHelpers,
-	page,
-	site,
-}) => {
+test(
+	'View the XSS is escaped when store it in widget page name',
+	{
+		tag: '@LPS-178476',
+	},
+	async ({apiHelpers, page, site}) => {
 
-	// Add listener with expect so it fails when a browser dialog is shown
+		// Add listener with expect so it fails when a browser dialog is shown
 
-	page.on('dialog', async (dialog) => {
-		dialog.accept();
+		page.on('dialog', async (dialog) => {
+			dialog.accept();
 
-		expect(dialog.message(), 'This alert should not be shown').toBeNull();
-	});
+			expect(
+				dialog.message(),
+				'This alert should not be shown'
+			).toBeNull();
+		});
 
-	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		title: '<script>alert(123);</script>',
-	});
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: '<script>alert(123);</script>',
+		});
 
-	// Go to view mode of page
+		// Go to view mode of page
 
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
-	// Open the Product Menu
+		// Open the Product Menu
 
-	await page
-		.getByRole('tab', {
-			name: 'Product Menu',
-		})
-		.click({timeout: 3000});
-});
+		await page
+			.getByRole('tab', {
+				name: 'Product Menu',
+			})
+			.click({timeout: 3000});
+	}
+);

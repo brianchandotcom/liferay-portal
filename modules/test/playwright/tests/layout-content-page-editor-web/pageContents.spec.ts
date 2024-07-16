@@ -24,7 +24,7 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('allows editing inline text from Page Content Panel', async ({
+test('Allows editing inline text from Page Content Panel', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

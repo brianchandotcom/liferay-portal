@@ -63,7 +63,7 @@ const NON_DESKTOP_PANELS: NonDesktopPanels = [
 	},
 ];
 
-test('shows correct sections on each configuration panel when viewport is not Desktop', async ({
+test('Shows correct sections on each configuration panel when viewport is not Desktop', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -110,7 +110,7 @@ test('shows correct sections on each configuration panel when viewport is not De
 	}
 });
 
-test('shows only Image Source field when the viewport is Desktop', async ({
+test('Shows only Image Source field when the viewport is Desktop', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -190,7 +190,7 @@ test('Background Image field is disabled for non-desktop viewports', async ({
 	}
 });
 
-test('checks that the layout can be resized', async ({
+test('Checks that the layout can be resized', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -252,7 +252,7 @@ test('checks that the layout can be resized', async ({
 	expect(newSizeResizer.width).toBe(460);
 });
 
-test('checks that the value of a field is propagated to smaller viewports', async ({
+test('Checks that the value of a field is propagated to smaller viewports', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -300,7 +300,7 @@ test('checks that the value of a field is propagated to smaller viewports', asyn
 	}
 });
 
-test('correct viewport configuration is set when adding a Grid', async ({
+test('Correct viewport configuration is set when adding a Grid', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

@@ -25,7 +25,7 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('checks that the Slider fragment works correctly', async ({
+test('Checks that the Slider fragment works correctly', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

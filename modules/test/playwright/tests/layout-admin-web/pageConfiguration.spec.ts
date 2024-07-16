@@ -24,7 +24,7 @@ const test = mergeTests(
 	pagesPagesTest
 );
 
-test('checks the accessibility of the General page configuration', async ({
+test('Checks the accessibility of the General page configuration', async ({
 	page,
 }) => {
 	await page.goto('/');
@@ -39,7 +39,7 @@ test('checks the accessibility of the General page configuration', async ({
 	});
 });
 
-test('Can configure an embedded page.', async ({
+test('Can configure an embedded page', async ({
 	apiHelpers,
 	page,
 	pageConfigurationPage,
@@ -75,7 +75,7 @@ test('Can configure an embedded page.', async ({
 	);
 });
 
-test('Can configure a full page application.', async ({
+test('Can configure a full page application', async ({
 	apiHelpers,
 	page,
 	pageConfigurationPage,
@@ -108,7 +108,7 @@ test('Can configure a full page application.', async ({
 	await expect(page.getByRole('heading', {name: 'Wiki'})).toBeVisible();
 });
 
-test('Can not select pages from other sites for Link to a Page of This Site.', async ({
+test('Can not select pages from other sites for Link to a Page', async ({
 	apiHelpers,
 	page,
 	pageConfigurationPage,
@@ -153,7 +153,7 @@ test('Can not select pages from other sites for Link to a Page of This Site.', a
 	await expect(modal.getByText('Sites and Libraries')).not.toBeVisible();
 });
 
-test('Can configure a panel page.', async ({
+test('Can configure a panel page', async ({
 	apiHelpers,
 	page,
 	pageConfigurationPage,
@@ -188,7 +188,7 @@ test('Can configure a panel page.', async ({
 	).toBeVisible();
 });
 
-test('Can edit the page name and layout template via pages administration.', async ({
+test('Can edit the page name and layout template via pages administration', async ({
 	apiHelpers,
 	page,
 	pageConfigurationPage,

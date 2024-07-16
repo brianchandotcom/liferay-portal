@@ -24,7 +24,7 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('allows moving through layout content with keyboard', async ({
+test('Allows moving through layout content with keyboard', async ({
 	apiHelpers,
 	pageEditorPage,
 	site,
@@ -97,7 +97,7 @@ test('allows moving through layout content with keyboard', async ({
 	await expect(secondEditable).toHaveClass(/page-editor__editable--active/);
 });
 
-test('focus order is correct', async ({
+test('Focus order is correct', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -158,7 +158,7 @@ test('focus order is correct', async ({
 	await expect(generalTab).toBeFocused();
 });
 
-test('check that it cannot be accessed by keyboard in disabled areas', async ({
+test('Check that it cannot be accessed by keyboard in disabled areas', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -179,7 +179,7 @@ test('check that it cannot be accessed by keyboard in disabled areas', async ({
 	}
 });
 
-test('checks the correct keyboard navigation in the experience selector', async ({
+test('Checks the correct keyboard navigation in the experience selector', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

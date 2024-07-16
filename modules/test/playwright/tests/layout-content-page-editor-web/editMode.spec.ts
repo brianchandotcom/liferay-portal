@@ -24,7 +24,7 @@ const test = mergeTests(
 	wemSiteTest
 );
 
-test('check only allowed actions can be executed in Content Editing mode', async ({
+test('Check only allowed actions can be executed in Content Editing mode', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

@@ -16,7 +16,7 @@ const test = mergeTests(
 	loginTest()
 );
 
-test('checks that the card checkbox has the correct aria label', async ({
+test('Checks that the card checkbox has the correct aria label', async ({
 	displayPageTemplatesPage,
 	page,
 	site,

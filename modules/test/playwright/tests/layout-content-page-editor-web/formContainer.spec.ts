@@ -25,7 +25,7 @@ const test = mergeTests(
 	wemSiteTest
 );
 
-test('allow selecting fields from main object and relationships in fields modal', async ({
+test('Allow selecting fields from main object and relationships in fields modal', async ({
 	apiHelpers,
 	pageEditorPage,
 	wemSite,
@@ -62,7 +62,7 @@ test('allow selecting fields from main object and relationships in fields modal'
 	await expect(form.getByText('Lemon Basket Color')).toBeVisible();
 });
 
-test('shows correct options in picklist field selected as title in related object', async ({
+test('Shows correct options in picklist field selected as title in related object', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,

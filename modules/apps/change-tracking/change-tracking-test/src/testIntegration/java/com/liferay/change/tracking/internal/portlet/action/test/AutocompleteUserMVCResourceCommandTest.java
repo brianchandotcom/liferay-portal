@@ -125,10 +125,9 @@ public class AutocompleteUserMVCResourceCommandTest {
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		mockLiferayResourceRequest.setParameter("keywords", userName);
-
 		mockLiferayResourceRequest.setParameter(
 			"ctCollectionId", String.valueOf(ctCollectionId));
+		mockLiferayResourceRequest.setParameter("keywords", userName);
 
 		return mockLiferayResourceRequest;
 	}

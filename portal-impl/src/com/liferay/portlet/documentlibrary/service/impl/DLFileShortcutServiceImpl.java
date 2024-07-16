@@ -28,8 +28,8 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 
 	@Override
 	public DLFileShortcut addFileShortcut(
-			long groupId, long repositoryId, long folderId, long toFileEntryId,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long groupId, long repositoryId,
+			long folderId, long toFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		ModelResourcePermissionUtil.check(
@@ -51,8 +51,8 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 		}
 
 		return dlFileShortcutLocalService.addFileShortcut(
-			getUserId(), groupId, repositoryId, folderId, toFileEntryId,
-			serviceContext);
+			externalReferenceCode, getUserId(), groupId, repositoryId, folderId,
+			toFileEntryId, serviceContext);
 	}
 
 	@Override

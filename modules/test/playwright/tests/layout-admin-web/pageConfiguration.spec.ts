@@ -6,8 +6,10 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageSelectorPagesTest} from '../../fixtures/pageSelectorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {checkAccessibility} from '../../utils/checkAccessibility';
@@ -17,8 +19,12 @@ import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
 	isolatedSiteTest,
 	loginTest(),
+	pageEditorPagesTest,
 	pageSelectorPagesTest,
 	pagesAdminPagesTest,
 	pagesPagesTest
@@ -235,4 +241,85 @@ test('Can edit the page name and layout template via pages administration', asyn
 	).toBeVisible();
 
 	await expect(page.locator('#layout-column_column-1')).toBeAttached();
+});
+
+test(
+	'Asserts the Utility Pages configuration view',
+	{
+		tag: '@LPD-4459',
+	},
+	async ({
+		page,
+		pageEditorPage,
+		site,
+		utilityPageConfigurationPage,
+		utilityPagesPage,
+	}) => {
+		await page.goto('/');
+
+		// The configuration action must be available from the card
+		// The configuration view should only allow setting the htmlTitle and htmlDescription SEO fields
+
+		await utilityPagesPage.goto(site.friendlyUrlPath);
+		await utilityPageConfigurationPage.setUtilityPageConfiguration(
+			getRandomString(),
+			getRandomString(),
+			'404 Error'
+		);
+
+		// During editing the "More Page Design Options" link should not be available
+
+		await utilityPagesPage.goto(site.friendlyUrlPath);
+		await utilityPagesPage.goToEdit('404 Error');
+		await pageEditorPage.goToSidebarTab('Page Design Options');
+
+		await expect(page.getByText('Master', {exact: true})).toBeVisible();
+		expect(
+			await page.getByTitle('More Page Design Options').count()
+		).toEqual(0);
+	}
+);
+
+test('Checks page SEO HTML title is not shown in edit mode', async ({
+	apiHelpers,
+	page,
+	pageConfigurationPage,
+	pageEditorPage,
+	pagesAdminPage,
+	site,
+}) => {
+
+	// Create page
+
+	const pageName = getRandomString();
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: pageName,
+	});
+
+	// Change SEO HTML title
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+	await pageConfigurationPage.goToSection(pageName, 'SEO');
+
+	const HTMLTitle = getRandomString();
+
+	await pageConfigurationPage.setHTMLTitle(HTMLTitle);
+
+	// Check SEO HTML title is shown in view mode
+
+	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+	expect(await page.title()).toBe(
+		`${HTMLTitle} - ${site.name} - Liferay DXP`
+	);
+
+	// Check SEO HTML title is not shown in view mode
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	expect(await page.title()).toBe(
+		`${pageName} - ${site.name} - Liferay DXP (Editing)`
+	);
 });

@@ -2,6 +2,9 @@
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
+Provide-Capability:\
+	liferay.language.resources;\
+		resource.bundle.base.name="content.Language"
 Web-ContextPath: /simulation-panel-app-${artifactId}
 #if (${buildType} != "gradle")
 -consumer-policy: ${versionPolicy}

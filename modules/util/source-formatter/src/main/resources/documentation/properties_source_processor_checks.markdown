@@ -19,6 +19,7 @@ PropertiesLiferayPluginPackageFileCheck | [Bug Prevention](bug_prevention_checks
 PropertiesLiferayPluginPackageLiferayVersionsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the version in `liferay-plugin-package.properties` file. |
 PropertiesLongLinesCheck | [Styling](styling_checks.markdown#styling-checks) | Finds lines that are longer than the specified maximum line length. |
 PropertiesMultiLineValuesOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Verifies that property with multiple values is not on a single line. |
+PropertiesPlaywrightTestCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `test.properties` for Playwright test. |
 PropertiesPortalFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `portal.properties` or `portal-*.properties` file. |
 PropertiesPortletFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `portlet.properties` file. |
 PropertiesReleaseBuildCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Verifies that the information in `release.properties` matches the information in `ReleaseInfo.java`. |

@@ -1,0 +1,667 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {expect, mergeTests} from '@playwright/test';
+
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../fixtures/loginTest';
+import {objectPagesTest} from '../../fixtures/objectPagesTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {wemSiteTest} from '../../fixtures/wemSiteTest';
+import {PageEditorPage} from '../../pages/layout-content-page-editor-web/PageEditorPage';
+import {
+	LEMON_BASKET_OBJECT_ERC,
+	LEMON_OBJECT_ERC,
+} from '../../setup/wem-site/constants';
+import {checkAccessibility} from '../../utils/checkAccessibility';
+import getGlobalSiteId from '../../utils/getGlobalSiteId';
+import getRandomString from '../../utils/getRandomString';
+import {PORTLET_URLS} from '../../utils/portletUrls';
+import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import getFormContainerDefinition from './utils/getFormContainerDefinition';
+import getFragmentDefinition from './utils/getFragmentDefinition';
+import getPageDefinition from './utils/getPageDefinition';
+
+const test = mergeTests(
+	apiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
+	isolatedSiteTest,
+	journalPagesTest,
+	loginTest(),
+	objectPagesTest,
+	pageEditorPagesTest,
+	wemSiteTest
+);
+
+const ENTER_KEY = 'Enter';
+
+async function openDropdownAndCheckStyle(
+	pageEditorPage: PageEditorPage,
+	dropdownId: string,
+	isDesktop = true,
+	style: string,
+	value: string
+) {
+
+	// Select dropdown
+
+	await pageEditorPage.selectFragment(dropdownId, isDesktop);
+
+	const dropdownFragment = pageEditorPage.getFragment(dropdownId, isDesktop);
+
+	const dropdownButton = dropdownFragment.locator(
+		'.dropdown-fragment-toggle'
+	);
+
+	// Open dropdown
+
+	await dropdownButton.press(ENTER_KEY);
+
+	const dropdownMenu = dropdownFragment.locator('.dropdown-fragment-menu');
+
+	await dropdownMenu.waitFor();
+
+	// Check style
+
+	expect(
+		await dropdownMenu.evaluate((element, style) => {
+			return window.getComputedStyle(element).getPropertyValue(style);
+		}, style)
+	).toBe(value);
+
+	// Close dropdown
+
+	await dropdownButton.press(ENTER_KEY);
+
+	await dropdownMenu.waitFor({state: 'hidden'});
+}
+
+test.describe('Content Display Fragment', () => {
+	test('Does not show alert when accessing a page with a web content display mapped to a restricted web content', async ({
+		apiHelpers,
+		browser,
+		journalPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create a web content restricted to site members
+
+		await journalPage.goto(site.friendlyUrlPath);
+		await journalPage.goToCreateArticle();
+
+		await journalPage.setArticleViewableBy('Site Members');
+
+		const articleTitle = getRandomString();
+		const articleContent = 'My article';
+
+		await journalPage.fillArticleData(articleTitle, articleContent);
+		await journalPage.publishArticle();
+
+		await expect(
+			page.getByLabel('Not Visible to Guest Users')
+		).toBeVisible();
+
+		// Create a page with a content display fragment and go to edit mode
+
+		const contentDisplayId = getRandomString();
+
+		const contentDisplayDefinition = getFragmentDefinition({
+			fragmentConfig: {
+				itemSelector: {
+					template: {
+						infoItemRendererKey:
+							'com.liferay.journal.web.internal.info.item.renderer.JournalArticleFullContentInfoItemRenderer',
+					},
+				},
+			},
+			id: contentDisplayId,
+			key: 'com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([contentDisplayDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Map the content display fragment to the created web content and publish the page
+
+		await pageEditorPage.selectFragment(contentDisplayId);
+
+		await pageEditorPage.setMappedItem({
+			entity: 'Web Content',
+			entry: articleTitle,
+		});
+
+		await pageEditorPage.publishPage();
+
+		// Navigate to page in incognito mode to simulate not logged user
+
+		const context = await browser.newContext();
+
+		const incognitoPage = await context.newPage();
+
+		await incognitoPage.goto(
+			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		// Check the content is not displayed and no alert is shown
+
+		await expect(incognitoPage.getByText(articleContent)).not.toBeVisible();
+		await expect(incognitoPage.getByRole('alert')).not.toBeVisible();
+	});
+});
+
+test.describe('Dropdown Fragment', () => {
+	test('Check dropdown menu is displayed correctly in all resolutions', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create content page with a Dropdown fragment and go to edit mode
+
+		const dropdownId = getRandomString();
+
+		const fragmentDefinition = getFragmentDefinition({
+			cssClasses: ['d-flex', 'justify-content-end'],
+			id: dropdownId,
+			key: 'BASIC_COMPONENT-dropdown',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([fragmentDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Check dropdown style in all viewports
+
+		await openDropdownAndCheckStyle(
+			pageEditorPage,
+			dropdownId,
+			true,
+			'right',
+			'280px'
+		);
+
+		await pageEditorPage.switchViewport('Portrait Phone');
+
+		await openDropdownAndCheckStyle(
+			pageEditorPage,
+			dropdownId,
+			false,
+			'right',
+			'0px'
+		);
+
+		await pageEditorPage.goToConfigurationTab('Advanced');
+
+		await page.getByRole('button', {name: 'Clear All'}).click();
+
+		await openDropdownAndCheckStyle(
+			pageEditorPage,
+			dropdownId,
+			false,
+			'left',
+			'0px'
+		);
+	});
+});
+
+test.describe('HTML Fragment', () => {
+	test('Can edit html editable', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create page with a HTML fragment and go to edit mode
+
+		const fragmentId = getRandomString();
+
+		const fragment = getFragmentDefinition({
+			id: fragmentId,
+			key: 'BASIC_COMPONENT-html',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([fragment]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Check html editable can be edited
+
+		await pageEditorPage.editHTMLEditable(
+			fragmentId,
+			'element-html',
+			'<div class="text-success"><h1>test html</h1></div>'
+		);
+
+		await expect(page.getByText('test html')).toBeAttached();
+	});
+});
+
+test.describe('Slider Fragment', () => {
+	test('Checks that the Slider fragment works correctly', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const expectSlideIsActive = async (name: string) => {
+			await expect(page.getByLabel(name, {exact: true})).toHaveClass(
+				/active/
+			);
+			await expect(page.getByLabel(`Go to ${name}`)).toHaveAttribute(
+				'aria-current',
+				'true'
+			);
+		};
+
+		const expectSlideIsNotActive = async (name: string) => {
+			await expect(page.getByLabel(name, {exact: true})).not.toHaveClass(
+				/active/
+			);
+			await expect(page.getByLabel(`Go to ${name}`)).toHaveAttribute(
+				'aria-current',
+				'false'
+			);
+		};
+
+		// Create page with Slider fragment and go to edit mode
+
+		const sliderId = getRandomString();
+
+		const sliderDefinition = getFragmentDefinition({
+			fragmentConfig: {
+				numberOfSlides: 3,
+			},
+			fragmentFields: [
+				{
+					id: '02-02-title',
+					value: {
+						text: {
+							value_i18n: {
+								en_US: 'Slide 2',
+							},
+						},
+					},
+				},
+				{
+					id: '01-02-title',
+					value: {
+						text: {
+							value_i18n: {
+								en_US: 'Slide 1',
+							},
+						},
+					},
+				},
+			],
+			id: sliderId,
+			key: 'BASIC_COMPONENT-slider',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([sliderDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Change the number of slides
+
+		const slide = page.locator('[aria-roledescription="slide"]');
+
+		expect(await slide.all()).toHaveLength(3);
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Number of Slides',
+			fragmentId: sliderId,
+			tab: 'General',
+			value: '2',
+		});
+
+		expect(await slide.all()).toHaveLength(2);
+
+		// Check Auto Hide Play button
+
+		const playButton = page.locator('.stopped');
+
+		await expect(playButton).not.toHaveClass(
+			/carousel-toggle-button--always-visible/
+		);
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Auto Hide Play Button',
+			fragmentId: sliderId,
+			tab: 'General',
+			value: false,
+		});
+
+		await expect(playButton).toHaveClass(
+			/carousel-toggle-button--always-visible/
+		);
+
+		await pageEditorPage.publishPage();
+
+		// Go to view mode
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		// Pause the carousel
+
+		await expect(page.getByText('Stop slide rotation')).toBeVisible();
+
+		await page.locator('.carousel-toggle-button.playing').click();
+
+		await expect(page.getByText('Start slide rotation')).toBeVisible();
+
+		// Check the slide 1 is active
+
+		await expectSlideIsActive('Slide 1');
+		await expectSlideIsNotActive('Slide 2');
+
+		// Click next slide and check the slide 2 is active
+
+		await page.getByLabel('Next Slide').click();
+
+		await expectSlideIsActive('Slide 2');
+		await expectSlideIsNotActive('Slide 1');
+
+		// Click previous slide and check the slide 1 is active
+
+		await page.getByLabel('Previous Slide').click();
+
+		await expectSlideIsActive('Slide 1');
+		await expectSlideIsNotActive('Slide 2');
+
+		// Check accessibility
+
+		await checkAccessibility({page, selectors: ['.component-slider']});
+	});
+});
+
+test.describe('Tabs Fragment', () => {
+	test('Checks that the Tabs fragment works correctly and has the correct semantics in small resolution', async ({
+		apiHelpers,
+		page,
+		site,
+	}) => {
+
+		// Create page with a Tabs fragment
+
+		const tabsDefinition = getFragmentDefinition({
+			fragmentConfig: {
+				numberOfTabs: 2,
+			},
+			fragmentFields: [
+				{
+					id: 'title1',
+					value: {},
+				},
+				{
+					id: 'title2',
+					value: {},
+				},
+			],
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-tabs',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([tabsDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Set small resolution and go to view mode
+
+		await page.setViewportSize({height: 600, width: 600});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		let dropdownButton = page.getByLabel('Current Selection: Tab 1');
+
+		await expect(dropdownButton).toHaveAttribute(
+			'aria-activedescendant',
+			''
+		);
+		await expect(dropdownButton).toHaveAttribute('aria-expanded', 'false');
+		await expect(dropdownButton).toHaveAttribute(
+			'aria-haspopup',
+			'listbox'
+		);
+		await expect(dropdownButton).toHaveAttribute('role', 'combobox');
+
+		// Open the dropdown and navigate by keyboard to select the Tab 2
+
+		await dropdownButton.press('Enter');
+
+		await expect(dropdownButton).toHaveAttribute('aria-expanded', 'true');
+
+		await page.keyboard.press('Tab');
+		await page.keyboard.press('Tab');
+		await page.keyboard.press('Enter');
+
+		dropdownButton = page.getByLabel('Current Selection: Tab 2');
+
+		// Check that the button has the correct text and the focus when the tab is selected
+
+		expect((await dropdownButton.textContent()).trim()).toBe('Tab 2');
+
+		await expect(dropdownButton).toBeFocused();
+
+		// Check accessibility
+
+		await checkAccessibility({page, selectors: ['.component-tabs']});
+	});
+});
+
+test.describe('Tags Fragment', () => {
+	test('Uses Tags fragment for Forms in a Content Page', async ({
+		apiHelpers,
+		page,
+		wemSite,
+	}) => {
+
+		// Get the id of Lemon object from the site initializer
+
+		const {id: objectId} =
+			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+				LEMON_OBJECT_ERC
+			);
+
+		// Create a Form Container with a Tags fragment and Submit fragment
+
+		const firstTagsFragmentDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'com.liferay.fragment.renderer.categorization.inputs.internal.TagsInputFragmentRenderer',
+		});
+
+		const secondTagsFragmentDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: 'com.liferay.fragment.renderer.categorization.inputs.internal.TagsInputFragmentRenderer',
+		});
+
+		const submitFragmentDefinition = getFragmentDefinition({
+			fragmentConfig: {
+				buttonSize: 'nm',
+				buttonType: 'primary',
+				submittedEntryStatus: 'approved',
+			},
+			fragmentFields: [
+				{
+					id: 'submit-button-text',
+					value: {
+						fragmentLink: {},
+					},
+				},
+			],
+			id: getRandomString(),
+			key: 'INPUTS-submit-button',
+		});
+
+		const formDefinition = getFormContainerDefinition({
+			id: getRandomString(),
+			objectId,
+			pageElements: [
+				firstTagsFragmentDefinition,
+				secondTagsFragmentDefinition,
+				submitFragmentDefinition,
+			],
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: wemSite.id,
+			title: getRandomString(),
+		});
+
+		// Create two tags in Wem Site
+
+		for (const tagName of ['Dogs', 'Cats']) {
+			await apiHelpers.headlessAdminTaxonomy.postSiteKeyword({
+				name: tagName,
+				siteId: wemSite.id,
+			});
+		}
+
+		// Create one tag on Global
+
+		const globalSiteId = await getGlobalSiteId(apiHelpers);
+
+		const globalTag =
+			await apiHelpers.headlessAdminTaxonomy.postSiteKeyword({
+				name: 'Rabbits',
+				siteId: globalSiteId,
+			});
+
+		// Go to view mode of the created page, select a tag for each fragment and submit the form
+
+		await page.goto(
+			`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await page.getByRole('combobox').first().click();
+		await page.getByRole('option', {exact: true, name: 'Dogs'}).click();
+
+		await page.getByRole('combobox').first().click();
+		await page.getByRole('option', {exact: true, name: 'Rabbits'}).click();
+
+		await page.getByRole('combobox').nth(1).click();
+		await page.getByRole('option', {exact: true, name: 'Cats'}).click();
+
+		await page.getByRole('button', {name: 'Submit'}).click();
+
+		await page
+			.getByText('Thank you. Your information was successfully received.')
+			.waitFor();
+
+		// Go to the object definition page and check the Tags fragment
+
+		await page.goto(
+			`/group${wemSite.friendlyUrlPath}${PORTLET_URLS.objects}_${objectId}`
+		);
+
+		await page
+			.locator('.table-list-title')
+			.getByRole('link')
+			.first()
+			.click();
+
+		const grid = page.getByRole('grid');
+
+		await grid.waitFor();
+
+		await expect(grid).toHaveText('RabbitsCatsDogs');
+
+		// Remove the tag created on Global
+
+		await apiHelpers.headlessAdminTaxonomy.deleteKeyword({
+			id: globalTag.id,
+		});
+	});
+
+	test('Checks that an info message appears when categorization is disabled', async ({
+		apiHelpers,
+		objectDetailsPage,
+		page,
+		pageEditorPage,
+		wemSite,
+	}) => {
+
+		// Get Lemon Basket object id from the site initializer
+
+		const {id: objectId} =
+			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
+				LEMON_BASKET_OBJECT_ERC
+			);
+
+		// Set the "Enable Categorization of Object entries" configuration to false
+
+		await objectDetailsPage.goto('Lemon Basket');
+
+		await objectDetailsPage.updateConfiguration({
+			fieldLabel: 'Enable Categorization of Object entries',
+			value: false,
+		});
+
+		// Create a Form Container with a Tags fragment
+
+		const formDefinition = getFormContainerDefinition({
+			id: getRandomString(),
+			objectId,
+			pageElements: [
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'com.liferay.fragment.renderer.categorization.inputs.internal.TagsInputFragmentRenderer',
+				}),
+			],
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: wemSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode and check the info message
+
+		await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+
+		await expect(
+			page.getByText(
+				'Categorization is disabled for the selected content. To show categories in this fragment, categorization must be enabled.'
+			)
+		).toBeVisible();
+
+		// Reset initial configuration
+
+		await objectDetailsPage.goto('Lemon Basket');
+
+		await objectDetailsPage.updateConfiguration({
+			fieldLabel: 'Enable Categorization of Object entries',
+			value: true,
+		});
+	});
+});

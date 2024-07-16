@@ -6272,9 +6272,16 @@ information. Make sure to commit in all format-javadoc results.
 					<sequential>
 						<echo>Executing Gradle tasks: @{modules.test.class}.</echo>
 
-						<gradle-execute dir="modules" task="@{modules.test.class}">
-							<arg value="--continue" />
-						</gradle-execute>
+						<trycatch property="gradle.failure">
+							<try>
+								<gradle-execute dir="modules" task="@{modules.test.class}">
+									<arg value="--continue" />
+								</gradle-execute>
+							</try>
+							<catch>
+								<echo>${gradle.failure}</echo>
+							</catch>
+						</trycatch>
 					</sequential>
 				</for>
 

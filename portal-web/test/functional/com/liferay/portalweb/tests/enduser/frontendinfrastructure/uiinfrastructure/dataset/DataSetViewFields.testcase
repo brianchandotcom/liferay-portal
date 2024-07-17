@@ -382,65 +382,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-174141. Confirm that the user can check and uncheck all the fields"
-	@priority = 3
-	test CanCheckAndUncheckAllFields {
-		task ("And Clicking to Add a new field") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("And select all the fields.") {
-			DataSetAdmin.checkFields(key_fieldList = "renderer,rendererType");
-		}
-
-		task ("Then Confirm all fields are checked ") {
-			DataSetAdmin.assertFieldsChecked(key_fieldList = "renderer,rendererType");
-		}
-
-		task ("When Uncheck all the fields.") {
-			DataSetAdmin.uncheckFields(key_fieldList = "renderer,rendererType");
-		}
-
-		task ("Then Confirm that all fields are unchecked ") {
-			DataSetAdmin.assertFieldsNotChecked(key_fieldList = "renderer,rendererType");
-		}
-	}
-
-	@description = "LPS-185228. Confirm that a field is not added after checking and unchecking it."
-	@priority = 5
-	test CannotAddFieldAfterUncheckingIt {
-		property portal.acceptance = "true";
-
-		task ("And clicks on plus button") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("And checks id and label fields") {
-			DataSetAdmin.checkFields(key_fieldList = "id,label");
-		}
-
-		task ("And unchecks id field") {
-			DataSetAdmin.uncheckFields(key_fieldList = "id");
-		}
-
-		task ("And clicks on Save button") {
-			Button.clickSave();
-		}
-
-		task ("Then label field should appear on Visualization Modes tab page") {
-			DataSetAdmin.assertFieldsOnTable(
-				key_position = 1,
-				keyName = "label");
-		}
-
-		task ("And id should not appear on Visualization Modes tab page") {
-			AssertElementNotPresent(
-				key_position = 1,
-				keyName = "id",
-				locator1 = "DataSet#FIELDS_TABLE");
-		}
-	}
-
 	@description = "LPS-179282. Confirm that the search bar returns works as expected"
 	@priority = 4
 	test CanSearchField {
@@ -500,32 +441,6 @@ definition {
 			DataSetAdmin.assertFieldsOnTable(
 				key_position = 1,
 				keyName = "id");
-		}
-	}
-
-	@description = "LPS-179282. Confirm that the user can check and uncheck the fields"
-	@priority = 5
-	test CheckandUncheckFields {
-		property portal.acceptance = "true";
-
-		task ("And Clicking to Add a new field") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("And Check three options (creator,id ,name)") {
-			DataSetAdmin.checkFields(key_fieldList = "creator,id,name");
-		}
-
-		task ("Then Confirm that the fields are checked ") {
-			DataSetAdmin.assertFieldsChecked(key_fieldList = "creator,id,name");
-		}
-
-		task ("When Check three options (Phone, User Account, and WebURL)") {
-			DataSetAdmin.uncheckFields(key_fieldList = "creator,id,name");
-		}
-
-		task ("Then Confirm that the fields are unchecked ") {
-			DataSetAdmin.assertFieldsNotChecked(key_fieldList = "creator,id,name");
 		}
 	}
 

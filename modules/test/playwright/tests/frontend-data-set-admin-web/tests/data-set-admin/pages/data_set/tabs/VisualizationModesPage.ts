@@ -224,4 +224,11 @@ export class VisualizationModesPage {
 	}) {
 		await this.checkField({dataId, expected: false, fieldName});
 	}
+
+	async unSelectSelectedFields() {
+		await this.page
+			.getByRole('dialog', {name: 'Select Field'})
+			.getByRole('button', {name: 'Deselect All'})
+			.click();
+	}
 }

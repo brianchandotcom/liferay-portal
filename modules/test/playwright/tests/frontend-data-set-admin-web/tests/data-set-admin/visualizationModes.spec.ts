@@ -883,4 +883,80 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			).toHaveText('Boolean');
 		});
 	});
+
+	test('Check modal field selection allows field search, check and uncheck fields @LPS-174141, @LPS-185228, @LPS-179282, @LPS-185231, LPS-185227', async ({
+		page,
+		visualizationModesPage,
+	}) => {
+		const SAMPLE_SCALAR_FIELD = 'externalReferenceCode';
+		const SAMPLE_FIELD = 'name';
+
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
+
+			await visualizationModesPage.selectTab('Table');
+
+			await expect(
+				visualizationModesPage.page.getByPlaceholder('Search')
+			).toBeVisible();
+		});
+
+		await test.step('Can check and uncheck fields in the field selection modal', async () => {
+			await visualizationModesPage.openAddFieldsModal();
+
+			await visualizationModesPage.selectField({fieldName: SAMPLE_FIELD});
+
+			const checkbox =
+				visualizationModesPage.getFieldCheckboxByLabel(SAMPLE_FIELD);
+
+			await expect(checkbox).toBeChecked();
+
+			await visualizationModesPage.unSelectField({
+				fieldName: SAMPLE_FIELD,
+			});
+
+			await expect(checkbox).not.toBeChecked();
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Can check some fields and uncheck all selected fields using Deselect All button', async () => {
+			await visualizationModesPage.openAddFieldsModal();
+
+			await visualizationModesPage.selectField({fieldName: SAMPLE_FIELD});
+
+			const sampleFieldCheckbox =
+				visualizationModesPage.getFieldCheckboxByLabel(SAMPLE_FIELD);
+
+			await expect(sampleFieldCheckbox).toBeChecked();
+
+			await visualizationModesPage.selectField({
+				fieldName: SAMPLE_SCALAR_FIELD,
+			});
+
+			const sampleScalarFieldCheckbox =
+				visualizationModesPage.getFieldCheckboxByLabel(
+					SAMPLE_SCALAR_FIELD
+				);
+
+			await expect(sampleScalarFieldCheckbox).toBeChecked();
+
+			await visualizationModesPage.unSelectSelectedFields();
+
+			await expect(sampleFieldCheckbox).not.toBeChecked();
+			await expect(sampleScalarFieldCheckbox).not.toBeChecked();
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Check there is no field added', async () => {
+			await visualizationModesPage.assertTableFieldRowCount(0);
+		});
+	});
 });

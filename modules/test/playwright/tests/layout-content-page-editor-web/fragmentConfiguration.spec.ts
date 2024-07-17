@@ -11,6 +11,7 @@ import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {wemSiteTest} from '../../fixtures/wemSiteTest';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -25,7 +26,8 @@ const test = mergeTests(
 	fragmentsPagesTest,
 	isolatedSiteTest,
 	loginTest(),
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	wemSiteTest
 );
 
 const STYLES = [
@@ -171,83 +173,38 @@ test.describe('Advanced Configuration', () => {
 
 	test('Checks that the advanced configuration of a fragment appears in its corresponding tab', async ({
 		apiHelpers,
-		fragmentEditorPage,
-		fragmentsPage,
 		page,
 		pageEditorPage,
-		site,
+		wemSite,
 	}) => {
 
-		// Go to fragment editor
-
-		await fragmentsPage.goto(site.friendlyUrlPath);
-
-		// Add a new fragment set and a fragment inside it
-
-		const setName = getRandomString();
-
-		await fragmentsPage.createFragmentSet(setName);
-
-		await fragmentsPage.goto(site.friendlyUrlPath);
-
-		await fragmentsPage.createFragment(setName, 'My Fragment');
-
-		// Add a configuration for the fragment
-
-		await fragmentEditorPage.addConfiguration(
-			JSON.stringify({
-				fieldSets: [
-					{
-						configurationRole: 'advanced',
-						fields: [
-							{
-								dataType: 'string',
-								defaultValue: '1',
-								label: 'Advanced Config Field',
-								name: 'advancedConfigField',
-								type: 'select',
-								typeOptions: {
-									validValues: [{label: '1', value: '1'}],
-								},
-							},
-						],
-						label: 'Advanced Config Fieldset',
-					},
-				],
-			})
-		);
-
-		await fragmentEditorPage.publish();
-
-		// Create a content page with the fragment previously created
+		// Create a content page with Wem Site's Apple fragment
 
 		const fragmentDefinition = getFragmentDefinition({
 			fragmentConfig: {
-				advancedConfigField: '1',
+				color: 'red',
 			},
 			id: getRandomString(),
-			key: 'my-fragment',
+			key: 'apple',
 		});
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([fragmentDefinition]),
-			siteId: site.id,
+			siteId: wemSite.id,
 			title: getRandomString(),
 		});
 
 		// Check advanced configuration appears where it should
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
 
 		await page.getByTitle('Browser').click();
 
-		await page.getByLabel('Select My Fragment').click();
+		await page.getByLabel('Select Apple').click();
 
 		await pageEditorPage.goToConfigurationTab('Advanced');
 
-		await expect(
-			page.getByLabel('Advanced Config Field', {exact: true})
-		).toBeVisible();
+		await expect(page.getByLabel('Color', {exact: true})).toBeVisible();
 	});
 });
 

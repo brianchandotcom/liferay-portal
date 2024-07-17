@@ -46,6 +46,8 @@ page import="com.liferay.portal.kernel.workflow.WorkflowTask" %>
 
 <%
 List<HeaderActionModel> actions = (List<HeaderActionModel>)request.getAttribute("liferay-commerce:header:actions");
+String additionalStatusLabel = (String)request.getAttribute("liferay-commerce:header:additionalStatusLabel");
+String additionalStatusLabelStyle = (String)request.getAttribute("liferay-commerce:header:additionalStatusLabelStyle");
 Object bean = request.getAttribute("liferay-commerce:header:bean");
 String beanIdLabel = (String)request.getAttribute("liferay-commerce:header:beanIdLabel");
 String cssClasses = (String)request.getAttribute("liferay-commerce:header:cssClasses");

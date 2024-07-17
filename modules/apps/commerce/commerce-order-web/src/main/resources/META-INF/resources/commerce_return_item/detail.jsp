@@ -63,7 +63,7 @@ CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getComm
 			<div class="row">
 				<div class="col">
 					<aui:input name="authorized" readonly="<%= Arrays.asList(CommerceReturnConstants.RETURN_STATUSES_LATEST).contains(returnStatus) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus()) %>" required="<%= true %>" type="text" value="<%= commerceReturnItem.getAuthorized() %>" />
-					<aui:input disabled="<%= Arrays.asList(CommerceReturnConstants.RETURN_STATUSES_LATEST).contains(returnStatus) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus()) %>" inlineLabel="right" label="authorize-return-without-returning-products" name="authorizeReturnWithoutReturningProducts" type="checkbox" value="<%= commerceReturnItem.getAuthorizeReturnWithoutReturningProducts() %>" />
+					<aui:input disabled="<%= Arrays.asList(CommerceReturnConstants.RETURN_STATUSES_LATEST).contains(returnStatus) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus()) %>" inlineLabel="right" label="authorize-return-without-returning-products" name="authorizeReturnWithoutReturningProducts" type="checkbox" value="<%= commerceReturnItem.isAuthorizeReturnWithoutReturningProducts() %>" />
 				</div>
 			</div>
 

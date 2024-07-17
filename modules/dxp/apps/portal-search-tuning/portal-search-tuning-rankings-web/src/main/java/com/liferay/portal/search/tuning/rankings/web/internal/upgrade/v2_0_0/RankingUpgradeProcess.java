@@ -15,11 +15,9 @@ import java.sql.PreparedStatement;
 /**
  * @author Almir Ferreira
  */
-public class RenameRankingUpgradeProcess extends UpgradeProcess {
+public class RankingUpgradeProcess extends UpgradeProcess {
 
-	public RenameRankingUpgradeProcess(
-		ClassNameLocalService classNameLocalService) {
-
+	public RankingUpgradeProcess(ClassNameLocalService classNameLocalService) {
 		_classNameLocalService = classNameLocalService;
 	}
 

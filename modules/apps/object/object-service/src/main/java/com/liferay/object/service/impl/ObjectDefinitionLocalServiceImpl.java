@@ -90,16 +90,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.jdbc.ConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -142,8 +138,6 @@ import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContr
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.sql.Connection;
-
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -152,8 +146,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.sql.DataSource;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -1331,20 +1323,11 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	protected void runSQL(String sql) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("SQL: " + sql);
-		}
 
-		DataSource dataSource = objectDefinitionPersistence.getDataSource();
+		// Call this method to also strip line delimeters like ";"
 
-		DB db = DBManagerUtil.getDB();
-
-		try (Connection connection = ConnectionUtil.getConnection(dataSource)) {
-			db.runSQL(connection, new String[] {sql});
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
+		ObjectDBManagerUtil.runSQL(
+			objectDefinitionPersistence.getDataSource(), _log, sql);
 	}
 
 	private ObjectDefinitionDeployer _addingObjectDefinitionDeployer(

@@ -37,11 +37,9 @@ import undoThunk from '../thunks/undo';
 import canBeDuplicated from '../utils/canBeDuplicated';
 import canBeRemoved from '../utils/canBeRemoved';
 import canBeSaved from '../utils/canBeSaved';
+import isCtrlOrMeta from '../utils/isCtrlOrMeta';
 import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
 import ShortcutModal from './ShortcutModal';
-
-const ctrlOrMeta = (event) =>
-	(event.ctrlKey && !event.metaKey) || (!event.ctrlKey && event.metaKey);
 
 const isEditableField = (element) =>
 	!!element.closest('.page-editor__editable');
@@ -212,7 +210,7 @@ export default function ShortcutManager() {
 					widgets
 				),
 			isKeyCombination: (event) =>
-				ctrlOrMeta(event) && event.code === D_KEY_CODE,
+				isCtrlOrMeta(event) && event.code === D_KEY_CODE,
 		},
 		hideSidebar: {
 			action: hideSidebar,
@@ -222,7 +220,7 @@ export default function ShortcutManager() {
 				!isEditingEditableField(),
 
 			isKeyCombination: (event) =>
-				ctrlOrMeta(event) &&
+				isCtrlOrMeta(event) &&
 				event.shiftKey &&
 				event.code === PERIOD_KEY_CODE,
 		},
@@ -282,7 +280,7 @@ export default function ShortcutManager() {
 				!!layoutData.items[activeItemId] &&
 				canBeSaved(layoutData.items[activeItemId], layoutData),
 			isKeyCombination: (event) =>
-				ctrlOrMeta(event) && event.code === S_KEY_CODE,
+				isCtrlOrMeta(event) && event.code === S_KEY_CODE,
 		},
 		selectParent: {
 			action: selectParent,
@@ -299,7 +297,9 @@ export default function ShortcutManager() {
 				!isWithinIframe() &&
 				!isEditingEditableField(),
 			isKeyCombination: (event) =>
-				ctrlOrMeta(event) && event.code === Z_KEY_CODE && !event.altKey,
+				isCtrlOrMeta(event) &&
+				event.code === Z_KEY_CODE &&
+				!event.altKey,
 		},
 	};
 

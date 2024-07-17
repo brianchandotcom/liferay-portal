@@ -14,9 +14,7 @@ import {
 	useActivateMultiSelect,
 	useMultiSelectIsActivated,
 } from '../contexts/ControlsContext';
-
-const ctrlOrMeta = (event) =>
-	(event.ctrlKey && !event.metaKey) || (!event.ctrlKey && event.metaKey);
+import isCtrlOrMeta from '../utils/isCtrlOrMeta';
 
 export default function MultiSelectManager() {
 	const multiSelectIsActivated = useMultiSelectIsActivated();
@@ -24,7 +22,7 @@ export default function MultiSelectManager() {
 
 	useEffect(() => {
 		const multiSelection = (event) => {
-			if (ctrlOrMeta(event) && !multiSelectIsActivated) {
+			if (isCtrlOrMeta(event) && !multiSelectIsActivated) {
 				activateMultiSelect(true);
 			}
 		};

@@ -59,7 +59,7 @@ public class DLFileShortcutLocalServiceTest {
 
 		DLFileShortcut dlFileShortcut =
 			_dlFileShortcutLocalService.addFileShortcut(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				dlFileEntry.getFileEntryId(), _serviceContext);
 
@@ -76,7 +76,7 @@ public class DLFileShortcutLocalServiceTest {
 
 		DLFileShortcut dlFileShortcut =
 			_dlFileShortcutLocalService.addFileShortcut(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				_group.getGroupId(), dlFileEntry.getFolderId(),
 				dlFileEntry.getFileEntryId(), _serviceContext);
 
@@ -97,7 +97,7 @@ public class DLFileShortcutLocalServiceTest {
 		DLFileEntry dlFileEntry = _addDLFileEntry();
 
 		_dlFileShortcutLocalService.addFileShortcut(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), dlFolder.getFolderId(),
 			dlFileEntry.getFileEntryId(), _serviceContext);
 	}
@@ -105,7 +105,7 @@ public class DLFileShortcutLocalServiceTest {
 	@Test(expected = NoSuchFileEntryException.class)
 	public void testAddDLFileShortcutWithInvalidDLFileEntry() throws Exception {
 		_dlFileShortcutLocalService.addFileShortcut(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, -1,
 			_serviceContext);
 	}
@@ -116,7 +116,7 @@ public class DLFileShortcutLocalServiceTest {
 
 		DLFileShortcut dlFileShortcut =
 			_dlFileShortcutLocalService.addFileShortcut(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				_group.getGroupId(), -1, dlFileEntry.getFileEntryId(),
 				_serviceContext);
 

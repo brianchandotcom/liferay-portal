@@ -68,7 +68,7 @@ public class DLFileShortcutTableReferenceDefinitionTest
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return _dlFileShortcutLocalService.addFileShortcut(
-			group.getCreatorUserId(), group.getGroupId(),
+			null, group.getCreatorUserId(), group.getGroupId(),
 			_dlFileEntry.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			_dlFileEntry.getFileEntryId(),

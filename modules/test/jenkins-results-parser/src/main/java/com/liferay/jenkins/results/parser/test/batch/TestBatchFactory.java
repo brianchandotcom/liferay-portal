@@ -38,10 +38,8 @@ public class TestBatchFactory {
 				return poshiTestBatch;
 			}
 
-			if (batchName.startsWith("integration") ||
-				batchName.startsWith("modules-integration") ||
-				batchName.startsWith("modules-unit") ||
-				batchName.startsWith("unit")) {
+			if (batchName.startsWith("modules-integration") ||
+				batchName.startsWith("modules-unit")) {
 
 				JUnitTestSelector jUnitTestSelector = new JUnitTestSelector(
 					propertiesFile, properties, batchName, relevantRuleName,

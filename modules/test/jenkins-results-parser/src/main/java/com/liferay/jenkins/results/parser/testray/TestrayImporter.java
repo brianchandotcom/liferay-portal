@@ -585,15 +585,18 @@ public class TestrayImporter {
 			}
 
 			if (testrayProductVersion == null) {
-				PortalGitWorkingDirectory portalGitWorkingDirectory =
-					_getPortalGitWorkingDirectory();
+				JobProperty jobProperty = _getJobProperty(
+					"testray.product.version.name", testBaseDir);
 
-				testrayProductVersion =
-					testrayProject.createTestrayProductVersion(
-						_replaceEnvVars(
-							portalGitWorkingDirectory.getMajorPortalVersion() +
-								".x",
-							true));
+				testrayProductVersionName = jobProperty.getValue();
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(
+						testrayProductVersionName)) {
+
+					testrayProductVersion =
+						testrayProject.createTestrayProductVersion(
+							_replaceEnvVars(testrayProductVersionName, true));
+				}
 			}
 
 			PortalRelease portalRelease = getPortalRelease();

@@ -764,7 +764,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				siteNavigationMenuItems) {
 
 			_siteNavigationMenuItemService.deleteSiteNavigationMenuItem(
-				siteNavigationMenuItem.getSiteNavigationMenuItemId());
+				siteNavigationMenuItem.getSiteNavigationMenuItemId(), true);
 		}
 	}
 

@@ -36,6 +36,7 @@ const HISTORY = {
 	EDITED: 'mark_edited',
 	NEXT: 'next_step',
 	PREV: 'prev_step',
+	RESET: 'reset_history',
 };
 
 const LANGUAGE = {

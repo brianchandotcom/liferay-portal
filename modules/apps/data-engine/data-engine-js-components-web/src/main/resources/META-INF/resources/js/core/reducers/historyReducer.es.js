@@ -55,6 +55,14 @@ export default function historyReducer(state, action) {
 					currentStep: state.history.currentStep - 1,
 				},
 			};
+		case EVENT_TYPES.HISTORY.RESET:
+			return {
+				history: {
+					...state.history,
+					currentStep: 0,
+					steps: [state],
+				},
+			};
 		default:
 			return state;
 	}

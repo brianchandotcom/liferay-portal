@@ -216,7 +216,7 @@ public class NavigationMenuResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"name"};
+		return new String[] {"name", "navigationMenuItems"};
 	}
 
 	private NavigationMenuResource _buildNavigationMenuResource() {

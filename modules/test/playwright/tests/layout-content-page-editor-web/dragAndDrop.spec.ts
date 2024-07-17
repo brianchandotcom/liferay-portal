@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import dragAndDropElement from '../../utils/dragAndDropElement';
 import getRandomString from '../../utils/getRandomString';
 import getContainerDefinition from './utils/getContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -66,10 +67,11 @@ test('checks that a widget can be added and dragged to another part of the page'
 
 	await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-	await pageEditorPage.dragAndDropElement(
-		page.locator('[data-name="Sort"]'),
-		gridColumn.nth(2)
-	);
+	await dragAndDropElement({
+		dragTarget: page.locator('[data-name="Sort"]'),
+		dropTarget: gridColumn.nth(2),
+		page,
+	});
 
 	expect(gridColumn.nth(2).locator('[data-name="Sort"]')).toBeVisible();
 });

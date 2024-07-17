@@ -8,6 +8,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {collapseSection} from '../../utils/collapseSection';
+import dragAndDropElement from '../../utils/dragAndDropElement';
 import {expandSection} from '../../utils/expandSection';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import {selectElement} from '../../utils/selectElement';
@@ -73,10 +74,11 @@ export class PageEditorPage {
 		await expandSection(header);
 
 		if (dropTarget) {
-			await this.dragAndDropElement(
-				this.page.getByRole('menuitem', {name}).first(),
-				dropTarget
-			);
+			await dragAndDropElement({
+				dragTarget: this.page.getByRole('menuitem', {name}).first(),
+				dropTarget,
+				page: this.page,
+			});
 		}
 		else {
 			await this.page.getByLabel(`Add ${name}`).focus();
@@ -149,10 +151,11 @@ export class PageEditorPage {
 		await expandSection(header);
 
 		if (dropTarget) {
-			this.dragAndDropElement(
-				this.page.getByRole('menuitem', {name}).first(),
-				dropTarget
-			);
+			await dragAndDropElement({
+				dragTarget: this.page.getByRole('menuitem', {name}).first(),
+				dropTarget,
+				page: this.page,
+			});
 		}
 		else {
 			await this.page.getByLabel(`Add ${name}`).first().focus();
@@ -386,27 +389,6 @@ export class PageEditorPage {
 			'Success:The experience was duplicated successfully.',
 			{autoClose: false}
 		);
-	}
-
-	async dragAndDropElement(dragTarget: Locator, dropTarget: Locator) {
-		await dragTarget.hover();
-
-		await this.page.mouse.down();
-
-		await dropTarget.hover();
-
-		const boundingClientRect = await dropTarget.evaluate((element) =>
-			element.getBoundingClientRect()
-		);
-
-		await dropTarget.hover({
-			position: {
-				x: boundingClientRect.width / 2,
-				y: boundingClientRect.height / 2,
-			},
-		});
-
-		await this.page.mouse.up();
 	}
 
 	async duplicateFragment(fragmentId: string) {

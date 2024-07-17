@@ -5,5 +5,6 @@
 		<suppress checks="JavaMetaAnnotationsCheck" files="frontend-js-minifier/src/main/java/com/liferay/frontend/js/minifier/internal/configuration/YahooJavaScriptMinifierConfiguration\.java" />
 		<suppress checks="JSLodashDependencyCheck" files="frontend-js-aui-web/src/main/resources/META-INF/resources/liferay/aui_sandbox\.js" />
 		<suppress checks="JSONPackageJSONCheck" files="frontend-js-recharts/package\.json" />
+		<suppress checks="ResourceBundleCheck" files="frontend-js-test/src/testIntegration/java/com/liferay/frontend/js/web/internal/servlet/test/ResourceBundleServiceTrackerCustomizerTest\.java" />
 	</source-check>
 </suppressions>

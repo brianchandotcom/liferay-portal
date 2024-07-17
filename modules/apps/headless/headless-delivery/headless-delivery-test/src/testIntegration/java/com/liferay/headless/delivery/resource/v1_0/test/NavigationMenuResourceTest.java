@@ -15,6 +15,12 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.test.util.DLAppTestUtil;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.client.pagination.Page;
@@ -23,6 +29,7 @@ import com.liferay.headless.delivery.client.resource.v1_0.NavigationMenuResource
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -40,12 +47,16 @@ import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenu
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -55,6 +66,35 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class NavigationMenuResourceTest
 	extends BaseNavigationMenuResourceTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseNavigationMenuResourceTestCase.setUpClass();
+
+		ExpandoTable expandoTable = _expandoTableLocalService.addDefaultTable(
+			PortalUtil.getDefaultCompanyId(),
+			SiteNavigationMenuItem.class.getName());
+
+		ExpandoColumn expandoColumn1 = _expandoColumnLocalService.addColumn(
+			expandoTable.getTableId(), RandomTestUtil.randomString(),
+			ExpandoColumnConstants.STRING, StringPool.BLANK);
+
+		_expandoColumnNames.add(expandoColumn1.getName());
+
+		ExpandoColumn expandoColumn2 = _expandoColumnLocalService.addColumn(
+			expandoTable.getTableId(), RandomTestUtil.randomString(),
+			ExpandoColumnConstants.STRING, StringPool.BLANK);
+
+		_expandoColumnNames.add(expandoColumn2.getName());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_expandoTableLocalService.deleteTable(
+			PortalUtil.getDefaultCompanyId(),
+			SiteNavigationMenuItem.class.getName(),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+	}
 
 	@Before
 	@Override
@@ -433,6 +473,14 @@ public class NavigationMenuResourceTest
 
 		navigationMenuResource.deleteNavigationMenu(postNavigationMenu.getId());
 	}
+
+	@Inject
+	private static ExpandoColumnLocalService _expandoColumnLocalService;
+
+	private static final List<String> _expandoColumnNames = new ArrayList<>();
+
+	@Inject
+	private static ExpandoTableLocalService _expandoTableLocalService;
 
 	private DepotEntry _depotEntry;
 

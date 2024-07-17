@@ -33,7 +33,6 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
-import com.liferay.portal.kernel.model.PortletPreferencesTable;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -1242,30 +1240,22 @@ public class LayoutLocalServiceWrapper
 				return;
 			}
 
-			for (long portletPreferencesId :
-					_getPortletPreferencesIds(deletedPortletIds)) {
+			for (String portletId : deletedPortletIds) {
+				for (PortletPreferences portletPreferences :
+						_portletPreferencesLocalService.
+							getPortletPreferencesByPortletId(portletId)) {
 
-				try {
-					_portletPreferencesLocalService.deletePortletPreferences(
-						portletPreferencesId);
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
+					try {
+						_portletPreferencesLocalService.
+							deletePortletPreferences(portletPreferences);
+					}
+					catch (Exception exception) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(exception);
+						}
 					}
 				}
 			}
-		}
-
-		private List<Long> _getPortletPreferencesIds(String[] portletIds) {
-			return dslQuery(
-				DSLQueryFactoryUtil.selectDistinct(
-					PortletPreferencesTable.INSTANCE.portletPreferencesId
-				).from(
-					PortletPreferencesTable.INSTANCE
-				).where(
-					PortletPreferencesTable.INSTANCE.portletId.in(portletIds)
-				));
 		}
 
 		private final boolean _copySegmentsExperience;

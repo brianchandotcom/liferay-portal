@@ -53,6 +53,18 @@ public class NewEnvJVMTestRuleTest {
 		assertProcessId();
 	}
 
+	@NewEnv.JVMArgsLine(
+		"-Dparent.java.locale.providers=${java.locale.providers}"
+	)
+	@Test
+	public void testDefaultJavaLocaleProviders() {
+		_counter.getAndIncrement();
+
+		Assert.assertEquals(
+			System.getProperty("parent.java.locale.providers"),
+			System.getProperty("java.locale.providers"));
+	}
+
 	@Test
 	public void testNewJVM1() {
 		Assert.assertEquals(1, _counter.getAndIncrement());

@@ -1267,7 +1267,8 @@ public class TestrayImporter {
 			}
 
 			if (!(testrayBuild instanceof Testray1TestrayBuild) &&
-				(testray1ImportEnabled != null)) {
+				(testray1ImportEnabled != null) &&
+				testray1ImportEnabled.equals("true")) {
 
 				TestrayProject testrayProject =
 					testrayBuild.getTestrayProject();

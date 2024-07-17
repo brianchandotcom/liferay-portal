@@ -125,6 +125,198 @@
 		"to": "StructureStructureKeyComparator.getInstance(false)"
 	},
 	{
+		"from": "new ArticleCreateDateComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new ArticleCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new ArticleDisplayDateComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleDisplayDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new ArticleDisplayDateComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleDisplayDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new ArticleIDComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleIDComparator.getInstance(false)"
+	},
+	{
+		"from": "new ArticleIDComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleIDComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new ArticleModifiedDateComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleModifiedDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new ArticleModifiedDateComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleModifiedDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new ArticleResourcePKComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleResourcePKComparator.getInstance(true)"
+	},
+	{
+		"from": "new ArticleResourcePKComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleResourcePKComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new ArticleReviewDateComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleReviewDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new ArticleReviewDateComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleReviewDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new ArticleTitleComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleTitleComparator.getInstance(false)"
+	},
+	{
+		"from": "new ArticleTitleComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleTitleComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new ArticleVersionComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleVersionComparator.getInstance(false)"
+	},
+	{
+		"from": "new ArticleVersionComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "ArticleVersionComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new FeedIDComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FeedIDComparator.getInstance(false)"
+	},
+	{
+		"from": "new FeedIDComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FeedIDComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new FeedNameComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FeedNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new FeedNameComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FeedNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new FolderArticleArticleIdComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FolderArticleArticleIdComparator.getInstance(false)"
+	},
+	{
+		"from": "new FolderArticleArticleIdComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FolderArticleArticleIdComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new FolderArticleCreateDateComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FolderArticleCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new FolderArticleCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FolderArticleCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new FolderArticleDisplayDateComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FolderArticleDisplayDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new FolderArticleDisplayDateComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FolderArticleDisplayDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new FolderArticleModifiedDateComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FolderArticleModifiedDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new FolderArticleModifiedDateComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FolderArticleModifiedDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new FolderArticleTitleComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FolderArticleTitleComparator.getInstance(false)"
+	},
+	{
+		"from": "new FolderArticleTitleComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FolderArticleTitleComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new FolderIdComparator()",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FolderIdComparator.getInstance(false)"
+	},
+	{
+		"from": "new FolderIdComparator(boolean paramName)",
+		"issueKey": "LPD-26438",
+		"skipParametersValidation": true,
+		"to": "FolderIdComparator.getInstance(param#0#)"
+	},
+	{
 		"from": "new CommercePriceEntryUOMCreateDateComparator()",
 		"issueKey": "LPD-28067",
 		"skipParametersValidation": true,

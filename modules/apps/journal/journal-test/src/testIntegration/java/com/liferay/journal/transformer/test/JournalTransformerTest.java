@@ -9,6 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.TemplateVariableDefinition;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
+import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -63,12 +66,16 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -79,6 +86,7 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -159,6 +167,12 @@ public class JournalTransformerTest {
 				new String[] {"[$FIELD_SET_NAME$]"},
 				new String[] {"FieldsGroup19507604"}),
 			dataDefinition.getDataDefinitionKey(), null);
+	}
+
+	@Test
+	public void testCreateTemplateNode() {
+		_testCreateTemplateNodeSelectTypeDDMFormFieldWithOptions();
+		_testCreateTemplateNodeSelectTypeDDMFormFieldWithoutOptions();
 	}
 
 	@Test
@@ -679,6 +693,89 @@ public class JournalTransformerTest {
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
+	private void _testCreateTemplateNodeSelectTypeDDMFormFieldWithOptions() {
+		DDMFormField ddmFormField = new DDMFormField(
+			"name", DDMFormFieldTypeConstants.SELECT);
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setMultiple(true);
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("root");
+
+		Element dynamicContentElement = rootElement.addElement(
+			"dynamic-content");
+
+		Element optionElement = dynamicContentElement.addElement("option");
+
+		String jsonArrayString = JSONUtil.putAll(
+			"option1", "option2"
+		).toString();
+
+		optionElement.setText(jsonArrayString);
+
+		TemplateNode templateNode = ReflectionTestUtil.invoke(
+			_journalTransformer, "_createTemplateNode",
+			new Class<?>[] {
+				DDMFormField.class, Element.class, Locale.class,
+				ThemeDisplay.class
+			},
+			ddmFormField, rootElement, LocaleUtil.getDefault(),
+			new ThemeDisplay());
+
+		Assert.assertNotNull(templateNode);
+
+		Assert.assertTrue(MapUtil.isEmpty(templateNode.getAttributes()));
+		Assert.assertTrue(
+			StringUtil.contains(
+				templateNode.getData(), "option1", StringPool.BLANK));
+		Assert.assertTrue(
+			StringUtil.contains(
+				templateNode.getData(), "option2", StringPool.BLANK));
+		Assert.assertEquals("name", templateNode.getName());
+		Assert.assertEquals("select", templateNode.getType());
+
+		List<String> options = templateNode.getOptions();
+
+		Assert.assertEquals(options.toString(), 1, options.size());
+		Assert.assertEquals(jsonArrayString, options.get(0));
+
+		Assert.assertTrue(MapUtil.isEmpty(templateNode.getOptionsMap()));
+	}
+
+	private void _testCreateTemplateNodeSelectTypeDDMFormFieldWithoutOptions() {
+		DDMFormField ddmFormField = new DDMFormField(
+			"name", DDMFormFieldTypeConstants.SELECT);
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setMultiple(true);
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("root");
+
+		rootElement.addElement("dynamic-content");
+
+		TemplateNode templateNode = ReflectionTestUtil.invoke(
+			_journalTransformer, "_createTemplateNode",
+			new Class<?>[] {
+				DDMFormField.class, Element.class, Locale.class,
+				ThemeDisplay.class
+			},
+			ddmFormField, rootElement, LocaleUtil.getDefault(),
+			new ThemeDisplay());
+
+		Assert.assertNotNull(templateNode);
+
+		Assert.assertTrue(MapUtil.isEmpty(templateNode.getAttributes()));
+		Assert.assertEquals("name", templateNode.getName());
+		Assert.assertEquals(StringPool.BLANK, templateNode.getData());
+		Assert.assertEquals("select", templateNode.getType());
+		Assert.assertTrue(ListUtil.isEmpty(templateNode.getOptions()));
+		Assert.assertTrue(MapUtil.isEmpty(templateNode.getOptionsMap()));
 	}
 
 	private static Object _journalTransformer;

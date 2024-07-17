@@ -127,7 +127,7 @@ public class AsyncAntivirusDLStoreTest {
 			new MockAntivirusScanner(() -> calledScan.set(true)), null);
 
 		_withAsyncAntivirusConfiguration(
-			1, "0 0/1 * * * ?", true,
+			"0 0/1 * * * ?", 1, true,
 			() -> {
 				_messageBus.sendMessage(
 					AntivirusAsyncDestinationNames.ANTIVIRUS,
@@ -189,7 +189,7 @@ public class AsyncAntivirusDLStoreTest {
 			null);
 
 		_withAsyncAntivirusConfiguration(
-			1, "0 0/1 * * * ?", true,
+			"0 0/1 * * * ?", 1, true,
 			() -> {
 				DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
@@ -232,7 +232,7 @@ public class AsyncAntivirusDLStoreTest {
 			null);
 
 		_withAsyncAntivirusConfiguration(
-			1, "0 0/1 * * * ?", true,
+			"0 0/1 * * * ?", 1, true,
 			() -> {
 				DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
@@ -268,7 +268,7 @@ public class AsyncAntivirusDLStoreTest {
 			new MockAntivirusScanner(() -> calledScan.set(true)), null);
 
 		_withAsyncAntivirusConfiguration(
-			1, "0 0/1 * * * ?", true,
+			"0 0/1 * * * ?", 1, true,
 			() -> {
 				DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
@@ -312,7 +312,7 @@ public class AsyncAntivirusDLStoreTest {
 			null);
 
 		_withAsyncAntivirusConfiguration(
-			1, "0 0/1 * * * ?", true,
+			"0 0/1 * * * ?", 1, true,
 			() -> {
 				DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
@@ -371,7 +371,7 @@ public class AsyncAntivirusDLStoreTest {
 			null);
 
 		_withAsyncAntivirusConfiguration(
-			1, "0 0/10 * * * ?", false,
+			"0 0/10 * * * ?", 1, false,
 			() -> {
 				DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
@@ -463,7 +463,7 @@ public class AsyncAntivirusDLStoreTest {
 			MapUtil.singletonDictionary(Constants.SERVICE_RANKING, 100));
 
 		_withAsyncAntivirusConfiguration(
-			5, "0 0/10 * * * ?", true,
+			"0 0/10 * * * ?", 5, true,
 			() -> {
 				ServiceReference<?>[] serviceReferences =
 					_bundleContext.getServiceReferences(
@@ -552,7 +552,7 @@ public class AsyncAntivirusDLStoreTest {
 	}
 
 	private void _withAsyncAntivirusConfiguration(
-			int maximumQueueSize, String batchScanCronExpression, boolean sync,
+			String batchScanCronExpression, int maximumQueueSize, boolean sync,
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 

@@ -95,7 +95,7 @@ public class EditCommerceShippingMethodAddressRestrictionMVCActionCommand
 			_commerceShippingMethodService.getCommerceShippingMethods(
 				commerceChannel.getGroupId(), true, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
-				new CommerceShippingMethodPriorityComparator());
+				CommerceShippingMethodPriorityComparator.getInstance(false));
 
 		for (CommerceShippingMethod commerceShippingMethod :
 				commerceShippingMethods) {

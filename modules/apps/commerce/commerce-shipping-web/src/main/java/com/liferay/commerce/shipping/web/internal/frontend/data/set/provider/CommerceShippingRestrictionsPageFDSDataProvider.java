@@ -72,7 +72,7 @@ public class CommerceShippingRestrictionsPageFDSDataProvider
 			_commerceShippingMethodService.getCommerceShippingMethods(
 				commerceChannel.getGroupId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
-				new CommerceShippingMethodPriorityComparator());
+				CommerceShippingMethodPriorityComparator.getInstance(false));
 
 		String orderByFieldName = _beanProperties.getString(
 			sort, "fieldName", StringPool.BLANK);

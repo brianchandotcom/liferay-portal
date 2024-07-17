@@ -71,7 +71,8 @@ public class CommerceOrderPaymentLocalServiceImpl
 		throws PortalException {
 
 		return commerceOrderPaymentPersistence.fetchByCommerceOrderId_First(
-			commerceOrderId, new CommerceOrderPaymentCreateDateComparator());
+			commerceOrderId,
+			CommerceOrderPaymentCreateDateComparator.getInstance(false));
 	}
 
 	@Override

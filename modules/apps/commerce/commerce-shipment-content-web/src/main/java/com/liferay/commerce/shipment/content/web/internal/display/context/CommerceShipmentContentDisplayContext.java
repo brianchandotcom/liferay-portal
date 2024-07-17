@@ -157,7 +157,7 @@ public class CommerceShipmentContentDisplayContext {
 				_commerceShipmentId,
 				_commerceShipmentItemSearchContainer.getStart(),
 				_commerceShipmentItemSearchContainer.getEnd(),
-				new CommerceShipmentItemCreateDateComparator()),
+				CommerceShipmentItemCreateDateComparator.getInstance(false)),
 			_commerceShipmentItemLocalService.getCommerceShipmentItemsCount(
 				_commerceShipmentId));
 
@@ -241,7 +241,7 @@ public class CommerceShipmentContentDisplayContext {
 				() -> _commerceShipmentLocalService.getCommerceShipments(
 					new long[] {commerceChannel.getGroupId()},
 					_searchContainer.getStart(), _searchContainer.getEnd(),
-					new CommerceShipmentCreateDateComparator()),
+					CommerceShipmentCreateDateComparator.getInstance(false)),
 				_commerceShipmentLocalService.getCommerceShipmentsCount(
 					new long[] {commerceChannel.getGroupId()}));
 		}

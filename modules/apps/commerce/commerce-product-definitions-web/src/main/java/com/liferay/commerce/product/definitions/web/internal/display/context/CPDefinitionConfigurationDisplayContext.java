@@ -96,7 +96,8 @@ public class CPDefinitionConfigurationDisplayContext
 			getCommerceAvailabilityEstimates(
 				cpRequestHelper.getCompanyId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
-				new CommerceAvailabilityEstimatePriorityComparator(true));
+				CommerceAvailabilityEstimatePriorityComparator.getInstance(
+					true));
 	}
 
 	public String getCommerceCurrencyCode() {

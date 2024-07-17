@@ -78,7 +78,8 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 		return commerceAddressService.getCommerceAddressesByCompanyId(
 			_commerceOrder.getCompanyId(), AccountEntry.class.getName(),
 			_commerceOrder.getCommerceAccountId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new CommerceAddressNameComparator());
+			QueryUtil.ALL_POS,
+			CommerceAddressNameComparator.getInstance(false));
 	}
 
 	public long getCommerceAddressId(HttpServletRequest httpServletRequest)

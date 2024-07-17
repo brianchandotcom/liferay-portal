@@ -29,7 +29,8 @@ public class CommerceAvailabilityEstimateUtil {
 
 		if (orderByCol.equals("priority")) {
 			orderByComparator =
-				new CommerceAvailabilityEstimatePriorityComparator(orderByAsc);
+				CommerceAvailabilityEstimatePriorityComparator.getInstance(
+					orderByAsc);
 		}
 
 		return orderByComparator;

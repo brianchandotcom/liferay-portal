@@ -928,7 +928,8 @@ public class CPDefinitionsImporter {
 				getCommerceAvailabilityEstimates(
 					serviceContext.getCompanyId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS,
-					new CommerceAvailabilityEstimatePriorityComparator(true));
+					CommerceAvailabilityEstimatePriorityComparator.getInstance(
+						true));
 
 		for (CommerceAvailabilityEstimate commerceAvailabilityEstimate :
 				commerceAvailabilityEstimates) {

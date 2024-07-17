@@ -53,7 +53,8 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 				_commerceShippingMethodService.getCommerceShippingMethods(
 					commerceChannel.getGroupId(), pagination.getStartPosition(),
 					pagination.getEndPosition(),
-					new CommerceShippingMethodPriorityComparator()),
+					CommerceShippingMethodPriorityComparator.getInstance(
+						false)),
 				this::_toShippingMethod),
 			pagination,
 			_commerceShippingMethodService.getCommerceShippingMethodsCount(

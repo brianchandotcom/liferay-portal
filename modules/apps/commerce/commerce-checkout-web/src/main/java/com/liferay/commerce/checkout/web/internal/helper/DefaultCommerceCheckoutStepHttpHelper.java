@@ -587,7 +587,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			_commerceShippingMethodLocalService.getCommerceShippingMethods(
 				commerceOrder.getGroupId(), true, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
-				new CommerceShippingMethodPriorityComparator());
+				CommerceShippingMethodPriorityComparator.getInstance(false));
 
 		CommerceShippingOption singleCommerceShippingOption =
 			_getSingleCommerceShippingOption(

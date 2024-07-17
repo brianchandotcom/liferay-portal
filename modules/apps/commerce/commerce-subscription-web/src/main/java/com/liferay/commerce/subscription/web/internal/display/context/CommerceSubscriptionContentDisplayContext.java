@@ -168,7 +168,8 @@ public class CommerceSubscriptionContentDisplayContext {
 						_cpRequestHelper.getCommerceChannelGroupId(),
 						_cpRequestHelper.getUserId(),
 						_searchContainer.getStart(), _searchContainer.getEnd(),
-						new CommerceSubscriptionEntryCreateDateComparator()),
+						CommerceSubscriptionEntryCreateDateComparator.
+							getInstance(false)),
 			_commerceSubscriptionEntryService.
 				getCommerceSubscriptionEntriesCount(
 					_cpRequestHelper.getCompanyId(),

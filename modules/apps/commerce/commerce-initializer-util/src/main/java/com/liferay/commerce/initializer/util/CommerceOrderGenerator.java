@@ -429,7 +429,7 @@ public class CommerceOrderGenerator {
 				_commerceChannelLocalService.
 					getCommerceChannelGroupIdBySiteGroupId(groupId),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new CommerceShippingMethodPriorityComparator());
+				CommerceShippingMethodPriorityComparator.getInstance(false));
 
 		if (commerceShippingMethods.isEmpty()) {
 			return 0;

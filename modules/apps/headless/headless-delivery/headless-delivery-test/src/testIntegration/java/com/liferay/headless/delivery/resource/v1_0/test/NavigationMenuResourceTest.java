@@ -412,6 +412,24 @@ public class NavigationMenuResourceTest
 		return true;
 	}
 
+	private NavigationMenu _randomNavigationMenu(
+			boolean includeNavigationMenuItem)
+		throws Exception {
+
+		NavigationMenu navigationMenu = super.randomNavigationMenu();
+
+		navigationMenu.setNavigationMenuItems(
+			() -> {
+				if (!includeNavigationMenuItem) {
+					return new NavigationMenuItem[0];
+				}
+
+				return _randomNavigationMenuItems();
+			});
+
+		return navigationMenu;
+	}
+
 	private NavigationMenuItem[] _randomNavigationMenuItems() {
 		return new NavigationMenuItem[] {
 			new NavigationMenuItem() {

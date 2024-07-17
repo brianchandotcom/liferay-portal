@@ -48,19 +48,119 @@ export default function UndoRedo({
 		step: 0,
 	});
 
-	const handleUndoRedo = (newStep) => {
+	const handleUndo = (newStep) => {
+		const descriptionInputComponent = Liferay.component(
+			`${portletNamespace}${META_FIELD_NAMES.description}`
+		);
+		const friendlyURLInputComponent = Liferay.component(
+			`${portletNamespace}${META_FIELD_NAMES.friendlyURL}`
+		);
 		const nextStep = history[newStep];
-
 		const titleInputComponent = Liferay.component(
 			`${portletNamespace}${META_FIELD_NAMES.title}`
 		);
 
+		if (nextStep.selectedLanguageId !== selectedLanguageId) {
+			const selectedLanguageIdInput = document.getElementById(
+				`${portletNamespace}languageId`
+			);
+
+			descriptionInputComponent
+				.get('translatedLanguages')
+				.values()
+				.map((lang) => {
+					if (
+						!nextStep.descriptionTranslatedLanguages.includes(lang)
+					) {
+						descriptionInputComponent
+							.get('translatedLanguages')
+							.remove(lang);
+						descriptionInputComponent.removeInputLanguage(lang);
+						descriptionInputComponent._updateTranslationStatus(
+							selectedLanguageId
+						);
+					}
+				});
+			descriptionInputComponent.selectFlag(nextStep.selectedLanguageId);
+			friendlyURLInputComponent
+				.get('translatedLanguages')
+				.values()
+				.map((lang) => {
+					if (
+						!nextStep.friendlyURLTranslatedLanguages.includes(lang)
+					) {
+						friendlyURLInputComponent
+							.get('translatedLanguages')
+							.remove(lang);
+						friendlyURLInputComponent.removeInputLanguage(lang);
+						friendlyURLInputComponent._updateTranslationStatus(
+							selectedLanguageId
+						);
+					}
+				});
+			friendlyURLInputComponent.selectFlag(nextStep.selectedLanguageId);
+			titleInputComponent
+				.get('translatedLanguages')
+				.values()
+				.map((lang) => {
+					if (!nextStep.titleTranslatedLanguages.includes(lang)) {
+						titleInputComponent
+							.get('translatedLanguages')
+							.remove(lang);
+						titleInputComponent.removeInputLanguage(lang);
+						titleInputComponent._updateTranslationStatus(
+							selectedLanguageId
+						);
+					}
+				});
+			titleInputComponent.selectFlag(nextStep.selectedLanguageId);
+
+			selectedLanguageIdInput.value = nextStep.selectedLanguageId;
+		}
+
+		descriptionInputComponent.updateInputLanguage(
+			nextStep.descriptionInputComponent,
+			nextStep.selectedLanguageId
+		);
+
+		friendlyURLInputComponent.updateInputLanguage(
+			nextStep.friendlyURLInputComponent,
+			nextStep.selectedLanguageId
+		);
+
+		titleInputComponent.updateInputLanguage(
+			nextStep.titleInputComponent,
+			nextStep.selectedLanguageId
+		);
+
+		descriptionInputComponent.updateInput(
+			nextStep.descriptionInputComponent
+		);
+
+		friendlyURLInputComponent.updateInput(
+			nextStep.friendlyURLInputComponent
+		);
+
+		titleInputComponent.updateInput(nextStep.titleInputComponent);
+
+		setState({
+			defaultLanguageId: nextStep.defaultLanguageId,
+			history,
+			selectedLanguageId: nextStep.selectedLanguageId,
+			step: newStep,
+		});
+	};
+
+	const handleRedo = (newStep) => {
 		const descriptionInputComponent = Liferay.component(
 			`${portletNamespace}${META_FIELD_NAMES.description}`
 		);
-
 		const friendlyURLInputComponent = Liferay.component(
 			`${portletNamespace}${META_FIELD_NAMES.friendlyURL}`
+		);
+		const nextStep = history[newStep];
+		const titleInputComponent = Liferay.component(
+			`${portletNamespace}${META_FIELD_NAMES.title}`
 		);
 
 		if (nextStep.selectedLanguageId !== selectedLanguageId) {
@@ -70,31 +170,72 @@ export default function UndoRedo({
 
 			selectedLanguageIdInput.value = nextStep.selectedLanguageId;
 
-			titleInputComponent.selectFlag(nextStep.selectedLanguageId);
+			nextStep.descriptionTranslatedLanguages.map((lang) => {
+				if (
+					!descriptionInputComponent
+						.get('translatedLanguages')
+						.has(lang)
+				) {
+					descriptionInputComponent
+						.get('translatedLanguages')
+						.add(lang);
+					descriptionInputComponent._updateTranslationStatus(
+						nextStep.selectedLanguageId
+					);
+				}
+			});
 			descriptionInputComponent.selectFlag(nextStep.selectedLanguageId);
+			nextStep.friendlyURLTranslatedLanguages.map((lang) => {
+				if (
+					!friendlyURLInputComponent
+						.get('translatedLanguages')
+						.has(lang)
+				) {
+					friendlyURLInputComponent
+						.get('translatedLanguages')
+						.add(lang);
+					friendlyURLInputComponent._updateTranslationStatus(
+						nextStep.selectedLanguageId
+					);
+				}
+			});
 			friendlyURLInputComponent.selectFlag(nextStep.selectedLanguageId);
+			nextStep.titleTranslatedLanguages.map((lang) => {
+				if (!titleInputComponent.get('translatedLanguages').has(lang)) {
+					titleInputComponent.get('translatedLanguages').add(lang);
+					titleInputComponent._updateTranslationStatus(
+						nextStep.selectedLanguageId
+					);
+				}
+			});
+			titleInputComponent.selectFlag(nextStep.selectedLanguageId);
 		}
-		else {
-			titleInputComponent.updateInputLanguage(
-				nextStep.titleInputComponent,
-				nextStep.selectedLanguageId
-			);
-			descriptionInputComponent.updateInputLanguage(
-				nextStep.descriptionInputComponent,
-				nextStep.selectedLanguageId
-			);
-			friendlyURLInputComponent.updateInputLanguage(
-				nextStep.friendlyURLInputComponent,
-				nextStep.selectedLanguageId
-			);
-			titleInputComponent.updateInput(nextStep.titleInputComponent);
-			descriptionInputComponent.updateInput(
-				nextStep.descriptionInputComponent
-			);
-			friendlyURLInputComponent.updateInput(
-				nextStep.friendlyURLInputComponent
-			);
-		}
+
+		descriptionInputComponent.updateInputLanguage(
+			nextStep.descriptionInputComponent,
+			nextStep.selectedLanguageId
+		);
+
+		friendlyURLInputComponent.updateInputLanguage(
+			nextStep.friendlyURLInputComponent,
+			nextStep.selectedLanguageId
+		);
+
+		titleInputComponent.updateInputLanguage(
+			nextStep.titleInputComponent,
+			nextStep.selectedLanguageId
+		);
+
+		descriptionInputComponent.updateInput(
+			nextStep.descriptionInputComponent
+		);
+
+		friendlyURLInputComponent.updateInput(
+			nextStep.friendlyURLInputComponent
+		);
+
+		titleInputComponent.updateInput(nextStep.titleInputComponent);
+
 		setState({
 			defaultLanguageId: nextStep.defaultLanguageId,
 			history,
@@ -314,7 +455,7 @@ export default function UndoRedo({
 				displayType="secondary"
 				onClick={() => {
 					Liferay.fire('journal:undo');
-					handleUndoRedo(step - 1);
+					handleUndo(step - 1);
 				}}
 				size="sm"
 				symbol="undo"
@@ -328,7 +469,7 @@ export default function UndoRedo({
 				displayType="secondary"
 				onClick={() => {
 					Liferay.fire('journal:redo');
-					handleUndoRedo(step + 1);
+					handleRedo(step + 1);
 				}}
 				size="sm"
 				symbol="redo"

@@ -47,8 +47,6 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		String jobPropertyValue = jobProperty.getValue();
 
-		System.out.println("job prop value: " + jobPropertyValue);
-
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
 			String playwrightProjectNamesEnv = System.getenv(
 				"PLAYWRIGHT_PROJECT_NAME");
@@ -57,15 +55,9 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 					playwrightProjectNamesEnv)) {
 
 				jobPropertyValue = playwrightProjectNamesEnv;
-
-				System.out.println("env job value: " + jobPropertyValue);
 			}
 			else {
 				jobPropertyValue = _getProjectJSONObj();
-
-				System.out.println("proj job value: " + jobPropertyValue);
-
-				return;
 			}
 		}
 
@@ -314,10 +306,12 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	private String _getProjectJSONObj() {
 		_loadPlaywrightJSONObjects();
 
-		JSONArray projectsJSONArray = _playwrightJSONObject.getJSONArray(
-			"projects");
+		JSONObject configJSONObject = _playwrightJSONObject.getJSONObject(
+			"config");
 
 		StringBuilder sb = new StringBuilder();
+
+		JSONArray projectsJSONArray = configJSONObject.optJSONArray("projects");
 
 		for (int i = 0; i < projectsJSONArray.length(); i++) {
 			JSONObject projectJSONObject = projectsJSONArray.getJSONObject(i);
@@ -407,15 +401,11 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				exception.printStackTrace();
 			}
 
-			System.out.println("base dir: " + playwrightBaseDir);
-
 			_callNPMCommand(playwrightBaseDir, "npm install");
 
 			String result = _callNPMCommand(
 				playwrightBaseDir,
 				"npm run playwright test -- --list --reporter=json");
-
-			System.out.println("results: " + result);
 
 			try {
 				int index = result.indexOf("\n{");

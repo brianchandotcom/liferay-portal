@@ -22,12 +22,14 @@ public class ExportImportConfigurationNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name", "createDate"};
 
-	public ExportImportConfigurationNameComparator() {
-		this(false);
-	}
+	public static ExportImportConfigurationNameComparator getInstance(
+		boolean ascending) {
 
-	public ExportImportConfigurationNameComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -73,6 +75,17 @@ public class ExportImportConfigurationNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private ExportImportConfigurationNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final ExportImportConfigurationNameComparator
+		_INSTANCE_ASCENDING = new ExportImportConfigurationNameComparator(true);
+
+	private static final ExportImportConfigurationNameComparator
+		_INSTANCE_DESCENDING = new ExportImportConfigurationNameComparator(
+			false);
 
 	private final boolean _ascending;
 

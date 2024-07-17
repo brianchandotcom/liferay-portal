@@ -184,8 +184,8 @@
 		<transitions>
 			<transition>
 				<labels>
-					<label language-id="en_US">						approve
-
+					<label language-id="en_US">
+						approve
 					</label>
 				</labels>
 				<name>approve</name>
@@ -194,7 +194,8 @@
 			</transition>
 			<transition>
 				<labels>
-					<label language-id="en_US">						reject
+					<label language-id="en_US">
+						reject
 					</label>
 				</labels>
 				<name>reject</name>

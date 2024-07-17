@@ -104,7 +104,7 @@ public class ExportImportPublishTemplatesDisplayContext {
 
 		_searchContainer.setOrderByCol("name");
 		_searchContainer.setOrderByComparator(
-			new ExportImportConfigurationNameComparator(true));
+			ExportImportConfigurationNameComparator.getInstance(true));
 		_searchContainer.setOrderByType("asc");
 
 		int exportImportConfigurationType = isLocalPublishing() ?

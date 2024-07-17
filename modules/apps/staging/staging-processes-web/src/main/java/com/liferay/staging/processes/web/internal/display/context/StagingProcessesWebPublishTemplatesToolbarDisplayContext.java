@@ -119,7 +119,7 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 
 		searchContainer.setOrderByCol("name");
 		searchContainer.setOrderByComparator(
-			new ExportImportConfigurationNameComparator(
+			ExportImportConfigurationNameComparator.getInstance(
 				Objects.equals(getOrderByType(), "asc")));
 		searchContainer.setOrderByType(getOrderByType());
 

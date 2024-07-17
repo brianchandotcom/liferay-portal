@@ -122,7 +122,7 @@ public class ExportTemplatesToolbarDisplayContext
 
 		searchContainer.setOrderByCol("name");
 		searchContainer.setOrderByComparator(
-			new ExportImportConfigurationNameComparator(
+			ExportImportConfigurationNameComparator.getInstance(
 				Objects.equals(getOrderByType(), "asc")));
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setResultsAndTotal(

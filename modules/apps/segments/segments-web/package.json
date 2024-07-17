@@ -42,5 +42,5 @@
 		"test": "node-scripts test",
 		"test:watch": "node-scripts test --watch"
 	},
-	"version": "3.0.125"
+	"version": "3.0.126"
 }

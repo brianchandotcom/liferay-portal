@@ -55,6 +55,13 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 							</c:choose>
 						</c:if>
 					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(additionalStatusLabel) %>">
+						<clay:label
+							displayType='<%= Validator.isNull(additionalStatusLabelStyle) ? "secondary" : additionalStatusLabelStyle %>'
+							label="<%= additionalStatusLabel %>"
+						/>
+					</c:if>
 				</div>
 
 				<div class="header-info">

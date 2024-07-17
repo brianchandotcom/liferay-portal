@@ -1764,6 +1764,59 @@ public interface DLFileShortcutPersistence
 		long groupId, long folderId, boolean active, int status);
 
 	/**
+	 * Returns the document library file shortcut where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchFileShortcutException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching document library file shortcut
+	 * @throws NoSuchFileShortcutException if a matching document library file shortcut could not be found
+	 */
+	public DLFileShortcut findByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchFileShortcutException;
+
+	/**
+	 * Returns the document library file shortcut where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 */
+	public DLFileShortcut fetchByERC_G(
+		String externalReferenceCode, long groupId);
+
+	/**
+	 * Returns the document library file shortcut where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	 */
+	public DLFileShortcut fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache);
+
+	/**
+	 * Removes the document library file shortcut where externalReferenceCode = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the document library file shortcut that was removed
+	 */
+	public DLFileShortcut removeByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchFileShortcutException;
+
+	/**
+	 * Returns the number of document library file shortcuts where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the number of matching document library file shortcuts
+	 */
+	public int countByERC_G(String externalReferenceCode, long groupId);
+
+	/**
 	 * Caches the document library file shortcut in the entity cache if it is enabled.
 	 *
 	 * @param dlFileShortcut the document library file shortcut

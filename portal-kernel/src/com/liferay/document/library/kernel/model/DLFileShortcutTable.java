@@ -31,6 +31,10 @@ public class DLFileShortcutTable extends BaseTable<DLFileShortcutTable> {
 			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DLFileShortcutTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<DLFileShortcutTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<DLFileShortcutTable, Long> fileShortcutId =
 		createColumn(
 			"fileShortcutId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

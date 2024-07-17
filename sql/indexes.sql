@@ -112,6 +112,7 @@ create index IX_2E64D9F9 on DLFileEntryTypes_DLFolders (companyId);
 create index IX_6E00A2EC on DLFileEntryTypes_DLFolders (folderId);
 
 create index IX_8571953E on DLFileShortcut (companyId, status);
+create unique index IX_A9E34105 on DLFileShortcut (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_17EE3098 on DLFileShortcut (groupId, folderId, active_, status);
 create unique index IX_86FE17F8 on DLFileShortcut (groupId, uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_4B7247F6 on DLFileShortcut (toFileEntryId);

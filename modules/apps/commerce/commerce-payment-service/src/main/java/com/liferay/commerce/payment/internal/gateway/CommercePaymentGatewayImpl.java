@@ -16,7 +16,9 @@ import com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalServic
 import com.liferay.commerce.payment.service.CommercePaymentEntryLocalService;
 import com.liferay.commerce.payment.util.CommercePaymentHelper;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -27,6 +29,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import javax.persistence.OptimisticLockException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,31 +62,124 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 			commercePaymentIntegration.authorize(
 				httpServletRequest, commercePaymentEntry);
 
+		commercePaymentEntry =
+			_commercePaymentEntryLocalService.fetchCommercePaymentEntry(
+				commercePaymentEntry.getCommercePaymentEntryId());
+
+		if (StringUtil.equals(
+				commercePaymentEntry.getErrorMessages(),
+				authorizedCommercePaymentEntry.getErrorMessages()) &&
+			StringUtil.equals(
+				commercePaymentEntry.getPayload(),
+				authorizedCommercePaymentEntry.getPayload()) &&
+			(commercePaymentEntry.getPaymentStatus() ==
+				authorizedCommercePaymentEntry.getPaymentStatus()) &&
+			StringUtil.equals(
+				commercePaymentEntry.getRedirectURL(),
+				authorizedCommercePaymentEntry.getRedirectURL()) &&
+			StringUtil.equals(
+				commercePaymentEntry.getTransactionCode(),
+				authorizedCommercePaymentEntry.getTransactionCode())) {
+
+			return commercePaymentEntry;
+		}
+
 		User currentUser = _portal.getUser(httpServletRequest);
 
 		PermissionThreadLocal.setPermissionChecker(
 			_defaultPermissionCheckerFactory.create(currentUser));
 
-		commercePaymentEntry =
-			_commercePaymentEntryLocalService.updateCommercePaymentEntry(
-				commercePaymentEntry.getExternalReferenceCode(),
-				commercePaymentEntry.getCommercePaymentEntryId(),
-				commercePaymentEntry.getCommerceChannelId(),
-				commercePaymentEntry.getAmount(),
-				commercePaymentEntry.getCallbackURL(),
-				commercePaymentEntry.getCancelURL(),
-				commercePaymentEntry.getCurrencyCode(),
-				authorizedCommercePaymentEntry.getErrorMessages(),
-				commercePaymentEntry.getLanguageId(),
-				commercePaymentEntry.getNote(),
-				commercePaymentEntry.getPayload(),
-				commercePaymentEntry.getPaymentIntegrationKey(),
-				commercePaymentEntry.getPaymentIntegrationType(),
-				authorizedCommercePaymentEntry.getPaymentStatus(),
-				commercePaymentEntry.getReasonKey(),
-				authorizedCommercePaymentEntry.getRedirectURL(),
-				authorizedCommercePaymentEntry.getTransactionCode(),
-				commercePaymentEntry.getType());
+		try {
+			commercePaymentEntry =
+				_commercePaymentEntryLocalService.updateCommercePaymentEntry(
+					commercePaymentEntry.getExternalReferenceCode(),
+					commercePaymentEntry.getCommercePaymentEntryId(),
+					commercePaymentEntry.getCommerceChannelId(),
+					commercePaymentEntry.getAmount(),
+					commercePaymentEntry.getCallbackURL(),
+					commercePaymentEntry.getCancelURL(),
+					commercePaymentEntry.getCurrencyCode(),
+					authorizedCommercePaymentEntry.getErrorMessages(),
+					commercePaymentEntry.getLanguageId(),
+					commercePaymentEntry.getNote(),
+					commercePaymentEntry.getPayload(),
+					commercePaymentEntry.getPaymentIntegrationKey(),
+					commercePaymentEntry.getPaymentIntegrationType(),
+					authorizedCommercePaymentEntry.getPaymentStatus(),
+					commercePaymentEntry.getReasonKey(),
+					authorizedCommercePaymentEntry.getRedirectURL(),
+					authorizedCommercePaymentEntry.getTransactionCode(),
+					commercePaymentEntry.getType());
+		}
+		catch (Exception exception) {
+			if (exception.getCause() instanceof SystemException) {
+				Throwable throwable = exception.getCause();
+
+				if (throwable instanceof ORMException) {
+					throwable = throwable.getCause();
+
+					if (throwable instanceof OptimisticLockException) {
+						commercePaymentEntry =
+							_commercePaymentEntryLocalService.
+								fetchCommercePaymentEntry(
+									commercePaymentEntry.
+										getCommercePaymentEntryId());
+
+						if (!StringUtil.equals(
+								commercePaymentEntry.getErrorMessages(),
+								authorizedCommercePaymentEntry.
+									getErrorMessages()) ||
+							!StringUtil.equals(
+								commercePaymentEntry.getPayload(),
+								authorizedCommercePaymentEntry.getPayload()) ||
+							(commercePaymentEntry.getPaymentStatus() !=
+								authorizedCommercePaymentEntry.
+									getPaymentStatus()) ||
+							!StringUtil.equals(
+								commercePaymentEntry.getRedirectURL(),
+								authorizedCommercePaymentEntry.
+									getRedirectURL()) ||
+							!StringUtil.equals(
+								commercePaymentEntry.getTransactionCode(),
+								authorizedCommercePaymentEntry.
+									getTransactionCode())) {
+
+							commercePaymentEntry =
+								_commercePaymentEntryLocalService.
+									updateCommercePaymentEntry(
+										commercePaymentEntry.
+											getExternalReferenceCode(),
+										commercePaymentEntry.
+											getCommercePaymentEntryId(),
+										commercePaymentEntry.
+											getCommerceChannelId(),
+										commercePaymentEntry.getAmount(),
+										commercePaymentEntry.getCallbackURL(),
+										commercePaymentEntry.getCancelURL(),
+										commercePaymentEntry.getCurrencyCode(),
+										authorizedCommercePaymentEntry.
+											getErrorMessages(),
+										commercePaymentEntry.getLanguageId(),
+										commercePaymentEntry.getNote(),
+										authorizedCommercePaymentEntry.
+											getPayload(),
+										commercePaymentEntry.
+											getPaymentIntegrationKey(),
+										commercePaymentEntry.
+											getPaymentIntegrationType(),
+										authorizedCommercePaymentEntry.
+											getPaymentStatus(),
+										commercePaymentEntry.getReasonKey(),
+										authorizedCommercePaymentEntry.
+											getRedirectURL(),
+										authorizedCommercePaymentEntry.
+											getTransactionCode(),
+										commercePaymentEntry.getType());
+						}
+					}
+				}
+			}
+		}
 
 		CommercePaymentEntryAuditConfiguration
 			commercePaymentEntryAuditConfiguration =
@@ -211,6 +308,10 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 			commercePaymentIntegration.capture(
 				httpServletRequest, commercePaymentEntry);
 
+		commercePaymentEntry =
+			_commercePaymentEntryLocalService.fetchCommercePaymentEntry(
+				commercePaymentEntry.getCommercePaymentEntryId());
+
 		if (StringUtil.equals(
 				commercePaymentEntry.getErrorMessages(),
 				capturedCommercePaymentEntry.getErrorMessages()) &&
@@ -234,26 +335,97 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 		PermissionThreadLocal.setPermissionChecker(
 			_defaultPermissionCheckerFactory.create(currentUser));
 
-		commercePaymentEntry =
-			_commercePaymentEntryLocalService.updateCommercePaymentEntry(
-				commercePaymentEntry.getExternalReferenceCode(),
-				commercePaymentEntry.getCommercePaymentEntryId(),
-				commercePaymentEntry.getCommerceChannelId(),
-				commercePaymentEntry.getAmount(),
-				commercePaymentEntry.getCallbackURL(),
-				commercePaymentEntry.getCancelURL(),
-				commercePaymentEntry.getCurrencyCode(),
-				capturedCommercePaymentEntry.getErrorMessages(),
-				commercePaymentEntry.getLanguageId(),
-				commercePaymentEntry.getNote(),
-				capturedCommercePaymentEntry.getPayload(),
-				commercePaymentEntry.getPaymentIntegrationKey(),
-				commercePaymentEntry.getPaymentIntegrationType(),
-				capturedCommercePaymentEntry.getPaymentStatus(),
-				commercePaymentEntry.getReasonKey(),
-				capturedCommercePaymentEntry.getRedirectURL(),
-				capturedCommercePaymentEntry.getTransactionCode(),
-				commercePaymentEntry.getType());
+		try {
+			commercePaymentEntry =
+				_commercePaymentEntryLocalService.updateCommercePaymentEntry(
+					commercePaymentEntry.getExternalReferenceCode(),
+					commercePaymentEntry.getCommercePaymentEntryId(),
+					commercePaymentEntry.getCommerceChannelId(),
+					commercePaymentEntry.getAmount(),
+					commercePaymentEntry.getCallbackURL(),
+					commercePaymentEntry.getCancelURL(),
+					commercePaymentEntry.getCurrencyCode(),
+					capturedCommercePaymentEntry.getErrorMessages(),
+					commercePaymentEntry.getLanguageId(),
+					commercePaymentEntry.getNote(),
+					capturedCommercePaymentEntry.getPayload(),
+					commercePaymentEntry.getPaymentIntegrationKey(),
+					commercePaymentEntry.getPaymentIntegrationType(),
+					capturedCommercePaymentEntry.getPaymentStatus(),
+					commercePaymentEntry.getReasonKey(),
+					capturedCommercePaymentEntry.getRedirectURL(),
+					capturedCommercePaymentEntry.getTransactionCode(),
+					commercePaymentEntry.getType());
+		}
+		catch (Exception exception) {
+			if (exception.getCause() instanceof SystemException) {
+				Throwable throwable = exception.getCause();
+
+				if (throwable instanceof ORMException) {
+					throwable = throwable.getCause();
+
+					if (throwable instanceof OptimisticLockException) {
+						commercePaymentEntry =
+							_commercePaymentEntryLocalService.
+								fetchCommercePaymentEntry(
+									commercePaymentEntry.
+										getCommercePaymentEntryId());
+
+						if (!StringUtil.equals(
+								commercePaymentEntry.getErrorMessages(),
+								capturedCommercePaymentEntry.
+									getErrorMessages()) ||
+							!StringUtil.equals(
+								commercePaymentEntry.getPayload(),
+								capturedCommercePaymentEntry.getPayload()) ||
+							(commercePaymentEntry.getPaymentStatus() !=
+								capturedCommercePaymentEntry.
+									getPaymentStatus()) ||
+							!StringUtil.equals(
+								commercePaymentEntry.getRedirectURL(),
+								capturedCommercePaymentEntry.
+									getRedirectURL()) ||
+							!StringUtil.equals(
+								commercePaymentEntry.getTransactionCode(),
+								capturedCommercePaymentEntry.
+									getTransactionCode())) {
+
+							commercePaymentEntry =
+								_commercePaymentEntryLocalService.
+									updateCommercePaymentEntry(
+										commercePaymentEntry.
+											getExternalReferenceCode(),
+										commercePaymentEntry.
+											getCommercePaymentEntryId(),
+										commercePaymentEntry.
+											getCommerceChannelId(),
+										commercePaymentEntry.getAmount(),
+										commercePaymentEntry.getCallbackURL(),
+										commercePaymentEntry.getCancelURL(),
+										commercePaymentEntry.getCurrencyCode(),
+										capturedCommercePaymentEntry.
+											getErrorMessages(),
+										commercePaymentEntry.getLanguageId(),
+										commercePaymentEntry.getNote(),
+										capturedCommercePaymentEntry.
+											getPayload(),
+										commercePaymentEntry.
+											getPaymentIntegrationKey(),
+										commercePaymentEntry.
+											getPaymentIntegrationType(),
+										capturedCommercePaymentEntry.
+											getPaymentStatus(),
+										commercePaymentEntry.getReasonKey(),
+										capturedCommercePaymentEntry.
+											getRedirectURL(),
+										capturedCommercePaymentEntry.
+											getTransactionCode(),
+										commercePaymentEntry.getType());
+						}
+					}
+				}
+			}
+		}
 
 		CommercePaymentEntryAuditConfiguration
 			commercePaymentEntryAuditConfiguration =

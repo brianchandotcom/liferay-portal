@@ -487,7 +487,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 	});
 
-	test('Configure table visualization mode with array fields @LPD-11769', async ({
+	test('Configure table visualization mode using search with array fields @LPD-11769, @LPS-185231, LPS-185227', async ({
 		page,
 		visualizationModesPage,
 	}) => {
@@ -884,7 +884,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 	});
 
-	test('Check modal field selection allows field search, check and uncheck fields @LPS-174141, @LPS-185228, @LPS-179282, @LPS-185231, LPS-185227', async ({
+	test('Check modal field selection allows check and uncheck fields @LPS-174141, @LPS-185228, @LPS-179282', async ({
 		page,
 		visualizationModesPage,
 	}) => {

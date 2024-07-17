@@ -21,6 +21,8 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
+import com.liferay.headless.delivery.client.dto.v1_0.CustomValue;
 import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.client.pagination.Page;
@@ -54,6 +56,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -281,6 +284,32 @@ public class NavigationMenuResourceTest
 		).header(
 			"X-Accept-All-Languages", "true"
 		).build();
+	}
+
+	private boolean _equalsCustomFieldsIgnoringOrder(
+		CustomField[] customFields1, CustomField[] customFields2) {
+
+		if (customFields1.length != customFields2.length) {
+			return false;
+		}
+
+		for (CustomField customField1 : customFields1) {
+			boolean contains = false;
+
+			for (CustomField customField2 : customFields2) {
+				if (Objects.equals(customField1, customField2)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			if (!contains) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private void _testGetNavigationMenu(

@@ -299,7 +299,7 @@ public class AssetTagsDisplayContext {
 				orderByComparator = new AssetTagNameComparator(orderByAsc);
 			}
 			else if (orderByCol.equals("usages")) {
-				orderByComparator = new AssetTagAssetCountComparator(
+				orderByComparator = AssetTagAssetCountComparator.getInstance(
 					orderByAsc);
 			}
 

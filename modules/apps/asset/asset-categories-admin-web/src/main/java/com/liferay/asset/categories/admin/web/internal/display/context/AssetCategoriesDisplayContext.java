@@ -271,7 +271,7 @@ public class AssetCategoriesDisplayContext {
 		}
 
 		categoriesSearchContainer.setOrderByComparator(
-			new AssetCategoryCreateDateComparator(orderByAsc));
+			AssetCategoryCreateDateComparator.getInstance(orderByAsc));
 		categoriesSearchContainer.setOrderByType(orderByType);
 
 		AssetVocabulary vocabulary = getVocabulary();
@@ -513,7 +513,7 @@ public class AssetCategoriesDisplayContext {
 				AssetVocabularyServiceUtil.getGroupVocabularies(
 					company.getGroupId(), false, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS,
-					new AssetVocabularyCreateDateComparator()));
+					AssetVocabularyCreateDateComparator.getInstance(true)));
 		}
 
 		List<DepotEntry> depotEntries =
@@ -528,7 +528,7 @@ public class AssetCategoriesDisplayContext {
 				AssetVocabularyServiceUtil.getGroupVocabularies(
 					group.getGroupId(), false, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS,
-					new AssetVocabularyCreateDateComparator());
+					AssetVocabularyCreateDateComparator.getInstance(true));
 
 			if (ListUtil.isNotEmpty(groupVocabularies)) {
 				_inheritedVocabularies.put(
@@ -654,7 +654,8 @@ public class AssetCategoriesDisplayContext {
 
 		_vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
 			_themeDisplay.getScopeGroupId(), false, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new AssetVocabularyCreateDateComparator());
+			QueryUtil.ALL_POS,
+			AssetVocabularyCreateDateComparator.getInstance(true));
 
 		return _vocabularies;
 	}
@@ -723,7 +724,7 @@ public class AssetCategoriesDisplayContext {
 		}
 
 		vocabulariesSearchContainer.setOrderByComparator(
-			new AssetVocabularyCreateDateComparator(orderByAsc));
+			AssetVocabularyCreateDateComparator.getInstance(orderByAsc));
 		vocabulariesSearchContainer.setOrderByType(orderByType);
 
 		String keywords = _getKeywords();

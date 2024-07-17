@@ -51,7 +51,9 @@ type RecipientType = 'role' | 'term' | 'user';
 
 type Recipient = {
 	bcc: string;
+	bccType: string;
 	cc: string;
+	ccType: string;
 	from: string;
 	fromName: LocalizedValue<string>;
 	to: LocalizedValue<string>;

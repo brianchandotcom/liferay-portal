@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.check.util.XMLSourceUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -81,7 +82,10 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 			String trimmedLine = StringUtil.trimLeading(
 				getLine(content, getLineNumber(content, matcher.start())));
 
-			if (trimmedLine.startsWith("<echo")) {
+			if (trimmedLine.startsWith("<content") ||
+				trimmedLine.startsWith("<echo") ||
+				XMLSourceUtil.isInsideCDATAMarkup(content, matcher.start())) {
+
 				continue;
 			}
 
@@ -92,14 +96,18 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 		matcher = _emptyLineInTagPattern2.matcher(content);
 
 		while (matcher.find()) {
-			if (StringUtil.equals(matcher.group(1), "echo")) {
+			String tagName = matcher.group(1);
+
+			if (tagName.startsWith("content") || tagName.startsWith("echo")) {
 				continue;
 			}
 
 			String trimmedLine = StringUtil.trim(
 				getLine(content, getLineNumber(content, matcher.start())));
 
-			if (trimmedLine.startsWith("<") || trimmedLine.endsWith(">")) {
+			if (trimmedLine.startsWith("<") || trimmedLine.endsWith(">") ||
+				XMLSourceUtil.isInsideCDATAMarkup(content, matcher.start())) {
+
 				continue;
 			}
 

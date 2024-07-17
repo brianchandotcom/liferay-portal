@@ -6,9 +6,9 @@
 import {Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {expandSection} from '../../utils/expandSection';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {DocumentLibraryPage} from './DocumentLibraryPage';
-import {expandSection} from "../../utils/expandSection";
-import {waitForSuccessAlert} from "../../utils/waitForSuccessAlert";
 
 export class DocumentLibraryEditFilePage {
 	readonly documentLibraryPage: DocumentLibraryPage;
@@ -63,7 +63,7 @@ export class DocumentLibraryEditFilePage {
 		});
 	}
 
-	async publishFileEntry(){
+	async publishFileEntry() {
 		if (await this.saveButton.isVisible()) {
 			await this.saveButton.click();
 		}
@@ -154,18 +154,20 @@ export class DocumentLibraryEditFilePage {
 	}
 
 	async selectSpecificDisplayPage(displayPageName: string) {
-		const displayPageFieldSet = this.page.locator('#_com_liferay_document_library_web_portlet_DLAdminPortlet_display-page');
+		const displayPageFieldSet = this.page.locator(
+			'#_com_liferay_document_library_web_portlet_DLAdminPortlet_display-page'
+		);
 
 		await expandSection(displayPageFieldSet);
 		await displayPageFieldSet
 			.getByTitle('Display Page Template Type')
 			.selectOption('Specific');
-		await displayPageFieldSet
-			.getByRole('button', {name: 'Select'})
-			.click();
+		await displayPageFieldSet.getByRole('button', {name: 'Select'}).click();
 		const selectDisplayPageModal = await this.page.frameLocator(
 			'iframe[title*="Select Page"]'
 		);
-		await selectDisplayPageModal.getByLabel('Select ' + displayPageName).click();
+		await selectDisplayPageModal
+			.getByLabel('Select ' + displayPageName)
+			.click();
 	}
 }

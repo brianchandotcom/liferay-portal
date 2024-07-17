@@ -5,12 +5,6 @@
 			"url": "https://learn.liferay.com/w/dxp/using-search/search-pages-and-widgets/search-facets/custom-facet"
 		}
 	},
-	"deprecated-apps": {
-		"en_US": {
-			"message": "since 7.1",
-			"url": "https://help.liferay.com/hc/en-us/articles/360017897432-Deprecated-Apps-in-7-1-What-to-Do#foundation"
-		}
-	},
 	"search-bar-suggestions": {
 		"en_US": {
 			"message": "Learn more.",
@@ -30,7 +24,7 @@
 	},
 	"search-pages-and-widgets": {
 		"en_US": {
-			"message": "search pages and widgets",
+			"message": "Learn more.",
 			"url": "https://learn.liferay.com/w/dxp/using-search/search-pages-and-widgets"
 		}
 	},

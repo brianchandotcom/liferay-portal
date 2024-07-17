@@ -216,7 +216,7 @@ test('Search the Segment Profile Distribution', async ({apiHelpers, page}) => {
 		channelName,
 	});
 
-	const date1 = new Date();
+	const date = new Date();
 
 	const generateIndividual = (name) => {
 		const id = getRandomString();
@@ -248,7 +248,7 @@ test('Search the Segment Profile Distribution', async ({apiHelpers, page}) => {
 			applicationId: 'Page',
 			canonicalUrl: 'https://www.liferay.com',
 			channelId: channel.id,
-			eventDate: date1.toISOString(),
+			eventDate: date.toISOString(),
 			eventId: 'pageViewed',
 			title: 'Liferay',
 			userId: individual.id,
@@ -262,7 +262,7 @@ test('Search the Segment Profile Distribution', async ({apiHelpers, page}) => {
 			applicationId: 'Page',
 			canonicalUrl: 'https://www.liferay.com',
 			channelId: channel.id,
-			eventDate: date1.toISOString(),
+			eventDate: date.toISOString(),
 			eventId: 'pageViewed',
 			title: 'Liferay',
 			userId: individual.id,
@@ -275,8 +275,8 @@ test('Search the Segment Profile Distribution', async ({apiHelpers, page}) => {
 		const firstSessions = firstIndividuals.map((individual) => ({
 			channelId: channel.id,
 			id: individual.id,
-			sessionEnd: date1.toISOString(),
-			sessionStart: date1.toISOString(),
+			sessionEnd: date.toISOString(),
+			sessionStart: date.toISOString(),
 			userId: individual.id,
 		}));
 
@@ -285,8 +285,8 @@ test('Search the Segment Profile Distribution', async ({apiHelpers, page}) => {
 		const secondSessions = secondIndividuals.map((individual) => ({
 			channelId: channel.id,
 			id: individual.id,
-			sessionEnd: date1.toISOString(),
-			sessionStart: date1.toISOString(),
+			sessionEnd: date.toISOString(),
+			sessionStart: date.toISOString(),
 			userId: individual.id,
 		}));
 
@@ -373,14 +373,7 @@ test('Segment Composition shows Active and Known individuals', async ({
 	apiHelpers,
 	page,
 }) => {
-	const anonymousIdentityID = '87';
-	const date1 = new Date();
-	const pageName = 'Liferay - AC Page';
-	const knownIndividualName = 'ac';
-	const dynamicSegmentName = 'Test Dynamic Segment';
-	const staticSegmentName = 'Test Static Segment';
 	const channelName = 'My Property - ' + getRandomString();
-
 	const {channel, project} = await createChannel({
 		apiHelpers,
 		channelName,
@@ -395,6 +388,7 @@ test('Segment Composition shows Active and Known individuals', async ({
 		};
 	};
 
+	const knownIndividualName = 'ac';
 	const knownIndividual = [generateIndividual(knownIndividualName)];
 
 	await test.step('Create the known individuals directly in the AC database', async () => {
@@ -404,59 +398,56 @@ test('Segment Composition shows Active and Known individuals', async ({
 		});
 	});
 
+	const anonymousIdentityID = '87';
+	const date = new Date();
+
 	await test.step('Create an identity for an anonymous directly in the AC database', async () => {
-		const identities = [
+		await apiHelpers.jsonWebServicesOSBAsah.createIdentities([
 			{
-				createDate: date1.toISOString(),
+				createDate: date.toISOString(),
 				id: anonymousIdentityID,
 			},
-		];
-
-		await apiHelpers.jsonWebServicesOSBAsah.createIdentities(identities);
+		]);
 	});
 
-	await test.step('Create events for the anonymous and known individual to appear in AC', async () => {
-		const knownIndividualEvent = knownIndividual.map((individual) => ({
-			applicationId: 'Page',
-			canonicalUrl: 'https://www.liferay.com',
-			channelId: channel.id,
-			eventDate: date1.toISOString(),
-			eventId: 'pageViewed',
-			title: pageName,
-			userId: individual.id,
-		}));
+	const pageName = 'Liferay - AC Page';
 
+	await test.step('Create events for the anonymous and known individual to appear in AC', async () => {
 		await apiHelpers.jsonWebServicesOSBAsah.createEvents(
-			knownIndividualEvent
+			knownIndividual.map((individual) => ({
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date.toISOString(),
+				eventId: 'pageViewed',
+				title: pageName,
+				userId: individual.id,
+			}))
 		);
 
-		const anonymousIndividualEvents = [
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
 			{
 				applicationId: 'Page',
 				canonicalUrl: 'https://www.liferay.com',
 				channelId: channel.id,
-				eventDate: date1.toISOString(),
+				eventDate: date.toISOString(),
 				eventId: 'pageViewed',
 				title: pageName,
 				userId: anonymousIdentityID,
 			},
-		];
-
-		await apiHelpers.jsonWebServicesOSBAsah.createEvents(
-			anonymousIndividualEvents
-		);
+		]);
 	});
 
 	await test.step('Create a session for the known individual', async () => {
-		const sessions = knownIndividual.map((individual) => ({
-			channelId: channel.id,
-			id: individual.id,
-			sessionEnd: date1.toISOString(),
-			sessionStart: date1.toISOString(),
-			userId: individual.id,
-		}));
-
-		await apiHelpers.jsonWebServicesOSBAsah.createSessions(sessions);
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions(
+			knownIndividual.map((individual) => ({
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			}))
+		);
 	});
 
 	await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -466,6 +457,8 @@ test('Segment Composition shows Active and Known individuals', async ({
 			projectID: project.groupId,
 		});
 	});
+
+	const dynamicSegmentName = 'Test Dynamic Segment';
 
 	await test.step('Create dynamic segment', async () => {
 		await navigateTo({
@@ -525,7 +518,7 @@ test('Segment Composition shows Active and Known individuals', async ({
 
 		await setSegmentName({
 			page,
-			segmentName: staticSegmentName,
+			segmentName: 'Test Static Segment',
 		});
 
 		await addStaticMember({

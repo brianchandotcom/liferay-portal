@@ -12,6 +12,7 @@ import {fragmentsPagesTest} from '../../fixtures/fragmentPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {wemSiteTest} from '../../fixtures/wemSiteTest';
 import {checkAccessibility} from '../../utils/checkAccessibility';
 import getRandomString from '../../utils/getRandomString';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -27,7 +28,8 @@ const test = mergeTests(
 	fragmentsPagesTest,
 	isolatedSiteTest,
 	loginTest(),
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	wemSiteTest
 );
 
 const PANELS: SidebarTab[] = [
@@ -185,44 +187,28 @@ test('Checks sidebar accessibility', async ({
 test.describe('Fragments Panel', () => {
 	test('Only published fragments are shown in the Fragments Sidebar', async ({
 		apiHelpers,
-		fragmentEditorPage,
 		fragmentsPage,
 		page,
 		pageEditorPage,
-		site,
+		wemSite,
 	}) => {
 
-		// Create new fragment set
+		// Create unpublished fragment inside Imported fragment set
 
-		await fragmentsPage.goto(site.friendlyUrlPath);
-
-		const setName = getRandomString();
-		await fragmentsPage.createFragmentSet(setName);
-
-		// Create unpublished fragment inside it
-
-		await fragmentsPage.goto(site.friendlyUrlPath);
+		await fragmentsPage.goto(wemSite.friendlyUrlPath);
 
 		const unpublishedFragmentName = getRandomString();
-		await fragmentsPage.createFragment(setName, unpublishedFragmentName);
-
-		// Create published fragment inside it
-
-		await fragmentsPage.goto(site.friendlyUrlPath);
-
-		const publishedFragmentName = getRandomString();
-		await fragmentsPage.createFragment(setName, publishedFragmentName);
-		await fragmentEditorPage.publish();
+		await fragmentsPage.createFragment('Imported', unpublishedFragmentName);
 
 		// Create content page and go to edit mode
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition(),
-			siteId: site.id,
+			siteId: wemSite.id,
 			title: getRandomString(),
 		});
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
 
 		// Check only published fragment is displayed
 
@@ -231,11 +217,11 @@ test.describe('Fragments Panel', () => {
 		await page
 			.getByRole('menuitem', {
 				exact: true,
-				name: setName,
+				name: 'Imported',
 			})
 			.click();
 
-		await expect(page.getByText(publishedFragmentName)).toBeVisible();
+		await expect(page.getByText('Apple')).toBeVisible();
 
 		await expect(page.getByText(unpublishedFragmentName)).not.toBeVisible();
 	});

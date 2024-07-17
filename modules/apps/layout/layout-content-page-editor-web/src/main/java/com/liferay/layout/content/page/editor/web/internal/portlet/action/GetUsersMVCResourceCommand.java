@@ -56,7 +56,7 @@ public class GetUsersMVCResourceCommand extends BaseMVCResourceCommand {
 					themeDisplay.getCompanyId(), StringPool.BLANK,
 					WorkflowConstants.STATUS_APPROVED, new LinkedHashMap<>(),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					new UserScreenNameComparator())) {
+					UserScreenNameComparator.getInstance(false))) {
 
 			if (user.isGuestUser()) {
 				continue;

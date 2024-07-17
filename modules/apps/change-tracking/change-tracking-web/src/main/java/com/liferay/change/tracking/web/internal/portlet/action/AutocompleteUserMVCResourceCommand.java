@@ -94,7 +94,7 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 			return _userLocalService.search(
 				themeDisplay.getCompanyId(), keywords,
 				WorkflowConstants.STATUS_APPROVED, new LinkedHashMap<>(), 0, 20,
-				new UserScreenNameComparator(true));
+				UserScreenNameComparator.getInstance(true));
 		}
 
 		long ctCollectionId = ParamUtil.getLong(
@@ -117,7 +117,7 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"usersRoles", role.getRoleId()
 				).build(),
-				0, 20, new UserScreenNameComparator(true));
+				0, 20, UserScreenNameComparator.getInstance(true));
 		}
 
 		User user = themeDisplay.getUser();
@@ -131,7 +131,7 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 
 		return _userLocalService.searchBySocial(
 			themeDisplay.getCompanyId(), groupIds, userGroupIds, keywords, 0,
-			20, new UserScreenNameComparator(true));
+			20, UserScreenNameComparator.getInstance(true));
 	}
 
 	private JSONArray _getUsersJSONArray(ResourceRequest resourceRequest)

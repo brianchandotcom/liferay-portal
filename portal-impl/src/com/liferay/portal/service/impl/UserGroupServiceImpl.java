@@ -193,7 +193,7 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 
 		return userGroupPersistence.filterFindByGtU_C_P(
 			gtUserGroupId, companyId, parentUserGroupId, 0, size,
-			new UserGroupIdComparator(true));
+			UserGroupIdComparator.getInstance(true));
 	}
 
 	/**

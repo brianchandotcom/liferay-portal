@@ -68,7 +68,7 @@ public class OrganizationDisplayContext {
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 				_getKeywords(), null, null, null, _getOrganizationParams(),
 				organizationSearch.getStart(), organizationSearch.getEnd(),
-				new OrganizationNameComparator(_isOrderByAscending())),
+				OrganizationNameComparator.getInstance(_isOrderByAscending())),
 			OrganizationLocalServiceUtil.searchCount(
 				_getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,

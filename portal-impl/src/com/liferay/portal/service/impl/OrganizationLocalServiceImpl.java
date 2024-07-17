@@ -759,7 +759,7 @@ public class OrganizationLocalServiceImpl
 		}
 
 		if (orderByComparator == null) {
-			orderByComparator = new OrganizationNameComparator(true);
+			orderByComparator = OrganizationNameComparator.getInstance(true);
 		}
 
 		Collections.sort(organizations, orderByComparator);
@@ -1339,7 +1339,7 @@ public class OrganizationLocalServiceImpl
 					return organizationPersistence.findByGtO_C_P(
 						previousId, companyId, parentPrimaryKey,
 						QueryUtil.ALL_POS, size,
-						new OrganizationIdComparator(true));
+						OrganizationIdComparator.getInstance(true));
 				}
 
 			});
@@ -1453,7 +1453,7 @@ public class OrganizationLocalServiceImpl
 		return search(
 			companyId, parentOrganizationId, keywords, type, regionId,
 			countryId, params, start, end,
-			new OrganizationNameComparator(true));
+			OrganizationNameComparator.getInstance(true));
 	}
 
 	/**
@@ -1567,7 +1567,7 @@ public class OrganizationLocalServiceImpl
 		return search(
 			companyId, parentOrganizationId, name, type, street, city, zip,
 			regionId, countryId, params, andOperator, start, end,
-			new OrganizationNameComparator(true));
+			OrganizationNameComparator.getInstance(true));
 	}
 
 	/**
@@ -2438,7 +2438,7 @@ public class OrganizationLocalServiceImpl
 						organization.getOrganizationId(),
 						StringPool.FORWARD_SLASH))[0],
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new OrganizationNameComparator(true));
+				OrganizationNameComparator.getInstance(true));
 
 		long[] organizationIds = new long[organizations.size()];
 

@@ -333,7 +333,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			roles = _roleLocalService.search(
 				themeDisplay.getCompanyId(), keywords, _getRoleTypesObj(type),
 				params, 0, SearchContainer.DEFAULT_DELTA,
-				new RoleNameComparator());
+				RoleNameComparator.getInstance(false));
 		}
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -386,7 +386,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 					WorkflowConstants.STATUS_APPROVED,
 					new LinkedHashMap<String, Object>(), 0,
 					SearchContainer.DEFAULT_DELTA,
-					new UserFirstNameComparator()));
+					UserFirstNameComparator.getInstance(false)));
 		}
 
 		for (String screenName :

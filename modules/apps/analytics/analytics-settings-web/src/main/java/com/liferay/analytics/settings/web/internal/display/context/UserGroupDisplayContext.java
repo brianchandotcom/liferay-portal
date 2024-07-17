@@ -73,7 +73,7 @@ public class UserGroupDisplayContext {
 			() -> UserGroupServiceUtil.search(
 				_getCompanyId(), _getKeywords(), _getUserGroupParams(),
 				userGroupSearch.getStart(), userGroupSearch.getEnd(),
-				new UserGroupNameComparator(_isOrderByAscending())),
+				UserGroupNameComparator.getInstance(_isOrderByAscending())),
 			UserGroupServiceUtil.searchCount(
 				_getCompanyId(), _getKeywords(), _getUserGroupParams()));
 		userGroupSearch.setRowChecker(

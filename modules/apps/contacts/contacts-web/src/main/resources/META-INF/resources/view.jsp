@@ -40,14 +40,14 @@ List<BaseModel<?>> contacts = null;
 int contactsCount = 0;
 
 if (userPublicPage) {
-	List<User> users = UserLocalServiceUtil.getSocialUsers(scopeGroup.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION, StringPool.EQUAL, 0, ContactsConstants.MAX_RESULT_COUNT, new UserLastNameComparator(true));
+	List<User> users = UserLocalServiceUtil.getSocialUsers(scopeGroup.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION, StringPool.EQUAL, 0, ContactsConstants.MAX_RESULT_COUNT, UserLastNameComparator.getInstance(true));
 
 	contacts = new ArrayList<BaseModel<?>>(users);
 
 	contactsCount = UserLocalServiceUtil.getSocialUsersCount(scopeGroup.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION, StringPool.EQUAL);
 }
 else if (showOnlySiteMembers || !filterBy.equals(ContactsConstants.FILTER_BY_DEFAULT)) {
-	List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), name, WorkflowConstants.STATUS_APPROVED, params, 0, ContactsConstants.MAX_RESULT_COUNT, new UserLastNameComparator(true));
+	List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), name, WorkflowConstants.STATUS_APPROVED, params, 0, ContactsConstants.MAX_RESULT_COUNT, UserLastNameComparator.getInstance(true));
 
 	contacts = new ArrayList<BaseModel<?>>(users);
 

@@ -90,7 +90,7 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 			return _userLocalService.search(
 				themeDisplay.getCompanyId(), query,
 				WorkflowConstants.STATUS_APPROVED, new LinkedHashMap<>(), 0, 20,
-				new UserScreenNameComparator());
+				UserScreenNameComparator.getInstance(false));
 		}
 
 		User user = themeDisplay.getUser();
@@ -104,7 +104,7 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 		return _userLocalService.searchBySocial(
 			themeDisplay.getCompanyId(), user.getGroupIds(),
 			user.getUserGroupIds(), query, 0, 20,
-			new UserScreenNameComparator());
+			UserScreenNameComparator.getInstance(false));
 	}
 
 	private JSONArray _getUsersJSONArray(

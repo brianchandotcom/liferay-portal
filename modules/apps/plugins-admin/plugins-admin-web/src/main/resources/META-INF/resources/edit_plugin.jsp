@@ -65,7 +65,7 @@ renderResponse.setTitle(title);
 
 								int maxNumberOfRolesChecked = 500;
 
-								List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), null, null, (Integer[])null, 0, maxNumberOfRolesChecked, new RoleRoleIdComparator(true));
+								List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), null, null, (Integer[])null, 0, maxNumberOfRolesChecked, RoleRoleIdComparator.getInstance(true));
 
 								int rolesCount = RoleLocalServiceUtil.searchCount(company.getCompanyId(), null, null, (Integer[])null);
 

@@ -62,7 +62,7 @@ public class WorkflowTaskAssignableUsersResourceImpl
 
 							if (commonAssignableUsers == null) {
 								commonAssignableUsers = new TreeSet<>(
-									new UserFirstNameComparator(true));
+									UserFirstNameComparator.getInstance(true));
 
 								commonAssignableUsers.addAll(assignableUsers);
 							}

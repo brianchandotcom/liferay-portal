@@ -68,7 +68,7 @@ public class TeamSearch extends SearchContainer<Team> {
 		}
 
 		if (orderByCol.equals("name")) {
-			orderByComparator = new TeamNameComparator(orderByAsc);
+			orderByComparator = TeamNameComparator.getInstance(orderByAsc);
 		}
 
 		return orderByComparator;

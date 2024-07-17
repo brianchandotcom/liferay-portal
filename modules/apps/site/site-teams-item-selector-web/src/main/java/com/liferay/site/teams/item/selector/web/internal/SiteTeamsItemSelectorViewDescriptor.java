@@ -132,7 +132,7 @@ public class SiteTeamsItemSelectorViewDescriptor
 		}
 
 		teamSearchContainer.setOrderByComparator(
-			new TeamNameComparator(orderByAsc));
+			TeamNameComparator.getInstance(orderByAsc));
 		teamSearchContainer.setOrderByType(_getOrderByType());
 
 		teamSearchContainer.setResultsAndTotal(

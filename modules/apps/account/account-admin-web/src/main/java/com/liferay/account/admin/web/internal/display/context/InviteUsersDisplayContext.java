@@ -43,7 +43,7 @@ public class InviteUsersDisplayContext {
 					}
 				).build(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new RoleNameComparator(true));
+				RoleNameComparator.getInstance(true));
 
 		List<MultiselectItem> multiselectItems = new ArrayList<>();
 

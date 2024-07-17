@@ -89,7 +89,7 @@ public class EntryFinderImpl
 				_userLocalService.search(
 					companyId, keywords, keywords, keywords, keywords, keywords,
 					0, null, false, start, end,
-					new UserLastNameComparator(true)));
+					UserLastNameComparator.getInstance(true)));
 
 			if (models.size() < (end - start)) {
 				int count = _userLocalService.searchCount(
@@ -111,7 +111,7 @@ public class EntryFinderImpl
 			models.addAll(
 				_userLocalService.getUsers(
 					companyId, WorkflowConstants.STATUS_APPROVED, start, end,
-					new UserLastNameComparator(true)));
+					UserLastNameComparator.getInstance(true)));
 
 			if (models.size() < (end - start)) {
 				int count = _userLocalService.getUsersCount(

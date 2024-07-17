@@ -215,7 +215,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 							"filterByUsersGroupsGroupId"),
 					groupId)
 			).build(),
-			start, end, new UserFirstNameComparator(true));
+			start, end, UserFirstNameComparator.getInstance(true));
 	}
 
 	private int _getAvailableUsersCount(

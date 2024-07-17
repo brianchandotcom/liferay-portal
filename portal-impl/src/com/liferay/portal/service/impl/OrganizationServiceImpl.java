@@ -426,7 +426,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 		return organizationPersistence.filterFindByGtO_C_P(
 			gtOrganizationId, companyId, parentOrganizationId, 0, size,
-			new OrganizationIdComparator(true));
+			OrganizationIdComparator.getInstance(true));
 	}
 
 	/**

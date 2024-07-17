@@ -50,7 +50,7 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 				LinkedHashMapBuilder.<String, Object>put(
 					"wildcardMode", WildcardMode.TRAILING
 				).build(),
-				0, _MAX_USERS, new UserScreenNameComparator());
+				0, _MAX_USERS, UserScreenNameComparator.getInstance(false));
 		}
 
 		User user = _userLocalService.getUser(userId);

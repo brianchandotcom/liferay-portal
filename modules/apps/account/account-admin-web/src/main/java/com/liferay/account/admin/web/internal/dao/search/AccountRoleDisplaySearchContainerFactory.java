@@ -98,7 +98,7 @@ public class AccountRoleDisplaySearchContainerFactory {
 					excludedRoleNames.toArray(new String[0])
 				).build(),
 				searchContainer.getStart(), searchContainer.getEnd(),
-				new RoleNameComparator(
+				RoleNameComparator.getInstance(
 					Objects.equals(searchContainer.getOrderByType(), "asc")));
 
 		searchContainer.setResultsAndTotal(

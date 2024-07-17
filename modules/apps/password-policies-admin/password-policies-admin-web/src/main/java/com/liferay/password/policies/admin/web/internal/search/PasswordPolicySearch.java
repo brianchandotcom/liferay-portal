@@ -94,14 +94,16 @@ public class PasswordPolicySearch extends SearchContainer<PasswordPolicy> {
 		OrderByComparator<PasswordPolicy> orderByComparator = null;
 
 		if (orderByCol.equals("name")) {
-			orderByComparator = new PasswordPolicyNameComparator(orderByAsc);
+			orderByComparator = PasswordPolicyNameComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("description")) {
-			orderByComparator = new PasswordPolicyDescriptionComparator(
+			orderByComparator = PasswordPolicyDescriptionComparator.getInstance(
 				orderByAsc);
 		}
 		else {
-			orderByComparator = new PasswordPolicyNameComparator(orderByAsc);
+			orderByComparator = PasswordPolicyNameComparator.getInstance(
+				orderByAsc);
 		}
 
 		return orderByComparator;

@@ -968,7 +968,8 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 				usersList = new ArrayList<>(users);
 
-				ListUtil.sort(usersList, new UserLastNameComparator(true));
+				ListUtil.sort(
+					usersList, UserLastNameComparator.getInstance(true));
 			}
 			else {
 				int usersCount = userLocalService.searchCount(
@@ -980,7 +981,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				usersList = userLocalService.search(
 					themeDisplay.getCompanyId(), keywords,
 					WorkflowConstants.STATUS_APPROVED, params, start, end,
-					new UserLastNameComparator(true));
+					UserLastNameComparator.getInstance(true));
 			}
 
 			for (User user : usersList) {

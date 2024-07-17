@@ -69,7 +69,7 @@ public class InviteMembersDisplayContext {
 						_themeDisplay.getCompanyId(), null, null,
 						new Integer[] {RoleConstants.TYPE_SITE},
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						new RoleNameComparator(false))),
+						RoleNameComparator.getInstance(false))),
 				role -> HashMapBuilder.<String, Object>put(
 					"label", role.getTitle(_themeDisplay.getLocale())
 				).put(

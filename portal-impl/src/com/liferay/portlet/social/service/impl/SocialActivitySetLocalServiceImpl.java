@@ -100,7 +100,7 @@ public class SocialActivitySetLocalServiceImpl
 
 		return socialActivitySetPersistence.fetchByC_C_T_First(
 			classNameId, classPK, type,
-			new SocialActivitySetModifiedDateComparator());
+			SocialActivitySetModifiedDateComparator.getInstance(false));
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class SocialActivitySetLocalServiceImpl
 
 		return socialActivitySetPersistence.fetchByU_C_C_T_First(
 			userId, classNameId, classPK, type,
-			new SocialActivitySetModifiedDateComparator());
+			SocialActivitySetModifiedDateComparator.getInstance(false));
 	}
 
 	@Override
@@ -117,7 +117,8 @@ public class SocialActivitySetLocalServiceImpl
 		long groupId, int start, int end) {
 
 		return socialActivitySetPersistence.findByGroupId(
-			groupId, start, end, new SocialActivitySetModifiedDateComparator());
+			groupId, start, end,
+			SocialActivitySetModifiedDateComparator.getInstance(false));
 	}
 
 	@Override
@@ -169,7 +170,7 @@ public class SocialActivitySetLocalServiceImpl
 
 		return socialActivitySetPersistence.fetchByG_U_T_First(
 			groupId, userId, type,
-			new SocialActivitySetModifiedDateComparator());
+			SocialActivitySetModifiedDateComparator.getInstance(false));
 	}
 
 	@Override
@@ -178,7 +179,7 @@ public class SocialActivitySetLocalServiceImpl
 
 		return socialActivitySetPersistence.fetchByG_U_C_T_First(
 			groupId, userId, classNameId, type,
-			new SocialActivitySetModifiedDateComparator());
+			SocialActivitySetModifiedDateComparator.getInstance(false));
 	}
 
 	@Override

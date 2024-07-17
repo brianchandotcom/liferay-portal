@@ -1316,7 +1316,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 
 		return userPersistence.findByGtU_C(
-			gtUserId, companyId, 0, size, new UserIdComparator(true));
+			gtUserId, companyId, 0, size, UserIdComparator.getInstance(true));
 	}
 
 	@Override

@@ -210,7 +210,8 @@ public class UserGroupRolesDisplayContext {
 			orderByAsc = true;
 		}
 
-		roleSearch.setOrderByComparator(new RoleNameComparator(orderByAsc));
+		roleSearch.setOrderByComparator(
+			RoleNameComparator.getInstance(orderByAsc));
 		roleSearch.setOrderByType(getOrderByType());
 
 		int roleType = RoleConstants.TYPE_SITE;

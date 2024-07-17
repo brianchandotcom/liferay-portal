@@ -91,7 +91,7 @@ public class MicroblogsWebUtil {
 		List<User> users = UserLocalServiceUtil.getSocialUsers(
 			userId, SocialRelationConstants.TYPE_BI_CONNECTION,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new UserFirstNameComparator(true));
+			UserFirstNameComparator.getInstance(true));
 
 		for (User user : users) {
 			if (user.isGuestUser() || (userId == user.getUserId())) {

@@ -1521,7 +1521,8 @@ public class CalendarPortlet extends MVCPortlet {
 
 			List<User> users = _userLocalService.search(
 				themeDisplay.getCompanyId(), keywords, 0, null, 0,
-				SearchContainer.DEFAULT_DELTA, new UserFirstNameComparator());
+				SearchContainer.DEFAULT_DELTA,
+				UserFirstNameComparator.getInstance(false));
 
 			for (User user : users) {
 				_addCalendar(

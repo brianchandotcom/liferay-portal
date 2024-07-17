@@ -909,7 +909,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			}
 
 			Set<User> allowedUsers = new TreeSet<>(
-				new UserScreenNameComparator(true));
+				UserScreenNameComparator.getInstance(true));
 
 			long assignedUserId = _getAssignedUserId(workflowTaskId);
 

@@ -322,6 +322,11 @@ public class NavigationMenuResourceTest
 		return new String[] {"name", "navigationMenuItems"};
 	}
 
+	@Override
+	protected NavigationMenu randomNavigationMenu() throws Exception {
+		return _randomNavigationMenu(true);
+	}
+
 	protected NavigationMenu testGetNavigationMenu_addNavigationMenu()
 		throws Exception {
 

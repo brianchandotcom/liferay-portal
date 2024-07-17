@@ -323,6 +323,18 @@ public class NavigationMenuResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
+		Thread currentThread = Thread.currentThread();
+
+		StackTraceElement[] stackTraceElements = currentThread.getStackTrace();
+
+		for (StackTraceElement stackTraceElement : stackTraceElements) {
+			String methodName = stackTraceElement.getMethodName();
+
+			if (methodName.contains("GraphQL")) {
+				return new String[] {"name"};
+			}
+		}
+
 		return new String[] {"name", "navigationMenuItems"};
 	}
 

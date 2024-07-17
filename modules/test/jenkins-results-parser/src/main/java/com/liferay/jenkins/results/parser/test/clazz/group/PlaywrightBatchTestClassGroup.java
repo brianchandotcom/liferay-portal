@@ -6,7 +6,6 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.AntUtil;
-import com.liferay.jenkins.results.parser.GitRepositoryJob;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
@@ -58,7 +57,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 					playwrightProjectNamesEnv)) {
 
 				jobPropertyValue = playwrightProjectNamesEnv;
-				
+
 				System.out.println("env job value: " + jobPropertyValue);
 			}
 			else {
@@ -78,18 +77,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	protected PlaywrightBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
-		this(
-			jsonObject, _DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH,
-			portalTestClassJob);
-	}
-
-	protected PlaywrightBatchTestClassGroup(
-		JSONObject jsonObject, String playwrightRelativeDirPath,
-		PortalTestClassJob portalTestClassJob) {
-
 		super(jsonObject, portalTestClassJob);
-
-		_playwrightRelativeDirPath = playwrightRelativeDirPath;
 
 		prepareTestClassGroup(batchName);
 	}
@@ -102,8 +90,6 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		PlaywrightTestSelector playwrightTestSelector =
 			playwrightTestBatch.getTestSelector();
-
-		_playwrightRelativeDirPath = _DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH;
 
 		Set<JobProperty> playwrightJobProperties =
 			playwrightTestSelector.getPlaywrightJobProperties();
@@ -127,20 +113,22 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	protected PlaywrightBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
-		this(
-			batchName, _DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH,
-			portalTestClassJob);
-	}
-
-	protected PlaywrightBatchTestClassGroup(
-		String batchName, String playwrightRelativeDirPath,
-		PortalTestClassJob portalTestClassJob) {
-
 		super(batchName, portalTestClassJob);
 
-		_playwrightRelativeDirPath = playwrightRelativeDirPath;
-
 		prepareTestClassGroup(batchName);
+	}
+
+	protected File getPlaywrightWorkingDirectory() {
+		Job job = getJob();
+
+		PortalTestClassJob portalReleaseJob = (PortalTestClassJob)job;
+
+		GitWorkingDirectory gitWorkingDirectory =
+			portalReleaseJob.getPortalGitWorkingDirectory();
+
+		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+
+		return new File(workingDirectory, "modules/test/playwright");
 	}
 
 	protected List<JobProperty> getRelevantPlaywrightJobProperties() {
@@ -408,26 +396,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				return;
 			}
 
-			Job job = getJob();
-
-			GitWorkingDirectory gitWorkingDirectory = null;
-
-			if (job instanceof PortalTestClassJob) {
-				PortalTestClassJob portalReleaseJob = (PortalTestClassJob)job;
-
-				gitWorkingDirectory =
-					portalReleaseJob.getPortalGitWorkingDirectory();
-			}
-			else {
-				GitRepositoryJob gitRepositoryJob = (GitRepositoryJob)job;
-
-				gitWorkingDirectory = gitRepositoryJob.getGitWorkingDirectory();
-			}
-
-			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
-
-			File playwrightBaseDir = new File(
-				workingDirectory, _playwrightRelativeDirPath);
+			File playwrightBaseDir = getPlaywrightWorkingDirectory();
 
 			try {
 				AntUtil.callTarget(
@@ -453,7 +422,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 				result = result.substring(index);
 
-				result = result.replace("Finished executing Bash commands.", "");
+				result = result.replace(
+					"Finished executing Bash commands.", "");
 
 				_playwrightJSONObject = new JSONObject(result.trim());
 			}
@@ -469,7 +439,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 					sb.toString(), "#ci-notifications", ":playwright:",
 					"Playwright Batch Creation Failure", "Liferay Playwright");
 			}
-			catch(Exception exception){
+			catch (Exception exception) {
 				exception.getMessage();
 			}
 
@@ -536,16 +506,12 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
-	private static final String _DEFAULT_PLAYWRIGHT_RELATIVE_DIR_PATH =
-		"modules/test/playwright";
-
 	private static JSONObject _playwrightJSONObject;
 	private static final AtomicBoolean _playwrightJSONObjectsLoaded =
 		new AtomicBoolean();
 	private static final List<JSONObject> _specJSONObjects =
 		Collections.synchronizedList(new ArrayList<JSONObject>());
 
-	private final String _playwrightRelativeDirPath;
 	private final Set<String> _projectNames = new HashSet<>();
 
 }

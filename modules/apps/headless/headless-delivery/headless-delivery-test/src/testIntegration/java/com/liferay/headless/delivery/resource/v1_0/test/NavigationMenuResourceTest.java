@@ -314,6 +314,30 @@ public class NavigationMenuResourceTest
 		return true;
 	}
 
+	private boolean _equals(
+		NavigationMenuItem[] navigationMenuItems1,
+		NavigationMenuItem[] navigationMenuItems2) {
+
+		if (navigationMenuItems1 == navigationMenuItems2) {
+			return true;
+		}
+
+		if (navigationMenuItems1.length != navigationMenuItems2.length) {
+			return false;
+		}
+
+		for (int i = 0; i < navigationMenuItems1.length; i++) {
+			NavigationMenuItem navigationMenuItem1 = navigationMenuItems1[i];
+			NavigationMenuItem navigationMenuItem2 = navigationMenuItems2[i];
+
+			if (!_equals(navigationMenuItem1, navigationMenuItem2)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private boolean _equalsCustomFieldsIgnoringOrder(
 		CustomField[] customFields1, CustomField[] customFields2) {
 

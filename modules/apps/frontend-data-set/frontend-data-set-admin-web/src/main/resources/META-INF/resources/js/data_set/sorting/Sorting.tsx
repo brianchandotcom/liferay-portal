@@ -101,14 +101,13 @@ const labelTextMatch = (item: IFDSSort) => {
 const AddFDSSortModalContent = ({
 	closeModal,
 	dataSet,
-	fdsSorts,
 	fields,
 	namespace,
 	onSave,
+	saveFDSSortURL,
 }: {
 	closeModal: Function;
 	dataSet: IDataSet | FDSViewType;
-	fdsSorts: IFDSSort[];
 	fields: IField[];
 	namespace: string;
 	onSave: ({
@@ -118,6 +117,7 @@ const AddFDSSortModalContent = ({
 		newFDSSort: IFDSSort;
 		previousDefaultFDSSort?: IFDSSort;
 	}) => void;
+	saveFDSSortURL: string;
 }) => {
 	const [labelI18n, setLabelI18n] = useState<
 		Liferay.Language.LocalizedValue<string>
@@ -132,24 +132,23 @@ const AddFDSSortModalContent = ({
 	const handleSave = async () => {
 		setSaveButtonDisabled(true);
 
-		// Add new sorting.
+		const formData = new FormData();
 
-		const addFDSSortResponse = await fetch(API_URL.SORTS, {
-			body: JSON.stringify({
-				[OBJECT_RELATIONSHIP.DATA_SET_SORT_ID]: dataSet.id,
-				default: useAsDefaultSorting,
-				fieldName: selectedFieldName,
-				label_i18n: labelI18n,
-				orderType: selectedOrderType,
-			}),
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
+		formData.append(`${namespace}dataSetId`, dataSet.id);
+		formData.append(
+			`${namespace}useAsDefaultSorting`,
+			String(useAsDefaultSorting)
+		);
+		formData.append(`${namespace}fieldName`, selectedFieldName);
+		formData.append(`${namespace}labelI18n`, JSON.stringify(labelI18n));
+		formData.append(`${namespace}orderType`, selectedOrderType);
+
+		const response = await fetch(saveFDSSortURL, {
+			body: formData,
 			method: 'POST',
 		});
 
-		if (!addFDSSortResponse.ok) {
+		if (!response.ok) {
 			setSaveButtonDisabled(false);
 
 			openDefaultFailureToast();
@@ -157,55 +156,9 @@ const AddFDSSortModalContent = ({
 			return;
 		}
 
-		const newFDSSort = await addFDSSortResponse.json();
+		const newFDSSort = await response.json();
 
-		// If an existing default sorting exists, change its default to false.
-
-		const defaultFDSSort = fdsSorts.find(
-			(fdsSort) => fdsSort.default
-		) as IFDSSort;
-
-		if (useAsDefaultSorting && defaultFDSSort) {
-			const updateDefaultFDSSortResponse = await fetch(
-				`${API_URL.SORTS}/by-external-reference-code/${defaultFDSSort.externalReferenceCode}`,
-				{
-					body: JSON.stringify({
-						default: false,
-					}),
-					headers: {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json',
-					},
-					method: 'PATCH',
-				}
-			);
-
-			if (!updateDefaultFDSSortResponse.ok) {
-				openToast({
-					message: sub(
-						Liferay.Language.get(
-							'an-unexpected-error-occurred-and-the-existing-default-sorting-was-not-removed.please-edit-the-x-sorting-and-uncheck-the-default-option'
-						),
-						[
-							defaultFDSSort.label ||
-								defaultFDSSort.label_i18n[
-									Liferay.ThemeDisplay.getDefaultLanguageId()
-								] ||
-								'',
-						]
-					),
-					type: 'danger',
-				});
-			}
-
-			const previousDefaultFDSSort =
-				await updateDefaultFDSSortResponse.json();
-
-			onSave({newFDSSort, previousDefaultFDSSort});
-		}
-		else {
-			onSave({newFDSSort});
-		}
+		onSave({newFDSSort});
 
 		openToast({
 			message: Liferay.Language.get('sorting-was-successfully-added'),
@@ -336,20 +289,22 @@ const AddFDSSortModalContent = ({
 
 interface IEditFDSSortModalContentProps {
 	closeModal: Function;
+	dataSet: IDataSet | FDSViewType;
 	fdsSort: IFDSSort;
-	fdsSorts: IFDSSort[];
 	fields: IField[];
 	namespace: string;
 	onSave: Function;
+	saveFDSSortURL: string;
 }
 
 const EditFDSSortModalContent = ({
 	closeModal,
+	dataSet,
 	fdsSort,
-	fdsSorts,
 	fields,
 	namespace,
 	onSave,
+	saveFDSSortURL,
 }: IEditFDSSortModalContentProps) => {
 	const [labelI18n, setLabelI18n] = useState<
 		Liferay.Language.LocalizedValue<string>
@@ -368,26 +323,27 @@ const EditFDSSortModalContent = ({
 	const handleSave = async () => {
 		setSaveButtonDisabled(true);
 
-		// Edit the sorting.
+		const formData = new FormData();
 
-		const editFDSSortResponse = await fetch(
-			`${API_URL.SORTS}/by-external-reference-code/${fdsSort.externalReferenceCode}`,
-			{
-				body: JSON.stringify({
-					default: useAsDefaultSorting,
-					fieldName: selectedFieldName,
-					label_i18n: labelI18n,
-					orderType: selectedOrderType,
-				}),
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				},
-				method: 'PATCH',
-			}
+		formData.append(`${namespace}dataSetId`, dataSet.id);
+		formData.append(
+			`${namespace}externalReferenceCode`,
+			fdsSort.externalReferenceCode
+		);
+		formData.append(`${namespace}fieldName`, selectedFieldName);
+		formData.append(`${namespace}labelI18n`, JSON.stringify(labelI18n));
+		formData.append(`${namespace}orderType`, selectedOrderType);
+		formData.append(
+			`${namespace}useAsDefaultSorting`,
+			String(useAsDefaultSorting)
 		);
 
-		if (!editFDSSortResponse.ok) {
+		const response = await fetch(saveFDSSortURL, {
+			body: formData,
+			method: 'POST',
+		});
+
+		if (!response.ok) {
 			setSaveButtonDisabled(false);
 
 			openDefaultFailureToast();
@@ -395,55 +351,9 @@ const EditFDSSortModalContent = ({
 			return;
 		}
 
-		const editedFDSSort = await editFDSSortResponse.json();
+		const newFDSSort = await response.json();
 
-		// If an existing default sorting exists, change its default to false.
-
-		const defaultFDSSort = fdsSorts.find(
-			(fdsSort) => fdsSort.default
-		) as IFDSSort;
-
-		if (useAsDefaultSorting && defaultFDSSort) {
-			const updateDefaultFDSSortResponse = await fetch(
-				`${API_URL.SORTS}/by-external-reference-code/${defaultFDSSort.externalReferenceCode}`,
-				{
-					body: JSON.stringify({
-						default: false,
-					}),
-					headers: {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json',
-					},
-					method: 'PATCH',
-				}
-			);
-
-			if (!updateDefaultFDSSortResponse.ok) {
-				openToast({
-					message: sub(
-						Liferay.Language.get(
-							'an-unexpected-error-occurred-and-the-existing-default-sorting-was-not-removed.please-edit-the-x-sorting-and-uncheck-the-default-option'
-						),
-						[
-							defaultFDSSort.label ||
-								defaultFDSSort.label_i18n[
-									Liferay.ThemeDisplay.getDefaultLanguageId()
-								] ||
-								'',
-						]
-					),
-					type: 'danger',
-				});
-			}
-
-			const previousDefaultFDSSort =
-				await updateDefaultFDSSortResponse.json();
-
-			onSave({editedFDSSort, previousDefaultFDSSort});
-		}
-		else {
-			onSave({editedFDSSort});
-		}
+		onSave({newFDSSort});
 
 		openToast({
 			message: Liferay.Language.get('sorting-was-successfully-edited'),
@@ -580,6 +490,7 @@ const Sorting = ({
 	dataSet,
 	fieldTreeItems,
 	namespace,
+	saveFDSSortURL,
 }: IDataSetSectionProps) => {
 	const fields = fieldTreeItems.filter((field) => field.sortable);
 	const [fdsSorts, setFDSSorts] = useState<Array<IFDSSort>>([]);
@@ -625,7 +536,6 @@ const Sorting = ({
 				<AddFDSSortModalContent
 					closeModal={closeModal}
 					dataSet={dataSet}
-					fdsSorts={fdsSorts}
 					fields={fields}
 					namespace={namespace}
 					onSave={({
@@ -651,6 +561,7 @@ const Sorting = ({
 							newFDSSort,
 						])
 					}
+					saveFDSSortURL={saveFDSSortURL}
 				/>
 			),
 		});
@@ -709,8 +620,8 @@ const Sorting = ({
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
 				<EditFDSSortModalContent
 					closeModal={closeModal}
+					dataSet={dataSet}
 					fdsSort={item}
-					fdsSorts={fdsSorts}
 					fields={fields}
 					namespace={namespace}
 					onSave={({
@@ -737,6 +648,7 @@ const Sorting = ({
 							}) || []
 						);
 					}}
+					saveFDSSortURL={saveFDSSortURL}
 				/>
 			),
 		});

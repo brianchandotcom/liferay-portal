@@ -329,6 +329,15 @@ public class DLFileShortcutLocalServiceWrapper
 		return _dlFileShortcutLocalService.fetchDLFileShortcut(fileShortcutId);
 	}
 
+	@Override
+	public DLFileShortcut fetchDLFileShortcutByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return _dlFileShortcutLocalService.
+			fetchDLFileShortcutByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the document library file shortcut matching the UUID and group.
 	 *
@@ -363,6 +372,16 @@ public class DLFileShortcutLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public DLFileShortcut getDLFileShortcutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileShortcutLocalService.
+			getDLFileShortcutByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	/**

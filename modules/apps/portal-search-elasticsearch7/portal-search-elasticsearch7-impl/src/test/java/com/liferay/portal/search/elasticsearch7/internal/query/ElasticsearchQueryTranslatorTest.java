@@ -19,12 +19,10 @@ import com.liferay.portal.search.internal.query.WildcardQueryImpl;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermsQuery;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -119,17 +117,11 @@ public class ElasticsearchQueryTranslatorTest {
 
 		termsQuery.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-		_setMaxTermsCount(10);
+		_assertTermsCount(1, 10, termsQuery);
 
-		_assertTermsCount(1, termsQuery);
+		_assertTermsCount(2, 5, termsQuery);
 
-		_setMaxTermsCount(5);
-
-		_assertTermsCount(2, termsQuery);
-
-		_setMaxTermsCount(3);
-
-		_assertTermsCount(4, termsQuery);
+		_assertTermsCount(4, 3, termsQuery);
 	}
 
 	private void _assertBoost(Query query) {
@@ -143,25 +135,21 @@ public class ElasticsearchQueryTranslatorTest {
 			String.valueOf(queryBuilder.boost()));
 	}
 
-	private void _assertTermsCount(int expected, TermsQuery termsQuery)
+	private void _assertTermsCount(
+			int expected, int maxTermsCount, TermsQuery termsQuery)
 		throws Exception {
 
-		IdempotentRetryAssert.retryAssert(
-			10, TimeUnit.SECONDS,
-			() -> {
-				String queryString = _elasticsearchQueryTranslator.visit(
-					termsQuery
-				).toString();
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					QueryUtil.class, "_MAX_TERMS_COUNT", maxTermsCount)) {
 
-				Assert.assertEquals(
-					queryString, expected,
-					StringUtil.count(queryString, "terms"));
-			});
-	}
+			String queryString = _elasticsearchQueryTranslator.visit(
+				termsQuery
+			).toString();
 
-	private void _setMaxTermsCount(int maxTermsCount) {
-		ReflectionTestUtil.setFieldValue(
-			QueryUtil.class, "_MAX_TERMS_COUNT", maxTermsCount);
+			Assert.assertEquals(
+				queryString, expected, StringUtil.count(queryString, "terms"));
+		}
 	}
 
 	private static final Float _BOOST = 1.5F;

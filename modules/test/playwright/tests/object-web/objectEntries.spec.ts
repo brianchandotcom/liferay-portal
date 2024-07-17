@@ -445,6 +445,61 @@ test.describe('Manage object entries through View Object Entries', () => {
 		}
 	});
 
+	test('can delete attachment field from object entry', async ({
+		apiHelpers,
+		viewObjectEntriesPage,
+	}) => {
+		const {objectDefinitions} = createdEntities;
+
+		const ATTACHMENT_FILE_NAME = 'astronaut.png';
+		const {objectFields} = await mockObjectFields({
+			apiHelpers,
+			objectFieldBusinessTypes: ['attachment'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postObjectDefinition({
+				active: true,
+				externalReferenceCode: getRandomString(),
+				label: {
+					en_US: getRandomString(),
+				},
+				name: 'ObjectDefinitionName' + getRandomInt(),
+				objectFields,
+				panelCategoryKey: 'control_panel.object',
+				pluralLabel: {
+					en_US: 'NewObject',
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		objectDefinitions.push(objectDefinition);
+
+		await viewObjectEntriesPage.goto(objectDefinition.id);
+
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		await viewObjectEntriesPage.selectFileFromDocumentsAndMedia(
+			ATTACHMENT_FILE_NAME
+		);
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+		await viewObjectEntriesPage.deleteFileButton.click();
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+	});
+
 	test('can view all entries related to an object in the relationship field using autocomplete', async ({
 		apiHelpers,
 		page,

@@ -10,6 +10,7 @@ import {PORTLET_URLS} from '../../../utils/portletUrls';
 export class ViewObjectEntriesPage {
 	readonly addObjectEntryButton: Locator;
 	readonly backButton: Locator;
+	readonly deleteFileButton: Locator;
 	readonly duplicateEntryErrorMessage: Locator;
 	readonly editObjectEntryForm: Locator;
 	readonly page: Page;
@@ -29,6 +30,7 @@ export class ViewObjectEntriesPage {
 			.getByTestId('fdsCreationActionButton')
 			.first();
 		this.backButton = page.getByTitle('Back');
+		this.deleteFileButton = page.getByRole('button', {name: 'Delete'});
 		this.duplicateEntryErrorMessage = page.getByText(
 			'Error:The field values are already in use. Please choose unique values.'
 		);

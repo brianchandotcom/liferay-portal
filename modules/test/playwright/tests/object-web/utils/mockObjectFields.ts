@@ -147,6 +147,41 @@ function getFormatDate(format: 'API' | 'UI'): string {
 	}
 }
 
+function getRandomFieldEntryValue(
+	format: 'API' | 'UI',
+	listTypeDefinitionItems: string[],
+	objectFieldBusinessType: ObjectFieldBusinessTypes
+) {
+	switch (objectFieldBusinessType) {
+		case 'boolean':
+			return Math.random() < 0.5;
+		case 'date':
+			return getFormatDate(format);
+		case 'decimal':
+			return parseFloat(Math.random().toFixed(10)).toString();
+		case 'encrypted':
+			return getRandomString();
+		case 'integer':
+			return Math.floor(Math.random() * 100).toString();
+		case 'longInteger':
+			return getRandomInt().toString();
+		case 'longText':
+			return getRandomString();
+		case 'multiselectPicklist':
+			return [listTypeDefinitionItems[0], listTypeDefinitionItems[1]];
+		case 'picklist':
+			return {key: listTypeDefinitionItems[0]};
+		case 'precisionDecimal':
+			return parseFloat(Math.random().toFixed(15)).toString();
+		case 'richText':
+			return getRandomString();
+		case 'text':
+			return getRandomString();
+		default:
+			return '';
+	}
+}
+
 export async function mockObjectFields({
 	apiHelpers,
 	objectEntryReturn,
@@ -199,76 +234,70 @@ export async function mockObjectFields({
 
 	let objectEntry = {} as ObjectEntry;
 
-	const objectEntryValues = {
-		boolean: Math.random() < 0.5,
-		date: getFormatDate(objectEntryReturn.format),
-		decimal: parseFloat(Math.random().toFixed(10)).toString(),
-		encrypted: getRandomString(),
-		integer: Math.floor(Math.random() * 100).toString(),
-		longInteger: getRandomInt().toString(),
-		longText: getRandomString(),
-		multiselectPicklist: [
-			listTypeDefinitionItems[0],
-			listTypeDefinitionItems[1],
-		],
-		picklist: {key: listTypeDefinitionItems[0]},
-		precisionDecimal: parseFloat(Math.random().toFixed(15)).toString(),
-		richText: getRandomString(),
-		text: getRandomString(),
-	};
-
 	const objectFields: Partial<ObjectField>[] = [];
-	const objectFieldsAdditionalSettings = {
-		attachment: {
-			objectFieldSettings: [
-				{
-					name: 'acceptedFileExtensions',
-					value: 'jpeg, jpg, pdf, png',
-				},
-				{
-					name: 'fileSource',
-					value: 'documentsAndMedia',
-				},
-				{
-					name: 'maximumFileSize',
-					value: '100',
-				},
-			],
-		},
-		autoIncrement: {
-			objectFieldSettings: [
-				{
-					name: 'initialValue',
-					value: '1',
-				},
-			],
-		},
-		longText: {
-			objectFieldSettings: [
-				{
-					name: 'showCounter',
-					value: false,
-				},
-			],
-		},
-		multiselectPicklist: {
-			listTypeDefinitionExternalReferenceCode:
-				listTypeDefinition.externalReferenceCode,
-			listTypeDefinitionId: listTypeDefinition.id,
-		},
-		picklist: {
-			listTypeDefinitionExternalReferenceCode:
-				listTypeDefinition.externalReferenceCode,
-		},
-	};
+	function setObjectFieldsAdditionalSettings(
+		objectFieldBusinessType: ObjectFieldBusinessTypes
+	): Partial<ObjectField> | undefined {
+		switch (objectFieldBusinessType) {
+			case 'attachment':
+				return {
+					objectFieldSettings: [
+						{
+							name: 'acceptedFileExtensions',
+							value: 'jpeg, jpg, pdf, png',
+						},
+						{
+							name: 'fileSource',
+							value: 'documentsAndMedia',
+						},
+						{
+							name: 'maximumFileSize',
+							value: '100',
+						},
+					],
+				};
+			case 'autoIncrement':
+				return {
+					objectFieldSettings: [
+						{
+							name: 'initialValue',
+							value: '1',
+						},
+					],
+				};
+			case 'longText':
+				return {
+					objectFieldSettings: [
+						{
+							name: 'showCounter',
+							value: false,
+						},
+					],
+				};
+			case 'multiselectPicklist':
+				return {
+					listTypeDefinitionExternalReferenceCode:
+						listTypeDefinition.externalReferenceCode,
+					listTypeDefinitionId: listTypeDefinition.id,
+				};
+			case 'picklist':
+				return {
+					listTypeDefinitionExternalReferenceCode:
+						listTypeDefinition.externalReferenceCode,
+				};
+			default:
+				return undefined;
+		}
+	}
 
 	for (const objectFieldBusinessType in objectFieldBusinessTypesLabelName) {
 		objectFields.push(
 			createObjectField(
 				objectFieldBusinessType as ObjectFieldBusinessTypes,
 				objectFieldBusinessTypesLabelName[objectFieldBusinessType],
-				objectFieldsAdditionalSettings[objectFieldBusinessType] ??
-					undefined
+				setObjectFieldsAdditionalSettings(
+					objectFieldBusinessType as ObjectFieldBusinessTypes
+				)
 			)
 		);
 
@@ -280,7 +309,11 @@ export async function mockObjectFields({
 			objectEntry = {
 				...objectEntry,
 				[objectFieldBusinessTypesLabelName[objectFieldBusinessType]
-					.name]: objectEntryValues[objectFieldBusinessType],
+					.name]: getRandomFieldEntryValue(
+					objectEntryReturn.format,
+					listTypeDefinitionItems,
+					objectFieldBusinessType as ObjectFieldBusinessTypes
+				),
 			};
 		}
 	}

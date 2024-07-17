@@ -87,7 +87,9 @@ public class RelevantRule implements Comparable<RelevantRule> {
 			getProperties(), "modified.files.includes", getName(),
 			getTestSuiteName());
 
-		if (modifiedFilesIncludes == null) {
+		if ((modifiedFilesIncludes == null) ||
+			modifiedFilesIncludes.isEmpty()) {
+
 			_modifiedFilesIncludesPathMatchers = Collections.emptyList();
 		}
 		else {

@@ -23,18 +23,14 @@
 		<initial>true</initial>
 		<labels>
 			<label language-id="en_US">
-
 				created
-
 			</label>
 		</labels>
 		<transitions>
 			<transition>
 				<labels>
 					<label language-id="en_US">
-
 						review
-
 					</label>
 				</labels>
 				<name>created_review_review</name>
@@ -66,7 +62,6 @@
 		<labels>
 			<label language-id="en_US">
 				approved
-
 			</label>
 		</labels>
 	</state>
@@ -117,7 +112,6 @@
 		<labels>
 			<label language-id="en_US">
 				update
-
 			</label>
 		</labels>
 		<transitions>
@@ -125,7 +119,6 @@
 				<labels>
 					<label language-id="en_US">
 						resubmit
-
 					</label>
 				</labels>
 				<name>resubmit</name>
@@ -186,7 +179,6 @@
 		<labels>
 			<label language-id="en_US">
 				review
-
 			</label>
 		</labels>
 		<transitions>

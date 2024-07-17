@@ -20,12 +20,12 @@ public class FeedIDComparator extends OrderByComparator<JournalFeed> {
 
 	public static final String[] ORDER_BY_FIELDS = {"feedId"};
 
-	public FeedIDComparator() {
-		this(false);
-	}
+	public static FeedIDComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public FeedIDComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -60,6 +60,16 @@ public class FeedIDComparator extends OrderByComparator<JournalFeed> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private FeedIDComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final FeedIDComparator _INSTANCE_ASCENDING =
+		new FeedIDComparator(true);
+
+	private static final FeedIDComparator _INSTANCE_DESCENDING =
+		new FeedIDComparator(false);
 
 	private final boolean _ascending;
 

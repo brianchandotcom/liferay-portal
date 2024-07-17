@@ -23,12 +23,12 @@ public class ArticleDisplayDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"displayDate", "version"};
 
-	public ArticleDisplayDateComparator() {
-		this(false);
-	}
+	public static ArticleDisplayDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public ArticleDisplayDateComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -70,6 +70,16 @@ public class ArticleDisplayDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private ArticleDisplayDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final ArticleDisplayDateComparator _INSTANCE_ASCENDING =
+		new ArticleDisplayDateComparator(true);
+
+	private static final ArticleDisplayDateComparator _INSTANCE_DESCENDING =
+		new ArticleDisplayDateComparator(false);
 
 	private final boolean _ascending;
 

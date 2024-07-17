@@ -20,12 +20,12 @@ public class ArticleVersionComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"version"};
 
-	public ArticleVersionComparator() {
-		this(false);
-	}
+	public static ArticleVersionComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public ArticleVersionComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +64,16 @@ public class ArticleVersionComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private ArticleVersionComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final ArticleVersionComparator _INSTANCE_ASCENDING =
+		new ArticleVersionComparator(true);
+
+	private static final ArticleVersionComparator _INSTANCE_DESCENDING =
+		new ArticleVersionComparator(false);
 
 	private final boolean _ascending;
 

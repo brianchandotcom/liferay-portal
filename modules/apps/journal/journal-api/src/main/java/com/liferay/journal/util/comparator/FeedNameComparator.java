@@ -19,12 +19,12 @@ public class FeedNameComparator extends OrderByComparator<JournalFeed> {
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public FeedNameComparator() {
-		this(false);
-	}
+	public static FeedNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public FeedNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +59,16 @@ public class FeedNameComparator extends OrderByComparator<JournalFeed> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private FeedNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final FeedNameComparator _INSTANCE_ASCENDING =
+		new FeedNameComparator(true);
+
+	private static final FeedNameComparator _INSTANCE_DESCENDING =
+		new FeedNameComparator(false);
 
 	private final boolean _ascending;
 

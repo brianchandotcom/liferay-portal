@@ -26,12 +26,14 @@ public class FolderArticleDisplayDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"displayDate"};
 
-	public FolderArticleDisplayDateComparator() {
-		this(false);
-	}
+	public static FolderArticleDisplayDateComparator getInstance(
+		boolean ascending) {
 
-	public FolderArticleDisplayDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -92,6 +94,16 @@ public class FolderArticleDisplayDateComparator
 
 		return folder.getCreateDate();
 	}
+
+	private FolderArticleDisplayDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final FolderArticleDisplayDateComparator
+		_INSTANCE_ASCENDING = new FolderArticleDisplayDateComparator(true);
+
+	private static final FolderArticleDisplayDateComparator
+		_INSTANCE_DESCENDING = new FolderArticleDisplayDateComparator(false);
 
 	private final boolean _ascending;
 

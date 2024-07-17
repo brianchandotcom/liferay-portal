@@ -26,12 +26,14 @@ public class FolderArticleModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public FolderArticleModifiedDateComparator() {
-		this(false);
-	}
+	public static FolderArticleModifiedDateComparator getInstance(
+		boolean ascending) {
 
-	public FolderArticleModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -92,6 +94,16 @@ public class FolderArticleModifiedDateComparator
 
 		return folder.getModifiedDate();
 	}
+
+	private FolderArticleModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final FolderArticleModifiedDateComparator
+		_INSTANCE_ASCENDING = new FolderArticleModifiedDateComparator(true);
+
+	private static final FolderArticleModifiedDateComparator
+		_INSTANCE_DESCENDING = new FolderArticleModifiedDateComparator(false);
 
 	private final boolean _ascending;
 

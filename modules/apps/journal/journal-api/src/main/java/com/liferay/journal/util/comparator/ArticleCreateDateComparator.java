@@ -21,12 +21,12 @@ public class ArticleCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public ArticleCreateDateComparator() {
-		this(false);
-	}
+	public static ArticleCreateDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public ArticleCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +59,16 @@ public class ArticleCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private ArticleCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final ArticleCreateDateComparator _INSTANCE_ASCENDING =
+		new ArticleCreateDateComparator(true);
+
+	private static final ArticleCreateDateComparator _INSTANCE_DESCENDING =
+		new ArticleCreateDateComparator(false);
 
 	private final boolean _ascending;
 

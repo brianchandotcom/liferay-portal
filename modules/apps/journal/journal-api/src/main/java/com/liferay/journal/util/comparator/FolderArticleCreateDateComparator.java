@@ -26,12 +26,14 @@ public class FolderArticleCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public FolderArticleCreateDateComparator() {
-		this(false);
-	}
+	public static FolderArticleCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public FolderArticleCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -92,6 +94,16 @@ public class FolderArticleCreateDateComparator
 
 		return folder.getCreateDate();
 	}
+
+	private FolderArticleCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final FolderArticleCreateDateComparator _INSTANCE_ASCENDING =
+		new FolderArticleCreateDateComparator(true);
+
+	private static final FolderArticleCreateDateComparator
+		_INSTANCE_DESCENDING = new FolderArticleCreateDateComparator(false);
 
 	private final boolean _ascending;
 

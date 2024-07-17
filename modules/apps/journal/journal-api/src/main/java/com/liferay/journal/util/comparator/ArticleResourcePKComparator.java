@@ -22,12 +22,12 @@ public class ArticleResourcePKComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"resourcePrimKey"};
 
-	public ArticleResourcePKComparator() {
-		this(true);
-	}
+	public static ArticleResourcePKComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public ArticleResourcePKComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -66,6 +66,16 @@ public class ArticleResourcePKComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private ArticleResourcePKComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final ArticleResourcePKComparator _INSTANCE_ASCENDING =
+		new ArticleResourcePKComparator(true);
+
+	private static final ArticleResourcePKComparator _INSTANCE_DESCENDING =
+		new ArticleResourcePKComparator(false);
 
 	private final boolean _ascending;
 

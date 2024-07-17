@@ -2017,7 +2017,7 @@ public class LanguageImpl implements Language, Serializable {
 		LanguageImpl.class.getName() + "._groupLocalesPortalCache";
 
 	private static final String _LIFERAY_LANGUAGE_IMPORT_REGEXP =
-		"await import\\(.@liferay/language/.+/all\\.js.\\)";
+		"await import\\(.@liferay/language/.+?/all\\.js.\\)";
 
 	private static final double _STORAGE_SIZE_DENOMINATOR = 1024.0;
 

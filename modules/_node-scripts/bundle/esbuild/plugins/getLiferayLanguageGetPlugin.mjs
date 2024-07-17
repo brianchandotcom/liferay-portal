@@ -38,7 +38,7 @@ export default function getLiferayLanguageGetPlugin(
 
 					const matches = contents.matchAll(REGEXP);
 
-					if (matches) {
+					if ([...matches].length) {
 						contents =
 							'await import(`@liferay/language/' +
 							'${Liferay.ThemeDisplay.getLanguageId()}' +

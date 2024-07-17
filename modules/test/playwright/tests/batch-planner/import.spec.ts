@@ -537,8 +537,8 @@ test('can import CSV file with an unexisting field', async ({
 			testLongTextField: 'This is a long text to test testLongTextField',
 			testPrecisionDecimalField: 321.123,
 			testRelationshipERC: '',
-			testRichTextField: 'null',
-			testRichTextFieldRawText: 'null',
+			testRichTextField: '',
+			testRichTextFieldRawText: '',
 			testTextField: 'Test',
 		},
 	]);

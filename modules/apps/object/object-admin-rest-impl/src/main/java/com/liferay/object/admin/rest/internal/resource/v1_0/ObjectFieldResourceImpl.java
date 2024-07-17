@@ -130,7 +130,7 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectDefinitionId);
 
-		return _toObjectField(
+		com.liferay.object.model.ObjectField serviceBuilderObjectField =
 			_objectFieldService.addCustomObjectField(
 				objectField.getExternalReferenceCode(),
 				ObjectFieldUtil.getListTypeDefinitionId(
@@ -158,7 +158,14 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 						_listTypeEntryLocalService, objectField,
 						contextUser.getUserId()),
 					objectField, _objectFieldSettingLocalService,
-					_objectFilterLocalService)));
+					_objectFilterLocalService));
+
+		if (objectDefinition.isApproved() && objectDefinition.isActive()) {
+			_objectDefinitionLocalService.deployObjectDefinition(
+				objectDefinition);
+		}
+
+		return _toObjectField(serviceBuilderObjectField);
 	}
 
 	@Override

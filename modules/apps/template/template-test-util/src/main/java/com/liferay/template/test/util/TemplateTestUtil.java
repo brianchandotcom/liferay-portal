@@ -127,6 +127,11 @@ public class TemplateTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		TemplateEntry templateEntry = addTemplateEntry(
+			infoItemClassName, infoItemFormVariationKey,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			getSampleScriptFTL(fieldName), serviceContext);
+
 		InfoItemFormProvider<?> infoItemFormProvider =
 			(InfoItemFormProvider<?>)
 				infoItemServiceRegistry.getFirstInfoItemService(
@@ -134,11 +139,6 @@ public class TemplateTestUtil {
 
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(
 			infoItemFormVariationKey, serviceContext.getScopeGroupId());
-
-		TemplateEntry templateEntry = addTemplateEntry(
-			infoItemClassName, infoItemFormVariationKey,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			getSampleScriptFTL(fieldName), serviceContext);
 
 		return infoForm.getInfoField(
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +

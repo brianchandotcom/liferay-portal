@@ -113,16 +113,16 @@ export default function UndoRedo({
 				`${portletNamespace}${META_FIELD_NAMES.description}`
 			);
 
-			const titleInputComponent = Liferay.componentReady(
-				`${portletNamespace}${META_FIELD_NAMES.title}`
-			);
-
 			const friendlyURLInputComponent = Liferay.componentReady(
 				`${portletNamespace}${META_FIELD_NAMES.friendlyURL}`
 			);
 
 			const selectedLanguageIdInput = document.getElementById(
 				`${portletNamespace}languageId`
+			);
+
+			const titleInputComponent = Liferay.componentReady(
+				`${portletNamespace}${META_FIELD_NAMES.title}`
 			);
 
 			Promise.all([
@@ -141,14 +141,25 @@ export default function UndoRedo({
 							descriptionInputComponent.getValue(
 								selectedLanguageId
 							),
+						descriptionTranslatedLanguages:
+							descriptionInputComponent
+								.get('translatedLanguages')
+								.values(),
 						friendlyURLInputComponent:
 							friendlyURLInputComponent.getValue(
 								selectedLanguageId
 							),
+						friendlyURLTranslatedLanguages:
+							friendlyURLInputComponent
+								.get('translatedLanguages')
+								.values(),
 						name: fieldName,
 						selectedLanguageId: selectedLanguageIdInput.value,
 						titleInputComponent:
 							titleInputComponent.getValue(selectedLanguageId),
+						titleTranslatedLanguages: titleInputComponent
+							.get('translatedLanguages')
+							.values(),
 					};
 
 					setState({
@@ -201,15 +212,26 @@ export default function UndoRedo({
 							descriptionInputComponent.getValue(
 								selectedLanguageIdInput.value
 							),
+						descriptionTranslatedLanguages:
+							descriptionInputComponent
+								.get('translatedLanguages')
+								.values(),
 						friendlyURLInputComponent:
 							friendlyURLInputComponent.getValue(
 								selectedLanguageIdInput.value
 							),
+						friendlyURLTranslatedLanguages:
+							friendlyURLInputComponent
+								.get('translatedLanguages')
+								.values(),
 						name: fieldName,
 						selectedLanguageId: selectedLanguageIdInput.value,
 						titleInputComponent: titleInputComponent.getValue(
 							selectedLanguageIdInput.value
 						),
+						titleTranslatedLanguages: titleInputComponent
+							.get('translatedLanguages')
+							.values(),
 					};
 
 					setState({

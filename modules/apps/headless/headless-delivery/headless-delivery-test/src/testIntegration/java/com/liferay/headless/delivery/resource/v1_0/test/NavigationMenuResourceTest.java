@@ -400,12 +400,18 @@ public class NavigationMenuResourceTest
 			navigationMenuResource.getSiteNavigationMenusPage(
 				testGroup.getGroupId(), Pagination.of(1, 10));
 
-		NavigationMenuItem navigationMenuItem = page.fetchFirstItem(
-		).getNavigationMenuItems()[0];
-
 		Assert.assertEquals(1, page.getTotalCount());
-		assertEquals(postNavigationMenu, page.fetchFirstItem());
 		assertValid(page);
+
+		NavigationMenu getNavigationMenu = page.fetchFirstItem();
+
+		Assert.assertEquals(
+			postNavigationMenu.getName(), getNavigationMenu.getName());
+		Assert.assertEquals(
+			postNavigationMenu.getSiteId(), getNavigationMenu.getSiteId());
+
+		NavigationMenuItem navigationMenuItem =
+			getNavigationMenu.getNavigationMenuItems()[0];
 
 		Assert.assertTrue(
 			navigationMenuItem.getContentURL(

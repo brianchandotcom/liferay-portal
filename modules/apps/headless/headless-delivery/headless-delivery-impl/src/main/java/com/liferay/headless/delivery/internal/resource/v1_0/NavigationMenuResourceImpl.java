@@ -202,6 +202,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				_getType(navigationMenuItem), unicodeProperties,
 				ServiceContextBuilder.create(
 					siteId, contextHttpServletRequest, null
+				).expandoBridgeAttributes(
+					CustomFieldsUtil.toMap(
+						SiteNavigationMenuItem.class.getName(),
+						contextCompany.getCompanyId(),
+						navigationMenuItem.getCustomFields(),
+						contextAcceptLanguage.getPreferredLocale())
 				).build());
 
 		_createNavigationMenuItems(

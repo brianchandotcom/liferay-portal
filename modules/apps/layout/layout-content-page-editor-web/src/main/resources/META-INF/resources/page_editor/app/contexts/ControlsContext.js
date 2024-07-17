@@ -33,6 +33,11 @@ const ActiveDispatchContext = React.createContext(() => {});
 const HoverStateContext = React.createContext(HOVER_INITIAL_STATE);
 const HoverDispatchContext = React.createContext(() => {});
 
+const getActiveItemIds = (activeItemIds, itemId) =>
+	activeItemIds.includes(itemId)
+		? activeItemIds.filter((activeItemId) => activeItemId !== itemId)
+		: [...activeItemIds, itemId];
+
 const reducer = (state, action) => {
 	const {itemId, itemType, multiSelectIsActive, origin, type} = action;
 	let nextState = state;
@@ -55,7 +60,7 @@ const reducer = (state, action) => {
 			activationOrigin: origin,
 			activeItemIds: Liferay.FeatureFlags['LPD-18221']
 				? nextState.multiSelectIsActive
-					? [...nextState.activeItemIds, itemId]
+					? getActiveItemIds(nextState.activeItemIds, itemId)
 					: itemId
 						? [itemId]
 						: []

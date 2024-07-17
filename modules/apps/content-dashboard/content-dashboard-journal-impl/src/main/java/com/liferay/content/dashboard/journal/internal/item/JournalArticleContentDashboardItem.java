@@ -141,7 +141,7 @@ public class JournalArticleContentDashboardItem
 			_journalArticleService.getArticlesByArticleId(
 				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
 				status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new ArticleVersionComparator());
+				ArticleVersionComparator.getInstance(false));
 
 		return ListUtil.toList(
 			journalArticles,

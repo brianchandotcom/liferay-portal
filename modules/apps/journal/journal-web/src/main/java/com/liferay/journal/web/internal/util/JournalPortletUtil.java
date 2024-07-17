@@ -83,25 +83,30 @@ public class JournalPortletUtil {
 		OrderByComparator<JournalArticle> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new ArticleCreateDateComparator(orderByAsc);
+			orderByComparator = ArticleCreateDateComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("display-date")) {
-			orderByComparator = new ArticleDisplayDateComparator(orderByAsc);
+			orderByComparator = ArticleDisplayDateComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("id")) {
-			orderByComparator = new ArticleIDComparator(orderByAsc);
+			orderByComparator = ArticleIDComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
-			orderByComparator = new ArticleModifiedDateComparator(orderByAsc);
+			orderByComparator = ArticleModifiedDateComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("review-date")) {
-			orderByComparator = new ArticleReviewDateComparator(orderByAsc);
+			orderByComparator = ArticleReviewDateComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("title")) {
-			orderByComparator = new ArticleTitleComparator(orderByAsc);
+			orderByComparator = ArticleTitleComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("version")) {
-			orderByComparator = new ArticleVersionComparator(orderByAsc);
+			orderByComparator = ArticleVersionComparator.getInstance(
+				orderByAsc);
 		}
 
 		return orderByComparator;

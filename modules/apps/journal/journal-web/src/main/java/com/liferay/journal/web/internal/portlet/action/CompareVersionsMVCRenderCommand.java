@@ -99,7 +99,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 			List<JournalArticle> sourceArticles =
 				_journalArticleService.getArticlesByArticleId(
 					groupId, articleId, 0, 1,
-					new ArticleVersionComparator(false));
+					ArticleVersionComparator.getInstance(false));
 
 			JournalArticle sourceArticle = sourceArticles.get(0);
 
@@ -108,7 +108,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 			List<JournalArticle> targetArticles =
 				_journalArticleService.getArticlesByArticleId(
 					groupId, articleId, 0, 1,
-					new ArticleVersionComparator(true));
+					ArticleVersionComparator.getInstance(true));
 
 			JournalArticle targetArticle = targetArticles.get(0);
 

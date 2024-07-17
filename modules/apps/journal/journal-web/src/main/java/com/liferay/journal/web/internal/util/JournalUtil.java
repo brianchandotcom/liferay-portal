@@ -69,7 +69,7 @@ public class JournalUtil {
 		List<JournalArticle> articles =
 			JournalArticleServiceUtil.getArticlesByArticleId(
 				groupId, articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new ArticleVersionComparator(true));
+				ArticleVersionComparator.getInstance(true));
 
 		for (JournalArticle article : articles) {
 			if ((article.getVersion() < sourceVersion) &&

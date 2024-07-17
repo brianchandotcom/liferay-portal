@@ -272,7 +272,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 				<ul class="list-group sidebar-list-group">
 
 					<%
-					for (JournalArticle articleVersion : JournalArticleServiceUtil.getArticlesByArticleId(article.getGroupId(), article.getArticleId(), 0, 10, new ArticleVersionComparator())) {
+					for (JournalArticle articleVersion : JournalArticleServiceUtil.getArticlesByArticleId(article.getGroupId(), article.getArticleId(), 0, 10, ArticleVersionComparator.getInstance(false))) {
 					%>
 
 						<li class="list-group-item list-group-item-flex p-0">

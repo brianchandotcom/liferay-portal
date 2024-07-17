@@ -219,7 +219,7 @@ public class JournalArticleModelIndexerWriterContributor
 			_journalArticleLocalService.getArticles(
 				journalArticle.getGroupId(), journalArticle.getArticleId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new ArticleVersionComparator());
+				ArticleVersionComparator.getInstance(false));
 
 		Indexer<JournalArticle> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);

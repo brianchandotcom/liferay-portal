@@ -1772,19 +1772,19 @@ public class JournalDisplayContext {
 		}
 
 		if (Objects.equals(getOrderByCol(), "create-date")) {
-			return new FolderArticleCreateDateComparator(orderByAsc);
+			return FolderArticleCreateDateComparator.getInstance(orderByAsc);
 		}
 		else if (Objects.equals(getOrderByCol(), "display-date")) {
-			return new FolderArticleDisplayDateComparator(orderByAsc);
+			return FolderArticleDisplayDateComparator.getInstance(orderByAsc);
 		}
 		else if (Objects.equals(getOrderByCol(), "id")) {
-			return new FolderArticleArticleIdComparator(orderByAsc);
+			return FolderArticleArticleIdComparator.getInstance(orderByAsc);
 		}
 		else if (Objects.equals(getOrderByCol(), "modified-date")) {
-			return new FolderArticleModifiedDateComparator(orderByAsc);
+			return FolderArticleModifiedDateComparator.getInstance(orderByAsc);
 		}
 		else if (Objects.equals(getOrderByCol(), "title")) {
-			return new FolderArticleTitleComparator(orderByAsc);
+			return FolderArticleTitleComparator.getInstance(orderByAsc);
 		}
 
 		return null;

@@ -33,7 +33,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 		total="<%= JournalArticleLocalServiceUtil.getArticlesCount(groupId, articleId) %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= JournalArticleLocalServiceUtil.getArticles(groupId, articleId, searchContainer.getStart(), searchContainer.getEnd(), new ArticleVersionComparator()) %>"
+			results="<%= JournalArticleLocalServiceUtil.getArticles(groupId, articleId, searchContainer.getStart(), searchContainer.getEnd(), ArticleVersionComparator.getInstance(false)) %>"
 		/>
 
 		<liferay-ui:search-container-row

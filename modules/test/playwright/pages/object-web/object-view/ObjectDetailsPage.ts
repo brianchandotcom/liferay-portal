@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
 
 export class ObjectDetailsPage {
@@ -33,7 +35,17 @@ export class ObjectDetailsPage {
 
 		// Ensure that the page has loaded
 
-		await this.saveButton.waitFor();
+		await this.saveButton.click({trial: true});
+
+		await clickAndExpectToBeVisible({
+			target: this.page.getByRole('menuitem', {name: 'en_US'}),
+			trigger: this.page.getByTitle('Open Localizations').first(),
+		});
+
+		await clickAndExpectToBeHidden({
+			target: this.page.getByRole('menuitem', {name: 'en_US'}),
+			trigger: this.page.getByTitle('Open Localizations').first(),
+		});
 	}
 
 	async updateConfiguration({
@@ -57,5 +69,12 @@ export class ObjectDetailsPage {
 		await this.page
 			.getByText('The object was saved successfully.')
 			.waitFor();
+
+		if (value) {
+			await expect(field).toBeChecked();
+		}
+		else {
+			await expect(field).not.toBeChecked();
+		}
 	}
 }

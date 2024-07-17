@@ -301,27 +301,6 @@ public class FreeMarkerTool {
 			}
 		}
 
-		for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
-			schema = entry.getValue();
-
-			if (schema.getOneOfSchemas() == null) {
-				continue;
-			}
-
-			for (Schema oneOfSchema : schema.getOneOfSchemas()) {
-				Map<String, Schema> propertySchemas =
-					oneOfSchema.getPropertySchemas();
-
-				Set<String> keys = propertySchemas.keySet();
-
-				Iterator<String> iterator = keys.iterator();
-
-				if (StringUtil.equalsIgnoreCase(schemaName, iterator.next())) {
-					return entry.getKey();
-				}
-			}
-		}
-
 		return null;
 	}
 

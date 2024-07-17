@@ -66,23 +66,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 
-<#if schema.oneOfSchemas?has_content>
-	@JsonSubTypes(
-		{
-			<#list schema.oneOfSchemas as oneOfSchema>
-				<#assign propertySchemaName = oneOfSchema.propertySchemas?keys[0] />
-
-				@JsonSubTypes.Type(name = "${propertySchemaName}", value=${propertySchemaName?cap_first}.class)
-
-				<#if oneOfSchema_has_next>
-					,
-				</#if>
-			</#list>
-		}
-	)
-	@JsonTypeInfo(include = JsonTypeInfo.As.PROPERTY, property = "childType", use = JsonTypeInfo.Id.NAME)
-</#if>
-
 <#if schema.discriminator?has_content>
 	@JsonSubTypes(
 		{
@@ -101,12 +84,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 </#if>
 
 <#assign dtoParentClassName = freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)! />
-
-<#if dtoParentClassName?has_content>
-	@JsonTypeInfo(
-		defaultImpl = ${schemaName}.class, include = JsonTypeInfo.As.PROPERTY, property = "childType", use = JsonTypeInfo.Id.NAME
-	)
-</#if>
 
 @Generated("")
 @GraphQLName(

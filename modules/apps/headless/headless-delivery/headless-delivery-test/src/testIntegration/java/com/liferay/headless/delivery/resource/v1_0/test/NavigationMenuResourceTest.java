@@ -412,6 +412,42 @@ public class NavigationMenuResourceTest
 		return true;
 	}
 
+	private NavigationMenuItem[] _randomNavigationMenuItems() {
+		return new NavigationMenuItem[] {
+			new NavigationMenuItem() {
+				{
+					customFields = new CustomField[] {
+						new CustomField() {
+							{
+								customValue = new CustomValue() {
+									{
+										data = RandomTestUtil.randomString();
+									}
+								};
+								dataType = "Text";
+								name = _expandoColumnNames.get(0);
+							}
+						},
+						new CustomField() {
+							{
+								customValue = new CustomValue() {
+									{
+										data = RandomTestUtil.randomString();
+									}
+								};
+								dataType = "Text";
+								name = _expandoColumnNames.get(1);
+							}
+						}
+					};
+					name = RandomTestUtil.randomString();
+					navigationMenuItems = new NavigationMenuItem[0];
+					type = "navigationMenu";
+				}
+			}
+		};
+	}
+
 	private void _testGetNavigationMenu(
 			long classPK, long classTypeId, Class<?> clazz, String contentURL,
 			String displayPageType, String title, String type,

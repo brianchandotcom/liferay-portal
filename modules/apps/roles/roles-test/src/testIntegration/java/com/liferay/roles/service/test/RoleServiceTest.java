@@ -154,10 +154,13 @@ public class RoleServiceTest extends BasePermissionTestCase {
 		List<Role> roles = _roleService.search(
 			group.getCompanyId(), StringPool.BLANK,
 			new Integer[] {RoleConstants.TYPE_PROVIDER}, params,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, new RoleRoleIdComparator());
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			RoleRoleIdComparator.getInstance(false));
 
 		Assert.assertEquals(
-			ListUtil.sort(expectedRoles, new RoleRoleIdComparator()), roles);
+			ListUtil.sort(
+				expectedRoles, RoleRoleIdComparator.getInstance(false)),
+			roles);
 	}
 
 	@Override

@@ -392,7 +392,7 @@ public class UserFinderTest {
 			TestPropsValues.getCompanyId(), _groupUser.getUserId(),
 			SocialRelationConstants.TYPE_BI_CONNECTION, StringPool.EQUAL,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new UserFirstNameComparator(true));
+			QueryUtil.ALL_POS, UserFirstNameComparator.getInstance(true));
 
 		Assert.assertEquals(users.toString(), 1, users.size());
 	}

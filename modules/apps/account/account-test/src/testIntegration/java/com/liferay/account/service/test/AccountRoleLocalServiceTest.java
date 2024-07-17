@@ -464,7 +464,7 @@ public class AccountRoleLocalServiceTest {
 			AccountRoleLocalServiceUtil.searchAccountRoles(
 				_accountEntry1.getCompanyId(),
 				new long[] {_accountEntry1.getAccountEntryId()}, keywords, null,
-				0, 2, new RoleNameComparator(true));
+				0, 2, RoleNameComparator.getInstance(true));
 
 		Assert.assertEquals(
 			expectedAccountRoles.toString(), 5,
@@ -479,7 +479,7 @@ public class AccountRoleLocalServiceTest {
 			_accountEntry1.getCompanyId(),
 			new long[] {_accountEntry1.getAccountEntryId()}, keywords, null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new RoleNameComparator(false));
+			RoleNameComparator.getInstance(false));
 
 		expectedAccountRoles = ListUtil.sort(
 			expectedAccountRoles, Collections.reverseOrder());

@@ -174,7 +174,7 @@ public class AccountOrganizationRetrieverTest {
 		Assert.assertEquals(organizations.toString(), 4, organizations.size());
 		Assert.assertEquals(
 			ListUtil.sort(
-				_organizations, new OrganizationNameComparator(false)),
+				_organizations, OrganizationNameComparator.getInstance(false)),
 			organizations);
 	}
 

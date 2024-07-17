@@ -118,7 +118,7 @@ public class AccountUserRetrieverWhenSearchingByEmailAddressDomainsTest {
 
 		Assert.assertEquals(users.size(), baseModelSearchResult.getLength());
 		Assert.assertEquals(
-			ListUtil.sort(users, new UserEmailAddressComparator(true)),
+			ListUtil.sort(users, UserEmailAddressComparator.getInstance(true)),
 			baseModelSearchResult.getBaseModels());
 	}
 

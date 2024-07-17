@@ -38,6 +38,10 @@ export default function ({currentLanguageId, namespace}) {
 					);
 
 					defaultLanguageIdInput.value = selectedLanguageId;
+
+					Liferay.fire('journal:defaultLocaleChanged', {
+						item: event.item,
+					});
 				}
 			);
 

@@ -163,28 +163,117 @@ export default function UndoRedo({
 		[history, portletNamespace, selectedLanguageId, step]
 	);
 
+	const resetStoreState = useCallback(
+		({fieldName}) => {
+			const defaultLanguageIdInput = document.getElementById(
+				`${portletNamespace}defaultLanguageId`
+			);
+
+			const descriptionInputComponent = Liferay.componentReady(
+				`${portletNamespace}${META_FIELD_NAMES.description}`
+			);
+
+			const friendlyURLInputComponent = Liferay.componentReady(
+				`${portletNamespace}${META_FIELD_NAMES.friendlyURL}`
+			);
+
+			const selectedLanguageIdInput = document.getElementById(
+				`${portletNamespace}languageId`
+			);
+
+			const titleInputComponent = Liferay.componentReady(
+				`${portletNamespace}${META_FIELD_NAMES.title}`
+			);
+
+			Promise.all([
+				descriptionInputComponent,
+				titleInputComponent,
+				friendlyURLInputComponent,
+			]).then(
+				([
+					descriptionInputComponent,
+					titleInputComponent,
+					friendlyURLInputComponent,
+				]) => {
+					const newHistory = {
+						defaultLanguageId: defaultLanguageIdInput.value,
+						descriptionInputComponent:
+							descriptionInputComponent.getValue(
+								selectedLanguageIdInput.value
+							),
+						friendlyURLInputComponent:
+							friendlyURLInputComponent.getValue(
+								selectedLanguageIdInput.value
+							),
+						name: fieldName,
+						selectedLanguageId: selectedLanguageIdInput.value,
+						titleInputComponent: titleInputComponent.getValue(
+							selectedLanguageIdInput.value
+						),
+					};
+
+					setState({
+						defaultLanguageId: defaultLanguageIdInput.value,
+						history: [newHistory],
+						selectedLanguageId: selectedLanguageIdInput.value,
+						step: 0,
+					});
+				}
+			);
+		},
+		[portletNamespace]
+	);
+
 	const localeChangeHandler = useCallback(
 		(event) => {
+			const fieldName = 'Locale Change';
 			const selectedLanguageId = event.item.getAttribute('data-value');
-
 			const selectedLanguageIdInput = document.getElementById(
 				`${portletNamespace}languageId`
 			);
 
 			selectedLanguageIdInput.value = selectedLanguageId;
 
-			Liferay.fire('journal:storeState', {fieldName: 'Locale Change'});
+			Liferay.fire('journal:storeState', {fieldName});
 		},
 		[portletNamespace]
 	);
 
+	const defaultLocaleChangeHandler = useCallback(
+		(event) => {
+			const defaultLanguageIdInput = document.getElementById(
+				`${portletNamespace}defaultLanguageId`
+			);
+			const fieldName = 'Reset';
+			const selectedLanguageId = event.item.getAttribute('data-value');
+			const selectedLanguageIdInput = document.getElementById(
+				`${portletNamespace}languageId`
+			);
+
+			defaultLanguageIdInput.value = selectedLanguageId;
+
+			selectedLanguageIdInput.value = selectedLanguageId;
+
+			resetStoreState({fieldName});
+		},
+		[portletNamespace, resetStoreState]
+	);
+
 	useEffect(() => {
 		Liferay.after('journal:localeChanged', localeChangeHandler);
+		Liferay.after(
+			'journal:defaultLocaleChanged',
+			defaultLocaleChangeHandler
+		);
 
 		return () => {
 			Liferay.detach('journal:localeChanged', localeChangeHandler);
+			Liferay.detach(
+				'journal:defaultLocaleChanged',
+				defaultLocaleChangeHandler
+			);
 		};
-	}, [localeChangeHandler]);
+	}, [defaultLocaleChangeHandler, localeChangeHandler]);
 
 	useEffect(() => {
 		Liferay.on('journal:storeState', handleStoreState);

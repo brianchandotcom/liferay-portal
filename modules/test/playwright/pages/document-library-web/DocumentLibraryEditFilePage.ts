@@ -48,12 +48,12 @@ export class DocumentLibraryEditFilePage {
 		);
 	}
 
-	async changeViewInItemSelctor(assetType: string, viewType: string) {
-		const modalIframe = await this.page.frameLocator(
+	async changeViewInItemSelector(assetType: string, viewType: string) {
+		const modalIframe = this.page.frameLocator(
 			`iframe[title="Select ${assetType}"]`
 		);
 
-		clickAndExpectToBeVisible({
+		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: modalIframe.getByRole('menuitem', {name: viewType}),
 			trigger: modalIframe.getByLabel(

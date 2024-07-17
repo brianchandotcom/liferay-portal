@@ -48,7 +48,13 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		String jobPropertyValue = jobProperty.getValue();
 
+		System.out.println("job prop value: " + jobPropertyValue);
+
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			jobPropertyValue = _getProjectJSONObj();
+
+			System.out.println("proj job value: " + jobPropertyValue);
+
 			return;
 		}
 
@@ -303,6 +309,27 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		return JenkinsResultsParserUtil.getProperty(
 			portalProperties, propertyName);
+	}
+
+	private String _getProjectJSONObj() {
+		_loadPlaywrightJSONObjects();
+
+		JSONArray projectsJSONArray = _playwrightJSONObject.getJSONArray(
+			"projects");
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < projectsJSONArray.length(); i++) {
+			JSONObject projectJSONObject = projectsJSONArray.getJSONObject(i);
+
+			sb.append(projectJSONObject.optString("name"));
+
+			sb.append(",");
+		}
+
+		sb.setLength(sb.length() - 1);
+
+		return sb.toString();
 	}
 
 	private List<JSONObject> _getSpecJSONObjects(JSONObject jsonObject) {

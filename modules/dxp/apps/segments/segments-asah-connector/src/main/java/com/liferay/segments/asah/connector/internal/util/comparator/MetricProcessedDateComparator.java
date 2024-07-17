@@ -20,12 +20,12 @@ public class MetricProcessedDateComparator extends OrderByComparator<Metric> {
 
 	public static final String[] ORDER_BY_FIELDS = {"processedDate"};
 
-	public MetricProcessedDateComparator() {
-		this(false);
-	}
+	public static MetricProcessedDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public MetricProcessedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -58,6 +58,16 @@ public class MetricProcessedDateComparator extends OrderByComparator<Metric> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private MetricProcessedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final MetricProcessedDateComparator _INSTANCE_ASCENDING =
+		new MetricProcessedDateComparator(true);
+
+	private static final MetricProcessedDateComparator _INSTANCE_DESCENDING =
+		new MetricProcessedDateComparator(false);
 
 	private final boolean _ascending;
 

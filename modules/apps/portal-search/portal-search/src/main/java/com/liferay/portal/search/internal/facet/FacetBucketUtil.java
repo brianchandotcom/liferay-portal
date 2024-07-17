@@ -44,7 +44,7 @@ public class FacetBucketUtil {
 		String fieldName, String value, String[] fieldValuePairs) {
 
 		for (String fieldValuePair : fieldValuePairs) {
-			if (fieldValuePair.equals(field + "=" + value)) {
+			if (fieldValuePair.equals(fieldName + "=" + value)) {
 				return true;
 			}
 		}
@@ -55,14 +55,14 @@ public class FacetBucketUtil {
 	private static boolean _isNestedValueInBucket(
 		Field field, String term, NestedFacet nestedFacet) {
 
-		String filterField = _removePath(
+		String filterFieldString = _removePath(
 			nestedFacet.getPath(), nestedFacet.getFilterField());
 		String filterValue = nestedFacet.getFilterValue();
 
 		FacetConfiguration facetConfiguration =
 			nestedFacet.getFacetConfiguration();
 
-		String valueField = _removePath(
+		String fieldName = _removePath(
 			nestedFacet.getPath(), facetConfiguration.getFieldName());
 
 		for (String value : field.getValues()) {
@@ -71,9 +71,9 @@ public class FacetBucketUtil {
 			String[] fieldValuePairs = value.split(StringPool.COMMA_AND_SPACE);
 
 			if (_fieldValuePairsContainsFieldValue(
-					filterField, filterValue, fieldValuePairs) &&
+					filterFieldString, filterValue, fieldValuePairs) &&
 				_fieldValuePairsContainsFieldValue(
-					valueField, term, fieldValuePairs)) {
+					fieldName, term, fieldValuePairs)) {
 
 				return true;
 			}

@@ -70,7 +70,7 @@ public abstract class BaseInputFragmentRendererTestCase {
 					"firstName")),
 			ObjectDefinitionConstants.SCOPE_SITE);
 
-		fragmentEntryLink = _addFragmentEntryLink();
+		fragmentEntryLink = addFragmentEntryLink();
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 	}
@@ -115,7 +115,7 @@ public abstract class BaseInputFragmentRendererTestCase {
 		assertRender(0, mockHttpServletRequest);
 	}
 
-	protected FragmentEntryLink _addFragmentEntryLink() throws Exception {
+	protected FragmentEntryLink addFragmentEntryLink() throws Exception {
 		FragmentRenderer fragmentRenderer = getFragmentRenderer();
 
 		Layout draftLayout = layout.fetchDraftLayout();

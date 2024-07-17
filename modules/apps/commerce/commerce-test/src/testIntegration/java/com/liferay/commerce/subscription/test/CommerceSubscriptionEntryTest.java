@@ -307,7 +307,8 @@ public class CommerceSubscriptionEntryTest {
 				getCommerceSubscriptionEntries(
 					_group.getCompanyId(), _user.getUserId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS,
-					new CommerceSubscriptionEntryCreateDateComparator());
+					CommerceSubscriptionEntryCreateDateComparator.getInstance(
+						false));
 
 		if (cpDefinitionSubscriptionEnabled && cpInstanceSubscriptionEnabled) {
 			Assert.assertEquals(

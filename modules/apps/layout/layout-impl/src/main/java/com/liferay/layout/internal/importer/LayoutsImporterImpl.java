@@ -300,7 +300,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			}
 
 			valid = _validateDisplayPageTemplatePageTemplateEntries(
-				groupId, layoutsImporterResultEntries, zipFile);
+				groupId, layoutsImporterResultEntries,
+				layoutPageTemplateCollectionId, zipFile);
 
 			if (!valid) {
 				return false;
@@ -2075,7 +2076,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private boolean _validateDisplayPageTemplatePageTemplateEntries(
 			long groupId,
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
-			ZipFile zipFile)
+			long layoutPageTemplateCollectionId, ZipFile zipFile)
 		throws Exception {
 
 		List<DisplayPageTemplateEntry> displayPageTemplateEntries =
@@ -2091,9 +2092,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.
 					fetchLayoutPageTemplateEntry(
-						groupId,
-						LayoutPageTemplateConstants.
-							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+						groupId, layoutPageTemplateCollectionId,
 						displayPageTemplate.getName(),
 						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 

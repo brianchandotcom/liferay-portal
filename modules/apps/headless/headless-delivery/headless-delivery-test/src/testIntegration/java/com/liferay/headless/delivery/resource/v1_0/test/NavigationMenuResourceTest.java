@@ -553,7 +553,44 @@ public class NavigationMenuResourceTest
 						}
 					};
 					name = RandomTestUtil.randomString();
-					navigationMenuItems = new NavigationMenuItem[0];
+					navigationMenuItems = new NavigationMenuItem[] {
+						new NavigationMenuItem() {
+							{
+								customFields = new CustomField[] {
+									new CustomField() {
+										{
+											customValue = new CustomValue() {
+												{
+													data =
+														RandomTestUtil.
+															randomString();
+												}
+											};
+											dataType = "Text";
+											name = _expandoColumnNames.get(0);
+										}
+									},
+									new CustomField() {
+										{
+											customValue = new CustomValue() {
+												{
+													data =
+														RandomTestUtil.
+															randomString();
+												}
+											};
+											dataType = "Text";
+											name = _expandoColumnNames.get(1);
+										}
+									}
+								};
+								name = RandomTestUtil.randomString();
+								navigationMenuItems = new NavigationMenuItem[0];
+								type = "url";
+								url = RandomTestUtil.randomString();
+							}
+						}
+					};
 					type = "navigationMenu";
 				}
 			}

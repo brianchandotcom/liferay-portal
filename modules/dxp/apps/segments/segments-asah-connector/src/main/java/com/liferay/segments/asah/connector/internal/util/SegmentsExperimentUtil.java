@@ -111,7 +111,7 @@ public class SegmentsExperimentUtil {
 
 			Metric metric = Collections.max(
 				experiment.getMetrics(),
-				new MetricProcessedDateComparator(true));
+				MetricProcessedDateComparator.getInstance(true));
 
 			for (DXPVariantMetric dxpVariantMetric :
 					metric.getDXPVariantMetrics()) {

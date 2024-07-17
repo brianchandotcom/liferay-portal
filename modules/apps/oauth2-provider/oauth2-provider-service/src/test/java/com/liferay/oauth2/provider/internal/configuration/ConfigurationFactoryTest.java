@@ -148,6 +148,17 @@ public class ConfigurationFactoryTest {
 			_oAuth2Application
 		);
 
+		_oAuth2ApplicationScopeAliasesLocalService = Mockito.mock(
+			OAuth2ApplicationScopeAliasesLocalService.class);
+
+		Mockito.when(
+			_oAuth2ApplicationScopeAliasesLocalService.
+				fetchOAuth2ApplicationScopeAliases(
+					Mockito.anyLong(), Mockito.anyList())
+		).thenReturn(
+			null
+		);
+
 		PortalK8sConfigMapModifier portalK8sConfigMapModifier = Mockito.mock(
 			PortalK8sConfigMapModifier.class);
 
@@ -193,6 +204,20 @@ public class ConfigurationFactoryTest {
 			}
 		);
 
+		_scopeLocator = Mockito.mock(ScopeLocator.class);
+
+		Mockito.when(
+			_scopeLocator.getLiferayOAuth2Scopes(_companyId)
+		).thenReturn(
+			new ArrayList<>()
+		);
+
+		Mockito.when(
+			_scopeLocator.getScopeAliases(_companyId)
+		).thenReturn(
+			new ArrayList<>()
+		);
+
 		_snapshot = Mockito.mock(Snapshot.class);
 
 		Mockito.when(
@@ -229,31 +254,6 @@ public class ConfigurationFactoryTest {
 		).thenReturn(
 			_user
 		);
-
-		_scopeLocator = Mockito.mock(ScopeLocator.class);
-
-		Mockito.when(
-			_scopeLocator.getScopeAliases(_companyId)
-		).thenReturn(
-			new ArrayList<>()
-		);
-
-		Mockito.when(
-			_scopeLocator.getLiferayOAuth2Scopes(_companyId)
-		).thenReturn(
-			new ArrayList<>()
-		);
-
-		_oAuth2ApplicationScopeAliasesLocalService = Mockito.mock(
-			OAuth2ApplicationScopeAliasesLocalService.class);
-
-		Mockito.when(
-			_oAuth2ApplicationScopeAliasesLocalService.
-				fetchOAuth2ApplicationScopeAliases(
-					Mockito.anyLong(), Mockito.anyList())
-		).thenReturn(
-			null
-		);
 	}
 
 	@Test
@@ -266,16 +266,16 @@ public class ConfigurationFactoryTest {
 		oa2pahscf.companyLocalService = _companyLocalService;
 		oa2pahscf.oAuth2ApplicationLocalService =
 			_oAuth2ApplicationLocalService;
-		oa2pahscf.userLocalService = _userLocalService;
 		oa2pahscf.oAuth2ApplicationScopeAliasesLocalService =
 			_oAuth2ApplicationScopeAliasesLocalService;
 		oa2pahscf.scopeLocator = _scopeLocator;
-
-		ReflectionTestUtil.setFieldValue(
-			oa2pahscf, "_scopeLocator", _scopeLocator);
+		oa2pahscf.userLocalService = _userLocalService;
 
 		ReflectionTestUtil.setFieldValue(
 			oa2pahscf, "_portalK8sConfigMapModifierSnapshot", _snapshot);
+
+		ReflectionTestUtil.setFieldValue(
+			oa2pahscf, "_scopeLocator", _scopeLocator);
 
 		oa2pahscf.activate(
 			HashMapBuilder.<String, Object>put(
@@ -330,10 +330,10 @@ public class ConfigurationFactoryTest {
 		oa2pauacf.companyLocalService = _companyLocalService;
 		oa2pauacf.oAuth2ApplicationLocalService =
 			_oAuth2ApplicationLocalService;
-		oa2pauacf.userLocalService = _userLocalService;
 		oa2pauacf.oAuth2ApplicationScopeAliasesLocalService =
 			_oAuth2ApplicationScopeAliasesLocalService;
 		oa2pauacf.scopeLocator = _scopeLocator;
+		oa2pauacf.userLocalService = _userLocalService;
 
 		VirtualHostLocalService virtualHostLocalService = Mockito.mock(
 			VirtualHostLocalService.class);
@@ -345,10 +345,10 @@ public class ConfigurationFactoryTest {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			oa2pauacf, "_virtualHostLocalService", virtualHostLocalService);
+			oa2pauacf, "_portalK8sConfigMapModifierSnapshot", _snapshot);
 
 		ReflectionTestUtil.setFieldValue(
-			oa2pauacf, "_portalK8sConfigMapModifierSnapshot", _snapshot);
+			oa2pauacf, "_virtualHostLocalService", virtualHostLocalService);
 
 		oa2pauacf.activate(
 			HashMapBuilder.<String, Object>put(

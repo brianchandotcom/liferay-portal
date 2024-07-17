@@ -80,7 +80,7 @@ public class FragmentCollectionItemSelectorViewDescriptor
 		searchContainer.setOrderByType(orderByType);
 
 		FragmentCollectionNameComparator fragmentCollectionNameComparator =
-			new FragmentCollectionNameComparator(orderByAsc);
+			FragmentCollectionNameComparator.getInstance(orderByAsc);
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 

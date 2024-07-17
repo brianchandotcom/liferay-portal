@@ -299,7 +299,8 @@ public class FragmentEntryLinkDisplayContext {
 
 		fragmentEntryLinksSearchContainer.setOrderByCol(getOrderByCol());
 		fragmentEntryLinksSearchContainer.setOrderByComparator(
-			new FragmentEntryLinkLastPropagationDateComparator(orderByAsc));
+			FragmentEntryLinkLastPropagationDateComparator.getInstance(
+				orderByAsc));
 		fragmentEntryLinksSearchContainer.setOrderByType(getOrderByType());
 
 		FragmentEntry fragmentEntry = getFragmentEntry();

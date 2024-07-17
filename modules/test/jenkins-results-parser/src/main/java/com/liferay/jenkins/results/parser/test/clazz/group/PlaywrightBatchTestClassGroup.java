@@ -51,11 +51,23 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		System.out.println("job prop value: " + jobPropertyValue);
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
-			jobPropertyValue = _getProjectJSONObj();
+			String playwrightProjectNamesEnv = System.getenv(
+				"PLAYWRIGHT_PROJECT_NAME");
 
-			System.out.println("proj job value: " + jobPropertyValue);
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(
+					playwrightProjectNamesEnv)) {
 
-			return;
+				jobPropertyValue = playwrightProjectNamesEnv;
+				
+				System.out.println("env job value: " + jobPropertyValue);
+			}
+			else {
+				jobPropertyValue = _getProjectJSONObj();
+
+				System.out.println("proj job value: " + jobPropertyValue);
+
+				return;
+			}
 		}
 
 		_addProjectNames(jobPropertyValue);
@@ -426,19 +438,23 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				exception.printStackTrace();
 			}
 
+			System.out.println("base dir: " + playwrightBaseDir);
+
 			_callNPMCommand(playwrightBaseDir, "npm install");
 
 			String result = _callNPMCommand(
 				playwrightBaseDir,
 				"npm run playwright test -- --list --reporter=json");
 
-			int index = result.indexOf("\n{");
-
-			result = result.substring(index);
-
-			result = result.replace("Finished executing Bash commands.", "");
+			System.out.println("results: " + result);
 
 			try {
+				int index = result.indexOf("\n{");
+
+				result = result.substring(index);
+
+				result = result.replace("Finished executing Bash commands.", "");
+
 				_playwrightJSONObject = new JSONObject(result.trim());
 			}
 			catch (JSONException jsonException) {
@@ -452,6 +468,9 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				NotificationUtil.sendSlackNotification(
 					sb.toString(), "#ci-notifications", ":playwright:",
 					"Playwright Batch Creation Failure", "Liferay Playwright");
+			}
+			catch(Exception exception){
+				exception.getMessage();
 			}
 
 			JSONArray errorsJSONArray = _playwrightJSONObject.optJSONArray(

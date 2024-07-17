@@ -84,6 +84,11 @@ public class AutocompleteUserMVCResourceCommandTest {
 
 		_userLocalService.addUserGroupUser(
 			userGroup.getUserGroupId(), _user2.getUserId());
+
+		_user3 = UserTestUtil.addUser();
+
+		_userLocalService.addUserGroupUser(
+			userGroup.getUserGroupId(), _user3.getUserId());
 	}
 
 	@Test
@@ -97,10 +102,12 @@ public class AutocompleteUserMVCResourceCommandTest {
 
 		_mvcResourceCommand.serveResource(
 			_getMockLiferayResourceRequest(
-				_user1.getScreenName(), ctCollection.getCtCollectionId()),
+				_user2.getScreenName(), ctCollection.getCtCollectionId()),
 			mockLiferayResourceResponse);
 
 		JSONArray jsonArray = _getUsersJSONArray(mockLiferayResourceResponse);
+
+		Assert.assertEquals(1, jsonArray.length());
 
 		JSONObject jsonObject = jsonArray.getJSONObject(0);
 
@@ -163,6 +170,7 @@ public class AutocompleteUserMVCResourceCommandTest {
 
 	private User _user1;
 	private User _user2;
+	private User _user3;
 
 	@Inject
 	private UserLocalService _userLocalService;

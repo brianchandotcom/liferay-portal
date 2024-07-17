@@ -267,6 +267,20 @@ export default function EditNotificationTemplate({
 					notificationTemplateId
 				);
 
+				let newRecipients = recipients;
+
+				if (type === 'email') {
+					newRecipients = [
+						{
+							...recipients[0],
+							bcc: recipients[0].bcc ?? '',
+							bccType: recipients[0].bccType ?? 'email',
+							cc: recipients[0].cc ?? '',
+							ccType: recipients[0].ccType ?? 'email',
+						},
+					];
+				}
+
 				setValues({
 					...values,
 					attachmentObjectFieldIds,
@@ -278,7 +292,7 @@ export default function EditNotificationTemplate({
 					objectDefinitionExternalReferenceCode,
 					objectDefinitionId,
 					recipientType,
-					recipients,
+					recipients: newRecipients,
 					subject,
 					system,
 					type,

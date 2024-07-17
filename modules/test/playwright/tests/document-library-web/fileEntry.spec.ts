@@ -133,7 +133,7 @@ testFeatureFlagsEnabled(
 			'Document'
 		);
 
-		await documentLibraryEditFilePage.changeViewInItemSelctor(
+		await documentLibraryEditFilePage.changeViewInItemSelector(
 			'Document',
 			'List'
 		);
@@ -142,7 +142,7 @@ testFeatureFlagsEnabled(
 			'Document'
 		);
 
-		await documentLibraryEditFilePage.changeViewInItemSelctor(
+		await documentLibraryEditFilePage.changeViewInItemSelector(
 			'Document',
 			'Table'
 		);

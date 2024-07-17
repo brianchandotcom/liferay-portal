@@ -179,10 +179,10 @@ export default function UndoRedo({
 	);
 
 	useEffect(() => {
-		Liferay.after('inputLocalized:localeChanged', localeChangeHandler);
+		Liferay.after('journal:localeChanged', localeChangeHandler);
 
 		return () => {
-			Liferay.detach('inputLocalized:localeChanged', localeChangeHandler);
+			Liferay.detach('journal:localeChanged', localeChangeHandler);
 		};
 	}, [localeChangeHandler]);
 

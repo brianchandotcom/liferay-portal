@@ -477,6 +477,11 @@ AUI.add(
 							item: event.item,
 							source: instance,
 						});
+
+						Liferay.fire('journal:localeChanged', {
+							item: event.item,
+							source: instance,
+						});
 					}
 				},
 

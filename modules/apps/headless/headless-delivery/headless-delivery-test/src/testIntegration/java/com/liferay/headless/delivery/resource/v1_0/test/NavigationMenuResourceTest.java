@@ -35,6 +35,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -284,6 +285,33 @@ public class NavigationMenuResourceTest
 		).header(
 			"X-Accept-All-Languages", "true"
 		).build();
+	}
+
+	private boolean _equals(
+		NavigationMenuItem navigationMenuItem1,
+		NavigationMenuItem navigationMenuItem2) {
+
+		if (navigationMenuItem1 == navigationMenuItem2) {
+			return true;
+		}
+
+		if (!Objects.equals(
+				navigationMenuItem1.getName(), navigationMenuItem2.getName()) ||
+			!_equals(
+				navigationMenuItem1.getNavigationMenuItems(),
+				navigationMenuItem2.getNavigationMenuItems()) ||
+			!Objects.equals(
+				navigationMenuItem1.getType(), navigationMenuItem2.getType()) ||
+			!Objects.equals(
+				navigationMenuItem1.getUrl(), navigationMenuItem2.getUrl()) ||
+			!_equalsCustomFieldsIgnoringOrder(
+				navigationMenuItem1.getCustomFields(),
+				navigationMenuItem2.getCustomFields())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _equalsCustomFieldsIgnoringOrder(

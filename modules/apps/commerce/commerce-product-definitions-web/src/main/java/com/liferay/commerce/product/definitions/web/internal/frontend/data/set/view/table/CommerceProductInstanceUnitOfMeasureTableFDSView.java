@@ -34,11 +34,13 @@ public class CommerceProductInstanceUnitOfMeasureTableFDSView
 
 		return fdsTableSchemaBuilder.add(
 			"name.LANG", "uom",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setActionId("edit");
-				fdsTableSchemaField.setContentRenderer("actionLink");
-				fdsTableSchemaField.setSortable(true);
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
+				"edit"
+			).setContentRenderer(
+				"actionLink"
+			).setSortable(
+				true
+			)
 		).add(
 			"key", "key"
 		).add(

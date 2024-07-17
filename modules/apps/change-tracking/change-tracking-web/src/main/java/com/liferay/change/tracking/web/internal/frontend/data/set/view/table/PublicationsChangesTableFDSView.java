@@ -51,10 +51,11 @@ public class PublicationsChangesTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
 			"status", "status",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("status");
-				fdsTableSchemaField.setSortable(true);
-			}
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"status"
+			).setSortable(
+				true
+			)
 		).add(
 			"changeType", "changed",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)

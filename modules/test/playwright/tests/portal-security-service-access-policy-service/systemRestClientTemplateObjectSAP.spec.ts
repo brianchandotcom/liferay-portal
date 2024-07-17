@@ -99,7 +99,9 @@ test('LPD-26931 Verify the new System REST Client Template Object SAP entry allo
 	await serviceAccessPolicyPage.goto(site.friendlyUrlPath);
 
 	await (
-		await page.getByRole('link', {name: 'SYSTEM_REST_CLIENT_TEMPLATE_OBJECT'})
+		await page.getByRole('link', {
+			name: 'SYSTEM_REST_CLIENT_TEMPLATE_OBJECT',
+		})
 	).click();
 
 	await editServiceAccessPolicyPage.enabledButton.setChecked(false);
@@ -133,7 +135,9 @@ test('LPD-26931 Verify the new System REST Client Template Object SAP entry allo
 	await serviceAccessPolicyPage.goto(site.friendlyUrlPath);
 
 	await (
-		await page.getByRole('link', {name: 'SYSTEM_REST_CLIENT_TEMPLATE_OBJECT'})
+		await page.getByRole('link', {
+			name: 'SYSTEM_REST_CLIENT_TEMPLATE_OBJECT',
+		})
 	).click();
 
 	await editServiceAccessPolicyPage.enabledButton.setChecked(true);

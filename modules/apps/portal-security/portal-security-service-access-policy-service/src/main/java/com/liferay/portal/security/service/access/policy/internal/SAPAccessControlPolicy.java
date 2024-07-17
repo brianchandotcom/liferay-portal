@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.service.access.policy.configuration.SAPConfiguration;
 import com.liferay.portal.security.service.access.policy.constants.SAPConstants;
-import com.liferay.portal.security.service.access.policy.web.internal.constants.SAPWebKeys;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 

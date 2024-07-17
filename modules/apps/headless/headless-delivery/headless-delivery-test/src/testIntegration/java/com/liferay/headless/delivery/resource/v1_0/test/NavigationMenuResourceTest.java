@@ -322,6 +322,13 @@ public class NavigationMenuResourceTest
 		return new String[] {"name", "navigationMenuItems"};
 	}
 
+	protected NavigationMenu testGetNavigationMenu_addNavigationMenu()
+		throws Exception {
+
+		return navigationMenuResource.postSiteNavigationMenu(
+			testGroup.getGroupId(), _randomNavigationMenu(false));
+	}
+
 	private NavigationMenuResource _buildNavigationMenuResource() {
 		NavigationMenuResource.Builder builder =
 			NavigationMenuResource.builder();

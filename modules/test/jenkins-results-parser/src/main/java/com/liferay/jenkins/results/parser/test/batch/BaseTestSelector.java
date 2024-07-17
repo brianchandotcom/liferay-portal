@@ -9,6 +9,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
+import com.liferay.jenkins.results.parser.test.suite.RelevantRuleConfigurationException;
 import com.liferay.jenkins.results.parser.test.suite.RelevantRuleEngine;
 
 import java.io.File;
@@ -90,11 +91,25 @@ public abstract class BaseTestSelector implements TestSelector {
 		_testBatch = testBatch;
 	}
 
-	protected void validate(String propertyName) {
+	protected void validate(String propertyName)
+		throws RelevantRuleConfigurationException {
+
 		if (getProperty(propertyName) == null) {
-			throw new IllegalStateException(
-				"Unable to create batch " + _batchName + " since " +
-					propertyName + " is not set");
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Unable to create batch ");
+			sb.append(_batchName);
+			sb.append(" since ");
+			sb.append(propertyName);
+			sb.append("[");
+			sb.append(getRelevantRuleName());
+			sb.append("][");
+			sb.append(getTestSuiteName());
+			sb.append("][");
+			sb.append(getBatchName());
+			sb.append("] is not set");
+
+			throw new RelevantRuleConfigurationException(sb.toString());
 		}
 	}
 

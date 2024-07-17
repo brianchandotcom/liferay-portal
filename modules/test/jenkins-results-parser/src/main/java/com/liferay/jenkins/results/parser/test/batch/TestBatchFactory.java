@@ -5,7 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.batch;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.test.suite.RelevantRuleConfigurationException;
 
 import java.io.File;
 
@@ -69,16 +69,11 @@ public class TestBatchFactory {
 				return playwrightTestBatch;
 			}
 		}
-		catch (IllegalStateException illegalStateException) {
-			String message = illegalStateException.getMessage();
+		catch (RelevantRuleConfigurationException
+					relevantRuleConfigurationException) {
 
-			if (message.startsWith("Unable to create batch")) {
-				message = JenkinsResultsParserUtil.combine(
-					message, " in ",
-					JenkinsResultsParserUtil.getCanonicalPath(propertiesFile));
-			}
-
-			throw new RuntimeException(message, illegalStateException);
+			RelevantRuleConfigurationException.addException(
+				relevantRuleConfigurationException);
 		}
 
 		return new DefaultTestBatch(batchName);

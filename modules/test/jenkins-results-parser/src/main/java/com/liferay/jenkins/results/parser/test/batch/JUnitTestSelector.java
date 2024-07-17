@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.test.batch;
 
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.test.suite.RelevantRuleConfigurationException;
 
 import java.io.File;
 
@@ -27,8 +28,9 @@ public class JUnitTestSelector extends BaseTestSelector {
 			"modules.includes.required.test.batch.class.names.includes";
 
 	public JUnitTestSelector(
-		File propertiesFile, Properties properties, String batchName,
-		String relevantRuleName, String testSuiteName) {
+			File propertiesFile, Properties properties, String batchName,
+			String relevantRuleName, String testSuiteName)
+		throws RelevantRuleConfigurationException {
 
 		super(
 			propertiesFile, properties, batchName, relevantRuleName,
@@ -88,7 +90,7 @@ public class JUnitTestSelector extends BaseTestSelector {
 	}
 
 	@Override
-	public void validate() {
+	public void validate() throws RelevantRuleConfigurationException {
 		validate(MODULES_INCLUDES_REQUIRED_TEST_BATCH_CLASS_NAMES_INCLUDES);
 	}
 

@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser.test.batch;
 
+import com.liferay.jenkins.results.parser.test.suite.RelevantRuleConfigurationException;
+
 /**
  * @author Kenji Heigel
  */
@@ -12,6 +14,6 @@ public interface TestSelector {
 
 	public void merge(TestSelector testSelector);
 
-	public void validate();
+	public void validate() throws RelevantRuleConfigurationException;
 
 }

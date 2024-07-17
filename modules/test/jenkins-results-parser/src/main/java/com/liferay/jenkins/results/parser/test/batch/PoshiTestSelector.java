@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser.test.batch;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.test.suite.RelevantRuleConfigurationException;
 
 import java.io.File;
 
@@ -26,8 +27,9 @@ public class PoshiTestSelector extends BaseTestSelector {
 		"test.batch.run.property.query";
 
 	public PoshiTestSelector(
-		File propertiesFile, Properties properties, String batchName,
-		String relevantRuleName, String testSuiteName) {
+			File propertiesFile, Properties properties, String batchName,
+			String relevantRuleName, String testSuiteName)
+		throws RelevantRuleConfigurationException {
 
 		super(
 			propertiesFile, properties, batchName, relevantRuleName,
@@ -119,7 +121,7 @@ public class PoshiTestSelector extends BaseTestSelector {
 	}
 
 	@Override
-	public void validate() {
+	public void validate() throws RelevantRuleConfigurationException {
 		validate(TEST_BATCH_RUN_PROPERTY_QUERY);
 	}
 

@@ -157,6 +157,25 @@ public class RelevantRule implements Comparable<RelevantRule> {
 			getModifiedFilesIncludesPathMatchers(), modifiedFile);
 	}
 
+	public void validate() throws RelevantRuleConfigurationException {
+		List<TestBatch> testBatches = getTestBatches();
+
+		if (testBatches.isEmpty()) {
+			throw new RelevantRuleConfigurationException(
+				"Unable to find test.batch.names for relevant rule '" +
+					getName() + "' in " + _filePath);
+		}
+
+		List<PathMatcher> modifiedFilesIncludes =
+			getModifiedFilesIncludesPathMatchers();
+
+		if (modifiedFilesIncludes.isEmpty()) {
+			throw new RelevantRuleConfigurationException(
+				"Unable to find modified.files.includes for relevant rule '" +
+					getName() + "' in " + _filePath);
+		}
+	}
+
 	private String _getBaseDirTestProperty(String propertyName) {
 		RelevantRuleEngine relevantRuleEngine =
 			RelevantRuleEngine.getInstance();

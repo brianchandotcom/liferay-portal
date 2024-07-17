@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.test.batch;
 
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.test.suite.RelevantRuleConfigurationException;
 
 import java.io.File;
 
@@ -22,8 +23,9 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 		"playwright.test.project";
 
 	public PlaywrightTestSelector(
-		File propertiesFile, Properties properties, String batchName,
-		String relevantRuleName, String testSuiteName) {
+			File propertiesFile, Properties properties, String batchName,
+			String relevantRuleName, String testSuiteName)
+		throws RelevantRuleConfigurationException {
 
 		super(
 			propertiesFile, properties, batchName, relevantRuleName,
@@ -53,7 +55,7 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 			playwrightTestSelector.getPlaywrightJobProperties());
 	}
 
-	public void validate() {
+	public void validate() throws RelevantRuleConfigurationException {
 		validate(PLAYWRIGHT_TEST_PROJECT);
 	}
 

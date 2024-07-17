@@ -242,6 +242,18 @@ public class FDSAdminDisplayContext {
 		return resourceURL.toString();
 	}
 
+	public String getSaveFDSSortURL() {
+		ResourceURL resourceURL =
+			(ResourceURL)PortalUtil.getControlPanelPortletURL(
+				_renderRequest, _themeDisplay.getScopeGroup(),
+				FDSAdminPortletKeys.FDS_ADMIN, 0, 0,
+				RenderRequest.RESOURCE_PHASE);
+
+		resourceURL.setResourceID("/frontend_data_set_admin/save_fds_sort");
+
+		return resourceURL.toString();
+	}
+
 	private final CETManager _cetManager;
 	private final ObjectDefinition _fdsEntryObjectDefinition;
 	private final ObjectDefinition _fdsViewObjectDefinition;

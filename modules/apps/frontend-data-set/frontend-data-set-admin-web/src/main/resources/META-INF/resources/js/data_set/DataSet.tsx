@@ -72,6 +72,7 @@ export interface IDataSetSectionProps {
 	onDataSetUpdate: (data: FDSViewType) => void;
 	restApplications: string[];
 	saveFDSFieldsURL: string;
+	saveFDSSortURL: string;
 	spritemap: string;
 }
 
@@ -84,6 +85,7 @@ const DataSet = ({
 	namespace,
 	restApplications,
 	saveFDSFieldsURL,
+	saveFDSSortURL,
 	spritemap,
 }: {
 	backURL: string;
@@ -94,6 +96,7 @@ const DataSet = ({
 	namespace: string;
 	restApplications: string[];
 	saveFDSFieldsURL: string;
+	saveFDSSortURL: string;
 	spritemap: string;
 }) => {
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -178,6 +181,7 @@ const DataSet = ({
 						}}
 						restApplications={restApplications}
 						saveFDSFieldsURL={saveFDSFieldsURL}
+						saveFDSSortURL={saveFDSSortURL}
 						spritemap={spritemap}
 					/>
 				)

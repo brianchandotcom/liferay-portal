@@ -59,7 +59,7 @@ test('checks that a widget can be added and dragged to another part of the page'
 
 	const widgetId = await pageEditorPage.getFragmentId('Sort');
 
-	await expect(await pageEditorPage.isActive(widgetId)).toBe(true);
+	expect(await pageEditorPage.isActive(widgetId)).toBe(true);
 
 	await pageEditorPage.publishPage();
 

@@ -31,6 +31,10 @@ export function Layout({components, editable, itemPath, rows, viewMode}) {
 	const Components = components ?? mergeVariants(editable, variants);
 
 	useEffect(() => {
+		dispatch({type: EVENT_TYPES.HISTORY.RESET});
+	}, [defaultLanguageId, dispatch]);
+
+	useEffect(() => {
 		const handleStoreState = () => {
 			dispatch({type: EVENT_TYPES.HISTORY.ADD});
 		};

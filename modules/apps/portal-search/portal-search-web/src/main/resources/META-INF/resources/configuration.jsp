@@ -11,28 +11,17 @@
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<clay:alert
-	cssClass="border-left-0 border-right-0 rounded-0"
+<clay:stripe
 	displayType="warning"
+	title="warning"
 >
-	<c:set var="deprecatedApps">
-		<liferay-learn:message
-			key="deprecated-apps"
-			resource="portal-search-web"
-		/>
-	</c:set>
+	<liferay-ui:message key="feature.flag.LPD-13778.description" />
 
-	<liferay-ui:message arguments="${deprecatedApps}" key="classic-search-portlet-has-been-deprecated-x" />
-
-	<c:set var="searchPagesAndWidgets">
-		<liferay-learn:message
-			key="search-pages-and-widgets"
-			resource="portal-search-web"
-		/>
-	</c:set>
-
-	<liferay-ui:message arguments="${searchPagesAndWidgets}" key="please-migrate-your-search-pages-x" />
-</clay:alert>
+	<liferay-learn:message
+		key="search-pages-and-widgets"
+		resource="portal-search-web"
+	/>
+</clay:stripe>
 
 <liferay-frontend:edit-form
 	action="<%= configurationActionURL %>"

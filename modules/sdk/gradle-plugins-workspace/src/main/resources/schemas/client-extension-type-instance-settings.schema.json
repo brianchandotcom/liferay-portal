@@ -2492,6 +2492,13 @@
 		},
 		{
 			"properties": {
+				"blacklist": {
+					"items": {
+						"type": "string"
+					},
+					"title": "Blacklist",
+					"type": "array"
+				},
 				"enabled": {
 					"default": true,
 					"title": "Enabled",
@@ -2512,6 +2519,14 @@
 						"type": "string"
 					},
 					"title": "Sandbox Attribute Values",
+					"type": "array"
+				},
+				"whitelist": {
+					"default": "com.liferay.fragment.model.FragmentEntry|com.liferay.journal.model.JournalArticle",
+					"items": {
+						"type": "string"
+					},
+					"title": "Whitelist",
 					"type": "array"
 				}
 			},

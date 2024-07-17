@@ -150,7 +150,7 @@ public class RepositoryTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		DLFileShortcutLocalServiceUtil.addFileShortcut(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			fileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

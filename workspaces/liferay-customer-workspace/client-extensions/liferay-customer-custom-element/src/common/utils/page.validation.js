@@ -4,8 +4,8 @@
  */
 
 import {getAccountFlags} from '../services/liferay/graphql/queries';
-import getLiferaySiteName from './getLiferaySiteName';
 import {API_BASE_URL, PAGE_ROUTER_TYPES, ROUTE_TYPES} from './constants';
+import getLiferaySiteName from './getLiferaySiteName';
 
 const BASE_API = `${API_BASE_URL}/${getLiferaySiteName()}`;
 

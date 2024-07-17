@@ -228,7 +228,7 @@ function updateLabelStatus(taxonomyCategoryBriefs) {
 		button.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			restArticle(button.getAttribute('data-request-id'));
+			restArticle(button.dataset.requestId);
 
 			document.getElementById('sidetabFeature').style.right = '0';
 		});

@@ -2,14 +2,11 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
-import {ApolloClient} from '@apollo/client';
 import {useMemo} from 'react';
 import useSWR from 'swr';
 import i18n from '~/common/I18n';
-import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import SearchBuilder from '~/common/core/SearchBuilder';
 import {Liferay} from '~/common/services/liferay';
-import {getOrganizations} from '~/common/services/liferay/graphql/queries';
 
 type Account = {
 	externalReferenceCode: string;
@@ -41,38 +38,7 @@ const getMyUserAccount = async () => {
 	};
 };
 
-const getFLSOrganizationsAccounts =
-	(client: ApolloClient<any>) =>
-	async ({organizationIds}: {organizationIds: number[]}) => {
-		if (!organizationIds.length) {
-			return [];
-		}
-
-		const response = await client.query({
-			query: getOrganizations,
-			variables: {
-				filter: SearchBuilder.in('id', organizationIds),
-			},
-		});
-
-		const organizations = (response.data?.organizations?.items ?? []) as {
-			accounts: {
-				items: Account[];
-			};
-		}[];
-
-		const organizationAccounts = [
-			...new Set(
-				organizations.map(({accounts}) => accounts.items).flat()
-			),
-		];
-
-		return organizationAccounts as Account[];
-	};
-
 const useProjectCategoryItems = () => {
-	const {client} = useAppPropertiesContext();
-
 	const {data: myUserAccount = {accountBriefs: [], organizationBriefs: []}} =
 		useSWR({key: '/projects'}, getMyUserAccount);
 
@@ -84,13 +50,10 @@ const useProjectCategoryItems = () => {
 		[myUserAccount?.organizationBriefs]
 	);
 
-	const {data: organizations = []} = useSWR(
-		{
-			key: '/organizations',
-			organizationIds: myFLSOrganizationBriefIds,
-		},
-		myUserAccount ? getFLSOrganizationsAccounts(client) : null
-	);
+	const {data: organizations = []} = useSWR({
+		key: '/organizations',
+		organizationIds: myFLSOrganizationBriefIds,
+	});
 
 	const projectCategoryItems = useMemo(() => {
 		const teamMembersERC = myUserAccount?.accountBriefs?.map(
@@ -106,6 +69,9 @@ const useProjectCategoryItems = () => {
 			.map(({externalReferenceCode}) => externalReferenceCode);
 
 		const organizationProjectsERC = organizations.map(
+
+			// @ts-ignore: Ignoring potential missing externalReferenceCode
+
 			({externalReferenceCode}) => externalReferenceCode
 		);
 

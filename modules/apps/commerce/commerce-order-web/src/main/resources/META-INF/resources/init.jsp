@@ -11,6 +11,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/comment" prefix="liferay-comment" %><%@
 taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
@@ -46,6 +47,7 @@ page import="com.liferay.commerce.model.CommerceOrderItem" %><%@
 page import="com.liferay.commerce.model.CommerceOrderNote" %><%@
 page import="com.liferay.commerce.model.CommerceOrderType" %><%@
 page import="com.liferay.commerce.model.CommerceReturn" %><%@
+page import="com.liferay.commerce.model.CommerceReturnItem" %><%@
 page import="com.liferay.commerce.model.CommerceShipment" %><%@
 page import="com.liferay.commerce.notification.model.CommerceNotificationQueueEntry" %><%@
 page import="com.liferay.commerce.order.CommerceOrderValidatorResult" %><%@
@@ -53,6 +55,7 @@ page import="com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSN
 page import="com.liferay.commerce.order.web.internal.constants.CommerceOrderScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.order.web.internal.constants.CommerceOrderTypeScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.order.web.internal.constants.CommerceReturnFDSNames" %><%@
+page import="com.liferay.commerce.order.web.internal.constants.CommerceReturnItemScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.order.web.internal.constants.CommerceReturnScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.order.web.internal.display.context.CommerceOrderEditDisplayContext" %><%@
 page import="com.liferay.commerce.order.web.internal.display.context.CommerceOrderListDisplayContext" %><%@
@@ -81,13 +84,15 @@ page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 
 <%@ page import="java.text.Format" %>
 
-<%@ page import="java.util.Calendar" %><%@
+<%@ page import="java.util.Arrays" %><%@
+page import="java.util.Calendar" %><%@
 page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@

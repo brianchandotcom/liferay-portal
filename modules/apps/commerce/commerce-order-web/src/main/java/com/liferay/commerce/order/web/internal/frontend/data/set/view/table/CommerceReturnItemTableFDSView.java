@@ -33,9 +33,12 @@ public class CommerceReturnItemTableFDSView extends BaseTableFDSView {
 
 		return fdsTableSchemaBuilder.add(
 			"r_commerceOrderItemToCommerceReturnItems_commerceOrderItem.sku",
-			"sku"
+			"sku",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
 		).add(
-			"r_commerceOrderItemToCommerceReturnItems_commerceOrderItem.name",
+			"r_commerceOrderItemToCommerceReturnItems_commerceOrderItem.name." +
+				"LANG",
 			"name"
 		).add(
 			"r_commerceOrderItemToCommerceReturnItems_commerceOrderItem." +
@@ -50,15 +53,17 @@ public class CommerceReturnItemTableFDSView extends BaseTableFDSView {
 		).add(
 			"authorized", "authorized"
 		).add(
-			"accepted", "accepted"
+			"received", "received",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"commerceReturnItemReceivedDataRenderer")
 		).add(
 			"returnResolutionMethod", "resolution",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"commerceReturnItemPicklistDataRenderer")
 		).add(
-			"status", "status",
+			"returnItemStatus", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"commerceStatusDataRenderer")
+				"commerceReturnItemStatusDataRenderer")
 		).build();
 	}
 

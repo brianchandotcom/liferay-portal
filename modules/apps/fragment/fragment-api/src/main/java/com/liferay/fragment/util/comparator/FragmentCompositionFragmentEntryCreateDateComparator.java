@@ -24,14 +24,14 @@ public class FragmentCompositionFragmentEntryCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public FragmentCompositionFragmentEntryCreateDateComparator() {
-		this(true);
-	}
+	public static FragmentCompositionFragmentEntryCreateDateComparator
+		getInstance(boolean ascending) {
 
-	public FragmentCompositionFragmentEntryCreateDateComparator(
-		boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -77,6 +77,20 @@ public class FragmentCompositionFragmentEntryCreateDateComparator
 
 		return fragmentEntry.getCreateDate();
 	}
+
+	private FragmentCompositionFragmentEntryCreateDateComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final FragmentCompositionFragmentEntryCreateDateComparator
+		_INSTANCE_ASCENDING =
+			new FragmentCompositionFragmentEntryCreateDateComparator(true);
+
+	private static final FragmentCompositionFragmentEntryCreateDateComparator
+		_INSTANCE_DESCENDING =
+			new FragmentCompositionFragmentEntryCreateDateComparator(false);
 
 	private final boolean _ascending;
 

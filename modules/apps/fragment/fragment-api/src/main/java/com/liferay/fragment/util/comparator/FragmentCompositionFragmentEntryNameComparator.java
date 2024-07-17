@@ -21,12 +21,14 @@ public class FragmentCompositionFragmentEntryNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public FragmentCompositionFragmentEntryNameComparator() {
-		this(false);
-	}
+	public static FragmentCompositionFragmentEntryNameComparator getInstance(
+		boolean ascending) {
 
-	public FragmentCompositionFragmentEntryNameComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -74,6 +76,18 @@ public class FragmentCompositionFragmentEntryNameComparator
 
 		return fragmentEntry.getName();
 	}
+
+	private FragmentCompositionFragmentEntryNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final FragmentCompositionFragmentEntryNameComparator
+		_INSTANCE_ASCENDING =
+			new FragmentCompositionFragmentEntryNameComparator(true);
+
+	private static final FragmentCompositionFragmentEntryNameComparator
+		_INSTANCE_DESCENDING =
+			new FragmentCompositionFragmentEntryNameComparator(false);
 
 	private final boolean _ascending;
 

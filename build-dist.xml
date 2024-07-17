@@ -1210,6 +1210,20 @@ org.apache.level=WARNING]]>
 		</replace>
 
 		<replace
+			file="${app.server.tomcat.dir}/conf/server.xml"
+		>
+			<replacetoken><![CDATA[<Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"/>]]></replacetoken>
+			<replacevalue><![CDATA[<Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster">
+		<Manager className="com.liferay.support.tomcat.session.LiferayDeltaManager" />
+		<Channel className="org.apache.catalina.tribes.group.GroupChannel">
+			<Sender className="org.apache.catalina.tribes.transport.ReplicationTransmitter">
+				<Transport className="org.apache.catalina.tribes.transport.nio.PooledParallelSender" timeout="300000" />
+			</Sender>
+		</Channel>
+	</Cluster>]]></replacevalue>
+		</replace>
+
+		<replace
 			file="${app.server.tomcat.dir}/conf/web.xml"
 		>
 			<replacetoken><![CDATA[<web-app]]></replacetoken>

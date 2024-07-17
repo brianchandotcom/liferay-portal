@@ -11,31 +11,33 @@ import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {DocumentLibraryPage} from './DocumentLibraryPage';
 
 export class DocumentLibraryEditFilePage {
-	readonly documentLibraryPage: DocumentLibraryPage;
 	readonly page: Page;
+
 	readonly backButton: Locator;
+	readonly documentLibraryPage: DocumentLibraryPage;
+	readonly permissionViewSelector: Locator;
+	readonly publishButton: Locator;
 	readonly publishDateSelector: Locator;
 	readonly saveButton: Locator;
-	readonly selectForUpdateButton: Locator;
-	readonly publishButton: Locator;
 	readonly scheduleButton: Locator;
+	readonly selectForUpdateButton: Locator;
 	readonly titleSelector: Locator;
-	readonly permissionViewSelector: Locator;
 
 	constructor(page: Page) {
-		this.documentLibraryPage = new DocumentLibraryPage(page);
 		this.page = page;
+
 		this.backButton = page.getByRole('link', {name: 'Back'});
+		this.documentLibraryPage = new DocumentLibraryPage(page);
+		this.permissionViewSelector = page.getByLabel('Viewable by');
 		this.publishButton = page.getByRole('button', {
 			exact: true,
 			name: 'Publish',
 		});
 		this.publishDateSelector = page.getByLabel('Publish Date');
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
-		this.selectForUpdateButton = page.getByLabel('Upload', {exact: true});
 		this.scheduleButton = page.getByRole('button', {name: 'Schedule'});
+		this.selectForUpdateButton = page.getByLabel('Upload', {exact: true});
 		this.titleSelector = page.getByLabel('Title');
-		this.permissionViewSelector = page.getByLabel('Viewable by');
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -63,6 +65,16 @@ export class DocumentLibraryEditFilePage {
 		});
 	}
 
+	async goBack() {
+		await this.backButton.click();
+	}
+
+	async goToNewFileDifferentType(type: string) {
+		await this.documentLibraryPage.goto();
+
+		await this.documentLibraryPage.goToCreateNewFileWithDifferentType(type);
+	}
+
 	async publishFileEntry() {
 		if (await this.saveButton.isVisible()) {
 			await this.saveButton.click();
@@ -72,16 +84,6 @@ export class DocumentLibraryEditFilePage {
 		}
 
 		await waitForSuccessAlert(this.page);
-	}
-
-	async goBack() {
-		await this.backButton.click();
-	}
-
-	async goToNewFileDifferentType(type: string) {
-		await this.documentLibraryPage.goto();
-
-		await this.documentLibraryPage.goToCreateNewFileWithDifferentType(type);
 	}
 
 	async publishNewBasicFileEntry(title: string) {
@@ -95,6 +97,30 @@ export class DocumentLibraryEditFilePage {
 		else {
 			await this.publishButton.click();
 		}
+	}
+
+	async publishMultipleFiles(dTypeTitle: string, filePaths: string[]) {
+		await this.page.getByRole('button', {name: 'Select Files'}).waitFor();
+		await this.page.locator('input[type="file"]').setInputFiles(filePaths);
+		await this.page.getByRole('button', {name: 'Document Type'}).click();
+		await this.page.getByRole('button', {name: 'Basic Document'}).click();
+		await this.page.getByRole('menuitem', {name: dTypeTitle}).click();
+		await this.page.getByRole('button', {name: 'Publish'}).click();
+	}
+
+	async publishNewFileWithoutGuestViewPermission(title: string) {
+		await this.goto();
+
+		await this.titleSelector.fill(title);
+		if (await this.permissionViewSelector.isVisible()) {
+			await this.permissionViewSelector.selectOption('Site Member');
+		}
+		else {
+			await this.page.getByRole('button', {name: 'Permissions'}).click();
+			await this.permissionViewSelector.selectOption('Site Member');
+		}
+
+		await this.publishButton.click();
 	}
 
 	async publishNewFileWithScheduleDate(scheduleDate: string, title: string) {
@@ -127,30 +153,6 @@ export class DocumentLibraryEditFilePage {
 		else {
 			await this.publishButton.click();
 		}
-	}
-
-	async publishNewFileWithoutGuestViewPermission(title: string) {
-		await this.goto();
-
-		await this.titleSelector.fill(title);
-		if (await this.permissionViewSelector.isVisible()) {
-			await this.permissionViewSelector.selectOption('Site Member');
-		}
-		else {
-			await this.page.getByRole('button', {name: 'Permissions'}).click();
-			await this.permissionViewSelector.selectOption('Site Member');
-		}
-
-		await this.publishButton.click();
-	}
-
-	async publishMultipleFiles(dTypeTitle: string, filePaths: string[]) {
-		await this.page.getByRole('button', {name: 'Select Files'}).waitFor();
-		await this.page.locator('input[type="file"]').setInputFiles(filePaths);
-		await this.page.getByRole('button', {name: 'Document Type'}).click();
-		await this.page.getByRole('button', {name: 'Basic Document'}).click();
-		await this.page.getByRole('menuitem', {name: dTypeTitle}).click();
-		await this.page.getByRole('button', {name: 'Publish'}).click();
 	}
 
 	async selectSpecificDisplayPage(displayPageName: string) {

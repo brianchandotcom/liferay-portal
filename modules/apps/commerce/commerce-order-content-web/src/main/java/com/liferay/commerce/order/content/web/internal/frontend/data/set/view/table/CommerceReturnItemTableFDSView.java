@@ -36,7 +36,7 @@ public class CommerceReturnItemTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
 		).add(
-			"commerceOrderItemToCommerceReturnItems.name", "product-name"
+			"commerceOrderItemToCommerceReturnItems.name.LANG", "product-name"
 		).add(
 			"commerceOrderItemToCommerceReturnItems.unitOfMeasureKey", "uom"
 		).add(

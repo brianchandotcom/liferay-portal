@@ -12,6 +12,8 @@ CommerceReturnContentDisplayContext commerceReturnContentDisplayContext = (Comme
 
 CommerceReturn commerceReturn = commerceReturnContentDisplayContext.getCommerceReturn();
 
+String returnStatus = commerceReturn.getReturnStatus();
+
 String note = StringPool.BLANK;
 
 if (commerceReturn != null) {
@@ -30,6 +32,8 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 
 <commerce-ui:header
 	actions="<%= commerceReturnContentDisplayContext.getHeaderActionModels() %>"
+	additionalStatusLabel="<%= returnStatus %>"
+	additionalStatusLabelStyle="<%= CommerceReturnConstants.getReturnStatusLabelStyle(returnStatus) %>"
 	bean="<%= (commerceReturn == null) ? null : commerceReturn.getObjectEntry() %>"
 	beanIdLabel='<%= (commerceReturn == null) ? null : "id" %>'
 	externalReferenceCode="<%= (commerceReturn == null) ? StringPool.BLANK : commerceReturn.getExternalReferenceCode() %>"
@@ -108,17 +112,6 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 						</div>
 
 						<div class="col-4">
-							<commerce-ui:info-box
-								elementClasses="py-3"
-								title='<%= LanguageUtil.get(request, "return-status") %>'
-							>
-								<clay:label
-									cssClass="mb-0"
-									displayType="<%= commerceReturnContentDisplayContext.getReturnStatusDisplayType() %>"
-									label="<%= commerceReturnContentDisplayContext.getReturnStatus() %>"
-								/>
-							</commerce-ui:info-box>
-
 							<liferay-portlet:renderURL var="editCommerceReturnNoteURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 								<portlet:param name="mvcRenderCommandName" value="/commerce_return_content/edit_commerce_return_note" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -237,7 +230,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 		).put(
 			"redirectURL", currentURL
 		).put(
-			"returnStatus", "completed"
+			"returnStatus", CommerceReturnConstants.RETURN_STATUS_PENDING
 		).build()
 	%>'
 	module="{editCommerceReturn} from commerce-order-content-web"

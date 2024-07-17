@@ -38,6 +38,8 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 		content = _fixEmptyLinesBetweenTags(fileName, content);
 
+		content = _fixEmptyLinesInTag(content);
+
 		content = _fixMissingEmptyLinesAroundComments(content);
 
 		Matcher matcher = _redundantEmptyLinePattern.matcher(content);
@@ -77,6 +79,42 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 		return content;
 	}
 
+	private String _fixEmptyLinesInTag(String content) {
+		Matcher matcher = _emptyLineInTagPattern1.matcher(content);
+
+		while (matcher.find()) {
+			String trimmedLine = StringUtil.trimLeading(
+				getLine(content, getLineNumber(content, matcher.start())));
+
+			if (trimmedLine.startsWith("<echo")) {
+				continue;
+			}
+
+			return StringUtil.replaceFirst(
+				content, "\n\n", "\n", matcher.start());
+		}
+
+		matcher = _emptyLineInTagPattern2.matcher(content);
+
+		while (matcher.find()) {
+			if (StringUtil.equals(matcher.group(1), "echo")) {
+				continue;
+			}
+
+			String trimmedLine = StringUtil.trim(
+				getLine(content, getLineNumber(content, matcher.start())));
+
+			if (trimmedLine.startsWith("<") || trimmedLine.endsWith(">")) {
+				continue;
+			}
+
+			return StringUtil.replaceFirst(
+				content, "\n\n", "\n", matcher.start());
+		}
+
+		return content;
+	}
+
 	private String _fixMissingEmptyLinesAroundComments(String content) {
 		Matcher matcher = _missingEmptyLineAfterCommentPattern.matcher(content);
 
@@ -97,6 +135,10 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 	private static final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
 		"\n(\t*)<[\\w/].*[^-]>(\n\n)(\t*)<(\\w)");
+	private static final Pattern _emptyLineInTagPattern1 = Pattern.compile(
+		">\n\n\t*+(?!<)");
+	private static final Pattern _emptyLineInTagPattern2 = Pattern.compile(
+		"\n\n\t+</(.+)>");
 	private static final Pattern _missingEmptyLineAfterCommentPattern =
 		Pattern.compile("[\t ]-->\n[\t<]");
 	private static final Pattern _missingEmptyLineBeforeCommentPattern =

@@ -45,7 +45,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Alexander Chow
  */
 @RunWith(Arquillian.class)
-public class WebServerRangeTest extends BaseWebServerTestCase {
+public class RangeWebServerTest extends BaseWebServerTestCase {
 
 	@ClassRule
 	@Rule
@@ -232,7 +232,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 
 	private static final String _SAMPLE_DATA =
 		"A123456789B123456789C123456789D123456789" +
-			"E123456789F123456789G123456789" + WebServerRangeTest._UNICODE_DATA;
+			"E123456789F123456789G123456789" + RangeWebServerTest._UNICODE_DATA;
 
 	private static final String _UNICODE_DATA = "H\u4e2d\u00e9\u00fc\u00f1";
 

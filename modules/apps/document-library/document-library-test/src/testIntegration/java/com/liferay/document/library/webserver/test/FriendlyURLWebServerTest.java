@@ -44,7 +44,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Adolfo Pérez
  */
 @RunWith(Arquillian.class)
-public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
+public class FriendlyURLWebServerTest extends BaseWebServerTestCase {
 
 	@ClassRule
 	@Rule

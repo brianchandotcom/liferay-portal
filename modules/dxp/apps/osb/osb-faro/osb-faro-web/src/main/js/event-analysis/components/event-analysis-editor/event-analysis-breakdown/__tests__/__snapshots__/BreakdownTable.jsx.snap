@@ -24,6 +24,11 @@ exports[`BreakdownTable render 1`] = `
                   class="text-truncate"
                 >
                   <div>
+                    <span
+                      class="breakdown-category"
+                    >
+                      EVENT
+                    </span>
                     Boolean Name
                   </div>
                 </span>

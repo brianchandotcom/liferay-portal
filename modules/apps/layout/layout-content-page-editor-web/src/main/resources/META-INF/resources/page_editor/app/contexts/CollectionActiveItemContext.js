@@ -9,7 +9,7 @@ import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {CollectionItemContext, INITIAL_STATE} from './CollectionItemContext';
 import {
-	useActiveItemId,
+	useActiveItemIds,
 	useActiveItemType,
 	useIsActive,
 } from './ControlsContext';
@@ -31,7 +31,7 @@ export function CollectionActiveItemContextProvider({children}) {
 }
 
 export function useSetCollectionActiveItemContext(itemId) {
-	const activeItemId = useActiveItemId();
+	const activeItemIds = useActiveItemIds();
 	const activeItemType = useActiveItemType();
 	const isActive = useIsActive();
 	const collectionContext = useContext(CollectionItemContext);
@@ -42,13 +42,19 @@ export function useSetCollectionActiveItemContext(itemId) {
 		[itemId]
 	);
 
+	const activeItemIdsIsEditable = () =>
+		Liferay.FeatureFlags['LPD-18221']
+			? activeItemIds.some((itemId) =>
+					itemId?.startsWith(item.config.fragmentEntryLinkId)
+				)
+			: activeItemIds?.startsWith(item.config.fragmentEntryLinkId);
+
 	if (
 		isActive(itemId) ||
 		(item &&
 			item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
 			activeItemType === ITEM_TYPES.editable &&
-			activeItemId &&
-			activeItemId.startsWith(item.config.fragmentEntryLinkId))
+			activeItemIdsIsEditable())
 	) {
 		setState(collectionContext);
 	}

@@ -59,12 +59,22 @@ export function fromControlsId(controlsItemId) {
 	if (!controlsItemId) {
 		return null;
 	}
+	else if (
+		Liferay.FeatureFlags['LPD-18221'] &&
+		Array.isArray(controlsItemId)
+	) {
 
-	const splits = controlsItemId.split(COLLECTION_ID_DIVIDER);
+		// todo: adapt collections for multiselect
 
-	const itemId = splits.pop();
+		return controlsItemId;
+	}
+	else {
+		const splits = controlsItemId.split(COLLECTION_ID_DIVIDER);
 
-	return itemId || controlsItemId;
+		const itemId = splits.pop();
+
+		return itemId || controlsItemId;
+	}
 }
 
 const NotCollectionSelectedMessage = () => (

@@ -328,7 +328,6 @@ definition {
 	@description = "This is a use case for LPS-190015, TC3. Canceling the multi publishing of several webcontents, stops them process properly and no webcontnts are published."
 	@priority = 3
 	test CanceledMultiPublisDoesNotPublishAnyWebContent {
-
 		task ("Activate local live staging") {
 			JSONStaging.enableLocalStaging(groupName = "Site Name");
 		}
@@ -1679,7 +1678,6 @@ definition {
 	@description = "This is a use case for LPS-190015, TC2. Publishing several webcontents from the first page of wcs by multi publish option."
 	@priority = 3
 	test PublishMoreWebContentWithMultiPublishOption {
-
 		task ("Activate local live staging") {
 			JSONStaging.enableLocalStaging(groupName = "Site Name");
 		}
@@ -1722,7 +1720,6 @@ definition {
 	@description = "This is a use case for LPS-190015, TC1. Publishing a single webcontent by multi publish option."
 	@priority = 3
 	test PublishOneWebContentWithMultiPublishOption {
-
 		task ("Activate local live staging") {
 			JSONStaging.enableLocalStaging(groupName = "Site Name");
 		}

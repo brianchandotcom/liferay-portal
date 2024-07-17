@@ -124,86 +124,76 @@ public class JournalManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		List<DropdownItem> actionDropdownItems =
-			DropdownItemListBuilder.addGroup(
-				dropdownGroupItem -> {
-					dropdownGroupItem.setDropdownItems(
-						DropdownItemListBuilder.add(
-							dropdownItem -> {
-								dropdownItem.putData("action", "expireEntries");
-								dropdownItem.setIcon("time");
-								dropdownItem.setLabel(
-									LanguageUtil.get(
-										httpServletRequest, "expire"));
-								dropdownItem.setQuickAction(true);
-							}
-						).build());
-					dropdownGroupItem.setSeparator(true);
-				}
-			).addGroup(
-				dropdownGroupItem -> {
-					dropdownGroupItem.setDropdownItems(
-						DropdownItemListBuilder.add(
-							dropdownItem -> {
-								dropdownItem.putData("action", "moveEntries");
-								dropdownItem.setIcon("move-folder");
-								dropdownItem.setLabel(
-									LanguageUtil.get(
-										httpServletRequest, "move"));
-								dropdownItem.setQuickAction(true);
-							}
-						).add(
-							dropdownItem -> {
-								dropdownItem.putData(
-									"action", "exportTranslation");
-								dropdownItem.setIcon("upload");
-								dropdownItem.setLabel(
-									LanguageUtil.get(
-										httpServletRequest,
-										"export-for-translations"));
-								dropdownItem.setQuickAction(true);
-							}
-						).build());
-					dropdownGroupItem.setSeparator(true);
-				}
-			).addGroup(
-				dropdownGroupItem -> {
-					dropdownGroupItem.setDropdownItems(
-						DropdownItemListBuilder.add(
-							dropdownItem -> {
-								dropdownItem.putData(
-									"action", "changePermissions");
-								dropdownItem.putData(
-									"maxItemsToShowInfoMessage",
-									String.valueOf(200));
-								dropdownItem.setIcon("password-policies");
-								dropdownItem.setLabel(
-									LanguageUtil.get(
-										httpServletRequest, "permissions"));
-								dropdownItem.setQuickAction(false);
-							}
-						).build());
-					dropdownGroupItem.setSeparator(true);
-				}
-			).addGroup(
-				dropdownGroupItem -> {
-					dropdownGroupItem.setDropdownItems(
-						DropdownItemListBuilder.add(
-							dropdownItem -> {
-								dropdownItem.putData("action", "deleteEntries");
-								dropdownItem.setIcon("trash");
-								dropdownItem.setLabel(
-									LanguageUtil.get(
-										httpServletRequest, "delete"));
-								dropdownItem.setQuickAction(true);
-							}
-						).build());
-					dropdownGroupItem.setSeparator(true);
-				}
-			).build();
-
-		actionDropdownItems = DropdownItemListBuilder.addAll(
-			actionDropdownItems
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "expireEntries");
+							dropdownItem.setIcon("time");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "expire"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "moveEntries");
+							dropdownItem.setIcon("move-folder");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "move"));
+							dropdownItem.setQuickAction(true);
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "exportTranslation");
+							dropdownItem.setIcon("upload");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									httpServletRequest,
+									"export-for-translations"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "changePermissions");
+							dropdownItem.putData(
+								"maxItemsToShowInfoMessage",
+								String.valueOf(200));
+							dropdownItem.setIcon("password-policies");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									httpServletRequest, "permissions"));
+							dropdownItem.setQuickAction(false);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "deleteEntries");
+							dropdownItem.setIcon("trash");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "delete"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
 		).addGroup(
 			() -> {
 				Group group = _themeDisplay.getScopeGroup();
@@ -231,8 +221,6 @@ public class JournalManagementToolbarDisplayContext
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
-
-		return actionDropdownItems;
 	}
 
 	@Override

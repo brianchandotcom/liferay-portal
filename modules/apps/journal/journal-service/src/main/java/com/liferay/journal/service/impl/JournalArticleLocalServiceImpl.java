@@ -111,7 +111,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -1467,9 +1466,8 @@ public class JournalArticleLocalServiceImpl
 		if (articleResource != null) {
 			_systemEventLocalService.addSystemEvent(
 				0, groupId, JournalArticle.class.getName(),
-				articleResource.getResourcePrimKey(),
-				articleResource.getUuid(), null,
-				SystemEventConstants.TYPE_DELETE,
+				articleResource.getResourcePrimKey(), articleResource.getUuid(),
+				null, SystemEventConstants.TYPE_DELETE,
 				JSONUtil.put(
 					"assetTitle", assetTitle
 				).toString());

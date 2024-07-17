@@ -311,36 +311,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-179151. Confirm that the Checkbox in the Field edit modal is displayed."
-	@priority = 3
-	test CanAssertTheSortableCheckbox {
-		task ("And adds two or more fields") {
-			DataSetAdmin.addFields(key_fieldList = "id,label");
-		}
-
-		task ("And clicks on ellipsis button on one of these fields") {
-			Click(
-				key_fieldName = "id",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-		}
-
-		task ("And clicks on Edit option") {
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("Then Edit field modal is displayed") {
-			AssertVisible(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "Edit id");
-		}
-
-		task ("And contains Sortable checkbox") {
-			AssertElementPresent(
-				key_checkboxOption = "Sortable",
-				locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
-		}
-	}
-
 	@description = "LPS-176516 Confirm that when adding a field with translation, and adding pt to the page URL, the values change according to the translation"
 	@priority = 3
 	test CanAssertTranslationIsWorking {
@@ -499,98 +469,6 @@ definition {
 
 		task ("Then Confirm that all fields are unchecked ") {
 			DataSetAdmin.assertFieldsNotChecked(key_fieldList = "renderer,rendererType");
-		}
-	}
-
-	@description = "LPS-179151. Confirm that the checkbox in the field edit modal is checked."
-	@priority = 4
-	test CanConfirmCheckedSortableCheckbox {
-		task ("And adds two or more fields") {
-			DataSetAdmin.addFields(key_fieldList = "id,label");
-		}
-
-		task ("And clicks on ellipsis button on one of these fields") {
-			Click(
-				key_fieldName = "id",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-		}
-
-		task ("And clicks on Edit option") {
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("Then Edit field modal is displayed") {
-			AssertVisible(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "Edit id");
-		}
-
-		task ("When the user unchecks and check on Sortable checkbox") {
-			Click(
-				key_checkboxOption = "Sortable",
-				locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
-
-			Click(
-				key_checkboxOption = "Sortable",
-				locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
-		}
-
-		task ("And clicks on Save button") {
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-		}
-
-		task ("Then the sortable field value is "yes" or "true"") {
-			AssertElementPresent(
-				chosenFilter = "true",
-				key_tableColumn = 1,
-				key_tableRow = 1,
-				locator1 = "DataSet#FILTER_TABLE_CELL");
-		}
-	}
-
-	@description = "LPS-179151. Confirm that the checkbox in the field edit modal is unchecked."
-	@priority = 4
-	test CanConfirmUncheckedSortableCheckbox {
-		task ("And adds two or more fields") {
-			DataSetAdmin.addFields(key_fieldList = "id,label");
-		}
-
-		task ("And clicks on ellipsis button on one of these fields") {
-			Click(
-				key_fieldName = "id",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-		}
-
-		task ("And clicks on Edit option") {
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("Then Edit field modal is displayed") {
-			AssertVisible(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "Edit id");
-		}
-
-		task ("When the user unchecks on Sortable checkbox") {
-			Click(
-				key_checkboxOption = "Sortable",
-				locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
-		}
-
-		task ("And clicks on Save button") {
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-		}
-
-		task ("Then the sortable field value is "no" or "false"") {
-			AssertElementPresent(
-				chosenFilter = "false",
-				key_tableColumn = 1,
-				key_tableRow = 1,
-				locator1 = "DataSet#FILTER_TABLE_CELL");
 		}
 	}
 

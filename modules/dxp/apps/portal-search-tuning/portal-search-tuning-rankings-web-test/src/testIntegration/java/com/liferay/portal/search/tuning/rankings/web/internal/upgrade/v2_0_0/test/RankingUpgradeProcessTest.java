@@ -3,17 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.tuning.rankings.web.internal.upgrade.v3_0_0.test;
+package com.liferay.portal.search.tuning.rankings.web.internal.upgrade.v2_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.search.spi.reindexer.IndexReindexer;
-import com.liferay.portal.search.tuning.rankings.constants.ResultRankingsConstants;
-import com.liferay.portal.search.tuning.rankings.index.Ranking;
-import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.upgrade.BaseRankingUpgradeProcessTestCase;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -24,10 +19,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author David Truong
+ * @author Almir Ferreira
  */
 @RunWith(Arquillian.class)
-public class RankingJSONStorageEntryUpgradeProcessTest
+public class RankingUpgradeProcessTest
 	extends BaseRankingUpgradeProcessTestCase {
 
 	@ClassRule
@@ -39,9 +34,12 @@ public class RankingJSONStorageEntryUpgradeProcessTest
 
 	@Test
 	public void testUpgradeProcess() throws Exception {
+		long oldClassNameId = classNameLocalService.getClassNameId(
+			"com.liferay.portal.search.tuning.rankings.web.internal.index." +
+				"Ranking");
 		long classPK = counterLocalService.increment();
 
-		addRanking(rankingClassNameId, classPK);
+		addRanking(oldClassNameId, classPK);
 
 		runUpgrade();
 
@@ -51,32 +49,13 @@ public class RankingJSONStorageEntryUpgradeProcessTest
 
 		Assert.assertNotNull(rankingJSONObject);
 
-		Assert.assertFalse(rankingJSONObject.has("inactive"));
-		Assert.assertTrue(rankingJSONObject.has("status"));
-		Assert.assertEquals(
-			ResultRankingsConstants.STATUS_ACTIVE,
-			rankingJSONObject.getString("status"));
-
-		_indexReindexer.reindex(companyId);
-
-		Assert.assertNotNull(
-			_rankingIndexReader.fetch(
-				Ranking.class.getName() + "_PORTLET_" + classPK,
-				rankingIndexName));
+		Assert.assertNull(classNameLocalService.fetchClassName(oldClassNameId));
 	}
 
 	@Override
 	protected String getUpgradeStepClassName() {
 		return "com.liferay.portal.search.tuning.rankings.web.internal." +
-			"upgrade.v3_0_0.RankingJSONStorageEntryUpgradeProcess";
+			"upgrade.v2_0_0.RankingUpgradeProcess";
 	}
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReindexer))"
-	)
-	private IndexReindexer _indexReindexer;
-
-	@Inject
-	private RankingIndexReader _rankingIndexReader;
 
 }

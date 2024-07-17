@@ -6,6 +6,10 @@
 import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers} from './ApiHelpers';
 
+type EmailNotificationRecipients = {
+	[key in 'roleName']?: string;
+};
+
 type TNotificationTemplate = {
 	editorType: string;
 	id?: number;
@@ -23,9 +27,8 @@ type TRecipient = {
 	fromName: {
 		[key: string]: string;
 	};
-	to: {
-		[key: string]: string;
-	};
+	to: LocalizedValue<string> | EmailNotificationRecipients[];
+	toType: string;
 };
 
 export class NotificationApiHelper {
@@ -82,6 +85,7 @@ export class NotificationApiHelper {
 					to: {
 						en_US: toEmail,
 					},
+					toType: 'email',
 				},
 			],
 			subject: {

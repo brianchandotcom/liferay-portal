@@ -270,6 +270,54 @@ public class NavigationMenuResourceTest
 	}
 
 	@Override
+	protected boolean equals(
+		NavigationMenu navigationMenu1, NavigationMenu navigationMenu2) {
+
+		if (navigationMenu1 == navigationMenu2) {
+			return true;
+		}
+
+		if (!Objects.equals(
+				navigationMenu1.getSiteId(), navigationMenu2.getSiteId())) {
+
+			return false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(additionalAssertFieldName, "name")) {
+				if (!Objects.equals(
+						navigationMenu1.getName(), navigationMenu2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					additionalAssertFieldName, "navigationMenuItems")) {
+
+				if (!_equals(
+						navigationMenu1.getNavigationMenuItems(),
+						navigationMenu2.getNavigationMenuItems())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name", "navigationMenuItems"};
 	}

@@ -19,6 +19,8 @@ public class XMLStylingCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		content = content.replaceAll(">\t", ">\n\t");
+
 		Matcher matcher = _xmlDeclarationPattern.matcher(content);
 
 		if (matcher.find()) {

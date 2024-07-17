@@ -58,7 +58,7 @@ public class DLFileShortcutUADTestUtil {
 			null, inputStream, bytes.length, null, null, null, serviceContext);
 
 		return dlFileShortcutLocalService.addFileShortcut(
-			userId, groupId, groupId, dlFolder.getFolderId(),
+			null, userId, groupId, groupId, dlFolder.getFolderId(),
 			dlFileEntry.getFileEntryId(), serviceContext);
 	}
 

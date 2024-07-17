@@ -1422,4 +1422,18 @@ definition {
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 	}
 
+	@description = "This ensures that a warning message is displayed when stage is activated"
+	@priority = 5
+	test CheckWarningMessageIsPresentWhenStageIsActivated {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONStaging.enableLocalStaging(groupName = "Test Site Name");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertTextEquals(
+			locator1 = "Message#WARNING",
+			value1 = "Warning:Redirect Functionality May Not Work as Expected in This Staging Environment.");
+	}
+
 }

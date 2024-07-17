@@ -82,7 +82,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -798,26 +797,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 		}
 
-		List<com.liferay.portal.kernel.model.PortletPreferences>
-			portletPreferences =
-				_portletPreferencesLocalService.
-					getPortletPreferencesByPortletId(portletId1);
-
-		Assert.assertEquals(
-			portletPreferences.toString(), 2, portletPreferences.size());
-
-		for (com.liferay.portal.kernel.model.PortletPreferences
-				portletPreference : portletPreferences) {
-
-			Assert.assertTrue(
-				portletPreference.toString(),
-				ArrayUtil.contains(
-					new long[] {
-						layout.getPlid(), PortletKeys.PREFS_PLID_SHARED
-					},
-					portletPreference.getPlid()));
-		}
-
+		_assertPortletPreferences(0, portletId1);
 		_assertPortletPreferences(count, portletId2);
 
 		_assertPortletPreferences(value, name, portletId2, draftLayout, layout);

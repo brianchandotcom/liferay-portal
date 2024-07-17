@@ -245,6 +245,7 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 					to: {
 						en_US: '[%SALES_AGENT%]',
 					},
+					toType: 'email',
 				},
 			],
 			subject: {

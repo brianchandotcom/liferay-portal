@@ -1,0 +1,29 @@
+{
+	"fieldSets": [
+		{
+			"configurationRole": "advanced",
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "Red",
+					"label": "Color",
+					"name": "color",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Red",
+								"value": "red"
+							},
+							{
+								"label": "Green",
+								"value": "green"
+							}
+						]
+					}
+				}
+			],
+			"label": "Apple Properties"
+		}
+	]
+}

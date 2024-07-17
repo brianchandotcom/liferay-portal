@@ -394,6 +394,7 @@ export class PageEditorPage {
 		await dragTarget.hover();
 
 		await this.page.mouse.down();
+
 		await dropTarget.hover();
 
 		const boundingClientRect = await dropTarget.evaluate((element) =>
@@ -406,6 +407,7 @@ export class PageEditorPage {
 				y: boundingClientRect.height / 2,
 			},
 		});
+
 		await this.page.mouse.up();
 	}
 

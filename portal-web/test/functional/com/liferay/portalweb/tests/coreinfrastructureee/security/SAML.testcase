@@ -1356,6 +1356,103 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPD-31188: ClassCastException after non-graceful shutdown."
+	@priority = 4
+	test AssertUserLoggedInAfterNonGracefulShutdown {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Edit user screen name") {
+			MyAccount.openMyAccountAdmin();
+
+			User.editUserInformation(userScreenNameEdit = "tester");
+		}
+
+		task ("Add virtual instance able.com") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.logoutPG();
+
+			User.viewLoggedOutPG();
+		}
+
+		task ("Setup IdP") {
+			SAML.setupIDP(
+				idpURL = "http://localhost:8080",
+				samlEntityId = "samlidp",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Setup SP") {
+			SAML.setupSP(
+				encryptionCertificate = "true",
+				samlEntityId = "samlsp",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("Add IdP configurations to service provider") {
+			SAML.addIDPConfigurationsToServiceProvider(
+				idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
+				idpEntityId = "samlidp",
+				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+				idpURL = "http://localhost:8080",
+				nameIdentifierFormat = "Email Address",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com",
+				userResolution = "dynamic");
+		}
+
+		task ("Enable SP roles and SP configurations to IdP") {
+			SAML.enableSPRoles(
+				samlEntityId = "samlsp",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			SAML.addSPConfigurationsToIdentityProvider(
+				idpURL = "http://localhost:8080",
+				nameIdentifierAttributeName = "emailAddress",
+				nameIdentifierFormat = "Email Address",
+				spAttributes = '''emailAddress
+				firstName
+				lastName
+				screenName
+				uuid''',
+				spEntityId = "samlsp",
+				spKeepAliveURL = "http://www.able.com:8080/c/portal/saml/keep_alive",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Login at able.com:8080 and assert Logged in") {
+			User.firstLoginUI(
+				password = PropsUtil.get("default.admin.password"),
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@liferay.com");
+
+			User.viewLoggedInPG();
+		}
+
+		task ("Kill server and start it") {
+			AntCommands.runCommand("build-test.xml", "terminate-one-java-process -Dprocess.name=Bootstrap");
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Refresh and assert logged in") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			Refresh();
+
+			User.viewLoggedInPG();
+
+			Portlet.shutdownServer();
+		}
+	}
+
 	@description = "This is a use case for LPS-105170 TC-5: Verification for portal User Attributes when they are duplicated in the mapping  when saving the SAML configuration - Using virtual instances."
 	@priority = 4
 	test AssertVerificationForDuplicatedUserAttributeMappingSAML {

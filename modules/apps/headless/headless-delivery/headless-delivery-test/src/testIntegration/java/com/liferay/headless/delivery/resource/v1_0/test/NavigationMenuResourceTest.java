@@ -39,7 +39,9 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -51,6 +53,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -608,6 +612,20 @@ public class NavigationMenuResourceTest
 		NavigationMenu postNavigationMenu =
 			testGetNavigationMenu_addNavigationMenu();
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		String value1 = RandomTestUtil.randomString();
+		String value2 = RandomTestUtil.randomString();
+
+		serviceContext.setExpandoBridgeAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				_expandoColumnNames.get(0), value1
+			).put(
+				_expandoColumnNames.get(1), value2
+			).build());
+
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
 				null, TestPropsValues.getUserId(), testGroup.getGroupId(),
@@ -639,8 +657,7 @@ public class NavigationMenuResourceTest
 						return null;
 					}
 				).buildString(),
-				ServiceContextTestUtil.getServiceContext(
-					testGroup.getGroupId(), TestPropsValues.getUserId()));
+				serviceContext);
 
 		Page<NavigationMenu> page =
 			navigationMenuResource.getSiteNavigationMenusPage(
@@ -676,6 +693,42 @@ public class NavigationMenuResourceTest
 			Assert.assertEquals(title, navigationMenuItem.getName());
 			Assert.assertFalse(navigationMenuItem.getUseCustomName());
 		}
+
+		CustomField[] customFields = ArrayUtil.filter(
+			navigationMenuItem.getCustomFields(),
+			customField ->
+				Objects.equals(
+					customField.getName(), _expandoColumnNames.get(0)) ||
+				Objects.equals(
+					customField.getName(), _expandoColumnNames.get(1)));
+
+		Assert.assertTrue(
+			_equalsCustomFieldsIgnoringOrder(
+				customFields,
+				new CustomField[] {
+					new CustomField() {
+						{
+							customValue = new CustomValue() {
+								{
+									data = value1;
+								}
+							};
+							dataType = "Text";
+							name = _expandoColumnNames.get(0);
+						}
+					},
+					new CustomField() {
+						{
+							customValue = new CustomValue() {
+								{
+									data = value2;
+								}
+							};
+							dataType = "Text";
+							name = _expandoColumnNames.get(1);
+						}
+					}
+				}));
 
 		navigationMenuResource.deleteNavigationMenu(postNavigationMenu.getId());
 	}

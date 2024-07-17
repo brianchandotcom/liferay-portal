@@ -991,7 +991,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public MBMessage fetchMBMessageByUrlSubject(
 		long groupId, String urlSubject) {
 
-		return mbMessagePersistence.fetchByG_US(groupId, urlSubject);
+		return mbMessagePersistence.fetchByG_US(
+			groupId,
+			_friendlyURLNormalizer.normalizeWithEncodingPeriodsAndSlashes(
+				urlSubject));
 	}
 
 	@Override
@@ -2374,8 +2377,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			subject = String.valueOf(id);
 		}
 		else {
-			subject = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
-				subject);
+			subject =
+				_friendlyURLNormalizer.normalizeWithEncodingPeriodsAndSlashes(
+					subject);
 		}
 
 		return ModelHintsUtil.trimString(

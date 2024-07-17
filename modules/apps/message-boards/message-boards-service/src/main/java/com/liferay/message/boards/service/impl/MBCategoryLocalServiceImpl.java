@@ -550,7 +550,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	public MBCategory getMBCategory(long groupId, String friendlyURL)
 		throws PortalException {
 
-		return mbCategoryPersistence.findByG_F(groupId, friendlyURL);
+		return mbCategoryPersistence.findByG_F(
+			groupId,
+			_friendlyURLNormalizer.normalizeWithEncodingPeriodsAndSlashes(
+				friendlyURL));
 	}
 
 	@Override
@@ -942,7 +945,9 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			name = String.valueOf(categoryId);
 		}
 		else {
-			name = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(name);
+			name =
+				_friendlyURLNormalizer.normalizeWithEncodingPeriodsAndSlashes(
+					name);
 		}
 
 		name = ModelHintsUtil.trimString(

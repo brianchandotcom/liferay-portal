@@ -12,7 +12,6 @@ export class ConfigurationTabPage {
 	readonly configurationTabLink: Locator;
 	readonly page: Page;
 	readonly processBuilderPage: ProcessBuilderPage;
-	readonly workflowAssigned: Locator;
 
 	constructor(page: Page) {
 		this.configurationTabLink = page.getByRole('link', {
@@ -20,9 +19,6 @@ export class ConfigurationTabPage {
 		});
 		this.page = page;
 		this.processBuilderPage = new ProcessBuilderPage(page);
-		this.workflowAssigned = page
-			.getByRole('cell', {name: 'Workflow Definition'})
-			.getByTitle('Workflow Definition');
 	}
 
 	async goTo() {
@@ -66,7 +62,9 @@ export class ConfigurationTabPage {
 	async assignWorkflowToAssetType(workflowName: string, assetType: string) {
 		await this.clickAssetTypeEditButton(assetType);
 
-		await this.workflowAssigned.selectOption(workflowName);
+		await this.getAssignWorkflowDropdown(assetType).selectOption(
+			workflowName
+		);
 
 		await this.clickAssetTypeSaveButton('assigned', assetType);
 	}
@@ -74,8 +72,16 @@ export class ConfigurationTabPage {
 	async unassignWorkflowFromAssetType(assetType: string) {
 		await this.clickAssetTypeEditButton(assetType);
 
-		await this.workflowAssigned.selectOption('No Workflow');
+		await this.getAssignWorkflowDropdown(assetType).selectOption(
+			'No Workflow'
+		);
 
 		await this.clickAssetTypeSaveButton('unassigned', assetType);
+	}
+
+	getAssignWorkflowDropdown(assetType: string) {
+		return this.page
+			.getByRole('row', {name: assetType})
+			.getByTitle('Workflow Definition');
 	}
 }

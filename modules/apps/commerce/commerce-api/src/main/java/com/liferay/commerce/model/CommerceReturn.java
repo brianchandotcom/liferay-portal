@@ -28,10 +28,10 @@ public class CommerceReturn {
 
 		_accountId = (long)objectEntryValues.get(
 			"r_accountToCommerceReturns_accountEntryId");
-		_createDate = objectEntry.getCreateDate();
 		_channelGroupId = (long)objectEntryValues.get("channelGroupId");
 		_channelId = (long)objectEntryValues.get("channelId");
 		_channelName = (String)objectEntryValues.get("channelName");
+		_createDate = objectEntry.getCreateDate();
 		_externalReferenceCode = objectEntry.getExternalReferenceCode();
 		_id = objectEntry.getPrimaryKey();
 		_note = (String)objectEntryValues.get("note");

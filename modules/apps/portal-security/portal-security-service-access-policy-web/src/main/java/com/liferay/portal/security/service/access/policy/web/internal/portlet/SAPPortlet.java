@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.remote.json.web.service.JSONWebServiceActionMapping;
 import com.liferay.portal.remote.json.web.service.JSONWebServiceActionsManager;
-import com.liferay.portal.security.service.access.policy.constants.SAPWebKeys;
+import com.liferay.portal.security.service.access.policy.web.internal.constants.SAPWebKeys;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryService;
 import com.liferay.portal.security.service.access.policy.web.internal.constants.SAPPortletKeys;
 

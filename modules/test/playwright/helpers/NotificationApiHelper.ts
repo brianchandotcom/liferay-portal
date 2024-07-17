@@ -23,9 +23,12 @@ type TRecipient = {
 	fromName: {
 		[key: string]: string;
 	};
-	to: {
-		[key: string]: string;
-	};
+	to: LocalizedValue<string> | EmailNotificationRecipients[];
+	toType: string;
+};
+
+type EmailNotificationRecipients = {
+	[key in 'roleName']?: string;
 };
 
 export class NotificationApiHelper {
@@ -82,6 +85,7 @@ export class NotificationApiHelper {
 					to: {
 						en_US: toEmail,
 					},
+					toType: 'email',
 				},
 			],
 			subject: {

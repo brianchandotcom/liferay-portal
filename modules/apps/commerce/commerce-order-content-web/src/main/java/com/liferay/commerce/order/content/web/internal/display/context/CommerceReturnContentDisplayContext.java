@@ -7,6 +7,7 @@ package com.liferay.commerce.order.content.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.commerce.constants.CommerceReturnConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -62,6 +63,7 @@ import java.text.DateFormat;
 import java.text.Format;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -243,7 +245,10 @@ public class CommerceReturnContentDisplayContext {
 			return creationMenu;
 		}
 
-		if (Objects.equals(commerceReturn.getReturnStatus(), "draft")) {
+		if (Objects.equals(
+				commerceReturn.getReturnStatus(),
+				CommerceReturnConstants.RETURN_STATUS_DRAFT)) {
+
 			creationMenu.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.setHref(
@@ -277,6 +282,15 @@ public class CommerceReturnContentDisplayContext {
 	public List<FDSActionDropdownItem>
 			getCommerceReturnItemFDSActionDropdownItems()
 		throws PortalException {
+
+		CommerceReturn commerceReturn = getCommerceReturn();
+
+		if (!StringUtil.equals(
+				commerceReturn.getReturnStatus(),
+				CommerceReturnConstants.RETURN_STATUS_DRAFT)) {
+
+			return Collections.emptyList();
+		}
 
 		HttpServletRequest httpServletRequest = _cpRequestHelper.getRequest();
 
@@ -357,7 +371,9 @@ public class CommerceReturnContentDisplayContext {
 		CommerceReturn commerceReturn = getCommerceReturn();
 
 		if ((commerceReturn != null) &&
-			!Objects.equals(commerceReturn.getReturnStatus(), "draft")) {
+			!Objects.equals(
+				commerceReturn.getReturnStatus(),
+				CommerceReturnConstants.RETURN_STATUS_DRAFT)) {
 
 			return headerActionModels;
 		}
@@ -482,7 +498,7 @@ public class CommerceReturnContentDisplayContext {
 		CommerceReturn commerceReturn = getCommerceReturn();
 
 		if (commerceReturn == null) {
-			return "draft";
+			return CommerceReturnConstants.RETURN_STATUS_DRAFT;
 		}
 
 		return commerceReturn.getReturnStatus();
@@ -491,10 +507,12 @@ public class CommerceReturnContentDisplayContext {
 	public String getReturnStatusDisplayType() {
 		String returnStatus = getReturnStatus();
 
-		if (returnStatus.equals("draft")) {
+		if (returnStatus.equals(CommerceReturnConstants.RETURN_STATUS_DRAFT)) {
 			return "info";
 		}
-		else if (returnStatus.equals("completed")) {
+		else if (returnStatus.equals(
+					CommerceReturnConstants.RETURN_STATUS_COMPLETED)) {
+
 			return "success";
 		}
 
@@ -573,7 +591,8 @@ public class CommerceReturnContentDisplayContext {
 					objectEntry.getGroupId(),
 					commerceReturnToCommerceReturnItems.
 						getObjectRelationshipId(),
-					commerceReturn.getId(), true, null, -1, -1),
+					commerceReturn.getId(), true, null, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
 				curObjectEntry -> {
 					Map<String, Serializable> values =
 						curObjectEntry.getValues();

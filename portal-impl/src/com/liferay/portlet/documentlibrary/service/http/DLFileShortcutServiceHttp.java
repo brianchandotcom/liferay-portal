@@ -43,8 +43,9 @@ public class DLFileShortcutServiceHttp {
 
 	public static com.liferay.document.library.kernel.model.DLFileShortcut
 			addFileShortcut(
-				HttpPrincipal httpPrincipal, long groupId, long repositoryId,
-				long folderId, long toFileEntryId,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId, long repositoryId, long folderId,
+				long toFileEntryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -54,8 +55,8 @@ public class DLFileShortcutServiceHttp {
 				_addFileShortcutParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, repositoryId, folderId, toFileEntryId,
-				serviceContext);
+				methodKey, externalReferenceCode, groupId, repositoryId,
+				folderId, toFileEntryId, serviceContext);
 
 			Object returnObj = null;
 
@@ -122,6 +123,43 @@ public class DLFileShortcutServiceHttp {
 		}
 	}
 
+	public static void deleteFileShortcut(
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DLFileShortcutServiceUtil.class, "deleteFileShortcut",
+				_deleteFileShortcutParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, groupId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.document.library.kernel.model.DLFileShortcut
 			getFileShortcut(HttpPrincipal httpPrincipal, long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -129,7 +167,7 @@ public class DLFileShortcutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFileShortcutServiceUtil.class, "getFileShortcut",
-				_getFileShortcutParameterTypes2);
+				_getFileShortcutParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileShortcutId);
@@ -170,7 +208,7 @@ public class DLFileShortcutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFileShortcutServiceUtil.class, "getGroupFileShortcuts",
-				_getGroupFileShortcutsParameterTypes3);
+				_getGroupFileShortcutsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -205,7 +243,7 @@ public class DLFileShortcutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFileShortcutServiceUtil.class, "getGroupFileShortcuts",
-				_getGroupFileShortcutsParameterTypes4);
+				_getGroupFileShortcutsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, start, end);
@@ -239,7 +277,7 @@ public class DLFileShortcutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFileShortcutServiceUtil.class, "getGroupFileShortcutsCount",
-				_getGroupFileShortcutsCountParameterTypes5);
+				_getGroupFileShortcutsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -274,7 +312,7 @@ public class DLFileShortcutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFileShortcutServiceUtil.class, "updateFileShortcut",
-				_updateFileShortcutParameterTypes6);
+				_updateFileShortcutParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileShortcutId, repositoryId, folderId,
@@ -317,7 +355,7 @@ public class DLFileShortcutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFileShortcutServiceUtil.class, "updateFileShortcuts",
-				_updateFileShortcutsParameterTypes7);
+				_updateFileShortcutsParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, oldToFileEntryId, newToFileEntryId);
@@ -351,25 +389,27 @@ public class DLFileShortcutServiceHttp {
 
 	private static final Class<?>[] _addFileShortcutParameterTypes0 =
 		new Class[] {
-			long.class, long.class, long.class, long.class,
+			String.class, long.class, long.class, long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFileShortcutParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getFileShortcutParameterTypes2 =
-		new Class[] {long.class};
-	private static final Class<?>[] _getGroupFileShortcutsParameterTypes3 =
+	private static final Class<?>[] _deleteFileShortcutParameterTypes2 =
+		new Class[] {String.class, long.class};
+	private static final Class<?>[] _getFileShortcutParameterTypes3 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getGroupFileShortcutsParameterTypes4 =
-		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getGroupFileShortcutsCountParameterTypes5 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateFileShortcutParameterTypes6 =
+	private static final Class<?>[] _getGroupFileShortcutsParameterTypes5 =
+		new Class[] {long.class, int.class, int.class};
+	private static final Class<?>[] _getGroupFileShortcutsCountParameterTypes6 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateFileShortcutParameterTypes7 =
 		new Class[] {
 			long.class, long.class, long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateFileShortcutsParameterTypes7 =
+	private static final Class<?>[] _updateFileShortcutsParameterTypes8 =
 		new Class[] {long.class, long.class};
 
 }

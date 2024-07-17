@@ -46,11 +46,14 @@ public interface DLFileShortcutService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the document library file shortcut remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link DLFileShortcutServiceUtil} if injection and service tracking are not available.
 	 */
 	public DLFileShortcut addFileShortcut(
-			long groupId, long repositoryId, long folderId, long toFileEntryId,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long groupId, long repositoryId,
+			long folderId, long toFileEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteFileShortcut(long fileShortcutId) throws PortalException;
+
+	public void deleteFileShortcut(String externalReferenceCode, long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileShortcut getFileShortcut(long fileShortcutId)

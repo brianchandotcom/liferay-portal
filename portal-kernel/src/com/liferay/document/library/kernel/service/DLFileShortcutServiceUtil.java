@@ -30,18 +30,27 @@ public class DLFileShortcutServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static DLFileShortcut addFileShortcut(
-			long groupId, long repositoryId, long folderId, long toFileEntryId,
+			String externalReferenceCode, long groupId, long repositoryId,
+			long folderId, long toFileEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFileShortcut(
-			groupId, repositoryId, folderId, toFileEntryId, serviceContext);
+			externalReferenceCode, groupId, repositoryId, folderId,
+			toFileEntryId, serviceContext);
 	}
 
 	public static void deleteFileShortcut(long fileShortcutId)
 		throws PortalException {
 
 		getService().deleteFileShortcut(fileShortcutId);
+	}
+
+	public static void deleteFileShortcut(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		getService().deleteFileShortcut(externalReferenceCode, groupId);
 	}
 
 	public static DLFileShortcut getFileShortcut(long fileShortcutId)

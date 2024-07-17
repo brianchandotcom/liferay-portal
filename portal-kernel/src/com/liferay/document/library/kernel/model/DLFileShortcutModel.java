@@ -7,6 +7,7 @@ package com.liferay.document.library.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -31,8 +32,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLFileShortcutModel
-	extends BaseModel<DLFileShortcut>, CTModel<DLFileShortcut>, MVCCModel,
-			ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
+	extends BaseModel<DLFileShortcut>, CTModel<DLFileShortcut>,
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -104,6 +106,23 @@ public interface DLFileShortcutModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this document library file shortcut.
+	 *
+	 * @return the external reference code of this document library file shortcut
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this document library file shortcut.
+	 *
+	 * @param externalReferenceCode the external reference code of this document library file shortcut
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the file shortcut ID of this document library file shortcut.

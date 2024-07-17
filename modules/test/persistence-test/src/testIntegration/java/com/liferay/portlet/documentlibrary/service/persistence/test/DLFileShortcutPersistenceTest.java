@@ -6,6 +6,7 @@
 package com.liferay.portlet.documentlibrary.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.exception.DuplicateDLFileShortcutExternalReferenceCodeException;
 import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil;
@@ -124,6 +125,9 @@ public class DLFileShortcutPersistenceTest {
 
 		newDLFileShortcut.setUuid(RandomTestUtil.randomString());
 
+		newDLFileShortcut.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newDLFileShortcut.setGroupId(RandomTestUtil.nextLong());
 
 		newDLFileShortcut.setCompanyId(RandomTestUtil.nextLong());
@@ -169,6 +173,9 @@ public class DLFileShortcutPersistenceTest {
 			newDLFileShortcut.getCtCollectionId());
 		Assert.assertEquals(
 			existingDLFileShortcut.getUuid(), newDLFileShortcut.getUuid());
+		Assert.assertEquals(
+			existingDLFileShortcut.getExternalReferenceCode(),
+			newDLFileShortcut.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingDLFileShortcut.getFileShortcutId(),
 			newDLFileShortcut.getFileShortcutId());
@@ -217,6 +224,28 @@ public class DLFileShortcutPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingDLFileShortcut.getStatusDate()),
 			Time.getShortTimestamp(newDLFileShortcut.getStatusDate()));
+	}
+
+	@Test(
+		expected = DuplicateDLFileShortcutExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		DLFileShortcut dlFileShortcut = addDLFileShortcut();
+
+		DLFileShortcut newDLFileShortcut = addDLFileShortcut();
+
+		newDLFileShortcut.setGroupId(dlFileShortcut.getGroupId());
+
+		newDLFileShortcut = _persistence.update(newDLFileShortcut);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newDLFileShortcut);
+
+		newDLFileShortcut.setExternalReferenceCode(
+			dlFileShortcut.getExternalReferenceCode());
+
+		_persistence.update(newDLFileShortcut);
 	}
 
 	@Test
@@ -302,6 +331,15 @@ public class DLFileShortcutPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_G("null", 0L);
+
+		_persistence.countByERC_G((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DLFileShortcut newDLFileShortcut = addDLFileShortcut();
 
@@ -351,12 +389,13 @@ public class DLFileShortcutPersistenceTest {
 	protected OrderByComparator<DLFileShortcut> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"DLFileShortcut", "mvccVersion", true, "ctCollectionId", true,
-			"uuid", true, "fileShortcutId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "repositoryId", true, "folderId", true,
-			"toFileEntryId", true, "treePath", true, "active", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"uuid", true, "externalReferenceCode", true, "fileShortcutId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "repositoryId",
+			true, "folderId", true, "toFileEntryId", true, "treePath", true,
+			"active", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -634,6 +673,17 @@ public class DLFileShortcutPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				dlFileShortcut, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
+			dlFileShortcut.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				dlFileShortcut, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(dlFileShortcut.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				dlFileShortcut, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected DLFileShortcut addDLFileShortcut() throws Exception {
@@ -646,6 +696,8 @@ public class DLFileShortcutPersistenceTest {
 		dlFileShortcut.setCtCollectionId(RandomTestUtil.nextLong());
 
 		dlFileShortcut.setUuid(RandomTestUtil.randomString());
+
+		dlFileShortcut.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		dlFileShortcut.setGroupId(RandomTestUtil.nextLong());
 

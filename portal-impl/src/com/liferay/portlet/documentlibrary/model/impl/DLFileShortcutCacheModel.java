@@ -68,7 +68,7 @@ public class DLFileShortcutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -76,6 +76,8 @@ public class DLFileShortcutCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", fileShortcutId=");
 		sb.append(fileShortcutId);
 		sb.append(", groupId=");
@@ -127,6 +129,13 @@ public class DLFileShortcutCacheModel
 		}
 		else {
 			dlFileShortcutImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			dlFileShortcutImpl.setExternalReferenceCode("");
+		}
+		else {
+			dlFileShortcutImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		dlFileShortcutImpl.setFileShortcutId(fileShortcutId);
@@ -203,6 +212,7 @@ public class DLFileShortcutCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		fileShortcutId = objectInput.readLong();
 
@@ -243,6 +253,13 @@ public class DLFileShortcutCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(fileShortcutId);
@@ -296,6 +313,7 @@ public class DLFileShortcutCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long fileShortcutId;
 	public long groupId;
 	public long companyId;

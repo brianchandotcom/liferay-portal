@@ -297,6 +297,13 @@ public class DLFileShortcutLocalServiceUtil {
 		return getService().fetchDLFileShortcut(fileShortcutId);
 	}
 
+	public static DLFileShortcut fetchDLFileShortcutByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return getService().fetchDLFileShortcutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the document library file shortcut matching the UUID and group.
 	 *
@@ -327,6 +334,14 @@ public class DLFileShortcutLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getDLFileShortcut(fileShortcutId);
+	}
+
+	public static DLFileShortcut getDLFileShortcutByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getDLFileShortcutByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

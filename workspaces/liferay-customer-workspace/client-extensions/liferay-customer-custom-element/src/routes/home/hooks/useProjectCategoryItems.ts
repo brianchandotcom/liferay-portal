@@ -88,8 +88,7 @@ const useProjectCategoryItems = () => {
 		{
 			key: '/organizations',
 			organizationIds: myFLSOrganizationBriefIds,
-		},
-		myUserAccount ? getFLSOrganizationsAccounts(client) : null
+		}
 	);
 
 	const projectCategoryItems = useMemo(() => {
@@ -106,6 +105,7 @@ const useProjectCategoryItems = () => {
 			.map(({externalReferenceCode}) => externalReferenceCode);
 
 		const organizationProjectsERC = organizations.map(
+			// @ts-ignore: Ignoring potential missing externalReferenceCode
 			({externalReferenceCode}) => externalReferenceCode
 		);
 

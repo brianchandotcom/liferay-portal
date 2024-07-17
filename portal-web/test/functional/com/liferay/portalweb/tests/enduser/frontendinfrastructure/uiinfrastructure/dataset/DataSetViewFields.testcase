@@ -404,50 +404,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-178736. Confirm that the user can change the Cell Renderer type on Edit"
-	@priority = 5
-	test CanChangeCellRenderer {
-		property portal.acceptance = "true";
-
-		task ("And add an id Field") {
-			DataSetAdmin.addFields(key_fieldList = "id");
-		}
-
-		task ("Then assert the "Default" is present from the column Cell Renderer") {
-			AssertElementPresent(
-				key_tableColumn = "Renderer",
-				key_tableRow = "Default",
-				locator1 = "DataSet#FIELDS_TABLE_AND_ROW");
-		}
-
-		task ("When the user clicks on the edit option from the id Field") {
-			Click(
-				key_fieldName = "id",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("And change the Cell Renderer to "Label"") {
-			Click(
-				dropdownLabel = "Renderer",
-				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
-
-			MenuItem.click(menuItem = "Label");
-
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-		}
-
-		task ("Then assert the "Label" is present from the column Cell Renderer") {
-			AssertElementPresent(
-				key_tableColumn = "Renderer",
-				key_tableRow = "Label",
-				locator1 = "DataSet#FIELDS_TABLE_AND_ROW");
-		}
-	}
-
 	@description = "LPS-174141. Confirm that the user can check and uncheck all the fields"
 	@priority = 3
 	test CanCheckAndUncheckAllFields {
@@ -589,47 +545,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-176051. Blocked by :LPS-186987. Confirm that Cell Renderer option can be selected on Cell Renderer Field."
-	@ignore = "true"
-	@priority = 3
-	test CanSelectCellRendererOption {
-
-		// TODO LPS-185794 CanSelectCellRendererOption pending implementation
-
-	}
-
-	@description = "LPS-176051. Confirm that the user can select options of dropdown on Edit"
-	@priority = 5
-	test CanSelectDropdownOptions {
-		property portal.acceptance = "true";
-
-		task ("And add new fields") {
-			DataSetAdmin.addFields(key_fieldList = "id,label");
-		}
-
-		task ("And clicks on Edit option") {
-			Click(
-				key_fieldName = "id",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("When the user clicks on Cell Renderer field") {
-			Click(
-				dropdownLabel = "Renderer",
-				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
-		}
-
-		task ("Then a dropdown is displayed") {
-			AssertVisible(locator1 = "WorkflowAllItems#TRANSITION_DROPDOWN_KEBAB");
-		}
-
-		task ("And the options present in the dropdown can be selected") {
-			MenuItem.click(menuItem = "Date and Time");
-		}
-	}
-
 	@description = "LPS-179282. Confirm that the user can check and uncheck the fields"
 	@priority = 5
 	test CheckandUncheckFields {
@@ -712,24 +627,6 @@ definition {
 				key_tableColumn = 1,
 				key_tableRow = 1,
 				locator1 = "DataSet#FILTER_TABLE_CELL");
-		}
-	}
-
-	@description = "LPS-179151. Confirm that the Field Edit modal is displayed."
-	@priority = 3
-	test TheEditFieldModalIsDisplayed {
-		task ("And adds two or more fields") {
-			DataSetAdmin.addFields(key_fieldList = "id,label");
-		}
-
-		task ("And clicks on ellipsis button on one of these fields") {
-			Click(
-				key_fieldName = "id",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-		}
-
-		task ("Then a dropdown is displayed that contains Edit option") {
-			MenuItem.viewVisible(menuItem = "Edit");
 		}
 	}
 

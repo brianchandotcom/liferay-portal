@@ -701,11 +701,12 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 	});
 
-	test('Check field edition in table visualization mode', async ({
+	test('Check field edition in table visualization mode @LPS-176051, @LPS-178736', async ({
 		page,
 		visualizationModesPage,
 	}) => {
 		const SAMPLE_SCALAR_FIELD = 'id';
+		const RENDERER_COLUMN_INDEX = 4;
 
 		await test.step('Navigate to table visualization mode page', async () => {
 			await visualizationModesPage.goto({
@@ -731,7 +732,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			});
 		});
 
-		await test.step('Open field edition modal, check that name field is not editable @LPS-176051, @LPS-178736', async () => {
+		await test.step('Open field edition modal, check that name field is not editable', async () => {
 			await clickActionInRow({
 				actionName: 'Edit',
 				rowName: SAMPLE_SCALAR_FIELD,
@@ -751,7 +752,56 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 			await expect(nameInput).toBeDisabled();
 
-			await visualizationModesPage.cancelAddFieldsModal();
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Open field edition modal, check that the user can change the renderer', async () => {
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_SCALAR_FIELD)
+					.locator('td')
+					.nth(RENDERER_COLUMN_INDEX)
+			).toHaveText('Default');
+
+			await clickActionInRow({
+				actionName: 'Edit',
+				rowName: SAMPLE_SCALAR_FIELD,
+				visualizationModesPage,
+			});
+
+			const rendererButton = page.getByRole('button', {name: 'Default'});
+			await expect(rendererButton).toBeInViewport();
+
+			const rendererDropdownId = await rendererButton.evaluate((node) => {
+				return node.getAttribute('aria-controls');
+			});
+			await rendererButton.click();
+
+			await page.locator(`#${rendererDropdownId}`).waitFor();
+
+			const availbleRenderersCount = await page
+				.locator(`#${rendererDropdownId}`)
+				.getByRole('option')
+				.count();
+			await expect(availbleRenderersCount).toBeGreaterThanOrEqual(10);
+
+			await page
+				.locator(`#${rendererDropdownId}`)
+				.getByRole('option', {name: 'Boolean'})
+				.click();
+
+			await saveFromModal({
+				page,
+			});
+
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_SCALAR_FIELD)
+					.locator('td')
+					.nth(RENDERER_COLUMN_INDEX)
+			).toHaveText('Boolean');
 		});
 	});
 });

@@ -175,7 +175,8 @@ public class NotificationsRestController extends BaseRestController {
 					"headless-server"),
 			StringBundler.concat(
 				"/o/headless-commerce-admin-payment/v1.0/payments/?filter=",
-				"classPK eq ", notificationRequestItem.getMerchantReference()));
+				"relatedItemId eq ",
+				notificationRequestItem.getMerchantReference()));
 
 		JSONArray itemsJSONArray = paymentsJSONObject.getJSONArray("items");
 
@@ -185,9 +186,7 @@ public class NotificationsRestController extends BaseRestController {
 			String payload = itemJSONObject.getString("payload");
 
 			if (StringUtils.contains(
-					payload, notificationRequestItem.getOriginalReference()) &&
-				StringUtils.contains(
-					payload, notificationRequestItem.getPspReference())) {
+					payload, notificationRequestItem.getOriginalReference())) {
 
 				return String.valueOf(itemJSONObject.getInt("id"));
 			}

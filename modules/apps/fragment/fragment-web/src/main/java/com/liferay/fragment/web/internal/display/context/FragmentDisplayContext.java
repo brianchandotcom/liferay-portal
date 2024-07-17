@@ -259,7 +259,7 @@ public class FragmentDisplayContext {
 				_themeDisplay.getLocale()));
 
 		contributedEntries.sort(
-			new FragmentCompositionFragmentEntryNameComparator(true));
+			FragmentCompositionFragmentEntryNameComparator.getInstance(true));
 
 		if (isSearch()) {
 			contributedEntries = ListUtil.filter(

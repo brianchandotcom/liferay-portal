@@ -218,7 +218,8 @@ public class EditStyleBookEntryDisplayContext {
 							_themeDisplay.getCompanyGroupId()
 						},
 						0, Math.min(fragmentCollectionsCount, 4),
-						new FragmentCollectionCreateDateComparator(false));
+						FragmentCollectionCreateDateComparator.getInstance(
+							false));
 
 				JSONObject[] fragmentCollectionContributorJSONObjects =
 					new JSONObject[0];

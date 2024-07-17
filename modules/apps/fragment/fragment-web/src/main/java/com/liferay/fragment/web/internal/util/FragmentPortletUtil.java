@@ -30,11 +30,11 @@ public class FragmentPortletUtil {
 		OrderByComparator<FragmentCollection> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new FragmentCollectionCreateDateComparator(
-				orderByAsc);
+			orderByComparator =
+				FragmentCollectionCreateDateComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new FragmentCollectionNameComparator(
+			orderByComparator = FragmentCollectionNameComparator.getInstance(
 				orderByAsc);
 		}
 
@@ -55,12 +55,13 @@ public class FragmentPortletUtil {
 
 		if (orderByCol.equals("name")) {
 			orderByComparator =
-				new FragmentCompositionFragmentEntryNameComparator(orderByAsc);
+				FragmentCompositionFragmentEntryNameComparator.getInstance(
+					orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
 			orderByComparator =
-				new FragmentCompositionFragmentEntryModifiedDateComparator(
-					orderByAsc);
+				FragmentCompositionFragmentEntryModifiedDateComparator.
+					getInstance(orderByAsc);
 		}
 
 		return orderByComparator;

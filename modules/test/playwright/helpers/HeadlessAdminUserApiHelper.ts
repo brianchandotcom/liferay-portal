@@ -443,4 +443,15 @@ export class HeadlessAdminUserApiHelper {
 			{data: {}, failOnStatusCode: true}
 		);
 	}
+
+	async assignUserToSite(
+		roleId: number | string,
+		siteId: number | string,
+		userId: number | string
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}roles/${roleId}/association/user-account/${userId}/site/${siteId}`,
+			{data: {}, failOnStatusCode: true}
+		);
+	}
 }

@@ -10,9 +10,14 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.ConnectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 
 import java.sql.Connection;
+
+import javax.sql.DataSource;
 
 /**
  * @author Murilo Stodolni
@@ -41,6 +46,21 @@ public class ObjectDBManagerUtil {
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
+		}
+	}
+
+	public static void runSQL(DataSource dataSource, Log log, String sql) {
+		if (log.isDebugEnabled()) {
+			log.debug("SQL: " + sql);
+		}
+
+		DB db = DBManagerUtil.getDB();
+
+		try (Connection connection = ConnectionUtil.getConnection(dataSource)) {
+			db.runSQL(connection, new String[] {sql});
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

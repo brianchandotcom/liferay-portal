@@ -22,12 +22,14 @@ public class UserGroupDescriptionComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"description", "name"};
 
-	public UserGroupDescriptionComparator() {
-		this(false);
-	}
+	public static UserGroupDescriptionComparator getInstance(
+		boolean ascending) {
 
-	public UserGroupDescriptionComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -69,6 +71,16 @@ public class UserGroupDescriptionComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private UserGroupDescriptionComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final UserGroupDescriptionComparator _INSTANCE_ASCENDING =
+		new UserGroupDescriptionComparator(true);
+
+	private static final UserGroupDescriptionComparator _INSTANCE_DESCENDING =
+		new UserGroupDescriptionComparator(false);
 
 	private final boolean _ascending;
 

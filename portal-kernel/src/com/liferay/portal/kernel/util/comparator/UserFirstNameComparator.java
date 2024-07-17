@@ -23,12 +23,12 @@ public class UserFirstNameComparator extends OrderByComparator<User> {
 		"firstName", "middleName", "lastName"
 	};
 
-	public UserFirstNameComparator() {
-		this(false);
-	}
+	public static UserFirstNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public UserFirstNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -77,6 +77,16 @@ public class UserFirstNameComparator extends OrderByComparator<User> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private UserFirstNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final UserFirstNameComparator _INSTANCE_ASCENDING =
+		new UserFirstNameComparator(true);
+
+	private static final UserFirstNameComparator _INSTANCE_DESCENDING =
+		new UserFirstNameComparator(false);
 
 	private final boolean _ascending;
 

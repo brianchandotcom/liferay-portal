@@ -21,12 +21,12 @@ public class RoleDescriptionComparator extends OrderByComparator<Role> {
 
 	public static final String[] ORDER_BY_FIELDS = {"description", "name"};
 
-	public RoleDescriptionComparator() {
-		this(false);
-	}
+	public static RoleDescriptionComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public RoleDescriptionComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -68,6 +68,16 @@ public class RoleDescriptionComparator extends OrderByComparator<Role> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private RoleDescriptionComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final RoleDescriptionComparator _INSTANCE_ASCENDING =
+		new RoleDescriptionComparator(true);
+
+	private static final RoleDescriptionComparator _INSTANCE_DESCENDING =
+		new RoleDescriptionComparator(false);
 
 	private final boolean _ascending;
 

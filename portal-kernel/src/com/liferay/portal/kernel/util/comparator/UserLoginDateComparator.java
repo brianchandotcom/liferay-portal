@@ -24,12 +24,12 @@ public class UserLoginDateComparator extends OrderByComparator<User> {
 		"loginDate", "lastName", "firstName", "middleName"
 	};
 
-	public UserLoginDateComparator() {
-		this(false);
-	}
+	public static UserLoginDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public UserLoginDateComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -83,6 +83,16 @@ public class UserLoginDateComparator extends OrderByComparator<User> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private UserLoginDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final UserLoginDateComparator _INSTANCE_ASCENDING =
+		new UserLoginDateComparator(true);
+
+	private static final UserLoginDateComparator _INSTANCE_DESCENDING =
+		new UserLoginDateComparator(false);
 
 	private final boolean _ascending;
 

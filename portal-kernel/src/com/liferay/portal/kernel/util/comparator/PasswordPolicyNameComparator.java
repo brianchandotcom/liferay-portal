@@ -20,12 +20,12 @@ public class PasswordPolicyNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public PasswordPolicyNameComparator() {
-		this(false);
-	}
+	public static PasswordPolicyNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public PasswordPolicyNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -62,6 +62,16 @@ public class PasswordPolicyNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private PasswordPolicyNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final PasswordPolicyNameComparator _INSTANCE_ASCENDING =
+		new PasswordPolicyNameComparator(true);
+
+	private static final PasswordPolicyNameComparator _INSTANCE_DESCENDING =
+		new PasswordPolicyNameComparator(false);
 
 	private final boolean _ascending;
 

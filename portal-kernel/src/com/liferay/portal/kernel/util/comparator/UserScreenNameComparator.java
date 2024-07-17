@@ -19,12 +19,12 @@ public class UserScreenNameComparator extends OrderByComparator<User> {
 
 	public static final String[] ORDER_BY_FIELDS = {"screenName"};
 
-	public UserScreenNameComparator() {
-		this(false);
-	}
+	public static UserScreenNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public UserScreenNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +59,16 @@ public class UserScreenNameComparator extends OrderByComparator<User> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private UserScreenNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final UserScreenNameComparator _INSTANCE_ASCENDING =
+		new UserScreenNameComparator(true);
+
+	private static final UserScreenNameComparator _INSTANCE_DESCENDING =
+		new UserScreenNameComparator(false);
 
 	private final boolean _ascending;
 

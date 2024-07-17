@@ -19,12 +19,12 @@ public class UserGroupIdComparator extends OrderByComparator<UserGroup> {
 
 	public static final String[] ORDER_BY_FIELDS = {"userGroupId"};
 
-	public UserGroupIdComparator() {
-		this(false);
-	}
+	public static UserGroupIdComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public UserGroupIdComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -66,6 +66,16 @@ public class UserGroupIdComparator extends OrderByComparator<UserGroup> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private UserGroupIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final UserGroupIdComparator _INSTANCE_ASCENDING =
+		new UserGroupIdComparator(true);
+
+	private static final UserGroupIdComparator _INSTANCE_DESCENDING =
+		new UserGroupIdComparator(false);
 
 	private final boolean _ascending;
 

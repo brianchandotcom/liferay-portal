@@ -19,12 +19,12 @@ public class TeamNameComparator extends OrderByComparator<Team> {
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public TeamNameComparator() {
-		this(false);
-	}
+	public static TeamNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public TeamNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +59,16 @@ public class TeamNameComparator extends OrderByComparator<Team> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private TeamNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final TeamNameComparator _INSTANCE_ASCENDING =
+		new TeamNameComparator(true);
+
+	private static final TeamNameComparator _INSTANCE_DESCENDING =
+		new TeamNameComparator(false);
 
 	private final boolean _ascending;
 

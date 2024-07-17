@@ -21,12 +21,14 @@ public class PasswordPolicyDescriptionComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"description"};
 
-	public PasswordPolicyDescriptionComparator() {
-		this(false);
-	}
+	public static PasswordPolicyDescriptionComparator getInstance(
+		boolean ascending) {
 
-	public PasswordPolicyDescriptionComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +65,16 @@ public class PasswordPolicyDescriptionComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private PasswordPolicyDescriptionComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final PasswordPolicyDescriptionComparator
+		_INSTANCE_ASCENDING = new PasswordPolicyDescriptionComparator(true);
+
+	private static final PasswordPolicyDescriptionComparator
+		_INSTANCE_DESCENDING = new PasswordPolicyDescriptionComparator(false);
 
 	private final boolean _ascending;
 

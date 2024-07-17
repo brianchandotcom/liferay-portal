@@ -19,12 +19,12 @@ public class UserIdComparator extends OrderByComparator<User> {
 
 	public static final String[] ORDER_BY_FIELDS = {"userId"};
 
-	public UserIdComparator() {
-		this(false);
-	}
+	public static UserIdComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public UserIdComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -66,6 +66,16 @@ public class UserIdComparator extends OrderByComparator<User> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private UserIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final UserIdComparator _INSTANCE_ASCENDING =
+		new UserIdComparator(true);
+
+	private static final UserIdComparator _INSTANCE_DESCENDING =
+		new UserIdComparator(false);
 
 	private final boolean _ascending;
 

@@ -23,12 +23,12 @@ public class UserJobTitleComparator extends OrderByComparator<User> {
 		"jobTitle", "lastName", "firstName", "middleName"
 	};
 
-	public UserJobTitleComparator() {
-		this(false);
-	}
+	public static UserJobTitleComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public UserJobTitleComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -84,6 +84,16 @@ public class UserJobTitleComparator extends OrderByComparator<User> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private UserJobTitleComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final UserJobTitleComparator _INSTANCE_ASCENDING =
+		new UserJobTitleComparator(true);
+
+	private static final UserJobTitleComparator _INSTANCE_DESCENDING =
+		new UserJobTitleComparator(false);
 
 	private final boolean _ascending;
 

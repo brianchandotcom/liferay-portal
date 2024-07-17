@@ -22,12 +22,14 @@ public class SocialActivitySetModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public SocialActivitySetModifiedDateComparator() {
-		this(false);
-	}
+	public static SocialActivitySetModifiedDateComparator getInstance(
+		boolean ascending) {
 
-	public SocialActivitySetModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -74,6 +76,17 @@ public class SocialActivitySetModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private SocialActivitySetModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final SocialActivitySetModifiedDateComparator
+		_INSTANCE_ASCENDING = new SocialActivitySetModifiedDateComparator(true);
+
+	private static final SocialActivitySetModifiedDateComparator
+		_INSTANCE_DESCENDING = new SocialActivitySetModifiedDateComparator(
+			false);
 
 	private final boolean _ascending;
 

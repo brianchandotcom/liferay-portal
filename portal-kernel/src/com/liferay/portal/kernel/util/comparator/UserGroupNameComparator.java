@@ -19,12 +19,12 @@ public class UserGroupNameComparator extends OrderByComparator<UserGroup> {
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public UserGroupNameComparator() {
-		this(false);
-	}
+	public static UserGroupNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public UserGroupNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +59,16 @@ public class UserGroupNameComparator extends OrderByComparator<UserGroup> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private UserGroupNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final UserGroupNameComparator _INSTANCE_ASCENDING =
+		new UserGroupNameComparator(true);
+
+	private static final UserGroupNameComparator _INSTANCE_DESCENDING =
+		new UserGroupNameComparator(false);
 
 	private final boolean _ascending;
 

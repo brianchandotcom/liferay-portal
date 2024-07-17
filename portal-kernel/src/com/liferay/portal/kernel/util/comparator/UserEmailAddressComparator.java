@@ -19,12 +19,12 @@ public class UserEmailAddressComparator extends OrderByComparator<User> {
 
 	public static final String[] ORDER_BY_FIELDS = {"emailAddress"};
 
-	public UserEmailAddressComparator() {
-		this(false);
-	}
+	public static UserEmailAddressComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public UserEmailAddressComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +59,16 @@ public class UserEmailAddressComparator extends OrderByComparator<User> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private UserEmailAddressComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final UserEmailAddressComparator _INSTANCE_ASCENDING =
+		new UserEmailAddressComparator(true);
+
+	private static final UserEmailAddressComparator _INSTANCE_DESCENDING =
+		new UserEmailAddressComparator(false);
 
 	private final boolean _ascending;
 

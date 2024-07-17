@@ -19,12 +19,12 @@ public class RoleRoleIdComparator extends OrderByComparator<Role> {
 
 	public static final String[] ORDER_BY_FIELDS = {"roleId"};
 
-	public RoleRoleIdComparator() {
-		this(false);
-	}
+	public static RoleRoleIdComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public RoleRoleIdComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +63,16 @@ public class RoleRoleIdComparator extends OrderByComparator<Role> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private RoleRoleIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final RoleRoleIdComparator _INSTANCE_ASCENDING =
+		new RoleRoleIdComparator(true);
+
+	private static final RoleRoleIdComparator _INSTANCE_DESCENDING =
+		new RoleRoleIdComparator(false);
 
 	private final boolean _ascending;
 

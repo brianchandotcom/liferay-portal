@@ -75,7 +75,16 @@ public class DBSchemaDefinitionExporterTest {
 		_databaseType = String.valueOf(DBManagerUtil.getDBType());
 		_folder = FileUtil.createTempFolder();
 
-		_createObjectsData();
+		_objectDefinition1 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			ObjectDefinitionTestUtil.getRandomName(),
+			ObjectDefinitionLocalServiceUtil.getService());
+		_objectDefinition2 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			ObjectDefinitionTestUtil.getRandomName(),
+			ObjectDefinitionLocalServiceUtil.getService());
+
+		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			ObjectRelationshipLocalServiceUtil.getService(), _objectDefinition1,
+			_objectDefinition2);
 	}
 
 	@AfterClass
@@ -84,7 +93,20 @@ public class DBSchemaDefinitionExporterTest {
 
 		FileUtil.deltree(_folder);
 
-		_removeObjectsData();
+		if (_objectRelationship != null) {
+			ObjectRelationshipLocalServiceUtil.deleteObjectRelationship(
+				_objectRelationship.getObjectRelationshipId());
+		}
+
+		if (_objectDefinition1 != null) {
+			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+				_objectDefinition1.getObjectDefinitionId());
+		}
+
+		if (_objectDefinition2 != null) {
+			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+				_objectDefinition2.getObjectDefinitionId());
+		}
 	}
 
 	@Test
@@ -128,36 +150,6 @@ public class DBSchemaDefinitionExporterTest {
 				"Finished database schema definition export to " +
 					_folder.getAbsolutePath(),
 				logMessages.get(1));
-		}
-	}
-
-	private static void _createObjectsData() throws Exception {
-		_objectDefinition1 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			ObjectDefinitionTestUtil.getRandomName(),
-			ObjectDefinitionLocalServiceUtil.getService());
-		_objectDefinition2 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			ObjectDefinitionTestUtil.getRandomName(),
-			ObjectDefinitionLocalServiceUtil.getService());
-
-		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
-			ObjectRelationshipLocalServiceUtil.getService(), _objectDefinition1,
-			_objectDefinition2);
-	}
-
-	private static void _removeObjectsData() throws Exception {
-		if (_objectRelationship != null) {
-			ObjectRelationshipLocalServiceUtil.deleteObjectRelationship(
-				_objectRelationship.getObjectRelationshipId());
-		}
-
-		if (_objectDefinition1 != null) {
-			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
-				_objectDefinition1.getObjectDefinitionId());
-		}
-
-		if (_objectDefinition2 != null) {
-			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
-				_objectDefinition2.getObjectDefinitionId());
 		}
 	}
 

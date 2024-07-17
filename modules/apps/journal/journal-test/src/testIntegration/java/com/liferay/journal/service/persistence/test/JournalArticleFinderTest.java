@@ -314,18 +314,18 @@ public class JournalArticleFinderTest {
 
 		// Comparators
 
-		testQueryByG_F(new ArticleCreateDateComparator(true));
-		testQueryByG_F(new ArticleCreateDateComparator(false));
-		testQueryByG_F(new ArticleDisplayDateComparator(true));
-		testQueryByG_F(new ArticleDisplayDateComparator(false));
-		testQueryByG_F(new ArticleIDComparator(true));
-		testQueryByG_F(new ArticleIDComparator(false));
-		testQueryByG_F(new ArticleModifiedDateComparator(true));
-		testQueryByG_F(new ArticleModifiedDateComparator(false));
-		testQueryByG_F(new ArticleReviewDateComparator(true));
-		testQueryByG_F(new ArticleReviewDateComparator(false));
-		testQueryByG_F(new ArticleVersionComparator(true));
-		testQueryByG_F(new ArticleVersionComparator(false));
+		testQueryByG_F(ArticleCreateDateComparator.getInstance(true));
+		testQueryByG_F(ArticleCreateDateComparator.getInstance(false));
+		testQueryByG_F(ArticleDisplayDateComparator.getInstance(true));
+		testQueryByG_F(ArticleDisplayDateComparator.getInstance(false));
+		testQueryByG_F(ArticleIDComparator.getInstance(true));
+		testQueryByG_F(ArticleIDComparator.getInstance(false));
+		testQueryByG_F(ArticleModifiedDateComparator.getInstance(true));
+		testQueryByG_F(ArticleModifiedDateComparator.getInstance(false));
+		testQueryByG_F(ArticleReviewDateComparator.getInstance(true));
+		testQueryByG_F(ArticleReviewDateComparator.getInstance(false));
+		testQueryByG_F(ArticleVersionComparator.getInstance(true));
+		testQueryByG_F(ArticleVersionComparator.getInstance(false));
 	}
 
 	@Test

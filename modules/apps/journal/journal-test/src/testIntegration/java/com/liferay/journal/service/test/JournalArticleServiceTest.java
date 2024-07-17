@@ -526,7 +526,7 @@ public class JournalArticleServiceTest {
 		journalArticles = _journalArticleService.getArticles(
 			_group.getGroupId(), journalFolder.getFolderId(),
 			LocaleUtil.getDefault(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new ArticleTitleComparator(true));
+			ArticleTitleComparator.getInstance(true));
 
 		Assert.assertEquals(
 			Arrays.asList(expiredJournalArticle, approvedJournalArticle),
@@ -535,7 +535,7 @@ public class JournalArticleServiceTest {
 		journalArticles = _journalArticleService.getArticles(
 			_group.getGroupId(), journalFolder.getFolderId(),
 			LocaleUtil.getDefault(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new ArticleTitleComparator(false));
+			ArticleTitleComparator.getInstance(false));
 
 		Assert.assertEquals(
 			Arrays.asList(approvedJournalArticle, expiredJournalArticle),
@@ -570,7 +570,7 @@ public class JournalArticleServiceTest {
 		List<JournalArticle> articles =
 			_journalArticleService.getArticlesByArticleId(
 				_group.getGroupId(), article.getArticleId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new ArticleVersionComparator(true));
+				QueryUtil.ALL_POS, ArticleVersionComparator.getInstance(true));
 
 		Assert.assertEquals(
 			articles.toString(), expectedArticles.size(), articles.size());
@@ -606,7 +606,7 @@ public class JournalArticleServiceTest {
 			_journalArticleService.getArticlesByArticleId(
 				_group.getGroupId(), article.getArticleId(),
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new ArticleVersionComparator(true));
+				QueryUtil.ALL_POS, ArticleVersionComparator.getInstance(true));
 
 		Assert.assertEquals(
 			articles.toString(), expectedArticles.size(), articles.size());
@@ -685,7 +685,7 @@ public class JournalArticleServiceTest {
 			_group.getGroupId(), JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
 			ddmStructure.getStructureId(), WorkflowConstants.STATUS_ANY,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new ArticleIDComparator(true));
+			ArticleIDComparator.getInstance(true));
 
 		Assert.assertEquals(
 			Arrays.asList(approvedJournalArticle, expiredJournalArticle),
@@ -695,7 +695,7 @@ public class JournalArticleServiceTest {
 			_group.getGroupId(), JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
 			ddmStructure.getStructureId(), WorkflowConstants.STATUS_ANY,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new ArticleIDComparator(false));
+			ArticleIDComparator.getInstance(false));
 
 		Assert.assertEquals(
 			Arrays.asList(expiredJournalArticle, approvedJournalArticle),

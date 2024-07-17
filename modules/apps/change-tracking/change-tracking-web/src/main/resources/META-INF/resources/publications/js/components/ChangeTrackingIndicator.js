@@ -147,6 +147,10 @@ export default function ChangeTrackingIndicator({
 	const renderUserPortrait = (entry, userInfo) => {
 		const user = userInfo[entry.userId];
 
+		if (!user) {
+			return <ClaySticker />;
+		}
+
 		return (
 			<ClaySticker
 				className={`sticker-user-icon ${

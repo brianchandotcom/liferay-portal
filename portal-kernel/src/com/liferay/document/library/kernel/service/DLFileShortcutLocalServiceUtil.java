@@ -53,14 +53,14 @@ public class DLFileShortcutLocalServiceUtil {
 	}
 
 	public static DLFileShortcut addFileShortcut(
-			long userId, long groupId, long repositoryId, long folderId,
-			long toFileEntryId,
+			String externalReferenceCode, long userId, long groupId,
+			long repositoryId, long folderId, long toFileEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFileShortcut(
-			userId, groupId, repositoryId, folderId, toFileEntryId,
-			serviceContext);
+			externalReferenceCode, userId, groupId, repositoryId, folderId,
+			toFileEntryId, serviceContext);
 	}
 
 	public static void addFileShortcutResources(
@@ -162,6 +162,13 @@ public class DLFileShortcutLocalServiceUtil {
 		throws PortalException {
 
 		getService().deleteFileShortcut(fileShortcutId);
+	}
+
+	public static void deleteFileShortcut(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		getService().deleteFileShortcut(externalReferenceCode, groupId);
 	}
 
 	public static void deleteFileShortcuts(long toFileEntryId)

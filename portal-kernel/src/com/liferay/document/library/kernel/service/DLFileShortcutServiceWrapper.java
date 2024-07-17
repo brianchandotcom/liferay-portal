@@ -30,12 +30,14 @@ public class DLFileShortcutServiceWrapper
 
 	@Override
 	public DLFileShortcut addFileShortcut(
-			long groupId, long repositoryId, long folderId, long toFileEntryId,
+			String externalReferenceCode, long groupId, long repositoryId,
+			long folderId, long toFileEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileShortcutService.addFileShortcut(
-			groupId, repositoryId, folderId, toFileEntryId, serviceContext);
+			externalReferenceCode, groupId, repositoryId, folderId,
+			toFileEntryId, serviceContext);
 	}
 
 	@Override
@@ -43,6 +45,14 @@ public class DLFileShortcutServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_dlFileShortcutService.deleteFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public void deleteFileShortcut(String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dlFileShortcutService.deleteFileShortcut(
+			externalReferenceCode, groupId);
 	}
 
 	@Override

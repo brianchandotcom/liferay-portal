@@ -85,8 +85,9 @@ public interface DLFileShortcutLocalService
 	public DLFileShortcut addDLFileShortcut(DLFileShortcut dlFileShortcut);
 
 	public DLFileShortcut addFileShortcut(
-			long userId, long groupId, long repositoryId, long folderId,
-			long toFileEntryId, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long repositoryId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void addFileShortcutResources(
@@ -155,6 +156,9 @@ public interface DLFileShortcutLocalService
 		throws PortalException;
 
 	public void deleteFileShortcut(long fileShortcutId) throws PortalException;
+
+	public void deleteFileShortcut(String externalReferenceCode, long groupId)
+		throws PortalException;
 
 	public void deleteFileShortcuts(long toFileEntryId) throws PortalException;
 

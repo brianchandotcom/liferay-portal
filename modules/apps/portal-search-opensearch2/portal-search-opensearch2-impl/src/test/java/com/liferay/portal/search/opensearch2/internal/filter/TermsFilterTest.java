@@ -14,12 +14,9 @@ import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQue
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 import com.liferay.portal.search.opensearch2.internal.util.QueryUtil;
 import com.liferay.portal.search.query.Query;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.filter.BaseTermsFilterTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,17 +57,11 @@ public class TermsFilterTest extends BaseTermsFilterTestCase {
 
 		termsFilter.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-		_setMaxTermsCount(10);
+		_assertTermsCount(1, 10, termsFilter);
 
-		_assertTermsCount(1, termsFilter);
+		_assertTermsCount(2, 5, termsFilter);
 
-		_setMaxTermsCount(5);
-
-		_assertTermsCount(2, termsFilter);
-
-		_setMaxTermsCount(3);
-
-		_assertTermsCount(4, termsFilter);
+		_assertTermsCount(4, 3, termsFilter);
 	}
 
 	@Override
@@ -78,22 +69,19 @@ public class TermsFilterTest extends BaseTermsFilterTestCase {
 		return LiferayOpenSearchIndexingFixtureFactory.getInstance();
 	}
 
-	private void _assertTermsCount(int expected, TermsFilter termsFilter)
+	private void _assertTermsCount(
+			int expected, int maxTermsCount, TermsFilter termsFilter)
 		throws Exception {
 
-		IdempotentRetryAssert.retryAssert(
-			10, TimeUnit.SECONDS,
-			() -> {
-				String jsonp = _toJSONP(termsFilter);
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					QueryUtil.class, "_MAX_TERMS_COUNT", maxTermsCount)) {
 
-				Assert.assertEquals(
-					jsonp, expected, StringUtil.count(jsonp, "terms"));
-			});
-	}
+			String jsonp = _toJSONP(termsFilter);
 
-	private void _setMaxTermsCount(int maxTermsCount) {
-		ReflectionTestUtil.setFieldValue(
-			QueryUtil.class, "_MAX_TERMS_COUNT", maxTermsCount);
+			Assert.assertEquals(
+				jsonp, expected, StringUtil.count(jsonp, "terms"));
+		}
 	}
 
 	private String _toJSONP(TermsFilter termsFilter) {

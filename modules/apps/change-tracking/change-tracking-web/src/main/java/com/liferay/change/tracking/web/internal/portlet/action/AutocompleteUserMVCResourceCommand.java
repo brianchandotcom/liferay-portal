@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -108,8 +109,15 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 			Role role = _roleLocalService.getRole(
 				themeDisplay.getCompanyId(), RoleConstants.PUBLICATIONS_USER);
 
-			return _userLocalService.getInheritedRoleUsers(
-				role.getRoleId(), 0, 20, new UserScreenNameComparator(true));
+			return _userLocalService.search(
+				themeDisplay.getCompanyId(), keywords,
+				WorkflowConstants.STATUS_APPROVED,
+				LinkedHashMapBuilder.<String, Object>put(
+					"inherit", true
+				).put(
+					"usersRoles", role.getRoleId()
+				).build(),
+				0, 20, new UserScreenNameComparator(true));
 		}
 
 		User user = themeDisplay.getUser();

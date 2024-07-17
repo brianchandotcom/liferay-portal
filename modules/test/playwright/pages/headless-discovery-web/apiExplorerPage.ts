@@ -21,7 +21,10 @@ export class ApiExplorerPage {
 		await this.getEndpointLocator(endpointPath).click();
 		for (const parameter of parameters) {
 			await expect(
-				this.page.getByRole('cell', {exact: true, name: parameter})
+				this.page
+					.getByRole('row')
+					.getByRole('cell')
+					.getByText(parameter)
 			).toBeVisible();
 		}
 		await this.getEndpointLocator(endpointPath).click();
@@ -34,7 +37,10 @@ export class ApiExplorerPage {
 		await this.getEndpointLocator(endpointPath).click();
 		for (const parameter of parameters) {
 			await expect(
-				this.page.getByRole('cell', {exact: true, name: parameter})
+				this.page
+					.getByRole('row')
+					.getByRole('cell')
+					.getByText(parameter)
 			).toBeHidden();
 		}
 		await this.getEndpointLocator(endpointPath).click();

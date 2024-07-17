@@ -35,7 +35,7 @@
 
 		<div class="collapse panel-collapse" id="mdfClaimActivitiesPanel-${activity.id}" role="tabpanel">
 			<div class="panel-body pt-0">
-				[#if (activity.listOfQualifiedLeads?has_content)!false != false]
+				[#if (activity.listOfQualifiedLeadsFile?has_content)!false != false]
 					<div class="py-3">
 						<h6 class="text-neutral-10">
 							List of Qualified Leads
@@ -48,7 +48,7 @@
 							</span>
 
 							<p class="mb-0 text-neutral-9">
-								${activity.listOfQualifiedLeads.name?keep_before("#")}
+								${activity.listOfQualifiedLeadsFile.name?keep_before("#")}
 							</p>
 						</a>
 					</div>

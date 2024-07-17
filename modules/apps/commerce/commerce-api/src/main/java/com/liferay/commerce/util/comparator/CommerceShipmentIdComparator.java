@@ -22,12 +22,12 @@ public class CommerceShipmentIdComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"commerceShipmentId"};
 
-	public CommerceShipmentIdComparator() {
-		this(false);
-	}
+	public static CommerceShipmentIdComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public CommerceShipmentIdComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +64,16 @@ public class CommerceShipmentIdComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceShipmentIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceShipmentIdComparator _INSTANCE_ASCENDING =
+		new CommerceShipmentIdComparator(true);
+
+	private static final CommerceShipmentIdComparator _INSTANCE_DESCENDING =
+		new CommerceShipmentIdComparator(false);
 
 	private final boolean _ascending;
 

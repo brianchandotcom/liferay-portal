@@ -20,12 +20,12 @@ public class CommerceAddressNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CommerceAddressNameComparator() {
-		this(false);
-	}
+	public static CommerceAddressNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public CommerceAddressNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -62,6 +62,16 @@ public class CommerceAddressNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceAddressNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceAddressNameComparator _INSTANCE_ASCENDING =
+		new CommerceAddressNameComparator(true);
+
+	private static final CommerceAddressNameComparator _INSTANCE_DESCENDING =
+		new CommerceAddressNameComparator(false);
 
 	private final boolean _ascending;
 

@@ -21,12 +21,14 @@ public class CommerceShipmentExpectedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"expectedDate"};
 
-	public CommerceShipmentExpectedDateComparator() {
-		this(false);
-	}
+	public static CommerceShipmentExpectedDateComparator getInstance(
+		boolean ascending) {
 
-	public CommerceShipmentExpectedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +65,17 @@ public class CommerceShipmentExpectedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceShipmentExpectedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceShipmentExpectedDateComparator
+		_INSTANCE_ASCENDING = new CommerceShipmentExpectedDateComparator(true);
+
+	private static final CommerceShipmentExpectedDateComparator
+		_INSTANCE_DESCENDING = new CommerceShipmentExpectedDateComparator(
+			false);
 
 	private final boolean _ascending;
 

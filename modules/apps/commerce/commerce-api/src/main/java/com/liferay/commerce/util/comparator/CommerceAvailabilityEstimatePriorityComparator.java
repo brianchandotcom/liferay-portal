@@ -22,12 +22,14 @@ public class CommerceAvailabilityEstimatePriorityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public CommerceAvailabilityEstimatePriorityComparator() {
-		this(false);
-	}
+	public static CommerceAvailabilityEstimatePriorityComparator getInstance(
+		boolean ascending) {
 
-	public CommerceAvailabilityEstimatePriorityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +66,18 @@ public class CommerceAvailabilityEstimatePriorityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceAvailabilityEstimatePriorityComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceAvailabilityEstimatePriorityComparator
+		_INSTANCE_ASCENDING =
+			new CommerceAvailabilityEstimatePriorityComparator(true);
+
+	private static final CommerceAvailabilityEstimatePriorityComparator
+		_INSTANCE_DESCENDING =
+			new CommerceAvailabilityEstimatePriorityComparator(false);
 
 	private final boolean _ascending;
 

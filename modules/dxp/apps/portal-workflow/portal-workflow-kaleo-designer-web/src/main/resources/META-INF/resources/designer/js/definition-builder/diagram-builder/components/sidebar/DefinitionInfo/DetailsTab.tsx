@@ -17,18 +17,6 @@ interface DetailsTabProps {
 }
 
 export function DetailsTab({definitionInfo}: DetailsTabProps) {
-	const titleCreated = Liferay.Language.get('created');
-	const titleLastModified = Liferay.Language.get('last-modified');
-	const titleTotalModifications = Liferay.Language.get('total-modifications');
-
-	const dateCreated = moment(definitionInfo.dateCreated).format(
-		Liferay.Language.get('mmm-dd-yyyy-lt')
-	);
-
-	const dateModified = moment(definitionInfo.dateModified).format(
-		Liferay.Language.get('mmm-dd-yyyy-lt')
-	);
-
 	const totalModifications = definitionInfo.totalModifications;
 
 	const revisionMessage =
@@ -38,37 +26,41 @@ export function DetailsTab({definitionInfo}: DetailsTabProps) {
 				])
 			: `${totalModifications} ${Liferay.Language.get('revision')}`;
 
+	const workflowDefinitionDetails = [
+		{
+			title: Liferay.Language.get('created'),
+			value: moment(definitionInfo.dateCreated).format(
+				Liferay.Language.get('mmm-dd-yyyy-lt')
+			),
+		},
+		{
+			title: Liferay.Language.get('last-modified'),
+			value: moment(definitionInfo.dateModified).format(
+				Liferay.Language.get('mmm-dd-yyyy-lt')
+			),
+		},
+		{
+			title: Liferay.Language.get('total-modifications'),
+			value: revisionMessage,
+		},
+	];
+
 	return (
 		<div className="lfr-workflow__details-tab-container">
-			<div className="lfr-workflow__details-tab-info-container">
-				<label className="lfr-workflow__details-tab-info-title">
-					{titleCreated.toUpperCase()}
-				</label>
+			{workflowDefinitionDetails.map(({title, value}) => (
+				<div
+					className="lfr-workflow__details-tab-info-container"
+					key={title}
+				>
+					<label className="lfr-workflow__details-tab-info-title">
+						{title.toUpperCase()}
+					</label>
 
-				<span className="lfr-workflow__details-tab-info-details">
-					{dateCreated}
-				</span>
-			</div>
-
-			<div className="lfr-workflow__details-tab-info-container">
-				<label className="lfr-workflow__details-tab-info-title">
-					{titleLastModified.toUpperCase()}
-				</label>
-
-				<span className="lfr-workflow__details-tab-info-details">
-					{dateModified}
-				</span>
-			</div>
-
-			<div className="lfr-workflow__details-tab-info-container">
-				<label className="lfr-workflow__details-tab-info-title">
-					{titleTotalModifications.toUpperCase()}
-				</label>
-
-				<span className="lfr-workflow__details-tab-info-details">
-					{revisionMessage}
-				</span>
-			</div>
+					<span className="lfr-workflow__details-tab-info-details">
+						{value}
+					</span>
+				</div>
+			))}
 		</div>
 	);
 }

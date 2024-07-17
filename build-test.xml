@@ -9636,6 +9636,22 @@ go</echo>
 	</target>
 
 	<target name="cluster-session-replication">
+		<if>
+			<not>
+				<resourcecontains
+					resource="${app.server.tomcat.dir}/webapps/ROOT/WEB-INF/classes/logging.properties"
+					substring="org.apache.catalina.ha.session.handlers"
+				/>
+			</not>
+			<then>
+				<echo append="true" file="${app.server.tomcat.dir}/webapps/ROOT/WEB-INF/classes/logging.properties">
+			<![CDATA[
+org.apache.catalina.ha.session.handlers=java.util.logging.ConsoleHandler
+org.apache.catalina.ha.session.level=INFO]]>
+				</echo>
+			</then>
+		</if>
+
 		<replace
 			failOnNoReplacements="true"
 			file="${app.server.tomcat.dir}/webapps/ROOT/WEB-INF/web.xml"

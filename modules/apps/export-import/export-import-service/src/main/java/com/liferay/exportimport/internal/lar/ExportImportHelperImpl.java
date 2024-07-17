@@ -1647,13 +1647,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				_manifestSummary.addModelAdditionCount(
 					manifestSummaryKey, modelAdditionCount);
 
-				if (FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
-					String assetTitle = GetterUtil.getString(
-						element.attributeValue("asset-title"));
+				String assetTitle = GetterUtil.getString(
+					element.attributeValue("asset-title"));
 
-					_manifestSummary.addAssetTitle(
-						manifestSummaryKey, assetTitle);
-				}
+				_manifestSummary.addAssetTitle(manifestSummaryKey, assetTitle);
 
 				long modelDeletionCount = GetterUtil.getLong(
 					element.attributeValue("deletion-count"));

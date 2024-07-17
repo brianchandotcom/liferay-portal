@@ -1377,36 +1377,19 @@ public class JournalArticleLocalServiceImpl
 
 		// System event
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				article.getCompanyId(), "LPS-165481")) {
-
-			if (articleResource != null) {
-				_systemEventLocalService.addSystemEvent(
-					0, article.getGroupId(), article.getModelClassName(),
-					article.getPrimaryKey(), articleResource.getUuid(), null,
-					SystemEventConstants.TYPE_DELETE,
-					JSONUtil.put(
-						"assetTitle",
-						article.getTitle(article.getDefaultLanguageId())
-					).put(
-						"uuid", article.getUuid()
-					).put(
-						"version", article.getVersion()
-					).toString());
-			}
-		}
-		else {
-			if (articleResource != null) {
-				_systemEventLocalService.addSystemEvent(
-					0, article.getGroupId(), article.getModelClassName(),
-					article.getPrimaryKey(), articleResource.getUuid(), null,
-					SystemEventConstants.TYPE_DELETE,
-					JSONUtil.put(
-						"uuid", article.getUuid()
-					).put(
-						"version", article.getVersion()
-					).toString());
-			}
+		if (articleResource != null) {
+			_systemEventLocalService.addSystemEvent(
+				0, article.getGroupId(), article.getModelClassName(),
+				article.getPrimaryKey(), articleResource.getUuid(), null,
+				SystemEventConstants.TYPE_DELETE,
+				JSONUtil.put(
+					"assetTitle",
+					article.getTitle(article.getDefaultLanguageId())
+				).put(
+					"uuid", article.getUuid()
+				).put(
+					"version", article.getVersion()
+				).toString());
 		}
 
 		return article;
@@ -1481,26 +1464,15 @@ public class JournalArticleLocalServiceImpl
 			SystemEventHierarchyEntryThreadLocal.pop(JournalArticle.class);
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
-			if (articleResource != null) {
-				_systemEventLocalService.addSystemEvent(
-					0, groupId, JournalArticle.class.getName(),
-					articleResource.getResourcePrimKey(),
-					articleResource.getUuid(), null,
-					SystemEventConstants.TYPE_DELETE,
-					JSONUtil.put(
-						"assetTitle", assetTitle
-					).toString());
-			}
-		}
-		else {
-			if (articleResource != null) {
-				_systemEventLocalService.addSystemEvent(
-					0, groupId, JournalArticle.class.getName(),
-					articleResource.getResourcePrimKey(),
-					articleResource.getUuid(), null,
-					SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
-			}
+		if (articleResource != null) {
+			_systemEventLocalService.addSystemEvent(
+				0, groupId, JournalArticle.class.getName(),
+				articleResource.getResourcePrimKey(),
+				articleResource.getUuid(), null,
+				SystemEventConstants.TYPE_DELETE,
+				JSONUtil.put(
+					"assetTitle", assetTitle
+				).toString());
 		}
 	}
 

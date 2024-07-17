@@ -36,7 +36,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -203,37 +202,35 @@ public class JournalManagementToolbarDisplayContext
 				}
 			).build();
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
-			actionDropdownItems = DropdownItemListBuilder.addAll(
-				actionDropdownItems
-			).addGroup(
-				() -> {
-					Group group = _themeDisplay.getScopeGroup();
+		actionDropdownItems = DropdownItemListBuilder.addAll(
+			actionDropdownItems
+		).addGroup(
+			() -> {
+				Group group = _themeDisplay.getScopeGroup();
 
-					if (_isShowPublishArticlesAction() && !group.isLayout()) {
-						return true;
-					}
-
-					return false;
-				},
-				dropdownGroupItem -> {
-					dropdownGroupItem.setDropdownItems(
-						DropdownItemListBuilder.add(
-							dropdownItem -> {
-								dropdownItem.putData(
-									"action", "publishEntriesToLive");
-								dropdownItem.setIcon("live");
-								dropdownItem.setLabel(
-									LanguageUtil.get(
-										httpServletRequest,
-										"publish-selected-elements"));
-								dropdownItem.setQuickAction(false);
-							}
-						).build());
-					dropdownGroupItem.setSeparator(true);
+				if (_isShowPublishArticlesAction() && !group.isLayout()) {
+					return true;
 				}
-			).build();
-		}
+
+				return false;
+			},
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "publishEntriesToLive");
+							dropdownItem.setIcon("live");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									httpServletRequest,
+									"publish-selected-elements"));
+							dropdownItem.setQuickAction(false);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).build();
 
 		return actionDropdownItems;
 	}

@@ -1,0 +1,4 @@
+dependencies {
+	testIntegrationImplementation project(":apps:frontend-js:frontend-js-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
+}

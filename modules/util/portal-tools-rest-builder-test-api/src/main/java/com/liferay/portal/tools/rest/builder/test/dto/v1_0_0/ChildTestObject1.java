@@ -6,7 +6,6 @@
 package com.liferay.portal.tools.rest.builder.test.dto.v1_0_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -33,10 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("ChildTestObject1")
 @JsonFilter("Liferay.Vulcan")
-@JsonTypeInfo(
-	defaultImpl = ChildTestObject1.class, include = JsonTypeInfo.As.PROPERTY,
-	property = "childType", use = JsonTypeInfo.Id.NAME
-)
 @XmlRootElement(name = "ChildTestObject1")
 public class ChildTestObject1 extends TestObject implements Serializable {
 

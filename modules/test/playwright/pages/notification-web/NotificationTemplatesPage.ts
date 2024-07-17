@@ -37,4 +37,8 @@ export class NotificationTemplatesPage {
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.notificationTemplates}`
 		);
 	}
+
+	async openNotificationTemplate(notificationName: string) {
+		await this.page.getByRole('link', {name: notificationName}).click();
+	}
 }

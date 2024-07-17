@@ -289,28 +289,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-185498. Confirm that when trying to delete field, modal appears."
-	@priority = 3
-	test CanAssertModalWhenDeleteField {
-		task ("And adds two or more fields") {
-			DataSetAdmin.addFields(key_fieldList = "id,label");
-		}
-
-		task ("When the user selects the Delete option in the 3 dots menu") {
-			Click(
-				key_fieldName = "id",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
-		}
-
-		task ("Then confirmation message is displayed") {
-			AssertElementPresent(
-				key_modalText = "Are you sure you want to delete this field? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
-				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
-		}
-	}
-
 	@description = "LPS-176516 Confirm that when adding a field with translation, and adding pt to the page URL, the values change according to the translation"
 	@priority = 3
 	test CanAssertTranslationIsWorking {
@@ -425,26 +403,6 @@ definition {
 
 		task ("Then Confirm that all fields are unchecked ") {
 			DataSetAdmin.assertFieldsNotChecked(key_fieldList = "renderer,rendererType");
-		}
-	}
-
-	@description = "LPS-185499. Confirm that field can be deleted."
-	@priority = 5
-	test CanDeleteField {
-		property portal.acceptance = "true";
-
-		task ("And adds 'id' field") {
-			DataSetAdmin.addFields(key_fieldList = "id");
-		}
-
-		task ("When the user selects the Delete option in the 3 dots menu / And the user confirms the deletion / Then the field is deleted") {
-			DataSetAdmin.deleteDataSetViewsFields(fieldName = "id");
-		}
-
-		task ("And assert the field is not present in the fields tab table") {
-			AssertElementPresent(
-				key_text = "Add Fields",
-				locator1 = "Button#ANY");
 		}
 	}
 

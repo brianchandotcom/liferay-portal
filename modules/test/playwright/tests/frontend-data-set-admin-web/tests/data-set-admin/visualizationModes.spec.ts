@@ -706,6 +706,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		visualizationModesPage,
 	}) => {
 		const SAMPLE_SCALAR_FIELD = 'id';
+		const SAMPLE_FIELD = 'name';
+		const LABEL_COLUMN_INDEX = 2;
 		const RENDERER_COLUMN_INDEX = 4;
 
 		await test.step('Navigate to table visualization mode page', async () => {
@@ -732,6 +734,85 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			});
 		});
 
+		await test.step('Check there is one field and is the one just added', async () => {
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_SCALAR_FIELD)
+					.locator('td')
+					.nth(LABEL_COLUMN_INDEX)
+			).toHaveText(SAMPLE_SCALAR_FIELD);
+
+			await visualizationModesPage.assertTableFieldRowCount(1);
+		});
+
+		await test.step('Add another field, save', async () => {
+			await visualizationModesPage.openAddFieldsModal();
+
+			await visualizationModesPage.selectField({
+				fieldName: SAMPLE_FIELD,
+			});
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Check there are two fields', async () => {
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_SCALAR_FIELD)
+					.locator('td')
+					.nth(LABEL_COLUMN_INDEX)
+			).toHaveText(SAMPLE_SCALAR_FIELD);
+
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_FIELD)
+					.locator('td')
+					.nth(LABEL_COLUMN_INDEX)
+			).toHaveText(SAMPLE_FIELD);
+
+			await visualizationModesPage.assertTableFieldRowCount(2);
+		});
+
+		await test.step('Delete field', async () => {
+			await clickActionInRow({
+				actionName: 'Delete',
+				rowName: SAMPLE_FIELD,
+				visualizationModesPage,
+			});
+
+			const deleteModal =
+				await visualizationModesPage.page.getByRole('dialog');
+
+			await expect(deleteModal).toContainText(
+				'Are you sure you want to delete this field? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.'
+			);
+
+			await deleteModal.getByRole('button', {name: 'Delete'}).click();
+
+			const toastContainer = page.locator('.alert-container');
+
+			await expect(toastContainer.getByText('Success')).toBeInViewport();
+
+			await toastContainer
+				.getByRole('button', {
+					name: 'Close',
+				})
+				.click();
+		});
+
+		await test.step('Check that there is only one field', async () => {
+			await expect(
+				visualizationModesPage
+					.getRowByText(SAMPLE_SCALAR_FIELD)
+					.locator('td')
+					.nth(LABEL_COLUMN_INDEX)
+			).toHaveText(SAMPLE_SCALAR_FIELD);
+
+			await visualizationModesPage.assertTableFieldRowCount(1);
+		});
+
 		await test.step('Open field edition modal, check that name field is not editable', async () => {
 			await clickActionInRow({
 				actionName: 'Edit',
@@ -752,9 +833,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 			await expect(nameInput).toBeDisabled();
 
-			await saveFromModal({
-				page,
-			});
+			await visualizationModesPage.cancelAddFieldsModal();
 		});
 
 		await test.step('Open field edition modal, check that the user can change the renderer', async () => {

@@ -9638,19 +9638,6 @@ go</echo>
 	<target name="cluster-session-replication">
 		<replace
 			failOnNoReplacements="true"
-			file="${app.server.tomcat.dir}/conf/context.xml"
-		>
-			<replacetoken><![CDATA[<Context>]]></replacetoken>
-			<replacevalue><![CDATA[<Context>
-
-		<Manager
-			className="org.apache.catalina.ha.session.DeltaManager"
-			expireSessionsOnShutdown="false"
-			notifyListenersOnReplication="true"/>]]></replacevalue>
-		</replace>
-
-		<replace
-			failOnNoReplacements="true"
 			file="${app.server.tomcat.dir}/webapps/ROOT/WEB-INF/web.xml"
 		>
 			<replacetoken><![CDATA[xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">]]></replacetoken>

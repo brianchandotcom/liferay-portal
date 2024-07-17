@@ -55,7 +55,7 @@ public class ExperimentJSONObjectMapperTest {
 		Assert.assertEquals(metrics.toString(), 4, metrics.size());
 
 		Metric metric = Collections.max(
-			metrics, new MetricProcessedDateComparator(true));
+			metrics, MetricProcessedDateComparator.getInstance(true));
 
 		Assert.assertEquals("61", metric.getId());
 		Assert.assertEquals(Integer.valueOf(4), metric.getElapsedDays());

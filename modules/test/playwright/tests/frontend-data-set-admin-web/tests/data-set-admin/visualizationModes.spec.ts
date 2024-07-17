@@ -700,4 +700,58 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await visualizationModesPage.assertTableFieldRowCount(1);
 		});
 	});
+
+	test('Check field edition in table visualization mode', async ({
+		page,
+		visualizationModesPage,
+	}) => {
+		const SAMPLE_SCALAR_FIELD = 'id';
+
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
+
+			await visualizationModesPage.selectTab('Table');
+
+			await expect(
+				visualizationModesPage.page.getByPlaceholder('Search')
+			).toBeVisible();
+		});
+
+		await test.step('Add one field, save', async () => {
+			await visualizationModesPage.openAddFieldsModal();
+
+			await visualizationModesPage.selectField({
+				fieldName: SAMPLE_SCALAR_FIELD,
+			});
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Open field edition modal, check that name field is not editable @LPS-176051, @LPS-178736', async () => {
+			await clickActionInRow({
+				actionName: 'Edit',
+				rowName: SAMPLE_SCALAR_FIELD,
+				visualizationModesPage,
+			});
+
+			const editModal =
+				await visualizationModesPage.page.getByRole('dialog');
+
+			await expect(editModal.getByRole('heading')).toContainText(
+				`Edit ${SAMPLE_SCALAR_FIELD}`
+			);
+
+			const nameInput = visualizationModesPage.page.getByLabel('Name');
+
+			await expect(nameInput).toBeInViewport();
+
+			await expect(nameInput).toBeDisabled();
+
+			await visualizationModesPage.cancelAddFieldsModal();
+		});
+	});
 });

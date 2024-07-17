@@ -3014,10 +3014,10 @@
   dependencies:
     jquery ">=1.5"
 
-"@liferay/js-api@0.6.0-pre.0":
-  version "0.6.0-pre.0"
-  resolved "https://registry.yarnpkg.com/@liferay/js-api/-/js-api-0.6.0-pre.0.tgz#51bd2dfed50b7ea4f6a3817854555b8362dbda15"
-  integrity sha512-ud04mxUggfJW7NICGd1njlT41zbpN94eRt/aEabQRMWZ0ELmRxMMPaG3KBKZXlbCuljAaeZeaZoYaWKm80UeHQ==
+"@liferay/js-api@0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@liferay/js-api/-/js-api-0.6.0.tgz#12f6cdf7d57b1a372d5f6570b1faa52401d4710b"
+  integrity sha512-Rf4AbSMYb4dV9FJ5jVRl1EL1jws2F6Lk91H5ZkZAb0rWsSrcb2LVt396Ww4qZrUBPlKojDctZ2q79yZKH76qFg==
 
 "@liferay/js-toolkit-core@3.0.1":
   version "3.0.1"

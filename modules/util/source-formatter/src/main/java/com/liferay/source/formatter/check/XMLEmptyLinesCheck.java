@@ -31,15 +31,10 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 		}
 
 		content = fixEmptyLinesInMultiLineTags(content);
-
 		content = fixEmptyLinesInNestedTags(content);
-
 		content = fixMissingEmptyLineAfterDoctype(content);
-
 		content = _fixEmptyLinesBetweenTags(fileName, content);
-
 		content = _fixEmptyLinesInTag(content);
-
 		content = _fixMissingEmptyLinesAroundComments(content);
 
 		Matcher matcher = _redundantEmptyLinePattern.matcher(content);

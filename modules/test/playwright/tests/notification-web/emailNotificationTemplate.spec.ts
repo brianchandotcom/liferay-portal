@@ -271,3 +271,43 @@ test('can see all roles groups in email notification template recipients', async
 		emailNotificationTemplatePage.organizationRolesGroupTitle
 	).toBeVisible();
 });
+
+test('can see cc/bcc fields in UI when creating notification via API without passing them', async ({
+	apiHelpers,
+	notificationTemplatesPage,
+	page,
+}) => {
+	const notificationTemplate =
+		await apiHelpers.notification.postNotificationTemplate({
+			editorType: 'richText',
+			name: 'Test Email',
+			recipientType: 'email',
+			recipients: [
+				{
+					from: 'test@liferay.com',
+					fromName: {
+						en_US: 'Test',
+					},
+					to: [
+						{
+							roleName: 'Account Administrator',
+						},
+					],
+					toType: 'role',
+				},
+			],
+			subject: {
+				en_US: 'Subject',
+			},
+			type: 'email',
+		});
+
+	await notificationTemplatesPage.goto();
+
+	await notificationTemplatesPage.openNotificationTemplate(
+		notificationTemplate.name
+	);
+
+	await expect(page.locator('#secondaryRecipientsCC')).toBeVisible();
+	await expect(page.locator('#secondaryRecipientsBCC')).toBeVisible();
+});

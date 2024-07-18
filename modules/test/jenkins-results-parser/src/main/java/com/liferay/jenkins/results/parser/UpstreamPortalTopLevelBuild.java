@@ -9,9 +9,6 @@ import java.io.IOException;
 
 import java.net.URL;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * @author Michael Hashimoto
  */
@@ -57,8 +54,7 @@ public class UpstreamPortalTopLevelBuild
 
 			portalWorkspace.setBuildProfile(getBuildProfile());
 			portalWorkspace.setOSBAsahGitHubURL(_getOSBAsahGitHubURL());
-			portalWorkspace.setPortalPrivateGitHubURL(
-				_getPortalPrivateGitHubURL());
+			portalWorkspace.setOSBFaroGitHubURL(_getOSBFaroGitHubURL());
 		}
 
 		WorkspaceGitRepository workspaceGitRepository =
@@ -93,6 +89,27 @@ public class UpstreamPortalTopLevelBuild
 		}
 
 		return null;
+	}
+
+	private String _getOSBFaroGitHubURL() {
+		String osbFaroGitHubURL = getParameterValue("OSB_FARO_GITHUB_URL");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(osbFaroGitHubURL)) {
+			return osbFaroGitHubURL;
+		}
+
+		Build controllerBuild = getControllerBuild();
+
+		if (controllerBuild != null) {
+			osbFaroGitHubURL = controllerBuild.getParameterValue(
+				"OSB_FARO_GITHUB_URL");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(osbFaroGitHubURL)) {
+				return osbFaroGitHubURL;
+			}
+		}
+
+		return "https://github.com/liferay/liferay-portal/tree/master";
 	}
 
 	private String _getPortalGitCommit() {
@@ -190,35 +207,5 @@ public class UpstreamPortalTopLevelBuild
 
 		return sb.toString();
 	}
-
-	private String _getPortalPrivateGitHubURL() {
-		String branchName = getBranchName();
-
-		if (branchName.startsWith("ee-") || branchName.endsWith("-private") ||
-			branchName.startsWith("release-")) {
-
-			return null;
-		}
-
-		String portalGitHubURL = _getPortalGitHubURL();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(portalGitHubURL)) {
-			return null;
-		}
-
-		Matcher matcher = _pattern.matcher(portalGitHubURL);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		return JenkinsResultsParserUtil.combine(
-			"https://github.com/", matcher.group("username"),
-			"/liferay-portal-ee/tree/", branchName, "-private");
-	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		"https://github.com/(?<username>[^/]+)/(?<repositoryName>[^/]+)/tree" +
-			"/(?<branchName>[^/]+)");
 
 }

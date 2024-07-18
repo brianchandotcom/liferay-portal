@@ -12,14 +12,19 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.Serializable;
 
@@ -30,7 +35,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -84,10 +88,27 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 		throws PortalException {
 
 		try {
-			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-				serviceContext.getRequest(), serviceContext.getScopeGroup(),
-				PortletKeys.MY_WORKFLOW_TASK, 0, 0,
-				PortletRequest.RENDER_PHASE);
+			HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Layout layout = themeDisplay.getLayout();
+
+			if (!StringUtil.equals(layout.getFriendlyURL(), "/manage")) {
+				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+					layout.getGroupId(), false, "/manage");
+			}
+
+			if (layout == null) {
+				layout = LayoutLocalServiceUtil.fetchLayout(
+					themeDisplay.getPlid());
+			}
+
+			PortletURL portletURL = PortletURLFactoryUtil.create(
+				serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASK,
+				layout.getPlid(), PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("mvcPath", "/edit_workflow_task.jsp");
 			portletURL.setParameter(
@@ -96,9 +117,13 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 
 			return portletURL.toString();
 		}
-		catch (WindowStateException windowStateException) {
-			throw new PortalException(windowStateException);
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
 		}
+
+		return null;
 	}
 
 	@Override

@@ -22,7 +22,7 @@ import {
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {MOVE_ITEM_DIRECTIONS} from '../config/constants/moveItemDirections';
 import {
-	useActiveItemId,
+	useActiveItemIds,
 	useActiveItemType,
 	useSelectItem,
 } from '../contexts/ControlsContext';
@@ -63,7 +63,7 @@ const isWithinIframe = () => {
 };
 
 export default function ShortcutManager() {
-	const activeItemId = useActiveItemId();
+	const activeItemIds = useActiveItemIds();
 	const activeItemType = useActiveItemType();
 	const dispatch = useDispatch();
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
@@ -75,6 +75,15 @@ export default function ShortcutManager() {
 	const {widgets} = state;
 
 	const {fragmentEntryLinks, layoutData} = state;
+
+	let activeItemId = activeItemIds;
+
+	if (Liferay.FeatureFlags['LPD-18221']) {
+
+		// todo: adapt shortcuts for multiselect
+
+		[activeItemId] = activeItemIds;
+	}
 
 	const activeLayoutDataItem =
 		activeItemType === ITEM_TYPES.layoutDataItem

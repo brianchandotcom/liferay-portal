@@ -90,21 +90,39 @@ public class BaseAuthFilterTest {
 	}
 
 	@Test
+	public void testGivenBasicAuthenticationWhenUserIsActivateThenHttpSessionIsValid() {
+		_mockFilterConfig.addInitParameter("basic_auth", "true");
+
+		User testUser = _setupUser(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertTrue(!_assertUserLocalServiceMock(testUser));
+	}
+
+	@Test
 	public void testGivenBasicAuthenticationWhenUserIsDeactivatedThenHttpSessionInvalidated() {
 		_mockFilterConfig.addInitParameter("basic_auth", "true");
 
-		User testUser = _setupUser();
+		User testUser = _setupUser(WorkflowConstants.STATUS_INACTIVE);
 
-		_assertUserLocalServiceMock(testUser);
+		Assert.assertTrue(_assertUserLocalServiceMock(testUser));
+	}
+
+	@Test
+	public void testGivenDigestAuthenticationWhenUserIsActiveThenHttpSessionIsValid() {
+		_mockFilterConfig.addInitParameter("digest_auth", "true");
+
+		User testUser = _setupUser(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertTrue(!_assertUserLocalServiceMock(testUser));
 	}
 
 	@Test
 	public void testGivenDigestAuthenticationWhenUserIsDeactivatedThenHttpSessionInvalidated() {
 		_mockFilterConfig.addInitParameter("digest_auth", "true");
 
-		User testUser = _setupUser();
+		User testUser = _setupUser(WorkflowConstants.STATUS_INACTIVE);
 
-		_assertUserLocalServiceMock(testUser);
+		Assert.assertTrue(_assertUserLocalServiceMock(testUser));
 	}
 
 	@Test
@@ -263,7 +281,7 @@ public class BaseAuthFilterTest {
 		Assert.assertNull(redirectURL);
 	}
 
-	private void _assertUserLocalServiceMock(User user) {
+	private boolean _assertUserLocalServiceMock(User user) {
 		try (MockedStatic<UserLocalServiceUtil>
 				userLocalServiceUtilMockedStatic = Mockito.mockStatic(
 					UserLocalServiceUtil.class)) {
@@ -276,7 +294,7 @@ public class BaseAuthFilterTest {
 
 			_processFilter();
 
-			Assert.assertTrue(_mockHttpSession.isInvalid());
+			return _mockHttpSession.isInvalid();
 		}
 	}
 
@@ -298,14 +316,14 @@ public class BaseAuthFilterTest {
 			PropsValues.class, propertyName, value);
 	}
 
-	private User _setupUser() {
+	private User _setupUser(int status) {
 		User testUser = new UserImpl();
 
 		_mockHttpSession.setAttribute(WebKeys.USER, testUser);
 
 		_mockHttpServletRequest.setSession(_mockHttpSession);
 
-		testUser.setStatus(WorkflowConstants.STATUS_INACTIVE);
+		testUser.setStatus(status);
 
 		return testUser;
 	}

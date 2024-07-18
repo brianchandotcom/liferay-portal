@@ -568,14 +568,8 @@ function Body({
 												selectedRESTSchema,
 												sourceItems,
 											}) => {
-												const restApplication =
-													selectedRESTApplication!.replace(
-														'/v1.0',
-														''
-													);
-
 												setSelectedRESTApplication(
-													restApplication
+													selectedRESTApplication
 												);
 												if (selectedRESTApplication) {
 													setRequiredRESTApplicationValidationError(
@@ -594,7 +588,10 @@ function Body({
 
 												const source =
 													getAPIHeadlessSourceURL(
-														restApplication,
+														selectedRESTApplication!.replace(
+															'/v1.0',
+															''
+														),
 														selectedRESTEndpoint
 													);
 
@@ -624,7 +621,6 @@ function Body({
 													false
 												);
 
-												setPreselectedValues([]);
 												setFilteredSourceItems(
 													sourceItems
 												);

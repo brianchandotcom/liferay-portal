@@ -10,7 +10,7 @@ import {TItem} from '@clayui/form/lib/SelectBox';
 import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import RequiredMark from '../../../../../components/RequiredMark';
 import ValidationFeedback from '../../../../../components/ValidationFeedback';
@@ -22,7 +22,10 @@ import {
 	ALLOWED_ENDPOINTS_PARAMETERS,
 	FUZZY_OPTIONS,
 } from '../../../../../utils/constants';
-import getFields from '../../../../../utils/getFields';
+import getFields, {
+	ISchemas,
+	getValidFields,
+} from '../../../../../utils/getFields';
 import openDefaultFailureToast from '../../../../../utils/openDefaultFailureToast';
 import {IField, ISelectionFilter} from '../../../../../utils/types';
 
@@ -68,12 +71,8 @@ function ApiRestApplication({
 	source,
 }: IApiRestApplicationModalContentProps) {
 	const [fields, setFields] = useState<IField[]>([]);
-	const [selectedItemKey, setSelectedItemKey] = useState<string>(
-		filter?.itemKey ? filter.itemKey : ''
-	);
-	const [selectedItemLabel, setSelectedItemLabel] = useState<string>(
-		filter?.itemLabel ? filter.itemLabel : ''
-	);
+	const [selectedItemKey, setSelectedItemKey] = useState<string>('');
+	const [selectedItemLabel, setSelectedItemLabel] = useState<string>('');
 	const [
 		noEnpointsRESTApplicationValidationError,
 		setNoEnpointsRESTApplicationValidationError,
@@ -83,13 +82,14 @@ function ApiRestApplication({
 	>(new Map());
 	const [selectedRESTApplication, setSelectedRESTApplication] = useState<
 		string | null
-	>(filter?.restApplication ? filter.restApplication : null);
+	>(null);
 	const [selectedRESTSchema, setSelectedRESTSchema] = useState<string | null>(
-		filter?.restSchema ? filter.restSchema : null
+		null
 	);
 	const [selectedRESTEndpoint, setSelectedRESTEndpoint] = useState<
 		string | null
-	>(filter?.restEndpoint ? filter.restEndpoint : null);
+	>(null);
+	const [sourceItems, setSourceItems] = useState<TItem[]>([]);
 
 	const isPathValid = (
 		path: string,
@@ -122,7 +122,7 @@ function ApiRestApplication({
 			source && !(source as string).match(/\{[A-Za-z0-9]+\}/g);
 
 		if (!isValidSource || !selectedItemKey || !selectedItemLabel) {
-			return;
+			return [];
 		}
 
 		const sourceItems = await fetch(source as string)
@@ -173,7 +173,8 @@ function ApiRestApplication({
 		const responseJson = await response.json();
 
 		const paths = Object.keys(responseJson.paths ?? []);
-		const schemaNames = Object.keys(responseJson.components?.schemas ?? []);
+		const schemas = responseJson.components?.schemas;
+		const schemaNames = Object.keys(schemas ?? []);
 
 		const schemaEndpoints: Map<string, Array<string>> = new Map();
 
@@ -199,81 +200,27 @@ function ApiRestApplication({
 			});
 		});
 
-		setSelectedItemKey('');
-		setSelectedItemLabel('');
+		return {schemaEndpoints, schemas};
+	};
 
-		if (schemaEndpoints.size === 0) {
-			setSelectedRESTSchema(null);
-			setSelectedRESTEndpoint(null);
+	const loadFields = ({
+		restSchema,
+		schemas,
+	}: {
+		restSchema: string;
+		schemas: ISchemas;
+	}) => {
+		const fields = getValidFields({
+			contextPath: '',
+			schemaName: restSchema,
+			schemas,
+		});
 
-			setNoEnpointsRESTApplicationValidationError(true);
-
-			onChange({
-				selectedItemKey: '',
-				selectedItemLabel: '',
-				selectedRESTApplication: restApplication,
-				selectedRESTEndpoint: null,
-				selectedRESTSchema: null,
-				sourceItems: [],
-			});
-		}
-		else if (schemaEndpoints.size === 1) {
-			const schema = schemaEndpoints.keys().next().value;
-
-			setSelectedRESTSchema(schema);
-
-			const paths = schemaEndpoints.get(schema);
-
-			if (paths?.length === 1) {
-				setSelectedRESTEndpoint(paths[0]);
-			}
-
-			setNoEnpointsRESTApplicationValidationError(false);
-
-			onChange({
-				selectedItemKey: '',
-				selectedItemLabel: '',
-				selectedRESTApplication: restApplication,
-				selectedRESTEndpoint:
-					paths?.length === 1 ? paths[0] : selectedRESTEndpoint,
-				selectedRESTSchema: schema,
-				sourceItems: [],
-			});
-
-			if (restApplication && schema) {
-				getFields({
-					restApplication,
-					restSchema: schema,
-				}).then((fields: IField[]) => {
-					if (fields) {
-						setFields(
-							fields.filter(
-								(field) =>
-									field.type !== 'array' &&
-									field.type !== 'object'
-							)
-						);
-					}
-				});
-			}
-		}
-		else {
-			setSelectedRESTSchema(null);
-			setSelectedRESTEndpoint(null);
-
-			setNoEnpointsRESTApplicationValidationError(false);
-
-			onChange({
-				selectedItemKey: '',
-				selectedItemLabel: '',
-				selectedRESTApplication: restApplication,
-				selectedRESTEndpoint: null,
-				selectedRESTSchema: null,
-				sourceItems: [],
-			});
-		}
-
-		setRESTSchemaEndpoints(schemaEndpoints);
+		setFields(
+			fields.filter(
+				(field) => field.type !== 'array' && field.type !== 'object'
+			)
+		);
 	};
 
 	const RestApplicationDropdown = () => (
@@ -302,17 +249,57 @@ function ApiRestApplication({
 		>
 			<RESTApplicationDropdownMenu
 				onItemClick={(item: string) => {
-					setSelectedRESTApplication(item);
-					getRESTSchemas(item);
+					const restApplication = item;
+					let restSchema: string | null = null;
+					let restEndpoint: string | null = null;
 
-					onChange({
-						selectedItemKey,
-						selectedItemLabel,
-						selectedRESTApplication: item,
-						selectedRESTEndpoint,
-						selectedRESTSchema,
-						sourceItems: [],
-					});
+					getRESTSchemas(restApplication)
+						.then((result) => {
+							const schemas = result?.schemas;
+							const schemaEndpoints = result?.schemaEndpoints;
+
+							if (schemaEndpoints) {
+								setNoEnpointsRESTApplicationValidationError(
+									schemaEndpoints.size === 0
+								);
+								if (schemaEndpoints.size === 1) {
+									restSchema = schemaEndpoints
+										.keys()
+										.next().value;
+
+									const paths = schemaEndpoints.get(
+										restSchema ?? ''
+									);
+
+									if (paths?.length === 1) {
+										restEndpoint = paths[0];
+									}
+
+									if (restSchema) {
+										loadFields({restSchema, schemas});
+									}
+								}
+
+								setRESTSchemaEndpoints(schemaEndpoints);
+							}
+						})
+						.finally(() => {
+							setSelectedRESTApplication(restApplication);
+							setSelectedRESTSchema(restSchema);
+							setSelectedRESTEndpoint(restEndpoint);
+							setSelectedItemKey('');
+							setSelectedItemLabel('');
+							setSourceItems([]);
+
+							onChange({
+								selectedItemKey: '',
+								selectedItemLabel: '',
+								selectedRESTApplication: restApplication,
+								selectedRESTEndpoint: restEndpoint,
+								selectedRESTSchema: restSchema,
+								sourceItems: [],
+							});
+						});
 				}}
 				restApplications={restApplications}
 			/>
@@ -341,6 +328,10 @@ function ApiRestApplication({
 				onItemClick={(item: string) => {
 					setSelectedRESTSchema(item);
 
+					setSelectedItemKey('');
+					setSelectedItemLabel('');
+					setSourceItems([]);
+
 					const endpoints = restSchemaEndpoints.get(item);
 					let endpoint;
 
@@ -353,8 +344,8 @@ function ApiRestApplication({
 					}
 
 					onChange({
-						selectedItemKey,
-						selectedItemLabel,
+						selectedItemKey: '',
+						selectedItemLabel: '',
 						selectedRESTApplication,
 						selectedRESTEndpoint:
 							endpoints?.length === 1
@@ -408,9 +399,13 @@ function ApiRestApplication({
 				onItemClick={(item: string) => {
 					setSelectedRESTEndpoint(item);
 
+					setSelectedItemKey('');
+					setSelectedItemLabel('');
+					setSourceItems([]);
+
 					onChange({
-						selectedItemKey,
-						selectedItemLabel,
+						selectedItemKey: '',
+						selectedItemLabel: '',
 						selectedRESTApplication,
 						selectedRESTEndpoint: item,
 						selectedRESTSchema,
@@ -550,6 +545,55 @@ function ApiRestApplication({
 		);
 	};
 
+	useEffect(() => {
+		if (!filter) {
+			return;
+		}
+		setSelectedItemKey(filter.itemKey);
+		setSelectedItemLabel(filter.itemLabel);
+		setSelectedRESTApplication(filter.restApplication);
+		setSelectedRESTSchema(filter.restSchema);
+		setSelectedRESTEndpoint(filter.restEndpoint);
+		let initialSourceItems: TItem[] = [];
+		getRESTSchemas(filter.restApplication)
+			.then((result) => {
+				const schemas = result?.schemas;
+				const schemaEndpoints = result?.schemaEndpoints;
+
+				if (schemaEndpoints) {
+					setRESTSchemaEndpoints(schemaEndpoints);
+					loadFields({
+						restSchema: filter.restSchema,
+						schemas,
+					});
+				}
+			})
+			.then(() =>
+				getSourceItems({
+					preselectedValueInput,
+					selectedItemKey: filter.itemKey,
+					selectedItemLabel: filter.itemLabel,
+					source: filter.source,
+				})
+			)
+			.then((sourceItems) => {
+				initialSourceItems = sourceItems;
+				setSourceItems(sourceItems);
+			})
+			.finally(() =>
+				onChange({
+					selectedItemKey: filter.itemKey,
+					selectedItemLabel: filter.itemLabel,
+					selectedRESTApplication: filter.restApplication,
+					selectedRESTEndpoint: filter.restEndpoint,
+					selectedRESTSchema: filter.restSchema,
+					sourceItems: initialSourceItems,
+				})
+			);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<>
 			{restApplications && (
@@ -585,26 +629,27 @@ function ApiRestApplication({
 				</ClayForm.Group>
 			)}
 
-			{restSchemaEndpoints.size > 0 && (
-				<ClayForm.Group
-					className={classNames({
-						'has-error': restSchemaValidationError,
-					})}
-				>
-					<label
-						htmlFor={`${namespace}restSchemaSelect`}
-						id={`${namespace}restSchema`}
+			{selectedRESTApplication &&
+				!noEnpointsRESTApplicationValidationError && (
+					<ClayForm.Group
+						className={classNames({
+							'has-error': restSchemaValidationError,
+						})}
 					>
-						{Liferay.Language.get('rest-schema')}
+						<label
+							htmlFor={`${namespace}restSchemaSelect`}
+							id={`${namespace}restSchema`}
+						>
+							{Liferay.Language.get('rest-schema')}
 
-						<RequiredMark />
-					</label>
+							<RequiredMark />
+						</label>
 
-					<RestSchemaDropdown />
+						<RestSchemaDropdown />
 
-					{restSchemaValidationError && <ValidationFeedback />}
-				</ClayForm.Group>
-			)}
+						{restSchemaValidationError && <ValidationFeedback />}
+					</ClayForm.Group>
+				)}
 
 			{selectedRESTSchema && (
 				<ClayForm.Group
@@ -670,24 +715,34 @@ function ApiRestApplication({
 							>
 								<ItemKeyDropdownMenu
 									itemKeys={fields.map((field) => field.name)}
-									onItemClick={(item: string) => {
-										setSelectedItemKey(item);
+									onItemClick={(itemKey: string) => {
+										setSelectedItemKey(itemKey);
+
+										let currentSourceItems: TItem[] =
+											sourceItems;
 
 										getSourceItems({
 											preselectedValueInput,
-											selectedItemKey: item,
+											selectedItemKey: itemKey,
 											selectedItemLabel,
 											source,
-										}).then((sourceItems) =>
-											onChange({
-												selectedItemKey: item,
-												selectedItemLabel,
-												selectedRESTApplication,
-												selectedRESTEndpoint,
-												selectedRESTSchema,
-												sourceItems,
+										})
+											.then((sourceItems) => {
+												currentSourceItems =
+													sourceItems;
+												setSourceItems(sourceItems);
 											})
-										);
+											.finally(() => {
+												onChange({
+													selectedItemKey: itemKey,
+													selectedItemLabel,
+													selectedRESTApplication,
+													selectedRESTEndpoint,
+													selectedRESTSchema,
+													sourceItems:
+														currentSourceItems,
+												});
+											});
 									}}
 								/>
 							</ClayDropDown>
@@ -731,24 +786,35 @@ function ApiRestApplication({
 									itemLabels={fields.map(
 										(field) => field.label
 									)}
-									onItemClick={(item: string) => {
-										setSelectedItemLabel(item);
+									onItemClick={(itemLabel: string) => {
+										setSelectedItemLabel(itemLabel);
+
+										let currentSourceItems: TItem[] =
+											sourceItems;
 
 										getSourceItems({
 											preselectedValueInput,
 											selectedItemKey,
-											selectedItemLabel: item,
+											selectedItemLabel: itemLabel,
 											source,
-										}).then((sourceItems) =>
-											onChange({
-												selectedItemKey,
-												selectedItemLabel: item,
-												selectedRESTApplication,
-												selectedRESTEndpoint,
-												selectedRESTSchema,
-												sourceItems,
+										})
+											.then((sourceItems) => {
+												currentSourceItems =
+													sourceItems;
+												setSourceItems(sourceItems);
 											})
-										);
+											.finally(() => {
+												onChange({
+													selectedItemKey,
+													selectedItemLabel:
+														itemLabel,
+													selectedRESTApplication,
+													selectedRESTEndpoint,
+													selectedRESTSchema,
+													sourceItems:
+														currentSourceItems,
+												});
+											});
 									}}
 								/>
 							</ClayDropDown>

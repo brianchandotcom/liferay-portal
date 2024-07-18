@@ -180,3 +180,5 @@ export default async function getFields({
 		schemas,
 	});
 }
+
+export {getValidFields, ISchemas};

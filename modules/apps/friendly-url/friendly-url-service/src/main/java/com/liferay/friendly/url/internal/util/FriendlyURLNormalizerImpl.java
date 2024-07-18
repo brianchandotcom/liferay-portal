@@ -40,122 +40,12 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 	@Override
 	public String normalizeWithEncoding(String friendlyURL) {
-		if (Validator.isNull(friendlyURL)) {
-			return friendlyURL;
-		}
+		return _normalizeWithEncoding(friendlyURL, false, false);
+	}
 
-		String decodedFriendlyURL = HttpComponentsUtil.decodePath(friendlyURL);
-
-		if (Validator.isNull(decodedFriendlyURL)) {
-			decodedFriendlyURL = HttpComponentsUtil.decodePath(
-				StringUtil.replace(
-					friendlyURL, CharPool.PERCENT, CharPool.POUND));
-		}
-
-		StringBuilder sb = new StringBuilder(decodedFriendlyURL.length());
-
-		boolean modified = false;
-
-		ByteBuffer byteBuffer = null;
-		CharBuffer charBuffer = null;
-
-		CharsetEncoder charsetEncoder = null;
-
-		for (int i = 0; i < decodedFriendlyURL.length(); i++) {
-			char c = decodedFriendlyURL.charAt(i);
-
-			if ((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z)) {
-				sb.append((char)(c + 32));
-
-				modified = true;
-			}
-			else if (((CharPool.LOWER_CASE_A <= c) &&
-					  (c <= CharPool.LOWER_CASE_Z)) ||
-					 ((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) ||
-					 (c == CharPool.PERIOD) || (c == CharPool.SLASH) ||
-					 (c == CharPool.STAR) || (c == CharPool.UNDERLINE)) {
-
-				sb.append(c);
-			}
-			else if (Arrays.binarySearch(_REPLACE_CHARS, c) >= 0) {
-				if ((i == 0) || (CharPool.DASH != sb.charAt(sb.length() - 1))) {
-					sb.append(CharPool.DASH);
-
-					if (c != CharPool.DASH) {
-						modified = true;
-					}
-				}
-				else {
-					modified = true;
-				}
-			}
-			else {
-				c = Character.toLowerCase(c);
-
-				if (charsetEncoder == null) {
-					charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
-						StringPool.UTF8);
-
-					byteBuffer = ByteBuffer.allocate(4);
-					charBuffer = CharBuffer.allocate(2);
-				}
-				else {
-					byteBuffer.clear();
-					charBuffer.clear();
-				}
-
-				charBuffer.put(c);
-
-				boolean endOfInput = false;
-
-				if ((decodedFriendlyURL.length() - 1) == i) {
-					endOfInput = true;
-				}
-
-				if (Character.isHighSurrogate(c) &&
-					((i + 1) < decodedFriendlyURL.length())) {
-
-					c = decodedFriendlyURL.charAt(i + 1);
-
-					if (Character.isLowSurrogate(c)) {
-						charBuffer.put(c);
-
-						i++;
-					}
-					else {
-						endOfInput = true;
-					}
-				}
-
-				charBuffer.flip();
-
-				charsetEncoder.encode(charBuffer, byteBuffer, endOfInput);
-
-				byteBuffer.flip();
-
-				while (byteBuffer.hasRemaining()) {
-					byte b = byteBuffer.get();
-
-					sb.append(CharPool.PERCENT);
-					sb.append(_HEX_DIGITS[(b >> 4) & 0x0F]);
-					sb.append(_HEX_DIGITS[b & 0x0F]);
-				}
-
-				if (endOfInput) {
-					charsetEncoder.flush(byteBuffer);
-
-					charsetEncoder.reset();
-				}
-
-				modified = true;
-			}
-		}
-
-		if (modified) {
-			return sb.toString();
-		}
-
-		return friendlyURL;
+	@Override
+	public String normalizeWithEncodingPeriodsAndSlashes(String friendlyURL) {
+		return _normalizeWithEncoding(friendlyURL, true, true);
 	}
 
 	@Override
@@ -207,6 +97,146 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 					}
 				}
 				else {
+					modified = true;
+				}
+			}
+		}
+
+		if (modified) {
+			return sb.toString();
+		}
+
+		return friendlyURL;
+	}
+
+	private String _normalizeWithEncoding(
+		String friendlyURL, boolean periods, boolean slashes) {
+
+		if (Validator.isNull(friendlyURL)) {
+			return friendlyURL;
+		}
+
+		String decodedFriendlyURL = HttpComponentsUtil.decodePath(friendlyURL);
+
+		if (Validator.isNull(decodedFriendlyURL)) {
+			decodedFriendlyURL = HttpComponentsUtil.decodePath(
+				StringUtil.replace(
+					friendlyURL, CharPool.PERCENT, CharPool.POUND));
+		}
+
+		StringBuilder sb = new StringBuilder(decodedFriendlyURL.length());
+
+		boolean modified = false;
+
+		ByteBuffer byteBuffer = null;
+		CharBuffer charBuffer = null;
+
+		CharsetEncoder charsetEncoder = null;
+
+		for (int i = 0; i < decodedFriendlyURL.length(); i++) {
+			char c = decodedFriendlyURL.charAt(i);
+
+			if ((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z)) {
+				sb.append((char)(c + 32));
+
+				modified = true;
+			}
+			else if (((CharPool.LOWER_CASE_A <= c) &&
+					  (c <= CharPool.LOWER_CASE_Z)) ||
+					 ((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) ||
+					 (!periods && (c == CharPool.PERIOD)) ||
+					 (!slashes && (c == CharPool.SLASH)) ||
+					 (c == CharPool.STAR) || (c == CharPool.UNDERLINE)) {
+
+				sb.append(c);
+			}
+			else if (Arrays.binarySearch(_REPLACE_CHARS, c) >= 0) {
+				if ((i == 0) || (CharPool.DASH != sb.charAt(sb.length() - 1))) {
+					sb.append(CharPool.DASH);
+
+					if (c != CharPool.DASH) {
+						modified = true;
+					}
+				}
+				else {
+					modified = true;
+				}
+			}
+			else {
+				if ((periods && (c == CharPool.PERIOD)) ||
+					(slashes && (c == CharPool.SLASH))) {
+
+					if ((i == 0) ||
+						(CharPool.DASH != sb.charAt(sb.length() - 1))) {
+
+						sb.append(CharPool.DASH);
+
+						if (c != CharPool.DASH) {
+							modified = true;
+						}
+					}
+					else {
+						modified = true;
+					}
+				}
+				else {
+					c = Character.toLowerCase(c);
+
+					if (charsetEncoder == null) {
+						charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
+							StringPool.UTF8);
+
+						byteBuffer = ByteBuffer.allocate(4);
+						charBuffer = CharBuffer.allocate(2);
+					}
+					else {
+						byteBuffer.clear();
+						charBuffer.clear();
+					}
+
+					charBuffer.put(c);
+
+					boolean endOfInput = false;
+
+					if ((decodedFriendlyURL.length() - 1) == i) {
+						endOfInput = true;
+					}
+
+					if (Character.isHighSurrogate(c) &&
+						((i + 1) < decodedFriendlyURL.length())) {
+
+						c = decodedFriendlyURL.charAt(i + 1);
+
+						if (Character.isLowSurrogate(c)) {
+							charBuffer.put(c);
+
+							i++;
+						}
+						else {
+							endOfInput = true;
+						}
+					}
+
+					charBuffer.flip();
+
+					charsetEncoder.encode(charBuffer, byteBuffer, endOfInput);
+
+					byteBuffer.flip();
+
+					while (byteBuffer.hasRemaining()) {
+						byte b = byteBuffer.get();
+
+						sb.append(CharPool.PERCENT);
+						sb.append(_HEX_DIGITS[(b >> 4) & 0x0F]);
+						sb.append(_HEX_DIGITS[b & 0x0F]);
+					}
+
+					if (endOfInput) {
+						charsetEncoder.flush(byteBuffer);
+
+						charsetEncoder.reset();
+					}
+
 					modified = true;
 				}
 			}

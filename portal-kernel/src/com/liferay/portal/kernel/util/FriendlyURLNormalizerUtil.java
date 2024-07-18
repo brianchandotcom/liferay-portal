@@ -27,6 +27,16 @@ public class FriendlyURLNormalizerUtil {
 		return friendlyURLNormalizer.normalizeWithEncoding(friendlyURL);
 	}
 
+	public static String normalizeWithEncodingPeriodsAndSlashes(
+		String friendlyURL) {
+
+		FriendlyURLNormalizer friendlyURLNormalizer =
+			_friendlyURLNormalizerSnapshot.get();
+
+		return friendlyURLNormalizer.normalizeWithEncodingPeriodsAndSlashes(
+			friendlyURL);
+	}
+
 	public static String normalizeWithPeriodsAndSlashes(String friendlyURL) {
 		FriendlyURLNormalizer friendlyURLNormalizer =
 			_friendlyURLNormalizerSnapshot.get();

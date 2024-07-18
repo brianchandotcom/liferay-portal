@@ -306,7 +306,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public MBCategory fetchMBCategory(long groupId, String friendlyURL) {
-		return mbCategoryPersistence.fetchByG_F(groupId, friendlyURL);
+		return mbCategoryPersistence.fetchByG_F(
+			groupId,
+			_friendlyURLNormalizer.normalizeWithEncodingPeriodsAndSlashes(
+				friendlyURL));
 	}
 
 	@Override

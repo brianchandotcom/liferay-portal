@@ -56,10 +56,6 @@ public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"context at the end, within a [], to indicate specific " +
 						"meaning"
 			).addExpectedMessage(
-				"The single-word key 'alert' should include a word of " +
-					"context at the end, within a [], to indicate specific " +
-						"meaning"
-			).addExpectedMessage(
 				"The single-word key 'average' should include a word of " +
 					"context at the end, within a [], to indicate specific " +
 						"meaning"

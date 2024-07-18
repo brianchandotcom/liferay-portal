@@ -1438,6 +1438,51 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["AccountGroup"]
+    "/account-groups/by-external-reference-code/{accountGroupExternalReferenceCode}/accounts":
+        get:
+            description:
+                Retrieves the list of accounts in an account group.
+            operationId: getAccountGroupByExternalReferenceCodeAccountsPage
+            parameters:
+                - in: path
+                  name: accountGroupExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+            tags: ["Account"]
     "/account-groups/by-external-reference-code/{externalReferenceCode}":
         delete:
             # @review
@@ -1645,6 +1690,52 @@ paths:
                     description:
                         "AccountGroup successfully replaced"
             tags: ["AccountGroup"]
+    "/account-groups/{accountGroupId}/accounts":
+        get:
+            description:
+                Retrieves the list of accounts in an account group.
+            operationId: getAccountGroupAccountsPage
+            parameters:
+                - in: path
+                  name: accountGroupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+            tags: ["Account"]
     "/accounts":
         get:
             # @review

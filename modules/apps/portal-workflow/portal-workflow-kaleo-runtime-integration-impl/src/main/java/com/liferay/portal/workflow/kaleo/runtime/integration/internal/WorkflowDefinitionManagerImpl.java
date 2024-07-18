@@ -102,7 +102,7 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		return _getActiveWorkflowDefinitions(
-			companyId, false, start, end, orderByComparator);
+			companyId, start, end, orderByComparator, false);
 	}
 
 	@Override
@@ -162,7 +162,7 @@ public class WorkflowDefinitionManagerImpl
 			long companyId, String name)
 		throws WorkflowException {
 
-		return _getLatestWorkflowDefinition(companyId, false, name);
+		return _getLatestWorkflowDefinition(companyId, name, false);
 	}
 
 	@Override
@@ -172,7 +172,7 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		return _getLatestWorkflowDefinitions(
-			active, companyId, false, start, end, orderByComparator);
+			companyId, active, start, end, orderByComparator, false);
 	}
 
 	@Override
@@ -223,7 +223,7 @@ public class WorkflowDefinitionManagerImpl
 			long companyId, String name, int version)
 		throws WorkflowException {
 
-		return _getWorkflowDefinition(companyId, false, name, version);
+		return _getWorkflowDefinition(companyId, name, version, false);
 	}
 
 	@Override
@@ -233,7 +233,7 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		return _getWorkflowDefinitions(
-			companyId, false, name, orderByComparator);
+			companyId, name, orderByComparator, false);
 	}
 
 	@Override
@@ -256,7 +256,7 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		return _getActiveWorkflowDefinitions(
-			companyId, true, start, end, orderByComparator);
+			companyId, start, end, orderByComparator, true);
 	}
 
 	@Override
@@ -264,7 +264,7 @@ public class WorkflowDefinitionManagerImpl
 			long companyId, String name)
 		throws WorkflowException {
 
-		return _getLatestWorkflowDefinition(companyId, true, name);
+		return _getLatestWorkflowDefinition(companyId, name, true);
 	}
 
 	@Override
@@ -274,7 +274,7 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		return _getLatestWorkflowDefinitions(
-			null, companyId, true, start, end, orderByComparator);
+			companyId, null, start, end, orderByComparator, true);
 	}
 
 	@Override
@@ -282,7 +282,7 @@ public class WorkflowDefinitionManagerImpl
 			long companyId, String name, int version)
 		throws WorkflowException {
 
-		return _getWorkflowDefinition(companyId, true, name, version);
+		return _getWorkflowDefinition(companyId, name, version, true);
 	}
 
 	@Override
@@ -292,7 +292,7 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		return _getWorkflowDefinitions(
-			companyId, true, name, orderByComparator);
+			companyId, name, orderByComparator, true);
 	}
 
 	@Override
@@ -426,8 +426,9 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	private List<WorkflowDefinition> _getActiveWorkflowDefinitions(
-			long companyId, boolean liberal, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
+			long companyId, int start, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator,
+			boolean liberal)
 		throws WorkflowException {
 
 		try {
@@ -469,7 +470,7 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	private WorkflowDefinition _getLatestWorkflowDefinition(
-			long companyId, boolean liberal, String name)
+			long companyId, String name, boolean liberal)
 		throws WorkflowException {
 
 		try {
@@ -494,8 +495,9 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	private List<WorkflowDefinition> _getLatestWorkflowDefinitions(
-			Boolean active, long companyId, boolean liberal, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
+			long companyId, Boolean active, int start, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator,
+			boolean liberal)
 		throws WorkflowException {
 
 		try {
@@ -548,7 +550,7 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	private WorkflowDefinition _getWorkflowDefinition(
-			long companyId, boolean liberal, String name, int version)
+			long companyId, String name, int version, boolean liberal)
 		throws WorkflowException {
 
 		try {
@@ -576,8 +578,9 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	private List<WorkflowDefinition> _getWorkflowDefinitions(
-			long companyId, boolean liberal, String name,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
+			long companyId, String name,
+			OrderByComparator<WorkflowDefinition> orderByComparator,
+			boolean liberal)
 		throws WorkflowException {
 
 		try {

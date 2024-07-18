@@ -58,34 +58,28 @@ public class CreateAccountMVCRenderCommandTest {
 	public void testRedirectToCreateAccountWhenCompanyStrangersTrue()
 		throws Exception {
 
-		MockLiferayPortletRenderResponse mockLiferayPortletRenderResponse =
-			new MockLiferayPortletRenderResponse();
-
 		PropsUtil.set(
 			PropsKeys.COMPANY_SECURITY_STRANGERS, Boolean.TRUE.toString());
 
-		String response = _mvcRenderCommand.render(
-			_getMockLiferayPortletRenderRequest(),
-			mockLiferayPortletRenderResponse);
-
-		Assert.assertEquals("/create_account.jsp", response);
+		Assert.assertEquals(
+			"/create_account.jsp",
+			_mvcRenderCommand.render(
+				_getMockLiferayPortletRenderRequest(),
+				new MockLiferayPortletRenderResponse()));
 	}
 
 	@Test
 	public void testRedirectToLoginWhenCompanyStrangersFalse()
 		throws Exception {
 
-		MockLiferayPortletRenderResponse mockLiferayPortletRenderResponse =
-			new MockLiferayPortletRenderResponse();
-
 		PropsUtil.set(
 			PropsKeys.COMPANY_SECURITY_STRANGERS, Boolean.FALSE.toString());
 
-		String response = _mvcRenderCommand.render(
-			_getMockLiferayPortletRenderRequest(),
-			mockLiferayPortletRenderResponse);
-
-		Assert.assertEquals("/login.jsp", response);
+		Assert.assertEquals(
+			"/login.jsp",
+			_mvcRenderCommand.render(
+				_getMockLiferayPortletRenderRequest(),
+				new MockLiferayPortletRenderResponse()));
 	}
 
 	private MockLiferayPortletRenderRequest

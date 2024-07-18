@@ -10,6 +10,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import getRandomString from '../../utils/getRandomString';
+import {openProductMenu} from '../../utils/productMenu';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
 import addDraftStructuredContent from '../../utils/structured-content/addDraftStructuredContent';
 import addExpiredStructuredContent from '../../utils/structured-content/addExpiredStructuredContent';
@@ -253,10 +254,6 @@ test(
 
 		// Open the Product Menu
 
-		await page
-			.getByRole('tab', {
-				name: 'Product Menu',
-			})
-			.click({timeout: 3000});
+		await openProductMenu(page);
 	}
 );

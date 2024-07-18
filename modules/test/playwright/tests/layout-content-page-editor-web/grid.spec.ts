@@ -70,6 +70,8 @@ test('Grid background image can be customized', async ({
 		trigger: card,
 	});
 
+	await pageEditorPage.waitForChangesSaved();
+
 	// Check correct image is used for background
 
 	expect(

@@ -249,10 +249,7 @@ test('Checks that the layout can be resized', async ({
 
 	// Simulate mouse movement to resize the element
 
-	await page.mouse.move(
-		originalSize.x + originalSize.width / 2,
-		originalSize.y
-	);
+	await resizeHandle.hover();
 	await page.mouse.down();
 	await page.mouse.move(
 		originalSize.x + originalSize.width / 2 + 50,

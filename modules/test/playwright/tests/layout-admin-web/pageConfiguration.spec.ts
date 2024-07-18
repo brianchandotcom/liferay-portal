@@ -13,6 +13,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageSelectorPagesTest} from '../../fixtures/pageSelectorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {checkAccessibility} from '../../utils/checkAccessibility';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {selectAndExpectToHaveValue} from '../../utils/selectAndExpectToHaveValue';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
@@ -147,13 +148,14 @@ test('Can not select pages from other sites for Link to a Page', async ({
 
 	await pageConfigurationPage.goToSection(name, 'General');
 
-	await page
-		.locator('.layout-type')
-		.getByRole('button', {name: 'Select'})
-		.click();
+	await clickAndExpectToBeVisible({
+		target: page.locator('.modal-dialog'),
+		trigger: page
+			.locator('.layout-type')
+			.getByRole('button', {name: 'Select'}),
+	});
 
 	const modal = await pageSelectorPage.getModal();
-
 	await modal.locator('.treeview').waitFor();
 
 	await expect(modal.getByText('Sites and Libraries')).not.toBeVisible();

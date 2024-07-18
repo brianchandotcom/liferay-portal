@@ -15,6 +15,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {wemSiteTest} from '../../fixtures/wemSiteTest';
 import {checkAccessibility} from '../../utils/checkAccessibility';
 import getRandomString from '../../utils/getRandomString';
+import {closeProductMenu, openProductMenu} from '../../utils/productMenu';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -134,7 +135,7 @@ test('Checks if sidebars are open or closed depending on Product Menu', async ({
 
 	// Check if sidebars are not visible when Product Menu is open
 
-	await page.getByLabel('Open Product Menu').click();
+	await openProductMenu(page);
 
 	await expect(panel).not.toBeVisible();
 
@@ -142,10 +143,7 @@ test('Checks if sidebars are open or closed depending on Product Menu', async ({
 
 	// Check if sidebars are visible when Product Menu is closed
 
-	await page
-		.getByLabel('Product Menu', {exact: true})
-		.getByLabel('Close')
-		.click();
+	await closeProductMenu(page);
 
 	await expect(panel).toBeVisible();
 

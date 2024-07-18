@@ -959,4 +959,193 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await visualizationModesPage.assertTableFieldRowCount(0);
 		});
 	});
+
+	test(
+		'Check that users can translate labels in table visualization mode.',
+		{tag: '@LPS-176516'},
+		async ({page, visualizationModesPage}) => {
+			const SAMPLE_FIELD = 'name';
+			const SAMPLE_FIELD_EN_US = 'Name';
+			const SAMPLE_FIELD_ES_ES = 'Nombre';
+			const SAMPLE_FIELD_PT_BR = 'Nome';
+			const LABEL_COLUMN_INDEX = 2;
+
+			await test.step('Navigate to table visualization mode page', async () => {
+				await visualizationModesPage.goto({
+					dataSetLabel,
+				});
+
+				await visualizationModesPage.selectTab('Table');
+
+				await expect(
+					visualizationModesPage.page.getByPlaceholder('Search')
+				).toBeVisible();
+			});
+
+			await test.step('Add field', async () => {
+				await visualizationModesPage.openAddFieldsModal();
+
+				await visualizationModesPage.selectField({
+					fieldName: SAMPLE_FIELD,
+				});
+
+				await saveFromModal({
+					page,
+				});
+			});
+
+			await test.step('Check there is one field and is the one just added', async () => {
+				await expect(
+					visualizationModesPage
+						.getRowByText(SAMPLE_FIELD)
+						.locator('td')
+						.nth(LABEL_COLUMN_INDEX)
+				).toHaveText(SAMPLE_FIELD);
+
+				await visualizationModesPage.assertTableFieldRowCount(1);
+			});
+
+			await test.step('Edit a field, change its label using the default language (en_US)', async () => {
+				await clickActionInRow({
+					actionName: 'Edit',
+					rowName: SAMPLE_FIELD,
+					visualizationModesPage,
+				});
+
+				const labelInput =
+					visualizationModesPage.page.getByLabel('Label');
+
+				await expect(labelInput).toBeInViewport();
+
+				await expect(labelInput).toBeEnabled();
+
+				await labelInput.fill(SAMPLE_FIELD_EN_US);
+
+				await saveFromModal({page});
+			});
+
+			await test.step('Check there is one field and the label shows the translated value', async () => {
+				await expect(
+					visualizationModesPage
+						.getRowByText(SAMPLE_FIELD)
+						.locator('td')
+						.nth(LABEL_COLUMN_INDEX)
+				).toHaveText(SAMPLE_FIELD_EN_US);
+
+				await visualizationModesPage.assertTableFieldRowCount(1);
+			});
+
+			await test.step('Edit a field, update the label using the pt_BR and es_ES languages', async () => {
+				await clickActionInRow({
+					actionName: 'Edit',
+					rowName: SAMPLE_FIELD,
+					visualizationModesPage,
+				});
+
+				const labelInput =
+					visualizationModesPage.page.getByLabel('Label');
+
+				await expect(labelInput).toBeInViewport();
+
+				const localizationButton = await page
+					.locator('.input-localized')
+					.getByRole('button');
+				const languageDropdownId = await localizationButton.evaluate(
+					(node) => node.getAttribute('aria-controls')
+				);
+
+				await localizationButton.click();
+
+				await page.locator(`#${languageDropdownId}`).waitFor();
+
+				await expect(
+					page
+						.locator(`#${languageDropdownId}`)
+						.getByRole('menuitem', {name: 'en_US'})
+						.locator('.label-item')
+				).toContainText('Default');
+
+				await expect(
+					page
+						.locator(`#${languageDropdownId}`)
+						.getByRole('menuitem', {name: 'es_ES'})
+						.locator('.label-item')
+				).toContainText('Untranslated');
+
+				await expect(
+					page
+						.locator(`#${languageDropdownId}`)
+						.getByRole('menuitem', {name: 'pt_BR'})
+						.locator('.label-item')
+				).toContainText('Untranslated');
+
+				await page
+					.locator(`#${languageDropdownId}`)
+					.getByRole('menuitem', {name: 'pt_BR'})
+					.click();
+
+				await labelInput.fill(SAMPLE_FIELD_PT_BR);
+
+				await localizationButton.click();
+
+				await page.locator(`#${languageDropdownId}`).waitFor();
+				await page
+					.locator(`#${languageDropdownId}`)
+					.getByRole('menuitem', {name: 'es_ES'})
+					.click();
+
+				await labelInput.fill(SAMPLE_FIELD_ES_ES);
+
+				await saveFromModal({page});
+			});
+
+			await test.step('Check that the language dropdown shows the updated language as Translated', async () => {
+				await clickActionInRow({
+					actionName: 'Edit',
+					rowName: SAMPLE_FIELD,
+					visualizationModesPage,
+				});
+
+				const localizationButton = await page
+					.locator('.input-localized')
+					.getByRole('button');
+				const languageDropdownId = await localizationButton.evaluate(
+					(node) => node.getAttribute('aria-controls')
+				);
+
+				await localizationButton.click();
+
+				await page.locator(`#${languageDropdownId}`).waitFor();
+
+				await expect(
+					page
+						.locator(`#${languageDropdownId}`)
+						.getByRole('menuitem', {name: 'en_US'})
+						.locator('.label-item')
+				).toContainText('Default');
+
+				await expect(
+					page
+						.locator(`#${languageDropdownId}`)
+						.getByRole('menuitem', {name: 'es_ES'})
+						.locator('.label-item')
+				).toContainText('Translated');
+
+				await expect(
+					page
+						.locator(`#${languageDropdownId}`)
+						.getByRole('menuitem', {name: 'pt_BR'})
+						.locator('.label-item')
+				).toContainText('Translated');
+
+				await page
+					.locator(`#${languageDropdownId}`)
+					.getByRole('menuitem', {name: 'pt_BR'})
+					.click();
+
+				await page.keyboard.press('Escape');
+				await visualizationModesPage.cancelAddFieldsModal();
+			});
+		}
+	);
 });

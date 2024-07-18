@@ -6,6 +6,7 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.filter;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -18,9 +19,31 @@ import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRe
  */
 public class SynonymSetFilterWriterUtil {
 
+	public static String buildSettings(
+		String[] filterNames, String[] synonymSets) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		for (String filterName : filterNames) {
+			jsonObject.put(
+				filterName,
+				JSONUtil.put(
+					"lenient", true
+				).put(
+					"synonyms", JSONFactoryUtil.createJSONArray(synonymSets)
+				).put(
+					"type", "synonym_graph"
+				));
+		}
+
+		return JSONUtil.put(
+			"analysis", JSONUtil.put("filter", jsonObject)
+		).toString();
+	}
+
 	public static void updateSynonymSets(
 		SearchEngineAdapter searchEngineAdapter, String companyIndexName,
-		String filterName, String[] synonymSets, boolean deletion) {
+		String[] filterNames, String[] synonymSets, boolean deletion) {
 
 		if (ArrayUtil.isEmpty(synonymSets) && !deletion) {
 			return;
@@ -33,32 +56,13 @@ public class SynonymSetFilterWriterUtil {
 				new UpdateIndexSettingsIndexRequest(companyIndexName);
 
 			updateIndexSettingsIndexRequest.setSettings(
-				_buildSettings(filterName, synonymSets));
+				buildSettings(filterNames, synonymSets));
 
 			searchEngineAdapter.execute(updateIndexSettingsIndexRequest);
 		}
 		finally {
 			_openIndex(searchEngineAdapter, companyIndexName);
 		}
-	}
-
-	private static String _buildSettings(
-		String filterName, String[] synonymSets) {
-
-		return JSONUtil.put(
-			"analysis",
-			JSONUtil.put(
-				"filter",
-				JSONUtil.put(
-					filterName,
-					JSONUtil.put(
-						"lenient", true
-					).put(
-						"synonyms", JSONFactoryUtil.createJSONArray(synonymSets)
-					).put(
-						"type", "synonym_graph"
-					)))
-		).toString();
 	}
 
 	private static void _closeIndex(

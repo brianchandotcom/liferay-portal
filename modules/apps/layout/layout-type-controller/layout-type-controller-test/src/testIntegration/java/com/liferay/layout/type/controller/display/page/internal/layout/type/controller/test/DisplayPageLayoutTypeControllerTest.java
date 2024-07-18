@@ -24,9 +24,11 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -41,8 +43,10 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -53,20 +57,26 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Collections;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.After;
@@ -280,6 +290,46 @@ public class DisplayPageLayoutTypeControllerTest {
 	}
 
 	@Test
+	public void testDisplayPageTypeControllerWithLockedLayout()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				null, _group.getGroupId(), 0,
+				_portal.getClassNameId(AssetCategory.class.getName()), 0,
+				RandomTestUtil.randomString(), 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		draftLayout.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		draftLayout = _layoutLocalService.updateLayout(draftLayout);
+
+		_lockLayout(draftLayout, TestPropsValues.getUser());
+
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(
+				LayoutConstants.TYPE_ASSET_DISPLAY);
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest(
+			Constants.EDIT, UserTestUtil.addGroupAdminUser(_group));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		layoutTypeController.includeLayoutContent(
+			httpServletRequest, mockHttpServletResponse, draftLayout);
+
+		Assert.assertEquals(
+			_layoutLockManager.getLockedLayoutURL(httpServletRequest),
+			mockHttpServletResponse.getRedirectedUrl());
+	}
+
+	@Test
 	public void testDisplayPageTypeControllerWithoutContextInfoItem()
 		throws Exception {
 
@@ -384,6 +434,29 @@ public class DisplayPageLayoutTypeControllerTest {
 		}
 	}
 
+	private HttpServletRequest _getHttpServletRequest(
+			String layoutMode, User user)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL, "http://www.liferay.com");
+
+		UserTestUtil.setUser(user);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY,
+			_getThemeDisplay(user, mockHttpServletRequest));
+
+		if (Validator.isNotNull(layoutMode)) {
+			mockHttpServletRequest.setParameter("p_l_mode", layoutMode);
+		}
+
+		return mockHttpServletRequest;
+	}
+
 	private MockHttpServletRequest _getMockHttpServletRequest(
 			Layout layout, User user)
 		throws Exception {
@@ -442,6 +515,50 @@ public class DisplayPageLayoutTypeControllerTest {
 		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
 		return mockHttpServletRequest;
+	}
+
+	private ThemeDisplay _getThemeDisplay(
+			User user, HttpServletRequest mockHttpServletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Company company = _companyLocalService.getCompany(
+			_group.getCompanyId());
+
+		themeDisplay.setCompany(company);
+
+		themeDisplay.setLanguageId(_group.getDefaultLanguageId());
+		themeDisplay.setLayout(LayoutTestUtil.addTypePortletLayout(_group));
+		themeDisplay.setLayoutSet(
+			_layoutSetLocalService.getLayoutSet(_group.getGroupId(), false));
+		themeDisplay.setLocale(
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+		themeDisplay.setPortalDomain(company.getVirtualHostname());
+		themeDisplay.setPortalURL(company.getPortalURL(_group.getGroupId()));
+		themeDisplay.setRequest(mockHttpServletRequest);
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setServerPort(8080);
+		themeDisplay.setSignedIn(true);
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(user);
+
+		return themeDisplay;
+	}
+
+	private void _lockLayout(Layout layout, User user) throws Exception {
+		MockActionRequest mockActionRequest = new MockActionRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setUser(user);
+
+		mockActionRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		_layoutLockManager.getLock(mockActionRequest);
 	}
 
 	private void _setUpInfoItem(boolean addGuestPermissions) throws Exception {
@@ -520,7 +637,13 @@ public class DisplayPageLayoutTypeControllerTest {
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
+	private LayoutLockManager _layoutLockManager;
+
+	@Inject
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Inject
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;

@@ -6,6 +6,7 @@
 package com.liferay.layout.type.controller.collection.internal.layout.type.controller.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -38,10 +39,12 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -81,6 +84,36 @@ public class CollectionPageLayoutTypeControllerTest {
 	@After
 	public void tearDown() throws Exception {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testCollectionPageDraftEditWithLockedLayout() throws Exception {
+		Layout layout = _addTypeCollectionLayout();
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		draftLayout.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		draftLayout = _layoutLocalService.updateLayout(draftLayout);
+
+		_lockLayout(draftLayout, TestPropsValues.getUser());
+
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(
+				LayoutConstants.TYPE_COLLECTION);
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest(
+			Constants.EDIT, UserTestUtil.addGroupAdminUser(_group));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		layoutTypeController.includeLayoutContent(
+			httpServletRequest, mockHttpServletResponse, draftLayout);
+
+		Assert.assertEquals(
+			_layoutLockManager.getLockedLayoutURL(httpServletRequest),
+			mockHttpServletResponse.getRedirectedUrl());
 	}
 
 	@Test(expected = PrincipalException.class)
@@ -217,6 +250,19 @@ public class CollectionPageLayoutTypeControllerTest {
 			new MockHttpServletResponse(), layout.fetchDraftLayout());
 	}
 
+	private void _lockLayout(Layout layout, User user) throws Exception {
+		MockActionRequest mockActionRequest = new MockActionRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setUser(user);
+
+		mockActionRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		_layoutLockManager.getLock(mockActionRequest);
+	}
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -225,6 +271,9 @@ public class CollectionPageLayoutTypeControllerTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutLockManager _layoutLockManager;
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;

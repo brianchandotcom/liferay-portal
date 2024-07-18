@@ -37,6 +37,7 @@ import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
 export default function StructureTreeNodeActions({
+	disabled,
 	item,
 	setEditingNodeId,
 	visible,
@@ -74,6 +75,7 @@ export default function StructureTreeNodeActions({
 							visible,
 					}
 				)}
+				disabled={disabled}
 				displayType="unstyled"
 				onClick={(event) => {
 					event.stopPropagation();

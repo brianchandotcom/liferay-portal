@@ -202,6 +202,8 @@ export default function PageStructureSidebar() {
 		const activeItemIds = useActiveItemIds();
 		const dispatch = useDispatch();
 		const hoveredItemId = useHoveredItemId();
+		const isMultiSelect =
+			Liferay.FeatureFlags['LPD-18221'] && activeItemIds.length > 1;
 		const isSelected = Liferay.FeatureFlags['LPD-18221']
 			? fromControlsId(activeItemIds).includes(item.id)
 			: item.id === fromControlsId(activeItemIds);
@@ -232,6 +234,11 @@ export default function PageStructureSidebar() {
 				{(item.hidable || item.hidden) && (
 					<VisibilityButton
 						className="ml-0"
+						disabled={
+							item.isMasterItem ||
+							item.hiddenAncestor ||
+							isMultiSelect
+						}
 						dispatch={dispatch}
 						node={item}
 						selectedViewportSize={selectedViewportSize}
@@ -241,6 +248,7 @@ export default function PageStructureSidebar() {
 
 				{showOptions && (
 					<StructureTreeNodeActions
+						disabled={isMultiSelect}
 						item={item}
 						setEditingNodeId={setEditingNodeId}
 						visible={item.hidden || isHovered || isSelected}

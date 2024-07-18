@@ -22,6 +22,7 @@ import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
 export default function VisibilityButton({
 	className,
+	disabled,
 	dispatch,
 	node,
 	selectedViewportSize,
@@ -47,7 +48,7 @@ export default function VisibilityButton({
 						visible,
 				}
 			)}
-			disabled={node.isMasterItem || node.hiddenAncestor}
+			disabled={disabled}
 			displayType="unstyled"
 			onClick={(event) => {
 				event.stopPropagation();

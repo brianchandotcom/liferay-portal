@@ -29,7 +29,7 @@ import useHasRequiredChild from '../../utils/useHasRequiredChild';
 import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
 import hasDropZoneChild from '../layout_data_items/hasDropZoneChild';
 
-export default function TopperItemActions({item}) {
+export default function TopperItemActions({disabled, item}) {
 	const [active, setActive] = useState(false);
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.itemId);
@@ -156,6 +156,7 @@ export default function TopperItemActions({item}) {
 				trigger={
 					<ClayButton
 						aria-label={Liferay.Language.get('options')}
+						disabled={disabled}
 						displayType="unstyled"
 						size="sm"
 						title={Liferay.Language.get('options')}

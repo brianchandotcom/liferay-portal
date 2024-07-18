@@ -7,7 +7,6 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.GitRepositoryJob;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
-import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 import java.io.File;
@@ -34,16 +33,13 @@ public class QAWebsitesPlaywrightBatchTestClassGroup
 
 	@Override
 	protected File getPlaywrightBaseDir() {
-		Job job = getJob();
-
-		GitRepositoryJob gitRepositoryJob = (GitRepositoryJob)job;
+		GitRepositoryJob gitRepositoryJob = (GitRepositoryJob)getJob();
 
 		GitWorkingDirectory gitWorkingDirectory =
 			gitRepositoryJob.getGitWorkingDirectory();
 
-		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
-
-		return new File(workingDirectory, "playwright");
+		return new File(
+			gitWorkingDirectory.getWorkingDirectory(), "playwright");
 	}
 
 }

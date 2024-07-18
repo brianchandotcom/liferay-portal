@@ -13,7 +13,7 @@ const getSectionTitle = (section) => {
 		return section.title;
 	}
 
-	if (stringToSlug(section.title) === section.friendlyUrlPath) {
+	if (stringToSlug(section.title) === decodeURI(section.friendlyUrlPath)) {
 		return section.title;
 	}
 

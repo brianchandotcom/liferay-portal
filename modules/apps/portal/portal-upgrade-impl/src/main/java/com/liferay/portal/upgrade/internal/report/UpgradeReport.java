@@ -7,6 +7,7 @@ package com.liferay.portal.upgrade.internal.report;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -72,6 +73,10 @@ public class UpgradeReport {
 	}
 
 	public void generateReport(UpgradeRecorder upgradeRecorder) {
+		if (StringUtil.equals(upgradeRecorder.getType(), "no upgrade")) {
+			return;
+		}
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Starting upgrade report generation");
 		}
@@ -551,6 +556,10 @@ public class UpgradeReport {
 	}
 
 	private Map<String, Integer> _getTableCounts() {
+		if (!StartupHelperUtil.isNewRelease()) {
+			return null;
+		}
+
 		try (Connection connection = DataAccess.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 

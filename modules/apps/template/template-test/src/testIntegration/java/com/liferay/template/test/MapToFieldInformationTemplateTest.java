@@ -146,18 +146,18 @@ public class MapToFieldInformationTemplateTest {
 	}
 
 	@Test
-	public void testMapToEditableField() throws Exception {
-		_mapToEditableField(
+	public void testMapToInfoField() throws Exception {
+		_mapToInfoField(
 			AssetCategory.class.getName(), 0, _assetCategory.getCategoryId(),
 			"name", StringPool.BLANK);
-		_mapToEditableField(
+		_mapToInfoField(
 			BlogsEntry.class.getName(), 0, _blogsEntry.getEntryId(), "content",
 			StringPool.BLANK);
-		_mapToEditableField(
+		_mapToInfoField(
 			FileEntry.class.getName(), _dlFileEntry.getFileEntryTypeId(),
 			_dlFileEntry.getFileEntryId(), "title",
 			String.valueOf(_dlFileEntry.getFileEntryTypeId()));
-		_mapToEditableField(
+		_mapToInfoField(
 			JournalArticle.class.getName(), _journalArticle.getDDMStructureId(),
 			_journalArticle.getResourcePrimKey(),
 			"DDMStructure_" + _ddmFormField.getName(),
@@ -169,7 +169,7 @@ public class MapToFieldInformationTemplateTest {
 	}
 
 	@Test
-	public void testMapToEditableFieldInCollectionDisplay() throws Exception {
+	public void testMapToInfoFieldInCollectionDisplay() throws Exception {
 		InfoField infoField = TemplateTestUtil.addTemplateEntryInfoField(
 			"AssetEntry_title", AssetEntry.class.getName(), StringPool.BLANK,
 			_infoItemServiceRegistry, _serviceContext);
@@ -339,7 +339,7 @@ public class MapToFieldInformationTemplateTest {
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 	}
 
-	private void _mapToEditableField(
+	private void _mapToInfoField(
 			String className, long classTypeId, long classPK, String fieldName,
 			String infoItemFormVariationKey)
 		throws Exception {

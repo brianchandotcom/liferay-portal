@@ -585,7 +585,7 @@ const SelectSubscription = ({
 							}));
 						}}
 					>
-						{state.id === 'renew' && state.activationKeys?.length > 1
+						{!hasComplimentaryKey && state.id === 'renew' && state.activationKeys?.length > 1
 							? i18n.sub('generate-x-keys', [
 									state.activationKeys?.length,
 							  ])

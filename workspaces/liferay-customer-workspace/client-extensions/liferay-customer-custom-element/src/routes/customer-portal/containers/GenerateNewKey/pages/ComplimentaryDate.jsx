@@ -158,6 +158,10 @@ const ComplimentaryDate = ({
 
 				setIsLoadingGenerateKey(false);
 
+				navigate(urlPreviousPage, {
+					state: {newKeyGeneratedAlert: true},
+				});
+
 				return true;
 			} else {
 				const results = await Promise.all(

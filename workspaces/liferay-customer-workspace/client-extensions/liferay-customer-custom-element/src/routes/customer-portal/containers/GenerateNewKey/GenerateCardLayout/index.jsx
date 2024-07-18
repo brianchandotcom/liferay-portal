@@ -77,26 +77,30 @@ const GenerateCardLayout = ({
 							<HandleSelectedDates />
 						</p>
 
-						<p className="m-0">
-							{i18n.translate('key-activations-available')}
-						</p>
+						{!isComplimentaryKey && (						
+							<>
+								<p className="m-0">
+									{i18n.translate('key-activations-available')}
+								</p>
 
-						<p className="font-weight-normal">
-							{selectedKeyData?.selectedSubscription?.quantity -
-								selectedKeyData?.selectedSubscription
-									?.provisionedCount}
+								<p className="font-weight-normal">
+									{selectedKeyData?.selectedSubscription?.quantity -
+										selectedKeyData?.selectedSubscription
+											?.provisionedCount}
 
-							{' of '}
+									{' of '}
 
-							{selectedKeyData?.selectedSubscription?.quantity}
-						</p>
+									{selectedKeyData?.selectedSubscription?.quantity}
+								</p>
 
-						<p className="m-0">{i18n.translate('instance-size')}</p>
+								<p className="m-0">{i18n.translate('instance-size')}</p>
 
-						<p className="font-weight-normal m-0">
-							{selectedKeyData?.selectedSubscription
-								?.instanceSize || 1}
-						</p>
+								<p className="font-weight-normal m-0">
+									{selectedKeyData?.selectedSubscription
+										?.instanceSize || 1}
+								</p>
+							</>
+						)}						
 					</div>
 				</ClayCard.Description>
 			</ClayCard.Body>

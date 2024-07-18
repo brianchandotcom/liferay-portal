@@ -165,8 +165,8 @@ public class RelevantRule implements Comparable<RelevantRule> {
 		if (testBatches.isEmpty()) {
 			throw new RelevantRuleConfigurationException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to find test.batch.names for relevant rule '",
-					getName(), "' in ", _filePath));
+					"Unable to find test.batch.names for relevant rule \"",
+					getName(), "\" in ", _filePath));
 		}
 
 		List<PathMatcher> modifiedFilesIncludes =
@@ -176,7 +176,7 @@ public class RelevantRule implements Comparable<RelevantRule> {
 			throw new RelevantRuleConfigurationException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to find modified.files.includes for relevant ",
-					"rule '", getName(), "' in ", _filePath));
+					"rule \"", getName(), "\" in ", _filePath));
 		}
 	}
 

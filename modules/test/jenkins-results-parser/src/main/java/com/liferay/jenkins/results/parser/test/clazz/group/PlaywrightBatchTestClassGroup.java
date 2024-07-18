@@ -57,7 +57,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				jobPropertyValue = playwrightProjectNamesEnv;
 			}
 			else {
-				jobPropertyValue = _getProjectJSONObj();
+				jobPropertyValue = _getProjectNames();
 			}
 		}
 
@@ -303,7 +303,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			portalProperties, propertyName);
 	}
 
-	private String _getProjectJSONObj() {
+	private String _getProjectNames() {
 		_loadPlaywrightJSONObjects();
 
 		JSONObject configJSONObject = _playwrightJSONObject.getJSONObject(

@@ -165,7 +165,7 @@ export class DocumentLibraryEditFilePage {
 		await displayPageFieldSet
 			.getByTitle('Display Page Template Type')
 			.selectOption('Specific');
-		await displayPageFieldSet.getByRole('button', {name: 'Select'}).click();
+		displayPageFieldSet.getByRole('button', {name: 'Select'}).click();
 		const selectDisplayPageModal = await this.page.frameLocator(
 			'iframe[title*="Select Page"]'
 		);

@@ -52,6 +52,14 @@ type TOrderRule = {
 	typeSettings?: string;
 };
 
+type TOrderType = {
+	active?: boolean;
+	id?: number;
+	name?: {
+		[key: string]: string;
+	};
+};
+
 export class HeadlessCommerceAdminOrderApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -64,6 +72,12 @@ export class HeadlessCommerceAdminOrderApiHelper {
 	async deleteOrder(orderId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/orders/${orderId}`
+		);
+	}
+
+	async deleteOrderTypes(orderTypeId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/order-types/${orderTypeId}`
 		);
 	}
 
@@ -169,5 +183,28 @@ export class HeadlessCommerceAdminOrderApiHelper {
 		}
 
 		return orderRule;
+	}
+
+	async postOrderType(orderType: TOrderType) {
+		orderType = {
+			active: orderType.active,
+			name: {
+				en_US: getRandomString(),
+			},
+			...orderType,
+		};
+
+		orderType = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/order-types`,
+			{
+				data: orderType,
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({id: orderType.id, type: 'orderType'});
+		}
+
+		return orderType;
 	}
 }

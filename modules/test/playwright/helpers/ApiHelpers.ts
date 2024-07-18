@@ -337,6 +337,12 @@ export class DataApiHelpers extends ApiHelpers {
 					await this.headlessCommerceAdminOrder.deleteOrder(item.id);
 
 					break;
+				case 'orderType':
+					await this.headlessCommerceAdminOrder.deleteOrderTypes(
+						item.id
+					);
+
+					break;
 				case 'organization':
 					await this.headlessAdminUser.deleteOrganization(item.id);
 

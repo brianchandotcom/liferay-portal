@@ -7,6 +7,7 @@ import {getRandomInt} from '../utils/getRandomInt';
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TChannel = {
+	accountId?: number;
 	currencyCode?: string;
 	id?: number;
 	name?: string;
@@ -41,11 +42,21 @@ export class HeadlessCommerceAdminChannelApiHelper {
 		);
 	}
 
+	async patchChannelWithAccountId(accountId: number, channel: TChannel) {
+		await this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channel.id}`,
+			{
+				accountId,
+			}
+		);
+	}
+
 	async postChannel(channel: TChannel): Promise<TChannel> {
 		channel = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels`,
 			{
 				data: {
+					accountId: 0,
 					currencyCode: 'USD',
 					name: 'Channel' + getRandomInt(),
 					siteGroupId: 0,

@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
  * @author David Truong
  */
 @RunWith(Arquillian.class)
-public class RankingJSONStorageEntryUpgradeProcessTest
+public class JSONStorageEntryRankingUpgradeProcessTest
 	extends BaseRankingUpgradeProcessTestCase {
 
 	@ClassRule
@@ -68,7 +68,7 @@ public class RankingJSONStorageEntryUpgradeProcessTest
 	@Override
 	protected String getUpgradeStepClassName() {
 		return "com.liferay.portal.search.tuning.rankings.web.internal." +
-			"upgrade.v3_0_0.RankingJSONStorageEntryUpgradeProcess";
+			"upgrade.v3_0_0.JSONStorageEntryRankingUpgradeProcess";
 	}
 
 	@Inject(

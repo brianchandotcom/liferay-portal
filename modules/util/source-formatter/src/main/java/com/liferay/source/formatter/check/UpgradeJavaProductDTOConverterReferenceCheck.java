@@ -32,11 +32,10 @@ public class UpgradeJavaProductDTOConverterReferenceCheck
 		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 
 		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
+			String childJavaTermContent = childJavaTerm.getContent();
+
 			if (childJavaTerm.hasAnnotation("Reference") &&
-				childJavaTerm.getContent(
-				).contains(
-					"ProductDTOConverter"
-				)) {
+				childJavaTermContent.contains("ProductDTOConverter")) {
 
 				Matcher matcher = _pattern.matcher(content);
 

@@ -48,17 +48,11 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
-			String playwrightProjectNamesEnv = System.getenv(
-				"PLAYWRIGHT_PROJECT_NAME");
+			jobPropertyValue = System.getenv("PLAYWRIGHT_PROJECT_NAME");
+		}
 
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(
-					playwrightProjectNamesEnv)) {
-
-				jobPropertyValue = playwrightProjectNamesEnv;
-			}
-			else {
-				jobPropertyValue = _getProjectNames();
-			}
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			jobPropertyValue = _getProjectNames();
 		}
 
 		_addProjectNames(jobPropertyValue);

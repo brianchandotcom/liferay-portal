@@ -13,6 +13,11 @@ import getRandomString from '../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {displayPageTemplatesTest} from './fixtures/displayTemplatePagesTest';
+import {ApiHelpers} from "../../helpers/ApiHelpers";
+import {
+	JournalEditArticlePage
+} from "../journal-web/pages/JournalEditArticlePage";
+import {JournalPage} from "../journal-web/pages/JournalPage";
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -22,11 +27,11 @@ const test = mergeTests(
 );
 
 async function addBasicJournalArticleWithSpecificDisplayPageTemplate(
-	apiHelpers,
-	displayPageTemplateName,
-	journalArticleTitle,
-	journalEditArticlePage,
-	journalPage,
+	apiHelpers : ApiHelpers,
+	displayPageTemplateName : string,
+	journalArticleTitle : string,
+	journalEditArticlePage : JournalEditArticlePage,
+	journalPage : JournalPage,
 	page,
 	site
 ) {
@@ -52,7 +57,7 @@ async function addBasicJournalArticleWithSpecificDisplayPageTemplate(
 		page,
 		`Success:${journalArticleTitle} was updated successfully.`
 	);
-}
+};
 
 test('Checks that the card checkbox has the correct aria label', async ({
 	displayPageTemplatesPage,

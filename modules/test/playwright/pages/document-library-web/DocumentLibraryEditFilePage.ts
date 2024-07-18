@@ -157,9 +157,7 @@ export class DocumentLibraryEditFilePage {
 	}
 
 	async selectSpecificDisplayPage(displayPageName: string) {
-		const displayPageFieldSet = this.page.locator(
-			'#_com_liferay_document_library_web_portlet_DLAdminPortlet_display-page'
-		);
+		const displayPageFieldSet = this.page.locator('fieldset', { hasText: 'Display Page', });
 
 		await expandSection(displayPageFieldSet);
 		await displayPageFieldSet

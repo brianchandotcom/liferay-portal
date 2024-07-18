@@ -2355,7 +2355,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			groupId, uniqueUrlSubject);
 
 		for (int i = 1; mbMessage != null; i++) {
-			uniqueUrlSubject = urlSubject + StringPool.DASH + i;
+			uniqueUrlSubject =
+				_friendlyURLNormalizer.normalizeWithEncodingPeriodsAndSlashes(
+					urlSubject + StringPool.DASH + i);
 
 			mbMessage = mbMessagePersistence.fetchByG_US(
 				groupId, uniqueUrlSubject);

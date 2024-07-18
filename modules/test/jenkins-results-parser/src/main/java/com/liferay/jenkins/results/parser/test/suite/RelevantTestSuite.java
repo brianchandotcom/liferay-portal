@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.suite;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalAcceptancePullRequestJob;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
@@ -12,6 +13,7 @@ import com.liferay.jenkins.results.parser.test.batch.TestBatch;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,6 +35,23 @@ public class RelevantTestSuite {
 	}
 
 	public List<TestBatch> getTestBatches() {
+		File baseTestPropertiesFile = new File(
+			_relevantRuleEngine.getBaseDir(), "test.properties");
+
+		String testBatchNamesPropertyValue =
+			JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getProperties(baseTestPropertiesFile),
+				"test.batch.names[relevant]");
+
+		if (testBatchNamesPropertyValue == null) {
+			throw new RuntimeException(
+				"Please set test.batch.names[relevant] in " +
+					baseTestPropertiesFile);
+		}
+
+		List<String> validTestBatchNames = Arrays.asList(
+			testBatchNamesPropertyValue.split(","));
+
 		List<TestBatch> testBatches = new ArrayList<>();
 
 		List<RelevantRule> relevantRules =
@@ -51,7 +70,11 @@ public class RelevantTestSuite {
 					continue;
 				}
 
-				testBatches.add(testBatch);
+				if (!validTestBatchNames.isEmpty() &&
+					validTestBatchNames.contains(testBatch.getName())) {
+
+					testBatches.add(testBatch);
+				}
 			}
 		}
 

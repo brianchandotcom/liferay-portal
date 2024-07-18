@@ -164,6 +164,11 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#createAccountGroupAccountsPageExportBatch",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"postAccountGroupAccountsPageExportBatch"));
+					put(
 						"mutation#createAccountsPageExportBatch",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class,
@@ -824,6 +829,16 @@ public class ServletDataImpl implements ServletData {
 							"postUserAccountWebUrlsPageExportBatch"));
 
 					put(
+						"query#accountGroupByExternalReferenceCodeAccounts",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"getAccountGroupByExternalReferenceCodeAccountsPage"));
+					put(
+						"query#accountGroupAccounts",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"getAccountGroupAccountsPage"));
+					put(
 						"query#accounts",
 						new ObjectValuePair<>(
 							AccountResourceImpl.class, "getAccountsPage"));
@@ -1266,6 +1281,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							OrganizationResourceImpl.class,
 							"getAccountByExternalReferenceCodeOrganizationsPage"));
+					put(
+						"query#AccountGroup.accounts",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"getAccountGroupAccountsPage"));
 					put(
 						"query#Organization.organizations",
 						new ObjectValuePair<>(

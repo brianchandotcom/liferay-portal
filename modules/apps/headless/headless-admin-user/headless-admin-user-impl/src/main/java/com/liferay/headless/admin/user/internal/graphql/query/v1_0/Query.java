@@ -214,6 +214,64 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountGroupByExternalReferenceCodeAccounts(accountGroupExternalReferenceCode: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the list of accounts in an account group."
+	)
+	public AccountPage accountGroupByExternalReferenceCodeAccounts(
+			@GraphQLName("accountGroupExternalReferenceCode") String
+				accountGroupExternalReferenceCode,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource -> new AccountPage(
+				accountResource.
+					getAccountGroupByExternalReferenceCodeAccountsPage(
+						accountGroupExternalReferenceCode, search,
+						_filterBiFunction.apply(accountResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(accountResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountGroupAccounts(accountGroupId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the list of accounts in an account group."
+	)
+	public AccountPage accountGroupAccounts(
+			@GraphQLName("accountGroupId") Long accountGroupId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource -> new AccountPage(
+				accountResource.getAccountGroupAccountsPage(
+					accountGroupId, search,
+					_filterBiFunction.apply(accountResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(accountResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accounts(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -2174,6 +2232,41 @@ public class Query {
 		}
 
 		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(AccountGroup.class)
+	public class GetAccountGroupAccountsPageTypeExtension {
+
+		public GetAccountGroupAccountsPageTypeExtension(
+			AccountGroup accountGroup) {
+
+			_accountGroup = accountGroup;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the list of accounts in an account group."
+		)
+		public AccountPage accounts(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_accountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				accountResource -> new AccountPage(
+					accountResource.getAccountGroupAccountsPage(
+						_accountGroup.getId(), search,
+						_filterBiFunction.apply(accountResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(accountResource, sortsString))));
+		}
+
+		private AccountGroup _accountGroup;
 
 	}
 

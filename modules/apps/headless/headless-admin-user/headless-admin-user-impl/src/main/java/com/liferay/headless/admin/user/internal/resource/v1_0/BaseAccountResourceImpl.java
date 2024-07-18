@@ -73,6 +73,211 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{accountGroupExternalReferenceCode}/accounts'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves the list of accounts in an account group."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "accountGroupExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sort"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/account-groups/by-external-reference-code/{accountGroupExternalReferenceCode}/accounts"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<Account> getAccountGroupByExternalReferenceCodeAccountsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("accountGroupExternalReferenceCode")
+			String accountGroupExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("search")
+			String search,
+			@javax.ws.rs.core.Context Filter filter,
+			@javax.ws.rs.core.Context Pagination pagination,
+			@javax.ws.rs.core.Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}/accounts'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves the list of accounts in an account group."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "accountGroupId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sort"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/account-groups/{accountGroupId}/accounts")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<Account> getAccountGroupAccountsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("accountGroupId")
+			Long accountGroupId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("search")
+			String search,
+			@javax.ws.rs.core.Context Filter filter,
+			@javax.ws.rs.core.Context Pagination pagination,
+			@javax.ws.rs.core.Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}/accounts/export-batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "accountGroupId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sort"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "contentType"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fieldNames"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/account-groups/{accountGroupId}/accounts/export-batch")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces("application/json")
+	@Override
+	public Response postAccountGroupAccountsPageExportBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("accountGroupId")
+			Long accountGroupId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("search")
+			String search,
+			@javax.ws.rs.core.Context Filter filter,
+			@javax.ws.rs.core.Context Sort[] sorts,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.DefaultValue("JSON")
+			@javax.ws.rs.QueryParam("contentType")
+			String contentType,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("fieldNames")
+			String fieldNames)
+		throws Exception {
+
+		vulcanBatchEngineExportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineExportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineExportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineExportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
+		vulcanBatchEngineExportTaskResource.setGroupLocalService(
+			groupLocalService);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineExportTaskResource.postExportTask(
+				Account.class.getName(), callbackURL, contentType, fieldNames)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
@@ -1208,7 +1413,12 @@ public abstract class BaseAccountResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		if (parameters.containsKey("organizationId")) {
+		if (parameters.containsKey("accountGroupId")) {
+			return getAccountGroupAccountsPage(
+				_parseLong((String)parameters.get("accountGroupId")), search,
+				filter, pagination, sorts);
+		}
+		else if (parameters.containsKey("organizationId")) {
 			return getOrganizationAccountsPage(
 				(String)parameters.get("organizationId"), search, filter,
 				pagination, sorts);

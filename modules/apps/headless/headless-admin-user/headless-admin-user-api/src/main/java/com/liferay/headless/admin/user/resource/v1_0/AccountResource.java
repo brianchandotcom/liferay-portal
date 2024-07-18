@@ -48,6 +48,21 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AccountResource {
 
+	public Page<Account> getAccountGroupByExternalReferenceCodeAccountsPage(
+			String accountGroupExternalReferenceCode, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Page<Account> getAccountGroupAccountsPage(
+			Long accountGroupId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Response postAccountGroupAccountsPageExportBatch(
+			Long accountGroupId, String search, Filter filter, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
+
 	public Page<Account> getAccountsPage(
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;

@@ -91,26 +91,31 @@ test('COMMERCE-12809 As a buyer, I want to be able to verify the included and ex
 			siteGroupId: site.id,
 		});
 
-		const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-			name: 'ProductDetailsSite',
-		});
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: 'ProductDetailsSite',
+			});
 
-		const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-			catalogId: catalog.id,
-			name: {en_US: 'Product1'},
-		});
-		const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-			catalogId: catalog.id,
-			name: {en_US: 'Product2'},
-		});
-		const product3 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-			catalogId: catalog.id,
-			name: {en_US: 'Product3'},
-		});
-		const product4 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-			catalogId: catalog.id,
-			name: {en_US: 'Product4'},
-		});
+		const product1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product1'},
+			});
+		const product2 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product2'},
+			});
+		const product3 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product3'},
+			});
+		const product4 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product4'},
+			});
 
 		await Promise.all([
 			apiHelpers.headlessCommerceAdminCatalog.postProductRelatedProduct(
@@ -123,91 +128,94 @@ test('COMMERCE-12809 As a buyer, I want to be able to verify the included and ex
 			),
 		]);
 
-		const option1 = await apiHelpers.headlessCommerceAdminCatalog.postOption(
-			'select',
-			'option1',
-			'Option1',
-			1
-		);
-		const option2 = await apiHelpers.headlessCommerceAdminCatalog.postOption(
-			'select',
-			'option2',
-			'Option2',
-			1
-		);
+		const option1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postOption(
+				'select',
+				'option1',
+				'Option1',
+				1
+			);
+		const option2 =
+			await apiHelpers.headlessCommerceAdminCatalog.postOption(
+				'select',
+				'option2',
+				'Option2',
+				1
+			);
 
-		const bundleProduct = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-			catalogId: catalog.id,
-			name: {en_US: 'ProductBundle'},
-			productOptions: [
-				{
-					fieldType: 'select',
-					key: 'option1',
-					name: {
-						en_US: 'Option1',
+		const bundleProduct =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'ProductBundle'},
+				productOptions: [
+					{
+						fieldType: 'select',
+						key: 'option1',
+						name: {
+							en_US: 'Option1',
+						},
+						optionId: option1.id,
+						priceType: 'static',
+						priority: 1,
+						productOptionValues: [
+							{
+								deltaPrice: 0.0,
+								key: 'value1',
+								name: {
+									en_US: 'Value1',
+								},
+								priority: 1,
+								quantity: 1,
+								skuId: product1.skus[0].id,
+							},
+							{
+								deltaPrice: 0.0,
+								key: 'value2',
+								name: {
+									en_US: 'Value2',
+								},
+								priority: 2,
+								quantity: 1,
+								skuId: product2.skus[0].id,
+							},
+						],
+						skuContributor: true,
 					},
-					optionId: option1.id,
-					priceType: 'static',
-					priority: 1,
-					productOptionValues: [
-						{
-							deltaPrice: 0.0,
-							key: 'value1',
-							name: {
-								en_US: 'Value1',
-							},
-							priority: 1,
-							quantity: 1,
-							skuId: product1.skus[0].id,
+					{
+						fieldType: 'select',
+						key: 'option2',
+						name: {
+							en_US: 'Option2',
 						},
-						{
-							deltaPrice: 0.0,
-							key: 'value2',
-							name: {
-								en_US: 'Value2',
+						optionId: option2.id,
+						priceType: 'static',
+						priority: 2,
+						productOptionValues: [
+							{
+								deltaPrice: 0.0,
+								key: 'value3',
+								name: {
+									en_US: 'Value3',
+								},
+								priority: 1,
+								quantity: 1,
+								skuId: product3.skus[0].id,
 							},
-							priority: 2,
-							quantity: 1,
-							skuId: product2.skus[0].id,
-						},
-					],
-					skuContributor: true,
-				},
-				{
-					fieldType: 'select',
-					key: 'option2',
-					name: {
-						en_US: 'Option2',
+							{
+								deltaPrice: 0.0,
+								key: 'value4',
+								name: {
+									en_US: 'Value4',
+								},
+								priority: 2,
+								quantity: 1,
+								skuId: product4.skus[0].id,
+							},
+						],
+						skuContributor: true,
 					},
-					optionId: option2.id,
-					priceType: 'static',
-					priority: 2,
-					productOptionValues: [
-						{
-							deltaPrice: 0.0,
-							key: 'value3',
-							name: {
-								en_US: 'Value3',
-							},
-							priority: 1,
-							quantity: 1,
-							skuId: product3.skus[0].id,
-						},
-						{
-							deltaPrice: 0.0,
-							key: 'value4',
-							name: {
-								en_US: 'Value4',
-							},
-							priority: 2,
-							quantity: 1,
-							skuId: product4.skus[0].id,
-						},
-					],
-					skuContributor: true,
-				},
-			],
-		});
+				],
+			});
 
 		await apiHelpers.headlessCommerceAdminOrder.postOrderRule({
 			type: 'products-limit',
@@ -222,9 +230,13 @@ test('COMMERCE-12809 As a buyer, I want to be able to verify the included and ex
 		await commerceAdminProductPage.managementToolbarSearchInput.fill(
 			bundleProduct.name.en_US
 		);
-		await commerceAdminProductPage.managementToolbarSearchInput.press('Enter');
+		await commerceAdminProductPage.managementToolbarSearchInput.press(
+			'Enter'
+		);
 
-		await page.getByRole('link', {exact: true, name: bundleProduct.name.en_US}).click();
+		await page
+			.getByRole('link', {exact: true, name: bundleProduct.name.en_US})
+			.click();
 
 		await commerceAdminProductPage.generateSkus();
 
@@ -432,8 +444,8 @@ test('COMMERCE-12805 As a buyer, I want to be able to verify the included and ex
 	apiHelpers,
 	applicationsMenuPage,
 	commerceAdminProductPage,
-	commerceLayoutsPage,
 	commerceInstanceSettingsPage,
+	commerceLayoutsPage,
 	page,
 	productDetailsPage,
 }) => {
@@ -450,24 +462,29 @@ test('COMMERCE-12805 As a buyer, I want to be able to verify the included and ex
 			siteGroupId: site.id,
 		});
 
-		const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
-		const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-			catalogId: catalog.id,
-			name: {en_US: 'Product1'},
-		});
-		const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-			catalogId: catalog.id,
-			name: {en_US: 'Product2'},
-		});
-		const product3 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-			catalogId: catalog.id,
-			name: {en_US: 'Product3'},
-		});
-		const product4 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-			catalogId: catalog.id,
-			name: {en_US: 'Product4'},
-		});
+		const product1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product1'},
+			});
+		const product2 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product2'},
+			});
+		const product3 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product3'},
+			});
+		const product4 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product4'},
+			});
 
 		await Promise.all([
 			apiHelpers.headlessCommerceAdminCatalog.postProductRelatedProduct(
@@ -480,102 +497,109 @@ test('COMMERCE-12805 As a buyer, I want to be able to verify the included and ex
 			),
 		]);
 
-		const option1 = await apiHelpers.headlessCommerceAdminCatalog.postOption(
-			'select',
-			'option1',
-			'Option1',
-			1
-		);
-		const option2 = await apiHelpers.headlessCommerceAdminCatalog.postOption(
-			'select',
-			'option2',
-			'Option2',
-			1
-		);
+		const option1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postOption(
+				'select',
+				'option1',
+				'Option1',
+				1
+			);
+		const option2 =
+			await apiHelpers.headlessCommerceAdminCatalog.postOption(
+				'select',
+				'option2',
+				'Option2',
+				1
+			);
 
-		const bundleProduct = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-			catalogId: catalog.id,
-			name: {en_US: 'ProductBundle'},
-			productOptions: [
-				{
-					fieldType: 'select',
-					key: 'option1',
-					name: {
-						en_US: 'Option1',
+		const bundleProduct =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'ProductBundle'},
+				productOptions: [
+					{
+						fieldType: 'select',
+						key: 'option1',
+						name: {
+							en_US: 'Option1',
+						},
+						optionId: option1.id,
+						priceType: 'static',
+						priority: 1,
+						productOptionValues: [
+							{
+								deltaPrice: 0.0,
+								key: 'value1',
+								name: {
+									en_US: 'Value1',
+								},
+								priority: 1,
+								quantity: 1,
+								skuId: product1.skus[0].id,
+							},
+							{
+								deltaPrice: 0.0,
+								key: 'value2',
+								name: {
+									en_US: 'Value2',
+								},
+								preselected: true,
+								priority: 2,
+								quantity: 1,
+								skuId: product2.skus[0].id,
+							},
+						],
+						skuContributor: true,
 					},
-					optionId: option1.id,
-					priceType: 'static',
-					priority: 1,
-					productOptionValues: [
-						{
-							deltaPrice: 0.0,
-							key: 'value1',
-							name: {
-								en_US: 'Value1',
-							},
-							priority: 1,
-							quantity: 1,
-							skuId: product1.skus[0].id,
+					{
+						fieldType: 'select',
+						key: 'option2',
+						name: {
+							en_US: 'Option2',
 						},
-						{
-							deltaPrice: 0.0,
-							key: 'value2',
-							name: {
-								en_US: 'Value2',
+						optionId: option2.id,
+						priceType: 'static',
+						priority: 2,
+						productOptionValues: [
+							{
+								deltaPrice: 0.0,
+								key: 'value3',
+								name: {
+									en_US: 'Value3',
+								},
+								priority: 1,
+								quantity: 1,
+								skuId: product3.skus[0].id,
 							},
-							preselected: true,
-							priority: 2,
-							quantity: 1,
-							skuId: product2.skus[0].id,
-						},
-					],
-					skuContributor: true,
-				},
-				{
-					fieldType: 'select',
-					key: 'option2',
-					name: {
-						en_US: 'Option2',
+							{
+								deltaPrice: 0.0,
+								key: 'value4',
+								name: {
+									en_US: 'Value4',
+								},
+								preselected: true,
+								priority: 2,
+								quantity: 1,
+								skuId: product4.skus[0].id,
+							},
+						],
+						skuContributor: true,
 					},
-					optionId: option2.id,
-					priceType: 'static',
-					priority: 2,
-					productOptionValues: [
-						{
-							deltaPrice: 0.0,
-							key: 'value3',
-							name: {
-								en_US: 'Value3',
-							},
-							priority: 1,
-							quantity: 1,
-							skuId: product3.skus[0].id,
-						},
-						{
-							deltaPrice: 0.0,
-							key: 'value4',
-							name: {
-								en_US: 'Value4',
-							},
-							preselected: true,
-							priority: 2,
-							quantity: 1,
-							skuId: product4.skus[0].id,
-						},
-					],
-					skuContributor: true,
-				},
-			],
-		});
+				],
+			});
 
 		await applicationsMenuPage.goToProducts();
 
 		await commerceAdminProductPage.managementToolbarSearchInput.fill(
 			bundleProduct.name.en_US
 		);
-		await commerceAdminProductPage.managementToolbarSearchInput.press('Enter');
+		await commerceAdminProductPage.managementToolbarSearchInput.press(
+			'Enter'
+		);
 
-		await page.getByRole('link', {exact: true, name: bundleProduct.name.en_US}).click();
+		await page
+			.getByRole('link', {exact: true, name: bundleProduct.name.en_US})
+			.click();
 
 		await commerceAdminProductPage.generateSkus();
 
@@ -607,7 +631,9 @@ test('COMMERCE-12805 As a buyer, I want to be able to verify the included and ex
 
 		await productDetailsPage.addToCartButton.click();
 
-		await expect(page.getByText('Danger:Product4 cannot be combined with Product2.')).toBeVisible();
+		await expect(
+			page.getByText('Danger:Product4 cannot be combined with Product2.')
+		).toBeVisible();
 	}
 	finally {
 		await commerceInstanceSettingsPage.toggleShowUnselectableOptions(false);

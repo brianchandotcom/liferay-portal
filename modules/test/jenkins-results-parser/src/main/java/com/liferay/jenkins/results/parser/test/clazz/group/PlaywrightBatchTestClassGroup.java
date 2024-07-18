@@ -32,7 +32,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -392,13 +391,13 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				exception.printStackTrace();
 			}
 
-			_callNPMCommand(playwrightBaseDir, "npm install");
-
-			String result = _callNPMCommand(
-				playwrightBaseDir,
-				"npm run playwright test -- --list --reporter=json");
-
 			try {
+				_callNPMCommand(playwrightBaseDir, "npm install");
+
+				String result = _callNPMCommand(
+					playwrightBaseDir,
+					"npm run playwright test -- --list --reporter=json");
+
 				int index = result.indexOf("\n{");
 
 				result = result.substring(index);
@@ -408,7 +407,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 				_playwrightJSONObject = new JSONObject(result.trim());
 			}
-			catch (JSONException jsonException) {
+			catch (Exception exception) {
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("Unable to parse Playwright JSON object ");
@@ -419,9 +418,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				NotificationUtil.sendSlackNotification(
 					sb.toString(), "#ci-notifications", ":playwright:",
 					"Playwright Batch Creation Failure", "Liferay Playwright");
-			}
-			catch (Exception exception) {
-				exception.getMessage();
+
+				exception.printStackTrace();
 			}
 
 			JSONArray errorsJSONArray = _playwrightJSONObject.optJSONArray(

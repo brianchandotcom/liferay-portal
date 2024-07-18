@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {expandSection} from '../../../utils/expandSection';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {BlogsPage} from './BlogsPage';
@@ -125,9 +126,22 @@ export class BlogsEditBlogEntryPage {
 		const selectDisplayPageModal = await this.page.frameLocator(
 			'iframe[title*="Select Page"]'
 		);
-		await selectDisplayPageModal
-			.getByLabel('Select ' + displayPageName)
-			.click();
+		await this.page
+			.locator('.modal-title', {
+				hasText: 'Select Page',
+			})
+			.waitFor({
+				state: 'visible',
+			});
+
+		await clickAndExpectToBeHidden({
+			target: this.page.locator('.modal-title', {
+				hasText: 'Select Page',
+			}),
+			trigger: selectDisplayPageModal.getByLabel(
+				'Select ' + displayPageName
+			),
+		});
 	}
 
 	async submitBlogEntryToWorkflow() {

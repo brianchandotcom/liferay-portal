@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
@@ -187,9 +188,23 @@ export class JournalEditArticlePage {
 		const selectDisplayPageModal = await this.page.frameLocator(
 			'iframe[title*="Select Display Page"]'
 		);
-		await selectDisplayPageModal
-			.getByLabel('Select ' + displayPageName)
-			.click();
+
+		await this.page
+			.locator('.modal-title', {
+				hasText: 'Select Display Page',
+			})
+			.waitFor({
+				state: 'visible',
+			});
+
+		await clickAndExpectToBeHidden({
+			target: this.page.locator('.modal-title', {
+				hasText: 'Select Display Page',
+			}),
+			trigger: selectDisplayPageModal.getByLabel(
+				'Select ' + displayPageName
+			),
+		});
 	}
 
 	async scheduleArticle(

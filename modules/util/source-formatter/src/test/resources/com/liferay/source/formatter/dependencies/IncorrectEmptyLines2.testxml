@@ -4,4 +4,11 @@
 	<element name="test">
 		<attribute name="hello world" />
 	</element>
+	<labels>
+		<label language-id="en_US">
+
+			approve
+
+		</label>
+	</labels>
 </definition>

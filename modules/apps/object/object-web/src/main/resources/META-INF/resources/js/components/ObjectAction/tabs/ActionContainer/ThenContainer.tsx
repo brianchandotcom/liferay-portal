@@ -156,7 +156,7 @@ export function ThenContainer({
 						'send-email-notifications-in-the-guest-users-preferred-language'
 					),
 					title: Liferay.Language.get(
-						'send-email-notifications-to-guest-users-in-the-form-submission-language.-If-a-translation-does-not-exist,-use-the-instance-language'
+						'send-email-notifications-to-guest-users-in-the-form-submission-language'
 					),
 				}
 			: values.parameters?.relatedObjectEntries !== undefined

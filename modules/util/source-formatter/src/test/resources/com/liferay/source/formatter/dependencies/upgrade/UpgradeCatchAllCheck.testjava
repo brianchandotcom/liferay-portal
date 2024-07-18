@@ -121,8 +121,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new ArticleReviewDateComparator();
 		new ArticleTitleComparator();
 		new ArticleVersionComparator();
+		new AssetCategoryCreateDateComparator();
 		new AssetListEntryCreateDateComparator();
+		new AssetTagAssetCountComparator();
 		new AssetTagCountComparator();
+		new AssetVocabularyCreateDateComparator();
 		new BackgroundTaskCompletionDateComparator();
 		new BackgroundTaskCreateDateComparator();
 		new BackgroundTaskNameComparator();
@@ -215,6 +218,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new DLFileVersionVersionComparator();
 		new DataProviderInstanceModifiedDateComparator();
 		new DataProviderInstanceNameComparator();
+		new ExportImportConfigurationNameComparator();
 		new FeedIDComparator();
 		new FeedNameComparator();
 		new FolderArticleArticleIdComparator();
@@ -224,6 +228,14 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new FolderArticleTitleComparator();
 		new FolderIdComparator();
 		new FolderNameComparator();
+		new FragmentCollectionCreateDateComparator();
+		new FragmentCollectionNameComparator();
+		new FragmentCompositionFragmentEntryCreateDateComparator();
+		new FragmentCompositionFragmentEntryModifiedDateComparator();
+		new FragmentCompositionFragmentEntryNameComparator();
+		new FragmentEntryCreateDateComparator();
+		new FragmentEntryLinkLastPropagationDateComparator();
+		new FragmentEntryNameComparator();
 		new GroupFriendlyURLComparator();
 		new GroupIdComparator();
 		new GroupTypeComparator();
@@ -289,6 +301,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new RoleNameComparator();
 		new RoleRoleIdComparator();
 		new RoleTypeComparator();
+		new SXPBlueprintModifiedDateComparator();
 		new SocialActivitySetModifiedDateComparator();
 		new StructureCreateDateComparator();
 		new StructureIdComparator();
@@ -356,8 +369,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new ArticleReviewDateComparator(showHiddenPages);
 		new ArticleTitleComparator(showHiddenPages);
 		new ArticleVersionComparator(showHiddenPages);
+		new AssetCategoryCreateDateComparator(showHiddenPages);
 		new AssetListEntryCreateDateComparator(showHiddenPages);
+		new AssetTagAssetCountComparator(showHiddenPages);
 		new AssetTagCountComparator(showHiddenPages);
+		new AssetVocabularyCreateDateComparator(showHiddenPages);
 		new BackgroundTaskCompletionDateComparator(showHiddenPages);
 		new BackgroundTaskCreateDateComparator(showHiddenPages);
 		new BackgroundTaskNameComparator(showHiddenPages);
@@ -450,6 +466,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new DLFileVersionVersionComparator(showHiddenPages);
 		new DataProviderInstanceModifiedDateComparator(showHiddenPages);
 		new DataProviderInstanceNameComparator(showHiddenPages);
+		new ExportImportConfigurationNameComparator(showHiddenPages);
 		new FeedIDComparator(showHiddenPages);
 		new FeedNameComparator(showHiddenPages);
 		new FolderArticleArticleIdComparator(showHiddenPages);
@@ -459,6 +476,14 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new FolderArticleTitleComparator(showHiddenPages);
 		new FolderIdComparator(showHiddenPages);
 		new FolderNameComparator(showHiddenPages);
+		new FragmentCollectionCreateDateComparator(showHiddenPages);
+		new FragmentCollectionNameComparator(showHiddenPages);
+		new FragmentCompositionFragmentEntryCreateDateComparator(showHiddenPages);
+		new FragmentCompositionFragmentEntryModifiedDateComparator(showHiddenPages);
+		new FragmentCompositionFragmentEntryNameComparator(showHiddenPages);
+		new FragmentEntryCreateDateComparator(showHiddenPages);
+		new FragmentEntryLinkLastPropagationDateComparator(showHiddenPages);
+		new FragmentEntryNameComparator(showHiddenPages);
 		new GroupFriendlyURLComparator(showHiddenPages);
 		new GroupIdComparator(showHiddenPages);
 		new GroupTypeComparator(showHiddenPages);
@@ -524,6 +549,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new RoleNameComparator(showHiddenPages);
 		new RoleRoleIdComparator(showHiddenPages);
 		new RoleTypeComparator(showHiddenPages);
+		new SXPBlueprintModifiedDateComparator(showHiddenPages);
 		new SocialActivitySetModifiedDateComparator(showHiddenPages);
 		new StructureCreateDateComparator(showHiddenPages);
 		new StructureIdComparator(showHiddenPages);

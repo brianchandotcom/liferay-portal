@@ -136,8 +136,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		ArticleReviewDateComparator.getInstance(false);
 		ArticleTitleComparator.getInstance(false);
 		ArticleVersionComparator.getInstance(false);
+		AssetCategoryCreateDateComparator.getInstance(true);
 		AssetListEntryCreateDateComparator.getInstance(false);
+		AssetTagAssetCountComparator.getInstance(true);
 		AssetTagCountComparator.getInstance(false);
+		AssetVocabularyCreateDateComparator.getInstance(true);
 		BackgroundTaskCompletionDateComparator.getInstance(false);
 		BackgroundTaskCreateDateComparator.getInstance(false);
 		BackgroundTaskNameComparator.getInstance(false);
@@ -230,6 +233,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		DLFileVersionVersionComparator.getInstance(false);
 		DataProviderInstanceModifiedDateComparator.getInstance(false);
 		DataProviderInstanceNameComparator.getInstance(false);
+		ExportImportConfigurationNameComparator.getInstance(false);
 		FeedIDComparator.getInstance(false);
 		FeedNameComparator.getInstance(false);
 		FolderArticleArticleIdComparator.getInstance(false);
@@ -239,6 +243,14 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		FolderArticleTitleComparator.getInstance(false);
 		FolderIdComparator.getInstance(false);
 		FolderNameComparator.getInstance(false);
+		FragmentCollectionCreateDateComparator.getInstance(true);
+		FragmentCollectionNameComparator.getInstance(false);
+		FragmentCompositionFragmentEntryCreateDateComparator.getInstance(true);
+		FragmentCompositionFragmentEntryModifiedDateComparator.getInstance(true);
+		FragmentCompositionFragmentEntryNameComparator.getInstance(false);
+		FragmentEntryCreateDateComparator.getInstance(true);
+		FragmentEntryLinkLastPropagationDateComparator.getInstance(true);
+		FragmentEntryNameComparator.getInstance(false);
 		GroupFriendlyURLComparator.getInstance(false);
 		GroupIdComparator.getInstance(false);
 		GroupTypeComparator.getInstance(false);
@@ -304,6 +316,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		RoleNameComparator.getInstance(false);
 		RoleRoleIdComparator.getInstance(false);
 		RoleTypeComparator.getInstance(false);
+		SXPBlueprintModifiedDateComparator.getInstance(false);
 		SocialActivitySetModifiedDateComparator.getInstance(false);
 		StructureCreateDateComparator.getInstance(false);
 		StructureIdComparator.getInstance(false);
@@ -370,8 +383,11 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		ArticleReviewDateComparator.getInstance(showHiddenPages);
 		ArticleTitleComparator.getInstance(showHiddenPages);
 		ArticleVersionComparator.getInstance(showHiddenPages);
+		AssetCategoryCreateDateComparator.getInstance(showHiddenPages);
 		AssetListEntryCreateDateComparator.getInstance(showHiddenPages);
+		AssetTagAssetCountComparator.getInstance(showHiddenPages);
 		AssetTagCountComparator.getInstance(showHiddenPages);
+		AssetVocabularyCreateDateComparator.getInstance(showHiddenPages);
 		BackgroundTaskCompletionDateComparator.getInstance(showHiddenPages);
 		BackgroundTaskCreateDateComparator.getInstance(showHiddenPages);
 		BackgroundTaskNameComparator.getInstance(showHiddenPages);
@@ -464,6 +480,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		DLFileVersionVersionComparator.getInstance(showHiddenPages);
 		DataProviderInstanceModifiedDateComparator.getInstance(showHiddenPages);
 		DataProviderInstanceNameComparator.getInstance(showHiddenPages);
+		ExportImportConfigurationNameComparator.getInstance(showHiddenPages);
 		FeedIDComparator.getInstance(showHiddenPages);
 		FeedNameComparator.getInstance(showHiddenPages);
 		FolderArticleArticleIdComparator.getInstance(showHiddenPages);
@@ -473,6 +490,14 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		FolderArticleTitleComparator.getInstance(showHiddenPages);
 		FolderIdComparator.getInstance(showHiddenPages);
 		FolderNameComparator.getInstance(showHiddenPages);
+		FragmentCollectionCreateDateComparator.getInstance(showHiddenPages);
+		FragmentCollectionNameComparator.getInstance(showHiddenPages);
+		FragmentCompositionFragmentEntryCreateDateComparator.getInstance(showHiddenPages);
+		FragmentCompositionFragmentEntryModifiedDateComparator.getInstance(showHiddenPages);
+		FragmentCompositionFragmentEntryNameComparator.getInstance(showHiddenPages);
+		FragmentEntryCreateDateComparator.getInstance(showHiddenPages);
+		FragmentEntryLinkLastPropagationDateComparator.getInstance(showHiddenPages);
+		FragmentEntryNameComparator.getInstance(showHiddenPages);
 		GroupFriendlyURLComparator.getInstance(showHiddenPages);
 		GroupIdComparator.getInstance(showHiddenPages);
 		GroupTypeComparator.getInstance(showHiddenPages);
@@ -538,6 +563,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		RoleNameComparator.getInstance(showHiddenPages);
 		RoleRoleIdComparator.getInstance(showHiddenPages);
 		RoleTypeComparator.getInstance(showHiddenPages);
+		SXPBlueprintModifiedDateComparator.getInstance(showHiddenPages);
 		SocialActivitySetModifiedDateComparator.getInstance(showHiddenPages);
 		StructureCreateDateComparator.getInstance(showHiddenPages);
 		StructureIdComparator.getInstance(showHiddenPages);

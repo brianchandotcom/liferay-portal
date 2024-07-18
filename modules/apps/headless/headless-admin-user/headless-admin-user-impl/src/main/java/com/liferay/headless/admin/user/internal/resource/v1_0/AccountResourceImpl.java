@@ -8,11 +8,14 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountListTypeConstants;
+import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountContactInformation;
@@ -60,6 +63,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -71,6 +75,7 @@ import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -146,6 +151,60 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		return getAccount(
 			DTOConverterUtil.getModelPrimaryKey(
 				_accountResourceDTOConverter, externalReferenceCode));
+	}
+
+	@Override
+	public Page<Account> getAccountGroupAccountsPage(
+			Long accountGroupId, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		AccountGroup accountGroup = _accountGroupService.getAccountGroup(
+			accountGroupId);
+
+		return SearchUtil.search(
+			Collections.emptyMap(),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						"accountGroupIds",
+						String.valueOf(accountGroup.getAccountGroupId())),
+					BooleanClauseOccur.MUST);
+			},
+			filter, AccountEntry.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
+			sorts,
+			document -> _toAccount(
+				Collections.emptyMap(),
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+	}
+
+	@Override
+	public Page<Account> getAccountGroupByExternalReferenceCodeAccountsPage(
+			String accountGroupExternalReferenceCode, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		AccountGroup accountGroup =
+			_accountGroupService.fetchAccountGroupByExternalReferenceCode(
+				accountGroupExternalReferenceCode,
+				contextCompany.getCompanyId());
+
+		if (accountGroup == null) {
+			throw new NoSuchGroupException(
+				"Unable to find account group with external reference code " +
+					accountGroupExternalReferenceCode);
+		}
+
+		return getAccountGroupAccountsPage(
+			accountGroup.getAccountGroupId(), search, filter, pagination,
+			sorts);
 	}
 
 	@Override
@@ -1011,6 +1070,29 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			_getDTOConverterContext(accountEntry.getAccountEntryId()));
 	}
 
+	private Account _toAccount(
+			Map<String, Map<String, String>> actions, long accountId)
+		throws Exception {
+
+		DTOConverterContext dtoConverterContext = _getDTOConverterContext(
+			accountId);
+
+		Map<String, Map<String, String>> actionsMap = new HashMap<>();
+
+		if (!actions.isEmpty()) {
+			actionsMap.putAll(actions);
+		}
+
+		actionsMap.putAll(dtoConverterContext.getActions());
+
+		return _accountResourceDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), actionsMap,
+				_dtoConverterRegistry, accountId,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
+	}
+
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -1032,6 +1114,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
+	@Reference
+	private AccountGroupService _accountGroupService;
+
 	@Reference(target = DTOConverterConstants.ACCOUNT_RESOURCE_DTO_CONVERTER)
 	private DTOConverter<AccountEntry, Account> _accountResourceDTOConverter;
 
@@ -1043,6 +1128,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	private final EntityModel _entityModel = new AccountEntityModel();
 

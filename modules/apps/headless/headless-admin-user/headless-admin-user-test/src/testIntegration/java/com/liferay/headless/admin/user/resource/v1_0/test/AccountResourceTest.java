@@ -9,8 +9,11 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.DuplicateAccountEntryExternalReferenceCodeException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
+import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountContactInformation;
@@ -25,6 +28,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -43,6 +47,7 @@ import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,6 +57,16 @@ import org.junit.runner.RunWith;
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class AccountResourceTest extends BaseAccountResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_accountGroup = _accountGroupLocalService.addAccountGroup(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringUtil.randomString(), new ServiceContext());
+	}
 
 	@After
 	@Override
@@ -415,6 +430,49 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		return accountResource.putAccountByExternalReferenceCode(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()),
 			randomAccount());
+	}
+
+	@Override
+	protected Account testGetAccountGroupAccountsPage_addAccount(
+			Long accountGroupId, Account account)
+		throws Exception {
+
+		account = _postAccount(account);
+
+		_accountGroupRelLocalService.addAccountGroupRel(
+			accountGroupId, AccountEntry.class.getName(), account.getId());
+
+		return account;
+	}
+
+	@Override
+	protected Long testGetAccountGroupAccountsPage_getAccountGroupId()
+		throws Exception {
+
+		return _accountGroup.getAccountGroupId();
+	}
+
+	@Override
+	protected Account
+			testGetAccountGroupByExternalReferenceCodeAccountsPage_addAccount(
+				String accountGroupExternalReferenceCode, Account account)
+		throws Exception {
+
+		account = _postAccount(account);
+
+		_accountGroupRelLocalService.addAccountGroupRel(
+			_accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
+			account.getId());
+
+		return account;
+	}
+
+	@Override
+	protected String
+			testGetAccountGroupByExternalReferenceCodeAccountsPage_getAccountGroupExternalReferenceCode()
+		throws Exception {
+
+		return _accountGroup.getExternalReferenceCode();
 	}
 
 	@Override
@@ -979,6 +1037,14 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	@Inject
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
+
+	private AccountGroup _accountGroup;
+
+	@Inject
+	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Inject
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Inject
 	private AddressLocalService _addressLocalService;

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import com.vladsch.flexmark.ast.Heading;
 import com.vladsch.flexmark.ext.admonition.AdmonitionExtension;
 import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
 import com.vladsch.flexmark.ext.aside.AsideExtension;
@@ -48,6 +49,7 @@ import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterVisitor;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterVisitorExt;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.util.ast.Block;
 import com.vladsch.flexmark.util.ast.Document;
 import com.vladsch.flexmark.util.ast.Node;
 import com.vladsch.flexmark.util.ast.NodeVisitor;
@@ -549,6 +551,35 @@ public class Main {
 		System.out.println(errorMessage);
 
 		_errorMessages.add(errorMessage);
+	}
+
+	private String _findTitle(Node root) {
+		if (root instanceof Heading) {
+			Heading heading = (Heading)root;
+
+			if ((heading.getLevel() == 1) && heading.hasChildren()) {
+				TextCollectingVisitor collectingVisitor =
+					new TextCollectingVisitor();
+
+				return collectingVisitor.collectAndGetText(heading);
+			}
+		}
+
+		if ((root instanceof Block) && root.hasChildren()) {
+			Node child = root.getFirstChild();
+
+			while (child != null) {
+				String title = _findTitle(child);
+
+				if (title != null) {
+					return title;
+				}
+
+				child = child.getNext();
+			}
+		}
+
+		return null;
 	}
 
 	private JSONArray _getBreadcrumbJSONArray(File file) throws Exception {
@@ -1134,13 +1165,9 @@ public class Main {
 	}
 
 	private String _getTitle(String text) {
-		int x = text.indexOf("#");
+		Node root = _parser.parse(text);
 
-		int y = text.indexOf(StringPool.NEW_LINE, x);
-
-		String title = text.substring(x + 1, y);
-
-		return title.trim();
+		return _findTitle(root);
 	}
 
 	private String _getUuid(String text) {

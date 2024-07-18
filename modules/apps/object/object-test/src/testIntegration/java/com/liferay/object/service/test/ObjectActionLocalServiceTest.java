@@ -2289,6 +2289,74 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
+	public void testSequentialObjectActions() throws Exception {
+		_publishCustomObjectDefinition();
+
+		ObjectAction objectAction1 = _addObjectAction(
+			null, RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionId", _objectDefinition.getObjectDefinitionId()
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "firstName"
+					).put(
+						"value", "John"
+					)
+				).toString()
+			).build(),
+			false);
+		ObjectAction objectAction2 = _addObjectAction(
+			null, RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionId", _objectDefinition.getObjectDefinitionId()
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "lastName"
+					).put(
+						"value", "Smith"
+					)
+				).toString()
+			).build(),
+			false);
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Map<String, Serializable> values = _objectEntryLocalService.getValues(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals("John", MapUtil.getString(values, "firstName"));
+		Assert.assertEquals("Smith", MapUtil.getString(values, "lastName"));
+
+		_objectActionLocalService.deleteObjectAction(objectAction1);
+		_objectActionLocalService.deleteObjectAction(objectAction2);
+	}
+
+	@Test
 	public void testUpdateObjectAction() throws Exception {
 		String externalReferenceCode1 = RandomTestUtil.randomString();
 

@@ -301,6 +301,7 @@ public class SiteActionDropdownItemsProvider {
 				dropdownItem.setHref(href);
 			}
 
+			dropdownItem.setIcon("shortcut");
 			dropdownItem.setLabel(
 				LanguageUtil.format(
 					_httpServletRequest, "go-to-x",

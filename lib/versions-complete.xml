@@ -6,7 +6,7 @@
 		<libraries>
 			<library>
 				<file-name>com.liferay.adaptive.media.image.impl.jar!metadata-extractor.jar</file-name>
-				<version>2.18.0</version>
+				<version>2.19.0</version>
 				<project-name>metadata-extractor</project-name>
 				<project-url>https://drewnoakes.com/code/exif/</project-url>
 				<licenses>
@@ -3855,7 +3855,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.tika.jar!metadata-extractor.jar</file-name>
-				<version>2.18.0</version>
+				<version>2.19.0</version>
 				<project-name>metadata-extractor</project-name>
 				<project-url>https://drewnoakes.com/code/exif/</project-url>
 				<licenses>

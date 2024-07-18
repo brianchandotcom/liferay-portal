@@ -101,7 +101,6 @@ import java.io.InputStream;
 import java.sql.Connection;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -606,10 +605,7 @@ public class MainServlet extends HttpServlet {
 		}
 
 		try (Connection connection = DataAccess.getConnection()) {
-			Date currentBuildDate = PortalUpgradeProcess.getCurrentBuildDate(
-				connection);
-
-			if (!currentBuildDate.before(ReleaseInfo.getBuildDate())) {
+			if (!StartupHelperUtil.isNewRelease()) {
 				return;
 			}
 

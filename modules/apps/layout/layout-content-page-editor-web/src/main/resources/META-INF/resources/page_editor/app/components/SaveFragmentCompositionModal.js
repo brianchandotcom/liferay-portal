@@ -18,14 +18,20 @@ import Button from '../../common/components/Button';
 import InvisibleFieldset from '../../common/components/InvisibleFieldset';
 import {openImageSelector} from '../../common/openImageSelector';
 import {config} from '../config/index';
-import {useActiveItemId} from '../contexts/ControlsContext';
+import {useActiveItemIds} from '../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import addFragmentComposition from '../thunks/addFragmentComposition';
 
 const SaveFragmentCompositionModal = ({itemId, onCloseModal}) => {
 	const dispatch = useDispatch();
 
-	const activeItemId = useActiveItemId();
+	const activeItemIds = useActiveItemIds();
+	let activeItemId = activeItemIds;
+
+	if (Liferay.FeatureFlags['LPD-18221']) {
+		[activeItemId] = activeItemIds;
+	}
+
 	const isMounted = useIsMounted();
 
 	const collections = useSelector((state) => state.collections || []);

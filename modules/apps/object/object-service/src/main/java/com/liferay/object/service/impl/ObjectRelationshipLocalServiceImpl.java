@@ -1023,9 +1023,6 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Override
 	protected void runSQL(String sql) {
-
-		// Call this method to also strip line delimeters like ";"
-
 		ObjectDBManagerUtil.runSQL(
 			objectRelationshipPersistence.getDataSource(), _log, sql);
 	}

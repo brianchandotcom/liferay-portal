@@ -50,6 +50,10 @@ public class ObjectDBManagerUtil {
 	}
 
 	public static void runSQL(DataSource dataSource, Log log, String sql) {
+
+		// The implementation in *ServiceBaseImpl#runSQL strips line delimeters
+		// like ";". See LPD-25786.
+
 		if (log.isDebugEnabled()) {
 			log.debug("SQL: " + sql);
 		}

@@ -8,7 +8,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.upgrade.registry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.search.tuning.rankings.web.internal.upgrade.v2_0_0.RenameRankingUpgradeProcess;
-import com.liferay.portal.search.tuning.rankings.web.internal.upgrade.v3_0_0.RankingJSONStorageEntryUpgradeProcess;
+import com.liferay.portal.search.tuning.rankings.web.internal.upgrade.v3_0_0.JSONStorageEntryRankingUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,7 +33,7 @@ public class PortalSearchTuningRankingsWebUpgradeStepRegistrator
 
 		registry.register(
 			"2.0.0", "3.0.0",
-			new RankingJSONStorageEntryUpgradeProcess(_classNameLocalService));
+			new JSONStorageEntryRankingUpgradeProcess(_classNameLocalService));
 	}
 
 	@Reference

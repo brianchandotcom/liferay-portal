@@ -13,6 +13,7 @@ import {PlacedOrdersPage} from '../pages/commerce/commerce-order-content-web/pla
 import {OrganizationManagementPage} from '../pages/commerce/commerce-organization-web/organizationManagementPage';
 import {SpecificationFacetsPage} from '../pages/commerce/commerce-product-content-search-web/specificationFacetsPage';
 import {ProductDetailsPage} from '../pages/commerce/commerce-product-content-web/productDetailsPage';
+import {ProductPublisherPage} from '../pages/commerce/commerce-product-content-web/productPublisherPage';
 import {AttachmentsPage} from '../pages/commerce/commerce-product-definitions-web/attachmentsPage';
 import {CommerceProductSpecificationsPage} from '../pages/commerce/commerce-product-options-web/commerceProductSpecificationsPage';
 import {CommerceThemeMiniumCatalogPage} from '../pages/commerce/commerce-theme-minium/commerceThemeMiniumCatalogPage';
@@ -70,6 +71,7 @@ const commercePagesTest = test.extend<{
 	pendingOrdersPage: PendingOrdersPage;
 	placedOrdersPage: PlacedOrdersPage;
 	productDetailsPage: ProductDetailsPage;
+	productPublisherPage: ProductPublisherPage;
 	specificationFacetsPage: SpecificationFacetsPage;
 }>({
 	attachmentsPage: async ({page}, use) => {
@@ -164,6 +166,9 @@ const commercePagesTest = test.extend<{
 	},
 	productDetailsPage: async ({page}, use) => {
 		await use(new ProductDetailsPage(page));
+	},
+	productPublisherPage: async ({page}, use) => {
+		await use(new ProductPublisherPage(page));
 	},
 	specificationFacetsPage: async ({page}, use) => {
 		await use(new SpecificationFacetsPage(page));

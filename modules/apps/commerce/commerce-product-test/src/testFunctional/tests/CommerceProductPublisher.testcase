@@ -14,44 +14,6 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-	@description = "This is a test for COMMERCE-10627 and COMMERCE-10455 that assert if it is possible to add and remove rules for the Product Publisher filter"
-	@priority = 4
-	test CanAddAndRemoveProductPublisherTagFilterRules {
-		property portal.acceptance = "false";
-
-		task ("Given the admin navigates to the pending order details page") {
-			ApplicationsMenu.gotoSite(site = "Minium");
-
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
-		}
-
-		task ("When the admin deploy the Product Publisher widget") {
-			CommerceAcceleratorsInitializer.addPortlet(portletName = "Product Publisher");
-		}
-
-		task ("Then the admin is able to add and remove new rules to the filter") {
-			CommerceWidget.updateProductPublisherConfiguration(
-				filterEntries = "featured",
-				filterType = "Tags",
-				portletName = "Product Publisher",
-				productSelection = "Dynamic");
-
-			for (var productName : list "Brake Rotors,Premium Brake Pads,Brake Pads,Premium Brake Fluid,Brake Fluid") {
-				AssertElementPresent(
-					key_productName = ${productName},
-					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-			}
-
-			CommerceWidget.deleteFilterEntry(portletName = "Product Publisher");
-
-			for (var productName : list "U-Joint,Transmission Cooler Line Assembly,Torque Converters,Wheel Seal - Front,Mount") {
-				AssertElementPresent(
-					key_productName = ${productName},
-					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-			}
-		}
-	}
-
 	@description = "COMMERCE-12633. As an admin, I can verify that the Product Publisher pagination works in product details content page."
 	@priority = 5
 	test CanAssertProductPublisherPaginationWorksInProductDetails {

@@ -76,7 +76,7 @@ test('LPD-22572 Picklist on product specifications page', async ({
 		'item2'
 	);
 
-	await productDetailsPage.changeValueInProductSPecification('Edit', 'item2');
+	await productDetailsPage.changeValueInProductSpecification('Edit', 'item2');
 
 	await expect(productDetailsPage.waitForEditScuccessMessage).toBeVisible();
 

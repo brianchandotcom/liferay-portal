@@ -61,7 +61,6 @@ test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 		'Color',
 		1
 	);
-
 	const option2 = await apiHelpers.headlessCommerceAdminCatalog.postOption(
 		'select',
 		'size',
@@ -77,12 +76,10 @@ test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 		catalogId: catalog.id,
 		name: {en_US: 'Product1'},
 	});
-
 	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
 		name: {en_US: 'Product2'},
 	});
-
 	const productBundle =
 		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 			catalogId: catalog.id,
@@ -212,7 +209,6 @@ test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 				rate: 1,
 			}
 		);
-
 	const sku2SkuUnitOfMeasure =
 		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
 			sku2.id,

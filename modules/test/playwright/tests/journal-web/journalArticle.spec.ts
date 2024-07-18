@@ -269,6 +269,70 @@ autoSaveAsDraftTest(
 );
 
 baseTest(
+	'LPD-31427: Select web content display template with the Preview feature',
+	async ({journalEditArticlePage, page, site}) => {
+		page.on('dialog', (dialog) => dialog.accept());
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const title = getRandomString();
+
+		await page.getByText('Content', {exact: true}).waitFor();
+
+		await journalEditArticlePage.fillTitle(title);
+
+		await page.getByRole('button', {name: 'Publish'}).click();
+
+		await journalEditArticlePage.editArticle(title);
+
+		await page.getByText('Content', {exact: true}).waitFor();
+
+		await page.getByRole('link', { name: 'Default Template' }).click();
+
+		await page.getByRole('button', {name: 'Clear'}).waitFor();
+
+		await page.getByRole('button', {name: 'Clear'}).click();
+
+		await page.getByText('Content', {exact: true}).waitFor();
+
+		let templateName = page.getByLabel('Template Name');
+
+		await expect(templateName).toHaveValue('No Template');
+
+		await page.getByRole('link', { name: 'Default Template' }).click();
+
+		await page
+			.locator(
+				'[id="_com_liferay_journal_web_portlet_JournalPortlet_previewWithTemplate"]'
+			).waitFor();
+
+		await page
+			.locator(
+				'[id="_com_liferay_journal_web_portlet_JournalPortlet_previewWithTemplate"]'
+			)
+			.click();
+
+		const dialog = page.getByRole('dialog');
+
+		await expect(dialog.getByRole('heading')).toHaveText('Title');
+
+		const dialogIFrame = page.frameLocator('iframe[title="Title"]');
+
+		await dialogIFrame.getByTitle('ddm-template-id')
+			.selectOption('Basic Web Content');
+
+		await dialogIFrame.getByRole('button', {name: 'Apply'})
+			.click();
+
+		await page.getByText('Content', {exact: true}).waitFor();
+
+		templateName = page.getByLabel('Template Name');
+
+		await expect(templateName).toHaveValue('Basic Web Content');
+	}
+);
+
+baseTest(
 	'LPD-15248 Move folder to another folder via management toolbar',
 	async ({apiHelpers, journalPage, page, site}) => {
 		const childFolder = await apiHelpers.jsonWebServicesJournal.addFolder({

@@ -111,10 +111,7 @@ test('LPS-121199 can assign usage to default even if the default display page te
 
 	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	await displayPageTemplatesPage.goToDisplayPageTemplateAction(
-		'View Usages',
-		'1'
-	);
+	await displayPageTemplatesPage.viewUsages(displayPageTemplateName);
 
 	await expect(page.getByText(journalArticleTitle)).toBeVisible();
 
@@ -178,10 +175,7 @@ test('LPS-121199 can assign usage to default even if the default display page te
 
 	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	await displayPageTemplatesPage.goToDisplayPageTemplateAction(
-		'View Usages',
-		'2'
-	);
+	await displayPageTemplatesPage.viewUsages(displayPageTemplateName);
 
 	await expect(page.getByText(journalArticleTitle)).toBeVisible();
 
@@ -235,10 +229,7 @@ test('LPS-121199 can assign multiple usages to default', async ({
 
 	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	await displayPageTemplatesPage.goToDisplayPageTemplateAction(
-		'View Usages',
-		'1'
-	);
+	await displayPageTemplatesPage.viewUsages(displayPageTemplateName);
 
 	for (let i = 1; i < 4; i++) {
 		const rowCheckbox = page.locator(
@@ -302,10 +293,7 @@ test('LPS-123480 view usages for blogs entry', async ({
 
 	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	await displayPageTemplatesPage.goToDisplayPageTemplateAction(
-		'View Usages',
-		'1'
-	);
+	await displayPageTemplatesPage.viewUsages(displayPageTemplateName);
 
 	const rowCheckbox = page.locator(
 		`[aria-labelledby="_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_assetDisplayPageEntries_1"]`
@@ -343,10 +331,7 @@ test('LPS-123480 view usages for basic document', async ({
 
 	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	await displayPageTemplatesPage.goToDisplayPageTemplateAction(
-		'View Usages',
-		'1'
-	);
+	await displayPageTemplatesPage.viewUsages(displayPageTemplateName);
 
 	const rowCheckbox = page.locator(
 		`[aria-labelledby="_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_assetDisplayPageEntries_1"]`

@@ -10,6 +10,7 @@ import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.net.URLEncoder;
@@ -124,6 +125,25 @@ public class FriendlyURLNormalizerImplTest {
 	}
 
 	@Test
+	public void testNormalizeWithEncodingPeriodsAndSlashes() throws Exception {
+		_testNormalizeWithEncodingPeriodAndSlashesUnicode("friendlyUrl");
+		_testNormalizeWithEncodingPeriodAndSlashesUnicode("\u5F15");
+		_testNormalizeWithEncodingPeriodAndSlashesUnicode("テスト");
+		_testNormalizeWithEncodingPeriodAndSlashesUnicode("اختبار");
+		_testNormalizeWithEncodingPeriodAndSlashesUnicode("\uD801\uDC37");
+		_testNormalizeWithEncodingPeriodAndSlashesUnicode(
+			String.valueOf(Character.MAX_HIGH_SURROGATE));
+		Assert.assertEquals(
+			"-",
+			_friendlyURLNormalizerImpl.normalizeWithEncodingPeriodsAndSlashes(
+				"./"));
+		Assert.assertEquals(
+			URLEncoder.encode("テ-ス-ト-テ-abc"),
+			_friendlyURLNormalizerImpl.normalizeWithEncodingPeriodsAndSlashes(
+				"テ-ス/ト.テ-//..../abc"));
+	}
+
+	@Test
 	public void testNormalizeWithEncodingRemove() throws Exception {
 		Assert.assertEquals(
 			StringPool.DASH,
@@ -234,6 +254,15 @@ public class FriendlyURLNormalizerImplTest {
 	public void testNormalizeWordWithNonasciiCharacters() {
 		Assert.assertEquals(
 			"wordnc", _friendlyURLNormalizerImpl.normalize("word\u00F1\u00C7"));
+	}
+
+	private void _testNormalizeWithEncodingPeriodAndSlashesUnicode(String s)
+		throws Exception {
+
+		Assert.assertEquals(
+			URLEncoder.encode(StringUtil.toLowerCase(s), StringPool.UTF8),
+			_friendlyURLNormalizerImpl.normalizeWithEncodingPeriodsAndSlashes(
+				s));
 	}
 
 	private void _testNormalizeWithEncodingUnicode(String s) throws Exception {

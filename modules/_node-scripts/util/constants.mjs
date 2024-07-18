@@ -9,6 +9,8 @@ import url from 'url';
 
 import fileExists from './fileExists.mjs';
 
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+
 export const SRC_PATH = path.join(
 	'src',
 	'main',
@@ -40,6 +42,8 @@ export const BUILD_SASS_CACHE_PATH = path.join(
 );
 
 export const LIFERAY_WORKING_BRANCH = 'master';
+
+export const NODE_SCRIPTS_PATH = path.resolve(__dirname, '..');
 
 export const WORK_PATH = path.join('build', 'node-scripts');
 export const WORK_EXPORT_PATH = path.join(WORK_PATH, 'export');

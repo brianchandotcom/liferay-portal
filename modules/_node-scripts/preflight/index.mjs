@@ -5,6 +5,7 @@
 
 import getNamedArguments from '../util/getNamedArguments.mjs';
 import {checkConfigFileNames} from './checkConfigFileNames.mjs';
+import {checkNodeScriptsHash} from './checkNodeScriptsHash.mjs';
 import {checkPackageJSONFiles} from './checkPackageJSONFiles.mjs';
 import {checkTsc} from './checkTsc.mjs';
 import {checkYarnLock} from './checkYarnLock.mjs';
@@ -23,6 +24,7 @@ export default async function preflight() {
 		checkPackageJSONFiles(all),
 		checkYarnLock(),
 		checkTsc(all),
+		checkNodeScriptsHash(),
 	]);
 
 	const errors = results.flat();

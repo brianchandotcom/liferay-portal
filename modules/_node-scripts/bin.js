@@ -25,7 +25,7 @@ const COMMANDS = {
 		script: './bundle/report.mjs',
 	},
 	'check:preflight': {
-		description: 'runs several other infra-type checks',
+		description: 'runs SF checks not implemented by eslint, prettier, etc.',
 		parameters: '[--all]',
 		script: './preflight/index.mjs',
 	},

@@ -107,7 +107,8 @@ public abstract class BaseTestSelector implements TestSelector {
 			sb.append(getTestSuiteName());
 			sb.append("][");
 			sb.append(getBatchName());
-			sb.append("] is not set");
+			sb.append("] is not set in ");
+			sb.append(getPropertiesFile());
 
 			throw new RelevantRuleConfigurationException(sb.toString());
 		}

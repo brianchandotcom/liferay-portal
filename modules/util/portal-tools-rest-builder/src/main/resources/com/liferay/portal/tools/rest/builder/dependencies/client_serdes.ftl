@@ -261,6 +261,37 @@ public class ${schemaName}SerDes {
 			return false;
 		}
 
+		<#if schema.discriminator?has_content>
+
+			<#assign propertyName = schema.discriminator.propertyName />
+
+			@Override
+			public ${schemaName} parseToDTO(String json) {
+
+				Map<String, Object> jsonMap = parseToMap(json);
+				Object ${propertyName} = jsonMap.get("${propertyName}");
+
+				if (${propertyName} != null) {
+					String ${propertyName}String = ${propertyName}.toString();
+
+					<#list schema.discriminator.mapping as mappingName, mappingSchema>
+
+						if (${propertyName}String.equals("${mappingName}")) {
+							return ${freeMarkerTool.getReferenceName(mappingSchema)}.toDTO(json);
+						} else
+					</#list>
+						{
+							throw new IllegalArgumentException(
+								"Unknown ${propertyName} '" + ${propertyName}String + "'");
+						}
+				} else {
+					throw new IllegalArgumentException(
+						"Missing ${propertyName} parameter");
+				}
+
+			}
+		</#if>
+
 		@Override
 		protected void setField(${schemaName} ${schemaVarName}, String jsonParserFieldName, Object jsonParserFieldValue) {
 			<#list properties?keys as propertyName>

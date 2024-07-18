@@ -19,9 +19,9 @@ import java.sql.ResultSet;
 /**
  * @author Almir Ferreira
  */
-public class RankingJSONStorageEntryUpgradeProcess extends UpgradeProcess {
+public class JSONStorageEntryRankingUpgradeProcess extends UpgradeProcess {
 
-	public RankingJSONStorageEntryUpgradeProcess(
+	public JSONStorageEntryRankingUpgradeProcess(
 		ClassNameLocalService classNameLocalService) {
 
 		_classNameLocalService = classNameLocalService;

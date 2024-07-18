@@ -70,7 +70,8 @@ public class WidgetLayoutTypeSettingsUpgradeProcessTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					_CONFIGURATION_PID,
+					"com.liferay.data.cleanup.internal.configuration." +
+						"DataRemovalConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
 						"removeWidgetLayoutTypeSettings", true
 					).build())) {
@@ -94,10 +95,6 @@ public class WidgetLayoutTypeSettingsUpgradeProcessTest {
 			}
 		}
 	}
-
-	private static final String _CONFIGURATION_PID =
-		"com.liferay.data.cleanup.internal.configuration." +
-			"DataRemovalConfiguration";
 
 	@DeleteAfterTestRun
 	private Group _group;

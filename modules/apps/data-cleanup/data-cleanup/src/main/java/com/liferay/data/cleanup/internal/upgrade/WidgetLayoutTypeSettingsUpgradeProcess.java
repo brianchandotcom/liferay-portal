@@ -77,10 +77,10 @@ public class WidgetLayoutTypeSettingsUpgradeProcess extends UpgradeProcess {
 		typeSettingsUnicodeProperties.remove(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
 
-		Set<Map.Entry<String, String>> entrySet =
+		Set<Map.Entry<String, String>> set =
 			typeSettingsUnicodeProperties.entrySet();
 
-		entrySet.removeIf(
+		set.removeIf(
 			entry -> {
 				String key = entry.getKey();
 

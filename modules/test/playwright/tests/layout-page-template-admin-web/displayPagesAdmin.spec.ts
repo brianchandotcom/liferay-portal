@@ -8,16 +8,14 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {ApiHelpers} from '../../helpers/ApiHelpers';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import {JournalEditArticlePage} from '../journal-web/pages/JournalEditArticlePage';
+import {JournalPage} from '../journal-web/pages/JournalPage';
 import {displayPageTemplatesTest} from './fixtures/displayTemplatePagesTest';
-import {ApiHelpers} from "../../helpers/ApiHelpers";
-import {
-	JournalEditArticlePage
-} from "../journal-web/pages/JournalEditArticlePage";
-import {JournalPage} from "../journal-web/pages/JournalPage";
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -27,11 +25,11 @@ const test = mergeTests(
 );
 
 async function addBasicJournalArticleWithSpecificDisplayPageTemplate(
-	apiHelpers : ApiHelpers,
-	displayPageTemplateName : string,
-	journalArticleTitle : string,
-	journalEditArticlePage : JournalEditArticlePage,
-	journalPage : JournalPage,
+	apiHelpers: ApiHelpers,
+	displayPageTemplateName: string,
+	journalArticleTitle: string,
+	journalEditArticlePage: JournalEditArticlePage,
+	journalPage: JournalPage,
 	page,
 	site
 ) {
@@ -57,7 +55,7 @@ async function addBasicJournalArticleWithSpecificDisplayPageTemplate(
 		page,
 		`Success:${journalArticleTitle} was updated successfully.`
 	);
-};
+}
 
 test('Checks that the card checkbox has the correct aria label', async ({
 	displayPageTemplatesPage,
@@ -132,9 +130,7 @@ test(
 
 		await expect(page.getByText(journalArticleTitle)).toBeVisible();
 
-		const firstRowCheckbox = page.locator(
-			'[aria-labelledby="_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_assetDisplayPageEntries_1"]'
-		);
+		const firstRowCheckbox = page.getByRole('row').getByRole('checkbox').first();
 
 		await firstRowCheckbox.click();
 
@@ -211,9 +207,7 @@ test(
 
 		await expect(page.getByText(journalArticleTitle)).toBeVisible();
 
-		const firstRowCheckbox = page.locator(
-			'[aria-labelledby="_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_assetDisplayPageEntries_1"]'
-		);
+		const firstRowCheckbox = page.getByRole('row').getByRole('checkbox').first();
 
 		await firstRowCheckbox.click();
 
@@ -278,10 +272,10 @@ test(
 
 		// Assign to default all the usages leaving the usages empty
 
-		for (let i = 1; i < 4; i++) {
-			const rowCheckbox = page.locator(
-				`[aria-labelledby="_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_assetDisplayPageEntries_${i}"]`
-			);
+		for (const rowCheckbox of await page
+			.getByRole('row')
+			.getByRole('checkbox')
+			.all()) {
 			await expect(rowCheckbox).toBeVisible();
 			await rowCheckbox.click();
 		}
@@ -350,10 +344,8 @@ test(
 
 		await displayPageTemplatesPage.viewUsages(displayPageTemplateName);
 
-		const rowCheckbox = page.locator(
-			`[aria-labelledby="_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_assetDisplayPageEntries_1"]`
-		);
-		await expect(rowCheckbox).toBeVisible();
+		const firstRowCheckbox = page.getByRole('row').getByRole('checkbox').first();
+		await expect(firstRowCheckbox).toBeVisible();
 	}
 );
 
@@ -401,9 +393,7 @@ test(
 
 		await displayPageTemplatesPage.viewUsages(displayPageTemplateName);
 
-		const rowCheckbox = page.locator(
-			`[aria-labelledby="_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_assetDisplayPageEntries_1"]`
-		);
-		await expect(rowCheckbox).toBeVisible();
+		const firstRowCheckbox = page.getByRole('row').getByRole('checkbox').first();
+		await expect(firstRowCheckbox).toBeVisible();
 	}
 );

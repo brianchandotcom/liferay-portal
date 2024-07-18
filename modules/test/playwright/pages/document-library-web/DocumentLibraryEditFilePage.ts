@@ -157,7 +157,9 @@ export class DocumentLibraryEditFilePage {
 	}
 
 	async selectSpecificDisplayPage(displayPageName: string) {
-		const displayPageFieldSet = this.page.locator('fieldset', { hasText: 'Display Page', });
+		const displayPageFieldSet = this.page.locator('fieldset', {
+			hasText: 'Display Page',
+		});
 
 		await expandSection(displayPageFieldSet);
 		await displayPageFieldSet

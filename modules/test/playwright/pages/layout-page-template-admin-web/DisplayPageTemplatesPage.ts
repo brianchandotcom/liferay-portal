@@ -70,12 +70,12 @@ export class DisplayPageTemplatesPage {
 		await this.clickMoreActions(name);
 
 		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {
+			target: this.page.getByRole('row').getByRole('checkbox').first(),
+
+			trigger: this.page.getByRole('menuitem', {
 				exact: true,
 				name: 'View Usages',
 			}),
-			trigger: this.page.getByRole('row').getByRole('checkbox'),
 		});
 	}
 

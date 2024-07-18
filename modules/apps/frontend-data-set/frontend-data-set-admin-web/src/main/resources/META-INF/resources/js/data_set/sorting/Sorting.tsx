@@ -70,7 +70,7 @@ const DefaultComponent = ({item}: IContentRendererProps) => {
 const LabelComponent = ({item, query}: IContentRendererProps) => {
 	const label =
 		item.label ||
-		item.label_i18n[Liferay.ThemeDisplay.getDefaultLanguageId()] ||
+		item.label_i18n?.[Liferay.ThemeDisplay.getDefaultLanguageId()] ||
 		'';
 
 	const fuzzyMatch = fuzzy.match(query, label, FUZZY_OPTIONS);

@@ -711,11 +711,11 @@ public class JournalTransformerTest {
 
 		Element optionElement = dynamicContentElement.addElement("option");
 
-		String jsonArrayString = JSONUtil.putAll(
+		String json = JSONUtil.putAll(
 			"option1", "option2"
 		).toString();
 
-		optionElement.setText(jsonArrayString);
+		optionElement.setText(json);
 
 		TemplateNode templateNode = ReflectionTestUtil.invoke(
 			_journalTransformer, "_createTemplateNode",
@@ -725,8 +725,6 @@ public class JournalTransformerTest {
 			},
 			ddmFormField, rootElement, LocaleUtil.getDefault(),
 			new ThemeDisplay());
-
-		Assert.assertNotNull(templateNode);
 
 		Assert.assertTrue(MapUtil.isEmpty(templateNode.getAttributes()));
 		Assert.assertTrue(
@@ -741,7 +739,7 @@ public class JournalTransformerTest {
 		List<String> options = templateNode.getOptions();
 
 		Assert.assertEquals(options.toString(), 1, options.size());
-		Assert.assertEquals(jsonArrayString, options.get(0));
+		Assert.assertEquals(json, options.get(0));
 
 		Assert.assertTrue(MapUtil.isEmpty(templateNode.getOptionsMap()));
 	}
@@ -767,8 +765,6 @@ public class JournalTransformerTest {
 			},
 			ddmFormField, rootElement, LocaleUtil.getDefault(),
 			new ThemeDisplay());
-
-		Assert.assertNotNull(templateNode);
 
 		Assert.assertTrue(MapUtil.isEmpty(templateNode.getAttributes()));
 		Assert.assertEquals("name", templateNode.getName());

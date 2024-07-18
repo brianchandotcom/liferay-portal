@@ -83,6 +83,7 @@ export type TProduct = {
 		[key: string]: string;
 	};
 	skus?: TSku[];
+	tags?: [string];
 	version?: number;
 };
 

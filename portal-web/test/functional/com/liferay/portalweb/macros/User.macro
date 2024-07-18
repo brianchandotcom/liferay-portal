@@ -2235,29 +2235,25 @@ definition {
 				portalURL = ${portalURL},
 				userEmailAddress = ${userEmailAddress});
 
-			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
+			Navigator.openSpecificURL(url = "${portalURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else if (isSet(nodePort)) {
-			var baseURL = "http://localhost:${nodePort}";
-
-			var portalURL = ${baseURL};
+			var portalURL = "http://localhost:${nodePort}";
 
 			JSONUser.agreeToTermsAndAnswerReminderQuery(
 				portalURL = ${portalURL},
 				userEmailAddress = ${userEmailAddress});
 
-			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
+			Navigator.openSpecificURL(url = "${portalURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			var baseURL = JSONCompany.getPortalURL();
-
-			var portalURL = ${baseURL};
+			var portalURL = JSONCompany.getPortalURL();
 
 			JSONUser.agreeToTermsAndAnswerReminderQuery(
 				portalURL = ${portalURL},
 				userEmailAddress = ${userEmailAddress});
 
-			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
+			Navigator.openSpecificURL(url = "${portalURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 
 		// TODO Remove below macro after password reminder gets completely cleaned out with JSON

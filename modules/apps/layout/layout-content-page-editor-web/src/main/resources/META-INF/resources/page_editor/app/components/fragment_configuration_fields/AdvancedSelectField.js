@@ -20,7 +20,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {getResetLabelByViewport} from '../../../app/utils/getResetLabelByViewport';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
-import {useActiveItemId} from '../../contexts/ControlsContext';
+import {useActiveItemIds} from '../../contexts/ControlsContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
@@ -36,7 +36,14 @@ export function AdvancedSelectField({
 	tokenValues,
 	value,
 }) {
-	const activeItemId = useActiveItemId();
+	const activeItemIds = useActiveItemIds();
+
+	let activeItemId = activeItemIds;
+
+	if (Liferay.FeatureFlags['LPD-18221']) {
+		[activeItemId] = activeItemIds;
+	}
+
 	const globalContext = useGlobalContext();
 	const helpTextId = useId();
 	const triggerId = useId();

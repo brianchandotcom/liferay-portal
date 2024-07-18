@@ -33,7 +33,7 @@ public class QAWebsitesPlaywrightBatchTestClassGroup
 	}
 
 	@Override
-	protected File getPlaywrightWorkingDirectory() {
+	protected File getPlaywrightBaseDir() {
 		Job job = getJob();
 
 		GitRepositoryJob gitRepositoryJob = (GitRepositoryJob)job;

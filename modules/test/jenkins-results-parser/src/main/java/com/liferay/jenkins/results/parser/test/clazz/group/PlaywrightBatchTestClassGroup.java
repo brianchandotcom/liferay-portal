@@ -104,7 +104,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		prepareTestClassGroup(batchName);
 	}
 
-	protected File getPlaywrightWorkingDirectory() {
+	protected File getPlaywrightBaseDir() {
 		Job job = getJob();
 
 		PortalTestClassJob portalReleaseJob = (PortalTestClassJob)job;
@@ -384,7 +384,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				return;
 			}
 
-			File playwrightBaseDir = getPlaywrightWorkingDirectory();
+			File playwrightBaseDir = getPlaywrightBaseDir();
 
 			try {
 				AntUtil.callTarget(

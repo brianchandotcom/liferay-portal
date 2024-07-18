@@ -8,13 +8,32 @@ import React from 'react';
 
 import {HIGHLIGHTED_COMMENT_ID_KEY} from '../../../app/config/constants/highlightedCommentIdKey';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {useActiveItemId} from '../../../app/contexts/ControlsContext';
+import {useActiveItemIds} from '../../../app/contexts/ControlsContext';
 import {useSelectorCallback} from '../../../app/contexts/StoreContext';
+import MultiSelectMessage from '../../../common/components/MultiSelectMessage';
 import FragmentComments from './FragmentComments';
 import FragmentEntryLinksWithComments from './FragmentEntryLinksWithComments';
 
 export default function CommentsSidebar() {
-	const activeItemId = useActiveItemId();
+	const activeItemIds = useActiveItemIds();
+
+	if (Liferay.FeatureFlags['LPD-18221'] && activeItemIds.length > 1) {
+		return <MultiSelectMessage />;
+	}
+	else {
+		return (
+			<CommentsSidebarContent
+				activeItemId={
+					Liferay.FeatureFlags['LPD-18221']
+						? activeItemIds[0]
+						: activeItemIds
+				}
+			/>
+		);
+	}
+}
+
+function CommentsSidebarContent({activeItemId}) {
 	const [highlightedMessageId] = useSessionState(HIGHLIGHTED_COMMENT_ID_KEY);
 
 	const activeFragmentEntryLink = useSelectorCallback(

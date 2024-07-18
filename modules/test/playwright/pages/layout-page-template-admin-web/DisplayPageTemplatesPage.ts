@@ -66,36 +66,16 @@ export class DisplayPageTemplatesPage {
 			.waitFor();
 	}
 
-	async goToDisplayPageTemplateAction(action: string, cardNum: string) {
-		const card = await this.page.locator(
-			`[id="_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_displayPages_${cardNum}"]`
-		);
-		await card.getByLabel('More actions').waitFor();
+	async viewUsages(name: string) {
+		await this.clickMoreActions(name);
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {
 				exact: true,
-				name: action,
+				name: 'View Usages',
 			}),
-			trigger: card.getByLabel('More actions', {
-				exact: true,
-			}),
-		});
-	}
-
-	async goToAssetDisplayEntryAction(action: string) {
-		await this.page.getByRole('button', {name: 'Actions'}).waitFor();
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {
-				exact: true,
-				name: action,
-			}),
-			trigger: this.page.getByLabel('Actions', {
-				exact: true,
-			}),
+			trigger: this.page.getByRole('row').getByRole('checkbox'),
 		});
 	}
 

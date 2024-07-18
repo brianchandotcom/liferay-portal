@@ -114,9 +114,7 @@ export class BlogsEditBlogEntryPage {
 	}
 
 	async selectSpecificDisplayPage(displayPageName: string) {
-		const displayPageFieldSet = this.page.locator(
-			'#_com_liferay_blogs_web_portlet_BlogsAdminPortlet_display-page'
-		);
+		const displayPageFieldSet = this.page.locator('fieldset', { hasText: 'Display Page', });
 
 		await expandSection(displayPageFieldSet);
 		await displayPageFieldSet

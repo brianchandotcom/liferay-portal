@@ -25,12 +25,14 @@ import java.util.Objects;
 
 import javax.annotation.Generated;
 
+<#assign dtoParentClassName = freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)! />
+
 /**
  * @author ${configYAML.author}
  * @generated
  */
 @Generated("")
-public class ${schemaName} implements Cloneable, Serializable {
+public class ${schemaName} <#if dtoParentClassName?has_content> extends ${dtoParentClassName} </#if> implements Cloneable, Serializable {
 
 	public static ${schemaName} toDTO(String json) {
 		return ${schemaName}SerDes.toDTO(json);

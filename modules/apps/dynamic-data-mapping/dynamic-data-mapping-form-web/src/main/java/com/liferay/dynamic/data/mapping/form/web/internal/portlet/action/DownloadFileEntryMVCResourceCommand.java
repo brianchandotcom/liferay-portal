@@ -18,10 +18,8 @@ import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Map;
@@ -62,9 +60,6 @@ public class DownloadFileEntryMVCResourceCommand
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap(true);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		for (DDMFormFieldValue ddmFormFieldValue :
 				ddmFormFieldValuesMap.get(
 					ParamUtil.getString(resourceRequest, "ddmFormFieldName"))) {
@@ -76,7 +71,7 @@ public class DownloadFileEntryMVCResourceCommand
 			}
 
 			JSONObject valueJSONObject = _jsonFactory.createJSONObject(
-				value.getString(themeDisplay.getLocale()));
+				value.getString(value.getDefaultLocale()));
 
 			if (valueJSONObject.isNull("fileEntryId")) {
 				continue;

@@ -212,6 +212,8 @@ test.describe('Dropdown Fragment', () => {
 
 		await page.getByRole('button', {name: 'Clear All'}).click();
 
+		await pageEditorPage.waitForChangesSaved();
+
 		await openDropdownAndCheckStyle(
 			pageEditorPage,
 			dropdownId,

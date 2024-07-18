@@ -113,6 +113,8 @@ public class SynonymSearchTest {
 
 		_setUpSynonyms();
 
+		_waitForConfigurationsToApply();
+
 		_addJournalArticles();
 	}
 
@@ -255,6 +257,10 @@ public class SynonymSearchTest {
 				"liferay_filter_synonym_zh"
 			}
 		).build();
+	}
+
+	private static void _waitForConfigurationsToApply() throws Exception {
+		Thread.sleep(60000);
 	}
 
 	private void _assertSearch(String keyword, Locale locale) {

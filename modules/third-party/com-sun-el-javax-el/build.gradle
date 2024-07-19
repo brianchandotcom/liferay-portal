@@ -19,6 +19,8 @@ patch {
 
 	fileNames "com/sun/el/parser/AstIdentifier.java"
 	fileNames "com/sun/el/parser/ELParser.java"
+	fileNames "com/sun/el/parser/ELParser.jjt"
+	fileNames "com/sun/el/parser/ELParserTokenManager.java"
 	fileNames "javax/el/BeanELResolver.java"
 
 	originalLibModuleName = "javax.el"

@@ -20,12 +20,12 @@ public class BackgroundTaskNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public BackgroundTaskNameComparator() {
-		this(false);
-	}
+	public static BackgroundTaskNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public BackgroundTaskNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -62,6 +62,16 @@ public class BackgroundTaskNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private BackgroundTaskNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final BackgroundTaskNameComparator _INSTANCE_ASCENDING =
+		new BackgroundTaskNameComparator(true);
+
+	private static final BackgroundTaskNameComparator _INSTANCE_DESCENDING =
+		new BackgroundTaskNameComparator(false);
 
 	private final boolean _ascending;
 

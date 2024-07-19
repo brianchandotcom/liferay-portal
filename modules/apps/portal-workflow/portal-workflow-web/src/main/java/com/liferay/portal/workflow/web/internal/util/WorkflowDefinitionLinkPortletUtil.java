@@ -30,12 +30,12 @@ public class WorkflowDefinitionLinkPortletUtil {
 
 		if (orderByCol.equals("resource")) {
 			orderByComparator =
-				new WorkflowDefinitionLinkSearchEntryResourceComparator(
+				WorkflowDefinitionLinkSearchEntryResourceComparator.getInstance(
 					orderByAsc);
 		}
 		else if (orderByCol.equals("workflow")) {
 			orderByComparator =
-				new WorkflowDefinitionLinkSearchEntryWorkflowComparator(
+				WorkflowDefinitionLinkSearchEntryWorkflowComparator.getInstance(
 					orderByAsc);
 		}
 

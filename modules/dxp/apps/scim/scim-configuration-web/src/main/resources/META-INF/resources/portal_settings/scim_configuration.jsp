@@ -84,6 +84,24 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 				</div>
 			</c:when>
 		</c:choose>
+
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(oAuth2ApplicationName) %>">
+				<label for="<portlet:namespace />resetSCIMClientData">
+					<liferay-ui:message key="scim-reset-client-data" />
+
+					<span aria-label="<%= LanguageUtil.get(request, "scim-reset-client-data-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-reset-client-data-help") %>">
+						<clay:icon
+							symbol="question-circle-full"
+						/>
+					</span>
+				</label>
+
+				<div class="input-group input-group-sm">
+					<aui:button id="resetSCIMClientData" label="discard-changes" name="resetSCIMClientData" small="<%= true %>" value="reset" />
+				</div>
+			</c:when>
+		</c:choose>
 	</c:when>
 </c:choose>
 

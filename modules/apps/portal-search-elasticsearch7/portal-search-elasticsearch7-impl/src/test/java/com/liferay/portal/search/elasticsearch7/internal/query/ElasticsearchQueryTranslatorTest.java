@@ -5,8 +5,11 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.query;
 
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslatorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.util.QueryUtil;
 import com.liferay.portal.search.internal.query.BooleanQueryImpl;
 import com.liferay.portal.search.internal.query.CommonTermsQueryImpl;
@@ -45,6 +48,17 @@ public class ElasticsearchQueryTranslatorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		ElasticsearchFilterTranslatorFixture
+			elasticsearchFilterTranslatorFixture =
+				new ElasticsearchFilterTranslatorFixture(
+					new com.liferay.portal.search.elasticsearch7.internal.
+						legacy.query.ElasticsearchQueryTranslatorFixture(
+					).getElasticsearchQueryTranslator());
+
+		_elasticsearchFilterTranslator =
+			elasticsearchFilterTranslatorFixture.
+				getElasticsearchFilterTranslator();
+
 		ElasticsearchQueryTranslatorFixture
 			elasticsearchQueryTranslatorFixture =
 				new ElasticsearchQueryTranslatorFixture();
@@ -110,6 +124,21 @@ public class ElasticsearchQueryTranslatorTest {
 	}
 
 	@Test
+	public void testTranslateTermsFilterExceedingMaxAllowedTerms()
+		throws Exception {
+
+		TermsFilter termsFilter = new TermsFilter("groupId");
+
+		termsFilter.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+
+		_assertTermsCount(1, 10, termsFilter);
+
+		_assertTermsCount(2, 5, termsFilter);
+
+		_assertTermsCount(4, 3, termsFilter);
+	}
+
+	@Test
 	public void testTranslateTermsQueryExceedingMaxAllowedTerms()
 		throws Exception {
 
@@ -136,24 +165,48 @@ public class ElasticsearchQueryTranslatorTest {
 	}
 
 	private void _assertTermsCount(
-			int expected, int maxTermsCount, TermsQuery termsQuery)
+			int expected, int maxTermsCount, Object terms, boolean query)
 		throws Exception {
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					QueryUtil.class, "_MAX_TERMS_COUNT", maxTermsCount)) {
 
-			String queryString = _elasticsearchQueryTranslator.visit(
-				termsQuery
-			).toString();
+			String queryString;
+
+			if (query) {
+				queryString = _elasticsearchQueryTranslator.visit(
+					(TermsQuery)terms
+				).toString();
+			}
+			else {
+				queryString = _elasticsearchFilterTranslator.visit(
+					(TermsFilter)terms
+				).toString();
+			}
 
 			Assert.assertEquals(
 				queryString, expected, StringUtil.count(queryString, "terms"));
 		}
 	}
 
+	private void _assertTermsCount(
+			int expected, int maxTermsCount, TermsFilter termsFilter)
+		throws Exception {
+
+		_assertTermsCount(expected, maxTermsCount, termsFilter, false);
+	}
+
+	private void _assertTermsCount(
+			int expected, int maxTermsCount, TermsQuery termsQuery)
+		throws Exception {
+
+		_assertTermsCount(expected, maxTermsCount, termsQuery, true);
+	}
+
 	private static final Float _BOOST = 1.5F;
 
+	private ElasticsearchFilterTranslator _elasticsearchFilterTranslator;
 	private ElasticsearchQueryTranslator _elasticsearchQueryTranslator;
 
 }

@@ -7,23 +7,13 @@
 
 import {test} from '@playwright/test';
 
-import {DocumentLibraryEditFilePage} from '../../../pages/document-library-web/DocumentLibraryEditFilePage';
 import {DisplayPageTemplatesPage} from '../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
-import {BlogsEditBlogEntryPage} from '../../blogs-web/pages/BlogsEditBlogEntryPage';
 
 const displayPageTemplatesTest = test.extend<{
-	blogsEditBlogEntryPage: BlogsEditBlogEntryPage;
 	displayPageTemplatesPage: DisplayPageTemplatesPage;
-	documentLibraryEditFilePage: DocumentLibraryEditFilePage;
 }>({
-	blogsEditBlogEntryPage: async ({page}, use) => {
-		await use(new BlogsEditBlogEntryPage(page));
-	},
 	displayPageTemplatesPage: async ({page}, use) => {
 		await use(new DisplayPageTemplatesPage(page));
-	},
-	documentLibraryEditFilePage: async ({page}, use) => {
-		await use(new DocumentLibraryEditFilePage(page));
 	},
 });
 

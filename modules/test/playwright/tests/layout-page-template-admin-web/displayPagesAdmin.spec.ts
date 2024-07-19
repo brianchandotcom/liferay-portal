@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {ApiHelpers} from '../../helpers/ApiHelpers';
@@ -13,6 +14,7 @@ import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {JournalEditArticlePage} from '../journal-web/pages/JournalEditArticlePage';
 import {JournalPage} from '../journal-web/pages/JournalPage';
@@ -20,7 +22,9 @@ import {displayPageTemplatesTest} from './fixtures/displayTemplatePagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
+	blogsPagesTest,
 	displayPageTemplatesTest,
+	documentLibraryPagesTest,
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest()
@@ -32,8 +36,8 @@ async function addBasicJournalArticleWithSpecificDisplayPageTemplate(
 	journalArticleTitle: string,
 	journalEditArticlePage: JournalEditArticlePage,
 	journalPage: JournalPage,
-	page,
-	site
+	page: Page,
+	site: Site
 ) {
 	const contentStructureId = await getBasicWebContentStructureId(apiHelpers);
 

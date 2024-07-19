@@ -66,8 +66,21 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 						"/test.properties"));
 			}
 
-			List<String> fileNames = new ArrayList<>();
+			File portalDir = getPortalDir();
 			String moduleName = _getModuleName(absolutePath);
+
+			List<String> buildFiles = SourceFormatterUtil.scanForFileNames(
+				portalDir.getCanonicalPath(),
+				new String[] {
+					"modules/apps/**/" + moduleName + "/build.gradle",
+					"modules/dxp/apps/**/" + moduleName + "/build.gradle"
+				});
+
+			if (ListUtil.isEmpty(buildFiles)) {
+				return content;
+			}
+
+			List<String> fileNames = new ArrayList<>();
 			String moduleRootDirLocation = "modules/";
 
 			for (int i = 0; i < getMaxDirLevel(); i++) {

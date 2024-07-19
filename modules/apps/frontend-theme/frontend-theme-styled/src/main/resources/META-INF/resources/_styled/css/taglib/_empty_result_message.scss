@@ -26,73 +26,73 @@
 
 	.taglib-empty-result-message-header,
 	.taglib-empty-result-message-header-has-plus-btn {
-		background-image: url(@theme_image_path@/states/empty_state.svg);
+		background-image: url(../images/states/empty_state.svg);
 
 		@media (prefers-reduced-motion: reduce) {
-			background-image: url(@theme_image_path@/states/empty_state_reduced_motion.svg);
+			background-image: url(../images/states/empty_state_reduced_motion.svg);
 		}
 
 		.c-prefers-reduced-motion & {
-			background-image: url(@theme_image_path@/states/empty_state_reduced_motion.svg);
+			background-image: url(../images/states/empty_state_reduced_motion.svg);
 		}
 	}
 
 	.taglib-empty-search-result-message-header {
-		background-image: url(@theme_image_path@/states/search_state.svg);
+		background-image: url(../images/states/search_state.svg);
 		max-width: 210px;
 		padding-top: 232px;
 
 		@media (prefers-reduced-motion: reduce) {
-			background-image: url(@theme_image_path@/states/search_state_reduced_motion.svg);
+			background-image: url(../images/states/search_state_reduced_motion.svg);
 		}
 
 		.c-prefers-reduced-motion & {
-			background-image: url(@theme_image_path@/states/search_state_reduced_motion.svg);
+			background-image: url(../images/states/search_state_reduced_motion.svg);
 		}
 	}
 
 	.taglib-empty-state {
-		background-image: url(@theme_image_path@/states/empty_state.svg);
+		background-image: url(../images/states/empty_state.svg);
 		margin: auto;
 		max-width: 250px;
 		padding-top: 250px;
 
 		@media (prefers-reduced-motion: reduce) {
-			background-image: url(@theme_image_path@/states/empty_state_reduced_motion.svg);
+			background-image: url(../images/states/empty_state_reduced_motion.svg);
 		}
 
 		.c-prefers-reduced-motion & {
-			background-image: url(@theme_image_path@/states/empty_state_reduced_motion.svg);
+			background-image: url(../images/states/empty_state_reduced_motion.svg);
 		}
 	}
 
 	.taglib-success-state {
-		background-image: url(@theme_image_path@/states/success_state.svg);
+		background-image: url(../images/states/success_state.svg);
 		margin: auto;
 		max-width: 250px;
 		padding-top: 250px;
 
 		@media (prefers-reduced-motion: reduce) {
-			background-image: url(@theme_image_path@/states/success_state_reduced_motion.svg);
+			background-image: url(../images/states/success_state_reduced_motion.svg);
 		}
 
 		.c-prefers-reduced-motion & {
-			background-image: url(@theme_image_path@/states/success_state_reduced_motion.svg);
+			background-image: url(../images/states/success_state_reduced_motion.svg);
 		}
 	}
 
 	.taglib-search-state {
-		background-image: url(@theme_image_path@/states/search_state.svg);
+		background-image: url(../images/states/search_state.svg);
 		margin: auto;
 		max-width: 250px;
 		padding-top: 250px;
 
 		@media (prefers-reduced-motion: reduce) {
-			background-image: url(@theme_image_path@/states/search_state_reduced_motion.svg);
+			background-image: url(../images/states/search_state_reduced_motion.svg);
 		}
 
 		.c-prefers-reduced-motion & {
-			background-image: url(@theme_image_path@/states/search_state_reduced_motion.svg);
+			background-image: url(../images/states/search_state_reduced_motion.svg);
 		}
 	}
 

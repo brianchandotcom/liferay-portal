@@ -608,12 +608,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		File file = new File(
 			new File(getFilePath(), "reports"), "upgrade_report.info");
 
+		String filePath = file.getAbsolutePath();
+
 		Pattern pattern = Pattern.compile(
-			"(?s)INFO - Upgrade report generated in " + file.getAbsolutePath() +
-				"\\n\\s+\\{(.+)\\}");
+			"(?s)INFO - Upgrade report generated in " +
+				Pattern.quote(filePath) + "\\s*\\{(.+?)\\}");
 
 		int index = _getLogContent().indexOf(
-			"INFO - Upgrade report generated in " + file.getAbsolutePath());
+			"INFO - Upgrade report generated in " + filePath);
 
 		String substringLogContextContent = _getLogContent().substring(index);
 

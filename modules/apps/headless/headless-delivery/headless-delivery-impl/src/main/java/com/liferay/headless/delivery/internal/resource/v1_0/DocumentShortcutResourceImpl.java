@@ -127,7 +127,7 @@ public class DocumentShortcutResourceImpl
 
 		return _toDocumentShortcut(
 			_dlAppService.addFileShortcut(
-				siteId, documentFolderId,
+				null, siteId, documentFolderId,
 				documentShortcut.getTargetDocumentId(),
 				_createServiceContext(
 					siteId, documentShortcut.getViewableByAsString())));

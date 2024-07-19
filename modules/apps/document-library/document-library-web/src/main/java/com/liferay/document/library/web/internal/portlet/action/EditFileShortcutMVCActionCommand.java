@@ -139,7 +139,7 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "repositoryId");
 
 			_dlAppService.addFileShortcut(
-				repositoryId, folderId, toFileEntryId, serviceContext);
+				null, repositoryId, folderId, toFileEntryId, serviceContext);
 		}
 		else {
 

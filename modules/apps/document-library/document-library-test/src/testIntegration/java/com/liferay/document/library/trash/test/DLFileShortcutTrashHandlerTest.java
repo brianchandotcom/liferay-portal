@@ -173,7 +173,8 @@ public class DLFileShortcutTrashHandlerTest
 			true, serviceContext);
 
 		FileShortcut fileShortcut = DLAppServiceUtil.addFileShortcut(
-			groupId, folderId, fileEntry.getFileEntryId(), serviceContext);
+			null, groupId, folderId, fileEntry.getFileEntryId(),
+			serviceContext);
 
 		return (BaseModel<?>)fileShortcut.getModel();
 	}

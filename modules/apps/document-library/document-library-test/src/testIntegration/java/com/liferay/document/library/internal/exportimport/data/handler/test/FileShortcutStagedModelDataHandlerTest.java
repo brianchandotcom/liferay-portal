@@ -136,7 +136,7 @@ public class FileShortcutStagedModelDataHandlerTest
 		FileEntry fileEntry = (FileEntry)fileEntryDependentStagedModels.get(0);
 
 		return DLAppLocalServiceUtil.addFileShortcut(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			folder.getFolderId(), fileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));

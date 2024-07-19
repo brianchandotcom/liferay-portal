@@ -524,7 +524,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			null, null, serviceContext);
 
 		DLAppLocalServiceUtil.addFileShortcut(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			folder.getFolderId(), fileEntry.getFileEntryId(), serviceContext);
 	}
 

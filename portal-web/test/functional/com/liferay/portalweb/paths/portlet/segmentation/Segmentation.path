@@ -188,7 +188,7 @@
 </tr>
 <tr>
 	<td>TRANSLATION_BUTTON</td>
-	<td>//button[@title='Open Localizations']</td>
+	<td>//button[@*='Open Localizations']</td>
 	<td></td>
 </tr>
 <tr>

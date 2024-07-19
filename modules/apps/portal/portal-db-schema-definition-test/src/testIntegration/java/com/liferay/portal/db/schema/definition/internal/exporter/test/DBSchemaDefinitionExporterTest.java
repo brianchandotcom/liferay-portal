@@ -14,6 +14,7 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.ConfigurationTestUtil;
 import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseTestUtil;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -166,7 +167,9 @@ public class DBSchemaDefinitionExporterTest {
 
 	@Test
 	public void testExportImportReportWithMissingTable() throws Exception {
-		DatabaseTestUtil.createTable();
+		DB db = DBManagerUtil.getDB();
+
+		db.runSQL("create table testTable (testColumn bigint primary key)");
 
 		try {
 			ConfigurationTestUtil.deployConfiguration(
@@ -179,7 +182,7 @@ public class DBSchemaDefinitionExporterTest {
 			Assert.assertTrue(content.contains("Missing tables: testTable"));
 		}
 		finally {
-			DatabaseTestUtil.dropTable();
+			db.runSQL("DROP_TABLE_IF_EXISTS(testTable)");
 		}
 	}
 

@@ -31,7 +31,7 @@ public class KBArticleSiblingNavigationHelper
 		List<KBArticle> kbArticles = _kbArticlePersistence.filterFindByG_P_M_S(
 			kbArticle.getGroupId(), kbArticle.getResourcePrimKey(), true,
 			WorkflowConstants.STATUS_APPROVED, 0, 1,
-			new KBArticlePriorityComparator(true));
+			KBArticlePriorityComparator.getInstance(true));
 
 		if (kbArticles.isEmpty()) {
 			return null;
@@ -46,7 +46,7 @@ public class KBArticleSiblingNavigationHelper
 			previousKBArticle.getGroupId(),
 			previousKBArticle.getResourcePrimKey(), true,
 			WorkflowConstants.STATUS_APPROVED, 0, 1,
-			new KBArticlePriorityComparator(false));
+			KBArticlePriorityComparator.getInstance(false));
 
 		if (kbArticles.isEmpty()) {
 			return null;
@@ -60,7 +60,7 @@ public class KBArticleSiblingNavigationHelper
 		return _kbArticlePersistence.filterFindByG_P_M_S(
 			kbArticle.getGroupId(), kbArticle.getParentResourcePrimKey(), true,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+			QueryUtil.ALL_POS, KBArticlePriorityComparator.getInstance(true));
 	}
 
 	@Override

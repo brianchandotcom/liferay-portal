@@ -31,7 +31,7 @@ public class KBArticleLocalSiblingNavigationHelper
 		return _kbArticlePersistence.fetchByG_P_M_S_First(
 			kbArticle.getGroupId(), kbArticle.getResourcePrimKey(), true,
 			WorkflowConstants.STATUS_APPROVED,
-			new KBArticlePriorityComparator(true));
+			KBArticlePriorityComparator.getInstance(true));
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class KBArticleLocalSiblingNavigationHelper
 			previousKBArticle.getGroupId(),
 			previousKBArticle.getResourcePrimKey(), true,
 			WorkflowConstants.STATUS_APPROVED,
-			new KBArticlePriorityComparator(true));
+			KBArticlePriorityComparator.getInstance(true));
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class KBArticleLocalSiblingNavigationHelper
 		return _kbArticlePersistence.findByG_P_M_S(
 			kbArticle.getGroupId(), kbArticle.getParentResourcePrimKey(), true,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+			QueryUtil.ALL_POS, KBArticlePriorityComparator.getInstance(true));
 	}
 
 	@Override

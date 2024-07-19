@@ -228,7 +228,7 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 		List<KBArticle> kbArticles = _kbArticleService.getKBArticles(
 			kbArticle.getGroupId(), parentResourcePrimKey,
 			WorkflowConstants.STATUS_ANY, position - 1, position + 1,
-			new KBArticlePriorityComparator(true));
+			KBArticlePriorityComparator.getInstance(true));
 
 		if (ListUtil.isEmpty(kbArticles)) {
 			return kbArticle.getPriority();

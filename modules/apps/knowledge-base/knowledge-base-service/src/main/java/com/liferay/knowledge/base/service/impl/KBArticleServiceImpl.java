@@ -184,7 +184,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			kbArticlePersistence.filterFindByG_P_L_NotS(
 				groupId, parentResourcePrimKey, true,
 				WorkflowConstants.STATUS_IN_TRASH, 0, 1,
-				new KBArticlePriorityComparator(true));
+				KBArticlePriorityComparator.getInstance(true));
 
 		if (kbArticles.isEmpty()) {
 			return null;
@@ -200,7 +200,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		List<KBArticle> kbArticles = kbArticlePersistence.filterFindByG_P_L_S(
 			groupId, parentResourcePrimKey, true,
 			WorkflowConstants.STATUS_APPROVED, 0, 1,
-			new KBArticlePriorityComparator(true));
+			KBArticlePriorityComparator.getInstance(true));
 
 		if (kbArticles.isEmpty()) {
 			return null;
@@ -366,7 +366,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
 		List<KBArticle> kbArticles = getGroupKBArticles(
 			group.getGroupId(), status, 0, max,
-			new KBArticleModifiedDateComparator());
+			KBArticleModifiedDateComparator.getInstance(false));
 
 		return _exportToRSS(
 			name, description, feedURL, kbArticles, type, version, displayStyle,
@@ -412,7 +412,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
 		List<KBArticle> kbArticles = getAllDescendantKBArticles(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, resourcePrimKey, status,
-			new KBArticleModifiedDateComparator());
+			KBArticleModifiedDateComparator.getInstance(false));
 
 		return _exportToRSS(
 			name, description, feedURL, ListUtil.subList(kbArticles, 0, max),

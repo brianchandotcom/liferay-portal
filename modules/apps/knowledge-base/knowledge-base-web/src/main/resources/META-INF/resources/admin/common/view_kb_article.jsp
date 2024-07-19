@@ -223,7 +223,7 @@ if (portletTitleBasedNavigation) {
 				status = WorkflowConstants.STATUS_ANY;
 			}
 
-			List<KBArticle> childKBArticles = KBArticleServiceUtil.getKBArticles(scopeGroupId, kbArticle.getResourcePrimKey(), status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+			List<KBArticle> childKBArticles = KBArticleServiceUtil.getKBArticles(scopeGroupId, kbArticle.getResourcePrimKey(), status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, KBArticlePriorityComparator.getInstance(true));
 			%>
 
 			<c:if test="<%= enableKBArticleSuggestions || !childKBArticles.isEmpty() %>">

@@ -37,7 +37,7 @@ import javax.sql.DataSource;
  */
 public class DBSchemaDefinitionExporterReport {
 
-	public static void generateReport(String path, DBType exportDBType)
+	public static void generateReport(DBType exportDBType, String path)
 		throws Exception {
 
 		Set<String> dbTables = _getDBTables();

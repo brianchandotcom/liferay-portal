@@ -1022,6 +1022,9 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.JSON_SERVICE_SERIALIZE_THROWABLE));
 
+	public static final int JSON_STRING_MAX_LENGTH = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.JSON_STRING_MAX_LENGTH));
+
 	public static final boolean JSON_WEB_SERVICE_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.JSON_WEB_SERVICE_ENABLED));

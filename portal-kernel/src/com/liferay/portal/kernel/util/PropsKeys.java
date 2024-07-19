@@ -1265,6 +1265,9 @@ public interface PropsKeys {
 	public static final String JSON_SERVICE_SERIALIZE_THROWABLE =
 		"json.service.serialize.throwable";
 
+	public static final String JSON_STRING_MAX_LENGTH =
+		"json.string.max.length";
+
 	public static final String JSON_WEB_SERVICE_ENABLED =
 		"json.web.service.enabled";
 

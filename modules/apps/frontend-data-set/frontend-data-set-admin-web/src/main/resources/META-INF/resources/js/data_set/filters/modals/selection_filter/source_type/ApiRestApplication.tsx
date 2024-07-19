@@ -128,8 +128,6 @@ function ApiRestApplication({
 		const sourceItems = await fetch(source as string)
 			.then((response) => {
 				if (!response.ok) {
-					openDefaultFailureToast();
-
 					return [];
 				}
 

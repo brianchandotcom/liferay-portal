@@ -77,7 +77,7 @@ const GenerateCardLayout = ({
 							<HandleSelectedDates />
 						</p>
 
-						{!isComplimentaryKey && (						
+						{!(isComplimentaryKey && isRenew) && (						
 							<>
 								<p className="m-0">
 									{i18n.translate('key-activations-available')}

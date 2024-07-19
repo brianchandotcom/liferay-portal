@@ -62,7 +62,7 @@ const RequiredInformation = ({
 	const hasTouched = !Object.keys(touched).length;
 	const hasError = Object.keys(errors).length;
 
-	const isRenew = state?.id === 'renew' ? true : false;
+	const isRenew = state?.id === 'renew';
 	const renewKey = state?.activationKeys[0];
 
 	const avaliableKeysMaximumCount =
@@ -603,7 +603,7 @@ const RequiredInformation = ({
 								</div>
 							) : (
 								<div className="mx-6">
-									{!isComplimentaryKey && !isOemOrEnterprise && (
+									{!(isComplimentaryKey && isRenew) && !isOemOrEnterprise && (
 										<div className="cp-input-generate-label">
 											<KeySelect
 												avaliableKeysMaximumCount={

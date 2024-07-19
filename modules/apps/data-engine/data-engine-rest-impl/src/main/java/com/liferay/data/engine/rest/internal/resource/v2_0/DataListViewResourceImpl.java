@@ -390,10 +390,10 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 		String sortFieldName = sort.getFieldName();
 
 		if (StringUtil.startsWith(sortFieldName, "createDate")) {
-			return new DEDataListViewCreateDateComparator(ascending);
+			return DEDataListViewCreateDateComparator.getInstance(ascending);
 		}
 		else if (StringUtil.startsWith(sortFieldName, "localized_name")) {
-			return new DEDataListViewNameComparator(ascending);
+			return DEDataListViewNameComparator.getInstance(ascending);
 		}
 
 		return new DEDataListViewModifiedDateComparator(ascending);

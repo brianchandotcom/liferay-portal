@@ -104,7 +104,7 @@ public class DDLRecordSetStagedModelRepository
 			portletDataContext.getCompanyId(),
 			portletDataContext.getScopeGroupId(), null, scope,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new DDLRecordSetNameComparator());
+			DDLRecordSetNameComparator.getInstance(false));
 
 		for (DDLRecordSet recordSet : recordSets) {
 			DDMStructure ddmStructure =

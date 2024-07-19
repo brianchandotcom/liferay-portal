@@ -569,7 +569,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		if (ArrayUtil.contains(
 				orderByComparator.getOrderByFields(), "modifiedDate")) {
 
-			return new StructureLinkStructureModifiedDateComparator(
+			return StructureLinkStructureModifiedDateComparator.getInstance(
 				orderByComparator.isAscending());
 		}
 

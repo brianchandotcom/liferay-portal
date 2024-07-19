@@ -428,7 +428,8 @@ public class DDMFormAdminFieldSetDisplayContext
 		OrderByComparator<DDMStructure> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new StructureCreateDateComparator(orderByAsc);
+			orderByComparator = StructureCreateDateComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
 			orderByComparator = new StructureModifiedDateComparator(orderByAsc);

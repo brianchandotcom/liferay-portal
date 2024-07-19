@@ -297,7 +297,7 @@ public class JournalDDMTemplateDisplayContext {
 		String orderByCol = getOrderByCol();
 
 		if (orderByCol.equals("id")) {
-			orderByComparator = new TemplateIdComparator(orderByAsc);
+			orderByComparator = TemplateIdComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
 			orderByComparator = new TemplateModifiedDateComparator(orderByAsc);

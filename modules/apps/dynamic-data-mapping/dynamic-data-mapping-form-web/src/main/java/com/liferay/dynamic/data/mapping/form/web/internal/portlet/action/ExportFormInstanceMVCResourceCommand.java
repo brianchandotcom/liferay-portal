@@ -145,7 +145,7 @@ public class ExportFormInstanceMVCResourceCommand
 			return new DDMFormInstanceRecordModifiedDateComparator(orderByAsc);
 		}
 
-		return new DDMFormInstanceRecordIdComparator(orderByAsc);
+		return DDMFormInstanceRecordIdComparator.getInstance(orderByAsc);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

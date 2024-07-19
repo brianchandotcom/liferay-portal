@@ -1770,7 +1770,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		String sortFieldName = sort.getFieldName();
 
 		if (StringUtil.startsWith(sortFieldName, "createDate")) {
-			return new StructureCreateDateComparator(ascending);
+			return StructureCreateDateComparator.getInstance(ascending);
 		}
 		else if (StringUtil.startsWith(sortFieldName, "localized_name")) {
 			return new StructureNameComparator(ascending);

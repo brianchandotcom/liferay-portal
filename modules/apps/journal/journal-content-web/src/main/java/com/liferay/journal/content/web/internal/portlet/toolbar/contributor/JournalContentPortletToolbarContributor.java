@@ -146,7 +146,7 @@ public class JournalContentPortletToolbarContributor
 					themeDisplay.getCompanyId(), currentAndAncestorSiteGroupIds,
 					_portal.getClassNameId(JournalArticle.class),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					new StructureCreateDateComparator()),
+					StructureCreateDateComparator.getInstance(false)),
 				Comparator.comparing(
 					ddmStructure -> ddmStructure.getName(locale)));
 
@@ -158,7 +158,7 @@ public class JournalContentPortletToolbarContributor
 				themeDisplay.getCompanyId(), currentAndAncestorSiteGroupIds,
 				_portal.getClassNameId(JournalArticle.class), 0,
 				_DEFAULT_MAX_DISPLAY_ITEMS,
-				new StructureCreateDateComparator());
+				StructureCreateDateComparator.getInstance(false));
 		}
 
 		for (DDMStructure ddmStructure : ddmStructures) {

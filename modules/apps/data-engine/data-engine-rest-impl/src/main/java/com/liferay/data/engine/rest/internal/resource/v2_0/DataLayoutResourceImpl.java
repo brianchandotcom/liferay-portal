@@ -608,10 +608,10 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		String sortFieldName = sort.getFieldName();
 
 		if (StringUtil.startsWith(sortFieldName, "createDate")) {
-			return new StructureLayoutCreateDateComparator(ascending);
+			return StructureLayoutCreateDateComparator.getInstance(ascending);
 		}
 		else if (StringUtil.startsWith(sortFieldName, "localized_name")) {
-			return new StructureLayoutNameComparator(ascending);
+			return StructureLayoutNameComparator.getInstance(ascending);
 		}
 
 		return new StructureLayoutModifiedDateComparator(ascending);

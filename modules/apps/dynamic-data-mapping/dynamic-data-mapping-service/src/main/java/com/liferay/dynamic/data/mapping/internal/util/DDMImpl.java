@@ -500,7 +500,7 @@ public class DDMImpl implements DDM {
 		OrderByComparator<DDMStructure> orderByComparator = null;
 
 		if (orderByCol.equals("id")) {
-			orderByComparator = new StructureIdComparator(orderByAsc);
+			orderByComparator = StructureIdComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
 			orderByComparator = new StructureModifiedDateComparator(orderByAsc);
@@ -522,7 +522,7 @@ public class DDMImpl implements DDM {
 		OrderByComparator<DDMTemplate> orderByComparator = null;
 
 		if (orderByCol.equals("id")) {
-			orderByComparator = new TemplateIdComparator(orderByAsc);
+			orderByComparator = TemplateIdComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
 			orderByComparator = new TemplateModifiedDateComparator(orderByAsc);

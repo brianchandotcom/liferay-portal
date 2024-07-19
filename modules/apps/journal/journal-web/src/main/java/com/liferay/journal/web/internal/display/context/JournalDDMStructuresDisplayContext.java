@@ -207,7 +207,7 @@ public class JournalDDMStructuresDisplayContext {
 		String orderByCol = getOrderByCol();
 
 		if (orderByCol.equals("id")) {
-			orderByComparator = new StructureIdComparator(orderByAsc);
+			orderByComparator = StructureIdComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
 			orderByComparator = new StructureModifiedDateComparator(orderByAsc);

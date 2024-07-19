@@ -195,7 +195,7 @@ public class WidgetTemplatesTemplateDisplayContext
 		}
 
 		if (Objects.equals(getOrderByCol(), "id")) {
-			orderByComparator = new TemplateIdComparator(orderByAsc);
+			orderByComparator = TemplateIdComparator.getInstance(orderByAsc);
 		}
 		else if (Objects.equals(getOrderByCol(), "modified-date")) {
 			orderByComparator = new TemplateModifiedDateComparator(orderByAsc);

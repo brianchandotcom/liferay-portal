@@ -54,7 +54,7 @@ public class DDMFormInstanceRecordSearch
 				orderByAsc);
 		}
 		else {
-			orderByComparator = new DDMFormInstanceRecordIdComparator(
+			orderByComparator = DDMFormInstanceRecordIdComparator.getInstance(
 				orderByAsc);
 		}
 

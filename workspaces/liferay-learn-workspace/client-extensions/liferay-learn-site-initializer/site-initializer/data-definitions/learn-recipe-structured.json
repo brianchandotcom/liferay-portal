@@ -1,0 +1,512 @@
+{
+	"availableLanguageIds": ["en_US"],
+	"contentType": "journal",
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"fieldNamespace": "",
+				"visibilityExpression": "",
+				"editorConfig": null,
+				"dataType": "string",
+				"fieldReference": "introduction"
+			},
+			"defaultValue": {},
+			"fieldType": "rich_text",
+			"indexType": "text",
+			"indexable": true,
+			"label": {"en_US": "Introduction"},
+			"localizable": true,
+			"name": "RichText90770077",
+			"nestedDataDefinitionFields": [],
+			"readOnly": false,
+			"repeatable": false,
+			"required": true,
+			"showLabel": true,
+			"tip": {"en_US": ""}
+		},
+		{
+			"customProperties": {
+				"fieldNamespace": "",
+				"visibilityExpression": "",
+				"editorConfig": null,
+				"dataType": "string",
+				"fieldReference": "Prerequisite"
+			},
+			"defaultValue": {},
+			"fieldType": "rich_text",
+			"indexType": "text",
+			"indexable": true,
+			"label": {"en_US": "Prerequisite"},
+			"localizable": true,
+			"name": "RichText13704107",
+			"nestedDataDefinitionFields": [],
+			"readOnly": false,
+			"repeatable": true,
+			"required": true,
+			"showLabel": true,
+			"tip": {"en_US": ""}
+		},
+		{
+			"customProperties": {
+				"normalizedStructure": false,
+				"labelAtStructureLevel": true,
+				"ddmStructureLayoutId": "",
+				"ddmStructureKey": "",
+				"ddmStructureId": "",
+				"upgradedStructure": false,
+				"fieldReference": "Steps",
+				"rows": [
+					{"columns": [{"size": 12, "fields": ["Fieldset26222506"]}]}
+				],
+				"collapsible": false
+			},
+			"defaultValue": {},
+			"fieldType": "fieldset",
+			"indexable": false,
+			"label": {"en_US": "Steps"},
+			"localizable": false,
+			"name": "Fieldset50244541",
+			"nestedDataDefinitionFields": [
+				{
+					"customProperties": {
+						"normalizedStructure": false,
+						"labelAtStructureLevel": true,
+						"ddmStructureLayoutId": "",
+						"ddmStructureKey": "",
+						"ddmStructureId": "",
+						"upgradedStructure": false,
+						"fieldReference": "Step",
+						"rows": [
+							{
+								"columns": [
+									{"size": 12, "fields": ["RichText69207274"]}
+								]
+							},
+							{
+								"columns": [
+									{"size": 12, "fields": ["Fieldset79722893"]}
+								]
+							},
+							{
+								"columns": [
+									{"size": 12, "fields": ["Field51714879"]}
+								]
+							}
+						],
+						"collapsible": false
+					},
+					"defaultValue": {},
+					"fieldType": "fieldset",
+					"indexable": false,
+					"label": {"en_US": "Step"},
+					"localizable": false,
+					"name": "Fieldset26222506",
+					"nestedDataDefinitionFields": [
+						{
+							"customProperties": {
+								"fieldNamespace": "",
+								"visibilityExpression": "",
+								"editorConfig": null,
+								"dataType": "string",
+								"fieldReference": "StepInstruction"
+							},
+							"defaultValue": {},
+							"fieldType": "rich_text",
+							"indexType": "text",
+							"indexable": true,
+							"label": {"en_US": "Instruction / Action"},
+							"localizable": true,
+							"name": "RichText69207274",
+							"nestedDataDefinitionFields": [],
+							"readOnly": false,
+							"repeatable": false,
+							"required": true,
+							"showLabel": true,
+							"tip": {
+								"en_US": "Make sure that you include a SINGLE activity that needs to be done"
+							}
+						},
+						{
+							"customProperties": {
+								"normalizedStructure": false,
+								"labelAtStructureLevel": true,
+								"ddmStructureLayoutId": "",
+								"ddmStructureKey": "",
+								"ddmStructureId": "",
+								"upgradedStructure": false,
+								"fieldReference": "Resources",
+								"rows": [
+									{
+										"columns": [
+											{
+												"size": 12,
+												"fields": ["Image08664333"]
+											}
+										]
+									},
+									{
+										"columns": [
+											{
+												"size": 12,
+												"fields": ["Text51057352"]
+											}
+										]
+									}
+								],
+								"collapsible": false
+							},
+							"defaultValue": {},
+							"fieldType": "fieldset",
+							"indexable": false,
+							"label": {"en_US": "Resources"},
+							"localizable": false,
+							"name": "Fieldset79722893",
+							"nestedDataDefinitionFields": [
+								{
+									"customProperties": {
+										"fieldNamespace": "",
+										"visibilityExpression": "",
+										"dataType": "image",
+										"requiredDescription": true,
+										"fieldReference": "Image"
+									},
+									"defaultValue": {},
+									"fieldType": "image",
+									"indexType": "text",
+									"indexable": true,
+									"label": {"en_US": "Image"},
+									"localizable": true,
+									"name": "Image08664333",
+									"nestedDataDefinitionFields": [],
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"tip": {"en_US": ""}
+								},
+								{
+									"customProperties": {
+										"labelAtStructureLevel": true,
+										"hideField": false,
+										"confirmationErrorMessage": {
+											"en_US": ""
+										},
+										"autocomplete": false,
+										"ddmDataProviderInstanceId": [],
+										"dataType": "string",
+										"tooltip": {"en_US": ""},
+										"requireConfirmation": false,
+										"displayStyle": "multiline",
+										"fieldNamespace": "",
+										"visibilityExpression": "",
+										"ddmDataProviderInstanceOutput": [],
+										"options": {},
+										"nativeField": false,
+										"confirmationLabel": {"en_US": ""},
+										"fieldReference": "Code",
+										"placeholder": {"en_US": ""},
+										"dataSourceType": "",
+										"direction": ["vertical"]
+									},
+									"defaultValue": {},
+									"fieldType": "text",
+									"indexType": "keyword",
+									"indexable": true,
+									"label": {"en_US": "Code"},
+									"localizable": true,
+									"name": "Text51057352",
+									"nestedDataDefinitionFields": [],
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"tip": {"en_US": ""}
+								}
+							],
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {}
+						},
+						{
+							"customProperties": {
+								"normalizedStructure": false,
+								"labelAtStructureLevel": true,
+								"ddmStructureLayoutId": "",
+								"ddmStructureKey": "",
+								"ddmStructureId": "",
+								"upgradedStructure": false,
+								"fieldReference": "AdditionalNotes",
+								"rows": [
+									{
+										"columns": [
+											{
+												"size": 12,
+												"fields": ["Select38529577"]
+											}
+										]
+									},
+									{
+										"columns": [
+											{
+												"size": 12,
+												"fields": ["RichText32407994"]
+											}
+										]
+									}
+								],
+								"collapsible": false
+							},
+							"defaultValue": {},
+							"fieldType": "fieldset",
+							"indexable": false,
+							"label": {"en_US": "Additional Notes"},
+							"localizable": false,
+							"name": "Field51714879",
+							"nestedDataDefinitionFields": [
+								{
+									"customProperties": {
+										"labelAtStructureLevel": true,
+										"fieldNamespace": "",
+										"visibilityExpression": "",
+										"alphabeticalOrder": false,
+										"ddmDataProviderInstanceOutput": [],
+										"ddmDataProviderInstanceId": [],
+										"dataType": "string",
+										"options": {
+											"en_US": [
+												{
+													"reference": "note",
+													"label": "Note",
+													"value": "Option24849266"
+												},
+												{
+													"reference": "warning",
+													"label": "Warn",
+													"value": "Option51237183"
+												}
+											]
+										},
+										"multiple": false,
+										"nativeField": false,
+										"fieldReference": "NoteType",
+										"dataSourceType": ["manual"]
+									},
+									"defaultValue": {},
+									"fieldType": "select",
+									"indexType": "keyword",
+									"indexable": true,
+									"label": {"en_US": "Note Type"},
+									"localizable": true,
+									"name": "Select38529577",
+									"nestedDataDefinitionFields": [],
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"tip": {"en_US": ""}
+								},
+								{
+									"customProperties": {
+										"fieldNamespace": "",
+										"visibilityExpression": "",
+										"editorConfig": null,
+										"dataType": "string",
+										"fieldReference": "NoteText"
+									},
+									"defaultValue": {},
+									"fieldType": "rich_text",
+									"indexType": "text",
+									"indexable": true,
+									"label": {"en_US": "Note Text"},
+									"localizable": true,
+									"name": "RichText32407994",
+									"nestedDataDefinitionFields": [],
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"tip": {"en_US": ""}
+								}
+							],
+							"readOnly": false,
+							"repeatable": true,
+							"required": false,
+							"showLabel": true,
+							"tip": {}
+						}
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {}
+				}
+			],
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"tip": {}
+		},
+		{
+			"customProperties": {
+				"fieldNamespace": "",
+				"visibilityExpression": "",
+				"editorConfig": null,
+				"dataType": "string",
+				"fieldReference": "Conclusion"
+			},
+			"defaultValue": {},
+			"fieldType": "rich_text",
+			"indexType": "text",
+			"indexable": true,
+			"label": {"en_US": "Conclusion"},
+			"localizable": true,
+			"name": "RichText10849538",
+			"nestedDataDefinitionFields": [],
+			"readOnly": false,
+			"repeatable": false,
+			"required": true,
+			"showLabel": true,
+			"tip": {"en_US": ""}
+		},
+		{
+			"customProperties": {
+				"fieldNamespace": "",
+				"visibilityExpression": "",
+				"editorConfig": null,
+				"dataType": "string",
+				"fieldReference": "Tip"
+			},
+			"defaultValue": {},
+			"fieldType": "rich_text",
+			"indexType": "text",
+			"indexable": true,
+			"label": {"en_US": "Tip"},
+			"localizable": true,
+			"name": "RichText86046881",
+			"nestedDataDefinitionFields": [],
+			"readOnly": false,
+			"repeatable": true,
+			"required": true,
+			"showLabel": true,
+			"tip": {"en_US": ""}
+		},
+		{
+			"customProperties": {
+				"labelAtStructureLevel": true,
+				"hideField": false,
+				"confirmationErrorMessage": {"en_US": ""},
+				"dataType": "integer",
+				"tooltip": {"en_US": ""},
+				"requireConfirmation": false,
+				"inputMask": false,
+				"characterOptions": false,
+				"fieldNamespace": "",
+				"requiredErrorMessage": {"en_US": ""},
+				"visibilityExpression": "",
+				"objectFieldName": "",
+				"inputMaskFormat": {"en_US": ""},
+				"nativeField": false,
+				"confirmationLabel": {"en_US": ""},
+				"fieldReference": "timeToFinish",
+				"numericInputMask": {
+					"en_US": {
+						"decimalPlaces": 2,
+						"append": "",
+						"symbols": {
+							"decimalSymbol": ".",
+							"thousandsSeparator": "none"
+						},
+						"appendType": "prefix"
+					}
+				},
+				"placeholder": {"en_US": ""},
+				"direction": ["vertical"]
+			},
+			"defaultValue": {"en_US": ""},
+			"fieldType": "numeric",
+			"indexType": "keyword",
+			"indexable": true,
+			"label": {"en_US": "Time to Finish (in minutes)"},
+			"localizable": true,
+			"name": "Numeric15126528",
+			"nestedDataDefinitionFields": [],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {"en_US": ""}
+		}
+	],
+	"dataDefinitionKey": "LEARN-RECIPE-STRUCTURED",
+	"defaultDataLayout": {
+		"dataLayoutFields": {},
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": ["RichText90770077"]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": ["RichText13704107"]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": ["Fieldset50244541"]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": ["RichText10849538"]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": ["RichText86046881"]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": ["Numeric15126528"]
+							}
+						]
+					}
+				],
+				"description": {"en_US": ""},
+				"title": {"en_US": ""}
+			}
+		],
+		"dataRules": [],
+		"description": {"en_US": "A recipe for completing a specific task."},
+		"name": {"en_US": "LEARN-RECIPE-STRUCTURED"},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {"en_US": "A recipe for completing a specific task."},
+	"name": {"en_US": "LEARN-RECIPE-STRUCTURED"},
+	"storageType": "default"
+}

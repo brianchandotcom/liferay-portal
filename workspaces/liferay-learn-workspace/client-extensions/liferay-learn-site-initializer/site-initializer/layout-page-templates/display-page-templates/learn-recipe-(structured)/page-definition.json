@@ -1,0 +1,119 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"cssClasses": ["learn-recipe-container", "header-navigation"],
+					"customCSS": ".[$FRAGMENT_CLASS$] {\n  align-items: center;\n\tjustify-content:space-between;\n  \nmargin-top: 0 !important;\n  \n}",
+					"fragmentStyle": {
+						"marginTop": "4",
+						"paddingLeft": "2.5rem",
+						"paddingRight": "2rem"
+					},
+					"indexed": true,
+					"layout": {
+						"contentDisplay": "FlexRow",
+						"marginTop": 2,
+						"widthType": "Fixed"
+					},
+					"name": "Site Nav Container"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {"key": "BASIC_COMPONENT-html"},
+							"fragmentConfig": {},
+							"fragmentFields": [
+								{
+									"id": "element-html",
+									"value": {
+										"html": {
+											"mapping": {
+												"fieldKey": "_ddmTemplate_LEARN_RECIPE_STRUCTURED_BREADCRUMB",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"cssClasses": ["recipe-feedback"],
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n\tdisplay: flex;\n\ttext-wrap: nowrap;\n}",
+							"fragment": {"key": "BASIC_COMPONENT-button"},
+							"fragmentConfig": {
+								"buttonType": "link",
+								"type": "link",
+								"buttonSize": "nm"
+							},
+							"fragmentFields": [
+								{
+									"id": "link",
+									"value": {
+										"fragmentLink": {
+											"value": {
+												"href": {
+													"value_i18n": {
+														"en_US": "https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
+													}
+												}
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Submit Feedback"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {"fontWeight": "fontWeightBold"},
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {"widthType": "Fixed"}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer"
+							},
+							"fragmentConfig": {},
+							"fragmentFields": [],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {"key": "liferay-learn"},
+		"themeName": "Dialect",
+		"themeSettings": {
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

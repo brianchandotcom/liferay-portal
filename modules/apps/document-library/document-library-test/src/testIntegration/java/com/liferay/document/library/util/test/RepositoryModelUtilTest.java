@@ -241,7 +241,7 @@ public class RepositoryModelUtilTest {
 
 		for (int i = 0; i < 5; i++) {
 			DLAppLocalServiceUtil.addFileShortcut(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				_folder.getFolderId(), dlFileEntry.getFileEntryId(),
 				_serviceContext);
 		}

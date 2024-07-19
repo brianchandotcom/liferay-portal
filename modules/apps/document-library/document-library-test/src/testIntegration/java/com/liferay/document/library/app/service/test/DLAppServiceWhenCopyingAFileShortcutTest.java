@@ -161,7 +161,7 @@ public class DLAppServiceWhenCopyingAFileShortcutTest
 		throws Exception {
 
 		FileShortcut fileShortcut = dlAppService.addFileShortcut(
-			sourceGroupId, sourceFolderId, fileEntry.getFileEntryId(),
+			null, sourceGroupId, sourceFolderId, fileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(sourceGroupId));
 
 		dlAppService.copyFileShortcut(

@@ -97,7 +97,7 @@ public class DLFolderFinderTest {
 			ContentTypes.TEXT_PLAIN);
 
 		_fileShortcut = DLAppLocalServiceUtil.addFileShortcut(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			fileEntry.getFolderId(), fileEntry.getFileEntryId(),
 			serviceContext);
 

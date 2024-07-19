@@ -204,8 +204,9 @@ public class FileShortcutStagedModelDataHandler
 				serviceContext.setUuid(fileShortcut.getUuid());
 
 				importedFileShortcut = _dlAppLocalService.addFileShortcut(
-					userId, groupId, folderId,
-					importedFileEntry.getFileEntryId(), serviceContext);
+					fileShortcut.getExternalReferenceCode(), userId, groupId,
+					folderId, importedFileEntry.getFileEntryId(),
+					serviceContext);
 			}
 			else {
 				importedFileShortcut = _dlAppLocalService.updateFileShortcut(
@@ -215,8 +216,8 @@ public class FileShortcutStagedModelDataHandler
 		}
 		else {
 			importedFileShortcut = _dlAppLocalService.addFileShortcut(
-				userId, groupId, folderId, importedFileEntry.getFileEntryId(),
-				serviceContext);
+				null, userId, groupId, folderId,
+				importedFileEntry.getFileEntryId(), serviceContext);
 		}
 
 		portletDataContext.importClassedModel(

@@ -265,7 +265,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		FileEntry fileEntry = addFileEntry(parentFolder.getFolderId());
 
 		FileShortcut fileShortcut = DLAppLocalServiceUtil.addFileShortcut(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			parentFolder.getFolderId(), fileEntry.getFileEntryId(),
 			serviceContext);
 

@@ -8,6 +8,7 @@ package com.liferay.portal.search;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
@@ -23,6 +24,12 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
+import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.util.PortalInstances;
 
 import java.lang.annotation.Annotation;
@@ -58,7 +65,8 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 
 		return new IndexableContext(
 			indexable.callbackKey(), returnType.getName(), indexable.type(),
-			_getServiceContextParameterIndex(method));
+			_getServiceContextParameterIndex(method),
+			(Transactional)annotations.get(Transactional.class));
 	}
 
 	@Override
@@ -121,19 +129,7 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 			});
 	}
 
-	private int _getServiceContextParameterIndex(Method method) {
-		Class<?>[] parameterTypes = method.getParameterTypes();
-
-		for (int i = parameterTypes.length - 1; i >= 0; i--) {
-			if (ServiceContext.class.isAssignableFrom(parameterTypes[i])) {
-				return i;
-			}
-		}
-
-		return -1;
-	}
-
-	private void _reindex(
+	private void _doReindex(
 			Indexer<Object> indexer, IndexableContext indexableContext,
 			Object[] arguments, Object result)
 		throws SearchException {
@@ -177,6 +173,57 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 		}
 	}
 
+	private int _getServiceContextParameterIndex(Method method) {
+		Class<?>[] parameterTypes = method.getParameterTypes();
+
+		for (int i = parameterTypes.length - 1; i >= 0; i--) {
+			if (ServiceContext.class.isAssignableFrom(parameterTypes[i])) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	private void _reindex(
+			Indexer<Object> indexer, IndexableContext indexableContext,
+			Object[] arguments, Object result)
+		throws SearchException {
+
+		if (indexableContext._transactionAttribute == null) {
+			_doReindex(indexer, indexableContext, arguments, result);
+
+			return;
+		}
+
+		TransactionConfig.Builder transactionConfigBuilder =
+			new TransactionConfig.Builder();
+
+		TransactionConfig transactionConfig =
+			transactionConfigBuilder.setIsolation(
+				indexableContext._transactionAttribute.getIsolation()
+			).setPropagation(
+				indexableContext._transactionAttribute.getPropagation()
+			).setReadOnly(
+				indexableContext._transactionAttribute.isReadOnly()
+			).setStrictReadOnly(
+				indexableContext._transactionAttribute.isStrictReadOnly()
+			).build();
+
+		try {
+			TransactionInvokerUtil.invoke(
+				transactionConfig,
+				() -> {
+					_doReindex(indexer, indexableContext, arguments, result);
+
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			ReflectionUtil.throwException(throwable);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexableAdvice.class);
 
@@ -189,18 +236,31 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 
 		private IndexableContext(
 			String callbackKey, String name, IndexableType indexableType,
-			int serviceContextIndex) {
+			int serviceContextIndex, Transactional transactional) {
 
 			_callbackKey = callbackKey;
 			_name = name;
 			_indexableType = indexableType;
 			_serviceContextIndex = serviceContextIndex;
+
+			org.springframework.transaction.interceptor.TransactionAttribute
+				transactionAttribute = TransactionAttributeBuilder.build(
+					transactional);
+
+			if (transactionAttribute == null) {
+				_transactionAttribute = null;
+			}
+			else {
+				_transactionAttribute = new TransactionAttributeAdapter(
+					transactionAttribute);
+			}
 		}
 
 		private final String _callbackKey;
 		private final IndexableType _indexableType;
 		private final String _name;
 		private final int _serviceContextIndex;
+		private final TransactionAttribute _transactionAttribute;
 
 	}
 

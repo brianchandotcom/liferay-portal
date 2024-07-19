@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -636,8 +635,8 @@ public class AssetCategoriesDisplayContext {
 							"vocabularyId", vocabulary.getVocabularyId()
 						).buildString());
 
-					String name = HtmlUtil.escape(
-						vocabulary.getTitle(_httpServletRequest.getLocale()));
+					String name = vocabulary.getTitle(
+						_httpServletRequest.getLocale());
 
 					verticalNavItem.setId(name);
 					verticalNavItem.setLabel(name);

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -332,8 +331,7 @@ public class LayoutPageTemplateDisplayContext {
 
 			verticalNavItemList.add(
 				verticalNavItem -> {
-					String name = HtmlUtil.escape(
-						layoutPageTemplateCollection.getName());
+					String name = layoutPageTemplateCollection.getName();
 
 					long layoutPageTemplateCollectionId =
 						layoutPageTemplateCollection.

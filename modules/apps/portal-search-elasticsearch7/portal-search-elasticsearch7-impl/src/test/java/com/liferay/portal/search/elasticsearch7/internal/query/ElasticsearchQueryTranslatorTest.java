@@ -7,6 +7,7 @@ package com.liferay.portal.search.elasticsearch7.internal.query;
 
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslatorFixture;
@@ -124,33 +125,31 @@ public class ElasticsearchQueryTranslatorTest {
 	}
 
 	@Test
-	public void testTranslateTermsFilterExceedingMaxAllowedTerms()
-		throws Exception {
-
-		TermsFilter termsFilter = new TermsFilter("groupId");
+	public void testTranslateTermsFilterExceedingMaxAllowedTerms() {
+		TermsFilter termsFilter = new TermsFilter(
+			RandomTestUtil.randomString());
 
 		termsFilter.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-		_assertTermsCount(1, 10, termsFilter);
+		_assertTermsCount(1, 10, termsFilter, false);
 
-		_assertTermsCount(2, 5, termsFilter);
+		_assertTermsCount(2, 5, termsFilter, false);
 
-		_assertTermsCount(4, 3, termsFilter);
+		_assertTermsCount(4, 3, termsFilter, false);
 	}
 
 	@Test
-	public void testTranslateTermsQueryExceedingMaxAllowedTerms()
-		throws Exception {
-
-		TermsQuery termsQuery = new TermsQueryImpl("groupId");
+	public void testTranslateTermsQueryExceedingMaxAllowedTerms() {
+		TermsQuery termsQuery = new TermsQueryImpl(
+			RandomTestUtil.randomString());
 
 		termsQuery.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-		_assertTermsCount(1, 10, termsQuery);
+		_assertTermsCount(1, 10, termsQuery, true);
 
-		_assertTermsCount(2, 5, termsQuery);
+		_assertTermsCount(2, 5, termsQuery, true);
 
-		_assertTermsCount(4, 3, termsQuery);
+		_assertTermsCount(4, 3, termsQuery, true);
 	}
 
 	private void _assertBoost(Query query) {
@@ -165,43 +164,36 @@ public class ElasticsearchQueryTranslatorTest {
 	}
 
 	private void _assertTermsCount(
-			int expected, int maxTermsCount, Object terms, boolean query)
-		throws Exception {
+		int expected, int maxTermsCount, Object terms, boolean query) {
 
-		try (AutoCloseable autoCloseable =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					QueryUtil.class, "_MAX_TERMS_COUNT", maxTermsCount)) {
+		Integer defaultMaxTermsCount = ReflectionTestUtil.getFieldValue(
+			QueryUtil.class, "_maxTermsCount");
 
-			String queryString;
+		_setMaxTermsCount(maxTermsCount);
 
-			if (query) {
-				queryString = _elasticsearchQueryTranslator.visit(
-					(TermsQuery)terms
-				).toString();
-			}
-			else {
-				queryString = _elasticsearchFilterTranslator.visit(
-					(TermsFilter)terms
-				).toString();
-			}
+		String queryString;
 
-			Assert.assertEquals(
-				queryString, expected, StringUtil.count(queryString, "terms"));
+		if (query) {
+			queryString = _elasticsearchQueryTranslator.visit(
+				(TermsQuery)terms
+			).toString();
 		}
+		else {
+			queryString = _elasticsearchFilterTranslator.visit(
+				(TermsFilter)terms
+			).toString();
+		}
+
+		Assert.assertEquals(
+			queryString, expected, StringUtil.count(queryString, "terms"));
+
+		_setMaxTermsCount(defaultMaxTermsCount);
 	}
 
-	private void _assertTermsCount(
-			int expected, int maxTermsCount, TermsFilter termsFilter)
-		throws Exception {
-
-		_assertTermsCount(expected, maxTermsCount, termsFilter, false);
-	}
-
-	private void _assertTermsCount(
-			int expected, int maxTermsCount, TermsQuery termsQuery)
-		throws Exception {
-
-		_assertTermsCount(expected, maxTermsCount, termsQuery, true);
+	private void _setMaxTermsCount(Integer maxTermsCount) {
+		ReflectionTestUtil.invoke(
+			QueryUtil.class, "_setMaxTermsCount",
+			new Class<?>[] {Integer.class}, maxTermsCount);
 	}
 
 	private static final Float _BOOST = 1.5F;

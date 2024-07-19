@@ -48,7 +48,6 @@ export default async function installSassBinary() {
    Computed (seemingly incorrect) hash is: ${hash}
 `
 		);
-
 	}
 
 	try {

@@ -254,7 +254,8 @@ public class LayoutRevisionLocalServiceImpl
 	public LayoutRevision fetchLastLayoutRevision(long plid, boolean head) {
 		try {
 			return layoutRevisionPersistence.findByH_P_Last(
-				head, plid, new LayoutRevisionCreateDateComparator(true));
+				head, plid,
+				LayoutRevisionCreateDateComparator.getInstance(true));
 		}
 		catch (NoSuchLayoutRevisionException noSuchLayoutRevisionException) {
 
@@ -274,7 +275,7 @@ public class LayoutRevisionLocalServiceImpl
 
 		return layoutRevisionPersistence.fetchByL_P_First(
 			layoutSetBranchId, plid,
-			new LayoutRevisionCreateDateComparator(false));
+			LayoutRevisionCreateDateComparator.getInstance(false));
 	}
 
 	@Override
@@ -283,7 +284,7 @@ public class LayoutRevisionLocalServiceImpl
 
 		return layoutRevisionPersistence.fetchByL_L_P_First(
 			layoutSetBranchId, layoutBranchId, plid,
-			new LayoutRevisionCreateDateComparator(false));
+			LayoutRevisionCreateDateComparator.getInstance(false));
 	}
 
 	@Override
@@ -328,7 +329,7 @@ public class LayoutRevisionLocalServiceImpl
 		List<LayoutRevision> layoutRevisions =
 			layoutRevisionPersistence.findByL_L_P(
 				layoutSetBranchId, layoutBranchId, plid, 0, 1,
-				new LayoutRevisionCreateDateComparator(false));
+				LayoutRevisionCreateDateComparator.getInstance(false));
 
 		if (!layoutRevisions.isEmpty()) {
 			return layoutRevisions.get(0);
@@ -646,7 +647,7 @@ public class LayoutRevisionLocalServiceImpl
 					layoutRevision.getLayoutSetBranchId(),
 					layoutRevision.getPlid(), WorkflowConstants.STATUS_APPROVED,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					new LayoutRevisionModifiedDateComparator(false));
+					LayoutRevisionModifiedDateComparator.getInstance(false));
 
 			for (LayoutRevision curLayoutRevision : layoutRevisions) {
 				if (curLayoutRevision.getLayoutRevisionId() !=

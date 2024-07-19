@@ -2652,7 +2652,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 					return groupPersistence.findByGtG_C_C_P(
 						previousId, companyId, classNameId, parentPrimaryKey,
-						QueryUtil.ALL_POS, size, new GroupIdComparator(true));
+						QueryUtil.ALL_POS, size,
+						GroupIdComparator.getInstance(true));
 				}
 
 			});

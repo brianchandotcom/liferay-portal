@@ -797,7 +797,7 @@ public class UsersAdminUtil {
 			orderByComparator = new GroupNameComparator(orderByAsc);
 		}
 		else if (orderByCol.equals("type")) {
-			orderByComparator = new GroupTypeComparator(orderByAsc);
+			orderByComparator = GroupTypeComparator.getInstance(orderByAsc);
 		}
 		else {
 			orderByComparator = new GroupNameComparator(orderByAsc);

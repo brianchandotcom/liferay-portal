@@ -96,7 +96,7 @@ public class DLFileVersionConstraintResolver
 			_dlFileVersionLocalService.getFileVersions(
 				dlFileVersion.getFileEntryId(), WorkflowConstants.STATUS_ANY);
 
-		fileVersions.sort(new DLFileVersionVersionComparator(true));
+		fileVersions.sort(DLFileVersionVersionComparator.getInstance(true));
 
 		String newFileVersion = null;
 		DLFileVersion previousFileVersion = null;

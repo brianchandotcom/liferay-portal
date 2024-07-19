@@ -405,7 +405,7 @@ public class LayoutSetBranchLocalServiceImpl
 
 		return layoutSetBranchPersistence.findByG_P(
 			groupId, privateLayout, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new LayoutSetBranchCreateDateComparator(true));
+			LayoutSetBranchCreateDateComparator.getInstance(true));
 	}
 
 	@Override

@@ -477,7 +477,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		return groupPersistence.findByGtG_C_P_S(
 			gtGroupId, companyId, parentGroupId, site, 0, size,
-			new GroupIdComparator(true));
+			GroupIdComparator.getInstance(true));
 	}
 
 	/**

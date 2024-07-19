@@ -2220,7 +2220,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		if (nextLayoutId == 1) {
 			Layout layout = layoutPersistence.fetchByG_P_First(
-				groupId, privateLayout, new LayoutComparator());
+				groupId, privateLayout, LayoutComparator.getInstance(false));
 
 			if (layout != null) {
 				nextLayoutId = layout.getLayoutId() + 1;

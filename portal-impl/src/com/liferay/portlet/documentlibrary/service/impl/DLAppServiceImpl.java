@@ -1578,7 +1578,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return getFolders(
 			repositoryId, parentFolderId, includeMountFolders, start, end,
-			new FolderNameComparator(true));
+			FolderNameComparator.getInstance(true));
 	}
 
 	/**
@@ -1686,7 +1686,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return getFolders(
 			repositoryId, parentFolderId, start, end,
-			new FolderNameComparator(true));
+			FolderNameComparator.getInstance(true));
 	}
 
 	/**
@@ -2228,7 +2228,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return getMountFolders(
 			repositoryId, parentFolderId, start, end,
-			new FolderNameComparator(true));
+			FolderNameComparator.getInstance(true));
 	}
 
 	/**

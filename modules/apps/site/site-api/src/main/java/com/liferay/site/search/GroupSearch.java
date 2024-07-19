@@ -83,7 +83,7 @@ public class GroupSearch extends SearchContainer<Group> {
 			return new GroupNameComparator(orderByAsc, locale);
 		}
 		else if (orderByCol.equals("type")) {
-			return new GroupTypeComparator(orderByAsc);
+			return GroupTypeComparator.getInstance(orderByAsc);
 		}
 
 		return new GroupNameComparator(orderByAsc, locale);

@@ -126,7 +126,7 @@ public class LayoutSetPrototypeDisplayContext {
 		}
 
 		searchContainer.setOrderByComparator(
-			new LayoutSetPrototypeCreateDateComparator(orderByAsc));
+			LayoutSetPrototypeCreateDateComparator.getInstance(orderByAsc));
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setResultsAndTotal(
 			() -> LayoutSetPrototypeLocalServiceUtil.search(

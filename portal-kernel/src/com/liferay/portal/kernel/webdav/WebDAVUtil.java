@@ -169,7 +169,7 @@ public class WebDAVUtil {
 		Set<Group> groups = new HashSet<>();
 
 		OrderByComparator<Group> orderByComparator =
-			new GroupFriendlyURLComparator(true);
+			GroupFriendlyURLComparator.getInstance(true);
 
 		groups.addAll(
 			GroupLocalServiceUtil.search(

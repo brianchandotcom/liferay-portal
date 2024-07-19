@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -169,7 +170,7 @@ public class DBSchemaDefinitionExporterTest {
 	public void testExportImportReportWithMissingTable() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		db.runSQL("create table testTable (testColumn bigint primary key)");
+		db.runSQL("create table TestTable (testColumn bigint primary key)");
 
 		try {
 			ConfigurationTestUtil.deployConfiguration(
@@ -179,7 +180,9 @@ public class DBSchemaDefinitionExporterTest {
 			String content = FileUtil.read(
 				new File(_folder, "db_export_report.info"));
 
-			Assert.assertTrue(content.contains("Missing tables: testTable"));
+			Assert.assertTrue(
+				content.contains(
+					"Missing tables: " + StringUtil.toLowerCase("TestTable")));
 		}
 		finally {
 			db.runSQL("DROP_TABLE_IF_EXISTS(testTable)");

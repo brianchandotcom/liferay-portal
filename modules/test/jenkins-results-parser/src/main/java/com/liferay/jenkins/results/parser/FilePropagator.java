@@ -326,6 +326,18 @@ public class FilePropagator {
 	private long _threadsDurationTotal;
 	private final long _timeout;
 
+	private static class FilePropagatorRuntimeException
+		extends RuntimeException {
+
+		public FilePropagatorRuntimeException(
+			FilePropagator filePropagator, String message,
+			Exception exception) {
+
+			super(filePropagator._id + " - " + message, exception);
+		}
+
+	}
+
 	private static class FilePropagatorTask {
 
 		private FilePropagatorTask(

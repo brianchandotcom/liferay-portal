@@ -645,6 +645,34 @@ public class FilterParserImplTest {
 	}
 
 	@Test
+	public void testParseWithLambdaAnyWithNoArgumentOnCollectionField()
+		throws ExpressionVisitException {
+
+		Expression expression = _filterParserImpl.parse(
+			"collectionFieldExternal/any()");
+
+		Assert.assertNotNull(expression);
+
+		MemberExpression memberExpression = (MemberExpression)expression;
+
+		CollectionPropertyExpression collectionPropertyExpression =
+			(CollectionPropertyExpression)memberExpression.getExpression();
+
+		Assert.assertEquals(
+			"collectionFieldExternal", collectionPropertyExpression.getName());
+
+		LambdaFunctionExpression lambdaFunctionExpression =
+			collectionPropertyExpression.getLambdaFunctionExpression();
+
+		Assert.assertEquals(
+			LambdaFunctionExpression.Type.ANY,
+			lambdaFunctionExpression.getType());
+		Assert.assertNull(lambdaFunctionExpression.getVariableName());
+
+		Assert.assertNull(lambdaFunctionExpression.getExpression());
+	}
+
+	@Test
 	public void testParseWithLeBinaryExpression()
 		throws ExpressionVisitException {
 

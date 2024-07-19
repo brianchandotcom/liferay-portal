@@ -5142,10 +5142,14 @@ public class ObjectEntryResourceTest {
 
 	@Test
 	public void testGetObjectEntryFilteredByKeywords() throws Exception {
+		_postObjectEntryWithKeywords();
 		_postObjectEntryWithKeywords("tag1");
 		_postObjectEntryWithKeywords("TAG1");
 		_postObjectEntryWithKeywords("tag1", "tag2");
 		_postObjectEntryWithKeywords("tag1", "tag2", "tag3");
+
+		_assertFilteredObjectEntries(1, "keywords/any()");
+		_assertFilteredObjectEntries(4, "not keywords/any()");
 
 		_assertFilteredObjectEntries(4, "keywords/any(k:k eq 'tag1')");
 		_assertFilteredObjectEntries(4, "keywords/any(k:k eq 'TAG1')");
@@ -5208,6 +5212,12 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1,
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).build(),
+			_TAG_1);
+		ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 			).put(
 				_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, _LIST_TYPE_ENTRY_KEY_1
 			).build(),
@@ -5234,6 +5244,13 @@ public class ObjectEntryResourceTest {
 			).build(),
 			_TAG_1);
 
+		_assertFilteredObjectEntries(
+			1,
+			String.format("%s/any()", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST));
+		_assertFilteredObjectEntries(
+			3,
+			String.format(
+				"not %s/any()", _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST));
 		_assertFilteredObjectEntries(
 			3,
 			String.format(
@@ -5390,6 +5407,8 @@ public class ObjectEntryResourceTest {
 		_postObjectEntryWithTaxonomyCategories(
 			taxonomyCategory1, taxonomyCategory2, taxonomyCategory3);
 
+		_assertFilteredObjectEntries(1, "taxonomyCategoryIds/any()");
+		_assertFilteredObjectEntries(3, "not taxonomyCategoryIds/any()");
 		_assertFilteredObjectEntries(
 			3,
 			String.format(

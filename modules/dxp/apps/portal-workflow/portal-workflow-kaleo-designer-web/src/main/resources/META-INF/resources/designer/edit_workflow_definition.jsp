@@ -59,6 +59,8 @@ renderResponse.setTitle(LanguageUtil.get(request, titleKey));
 		).put(
 			"statuses", kaleoDesignerDisplayContext.getStatusesJSONArray()
 		).put(
+			"timeZoneId", kaleoDesignerDisplayContext.getTimeZoneId()
+		).put(
 			"title", (currentKaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : currentKaleoDefinitionVersion.getTitle(locale)
 		).put(
 			"translations", (currentKaleoDefinitionVersion == null) ? new HashMap<>() : currentKaleoDefinitionVersion.getTitleMap()

@@ -483,6 +483,18 @@ public class KaleoDesignerDisplayContext {
 			));
 	}
 
+	public String getTimeZoneId() {
+		User user = _themeDisplay.getUser();
+
+		if ((user == null) || user.isGuestUser() ||
+			Validator.isNull(user.getFullName())) {
+
+			return null;
+		}
+
+		return user.getTimeZoneId();
+	}
+
 	public String getTitle(KaleoDefinitionVersion kaleoDefinitionVersion) {
 		if (kaleoDefinitionVersion == null) {
 			return _getLanguage("new-workflow");

@@ -86,6 +86,7 @@ export default function DefinitionBuilder(props) {
 		showDefinitionInfo,
 		sourceView,
 		statuses: props.statuses,
+		timeZoneId: props.timeZoneId,
 		version,
 		versions: props.versions,
 		workflowDefinitionVersions,

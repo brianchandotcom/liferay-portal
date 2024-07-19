@@ -3,20 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import moment from 'moment';
 import React from 'react';
 
 import lang from '../../../../util/lang';
+import toLocalDateTimeFormatted from '../../../util/toLocalDateTimeFormatted';
 
 import './DetailsTab.scss';
 
-moment.locale(Liferay.ThemeDisplay.getBCP47LanguageId());
-
 interface DetailsTabProps {
 	definitionInfo: DefinitionInfo;
+	timeZoneId: string;
 }
 
-export function DetailsTab({definitionInfo}: DetailsTabProps) {
+export function DetailsTab({definitionInfo, timeZoneId}: DetailsTabProps) {
 	const totalModifications = definitionInfo.totalModifications;
 
 	const revisionMessage =
@@ -26,17 +25,23 @@ export function DetailsTab({definitionInfo}: DetailsTabProps) {
 				])
 			: `${totalModifications} ${Liferay.Language.get('revision')}`;
 
+	const language = Liferay.ThemeDisplay.getBCP47LanguageId();
+
 	const workflowDefinitionDetails = [
 		{
 			title: Liferay.Language.get('created'),
-			value: moment(definitionInfo.dateCreated).format(
-				Liferay.Language.get('mmm-dd-yyyy-lt')
+			value: toLocalDateTimeFormatted(
+				definitionInfo.dateCreated,
+				language,
+				timeZoneId
 			),
 		},
 		{
 			title: Liferay.Language.get('last-modified'),
-			value: moment(definitionInfo.dateModified).format(
-				Liferay.Language.get('mmm-dd-yyyy-lt')
+			value: toLocalDateTimeFormatted(
+				definitionInfo.dateModified,
+				language,
+				timeZoneId
 			),
 		},
 		{

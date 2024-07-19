@@ -52,6 +52,7 @@ interface DefinitionBuilderContextProviderProps {
 	showDefinitionInfo: boolean;
 	sourceView: boolean;
 	statuses: LabelValueObject<number>[];
+	timeZoneId: string;
 	version: string;
 	workflowDefinitionVersions: WorkflowDefinitionVersion[];
 }

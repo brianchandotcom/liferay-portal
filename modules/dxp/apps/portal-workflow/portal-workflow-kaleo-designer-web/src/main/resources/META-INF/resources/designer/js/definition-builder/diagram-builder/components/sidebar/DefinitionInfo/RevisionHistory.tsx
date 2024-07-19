@@ -11,12 +11,14 @@ interface RevisionHistoryProps {
 	setWorkflowDefinitionVersions: React.Dispatch<
 		React.SetStateAction<WorkflowDefinitionVersion[]>
 	>;
+	timeZoneId: string;
 	version: number;
 	workflowDefinitionVersions: WorkflowDefinitionVersion[];
 }
 
 export function RevisionHistory({
 	setWorkflowDefinitionVersions,
+	timeZoneId,
 	version,
 	workflowDefinitionVersions,
 }: RevisionHistoryProps) {
@@ -58,6 +60,7 @@ export function RevisionHistory({
 								setWorkflowDefinitionVersions={
 									setWorkflowDefinitionVersions
 								}
+								timeZoneId={timeZoneId}
 								versionNumber={parseInt(version, 10)}
 							/>
 						)
@@ -70,6 +73,7 @@ export function RevisionHistory({
 							setWorkflowDefinitionVersions={
 								setWorkflowDefinitionVersions
 							}
+							timeZoneId=""
 							versionNumber={versionNumber}
 						/>
 					))}

@@ -12,9 +12,12 @@ import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import java.util.List;
 import java.util.function.Function;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Alejandro Tardín
  */
+@ProviderType
 public interface FieldPredicateProvider {
 
 	public Predicate getBinaryExpressionPredicate(

@@ -19,12 +19,12 @@ public class GroupIdComparator extends OrderByComparator<Group> {
 
 	public static final String[] ORDER_BY_FIELDS = {"groupId"};
 
-	public GroupIdComparator() {
-		this(false);
-	}
+	public static GroupIdComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public GroupIdComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -66,6 +66,16 @@ public class GroupIdComparator extends OrderByComparator<Group> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private GroupIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final GroupIdComparator _INSTANCE_ASCENDING =
+		new GroupIdComparator(true);
+
+	private static final GroupIdComparator _INSTANCE_DESCENDING =
+		new GroupIdComparator(false);
 
 	private final boolean _ascending;
 

@@ -21,12 +21,12 @@ public class LayoutComparator extends OrderByComparator<Layout> {
 
 	public static final String[] ORDER_BY_FIELDS = {"groupId", "layoutId"};
 
-	public LayoutComparator() {
-		this(false);
-	}
+	public static LayoutComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public LayoutComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -74,6 +74,16 @@ public class LayoutComparator extends OrderByComparator<Layout> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private LayoutComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final LayoutComparator _INSTANCE_ASCENDING =
+		new LayoutComparator(true);
+
+	private static final LayoutComparator _INSTANCE_DESCENDING =
+		new LayoutComparator(false);
 
 	private final boolean _ascending;
 

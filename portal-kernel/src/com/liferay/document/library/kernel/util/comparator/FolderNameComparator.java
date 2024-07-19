@@ -20,12 +20,12 @@ public class FolderNameComparator extends OrderByComparator<Folder> {
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public FolderNameComparator() {
-		this(false);
-	}
+	public static FolderNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public FolderNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -60,6 +60,16 @@ public class FolderNameComparator extends OrderByComparator<Folder> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private FolderNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final FolderNameComparator _INSTANCE_ASCENDING =
+		new FolderNameComparator(true);
+
+	private static final FolderNameComparator _INSTANCE_DESCENDING =
+		new FolderNameComparator(false);
 
 	private final boolean _ascending;
 

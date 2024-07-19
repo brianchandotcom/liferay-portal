@@ -19,12 +19,12 @@ public class FolderIdComparator extends OrderByComparator<DLFolder> {
 
 	public static final String[] ORDER_BY_FIELDS = {"folderId"};
 
-	public FolderIdComparator() {
-		this(false);
-	}
+	public static FolderIdComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public FolderIdComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -66,6 +66,16 @@ public class FolderIdComparator extends OrderByComparator<DLFolder> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private FolderIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final FolderIdComparator _INSTANCE_ASCENDING =
+		new FolderIdComparator(true);
+
+	private static final FolderIdComparator _INSTANCE_DESCENDING =
+		new FolderIdComparator(false);
 
 	private final boolean _ascending;
 

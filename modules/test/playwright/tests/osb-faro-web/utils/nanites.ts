@@ -26,5 +26,5 @@ export async function runNanites({
 	page: Page;
 }) {
 	await apiHelpers.jsonWebServicesOSBAsah.runNanites(naniteNames);
-	await page.waitForTimeout(5000);
+	await page.waitForTimeout(10000);
 }

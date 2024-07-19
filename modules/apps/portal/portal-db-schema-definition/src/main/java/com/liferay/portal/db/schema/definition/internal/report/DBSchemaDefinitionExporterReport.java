@@ -37,14 +37,14 @@ import javax.sql.DataSource;
  */
 public class DBSchemaDefinitionExporterReport {
 
-	public static void generateReport(String path, DBType targetDBType)
+	public static void generateReport(String path, DBType exportDBType)
 		throws Exception {
 
 		Set<String> dbTables = _getDBTables();
-		Set<String> fileTables = _getFileTables(path);
+		Set<String> exportTables = _getExportTables(path);
 
 		Set<String> tablesNotFound = SetUtil.asymmetricDifference(
-			dbTables, fileTables);
+			dbTables, exportTables);
 
 		Release release = ReleaseLocalServiceUtil.fetchRelease(
 			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
@@ -60,9 +60,9 @@ public class DBSchemaDefinitionExporterReport {
 				PatcherValues.INSTALLED_PATCH_NAMES,
 				StringPool.COMMA_AND_SPACE),
 			StringPool.NEW_LINE, "Database type: ", DBManagerUtil.getDBType(),
-			StringPool.NEW_LINE, "Exported database type: ", targetDBType,
+			StringPool.NEW_LINE, "Export database type: ", exportDBType,
 			StringPool.NEW_LINE, "Database tables: ", dbTables.size(),
-			StringPool.NEW_LINE, "File tables: ", fileTables.size(),
+			StringPool.NEW_LINE, "Export tables: ", exportTables.size(),
 			StringPool.NEW_LINE, "Missing tables: ",
 			StringUtil.merge(tablesNotFound, StringPool.COMMA_AND_SPACE),
 			StringPool.NEW_LINE);
@@ -97,7 +97,7 @@ public class DBSchemaDefinitionExporterReport {
 		return tableNames;
 	}
 
-	private static Set<String> _getFileTables(String path) throws Exception {
+	private static Set<String> _getExportTables(String path) throws Exception {
 		Set<String> tableNames = new HashSet<>();
 
 		String fileContent = StringUtil.toLowerCase(

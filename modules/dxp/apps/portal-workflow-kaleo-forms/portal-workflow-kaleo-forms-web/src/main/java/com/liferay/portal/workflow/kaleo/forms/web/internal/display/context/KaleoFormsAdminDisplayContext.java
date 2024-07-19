@@ -223,7 +223,7 @@ public class KaleoFormsAdminDisplayContext {
 		OrderByComparator<KaleoProcess> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new KaleoProcessCreateDateComparator(
+			orderByComparator = KaleoProcessCreateDateComparator.getInstance(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {

@@ -346,7 +346,7 @@ public class KBArticleItemSelectorViewDisplayContext {
 
 					if (Objects.equals(_getOrderByCol(), "priority")) {
 						kbObjectOrderByComparator =
-							new KBObjectsPriorityComparator<>(orderByAsc);
+							KBObjectsPriorityComparator.getInstance(orderByAsc);
 					}
 					else if (Objects.equals(
 								_getOrderByCol(), "modified-date")) {
@@ -360,7 +360,8 @@ public class KBArticleItemSelectorViewDisplayContext {
 					}
 					else if (Objects.equals(_getOrderByCol(), "view-count")) {
 						kbObjectOrderByComparator =
-							new KBObjectsViewCountComparator<>(orderByAsc);
+							KBObjectsViewCountComparator.getInstance(
+								orderByAsc);
 					}
 
 					return KBFolderServiceUtil.getKBFoldersAndKBArticles(

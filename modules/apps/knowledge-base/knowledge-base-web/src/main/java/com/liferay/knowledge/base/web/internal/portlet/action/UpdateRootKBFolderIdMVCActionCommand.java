@@ -99,7 +99,7 @@ public class UpdateRootKBFolderIdMVCActionCommand extends BaseMVCActionCommand {
 		if (kbArticle == null) {
 			List<KBArticle> kbArticles = _kbArticleLocalService.getKBArticles(
 				groupId, newKBFolderId, WorkflowConstants.STATUS_APPROVED, 0, 1,
-				new KBArticlePriorityComparator(true));
+				KBArticlePriorityComparator.getInstance(true));
 
 			if (!kbArticles.isEmpty()) {
 				kbArticle = kbArticles.get(0);

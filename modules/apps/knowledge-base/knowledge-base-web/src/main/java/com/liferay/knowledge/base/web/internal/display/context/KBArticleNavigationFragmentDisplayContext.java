@@ -69,20 +69,21 @@ public class KBArticleNavigationFragmentDisplayContext {
 			return KBArticleServiceUtil.getKBArticles(
 				_kbArticle.getGroupId(), _kbArticle.getKbFolderId(),
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+				QueryUtil.ALL_POS,
+				KBArticlePriorityComparator.getInstance(true));
 		}
 
 		if (_isMaxNestingLevelReached(level)) {
 			return KBArticleServiceUtil.getAllDescendantKBArticles(
 				_kbArticle.getGroupId(), parentResourcePrimKey,
 				WorkflowConstants.STATUS_APPROVED,
-				new KBArticlePriorityComparator(true));
+				KBArticlePriorityComparator.getInstance(true));
 		}
 
 		return KBArticleServiceUtil.getKBArticles(
 			_kbArticle.getGroupId(), parentResourcePrimKey,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+			QueryUtil.ALL_POS, KBArticlePriorityComparator.getInstance(true));
 	}
 
 	public boolean isFurtherExpansionRequired(KBArticle kbArticle, int level)

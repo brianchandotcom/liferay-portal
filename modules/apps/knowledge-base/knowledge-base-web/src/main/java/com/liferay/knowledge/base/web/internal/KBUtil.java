@@ -83,7 +83,8 @@ public class KBUtil {
 			}
 		}
 
-		return ListUtil.sort(kbFolders, new KBFolderNameComparator(false));
+		return ListUtil.sort(
+			kbFolders, KBFolderNameComparator.getInstance(false));
 	}
 
 	public static OrderByComparator<KBArticle> getKBArticleOrderByComparator(
@@ -100,28 +101,28 @@ public class KBUtil {
 		}
 
 		if (orderByCol.equals("create-date")) {
-			return new KBArticleCreateDateComparator(ascending);
+			return KBArticleCreateDateComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("modified-date")) {
-			return new KBArticleModifiedDateComparator(ascending);
+			return KBArticleModifiedDateComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("priority")) {
-			return new KBArticlePriorityComparator(ascending);
+			return KBArticlePriorityComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("status")) {
-			return new KBArticleStatusComparator(ascending);
+			return KBArticleStatusComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("title")) {
-			return new KBArticleTitleComparator(ascending);
+			return KBArticleTitleComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("user-name")) {
-			return new KBArticleUserNameComparator(ascending);
+			return KBArticleUserNameComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("version")) {
-			return new KBArticleVersionComparator(ascending);
+			return KBArticleVersionComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("view-count")) {
-			return new KBArticleViewCountComparator(ascending);
+			return KBArticleViewCountComparator.getInstance(ascending);
 		}
 
 		return null;
@@ -189,7 +190,7 @@ public class KBUtil {
 		String orderByCol, String orderByType) {
 
 		if (Validator.isNull(orderByCol) || Validator.isNull(orderByType)) {
-			return new KBCommentStatusComparator();
+			return KBCommentStatusComparator.getInstance(false);
 		}
 
 		boolean ascending = false;
@@ -199,16 +200,16 @@ public class KBUtil {
 		}
 
 		if (orderByCol.equals("create-date")) {
-			return new KBCommentCreateDateComparator(ascending);
+			return KBCommentCreateDateComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("modified-date")) {
-			return new KBCommentModifiedDateComparator(ascending);
+			return KBCommentModifiedDateComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("status")) {
-			return new KBCommentStatusComparator(ascending);
+			return KBCommentStatusComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("user-name")) {
-			return new KBCommentUserNameComparator(ascending);
+			return KBCommentUserNameComparator.getInstance(ascending);
 		}
 
 		return null;
@@ -231,13 +232,13 @@ public class KBUtil {
 			return new KBObjectsModifiedDateComparator<>(ascending, true);
 		}
 		else if (orderByCol.equals("priority")) {
-			return new KBObjectsPriorityComparator<>(ascending);
+			return KBObjectsPriorityComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("title")) {
 			return new KBObjectsTitleComparator<>(ascending, true);
 		}
 		else if (orderByCol.equals("view-count")) {
-			return new KBObjectsViewCountComparator<>(ascending);
+			return KBObjectsViewCountComparator.getInstance(ascending);
 		}
 
 		return null;
@@ -257,16 +258,16 @@ public class KBUtil {
 		}
 
 		if (orderByCol.equals("create-date")) {
-			return new KBTemplateCreateDateComparator(ascending);
+			return KBTemplateCreateDateComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("modified-date")) {
-			return new KBTemplateModifiedDateComparator(ascending);
+			return KBTemplateModifiedDateComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("title")) {
-			return new KBTemplateTitleComparator(ascending);
+			return KBTemplateTitleComparator.getInstance(ascending);
 		}
 		else if (orderByCol.equals("user-name")) {
-			return new KBTemplateUserNameComparator(ascending);
+			return KBTemplateUserNameComparator.getInstance(ascending);
 		}
 
 		return null;

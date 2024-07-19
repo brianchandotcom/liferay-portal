@@ -30,8 +30,9 @@ public class WorkflowDefinitionPortletUtil {
 		OrderByComparator<WorkflowDefinition> orderByComparator = null;
 
 		if (orderByCol.equals("last-modified")) {
-			orderByComparator = new WorkflowDefinitionModifiedDateComparator(
-				orderByAsc);
+			orderByComparator =
+				WorkflowDefinitionModifiedDateComparator.getInstance(
+					orderByAsc);
 		}
 		else {
 			orderByComparator = new WorkflowDefinitionTitleComparator(

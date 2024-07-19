@@ -34,7 +34,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.upload.test.util.UploadTestUtil;
 
 import java.util.Objects;
@@ -219,75 +222,84 @@ public abstract class BaseExportImportTestCase {
 			new MockLiferayPortletActionRequest(
 				mockMultipartHttpServletRequest);
 
-		if (JSONUtil.isJSONArray(json)) {
-			mockMultipartHttpServletRequest.addParameter(
-				"objectDefinitions", json);
-		}
-		else {
-			byte[] bytes = json.getBytes();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				UploadServletRequestImpl.class.getName(), LoggerTestUtil.OFF)) {
 
-			mockMultipartHttpServletRequest.addFile(
-				new MockMultipartFile(RandomTestUtil.randomString(), bytes));
+			if (JSONUtil.isJSONArray(json)) {
+				mockMultipartHttpServletRequest.addParameter(
+					"objectDefinitions", json);
+			}
+			else {
+				byte[] bytes = json.getBytes();
 
-			mockMultipartHttpServletRequest.setCharacterEncoding(
-				StringPool.UTF8);
+				mockMultipartHttpServletRequest.addFile(
+					new MockMultipartFile(
+						RandomTestUtil.randomString(), bytes));
 
-			String boundary = "WebKitFormBoundary" + StringUtil.randomString();
+				mockMultipartHttpServletRequest.setCharacterEncoding(
+					StringPool.UTF8);
 
-			String start = StringBundler.concat(
-				StringPool.DOUBLE_DASH, boundary,
-				"\r\nContent-Disposition:form-data;name=\"", getJSONName(),
-				"\";filename=\"", RandomTestUtil.randomString(),
-				"\";\r\nContent-type:application/json\r\n\r\n");
-			String end = StringBundler.concat(
-				"\r\n--", boundary, StringPool.DOUBLE_DASH);
+				String boundary =
+					"WebKitFormBoundary" + StringUtil.randomString();
 
-			mockMultipartHttpServletRequest.setContent(
-				ArrayUtil.append(start.getBytes(), bytes, end.getBytes()));
+				String start = StringBundler.concat(
+					StringPool.DOUBLE_DASH, boundary,
+					"\r\nContent-Disposition:form-data;name=\"", getJSONName(),
+					"\";filename=\"", RandomTestUtil.randomString(),
+					"\";\r\nContent-type:application/json\r\n\r\n");
+				String end = StringBundler.concat(
+					"\r\n--", boundary, StringPool.DOUBLE_DASH);
 
-			mockMultipartHttpServletRequest.setContentType(
-				MediaType.MULTIPART_FORM_DATA_VALUE + "; boundary=" + boundary);
+				mockMultipartHttpServletRequest.setContent(
+					ArrayUtil.append(start.getBytes(), bytes, end.getBytes()));
 
-			if (Validator.isNotNull(externalReferenceCode)) {
-				mockLiferayPortletActionRequest.addParameter(
-					"externalReferenceCode", externalReferenceCode);
+				mockMultipartHttpServletRequest.setContentType(
+					MediaType.MULTIPART_FORM_DATA_VALUE + "; boundary=" +
+						boundary);
+
+				if (Validator.isNotNull(externalReferenceCode)) {
+					mockLiferayPortletActionRequest.addParameter(
+						"externalReferenceCode", externalReferenceCode);
+				}
+
+				mockLiferayPortletActionRequest.addParameter("name", name);
 			}
 
-			mockLiferayPortletActionRequest.addParameter("name", name);
+			mockLiferayPortletActionRequest.addParameter(
+				"redirect", RandomTestUtil.randomString());
+			mockLiferayPortletActionRequest.setAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG, null);
+			mockLiferayPortletActionRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+			ReflectionTestUtil.setFieldValue(
+				mvcActionCommand, "_portal",
+				ProxyUtil.newProxyInstance(
+					getClassLoader(), new Class<?>[] {Portal.class},
+					(proxy, method, args) -> {
+						if (Objects.equals(
+								method.getName(), "getUploadPortletRequest")) {
+
+							LiferayPortletRequest liferayPortletRequest =
+								_portal.getLiferayPortletRequest(
+									mockLiferayPortletActionRequest);
+
+							return UploadTestUtil.createUploadPortletRequest(
+								_portal.getUploadServletRequest(
+									liferayPortletRequest.
+										getHttpServletRequest()),
+								liferayPortletRequest,
+								_portal.getPortletNamespace(
+									liferayPortletRequest.getPortletName()));
+						}
+
+						return method.invoke(_portal, args);
+					}));
+
+			mvcActionCommand.processAction(
+				mockLiferayPortletActionRequest,
+				mockLiferayPortletActionResponse);
 		}
-
-		mockLiferayPortletActionRequest.addParameter(
-			"redirect", RandomTestUtil.randomString());
-		mockLiferayPortletActionRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG, null);
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		ReflectionTestUtil.setFieldValue(
-			mvcActionCommand, "_portal",
-			ProxyUtil.newProxyInstance(
-				getClassLoader(), new Class<?>[] {Portal.class},
-				(proxy, method, args) -> {
-					if (Objects.equals(
-							method.getName(), "getUploadPortletRequest")) {
-
-						LiferayPortletRequest liferayPortletRequest =
-							_portal.getLiferayPortletRequest(
-								mockLiferayPortletActionRequest);
-
-						return UploadTestUtil.createUploadPortletRequest(
-							_portal.getUploadServletRequest(
-								liferayPortletRequest.getHttpServletRequest()),
-							liferayPortletRequest,
-							_portal.getPortletNamespace(
-								liferayPortletRequest.getPortletName()));
-					}
-
-					return method.invoke(_portal, args);
-				}));
-
-		mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
 
 		return mockLiferayPortletActionResponse;
 	}

@@ -396,7 +396,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getLocalRepository(repositoryId);
 
 		return localRepository.addFileShortcut(
-			userId, folderId, toFileEntryId, serviceContext);
+			externalReferenceCode, userId, folderId, toFileEntryId,
+			serviceContext);
 	}
 
 	/**
@@ -1469,7 +1470,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 					FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
 
 					targetLocalRepository.addFileShortcut(
-						userId, targetFolder.getFolderId(),
+						null, userId, targetFolder.getFolderId(),
 						fileShortcut.getToFileEntryId(), serviceContext);
 				}
 			}

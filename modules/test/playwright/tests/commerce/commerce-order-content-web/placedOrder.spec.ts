@@ -9,14 +9,18 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import getRandomString from '../../../utils/getRandomString';
+import performLogin, {performLogout} from '../../../utils/performLogin';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
+import {miniumSetUp} from '../utils/commerce';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
-	loginTest()
+	loginTest(),
+	usersAndOrganizationsPagesTest
 );
 
 test('LPD-25831 Placed orders widget configuration to display full addresses and phone number', async ({
@@ -82,7 +86,6 @@ test('LPD-25831 Placed orders widget configuration to display full addresses and
 			},
 		],
 		orderStatus: '0',
-		paymentMethod: 'paypal',
 		paymentStatus: '0',
 		shippingAddressId: address.id,
 	});
@@ -136,4 +139,129 @@ test('LPD-25831 Placed orders widget configuration to display full addresses and
 	);
 	await expect(placedOrdersPage.shippingAddress).toContainText('Alabama');
 	await expect(placedOrdersPage.shippingAddress).toContainText(phoneNumber);
+});
+
+test('LPD-26643 Reorder from placed orders details page', async ({
+	apiHelpers,
+	checkoutPage,
+	commerceAdminOrderDetailsPage,
+	commerceMiniCartPage,
+	editUserPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'admin',
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const {channel, site} = await miniumSetUp(apiHelpers);
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['demo.unprivileged@liferay.com']
+	);
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
+		account.id
+	);
+
+	const buyerAccountRole = rolesResponse?.items?.filter((role) => {
+		return role.name === 'Buyer';
+	});
+
+	await apiHelpers.headlessAdminUser.assignAccountRoles(
+		account.externalReferenceCode,
+		buyerAccountRole[0].id,
+		user.emailAddress
+	);
+
+	await apiHelpers.headlessCommerceAdminAccount.postAddress(account.id, {
+		phoneNumber: '12345',
+		regionISOCode: 'LA',
+	});
+
+	const product = await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+		new URLSearchParams({
+			filter: `name eq 'U-Joint'`,
+		})
+	);
+
+	const productId = product.items[0].productId;
+
+	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+		.getProduct(productId)
+		.then((product) => {
+			return product.skus;
+		});
+
+	const sku = productSkus[0];
+
+	await apiHelpers.headlessCommerceDeliveryCart.postCart(
+		{
+			accountId: account.id,
+			cartItems: [
+				{
+					quantity: 1,
+					skuId: sku.id,
+				},
+			],
+		},
+		channel.id
+	);
+
+	await usersAndOrganizationsPage.goToUsers();
+
+	await (
+		await usersAndOrganizationsPage.usersTableRowLink('demo.unprivileged')
+	).click();
+
+	await editUserPage.selectUserMembershipSite(site.name);
+
+	await performLogout(page);
+
+	await performLogin(page, user.alternateName);
+
+	await page.goto(`/web/${site.name}`);
+
+	await commerceMiniCartPage.submitCart();
+
+	await expect(page.getByText('U-joint')).toBeVisible();
+
+	await checkoutPage.chooseShippingAddress({index: 1});
+
+	await expect(page.getByText('Standard Delivery (+$ 15.00)')).toBeVisible();
+
+	await checkoutPage.continueButton.click();
+
+	await expect(page.getByText('U-joint')).toBeVisible();
+
+	await checkoutPage.continueButton.click();
+
+	await expect(checkoutPage.orderSuccessMessage).toBeVisible();
+
+	await checkoutPage.goToOrderDetailsButton.click();
+
+	await expect(page.getByText('U-joint')).toBeVisible();
+
+	await commerceAdminOrderDetailsPage.reorder();
+
+	await expect(page.getByText('U-joint')).toBeVisible();
+
+	await checkoutPage.chooseShippingAddress({index: 1});
+
+	await expect(page.getByText('Standard Delivery (+$ 15.00)')).toBeVisible();
+
+	await checkoutPage.continueButton.click();
+
+	await expect(page.getByText('U-joint')).toBeVisible();
+
+	await checkoutPage.continueButton.click();
+
+	await expect(checkoutPage.orderSuccessMessage).toBeVisible();
 });

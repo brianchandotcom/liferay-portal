@@ -91,4 +91,10 @@ export class CommerceMiniCartPage {
 		await this.quickAddToCartSku(sku).click();
 		await this.quickAddToCartButton.click();
 	}
+
+	async submitCart() {
+		this.miniCartButton.waitFor();
+		this.miniCartButton.click();
+		this.submitButton.click();
+	}
 }

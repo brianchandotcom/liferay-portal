@@ -18,6 +18,7 @@ export class CheckoutPage {
 	readonly configurationMenuItem: Locator;
 	readonly continueButton: Locator;
 	readonly countryInput: Locator;
+	readonly goToOrderDetailsButton: Locator;
 	readonly layoutsPage: CommerceLayoutsPage;
 	readonly nameInput: Locator;
 	readonly optionsButton: Locator;
@@ -26,6 +27,7 @@ export class CheckoutPage {
 	readonly phoneNumberInput: Locator;
 	readonly regionInput: Locator;
 	readonly shippingAddress: Locator;
+	readonly shippingAddressSelect: Locator;
 	readonly zipInput: Locator;
 
 	constructor(page: Page) {
@@ -53,6 +55,9 @@ export class CheckoutPage {
 			name: 'Configuration',
 		});
 		this.countryInput = page.getByTitle('Country');
+		this.goToOrderDetailsButton = page.getByRole('button', {
+			name: 'Go to Order Details',
+		});
 		this.layoutsPage = new CommerceLayoutsPage(page);
 		this.nameInput = page.getByPlaceholder('Name', {exact: true});
 		this.optionsButton = page
@@ -69,10 +74,16 @@ export class CheckoutPage {
 		});
 		this.regionInput = page.getByTitle('Region');
 		this.shippingAddress = page.getByTestId('commerceShippingAddress');
+		this.shippingAddressSelect = page.getByText('Choose Shipping Address');
 		this.zipInput = page.getByPlaceholder('Zip', {exact: true});
 	}
 
 	async addCheckoutWidget() {
 		await this.layoutsPage.addWidgetToPage('Checkout');
+	}
+
+	async chooseShippingAddress(index) {
+		this.shippingAddressSelect.selectOption(index);
+		this.continueButton.click();
 	}
 }

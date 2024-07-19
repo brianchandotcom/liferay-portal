@@ -43,12 +43,6 @@ public class DatabaseTestUtil {
 		}
 	}
 
-	public static void createTable() throws Exception {
-		DB db = DBManagerUtil.getDB();
-
-		db.runSQL("create table testTable (testColumn bigint primary key)");
-	}
-
 	public static void destroyDataSource(DataSource dataSource)
 		throws Exception {
 
@@ -64,12 +58,6 @@ public class DatabaseTestUtil {
 		else {
 			db.runSQL("drop schema " + schemaName + " cascade");
 		}
-	}
-
-	public static void dropTable() throws Exception {
-		DB db = DBManagerUtil.getDB();
-
-		db.runSQL("DROP_TABLE_IF_EXISTS(test)");
 	}
 
 	public static List<String> getIndexColumnNames(DataSource dataSource)

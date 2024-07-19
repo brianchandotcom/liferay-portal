@@ -196,9 +196,15 @@ public class FileShortcutStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			FileShortcut existingFileShortcut =
-				fetchStagedModelByUuidAndGroupId(
+				_fetchFileShortcutByErcAndGroupId(
+					fileShortcut.getExternalReferenceCode(),
+					portletDataContext.getScopeGroupId());
+
+			if (existingFileShortcut == null) {
+				existingFileShortcut = fetchStagedModelByUuidAndGroupId(
 					fileShortcut.getUuid(),
 					portletDataContext.getScopeGroupId());
+			}
 
 			if (existingFileShortcut == null) {
 				serviceContext.setUuid(fileShortcut.getUuid());
@@ -265,6 +271,26 @@ public class FileShortcutStagedModelDataHandler
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get file entry " + fileEntryId, portalException);
+			}
+
+			return null;
+		}
+	}
+
+	private FileShortcut _fetchFileShortcutByErcAndGroupId(
+		String externalReferenceCode, long groupId) {
+
+		try {
+			DLFileShortcut dlFileShortcut =
+				_dlFileShortcutLocalService.
+					getDLFileShortcutByExternalReferenceCode(
+						externalReferenceCode, groupId);
+
+			return new LiferayFileShortcut(dlFileShortcut);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
 			}
 
 			return null;

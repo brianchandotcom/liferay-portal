@@ -5,6 +5,8 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0;
 
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestObject1;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestObject2;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.TestObject;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
@@ -286,7 +288,7 @@ public class TestObjectSerDes {
 
 		@Override
 		protected TestObject createDTO() {
-			return new TestObject();
+			return null;
 		}
 
 		@Override
@@ -328,6 +330,30 @@ public class TestObjectSerDes {
 			}
 
 			return false;
+		}
+
+		@Override
+		public TestObject parseToDTO(String json) {
+			Map<String, Object> jsonMap = parseToMap(json);
+			Object type = jsonMap.get("type");
+
+			if (type != null) {
+				String typeString = type.toString();
+
+				if (typeString.equals("ChildTestObject1")) {
+					return ChildTestObject1.toDTO(json);
+				}
+				else if (typeString.equals("ChildTestObject2")) {
+					return ChildTestObject2.toDTO(json);
+				}
+				else {
+					throw new IllegalArgumentException(
+						"Unknown type '" + typeString + "'");
+				}
+			}
+			else {
+				throw new IllegalArgumentException("Missing type parameter");
+			}
 		}
 
 		@Override

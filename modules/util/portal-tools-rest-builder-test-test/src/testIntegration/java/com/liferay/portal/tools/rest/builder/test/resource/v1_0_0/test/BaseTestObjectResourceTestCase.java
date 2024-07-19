@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -31,6 +32,8 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestObject1;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestObject2;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.TestObject;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
@@ -38,7 +41,6 @@ import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0_0.TestObj
 import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.TestObjectSerDes;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.lang.reflect.Method;
 
@@ -1042,19 +1044,45 @@ public abstract class BaseTestObjectResourceTestCase {
 	}
 
 	protected TestObject randomTestObject() throws Exception {
-		return new TestObject() {
-			{
-				dateCreated = RandomTestUtil.nextDate();
-				dateModified = RandomTestUtil.nextDate();
-				description = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				documentId = RandomTestUtil.randomLong();
-				jsonProperty = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
-			}
-		};
+		switch (RandomTestUtil.randomInt(0, 1)) {
+			case 0:
+				return new ChildTestObject1() {
+					{
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						description = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						documentId = RandomTestUtil.randomLong();
+						jsonProperty = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						name = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						self = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						type = Type.create("ChildTestObject1");
+					}
+				};
+
+			case 1:
+				return new ChildTestObject2() {
+					{
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						description = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						documentId = RandomTestUtil.randomLong();
+						jsonProperty = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						name = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						self = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						type = Type.create("ChildTestObject2");
+					}
+				};
+		}
+
+		return null;
 	}
 
 	protected TestObject randomIrrelevantTestObject() throws Exception {

@@ -40,11 +40,11 @@ public class DBSchemaDefinitionExporterReport {
 	public static void generateReport(DBType exportDBType, String path)
 		throws Exception {
 
-		Set<String> dbTables = _getDBTables();
-		Set<String> exportTables = _getExportTables(path);
+		Set<String> dbTableNames = _getDBTableNames();
+		Set<String> exportTableNames = _getExportTableNames(path);
 
-		Set<String> missingTables = SetUtil.asymmetricDifference(
-			dbTables, exportTables);
+		Set<String> missingTableNames = SetUtil.asymmetricDifference(
+			dbTableNames, exportTableNames);
 
 		Release release = ReleaseLocalServiceUtil.fetchRelease(
 			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
@@ -61,10 +61,10 @@ public class DBSchemaDefinitionExporterReport {
 				StringPool.COMMA_AND_SPACE),
 			StringPool.NEW_LINE, "Database type: ", DBManagerUtil.getDBType(),
 			StringPool.NEW_LINE, "Export database type: ", exportDBType,
-			StringPool.NEW_LINE, "Database tables: ", dbTables.size(),
-			StringPool.NEW_LINE, "Export tables: ", exportTables.size(),
+			StringPool.NEW_LINE, "Database tables: ", dbTableNames.size(),
+			StringPool.NEW_LINE, "Export tables: ", exportTableNames.size(),
 			StringPool.NEW_LINE, "Missing tables: ",
-			StringUtil.merge(missingTables, StringPool.COMMA_AND_SPACE),
+			StringUtil.merge(missingTableNames, StringPool.COMMA_AND_SPACE),
 			StringPool.NEW_LINE);
 
 		FileUtil.write(new File(path, "db_export_report.info"), message);
@@ -74,7 +74,7 @@ public class DBSchemaDefinitionExporterReport {
 		return Time.getSimpleDate(date, DateUtil.ISO_8601_PATTERN);
 	}
 
-	private static Set<String> _getDBTables() throws Exception {
+	private static Set<String> _getDBTableNames() throws Exception {
 		Set<String> tableNames = new HashSet<>();
 
 		DataSource dataSource = InfrastructureUtil.getDataSource();
@@ -97,7 +97,7 @@ public class DBSchemaDefinitionExporterReport {
 		return tableNames;
 	}
 
-	private static Set<String> _getExportTables(String path) throws Exception {
+	private static Set<String> _getExportTableNames(String path) throws Exception {
 		Set<String> tableNames = new HashSet<>();
 
 		String fileContent = StringUtil.toLowerCase(

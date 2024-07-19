@@ -10,13 +10,17 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {commercePagesTest} from '../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
+import performLogin, {performLogout} from '../../utils/performLogin';
+import {miniumSetUp} from './utils/commerce';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
-	loginTest()
+	loginTest(),
+	usersAndOrganizationsPagesTest
 );
 
 test('LPD-3185 Search a catalog entry using global search, click on a suggested entry and get redirected to that product details page', async ({
@@ -88,4 +92,82 @@ test('LPD-3185 Search a catalog entry using global search, click on a suggested 
 	expect(
 		await productDetailsPage.productNameHeading('ABS Sensor')
 	).toBeVisible();
+});
+
+test('COMMERCE-6322. As a buyer, I want to be able to search an entry in Catalog using Global Search and I want the results to be visible in Search Results widget', async ({
+	apiHelpers,
+	commerceCatalogPage,
+	editUserPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	const {site} = await miniumSetUp(apiHelpers);
+
+	await usersAndOrganizationsPage.goToUsers();
+
+	await (
+		await usersAndOrganizationsPage.usersTableRowLink('demo.unprivileged')
+	).click();
+
+	await editUserPage.selectUserMembershipSite(site.name);
+
+	await performLogout(page);
+	await performLogin(page, 'demo.unprivileged');
+
+	await page.goto(`/web/${site.name}`);
+
+	await commerceCatalogPage.catalogSearch.click();
+	await commerceCatalogPage.catalogSearch.fill('U-Joint');
+	await commerceCatalogPage.catalogSearch.press('Enter');
+
+	expect(await commerceCatalogPage.productLink('U-Joint')).toBeVisible();
+
+	expect(await commerceCatalogPage.productLink('Ball Joints')).toBeVisible();
+});
+
+test('COMMERCE-6326. As a buyer, I want to be able to search an entry in All Content using Global Search and the results should be visible on Search page', async ({
+	apiHelpers,
+	commerceCatalogPage,
+	editUserPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	const {site} = await miniumSetUp(apiHelpers);
+
+	await usersAndOrganizationsPage.goToUsers();
+
+	await (
+		await usersAndOrganizationsPage.usersTableRowLink('demo.unprivileged')
+	).click();
+
+	await editUserPage.selectUserMembershipSite(site.name);
+
+	await performLogout(page);
+	await performLogin(page, 'demo.unprivileged');
+
+	await page.goto(`/web/${site.name}`);
+
+	await commerceCatalogPage.focusGlobalSearchBarInput();
+	await commerceCatalogPage.search('U-Joint');
+	await (
+		await commerceCatalogPage.globalSearchBarCommerceItemLink(
+			'Search U-Joint in All Content'
+		)
+	).waitFor({state: 'visible'});
+
+	expect(
+		await commerceCatalogPage.globalSearchBarCommerceItemLink(
+			'Search U-Joint in All Content'
+		)
+	).toBeVisible();
+
+	await (
+		await commerceCatalogPage.globalSearchBarCommerceItemLink(
+			'Search U-Joint in All Content'
+		)
+	).click();
+
+	expect(await commerceCatalogPage.productLink('U-Joint')).toBeVisible();
+
+	expect(await commerceCatalogPage.productLink('Ball Joints')).toBeVisible();
 });

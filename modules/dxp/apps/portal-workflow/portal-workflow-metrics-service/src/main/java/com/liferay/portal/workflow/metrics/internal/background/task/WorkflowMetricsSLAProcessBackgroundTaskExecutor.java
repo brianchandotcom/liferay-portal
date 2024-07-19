@@ -453,8 +453,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				_workflowMetricsSLADefinitionVersionLocalService.
 					getWorkflowMetricsSLADefinitionVersions(
 						workflowMetricsSLADefinitionId,
-						new WorkflowMetricsSLADefinitionVersionIdComparator(
-							true));
+						WorkflowMetricsSLADefinitionVersionIdComparator.
+							getInstance(true));
 
 		Iterator<WorkflowMetricsSLADefinitionVersion> iterator =
 			workflowMetricsSLADefinitionVersions.iterator();

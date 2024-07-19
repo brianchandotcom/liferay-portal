@@ -140,9 +140,15 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 				StringUtil.toUpperCase(lambdaFunction),
 				LambdaFunctionExpression.Type.ANY.name())) {
 
+			Expression lambdaFunctionExpression = null;
+
+			if (expression != null) {
+				lambdaFunctionExpression = expression.accept(this);
+			}
+
 			return _expressionFactory.createLambdaFunctionExpression(
 				LambdaFunctionExpression.Type.ANY, lambdaVariable,
-				expression.accept(this));
+				lambdaFunctionExpression);
 		}
 
 		throw new UnsupportedOperationException(

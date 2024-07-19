@@ -15,10 +15,14 @@ import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSea
 public class WorkflowDefinitionLinkSearchEntryResourceComparator
 	extends OrderByComparator<WorkflowDefinitionLinkSearchEntry> {
 
-	public WorkflowDefinitionLinkSearchEntryResourceComparator(
-		boolean ascending) {
+	public static WorkflowDefinitionLinkSearchEntryResourceComparator
+		getInstance(boolean ascending) {
 
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -39,6 +43,20 @@ public class WorkflowDefinitionLinkSearchEntryResourceComparator
 
 		return -value;
 	}
+
+	private WorkflowDefinitionLinkSearchEntryResourceComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final WorkflowDefinitionLinkSearchEntryResourceComparator
+		_INSTANCE_ASCENDING =
+			new WorkflowDefinitionLinkSearchEntryResourceComparator(true);
+
+	private static final WorkflowDefinitionLinkSearchEntryResourceComparator
+		_INSTANCE_DESCENDING =
+			new WorkflowDefinitionLinkSearchEntryResourceComparator(false);
 
 	private final boolean _ascending;
 

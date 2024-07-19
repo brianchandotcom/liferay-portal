@@ -5,21 +5,9 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.context.resolver;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.petra.function.UnsafeSupplier;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONArrayStdSerializer;
-import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONObjectStdSerializer;
-import com.liferay.portal.vulcan.jaxrs.serializer.UnsafeSupplierJsonSerializer;
+import com.liferay.portal.vulcan.jackson.databind.ObjectMapperProviderUtil;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
@@ -33,39 +21,7 @@ public class ObjectMapperContextResolver
 
 	@Override
 	public ObjectMapper getContext(Class<?> clazz) {
-		return _objectMapper;
+		return ObjectMapperProviderUtil.getObjectMapper();
 	}
-
-	private static final ObjectMapper _objectMapper = new ObjectMapper() {
-		{
-			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-			enable(SerializationFeature.INDENT_OUTPUT);
-			registerModule(
-				new SimpleModule() {
-					{
-						addSerializer(
-							JSONArray.class,
-							new JSONArrayStdSerializer(JSONArray.class));
-						addSerializer(
-							JSONObject.class,
-							new JSONObjectStdSerializer(JSONObject.class));
-						addSerializer(
-							(Class<UnsafeSupplier<Object, Exception>>)
-								(Class<?>)UnsafeSupplier.class,
-							new UnsafeSupplierJsonSerializer());
-					}
-				});
-			setDateFormat(new ISO8601DateFormat());
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							SimpleBeanPropertyFilter.serializeAll());
-					}
-				});
-			setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
-		}
-	};
 
 }

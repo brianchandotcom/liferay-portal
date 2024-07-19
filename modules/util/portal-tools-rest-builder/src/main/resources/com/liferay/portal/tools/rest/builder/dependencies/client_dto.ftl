@@ -32,7 +32,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ${schemaName} <#if dtoParentClassName?has_content> extends ${dtoParentClassName} </#if> implements Cloneable, Serializable {
+public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} <#if dtoParentClassName?has_content> extends ${dtoParentClassName} </#if> implements Cloneable, Serializable {
 
 	public static ${schemaName} toDTO(String json) {
 		return ${schemaName}SerDes.toDTO(json);

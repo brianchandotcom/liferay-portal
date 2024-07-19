@@ -245,7 +245,12 @@ public class ${schemaName}SerDes {
 
 		@Override
 		protected ${schemaName} createDTO() {
-			return new ${schemaName}();
+			<#if schema.discriminator?has_content>
+				return null;
+			<#else>
+				return new ${schemaName}();
+			</#if>
+
 		}
 
 		@Override

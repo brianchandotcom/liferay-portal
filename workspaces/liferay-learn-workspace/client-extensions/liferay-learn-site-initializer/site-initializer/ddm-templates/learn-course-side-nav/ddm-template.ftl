@@ -32,21 +32,22 @@
 						</#list>
 						<div class="panel-group">
 							<div class="panel panel-secondary">
-							<a href="${modulesJSONObject.url}" style="display: contents !important;">
-								<div
-									class="liferay-nav-item ${(moduleLessonIsSelected)?then("highlightedNavItem", "")} ${(navigationJSONObject.getJSONObject("self").url == modulesJSONObject.url)?then("selected", "")}"
-									href="${modulesJSONObject.url}"
-									style="display: flex; justify-content: space-between; padding-top: 0; padding-bottom: 0;"
-								>
-									<div class="nav-item-number-title panel-header panel-header-link">
-										<div>
-											<span class="course-module-number ${(moduleLessonIsSelected)?then("highlighted", "")}">${i+1}</span>
-										</div>
+								<a href="${modulesJSONObject.url}" style="display: contents !important;">
+									<div
+										class="liferay-nav-item ${(moduleLessonIsSelected)?then("highlightedNavItem", "")} ${(navigationJSONObject.getJSONObject("self").url == modulesJSONObject.url)?then("selected", "")}"
+										href="${modulesJSONObject.url}"
+										style="display: flex; justify-content: space-between; padding-top: 0; padding-bottom: 0;"
+									>
+										<div class="nav-item-number-title panel-header panel-header-link">
+											<div>
+												<span class="course-module-number ${(moduleLessonIsSelected)?then("highlighted", "")}">${i+1}</span>
+											</div>
 
-										<span class="course-module-title">${modulesJSONObject.getString("title")}</span>
+											<span class="course-module-title">${modulesJSONObject.getString("title")}</span>
+										</div>
 									</div>
-								</div>
-							</a>
+								</a>
+
 								<button
 									aria-controls= "collapsePanel${i}"
 									aria-expanded="false"

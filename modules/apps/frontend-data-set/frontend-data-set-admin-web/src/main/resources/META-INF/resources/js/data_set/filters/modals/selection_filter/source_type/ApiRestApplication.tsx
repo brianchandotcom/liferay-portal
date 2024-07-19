@@ -136,7 +136,7 @@ function ApiRestApplication({
 				return responseJSON;
 			})
 			.then((apiValues) => {
-				return !apiValues.items.length
+				return !apiValues?.items?.length
 					? []
 					: apiValues.items
 							.filter((item: any) => {

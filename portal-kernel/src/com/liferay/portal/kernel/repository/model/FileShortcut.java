@@ -43,6 +43,8 @@ public interface FileShortcut
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException;
 
+	public String getExternalReferenceCode();
+
 	public long getFileShortcutId();
 
 	public FileVersion getFileVersion() throws PortalException;

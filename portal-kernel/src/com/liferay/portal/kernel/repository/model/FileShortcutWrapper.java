@@ -68,6 +68,11 @@ public class FileShortcutWrapper
 	}
 
 	@Override
+	public String getExternalReferenceCode() {
+		return _fileShortcut.getExternalReferenceCode();
+	}
+
+	@Override
 	public long getFileShortcutId() {
 		return _fileShortcut.getFileShortcutId();
 	}

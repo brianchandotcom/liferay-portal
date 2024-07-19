@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,6 +64,33 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 						"' does not exist in 'testray.team.*.component.names' ",
 						"in ", SourceUtil.getRootDirName(absolutePath),
 						"/test.properties"));
+			}
+
+			List<String> fileNames = new ArrayList<>();
+			String moduleName = _getModuleName(absolutePath);
+			String moduleRootDirLocation = "modules/";
+
+			for (int i = 0; i < getMaxDirLevel(); i++) {
+				File file = new File(getBaseDirName() + moduleRootDirLocation);
+
+				if (file.exists()) {
+					fileNames = SourceFormatterUtil.scanForFileNames(
+						file.getCanonicalPath(),
+						new String[] {
+							"apps/**/" + moduleName + "/test.properties"
+						});
+
+					break;
+				}
+
+				moduleRootDirLocation = "../" + moduleRootDirLocation;
+			}
+
+			if (ListUtil.isEmpty(fileNames)) {
+				addMessage(
+					fileName,
+					"Missing test.properties for module '" + moduleName +
+						"' in modules/apps");
 			}
 		}
 

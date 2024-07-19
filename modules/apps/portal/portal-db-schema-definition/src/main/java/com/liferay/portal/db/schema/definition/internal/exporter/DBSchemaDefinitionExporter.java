@@ -112,7 +112,7 @@ public class DBSchemaDefinitionExporter {
 			}
 
 			DBSchemaDefinitionExporterReport.generateReport(
-				dbSchemaDefinitionExporterConfiguration.path(), exportDBType);
+				exportDBType, dbSchemaDefinitionExporterConfiguration.path());
 		}
 		catch (Exception exception) {
 			_log.error(

@@ -32,10 +32,10 @@ import javax.sql.DataSource;
  */
 public class DatabaseTestUtil {
 
-	public static void createExtraTable() throws Exception {
+	public static void createTable() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		db.runSQL("create table test (testColumn bigint primary key)");
+		db.runSQL("create table testTable (testColumn bigint primary key)");
 	}
 
 	public static void createSchema(String schemaName) throws Exception {
@@ -55,7 +55,7 @@ public class DatabaseTestUtil {
 		DataSourceFactoryUtil.destroyDataSource(dataSource);
 	}
 
-	public static void dropExtraTable() throws Exception {
+	public static void dropTable() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
 		db.runSQL("DROP_TABLE_IF_EXISTS(test)");

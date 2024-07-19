@@ -153,7 +153,7 @@ public class DBSchemaDefinitionExporterTest {
 	}
 
 	@Test
-	public void testExportImportValidation() throws Exception {
+	public void testExportImportReport() throws Exception {
 		ConfigurationTestUtil.deployConfiguration(
 			_configurationAdmin, _databaseType, _folder.getAbsolutePath(),
 			_PID);
@@ -165,8 +165,8 @@ public class DBSchemaDefinitionExporterTest {
 	}
 
 	@Test
-	public void testExportImportValidationWithMissingTable() throws Exception {
-		DatabaseTestUtil.createExtraTable();
+	public void testExportImportReportWithMissingTable() throws Exception {
+		DatabaseTestUtil.createTable();
 
 		try {
 			ConfigurationTestUtil.deployConfiguration(
@@ -176,10 +176,10 @@ public class DBSchemaDefinitionExporterTest {
 			String content = FileUtil.read(
 				new File(_folder, "db_export_report.info"));
 
-			Assert.assertTrue(content.contains("Missing tables: test"));
+			Assert.assertTrue(content.contains("Missing tables: testTable"));
 		}
 		finally {
-			DatabaseTestUtil.dropExtraTable();
+			DatabaseTestUtil.dropTable();
 		}
 	}
 

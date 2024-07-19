@@ -21,12 +21,12 @@ public class KBArticleUserNameComparator extends OrderByComparator<KBArticle> {
 
 	public static final String[] ORDER_BY_FIELDS = {"userName", "title"};
 
-	public KBArticleUserNameComparator() {
-		this(false);
-	}
+	public static KBArticleUserNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public KBArticleUserNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -70,6 +70,16 @@ public class KBArticleUserNameComparator extends OrderByComparator<KBArticle> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private KBArticleUserNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final KBArticleUserNameComparator _INSTANCE_ASCENDING =
+		new KBArticleUserNameComparator(true);
+
+	private static final KBArticleUserNameComparator _INSTANCE_DESCENDING =
+		new KBArticleUserNameComparator(false);
 
 	private final boolean _ascending;
 

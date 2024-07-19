@@ -22,12 +22,12 @@ public class KBObjectsViewCountComparator<T> extends OrderByComparator<T> {
 
 	public static final String[] ORDER_BY_FIELDS = {"viewCount", "title"};
 
-	public KBObjectsViewCountComparator() {
-		this(false);
-	}
+	public static KBObjectsViewCountComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public KBObjectsViewCountComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -108,6 +108,16 @@ public class KBObjectsViewCountComparator<T> extends OrderByComparator<T> {
 
 		return 0;
 	}
+
+	private KBObjectsViewCountComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final KBObjectsViewCountComparator _INSTANCE_ASCENDING =
+		new KBObjectsViewCountComparator(true);
+
+	private static final KBObjectsViewCountComparator _INSTANCE_DESCENDING =
+		new KBObjectsViewCountComparator(false);
 
 	private final boolean _ascending;
 

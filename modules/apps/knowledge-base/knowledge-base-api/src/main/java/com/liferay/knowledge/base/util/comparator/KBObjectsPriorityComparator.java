@@ -22,12 +22,12 @@ public class KBObjectsPriorityComparator<T> extends OrderByComparator<T> {
 
 	public static final String[] ORDER_BY_FIELDS = {"priority", "title"};
 
-	public KBObjectsPriorityComparator() {
-		this(false);
-	}
+	public static KBObjectsPriorityComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public KBObjectsPriorityComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -108,6 +108,16 @@ public class KBObjectsPriorityComparator<T> extends OrderByComparator<T> {
 
 		return kbFolder.getName();
 	}
+
+	private KBObjectsPriorityComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final KBObjectsPriorityComparator _INSTANCE_ASCENDING =
+		new KBObjectsPriorityComparator(true);
+
+	private static final KBObjectsPriorityComparator _INSTANCE_DESCENDING =
+		new KBObjectsPriorityComparator(false);
 
 	private final boolean _ascending;
 

@@ -21,12 +21,12 @@ public class KBFolderNameComparator extends OrderByComparator<KBFolder> {
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public KBFolderNameComparator() {
-		this(false);
-	}
+	public static KBFolderNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public KBFolderNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +63,16 @@ public class KBFolderNameComparator extends OrderByComparator<KBFolder> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private KBFolderNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final KBFolderNameComparator _INSTANCE_ASCENDING =
+		new KBFolderNameComparator(true);
+
+	private static final KBFolderNameComparator _INSTANCE_DESCENDING =
+		new KBFolderNameComparator(false);
 
 	private final boolean _ascending;
 

@@ -22,12 +22,14 @@ public class KBTemplateModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public KBTemplateModifiedDateComparator() {
-		this(false);
-	}
+	public static KBTemplateModifiedDateComparator getInstance(
+		boolean ascending) {
 
-	public KBTemplateModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -60,6 +62,16 @@ public class KBTemplateModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private KBTemplateModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final KBTemplateModifiedDateComparator _INSTANCE_ASCENDING =
+		new KBTemplateModifiedDateComparator(true);
+
+	private static final KBTemplateModifiedDateComparator _INSTANCE_DESCENDING =
+		new KBTemplateModifiedDateComparator(false);
 
 	private final boolean _ascending;
 

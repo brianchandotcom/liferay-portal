@@ -19,12 +19,12 @@ public class KBCommentUserNameComparator extends OrderByComparator<KBComment> {
 
 	public static final String[] ORDER_BY_FIELDS = {"userName"};
 
-	public KBCommentUserNameComparator() {
-		this(false);
-	}
+	public static KBCommentUserNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public KBCommentUserNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +59,16 @@ public class KBCommentUserNameComparator extends OrderByComparator<KBComment> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private KBCommentUserNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final KBCommentUserNameComparator _INSTANCE_ASCENDING =
+		new KBCommentUserNameComparator(true);
+
+	private static final KBCommentUserNameComparator _INSTANCE_DESCENDING =
+		new KBCommentUserNameComparator(false);
 
 	private final boolean _ascending;
 

@@ -20,12 +20,12 @@ public class KBArticleStatusComparator extends OrderByComparator<KBArticle> {
 
 	public static final String[] ORDER_BY_FIELDS = {"status", "title"};
 
-	public KBArticleStatusComparator() {
-		this(false);
-	}
+	public static KBArticleStatusComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public KBArticleStatusComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -70,6 +70,16 @@ public class KBArticleStatusComparator extends OrderByComparator<KBArticle> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private KBArticleStatusComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final KBArticleStatusComparator _INSTANCE_ASCENDING =
+		new KBArticleStatusComparator(true);
+
+	private static final KBArticleStatusComparator _INSTANCE_DESCENDING =
+		new KBArticleStatusComparator(false);
 
 	private final boolean _ascending;
 

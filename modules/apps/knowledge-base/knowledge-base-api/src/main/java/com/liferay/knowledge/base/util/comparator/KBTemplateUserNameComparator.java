@@ -22,12 +22,12 @@ public class KBTemplateUserNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"userName", "title"};
 
-	public KBTemplateUserNameComparator() {
-		this(false);
-	}
+	public static KBTemplateUserNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public KBTemplateUserNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -71,6 +71,16 @@ public class KBTemplateUserNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private KBTemplateUserNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final KBTemplateUserNameComparator _INSTANCE_ASCENDING =
+		new KBTemplateUserNameComparator(true);
+
+	private static final KBTemplateUserNameComparator _INSTANCE_DESCENDING =
+		new KBTemplateUserNameComparator(false);
 
 	private final boolean _ascending;
 

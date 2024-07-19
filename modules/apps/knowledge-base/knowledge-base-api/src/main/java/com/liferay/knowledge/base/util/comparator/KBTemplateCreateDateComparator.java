@@ -22,12 +22,14 @@ public class KBTemplateCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public KBTemplateCreateDateComparator() {
-		this(false);
-	}
+	public static KBTemplateCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public KBTemplateCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -60,6 +62,16 @@ public class KBTemplateCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private KBTemplateCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final KBTemplateCreateDateComparator _INSTANCE_ASCENDING =
+		new KBTemplateCreateDateComparator(true);
+
+	private static final KBTemplateCreateDateComparator _INSTANCE_DESCENDING =
+		new KBTemplateCreateDateComparator(false);
 
 	private final boolean _ascending;
 

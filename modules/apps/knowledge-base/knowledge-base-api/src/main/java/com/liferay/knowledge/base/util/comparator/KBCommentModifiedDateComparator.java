@@ -21,12 +21,14 @@ public class KBCommentModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public KBCommentModifiedDateComparator() {
-		this(false);
-	}
+	public static KBCommentModifiedDateComparator getInstance(
+		boolean ascending) {
 
-	public KBCommentModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +61,16 @@ public class KBCommentModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private KBCommentModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final KBCommentModifiedDateComparator _INSTANCE_ASCENDING =
+		new KBCommentModifiedDateComparator(true);
+
+	private static final KBCommentModifiedDateComparator _INSTANCE_DESCENDING =
+		new KBCommentModifiedDateComparator(false);
 
 	private final boolean _ascending;
 

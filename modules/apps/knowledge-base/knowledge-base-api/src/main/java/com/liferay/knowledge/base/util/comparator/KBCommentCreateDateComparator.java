@@ -21,12 +21,12 @@ public class KBCommentCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public KBCommentCreateDateComparator() {
-		this(false);
-	}
+	public static KBCommentCreateDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public KBCommentCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +59,16 @@ public class KBCommentCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private KBCommentCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final KBCommentCreateDateComparator _INSTANCE_ASCENDING =
+		new KBCommentCreateDateComparator(true);
+
+	private static final KBCommentCreateDateComparator _INSTANCE_DESCENDING =
+		new KBCommentCreateDateComparator(false);
 
 	private final boolean _ascending;
 

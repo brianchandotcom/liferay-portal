@@ -21,12 +21,12 @@ public class KBArticleTitleComparator extends OrderByComparator<KBArticle> {
 
 	public static final String[] ORDER_BY_FIELDS = {"title"};
 
-	public KBArticleTitleComparator() {
-		this(false);
-	}
+	public static KBArticleTitleComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public KBArticleTitleComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -61,6 +61,16 @@ public class KBArticleTitleComparator extends OrderByComparator<KBArticle> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private KBArticleTitleComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final KBArticleTitleComparator _INSTANCE_ASCENDING =
+		new KBArticleTitleComparator(true);
+
+	private static final KBArticleTitleComparator _INSTANCE_DESCENDING =
+		new KBArticleTitleComparator(false);
 
 	private final boolean _ascending;
 

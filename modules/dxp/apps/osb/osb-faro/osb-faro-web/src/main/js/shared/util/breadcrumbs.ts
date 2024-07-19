@@ -220,6 +220,17 @@ export const getEvents = ({groupId}: IBasicRouteArgs) => ({
 	label: Liferay.Language.get('events')
 });
 
+export const getEventAnalysis = ({
+	channelId,
+	groupId
+}: IBasicSidebarRouteArgs) => ({
+	href: toRoute(Routes.EVENT_ANALYSIS, {
+		channelId,
+		groupId
+	}),
+	label: Liferay.Language.get('event-analysis')
+});
+
 export const getEventAttributes = ({groupId}: IBasicRouteArgs) => ({
 	href: toRoute(Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_GLOBAL, {
 		groupId

@@ -67,7 +67,7 @@ public class DBSchemaDefinitionExporterReport {
 			StringUtil.merge(tablesNotFound, StringPool.COMMA_AND_SPACE),
 			StringPool.NEW_LINE);
 
-		FileUtil.write(new File(path, _REPORT_INFO), message);
+		FileUtil.write(new File(path, "db_export_report.info"), message);
 	}
 
 	private static String _formatDate(Date date) {
@@ -115,7 +115,5 @@ public class DBSchemaDefinitionExporterReport {
 
 		return tableNames;
 	}
-
-	private static final String _REPORT_INFO = "db_export_report.info";
 
 }

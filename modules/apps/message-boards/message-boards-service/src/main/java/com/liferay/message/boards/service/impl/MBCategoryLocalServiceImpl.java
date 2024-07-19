@@ -958,10 +958,16 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		MBCategory mbCategory = mbCategoryPersistence.fetchByG_F(
 			groupId, friendlyURL);
 
+		if (mbCategory == null) {
+			return friendlyURL;
+		}
+
+		if (!StringUtil.endsWith(friendlyURL, StringPool.DASH)) {
+			name = name + StringPool.DASH;
+		}
+
 		for (int i = 1; mbCategory != null; i++) {
-			friendlyURL =
-				_friendlyURLNormalizer.normalizeWithEncodingPeriodsAndSlashes(
-					name + StringPool.DASH + i);
+			friendlyURL = name + i;
 
 			mbCategory = mbCategoryPersistence.fetchByG_F(groupId, friendlyURL);
 		}

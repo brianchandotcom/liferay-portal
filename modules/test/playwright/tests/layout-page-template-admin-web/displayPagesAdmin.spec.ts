@@ -13,6 +13,7 @@ import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {JournalEditArticlePage} from '../journal-web/pages/JournalEditArticlePage';
 import {JournalPage} from '../journal-web/pages/JournalPage';
 import {displayPageTemplatesTest} from './fixtures/displayTemplatePagesTest';
@@ -21,6 +22,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	displayPageTemplatesTest,
 	isolatedSiteTest,
+	journalPagesTest,
 	loginTest()
 );
 
@@ -130,7 +132,10 @@ test(
 
 		await expect(page.getByText(journalArticleTitle)).toBeVisible();
 
-		const firstRowCheckbox = page.getByRole('row').getByRole('checkbox').first();
+		const firstRowCheckbox = page
+			.getByRole('row')
+			.getByRole('checkbox')
+			.first();
 
 		await firstRowCheckbox.click();
 
@@ -207,7 +212,10 @@ test(
 
 		await expect(page.getByText(journalArticleTitle)).toBeVisible();
 
-		const firstRowCheckbox = page.getByRole('row').getByRole('checkbox').first();
+		const firstRowCheckbox = page
+			.getByRole('row')
+			.getByRole('checkbox')
+			.first();
 
 		await firstRowCheckbox.click();
 
@@ -344,7 +352,10 @@ test(
 
 		await displayPageTemplatesPage.viewUsages(displayPageTemplateName);
 
-		const firstRowCheckbox = page.getByRole('row').getByRole('checkbox').first();
+		const firstRowCheckbox = page
+			.getByRole('row')
+			.getByRole('checkbox')
+			.first();
 		await expect(firstRowCheckbox).toBeVisible();
 	}
 );
@@ -393,7 +404,10 @@ test(
 
 		await displayPageTemplatesPage.viewUsages(displayPageTemplateName);
 
-		const firstRowCheckbox = page.getByRole('row').getByRole('checkbox').first();
+		const firstRowCheckbox = page
+			.getByRole('row')
+			.getByRole('checkbox')
+			.first();
 		await expect(firstRowCheckbox).toBeVisible();
 	}
 );

@@ -10,15 +10,11 @@ import {test} from '@playwright/test';
 import {DocumentLibraryEditFilePage} from '../../../pages/document-library-web/DocumentLibraryEditFilePage';
 import {DisplayPageTemplatesPage} from '../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
 import {BlogsEditBlogEntryPage} from '../../blogs-web/pages/BlogsEditBlogEntryPage';
-import {JournalEditArticlePage} from '../../journal-web/pages/JournalEditArticlePage';
-import {JournalPage} from '../../journal-web/pages/JournalPage';
 
 const displayPageTemplatesTest = test.extend<{
 	blogsEditBlogEntryPage: BlogsEditBlogEntryPage;
 	displayPageTemplatesPage: DisplayPageTemplatesPage;
 	documentLibraryEditFilePage: DocumentLibraryEditFilePage;
-	journalEditArticlePage: JournalEditArticlePage;
-	journalPage: JournalPage;
 }>({
 	blogsEditBlogEntryPage: async ({page}, use) => {
 		await use(new BlogsEditBlogEntryPage(page));
@@ -28,12 +24,6 @@ const displayPageTemplatesTest = test.extend<{
 	},
 	documentLibraryEditFilePage: async ({page}, use) => {
 		await use(new DocumentLibraryEditFilePage(page));
-	},
-	journalEditArticlePage: async ({page}, use) => {
-		await use(new JournalEditArticlePage(page));
-	},
-	journalPage: async ({page}, use) => {
-		await use(new JournalPage(page));
 	},
 });
 

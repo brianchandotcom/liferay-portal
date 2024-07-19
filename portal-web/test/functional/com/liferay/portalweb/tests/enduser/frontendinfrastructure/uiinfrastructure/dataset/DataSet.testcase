@@ -27,24 +27,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-178858 Confirm the empty message on the Data Set administration page"
-	@priority = 3
-	test AssertEmptyMessageInDSAdmin {
-		task ("And the text “No Datasets Created. Start creating one to show your data.” is present on the page") {
-			AssertTextPresent(
-				locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT",
-				value1 = "No Data Sets Created");
-
-			AssertTextPresent(
-				locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT",
-				value1 = "Start creating one to show your data.");
-		}
-
-		task ("And “New Dataset” button is present on the page") {
-			CustomerPortal.assertButtonIsVisible(text = "New Data Set");
-		}
-	}
-
 	@description = "LPS-178858 Confirm that the new Data Set Modal is displayed by clicking on the add button"
 	@priority = 3
 	test AssertNewDataSetModal {

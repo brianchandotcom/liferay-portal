@@ -146,25 +146,35 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	dataSetERCs.length = 0;
 });
 
-test('Create data set via UI', async ({dataSetsPage, page}) => {
-	await test.step('Create Data Set', async () => {
-		await dataSetsPage.goto();
-		await dataSetsPage.createDataSet(tableSectionsDataSetConfig);
-	});
+test(
+	'Create data set via UI',
+	{tag: '@LPS-178858'},
+	async ({dataSetsPage, page}) => {
+		await test.step('Navigate to Data Set page', async () => {
+			await dataSetsPage.goto();
+			await expect(
+				dataSetsPage.dataSetsEmptyState.locator('.c-empty-state-title')
+			).toContainText('No Data Sets Created');
+		});
 
-	await assertTableColumnLabels(page);
+		await test.step('Create Data Set', async () => {
+			await dataSetsPage.createDataSet(tableSectionsDataSetConfig);
+		});
 
-	await assertTableCellContent({
-		dataSetConfig: tableSectionsDataSetConfig,
-		page,
-	});
+		await assertTableColumnLabels(page);
 
-	await assertTableActionLabels(page);
+		await assertTableCellContent({
+			dataSetConfig: tableSectionsDataSetConfig,
+			page,
+		});
 
-	await test.step('Delete Data Set', async () => {
-		await dataSetsPage.deleteDataSet(tableSectionsDataSetConfig.name);
-	});
-});
+		await assertTableActionLabels(page);
+
+		await test.step('Delete Data Set', async () => {
+			await dataSetsPage.deleteDataSet(tableSectionsDataSetConfig.name);
+		});
+	}
+);
 
 test('Create parameterized data set via UI', async ({dataSetsPage, page}) => {
 	await test.step('Create Data Set', async () => {

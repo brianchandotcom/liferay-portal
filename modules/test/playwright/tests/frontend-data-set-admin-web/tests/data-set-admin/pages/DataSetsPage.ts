@@ -13,6 +13,7 @@ export class DataSetsPage {
 	readonly apiHelpers: ApiHelpers;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly basePath: string;
+	readonly dataSetsEmptyState: Locator;
 	readonly dataSetsTable: Locator;
 	readonly newDataSetButton: Locator;
 	readonly newDataSetModal: {
@@ -33,6 +34,7 @@ export class DataSetsPage {
 		this.apiHelpers = new ApiHelpers(page);
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.basePath = 'data-set-manager/entries';
+		this.dataSetsEmptyState = page.locator('.c-empty-state');
 		this.dataSetsTable = page.locator('.data-set > div:nth-child(2)');
 		this.newDataSetButton = page.getByLabel('New Data Set').first();
 		this.newDataSetModal = {

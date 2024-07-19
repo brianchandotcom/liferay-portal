@@ -175,7 +175,8 @@ export const ACTIONS = {
 					const assignmentsRedirectURL = createRenderURL(
 						basePortletURL,
 						{
-							mvcRenderCommandName: '/users_admin/view',
+							mvcRenderCommandName:
+								'/users_admin/organizations_view_tree',
 							organizationId,
 							screenNavigationCategoryKey: 'organizations',
 							usersListView: 'tree',

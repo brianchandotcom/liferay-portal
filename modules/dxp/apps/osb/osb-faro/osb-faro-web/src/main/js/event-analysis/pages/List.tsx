@@ -6,11 +6,14 @@ import React from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
 import {Routes, toRoute} from 'shared/util/router';
+import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDataSource} from 'shared/hooks/useDataSource';
 import {useParams} from 'react-router-dom';
 
 const List = () => {
+	const {selectedChannel} = useChannelContext();
+
 	const {channelId, groupId} = useParams();
 	const currentUser = useCurrentUser();
 
@@ -38,7 +41,7 @@ const List = () => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: Liferay.Language.get('home')
+						label: selectedChannel?.name
 					})
 				]}
 				groupId={groupId}

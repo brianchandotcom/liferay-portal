@@ -139,15 +139,16 @@ export function VersionRow({
 				version,
 			});
 		}
-
-		await restoreWorkflowDefinition(saveDefinitionRequest, {
-			active,
-			content,
-			name: definitionName,
-			title,
-			title_i18n,
-			version,
-		});
+		else {
+			await restoreWorkflowDefinition(saveDefinitionRequest, {
+				active,
+				content,
+				name: definitionName,
+				title,
+				title_i18n,
+				version,
+			});
+		}
 	};
 
 	return (

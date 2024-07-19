@@ -247,6 +247,7 @@ public class DLAppServiceUtil {
 	 * Adds a file shortcut to the existing file entry. This method is only
 	 * supported by the Liferay repository.
 	 *
+	 * @param externalReferenceCode the external reference code or the file shortcut
 	 * @param repositoryId the primary key of the repository
 	 * @param folderId the primary key of the file shortcut's parent folder
 	 * @param toFileEntryId the primary key of the file shortcut's file entry
@@ -258,12 +259,14 @@ public class DLAppServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.repository.model.FileShortcut
 			addFileShortcut(
-				long repositoryId, long folderId, long toFileEntryId,
+				String externalReferenceCode, long repositoryId, long folderId,
+				long toFileEntryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFileShortcut(
-			repositoryId, folderId, toFileEntryId, serviceContext);
+			externalReferenceCode, repositoryId, folderId, toFileEntryId,
+			serviceContext);
 	}
 
 	/**

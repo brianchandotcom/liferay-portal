@@ -16,6 +16,8 @@
 	<import class="com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.ERCVersionedEntryVersion" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.FinderWhereClauseEntry" />
+	<import class="com.liferay.portal.tools.service.builder.test.model.IndexEntry" />
+	<import class="com.liferay.portal.tools.service.builder.test.model.KeywordsEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.LocalizedEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocalization" />
@@ -144,6 +146,20 @@
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="nickname" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.portal.tools.service.builder.test.model.impl.IndexEntryImpl" table="IndexEntry">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="indexEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.portal.tools.service.builder.test.model.impl.KeywordsEntryImpl" table="KeywordsEntry">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="keywordsEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.LazyBlobEntryImpl" table="LazyBlobEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lazyBlobEntryId" type="long">

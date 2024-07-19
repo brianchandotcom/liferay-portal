@@ -243,8 +243,8 @@ public class DLAppServiceHttp {
 
 	public static com.liferay.portal.kernel.repository.model.FileShortcut
 			addFileShortcut(
-				HttpPrincipal httpPrincipal, long repositoryId, long folderId,
-				long toFileEntryId,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long repositoryId, long folderId, long toFileEntryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -254,8 +254,8 @@ public class DLAppServiceHttp {
 				_addFileShortcutParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, repositoryId, folderId, toFileEntryId,
-				serviceContext);
+				methodKey, externalReferenceCode, repositoryId, folderId,
+				toFileEntryId, serviceContext);
 
 			Object returnObj = null;
 
@@ -4802,7 +4802,7 @@ public class DLAppServiceHttp {
 	};
 	private static final Class<?>[] _addFileShortcutParameterTypes4 =
 		new Class[] {
-			long.class, long.class, long.class,
+			String.class, long.class, long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addFolderParameterTypes5 = new Class[] {

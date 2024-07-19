@@ -9,10 +9,15 @@ import {ApiHelpers} from '../ApiHelpers';
 
 type Event = {
 	applicationId: string;
+	assetId?: string;
+	assetTitle?: string;
 	canonicalUrl: string;
 	channelId: string;
+	dataSourceId?: number;
 	eventDate: string;
 	eventId: string;
+	eventProperties?: string;
+	properties?: Property[];
 	title: string;
 	userId: string;
 };
@@ -44,6 +49,11 @@ type PageDaily = {
 	title: string;
 	userId: string;
 	views: number;
+};
+
+type Property = {
+	name: string;
+	value: string;
 };
 
 type Session = {

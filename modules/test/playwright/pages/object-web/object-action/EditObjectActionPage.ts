@@ -51,7 +51,7 @@ export class EditObjectActionPage {
 		this.userPreferredLanguage = page
 			.frameLocator('iframe')
 			.getByText(
-				`Send email notifications in a guest user's preferred language.`
+				`Send email notifications in the guest user's preferred language.`
 			);
 		this.viewObjectActionsPage = new ViewObjectActionsPage(page);
 	}

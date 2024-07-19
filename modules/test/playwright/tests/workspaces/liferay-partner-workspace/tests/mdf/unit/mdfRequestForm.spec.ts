@@ -17,7 +17,7 @@ test.describe('MDF Request Form', () => {
 	let accountUser;
 
 	test.beforeEach(async ({mdfRequestFormPage, partnerHelper, partnerSite}) => {
-		const { account } = await partnerHelper.createAccountUser({accountName, accountType: 'business'});
+		const { account } = await partnerHelper.createAccountUser({accountName});
 		await partnerHelper.assignUserToAccountRole({accountId: account.id, accountRole});
 
 		accountUser = account;

@@ -14,7 +14,6 @@ type AssignUserToAccountRole = {
 
 type CreateAccount = {
     accountName: string;
-    accountType: string;
 }
 
 type CreateMDFRequest = {

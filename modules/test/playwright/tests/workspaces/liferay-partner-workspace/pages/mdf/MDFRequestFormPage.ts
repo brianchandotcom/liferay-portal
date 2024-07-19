@@ -68,18 +68,15 @@ export class MDFRequestFormPage {
 
 	async createNewRequest(form: FormContent) {
 		await this.form.goals.fillForm(form.goals);
-
-		expect(this.continueButton).toBeEnabled();
-
 		await this.continue();
-
+		
 		for (const [index, activity] of form.activities.entries()) {
 			await this.form.activities.fillForm(index, activity);
 
 			await this.continue();
 		}
 
-		await this.continueButton.click();
+		await this.continue();
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {

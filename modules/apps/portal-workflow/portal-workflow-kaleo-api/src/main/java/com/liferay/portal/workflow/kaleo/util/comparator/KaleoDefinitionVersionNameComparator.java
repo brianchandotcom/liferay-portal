@@ -15,12 +15,14 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 public class KaleoDefinitionVersionNameComparator
 	extends OrderByComparator<KaleoDefinitionVersion> {
 
-	public KaleoDefinitionVersionNameComparator() {
-		this(false);
-	}
+	public static KaleoDefinitionVersionNameComparator getInstance(
+		boolean ascending) {
 
-	public KaleoDefinitionVersionNameComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -60,6 +62,16 @@ public class KaleoDefinitionVersionNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private KaleoDefinitionVersionNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final KaleoDefinitionVersionNameComparator
+		_INSTANCE_ASCENDING = new KaleoDefinitionVersionNameComparator(true);
+
+	private static final KaleoDefinitionVersionNameComparator
+		_INSTANCE_DESCENDING = new KaleoDefinitionVersionNameComparator(false);
 
 	private static final String _ORDER_BY_ASC =
 		"KaleoDefinitionVersion.name ASC";

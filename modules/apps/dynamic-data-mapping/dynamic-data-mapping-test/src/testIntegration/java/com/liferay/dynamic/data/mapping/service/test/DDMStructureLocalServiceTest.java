@@ -676,7 +676,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 			structure.getCompanyId(), new long[] {structure.getGroupId()},
 			structure.getClassNameId(), "Event",
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new StructureIdComparator(true));
+			QueryUtil.ALL_POS, StructureIdComparator.getInstance(true));
 
 		Assert.assertEquals(structures.toString(), 2, structures.size());
 		Assert.assertEquals("Events", getStructureName(structures.get(0)));
@@ -693,7 +693,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 			structure.getCompanyId(), new long[] {structure.getGroupId()},
 			structure.getClassNameId(), "To Do",
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new StructureIdComparator(true));
+			QueryUtil.ALL_POS, StructureIdComparator.getInstance(true));
 
 		Assert.assertEquals(structures.toString(), 2, structures.size());
 		Assert.assertEquals("To Do", getStructureName(structures.get(0)));
@@ -740,7 +740,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 			_classNameId, "Contact", "Event", null,
 			DDMStructureConstants.TYPE_DEFAULT,
 			WorkflowConstants.STATUS_APPROVED, false, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new StructureIdComparator(true));
+			QueryUtil.ALL_POS, StructureIdComparator.getInstance(true));
 
 		Assert.assertEquals("Contact", getStructureName(structures.get(0)));
 		Assert.assertEquals("Event", getStructureName(structures.get(1)));
@@ -881,7 +881,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(group.getGroupId()),
 			structure.getClassNameId(), "Global", WorkflowConstants.STATUS_ANY,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new StructureIdComparator(true));
+			StructureIdComparator.getInstance(true));
 
 		Assert.assertEquals(structures.toString(), 0, structures.size());
 

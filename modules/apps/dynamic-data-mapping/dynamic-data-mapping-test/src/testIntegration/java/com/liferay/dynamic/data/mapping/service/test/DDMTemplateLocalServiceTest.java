@@ -360,7 +360,7 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			null, null, _resourceClassNameId, "Event", "Meeting", null, null,
 			null, WorkflowConstants.STATUS_APPROVED, false, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new TemplateIdComparator(true));
+			QueryUtil.ALL_POS, TemplateIdComparator.getInstance(true));
 
 		Assert.assertEquals("Event", getTemplateName(templates.get(0)));
 		Assert.assertEquals("Meeting", getTemplateName(templates.get(1)));

@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {$} from 'execa';
 import {constants, mkdirSync, renameSync} from 'fs';
 import * as fs from 'fs/promises';
 import path from 'path';
-import resolve from 'resolve';
 
 import {WORK_PATH} from '../../util/constants.mjs';
-import forkModule from '../../util/forkModule.mjs';
 import onExit from '../../util/onExit.mjs';
 
 const DISABLE_BUILD_CONFIGS = [
@@ -30,14 +29,7 @@ export default async function runNpmScripts(projectNpmScriptsConfig) {
 
 	await writeNpmScriptsConfig(projectNpmScriptsConfig);
 
-	const npmScriptsPath = resolve.sync(
-		'@liferay/npm-scripts/bin/liferay-npm-scripts.js',
-		{basedir: '.'}
-	);
-
-	const {stdout} = await forkModule(npmScriptsPath, ['build'], {
-		stdio: 'pipe',
-	});
+	const {stdout} = await $`liferay-npm-scripts build`;
 
 	const lapse = performance.now() - start;
 

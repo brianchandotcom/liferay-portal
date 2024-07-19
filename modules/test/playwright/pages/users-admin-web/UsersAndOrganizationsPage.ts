@@ -36,6 +36,7 @@ export const searchTableRowByValue = async function (
 
 export class UsersAndOrganizationsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly assignUsersMenuItem: Locator;
 	readonly deletePersonalDataMenuItem: Locator;
 	readonly optionsMenu: Locator;
 	readonly page: Page;
@@ -88,6 +89,9 @@ export class UsersAndOrganizationsPage {
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.assignUsersMenuItem = page.getByRole('menuitem', {
+			name: 'Assign Users',
+		});
 		this.deletePersonalDataMenuItem = page.getByRole('menuitem', {
 			name: 'Delete Personal Data',
 		});

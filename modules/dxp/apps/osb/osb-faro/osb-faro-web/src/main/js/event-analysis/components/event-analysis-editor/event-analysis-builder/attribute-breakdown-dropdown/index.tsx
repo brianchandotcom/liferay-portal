@@ -204,13 +204,13 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 											eventAttributeDefinitions: Attribute[];
 										};
 									}) => {
-										let modifieldEventAttributeDefinitions = [];
+										let modifiedEventAttributeDefinitions = [];
 
 										if (
 											attributeOwnerType ===
 											AttributeOwnerTypes.Event
 										) {
-											modifieldEventAttributeDefinitions = attribute
+											modifiedEventAttributeDefinitions = attribute
 												? eventAttributeDefinitions.map(
 														eventAttributeDefinition => {
 															if (
@@ -228,7 +228,7 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 											attributeOwnerType ===
 											AttributeOwnerTypes.Individual
 										) {
-											modifieldEventAttributeDefinitions = IndividualAttributes;
+											modifiedEventAttributeDefinitions = IndividualAttributes;
 										}
 
 										return (
@@ -236,7 +236,7 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 												activeId={attributeId}
 												disabledIds={disabledIds}
 												items={
-													modifieldEventAttributeDefinitions
+													modifiedEventAttributeDefinitions
 												}
 												onEditClick={(
 													attribute: Attribute

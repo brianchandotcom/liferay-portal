@@ -34,7 +34,9 @@ public class ObjectMapperProviderUtil {
 		if (PropsValues.JSON_STRING_MAX_LENGTH != _jsonStringMaxLength) {
 			_jsonStringMaxLength = PropsValues.JSON_STRING_MAX_LENGTH;
 
-			_batchEngineObjectMapper = new ObjectMapper(_getJsonFactory()) {
+			_batchEngineObjectMapper = new ObjectMapper(
+				_getJsonFactory(_jsonStringMaxLength)) {
+
 				{
 					disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 					enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
@@ -60,7 +62,9 @@ public class ObjectMapperProviderUtil {
 		if (PropsValues.JSON_STRING_MAX_LENGTH != _jsonStringMaxLength) {
 			_jsonStringMaxLength = PropsValues.JSON_STRING_MAX_LENGTH;
 
-			_objectMapper = new ObjectMapper(_getJsonFactory()) {
+			_objectMapper = new ObjectMapper(
+				_getJsonFactory(_jsonStringMaxLength)) {
+
 				{
 					configure(
 						MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
@@ -99,12 +103,12 @@ public class ObjectMapperProviderUtil {
 		return _objectMapper;
 	}
 
-	private static JsonFactory _getJsonFactory() {
+	private static JsonFactory _getJsonFactory(int jsonStringMaxLength) {
 		return new JsonFactoryBuilder(
 		).streamReadConstraints(
 			StreamReadConstraints.builder(
 			).maxStringLength(
-				PropsValues.JSON_STRING_MAX_LENGTH
+				jsonStringMaxLength
 			).build()
 		).build();
 	}

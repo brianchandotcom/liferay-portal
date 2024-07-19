@@ -22,12 +22,12 @@ public class LayoutRevisionIdComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"layoutRevisionId"};
 
-	public LayoutRevisionIdComparator() {
-		this(false);
-	}
+	public static LayoutRevisionIdComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public LayoutRevisionIdComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -72,6 +72,16 @@ public class LayoutRevisionIdComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private LayoutRevisionIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final LayoutRevisionIdComparator _INSTANCE_ASCENDING =
+		new LayoutRevisionIdComparator(true);
+
+	private static final LayoutRevisionIdComparator _INSTANCE_DESCENDING =
+		new LayoutRevisionIdComparator(false);
 
 	private final boolean _ascending;
 

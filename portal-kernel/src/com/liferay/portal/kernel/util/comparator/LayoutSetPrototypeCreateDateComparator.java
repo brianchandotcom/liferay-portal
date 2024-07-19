@@ -23,12 +23,14 @@ public class LayoutSetPrototypeCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public LayoutSetPrototypeCreateDateComparator() {
-		this(false);
-	}
+	public static LayoutSetPrototypeCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public LayoutSetPrototypeCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -65,6 +67,17 @@ public class LayoutSetPrototypeCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private LayoutSetPrototypeCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final LayoutSetPrototypeCreateDateComparator
+		_INSTANCE_ASCENDING = new LayoutSetPrototypeCreateDateComparator(true);
+
+	private static final LayoutSetPrototypeCreateDateComparator
+		_INSTANCE_DESCENDING = new LayoutSetPrototypeCreateDateComparator(
+			false);
 
 	private final boolean _ascending;
 

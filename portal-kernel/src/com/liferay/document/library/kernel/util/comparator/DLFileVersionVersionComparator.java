@@ -14,14 +14,14 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class DLFileVersionVersionComparator
 	extends OrderByComparator<DLFileVersion> {
 
-	public DLFileVersionVersionComparator() {
-		this(false);
-	}
+	public static DLFileVersionVersionComparator getInstance(
+		boolean ascending) {
 
-	public DLFileVersionVersionComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-		_versionNumberComparator = new VersionNumberComparator(_ascending);
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -50,6 +50,18 @@ public class DLFileVersionVersionComparator
 	public boolean isAscending() {
 		return _versionNumberComparator.isAscending();
 	}
+
+	private DLFileVersionVersionComparator(boolean ascending) {
+		_ascending = ascending;
+
+		_versionNumberComparator = new VersionNumberComparator(_ascending);
+	}
+
+	private static final DLFileVersionVersionComparator _INSTANCE_ASCENDING =
+		new DLFileVersionVersionComparator(true);
+
+	private static final DLFileVersionVersionComparator _INSTANCE_DESCENDING =
+		new DLFileVersionVersionComparator(false);
 
 	private static final String _ORDER_BY_ASC = "DLFileVersion.version ASC";
 

@@ -19,12 +19,12 @@ public class GroupFriendlyURLComparator extends OrderByComparator<Group> {
 
 	public static final String[] ORDER_BY_FIELDS = {"groupFriendlyURL"};
 
-	public GroupFriendlyURLComparator() {
-		this(false);
-	}
+	public static GroupFriendlyURLComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public GroupFriendlyURLComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +59,16 @@ public class GroupFriendlyURLComparator extends OrderByComparator<Group> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private GroupFriendlyURLComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final GroupFriendlyURLComparator _INSTANCE_ASCENDING =
+		new GroupFriendlyURLComparator(true);
+
+	private static final GroupFriendlyURLComparator _INSTANCE_DESCENDING =
+		new GroupFriendlyURLComparator(false);
 
 	private final boolean _ascending;
 

@@ -19,10 +19,10 @@ import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.schema.definition.internal.partition.DBSchemaPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
-import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -41,8 +41,9 @@ import javax.sql.DataSource;
  */
 public class ObjectSQLProvider implements SQLProvider {
 
-	public ObjectSQLProvider(DB db) throws Exception {
+	public ObjectSQLProvider(DB db, long companyId) throws Exception {
 		_db = db;
+		_companyId = companyId;
 
 		_appendSQL();
 	}
@@ -65,6 +66,8 @@ public class ObjectSQLProvider implements SQLProvider {
 		DB sourceDB = DBManagerUtil.getDB();
 
 		try (Connection connection = dataSource.getConnection()) {
+			DBSchemaPartitionUtil.setPartition(connection, _companyId);
+
 			for (String tableName : _tableNames) {
 				for (IndexMetadata indexMetadata :
 						sourceDB.getIndexes(
@@ -121,8 +124,7 @@ public class ObjectSQLProvider implements SQLProvider {
 	private void _appendSQL() throws Exception {
 		List<ObjectDefinition> objectDefinitions =
 			ObjectDefinitionLocalServiceUtil.getObjectDefinitions(
-				PortalInstancePool.getDefaultCompanyId(),
-				WorkflowConstants.STATUS_APPROVED);
+				_companyId, WorkflowConstants.STATUS_APPROVED);
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			_appendTablesSQL(objectDefinition);
@@ -175,6 +177,7 @@ public class ObjectSQLProvider implements SQLProvider {
 			dynamicObjectDefinitionTable.getTableName());
 	}
 
+	private final long _companyId;
 	private final DB _db;
 	private final StringBundler _indexesSQLSB = new StringBundler();
 	private final Set<String> _tableNames = new HashSet<>();

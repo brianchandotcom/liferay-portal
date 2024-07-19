@@ -145,6 +145,22 @@ export async function saveSegment(page: Page) {
 	await page.waitForSelector('div.alert-success', {state: 'visible'});
 }
 
+export async function selectAsset({
+	assetName,
+	index = 0,
+	page,
+}: {
+	assetName: string;
+	index?: number;
+	page: Page;
+}) {
+	await page.getByRole('button', {name: 'Select'}).nth(index).click();
+
+	await page.locator('.table-title').getByText(assetName).click();
+
+	await page.getByRole('button', {name: 'Add'}).click();
+}
+
 export async function selectOperator({
 	index = 0,
 	operator,

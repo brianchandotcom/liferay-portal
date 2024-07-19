@@ -55,5 +55,6 @@ export async function searchByTerm({
 	await page.getByPlaceholder('Search').first().click();
 	await page.getByPlaceholder('Search').first().fill(searchTerm);
 	await page.getByPlaceholder('Search').first().press('Enter');
+
 	await waitForLoading(page);
 }

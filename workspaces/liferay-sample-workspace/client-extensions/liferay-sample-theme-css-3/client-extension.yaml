@@ -1,6 +1,9 @@
 assemble:
     - from: build/buildTheme/img
       into: static/img
+assemble:
+    - from: build/buildTheme/images
+      into: static/images
 liferay-sample-theme-css-3:
     clayURL: css/clay.css
     frontendTokenDefinitionJSON: src/frontend-token-definition.json

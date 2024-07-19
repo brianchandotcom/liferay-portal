@@ -255,7 +255,7 @@ export default function UpperToolbar({
 					creatorName:
 						publishedOrSavedDefinitionResponseJSON.creator?.name,
 					dateCreated:
-						publishedOrSavedDefinitionResponseJSON.dateCreated,
+						publishedOrSavedDefinitionResponseJSON.dateModified,
 					version: String(
 						parseInt(
 							publishedOrSavedDefinitionResponseJSON.version,

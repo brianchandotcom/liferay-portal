@@ -70,6 +70,7 @@ interface WorkflowDefinition {
 	content: string;
 	creator?: Creator;
 	dateCreated?: string;
+	dateModified?: string;
 	name: string;
 	title: string;
 	title_i18n: {

@@ -81,7 +81,7 @@ export function VersionRow({
 					creatorName: restoredWorkflowDefinition.creator
 						?.name as string,
 					dateCreated:
-						restoredWorkflowDefinition.dateCreated as string,
+						restoredWorkflowDefinition.dateModified as string,
 					version: String(
 						parseInt(restoredWorkflowDefinition.version, 10)
 					),

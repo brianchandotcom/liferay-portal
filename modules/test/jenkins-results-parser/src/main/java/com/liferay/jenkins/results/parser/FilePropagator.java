@@ -91,8 +91,7 @@ public class FilePropagator {
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			threadCount);
 
-		System.out.println(
-			"File propagation starting with " + threadCount + " threads.");
+		log("File propagation starting with " + threadCount + " threads.");
 
 		try {
 			String previousString = null;
@@ -148,7 +147,7 @@ public class FilePropagator {
 
 				sb.append("\n");
 
-				System.out.println(sb.toString());
+				log(sb.toString());
 
 				previousString = currentString;
 
@@ -158,7 +157,7 @@ public class FilePropagator {
 			long duration =
 				JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
 
-			System.out.println(
+			log(
 				JenkinsResultsParserUtil.combine(
 					"File propagation completed in ",
 					JenkinsResultsParserUtil.toDurationString(duration), "."));
@@ -198,7 +197,7 @@ public class FilePropagator {
 		for (FilePropagatorTask filePropagatorTask : _filePropagatorTasks) {
 			String sourceFileName = filePropagatorTask._sourceFileName;
 
-			System.out.println("Copying from source " + sourceFileName);
+			log("Copying from source " + sourceFileName);
 
 			String targetFileName = filePropagatorTask._targetFileName;
 
@@ -264,7 +263,7 @@ public class FilePropagator {
 				"Unable to copy from source. Executed: " + commands, exception);
 		}
 
-		System.out.println("Finished copying from source.");
+		log("Finished copying from source.");
 	}
 
 	private int _executeBashCommands(List<String> commands, String targetSlave)

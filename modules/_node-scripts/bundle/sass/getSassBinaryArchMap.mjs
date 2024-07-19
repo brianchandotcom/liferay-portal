@@ -11,6 +11,10 @@ import {getBuildPropertiesPath, getRootDir} from '../../util/constants.mjs';
 
 const SASS_BINARY = {
 	darwin: {
+		arm64: {
+			binary: 'dart-sass/sass',
+			buildPropertiesKeyPrefix: 'nodejs.sass.mac.arm',
+		},
 		x64: {
 			binary: 'dart-sass/sass',
 			buildPropertiesKeyPrefix: 'nodejs.sass.mac',
@@ -78,6 +82,7 @@ export default async function getSassBinaryArchMap() {
 		'nodejs.sass.version',
 		'nodejs.sass.linux.name',
 		'nodejs.sass.mac.name',
+		'nodejs.sass.mac.arm.name',
 		'nodejs.sass.windows.name',
 		'nodejs.sass.base.url',
 	]) {

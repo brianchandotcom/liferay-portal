@@ -804,13 +804,25 @@ public class PredicateExpressionVisitorImpl
 		LambdaFunctionExpression lambdaFunctionExpression =
 			collectionPropertyExpression.getLambdaFunctionExpression();
 
+		String propertyExpressionName = collectionPropertyExpression.getName();
+
+		if (lambdaFunctionExpression.getExpression() == null) {
+			FieldPredicateProvider fieldPredicateProvider =
+				_getFieldPredicateProvider(
+					propertyExpressionName, objectDefinition);
+
+			return fieldPredicateProvider.getIsEmptyPredicate(
+				propertyExpressionName,
+				name -> _getColumn(name, objectDefinition));
+		}
+
 		return (Predicate)lambdaFunctionExpression.accept(
 			new PredicateExpressionVisitorImpl(
 				_getObjectDefinitionEntityModel(objectDefinition),
 				_entityModelProvider,
 				Collections.singletonMap(
 					lambdaFunctionExpression.getVariableName(),
-					collectionPropertyExpression.getName()),
+					propertyExpressionName),
 				objectDefinition, _objectFieldBusinessTypeRegistry,
 				_objectFieldLocalService,
 				_objectRelatedModelsPredicateProviderRegistry,

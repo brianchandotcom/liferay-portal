@@ -67,6 +67,25 @@ public class TaxonomyCategoryIdsFieldPredicateProvider
 	}
 
 	@Override
+	public Predicate getIsEmptyPredicate(
+		String fieldName,
+		Function<String, Column<?, ?>> objectDefinitionColumnSupplier) {
+
+		Column<?, ?> column = objectDefinitionColumnSupplier.apply("id");
+
+		return column.notIn(
+			DSLQueryFactoryUtil.select(
+				AssetEntryTable.INSTANCE.classPK
+			).from(
+				AssetEntryTable.INSTANCE
+			).innerJoinON(
+				AssetEntryAssetCategoryRelTable.INSTANCE,
+				AssetEntryTable.INSTANCE.entryId.eq(
+					AssetEntryAssetCategoryRelTable.INSTANCE.assetEntryId)
+			));
+	}
+
+	@Override
 	public Predicate getStartsWithPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
 		String fieldName, Object fieldValue) {

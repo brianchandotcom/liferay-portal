@@ -80,6 +80,29 @@ public class KeywordsFieldPredicateProvider implements FieldPredicateProvider {
 	}
 
 	@Override
+	public Predicate getIsEmptyPredicate(
+		String fieldName,
+		Function<String, Column<?, ?>> objectDefinitionColumnSupplier) {
+
+		Column<?, ?> column = objectDefinitionColumnSupplier.apply("id");
+
+		return column.notIn(
+			DSLQueryFactoryUtil.select(
+				AssetEntryTable.INSTANCE.classPK
+			).from(
+				AssetEntryTable.INSTANCE
+			).innerJoinON(
+				AssetEntries_AssetTagsTable.INSTANCE,
+				AssetEntryTable.INSTANCE.entryId.eq(
+					AssetEntries_AssetTagsTable.INSTANCE.entryId)
+			).innerJoinON(
+				AssetTagTable.INSTANCE,
+				AssetTagTable.INSTANCE.tagId.eq(
+					AssetEntries_AssetTagsTable.INSTANCE.tagId)
+			));
+	}
+
+	@Override
 	public Predicate getStartsWithPredicate(
 		Function<String, Column<?, ?>> objectDefinitionColumnSupplier,
 		String fieldName, Object fieldValue) {

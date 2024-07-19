@@ -1,0 +1,99 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.db.schema.definition.internal.sql.provider;
+
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.db.DBResourceUtil;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactory;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.upgrade.release.SchemaCreator;
+
+import java.util.Collection;
+import java.util.ServiceLoader;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+
+/**
+ * @author Mariano Álvaro Sáiz
+ */
+public abstract class BaseSQLProvider implements SQLProvider {
+
+	public BaseSQLProvider(DBType dbType) throws Exception {
+		db = _getDB(dbType);
+
+		_appendPortalSQL();
+
+		_appendModulesSQL();
+	}
+
+	@Override
+	public String getIndexesSQL() {
+		return _indexesSQLSB.toString();
+	}
+
+	@Override
+	public String getTablesSQL() {
+		return _tablesSQLSB.toString();
+	}
+
+	protected final DB db;
+
+	private void _appendModulesSQL() throws Exception {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		Collection<ServiceReference<SchemaCreator>> serviceReferences =
+			bundleContext.getServiceReferences(SchemaCreator.class, null);
+
+		for (ServiceReference<SchemaCreator> serviceReference :
+				serviceReferences) {
+
+			_appendSQL(
+				DBResourceUtil.getModuleIndexesSQL(
+					serviceReference.getBundle()),
+				DBResourceUtil.getModuleTablesSQL(
+					serviceReference.getBundle()));
+		}
+	}
+
+	private void _appendPortalSQL() throws Exception {
+		_appendSQL(
+			DBResourceUtil.getPortalIndexesSQL(),
+			DBResourceUtil.getPortalTablesSQL());
+	}
+
+	private void _appendSQL(String indexesSQL, String tablesSQL)
+		throws Exception {
+
+		if (Validator.isNotNull(indexesSQL)) {
+			_indexesSQLSB.append(db.buildSQL(indexesSQL));
+		}
+
+		if (Validator.isNotNull(tablesSQL)) {
+			_tablesSQLSB.append(db.buildSQL(tablesSQL));
+		}
+	}
+
+	private DB _getDB(DBType dbType) {
+		ServiceLoader<DBFactory> serviceLoader = ServiceLoader.load(
+			DBFactory.class, DBFactory.class.getClassLoader());
+
+		for (DBFactory dbFactory : serviceLoader) {
+			if (dbFactory.getDBType() == dbType) {
+				return dbFactory.create(0, 0);
+			}
+		}
+
+		throw new IllegalArgumentException("Database type " + dbType);
+	}
+
+	private final StringBundler _indexesSQLSB = new StringBundler();
+	private final StringBundler _tablesSQLSB = new StringBundler();
+
+}

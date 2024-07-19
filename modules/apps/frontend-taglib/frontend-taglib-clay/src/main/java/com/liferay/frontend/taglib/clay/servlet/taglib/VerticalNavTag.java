@@ -8,6 +8,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -290,7 +291,8 @@ public class VerticalNavTag extends BaseContainerTag {
 				jspWriter.write("\" role=\"menuitem\" tabindex=\"-1\">");
 			}
 
-			jspWriter.write((String)verticalNavItem.get("label"));
+			jspWriter.write(
+				HtmlUtil.escape((String)verticalNavItem.get("label")));
 
 			if (items != null) {
 				IconTag iconTag = new IconTag();

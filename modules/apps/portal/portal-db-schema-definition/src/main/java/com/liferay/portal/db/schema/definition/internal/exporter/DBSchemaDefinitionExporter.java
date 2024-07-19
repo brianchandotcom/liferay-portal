@@ -91,11 +91,11 @@ public class DBSchemaDefinitionExporter {
 						DBSchemaDefinitionExporterConfiguration.class,
 						properties);
 
-			DBType targetDBType = DBType.valueOf(
+			DBType exportDBType = DBType.valueOf(
 				StringUtil.toUpperCase(
 					dbSchemaDefinitionExporterConfiguration.databaseType()));
 
-			SQLProvider sqlProvider = new PortalSQLProvider(targetDBType);
+			SQLProvider sqlProvider = new PortalSQLProvider(exportDBType);
 
 			File file = new File(
 				dbSchemaDefinitionExporterConfiguration.path());
@@ -112,7 +112,7 @@ public class DBSchemaDefinitionExporter {
 			}
 
 			DBSchemaDefinitionExporterReport.generateReport(
-				dbSchemaDefinitionExporterConfiguration.path(), targetDBType);
+				dbSchemaDefinitionExporterConfiguration.path(), exportDBType);
 		}
 		catch (Exception exception) {
 			_log.error(

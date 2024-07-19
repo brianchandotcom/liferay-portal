@@ -426,7 +426,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		return repository.addFileShortcut(
-			getUserId(), folderId, toFileEntryId, serviceContext);
+			externalReferenceCode, getUserId(), folderId, toFileEntryId,
+			serviceContext);
 	}
 
 	/**
@@ -774,8 +775,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileShortcutId);
 
 		FileShortcut targetFileShortcut = destinationRepository.addFileShortcut(
-			getUserId(), destinationFolderId, fileShortcut.getToFileEntryId(),
-			serviceContext);
+			null, getUserId(), destinationFolderId,
+			fileShortcut.getToFileEntryId(), serviceContext);
 
 		_copyResourcePermissions(
 			fileShortcut.getCompanyId(), DLFileShortcut.class.getName(),
@@ -3438,7 +3439,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 					FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
 
 					toRepository.addFileShortcut(
-						getUserId(), targetFolder.getFolderId(),
+						null, getUserId(), targetFolder.getFolderId(),
 						fileShortcut.getToFileEntryId(), serviceContext);
 				}
 			}

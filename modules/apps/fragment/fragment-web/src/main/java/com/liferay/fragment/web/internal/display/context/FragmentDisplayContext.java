@@ -637,8 +637,7 @@ public class FragmentDisplayContext {
 						).buildString());
 					verticalNavItem.setId(String.valueOf(fragmentCollectionId));
 
-					verticalNavItem.setLabel(
-						HtmlUtil.escape(fragmentCollection.getName()));
+					verticalNavItem.setLabel(fragmentCollection.getName());
 				});
 		}
 
@@ -678,9 +677,8 @@ public class FragmentDisplayContext {
 					verticalNavItem.setId(fragmentCollectionKey);
 
 					verticalNavItem.setLabel(
-						HtmlUtil.escape(
-							fragmentCollectionContributor.getName(
-								_themeDisplay.getLocale())));
+						fragmentCollectionContributor.getName(
+							_themeDisplay.getLocale()));
 				});
 		}
 

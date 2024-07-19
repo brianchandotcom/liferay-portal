@@ -1546,8 +1546,7 @@ public class LayoutsAdminDisplayContext {
 				continue;
 			}
 
-			String name = HtmlUtil.escape(
-				layoutPageTemplateCollection.getName());
+			String name = layoutPageTemplateCollection.getName();
 
 			verticalNavItemList.add(
 				verticalNavItem -> {

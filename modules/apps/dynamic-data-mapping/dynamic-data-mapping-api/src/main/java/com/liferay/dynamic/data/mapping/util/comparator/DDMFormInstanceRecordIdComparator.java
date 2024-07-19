@@ -22,12 +22,14 @@ public class DDMFormInstanceRecordIdComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"formInstanceRecordId"};
 
-	public DDMFormInstanceRecordIdComparator() {
-		this(false);
-	}
+	public static DDMFormInstanceRecordIdComparator getInstance(
+		boolean ascending) {
 
-	public DDMFormInstanceRecordIdComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +65,16 @@ public class DDMFormInstanceRecordIdComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private DDMFormInstanceRecordIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final DDMFormInstanceRecordIdComparator _INSTANCE_ASCENDING =
+		new DDMFormInstanceRecordIdComparator(true);
+
+	private static final DDMFormInstanceRecordIdComparator
+		_INSTANCE_DESCENDING = new DDMFormInstanceRecordIdComparator(false);
 
 	private final boolean _ascending;
 

@@ -21,12 +21,12 @@ public class StructureLayoutNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public StructureLayoutNameComparator() {
-		this(true);
-	}
+	public static StructureLayoutNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public StructureLayoutNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +64,16 @@ public class StructureLayoutNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private StructureLayoutNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final StructureLayoutNameComparator _INSTANCE_ASCENDING =
+		new StructureLayoutNameComparator(true);
+
+	private static final StructureLayoutNameComparator _INSTANCE_DESCENDING =
+		new StructureLayoutNameComparator(false);
 
 	private final boolean _ascending;
 

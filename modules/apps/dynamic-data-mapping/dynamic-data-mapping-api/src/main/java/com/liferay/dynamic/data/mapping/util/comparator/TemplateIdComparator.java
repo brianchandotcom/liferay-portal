@@ -19,12 +19,12 @@ public class TemplateIdComparator extends OrderByComparator<DDMTemplate> {
 
 	public static final String[] ORDER_BY_FIELDS = {"templateId"};
 
-	public TemplateIdComparator() {
-		this(false);
-	}
+	public static TemplateIdComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public TemplateIdComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -66,6 +66,16 @@ public class TemplateIdComparator extends OrderByComparator<DDMTemplate> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private TemplateIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final TemplateIdComparator _INSTANCE_ASCENDING =
+		new TemplateIdComparator(true);
+
+	private static final TemplateIdComparator _INSTANCE_DESCENDING =
+		new TemplateIdComparator(false);
 
 	private final boolean _ascending;
 

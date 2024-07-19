@@ -92,9 +92,9 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		User user = (User)httpSession.getAttribute(WebKeys.USER);
+		User user1 = (User)httpSession.getAttribute(WebKeys.USER);
 
-		if (user == null) {
+		if (user1 == null) {
 			long userId = 0;
 
 			try {
@@ -123,8 +123,16 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 			}
 		}
 		else {
+			User user2 = UserLocalServiceUtil.getUser(user1.getUserId());
+
+			if (!user2.isActive()) {
+				httpSession.invalidate();
+
+				return null;
+			}
+
 			httpServletRequest = new ProtectedServletRequest(
-				httpServletRequest, String.valueOf(user.getUserId()),
+				httpServletRequest, String.valueOf(user1.getUserId()),
 				HttpServletRequest.BASIC_AUTH);
 
 			PrincipalThreadLocal.setPassword(

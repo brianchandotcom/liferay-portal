@@ -71,7 +71,9 @@ public class CommerceReturnObjectEntryValuesContributor
 
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(
-				GetterUtil.getLong(values.get("commerceOrderId")));
+				GetterUtil.getLong(
+					values.get(
+						"r_commerceOrderToCommerceReturns_commerceOrderId")));
 
 		values.put("channelGroupId", commerceOrder.getGroupId());
 

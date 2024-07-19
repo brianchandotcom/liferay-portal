@@ -1,0 +1,66 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {expect, mergeTests} from '@playwright/test';
+
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {loginTest} from '../../fixtures/loginTest';
+import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
+
+export const test = mergeTests(apiHelpersTest, loginTest());
+
+test('LPD-31710 Publication bar disappears when trying to select a publication', async ({
+	apiHelpers,
+	page,
+}) => {
+	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[user.alternateName] = {
+		name: user.givenName,
+		password: 'test',
+		surname: user.familyName,
+	};
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		'Publications User',
+		user.id
+	);
+
+	await performLogout(page);
+
+	await performLogin(page, user.alternateName);
+
+	const ctCollection =
+		await apiHelpers.headlessChangeTracking.createCTCollection(
+			getRandomString()
+		);
+
+	await performLogout(page);
+
+	await performLogin(page, 'test');
+
+	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+
+	const changeTrackingIndicatorButton = page.locator(
+		'.change-tracking-indicator-button'
+	);
+
+	await changeTrackingIndicatorButton.click();
+
+	const selectPublicationMenuItem = page.getByRole('menuitem', {
+		name: 'Select a Publication',
+	});
+
+	await expect(selectPublicationMenuItem).toBeVisible();
+
+	await selectPublicationMenuItem.click();
+
+	await expect(
+		page.locator('li').filter({hasText: ctCollection.name})
+	).toBeVisible();
+
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(ctCollection.id);
+});

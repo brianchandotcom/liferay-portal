@@ -195,3 +195,33 @@ test('LPD-30589 Add Organization Team', async ({
 		(await teamsPage.teamsTableRow(1, newTeamName, true)).row
 	).toBeVisible();
 });
+
+test('LPD-31669 Check whether admin user is redirected to organization page after user to org assignment', async ({
+	apiHelpers,
+	assignUsersPage,
+	organizationUsersPage,
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	const userName = 'Test Test';
+
+	const organization = await apiHelpers.headlessAdminUser.postOrganization();
+
+	await usersAndOrganizationsPage.goToOrganizations();
+
+	await (
+		await usersAndOrganizationsPage.organizationActionsMenu(
+			organization.name
+		)
+	).click();
+	await usersAndOrganizationsPage.assignUsersMenuItem.click();
+
+	await (await assignUsersPage.usersTableRowCheckbox(userName)).check();
+	await assignUsersPage.doneButton.click();
+
+	await waitForSuccessAlert(page);
+
+	await expect(
+		await organizationUsersPage.usersTableRowLink(userName)
+	).toBeVisible();
+});

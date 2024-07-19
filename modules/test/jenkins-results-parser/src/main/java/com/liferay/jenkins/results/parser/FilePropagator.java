@@ -223,8 +223,8 @@ public class FilePropagator {
 					}
 				}
 				catch (IOException ioException) {
-					throw new RuntimeException(
-						"Unable to get jenkins-admin user credentials",
+					throw new FilePropagatorRuntimeException(
+						this, "Unable to get jenkins-admin user credentials",
 						ioException);
 				}
 
@@ -259,8 +259,9 @@ public class FilePropagator {
 			}
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(
-				"Unable to copy from source. Executed: " + commands, exception);
+			throw new FilePropagatorRuntimeException(
+				this, "Unable to copy from source. Executed: " + commands,
+				exception);
 		}
 
 		log("Finished copying from source.");

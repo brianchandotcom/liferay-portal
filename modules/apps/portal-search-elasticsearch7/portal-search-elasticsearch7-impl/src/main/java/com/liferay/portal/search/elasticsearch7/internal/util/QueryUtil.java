@@ -20,7 +20,7 @@ public class QueryUtil {
 	public static AbstractQueryBuilder<? extends AbstractQueryBuilder<?>>
 		translateTerms(String field, String[] terms) {
 
-		if (terms.length <= _MAX_TERMS_COUNT) {
+		if (terms.length <= _maxTermsCount) {
 			return QueryBuilders.termsQuery(field, terms);
 		}
 
@@ -31,7 +31,7 @@ public class QueryUtil {
 		for (String term : terms) {
 			termsList.add(term);
 
-			if (termsList.size() == _MAX_TERMS_COUNT) {
+			if (termsList.size() == _maxTermsCount) {
 				boolQueryBuilder.should(
 					QueryBuilders.termsQuery(
 						field, termsList.toArray(new String[0])));
@@ -49,6 +49,14 @@ public class QueryUtil {
 		return boolQueryBuilder;
 	}
 
-	private static final Integer _MAX_TERMS_COUNT = 65536;
+	private static void _setMaxTermsCount(Integer maxTermsCount) {
+		_maxTermsCount = maxTermsCount;
+	}
+
+	private static Integer _maxTermsCount;
+
+	static {
+		_setMaxTermsCount(65536);
+	}
 
 }

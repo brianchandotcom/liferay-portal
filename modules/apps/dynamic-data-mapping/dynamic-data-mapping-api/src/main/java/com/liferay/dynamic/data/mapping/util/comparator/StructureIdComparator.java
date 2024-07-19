@@ -19,12 +19,12 @@ public class StructureIdComparator extends OrderByComparator<DDMStructure> {
 
 	public static final String[] ORDER_BY_FIELDS = {"structureId"};
 
-	public StructureIdComparator() {
-		this(false);
-	}
+	public static StructureIdComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public StructureIdComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -66,6 +66,16 @@ public class StructureIdComparator extends OrderByComparator<DDMStructure> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private StructureIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final StructureIdComparator _INSTANCE_ASCENDING =
+		new StructureIdComparator(true);
+
+	private static final StructureIdComparator _INSTANCE_DESCENDING =
+		new StructureIdComparator(false);
 
 	private final boolean _ascending;
 

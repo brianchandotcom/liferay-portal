@@ -23,12 +23,14 @@ public class DataProviderInstanceNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public DataProviderInstanceNameComparator() {
-		this(false);
-	}
+	public static DataProviderInstanceNameComparator getInstance(
+		boolean ascending) {
 
-	public DataProviderInstanceNameComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -68,6 +70,16 @@ public class DataProviderInstanceNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private DataProviderInstanceNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final DataProviderInstanceNameComparator
+		_INSTANCE_ASCENDING = new DataProviderInstanceNameComparator(true);
+
+	private static final DataProviderInstanceNameComparator
+		_INSTANCE_DESCENDING = new DataProviderInstanceNameComparator(false);
 
 	private final boolean _ascending;
 

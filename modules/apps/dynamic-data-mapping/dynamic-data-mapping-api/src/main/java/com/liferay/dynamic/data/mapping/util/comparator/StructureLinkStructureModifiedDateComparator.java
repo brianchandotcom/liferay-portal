@@ -25,12 +25,14 @@ public class StructureLinkStructureModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public StructureLinkStructureModifiedDateComparator() {
-		this(false);
-	}
+	public static StructureLinkStructureModifiedDateComparator getInstance(
+		boolean ascending) {
 
-	public StructureLinkStructureModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -79,6 +81,18 @@ public class StructureLinkStructureModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private StructureLinkStructureModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final StructureLinkStructureModifiedDateComparator
+		_INSTANCE_ASCENDING = new StructureLinkStructureModifiedDateComparator(
+			true);
+
+	private static final StructureLinkStructureModifiedDateComparator
+		_INSTANCE_DESCENDING = new StructureLinkStructureModifiedDateComparator(
+			false);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StructureLinkStructureModifiedDateComparator.class);

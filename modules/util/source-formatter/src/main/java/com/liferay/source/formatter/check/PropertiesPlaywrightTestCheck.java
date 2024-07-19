@@ -8,11 +8,14 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -43,9 +46,24 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 					fileName,
 					"Missing property '" + _TESTRAY_MAIN_COMPONENT_NAME +
 						"' in test.properties");
+
+				return content;
 			}
 
-			return content;
+			List<String> testrayAllTeamsComponentNames =
+				_getTestrayAllTeamsComponentNames();
+
+			if (!testrayAllTeamsComponentNames.contains(
+					testrayMainComponentName)) {
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Property value '", testrayMainComponentName,
+						"' does not exist in 'testray.team.*.component.names' ",
+						"in ", SourceUtil.getRootDirName(absolutePath),
+						"/test.properties"));
+			}
 		}
 
 		if (absolutePath.contains("/modules/apps/")) {
@@ -104,11 +122,63 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 		return absolutePath.substring(y + 1, x);
 	}
 
+	private synchronized List<String> _getTestrayAllTeamsComponentNames()
+		throws IOException {
+
+		if (_testrayAllTeamsComponentNames != null) {
+			return _testrayAllTeamsComponentNames;
+		}
+
+		_testrayAllTeamsComponentNames = new ArrayList<>();
+
+		File file = new File(getPortalDir(), "test.properties");
+
+		if (!file.exists()) {
+			return _testrayAllTeamsComponentNames;
+		}
+
+		Properties properties = new Properties();
+
+		properties.load(new FileInputStream(file));
+
+		List<String> testrayAvailableComponentNames = ListUtil.fromString(
+			properties.getProperty("testray.available.component.names"),
+			StringPool.COMMA);
+
+		for (String testrayAvailableComponentName :
+				testrayAvailableComponentNames) {
+
+			if (!testrayAvailableComponentName.startsWith("${") &&
+				!testrayAvailableComponentName.endsWith("}")) {
+
+				continue;
+			}
+
+			String testrayTeamComponentName =
+				testrayAvailableComponentName.substring(
+					2, testrayAvailableComponentName.length() - 1);
+
+			List<String> testraTeamComponentNames = ListUtil.fromString(
+				properties.getProperty(testrayTeamComponentName),
+				StringPool.COMMA);
+
+			if (ListUtil.isEmpty(testraTeamComponentNames)) {
+				continue;
+			}
+
+			_testrayAllTeamsComponentNames.addAll(testraTeamComponentNames);
+		}
+
+		return _testrayAllTeamsComponentNames;
+	}
+
 	private static final String _PLAYWRIGHT_TEST_PROJECT_NAME =
 		"playwright.test.project[playwright-js-tomcat90-mysql57-jdk8]" +
 			"[relevant]";
 
 	private static final String _TESTRAY_MAIN_COMPONENT_NAME =
 		"testray.main.component.name";
+
+	private List<String> _testrayAllTeamsComponentNames;
 
 }

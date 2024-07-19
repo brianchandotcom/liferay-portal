@@ -41,6 +41,14 @@ public class FilePropagator {
 
 		_timeout = timeout;
 
+		synchronized (_instanceCount) {
+			Thread thread = Thread.currentThread();
+
+			_id = JenkinsResultsParserUtil.combine(
+				String.valueOf(thread.getId()), "-",
+				String.valueOf(_instanceCount++));
+		}
+
 		for (String fileName : fileNames) {
 			_filePropagatorTasks.add(
 				new FilePropagatorTask(
@@ -290,10 +298,13 @@ public class FilePropagator {
 
 	private static final long _TIMEOUT_DEFAULT = 15 * 60 * 1000;
 
+	private static Integer _instanceCount = 0;
+
 	private final List<String> _busySlaves = new ArrayList<>();
 	private final List<String> _errorSlaves = new ArrayList<>();
 	private final List<FilePropagatorTask> _filePropagatorTasks =
 		new ArrayList<>();
+	private final String _id;
 	private final List<String> _mirrorSlaves = new ArrayList<>();
 	private String _postDistCommand;
 	private String _preDistCommand;

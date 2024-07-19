@@ -3,7 +3,10 @@
 		"pageElements": [
 			{
 				"definition": {
-					"cssClasses": ["learn-recipe-container", "header-navigation"],
+					"cssClasses": [
+						"learn-recipe-container",
+						"header-navigation"
+					],
 					"customCSS": ".[$FRAGMENT_CLASS$] {\n  align-items: center;\n\tjustify-content:space-between;\n  \nmargin-top: 0 !important;\n  \n}",
 					"fragmentStyle": {
 						"marginTop": "4",
@@ -21,8 +24,11 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {"key": "BASIC_COMPONENT-html"},
-							"fragmentConfig": {},
+							"fragment": {
+								"key": "BASIC_COMPONENT-html"
+							},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "element-html",
@@ -44,13 +50,17 @@
 					},
 					{
 						"definition": {
-							"cssClasses": ["recipe-feedback"],
+							"cssClasses": [
+								"recipe-feedback"
+							],
 							"customCSS": ".[$FRAGMENT_CLASS$] {\n\tdisplay: flex;\n\ttext-wrap: nowrap;\n}",
-							"fragment": {"key": "BASIC_COMPONENT-button"},
+							"fragment": {
+								"key": "BASIC_COMPONENT-button"
+							},
 							"fragmentConfig": {
+								"buttonSize": "nm",
 								"buttonType": "link",
-								"type": "link",
-								"buttonSize": "nm"
+								"type": "link"
 							},
 							"fragmentFields": [
 								{
@@ -73,7 +83,9 @@
 									}
 								}
 							],
-							"fragmentStyle": {"fontWeight": "fontWeightBold"},
+							"fragmentStyle": {
+								"fontWeight": "fontWeightBold"
+							},
 							"indexed": true
 						},
 						"type": "Fragment"
@@ -84,7 +96,9 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {"widthType": "Fixed"}
+					"layout": {
+						"widthType": "Fixed"
+					}
 				},
 				"pageElements": [
 					{
@@ -92,8 +106,10 @@
 							"fragment": {
 								"key": "com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer"
 							},
-							"fragmentConfig": {},
-							"fragmentFields": [],
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"type": "Fragment"
@@ -106,12 +122,14 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"masterPage": {"key": "liferay-learn"},
+		"masterPage": {
+			"key": "liferay-learn"
+		},
 		"themeName": "Dialect",
 		"themeSettings": {
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-header": "false",
 			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},

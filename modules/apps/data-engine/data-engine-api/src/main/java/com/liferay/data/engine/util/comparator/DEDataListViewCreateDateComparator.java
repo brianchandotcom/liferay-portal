@@ -21,12 +21,14 @@ public class DEDataListViewCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public DEDataListViewCreateDateComparator() {
-		this(false);
-	}
+	public static DEDataListViewCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public DEDataListViewCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -61,6 +63,16 @@ public class DEDataListViewCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private DEDataListViewCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final DEDataListViewCreateDateComparator
+		_INSTANCE_ASCENDING = new DEDataListViewCreateDateComparator(true);
+
+	private static final DEDataListViewCreateDateComparator
+		_INSTANCE_DESCENDING = new DEDataListViewCreateDateComparator(false);
 
 	private final boolean _ascending;
 

@@ -241,6 +241,7 @@ public interface DLAppLocalService extends BaseLocalService {
 	 * Adds the file shortcut to the existing file entry. This method is only
 	 * supported by the Liferay repository.
 	 *
+	 * @param externalReferenceCode the external reference code or the file shortcut
 	 * @param userId the primary key of the file shortcut's creator/owner
 	 * @param repositoryId the primary key of the repository
 	 * @param folderId the primary key of the file shortcut's parent folder
@@ -252,8 +253,8 @@ public interface DLAppLocalService extends BaseLocalService {
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public FileShortcut addFileShortcut(
-			long userId, long repositoryId, long folderId, long toFileEntryId,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long repositoryId,
+			long folderId, long toFileEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

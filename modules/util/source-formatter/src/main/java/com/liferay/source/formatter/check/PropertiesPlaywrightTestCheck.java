@@ -77,7 +77,8 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 					fileNames = SourceFormatterUtil.scanForFileNames(
 						file.getCanonicalPath(),
 						new String[] {
-							"apps/**/" + moduleName + "/test.properties"
+							"apps/**/" + moduleName + "/test.properties",
+							"dxp/apps/**/" + moduleName + "/test.properties"
 						});
 
 					break;
@@ -90,11 +91,13 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					"Missing test.properties for module '" + moduleName +
-						"' in modules/apps");
+						"' in modules");
 			}
 		}
 
-		if (absolutePath.contains("/modules/apps/")) {
+		if (absolutePath.contains("/modules/apps/") ||
+			absolutePath.contains("/modules/dxp/apps/")) {
+
 			String moduleName = _getModuleName(absolutePath);
 
 			File file = new File(

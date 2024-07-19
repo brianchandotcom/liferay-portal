@@ -195,7 +195,17 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CommerceShippingMethodPriorityComparator.getInstance(false);
 		CommerceSubscriptionEntryCreateDateComparatorOrganizationIdComparator.getInstance(false);
 		CommerceTierPriceEntryMinQuantityComparator.getInstance(false);
+		DDLRecordCreateDateComparator.getInstance(false);
+		DDLRecordIdComparator.getInstance(false);
+		DDLRecordSetCreateDateComparator.getInstance(false);
+		DDLRecordSetNameComparator.getInstance(false);
+		DDMFormInstanceNameComparator.getInstance(false);
+		DDMFormInstanceRecordIdComparator.getInstance(false);
+		DEDataListViewCreateDateComparator.getInstance(false);
+		DEDataListViewNameComparator.getInstance(false);
 		DLFileVersionVersionComparator.getInstance(false);
+		DataProviderInstanceModifiedDateComparator.getInstance(false);
+		DataProviderInstanceNameComparator.getInstance(false);
 		FeedIDComparator.getInstance(false);
 		FeedNameComparator.getInstance(false);
 		FolderArticleArticleIdComparator.getInstance(false);
@@ -227,6 +237,12 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		KBTemplateModifiedDateComparator.getInstance(false);
 		KBTemplateTitleComparator.getInstance(false);
 		KBTemplateUserNameComparator.getInstance(false);
+		KaleoDefinitionVersionActiveComparator.getInstance(false);
+		KaleoDefinitionVersionComparator.getInstance(false);
+		KaleoDefinitionVersionIdComparator.getInstance(false);
+		KaleoDefinitionVersionModifiedDateComparator.getInstance(false);
+		KaleoDefinitionVersionNameComparator.getInstance(false);
+		KaleoDefinitionVersionVersionComparator.getInstance(false);
 		KaleoProcessCreateDateComparator.getInstance(false);
 		LayoutClassedModelUsageModifiedDateComparator.getInstance(true);
 		LayoutComparator.getInstance(false);
@@ -265,7 +281,13 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		RoleRoleIdComparator.getInstance(false);
 		RoleTypeComparator.getInstance(false);
 		SocialActivitySetModifiedDateComparator.getInstance(false);
+		StructureCreateDateComparator.getInstance(false);
+		StructureIdComparator.getInstance(false);
+		StructureLayoutCreateDateComparator.getInstance(false);
+		StructureLayoutNameComparator.getInstance(true);
+		StructureLinkStructureModifiedDateComparator.getInstance(false);
 		TeamNameComparator.getInstance(false);
+		TemplateIdComparator.getInstance(false);
 		ThreadCreateDateComparator.getInstance(false);
 		ThreadLastPostDateComparator.getInstance(false);
 		ThreadModifiedDateComparator.getInstance(false);
@@ -279,6 +301,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		UserLastNameComparator.getInstance(false);
 		UserLoginDateComparator.getInstance(false);
 		UserScreenNameComparator.getInstance(false);
+		WorkflowMetricsSLADefinitionVersionIdComparator.getInstance(false);
 
 		PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX;
 		PortletDisplayTemplateConstants.ENTRIES;
@@ -382,7 +405,17 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		CommerceShippingMethodPriorityComparator.getInstance(showHiddenPages);
 		CommerceSubscriptionEntryCreateDateComparatorOrganizationIdComparator.getInstance(showHiddenPages);
 		CommerceTierPriceEntryMinQuantityComparator.getInstance(showHiddenPages);
+		DDLRecordCreateDateComparator.getInstance(showHiddenPages);
+		DDLRecordIdComparator.getInstance(showHiddenPages);
+		DDLRecordSetCreateDateComparator.getInstance(showHiddenPages);
+		DDLRecordSetNameComparator.getInstance(showHiddenPages);
+		DDMFormInstanceNameComparator.getInstance(showHiddenPages);
+		DDMFormInstanceRecordIdComparator.getInstance(showHiddenPages);
+		DEDataListViewCreateDateComparator.getInstance(showHiddenPages);
+		DEDataListViewNameComparator.getInstance(showHiddenPages);
 		DLFileVersionVersionComparator.getInstance(showHiddenPages);
+		DataProviderInstanceModifiedDateComparator.getInstance(showHiddenPages);
+		DataProviderInstanceNameComparator.getInstance(showHiddenPages);
 		FeedIDComparator.getInstance(showHiddenPages);
 		FeedNameComparator.getInstance(showHiddenPages);
 		FolderArticleArticleIdComparator.getInstance(showHiddenPages);
@@ -414,6 +447,12 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		KBTemplateModifiedDateComparator.getInstance(showHiddenPages);
 		KBTemplateTitleComparator.getInstance(showHiddenPages);
 		KBTemplateUserNameComparator.getInstance(showHiddenPages);
+		KaleoDefinitionVersionActiveComparator.getInstance(showHiddenPages);
+		KaleoDefinitionVersionComparator.getInstance(showHiddenPages);
+		KaleoDefinitionVersionIdComparator.getInstance(showHiddenPages);
+		KaleoDefinitionVersionModifiedDateComparator.getInstance(showHiddenPages);
+		KaleoDefinitionVersionNameComparator.getInstance(showHiddenPages);
+		KaleoDefinitionVersionVersionComparator.getInstance(showHiddenPages);
 		KaleoProcessCreateDateComparator.getInstance(showHiddenPages);
 		LayoutClassedModelUsageModifiedDateComparator.getInstance(showHiddenPages);
 		LayoutComparator.getInstance(showHiddenPages);
@@ -452,7 +491,13 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		RoleRoleIdComparator.getInstance(showHiddenPages);
 		RoleTypeComparator.getInstance(showHiddenPages);
 		SocialActivitySetModifiedDateComparator.getInstance(showHiddenPages);
+		StructureCreateDateComparator.getInstance(showHiddenPages);
+		StructureIdComparator.getInstance(showHiddenPages);
+		StructureLayoutCreateDateComparator.getInstance(showHiddenPages);
+		StructureLayoutNameComparator.getInstance(showHiddenPages);
+		StructureLinkStructureModifiedDateComparator.getInstance(showHiddenPages);
 		TeamNameComparator.getInstance(showHiddenPages);
+		TemplateIdComparator.getInstance(showHiddenPages);
 		ThreadCreateDateComparator.getInstance(showHiddenPages);
 		ThreadLastPostDateComparator.getInstance(showHiddenPages);
 		ThreadModifiedDateComparator.getInstance(showHiddenPages);
@@ -466,6 +511,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		UserLastNameComparator.getInstance(showHiddenPages);
 		UserLoginDateComparator.getInstance(showHiddenPages);
 		UserScreenNameComparator.getInstance(showHiddenPages);
+		WorkflowMetricsSLADefinitionVersionIdComparator.getInstance(showHiddenPages);
 	}
 
 	public void method(CommerceAddress commerceAddress) {

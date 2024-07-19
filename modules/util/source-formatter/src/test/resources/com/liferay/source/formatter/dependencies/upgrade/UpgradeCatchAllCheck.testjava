@@ -180,7 +180,17 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new CommerceShippingMethodPriorityComparator();
 		new CommerceSubscriptionEntryCreateDateComparatorOrganizationIdComparator();
 		new CommerceTierPriceEntryMinQuantityComparator();
+		new DDLRecordCreateDateComparator();
+		new DDLRecordIdComparator();
+		new DDLRecordSetCreateDateComparator();
+		new DDLRecordSetNameComparator();
+		new DDMFormInstanceNameComparator();
+		new DDMFormInstanceRecordIdComparator();
+		new DEDataListViewCreateDateComparator();
+		new DEDataListViewNameComparator();
 		new DLFileVersionVersionComparator();
+		new DataProviderInstanceModifiedDateComparator();
+		new DataProviderInstanceNameComparator();
 		new FeedIDComparator();
 		new FeedNameComparator();
 		new FolderArticleArticleIdComparator();
@@ -212,6 +222,12 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new KBTemplateModifiedDateComparator();
 		new KBTemplateTitleComparator();
 		new KBTemplateUserNameComparator();
+		new KaleoDefinitionVersionActiveComparator();
+		new KaleoDefinitionVersionComparator();
+		new KaleoDefinitionVersionIdComparator();
+		new KaleoDefinitionVersionModifiedDateComparator();
+		new KaleoDefinitionVersionNameComparator();
+		new KaleoDefinitionVersionVersionComparator();
 		new KaleoProcessCreateDateComparator();
 		new LayoutClassedModelUsageModifiedDateComparator();
 		new LayoutComparator();
@@ -250,7 +266,13 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new RoleRoleIdComparator();
 		new RoleTypeComparator();
 		new SocialActivitySetModifiedDateComparator();
+		new StructureCreateDateComparator();
+		new StructureIdComparator();
+		new StructureLayoutCreateDateComparator();
+		new StructureLayoutNameComparator();
+		new StructureLinkStructureModifiedDateComparator();
 		new TeamNameComparator();
+		new TemplateIdComparator();
 		new ThreadCreateDateComparator();
 		new ThreadLastPostDateComparator();
 		new ThreadModifiedDateComparator();
@@ -264,6 +286,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new UserLastNameComparator();
 		new UserLoginDateComparator();
 		new UserScreenNameComparator();
+		new WorkflowMetricsSLADefinitionVersionIdComparator();
 
 		PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX;
 		PortletDisplayTemplateManager.ENTRIES;
@@ -368,7 +391,17 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new CommerceShippingMethodPriorityComparator(showHiddenPages);
 		new CommerceSubscriptionEntryCreateDateComparatorOrganizationIdComparator(showHiddenPages);
 		new CommerceTierPriceEntryMinQuantityComparator(showHiddenPages);
+		new DDLRecordCreateDateComparator(showHiddenPages);
+		new DDLRecordIdComparator(showHiddenPages);
+		new DDLRecordSetCreateDateComparator(showHiddenPages);
+		new DDLRecordSetNameComparator(showHiddenPages);
+		new DDMFormInstanceNameComparator(showHiddenPages);
+		new DDMFormInstanceRecordIdComparator(showHiddenPages);
+		new DEDataListViewCreateDateComparator(showHiddenPages);
+		new DEDataListViewNameComparator(showHiddenPages);
 		new DLFileVersionVersionComparator(showHiddenPages);
+		new DataProviderInstanceModifiedDateComparator(showHiddenPages);
+		new DataProviderInstanceNameComparator(showHiddenPages);
 		new FeedIDComparator(showHiddenPages);
 		new FeedNameComparator(showHiddenPages);
 		new FolderArticleArticleIdComparator(showHiddenPages);
@@ -400,6 +433,12 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new KBTemplateModifiedDateComparator(showHiddenPages);
 		new KBTemplateTitleComparator(showHiddenPages);
 		new KBTemplateUserNameComparator(showHiddenPages);
+		new KaleoDefinitionVersionActiveComparator(showHiddenPages);
+		new KaleoDefinitionVersionComparator(showHiddenPages);
+		new KaleoDefinitionVersionIdComparator(showHiddenPages);
+		new KaleoDefinitionVersionModifiedDateComparator(showHiddenPages);
+		new KaleoDefinitionVersionNameComparator(showHiddenPages);
+		new KaleoDefinitionVersionVersionComparator(showHiddenPages);
 		new KaleoProcessCreateDateComparator(showHiddenPages);
 		new LayoutClassedModelUsageModifiedDateComparator(showHiddenPages);
 		new LayoutComparator(showHiddenPages);
@@ -438,7 +477,13 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new RoleRoleIdComparator(showHiddenPages);
 		new RoleTypeComparator(showHiddenPages);
 		new SocialActivitySetModifiedDateComparator(showHiddenPages);
+		new StructureCreateDateComparator(showHiddenPages);
+		new StructureIdComparator(showHiddenPages);
+		new StructureLayoutCreateDateComparator(showHiddenPages);
+		new StructureLayoutNameComparator(showHiddenPages);
+		new StructureLinkStructureModifiedDateComparator(showHiddenPages);
 		new TeamNameComparator(showHiddenPages);
+		new TemplateIdComparator(showHiddenPages);
 		new ThreadCreateDateComparator(showHiddenPages);
 		new ThreadLastPostDateComparator(showHiddenPages);
 		new ThreadModifiedDateComparator(showHiddenPages);
@@ -452,6 +497,7 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new UserLastNameComparator(showHiddenPages);
 		new UserLoginDateComparator(showHiddenPages);
 		new UserScreenNameComparator(showHiddenPages);
+		new WorkflowMetricsSLADefinitionVersionIdComparator(showHiddenPages);
 	}
 
 	public void method(CommerceAddress commerceAddress) {

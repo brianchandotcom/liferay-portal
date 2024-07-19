@@ -24,6 +24,9 @@ create unique index IX_6E042099 on EagerBlobEntry (uuid_[$COLUMN_LENGTH:75$], gr
 
 create index IX_420C1E47 on FinderWhereClauseEntry (name[$COLUMN_LENGTH:75$]);
 
+create index IX_CA2E6A1D on IndexEntries_KeywordsEntries (companyId);
+create index IX_FE7B50C8 on IndexEntries_KeywordsEntries (keywordsEntryId);
+
 create unique index IX_2FF02DF5 on LVEntry (groupId, head, uniqueGroupKey[$COLUMN_LENGTH:75$]);
 create index IX_8F9FD921 on LVEntry (groupId, uniqueGroupKey[$COLUMN_LENGTH:75$]);
 create unique index IX_50CAD09D on LVEntry (headId);

@@ -111,6 +111,11 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
+	public String getExternalReferenceCode() {
+		return _dlFileShortcut.getExternalReferenceCode();
+	}
+
+	@Override
 	public long getFileShortcutId() {
 		return _dlFileShortcut.getFileShortcutId();
 	}

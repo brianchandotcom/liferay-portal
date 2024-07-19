@@ -74,6 +74,11 @@ public class FileShortcutProxyBean
 	}
 
 	@Override
+	public String getExternalReferenceCode() {
+		return _fileShortcut.getExternalReferenceCode();
+	}
+
+	@Override
 	public long getFileShortcutId() {
 		return _fileShortcut.getFileShortcutId();
 	}

@@ -154,7 +154,8 @@ public class KaleoFormsViewRecordsDisplayContext {
 			orderByComparator = new DDLRecordModifiedDateComparator(orderByAsc);
 		}
 		else {
-			orderByComparator = new DDLRecordCreateDateComparator(orderByAsc);
+			orderByComparator = DDLRecordCreateDateComparator.getInstance(
+				orderByAsc);
 		}
 
 		return orderByComparator;

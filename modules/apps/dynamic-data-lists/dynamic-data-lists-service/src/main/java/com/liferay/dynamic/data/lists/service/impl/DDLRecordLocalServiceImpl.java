@@ -354,7 +354,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Override
 	public DDLRecord fetchFirstRecord(String className, long classPK) {
 		return ddlRecordPersistence.fetchByC_C_First(
-			className, classPK, new DDLRecordIdComparator(true));
+			className, classPK, DDLRecordIdComparator.getInstance(true));
 	}
 
 	/**

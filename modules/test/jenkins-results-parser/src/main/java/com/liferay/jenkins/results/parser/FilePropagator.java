@@ -174,6 +174,20 @@ public class FilePropagator {
 		}
 	}
 
+	protected void log(String message) {
+		System.out.print("FilePropagator ID: ");
+		System.out.print(_id);
+
+		if (message.contains("\n")) {
+			System.out.print("\n");
+		}
+		else {
+			System.out.print(" - ");
+		}
+
+		System.out.println(message);
+	}
+
 	private void _copyFromSource() {
 		if (_filePropagatorTasks.isEmpty() || _targetSlaves.isEmpty()) {
 			return;

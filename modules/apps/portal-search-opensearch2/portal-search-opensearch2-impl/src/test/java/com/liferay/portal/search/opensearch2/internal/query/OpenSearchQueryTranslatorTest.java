@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.opensearch2.internal.query;
 
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.internal.query.BooleanQueryImpl;
@@ -17,6 +18,8 @@ import com.liferay.portal.search.internal.query.TermQueryImpl;
 import com.liferay.portal.search.internal.query.TermsQueryImpl;
 import com.liferay.portal.search.internal.query.WildcardQueryImpl;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
+import com.liferay.portal.search.opensearch2.internal.filter.OpenSearchFilterTranslator;
+import com.liferay.portal.search.opensearch2.internal.filter.OpenSearchFilterTranslatorFixture;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 import com.liferay.portal.search.opensearch2.internal.util.QueryUtil;
 import com.liferay.portal.search.query.BooleanQuery;
@@ -50,6 +53,14 @@ public class OpenSearchQueryTranslatorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		OpenSearchFilterTranslatorFixture openSearchFilterTranslatorFixture =
+			new OpenSearchFilterTranslatorFixture(
+				new com.liferay.portal.search.opensearch2.internal.legacy.query.
+					OpenSearchQueryTranslator());
+
+		_openSearchFilterTranslator =
+			openSearchFilterTranslatorFixture.getOpenSearchFilterTranslator();
+
 		OpenSearchQueryTranslatorFixture openSearchQueryTranslatorFixture =
 			new OpenSearchQueryTranslatorFixture();
 
@@ -123,6 +134,21 @@ public class OpenSearchQueryTranslatorTest {
 	}
 
 	@Test
+	public void testTranslateTermsFilterExceedingMaxAllowedTerms()
+		throws Exception {
+
+		TermsFilter termsFilter = new TermsFilter("groupId");
+
+		termsFilter.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+
+		_assertTermsCount(1, 10, termsFilter);
+
+		_assertTermsCount(2, 5, termsFilter);
+
+		_assertTermsCount(4, 3, termsFilter);
+	}
+
+	@Test
 	public void testTranslateTermsQueryExceedingMaxAllowedTerms()
 		throws Exception {
 
@@ -140,38 +166,61 @@ public class OpenSearchQueryTranslatorTest {
 	private void _assertBoost(Query query) {
 		query.setBoost(_BOOST);
 
-		String jsonp = _toJSONP(query);
+		org.opensearch.client.opensearch._types.query_dsl.Query
+			openSearchQuery =
+				new org.opensearch.client.opensearch._types.query_dsl.Query(
+					_openSearchQueryTranslator.translate(query));
+
+		String jsonp = JsonpUtil.toString(openSearchQuery);
 
 		Assert.assertTrue(
 			jsonp, jsonp.contains("\"boost\":" + String.valueOf(_BOOST)));
 	}
 
 	private void _assertTermsCount(
-			int expected, int maxTermsCount, TermsQuery termsQuery)
+			int expected, int maxTermsCount, Object terms, boolean query)
 		throws Exception {
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					QueryUtil.class, "_MAX_TERMS_COUNT", maxTermsCount)) {
 
-			String jsonp = _toJSONP(termsQuery);
+			String jsonp;
+
+			if (query) {
+				jsonp = JsonpUtil.toString(
+					new org.opensearch.client.opensearch._types.query_dsl.Query(
+						_openSearchQueryTranslator.translate(
+							(TermsQuery)terms)));
+			}
+			else {
+				jsonp = JsonpUtil.toString(
+					new org.opensearch.client.opensearch._types.query_dsl.Query(
+						_openSearchFilterTranslator.visit((TermsFilter)terms)));
+			}
 
 			Assert.assertEquals(
 				jsonp, expected, StringUtil.count(jsonp, "terms"));
 		}
 	}
 
-	private String _toJSONP(Query query) {
-		org.opensearch.client.opensearch._types.query_dsl.Query
-			openSearchQuery =
-				new org.opensearch.client.opensearch._types.query_dsl.Query(
-					_openSearchQueryTranslator.translate(query));
+	private void _assertTermsCount(
+			int expected, int maxTermsCount, TermsFilter termsFilter)
+		throws Exception {
 
-		return JsonpUtil.toString(openSearchQuery);
+		_assertTermsCount(expected, maxTermsCount, termsFilter, false);
+	}
+
+	private void _assertTermsCount(
+			int expected, int maxTermsCount, TermsQuery termsQuery)
+		throws Exception {
+
+		_assertTermsCount(expected, maxTermsCount, termsQuery, true);
 	}
 
 	private static final Float _BOOST = 1.5F;
 
+	private OpenSearchFilterTranslator _openSearchFilterTranslator;
 	private OpenSearchQueryTranslator _openSearchQueryTranslator;
 
 }

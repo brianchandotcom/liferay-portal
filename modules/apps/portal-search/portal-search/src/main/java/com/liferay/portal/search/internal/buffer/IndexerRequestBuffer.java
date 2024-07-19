@@ -6,6 +6,7 @@
 package com.liferay.portal.search.internal.buffer;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,11 +19,14 @@ import java.util.List;
  */
 public class IndexerRequestBuffer {
 
-	public static IndexerRequestBuffer create() {
+	public static IndexerRequestBuffer create(
+		TransactionAttribute transactionAttribute) {
+
 		List<IndexerRequestBuffer> indexerRequestBuffers =
 			_indexerRequestBuffersThreadLocal.get();
 
-		IndexerRequestBuffer indexerRequestBuffer = new IndexerRequestBuffer();
+		IndexerRequestBuffer indexerRequestBuffer = new IndexerRequestBuffer(
+			transactionAttribute);
 
 		indexerRequestBuffers.add(indexerRequestBuffer);
 
@@ -70,6 +74,10 @@ public class IndexerRequestBuffer {
 		return _indexerRequests.values();
 	}
 
+	public TransactionAttribute getTransactionAttribute() {
+		return _transactionAttribute;
+	}
+
 	public boolean isEmpty() {
 		return _indexerRequests.isEmpty();
 	}
@@ -82,6 +90,10 @@ public class IndexerRequestBuffer {
 		return _indexerRequests.size();
 	}
 
+	private IndexerRequestBuffer(TransactionAttribute transactionAttribute) {
+		_transactionAttribute = transactionAttribute;
+	}
+
 	private static final ThreadLocal<List<IndexerRequestBuffer>>
 		_indexerRequestBuffersThreadLocal = new CentralizedThreadLocal<>(
 			IndexerRequestBuffer.class + "._indexerRequestBuffersThreadLocal",
@@ -89,5 +101,6 @@ public class IndexerRequestBuffer {
 
 	private final LinkedHashMap<IndexerRequest, IndexerRequest>
 		_indexerRequests = new LinkedHashMap<>();
+	private final TransactionAttribute _transactionAttribute;
 
 }

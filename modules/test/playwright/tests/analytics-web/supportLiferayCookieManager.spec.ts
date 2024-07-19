@@ -132,115 +132,121 @@ async function checkAnalyticsInstance(page: Page) {
 	});
 }
 
-test.describe('LPD-6540 Support Liferay Cookie Manager', () => {
-	test.beforeEach(async ({apiHelpers, page}) => {
-		await connectACToDXP({
-			apiHelpers,
+test.describe(
+	'LPD-6540 Support Liferay Cookie Manager',
+	{
+		tag: '@LPD-6540',
+	},
+	() => {
+		test.beforeEach(async ({apiHelpers, page}) => {
+			await connectACToDXP({
+				apiHelpers,
+				page,
+			});
+		});
+
+		test('When Cookie Preference Handling and Explicit Cookie Consent Mode are both Enabled, AC tracking should be disabled by default and only be enabled as soon the user accepts the performance cookies', async ({
 			page,
-		});
-	});
+		}) => {
+			await test.step('Enable the cookie banner and explicit consent mode', async () => {
+				await changeCookiePreference({
+					enableCookieBanner: true,
+					enableExplicitCookieConsentMode: true,
+					page,
+				});
+			});
 
-	test('When Cookie Preference Handling and Explicit Cookie Consent Mode are both Enabled, AC tracking should be disabled by default and only be enabled as soon the user accepts the performance cookies', async ({
-		page,
-	}) => {
-		await test.step('Enable the cookie banner and explicit consent mode', async () => {
-			await changeCookiePreference({
-				enableCookieBanner: true,
-				enableExplicitCookieConsentMode: true,
-				page,
+			await test.step('Go to DXP > Check that events are not being sent', async () => {
+				await page.goto(liferayConfig.environment.baseUrl);
+
+				expect(await checkAnalyticsInstance(page)).toBeFalsy();
+			});
+
+			await test.step('Accept all cookies > Check that events start to be sent', async () => {
+				await page.getByRole('button', {name: 'Accept All'}).click();
+
+				await page.waitForTimeout(3000);
+
+				expect(await checkAnalyticsInstance(page)).toBeTruthy();
 			});
 		});
 
-		await test.step('Go to DXP > Check that events are not being sent', async () => {
-			await page.goto(liferayConfig.environment.baseUrl);
+		test('When Cookie Preference Handling and Explicit Cookie Consent Mode are both Enabled, AC tracking should be disabled by default and remain disabled if end user did not accept the perfomance cookies', async ({
+			page,
+		}) => {
+			await test.step('Enable the cookie banner and explicit consent mode', async () => {
+				await changeCookiePreference({
+					enableCookieBanner: true,
+					enableExplicitCookieConsentMode: true,
+					page,
+				});
+			});
 
-			expect(await checkAnalyticsInstance(page)).toBeFalsy();
-		});
+			await test.step('Go to DXP > Check that events are not being sent', async () => {
+				await page.goto(liferayConfig.environment.baseUrl);
 
-		await test.step('Accept all cookies > Check that events start to be sent', async () => {
-			await page.getByRole('button', {name: 'Accept All'}).click();
+				expect(await checkAnalyticsInstance(page)).toBeFalsy();
+			});
 
-			await page.waitForTimeout(3000);
+			await test.step('Decline all cookies > Check that events are not sent', async () => {
+				await page.getByRole('button', {name: 'Decline All'}).click();
 
-			expect(await checkAnalyticsInstance(page)).toBeTruthy();
-		});
-	});
+				await page.waitForTimeout(3000);
 
-	test('When Cookie Preference Handling and Explicit Cookie Consent Mode are both Enabled, AC tracking should be disabled by default and remain disabled if end user did not accept the perfomance cookies', async ({
-		page,
-	}) => {
-		await test.step('Enable the cookie banner and explicit consent mode', async () => {
-			await changeCookiePreference({
-				enableCookieBanner: true,
-				enableExplicitCookieConsentMode: true,
-				page,
+				expect(await checkAnalyticsInstance(page)).toBeFalsy();
 			});
 		});
 
-		await test.step('Go to DXP > Check that events are not being sent', async () => {
-			await page.goto(liferayConfig.environment.baseUrl);
+		test('When Cookie Preference Handling is Enabled and Explicit Cookie Consent Mode is not Enabled, AC tracking should be enabled by default until the user rejects the performance cookies', async ({
+			page,
+		}) => {
+			await test.step('Enable the cookie banner and Disabled explicit consent mode', async () => {
+				await changeCookiePreference({
+					enableCookieBanner: true,
+					enableExplicitCookieConsentMode: false,
+					page,
+				});
+			});
 
-			expect(await checkAnalyticsInstance(page)).toBeFalsy();
-		});
+			await test.step('Go to DXP > Check that events are sent', async () => {
+				await page.goto(liferayConfig.environment.baseUrl);
 
-		await test.step('Decline all cookies > Check that events are not sent', async () => {
-			await page.getByRole('button', {name: 'Decline All'}).click();
+				expect(await checkAnalyticsInstance(page)).toBeTruthy();
+			});
 
-			await page.waitForTimeout(3000);
+			await test.step('Decline all cookies > Check that events are not sent', async () => {
+				await page.getByRole('button', {name: 'Decline All'}).click();
 
-			expect(await checkAnalyticsInstance(page)).toBeFalsy();
-		});
-	});
+				await page.waitForTimeout(3000);
 
-	test('When Cookie Preference Handling is Enabled and Explicit Cookie Consent Mode is not Enabled, AC tracking should be enabled by default until the user rejects the performance cookies', async ({
-		page,
-	}) => {
-		await test.step('Enable the cookie banner and Disabled explicit consent mode', async () => {
-			await changeCookiePreference({
-				enableCookieBanner: true,
-				enableExplicitCookieConsentMode: false,
-				page,
+				expect(await checkAnalyticsInstance(page)).toBeFalsy();
 			});
 		});
 
-		await test.step('Go to DXP > Check that events are sent', async () => {
-			await page.goto(liferayConfig.environment.baseUrl);
+		test('When Cookie Preference Handling is Enabled and Explicit Cookie Consent Mode is not Enabled, AC tracking should be enabled by default and remain enabled if end user accepts the perfomance cookies', async ({
+			page,
+		}) => {
+			await test.step('Enable the cookie banner and Disabled explicit consent mode', async () => {
+				await changeCookiePreference({
+					enableCookieBanner: true,
+					enableExplicitCookieConsentMode: false,
+					page,
+				});
+			});
 
-			expect(await checkAnalyticsInstance(page)).toBeTruthy();
-		});
+			await test.step('Go to DXP > Check that events are sent', async () => {
+				await page.goto(liferayConfig.environment.baseUrl);
 
-		await test.step('Decline all cookies > Check that events are not sent', async () => {
-			await page.getByRole('button', {name: 'Decline All'}).click();
+				expect(await checkAnalyticsInstance(page)).toBeTruthy();
+			});
 
-			await page.waitForTimeout(3000);
+			await test.step('Accept all cookies > Check that events are sent', async () => {
+				await page.getByRole('button', {name: 'Accept All'}).click();
 
-			expect(await checkAnalyticsInstance(page)).toBeFalsy();
-		});
-	});
+				await page.waitForTimeout(3000);
 
-	test('When Cookie Preference Handling is Enabled and Explicit Cookie Consent Mode is not Enabled, AC tracking should be enabled by default and remain enabled if end user accepts the perfomance cookies', async ({
-		page,
-	}) => {
-		await test.step('Enable the cookie banner and Disabled explicit consent mode', async () => {
-			await changeCookiePreference({
-				enableCookieBanner: true,
-				enableExplicitCookieConsentMode: false,
-				page,
+				expect(await checkAnalyticsInstance(page)).toBeTruthy();
 			});
 		});
-
-		await test.step('Go to DXP > Check that events are sent', async () => {
-			await page.goto(liferayConfig.environment.baseUrl);
-
-			expect(await checkAnalyticsInstance(page)).toBeTruthy();
-		});
-
-		await test.step('Accept all cookies > Check that events are sent', async () => {
-			await page.getByRole('button', {name: 'Accept All'}).click();
-
-			await page.waitForTimeout(3000);
-
-			expect(await checkAnalyticsInstance(page)).toBeTruthy();
-		});
-	});
-});
+	}
+);

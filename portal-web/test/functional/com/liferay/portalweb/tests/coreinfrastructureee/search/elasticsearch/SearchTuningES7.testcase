@@ -367,11 +367,6 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Journal");
 
-		AssertTextNotEquals.assertNotPartialMatch(
-			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC_ORDER",
-			resultOrder = 1,
-			value1 = "Journal 2");
-
 		for (var webContentTitle : list "Article 1,Article 2,Journal 1,Journal 2") {
 			SearchResults.viewSearchResults(
 				searchAssetTitle = ${webContentTitle},

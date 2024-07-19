@@ -43,7 +43,7 @@ public class DBSchemaDefinitionExporterReport {
 		Set<String> dbTables = _getDBTables();
 		Set<String> exportTables = _getExportTables(path);
 
-		Set<String> tablesNotFound = SetUtil.asymmetricDifference(
+		Set<String> missingTables = SetUtil.asymmetricDifference(
 			dbTables, exportTables);
 
 		Release release = ReleaseLocalServiceUtil.fetchRelease(
@@ -64,7 +64,7 @@ public class DBSchemaDefinitionExporterReport {
 			StringPool.NEW_LINE, "Database tables: ", dbTables.size(),
 			StringPool.NEW_LINE, "Export tables: ", exportTables.size(),
 			StringPool.NEW_LINE, "Missing tables: ",
-			StringUtil.merge(tablesNotFound, StringPool.COMMA_AND_SPACE),
+			StringUtil.merge(missingTables, StringPool.COMMA_AND_SPACE),
 			StringPool.NEW_LINE);
 
 		FileUtil.write(new File(path, "db_export_report.info"), message);

@@ -97,7 +97,9 @@ public class DBSchemaDefinitionExporterReport {
 		return tableNames;
 	}
 
-	private static Set<String> _getExportTableNames(String path) throws Exception {
+	private static Set<String> _getExportTableNames(String path)
+		throws Exception {
+
 		Set<String> tableNames = new HashSet<>();
 
 		String fileContent = StringUtil.toLowerCase(

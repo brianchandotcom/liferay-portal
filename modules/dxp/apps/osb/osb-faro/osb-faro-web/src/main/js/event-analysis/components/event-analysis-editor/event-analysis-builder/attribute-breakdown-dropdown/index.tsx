@@ -1,11 +1,11 @@
 import BaseDropdown from '../base-dropdown';
 import BreakdownOptions from './options';
 import EventAttributeDefinitionQuery, {
-	UPDATE_EVENT_ATTRIBUTE_DEFINITION
+	UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 } from 'event-analysis/queries/EventAttributeDefinitionQuery';
 import EventAttributeDefinitionsQuery, {
 	EventAttributeDefinitionsData,
-	EventAttributeDefinitionsVariables
+	EventAttributeDefinitionsVariables,
 } from 'event-analysis/queries/EventAttributeDefinitionsQuery';
 import React, {useState} from 'react';
 import {AddBreakdown, EditBreakdown} from '../../context/attributes';
@@ -15,7 +15,7 @@ import {
 	AttributeOwnerTypes,
 	AttributeTypes,
 	Breakdown,
-	DataTypes
+	DataTypes,
 } from 'event-analysis/utils/types';
 import {BREAKDOWN_FNS_MAP} from 'event-analysis/utils/utils';
 import {close, modalTypes, open} from 'shared/actions/modals';
@@ -34,49 +34,49 @@ const IndividualAttributes = [
 		displayName: 'jobTitle',
 		id: 'jobTitle',
 		name: 'jobTitle',
-		type: AttributeTypes.Global
+		type: AttributeTypes.Global,
 	},
 	{
 		dataType: DataTypes.String,
 		displayName: 'languageId',
 		id: 'languageId',
 		name: 'languageId',
-		type: AttributeTypes.Global
+		type: AttributeTypes.Global,
 	},
 	{
 		dataType: DataTypes.String,
 		displayName: Liferay.Language.get('role'),
 		id: 'role',
 		name: 'role',
-		type: AttributeTypes.Local
+		type: AttributeTypes.Local,
 	},
 	{
 		dataType: DataTypes.String,
 		displayName: Liferay.Language.get('site-membership'),
 		id: 'group',
 		name: 'group',
-		type: AttributeTypes.Local
+		type: AttributeTypes.Local,
 	},
 	{
 		dataType: DataTypes.String,
 		displayName: Liferay.Language.get('team'),
 		id: 'team',
 		name: 'team',
-		type: AttributeTypes.Local
+		type: AttributeTypes.Local,
 	},
 	{
 		dataType: DataTypes.String,
 		displayName: Liferay.Language.get('user-group'),
 		id: 'userGroup',
 		name: 'userGroup',
-		type: AttributeTypes.Local
-	}
+		type: AttributeTypes.Local,
+	},
 ];
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface IAttributeBreakdownDropdownProps extends PropsFromRedux {
-	alignmentPosition?: typeof Align[keyof typeof Align];
+	alignmentPosition?: (typeof Align)[keyof typeof Align];
 	attribute?: Attribute;
 	breakdown?: Breakdown;
 	disabledIds: string[];
@@ -86,7 +86,9 @@ interface IAttributeBreakdownDropdownProps extends PropsFromRedux {
 	uneditableIds: string[];
 }
 
-const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = ({
+const AttributeBreakdownDropdown: React.FC<
+	IAttributeBreakdownDropdownProps
+> = ({
 	alignmentPosition = Align.RightTop,
 	attribute,
 	breakdown,
@@ -96,12 +98,10 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 	onAttributeSelect,
 	open,
 	trigger,
-	uneditableIds
+	uneditableIds,
 }) => {
-	const [
-		attributeOwnerType,
-		setAttributeOwnerType
-	] = useState<AttributeOwnerTypes>(AttributeOwnerTypes.Event);
+	const [attributeOwnerType, setAttributeOwnerType] =
+		useState<AttributeOwnerTypes>(AttributeOwnerTypes.Event);
 	const [query, setQuery] = useState('');
 	const [selectedAttribute, setSelectedAttribute] = useState<Attribute>(
 		breakdown ? attribute : null
@@ -119,10 +119,10 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 			size: 200,
 			sort: {
 				column: DISPLAY_NAME,
-				type: OrderByDirections.Ascending
+				type: OrderByDirections.Ascending,
 			},
-			type: AttributeTypes.All
-		}
+			type: AttributeTypes.All,
+		},
 	});
 
 	const attributeId = attribute ? attribute.id : null;
@@ -146,8 +146,8 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 	return (
 		<BaseDropdown
 			alignmentPosition={alignmentPosition}
-			className='event-analysis-editor-attribute-dropdown-root'
-			onActiveChange={active => {
+			className="event-analysis-editor-attribute-dropdown-root"
+			onActiveChange={(active) => {
 				if (!active) {
 					setAttributeOwnerType(AttributeOwnerTypes.Event);
 					setQuery('');
@@ -157,13 +157,13 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 			trigger={trigger}
 		>
 			{({setActive}) => (
-				<TransitionGroup className='transition-carousel-group'>
+				<TransitionGroup className="transition-carousel-group">
 					{(!selectedAttribute || !showOptions) && (
 						<CSSTransition
-							classNames='transition-attribute-carousel-right'
+							classNames="transition-attribute-carousel-right"
 							timeout={250}
 						>
-							<div className='d-flex flex-column'>
+							<div className="d-flex flex-column">
 								<BaseDropdown.Header
 									activeTabId={attributeOwnerType}
 									tabs={[
@@ -173,19 +173,20 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 													AttributeOwnerTypes.Event
 												),
 											tabId: AttributeOwnerTypes.Event,
-											title: Liferay.Language.get('event')
+											title: Liferay.Language.get(
+												'event'
+											),
 										},
 										{
 											onClick: () =>
 												setAttributeOwnerType(
 													AttributeOwnerTypes.Individual
 												),
-											tabId:
-												AttributeOwnerTypes.Individual,
+											tabId: AttributeOwnerTypes.Individual,
 											title: Liferay.Language.get(
 												'individual'
-											)
-										}
+											),
+										},
 									]}
 									title={Liferay.Language.get('attributes')}
 								/>
@@ -197,38 +198,44 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 								>
 									{({
 										eventAttributeDefinitions: {
-											eventAttributeDefinitions
-										}
+											eventAttributeDefinitions,
+										},
 									}: {
 										eventAttributeDefinitions: {
 											eventAttributeDefinitions: Attribute[];
 										};
 									}) => {
-										let modifieldEventAttributeDefinitions = [];
+										let modifieldEventAttributeDefinitions =
+											[];
 
 										if (
 											attributeOwnerType ===
 											AttributeOwnerTypes.Event
 										) {
-											modifieldEventAttributeDefinitions = attribute
-												? eventAttributeDefinitions.map(
-														eventAttributeDefinition => {
-															if (
-																attribute.id ===
-																eventAttributeDefinition.id
-															) {
-																return attribute;
-															}
+											modifieldEventAttributeDefinitions =
+												attribute
+													? eventAttributeDefinitions.map(
+															(
+																eventAttributeDefinition
+															) => {
+																if (
+																	attribute.id ===
+																	eventAttributeDefinition.id
+																) {
+																	return attribute;
+																}
 
-															return eventAttributeDefinition;
-														}
-												  )
-												: eventAttributeDefinitions;
-										} else if (
+																return eventAttributeDefinition;
+															}
+														)
+													: eventAttributeDefinitions;
+										}
+										else if (
 											attributeOwnerType ===
 											AttributeOwnerTypes.Individual
 										) {
-											modifieldEventAttributeDefinitions = IndividualAttributes;
+											modifieldEventAttributeDefinitions =
+												IndividualAttributes;
 										}
 
 										return (
@@ -245,10 +252,11 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 														modalTypes.EDIT_ATTRIBUTE_EVENT_MODAL,
 														{
 															id: attribute.id,
-															mutation: UPDATE_EVENT_ATTRIBUTE_DEFINITION,
+															mutation:
+																UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 															onClose,
 															query: EventAttributeDefinitionQuery,
-															showTypecast: true
+															showTypecast: true,
 														}
 													);
 
@@ -261,7 +269,7 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 														dataType,
 														description,
 														displayName,
-														id: newAttributeId
+														id: newAttributeId,
 													} = attribute;
 
 													const breakdownFn =
@@ -272,12 +280,14 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 													onAttributeSelect({
 														attribute,
 														breakdown: breakdownFn({
-															attributeId: newAttributeId,
-															attributeType: attributeOwnerType,
+															attributeId:
+																newAttributeId,
+															attributeType:
+																attributeOwnerType,
 															description,
-															displayName
+															displayName,
 														}),
-														id: breakdownId
+														id: breakdownId,
 													});
 
 													setActive(false);
@@ -301,22 +311,22 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 
 					{showOptions && (
 						<CSSTransition
-							classNames='transition-attribute-carousel-left'
+							classNames="transition-attribute-carousel-left"
 							timeout={250}
 						>
-							<div className='w-100'>
+							<div className="w-100">
 								<BreakdownOptions
 									attribute={selectedAttribute}
 									attributeOwnerType={attributeOwnerType}
 									breakdownId={breakdownId}
 									onActiveChange={setActive}
-									onAttributeChange={params => {
+									onAttributeChange={(params) => {
 										setSelectedAttribute(params);
 									}}
 									onEditClick={
 										uneditableIds &&
 										uneditableIds.some(
-											uneditableAttributeId =>
+											(uneditableAttributeId) =>
 												uneditableAttributeId ===
 												selectedAttribute.id
 										)
@@ -325,17 +335,17 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 													open(
 														modalTypes.EDIT_ATTRIBUTE_EVENT_MODAL,
 														{
-															id:
-																selectedAttribute.id,
-															mutation: UPDATE_EVENT_ATTRIBUTE_DEFINITION,
+															id: selectedAttribute.id,
+															mutation:
+																UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 															onClose,
 															query: EventAttributeDefinitionQuery,
-															showTypecast: true
+															showTypecast: true,
 														}
 													);
 
 													setActive(false);
-											  }
+												}
 									}
 								/>
 							</div>

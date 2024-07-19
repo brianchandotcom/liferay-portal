@@ -1,7 +1,7 @@
 import BarComparisonCell from './BarComparisonCell';
 import EventAnalysisResultQuery, {
 	EventAnalysisResultData,
-	EventAnalysisResultVariables
+	EventAnalysisResultVariables,
 } from 'event-analysis/queries/EventAnalysisResultQuery';
 import getCN from 'classnames';
 import PercentOfCell from './PercentOfCell';
@@ -18,7 +18,7 @@ import {
 	Event,
 	Filters,
 	ParsedBreakdownData,
-	ParsedBreakdownItem
+	ParsedBreakdownItem,
 } from 'event-analysis/utils/types';
 import {compose} from 'redux';
 import {debounce, get, isNil, omit} from 'lodash';
@@ -74,11 +74,11 @@ const TABLE_COLUMN_ATTRIBUTES_MAP: TableColumnAttributesType = {
 	columnSizePercentage: {
 		breakdownColumn1x: 0.33,
 		breakdownColumn2x: 0.25,
-		breakdownColumn3x: 0.2
+		breakdownColumn3x: 0.2,
 	},
 	fontSize: 14,
 	paddingX: 32,
-	truncateGap: 1
+	truncateGap: 1,
 };
 
 const getBreakdownByAccessor = (
@@ -105,7 +105,7 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 	eventAnalysisResult,
 	onDeltaChange,
 	onPageChange,
-	page
+	page,
 }) => {
 	const [maxBreakdownLength, setMaxBreakdownLength] = useState<number>();
 
@@ -129,7 +129,7 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 		items: ParsedBreakdownData;
 	} => {
 		const orderedBreakdowns = breakdownOrder.map(
-			breakdownId => breakdowns[breakdownId]
+			(breakdownId) => breakdowns[breakdownId]
 		);
 
 		const items = parseBreakdownData(data, orderedBreakdowns);
@@ -144,20 +144,19 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 			highestValue,
 			maxBreakdownLength,
 			order: breakdownOrder,
-			value: data.value
+			value: data.value,
 		});
 
 		return {
 			columns,
 			count: data.count,
 			highestValue,
-			items
+			items,
 		};
 	};
 
-	const {columns, count, highestValue, items} = parseData(
-		eventAnalysisResult
-	);
+	const {columns, count, highestValue, items} =
+		parseData(eventAnalysisResult);
 
 	const orderIOMap = OrderedMap(
 		breakdownOrder.map((breakdownId, i) => {
@@ -165,7 +164,7 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 
 			return [
 				`breakdown${i}`,
-				{field: `breakdown${i}`, sortOrder: sortType}
+				{field: `breakdown${i}`, sortOrder: sortType},
 			];
 		})
 	);
@@ -181,7 +180,7 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 			columnSizePercentage,
 			fontSize,
 			paddingX,
-			truncateGap
+			truncateGap,
 		} = TABLE_COLUMN_ATTRIBUTES_MAP;
 
 		const columnTablePercentage = Math.floor(
@@ -222,7 +221,7 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 		);
 	}, [breakdownOrder.length]);
 
-	const handleSort = orderIOMap => {
+	const handleSort = (orderIOMap) => {
 		const {field, sortOrder} = orderIOMap.first();
 
 		const breakdown = getBreakdownByAccessor(
@@ -237,16 +236,16 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 			attribute,
 			breakdown: {
 				...breakdown,
-				sortType: sortOrder
+				sortType: sortOrder,
 			},
-			id: breakdown.id
+			id: breakdown.id,
 		});
 	};
 
 	return (
 		<div
 			className={getCN('breakdown-table-root', {
-				'breakdown-single-event': !breakdownOrder.length
+				'breakdown-single-event': !breakdownOrder.length,
 			})}
 			ref={tableRef}
 		>
@@ -269,7 +268,7 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 					onSortChange={handleSort}
 					orderIOMap={orderIOMap}
 					page={page}
-					rowIdentifier='index'
+					rowIdentifier="index"
 					total={count}
 				/>
 			)}
@@ -277,7 +276,9 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 	);
 };
 
-const BreakdownWithSafeResults: React.FC<IBreakdownTableWithSafeResultsProps> = ({
+const BreakdownWithSafeResults: React.FC<
+	IBreakdownTableWithSafeResultsProps
+> = ({
 	attributes,
 	breakdownOrder,
 	breakdowns,
@@ -288,7 +289,7 @@ const BreakdownWithSafeResults: React.FC<IBreakdownTableWithSafeResultsProps> = 
 	filterOrder,
 	filters,
 	rangeSelectors,
-	type
+	type,
 }) => {
 	const {delta, onDeltaChange, onPageChange, page} = useStatefulPagination();
 
@@ -301,17 +302,17 @@ const BreakdownWithSafeResults: React.FC<IBreakdownTableWithSafeResultsProps> = 
 			analysisType: type,
 			channelId,
 			compareToPrevious,
-			eventAnalysisBreakdowns: breakdownOrder.map(breakdownId =>
+			eventAnalysisBreakdowns: breakdownOrder.map((breakdownId) =>
 				omit(breakdowns[breakdownId], 'id')
 			),
-			eventAnalysisFilters: filterOrder.map(filterId =>
+			eventAnalysisFilters: filterOrder.map((filterId) =>
 				omit(filters[filterId], 'id')
 			),
 			eventDefinitionId: event.id,
 			page: page - 1,
 			size: delta,
-			...getSafeRangeSelectors(rangeSelectors)
-		}
+			...getSafeRangeSelectors(rangeSelectors),
+		},
 	});
 
 	useEffect(() => {
@@ -321,7 +322,7 @@ const BreakdownWithSafeResults: React.FC<IBreakdownTableWithSafeResultsProps> = 
 	return (
 		<SafeResults {...result} page={false} pageDisplay={false}>
 			{({
-				eventAnalysisResult
+				eventAnalysisResult,
 			}: {
 				eventAnalysisResult: EventAnalysisResultData;
 			}) => (
@@ -354,7 +355,7 @@ const getColumns = ({
 	highestValue,
 	maxBreakdownLength,
 	order,
-	value
+	value,
 }) => {
 	const columns = order.map((breakdownId: string, i: number) => {
 		const {attributeId, attributeType, sortType} = breakdowns[breakdownId];
@@ -384,7 +385,8 @@ const getColumns = ({
 							{Liferay.Language.get('no-results')}
 						</td>
 					);
-				} else if (isNil(dataValue)) {
+				}
+				else if (isNil(dataValue)) {
 					return null;
 				}
 
@@ -405,15 +407,15 @@ const getColumns = ({
 				);
 			},
 			headProps: {
-				order: sortType
+				order: sortType,
 			},
 			label: (
 				<div>
-					<span className='breakdown-category'>{attributeType}</span>
+					<span className="breakdown-category">{attributeType}</span>
 
 					{attributes[attributeId].displayName}
 				</div>
-			)
+			),
 		};
 	});
 
@@ -445,7 +447,7 @@ const getColumns = ({
 			);
 		},
 		label: Liferay.Language.get('events'),
-		sortable: false
+		sortable: false,
 	});
 
 	columns.push({
@@ -459,9 +461,9 @@ const getColumns = ({
 			</td>
 		),
 		label: sub(Liferay.Language.get('percent-of-x'), [
-			event.displayName || event.name
+			event.displayName || event.name,
 		]),
-		sortable: false
+		sortable: false,
 	});
 
 	return columns;

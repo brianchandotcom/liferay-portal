@@ -33,6 +33,7 @@ import {
 	editSegment,
 	includeAnonymousToggle,
 	saveSegment,
+	selectAsset,
 	selectOperator,
 	setSegmentName,
 } from './utils/segments';
@@ -622,3 +623,226 @@ test('Segment Composition shows Active and Known individuals', async ({
 		);
 	});
 });
+
+test(
+	'Create a segment with behavior of commenting on a blog',
+	{
+		tag: '@Legacy',
+	},
+
+	async ({apiHelpers, page}) => {
+		const channelName = 'My Property - ' + getRandomString();
+		const {channel, project} = await createChannel({
+			apiHelpers,
+			channelName,
+		});
+
+		const generateIndividual = (name) => {
+			const id = getRandomString();
+
+			return {
+				id,
+				name,
+			};
+		};
+
+		const knownIndividualName = 'ac';
+		const knownIndividual = [generateIndividual(knownIndividualName)];
+
+		await test.step('Create the known individuals directly in the AC database', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals: knownIndividual,
+			});
+		});
+
+		const anonymousIdentityID = '87';
+		const date = new Date();
+
+		await test.step('Create an identity for an anonymous individual directly in the AC database', async () => {
+			await apiHelpers.jsonWebServicesOSBAsah.createIdentities([
+				{
+					createDate: date.toISOString(),
+					id: anonymousIdentityID,
+				},
+			]);
+		});
+
+		const pageName = 'Liferay Blog - AC Page';
+
+		await test.step('Create blogViewed and posted events for known and anonymous individuals', async () => {
+			const blogId = '1905';
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+				knownIndividual.map((individual) => ({
+					applicationId: 'Blog',
+					assetId: blogId,
+					assetTitle: pageName,
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					dataSourceId: 0,
+					eventDate: date.toISOString(),
+					eventId: 'blogViewed',
+					title: pageName,
+					userId: individual.id,
+				}))
+			);
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+				knownIndividual.map((individual) => ({
+					applicationId: 'Comment',
+					assetId: blogId,
+					assetTitle: pageName,
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					dataSourceId: 0,
+					eventDate: date.toISOString(),
+					eventId: 'posted',
+					eventProperties:
+						'{"className":"com.liferay.blogs.model.BlogsEntry"}',
+					properties: [
+						{
+							name: 'className',
+							value: 'com.liferay.blogs.model.BlogsEntry',
+						},
+					],
+					title: pageName,
+					userId: individual.id,
+				}))
+			);
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+				{
+					applicationId: 'Comment',
+					assetId: blogId,
+					assetTitle: pageName,
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					dataSourceId: 0,
+					eventDate: date.toISOString(),
+					eventId: 'posted',
+					eventProperties:
+						'{"className":"com.liferay.blogs.model.BlogsEntry"}',
+					properties: [
+						{
+							name: 'className',
+							value: 'com.liferay.blogs.model.BlogsEntry',
+						},
+					],
+					title: pageName,
+					userId: anonymousIdentityID,
+				},
+			]);
+		});
+
+		await test.step('Create a session for the known individual', async () => {
+			await apiHelpers.jsonWebServicesOSBAsah.createSessions(
+				knownIndividual.map((individual) => ({
+					channelId: channel.id,
+					id: individual.id,
+					sessionEnd: date.toISOString(),
+					sessionStart: date.toISOString(),
+					userId: individual.id,
+				}))
+			);
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACSitesPageViaURL({
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+		});
+
+		await test.step('Create dynamic segment', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Segments',
+			});
+
+			await createDynamicSegment(page);
+
+			await addSegmentField({
+				criterionName: 'Commented on Blog',
+				criterionType: 'Events',
+				page,
+			});
+
+			await selectAsset({
+				assetName: pageName,
+				page,
+			});
+
+			await includeAnonymousToggle({
+				enable: true,
+				page,
+			});
+
+			await setSegmentName({
+				page,
+				segmentName: 'Test Commented on Blog Segment',
+			});
+
+			await saveSegment(page);
+		});
+
+		await test.step('Run the Segment Nanite', async () => {
+			await runNanites({
+				apiHelpers,
+				naniteNames: [Nanites.UpdateMembershipsNanite],
+				page,
+			});
+		});
+
+		await test.step('Reload the segment page to clear the cache', async () => {
+			await waitForLoading(page);
+
+			await page.reload();
+
+			await waitForLoading(page);
+		});
+
+		await test.step('Check the segment member count in the membership', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Membership',
+			});
+
+			await expect(
+				page
+					.locator('li')
+					.filter({hasText: 'Known Members:'})
+					.locator('b')
+			).toHaveText('1');
+
+			await expect(
+				page
+					.locator('li')
+					.filter({hasText: 'Anonymous Members:'})
+					.locator('b')
+			).toHaveText('1');
+
+			await expect(
+				page
+					.locator('li')
+					.filter({hasText: 'Total Members:'})
+					.locator('b')
+			).toHaveText('2');
+		});
+
+		await test.step('Check that the correct known member appears in the membership tab', async () => {
+			await viewNameOnTableList({
+				itemNames: `${knownIndividualName} Smith`,
+				page,
+			});
+		});
+
+		await test.step('delete channel', async () => {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+				`[${channel.id}]`,
+				project.groupId
+			);
+		});
+	}
+);

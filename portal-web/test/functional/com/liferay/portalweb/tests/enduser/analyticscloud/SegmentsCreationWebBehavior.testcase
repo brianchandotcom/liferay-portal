@@ -35,63 +35,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9220 | Test Summary: Create a segment with behavior of commenting on a blog"
-	@priority = 4
-	test CanCreateWebBehaviorSegmentCommentingBlog {
-		ACUtils.createBlogsAndAddToPage();
-
-		JSONUser.addUser(
-			userEmailAddress = "ac@liferay.com",
-			userFirstName = "ac",
-			userLastName = "ac",
-			userScreenName = "ac");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "ac@liferay.com");
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		ACUtils.navigateToSitePageWithUser(
-			actionType = "Comment Blog",
-			commentText = "Blogs Entry Comment",
-			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
-			emailList = "ac@liferay.com",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-		ACNavigation.goToSegments();
-
-		ACSegments.createDynamicSegment();
-
-		ACUtils.setItemName(itemName = "Dynamic Segment Test");
-
-		ACSegments.addSegmentField(segmentField = "Commented on Blog");
-
-		ACSegments.editWebBehaviorCriterion(
-			indexField = 1,
-			searchTerm = "Blogs AC Title");
-
-		ACSegments.previewSegmentMembership();
-
-		ACUtils.viewNameList(nameList = "ac ac");
-
-		ACUtils.closeModal();
-
-		ACSegments.saveSegment();
-
-		ACNavigation.goToSegments();
-
-		ACUtils.viewNameList(nameList = "Dynamic Segment Test");
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9221 | Test Summary: Create a Web Behavior criteria at least/at most times"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentCriteriaLeastMostTimes {

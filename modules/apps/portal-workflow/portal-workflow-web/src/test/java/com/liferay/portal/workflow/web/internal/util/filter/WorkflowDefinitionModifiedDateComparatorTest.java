@@ -46,7 +46,7 @@ public class WorkflowDefinitionModifiedDateComparatorTest {
 	@Test
 	public void testCompare() {
 		WorkflowDefinitionModifiedDateComparator comparator =
-			new WorkflowDefinitionModifiedDateComparator(ascending);
+			WorkflowDefinitionModifiedDateComparator.getInstance(ascending);
 
 		Calendar calendar = Calendar.getInstance();
 

@@ -63,7 +63,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 )
 @JsonTypeInfo(
 	include = JsonTypeInfo.As.PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME
+	use = JsonTypeInfo.Id.NAME, visible = true
 )
 @XmlRootElement(name = "TestObject")
 public abstract class TestObject implements Serializable {

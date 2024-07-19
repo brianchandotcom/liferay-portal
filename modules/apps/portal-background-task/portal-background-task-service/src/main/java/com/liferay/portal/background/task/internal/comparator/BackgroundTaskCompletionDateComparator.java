@@ -23,12 +23,14 @@ public class BackgroundTaskCompletionDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"completionDate"};
 
-	public BackgroundTaskCompletionDateComparator() {
-		this(false);
-	}
+	public static BackgroundTaskCompletionDateComparator getInstance(
+		boolean ascending) {
 
-	public BackgroundTaskCompletionDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +66,17 @@ public class BackgroundTaskCompletionDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private BackgroundTaskCompletionDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final BackgroundTaskCompletionDateComparator
+		_INSTANCE_ASCENDING = new BackgroundTaskCompletionDateComparator(true);
+
+	private static final BackgroundTaskCompletionDateComparator
+		_INSTANCE_DESCENDING = new BackgroundTaskCompletionDateComparator(
+			false);
 
 	private final boolean _ascending;
 

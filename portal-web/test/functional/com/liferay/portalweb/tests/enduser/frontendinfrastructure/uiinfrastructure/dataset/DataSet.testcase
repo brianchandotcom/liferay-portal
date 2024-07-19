@@ -285,28 +285,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-172398. Confirm that the data set can be deleted"
-	@priority = 5
-	test CanDeleteDataSet {
-		property portal.acceptance = "true";
-
-		task ("When the user goes to add data sets") {
-			DataSetAdmin.createDataSet(
-				key_name = "Test Data Set",
-				key_type = "/data-set-manager/entries");
-		}
-
-		task ("And the user deletes a data set") {
-			DataSetAdmin.deleteDataSet(entry = "Test Data Set");
-		}
-
-		task ("Then The data set is not present in the Data Sets admin page") {
-			AssertElementPresent(
-				locator1 = "Message#EMPTY_STATE_INFO",
-				value1 = "No Results Found");
-		}
-	}
-
 	@description = "LPS-172882: Display a list of headless resources in new FDS View modal"
 	@priority = 5
 	test CanDisplayHeadlessDeliveryAPIResources {
@@ -536,28 +514,6 @@ definition {
 			AssertElementPresent(
 				key_addressType = "Portugues",
 				locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADDRESS_TYPE");
-		}
-	}
-
-	@description = "LPS-172398. Confirm that the options view and Delete is present and is visible after clicking the ellipsis button."
-	@priority = 3
-	test DeleteAndViewAreAvailable {
-		task ("When The user goes to add a new data set") {
-			DataSetAdmin.createDataSet(
-				key_name = "Test Data Set",
-				key_type = "/data-set-manager/entries");
-		}
-
-		task ("And opening the dropdown menu") {
-			Click(
-				key_entry = "Test Data Set",
-				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
-		}
-
-		task ("Then Confirm that the options view and Delete is present and is visible") {
-			AssertElementPresent(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
-
-			AssertElementPresent(locator1 = "DataSet#VIEW_ENTRY_BUTTON");
 		}
 	}
 

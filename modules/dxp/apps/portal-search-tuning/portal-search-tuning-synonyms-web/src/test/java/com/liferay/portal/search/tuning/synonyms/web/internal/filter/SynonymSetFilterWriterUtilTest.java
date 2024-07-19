@@ -27,8 +27,8 @@ public class SynonymSetFilterWriterUtilTest extends BaseSynonymsWebTestCase {
 	@Test
 	public void testUpdateSynonymSets() {
 		SynonymSetFilterWriterUtil.updateSynonymSets(
-			searchEngineAdapter, "companyIndexName", "filterName",
-			new String[] {"car,automobile"}, true);
+			searchEngineAdapter, "companyIndexName",
+			new String[] {"filterName"}, new String[] {"car,automobile"}, true);
 
 		Mockito.verify(
 			searchEngineAdapter, Mockito.times(3)
@@ -40,8 +40,8 @@ public class SynonymSetFilterWriterUtilTest extends BaseSynonymsWebTestCase {
 	@Test
 	public void testUpdateSynonymSetsWithEmptySynonymSetFalseDeletion() {
 		SynonymSetFilterWriterUtil.updateSynonymSets(
-			searchEngineAdapter, "companyIndexName", "filterName",
-			new String[0], false);
+			searchEngineAdapter, "companyIndexName",
+			new String[] {"filterName"}, new String[0], false);
 
 		Mockito.verify(
 			searchEngineAdapter, Mockito.never()

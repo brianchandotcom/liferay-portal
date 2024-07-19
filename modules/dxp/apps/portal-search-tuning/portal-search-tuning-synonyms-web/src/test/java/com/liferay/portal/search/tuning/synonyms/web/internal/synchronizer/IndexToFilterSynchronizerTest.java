@@ -44,7 +44,7 @@ public class IndexToFilterSynchronizerTest extends BaseSynonymsWebTestCase {
 
 		_synonymSetFilterWriterUtilMockedStatic.verify(
 			() -> SynonymSetFilterWriterUtil.updateSynonymSets(
-				Mockito.any(), Mockito.anyString(), Mockito.anyString(),
+				Mockito.any(), Mockito.anyString(), Mockito.any(),
 				Mockito.any(), Mockito.anyBoolean()),
 			Mockito.times(1));
 	}

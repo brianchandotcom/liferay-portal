@@ -18,7 +18,8 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ChildTestObject1 implements Cloneable, Serializable {
+public class ChildTestObject1
+	extends TestObject implements Cloneable, Serializable {
 
 	public static ChildTestObject1 toDTO(String json) {
 		return ChildTestObject1SerDes.toDTO(json);

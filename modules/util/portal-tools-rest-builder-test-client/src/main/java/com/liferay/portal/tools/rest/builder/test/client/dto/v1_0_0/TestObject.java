@@ -20,7 +20,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class TestObject implements Cloneable, Serializable {
+public abstract class TestObject implements Cloneable, Serializable {
 
 	public static TestObject toDTO(String json) {
 		return TestObjectSerDes.toDTO(json);

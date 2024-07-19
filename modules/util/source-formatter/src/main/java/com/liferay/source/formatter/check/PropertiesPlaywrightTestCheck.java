@@ -158,15 +158,15 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				testrayAvailableComponentName.substring(
 					2, testrayAvailableComponentName.length() - 1);
 
-			List<String> testraTeamComponentNames = ListUtil.fromString(
+			List<String> testrayTeamComponentNames = ListUtil.fromString(
 				properties.getProperty(testrayTeamComponentName),
 				StringPool.COMMA);
 
-			if (ListUtil.isEmpty(testraTeamComponentNames)) {
+			if (ListUtil.isEmpty(testrayTeamComponentNames)) {
 				continue;
 			}
 
-			_testrayAllTeamsComponentNames.addAll(testraTeamComponentNames);
+			_testrayAllTeamsComponentNames.addAll(testrayTeamComponentNames);
 		}
 
 		return _testrayAllTeamsComponentNames;

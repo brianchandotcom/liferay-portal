@@ -224,7 +224,8 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		throws PortalException {
 
 		return kaleoDefinitionVersionPersistence.fetchByC_N_First(
-			companyId, name, new KaleoDefinitionVersionIdComparator(false));
+			companyId, name,
+			KaleoDefinitionVersionIdComparator.getInstance(false));
 	}
 
 	@Override
@@ -243,7 +244,8 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		throws PortalException {
 
 		return kaleoDefinitionVersionPersistence.findByC_N_First(
-			companyId, name, new KaleoDefinitionVersionIdComparator(true));
+			companyId, name,
+			KaleoDefinitionVersionIdComparator.getInstance(true));
 	}
 
 	@Override
@@ -302,7 +304,7 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 		return kaleoDefinitionVersionPersistence.findByC_N_PrevAndNext(
 			kaleoDefinitionVersion.getKaleoDefinitionVersionId(), companyId,
-			name, new KaleoDefinitionVersionIdComparator(true));
+			name, KaleoDefinitionVersionIdComparator.getInstance(true));
 	}
 
 	@Override
@@ -311,7 +313,8 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		throws PortalException {
 
 		return kaleoDefinitionVersionPersistence.findByC_N_First(
-			companyId, name, new KaleoDefinitionVersionIdComparator(false));
+			companyId, name,
+			KaleoDefinitionVersionIdComparator.getInstance(false));
 	}
 
 	@Override

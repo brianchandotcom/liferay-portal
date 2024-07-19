@@ -420,6 +420,8 @@ public abstract class Base${schemaName}ResourceImpl
 
 					, existing${schemaName}
 				);
+			<#elseif schema.discriminator?has_content && javaMethodSignature.returnType?ends_with(schemaName)>
+				return null;
 			<#else>
 				return new ${javaMethodSignature.returnType}();
 			</#if>

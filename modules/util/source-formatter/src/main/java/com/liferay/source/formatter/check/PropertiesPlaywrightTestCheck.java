@@ -8,6 +8,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.source.formatter.check.util.SourceChecksUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -51,6 +52,12 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				return content;
 			}
 
+			String rootDirName = SourceUtil.getRootDirName(absolutePath);
+
+			if (rootDirName.equals(StringPool.BLANK)) {
+				return content;
+			}
+
 			List<String> testrayAllTeamsComponentNames =
 				_getTestrayAllTeamsComponentNames();
 
@@ -62,18 +69,17 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 					StringBundler.concat(
 						"Property value '", testrayMainComponentName,
 						"' does not exist in 'testray.team.*.component.names' ",
-						"in ", SourceUtil.getRootDirName(absolutePath),
+						"in ", rootDirName,
 						"/test.properties"));
 			}
 
-			File portalDir = getPortalDir();
 			String moduleName = _getModuleName(absolutePath);
 
 			List<String> buildGradleFileNames = SourceFormatterUtil.scanForFileNames(
-				portalDir.getCanonicalPath(),
+					rootDirName + "/modules",
 				new String[] {
-					"modules/apps/**/" + moduleName + "/build.gradle",
-					"modules/dxp/apps/**/" + moduleName + "/build.gradle"
+					"apps/**/" + moduleName + "/build.gradle",
+					"dxp/apps/**/" + moduleName + "/build.gradle"
 				});
 
 			if (ListUtil.isEmpty(buildGradleFileNames) || buildGradleFileNames.size() != 1) {

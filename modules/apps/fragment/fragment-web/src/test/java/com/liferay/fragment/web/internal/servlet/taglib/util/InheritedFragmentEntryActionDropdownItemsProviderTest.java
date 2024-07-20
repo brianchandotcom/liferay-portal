@@ -100,15 +100,10 @@ public class InheritedFragmentEntryActionDropdownItemsProviderTest {
 		languageUtil.setLanguage(Mockito.mock(Language.class));
 
 		Mockito.when(
-			languageUtil.get(_httpServletRequest, "copy-to")
-		).thenReturn(
-			"copy-to"
-		);
-
-		Mockito.when(
-			languageUtil.get(_httpServletRequest, "export")
-		).thenReturn(
-			"export"
+			languageUtil.get(
+				Mockito.any(HttpServletRequest.class), Mockito.anyString())
+		).thenAnswer(
+			invocation -> invocation.getArguments()[1]
 		);
 	}
 

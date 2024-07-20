@@ -273,69 +273,10 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest {
 		languageUtil.setLanguage(Mockito.mock(Language.class));
 
 		Mockito.when(
-			languageUtil.get(_httpServletRequest, "change-thumbnail")
-		).thenReturn(
-			"change-thumbnail"
-		);
-
-		Mockito.when(
-			languageUtil.get(_httpServletRequest, "copy-to")
-		).thenReturn(
-			"copy-to"
-		);
-
-		Mockito.when(
-			languageUtil.get(_httpServletRequest, "edit")
-		).thenReturn(
-			"edit"
-		);
-
-		Mockito.when(
-			languageUtil.get(_httpServletRequest, "export")
-		).thenReturn(
-			"export"
-		);
-
-		Mockito.when(
-			languageUtil.get(_httpServletRequest, "delete")
-		).thenReturn(
-			"delete"
-		);
-
-		Mockito.when(
-			languageUtil.get(_httpServletRequest, "make-a-copy")
-		).thenReturn(
-			"make-a-copy"
-		);
-
-		Mockito.when(
-			languageUtil.get(_httpServletRequest, "mark-as-cacheable")
-		).thenReturn(
-			"mark-as-cacheable"
-		);
-
-		Mockito.when(
-			languageUtil.get(_httpServletRequest, "move")
-		).thenReturn(
-			"move"
-		);
-
-		Mockito.when(
-			languageUtil.get(_httpServletRequest, "rename")
-		).thenReturn(
-			"rename"
-		);
-
-		Mockito.when(
-			languageUtil.get(_httpServletRequest, "view-site-usages")
-		).thenReturn(
-			"view-site-usages"
-		);
-
-		Mockito.when(
-			languageUtil.get(_httpServletRequest, "view-usages")
-		).thenReturn(
-			"view-usages"
+			languageUtil.get(
+				Mockito.any(HttpServletRequest.class), Mockito.anyString())
+		).thenAnswer(
+			invocation -> invocation.getArguments()[1]
 		);
 	}
 

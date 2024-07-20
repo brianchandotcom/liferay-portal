@@ -41,35 +41,6 @@ const getMyUserAccount = async () => {
 	};
 };
 
-const getFLSOrganizationsAccounts =
-	(client: ApolloClient<any>) =>
-	async ({organizationIds}: {organizationIds: number[]}) => {
-		if (!organizationIds.length) {
-			return [];
-		}
-
-		const response = await client.query({
-			query: getOrganizations,
-			variables: {
-				filter: SearchBuilder.in('id', organizationIds),
-			},
-		});
-
-		const organizations = (response.data?.organizations?.items ?? []) as {
-			accounts: {
-				items: Account[];
-			};
-		}[];
-
-		const organizationAccounts = [
-			...new Set(
-				organizations.map(({accounts}) => accounts.items).flat()
-			),
-		];
-
-		return organizationAccounts as Account[];
-	};
-
 const useProjectCategoryItems = () => {
 	const {client} = useAppPropertiesContext();
 

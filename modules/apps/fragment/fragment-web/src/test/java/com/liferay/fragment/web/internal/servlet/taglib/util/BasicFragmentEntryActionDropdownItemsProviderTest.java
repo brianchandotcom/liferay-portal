@@ -30,7 +30,7 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 		throws Exception {
 
 		setUpFragmentPermission(true);
-		_setUpFragmentEntry(false, false);
+		_setUpFragmentEntry(false, false, false);
 
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
@@ -49,7 +49,7 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 		throws Exception {
 
 		setUpFragmentPermission(false);
-		_setUpFragmentEntry(false, false);
+		_setUpFragmentEntry(false, false, false);
 
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
@@ -62,9 +62,27 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 	}
 
 	@Test
+	public void testGetDraftFragmentEntryActionDropdowns() throws Exception {
+		setUpFragmentPermission(true);
+		_setUpFragmentEntry(true, false, false);
+
+		BasicFragmentEntryActionDropdownItemsProvider
+			basicFragmentEntryActionDropdownItemsProvider =
+				new BasicFragmentEntryActionDropdownItemsProvider(
+					_fragmentEntry, renderRequest, renderResponse);
+
+		assertDropdownItemsInCorrectOrder(
+			basicFragmentEntryActionDropdownItemsProvider.
+				getActionDropdownItems(),
+			"edit", "change-thumbnail", "discard-draft", "rename",
+			"mark-as-cacheable", "view-site-usages", "export", "make-a-copy",
+			"move", "delete");
+	}
+
+	@Test
 	public void testGetReactFragmentEntryActionDropdowns() throws Exception {
 		setUpFragmentPermission(true);
-		_setUpFragmentEntry(false, true);
+		_setUpFragmentEntry(false, false, true);
 
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
@@ -81,7 +99,7 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 	@Test
 	public void testGetReadonlyFragmentEntryActionDropdowns() throws Exception {
 		setUpFragmentPermission(true);
-		_setUpFragmentEntry(true, false);
+		_setUpFragmentEntry(false, true, false);
 
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
@@ -94,11 +112,19 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 			"edit", "make-a-copy");
 	}
 
-	private void _setUpFragmentEntry(boolean readOnly, boolean typeReact) {
+	private void _setUpFragmentEntry(
+		boolean draft, boolean readOnly, boolean typeReact) {
+
 		Mockito.when(
 			_fragmentEntry.getGlobalUsageCount()
 		).thenReturn(
 			0
+		);
+
+		Mockito.when(
+			_fragmentEntry.isDraft()
+		).thenReturn(
+			draft
 		);
 
 		Mockito.when(

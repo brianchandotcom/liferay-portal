@@ -87,6 +87,8 @@ public abstract class BaseActionDropdownItemsProviderTestCase {
 		);
 	}
 
+	protected final HttpServletRequest httpServletRequest = Mockito.mock(
+		HttpServletRequest.class);
 	protected final RenderRequest renderRequest = Mockito.mock(
 		RenderRequest.class);
 	protected final RenderResponse renderResponse = Mockito.mock(
@@ -121,20 +123,20 @@ public abstract class BaseActionDropdownItemsProviderTestCase {
 
 	private void _setUpHttpServletRequest() {
 		Mockito.when(
-			_httpServletRequest.getAttribute(
+			httpServletRequest.getAttribute(
 				FragmentPortletConfiguration.class.getName())
 		).thenReturn(
 			_fragmentPortletConfiguration
 		);
 
 		Mockito.when(
-			_httpServletRequest.getAttribute(ItemSelector.class.getName())
+			httpServletRequest.getAttribute(ItemSelector.class.getName())
 		).thenReturn(
 			_itemSelector
 		);
 
 		Mockito.when(
-			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			_themeDisplay
 		);
@@ -170,7 +172,7 @@ public abstract class BaseActionDropdownItemsProviderTestCase {
 		Mockito.when(
 			portalUtil.getHttpServletRequest(renderRequest)
 		).thenReturn(
-			_httpServletRequest
+			httpServletRequest
 		);
 	}
 
@@ -196,7 +198,7 @@ public abstract class BaseActionDropdownItemsProviderTestCase {
 
 	private void _setUpRenderRequest() {
 		Mockito.when(
-			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			_themeDisplay
 		);
@@ -233,8 +235,6 @@ public abstract class BaseActionDropdownItemsProviderTestCase {
 			FragmentPermission.class);
 	private final FragmentPortletConfiguration _fragmentPortletConfiguration =
 		Mockito.mock(FragmentPortletConfiguration.class);
-	private final HttpServletRequest _httpServletRequest = Mockito.mock(
-		HttpServletRequest.class);
 	private final ItemSelector _itemSelector = Mockito.mock(ItemSelector.class);
 	private final MockedStatic<PortletURLBuilder>
 		_portletURLBuilderMockedStatic = Mockito.mockStatic(

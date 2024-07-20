@@ -76,7 +76,7 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 					"modules/dxp/apps/**/" + moduleName + "/build.gradle"
 				});
 
-			if (ListUtil.isEmpty(buildGradleFileNames)) {
+			if (ListUtil.isEmpty(buildGradleFileNames) || buildGradleFileNames.size() != 1) {
 				return content;
 			}
 

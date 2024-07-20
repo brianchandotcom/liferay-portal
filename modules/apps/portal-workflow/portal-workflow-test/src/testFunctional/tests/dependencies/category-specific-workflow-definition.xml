@@ -22,7 +22,7 @@
 		</metadata>
 		<labels>
 			<label language-id="en_US">
-				determine-branch
+				Determine Branch
 			</label>
 		</labels>
 		<script>
@@ -106,7 +106,7 @@
 		<initial>true</initial>
 		<labels>
 			<label language-id="en_US">
-				created
+				Created
 			</label>
 		</labels>
 		<transitions>
@@ -144,7 +144,7 @@
 		</actions>
 		<labels>
 			<label language-id="en_US">
-				approved
+				Approved
 			</label>
 		</labels>
 	</state>
@@ -181,14 +181,14 @@
 		</assignments>
 		<labels>
 			<label language-id="en_US">
-				update
+				Update
 			</label>
 		</labels>
 		<transitions>
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						resubmit
+						Resubmit
 					</label>
 				</labels>
 				<id>resubmit</id>
@@ -263,7 +263,7 @@
 		</assignments>
 		<labels>
 			<label language-id="en_US">
-				content-review
+				Content Review
 			</label>
 		</labels>
 		<task-timers>
@@ -291,7 +291,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						approve
+						Approve
 					</label>
 				</labels>
 				<id>approve</id>
@@ -301,7 +301,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						reject
+						Reject
 					</label>
 				</labels>
 				<id>reject</id>
@@ -376,14 +376,14 @@
 		</assignments>
 		<labels>
 			<label language-id="en_US">
-				legal-review
+				Legal Review
 			</label>
 		</labels>
 		<transitions>
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						approve
+						Approve
 					</label>
 				</labels>
 				<id>legal-review_approve_approved</id>
@@ -393,7 +393,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						reject
+						Reject
 					</label>
 				</labels>
 				<id>legal-review_reject_update</id>

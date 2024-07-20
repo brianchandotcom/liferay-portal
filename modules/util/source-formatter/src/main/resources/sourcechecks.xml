@@ -2036,6 +2036,10 @@
 			<description name="Checks the file name of workflow definition files." />
 			<property name="enabled" value="false" />
 		</check>
+		<check name="XMLWorkflowDefinitionFileStylingCheck">
+			<category name="Styling" />
+			<description name="Applies rules to enforce consistency in code style in `*workflow-definition.xml` files." />
+		</check>
 
 		<!-- Liferay Source Checks -->
 

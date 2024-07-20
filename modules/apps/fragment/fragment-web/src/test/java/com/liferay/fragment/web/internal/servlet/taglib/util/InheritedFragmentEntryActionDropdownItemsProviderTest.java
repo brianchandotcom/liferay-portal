@@ -6,12 +6,8 @@
 package com.liferay.fragment.web.internal.servlet.taglib.util;
 
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.List;
-
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,19 +35,10 @@ public class InheritedFragmentEntryActionDropdownItemsProviderTest
 					Mockito.mock(FragmentEntry.class), renderRequest,
 					renderResponse);
 
-		List<DropdownItem> dropdownItems =
+		assertDropdownItemsInCorrectOrder(
 			inheritedFragmentEntryActionDropdownItemsProvider.
-				getActionDropdownItems();
-
-		Assert.assertEquals(dropdownItems.toString(), 2, dropdownItems.size());
-
-		DropdownItem copyDropdownItem = dropdownItems.get(0);
-
-		Assert.assertEquals("copy-to", copyDropdownItem.get("label"));
-
-		DropdownItem exportDropdownItem = dropdownItems.get(1);
-
-		Assert.assertEquals("export", exportDropdownItem.get("label"));
+				getActionDropdownItems(),
+			"copy-to", "export");
 	}
 
 }

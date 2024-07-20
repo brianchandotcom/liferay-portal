@@ -7,6 +7,7 @@ package com.liferay.fragment.web.internal.servlet.taglib.util;
 
 import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -18,7 +19,11 @@ import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfig
 import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProviderUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -27,6 +32,7 @@ import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 
 import org.mockito.MockedStatic;
@@ -57,6 +63,21 @@ public abstract class BaseActionDropdownItemsProviderTestCase {
 		_uploadServletRequestConfigurationProviderUtilMockedStatic.close();
 	}
 
+	protected void assertDropdownItemsInCorrectOrder(
+		List<DropdownItem> dropdownItems, String... labels) {
+
+		dropdownItems = _getActionDropdownItems(dropdownItems);
+
+		Assert.assertEquals(
+			dropdownItems.toString(), labels.length, dropdownItems.size());
+
+		for (int i = 0; i < dropdownItems.size(); i++) {
+			DropdownItem dropdownItem = dropdownItems.get(i);
+
+			Assert.assertEquals(labels[i], dropdownItem.get("label"));
+		}
+	}
+
 	protected void setUpFragmentPermission(boolean contains) {
 		Mockito.when(
 			FragmentPermission.contains(
@@ -70,6 +91,25 @@ public abstract class BaseActionDropdownItemsProviderTestCase {
 		RenderRequest.class);
 	protected final RenderResponse renderResponse = Mockito.mock(
 		RenderResponse.class);
+
+	private List<DropdownItem> _getActionDropdownItems(
+		List<DropdownItem> dropdownItems) {
+
+		List<DropdownItem> allDropdownItems = new ArrayList<>();
+
+		for (DropdownItem dropdownItem : dropdownItems) {
+			if (!StringUtil.equals((String)dropdownItem.get("type"), "group")) {
+				allDropdownItems.add(dropdownItem);
+
+				continue;
+			}
+
+			allDropdownItems.addAll(
+				(List<DropdownItem>)dropdownItem.get("items"));
+		}
+
+		return allDropdownItems;
+	}
 
 	private void _setUpFragmentPortletConfiguration() {
 		Mockito.when(

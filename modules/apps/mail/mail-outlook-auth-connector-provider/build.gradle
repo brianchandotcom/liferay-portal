@@ -1,6 +1,6 @@
 dependencies {
 	compileInclude group: "com.github.stephenc.jcip", name: "jcip-annotations", version: "1.0-1"
-	compileInclude group: "com.liferay", name: "com.nimbusds.jwt", version: "9.30.2.LIFERAY-PATCHED-1"
+	compileInclude group: "com.liferay", name: "com.nimbusds.jwt", version: "9.40.LIFERAY-PATCHED-1"
 	compileInclude group: "com.microsoft.azure", name: "msal4j", version: "1.13.8"
 	compileInclude group: "com.nimbusds", name: "content-type", version: "2.2"
 	compileInclude group: "com.nimbusds", name: "lang-tag", version: "1.7"

@@ -2,7 +2,7 @@ task jarManifest
 task jarPatched(type: Zip)
 
 dependencies {
-	compileOnly group: "com.nimbusds", name: "nimbus-jose-jwt", transitive: false, version: "9.30.2"
+	compileOnly group: "com.nimbusds", name: "nimbus-jose-jwt", transitive: false, version: "9.40"
 }
 
 jar {

@@ -69,14 +69,14 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 			File portalDir = getPortalDir();
 			String moduleName = _getModuleName(absolutePath);
 
-			List<String> buildFiles = SourceFormatterUtil.scanForFileNames(
+			List<String> buildGradleFileNames = SourceFormatterUtil.scanForFileNames(
 				portalDir.getCanonicalPath(),
 				new String[] {
 					"modules/apps/**/" + moduleName + "/build.gradle",
 					"modules/dxp/apps/**/" + moduleName + "/build.gradle"
 				});
 
-			if (ListUtil.isEmpty(buildFiles)) {
+			if (ListUtil.isEmpty(buildGradleFileNames)) {
 				return content;
 			}
 

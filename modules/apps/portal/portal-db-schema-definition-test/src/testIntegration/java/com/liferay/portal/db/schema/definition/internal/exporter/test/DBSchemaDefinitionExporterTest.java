@@ -161,7 +161,7 @@ public class DBSchemaDefinitionExporterTest {
 			_PID);
 
 		String content = FileUtil.read(
-			new File(_folder, "db_export_report.info"));
+			new File(_folder, "db_schema_definition_export_report.info"));
 
 		Assert.assertTrue(content.contains("Missing tables: \n"));
 	}
@@ -178,7 +178,7 @@ public class DBSchemaDefinitionExporterTest {
 				_PID);
 
 			String content = FileUtil.read(
-				new File(_folder, "db_export_report.info"));
+				new File(_folder, "db_schema_definition_export_report.info"));
 
 			Assert.assertTrue(
 				content.contains(

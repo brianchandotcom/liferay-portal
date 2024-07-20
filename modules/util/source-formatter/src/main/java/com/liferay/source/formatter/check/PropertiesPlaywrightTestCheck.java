@@ -80,32 +80,20 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				return content;
 			}
 
-			List<String> fileNames = new ArrayList<>();
-			String moduleRootDirLocation = "modules/";
+			String buildGradleFileName = buildGradleFileNames.get(0);
 
-			for (int i = 0; i < getMaxDirLevel(); i++) {
-				File file = new File(getBaseDirName() + moduleRootDirLocation);
+			int x = buildGradleFileName.lastIndexOf("/");
 
-				if (file.exists()) {
-					fileNames = SourceFormatterUtil.scanForFileNames(
-						file.getCanonicalPath(),
-						new String[] {
-							"apps/**/" + moduleName + "/test.properties",
-							"dxp/apps/**/" + moduleName + "/test.properties"
-						});
+			File file = new File(
+					buildGradleFileName.substring(0, x) + "/test.properties");
 
-					break;
-				}
-
-				moduleRootDirLocation = "../" + moduleRootDirLocation;
-			}
-
-			if (ListUtil.isEmpty(fileNames)) {
+			if (!file.exists()) {
 				addMessage(
-					fileName,
-					"Missing test.properties for module '" + moduleName +
-						"' in modules");
+						fileName,
+						"Missing test.properties for module '" + moduleName +
+								"' in modules");
 			}
+
 		}
 
 		if (absolutePath.contains("/modules/apps/") ||

@@ -6,83 +6,42 @@
 package com.liferay.fragment.web.internal.servlet.taglib.util;
 
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
-import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
-import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProviderUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
  * @author Eudaldo Alonso
  */
-public class BasicFragmentEntryActionDropdownItemsProviderTest {
+public class BasicFragmentEntryActionDropdownItemsProviderTest
+	extends BaseActionDropdownItemsProviderTestCase {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		_setUpFragmentPortletConfiguration();
-		_setUpHttpServletRequest();
-		_setUpItemSelector();
-		_setUpLanguageUtil();
-		_setUpPortalUtil();
-		_setUpPortletURLBuilder();
-		_setUpRenderResponse();
-		_setUpUploadServletRequestConfigurationProviderUtil();
-	}
-
-	@After
-	public void tearDown() {
-		_fragmentPermissionMockedStatic.close();
-		_portletURLBuilderMockedStatic.close();
-		_uploadServletRequestConfigurationProviderUtilMockedStatic.close();
-	}
-
 	@Test
 	public void testGetActionDropdownsWithManageFragmentEntries()
 		throws Exception {
 
-		_setUpFragmentPermission(true);
+		setUpFragmentPermission(true);
 		_setUpFragmentEntry(false, false);
 
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
 				new BasicFragmentEntryActionDropdownItemsProvider(
-					_fragmentEntry, _renderRequest, _renderResponse);
+					_fragmentEntry, renderRequest, renderResponse);
 
 		List<DropdownItem> dropdownItems = _getActionDropdownItems(
 			basicFragmentEntryActionDropdownItemsProvider.
@@ -108,13 +67,13 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest {
 	public void testGetActionDropdownsWithoutManageFragmentEntries()
 		throws Exception {
 
-		_setUpFragmentPermission(false);
+		setUpFragmentPermission(false);
 		_setUpFragmentEntry(false, false);
 
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
 				new BasicFragmentEntryActionDropdownItemsProvider(
-					_fragmentEntry, _renderRequest, _renderResponse);
+					_fragmentEntry, renderRequest, renderResponse);
 
 		List<DropdownItem> dropdownItems = _getActionDropdownItems(
 			basicFragmentEntryActionDropdownItemsProvider.
@@ -125,13 +84,13 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest {
 
 	@Test
 	public void testGetReactFragmentEntryActionDropdowns() throws Exception {
-		_setUpFragmentPermission(true);
+		setUpFragmentPermission(true);
 		_setUpFragmentEntry(false, true);
 
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
 				new BasicFragmentEntryActionDropdownItemsProvider(
-					_fragmentEntry, _renderRequest, _renderResponse);
+					_fragmentEntry, renderRequest, renderResponse);
 
 		List<DropdownItem> dropdownItems = _getActionDropdownItems(
 			basicFragmentEntryActionDropdownItemsProvider.
@@ -151,13 +110,13 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest {
 
 	@Test
 	public void testGetReadonlyFragmentEntryActionDropdowns() throws Exception {
-		_setUpFragmentPermission(true);
+		setUpFragmentPermission(true);
 		_setUpFragmentEntry(true, false);
 
 		BasicFragmentEntryActionDropdownItemsProvider
 			basicFragmentEntryActionDropdownItemsProvider =
 				new BasicFragmentEntryActionDropdownItemsProvider(
-					_fragmentEntry, _renderRequest, _renderResponse);
+					_fragmentEntry, renderRequest, renderResponse);
 
 		List<DropdownItem> dropdownItems = _getActionDropdownItems(
 			basicFragmentEntryActionDropdownItemsProvider.
@@ -220,145 +179,7 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest {
 		);
 	}
 
-	private void _setUpFragmentPermission(boolean contains) {
-		Mockito.when(
-			FragmentPermission.contains(
-				Mockito.any(), Mockito.anyLong(), Mockito.anyString())
-		).thenReturn(
-			contains
-		);
-	}
-
-	private void _setUpFragmentPortletConfiguration() {
-		Mockito.when(
-			_fragmentPortletConfiguration.thumbnailExtensions()
-		).thenReturn(
-			new String[0]
-		);
-	}
-
-	private void _setUpHttpServletRequest() {
-		Mockito.when(
-			_httpServletRequest.getAttribute(
-				FragmentPortletConfiguration.class.getName())
-		).thenReturn(
-			_fragmentPortletConfiguration
-		);
-
-		Mockito.when(
-			_httpServletRequest.getAttribute(ItemSelector.class.getName())
-		).thenReturn(
-			_itemSelector
-		);
-
-		Mockito.when(
-			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			_themeDisplay
-		);
-	}
-
-	private void _setUpItemSelector() {
-		Mockito.when(
-			_itemSelector.getItemSelectorURL(
-				Mockito.any(), Mockito.anyString(), Mockito.any())
-		).thenReturn(
-			Mockito.mock(PortletURL.class)
-		);
-	}
-
-	private void _setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(Mockito.mock(Language.class));
-
-		Mockito.when(
-			languageUtil.get(
-				Mockito.any(HttpServletRequest.class), Mockito.anyString())
-		).thenAnswer(
-			invocation -> invocation.getArguments()[1]
-		);
-	}
-
-	private void _setUpPortalUtil() {
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(Mockito.mock(Portal.class));
-
-		Mockito.when(
-			portalUtil.getHttpServletRequest(_renderRequest)
-		).thenReturn(
-			_httpServletRequest
-		);
-	}
-
-	private void _setUpPortletURLBuilder() {
-		Mockito.when(
-			PortletURLBuilder.create(Mockito.any())
-		).thenReturn(
-			new PortletURLBuilder.PortletURLStep(new MockLiferayPortletURL())
-		);
-
-		Mockito.when(
-			PortletURLBuilder.createActionURL(_renderResponse)
-		).thenReturn(
-			new PortletURLBuilder.PortletURLStep(new MockLiferayPortletURL())
-		);
-
-		Mockito.when(
-			PortletURLBuilder.createRenderURL(_renderResponse)
-		).thenReturn(
-			new PortletURLBuilder.PortletURLStep(new MockLiferayPortletURL())
-		);
-	}
-
-	private void _setUpRenderResponse() {
-		Mockito.when(
-			_renderResponse.createRenderURL()
-		).thenReturn(
-			Mockito.mock(LiferayPortletURL.class)
-		);
-
-		Mockito.when(
-			_renderResponse.createResourceURL()
-		).thenReturn(
-			Mockito.mock(LiferayPortletURL.class)
-		);
-	}
-
-	private void _setUpUploadServletRequestConfigurationProviderUtil() {
-		UploadServletRequestConfigurationProvider
-			uploadServletRequestConfigurationProvider = Mockito.mock(
-				UploadServletRequestConfigurationProvider.class);
-
-		Mockito.when(
-			uploadServletRequestConfigurationProvider.getMaxSize()
-		).thenReturn(
-			0L
-		);
-	}
-
 	private final FragmentEntry _fragmentEntry = Mockito.mock(
 		FragmentEntry.class);
-	private final MockedStatic<FragmentPermission>
-		_fragmentPermissionMockedStatic = Mockito.mockStatic(
-			FragmentPermission.class);
-	private final FragmentPortletConfiguration _fragmentPortletConfiguration =
-		Mockito.mock(FragmentPortletConfiguration.class);
-	private final HttpServletRequest _httpServletRequest = Mockito.mock(
-		HttpServletRequest.class);
-	private final ItemSelector _itemSelector = Mockito.mock(ItemSelector.class);
-	private final MockedStatic<PortletURLBuilder>
-		_portletURLBuilderMockedStatic = Mockito.mockStatic(
-			PortletURLBuilder.class);
-	private final RenderRequest _renderRequest = Mockito.mock(
-		RenderRequest.class);
-	private final RenderResponse _renderResponse = Mockito.mock(
-		RenderResponse.class);
-	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
-	private final MockedStatic<UploadServletRequestConfigurationProviderUtil>
-		_uploadServletRequestConfigurationProviderUtilMockedStatic =
-			Mockito.mockStatic(
-				UploadServletRequestConfigurationProviderUtil.class);
 
 }

@@ -23,14 +23,14 @@
 		<initial>true</initial>
 		<labels>
 			<label language-id="en_US">
-				created
+				Created
 			</label>
 		</labels>
 		<transitions>
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						review
+						Review
 					</label>
 				</labels>
 				<name>created_review_review</name>
@@ -78,7 +78,7 @@
 		</actions>
 		<labels>
 			<label language-id="en_US">
-				approved
+				Approved
 			</label>
 		</labels>
 	</state>
@@ -130,14 +130,14 @@
 		</assignments>
 		<labels>
 			<label language-id="en_US">
-				update
+				Update
 			</label>
 		</labels>
 		<transitions>
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						resubmit
+						Resubmit
 					</label>
 				</labels>
 				<name>resubmit</name>
@@ -195,14 +195,14 @@
 		</assignments>
 		<labels>
 			<label language-id="en_US">
-				review
+				Review
 			</label>
 		</labels>
 		<transitions>
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						approve
+						Approve
 					</label>
 				</labels>
 				<name>approve</name>
@@ -212,7 +212,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						reject
+						Reject
 					</label>
 				</labels>
 				<name>reject</name>

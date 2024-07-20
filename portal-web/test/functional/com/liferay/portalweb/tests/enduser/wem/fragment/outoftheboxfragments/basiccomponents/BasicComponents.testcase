@@ -313,14 +313,39 @@ definition {
 				fragmentName = "Heading");
 		}
 
+		task ("Edit the inline text of Heading") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Welcome to Liferay");
+		}
+
+		task ("Configure the styles of Heading") {
+			PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+			PageEditor.configureFragment(headingLevel = "H4");
+
+			PageEditor.gotoStyle(fragmentName = "Heading");
+
+			PageEditor.configureFragment(textColor = "Warning");
+		}
+
 		task ("Duplicate the Heading") {
 			PageEditor.gotoDuplicate(fragmentName = "Heading");
 		}
 
-		task ("View the duplicated Heading") {
-			PageEditor.viewDuplicateFragment(
+		task ("View custom fragment styles and edited inline text are copied to duplicated Heading") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Welcome to Liferay",
 				fragmentName = "Heading",
-				id = "Heading");
+				id = "element-text",
+				position = 2);
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Heading",
+				headingLevel = "h4",
+				position = 2,
+				textColor = "warning");
 		}
 	}
 

@@ -8,7 +8,6 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.source.formatter.check.util.SourceChecksUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -52,12 +51,6 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 				return content;
 			}
 
-			String rootDirName = SourceUtil.getRootDirName(absolutePath);
-
-			if (rootDirName.equals(StringPool.BLANK)) {
-				return content;
-			}
-
 			List<String> testrayAllTeamsComponentNames =
 				_getTestrayAllTeamsComponentNames();
 
@@ -69,37 +62,45 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 					StringBundler.concat(
 						"Property value '", testrayMainComponentName,
 						"' does not exist in 'testray.team.*.component.names' ",
-						"in ", rootDirName,
+						"in ", SourceUtil.getRootDirName(absolutePath),
 						"/test.properties"));
 			}
 
-			String moduleName = _getModuleName(absolutePath);
+			List<String> buildGradleFileNames = _getBuildGradleFileNames();
 
-			List<String> buildGradleFileNames = SourceFormatterUtil.scanForFileNames(
-					rootDirName + "/modules",
-				new String[] {
-					"apps/**/" + moduleName + "/build.gradle",
-					"dxp/apps/**/" + moduleName + "/build.gradle"
-				});
-
-			if (ListUtil.isEmpty(buildGradleFileNames) || buildGradleFileNames.size() != 1) {
+			if (ListUtil.isEmpty(buildGradleFileNames)) {
 				return content;
 			}
 
-			String buildGradleFileName = buildGradleFileNames.get(0);
+			String moduleName = _getModuleName(absolutePath);
+			List<String> testPropertiesFileNames = new ArrayList<>();
 
-			int x = buildGradleFileName.lastIndexOf("/");
+			for (String buildGradleFileName : buildGradleFileNames) {
+				if (buildGradleFileName.endsWith(
+						"/" + moduleName + "/build.gradle")) {
 
-			File file = new File(
-					buildGradleFileName.substring(0, x) + "/test.properties");
+					int x = buildGradleFileName.lastIndexOf("/");
+
+					testPropertiesFileNames.add(
+						buildGradleFileName.substring(0, x) +
+							"/test.properties");
+				}
+			}
+
+			if (ListUtil.isEmpty(testPropertiesFileNames) ||
+				(testPropertiesFileNames.size() != 1)) {
+
+				return content;
+			}
+
+			File file = new File(testPropertiesFileNames.get(0));
 
 			if (!file.exists()) {
 				addMessage(
-						fileName,
-						"Missing test.properties for module '" + moduleName +
-								"' in modules");
+					fileName,
+					"Missing test.properties for module '" + moduleName +
+						"' in modules");
 			}
-
 		}
 
 		if (absolutePath.contains("/modules/apps/") ||
@@ -150,6 +151,20 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private synchronized List<String> _getBuildGradleFileNames()
+		throws IOException {
+
+		if (_buildGradleFileNames != null) {
+			return _buildGradleFileNames;
+		}
+
+		_buildGradleFileNames = SourceFormatterUtil.scanForFileNames(
+			getPortalDir().getCanonicalPath() + "/modules",
+			new String[] {"apps/**/build.gradle", "dxp/apps/**/build.gradle"});
+
+		return _buildGradleFileNames;
 	}
 
 	private String _getModuleName(String absolutePath) {
@@ -217,6 +232,7 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 	private static final String _TESTRAY_MAIN_COMPONENT_NAME =
 		"testray.main.component.name";
 
+	private List<String> _buildGradleFileNames;
 	private List<String> _testrayAllTeamsComponentNames;
 
 }

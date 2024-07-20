@@ -28,7 +28,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						Start-Condition
+						Start Condition
 					</label>
 				</labels>
 				<name>9f7ea4cb-7d05-4f1d-b4b1-bec5f2236ab6</name>
@@ -83,7 +83,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						Condition-Task-One
+						Condition Task One
 					</label>
 				</labels>
 				<name>7e41ff0e-c095-446b-b423-42067ae5dab1</name>
@@ -93,7 +93,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						Condition-Task-Two
+						Condition Task Two
 					</label>
 				</labels>
 				<name>9a7dd0f9-5718-42d2-b4cf-7299d4f9f9e9</name>
@@ -127,7 +127,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						Task-End-One
+						Task End One
 					</label>
 				</labels>
 				<name>b94d1013-4e19-4393-bd8d-a944d9a64488</name>
@@ -161,7 +161,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						Task-End-Two
+						Task End Two
 					</label>
 				</labels>
 				<name>71253214-5533-460d-a10b-6edb87df5827</name>

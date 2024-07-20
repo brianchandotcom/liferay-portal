@@ -28,7 +28,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						Start-Fork
+						Start Fork
 					</label>
 				</labels>
 				<name>cf54177e-013a-429c-9f75-e1b8542beeea</name>
@@ -79,7 +79,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						Fork-Task-One
+						Fork Task One
 					</label>
 				</labels>
 				<name>a45a01e4-1766-446e-be3c-737c6835d807</name>
@@ -89,7 +89,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						Fork-Task-Two
+						Fork Task Two
 					</label>
 				</labels>
 				<name>4133ecd8-58bf-4ceb-a7c4-21150c54337c</name>
@@ -123,7 +123,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						Task-Join-One
+						Task Join One
 					</label>
 				</labels>
 				<name>aaed243c-cbb0-4496-b2e1-0935eea8b161</name>
@@ -157,7 +157,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						Task-Join-Two
+						Task Join Two
 					</label>
 				</labels>
 				<name>a0627242-65d9-4d13-a28c-a904a1c271b7</name>
@@ -188,7 +188,7 @@
 			<transition>
 				<labels>
 					<label language-id="en_US">
-						Join-End
+						Join End
 					</label>
 				</labels>
 				<name>188d75ae-32a6-4048-8220-b5963157ded3</name>

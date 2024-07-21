@@ -66,7 +66,7 @@ public abstract class BaseInputFragmentRendererTestCase {
 					"firstName")),
 			ObjectDefinitionConstants.SCOPE_SITE);
 
-		fragmentEntryLink = addFragmentEntryLink();
+		fragmentEntryLink = addFragmentEntryLink(objectDefinition);
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 	}
@@ -93,7 +93,7 @@ public abstract class BaseInputFragmentRendererTestCase {
 	@Test
 	public void testRenderWithInfoItemDetails() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest();
+			getMockHttpServletRequest(objectDefinition);
 
 		FragmentRenderer fragmentRenderer = getFragmentRenderer();
 
@@ -120,7 +120,10 @@ public abstract class BaseInputFragmentRendererTestCase {
 		assertRender(0, mockHttpServletRequest);
 	}
 
-	protected FragmentEntryLink addFragmentEntryLink() throws Exception {
+	protected FragmentEntryLink addFragmentEntryLink(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
 		FragmentRenderer fragmentRenderer = getFragmentRenderer();
 
 		Layout draftLayout = layout.fetchDraftLayout();
@@ -150,7 +153,8 @@ public abstract class BaseInputFragmentRendererTestCase {
 
 	protected abstract FragmentRenderer getFragmentRenderer();
 
-	protected MockHttpServletRequest getMockHttpServletRequest()
+	protected MockHttpServletRequest getMockHttpServletRequest(
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -225,7 +229,7 @@ public abstract class BaseInputFragmentRendererTestCase {
 		defaultFragmentRendererContext.setMode(mode);
 
 		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest();
+			getMockHttpServletRequest(objectDefinition);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

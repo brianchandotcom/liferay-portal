@@ -46,8 +46,8 @@ public abstract class BaseActionDropdownItemsProviderTestCase {
 	@Before
 	public void setUp() {
 		_setUpFragmentPortletConfiguration();
-		_setUpItemSelector();
 		_setUpHttpServletRequest();
+		_setUpItemSelector();
 		_setUpLanguageUtil();
 		_setUpPortalUtil();
 		_setUpPortletURLBuilder();

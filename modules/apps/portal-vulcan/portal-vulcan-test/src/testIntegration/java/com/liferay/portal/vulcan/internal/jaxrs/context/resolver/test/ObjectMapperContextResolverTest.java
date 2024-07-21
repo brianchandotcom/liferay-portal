@@ -92,7 +92,6 @@ public class ObjectMapperContextResolverTest {
 						"testString", RandomTestUtil.randomString(10)
 					).toString(),
 					"test-vulcan/test", Http.Method.POST));
-
 			Assert.assertEquals(
 				400,
 				HTTPTestUtil.invokeToHttpCode(

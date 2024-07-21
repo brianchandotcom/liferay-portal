@@ -21,6 +21,9 @@ import java.util.List;
 public class ObjectWriterFactory {
 
 	public static ObjectWriter getObjectWriter(List<String> includeFieldNames) {
+		ObjectMapper objectMapper =
+			ObjectMapperProviderUtil.getBatchEngineObjectMapper();
+
 		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
 
 		if (includeFieldNames.isEmpty()) {
@@ -32,9 +35,6 @@ public class ObjectWriterFactory {
 				VulcanPropertyFilter.of(
 					new HashSet<>(includeFieldNames), null));
 		}
-
-		ObjectMapper objectMapper =
-			ObjectMapperProviderUtil.getBatchEngineObjectMapper();
 
 		return objectMapper.writer(simpleFilterProvider);
 	}

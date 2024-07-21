@@ -42,7 +42,7 @@ RedirectEntriesDisplayContext redirectEntriesDisplayContext = (RedirectEntriesDi
 			<div class="lfr-search-container">
 				<clay:alert
 					displayType="warning"
-					message="redirect-functionality-may-not-work-as-expected-in-this-staging-environment"
+					message="redirect-functionality-may-not-work-as-expected-in-the-staging-environment"
 				/>
 			</div>
 		</c:if>

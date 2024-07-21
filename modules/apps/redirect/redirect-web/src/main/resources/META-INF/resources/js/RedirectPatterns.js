@@ -236,7 +236,7 @@ const RedirectPattern = ({
 						title={`${Liferay.Language.get('warning')}:`}
 					>
 						{Liferay.Language.get(
-							'redirect-functionality-may-not-work-as-expected-in-this-staging-environment'
+							'redirect-functionality-may-not-work-as-expected-in-the-staging-environment'
 						)}
 					</ClayAlert>
 				)}

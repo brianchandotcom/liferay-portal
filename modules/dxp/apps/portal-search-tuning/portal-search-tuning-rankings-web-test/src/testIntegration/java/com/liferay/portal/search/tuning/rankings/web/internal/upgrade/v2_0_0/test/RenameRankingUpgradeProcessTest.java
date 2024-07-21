@@ -34,12 +34,12 @@ public class RenameRankingUpgradeProcessTest
 
 	@Test
 	public void testUpgradeProcess() throws Exception {
-		long oldClassNameId = classNameLocalService.getClassNameId(
+		long classNameId = classNameLocalService.getClassNameId(
 			"com.liferay.portal.search.tuning.rankings.web.internal.index." +
 				"Ranking");
 		long classPK = counterLocalService.increment();
 
-		addRanking(oldClassNameId, classPK);
+		addRanking(classNameId, classPK);
 
 		runUpgrade();
 
@@ -49,7 +49,7 @@ public class RenameRankingUpgradeProcessTest
 
 		Assert.assertNotNull(rankingJSONObject);
 
-		Assert.assertNull(classNameLocalService.fetchClassName(oldClassNameId));
+		Assert.assertNull(classNameLocalService.fetchClassName(classNameId));
 	}
 
 	@Override

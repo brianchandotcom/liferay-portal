@@ -24,6 +24,7 @@ import java.util.Properties;
  * @author Alan Huang
  */
 public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
+
 	@Override
 	public boolean isLiferaySourceCheck() {
 		return true;

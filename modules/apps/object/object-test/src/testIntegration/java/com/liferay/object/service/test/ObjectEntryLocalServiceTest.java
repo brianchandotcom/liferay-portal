@@ -1881,7 +1881,7 @@ public class ObjectEntryLocalServiceTest {
 					"encrypted-media\" allowfullscreen=\"\" frameborder=\"0\" ",
 					"height=\"315\" src=",
 					"\"https://www.youtube.com/embed/6LjQ7Z99N74?rel=0\" ",
-					"width=\"560\"></iframe></div> <p>&nbsp;</p>")
+					"width=\"560\"></iframe></div><p>&nbsp;</p>")
 			).build();
 
 		ObjectEntry objectEntry = _addObjectEntry(

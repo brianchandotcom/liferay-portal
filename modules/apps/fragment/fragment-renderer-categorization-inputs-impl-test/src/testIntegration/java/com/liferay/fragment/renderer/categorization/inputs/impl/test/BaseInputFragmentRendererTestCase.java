@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.renderer.categorization.inputs.impl.test;
 
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
@@ -19,15 +20,18 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -36,6 +40,7 @@ import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -73,6 +78,25 @@ public abstract class BaseInputFragmentRendererTestCase {
 		fragmentEntryLink = addFragmentEntryLink();
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+	}
+
+	@Test
+	public void testRenderWithCategorizationDisabledInEditMode()
+		throws Exception {
+
+		_assertRenderWithCategorizationDisabled(
+			LanguageUtil.get(
+				LocaleUtil.getSiteDefault(),
+				"categorization-is-disabled-for-the-selected-content"),
+			FragmentEntryLinkConstants.EDIT);
+	}
+
+	@Test
+	public void testRenderWithCategorizationDisabledInViewMode()
+		throws Exception {
+
+		_assertRenderWithCategorizationDisabled(
+			StringPool.BLANK, FragmentEntryLinkConstants.VIEW);
 	}
 
 	@Test
@@ -162,5 +186,63 @@ public abstract class BaseInputFragmentRendererTestCase {
 
 	@Inject
 	protected SegmentsExperienceLocalService segmentsExperienceLocalService;
+
+	private void _assertRenderWithCategorizationDisabled(
+			String expectedResult, String mode)
+		throws Exception {
+
+		_objectDefinitionLocalService.updateCustomObjectDefinition(
+			objectDefinition.getExternalReferenceCode(),
+			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getAccountEntryRestrictedObjectFieldId(),
+			objectDefinition.getDescriptionObjectFieldId(), 0,
+			objectDefinition.getTitleObjectFieldId(),
+			objectDefinition.isAccountEntryRestricted(),
+			objectDefinition.isActive(), false,
+			objectDefinition.isEnableComments(),
+			objectDefinition.isEnableIndexSearch(),
+			objectDefinition.isEnableLocalization(),
+			objectDefinition.isEnableObjectEntryDraft(),
+			objectDefinition.isEnableObjectEntryHistory(),
+			objectDefinition.getLabelMap(), objectDefinition.getName(),
+			objectDefinition.getPanelAppOrder(),
+			objectDefinition.getPanelCategoryKey(),
+			objectDefinition.isPortlet(), objectDefinition.getPluralLabelMap(),
+			objectDefinition.getScope(), objectDefinition.getStatus());
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		defaultFragmentRendererContext.setMode(mode);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			ContentLayoutTestUtil.getMockHttpServletRequest(
+				companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+				group, layout);
+
+		InfoItemDetailsProvider<ObjectEntry> infoItemDetailsProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemDetailsProvider.class, objectDefinition.getClassName());
+
+		mockHttpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
+			infoItemDetailsProvider.getInfoItemDetails(addObjectEntry()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		FragmentRenderer fragmentRenderer = getFragmentRenderer();
+
+		fragmentRenderer.render(
+			defaultFragmentRendererContext, mockHttpServletRequest,
+			mockHttpServletResponse);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertTrue(content.contains(expectedResult));
+	}
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

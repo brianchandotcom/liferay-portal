@@ -31,74 +31,75 @@ import com.liferay.portal.vulcan.jaxrs.serializer.UnsafeSupplierJsonSerializer;
 public class ObjectMapperProviderUtil {
 
 	public static ObjectMapper getBatchEngineObjectMapper() {
-		if (PropsValues.JSON_STRING_MAX_LENGTH != _jsonStringMaxLength) {
-			_jsonStringMaxLength = PropsValues.JSON_STRING_MAX_LENGTH;
-
-			_batchEngineObjectMapper = new ObjectMapper(
-				_getJsonFactory(_jsonStringMaxLength)) {
-
-				{
-					disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-					enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
-					registerModule(
-						new SimpleModule() {
-							{
-								addSerializer(
-									(Class<UnsafeSupplier<Object, Exception>>)
-										(Class<?>)UnsafeSupplier.class,
-									new UnsafeSupplierJsonSerializer());
-							}
-						});
-					setDateFormat(new ISO8601DateFormat());
-					setSerializationInclusion(JsonInclude.Include.NON_NULL);
-				}
-			};
+		if (PropsValues.JSON_STRING_MAX_LENGTH == _jsonStringMaxLength) {
+			return _batchEngineObjectMapper;
 		}
+
+		_jsonStringMaxLength = PropsValues.JSON_STRING_MAX_LENGTH;
+
+		_batchEngineObjectMapper = new ObjectMapper(
+			_getJsonFactory(_jsonStringMaxLength)) {
+
+			{
+				disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+				enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
+				registerModule(
+					new SimpleModule() {
+						{
+							addSerializer(
+								(Class<UnsafeSupplier<Object, Exception>>)
+									(Class<?>)UnsafeSupplier.class,
+								new UnsafeSupplierJsonSerializer());
+						}
+					});
+				setDateFormat(new ISO8601DateFormat());
+				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			}
+		};
 
 		return _batchEngineObjectMapper;
 	}
 
 	public static ObjectMapper getObjectMapper() {
-		if (PropsValues.JSON_STRING_MAX_LENGTH != _jsonStringMaxLength) {
-			_jsonStringMaxLength = PropsValues.JSON_STRING_MAX_LENGTH;
-
-			_objectMapper = new ObjectMapper(
-				_getJsonFactory(_jsonStringMaxLength)) {
-
-				{
-					configure(
-						MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-					enable(SerializationFeature.INDENT_OUTPUT);
-					registerModule(
-						new SimpleModule() {
-							{
-								addSerializer(
-									JSONArray.class,
-									new JSONArrayStdSerializer(
-										JSONArray.class));
-								addSerializer(
-									JSONObject.class,
-									new JSONObjectStdSerializer(
-										JSONObject.class));
-								addSerializer(
-									(Class<UnsafeSupplier<Object, Exception>>)
-										(Class<?>)UnsafeSupplier.class,
-									new UnsafeSupplierJsonSerializer());
-							}
-						});
-					setDateFormat(new ISO8601DateFormat());
-					setFilterProvider(
-						new SimpleFilterProvider() {
-							{
-								addFilter(
-									"Liferay.Vulcan",
-									SimpleBeanPropertyFilter.serializeAll());
-							}
-						});
-					setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
-				}
-			};
+		if (PropsValues.JSON_STRING_MAX_LENGTH == _jsonStringMaxLength) {
+			return _objectMapper;
 		}
+
+		_jsonStringMaxLength = PropsValues.JSON_STRING_MAX_LENGTH;
+
+		_objectMapper = new ObjectMapper(
+			_getJsonFactory(_jsonStringMaxLength)) {
+
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				enable(SerializationFeature.INDENT_OUTPUT);
+				registerModule(
+					new SimpleModule() {
+						{
+							addSerializer(
+								JSONArray.class,
+								new JSONArrayStdSerializer(JSONArray.class));
+							addSerializer(
+								JSONObject.class,
+								new JSONObjectStdSerializer(JSONObject.class));
+							addSerializer(
+								(Class<UnsafeSupplier<Object, Exception>>)
+									(Class<?>)UnsafeSupplier.class,
+								new UnsafeSupplierJsonSerializer());
+						}
+					});
+				setDateFormat(new ISO8601DateFormat());
+				setFilterProvider(
+					new SimpleFilterProvider() {
+						{
+							addFilter(
+								"Liferay.Vulcan",
+								SimpleBeanPropertyFilter.serializeAll());
+						}
+					});
+				setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
+			}
+		};
 
 		return _objectMapper;
 	}

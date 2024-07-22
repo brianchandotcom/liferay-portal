@@ -98,7 +98,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
-				"An API endpoint must be related to an API application."
+				"The value is invalid for object field " +
+					"\"r_apiApplicationToAPIEndpoints_c_apiApplicationId\""
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -136,7 +137,9 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "An API endpoint must be related to an API schema."
+				"title",
+				"The value is invalid for object field " +
+					"\"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId\""
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

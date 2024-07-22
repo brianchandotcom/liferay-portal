@@ -21,7 +21,11 @@ const AutoSelect = ({itemId}) => {
 	return null;
 };
 
-const renderComponent = ({activeItemId}) => {
+const renderComponent = ({
+	multiSelectIsActive,
+	activeItemId,
+	activeItemIds = [],
+}) => {
 	return render(
 		<StoreMother.Component
 			getState={() => ({
@@ -94,7 +98,12 @@ const renderComponent = ({activeItemId}) => {
 				},
 			})}
 		>
-			<ControlsProvider>
+			<ControlsProvider
+				activeInitialState={{
+					activeItemIds,
+					multiSelectIsActive,
+				}}
+			>
 				<AutoSelect itemId={activeItemId} />
 
 				<LayoutBreadcrumbs />
@@ -105,6 +114,8 @@ const renderComponent = ({activeItemId}) => {
 
 describe('LayoutBreadcrumbs', () => {
 	beforeAll(() => {
+		Liferay.FeatureFlags['LPD-18221'] = true;
+
 		const wrapper = document.createElement('div');
 		wrapper.setAttribute('id', 'wrapper');
 		document.body.appendChild(wrapper);
@@ -113,6 +124,8 @@ describe('LayoutBreadcrumbs', () => {
 	afterAll(() => {
 		const wrapper = document.getElementById('wrapper');
 		document.body.removeChild(wrapper);
+
+		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
 	it('renders item in breadcrumbs when selecting it', () => {
@@ -144,5 +157,16 @@ describe('LayoutBreadcrumbs', () => {
 		expect(screen.queryAllByText('grid')[0]).toBeInTheDocument();
 
 		expect(screen.queryByText('column')).not.toBeInTheDocument();
+	});
+
+	it('does not render anything when multiple elements are selected', () => {
+		renderComponent({
+			activeItemId: 'item-4',
+			activeItemIds: ['item-1'],
+			multiSelectIsActive: true,
+		});
+
+		expect(screen.queryByText('Item 1')).not.toBeInTheDocument();
+		expect(screen.queryByText('Item 4')).not.toBeInTheDocument();
 	});
 });

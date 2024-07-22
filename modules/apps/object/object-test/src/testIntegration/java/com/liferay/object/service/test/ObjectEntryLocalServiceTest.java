@@ -1886,7 +1886,10 @@ public class ObjectEntryLocalServiceTest {
 
 		ObjectEntry objectEntry = _addObjectEntry(
 			TestPropsValues.getGroupId(),
-			objectDefinition.getObjectDefinitionId(), expectedValues);
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.create(
+				expectedValues
+			).build());
 
 		Map<String, Serializable> actualValues = objectEntry.getValues();
 

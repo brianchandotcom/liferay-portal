@@ -531,7 +531,10 @@ public class CalendarBookingLocalServiceTest {
 		CalendarBooking calendarBooking =
 			CalendarBookingTestUtil.addCalendarBooking(
 				_user, calendar, new long[0],
-				RandomTestUtil.randomLocaleStringMap(), descriptionMap,
+				RandomTestUtil.randomLocaleStringMap(),
+				HashMapBuilder.create(
+					descriptionMap
+				).build(),
 				startTime, startTime + (Time.HOUR * 10), null, (int)startTime,
 				NotificationType.EMAIL, 0, NotificationType.EMAIL,
 				serviceContext);

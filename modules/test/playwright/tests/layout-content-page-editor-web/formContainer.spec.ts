@@ -105,3 +105,50 @@ test('Shows correct options in picklist field selected as title in related objec
 	await expect(page.getByText('Plastic', {exact: true})).toBeVisible();
 	await expect(page.getByText('Carton', {exact: true})).toBeVisible();
 });
+
+test(
+	'Checks changing the option when one default is selected set the value correctly',
+	{
+		tag: '@LPD-31856',
+	},
+	async ({apiHelpers, page, pageEditorPage, wemSite}) => {
+
+		// Create a page with a Form fragment
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: wemSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode and map it to the object
+
+		await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+
+		await pageEditorPage.mapFormFragment(formId, 'Lemon Basket', [
+			'Material',
+		]);
+
+		// Publish and go to view mode
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(
+			`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		// Check that the value after selecting the item is correct
+
+		await page.getByLabel('Material').click();
+
+		await page.getByText('carton').click();
+
+		expect(page.getByLabel('Material')).toHaveValue('Carton');
+	}
+);

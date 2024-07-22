@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -451,6 +452,23 @@ public class NavigationMenuResourceTest
 		Map<String, Serializable> expandoBridgeAttributes =
 			serviceContext.getExpandoBridgeAttributes();
 
+		if (MapUtil.isEmpty(expandoBridgeAttributes)) {
+			return TransformUtil.transformToArray(
+				_expandoColumnNames,
+				expandoColumnName -> new CustomField() {
+					{
+						customValue = new CustomValue() {
+							{
+								data = StringPool.BLANK;
+							}
+						};
+						dataType = "Text";
+						name = expandoColumnName;
+					}
+				},
+				CustomField.class);
+		}
+
 		return TransformUtil.transformToArray(
 			expandoBridgeAttributes.entrySet(),
 			entry -> new CustomField() {
@@ -467,17 +485,21 @@ public class NavigationMenuResourceTest
 			CustomField.class);
 	}
 
-	private ServiceContext _getServiceContext() throws Exception {
+	private ServiceContext _getServiceContext(boolean expandoBridgeAttributes)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setExpandoBridgeAttributes(
-			HashMapBuilder.<String, Serializable>put(
-				_expandoColumnNames.get(0), RandomTestUtil.randomString()
-			).put(
-				_expandoColumnNames.get(1), RandomTestUtil.randomString()
-			).build());
+		if (expandoBridgeAttributes) {
+			serviceContext.setExpandoBridgeAttributes(
+				HashMapBuilder.<String, Serializable>put(
+					_expandoColumnNames.get(0), RandomTestUtil.randomString()
+				).put(
+					_expandoColumnNames.get(1), RandomTestUtil.randomString()
+				).build());
+		}
 
 		return serviceContext;
 	}
@@ -664,7 +686,11 @@ public class NavigationMenuResourceTest
 
 		_testGetSiteNavigationMenusPage(
 			classPK, classTypeId, clazz, contentURL, displayPageType, title,
-			type, useCustomName, _getServiceContext());
+			type, useCustomName, _getServiceContext(false));
+
+		_testGetSiteNavigationMenusPage(
+			classPK, classTypeId, clazz, contentURL, displayPageType, title,
+			type, useCustomName, _getServiceContext(true));
 	}
 
 	private void _testGetSiteNavigationMenusPage(

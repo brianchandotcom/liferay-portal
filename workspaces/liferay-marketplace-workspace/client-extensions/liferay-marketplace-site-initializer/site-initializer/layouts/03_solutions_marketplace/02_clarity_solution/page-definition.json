@@ -112,7 +112,7 @@
 																	"fieldKey": "FileEntry_previewImage",
 																	"itemReference": {
 																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/customer_dashboard.png#]"
+																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/customer_dashboard.png#]"
 																	}
 																}
 															}
@@ -465,7 +465,7 @@
 																								"fieldKey": "FileEntry_previewImage",
 																								"itemReference": {
 																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/home_with_guide.png#]"
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/home_with_guide.png#]"
 																								}
 																							}
 																						}
@@ -488,7 +488,7 @@
 																								"fieldKey": "FileEntry_previewImage",
 																								"itemReference": {
 																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/trial_instructions.png#]"
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/trial_instructions.png#]"
 																								}
 																							}
 																						}
@@ -546,7 +546,7 @@
 																								"fieldKey": "FileEntry_previewImage",
 																								"itemReference": {
 																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/sign_in.png#]"
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/sign_in.png#]"
 																								}
 																							}
 																						}
@@ -858,7 +858,7 @@
 																																					"fieldKey": "FileEntry_previewImage",
 																																					"itemReference": {
 																																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/revenue_growth.png#]"
+																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/revenue_growth.png#]"
 																																					}
 																																				}
 																																			}
@@ -1224,7 +1224,7 @@
 																																					"fieldKey": "FileEntry_previewImage",
 																																					"itemReference": {
 																																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/sales_rep_support.png#]"
+																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/sales_rep_support.png#]"
 																																					}
 																																				}
 																																			}
@@ -1598,7 +1598,7 @@
 																																					"fieldKey": "FileEntry_previewImage",
 																																					"itemReference": {
 																																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/fix_delivery_method.png#]"
+																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/fix_delivery_method.png#]"
 																																					}
 																																				}
 																																			}
@@ -1964,7 +1964,7 @@
 																																					"fieldKey": "FileEntry_previewImage",
 																																					"itemReference": {
 																																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/unify_commerce.png#]"
+																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/unify_commerce.png#]"
 																																					}
 																																				}
 																																			}
@@ -2330,7 +2330,7 @@
 																																					"fieldKey": "FileEntry_previewImage",
 																																					"itemReference": {
 																																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/future_prospects.png#]"
+																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/future_prospects.png#]"
 																																					}
 																																				}
 																																			}
@@ -2690,7 +2690,7 @@
 																																					"fieldKey": "FileEntry_previewImage",
 																																					"itemReference": {
 																																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/application_security.png#]"
+																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/application_security.png#]"
 																																					}
 																																				}
 																																			}
@@ -2953,7 +2953,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/avatar.png#]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/avatar.png#]"
 																							}
 																						}
 																					}
@@ -3195,7 +3195,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/web_cursor.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/web_cursor.png#]"
 																											}
 																										}
 																									}
@@ -3367,7 +3367,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/mail.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/mail.png#]"
 																											}
 																										}
 																									}
@@ -3531,7 +3531,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/mobile_banking.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/clarity-solution-assets/mobile_banking.png#]"
 																											}
 																										}
 																									}

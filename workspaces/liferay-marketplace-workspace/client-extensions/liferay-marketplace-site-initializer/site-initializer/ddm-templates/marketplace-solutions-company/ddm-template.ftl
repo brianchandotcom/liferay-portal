@@ -100,7 +100,7 @@
 				<#if companyWebsite?has_content>
 					<div class="d-flex flex-row">
 						<div class="align-items-center d-flex mr-2">
-							<img class="company-icon" aria-label="video-thumbnail" src="/documents/d/marketplace/lr-icon-063-png"></img>
+							<img class="company-icon" aria-label="video-thumbnail" src="/documents/d/marketplace/lr_icon_063-png"></img>
 						</div>
 
 						<div class="d-flex flex-column">
@@ -117,7 +117,7 @@
 					<#if companyEmail?has_content>
 						<div class="d-flex flex-row">
 							<div class="align-items-center d-flex mr-2">
-								<img class="company-icon" aria-label="video-thumbnail" src="/documents/d/marketplace/lr-icon-184-png"></img>
+								<img class="company-icon" aria-label="video-thumbnail" src="/documents/d/marketplace/lr_icon_184-png"></img>
 							</div>
 
 							<div class="d-flex flex-column">
@@ -133,7 +133,7 @@
 					<#if companyPhone?has_content>
 						<div class="d-flex flex-row">
 							<div class="align-items-center d-flex mr-2">
-								<img class="company-icon" aria-label="video-thumbnail" src="/documents/d/marketplace/lr-icon-185-png"></img>
+								<img class="company-icon" aria-label="video-thumbnail" src="/documents/d/marketplace/lr_icon_185-png"></img>
 							</div>
 
 							<div class="d-flex flex-column">

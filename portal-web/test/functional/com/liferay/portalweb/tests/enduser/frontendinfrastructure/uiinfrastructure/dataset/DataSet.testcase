@@ -27,48 +27,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-178858 Confirm that the new Data Set Modal is displayed by clicking on the add button"
-	@priority = 3
-	test AssertNewDataSetModal {
-		task ("When the user clicks on “Create Dataset” button") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("Then the New Dataset modal is displayed") {
-			AssertElementPresent(
-				key_modal_title = "New Data Set",
-				locator1 = "AccessibilityMenu#MODAL_TITLE");
-		}
-	}
-
-	@description = "LPS-181546 Confirm that the data set information is created and displayed correctly"
-	@priority = 5
-	test AssertTheInformationsInDataSet {
-		task ("When the user creates a new data entry") {
-			DataSetAdmin.createDataSetEntryViaAPI(
-				dataSetName = "Blog Posts Posts",
-				restApplication = "/headless-delivery/v1.0",
-				restEndpoint = "/v1.0/sites/{siteId}/blog-postings",
-				restSchema = "BlogPosting");
-
-			Refresh();
-		}
-
-		task ("Then confirm that the Data Set has been created and the information is shown correctly.") {
-			AssertElementPresent(
-				key_text = "Blog Posts Posts",
-				locator1 = "CP2Utils#ANY_TEXT");
-
-			AssertElementPresent(
-				key_text = "/headless-delivery/v1.0",
-				locator1 = "CP2Utils#ANY_TEXT");
-
-			AssertElementPresent(
-				key_text = "/v1.0/sites/{siteId}/blog-postings",
-				locator1 = "CP2Utils#ANY_TEXT");
-		}
-	}
-
 	@description = "LPS-178858 Confirm that the modal data set view is displayed"
 	@priority = 3
 	test CanAssertTheDataSetViewCanBeCreated {

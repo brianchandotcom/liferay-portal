@@ -10,7 +10,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceOrderConstants;
-import com.liferay.commerce.constants.CommerceReturnConstants;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -64,7 +63,8 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlags("LPD-10562")
 @RunWith(Arquillian.class)
-public class CommerceReturnObjectValidationRuleEngineImplTest {
+public class
+	CommerceReturnCommerceOrderStatusObjectValidationRuleEngineImplTest {
 
 	@ClassRule
 	@Rule
@@ -118,129 +118,6 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
 			_user.getUserId(), true);
-	}
-
-	@Test
-	public void testCommerceReturnAccountEntryIdObjectValidationRuleEngineImpl() {
-		Map<String, Object> results =
-			_commerceReturnAccountEntryIdObjectValidationRuleEngineImpl.execute(
-				HashMapBuilder.<String, Object>put(
-					"entryDTO",
-					HashMapBuilder.put(
-						"properties",
-						HashMapBuilder.put(
-							"r_accountToCommerceReturns_accountEntryId",
-							RandomTestUtil.randomLong()
-						).put(
-							"r_commerceOrderToCommerceReturns_commerceOrderId",
-							_commerceOrder.getCommerceOrderId()
-						).build()
-					).build()
-				).build(),
-				null);
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
-
-		results =
-			_commerceReturnAccountEntryIdObjectValidationRuleEngineImpl.execute(
-				HashMapBuilder.<String, Object>put(
-					"entryDTO",
-					HashMapBuilder.put(
-						"properties",
-						HashMapBuilder.put(
-							"r_accountToCommerceReturns_accountEntryId",
-							_accountEntry.getAccountEntryId()
-						).put(
-							"r_commerceOrderToCommerceReturns_commerceOrderId",
-							_commerceOrder.getCommerceOrderId()
-						).build()
-					).build()
-				).build(),
-				null);
-
-		Assert.assertTrue(
-			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
-	}
-
-	@Test
-	public void testCommerceReturnCommerceOrderIdObjectValidationRuleEngineImpl() {
-		Map<String, Object> results =
-			_commerceReturnCommerceOrderIdObjectValidationRuleEngineImpl.
-				execute(
-					HashMapBuilder.<String, Object>put(
-						"entryDTO",
-						HashMapBuilder.put(
-							"properties",
-							HashMapBuilder.put(
-								"r_commerceOrderToCommerceReturns_" +
-									"commerceOrderId",
-								_commerceOrder.getCommerceOrderId()
-							).build()
-						).build()
-					).put(
-						"originalEntryDTO",
-						HashMapBuilder.put(
-							"properties",
-							HashMapBuilder.put(
-								"r_commerceOrderToCommerceReturns_" +
-									"commerceOrderId",
-								_commerceOrder.getCommerceOrderId()
-							).build()
-						).build()
-					).build(),
-					null);
-
-		Assert.assertTrue(
-			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
-
-		results =
-			_commerceReturnCommerceOrderIdObjectValidationRuleEngineImpl.
-				execute(
-					HashMapBuilder.<String, Object>put(
-						"entryDTO",
-						HashMapBuilder.put(
-							"properties",
-							HashMapBuilder.put(
-								"r_commerceOrderToCommerceReturns_" +
-									"commerceOrderId",
-								RandomTestUtil.randomLong()
-							).build()
-						).build()
-					).put(
-						"originalEntryDTO",
-						HashMapBuilder.put(
-							"properties",
-							HashMapBuilder.put(
-								"r_commerceOrderToCommerceReturns_" +
-									"commerceOrderId",
-								_commerceOrder.getCommerceOrderId()
-							).build()
-						).build()
-					).build(),
-					null);
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
-
-		results =
-			_commerceReturnCommerceOrderIdObjectValidationRuleEngineImpl.
-				execute(
-					HashMapBuilder.<String, Object>put(
-						"entryDTO",
-						HashMapBuilder.put(
-							"properties",
-							HashMapBuilder.put(
-								"r_commerceOrderToCommerceReturns_" +
-									"commerceOrderId",
-								_commerceOrder.getCommerceOrderId()
-							).build()
-						).build()
-					).build(),
-					null);
-
-		Assert.assertTrue(
-			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 	}
 
 	@Test
@@ -320,46 +197,6 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 	}
 
-	@Test
-	public void testCommerceReturnReturnStatusObjectValidationRuleEngineImpl() {
-		Map<String, Object> results =
-			_commerceReturnReturnStatusObjectValidationRuleEngineImpl.execute(
-				HashMapBuilder.<String, Object>put(
-					"entryDTO",
-					HashMapBuilder.put(
-						"properties",
-						HashMapBuilder.put(
-							"r_commerceOrderToCommerceReturns_commerceOrderId",
-							RandomTestUtil.randomLong()
-						).build()
-					).build()
-				).build(),
-				null);
-
-		Assert.assertFalse(
-			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
-
-		results =
-			_commerceReturnReturnStatusObjectValidationRuleEngineImpl.execute(
-				HashMapBuilder.<String, Object>put(
-					"entryDTO",
-					HashMapBuilder.put(
-						"properties",
-						HashMapBuilder.put(
-							"returnStatus",
-							HashMapBuilder.put(
-								"key",
-								CommerceReturnConstants.RETURN_STATUS_DRAFT
-							).build()
-						).build()
-					).build()
-				).build(),
-				null);
-
-		Assert.assertTrue(
-			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
-	}
-
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
@@ -383,28 +220,10 @@ public class CommerceReturnObjectValidationRuleEngineImplTest {
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.commerce.internal.object.validation.rule.CommerceReturnAccountEntryIdObjectValidationRuleEngineImpl"
-	)
-	private ObjectValidationRuleEngine
-		_commerceReturnAccountEntryIdObjectValidationRuleEngineImpl;
-
-	@Inject(
-		filter = "component.name=com.liferay.commerce.internal.object.validation.rule.CommerceReturnCommerceOrderIdObjectValidationRuleEngineImpl"
-	)
-	private ObjectValidationRuleEngine
-		_commerceReturnCommerceOrderIdObjectValidationRuleEngineImpl;
-
-	@Inject(
 		filter = "component.name=com.liferay.commerce.internal.object.validation.rule.CommerceReturnCommerceOrderStatusObjectValidationRuleEngineImpl"
 	)
 	private ObjectValidationRuleEngine
 		_commerceReturnCommerceOrderStatusObjectValidationRuleEngineImpl;
-
-	@Inject(
-		filter = "component.name=com.liferay.commerce.internal.object.validation.rule.CommerceReturnReturnStatusObjectValidationRuleEngineImpl"
-	)
-	private ObjectValidationRuleEngine
-		_commerceReturnReturnStatusObjectValidationRuleEngineImpl;
 
 	@Inject
 	private CommerceShipmentItemLocalService _commerceShipmentItemLocalService;

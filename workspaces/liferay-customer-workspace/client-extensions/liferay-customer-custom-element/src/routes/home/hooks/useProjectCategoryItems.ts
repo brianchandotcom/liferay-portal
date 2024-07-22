@@ -5,7 +5,6 @@
 import {useMemo} from 'react';
 import useSWR from 'swr';
 import i18n from '~/common/I18n';
-import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import SearchBuilder from '~/common/core/SearchBuilder';
 import {Liferay} from '~/common/services/liferay';
 

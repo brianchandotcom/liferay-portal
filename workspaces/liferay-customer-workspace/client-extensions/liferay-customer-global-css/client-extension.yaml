@@ -1,6 +1,6 @@
 assemble:
     - from: assets
-        into: static
+      into: static
 liferay-learn-global-css:
     name: Liferay Customer Global CSS
     type: globalCSS

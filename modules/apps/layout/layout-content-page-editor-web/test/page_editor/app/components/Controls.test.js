@@ -18,7 +18,7 @@ const HOVER_ITEM = 'HOVER_ITEM';
 const SELECT_ITEM = 'SELECT_ITEM';
 const STATE = {
 	activationOrigin: 'pageEditor',
-	activeItemId: null,
+	activeItemIds: null,
 	activeItemType: null,
 	hoveredItemId: null,
 	hoveredItemType: null,
@@ -48,7 +48,7 @@ describe('Reducer', () => {
 		[
 			'editable when a fragment is selected',
 			{
-				activeItemId: 'item-1',
+				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
 				hoveredItemId: 'editable-1',
 				hoveredItemType: 'editable',
@@ -59,7 +59,7 @@ describe('Reducer', () => {
 				type: HOVER_ITEM,
 			},
 			{
-				activeItemId: 'item-1',
+				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
 				hoveredItemId: 'editable-1',
 				hoveredItemType: 'editable',
@@ -108,7 +108,7 @@ describe('Reducer', () => {
 		[
 			'editable',
 			{
-				activeItemId: 'item-1',
+				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
 				hoveredItemId: 'editable-1',
 				hoveredItemType: 'editable',
@@ -118,7 +118,7 @@ describe('Reducer', () => {
 				type: HOVER_ITEM,
 			},
 			{
-				activeItemId: 'item-1',
+				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
 				hoveredItemType: 'layoutItem',
 			},
@@ -144,7 +144,7 @@ describe('Reducer', () => {
 				type: SELECT_ITEM,
 			},
 			{
-				activeItemId: 'item-1',
+				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
 				hoveredItemId: 'item-1',
 				hoveredItemType: 'layoutItem',
@@ -153,7 +153,7 @@ describe('Reducer', () => {
 		[
 			'fragment which is already selected',
 			{
-				activeItemId: 'item-1',
+				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
 				hoveredItemId: 'item-1',
 				hoveredItemType: 'layoutItem',
@@ -164,7 +164,7 @@ describe('Reducer', () => {
 				type: SELECT_ITEM,
 			},
 			{
-				activeItemId: 'item-1',
+				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
 				hoveredItemId: 'item-1',
 				hoveredItemType: 'layoutItem',
@@ -173,7 +173,7 @@ describe('Reducer', () => {
 		[
 			'editable when a fragment is selected',
 			{
-				activeItemId: 'item-1',
+				activeItemIds: 'item-1',
 				hoveredItemId: 'editable-1',
 				hoveredItemType: 'editable',
 			},
@@ -183,7 +183,7 @@ describe('Reducer', () => {
 				type: SELECT_ITEM,
 			},
 			{
-				activeItemId: 'editable-1',
+				activeItemIds: 'editable-1',
 				activeItemType: 'editable',
 				hoveredItemId: 'editable-1',
 				hoveredItemType: 'editable',
@@ -202,7 +202,7 @@ describe('Reducer', () => {
 			},
 			{
 				activationOrigin: 'structureTreeNode',
-				activeItemId: 'item-1',
+				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
 				hoveredItemId: 'item-1',
 			},
@@ -218,7 +218,7 @@ describe('Reducer', () => {
 		[
 			'fragment',
 			{
-				activeItemId: 'item-1',
+				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
 			},
 			{
@@ -232,7 +232,7 @@ describe('Reducer', () => {
 		[
 			'fragment when other fragment is selected',
 			{
-				activeItemId: 'item-1',
+				activeItemIds: 'item-1',
 				activeItemType: 'layoutItem',
 				hoveredItemId: 'item-2',
 				hoveredItemType: 'layoutDataItem',
@@ -243,7 +243,7 @@ describe('Reducer', () => {
 				type: SELECT_ITEM,
 			},
 			{
-				activeItemId: 'item-2',
+				activeItemIds: 'item-2',
 				activeItemType: 'layoutItem',
 				hoveredItemId: 'item-2',
 				hoveredItemType: 'layoutDataItem',
@@ -252,7 +252,7 @@ describe('Reducer', () => {
 		[
 			'editable',
 			{
-				activeItemId: 'editable-1',
+				activeItemIds: 'editable-1',
 				activeItemType: 'editable',
 			},
 			{

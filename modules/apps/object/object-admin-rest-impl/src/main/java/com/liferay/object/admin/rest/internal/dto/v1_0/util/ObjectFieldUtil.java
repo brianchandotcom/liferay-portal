@@ -61,18 +61,18 @@ public class ObjectFieldUtil {
 		}
 
 		ListTypeDefinition listTypeDefinition =
-			listTypeDefinitionLocalService.fetchListTypeDefinition(
-				GetterUtil.getLong(objectField.getListTypeDefinitionId()));
-
-		if (listTypeDefinition != null) {
-			return objectField.getListTypeDefinitionId();
-		}
-
-		listTypeDefinition =
 			listTypeDefinitionLocalService.
 				fetchListTypeDefinitionByExternalReferenceCode(
 					objectField.getListTypeDefinitionExternalReferenceCode(),
 					companyId);
+
+		if (listTypeDefinition != null) {
+			return listTypeDefinition.getListTypeDefinitionId();
+		}
+
+		listTypeDefinition =
+			listTypeDefinitionLocalService.fetchListTypeDefinition(
+				GetterUtil.getLong(objectField.getListTypeDefinitionId()));
 
 		if (listTypeDefinition == null) {
 			listTypeDefinition =

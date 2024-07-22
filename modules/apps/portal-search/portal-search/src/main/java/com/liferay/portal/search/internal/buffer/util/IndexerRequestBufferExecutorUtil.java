@@ -106,7 +106,9 @@ public class IndexerRequestBufferExecutorUtil {
 		Collection<IndexerRequest> indexerRequests =
 			indexerRequestBuffer.getIndexerRequests();
 
-		if (!BufferOverflowThreadLocal.isOverflowMode()) {
+		if (!BufferOverflowThreadLocal.isOverflowMode() &&
+			(indexerRequests.size() > 1)) {
+
 			indexerRequests = _mergeIndexerRequests(indexerRequests);
 		}
 

@@ -31,6 +31,7 @@ import com.liferay.headless.delivery.client.resource.v1_0.NavigationMenuResource
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
@@ -444,6 +445,43 @@ public class NavigationMenuResourceTest
 		return false;
 	}
 
+	private CustomField[] _getExpectedCustomFields(
+		ServiceContext serviceContext) {
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			serviceContext.getExpandoBridgeAttributes();
+
+		return TransformUtil.transformToArray(
+			expandoBridgeAttributes.entrySet(),
+			entry -> new CustomField() {
+				{
+					customValue = new CustomValue() {
+						{
+							data = entry.getValue();
+						}
+					};
+					dataType = "Text";
+					name = entry.getKey();
+				}
+			},
+			CustomField.class);
+	}
+
+	private ServiceContext _getServiceContext() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setExpandoBridgeAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				_expandoColumnNames.get(0), RandomTestUtil.randomString()
+			).put(
+				_expandoColumnNames.get(1), RandomTestUtil.randomString()
+			).build());
+
+		return serviceContext;
+	}
+
 	private NavigationMenu _randomNavigationMenu(
 			boolean includeNavigationMenuItem)
 		throws Exception {
@@ -624,22 +662,19 @@ public class NavigationMenuResourceTest
 			Boolean useCustomName)
 		throws Exception {
 
+		_testGetSiteNavigationMenusPage(
+			classPK, classTypeId, clazz, contentURL, displayPageType, title,
+			type, useCustomName, _getServiceContext());
+	}
+
+	private void _testGetSiteNavigationMenusPage(
+			long classPK, long classTypeId, Class<?> clazz, String contentURL,
+			String displayPageType, String title, String type,
+			Boolean useCustomName, ServiceContext serviceContext)
+		throws Exception {
+
 		NavigationMenu postNavigationMenu =
 			testGetNavigationMenu_addNavigationMenu();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				testGroup.getGroupId(), TestPropsValues.getUserId());
-
-		String value1 = RandomTestUtil.randomString();
-		String value2 = RandomTestUtil.randomString();
-
-		serviceContext.setExpandoBridgeAttributes(
-			HashMapBuilder.<String, Serializable>put(
-				_expandoColumnNames.get(0), value1
-			).put(
-				_expandoColumnNames.get(1), value2
-			).build());
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
@@ -718,31 +753,7 @@ public class NavigationMenuResourceTest
 
 		Assert.assertTrue(
 			_equalsCustomFieldsIgnoringOrder(
-				customFields,
-				new CustomField[] {
-					new CustomField() {
-						{
-							customValue = new CustomValue() {
-								{
-									data = value1;
-								}
-							};
-							dataType = "Text";
-							name = _expandoColumnNames.get(0);
-						}
-					},
-					new CustomField() {
-						{
-							customValue = new CustomValue() {
-								{
-									data = value2;
-								}
-							};
-							dataType = "Text";
-							name = _expandoColumnNames.get(1);
-						}
-					}
-				}));
+				customFields, _getExpectedCustomFields(serviceContext)));
 
 		navigationMenuResource.deleteNavigationMenu(postNavigationMenu.getId());
 	}

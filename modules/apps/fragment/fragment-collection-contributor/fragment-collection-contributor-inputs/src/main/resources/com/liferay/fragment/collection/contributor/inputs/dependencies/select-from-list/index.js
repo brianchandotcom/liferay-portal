@@ -74,7 +74,7 @@ if (input.value) {
 		if (selectedOptionElement) {
 			optionListElement.setAttribute(
 				'aria-activedescendant',
-				selectedOption.id
+				selectedOptionElement.id
 			);
 		}
 	}

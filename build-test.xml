@@ -481,6 +481,45 @@ module.framework.properties.osgi.console=11312</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="download-gradle-wrapper-binary">
+		<attribute workspaceDir="workspace.dir" default="/opt/dev/projects/github/liferay-portal" />
+		<sequential>
+			<if>
+				<available file="@{workspace.dir}/gradle/wrapper/gradle-wrapper.properties" />
+				<then>
+					<local name="gradle.wrapper.bin.file.name" />
+					<local name="gradle.wrapper.bin.file.url" />
+
+					<beanshell>
+						<![CDATA[
+							import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+							File gradleWrapperPropertiesFile = new File("@{workspace.dir} + "/gradle/wrapper/gradle-wrapper.properties");
+							Properties gradleWrapperProperties = JenkinsResultsParserUtil.getProperties(new File[] {gradleWrapperPropertiesFile});
+							String distributionURL = gradleWrapperProperties.getProperty("distributionUrl");
+							project.setProperty("gradle.wrapper.bin.file.name", distributionURL.replaceAll(".*/([^/]+)", "$1"));
+							project.setProperty("gradle.wrapper.bin.file.url", distributionURL);
+						]]>
+					</beanshell>
+
+					<mirrors-get
+						dest="@{workspace.dir}/gradle/wrapper/${gradle.wrapper.bin.file.name}"
+						src="${gradle.wrapper.bin.file.url}"
+					/>
+
+					<beanshell>
+						<![CDATA[
+							import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+							File gradleWrapperPropertiesFile = new File("@{workspace.dir}" + "/gradle/wrapper/gradle-wrapper.properties");
+							Properties gradleWrapperProperties = JenkinsResultsParserUtil.getProperties(new File[] {gradleWrapperPropertiesFile});
+							gradleWrapperProperties.setProperty("distributionUrl", "./" + project.getProperty("gradle.wrapper.bin.file.name"));
+							JenkinsResultsParserUtil.writePropertiesFile(gradleWrapperPropertiesFile, gradleWrapperProperties, true);
+						]]>
+					</beanshell>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="export-database-mysql-compact">
 		<attribute default="mysql" name="database.file.prefix" />
 		<attribute default="lportal" name="database.schema.name" />

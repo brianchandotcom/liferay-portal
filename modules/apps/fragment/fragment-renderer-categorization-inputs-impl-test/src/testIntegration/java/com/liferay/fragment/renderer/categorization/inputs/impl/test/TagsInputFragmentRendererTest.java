@@ -45,7 +45,7 @@ public class TagsInputFragmentRendererTest
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Override
-	public ObjectEntry addObjectEntry() throws Exception {
+	protected ObjectEntry addObjectEntry() throws Exception {
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			objectDefinition.getObjectDefinitionId(),
@@ -58,7 +58,7 @@ public class TagsInputFragmentRendererTest
 	}
 
 	@Override
-	public void assertRender(
+	protected void assertRender(
 		int expectedResult, HttpServletRequest httpServletRequest) {
 
 		Map<String, Object> data =
@@ -81,12 +81,12 @@ public class TagsInputFragmentRendererTest
 	}
 
 	@Override
-	public FragmentRenderer getFragmentRenderer() {
+	protected FragmentRenderer getFragmentRenderer() {
 		return _tagsInputFragmentRenderer;
 	}
 
 	@Override
-	public String getRenderKey() {
+	protected String getRenderKey() {
 		return "com.liferay.fragment.renderer.categorization.inputs.internal." +
 			"TagsInputFragmentRenderer";
 	}

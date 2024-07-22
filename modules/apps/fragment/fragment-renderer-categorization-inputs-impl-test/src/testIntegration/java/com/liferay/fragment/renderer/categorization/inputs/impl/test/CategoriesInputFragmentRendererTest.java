@@ -48,8 +48,20 @@ public class CategoriesInputFragmentRendererTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Before
 	@Override
-	public ObjectEntry addObjectEntry() throws Exception {
+	public void setUp() throws Exception {
+		super.setUp();
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			group.getGroupId());
+
+		_assetCategory = AssetTestUtil.addCategory(
+			group.getGroupId(), assetVocabulary.getVocabularyId());
+	}
+
+	@Override
+	protected ObjectEntry addObjectEntry() throws Exception {
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			objectDefinition.getObjectDefinitionId(),
@@ -62,7 +74,7 @@ public class CategoriesInputFragmentRendererTest
 	}
 
 	@Override
-	public void assertRender(
+	protected void assertRender(
 		int expectedResult, HttpServletRequest httpServletRequest) {
 
 		Map<String, Object> data =
@@ -94,26 +106,14 @@ public class CategoriesInputFragmentRendererTest
 	}
 
 	@Override
-	public FragmentRenderer getFragmentRenderer() {
+	protected FragmentRenderer getFragmentRenderer() {
 		return _categoriesInputFragmentRenderer;
 	}
 
 	@Override
-	public String getRenderKey() {
+	protected String getRenderKey() {
 		return "com.liferay.fragment.renderer.categorization.inputs.internal." +
 			"CategoriesInputFragmentRenderer";
-	}
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			group.getGroupId());
-
-		_assetCategory = AssetTestUtil.addCategory(
-			group.getGroupId(), assetVocabulary.getVocabularyId());
 	}
 
 	private AssetCategory _assetCategory;

@@ -52,15 +52,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 public abstract class BaseInputFragmentRendererTestCase {
 
-	public abstract ObjectEntry addObjectEntry() throws Exception;
-
-	public abstract void assertRender(
-		int expectedResult, HttpServletRequest httpServletRequest);
-
-	public abstract FragmentRenderer getFragmentRenderer();
-
-	public abstract String getRenderKey();
-
 	@Before
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
@@ -152,6 +143,13 @@ public abstract class BaseInputFragmentRendererTestCase {
 			segmentsExperienceId);
 	}
 
+	protected abstract ObjectEntry addObjectEntry() throws Exception;
+
+	protected abstract void assertRender(
+		int expectedResult, HttpServletRequest httpServletRequest);
+
+	protected abstract FragmentRenderer getFragmentRenderer();
+
 	protected MockHttpServletRequest getMockHttpServletRequest()
 		throws Exception {
 
@@ -170,6 +168,8 @@ public abstract class BaseInputFragmentRendererTestCase {
 
 		return mockHttpServletRequest;
 	}
+
+	protected abstract String getRenderKey();
 
 	@Inject
 	protected CompanyLocalService companyLocalService;

@@ -111,9 +111,15 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 
 	return (
 		<>
-			<h1 className="mb-3">{i18n.translate('recent-trials')}</h1>
 
+		<div className='d-flex justify-content-between'>
+		   <h1 className="mb-1">{i18n.translate('recent-trials')}</h1>
+
+           <ClayButton size='sm'>New Trial</ClayButton>
+		</div>
+			
 			<Table
+				className='mt-3'
 				columns={[
 					{
 						key: 'id',

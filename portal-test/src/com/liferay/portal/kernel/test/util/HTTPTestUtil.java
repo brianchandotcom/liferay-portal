@@ -116,6 +116,12 @@ public class HTTPTestUtil {
 			return this;
 		}
 
+		public HTTPTestUtilCustomizer withGuest() {
+			_newCredentials = null;
+
+			return this;
+		}
+
 		private String _newBaseURL = _baseURL;
 		private String _newCredentials = _credentials;
 
@@ -129,8 +135,12 @@ public class HTTPTestUtil {
 
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.addHeader(
-			"Authorization", "Basic " + Base64.encode(_credentials.getBytes()));
+
+		if (_credentials != null) {
+			options.addHeader(
+				"Authorization",
+				"Basic " + Base64.encode(_credentials.getBytes()));
+		}
 
 		if (MapUtil.isNotEmpty(headers)) {
 			headers.forEach(options::addHeader);

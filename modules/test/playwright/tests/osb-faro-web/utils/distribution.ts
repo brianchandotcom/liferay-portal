@@ -59,16 +59,37 @@ export async function viewBreakdownRechartsData({
 	maxCount: string;
 	page: Page;
 }) {
-	const card = page.locator('.distribution-card-root');
-	const ticks = card.locator(
-		'.recharts-cartesian-axis.recharts-xAxis .recharts-layer.recharts-cartesian-axis-tick'
-	);
+	if ((await page.$('.distribution-card-root')) !== null) {
 
-	const ticksCount = await ticks.count();
-	const lastTick = ticks.nth(ticksCount - 1);
+		// If it is on the Breakdown by Individual Attribute card
 
-	const lastTickValue = await lastTick.textContent();
+		const card = page.locator('.distribution-card-root');
+		const ticks = card.locator(
+			'.recharts-cartesian-axis.recharts-xAxis .recharts-layer.recharts-cartesian-axis-tick'
+		);
 
-	expect(card.getByText(attributeValue)).toBeVisible();
-	expect(lastTickValue).toEqual(maxCount);
+		const ticksCount = await ticks.count();
+		const lastTick = ticks.nth(ticksCount - 1);
+
+		const lastTickValue = await lastTick.textContent();
+
+		expect(card.getByText(attributeValue)).toBeVisible();
+		expect(lastTickValue).toEqual(maxCount);
+	}
+	else {
+
+		// If it is on the Distribution by Attribute in the Distribution tab
+
+		const ticks = page.locator(
+			'.recharts-cartesian-axis.recharts-xAxis .recharts-layer.recharts-cartesian-axis-tick'
+		);
+
+		const ticksCount = await ticks.count();
+		const lastTick = ticks.nth(ticksCount - 1);
+
+		const lastTickValue = await lastTick.textContent();
+
+		expect(page.getByText(attributeValue)).toBeVisible();
+		expect(lastTickValue).toEqual(maxCount);
+	}
 }

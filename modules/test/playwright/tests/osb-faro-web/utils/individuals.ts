@@ -4,6 +4,7 @@
  */
 
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import getRandomString from '../../../utils/getRandomString';
 
 const modifiedDate = new Date().toISOString();
 
@@ -60,4 +61,13 @@ export async function createIndividuals({
 	await apiHelpers.jsonWebServicesOSBAsah.createIdentities(
 		individualIdentities
 	);
+}
+
+export function generateIndividual({name}: {name: any}) {
+	const id = getRandomString();
+
+	return {
+		id,
+		name,
+	};
 }

@@ -63,8 +63,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -152,13 +150,9 @@ public class CalendarBookingLocalServiceImpl
 		long calendarBookingId = counterLocalService.increment();
 
 		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
-			String sanitizedDescription = SanitizerUtil.sanitize(
-				calendar.getCompanyId(), calendar.getGroupId(), userId,
-				CalendarBooking.class.getName(), calendarBookingId,
-				ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, entry.getValue(),
-				null);
-
-			descriptionMap.put(entry.getKey(), sanitizedDescription);
+			descriptionMap.put(
+				entry.getKey(),
+				_htmlParser.extractText(HtmlUtil.escape(entry.getValue())));
 		}
 
 		TimeZone timeZone = _getTimeZone(calendar, allDay);

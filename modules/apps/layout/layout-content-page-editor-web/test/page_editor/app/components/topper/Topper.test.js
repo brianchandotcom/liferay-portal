@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -20,6 +20,8 @@ const renderTopper = ({
 	hasUpdatePermissions = true,
 	lockedExperience = false,
 	rowConfig = {styles: {}},
+	activeItemIds,
+	isActive = true,
 } = {}) => {
 	const row = {
 		children: [],
@@ -35,7 +37,7 @@ const renderTopper = ({
 
 	return render(
 		<DndProvider backend={HTML5Backend}>
-			<ControlsProvider>
+			<ControlsProvider activeInitialState={{activeItemIds}}>
 				<StoreAPIContextProvider
 					getState={() => ({
 						fragmentEntryLinks: {},
@@ -47,7 +49,11 @@ const renderTopper = ({
 						selectedViewportSize: VIEWPORT_SIZES.desktop,
 					})}
 				>
-					<Topper item={row} layoutData={layoutData}>
+					<Topper
+						isActive={isActive}
+						item={row}
+						layoutData={layoutData}
+					>
 						<Row item={row} layoutData={layoutData}></Row>
 					</Topper>
 				</StoreAPIContextProvider>
@@ -85,5 +91,15 @@ describe('Topper', () => {
 		expect(
 			baseElement.querySelector('[data-name="customName"]')
 		).toBeInTheDocument();
+	});
+
+	it('disables options when multiple items are selected', () => {
+		Liferay.FeatureFlags['LPD-18221'] = true;
+
+		renderTopper({activeItemIds: ['item-1', 'item-2'], isActive: true});
+
+		expect(screen.getByLabelText('options')).toBeDisabled();
+
+		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 });

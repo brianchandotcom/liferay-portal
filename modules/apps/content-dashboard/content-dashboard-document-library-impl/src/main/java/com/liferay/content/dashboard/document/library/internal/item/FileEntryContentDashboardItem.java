@@ -33,6 +33,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -58,6 +59,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -384,10 +386,20 @@ public class FileEntryContentDashboardItem
 	public List<SpecificInformation<?>> getSpecificInformationList(
 		Locale locale) {
 
+		List<DLFileEntryMetadata> dlFileEntryMetadatas =
+			_getDLFileEntryMetadatas();
+
+		long tiffImageLength = _getDDMFormFieldsValueValue(
+			dlFileEntryMetadatas, "TIFF_IMAGE_LENGTH");
+
+		long tiffImageWidth = _getDDMFormFieldsValueValue(
+			dlFileEntryMetadatas, "TIFF_IMAGE_WIDTH");
+
 		return Arrays.asList(
 			new SpecificInformation<>(
 				"content-dashboard-aspect-ratio",
-				SpecificInformation.Type.STRING, _getAspectRatio(locale)),
+				SpecificInformation.Type.STRING,
+				_getAspectRatio(tiffImageLength, tiffImageWidth, locale)),
 			new SpecificInformation<>(
 				"extension", SpecificInformation.Type.STRING, _getExtension()),
 			new SpecificInformation<>(
@@ -395,6 +407,9 @@ public class FileEntryContentDashboardItem
 			new SpecificInformation<>(
 				"latest-version-url", SpecificInformation.Type.URL,
 				_getLatestVersionURL()),
+			new SpecificInformation<>(
+				"resolution", SpecificInformation.Type.STRING,
+				_getResolution(tiffImageLength, tiffImageWidth)),
 			new SpecificInformation<>(
 				"size", SpecificInformation.Type.STRING, _getSize(locale)),
 			new SpecificInformation<>(
@@ -494,62 +509,21 @@ public class FileEntryContentDashboardItem
 			_fileEntry, httpServletRequest);
 	}
 
-	private String _getAspectRatio(Locale locale) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_fileEntry.getCompanyId(), "LPD-30087")) {
+	private String _getAspectRatio(
+		long imageLength, long imageWidth, Locale locale) {
 
+		if ((imageLength <= 0) && (imageWidth <= 0)) {
 			return null;
 		}
 
-		FileVersion fileVersion;
-
-		try {
-			fileVersion = _fileEntry.getFileVersion();
+		if (imageLength > imageWidth) {
+			return _language.get(locale, "tall");
 		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-
-			return null;
+		else if (imageLength < imageWidth) {
+			return _language.get(locale, "wide");
 		}
 
-		if (fileVersion == null) {
-			return null;
-		}
-
-		List<DLFileEntryMetadata> dlFileEntryMetadatas =
-			_dlFileEntryMetadataLocalService.getFileVersionFileEntryMetadatas(
-				fileVersion.getFileVersionId());
-
-		if (ListUtil.isEmpty(dlFileEntryMetadatas)) {
-			return null;
-		}
-
-		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
-			Long tiffImageLength = _getDDMFormFieldsValueValue(
-				dlFileEntryMetadata.getDDMStorageId(), "TIFF_IMAGE_LENGTH");
-
-			if (tiffImageLength == null) {
-				continue;
-			}
-
-			Long tiffImageWidth = _getDDMFormFieldsValueValue(
-				dlFileEntryMetadata.getDDMStorageId(), "TIFF_IMAGE_WIDTH");
-
-			if (tiffImageWidth == null) {
-				continue;
-			}
-
-			if (tiffImageLength > tiffImageWidth) {
-				return _language.get(locale, "tall");
-			}
-			else if (tiffImageLength < tiffImageWidth) {
-				return _language.get(locale, "wide");
-			}
-
-			return _language.get(locale, "square");
-		}
-
-		return null;
+		return _language.get(locale, "square");
 	}
 
 	private ContentDashboardItemAction _getContentDashboardItemAction(
@@ -622,6 +596,25 @@ public class FileEntryContentDashboardItem
 		return contentDashboardItemVersionActions;
 	}
 
+	private long _getDDMFormFieldsValueValue(
+		List<DLFileEntryMetadata> dlFileEntryMetadatas, String fieldName) {
+
+		if (ListUtil.isEmpty(dlFileEntryMetadatas)) {
+			return 0;
+		}
+
+		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
+			Long ddmFormFieldsValueValue = _getDDMFormFieldsValueValue(
+				dlFileEntryMetadata.getDDMStorageId(), fieldName);
+
+			if (ddmFormFieldsValueValue != null) {
+				return ddmFormFieldsValueValue;
+			}
+		}
+
+		return 0;
+	}
+
 	private Long _getDDMFormFieldsValueValue(
 		long ddmStorageId, String fieldName) {
 
@@ -638,11 +631,40 @@ public class FileEntryContentDashboardItem
 			_ddmFieldLocalService.fetchDDMFieldAttribute(
 				ddmField.getFieldId(), StringPool.BLANK, StringPool.BLANK);
 
-		if (ddmFieldAttribute == null) {
+		if ((ddmFieldAttribute == null) ||
+			(ddmFieldAttribute.getAttributeValue() == null) ||
+			!Validator.isNumber(ddmFieldAttribute.getAttributeValue())) {
+
 			return null;
 		}
 
 		return Long.valueOf(ddmFieldAttribute.getAttributeValue());
+	}
+
+	private List<DLFileEntryMetadata> _getDLFileEntryMetadatas() {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_fileEntry.getCompanyId(), "LPD-30087")) {
+
+			return null;
+		}
+
+		FileVersion fileVersion;
+
+		try {
+			fileVersion = _fileEntry.getFileVersion();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return null;
+		}
+
+		if (fileVersion == null) {
+			return null;
+		}
+
+		return _dlFileEntryMetadataLocalService.
+			getFileVersionFileEntryMetadatas(fileVersion.getFileVersionId());
 	}
 
 	private String _getExtension() {
@@ -707,6 +729,20 @@ public class FileEntryContentDashboardItem
 		}
 
 		return null;
+	}
+
+	private String _getResolution(long imageLength, long imageWidth) {
+		if ((imageLength <= 0) && (imageWidth <= 0)) {
+			return null;
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(imageWidth);
+		sb.append("x");
+		sb.append(imageLength);
+
+		return sb.toString();
 	}
 
 	private String _getSize(Locale locale) {

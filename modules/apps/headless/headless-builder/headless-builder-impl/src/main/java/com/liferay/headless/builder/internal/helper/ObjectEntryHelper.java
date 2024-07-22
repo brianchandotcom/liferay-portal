@@ -21,8 +21,6 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -110,11 +108,6 @@ public class ObjectEntryHelper {
 		return _withNestedFields(
 			nestedFields,
 			() -> {
-				PermissionThreadLocal.setPermissionChecker(
-					_permissionCheckerFactory.create(
-						_userLocalService.getUser(
-							objectDefinition.getUserId())));
-
 				DefaultObjectEntryManager defaultObjectEntryManager =
 					(DefaultObjectEntryManager)_objectEntryManager;
 
@@ -164,11 +157,6 @@ public class ObjectEntryHelper {
 		return _withNestedFields(
 			nestedFields,
 			() -> {
-				PermissionThreadLocal.setPermissionChecker(
-					_permissionCheckerFactory.create(
-						_userLocalService.getUser(
-							objectDefinition.getUserId())));
-
 				DefaultObjectEntryManager defaultObjectEntryManager =
 					(DefaultObjectEntryManager)_objectEntryManager;
 
@@ -195,17 +183,9 @@ public class ObjectEntryHelper {
 
 		return _withNestedFields(
 			nestedFields,
-			() -> {
-				PermissionThreadLocal.setPermissionChecker(
-					_permissionCheckerFactory.create(
-						_userLocalService.getUser(
-							objectDefinition.getUserId())));
-
-				return _objectEntryManager.getObjectEntry(
-					companyId, _getDefaultDTOConverterContext(objectDefinition),
-					objetEntryExternalReferenceCode, objectDefinition,
-					scopeKey);
-			});
+			() -> _objectEntryManager.getObjectEntry(
+				companyId, _getDefaultDTOConverterContext(objectDefinition),
+				objetEntryExternalReferenceCode, objectDefinition, scopeKey));
 	}
 
 	public ObjectEntry getObjectEntry(
@@ -346,9 +326,6 @@ public class ObjectEntryHelper {
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
-	@Reference
-	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

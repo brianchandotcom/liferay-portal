@@ -54,12 +54,20 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -68,6 +76,8 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.security.service.access.policy.model.SAPEntry;
+import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -1984,6 +1994,73 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		_assertFilterString(
 			"integerProperty", 1, "contains(relatedTextProperty2, 'value5')");
+	}
+
+	@Test
+	public void testGetWithServiceAccessPolicy() throws Exception {
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_objectDefinition1.getExternalReferenceCode(),
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, null,
+			APIApplication.Endpoint.RetrieveType.COLLECTION.getValue(),
+			APIApplication.Endpoint.Scope.COMPANY);
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		ObjectEntry objectEntry = _addCustomObjectEntry(
+			0, null, _objectDefinition1, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		Role guestRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntry.getObjectEntryId()),
+			guestRole.getRoleId(), new String[] {ActionKeys.VIEW});
+
+		_addCustomObjectEntry(
+			0, null, _objectDefinition1, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		_sapEntry = _sapEntryLocalService.addSAPEntry(
+			TestPropsValues.getUserId(),
+			"com.liferay.headless.builder.internal.resource." +
+				"HeadlessBuilderResourceImpl#get",
+			true, true, RandomTestUtil.randomString(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		HTTPTestUtil.customize(
+		).withGuest(
+		).apply(
+			() -> JSONAssert.assertEquals(
+				JSONUtil.put(
+					"items",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"textProperty", values.get("textProperty")))
+				).put(
+					"lastPage", 1
+				).put(
+					"page", 1
+				).put(
+					"pageSize", 20
+				).put(
+					"totalCount", 1
+				).toString(),
+				HTTPTestUtil.invokeToJSONObject(
+					null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
+					Http.Method.GET
+				).toString(),
+				JSONCompareMode.LENIENT)
+		);
 	}
 
 	@Test
@@ -4010,6 +4087,19 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	private ObjectRelationship _objectRelationship1;
 	private ObjectRelationship _objectRelationship2;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@DeleteAfterTestRun
+	private SAPEntry _sapEntry;
+
+	@Inject
+	private SAPEntryLocalService _sapEntryLocalService;
+
 	private ObjectDefinition _siteScopedObjectDefinition1;
 	private ObjectDefinition _siteScopedObjectDefinition2;
 	private ObjectDefinition _siteScopedObjectDefinition3;

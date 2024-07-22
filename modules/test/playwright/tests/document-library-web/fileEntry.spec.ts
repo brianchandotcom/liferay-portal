@@ -7,11 +7,16 @@ import {expect, mergeTests} from '@playwright/test';
 import moment from 'moment';
 import path from 'path';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {performLogout} from '../../utils/performLogin';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 const baseTest = mergeTests(
 	documentLibraryPagesTest,
@@ -19,6 +24,13 @@ const baseTest = mergeTests(
 	loginTest()
 );
 
+export const testSearchInDlPortlet = mergeTests(
+	apiHelpersTest,
+	baseTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	})
+);
 export const testFeatureFlagsEnabled = mergeTests(
 	baseTest,
 	featureFlagsTest({
@@ -180,5 +192,50 @@ testUploadMultipleFieldsWithCustomDocumentType(
 		await expect(
 			page.getByRole('link', {exact: true, name: 'image1'})
 		).toBeVisible();
+	}
+);
+
+testSearchInDlPortlet(
+	'LPD-31694 Search in DL portlet does not show results in card view for LPS-202909',
+	async ({
+		apiHelpers,
+		documentLibraryEditFilePage,
+		documentLibraryPage,
+		page,
+		site,
+	}) => {
+		const title = getRandomString();
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+		await documentLibraryPage.goToCreateNewFile();
+		await documentLibraryEditFilePage.publishNewBasicFileEntryWithoutGoTo(
+			title
+		);
+
+		const portletId = getRandomString();
+		const widgetDefinition = getWidgetDefinition({
+			id: portletId,
+			widgetName: 'com_liferay_document_library_web_portlet_DLPortlet',
+		});
+		await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([widgetDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await performLogout(page);
+
+		await page.goto('/web' + site.friendlyUrlPath);
+
+		const dlPortlet = page.locator('.portlet-document-library');
+
+		await dlPortlet.getByPlaceholder('Search for').first().fill(title);
+		await dlPortlet.getByPlaceholder('Search for').first().press('Enter');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Cards'}),
+			trigger: page.getByLabel('Select View, Currently Selected: '),
+		});
+		await expect(dlPortlet.getByRole('link', {name: title})).toBeVisible();
 	}
 );

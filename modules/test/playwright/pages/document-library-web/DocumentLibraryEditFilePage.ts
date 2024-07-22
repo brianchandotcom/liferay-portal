@@ -99,6 +99,16 @@ export class DocumentLibraryEditFilePage {
 			await this.publishButton.click();
 		}
 	}
+	async publishNewBasicFileEntryWithoutGoTo(title: string) {
+		await this.titleSelector.fill(title);
+
+		if (await this.saveButton.isVisible()) {
+			await this.saveButton.click();
+		}
+		else {
+			await this.publishButton.click();
+		}
+	}
 
 	async publishMultipleFiles(dTypeTitle: string, filePaths: string[]) {
 		await this.page.getByRole('button', {name: 'Select Files'}).waitFor();

@@ -497,7 +497,8 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"An API property must be related to an API property.",
+			"The value is invalid for object field " +
+				"\"r_apiPropertyToAPIProperties_c_apiPropertyId\"",
 			jsonObject.get("title"));
 
 		String name = RandomTestUtil.randomString();

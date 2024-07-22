@@ -7,10 +7,10 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -33,7 +33,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -120,7 +120,7 @@ public class NavigationMenuResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
@@ -140,7 +140,7 @@ public class NavigationMenuResourceTest
 	public void testGetNavigationMenu() throws Exception {
 		super.testGetNavigationMenu();
 
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
 			StringUtil.randomString(), new Date(),
 			ServiceContextTestUtil.getServiceContext(
@@ -210,7 +210,7 @@ public class NavigationMenuResourceTest
 	public void testGetSiteNavigationMenusPage() throws Exception {
 		super.testGetSiteNavigationMenusPage();
 
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
 			StringUtil.randomString(), new Date(),
 			ServiceContextTestUtil.getServiceContext(
@@ -512,8 +512,7 @@ public class NavigationMenuResourceTest
 				).put(
 					"className", clazz.getName()
 				).put(
-					"classNameId",
-					String.valueOf(PortalUtil.getClassNameId(clazz))
+					"classNameId", String.valueOf(_portal.getClassNameId(clazz))
 				).put(
 					"classPK", String.valueOf(classPK)
 				).put(
@@ -522,7 +521,7 @@ public class NavigationMenuResourceTest
 					"title", String.valueOf(title)
 				).put(
 					"type",
-					ResourceActionsUtil.getModelResource(
+					_resourceActions.getModelResource(
 						LocaleUtil.getDefault(), clazz.getName())
 				).put(
 					"useCustomName",
@@ -647,8 +646,7 @@ public class NavigationMenuResourceTest
 				).put(
 					"className", clazz.getName()
 				).put(
-					"classNameId",
-					String.valueOf(PortalUtil.getClassNameId(clazz))
+					"classNameId", String.valueOf(_portal.getClassNameId(clazz))
 				).put(
 					"classPK", String.valueOf(classPK)
 				).put(
@@ -657,7 +655,7 @@ public class NavigationMenuResourceTest
 					"title", String.valueOf(title)
 				).put(
 					"type",
-					ResourceActionsUtil.getModelResource(
+					_resourceActions.getModelResource(
 						LocaleUtil.getDefault(), clazz.getName())
 				).put(
 					"useCustomName",
@@ -753,10 +751,22 @@ public class NavigationMenuResourceTest
 	@Inject
 	private static ExpandoTableLocalService _expandoTableLocalService;
 
+	@Inject
+	private BlogsEntryLocalService _blogsEntryLocalService;
+
 	private DepotEntry _depotEntry;
 
 	@Inject
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private ResourceActions _resourceActions;
 
 	@Inject
 	private SiteNavigationMenuItemLocalService

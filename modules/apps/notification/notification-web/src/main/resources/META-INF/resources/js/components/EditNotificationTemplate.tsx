@@ -82,11 +82,7 @@ export function validate(values: NotificationTemplate) {
 			errors.to = constantsUtils.REQUIRED_MSG;
 		}
 
-		if (
-			Liferay.FeatureFlags['LPD-11165'] &&
-			Array.isArray(recipient.to) &&
-			!recipient.to.length
-		) {
+		if (Array.isArray(recipient.to) && !recipient.to.length) {
 			errors.to = constantsUtils.REQUIRED_MSG;
 		}
 	}
@@ -127,28 +123,7 @@ export default function EditNotificationTemplate({
 			return;
 		}
 
-		let notificationValue = {...notification};
-
-		if (
-			!Liferay.FeatureFlags['LPD-11165'] &&
-			notification.type === 'email'
-		) {
-			const recipients = notification.recipients[0] as EmailRecipients;
-
-			notificationValue = {
-				...notification,
-				recipients: [
-					{
-						bcc: recipients.bcc,
-						cc: recipients.cc,
-						from: recipients.from,
-						fromName: recipients.fromName,
-						singleRecipient: recipients.singleRecipient,
-						to: recipients.to,
-					},
-				],
-			};
-		}
+		const notificationValue = {...notification};
 
 		setIsSubmitted(true);
 
@@ -368,14 +343,10 @@ export default function EditNotificationTemplate({
 					<div
 						className={classNames(
 							{
-								row: !(
-									Liferay.FeatureFlags['LPD-11165'] &&
-									values.type === 'email'
-								),
+								row: !(values.type === 'email'),
 							},
 							{
 								'lfr__notification-template-basic-info':
-									Liferay.FeatureFlags['LPD-11165'] &&
 									values.type === 'email',
 							}
 						)}
@@ -383,10 +354,7 @@ export default function EditNotificationTemplate({
 						<div
 							className={classNames(
 								{
-									'col-lg-6': !(
-										Liferay.FeatureFlags['LPD-11165'] &&
-										values.type === 'email'
-									),
+									'col-lg-6': !(values.type === 'email'),
 								},
 								'lfr__notification-template-card'
 							)}
@@ -401,7 +369,6 @@ export default function EditNotificationTemplate({
 						<div
 							className={classNames({
 								'col-lg-6 lfr__notification-template-card': !(
-									Liferay.FeatureFlags['LPD-11165'] &&
 									values.type === 'email'
 								),
 							})}

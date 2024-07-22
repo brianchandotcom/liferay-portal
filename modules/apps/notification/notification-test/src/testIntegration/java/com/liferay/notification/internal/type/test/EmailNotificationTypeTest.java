@@ -88,7 +88,6 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -411,7 +410,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				user2.getEmailAddress()));
 	}
 
-	@FeatureFlags("LPD-11165")
 	@Test
 	public void testSendNotificationWithRegularRoles() throws Exception {
 		Role role1 = _addRole(RoleConstants.TYPE_REGULAR, user1);
@@ -468,7 +466,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationTemplate);
 	}
 
-	@FeatureFlags("LPD-11165")
 	@Test
 	public void testSendNotificationWithRoles() throws Exception {
 		AccountEntry accountEntry1 = _addAccountEntry();

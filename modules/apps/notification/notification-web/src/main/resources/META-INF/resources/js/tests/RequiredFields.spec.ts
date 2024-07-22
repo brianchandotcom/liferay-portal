@@ -121,8 +121,6 @@ describe('Notification template: Validate required fields', () => {
 	});
 
 	it('validates that primary recipient roles field is required', () => {
-		Liferay.FeatureFlags['LPD-11165'] = true;
-
 		const modifiedNotificationTemplateMock =
 			generateModifiedNotificationTemplateMock({
 				recipients: [

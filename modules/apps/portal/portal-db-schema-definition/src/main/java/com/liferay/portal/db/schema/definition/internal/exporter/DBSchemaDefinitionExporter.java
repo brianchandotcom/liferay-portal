@@ -9,14 +9,22 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.schema.definition.internal.configuration.DBSchemaDefinitionExporterConfiguration;
-import com.liferay.portal.db.schema.definition.internal.report.DBSchemaDefinitionExporterReport;
 import com.liferay.portal.db.schema.definition.internal.sql.provider.PortalSQLProvider;
 import com.liferay.portal.db.schema.definition.internal.sql.provider.SQLProvider;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.ReleaseConstants;
+import com.liferay.portal.kernel.patcher.PatcherValues;
+import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -25,7 +33,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
+import javax.sql.DataSource;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
@@ -111,7 +127,7 @@ public class DBSchemaDefinitionExporter {
 						file.getAbsolutePath());
 			}
 
-			DBSchemaDefinitionExporterReport.generateReport(
+			_generateReport(
 				exportDBType, dbSchemaDefinitionExporterConfiguration.path());
 		}
 		catch (Exception exception) {
@@ -121,6 +137,84 @@ public class DBSchemaDefinitionExporter {
 		finally {
 			_deleteConfiguration((String)properties.get("service.pid"));
 		}
+	}
+
+	private void _generateReport(DBType exportDBType, String path)
+		throws Exception {
+
+		Release release = ReleaseLocalServiceUtil.fetchRelease(
+			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+		String buildDate = Time.getSimpleDate(
+			release.getBuildDate(), DateUtil.ISO_8601_PATTERN);
+
+		Set<String> dbTableNames = _getDBTableNames();
+		String exportDate = Time.getSimpleDate(
+			new Date(), DateUtil.ISO_8601_PATTERN);
+		Set<String> exportTableNames = _getExportTableNames(path);
+		String installedPatches = StringUtil.merge(
+			PatcherValues.INSTALLED_PATCH_NAMES, StringPool.COMMA_AND_SPACE);
+		String missingTableNames = StringUtil.merge(
+			SetUtil.asymmetricDifference(dbTableNames, exportTableNames),
+			StringPool.COMMA_AND_SPACE);
+
+		FileUtil.write(
+			new File(path, "db_schema_definition_export_report.info"),
+			StringUtil.merge(
+				new Object[] {
+					"Export date: " + exportDate,
+					"Portal schema version: " + release.getSchemaVersion(),
+					"Portal build number: " + release.getBuildNumber(),
+					"Portal build date: " + buildDate,
+					"Installed patches: " + installedPatches,
+					"Database type: " + DBManagerUtil.getDBType(),
+					"Export database type: " + exportDBType,
+					"Database tables: " + dbTableNames.size(),
+					"Export tables: " + exportTableNames.size(),
+					"Missing tables: " + missingTableNames
+				},
+				StringPool.NEW_LINE));
+	}
+
+	private Set<String> _getDBTableNames() throws Exception {
+		Set<String> tableNames = new HashSet<>();
+
+		DataSource dataSource = InfrastructureUtil.getDataSource();
+
+		try (Connection connection = dataSource.getConnection()) {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					connection.getCatalog(), connection.getSchema(), null,
+					new String[] {"TABLE"})) {
+
+				while (resultSet.next()) {
+					tableNames.add(
+						StringUtil.toLowerCase(
+							resultSet.getString("TABLE_NAME")));
+				}
+			}
+		}
+
+		return tableNames;
+	}
+
+	private Set<String> _getExportTableNames(String path) throws Exception {
+		Set<String> tableNames = new HashSet<>();
+
+		String[] lines = StringUtil.split(
+			StringUtil.toLowerCase(FileUtil.read(new File(path, "tables.sql"))),
+			StringPool.NEW_LINE);
+
+		for (String line : lines) {
+			if (StringUtil.startsWith(line, "create table")) {
+				String[] parts = line.split(StringPool.SPACE);
+
+				tableNames.add(parts[2]);
+			}
+		}
+
+		return tableNames;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {liferayConfig} from '../../../../liferay.config';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import saveFromModal from '../../utils/saveFromModal';
@@ -884,82 +885,6 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 	});
 
-	test('Check modal field selection allows check and uncheck fields @LPS-174141, @LPS-185228, @LPS-179282', async ({
-		page,
-		visualizationModesPage,
-	}) => {
-		const SAMPLE_SCALAR_FIELD = 'externalReferenceCode';
-		const SAMPLE_FIELD = 'name';
-
-		await test.step('Navigate to table visualization mode page', async () => {
-			await visualizationModesPage.goto({
-				dataSetLabel,
-			});
-
-			await visualizationModesPage.selectTab('Table');
-
-			await expect(
-				visualizationModesPage.page.getByPlaceholder('Search')
-			).toBeVisible();
-		});
-
-		await test.step('Can check and uncheck fields in the field selection modal', async () => {
-			await visualizationModesPage.openAddFieldsModal();
-
-			await visualizationModesPage.selectField({fieldName: SAMPLE_FIELD});
-
-			const checkbox =
-				visualizationModesPage.getFieldCheckboxByLabel(SAMPLE_FIELD);
-
-			await expect(checkbox).toBeChecked();
-
-			await visualizationModesPage.unSelectField({
-				fieldName: SAMPLE_FIELD,
-			});
-
-			await expect(checkbox).not.toBeChecked();
-
-			await saveFromModal({
-				page,
-			});
-		});
-
-		await test.step('Can check some fields and uncheck all selected fields using Deselect All button', async () => {
-			await visualizationModesPage.openAddFieldsModal();
-
-			await visualizationModesPage.selectField({fieldName: SAMPLE_FIELD});
-
-			const sampleFieldCheckbox =
-				visualizationModesPage.getFieldCheckboxByLabel(SAMPLE_FIELD);
-
-			await expect(sampleFieldCheckbox).toBeChecked();
-
-			await visualizationModesPage.selectField({
-				fieldName: SAMPLE_SCALAR_FIELD,
-			});
-
-			const sampleScalarFieldCheckbox =
-				visualizationModesPage.getFieldCheckboxByLabel(
-					SAMPLE_SCALAR_FIELD
-				);
-
-			await expect(sampleScalarFieldCheckbox).toBeChecked();
-
-			await visualizationModesPage.unSelectSelectedFields();
-
-			await expect(sampleFieldCheckbox).not.toBeChecked();
-			await expect(sampleScalarFieldCheckbox).not.toBeChecked();
-
-			await saveFromModal({
-				page,
-			});
-		});
-
-		await test.step('Check there is no field added', async () => {
-			await visualizationModesPage.assertTableFieldRowCount(0);
-		});
-	});
-
 	test(
 		'Check that users can translate labels in table visualization mode.',
 		{tag: '@LPS-176516'},
@@ -969,6 +894,8 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			const SAMPLE_FIELD_ES_ES = 'Nombre';
 			const SAMPLE_FIELD_PT_BR = 'Nome';
 			const LABEL_COLUMN_INDEX = 2;
+			const ES_BASE_URL = `${liferayConfig.environment.baseUrl}/es`;
+			const PT_BASE_URL = `${liferayConfig.environment.baseUrl}/pt`;
 
 			await test.step('Navigate to table visualization mode page', async () => {
 				await visualizationModesPage.goto({
@@ -1146,6 +1073,129 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				await page.keyboard.press('Escape');
 				await visualizationModesPage.cancelAddFieldsModal();
 			});
+
+			await test.step('Confirm that the translation works when the page is loaded with es_ES locale', async () => {
+				const currentUrl = page.url();
+				const updatedUrl = currentUrl.replace(
+					liferayConfig.environment.baseUrl,
+					ES_BASE_URL
+				);
+
+				await page.goto(updatedUrl);
+
+				await visualizationModesPage.dataSetPage.selectTab(
+					'Modos de visualización'
+				);
+
+				await expect(
+					visualizationModesPage
+						.getRowByText(SAMPLE_FIELD)
+						.locator('td')
+						.nth(LABEL_COLUMN_INDEX)
+				).toHaveText(SAMPLE_FIELD_ES_ES);
+
+				await visualizationModesPage.assertTableFieldRowCount(1);
+			});
+
+			await test.step('Confirm that the translation works when the page is loaded with pt_BR locale', async () => {
+				const currentUrl = page.url();
+				const updatedUrl = currentUrl.replace(ES_BASE_URL, PT_BASE_URL);
+
+				await page.goto(updatedUrl);
+
+				await visualizationModesPage.dataSetPage.selectTab(
+					'Modos de exibição'
+				);
+
+				await expect(
+					visualizationModesPage
+						.getRowByText(SAMPLE_FIELD)
+						.locator('td')
+						.nth(LABEL_COLUMN_INDEX)
+				).toHaveText(SAMPLE_FIELD_PT_BR);
+
+				await visualizationModesPage.assertTableFieldRowCount(1);
+			});
+
+			await test.step('Restore EN locale', async () => {
+				await page.goto(`${liferayConfig.environment.baseUrl}/en`);
+			});
 		}
 	);
+
+	test('Check modal field selection allows check and uncheck fields @LPS-174141, @LPS-185228, @LPS-179282', async ({
+		page,
+		visualizationModesPage,
+	}) => {
+		const SAMPLE_SCALAR_FIELD = 'externalReferenceCode';
+		const SAMPLE_FIELD = 'name';
+
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
+
+			await visualizationModesPage.selectTab('Table');
+
+			await expect(
+				visualizationModesPage.page.getByPlaceholder('Search')
+			).toBeVisible();
+		});
+
+		await test.step('Can check and uncheck fields in the field selection modal', async () => {
+			await visualizationModesPage.openAddFieldsModal();
+
+			await visualizationModesPage.selectField({fieldName: SAMPLE_FIELD});
+
+			const checkbox =
+				visualizationModesPage.getFieldCheckboxByLabel(SAMPLE_FIELD);
+
+			await expect(checkbox).toBeChecked();
+
+			await visualizationModesPage.unSelectField({
+				fieldName: SAMPLE_FIELD,
+			});
+
+			await expect(checkbox).not.toBeChecked();
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Can check some fields and uncheck all selected fields using Deselect All button', async () => {
+			await visualizationModesPage.openAddFieldsModal();
+
+			await visualizationModesPage.selectField({fieldName: SAMPLE_FIELD});
+
+			const sampleFieldCheckbox =
+				visualizationModesPage.getFieldCheckboxByLabel(SAMPLE_FIELD);
+
+			await expect(sampleFieldCheckbox).toBeChecked();
+
+			await visualizationModesPage.selectField({
+				fieldName: SAMPLE_SCALAR_FIELD,
+			});
+
+			const sampleScalarFieldCheckbox =
+				visualizationModesPage.getFieldCheckboxByLabel(
+					SAMPLE_SCALAR_FIELD
+				);
+
+			await expect(sampleScalarFieldCheckbox).toBeChecked();
+
+			await visualizationModesPage.unSelectSelectedFields();
+
+			await expect(sampleFieldCheckbox).not.toBeChecked();
+			await expect(sampleScalarFieldCheckbox).not.toBeChecked();
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Check there is no field added', async () => {
+			await visualizationModesPage.assertTableFieldRowCount(0);
+		});
+	});
 });

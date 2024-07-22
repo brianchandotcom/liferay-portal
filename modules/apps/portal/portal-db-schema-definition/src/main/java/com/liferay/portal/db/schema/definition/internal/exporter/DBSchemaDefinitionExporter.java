@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.patcher.PatcherValues;
-import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -36,6 +36,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
@@ -107,11 +108,11 @@ public class DBSchemaDefinitionExporter {
 						DBSchemaDefinitionExporterConfiguration.class,
 						properties);
 
-			DBType exportDBType = DBType.valueOf(
+			DBType dbType = DBType.valueOf(
 				StringUtil.toUpperCase(
 					dbSchemaDefinitionExporterConfiguration.databaseType()));
 
-			SQLProvider sqlProvider = new PortalSQLProvider(exportDBType);
+			SQLProvider sqlProvider = new PortalSQLProvider(dbType);
 
 			File file = new File(
 				dbSchemaDefinitionExporterConfiguration.path());
@@ -128,7 +129,7 @@ public class DBSchemaDefinitionExporter {
 			}
 
 			_generateReport(
-				exportDBType, dbSchemaDefinitionExporterConfiguration.path());
+				dbType, dbSchemaDefinitionExporterConfiguration.path());
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -142,7 +143,7 @@ public class DBSchemaDefinitionExporter {
 	private void _generateReport(DBType exportDBType, String path)
 		throws Exception {
 
-		Release release = ReleaseLocalServiceUtil.fetchRelease(
+		Release release = _releaseLocalService.fetchRelease(
 			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 		String buildDate = Time.getSimpleDate(
@@ -222,5 +223,8 @@ public class DBSchemaDefinitionExporter {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ReleaseLocalService _releaseLocalService;
 
 }

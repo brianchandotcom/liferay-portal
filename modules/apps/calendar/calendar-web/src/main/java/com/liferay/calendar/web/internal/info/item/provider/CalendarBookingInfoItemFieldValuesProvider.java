@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -156,8 +158,18 @@ public class CalendarBookingInfoItemFieldValuesProvider
 			Group group = _groupLocalService.getGroup(
 				calendarBooking.getGroupId());
 
-			String layoutActualURL = _portal.getLayoutActualURL(
-				_layoutLocalService.fetchLayout(group.getDefaultPublicPlid()));
+			Layout layout = _layoutLocalService.fetchLayout(
+				group.getDefaultPublicPlid());
+
+			if (layout == null) {
+				Group guestGroup = _groupLocalService.getGroup(
+					company.getCompanyId(), GroupConstants.GUEST);
+
+				layout = _layoutLocalService.fetchLayout(
+					guestGroup.getDefaultPublicPlid());
+			}
+
+			String layoutActualURL = _portal.getLayoutActualURL(layout);
 
 			String url = portalURL + layoutActualURL;
 

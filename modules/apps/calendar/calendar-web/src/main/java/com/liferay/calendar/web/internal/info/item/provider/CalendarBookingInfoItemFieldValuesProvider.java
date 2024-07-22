@@ -86,68 +86,12 @@ public class CalendarBookingInfoItemFieldValuesProvider
 		}
 	}
 
-	private List<InfoFieldValue<Object>> _getCalendarBookingInfoFieldValues(
-			CalendarBooking calendarBooking)
-		throws PortalException {
-
-		return Arrays.asList(
-			new InfoFieldValue<>(
-				CalendarBookingInfoItemFields.titleInfoField,
-				InfoLocalizedValue.<String>builder(
-				).defaultLocale(
-					LocaleUtil.fromLanguageId(
-						calendarBooking.getDefaultLanguageId())
-				).values(
-					calendarBooking.getTitleMap()
-				).build()),
-			new InfoFieldValue<>(
-				CalendarBookingInfoItemFields.descriptionInfoField,
-				InfoLocalizedValue.<String>builder(
-				).defaultLocale(
-					LocaleUtil.fromLanguageId(
-						calendarBooking.getDefaultLanguageId())
-				).values(
-					calendarBooking.getDescriptionMap()
-				).build()),
-			new InfoFieldValue<>(
-				CalendarBookingInfoItemFields.locationInfoField,
-				calendarBooking.getLocation()),
-			new InfoFieldValue<>(
-				CalendarBookingInfoItemFields.eventURLInfoField,
-				_getCalendarBookingURL(calendarBooking)),
-			new InfoFieldValue<>(
-				CalendarBookingInfoItemFields.startDateInfoField,
-				new Date(calendarBooking.getStartTime())),
-			new InfoFieldValue<>(
-				CalendarBookingInfoItemFields.endDateInfoField,
-				new Date(calendarBooking.getEndTime())),
-			new InfoFieldValue<>(
-				CalendarBookingInfoItemFields.allDayInfoField,
-				calendarBooking.isAllDay()),
-			new InfoFieldValue<>(
-				CalendarBookingInfoItemFields.calendarNameInfoField,
-				InfoLocalizedValue.<String>builder(
-				).defaultLocale(
-					LocaleUtil.fromLanguageId(
-						calendarBooking.getDefaultLanguageId())
-				).values(
-					_getCalendarNameMap(calendarBooking)
-				).build()),
-			new InfoFieldValue<>(
-				CalendarBookingInfoItemFields.invitationsInfoField,
-				_getInvitations(calendarBooking)),
-			new InfoFieldValue<>(
-				CalendarBookingInfoItemFields.repetitionsInfoField,
-				RecurrenceUtil.getSummary(
-					calendarBooking, calendarBooking.getRecurrenceObj())));
-	}
-
 	/**
 	 * See {@link
 	 * com.liferay.calendar.internal.notification.NotificationTemplateContextFactory#_getCalendarBookingURL(
 	 * User, long)}
 	 */
-	private String _getCalendarBookingURL(CalendarBooking calendarBooking) {
+	protected String getCalendarBookingURL(CalendarBooking calendarBooking) {
 		try {
 			Company company = _companyLocalService.getCompany(
 				calendarBooking.getCompanyId());
@@ -197,6 +141,62 @@ public class CalendarBookingInfoItemFieldValuesProvider
 
 			return StringPool.BLANK;
 		}
+	}
+
+	private List<InfoFieldValue<Object>> _getCalendarBookingInfoFieldValues(
+			CalendarBooking calendarBooking)
+		throws PortalException {
+
+		return Arrays.asList(
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.titleInfoField,
+				InfoLocalizedValue.<String>builder(
+				).defaultLocale(
+					LocaleUtil.fromLanguageId(
+						calendarBooking.getDefaultLanguageId())
+				).values(
+					calendarBooking.getTitleMap()
+				).build()),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.descriptionInfoField,
+				InfoLocalizedValue.<String>builder(
+				).defaultLocale(
+					LocaleUtil.fromLanguageId(
+						calendarBooking.getDefaultLanguageId())
+				).values(
+					calendarBooking.getDescriptionMap()
+				).build()),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.locationInfoField,
+				calendarBooking.getLocation()),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.eventURLInfoField,
+				getCalendarBookingURL(calendarBooking)),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.startDateInfoField,
+				new Date(calendarBooking.getStartTime())),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.endDateInfoField,
+				new Date(calendarBooking.getEndTime())),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.allDayInfoField,
+				calendarBooking.isAllDay()),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.calendarNameInfoField,
+				InfoLocalizedValue.<String>builder(
+				).defaultLocale(
+					LocaleUtil.fromLanguageId(
+						calendarBooking.getDefaultLanguageId())
+				).values(
+					_getCalendarNameMap(calendarBooking)
+				).build()),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.invitationsInfoField,
+				_getInvitations(calendarBooking)),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.repetitionsInfoField,
+				RecurrenceUtil.getSummary(
+					calendarBooking, calendarBooking.getRecurrenceObj())));
 	}
 
 	private Map<Locale, String> _getCalendarNameMap(

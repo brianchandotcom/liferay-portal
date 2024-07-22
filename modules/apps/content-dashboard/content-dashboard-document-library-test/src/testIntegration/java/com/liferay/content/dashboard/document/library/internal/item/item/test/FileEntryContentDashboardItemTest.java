@@ -452,19 +452,37 @@ public class FileEntryContentDashboardItemTest {
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		_assertSpecificInformationList(
-			null, "jpg", "0 B", _getVersionableContentDashboardItem(1));
+			null, "jpg", null, "0 B", _getVersionableContentDashboardItem(1));
 		_assertSpecificInformationList(
-			_language.get(LocaleUtil.getDefault(), "square"), "jpeg", "7 KB",
+			_language.get(LocaleUtil.getDefault(), "square"), "jpeg", "225x225",
+			"7 KB",
 			_getVersionableContentDashboardItem(
 				"dependencies/225x225.jpeg", 1));
 		_assertSpecificInformationList(
-			_language.get(LocaleUtil.getDefault(), "tall"), "jpeg", "6 KB",
+			_language.get(LocaleUtil.getDefault(), "tall"), "jpeg", "183x275",
+			"6 KB",
 			_getVersionableContentDashboardItem(
 				"dependencies/183x275.jpeg", 1));
 		_assertSpecificInformationList(
-			_language.get(LocaleUtil.getDefault(), "wide"), "jpeg", "8 KB",
+			_language.get(LocaleUtil.getDefault(), "tall"), "jpeg", "183x275",
+			"6 KB",
+			_getVersionableContentDashboardItem(
+				"dependencies/small-image.jpeg", 1));
+		_assertSpecificInformationList(
+			_language.get(LocaleUtil.getDefault(), "wide"), "jpeg", "277x182",
+			"8 KB",
 			_getVersionableContentDashboardItem(
 				"dependencies/277x182.jpeg", 1));
+		_assertSpecificInformationList(
+			_language.get(LocaleUtil.getDefault(), "wide"), "jpeg", "500x333",
+			"42 KB",
+			_getVersionableContentDashboardItem(
+				"dependencies/medium-image.jpeg", 1));
+		_assertSpecificInformationList(
+			_language.get(LocaleUtil.getDefault(), "wide"), "jpg", "1920x1080",
+			"281 KB",
+			_getVersionableContentDashboardItem(
+				"dependencies/large-image.jpg", 1));
 	}
 
 	@Test
@@ -590,7 +608,7 @@ public class FileEntryContentDashboardItemTest {
 
 	private void _assertSpecificInformationList(
 		String expectedAspectRatio, String expectedExtension,
-		String expectedSize,
+		String expectedResolution, String expectedSize,
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem) {
 
@@ -618,6 +636,16 @@ public class FileEntryContentDashboardItemTest {
 
 		Assert.assertEquals(
 			expectedExtension, extensionSpecificInformation.getValue());
+
+		ContentDashboardItem.SpecificInformation<?>
+			resolutionSpecificInformation = _getSpecificInformation(
+				"resolution", specificInformationList);
+
+		Assert.assertNotNull(
+			"resolution not found", resolutionSpecificInformation);
+
+		Assert.assertEquals(
+			expectedResolution, resolutionSpecificInformation.getValue());
 
 		ContentDashboardItem.SpecificInformation<?> sizeSpecificInformation =
 			_getSpecificInformation("size", specificInformationList);

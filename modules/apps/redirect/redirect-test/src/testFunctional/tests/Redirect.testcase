@@ -1433,7 +1433,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#WARNING",
-			value1 = "Warning:Redirect Functionality May Not Work as Expected in This Staging Environment.");
+			value1 = "Warning:Redirect functionality may not work as expected in the staging environment.");
 	}
 
 }

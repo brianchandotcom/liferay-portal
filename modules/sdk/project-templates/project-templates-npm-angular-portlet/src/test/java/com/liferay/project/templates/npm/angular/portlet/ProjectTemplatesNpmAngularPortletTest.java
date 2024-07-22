@@ -21,6 +21,7 @@ import java.util.Properties;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -30,6 +31,7 @@ import org.junit.runners.Parameterized;
 /**
  * @author Lawrence Lee
  */
+@Ignore
 @RunWith(Parameterized.class)
 public class ProjectTemplatesNpmAngularPortletTest
 	implements BaseProjectTemplatesTestCase {

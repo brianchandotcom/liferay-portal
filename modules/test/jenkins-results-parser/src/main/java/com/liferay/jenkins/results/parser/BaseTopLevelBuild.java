@@ -35,10 +35,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
@@ -892,7 +894,16 @@ public abstract class BaseTopLevelBuild
 			urlAxisNames.put(buildURL, propertyName);
 		}
 
-		addDownstreamBuilds(urlAxisNames);
+		if (!urlAxisNames.isEmpty()) {
+			addDownstreamBuilds(urlAxisNames);
+
+			return;
+		}
+
+		System.out.println(
+			"Unable to find downstream builds in build-database.json");
+
+		_findDownstreamBuildsInConsoleText();
 	}
 
 	@Override
@@ -2258,6 +2269,84 @@ public abstract class BaseTopLevelBuild
 		}
 	}
 
+	private void _findDownstreamBuildsInConsoleText() {
+		if ((getBuildURL() == null) || (getParentBuild() != null)) {
+			return;
+		}
+
+		String consoleText = getConsoleText();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(consoleText)) {
+			return;
+		}
+
+		Set<String> downstreamBuildURLs = new HashSet<>();
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			String downstreamBuildURL = downstreamBuild.getBuildURL();
+
+			if (downstreamBuildURL != null) {
+				downstreamBuildURLs.add(downstreamBuildURL);
+			}
+
+			List<String> downstreamBadBuildURLs =
+				downstreamBuild.getBadBuildURLs();
+
+			if (downstreamBadBuildURLs != null) {
+				downstreamBuildURLs.addAll(downstreamBadBuildURLs);
+			}
+		}
+
+		Map<String, String> urlAxisNames = new HashMap<>();
+
+		int i = consoleText.lastIndexOf("\nstop-current-job:");
+
+		if (i != -1) {
+			consoleText = consoleText.substring(0, i);
+		}
+
+		Matcher downstreamBuildURLMatcher = _downstreamBuildURLPattern.matcher(
+			consoleText.substring(consoleReadCursor));
+
+		consoleReadCursor = consoleText.length();
+
+		while (downstreamBuildURLMatcher.find()) {
+			String url = downstreamBuildURLMatcher.group("url");
+
+			Pattern reinvocationPattern = Pattern.compile(
+				Pattern.quote(url) + " restarted at (?<url>[^\\s]*)\\.");
+
+			Matcher reinvocationMatcher = reinvocationPattern.matcher(
+				consoleText);
+
+			while (reinvocationMatcher.find()) {
+				url = reinvocationMatcher.group("url");
+			}
+
+			if (downstreamBuildURLs.contains(url) ||
+				urlAxisNames.containsKey(url)) {
+
+				continue;
+			}
+
+			String jobVariant = downstreamBuildURLMatcher.group("jobVariant");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant)) {
+				String jobName = downstreamBuildURLMatcher.group("jobName");
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(jobName) &&
+					jobVariant.contains(jobName + "/")) {
+
+					jobVariant = jobVariant.replaceAll(jobName + "/", "");
+				}
+			}
+
+			urlAxisNames.put(url, jobVariant);
+		}
+
+		addDownstreamBuilds(urlAxisNames);
+	}
+
 	private Map<Map<String, String>, Integer> _getSlaveUsageByLabels() {
 		Map<Map<String, String>, Integer> slaveUsages = new HashMap<>();
 
@@ -2337,6 +2426,9 @@ public abstract class BaseTopLevelBuild
 		"http://test-1-0.liferay.com/userContent/reports/ci-system-status" +
 			"/index.html";
 
+	private static final Pattern _downstreamBuildURLPattern = Pattern.compile(
+		"[\\'\\\"](?<jobVariant>[^\\'\\\"]+)[\\'\\\"] (completed|started) at " +
+			"(?<url>.+/job/(?<jobName>[^/]+)/.+)\\.");
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);
 	private static final Pattern _gitHubURLPattern = Pattern.compile(

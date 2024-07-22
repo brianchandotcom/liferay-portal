@@ -1543,6 +1543,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void reset() {
+		consoleReadCursor = 0;
 		_duration = null;
 		_jenkinsConsoleTextLoader = null;
 		_jenkinsMaster = null;
@@ -2998,6 +2999,7 @@ public abstract class BaseBuild implements Build {
 	protected static final SimpleDateFormat stopWatchTimestampSimpleDateFormat =
 		new SimpleDateFormat("MM-dd-yyyy HH:mm:ss:SSS z");
 
+	protected int consoleReadCursor;
 	protected boolean fromArchive;
 	protected boolean fromCompletedBuild;
 	protected String gitRepositoryName;

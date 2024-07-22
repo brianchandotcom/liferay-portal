@@ -23,6 +23,12 @@ const FUZZY_OPTIONS = {
 	pre: '<strong>',
 };
 
+const HEADERS = {
+	'Accept': 'application/json',
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+	'Content-Type': 'application/json',
+};
+
 const OBJECT_RELATIONSHIP = {
 	DATA_SET_CARDS_SECTION: 'fdsViewFDSCardsSectionRelationship',
 	DATA_SET_CARDS_SECTION_ERC:
@@ -87,6 +93,7 @@ export {
 	DEFAULT_VISUALIZATION_MODES,
 	FDS_DEFAULT_PROPS,
 	FUZZY_OPTIONS,
+	HEADERS,
 	OBJECT_RELATIONSHIP,
 	ALLOWED_ENDPOINTS_PARAMETERS,
 };

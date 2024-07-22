@@ -13,7 +13,7 @@ import React, {useEffect, useState} from 'react';
 
 import '../../../../css/ListVisualizationMode.scss';
 import FieldSelectModalContent from '../../../components/FieldSelectModalContent';
-import {API_URL, OBJECT_RELATIONSHIP} from '../../../utils/constants';
+import {API_URL, HEADERS, OBJECT_RELATIONSHIP} from '../../../utils/constants';
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 import {IField, IFieldTreeItem} from '../../../utils/types';
@@ -51,7 +51,10 @@ export default function List(props: IDataSetSectionProps) {
 
 	const getFDSListSections = async () => {
 		const response = await fetch(
-			`${API_URL.LIST_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTION_ERC} eq '${dataSet.externalReferenceCode}')`
+			`${API_URL.LIST_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTION_ERC} eq '${dataSet.externalReferenceCode}')`,
+			{
+				headers: HEADERS,
+			}
 		);
 
 		if (!response.ok) {

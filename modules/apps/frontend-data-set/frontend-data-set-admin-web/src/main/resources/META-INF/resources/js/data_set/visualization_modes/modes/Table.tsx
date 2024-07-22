@@ -27,6 +27,7 @@ import OrderableTable from '../../../components/OrderableTable';
 import {
 	API_URL,
 	FUZZY_OPTIONS,
+	HEADERS,
 	OBJECT_RELATIONSHIP,
 } from '../../../utils/constants';
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
@@ -373,7 +374,10 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 
 	const getFDSFields = async () => {
 		const response = await fetch(
-			`${API_URL.TABLE_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTION_ID} eq '${dataSet.id}')&nestedFields=${OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTION}&sort=dateCreated:asc`
+			`${API_URL.TABLE_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTION_ID} eq '${dataSet.id}')&nestedFields=${OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTION}&sort=dateCreated:asc`,
+			{
+				headers: HEADERS,
+			}
 		);
 
 		if (!response.ok) {

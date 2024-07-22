@@ -14,6 +14,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureServiceUtil;
+import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.kernel.provider.util.LayoutUtilityPageEntryLayoutProviderUtil;
@@ -279,9 +280,16 @@ public class WelcomeSiteInitializerTest {
 
 		LayoutStructure layoutStructure = _getLayoutStructure(layout);
 
+		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
+			(ContainerStyledLayoutStructureItem)
+				layoutStructure.addContainerStyledLayoutStructureItem(
+					layoutStructure.getMainItemId(), 0);
+
+		containerStyledLayoutStructureItem.setWidthType("fixed");
+
 		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(),
-			layoutStructure.getMainItemId(), 0);
+			containerStyledLayoutStructureItem.getItemId(), 0);
 
 		JSONObject dataJSONObject = layoutStructure.toJSONObject();
 

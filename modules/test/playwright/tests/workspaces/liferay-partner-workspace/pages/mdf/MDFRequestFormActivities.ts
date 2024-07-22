@@ -5,7 +5,11 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import { MDFRequestActivityBudgetExpense, MDFRequestActivityTactics, MDFRequestTypeOfActivity } from './utils/enums';
+import {
+	MDFRequestActivityBudgetExpense,
+	MDFRequestActivityTactics,
+	MDFRequestTypeOfActivity,
+} from './utils/enums';
 
 type ExpenseOption = {type: MDFRequestActivityBudgetExpense; value: number};
 
@@ -22,21 +26,21 @@ export type MDFRequestFormActivitiesContent = {
 };
 
 export class MDFRequestFormActivities {
-    readonly addActivity: Locator;
+	readonly addActivity: Locator;
 	readonly addExpense: Locator;
 	readonly page: Page;
 	readonly totalMDFRequestAmount: Locator;
 
-    constructor(page: Page) {
-        this.addActivity = page.getByRole('button', {name: 'Add Activity'});
+	constructor(page: Page) {
+		this.addActivity = page.getByRole('button', {name: 'Add Activity'});
 		this.addExpense = page.getByRole('button', {name: 'Add Expense'});
 		this.page = page;
 		this.totalMDFRequestAmount = page.getByText(
 			'Total MDF Requested Amount:'
 		);
-    }
+	}
 
-    activityName(index: number) {
+	activityName(index: number) {
 		return this.page.locator(`input[name="activities[${index}].name"]`);
 	}
 

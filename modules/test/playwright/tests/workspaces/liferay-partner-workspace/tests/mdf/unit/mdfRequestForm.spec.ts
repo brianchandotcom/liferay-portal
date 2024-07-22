@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import { apiHelpersTest } from '../../../../../../fixtures/apiHelpersTest';
+import {apiHelpersTest} from '../../../../../../fixtures/apiHelpersTest';
 import {partnerPagesTest} from '../../../fixtures/partnerPagesTest';
-import { generateMDFRequestData } from '../../../pages/mdf/utils/mdfRequestData';
+import {generateMDFRequestData} from '../../../pages/mdf/utils/mdfRequestData';
 
 export const test = mergeTests(apiHelpersTest, partnerPagesTest);
 
@@ -16,18 +16,25 @@ test.describe('MDF Request Form', () => {
 	const accountRole = '[Account] Partner Manager (PM)';
 	let accountUser;
 
-	test.beforeEach(async ({mdfRequestFormPage, partnerHelper, partnerSite}) => {
-		const { account } = await partnerHelper.createAccountUser({accountName});
-		await partnerHelper.assignUserToAccountRole({accountId: account.id, accountRole});
+	test.beforeEach(
+		async ({mdfRequestFormPage, partnerHelper, partnerSite}) => {
+			const {account} = await partnerHelper.createAccountUser({
+				accountName,
+			});
+			await partnerHelper.assignUserToAccountRole({
+				accountId: account.id,
+				accountRole,
+			});
 
-		accountUser = account;
+			accountUser = account;
 
-		await mdfRequestFormPage.goto(partnerSite.friendlyUrlPath); 
-	});
+			await mdfRequestFormPage.goto(partnerSite.friendlyUrlPath);
+		}
+	);
 
 	test.afterEach(async ({apiHelpers}) => {
 		await apiHelpers.headlessAdminUser.deleteAccount(accountUser.id);
-	})
+	});
 
 	test('Open MDF Request Form', async ({page}) => {
 		const heading = await page.getByRole('heading', {
@@ -37,9 +44,7 @@ test.describe('MDF Request Form', () => {
 		expect(heading).toBeTruthy();
 	});
 
-	test('Create a New MDF Request', async ({
-		mdfRequestFormPage
-	}) => {
+	test('Create a New MDF Request', async ({mdfRequestFormPage}) => {
 		const mdfRequestData = generateMDFRequestData();
 
 		await mdfRequestFormPage.createNewRequest(mdfRequestData);

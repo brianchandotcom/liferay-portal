@@ -4,19 +4,19 @@
  */
 
 export const mockMDFRequestData = {
-	claimPercent:0.5,
-	companyName:"Deathray, Inc.*",
-	convertedTotalCostOfExpense:50000,
-	convertedTotalMDFRequestAmount:25000,
-	liferayBusinessSalesGoals:"Lead generation",
-	liferayBusinessSalesGoalsOther:"",
-	maxDateActivity:"2024-07-12",
-	minDateActivity:"2024-07-11",
-	overallCampaignDescription:"Campaign Description",
-	overallCampaignName:"Test Campaign",
-	submitDate:"2024-07-10T18:11:39.346Z",
-	targetAudienceRoles:"C-Level/Executive/VP; Independent Contractor",
-	targetMarkets:"Aerospace & Defense; Agriculture",
-	totalCostOfExpense:0,
-	totalMDFRequestAmount:25000					
-}
+	claimPercent: 0.5,
+	companyName: 'Deathray, Inc.*',
+	convertedTotalCostOfExpense: 50000,
+	convertedTotalMDFRequestAmount: 25000,
+	liferayBusinessSalesGoals: 'Lead generation',
+	liferayBusinessSalesGoalsOther: '',
+	maxDateActivity: '2024-07-12',
+	minDateActivity: '2024-07-11',
+	overallCampaignDescription: 'Campaign Description',
+	overallCampaignName: 'Test Campaign',
+	submitDate: '2024-07-10T18:11:39.346Z',
+	targetAudienceRoles: 'C-Level/Executive/VP; Independent Contractor',
+	targetMarkets: 'Aerospace & Defense; Agriculture',
+	totalCostOfExpense: 0,
+	totalMDFRequestAmount: 25000,
+};

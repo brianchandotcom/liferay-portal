@@ -13,12 +13,12 @@ type AssignUserToAccountRole = {
 };
 
 type CreateAccount = {
-    accountName: string;
-}
+	accountName: string;
+};
 
 type CreateMDFRequest = {
-    data: {};
-}
+	data: {};
+};
 
 type TAccount = {
 	externalReferenceCode?: string;
@@ -28,15 +28,15 @@ type TAccount = {
 };
 
 type TMyAccountType = TAccount & {
-		currency: string,
-		externalReferenceCode: string,
-		marketingPerformance: number,
-		marketingPlan: boolean,
-		name: string,
-		newProjectExistingBusiness: number,
-		partnerCountry: string,
-		r_prtLvlToAcc_c_partnerLevelERC: string,
-		solutionDeliveryCertification: boolean,
+	currency: string;
+	externalReferenceCode: string;
+	marketingPerformance: number;
+	marketingPlan: boolean;
+	name: string;
+	newProjectExistingBusiness: number;
+	partnerCountry: string;
+	r_prtLvlToAcc_c_partnerLevelERC: string;
+	solutionDeliveryCertification: boolean;
 };
 export class PartnerHelper {
 	readonly apiHelpers: ApiHelpers;
@@ -69,7 +69,6 @@ export class PartnerHelper {
 				filteredAccountRole[0].id,
 				user.id
 			);
-
 		}
 		catch (error) {
 			console.error('Error when trying to assign user to role', error);
@@ -77,26 +76,24 @@ export class PartnerHelper {
 		}
 	}
 
-
-	async createAccountUser({
-		accountName,
-	}: CreateAccount) {
+	async createAccountUser({accountName}: CreateAccount) {
 		const partnerAccount: TMyAccountType = {
-			currency: "USD",
-			externalReferenceCode: "0017000000b3ScRAAU",
+			currency: 'USD',
+			externalReferenceCode: '0017000000b3ScRAAU',
 			marketingPerformance: 3,
 			marketingPlan: true,
 			name: accountName,
 			newProjectExistingBusiness: 1,
-			partnerCountry: "US",
-			r_prtLvlToAcc_c_partnerLevelERC: "GOLD-PRTLVL",
+			partnerCountry: 'US',
+			r_prtLvlToAcc_c_partnerLevelERC: 'GOLD-PRTLVL',
 			solutionDeliveryCertification: true,
 		};
 
 		try {
-			const account = await this.apiHelpers.headlessAdminUser.postAccount(
-				partnerAccount
-			);
+			const account =
+				await this.apiHelpers.headlessAdminUser.postAccount(
+					partnerAccount
+				);
 
 			await this.apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
 				account.id,
@@ -111,19 +108,17 @@ export class PartnerHelper {
 		}
 	}
 
-    async createMDFRequest({
-        data,
-    }: CreateMDFRequest) {
-        try {
-            const mdfRequest = await this.apiHelpers.post('/o/c/mdfrequests', {
-                data
-            });
+	async createMDFRequest({data}: CreateMDFRequest) {
+		try {
+			const mdfRequest = await this.apiHelpers.post('/o/c/mdfrequests', {
+				data,
+			});
 
-            return mdfRequest   
-        }
-        catch (error) {
-            console.error('Error when trying to create an MDF Request', error);
-            throw error;
-        }
-    }
+			return mdfRequest;
+		}
+		catch (error) {
+			console.error('Error when trying to create an MDF Request', error);
+			throw error;
+		}
+	}
 }

@@ -5,7 +5,12 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import { MDFRequestAdditionalOptions, MDFRequestLiferayBusinessSalesGoals, MDFRequestTargetAudienceRoles, MDFRequestTargetMarkets } from './utils/enums';
+import {
+	MDFRequestAdditionalOptions,
+	MDFRequestLiferayBusinessSalesGoals,
+	MDFRequestTargetAudienceRoles,
+	MDFRequestTargetMarkets,
+} from './utils/enums';
 
 export type MDFRequestFormGoalsContent = {
 	additionalOptions?: MDFRequestAdditionalOptions[];
@@ -19,7 +24,7 @@ export type MDFRequestFormGoalsContent = {
 };
 
 export class MDFRequestFormGoals {
-    readonly additionalOptions: {
+	readonly additionalOptions: {
 		dxpMigrationUpgrade: Locator;
 		migrationFromCompetitorPlatform: Locator;
 	};
@@ -73,8 +78,8 @@ export class MDFRequestFormGoals {
 		wholesaleDistribution: Locator;
 	};
 
-    constructor(page: Page) {
-        this.additionalOptions = {
+	constructor(page: Page) {
+		this.additionalOptions = {
 			dxpMigrationUpgrade: page.getByLabel(
 				'6.x to DXP Migration/Upgrade'
 			),
@@ -147,9 +152,9 @@ export class MDFRequestFormGoals {
 			utilities: page.getByLabel('Utilities'),
 			wholesaleDistribution: page.getByLabel('Wholesale/Distribution'),
 		};
-    }
+	}
 
-    async selectCompany(companyName: string) {
+	async selectCompany(companyName: string) {
 		await this.companyName.selectOption({label: companyName});
 	}
 

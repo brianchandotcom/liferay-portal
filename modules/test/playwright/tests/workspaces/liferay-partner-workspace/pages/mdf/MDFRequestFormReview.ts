@@ -3,81 +3,116 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { Page, expect } from "@playwright/test";
+import {Page, expect} from '@playwright/test';
+import moment from 'moment';
 
 interface MDFRequestContent {
-    activities: [{
-        activityName: string;
-        claimPercent: number;
-        endDate: string;
-        expenses: [{ value: number }];
-        leadGenerated: boolean;
-        marketingActivity: string;
-        startDate: string;
-        tactic: string;
-    }];
-    goals: {
-        companyName: string;
-        liferayBusinessSalesGoals: string[];
-        overallCampaignDescription: string;
-        overallCampaignName: string;
-        targetAudienceRoles: string[];
-        targetMarkets: string[];
-    }
+	activities: [
+		{
+			activityName: string;
+			claimPercent: number;
+			endDate?: string;
+			expenses: [{value: number}];
+			leadGenerated: boolean;
+			marketingActivity: string;
+			startDate?: string;
+			tactic?: string;
+		},
+	];
+	goals: {
+		companyName: string;
+		liferayBusinessSalesGoals?: string[];
+		overallCampaignDescription: string;
+		overallCampaignName: string;
+		targetAudienceRoles?: string[];
+		targetMarkets?: string[];
+	};
 }
 
 export class MDFRequestFormReview {
-    readonly page: Page;
+	readonly page: Page;
 
-    constructor(page: Page) {
-        this.page = page;
-    }
+	constructor(page: Page) {
+		this.page = page;
+	}
 
-    async reviewMDFContent(mdfRequestContent: MDFRequestContent) {
-        const {
-            activities: [{
-                activityName,
-                endDate,
-                expenses: [{ value: expenses }],
-                claimPercent,
-                leadGenerated,
-                marketingActivity,
-                startDate,
-                tactic
-            }],
-            goals: {
-                overallCampaignName: campaignName,
-                companyName,
-                overallCampaignDescription: campaignDescription,
-                liferayBusinessSalesGoals: [liferayBusinessSalesGoals],
-                targetAudienceRoles: [targetAudienceRoles],
-                targetMarkets: [targetMarkets]
-            }
-        } = mdfRequestContent;
+	async reviewMDFContent(mdfRequestContent: MDFRequestContent) {
+		const {
+			activities: [
+				{
+					activityName,
+					expenses: [{value: expenses}],
+					claimPercent,
+					leadGenerated,
+					marketingActivity,
+				},
+			],
+			goals: {
+				companyName,
+				overallCampaignDescription: campaignDescription,
+				overallCampaignName: campaignName,
+			},
+		} = mdfRequestContent;
 
-        const expensePercentage = String(expenses * claimPercent);
-        const leadGeneratedText = leadGenerated ? 'Yes' : 'No';
+		const expensePercentage = String(expenses * claimPercent);
+		const leadGeneratedText = leadGenerated ? 'Yes' : 'No';
 
-        await expect(this.page.getByRole('cell', { name: companyName })).toBeVisible();
-        await expect(this.page.getByRole('cell', { name: campaignName })).toBeVisible();
-        await expect(this.page.getByRole('cell', { name: campaignDescription })).toBeVisible();
-        await expect(this.page.getByRole('cell', { name: liferayBusinessSalesGoals[0] })).toBeVisible();
-        await expect(this.page.getByRole('cell', { name: targetMarkets[0] })).toBeVisible();
-        await expect(this.page.getByRole('cell', { name: targetAudienceRoles[0] })).toBeVisible();
-        await expect(this.page.getByText(expensePercentage).first()).toBeVisible();
-        await expect(this.page.getByText(activityName).first()).toBeVisible();
+		await expect(
+			this.page.getByRole('cell', {name: companyName})
+		).toBeVisible();
+		await expect(
+			this.page.getByRole('cell', {name: campaignName})
+		).toBeVisible();
+		await expect(
+			this.page.getByRole('cell', {name: campaignDescription})
+		).toBeVisible();
+		await expect(
+			this.page.getByRole('cell', {name: 'Lead generation'})
+		).toBeVisible();
+		await expect(
+			this.page.getByRole('cell', {
+				name: 'Aerospace & Defense; Agriculture',
+			})
+		).toBeVisible();
+		await expect(
+			this.page.getByRole('cell', {
+				name: 'C-Level/Executive/VP; Administrator',
+			})
+		).toBeVisible();
+		await expect(
+			this.page.getByText(expensePercentage).first()
+		).toBeVisible();
+		await expect(this.page.getByText(activityName).first()).toBeVisible();
 
-        await this.page.getByRole('tab', {name: 'MDF Requested'}).click();
+		await this.page
+			.getByRole('button', {exact: false, name: campaignName})
+			.click();
 
-        await expect(this.page.getByText(activityName).first()).toBeVisible();
-        await expect(this.page.getByRole('cell', {name: tactic})).toBeVisible();
-        await expect(this.page.getByRole('cell', {name: marketingActivity})).toBeVisible();
-        await expect(this.page.getByRole('cell', {name: startDate})).toBeVisible();
-        await expect(this.page.getByRole('cell', {name: endDate})).toBeVisible();
-        await expect(this.page.getByRole('cell', {name: String(expenses)})).toBeVisible();
-        await expect(this.page.getByRole('cell', {name: leadGeneratedText})).toBeVisible();
-        await expect(this.page.getByText(expensePercentage).first()).toBeVisible();
-
-        await this.page.getByRole('tab', {name: 'MDF Requested'}).click();
-    }
+		await expect(this.page.getByText(activityName).first()).toBeVisible();
+		await expect(
+			this.page.getByRole('cell', {name: 'Other'})
+		).toBeVisible();
+		await expect(
+			this.page.getByRole('cell', {name: marketingActivity})
+		).toBeVisible();
+		await expect(
+			this.page.getByRole('cell', {
+				name: moment().add(1, 'days').format('l'),
+			})
+		).toBeVisible();
+		await expect(
+			this.page.getByRole('cell', {
+				name: moment().add(2, 'days').format('l'),
+			})
+		).toBeVisible();
+		await expect(
+			this.page.getByRole('cell', {name: String(expenses)})
+		).toBeVisible();
+		await expect(
+			this.page.getByRole('cell', {name: leadGeneratedText})
+		).toBeVisible();
+		await expect(
+			this.page.getByText(expensePercentage).first()
+		).toBeVisible();
+	}
 }

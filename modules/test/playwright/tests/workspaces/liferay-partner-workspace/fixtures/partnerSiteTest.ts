@@ -20,7 +20,10 @@ export interface PartnerSite {
 export const partnerSiteTest = test.extend<PartnerSite>({
 	partnerSite: [
 		async ({page, partnerHelper}, use) => {
-			const site = await partnerHelper.apiHelpers.headlessSite.getSiteByERC('LIFERAY_PARTNER');
+			const site =
+				await partnerHelper.apiHelpers.headlessSite.getSiteByERC(
+					'LIFERAY_PARTNER'
+				);
 
 			expect(site.id).toBeGreaterThan(0);
 

@@ -29,7 +29,9 @@ export class MDFRequestListPage {
 	readonly searchInput: Locator;
 
 	constructor(page: Page) {
-		this.actionButton = page.getByRole('cell', { name: 'Action Button' }).first();
+		this.actionButton = page
+			.getByRole('cell', {name: 'Action Button'})
+			.first();
 		this.activityAfterDateInput = page
 			.locator('div')
 			.filter({hasText: /^Activity Date On Or After$/})
@@ -47,12 +49,14 @@ export class MDFRequestListPage {
 		this.activityStatusButton = page.getByRole('button', {name: 'Status'});
 		this.applyFilterButton = page.getByRole('button', {name: 'Apply'});
 		this.cleanSearch = page.getByLabel('Clean Search');
-		this.clearAllFilters = page.getByRole('button', { name: 'Clear All Filters' });
+		this.clearAllFilters = page.getByRole('button', {
+			name: 'Clear All Filters',
+		});
 		this.completedTab = page.getByRole('tab', {
 			exact: true,
 			name: 'Completed',
 		});
-		this.completeMenuItem = page.getByRole('menuitem', { name: 'Complete' });
+		this.completeMenuItem = page.getByRole('menuitem', {name: 'Complete'});
 		this.exportRequestButton = page.getByRole('link', {
 			name: 'Export MDF Report',
 		});
@@ -80,7 +84,7 @@ export class MDFRequestListPage {
 		await this.page.getByLabel(partner).check();
 		await this.applyFilterButton.click();
 	}
-	
+
 	async filterMDFRequestByPeriod(
 		activityAfterDate: string,
 		activityBeforeDate: string
@@ -106,7 +110,7 @@ export class MDFRequestListPage {
 		await this.searchInput.click();
 		await this.searchInput.fill(text);
 		await this.searchInput.press('Enter');
-	} 
+	}
 
 	async getCampaignName() {
 		return this.page.locator('td:nth-child(4)').first();

@@ -3010,25 +3010,67 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	<#if javaDataTypeMap?keys?seq_contains(schemaName)>
 		protected ${schemaName} random${schemaName}() throws Exception {
-			return new ${schemaName}() {
-				{
-					<#list properties?keys as propertyName>
-						<#if stringUtil.equals(propertyName, "siteId")>
-							${propertyName} = testGroup.getGroupId();
-						<#elseif stringUtil.equals(properties[propertyName], "Integer")>
-							${propertyName} = RandomTestUtil.randomInt();
-						<#elseif propertyName?contains("email") && stringUtil.equals(properties[propertyName], "String")>
-							${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString()) + "@liferay.com";
-						<#elseif stringUtil.equals(properties[propertyName], "String")>
-							${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString());
-						<#elseif randomDataTypes?seq_contains(properties[propertyName])>
-							${propertyName} = RandomTestUtil.random${properties[propertyName]}();
-						<#elseif stringUtil.equals(properties[propertyName], "Date")>
-							${propertyName} = RandomTestUtil.nextDate();
-						</#if>
-					</#list>
+
+			<#if schema.discriminator?has_content>
+				<#assign discriminatorPropertyName = schema.discriminator.propertyName />
+
+				switch(RandomTestUtil.randomInt(0,${schema.discriminator.mapping?size - 1})) {
+
+				<#list schema.discriminator.mapping as mappingName, mappingSchema>
+					<#assign
+						childSchemaName = freeMarkerTool.getReferenceName(mappingSchema)
+						childSchema = allSchemas[childSchemaName]
+						allChildProperties = properties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, childSchema, allSchemas)
+					/>
+						case ${mappingName?index}:
+							return new ${childSchemaName}() {
+								{
+									<#list allChildProperties?keys as propertyName>
+										<#if stringUtil.equals(propertyName, "siteId")>
+											${propertyName} = testGroup.getGroupId();
+										<#elseif stringUtil.equals(properties[propertyName], "Integer")>
+											${propertyName} = RandomTestUtil.randomInt();
+										<#elseif propertyName?contains("email") && stringUtil.equals(properties[propertyName], "String")>
+											${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString()) + "@liferay.com";
+										<#elseif stringUtil.equals(properties[propertyName], "String")>
+											${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString());
+										<#elseif randomDataTypes?seq_contains(properties[propertyName])>
+											${propertyName} = RandomTestUtil.random${properties[propertyName]}();
+										<#elseif stringUtil.equals(properties[propertyName], "Date")>
+											${propertyName} = RandomTestUtil.nextDate();
+										</#if>
+									</#list>
+									${discriminatorPropertyName} = ${discriminatorPropertyName?cap_first}.create("${mappingName}");
+								}
+						};
+
+				</#list>
 				}
-			};
+
+				return null;
+
+			<#else>
+				return new ${schemaName}() {
+					{
+						<#list properties?keys as propertyName>
+							<#if stringUtil.equals(propertyName, "siteId")>
+								${propertyName} = testGroup.getGroupId();
+							<#elseif stringUtil.equals(properties[propertyName], "Integer")>
+								${propertyName} = RandomTestUtil.randomInt();
+							<#elseif propertyName?contains("email") && stringUtil.equals(properties[propertyName], "String")>
+								${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString()) + "@liferay.com";
+							<#elseif stringUtil.equals(properties[propertyName], "String")>
+								${propertyName} = StringUtil.toLowerCase(RandomTestUtil.randomString());
+							<#elseif randomDataTypes?seq_contains(properties[propertyName])>
+								${propertyName} = RandomTestUtil.random${properties[propertyName]}();
+							<#elseif stringUtil.equals(properties[propertyName], "Date")>
+								${propertyName} = RandomTestUtil.nextDate();
+							</#if>
+						</#list>
+					}
+				};
+
+			</#if>
 		}
 
 		protected ${schemaName} randomIrrelevant${schemaName}() throws Exception {

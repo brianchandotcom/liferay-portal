@@ -54,6 +54,16 @@ export default function ShortcutModal({onCloseModal}) {
 					keyCombinations={[KEY_LABEL, 'S']}
 				/>
 
+				<KeyboardShorcut
+					description={Liferay.Language.get('show-hide-fragment')}
+					keyCombinations={[KEY_LABEL, 'H']}
+				/>
+
+				<KeyboardShorcut
+					description={Liferay.Language.get('rename')}
+					keyCombinations={[KEY_LABEL, OPTION_KEY_LABEL, 'R']}
+				/>
+
 				<p className="sheet-subtitle text-secondary">
 					{Liferay.Language.get('selection')}
 				</p>

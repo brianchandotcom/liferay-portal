@@ -1,0 +1,107 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"ddmStructureKey": "dataDefinition1",
+				"ddmStructureLayoutId": "",
+				"fieldReference": "Fieldset1",
+				"rows": [
+					{
+						"columns": [
+							{
+								"fields": [
+									"Text1"
+								],
+								"size": 12
+							}
+						]
+					}
+				]
+			},
+			"fieldType": "fieldset",
+			"label": {
+				"en_US": "Fieldset 1"
+			},
+			"name": "Fieldset1",
+			"nestedDataDefinitionFields": [
+				{
+					"customProperties": {
+						"dataType": "string",
+						"displayStyle": "singleline",
+						"fieldReference": "Text1"
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Text 1"
+					},
+					"name": "Text1",
+					"nestedDataDefinitionFields": [
+					]
+				}
+			]
+		},
+		{
+			"customProperties": {
+				"dataType": "string",
+				"displayStyle": "singleline",
+				"fieldReference": "Text2"
+			},
+			"fieldType": "text",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text 2"
+			},
+			"name": "Text2",
+			"nestedDataDefinitionFields": [
+			]
+		}
+	],
+	"dataDefinitionKey": "dataDefinition2",
+	"defaultDataLayout": {
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Fieldset1"
+								]
+							}
+						]
+					},
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Text2"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": ""
+				},
+				"title": {
+					"en_US": ""
+				}
+			}
+		],
+		"name": {
+			"en_US": "Data Definition  2"
+		},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"name": {
+		"en_US": "Data Definition  2"
+	},
+	"storageType": "default"
+}

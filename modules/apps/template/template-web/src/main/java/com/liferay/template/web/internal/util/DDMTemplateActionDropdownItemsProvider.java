@@ -221,8 +221,8 @@ public class DDMTemplateActionDropdownItemsProvider {
 			dropdownItem.setHref(
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
-				).setMVCPath(
-					"/view_widget_templates_usages.jsp"
+				).setMVCRenderCommandName(
+					"/template/view_widget_templates_usages"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(

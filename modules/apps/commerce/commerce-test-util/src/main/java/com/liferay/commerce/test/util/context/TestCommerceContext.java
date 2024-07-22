@@ -6,6 +6,7 @@
 package com.liferay.commerce.test.util.context;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountGroupLocalServiceUtil;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceOrder;
@@ -45,7 +46,12 @@ public class TestCommerceContext implements CommerceContext {
 
 	@Override
 	public long[] getCommerceAccountGroupIds() {
-		return new long[0];
+		if (_accountEntry == null) {
+			return new long[0];
+		}
+
+		return AccountGroupLocalServiceUtil.getAccountGroupIds(
+			_accountEntry.getAccountEntryId());
 	}
 
 	@Override

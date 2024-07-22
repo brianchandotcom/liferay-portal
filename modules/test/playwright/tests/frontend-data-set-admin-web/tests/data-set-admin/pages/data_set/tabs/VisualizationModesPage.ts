@@ -17,7 +17,7 @@ export class VisualizationModesPage {
 	};
 	readonly cardsVisualizationModeContainer: Locator;
 	private readonly container: Locator;
-	private readonly dataSetPage: DataSetPage;
+	readonly dataSetPage: DataSetPage;
 	readonly fieldSelectModalContainer: Locator;
 	readonly listVisualizationModeContainer: Locator;
 	readonly page: Page;

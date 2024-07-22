@@ -244,7 +244,9 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "The API filter must be related to an API endpoint."
+				"title",
+				"The value is invalid for object field " +
+					"\"r_apiEndpointToAPIFilters_c_apiEndpointId\""
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

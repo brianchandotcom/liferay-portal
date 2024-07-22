@@ -165,7 +165,9 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "The API sort must be related to an API endpoint."
+				"title",
+				"The value is invalid for object field " +
+					"\"r_apiEndpointToAPISorts_c_apiEndpointId\""
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

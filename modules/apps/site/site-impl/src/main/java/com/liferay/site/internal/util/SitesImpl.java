@@ -997,7 +997,7 @@ public class SitesImpl implements Sites {
 				BackgroundTaskExecutorNames.
 					LAYOUT_SET_PROTOTYPE_MERGE_BACKGROUND_TASK_EXECUTOR,
 				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new BackgroundTaskCreateDateComparator());
+				BackgroundTaskCreateDateComparator.getInstance(false));
 
 		for (BackgroundTask incompleteBackgroundTask :
 				incompleteBackgroundTasks) {
@@ -1050,7 +1050,8 @@ public class SitesImpl implements Sites {
 				groupId,
 				BackgroundTaskExecutorNames.
 					LAYOUT_SET_PROTOTYPE_IMPORT_BACKGROUND_TASK_EXECUTOR,
-				completed, new BackgroundTaskCreateDateComparator(false));
+				completed,
+				BackgroundTaskCreateDateComparator.getInstance(false));
 
 		if (previousBackgroundTask == null) {
 			return false;

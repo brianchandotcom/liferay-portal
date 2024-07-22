@@ -26,15 +26,16 @@ public class BackgroundTaskComparatorFactoryUtil {
 		OrderByComparator<BackgroundTask> orderByComparator = null;
 
 		if (orderByCol.equals("completion-date")) {
-			orderByComparator = new BackgroundTaskCompletionDateComparator(
-				orderByAsc);
+			orderByComparator =
+				BackgroundTaskCompletionDateComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("create-date")) {
-			orderByComparator = new BackgroundTaskCreateDateComparator(
+			orderByComparator = BackgroundTaskCreateDateComparator.getInstance(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new BackgroundTaskNameComparator(orderByAsc);
+			orderByComparator = BackgroundTaskNameComparator.getInstance(
+				orderByAsc);
 		}
 
 		return orderByComparator;

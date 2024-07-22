@@ -351,7 +351,8 @@ public class KBFolderLocalServiceTest {
 			_kbFolderLocalService.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new KBObjectsPriorityComparator(true));
+				QueryUtil.ALL_POS,
+				KBObjectsPriorityComparator.getInstance(true));
 
 		KBFolder currentKBFolder = (KBFolder)kbFoldersAndKBArticles.get(0);
 		KBArticle currentKBArticle1 = (KBArticle)kbFoldersAndKBArticles.get(1);
@@ -418,7 +419,8 @@ public class KBFolderLocalServiceTest {
 			_kbFolderLocalService.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new KBObjectsViewCountComparator(true));
+				QueryUtil.ALL_POS,
+				KBObjectsViewCountComparator.getInstance(true));
 
 		KBFolder currentKBFolder = (KBFolder)kbFoldersAndKBArticles.get(0);
 		KBArticle currentKBArticle1 = (KBArticle)kbFoldersAndKBArticles.get(1);
@@ -494,7 +496,8 @@ public class KBFolderLocalServiceTest {
 			_kbFolderLocalService.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new KBObjectsPriorityComparator(false));
+				QueryUtil.ALL_POS,
+				KBObjectsPriorityComparator.getInstance(false));
 
 		KBFolder currentKBFolder = (KBFolder)kbFoldersAndKBArticles.get(0);
 		KBArticle currentKBArticle1 = (KBArticle)kbFoldersAndKBArticles.get(3);
@@ -561,7 +564,8 @@ public class KBFolderLocalServiceTest {
 			_kbFolderLocalService.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new KBObjectsViewCountComparator(false));
+				QueryUtil.ALL_POS,
+				KBObjectsViewCountComparator.getInstance(false));
 
 		KBFolder currentKBFolder = (KBFolder)kbFoldersAndKBArticles.get(0);
 		KBArticle currentKBArticle1 = (KBArticle)kbFoldersAndKBArticles.get(2);

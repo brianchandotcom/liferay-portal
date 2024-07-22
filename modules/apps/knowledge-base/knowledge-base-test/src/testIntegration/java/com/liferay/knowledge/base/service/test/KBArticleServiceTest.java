@@ -123,14 +123,14 @@ public class KBArticleServiceTest {
 		List<KBArticle> kbArticles = _kbArticleService.getKBArticles(
 			_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+			QueryUtil.ALL_POS, KBArticlePriorityComparator.getInstance(true));
 
 		Assert.assertEquals(kbArticles.toString(), 2, kbArticles.size());
 
 		kbArticles = _kbArticleService.getKBArticles(
 			_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new KBArticlePriorityComparator(true));
+			KBArticlePriorityComparator.getInstance(true));
 
 		Assert.assertEquals(kbArticles.toString(), 3, kbArticles.size());
 
@@ -140,7 +140,7 @@ public class KBArticleServiceTest {
 		kbArticles = _kbArticleService.getKBArticles(
 			_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+			QueryUtil.ALL_POS, KBArticlePriorityComparator.getInstance(true));
 
 		Assert.assertEquals(kbArticles.toString(), 1, kbArticles.size());
 	}

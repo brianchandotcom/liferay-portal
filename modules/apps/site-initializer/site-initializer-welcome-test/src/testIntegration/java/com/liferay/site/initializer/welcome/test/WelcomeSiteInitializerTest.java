@@ -14,6 +14,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureServiceUtil;
+import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.kernel.provider.util.LayoutUtilityPageEntryLayoutProviderUtil;
@@ -108,7 +109,7 @@ public class WelcomeSiteInitializerTest {
 			layoutUtilityPageEntry.getPlid());
 
 		_addPortletToLayoutUtilityPageEntryLayout(
-			layout1, LoginPortletKeys.CREATE_ACCOUNT);
+			false, layout1, LoginPortletKeys.CREATE_ACCOUNT);
 
 		PageDefinition pageDefinition1 = _getPageDefinition(
 			layout1, _getLayoutStructure(layout1));
@@ -150,7 +151,7 @@ public class WelcomeSiteInitializerTest {
 			layoutUtilityPageEntry.getPlid());
 
 		_addPortletToLayoutUtilityPageEntryLayout(
-			layout1, LoginPortletKeys.FORGOT_PASSWORD);
+			false, layout1, LoginPortletKeys.FORGOT_PASSWORD);
 
 		PageDefinition pageDefinition1 = _getPageDefinition(
 			layout1, _getLayoutStructure(layout1));
@@ -223,7 +224,7 @@ public class WelcomeSiteInitializerTest {
 			layoutUtilityPageEntry.getPlid());
 
 		_addPortletToLayoutUtilityPageEntryLayout(
-			layout1, LoginPortletKeys.LOGIN);
+			true, layout1, LoginPortletKeys.LOGIN);
 
 		PageDefinition pageDefinition1 = _getPageDefinition(
 			layout1, _getLayoutStructure(layout1));
@@ -249,7 +250,7 @@ public class WelcomeSiteInitializerTest {
 	}
 
 	private void _addPortletToLayoutUtilityPageEntryLayout(
-			Layout layout, String portletId)
+			boolean includeContainer, Layout layout, String portletId)
 		throws Exception {
 
 		JSONObject editableValueJSONObject =
@@ -279,9 +280,22 @@ public class WelcomeSiteInitializerTest {
 
 		LayoutStructure layoutStructure = _getLayoutStructure(layout);
 
+		String itemId = layoutStructure.getMainItemId();
+
+		if (includeContainer) {
+			ContainerStyledLayoutStructureItem
+				containerStyledLayoutStructureItem =
+					(ContainerStyledLayoutStructureItem)
+						layoutStructure.addContainerStyledLayoutStructureItem(
+							layoutStructure.getMainItemId(), 0);
+
+			containerStyledLayoutStructureItem.setWidthType("fixed");
+
+			itemId = containerStyledLayoutStructureItem.getItemId();
+		}
+
 		layoutStructure.addFragmentStyledLayoutStructureItem(
-			fragmentEntryLink.getFragmentEntryLinkId(),
-			layoutStructure.getMainItemId(), 0);
+			fragmentEntryLink.getFragmentEntryLinkId(), itemId, 0);
 
 		JSONObject dataJSONObject = layoutStructure.toJSONObject();
 

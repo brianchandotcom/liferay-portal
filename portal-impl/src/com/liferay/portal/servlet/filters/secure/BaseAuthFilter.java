@@ -128,6 +128,14 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 			if (!user2.isActive()) {
 				httpSession.invalidate();
 
+				HttpAuthorizationHeader httpAuthorizationHeader =
+					new HttpAuthorizationHeader(
+						HttpAuthorizationHeader.SCHEME_BASIC);
+
+				HttpAuthManagerUtil.generateChallenge(
+					httpServletRequest, httpServletResponse,
+					httpAuthorizationHeader);
+
 				return null;
 			}
 
@@ -185,6 +193,14 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 
 			if (!user2.isActive()) {
 				httpSession.invalidate();
+
+				HttpAuthorizationHeader httpAuthorizationHeader =
+					new HttpAuthorizationHeader(
+						HttpAuthorizationHeader.SCHEME_DIGEST);
+
+				HttpAuthManagerUtil.generateChallenge(
+					httpServletRequest, httpServletResponse,
+					httpAuthorizationHeader);
 
 				return null;
 			}

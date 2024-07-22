@@ -9078,6 +9078,8 @@ junit.jvm.override.version=21</echo>
 										<echo>##</echo>
 										<echo></echo>
 
+										<download-gradle-wrapper-binary workspace.dir="${workspace.dir}" />
+
 										<execute dir="${workspace.dir}">
 											./gradlew build
 										</execute>

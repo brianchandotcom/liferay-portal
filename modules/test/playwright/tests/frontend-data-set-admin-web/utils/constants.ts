@@ -3,6 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {liferayConfig} from '../../../liferay.config';
+
+const ES_BASE_URL = `${liferayConfig.environment.baseUrl}/es`;
+const EN_BASE_URL = `${liferayConfig.environment.baseUrl}/en`;
+const PT_BASE_URL = `${liferayConfig.environment.baseUrl}/pt`;
+
 const DEFAULT_LABEL = {
 	DATA_SET: 'Sample Data Set',
 };
@@ -41,4 +47,7 @@ export {
 	SELECTION_FILTER_DATA_SET_RELATIONSHIP,
 	SORT_DATA_SET_RELATIONSHIP,
 	DEFAULT_LABEL,
+	ES_BASE_URL,
+	EN_BASE_URL,
+	PT_BASE_URL,
 };

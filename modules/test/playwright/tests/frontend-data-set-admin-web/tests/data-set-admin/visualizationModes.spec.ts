@@ -10,6 +10,7 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import {liferayConfig} from '../../../../liferay.config';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
+import {EN_BASE_URL, ES_BASE_URL, PT_BASE_URL} from '../../utils/constants';
 import saveFromModal from '../../utils/saveFromModal';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
@@ -23,6 +24,11 @@ export const test = mergeTests(
 	loginTest(),
 	dataSetManagerSetupTest
 );
+
+const LABEL_COLUMN_INDEX = 2;
+const RENDERER_COLUMN_INDEX = 4;
+const SORTABLE_COLUMN_INDEX = 5;
+const TYPE_COLUMN_INDEX = 3;
 
 let dataSetERC: string;
 
@@ -256,7 +262,6 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		const SAMPLE_SCALAR_FIELD = 'id';
 		const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
 		const SAMPLE_OBJECT_CHILD_FIELD = 'id';
-		const SORTABLE_COLUMN_INDEX = 5;
 
 		await test.step('Navigate to table visualization mode page', async () => {
 			await visualizationModesPage.goto({
@@ -497,8 +502,6 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		const SAMPLE_SCALAR_ARRAY_FIELD = 'keywords';
 		const SAMPLE_FULL_COMPLEX_FIELD = 'creator.*';
 		const SAMPLE_COMPLEX_OBJECT_CHILD_FIELD = 'creator.givenName';
-		const SORTABLE_COLUMN_INDEX = 5;
-		const TYPE_COLUMN_INDEX = 3;
 
 		await test.step('Navigate to table visualization mode page', async () => {
 			await visualizationModesPage.goto({
@@ -587,7 +590,6 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 	}) => {
 		const SAMPLE_SCALAR_FIELD = 'id';
 		const SAMPLE_OBJECT_FIELD = 'fdsViewFDSFieldRelationship';
-		const LABEL_COLUMN_INDEX = 2;
 
 		await test.step('Navigate to table visualization mode page', async () => {
 			await visualizationModesPage.goto({
@@ -708,8 +710,6 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 	}) => {
 		const SAMPLE_SCALAR_FIELD = 'id';
 		const SAMPLE_FIELD = 'name';
-		const LABEL_COLUMN_INDEX = 2;
-		const RENDERER_COLUMN_INDEX = 4;
 
 		await test.step('Navigate to table visualization mode page', async () => {
 			await visualizationModesPage.goto({
@@ -893,9 +893,6 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			const SAMPLE_FIELD_EN_US = 'Name';
 			const SAMPLE_FIELD_ES_ES = 'Nombre';
 			const SAMPLE_FIELD_PT_BR = 'Nome';
-			const LABEL_COLUMN_INDEX = 2;
-			const ES_BASE_URL = `${liferayConfig.environment.baseUrl}/es`;
-			const PT_BASE_URL = `${liferayConfig.environment.baseUrl}/pt`;
 
 			await test.step('Navigate to table visualization mode page', async () => {
 				await visualizationModesPage.goto({
@@ -1118,7 +1115,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			});
 
 			await test.step('Restore EN locale', async () => {
-				await page.goto(`${liferayConfig.environment.baseUrl}/en`);
+				await page.goto(EN_BASE_URL);
 			});
 		}
 	);

@@ -175,7 +175,8 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"An API schema must be related to an API application.",
+			"The value is invalid for object field " +
+				"\"r_apiApplicationToAPISchemas_c_apiApplicationId\"",
 			jsonObject.get("title"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(

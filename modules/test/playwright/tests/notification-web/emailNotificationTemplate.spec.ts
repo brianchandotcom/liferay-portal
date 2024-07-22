@@ -16,7 +16,18 @@ export const test = mergeTests(
 	notificationPagesTest
 );
 
-test.afterEach(async ({notificationTemplatesPage, page}) => {
+let objectDefinition: ObjectDefinition;
+
+test.beforeEach(async ({apiHelpers}) => {
+	objectDefinition = await apiHelpers.objectAdmin.postRandomObjectDefinition({
+		objectFolderExternalReferenceCode: 'default',
+		status: {code: 0},
+	});
+});
+
+test.afterEach(async ({apiHelpers, notificationTemplatesPage, page}) => {
+	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
+
 	await notificationTemplatesPage.goto();
 
 	const frontEndDatasetItemActions =
@@ -306,4 +317,106 @@ test('can see cc/bcc fields in UI when creating notification via API without pas
 
 	await expect(page.locator('#secondaryRecipientsCC')).toBeVisible();
 	await expect(page.locator('#secondaryRecipientsBCC')).toBeVisible();
+});
+
+test('can use notification terms and freeMarker variables in notification template', async ({
+	emailNotificationTemplatePage,
+	notificationTemplatesPage,
+	page,
+}) => {
+	await emailNotificationTemplatePage.goto();
+
+	const notificationTemplateName =
+		'Notification Template Name' + getRandomInt();
+
+	await emailNotificationTemplatePage.basicInfoName.fill(
+		notificationTemplateName
+	);
+
+	await emailNotificationTemplatePage.senderEmailAddress.fill(
+		'test@liferay.com'
+	);
+
+	await emailNotificationTemplatePage.senderName.fill('test user');
+
+	await emailNotificationTemplatePage.primaryRecipientUserEmailAddress.fill(
+		'[%CURRENT_USER_EMAIL_ADDRESS%]'
+	);
+
+	await emailNotificationTemplatePage.contentSubject.fill('Content subject');
+
+	await emailNotificationTemplatePage.definitionOfTermsEntity.click();
+
+	await page
+		.getByRole('option', {name: objectDefinition.externalReferenceCode})
+		.click();
+
+	const copyButtons = [
+		emailNotificationTemplatePage.copyButton.first(),
+		emailNotificationTemplatePage.copyButton.last(),
+	];
+
+	for (const copyButton of copyButtons) {
+		await copyButton.click();
+
+		await emailNotificationTemplatePage.richTextField.click();
+
+		await page.keyboard.press('PageDown');
+
+		await page.keyboard.press('Control+V');
+	}
+
+	await emailNotificationTemplatePage.saveButton.click();
+
+	await notificationTemplatesPage
+		.getFrontEndDatasetItemLocator(notificationTemplateName)
+		.click();
+
+	await expect(
+		emailNotificationTemplatePage.primaryRecipientUserEmailAddress
+	).toHaveValue('[%CURRENT_USER_EMAIL_ADDRESS%]');
+
+	const objectDefinitionTerm =
+		objectDefinition.externalReferenceCode.toUpperCase();
+
+	const objectFieldTerm = objectDefinition.objectFields
+		.find((objectField) => !objectField.system)
+		.name.toUpperCase();
+
+	await expect(
+		emailNotificationTemplatePage.richTextField.getByText(
+			'[%CURRENT_USER_FIRST_NAME%]' +
+				`[%${objectDefinitionTerm}_${objectFieldTerm}%]`
+		)
+	).toBeVisible();
+
+	await emailNotificationTemplatePage.editorType.click();
+
+	await page.getByRole('option', {name: 'FreeMarker Template'}).click();
+
+	await expect(page.getByText('Elements')).toBeVisible();
+
+	await emailNotificationTemplatePage.freeMarkerEntity.click();
+
+	await page
+		.getByRole('option', {name: objectDefinition.label['en_US']})
+		.click();
+
+	await page.getByRole('button', {name: 'Current URL'}).click();
+
+	await page.getByRole('button', {name: objectFieldTerm}).click();
+
+	await emailNotificationTemplatePage.saveButton.click();
+
+	await notificationTemplatesPage
+		.getFrontEndDatasetItemLocator(notificationTemplateName)
+		.click();
+
+	await expect(
+		page
+			.locator('.CodeMirror-lines')
+			.getByText(
+				'currentURL$' + `{ObjectField_${objectFieldTerm}.getData()}`
+			)
+	).toBeVisible();
 });

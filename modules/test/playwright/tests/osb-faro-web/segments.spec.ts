@@ -13,7 +13,10 @@ import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
 import {createChannel, switchChannel} from './utils/channel';
-import {goToDistributionTabAndSelectAttribute} from './utils/distribution';
+import {
+	goToDistributionTabAndSelectAttribute,
+	viewBreakdownRechartsData,
+} from './utils/distribution';
 import {changeEventDisplayName} from './utils/event-definitions';
 import {createIndividuals} from './utils/individuals';
 import {waitForLoading} from './utils/loading';
@@ -345,7 +348,7 @@ test(
 			await saveSegment(page);
 		});
 
-		await test.step('Click on distribution tab and select birthDate attribute', async () => {
+		await test.step('Click on distribution tab and select familyName attribute', async () => {
 			await goToDistributionTabAndSelectAttribute({
 				attributeName: 'familyName',
 				page,
@@ -864,6 +867,112 @@ test(
 		await test.step('Check that the correct known member appears in the membership tab', async () => {
 			await viewNameOnTableList({
 				itemNames: `${knownIndividualName} Smith`,
+				page,
+			});
+		});
+
+		await test.step('delete channel', async () => {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+				`[${channel.id}]`,
+				project.groupId
+			);
+		});
+	}
+);
+
+test(
+	'Segment distribution chart can be filtered by date property',
+	{
+		tag: '@Legacy',
+	},
+	async ({apiHelpers, page}) => {
+		const channelName = 'My Property - ' + getRandomString();
+		const {channel, project} = await createChannel({
+			apiHelpers,
+			channelName,
+		});
+
+		const generateIndividual = (name) => {
+			const id = getRandomString();
+
+			return {
+				id,
+				name,
+			};
+		};
+
+		const knownIndividualName = 'ac';
+		const knownIndividual = [generateIndividual(knownIndividualName)];
+
+		await test.step('Create the known individuals directly in the AC database', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals: knownIndividual,
+			});
+		});
+
+		const date = new Date();
+
+		await test.step('Create an event for the individual to appear in AC', async () => {
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+				knownIndividual.map((individual) => ({
+					applicationId: 'Page',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: date.toISOString(),
+					eventId: 'pageViewed',
+					title: 'Liferay',
+					userId: individual.id,
+				}))
+			);
+		});
+
+		await test.step('Create a session for the known individual', async () => {
+			await apiHelpers.jsonWebServicesOSBAsah.createSessions(
+				knownIndividual.map((individual) => ({
+					channelId: channel.id,
+					id: individual.id,
+					sessionEnd: date.toISOString(),
+					sessionStart: date.toISOString(),
+					userId: individual.id,
+				}))
+			);
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACSitesPageViaURL({
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+		});
+
+		await test.step('Go to Segments > Create a Static Segment', async () => {
+			await navigateTo({page, pageName: 'Segments'});
+
+			await createStaticSegment(page);
+
+			await setSegmentName({page, segmentName: 'Test Static Segment'});
+
+			await addStaticMember({
+				memberNames: `${knownIndividualName}@liferay.com`,
+				page,
+			});
+
+			await saveSegment(page);
+		});
+
+		await test.step('Click on distribution tab and select birthDate attribute', async () => {
+			await goToDistributionTabAndSelectAttribute({
+				attributeName: 'birthDate',
+				page,
+			});
+		});
+
+		await test.step('Check if the correct results appear (birthdate and maximum count)', async () => {
+			await viewBreakdownRechartsData({
+				attributeValue: '1970-01-01',
+				maxCount: '1',
 				page,
 			});
 		});

@@ -497,11 +497,11 @@ export default function UpperToolbar({
 						{definitionNotPublished && (
 							<ClayToolbar.Item>
 								<ClayButton
-									aria-label="save"
+									aria-label={Liferay.Language.get('save')}
 									disabled={isView}
 									displayType="secondary"
 									onClick={saveDefinition}
-									title="save"
+									title={Liferay.Language.get('save')}
 								>
 									{Liferay.Language.get('save')}
 								</ClayButton>

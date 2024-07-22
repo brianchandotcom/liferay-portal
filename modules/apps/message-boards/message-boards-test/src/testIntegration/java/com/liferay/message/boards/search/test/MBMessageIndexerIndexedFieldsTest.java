@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParser;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -225,9 +226,11 @@ public class MBMessageIndexerIndexedFieldsTest {
 		).put(
 			"threadId", String.valueOf(mbMessage.getThreadId())
 		).put(
-			"urlSubject", mbMessage.getUrlSubject()
+			"urlSubject",
+			HttpComponentsUtil.decodePath(mbMessage.getUrlSubject())
 		).put(
-			"urlSubject_String_sortable", mbMessage.getUrlSubject()
+			"urlSubject_String_sortable",
+			HttpComponentsUtil.decodePath(mbMessage.getUrlSubject())
 		).put(
 			"visible", "true"
 		).build();

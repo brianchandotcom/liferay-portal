@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistryUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -91,7 +92,9 @@ public class MBMessageModelDocumentContributor
 
 		document.addKeyword("parentMessageId", mbMessage.getParentMessageId());
 		document.addKeyword("threadId", mbMessage.getThreadId());
-		document.addKeywordSortable("urlSubject", mbMessage.getUrlSubject());
+		document.addKeywordSortable(
+			"urlSubject",
+			HttpComponentsUtil.decodePath(mbMessage.getUrlSubject()));
 
 		if (mbMessage.getMessageId() == mbMessage.getRootMessageId()) {
 			boolean answered = false;

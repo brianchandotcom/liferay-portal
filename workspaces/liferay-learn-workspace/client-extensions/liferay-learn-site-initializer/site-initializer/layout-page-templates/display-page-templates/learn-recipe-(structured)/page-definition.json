@@ -4,7 +4,9 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {"widthType": "Fixed"}
+					"layout": {
+						"widthType": "Fixed"
+					}
 				},
 				"pageElements": [
 					{
@@ -12,8 +14,10 @@
 							"fragment": {
 								"key": "com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer"
 							},
-							"fragmentConfig": {},
-							"fragmentFields": [],
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"type": "Fragment"
@@ -26,12 +30,14 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"masterPage": {"key": "liferay-learn"},
+		"masterPage": {
+			"key": "liferay-learn"
+		},
 		"themeName": "Dialect",
 		"themeSettings": {
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-header": "false",
 			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},

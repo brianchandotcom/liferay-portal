@@ -37,7 +37,7 @@
 	journalArticlePK = .vars["reserved-article-resource-prim-key"].getData()?number
 />
 
-<div class="learn-recipe-container"> 
+<div class="learn-recipe-container">
 	<div class="header-navigation d-flex justify-content-between px-3 mb-3">
 		<div class="learn-recipe-breadcrumbs">
 			<div>
@@ -81,7 +81,7 @@
 					<h1>${.vars["reserved-article-title"].data}</h1>
 				</div>
 			<div>
-			<p class="component-text text-paragraph mb-0 text-break"> 
+			<p class="component-text text-paragraph mb-0 text-break">
 				While we make every effort to ensure this Recipe is accurate, it may not always reflect the most recent updates or
 				official guidelines. We appreciate your understanding and encourage you to reach out with any feedback or concerns.
 			</p>
@@ -90,7 +90,9 @@
 
 	<article>
 		<a id="introduction" />
+
 		<h3><@liferay_ui["message"] key="Introduction"/></h3>
+
 		<div>
 			<#if (introduction.getData())??>
 				${introduction.getData()}
@@ -98,6 +100,7 @@
 		</div>
 
 		<a id="prerequisites" />
+
 		<h3><@liferay_ui["message"] key="Prerequisites"/></h3>
 		<#if Prerequisite.getSiblings()?? && Prerequisite.getSiblings()?has_content>
 			<ul>
@@ -130,6 +133,7 @@
 											<svg class="adm-icon">
 												<use xlink:href="#adm-note"></use>
 											</svg>
+
 											<span>
 												<@liferay_ui["message"] key="${current_Note.NoteType.getData()}" />
 											</span>
@@ -151,7 +155,7 @@
 					</#list>
 				</ol>
 			</#if>
-			
+
 			<a id="conclusion" />
 				<h3><@liferay_ui["message"] key="Conclusion"/></h3>
 				<#if (Conclusion.getData())??>
@@ -168,6 +172,7 @@
 								 	<svg class="adm-icon">
 										<use xlink:href="#adm-tip"></use>
 									</svg>
+
 									<span>tip</span>
 								</div>
 
@@ -187,6 +192,7 @@
 			<div class="col recipe-dialect">
 				<@liferay_ui["message"] key="Recipe" />
 			</div>
+
 			<div class="col reading-time text-right">
 				<#if (timeToFinish.getData())??>
 					<span> ${timeToFinish.getData()} Minutes </span>

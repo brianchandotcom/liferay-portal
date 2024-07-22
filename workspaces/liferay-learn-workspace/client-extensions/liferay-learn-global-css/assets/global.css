@@ -337,9 +337,9 @@ pre[class*='language-'] {
 
 	.learn-article-breadcrumbs,
 	.learn-recipe-breadcrumbs {
+		align-items: center;
 		display: flex;
 		justify-content: center;
-		align-items: center;
 		a,
 		li {
 			border-radius: 1px;

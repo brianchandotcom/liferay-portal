@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -163,20 +164,26 @@ public class FileResolutionContentDashboardItemFilter
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		if (resolution == Resolution.LARGE) {
-			sb.append(_language.get(_httpServletRequest, "from"));
+			sb.append(
+				StringUtil.toLowerCase(
+					_language.get(_httpServletRequest, "from")));
 			sb.append(StringPool.SPACE);
 			sb.append(
 				_getResolutionLabel(
 					resolution._startLengthValue, resolution._startWidthValue));
 		}
 		else if (resolution == Resolution.MEDIUM) {
-			sb.append(_language.get(_httpServletRequest, "from"));
+			sb.append(
+				StringUtil.toLowerCase(
+					_language.get(_httpServletRequest, "from")));
 			sb.append(StringPool.SPACE);
 			sb.append(
 				_getResolutionLabel(
 					resolution._startLengthValue, resolution._startWidthValue));
 			sb.append(StringPool.SPACE);
-			sb.append(_language.get(_httpServletRequest, "to"));
+			sb.append(
+				StringUtil.toLowerCase(
+					_language.get(_httpServletRequest, "to")));
 			sb.append(StringPool.SPACE);
 			sb.append(
 				_getResolutionLabel(

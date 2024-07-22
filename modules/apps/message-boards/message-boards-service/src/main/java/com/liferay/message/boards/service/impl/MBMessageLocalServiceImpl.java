@@ -2354,10 +2354,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBMessage mbMessage = mbMessagePersistence.fetchByG_US(
 			groupId, uniqueUrlSubject);
 
+		if (mbMessage == null) {
+			return uniqueUrlSubject;
+		}
+
+		if (!StringUtil.endsWith(uniqueUrlSubject, StringPool.DASH)) {
+			urlSubject = urlSubject + StringPool.DASH;
+		}
+
 		for (int i = 1; mbMessage != null; i++) {
-			uniqueUrlSubject =
-				_friendlyURLNormalizer.normalizeWithEncodingPeriodsAndSlashes(
-					urlSubject + StringPool.DASH + i);
+			uniqueUrlSubject = urlSubject + i;
 
 			mbMessage = mbMessagePersistence.fetchByG_US(
 				groupId, uniqueUrlSubject);

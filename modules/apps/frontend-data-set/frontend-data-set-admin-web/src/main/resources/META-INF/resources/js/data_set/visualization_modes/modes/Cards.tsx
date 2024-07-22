@@ -13,7 +13,11 @@ import React, {useEffect, useState} from 'react';
 
 import '../../../../css/CardsVisualizationMode.scss';
 import FieldSelectModalContent from '../../../components/FieldSelectModalContent';
-import {API_URL, HEADERS, OBJECT_RELATIONSHIP} from '../../../utils/constants';
+import {
+	API_URL,
+	DEFAULT_FETCH_HEADERS,
+	OBJECT_RELATIONSHIP,
+} from '../../../utils/constants';
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 import {IField, IFieldTreeItem} from '../../../utils/types';
@@ -52,7 +56,7 @@ export default function Cards(props: IDataSetSectionProps) {
 	const getFDSCardsSections = async () => {
 		const response = await fetch(
 			`${API_URL.CARDS_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_CARDS_SECTION_ERC} eq '${dataSet.externalReferenceCode}')`,
-			{headers: HEADERS}
+			{headers: DEFAULT_FETCH_HEADERS}
 		);
 
 		if (!response.ok) {
@@ -176,10 +180,7 @@ export default function Cards(props: IDataSetSectionProps) {
 				fieldName: field.name,
 				name: cardsSection.name,
 			}),
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
+			headers: DEFAULT_FETCH_HEADERS,
 			method,
 		});
 

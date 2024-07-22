@@ -26,8 +26,8 @@ import FieldSelectModalContent, {
 import OrderableTable from '../../../components/OrderableTable';
 import {
 	API_URL,
+	DEFAULT_FETCH_HEADERS,
 	FUZZY_OPTIONS,
-	HEADERS,
 	OBJECT_RELATIONSHIP,
 } from '../../../utils/constants';
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
@@ -164,10 +164,7 @@ const EditFDSFieldModalContent = ({
 			`${API_URL.TABLE_SECTIONS}/by-external-reference-code/${fdsField.externalReferenceCode}`,
 			{
 				body: JSON.stringify(body),
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				},
+				headers: DEFAULT_FETCH_HEADERS,
 				method: 'PATCH',
 			}
 		);
@@ -376,7 +373,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 		const response = await fetch(
 			`${API_URL.TABLE_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTION_ID} eq '${dataSet.id}')&nestedFields=${OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTION}&sort=dateCreated:asc`,
 			{
-				headers: HEADERS,
+				headers: DEFAULT_FETCH_HEADERS,
 			}
 		);
 
@@ -545,10 +542,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 			`${API_URL.DATA_SETS}/by-external-reference-code/${dataSet.externalReferenceCode}`,
 			{
 				body: JSON.stringify(body),
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				},
+				headers: DEFAULT_FETCH_HEADERS,
 				method: 'PATCH',
 			}
 		);

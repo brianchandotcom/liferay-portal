@@ -1256,6 +1256,10 @@ definition {
 		}
 
 		task ("Execute SP initiated SSO") {
+			Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+			Refresh();
+
 			SAML.executeSPInitiatedSSO(
 				password = PropsUtil.get("default.admin.password"),
 				spURL = "http://www.able.com:9080",

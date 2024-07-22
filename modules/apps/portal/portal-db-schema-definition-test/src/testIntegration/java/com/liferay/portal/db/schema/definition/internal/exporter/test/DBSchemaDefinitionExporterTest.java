@@ -163,7 +163,7 @@ public class DBSchemaDefinitionExporterTest {
 		String content = FileUtil.read(
 			new File(_folder, "db_schema_definition_export_report.info"));
 
-		Assert.assertTrue(content.contains("Missing tables: \n"));
+		Assert.assertTrue(content.endsWith("Missing tables:"));
 	}
 
 	@Test

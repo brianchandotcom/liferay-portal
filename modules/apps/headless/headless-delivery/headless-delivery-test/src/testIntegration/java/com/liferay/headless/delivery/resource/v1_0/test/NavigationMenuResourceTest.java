@@ -91,7 +91,7 @@ public class NavigationMenuResourceTest
 		BaseNavigationMenuResourceTestCase.setUpClass();
 
 		ExpandoTable expandoTable = _expandoTableLocalService.addDefaultTable(
-			PortalUtil.getDefaultCompanyId(),
+			TestPropsValues.getCompanyId(),
 			SiteNavigationMenuItem.class.getName());
 
 		ExpandoColumn expandoColumn1 = _expandoColumnLocalService.addColumn(
@@ -110,7 +110,7 @@ public class NavigationMenuResourceTest
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_expandoTableLocalService.deleteTable(
-			PortalUtil.getDefaultCompanyId(),
+			TestPropsValues.getCompanyId(),
 			SiteNavigationMenuItem.class.getName(),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 	}

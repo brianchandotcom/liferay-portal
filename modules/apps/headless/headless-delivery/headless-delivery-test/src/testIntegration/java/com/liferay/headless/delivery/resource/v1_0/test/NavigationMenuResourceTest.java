@@ -346,12 +346,13 @@ public class NavigationMenuResourceTest
 
 		StackTraceElement[] stackTraceElements = currentThread.getStackTrace();
 
-		for (StackTraceElement stackTraceElement : stackTraceElements) {
-			String methodName = stackTraceElement.getMethodName();
+		StackTraceElement stackTraceElement = stackTraceElements[3];
 
-			if (methodName.contains("GraphQL")) {
-				return new String[] {"name"};
-			}
+		if (StringUtil.contains(
+				stackTraceElement.getMethodName(), "GraphQL",
+				StringPool.BLANK)) {
+
+			return new String[] {"name"};
 		}
 
 		return new String[] {"name", "navigationMenuItems"};

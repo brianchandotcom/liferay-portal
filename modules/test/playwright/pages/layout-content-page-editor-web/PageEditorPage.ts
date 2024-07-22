@@ -782,10 +782,12 @@ export class PageEditorPage {
 	async setMappedItem({
 		entity,
 		entry,
+		entryLocator,
 		folder,
 	}: {
 		entity: string;
 		entry: string;
+		entryLocator?: Locator;
 		folder?: string;
 	}) {
 		await this.selectItemMappingButton.click();
@@ -826,7 +828,9 @@ export class PageEditorPage {
 
 			await clickAndExpectToBeHidden({
 				target: iframe.locator('.sheet-title').getByText(entity),
-				trigger: iframe.getByRole('paragraph').filter({hasText: entry}),
+				trigger: entryLocator
+					? entryLocator
+					: iframe.getByRole('paragraph').filter({hasText: entry}),
 			});
 		}
 
@@ -843,13 +847,14 @@ export class PageEditorPage {
 		mapping: {
 			entity?: string;
 			entry?: string;
+			entryLocator?: Locator;
 			field: string;
 			folder?: string;
 		};
 		relationship?: string;
 		source?: 'content' | 'relationship' | 'structure';
 	}) {
-		const {entity, entry, field, folder} = mapping;
+		const {entity, entry, entryLocator, field, folder} = mapping;
 
 		// Select source and relationship if needed
 
@@ -873,7 +878,7 @@ export class PageEditorPage {
 
 		// If source is content, select the item and the field
 
-		await this.setMappedItem({entity, entry, folder});
+		await this.setMappedItem({entity, entry, entryLocator, folder});
 
 		await this.page.getByLabel('Field').selectOption(field);
 	}

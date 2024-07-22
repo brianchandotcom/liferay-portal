@@ -38,8 +38,9 @@ function ObjectPicklist({
 	}, []);
 
 	useEffect(() => {
-		const picklist = picklists?.find((item) =>
-			String(item.externalReferenceCode) === (filter as any)?.source
+		const picklist = picklists?.find(
+			(item) =>
+				String(item.externalReferenceCode) === (filter as any)?.source
 		);
 
 		if (picklist) {

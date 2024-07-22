@@ -8,17 +8,22 @@ import {useEffect} from 'react';
 import {
 	CONTROL_KEY_CODE,
 	ENTER_KEY_CODE,
+	ESCAPE_KEY_CODE,
 	META_KEY_CODE,
 } from '../config/constants/keyboardCodes';
 import {
 	useActivateMultiSelect,
+	useActiveItemIds,
 	useMultiSelectIsActivated,
+	useSelectItem,
 } from '../contexts/ControlsContext';
 import isCtrlOrMeta from '../utils/isCtrlOrMeta';
 
 export default function MultiSelectManager() {
-	const multiSelectIsActivated = useMultiSelectIsActivated();
+	const activeItemIds = useActiveItemIds();
 	const activateMultiSelect = useActivateMultiSelect();
+	const multiSelectIsActivated = useMultiSelectIsActivated();
+	const selectItem = useSelectItem();
 
 	useEffect(() => {
 		const multiSelection = (event) => {
@@ -34,6 +39,9 @@ export default function MultiSelectManager() {
 		const onKeydown = (event) => {
 			if (event.key === ENTER_KEY_CODE) {
 				multiSelection(event);
+			}
+			else if (event.key === ESCAPE_KEY_CODE && activeItemIds.length) {
+				selectItem(null);
 			}
 		};
 
@@ -55,7 +63,12 @@ export default function MultiSelectManager() {
 			window.removeEventListener('keydown', onKeydown, true);
 			window.removeEventListener('keyup', onKeyup, true);
 		};
-	}, [multiSelectIsActivated, activateMultiSelect]);
+	}, [
+		activeItemIds,
+		activateMultiSelect,
+		multiSelectIsActivated,
+		selectItem,
+	]);
 
 	return null;
 }

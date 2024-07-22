@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mikel Lorza
  */
 @Component(
-	property = "service.ranking:Integer=30",
+	property = "service.ranking:Integer=160",
 	service = ContentDashboardItemFilterProvider.class
 )
 public class FileAspectRatioContentDashboardItemFilterProvider

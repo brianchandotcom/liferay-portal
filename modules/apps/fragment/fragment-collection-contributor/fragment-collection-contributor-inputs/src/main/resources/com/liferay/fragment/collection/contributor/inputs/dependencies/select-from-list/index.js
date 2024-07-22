@@ -337,6 +337,7 @@ function setFocusedOption(
 function createOptionElement(option) {
 	const optionElement = document.createElement('li');
 
+	optionElement.dataset.optionLabel = option.textContent;
 	optionElement.dataset.optionValue = option.value;
 
 	// eslint-disable-next-line no-undef
@@ -378,8 +379,8 @@ function setSelectedOption(optionElement) {
 
 	optionElement.classList.add('active');
 
-	labelInputElement.value = optionElement.textContent;
-	uiInputElement.value = optionElement.textContent;
+	labelInputElement.value = optionElement.dataset.optionLabel;
+	uiInputElement.value = optionElement.dataset.optionLabel;
 	valueInputElement.value = optionElement.dataset.optionValue;
 }
 

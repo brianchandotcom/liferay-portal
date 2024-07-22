@@ -54,13 +54,13 @@
 								[#assign selectedValueFoundInOptions=true]
 							[/#if]
 
-							<li [#if selectedOption]aria-selected="true"[/#if] class="[#if selectedOption]active[/#if] dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
+							<li [#if selectedOption]aria-selected="true"[/#if] class="[#if selectedOption]active[/#if] dropdown-item" data-option-label="${htmlUtil.escape(option.label)}" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
 								${htmlUtil.escape(option.label)}
 							</li>
 						[/#list]
 
 						[#if !selectedValueFoundInOptions && input.value?? && input.attributes.selectedOptionLabel??]
-							<li class="dropdown-item" data-option-value="${input.value}" id="${fragmentEntryLinkNamespace}-option-${input.value}" role="option">
+							<li class="dropdown-item" data-option-label="${htmlUtil.escape(input.attributes.selectedOptionLabel)}" data-option-value="${input.value}" id="${fragmentEntryLinkNamespace}-option-${input.value}" role="option">
 								${htmlUtil.escape(input.attributes.selectedOptionLabel)}
 							</li>
 						[/#if]

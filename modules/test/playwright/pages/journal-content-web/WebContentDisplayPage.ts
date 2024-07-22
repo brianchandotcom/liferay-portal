@@ -10,33 +10,43 @@ import {UIElementsPage} from '../uielements/UIElementsPage';
 export class WebContentDisplayPage {
 	readonly page: Page;
 
+	readonly app: Locator;
 	readonly configurationOption: Locator;
-	readonly modalIFrame: FrameLocator;
+	readonly saveButton: Locator;
 	readonly selectButton: Locator;
 	readonly selectWebContentButton: Locator;
-	readonly saveButton: Locator;
+	readonly selectWebContentFrame: FrameLocator;
+	readonly uiElementsPage;
 	readonly webContentDisplay: Locator;
 	readonly webContentDisplayAddButton: Locator;
+	readonly webContentDisplayConfig: FrameLocator;
 	readonly webContentDisplayContent: Locator;
+	readonly webContentDisplayOptionsContent: Locator;
 	readonly webContentDisplayOptionsWidget: Locator;
 	readonly webContentDisplayWidget: Locator;
-	readonly webContentDisplayOptionsContent: Locator;
-	readonly uiElementsPage;
+	readonly webContentToSelect: Locator;
 
 	constructor(page: Page) {
+		this.app = page.getByTestId('app-loaded');
 		this.configurationOption = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Configuration',
 		});
-		this.modalIFrame = page.frameLocator('iframe[id="modalIframe"]');
 		this.page = page;
-		this.saveButton = this.modalIFrame.getByRole('button', {name: 'Save'});
-		this.selectButton = this.modalIFrame.getByRole('button', {
+		this.saveButton = page
+			.frameLocator('iframe[title*="Web Content Display"]')
+			.getByRole('button', {
+				name: 'Save',
+			});
+		this.selectButton = this.app.getByRole('button', {
 			name: 'Select',
 		});
-		this.selectWebContentButton = this.modalIFrame
-			.frameLocator('iframe[title="Select Web Content"]')
-			.locator('*[data-qa-id="row"]');
+		this.selectWebContentButton = page
+			.frameLocator('iframe[title*="Web Content Display"]')
+			.getByRole('button', {name: 'Select'});
+		this.selectWebContentFrame = page
+			.frameLocator('iframe[title*="Web Content Display"]')
+			.frameLocator('iframe[title="Select Web Content"]');
 		this.uiElementsPage = new UIElementsPage(page);
 		this.webContentDisplay = page
 			.getByText('Select web content to make it visible')
@@ -48,6 +58,9 @@ export class WebContentDisplayPage {
 			.locator('li')
 			.filter({hasText: 'Web Content Display'})
 			.getByLabel('Add Content');
+		this.webContentDisplayConfig = page.frameLocator(
+			'iframe[title*="Web Content Display"]'
+		);
 		this.webContentDisplayContent = page.locator(
 			'[id^="portlet_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE"]'
 		);
@@ -61,6 +74,8 @@ export class WebContentDisplayPage {
 		this.webContentDisplayWidget = page.getByText(
 			'Web Content Display Info: This application is not visible to users yet. Select w'
 		);
+		this.webContentToSelect =
+			this.selectWebContentFrame.locator('[data-qa-id="row"]');
 	}
 
 	async addWebContentWithDisplay() {
@@ -68,11 +83,19 @@ export class WebContentDisplayPage {
 		await this.webContentDisplayContent.hover();
 		await this.webContentDisplayOptionsContent.click();
 		await this.configurationOption.click();
-		await this.selectButton.waitFor({state: 'visible'});
-		await this.selectButton.click();
+		await this.page
+			.getByText('Success:The application was added to the page.')
+			.waitFor({state: 'hidden'});
+		await this.selectWebContentButton.waitFor({state: 'visible'});
 		await this.selectWebContentButton.click();
+		await this.webContentToSelect.waitFor({state: 'visible'});
+		await this.webContentToSelect.hover();
+		await this.webContentToSelect.click();
 		if (!this.saveButton.isVisible) {
-			await this.selectWebContentButton.click();
+			await this.webContentToSelect.click();
+		}
+		if (!this.saveButton.isVisible) {
+			await this.webContentToSelect.click();
 		}
 		await this.saveButton.click();
 		await this.uiElementsPage.closeClickable.click();
@@ -86,18 +109,36 @@ export class WebContentDisplayPage {
 		await this.webContentDisplayAddButton.click();
 		await this.uiElementsPage.pageCreatedAlert.waitFor({state: 'hidden'});
 		await this.uiElementsPage.pageUpdatedAlert.waitFor({state: 'hidden'});
-		await this.webContentDisplayWidget.hover();
-		await this.webContentDisplayOptionsWidget.waitFor({state: 'visible'});
-		await this.webContentDisplayOptionsWidget.click();
-		await this.configurationOption.click();
+		await this.page
+			.getByLabel('Asset PublisherDocuments and')
+			.locator('li')
+			.filter({hasText: 'Web Content Display'})
+			.getByLabel('Add Content')
+			.hover();
+		await this.page
+			.getByLabel('Asset PublisherDocuments and')
+			.locator('li')
+			.filter({hasText: 'Web Content Display'})
+			.getByLabel('Add Content')
+			.click();
+		await this.page
+			.getByText('Success:The application was added to the page.')
+			.waitFor({state: 'visible'});
+		await this.page
+			.getByRole('heading', {name: 'Web Content Display'})
+			.hover();
+		await this.selectButton.waitFor({state: 'visible'});
+		await this.selectButton.click();
 		await this.page
 			.getByText('Success:The application was added to the page.')
 			.waitFor({state: 'hidden'});
-		await this.selectButton.waitFor({state: 'visible'});
-		await this.selectButton.click();
+		await this.selectWebContentButton.waitFor({state: 'visible'});
 		await this.selectWebContentButton.click();
+		await this.webContentToSelect.waitFor({state: 'visible'});
+		await this.webContentToSelect.hover();
+		await this.webContentToSelect.click();
 		if (!this.saveButton.isVisible) {
-			await this.selectWebContentButton.click();
+			await this.webContentToSelect.click();
 		}
 		await this.saveButton.click();
 	}

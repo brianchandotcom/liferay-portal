@@ -6,4 +6,7 @@
 export const config = {
 	name: 'layout-set-prototype-web',
 	testDir: 'tests/layout-set-prototype-web',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

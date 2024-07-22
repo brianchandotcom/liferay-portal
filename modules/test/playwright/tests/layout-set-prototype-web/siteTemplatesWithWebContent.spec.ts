@@ -434,8 +434,8 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 	await uiElementsPage.clickNewButton();
 	if (!pagesAdminPage.addTemplatePageButton.isVisible) {
 		await uiElementsPage.clickNewButton();
+		await pagesAdminPage.addTemplatePageButton.waitFor({state: 'visible'});
 	}
-	await pagesAdminPage.addTemplatePageButton.waitFor({state: 'visible'});
 	await pagesAdminPage.addTemplatePageButton.click();
 	await pagesAdminPage.addWidgetPage(templateName);
 
@@ -444,8 +444,8 @@ async function createSiteTemplateWithWebContentOnWidgetPage({
 	await webContentDisplayPage.addWebContentWithWidget();
 	await uiElementsPage.setupUpdatedAlert.waitFor({state: 'hidden'});
 	await uiElementsPage.closeClickable.click();
-	await webContentDisplayPage.webContentDisplayWidget.waitFor({
-		state: 'visible',
+	await uiElementsPage.closeClickable.waitFor({
+		state: 'hidden',
 	});
 }
 

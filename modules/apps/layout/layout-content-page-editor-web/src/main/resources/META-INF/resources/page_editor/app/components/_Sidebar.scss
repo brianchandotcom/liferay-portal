@@ -278,3 +278,12 @@ html#{$cadmin-selector} .page-editor__wrapper {
 		}
 	}
 }
+
+.page-editor__sidebar {
+	.keyboard-shortcuts-button {
+		bottom: 24px;
+		left: 4px;
+		position: fixed;
+		z-index: 1;
+	}
+}

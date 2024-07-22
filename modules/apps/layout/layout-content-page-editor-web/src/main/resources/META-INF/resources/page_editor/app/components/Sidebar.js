@@ -8,7 +8,7 @@ import {ReactPortal, useStateSafe} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {useId, useSessionState} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 
 import BrowserSidebar from '../../plugins/browser/components/BrowserSidebar';
 import CommentsSidebar from '../../plugins/comments/components/CommentsSidebar';
@@ -26,6 +26,7 @@ import selectSidebarIsOpened from '../selectors/selectSidebarIsOpened';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import {useDropClear} from '../utils/drag_and_drop/useDragAndDrop';
 import isSmallResolution from '../utils/isSmallResolution';
+import ShortcutModal from './ShortcutModal';
 
 const {useEffect} = React;
 
@@ -81,6 +82,8 @@ export default function Sidebar() {
 		sidebarPanels,
 		sidebarPanelsMap: config.sidebarPanelsMap,
 	});
+
+	const [openShortcutModal, setOpenShorcutModal] = useState(false);
 
 	useEffect(() => {
 		const wrapper = document.getElementById('wrapper');
@@ -333,6 +336,26 @@ export default function Sidebar() {
 						);
 					})}
 				</div>
+
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('keyboard-shortcuts')}
+					className="keyboard-shortcuts-button"
+					data-tooltip-align="left"
+					displayType="unstyled"
+					id={`${sidebarId}keyboard_shortcuts`}
+					key="keyboard_shortcuts"
+					onClick={() => setOpenShorcutModal(true)}
+					size="sm"
+					symbol="question-circle-full"
+					tabIndex={0}
+					title={Liferay.Language.get('keyboard-shortcuts')}
+				/>
+
+				{openShortcutModal && (
+					<ShortcutModal
+						onCloseModal={() => setOpenShorcutModal(false)}
+					/>
+				)}
 
 				<div
 					aria-label={sub(

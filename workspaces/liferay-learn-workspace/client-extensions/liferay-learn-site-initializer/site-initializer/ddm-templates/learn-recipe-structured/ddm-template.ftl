@@ -37,7 +37,35 @@
 	journalArticlePK = .vars["reserved-article-resource-prim-key"].getData()?number
 />
 
-<div class="learn-recipe-container">
+<div class="learn-recipe-container"> 
+	<div class="header-navigation d-flex justify-content-between px-3 mb-3">
+		<div class="learn-recipe-breadcrumbs">
+			<div>
+				<div class="align-items-baseline d-flex justify-content-between">
+					<ul
+					aria-label="breadcrumb navigation"
+					class="learn-recipe-breadcrumb"
+					role="navigation"
+					>
+						<li>
+							<a href="/"><@clay["icon"] symbol="home-full" /></a>
+						</li>
+						<li>
+							<a href='/search'>Recipes</a>
+						</li>
+						<li>
+							${.vars["reserved-article-title"].data}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="component-button text-break recipe-feedback">
+			<a class="btn btn-nm btn-link page-editor__editable" data-lfr-editable-id="link" data-lfr-editable-type="link" href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new" id="fragment-txnc-link" rel="" target="" data-tooltip-floating="true">Submit Feedback</a>
+		</div>
+	</div>
+
 	<div class="container recipe-main">
 		<div class="row">
 			<div id="left-panel" class="col-md-9 recipe-main">

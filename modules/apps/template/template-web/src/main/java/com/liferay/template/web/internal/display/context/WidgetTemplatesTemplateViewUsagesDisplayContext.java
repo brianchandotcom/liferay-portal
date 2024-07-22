@@ -14,6 +14,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -74,6 +75,10 @@ public class WidgetTemplatesTemplateViewUsagesDisplayContext {
 	}
 
 	public String getDDMTemplateUsageName(Layout layout) {
+		if (layout == null) {
+			return StringPool.DASH;
+		}
+
 		String ddmTemplateUsageName = layout.getName(_themeDisplay.getLocale());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -93,6 +98,10 @@ public class WidgetTemplatesTemplateViewUsagesDisplayContext {
 	}
 
 	public String getDDMTemplateUsageType(Layout layout) {
+		if (layout == null) {
+			return "embedded";
+		}
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_fetchLayoutPageTemplateEntry(layout);
 

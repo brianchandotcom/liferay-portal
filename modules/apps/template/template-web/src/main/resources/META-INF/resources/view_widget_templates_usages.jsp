@@ -85,11 +85,6 @@ renderResponse.setTitle(HtmlUtil.escape(ddmTemplate.getName(locale)));
 								value="<%= PortletIdCodec.decodeInstanceId(curPortletPreferences.getPortletId()) %>"
 							/>
 						</c:if>
-
-						<liferay-ui:search-container-column-date
-							name="modified-date"
-							value="<%= curLayout.getModifiedDate() %>"
-						/>
 					</liferay-ui:search-container-row>
 
 					<liferay-ui:search-iterator

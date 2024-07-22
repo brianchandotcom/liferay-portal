@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(
-	property = "service.ranking:Integer=200",
+	property = "service.ranking:Integer=140",
 	service = ContentDashboardItemFilterProvider.class
 )
 public class FileExtensionContentDashboardItemFilterProvider

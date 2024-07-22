@@ -31,7 +31,9 @@ import com.liferay.portal.vulcan.jaxrs.serializer.UnsafeSupplierJsonSerializer;
 public class ObjectMapperProviderUtil {
 
 	public static ObjectMapper getBatchEngineObjectMapper() {
-		if (PropsValues.JSON_STRING_MAX_LENGTH == _jsonStringMaxLength) {
+		if ((_jsonStringMaxLength != null) &&
+			_jsonStringMaxLength.equals(PropsValues.JSON_STRING_MAX_LENGTH)) {
+
 			return _batchEngineObjectMapper;
 		}
 
@@ -61,7 +63,9 @@ public class ObjectMapperProviderUtil {
 	}
 
 	public static ObjectMapper getObjectMapper() {
-		if (PropsValues.JSON_STRING_MAX_LENGTH == _jsonStringMaxLength) {
+		if ((_jsonStringMaxLength != null) &&
+			_jsonStringMaxLength.equals(PropsValues.JSON_STRING_MAX_LENGTH)) {
+
 			return _objectMapper;
 		}
 
@@ -115,7 +119,7 @@ public class ObjectMapperProviderUtil {
 	}
 
 	private static volatile ObjectMapper _batchEngineObjectMapper;
-	private static int _jsonStringMaxLength;
+	private static Integer _jsonStringMaxLength;
 	private static volatile ObjectMapper _objectMapper;
 
 }

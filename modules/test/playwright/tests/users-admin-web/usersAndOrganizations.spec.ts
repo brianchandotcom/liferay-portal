@@ -225,3 +225,57 @@ test('LPD-31669 Check whether admin user is redirected to organization page afte
 		await organizationUsersPage.usersTableRowLink(userName)
 	).toBeVisible();
 });
+
+test('LPD-31978 Remove member', async ({
+	apiHelpers,
+	organizationUsersPage,
+	usersAndOrganizationsPage,
+}) => {
+	const userAccount = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	const organization = await apiHelpers.headlessAdminUser.postOrganization();
+
+	await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+		organization.id,
+		userAccount.emailAddress
+	);
+
+	apiHelpers.data.push({
+		id: `${organization.id}_test@liferay.com`,
+		type: 'organizationUserAccountAssociation',
+	});
+
+	await usersAndOrganizationsPage.goToOrganizations();
+	await (
+		await usersAndOrganizationsPage.organizationsTableRowLink(
+			organization.name
+		)
+	).click();
+
+	await expect(
+		await organizationUsersPage.usersTableRowLink(
+			userAccount.givenName + ' ' + userAccount.familyName
+		)
+	).toBeVisible();
+
+	await (
+		await organizationUsersPage.usersTableRowActions(
+			userAccount.givenName + ' ' + userAccount.familyName
+		)
+	).click();
+	await organizationUsersPage.removeMenuItem.click();
+
+	await usersAndOrganizationsPage.goToOrganizations();
+	await (
+		await usersAndOrganizationsPage.organizationsTableRowLink(
+			organization.name
+		)
+	).click();
+
+	await expect(organizationUsersPage.filterButton).toBeVisible();
+	await expect(
+		await organizationUsersPage.screenName(
+			userAccount.givenName + ' ' + userAccount.familyName
+		)
+	).toHaveCount(0);
+});

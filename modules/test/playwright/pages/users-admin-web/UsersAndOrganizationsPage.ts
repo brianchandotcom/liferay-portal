@@ -66,6 +66,9 @@ export class UsersAndOrganizationsPage {
 		value: string,
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
+	readonly organizationsTableRowLink: (
+		organizationName: string
+	) => Promise<Locator>;
 	readonly organizationUsersTable: Locator;
 	readonly organizationUsersTableRow: (
 		colPosition: number,
@@ -221,6 +224,23 @@ export class UsersAndOrganizationsPage {
 				colPosition,
 				value,
 				strictEqual
+			);
+		};
+		this.organizationsTableRowLink = async (organizationName: string) => {
+			const myOrganizationsTableRow = await this.organizationsTableRow(
+				1,
+				organizationName,
+				true
+			);
+
+			if (myOrganizationsTableRow && myOrganizationsTableRow.column) {
+				return myOrganizationsTableRow.column.getByRole('link', {
+					name: organizationName,
+				});
+			}
+
+			throw new Error(
+				`Cannot locate organization row with name ${organizationName}`
 			);
 		};
 		this.page = page;

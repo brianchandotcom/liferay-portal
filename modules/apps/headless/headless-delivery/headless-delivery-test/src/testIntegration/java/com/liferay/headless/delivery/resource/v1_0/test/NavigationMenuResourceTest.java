@@ -362,6 +362,7 @@ public class NavigationMenuResourceTest
 		return _randomNavigationMenu(true);
 	}
 
+	@Override
 	protected NavigationMenu testGetNavigationMenu_addNavigationMenu()
 		throws Exception {
 

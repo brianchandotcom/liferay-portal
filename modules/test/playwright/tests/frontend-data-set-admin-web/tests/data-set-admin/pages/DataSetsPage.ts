@@ -17,6 +17,7 @@ export class DataSetsPage {
 	readonly dataSetsTable: Locator;
 	readonly newDataSetButton: Locator;
 	readonly newDataSetModal: {
+		readonly cancel: Locator;
 		readonly heading: Locator;
 		readonly nameInput: Locator;
 		readonly restApplicationField: Locator;
@@ -38,6 +39,7 @@ export class DataSetsPage {
 		this.dataSetsTable = page.locator('.data-set > div:nth-child(2)');
 		this.newDataSetButton = page.getByLabel('New Data Set').first();
 		this.newDataSetModal = {
+			cancel: page.getByRole('button', {name: 'Cancel'}),
 			heading: page.getByRole('heading', {name: 'New Data Set'}),
 			nameInput: page.getByLabel('NameRequired'),
 			restApplicationField: page.getByLabel('REST ApplicationRequired'),

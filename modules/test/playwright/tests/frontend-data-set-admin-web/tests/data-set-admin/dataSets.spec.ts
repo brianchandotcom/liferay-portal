@@ -638,3 +638,31 @@ test('Can sort Data Set by different columns', async ({
 		});
 	});
 });
+
+test(
+	'Check cancel in Data Set',
+	{tag: ['@LPS-175990', '@LPS-172398']},
+	async ({dataSetsPage, page}) => {
+		await test.step('Navigate to Data Set page', async () => {
+			await dataSetsPage.goto();
+		});
+
+		await test.step('Cannot create a Data Set without a name', async () => {
+			await dataSetsPage.newDataSetButton.click();
+			await dataSetsPage.newDataSetModal.nameInput.waitFor();
+
+			await dataSetsPage.newDataSetModal.nameInput.fill('');
+			await dataSetsPage.newDataSetModal.saveButton.click();
+
+			await expect(
+				page.getByText('This field is required.', {exact: true})
+			).toBeVisible();
+
+			await dataSetsPage.newDataSetModal.cancel.click();
+
+			await expect(
+				dataSetsPage.dataSetsEmptyState.locator('.c-empty-state-title')
+			).toContainText('No Data Sets Created');
+		});
+	}
+);

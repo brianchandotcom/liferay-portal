@@ -18,15 +18,15 @@ const API_URL = {
 	TABLE_SECTIONS: '/o/data-set-manager/table-sections',
 };
 
-const FUZZY_OPTIONS = {
-	post: '</strong>',
-	pre: '<strong>',
-};
-
-const HEADERS = {
+const DEFAULT_FETCH_HEADERS = {
 	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 	'Content-Type': 'application/json',
+};
+
+const FUZZY_OPTIONS = {
+	post: '</strong>',
+	pre: '<strong>',
 };
 
 const OBJECT_RELATIONSHIP = {
@@ -93,7 +93,7 @@ export {
 	DEFAULT_VISUALIZATION_MODES,
 	FDS_DEFAULT_PROPS,
 	FUZZY_OPTIONS,
-	HEADERS,
+	DEFAULT_FETCH_HEADERS,
 	OBJECT_RELATIONSHIP,
 	ALLOWED_ENDPOINTS_PARAMETERS,
 };

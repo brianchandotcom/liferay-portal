@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-WidgetTemplatesTemplateViewUsagesDisplayContext widgetTemplatesTemplateViewUsagesDisplayContext = new WidgetTemplatesTemplateViewUsagesDisplayContext(request, renderRequest, renderResponse);
+WidgetTemplatesTemplateViewUsagesDisplayContext widgetTemplatesTemplateViewUsagesDisplayContext = (WidgetTemplatesTemplateViewUsagesDisplayContext)request.getAttribute(WidgetTemplatesTemplateViewUsagesDisplayContext.class.getName());
 
 DDMTemplate ddmTemplate = widgetTemplatesTemplateViewUsagesDisplayContext.getDDMTemplate();
 

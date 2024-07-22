@@ -139,11 +139,22 @@ public class OpenSearchQueryTranslatorTest {
 
 		termsFilter.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-		_assertTermsCount(1, 10, termsFilter, false);
+		Integer defaultMaxTermsCount = ReflectionTestUtil.getFieldValue(
+			QueryUtil.class, "_maxTermsCount");
 
-		_assertTermsCount(2, 5, termsFilter, false);
+		_setMaxTermsCount(10);
 
-		_assertTermsCount(4, 3, termsFilter, false);
+		_assertTermsCount(1, termsFilter);
+
+		_setMaxTermsCount(5);
+
+		_assertTermsCount(2, termsFilter);
+
+		_setMaxTermsCount(3);
+
+		_assertTermsCount(4, termsFilter);
+
+		_setMaxTermsCount(defaultMaxTermsCount);
 	}
 
 	@Test
@@ -152,11 +163,22 @@ public class OpenSearchQueryTranslatorTest {
 
 		termsQuery.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-		_assertTermsCount(1, 10, termsQuery, true);
+		Integer defaultMaxTermsCount = ReflectionTestUtil.getFieldValue(
+			QueryUtil.class, "_maxTermsCount");
 
-		_assertTermsCount(2, 5, termsQuery, true);
+		_setMaxTermsCount(10);
 
-		_assertTermsCount(4, 3, termsQuery, true);
+		_assertTermsCount(1, termsQuery);
+
+		_setMaxTermsCount(5);
+
+		_assertTermsCount(2, termsQuery);
+
+		_setMaxTermsCount(3);
+
+		_assertTermsCount(4, termsQuery);
+
+		_setMaxTermsCount(defaultMaxTermsCount);
 	}
 
 	private void _assertBoost(Query query) {
@@ -173,30 +195,20 @@ public class OpenSearchQueryTranslatorTest {
 			jsonp, jsonp.contains("\"boost\":" + String.valueOf(_BOOST)));
 	}
 
-	private void _assertTermsCount(
-		int expected, int maxTermsCount, Object terms, boolean query) {
-
-		Integer defaultMaxTermsCount = ReflectionTestUtil.getFieldValue(
-			QueryUtil.class, "_maxTermsCount");
-
-		_setMaxTermsCount(maxTermsCount);
-
-		String jsonp;
-
-		if (query) {
-			jsonp = JsonpUtil.toString(
-				new org.opensearch.client.opensearch._types.query_dsl.Query(
-					_openSearchQueryTranslator.translate((TermsQuery)terms)));
-		}
-		else {
-			jsonp = JsonpUtil.toString(
-				new org.opensearch.client.opensearch._types.query_dsl.Query(
-					_openSearchFilterTranslator.visit((TermsFilter)terms)));
-		}
+	private void _assertTermsCount(int expected, TermsFilter termsFilter) {
+		String jsonp = JsonpUtil.toString(
+			new org.opensearch.client.opensearch._types.query_dsl.Query(
+				_openSearchFilterTranslator.visit(termsFilter)));
 
 		Assert.assertEquals(jsonp, expected, StringUtil.count(jsonp, "terms"));
+	}
 
-		_setMaxTermsCount(defaultMaxTermsCount);
+	private void _assertTermsCount(int expected, TermsQuery termsQuery) {
+		String jsonp = JsonpUtil.toString(
+			new org.opensearch.client.opensearch._types.query_dsl.Query(
+				_openSearchQueryTranslator.translate(termsQuery)));
+
+		Assert.assertEquals(jsonp, expected, StringUtil.count(jsonp, "terms"));
 	}
 
 	private void _setMaxTermsCount(Integer maxTermsCount) {

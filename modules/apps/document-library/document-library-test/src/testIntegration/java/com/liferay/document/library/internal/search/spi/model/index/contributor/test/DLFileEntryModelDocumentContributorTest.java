@@ -168,6 +168,7 @@ public class DLFileEntryModelDocumentContributorTest {
 
 		_testIndexDefaultLanguageId(
 			company.getLocale(), "true", LocaleUtil.HUNGARY);
+
 		_testIndexDefaultLanguageId(
 			LocaleUtil.HUNGARY, "false", LocaleUtil.HUNGARY);
 	}

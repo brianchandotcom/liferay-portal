@@ -141,6 +141,10 @@ public class FriendlyURLNormalizerImplTest {
 			URLEncoder.encode("テ-ス-ト-テ-abc"),
 			_friendlyURLNormalizerImpl.normalizeWithEncodingPeriodsAndSlashes(
 				"テ-ス/ト.テ-//..../abc"));
+		Assert.assertEquals(
+			"friendly-url-1",
+			_friendlyURLNormalizerImpl.normalizeWithEncodingPeriodsAndSlashes(
+				"friendly-url------/././.-1"));
 	}
 
 	@Test

@@ -40,24 +40,8 @@ public class FacetBucketUtil {
 		return false;
 	}
 
-	private static boolean _fieldValuePairsContainsFieldValue(
-		String fieldName, String value, String[] fieldValuePairs) {
-
-		for (String fieldValuePair : fieldValuePairs) {
-			if (fieldValuePair.equals(fieldName + "=" + value)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private static boolean _isNestedValueInBucket(
 		Field field, String term, NestedFacet nestedFacet) {
-
-		String filterFieldString = _removePath(
-			nestedFacet.getPath(), nestedFacet.getFilterField());
-		String filterValue = nestedFacet.getFilterValue();
 
 		FacetConfiguration facetConfiguration =
 			nestedFacet.getFacetConfiguration();
@@ -65,15 +49,18 @@ public class FacetBucketUtil {
 		String fieldName = _removePath(
 			nestedFacet.getPath(), facetConfiguration.getFieldName());
 
-		for (String value : field.getValues()) {
-			value = _removeCurlyBraces(value);
+		String filterFieldName = _removePath(
+			nestedFacet.getPath(), nestedFacet.getFilterField());
+		String filterFieldValue = nestedFacet.getFilterValue();
 
-			String[] fieldValuePairs = value.split(StringPool.COMMA_AND_SPACE);
+		for (String fieldValue : field.getValues()) {
+			fieldValue = _removeCurlyBraces(fieldValue);
 
-			if (_fieldValuePairsContainsFieldValue(
-					filterFieldString, filterValue, fieldValuePairs) &&
-				_fieldValuePairsContainsFieldValue(
-					fieldName, term, fieldValuePairs)) {
+			String[] pairs = fieldValue.split(StringPool.COMMA_AND_SPACE);
+
+			if (_pairsContainFieldNameFieldValue(
+					filterFieldName, filterFieldValue, pairs) &&
+				_pairsContainFieldNameFieldValue(fieldName, term, pairs)) {
 
 				return true;
 			}
@@ -94,6 +81,18 @@ public class FacetBucketUtil {
 			Validator.isNotNull(upper) && (value.compareTo(upper) <= 0)) {
 
 			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _pairsContainFieldNameFieldValue(
+		String fieldName, String fieldValue, String[] pairs) {
+
+		for (String pair : pairs) {
+			if (pair.equals(fieldName + "=" + fieldValue)) {
+				return true;
+			}
 		}
 
 		return false;

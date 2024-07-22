@@ -102,17 +102,7 @@ public abstract class BaseInputFragmentRendererTestCase {
 	@Test
 	public void testRenderWithInfoItemDetails() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
-			ContentLayoutTestUtil.getMockHttpServletRequest(
-				companyLocalService.getCompany(TestPropsValues.getCompanyId()),
-				group, layout);
-
-		InfoItemDetailsProvider<ObjectEntry> infoItemDetailsProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemDetailsProvider.class, objectDefinition.getClassName());
-
-		mockHttpServletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
-			infoItemDetailsProvider.getInfoItemDetails(addObjectEntry()));
+			getMockHttpServletRequest();
 
 		FragmentRenderer fragmentRenderer = getFragmentRenderer();
 
@@ -160,6 +150,25 @@ public abstract class BaseInputFragmentRendererTestCase {
 			0, StringPool.BLANK, StringPool.BLANK, draftLayout, getRenderKey(),
 			fragmentRenderer.getType(), jsonObject.getString("addedItemId"), 0,
 			segmentsExperienceId);
+	}
+
+	protected MockHttpServletRequest getMockHttpServletRequest()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			ContentLayoutTestUtil.getMockHttpServletRequest(
+				companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+				group, layout);
+
+		InfoItemDetailsProvider<ObjectEntry> infoItemDetailsProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemDetailsProvider.class, objectDefinition.getClassName());
+
+		mockHttpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
+			infoItemDetailsProvider.getInfoItemDetails(addObjectEntry()));
+
+		return mockHttpServletRequest;
 	}
 
 	@Inject
@@ -216,17 +225,7 @@ public abstract class BaseInputFragmentRendererTestCase {
 		defaultFragmentRendererContext.setMode(mode);
 
 		MockHttpServletRequest mockHttpServletRequest =
-			ContentLayoutTestUtil.getMockHttpServletRequest(
-				companyLocalService.getCompany(TestPropsValues.getCompanyId()),
-				group, layout);
-
-		InfoItemDetailsProvider<ObjectEntry> infoItemDetailsProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemDetailsProvider.class, objectDefinition.getClassName());
-
-		mockHttpServletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
-			infoItemDetailsProvider.getInfoItemDetails(addObjectEntry()));
+			getMockHttpServletRequest();
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

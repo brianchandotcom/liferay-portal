@@ -29,14 +29,14 @@
 								"backgroundColor": "",
 								"backgroundFragmentImage": {
 									"title": {
-										"value": "Solutions_Banner.jpg"
+										"value": "solutions_banner.jpg"
 									},
 									"url": {
 										"mapping": {
 											"fieldKey": "FileEntry_previewImage",
 											"itemReference": {
 												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Hero Images/Solutions_Banner.jpg#]"
+												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/hero-images/solutions_banner.jpg#]"
 											}
 										}
 									}

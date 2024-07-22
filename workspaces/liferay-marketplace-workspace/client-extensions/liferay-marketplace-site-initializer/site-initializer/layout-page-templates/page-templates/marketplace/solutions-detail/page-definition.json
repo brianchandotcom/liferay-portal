@@ -10,7 +10,7 @@
 					"fragmentConfig": {
 						"contentInitEvent": "",
 						"modalEditMode": true,
-						"modalId": "solutions-details-video",
+						"modalId": "solutions_details_video",
 						"modalOverlayColor": "transparent",
 						"modalSize": "lg"
 					},
@@ -259,7 +259,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details-app-icon.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details_app_icon.png#]"
 																											}
 																										}
 																									}
@@ -860,7 +860,7 @@
 																						"fieldKey": "FileEntry_previewImage",
 																						"itemReference": {
 																							"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																							"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details-hero-carousel-graphic.png#]"
+																							"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details_hero_carousel_graphic.png#]"
 																						}
 																					}
 																				}
@@ -876,7 +876,7 @@
 																						"fieldKey": "FileEntry_previewImage",
 																						"itemReference": {
 																							"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																							"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solution-details-thank-you-graphic.png#]"
+																							"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solution_details_thank_you_graphic.png#]"
 																						}
 																					}
 																				}
@@ -1883,7 +1883,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details-video.png#]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details_video.png#]"
 																							}
 																						}
 																					}

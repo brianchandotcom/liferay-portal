@@ -1,2 +1,3 @@
 workspaces/liferay-marketplace-workspace/client-extensions/liferay-marketplace-custom-element
 workspaces/liferay-marketplace-workspace/client-extensions/liferay-marketplace-etc-spring-boot
+workspaces/liferay-marketplace-workspace/client-extensions/liferay-marketplace-site-initializer

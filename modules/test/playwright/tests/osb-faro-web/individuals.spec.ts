@@ -15,7 +15,7 @@ import {
 	addBreakdownByAttribute,
 	viewBreakdownRechartsData,
 } from './utils/distribution';
-import {createIndividuals} from './utils/individuals';
+import {createIndividuals, generateIndividual} from './utils/individuals';
 import {navigateTo, navigateToACSitesPageViaURL} from './utils/navigation';
 
 export const test = mergeTests(
@@ -31,23 +31,18 @@ test(
 		tag: '@Legacy',
 	},
 	async ({apiHelpers, page}) => {
-		const individualName = 'ac';
 		const channelName = 'My Property - ' + getRandomString();
 		const {channel, project} = await createChannel({
 			apiHelpers,
 			channelName,
 		});
-		const date = new Date();
-		const generateIndividual = (name) => {
-			const id = getRandomString();
 
-			return {
-				id,
-				name,
-			};
-		};
-
-		const individuals = [generateIndividual(individualName)];
+		const individualName = 'ac';
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
 
 		await test.step('Create new Individual', async () => {
 			await createIndividuals({
@@ -56,6 +51,7 @@ test(
 			});
 		});
 
+		const date = new Date();
 		await test.step('Create Individual Event', async () => {
 			const events = individuals.map((individual) => ({
 				applicationId: 'Page',

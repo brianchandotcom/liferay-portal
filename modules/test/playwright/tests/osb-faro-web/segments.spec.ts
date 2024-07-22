@@ -18,7 +18,7 @@ import {
 	viewBreakdownRechartsData,
 } from './utils/distribution';
 import {changeEventDisplayName} from './utils/event-definitions';
-import {createIndividuals} from './utils/individuals';
+import {createIndividuals, generateIndividual} from './utils/individuals';
 import {waitForLoading} from './utils/loading';
 import {Nanites, runNanites} from './utils/nanites';
 import {
@@ -228,45 +228,34 @@ test(
 
 	async ({apiHelpers, page}) => {
 		const channelName = 'My Property - ' + getRandomString();
-
-		const firstIndividualsName = 'ac';
-		const secondIndividualsName = 'dxp';
-
 		const {channel, project} = await createChannel({
 			apiHelpers,
 			channelName,
 		});
 
-		const date = new Date();
+		const firstIndividualsName = 'ac';
+		const secondIndividualsName = 'dxp';
+		const knownIndividuals = [
+			generateIndividual({
+				name: firstIndividualsName,
+			}),
+			generateIndividual({
+				name: secondIndividualsName,
+			}),
+		];
 
-		const generateIndividual = (name) => {
-			const id = getRandomString();
-
-			return {
-				id,
-				name,
-			};
-		};
-
-		const firstIndividuals = [generateIndividual(firstIndividualsName)];
-
-		const secondIndividuals = [generateIndividual(secondIndividualsName)];
-
-		await test.step('Create the first and second Individuals', async () => {
+		await test.step('Create 2 individuals directly in the AC database', async () => {
 			await createIndividuals({
 				apiHelpers,
-				individuals: firstIndividuals,
-			});
-
-			await createIndividuals({
-				apiHelpers,
-				individuals: secondIndividuals,
+				individuals: knownIndividuals,
 			});
 		});
 
+		const date = new Date();
+
 		await test.step('Create the first and second Individuals Events', async () => {
-			const firstIndividualsEvents = firstIndividuals.map(
-				(individual) => ({
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+				knownIndividuals.map((individual) => ({
 					applicationId: 'Page',
 					canonicalUrl: 'https://www.liferay.com',
 					channelId: channel.id,
@@ -274,49 +263,19 @@ test(
 					eventId: 'pageViewed',
 					title: 'Liferay',
 					userId: individual.id,
-				})
+				}))
 			);
-
-			await apiHelpers.jsonWebServicesOSBAsah.createEvents(
-				firstIndividualsEvents
-			);
-
-			const secondEvents = secondIndividuals.map((individual) => ({
-				applicationId: 'Page',
-				canonicalUrl: 'https://www.liferay.com',
-				channelId: channel.id,
-				eventDate: date.toISOString(),
-				eventId: 'pageViewed',
-				title: 'Liferay',
-				userId: individual.id,
-			}));
-
-			await apiHelpers.jsonWebServicesOSBAsah.createEvents(secondEvents);
 		});
 
 		await test.step('Create the first and second Individual Session', async () => {
-			const firstSessions = firstIndividuals.map((individual) => ({
-				channelId: channel.id,
-				id: individual.id,
-				sessionEnd: date.toISOString(),
-				sessionStart: date.toISOString(),
-				userId: individual.id,
-			}));
-
 			await apiHelpers.jsonWebServicesOSBAsah.createSessions(
-				firstSessions
-			);
-
-			const secondSessions = secondIndividuals.map((individual) => ({
-				channelId: channel.id,
-				id: individual.id,
-				sessionEnd: date.toISOString(),
-				sessionStart: date.toISOString(),
-				userId: individual.id,
-			}));
-
-			await apiHelpers.jsonWebServicesOSBAsah.createSessions(
-				secondSessions
+				knownIndividuals.map((individual) => ({
+					channelId: channel.id,
+					id: individual.id,
+					sessionEnd: date.toISOString(),
+					sessionStart: date.toISOString(),
+					userId: individual.id,
+				}))
 			);
 		});
 
@@ -412,17 +371,12 @@ test(
 			channelName,
 		});
 
-		const generateIndividual = (name) => {
-			const id = getRandomString();
-
-			return {
-				id,
-				name,
-			};
-		};
-
 		const knownIndividualName = 'ac';
-		const knownIndividual = [generateIndividual(knownIndividualName)];
+		const knownIndividual = [
+			generateIndividual({
+				name: knownIndividualName,
+			}),
+		];
 
 		await test.step('Create the known individuals directly in the AC database', async () => {
 			await createIndividuals({
@@ -670,17 +624,12 @@ test(
 			channelName,
 		});
 
-		const generateIndividual = (name) => {
-			const id = getRandomString();
-
-			return {
-				id,
-				name,
-			};
-		};
-
 		const knownIndividualName = 'ac';
-		const knownIndividual = [generateIndividual(knownIndividualName)];
+		const knownIndividual = [
+			generateIndividual({
+				name: knownIndividualName,
+			}),
+		];
 
 		await test.step('Create the known individuals directly in the AC database', async () => {
 			await createIndividuals({
@@ -892,17 +841,12 @@ test(
 			channelName,
 		});
 
-		const generateIndividual = (name) => {
-			const id = getRandomString();
-
-			return {
-				id,
-				name,
-			};
-		};
-
 		const knownIndividualName = 'ac';
-		const knownIndividual = [generateIndividual(knownIndividualName)];
+		const knownIndividual = [
+			generateIndividual({
+				name: knownIndividualName,
+			}),
+		];
 
 		await test.step('Create the known individuals directly in the AC database', async () => {
 			await createIndividuals({

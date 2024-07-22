@@ -14,7 +14,7 @@ import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
 import {createChannel, switchChannel} from './utils/channel';
-import {createIndividuals} from './utils/individuals';
+import {createIndividuals, generateIndividual} from './utils/individuals';
 import {Nanites, runNanites} from './utils/nanites';
 import {
 	navigateTo,
@@ -80,25 +80,13 @@ test(
 			apiHelpers,
 			channelName,
 		});
-		const date1 = new Date();
-		const date2 = new Date();
-		date2.setDate(date2.getDate() - 5);
+
 		const individualName = 'user1';
-		const pageName = 'Liferay - AC Page';
-		const dynamicSegmentName = 'Test Dynamic Segment';
-		const staticSegmentName = 'Test Static Segment';
-		const segmentsName = [dynamicSegmentName, staticSegmentName];
-
-		const generateIndividual = (name) => {
-			const id = getRandomString();
-
-			return {
-				id,
-				name,
-			};
-		};
-
-		const individuals = [generateIndividual(individualName)];
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
 
 		await test.step('Create an Individual directly in the AC database', async () => {
 			await createIndividuals({
@@ -106,6 +94,9 @@ test(
 				individuals,
 			});
 		});
+
+		const date1 = new Date();
+		const pageName = 'Liferay - AC Page';
 
 		await test.step('Create an event for the individual to appear within the Last 24 hours period in AC', async () => {
 			const events = individuals.map((individual) => ({
@@ -132,6 +123,9 @@ test(
 
 			await apiHelpers.jsonWebServicesOSBAsah.createSessions(sessions);
 		});
+
+		const date2 = new Date();
+		date2.setDate(date2.getDate() - 5);
 
 		await test.step('Create an event for the individual to appear in periods different than the Last 24 hours in AC', async () => {
 			const pageDaily = individuals.map((individual) => ({
@@ -173,6 +167,8 @@ test(
 			});
 		});
 
+		const dynamicSegmentName = 'Test Dynamic Segment';
+
 		await test.step('Create dynamic segment', async () => {
 			await createDynamicSegment(page);
 
@@ -202,6 +198,8 @@ test(
 				pageName: 'Segments',
 			});
 		});
+
+		const staticSegmentName = 'Test Static Segment';
 
 		await test.step('Create static segment', async () => {
 			await createStaticSegment(page);
@@ -245,6 +243,8 @@ test(
 				pageName,
 			});
 		});
+
+		const segmentsName = [dynamicSegmentName, staticSegmentName];
 
 		await test.step('Check that the created segment appears on the Audience card', async () => {
 			for (const itemName of segmentsName) {
@@ -353,60 +353,60 @@ test(
 			apiHelpers,
 			channelName,
 		});
-		const date1 = new Date();
-		const individualsPresentIn24Hours = ['user1', 'user2'];
-		const individualPresentIn30Days = ['user3'];
+
+		const firstIndividual = 'user1';
+		const secondIndividual = 'user2';
+		const thirdIndividual = 'user3';
+
+		const individuals = [
+			generateIndividual({
+				name: firstIndividual,
+			}),
+			generateIndividual({
+				name: secondIndividual,
+			}),
+			generateIndividual({
+				name: thirdIndividual,
+			}),
+		];
 
 		await test.step('Create 3 Individuals directly in the AC database', async () => {
-			const individuals = [
-				{id: '1', name: 'user1'},
-				{id: '2', name: 'user2'},
-				{id: '3', name: 'user3'},
-			];
-
 			await createIndividuals({
 				apiHelpers,
 				individuals,
 			});
 		});
 
+		const date1 = new Date();
+
 		await test.step('Create events for two of the individuals to appear within the Last 24 hours period in AC', async () => {
-			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
-				{
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+				individuals.slice(0, 2).map((individual) => ({
 					applicationId: 'Page',
 					canonicalUrl: 'https://www.liferay.com',
 					channelId: channel.id,
 					eventDate: date1.toISOString(),
 					eventId: 'pageViewed',
 					title: 'Liferay',
-					userId: '1',
-				},
-				{
-					applicationId: 'Page',
-					canonicalUrl: 'https://www.liferay.com',
-					channelId: channel.id,
-					eventDate: date1.toISOString(),
-					eventId: 'pageViewed',
-					title: 'Liferay',
-					userId: '2',
-				},
-			]);
+					userId: individual.id,
+				}))
+			);
 		});
 
 		await test.step('Create events for one of the individuals to appear in periods different than the Last 24 hours in AC', async () => {
 			const date2 = new Date();
 			date2.setDate(date2.getDate() - 5);
 
-			await apiHelpers.jsonWebServicesOSBAsah.createPagesDaily([
-				{
+			await apiHelpers.jsonWebServicesOSBAsah.createPagesDaily(
+				individuals.slice(2, 3).map((individual) => ({
 					canonicalUrl: 'https://www.liferay.com',
 					channelId: channel.id,
 					eventDate: date2.toISOString(),
 					title: 'Liferay',
-					userId: '3',
+					userId: individual.id,
 					views: 1,
-				},
-			]);
+				}))
+			);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
@@ -435,6 +435,8 @@ test(
 			});
 		});
 
+		const individualPresentIn30Days = [thirdIndividual];
+
 		await test.step('Check that User3 User3 is appearing in the list', async () => {
 			await viewNameOnTableList({
 				itemNames: individualPresentIn30Days,
@@ -448,6 +450,8 @@ test(
 				timeFilterPeriod: 'Last 24 hours',
 			});
 		});
+
+		const individualsPresentIn24Hours = [firstIndividual, secondIndividual];
 
 		await test.step('Check that User1 User1 and User2 User2 are appearing in the list', async () => {
 			await viewNameOnTableList({
@@ -479,13 +483,13 @@ test(
 	},
 
 	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
 		const pageTitle = 'My Page';
 		const sitePage = await createSitePage({
 			apiHelpers,
 			pageTitle,
 		});
 
+		const channelName = 'My Property - ' + getRandomString();
 		await test.step('Connect the DXP to AC', async () => {
 			await syncAnalyticsCloud({
 				apiHelpers,
@@ -591,7 +595,6 @@ test(
 	},
 
 	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
 		const pageTitle1 = 'My Page 1';
 		const sitePage1 = await createSitePage({
 			apiHelpers,
@@ -603,6 +606,7 @@ test(
 			pageTitle: pageTitle2,
 		});
 
+		const channelName = 'My Property - ' + getRandomString();
 		await test.step('Connect the DXP to AC', async () => {
 			await syncAnalyticsCloud({
 				apiHelpers,

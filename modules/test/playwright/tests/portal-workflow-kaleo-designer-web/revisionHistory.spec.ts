@@ -4,7 +4,6 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
-import moment from 'moment';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -12,6 +11,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import performLogin, {performLogout} from '../../utils/performLogin';
+import {toLocalDateTimeFormatted} from './utils/toLocalDateTimeFormatted';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -57,6 +57,15 @@ test.describe('Revision History tab', () => {
 		page,
 		processBuilderPage,
 	}) => {
+		const demoUser =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'demo.company.admin@liferay.com'
+			);
+
+		await performLogout(page);
+
+		await performLogin(page, demoUser.alternateName);
+
 		await processBuilderPage.goto();
 
 		await processBuilderPage.clickWorkflowDefinitionName(
@@ -78,26 +87,41 @@ test.describe('Revision History tab', () => {
 				workflowDefinitionName
 			);
 
-		const createdDate = moment(newWorkflowDefinition.dateCreated).format(
-			'MMM DD, YYYY, LT'
+		const dateCreated = toLocalDateTimeFormatted(
+			newWorkflowDefinition.dateCreated,
+			'en-us',
+			'UTC'
+		);
+		const dateModified = toLocalDateTimeFormatted(
+			newWorkflowDefinition.dateModified,
+			'en-us',
+			'UTC'
 		);
 
 		await expect(definitionInfoPage.getVersionLabel('2')).toBeVisible();
+
+		const testUser =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'test@liferay.com'
+			);
+
 		await expect(
 			definitionInfoPage.getDateAndUserFromVersion(
-				createdDate,
-				'Test Test'
+				dateCreated,
+				testUser.name
 			)
 		).toBeVisible();
 
-		const user =
-			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-				'demo.company.admin@liferay.com'
-			);
+		await expect(
+			definitionInfoPage.getDateAndUserFromVersion(
+				dateModified,
+				demoUser.name
+			)
+		).toBeVisible();
 
 		await performLogout(page);
 
-		await performLogin(page, user.alternateName);
+		await performLogin(page, testUser.alternateName);
 
 		await processBuilderPage.goto();
 
@@ -118,16 +142,18 @@ test.describe('Revision History tab', () => {
 				workflowDefinitionName
 			);
 
-		const createdDate2 = moment(newWorkflowDefinition2.dateCreated).format(
-			'MMM DD, YYYY, LT'
+		const currentDateModified = toLocalDateTimeFormatted(
+			newWorkflowDefinition2.dateModified,
+			'en-us',
+			'UTC'
 		);
 
 		await expect(definitionInfoPage.getVersionLabel('3')).toBeVisible();
+
 		await expect(
-			definitionInfoPage.getDateAndUserFromVersion(
-				createdDate2,
-				user.name
-			)
+			definitionInfoPage
+				.getDateAndUserFromVersion(currentDateModified, testUser.name)
+				.last()
 		).toBeVisible();
 	});
 });

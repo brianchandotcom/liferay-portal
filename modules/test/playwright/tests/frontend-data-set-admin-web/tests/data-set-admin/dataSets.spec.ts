@@ -59,6 +59,13 @@ const tableSectionsDataSetConfig = {
 	restSchema: 'FDSField',
 };
 
+const tableSectionsWithSpecialCharactersDataSetConfig = {
+	name: 'Data Set ~!@#$%^&*(){}[].<>/? name',
+	restApplication: '/data-set-manager/table-sections',
+	restEndpoint: '/',
+	restSchema: 'FDSField',
+};
+
 async function assertTableActionLabels(page) {
 	await test.step('Assert table action labels', async () => {
 		await page.locator('.dnd-td.item-actions').first().waitFor();
@@ -663,6 +670,73 @@ test(
 			await expect(
 				dataSetsPage.dataSetsEmptyState.locator('.c-empty-state-title')
 			).toContainText('No Data Sets Created');
+		});
+
+		await test.step('Can create a Data Set using special characters', async () => {
+			await dataSetsPage.createDataSet(
+				tableSectionsWithSpecialCharactersDataSetConfig
+			);
+		});
+
+		await assertTableCellContent({
+			dataSetConfig: tableSectionsWithSpecialCharactersDataSetConfig,
+			page,
+		});
+
+		await test.step('Select the Delete Data Set action, then click Cancel button', async () => {
+			const datasetTestRow = await page
+				.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
+				.filter({
+					hasText:
+						tableSectionsWithSpecialCharactersDataSetConfig.name,
+				});
+
+			await datasetTestRow
+				.first()
+				.getByRole('button', {name: 'Actions'})
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+			const deleteModal = await page.getByRole('dialog');
+
+			await deleteModal.getByRole('button', {name: 'Cancel'}).click();
+
+			await assertTableCellContent({
+				dataSetConfig: tableSectionsWithSpecialCharactersDataSetConfig,
+				page,
+			});
+		});
+
+		await test.step('Select the Delete Data Set action, then click X button', async () => {
+			const datasetTestRow = await page
+				.locator('.data-set-content-wrapper .dnd-tbody .dnd-tr')
+				.filter({
+					hasText:
+						tableSectionsWithSpecialCharactersDataSetConfig.name,
+				});
+
+			await datasetTestRow
+				.first()
+				.getByRole('button', {name: 'Actions'})
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+			const deleteModal = await page.getByRole('dialog');
+
+			await deleteModal.getByRole('button', {name: 'Close'}).click();
+
+			await assertTableCellContent({
+				dataSetConfig: tableSectionsWithSpecialCharactersDataSetConfig,
+				page,
+			});
+		});
+
+		await test.step('Delete Data Set', async () => {
+			await dataSetsPage.deleteDataSet(
+				tableSectionsWithSpecialCharactersDataSetConfig.name
+			);
 		});
 	}
 );

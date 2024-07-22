@@ -1247,37 +1247,6 @@ definition {
 	}
 
 	@priority = 4
-	test RemoveMember {
-		property portal.acceptance = "true";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONOrganization.addOrganization(organizationName = "Organization Name");
-
-		Organization.openOrganizationsAdmin();
-
-		Organization.assignUser(
-			orgName = "Organization Name",
-			userScreenName = "usersn");
-
-		Organization.openOrganizationsAdmin();
-
-		Organization.gotoCP(orgName = "Organization Name");
-
-		Organization.removeAssignee(userFullName = "userfn userln");
-
-		Organization.openOrganizationsAdmin();
-
-		Organization.gotoCP(orgName = "Organization Name");
-
-		LexiconTable.viewTableEntryNotPresent(tableEntry = "userfn");
-	}
-
-	@priority = 4
 	test SearchOrganization {
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 

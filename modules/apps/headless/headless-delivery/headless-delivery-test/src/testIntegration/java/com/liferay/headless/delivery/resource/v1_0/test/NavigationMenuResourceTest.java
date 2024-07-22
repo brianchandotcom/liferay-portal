@@ -90,9 +90,17 @@ public class NavigationMenuResourceTest
 	public static void setUpClass() throws Exception {
 		BaseNavigationMenuResourceTestCase.setUpClass();
 
-		ExpandoTable expandoTable = _expandoTableLocalService.addDefaultTable(
+		_originalExpandoTable = _expandoTableLocalService.fetchDefaultTable(
 			TestPropsValues.getCompanyId(),
 			SiteNavigationMenuItem.class.getName());
+
+		ExpandoTable expandoTable = _originalExpandoTable;
+
+		if (expandoTable == null) {
+			expandoTable = _expandoTableLocalService.addDefaultTable(
+				TestPropsValues.getCompanyId(),
+				SiteNavigationMenuItem.class.getName());
+		}
 
 		ExpandoColumn expandoColumn1 = _expandoColumnLocalService.addColumn(
 			expandoTable.getTableId(), RandomTestUtil.randomString(),
@@ -109,10 +117,19 @@ public class NavigationMenuResourceTest
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_expandoTableLocalService.deleteTable(
-			TestPropsValues.getCompanyId(),
-			SiteNavigationMenuItem.class.getName(),
-			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+		if (_originalExpandoTable == null) {
+			_expandoTableLocalService.deleteTable(
+				TestPropsValues.getCompanyId(),
+				SiteNavigationMenuItem.class.getName(),
+				ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+			return;
+		}
+
+		for (String expandoColumnName : _expandoColumnNames) {
+			_expandoColumnLocalService.deleteColumn(
+				_originalExpandoTable.getTableId(), expandoColumnName);
+		}
 	}
 
 	@Before
@@ -750,6 +767,8 @@ public class NavigationMenuResourceTest
 
 	@Inject
 	private static ExpandoTableLocalService _expandoTableLocalService;
+
+	private static ExpandoTable _originalExpandoTable;
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;

@@ -327,6 +327,77 @@ test.describe('Manage object fields through Model Builder', () => {
 				.getByText('intField')
 		).toBeHidden();
 	});
+
+	test('can edit picklist object field from draft object definition', async ({
+		apiHelpers,
+		modelBuilderPage,
+		page,
+	}) => {
+		const {listTypeDefinitionIds} = createdEntities;
+
+		const draftObjectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 2},
+			});
+
+		const listTypeDefinition =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		listTypeDefinitionIds.push(listTypeDefinition.id);
+
+		let picklistFieldName = 'picklistField' + getRandomInt();
+
+		await apiHelpers.objectAdmin.postObjectFieldByExternalReferenceCode(
+			draftObjectDefinition.externalReferenceCode,
+			{
+				DBType: 'String',
+				businessType: 'Picklist',
+				externalReferenceCode: picklistFieldName,
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: picklistFieldName},
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				listTypeDefinitionId: listTypeDefinition.id,
+				localized: false,
+				name: picklistFieldName,
+				readOnly: 'false',
+				required: false,
+				state: false,
+				system: false,
+			}
+		);
+
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderPage.clickLeftSideBarItem(
+			draftObjectDefinition.label['en_US']
+		);
+
+		await modelBuilderPage.clickShowAllFieldsButton(
+			draftObjectDefinition.label['en_US']
+		);
+
+		await page.getByText(picklistFieldName).click();
+
+		picklistFieldName = 'picklistField' + getRandomInt();
+
+		await page
+			.getByPlaceholder('Text to translate...')
+			.fill(picklistFieldName);
+
+		await modelBuilderPage.clickLeftSideBarItem(
+			draftObjectDefinition.label['en_US']
+		);
+
+		await expect(page.getByText(picklistFieldName)).toBeVisible();
+
+		await apiHelpers.objectAdmin.deleteObjectDefinition(
+			draftObjectDefinition.id
+		);
+	});
 });
 
 test.describe('Manage objectFields through Objects Admin UI', () => {

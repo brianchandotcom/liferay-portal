@@ -183,7 +183,56 @@ autoSaveAsDraftTest(
 		);
 	}
 );
+autoSaveAsDraftTest(
+	'LPD-31072: Translation is removed when using Undo and restored when using Redo',
+	async ({journalEditArticlePage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
+		await journalEditArticlePage.fillTitle(getRandomString());
+
+		const translationButton = page.locator(
+			'[id="_com_liferay_journal_web_portlet_JournalPortlet__com_liferay_journal_web_portlet_JournalPortlet_titleMapAsXMLMenu"]'
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Not translated into Catalan.',
+			}),
+			trigger: translationButton,
+		});
+
+		await journalEditArticlePage.fillTitle(getRandomString());
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {
+				name: 'Translated into Catalan.',
+			}),
+			trigger: translationButton,
+		});
+
+		await journalEditArticlePage.undoButton.click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {
+				name: 'Not translated into Catalan.',
+			}),
+			trigger: translationButton,
+		});
+
+		await journalEditArticlePage.redoButton.click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: false,
+			target: page.getByRole('menuitem', {
+				name: 'Translated into Catalan.',
+			}),
+			trigger: translationButton,
+		});
+	}
+);
 autoSaveAsDraftTest(
 	'LPD-26863: Undo/Redo buttons work with metadata fields',
 	async ({journalEditArticlePage, site}) => {

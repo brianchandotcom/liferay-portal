@@ -97,12 +97,10 @@ function Body({
 	const validate = () => {
 		let isValid = true;
 
-		if (Liferay.FeatureFlags['LPD-10754']) {
-			const isLabelValid = isi18nFilterLabelsValid(i18nFilterLabels);
-			setLabelValidationError(!isLabelValid);
+		const isLabelValid = isi18nFilterLabelsValid(i18nFilterLabels);
+		setLabelValidationError(!isLabelValid);
 
-			isValid = isLabelValid;
-		}
+		isValid = isLabelValid;
 
 		if (!selectedField) {
 			setFieldValidationError(true);

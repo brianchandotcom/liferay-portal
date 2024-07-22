@@ -24,7 +24,6 @@ const PICKLIST_VALUE_NAME = 'Sample Value';
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
-		'LPD-10754': true,
 		'LPS-178052': true,
 	}),
 	filtersPageTest,

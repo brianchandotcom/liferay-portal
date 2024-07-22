@@ -108,19 +108,17 @@ function Configuration({
 
 	return (
 		<>
-			{Liferay.FeatureFlags['LPD-10754'] && (
-				<ClayLayout.SheetSection className="mb-4">
-					<h3 className="sheet-subtitle">
-						{Liferay.Language.get('configuration')}
-					</h3>
+			<ClayLayout.SheetSection className="mb-4">
+				<h3 className="sheet-subtitle">
+					{Liferay.Language.get('configuration')}
+				</h3>
 
-					<ClayForm.Text>
-						{Liferay.Language.get(
-							'add-a-name-for-your-filter-and-select-a-field-to-start-creating-it'
-						)}
-					</ClayForm.Text>
-				</ClayLayout.SheetSection>
-			)}
+				<ClayForm.Text>
+					{Liferay.Language.get(
+						'add-a-name-for-your-filter-and-select-a-field-to-start-creating-it'
+					)}
+				</ClayForm.Text>
+			</ClayLayout.SheetSection>
 
 			<ClayForm.Group
 				className={classNames({
@@ -137,11 +135,11 @@ function Configuration({
 						setI18nFilterLabels(values);
 					}}
 					placeholder={Liferay.Language.get('add-a-name')}
-					required={Liferay.FeatureFlags['LPD-10754']}
+					required={true}
 					translations={i18nFilterLabels}
 				/>
 
-				{Liferay.FeatureFlags['LPD-10754'] && labelValidationError && (
+				{labelValidationError && (
 					<ValidationFeedback />
 				)}
 			</ClayForm.Group>
@@ -149,15 +147,11 @@ function Configuration({
 			<ClayForm.Group
 				className={classNames({
 					'has-error':
-						fieldInUseValidationError ||
-						(Liferay.FeatureFlags['LPD-10754'] &&
-							fieldValidationError),
+						fieldInUseValidationError || fieldValidationError,
 				})}
 			>
 				<label htmlFor={selectedFieldFormElementId}>
-					{Liferay.Language.get('filter-by')}
-
-					{Liferay.FeatureFlags['LPD-10754'] && <RequiredMark />}
+					<RequiredMark />
 				</label>
 
 				<FieldNameDropdown
@@ -183,7 +177,7 @@ function Configuration({
 					/>
 				)}
 
-				{Liferay.FeatureFlags['LPD-10754'] && fieldValidationError && (
+				{fieldValidationError && (
 					<ValidationFeedback />
 				)}
 			</ClayForm.Group>

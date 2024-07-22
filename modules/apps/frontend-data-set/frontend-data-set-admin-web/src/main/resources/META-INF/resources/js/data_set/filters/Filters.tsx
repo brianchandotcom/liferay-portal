@@ -282,7 +282,7 @@ function Filters({
 						},
 					},
 				],
-				size: Liferay.FeatureFlags['LPD-10754'] ? 'lg' : 'md',
+				size: 'lg',
 				status: 'info',
 				title: Liferay.Language.get('no-fields-available'),
 			});
@@ -309,7 +309,7 @@ function Filters({
 					/>
 				),
 				disableAutoClose: true,
-				size: Liferay.FeatureFlags['LPD-10754'] ? 'lg' : 'md',
+				size: 'lg',
 			});
 		}
 	};
@@ -351,7 +351,7 @@ function Filters({
 				/>
 			),
 			disableAutoClose: true,
-			size: Liferay.FeatureFlags['LPD-10754'] ? 'lg' : 'md',
+			size: 'lg',
 		});
 
 	const onDelete = async ({item}: {item: IFilter}) => {
@@ -393,7 +393,7 @@ function Filters({
 					},
 				},
 			],
-			size: Liferay.FeatureFlags['LPD-10754'] ? 'lg' : 'md',
+			size: 'lg',
 			status: 'warning',
 			title: Liferay.Language.get('delete-filter'),
 		});

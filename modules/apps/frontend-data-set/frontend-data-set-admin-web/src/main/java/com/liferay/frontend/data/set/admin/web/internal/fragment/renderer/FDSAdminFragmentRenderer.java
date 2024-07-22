@@ -618,20 +618,13 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					);
 				}
 
-				String listTypeDefinitionERC = null;
-				String sourceType = null;
-
-				if (FeatureFlagManagerUtil.isEnabled("LPD-10754")) {
-					listTypeDefinitionERC = MapUtil.getString(
-						properties, "source");
-					sourceType = MapUtil.getString(properties, "sourceType");
-				}
-				else {
-					listTypeDefinitionERC = MapUtil.getString(
-						properties, "listTypeDefinitionERC");
-				}
+				String listTypeDefinitionERC = MapUtil.getString(
+					properties, "source");
 
 				if (Validator.isNotNull(listTypeDefinitionERC)) {
+					String sourceType = MapUtil.getString(
+						properties, "sourceType");
+
 					JSONObject selectionFilterJSONObject = JSONUtil.put(
 						"autocompleteEnabled", true
 					).put(

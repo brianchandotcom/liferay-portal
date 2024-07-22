@@ -39,10 +39,7 @@ function ObjectPicklist({
 
 	useEffect(() => {
 		const picklist = picklists?.find((item) =>
-			Liferay.FeatureFlags['LPD-10754']
-				? String(item.externalReferenceCode) === (filter as any)?.source
-				: String(item.externalReferenceCode) ===
-					(filter as any)?.listTypeDefinitionERC
+			String(item.externalReferenceCode) === (filter as any)?.source
 		);
 
 		if (picklist) {

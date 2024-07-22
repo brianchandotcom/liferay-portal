@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -96,7 +95,6 @@ public class NotificationTemplateResourceTest
 	public void testGraphQLGetNotificationTemplatesPage() throws Exception {
 	}
 
-	@FeatureFlags("LPD-11165")
 	@Override
 	@Test
 	public void testPostNotificationTemplate() throws Exception {

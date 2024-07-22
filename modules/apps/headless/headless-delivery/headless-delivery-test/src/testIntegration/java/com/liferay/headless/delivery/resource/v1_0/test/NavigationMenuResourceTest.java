@@ -434,27 +434,14 @@ public class NavigationMenuResourceTest
 	private boolean _equalsCustomFieldsIgnoringOrder(
 		CustomField[] customFields1, CustomField[] customFields2) {
 
-		if (customFields1.length != customFields2.length) {
-			return false;
+		if ((ArrayUtil.isEmpty(customFields1) &&
+			 ArrayUtil.isEmpty(customFields2)) ||
+			ArrayUtil.containsAll(customFields1, customFields2)) {
+
+			return true;
 		}
 
-		for (CustomField customField1 : customFields1) {
-			boolean contains = false;
-
-			for (CustomField customField2 : customFields2) {
-				if (Objects.equals(customField1, customField2)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			if (!contains) {
-				return false;
-			}
-		}
-
-		return true;
+		return false;
 	}
 
 	private NavigationMenu _randomNavigationMenu(

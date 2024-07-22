@@ -26,6 +26,39 @@
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Material$]",
 			"name": "material",
+			"objectFieldSettings": [
+				{
+					"name": "stateFlow",
+					"value": {
+						"objectStates": [
+							{
+								"key": "plastic",
+								"objectStateTransitions": [
+									{
+										"key": "carton"
+									}
+								]
+							},
+							{
+								"key": "carton",
+								"objectStateTransitions": [
+									{
+										"key": "plastic"
+									}
+								]
+							}
+						]
+					}
+				},
+				{
+					"name": "defaultValueType",
+					"value": "inputAsValue"
+				},
+				{
+					"name": "defaultValue",
+					"value": "plastic"
+				}
+			],
 			"required": false,
 			"type": "String"
 		}

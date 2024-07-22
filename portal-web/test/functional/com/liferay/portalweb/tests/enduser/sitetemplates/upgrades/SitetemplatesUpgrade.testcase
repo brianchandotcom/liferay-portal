@@ -316,6 +316,14 @@ definition {
 
 			Refresh();
 
+			WaitForElementPresent(
+				key_infoMessage = "There are no results.",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			// LPD-31942 checking if pause wpuld solve the problem
+
+			Pause(value1 = 3000);
+
 			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
 		}
 

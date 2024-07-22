@@ -1,6 +1,4 @@
-/* eslint-disable no-var */
-
-/* eslint-disable no-undef */
+/* eslint-disable */
 
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com

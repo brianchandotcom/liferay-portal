@@ -139,9 +139,7 @@ function Configuration({
 					translations={i18nFilterLabels}
 				/>
 
-				{labelValidationError && (
-					<ValidationFeedback />
-				)}
+				{labelValidationError && <ValidationFeedback />}
 			</ClayForm.Group>
 
 			<ClayForm.Group
@@ -177,9 +175,7 @@ function Configuration({
 					/>
 				)}
 
-				{fieldValidationError && (
-					<ValidationFeedback />
-				)}
+				{fieldValidationError && <ValidationFeedback />}
 			</ClayForm.Group>
 		</>
 	);

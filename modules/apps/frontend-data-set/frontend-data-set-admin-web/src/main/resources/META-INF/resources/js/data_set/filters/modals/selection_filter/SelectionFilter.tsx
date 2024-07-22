@@ -256,7 +256,7 @@ function Body({
 				};
 			}
 
- 			formData = {
+			formData = {
 				...formData,
 				include: includeMode === 'include',
 				multiple,
@@ -288,8 +288,10 @@ function Body({
 			getAllPicklists().then((items) => {
 				setPicklists(items);
 
-				const picklist = items.find((item) =>
-					String(item.externalReferenceCode) === (filter as any)?.source
+				const picklist = items.find(
+					(item) =>
+						String(item.externalReferenceCode) ===
+						(filter as any)?.source
 				);
 
 				if (picklist) {
@@ -563,14 +565,13 @@ function Body({
 											);
 										}
 
-										const source =
-											getAPIHeadlessSourceURL(
-												selectedRESTApplication!.replace(
-													'/v1.0',
-													''
-												),
-												selectedRESTEndpoint
-											);
+										const source = getAPIHeadlessSourceURL(
+											selectedRESTApplication!.replace(
+												'/v1.0',
+												''
+											),
+											selectedRESTEndpoint
+										);
 
 										setSource(source as string);
 										setSourceValidationError(false);
@@ -579,28 +580,16 @@ function Body({
 											selectedRESTSchema
 										);
 										if (selectedRESTSchema) {
-											setRESTSchemaValidationError(
-												false
-											);
+											setRESTSchemaValidationError(false);
 										}
 
-										setSelectedItemKey(
-											selectedItemKey
-										);
-										setItemKeyValidationError(
-											false
-										);
+										setSelectedItemKey(selectedItemKey);
+										setItemKeyValidationError(false);
 
-										setSelectedItemLabel(
-											selectedItemLabel
-										);
-										setItemLabelValidationError(
-											false
-										);
+										setSelectedItemLabel(selectedItemLabel);
+										setItemLabelValidationError(false);
 
-										setFilteredSourceItems(
-											sourceItems
-										);
+										setFilteredSourceItems(sourceItems);
 									}}
 									preselectedValueInput={
 										preselectedValueInput
@@ -623,9 +612,7 @@ function Body({
 							<>
 								<ClayLayout.SheetSection className="mb-4">
 									<h3 className="sheet-subtitle">
-										{Liferay.Language.get(
-											'filter-options'
-										)}
+										{Liferay.Language.get('filter-options')}
 									</h3>
 								</ClayLayout.SheetSection>
 								<ClayForm.Group
@@ -634,9 +621,7 @@ function Body({
 									})}
 								>
 									<label
-										htmlFor={
-											preselectedValuesFormElementId
-										}
+										htmlFor={preselectedValuesFormElementId}
 									>
 										{Liferay.Language.get(
 											'preselected-values'
@@ -660,42 +645,36 @@ function Body({
 										inputName={
 											preselectedValuesFormElementId
 										}
-										items={preselectedValues.map(
-											(item) => {
-												let valueItem;
+										items={preselectedValues.map((item) => {
+											let valueItem;
 
-												if (
-													sourceType ===
-													ESelectionFilterSourceType.PICKLIST
-												) {
-													valueItem = {
-														label: item.name,
-														value: String(
-															item.externalReferenceCode
-														),
-													};
-												}
-
-												if (
-													sourceType ===
-													ESelectionFilterSourceType.API_HEADLESS
-												) {
-													valueItem = {
-														label: item.label,
-														value: item.value,
-													};
-												}
-
-												return valueItem as TItem;
+											if (
+												sourceType ===
+												ESelectionFilterSourceType.PICKLIST
+											) {
+												valueItem = {
+													label: item.name,
+													value: String(
+														item.externalReferenceCode
+													),
+												};
 											}
-										)}
+
+											if (
+												sourceType ===
+												ESelectionFilterSourceType.API_HEADLESS
+											) {
+												valueItem = {
+													label: item.label,
+													value: item.value,
+												};
+											}
+
+											return valueItem as TItem;
+										})}
 										loadingState={4}
-										onChange={
-											setPreselectedValueInput
-										}
-										onItemsChange={(
-											selectedItems: any
-										) => {
+										onChange={setPreselectedValueInput}
+										onItemsChange={(selectedItems: any) => {
 											let preselectedValues;
 
 											if (
@@ -704,13 +683,9 @@ function Body({
 											) {
 												preselectedValues =
 													selectedItems.map(
-														({
-															value,
-														}: any) => {
+														({value}: any) => {
 															return filteredSourceItems.find(
-																(
-																	item
-																) =>
+																(item) =>
 																	String(
 																		item.value
 																	) ===
@@ -728,15 +703,11 @@ function Body({
 											) {
 												preselectedValues =
 													selectedItems.map(
-														({
-															value,
-														}: any) => {
+														({value}: any) => {
 															return (
 																source as IPickList
 															).listTypeEntries.find(
-																(
-																	item
-																) =>
+																(item) =>
 																	String(
 																		item.externalReferenceCode
 																	) ===
@@ -766,9 +737,7 @@ function Body({
 										placeholder={Liferay.Language.get(
 											'select-a-default-value-for-your-filter'
 										)}
-										sourceItems={
-											filteredSourceItems
-										}
+										sourceItems={filteredSourceItems}
 										value={preselectedValueInput}
 									/>
 
@@ -789,9 +758,7 @@ function Body({
 									<ClayLayout.Col size={6}>
 										<ClayForm.Group>
 											<label
-												htmlFor={
-													multipleFormElementId
-												}
+												htmlFor={multipleFormElementId}
 											>
 												{Liferay.Language.get(
 													'selection'
@@ -808,23 +775,14 @@ function Body({
 											</label>
 
 											<ClayRadioGroup
-												name={
-													multipleFormElementId
-												}
-												onChange={(
-													newVal: any
-												) => {
+												name={multipleFormElementId}
+												onChange={(newVal: any) => {
 													const newMultiple =
-														newVal ===
-														'true';
-													setMultiple(
-														newMultiple
-													);
+														newVal === 'true';
+													setMultiple(newMultiple);
 												}}
 												value={
-													multiple
-														? 'true'
-														: 'false'
+													multiple ? 'true' : 'false'
 												}
 											>
 												<ClayRadio
@@ -870,12 +828,8 @@ function Body({
 													name={
 														includeModeFormElementId
 													}
-													onChange={(
-														val: any
-													) => {
-														setIncludeMode(
-															val
-														);
+													onChange={(val: any) => {
+														setIncludeMode(val);
 													}}
 													value={includeMode}
 												>

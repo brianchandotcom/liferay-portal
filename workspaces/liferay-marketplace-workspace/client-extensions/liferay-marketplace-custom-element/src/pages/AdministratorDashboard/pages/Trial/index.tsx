@@ -12,6 +12,7 @@ import i18n from '../../../../i18n';
 import InfoCard from '../../components/InfoCard';
 import useTrialMetrics from '../../hooks/useTrialMetrics';
 import TrialTable from './TrialTable';
+import { ORDER_WORKFLOW_STATUS_CODE } from '../../../../enums/Order';
 
 const getAvailabilityResourceLabel = (availability: Availability) => {
 	if (availability.fallback) {
@@ -24,6 +25,8 @@ const getAvailabilityResourceLabel = (availability: Availability) => {
 const Trial = () => {
 	const {availability, expired, isLoading, mutate, orderTableData, orders} =
 		useTrialMetrics('week');
+
+	const expiredTrials = orderTableData?.items?.filter((status: PlacedOrder) => status.orderStatusInfo.code === ORDER_WORKFLOW_STATUS_CODE.COMPLETED)
 
 	return (
 		<Page pageRendererProps={{isLoading}}>
@@ -119,7 +122,7 @@ const Trial = () => {
 						growthContext={`+${expired?.lastPeriod ?? 0} this week`}
 						symbol="date-time"
 						title={i18n.translate('expired')}
-						value={expired.totalCount ?? 0}
+						value={expiredTrials?.length ?? 0}
 					/>
 				</div>
 

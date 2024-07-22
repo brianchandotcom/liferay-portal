@@ -96,9 +96,6 @@ public class CalendarBookingInfoItemFieldValuesProvider
 			Company company = _companyLocalService.getCompany(
 				calendarBooking.getCompanyId());
 
-			String portalURL = company.getPortalURL(
-				calendarBooking.getGroupId());
-
 			Group group = _groupLocalService.getGroup(
 				calendarBooking.getGroupId());
 
@@ -113,9 +110,9 @@ public class CalendarBookingInfoItemFieldValuesProvider
 					guestGroup.getDefaultPublicPlid());
 			}
 
-			String layoutActualURL = _portal.getLayoutActualURL(layout);
-
-			String url = portalURL + layoutActualURL;
+			String url =
+				company.getPortalURL(calendarBooking.getGroupId()) +
+					_portal.getLayoutActualURL(layout);
 
 			String namespace = _portal.getPortletNamespace(
 				CalendarPortletKeys.CALENDAR);

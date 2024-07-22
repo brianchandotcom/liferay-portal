@@ -2,14 +2,12 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
-import {ApolloClient} from '@apollo/client';
 import {useMemo} from 'react';
 import useSWR from 'swr';
 import i18n from '~/common/I18n';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import SearchBuilder from '~/common/core/SearchBuilder';
 import {Liferay} from '~/common/services/liferay';
-import {getOrganizations} from '~/common/services/liferay/graphql/queries';
 
 type Account = {
 	externalReferenceCode: string;
@@ -42,8 +40,6 @@ const getMyUserAccount = async () => {
 };
 
 const useProjectCategoryItems = () => {
-	const {client} = useAppPropertiesContext();
-
 	const {data: myUserAccount = {accountBriefs: [], organizationBriefs: []}} =
 		useSWR({key: '/projects'}, getMyUserAccount);
 

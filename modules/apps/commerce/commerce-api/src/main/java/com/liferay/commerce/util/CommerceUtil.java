@@ -141,12 +141,12 @@ public class CommerceUtil {
 
 		if (orderByCol.equals("name")) {
 			orderByComparator =
-				new CommerceInventoryWarehouseItemWarehouseNameComparator(
-					orderByAsc);
+				CommerceInventoryWarehouseItemWarehouseNameComparator.
+					getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("quantity")) {
 			orderByComparator =
-				new CommerceInventoryWarehouseItemQuantityComparator(
+				CommerceInventoryWarehouseItemQuantityComparator.getInstance(
 					orderByAsc);
 		}
 
@@ -166,12 +166,14 @@ public class CommerceUtil {
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator = null;
 
 		if (orderByCol.equals("city")) {
-			orderByComparator = new CommerceInventoryWarehouseCityComparator(
-				orderByAsc);
+			orderByComparator =
+				CommerceInventoryWarehouseCityComparator.getInstance(
+					orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new CommerceInventoryWarehouseNameComparator(
-				orderByAsc);
+			orderByComparator =
+				CommerceInventoryWarehouseNameComparator.getInstance(
+					orderByAsc);
 		}
 
 		return orderByComparator;

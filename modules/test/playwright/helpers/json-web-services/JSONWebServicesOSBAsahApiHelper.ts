@@ -22,6 +22,24 @@ type Event = {
 	userId: string;
 };
 
+type EventAttributeDefinition = {
+	dataType: string;
+	displayName: string;
+	name: string;
+	type: string;
+};
+
+type EventDefinition = {
+	applicationId: string;
+	description?: string;
+	displayName: string;
+	eventAttributeDefinitions?: EventAttributeDefinition[];
+	eventDate?: string;
+	name: string;
+	type: string;
+	url?: string;
+};
+
 type Identity = {
 	createDate: string;
 	id: string;
@@ -96,6 +114,19 @@ export class JSONWebServicesOSBAsahApiHelper {
 			`${asahConfig.environment.backendUrl}${this.basePath}/events`,
 			{
 				data: events,
+				failOnStatusCode: true,
+				headers: this.getHeaders(),
+			}
+		);
+	}
+
+	async createEventDefinition(
+		eventDefinition: EventDefinition[]
+	): Promise<any> {
+		return this.apiHelpers.post(
+			`${asahConfig.environment.backendUrl}${this.basePath}/event-definition`,
+			{
+				data: eventDefinition,
 				failOnStatusCode: true,
 				headers: this.getHeaders(),
 			}

@@ -13,13 +13,6 @@ components:
                     type: integer
         TestrayBuildMetric:
             properties:
-                actions:
-                    additionalProperties:
-                        additionalProperties:
-                            type: string
-                        type: object
-                    readOnly: true
-                    type: object
                 testrayBuildArchived:
                     type: boolean
                 testrayBuildDueDate:
@@ -42,13 +35,6 @@ components:
             type: object
         TestrayCaseResult:
             properties:
-                actions:
-                    additionalProperties:
-                        additionalProperties:
-                            type: string
-                        type: object
-                    readOnly: true
-                    type: object
                 comment:
                     type: string
                 error:
@@ -92,9 +78,9 @@ components:
                     type: integer
                 testrayTeamName:
                     type: string
-                userImgUrl:
-                    type: string
                 userName:
+                    type: string
+                userPortraitUrl:
                     type: string
                 warning:
                     type: integer
@@ -154,13 +140,6 @@ components:
             type: object
         TestrayRoutineMetric:
             properties:
-                actions:
-                    additionalProperties:
-                        additionalProperties:
-                            type: string
-                        type: object
-                    readOnly: true
-                    type: object
                 testrayBuildDueDate:
                     type: string
                 testrayRoutineId:
@@ -218,6 +197,36 @@ components:
                 untested:
                     format: int64
                     type: integer
+            type: object
+        TestraySubtask:
+            properties:
+                caseResultAmount:
+                    format: int64
+                    type: integer
+                error:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                issues:
+                    type: string
+                name:
+                    type: string
+                score:
+                    format: int64
+                    type: integer
+                status:
+                    type: string
+                testrayTaskId:
+                    format: int64
+                    type: integer
+                userId:
+                    format: int64
+                    type: integer
+                userName:
+                    type: string
+                userPortraitUrl:
+                    type: string
             type: object
         TestrayTeamMetric:
             properties:
@@ -450,6 +459,10 @@ paths:
                       type: string
                 - in: query
                   name: testrayRunName
+                  schema:
+                      type: string
+                - in: query
+                  name: testraySubtaskId
                   schema:
                       type: string
                 - in: query
@@ -989,6 +1002,69 @@ paths:
                                 $ref: "#/components/schemas/TestrayTestFlow"
                     description:
                         Invalid answer provided
+            tags: ["TestrayTestFlow"]
+    "/testray-testflow/testray-subtask":
+        get:
+            operationId: getTestrayTestFlowTestraySubtaskPage
+            parameters:
+                - in: query
+                  name: error
+                  schema:
+                      type: string
+                - in: query
+                  name: issues
+                  schema:
+                      type: string
+                - in: query
+                  name: name
+                  schema:
+                      type: string
+                - in: query
+                  name: noIssues
+                  schema:
+                      type: boolean
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: status
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayComponentIds
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayTaskId
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: testrayTeamIds
+                  schema:
+                      type: string
+                - in: query
+                  name: userId
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestraySubtask"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TestraySubtask"
+                                type: array
             tags: ["TestrayTestFlow"]
     "/testray-testflow/{testrayTaskId}":
         post:

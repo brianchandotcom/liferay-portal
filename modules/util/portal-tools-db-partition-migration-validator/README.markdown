@@ -5,7 +5,7 @@ This tool validates the compatibility between the source and target databases fo
 ## Requirements
 
 - MySQL or PostgreSQL
-- Database user with DDL privileges
+- Database user with read access to all partitions
 
 ## Usage
 

@@ -6,7 +6,7 @@ that they only contain data associated with their proper company ID.
 ## Requirements
 
 - MySQL or PostgreSQL
-- Database user with DDL privileges
+- Database user with read access to all partitions
 
 ## Usage
 

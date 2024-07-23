@@ -213,6 +213,14 @@ public class PasswordEncryptorUtilTest {
 	}
 
 	@Test
+	public void testEncryptPBKDF2WithHmacSHA256() throws Exception {
+		runTests(
+			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA256", "password",
+			"AAAAoAAB9ADJZ16OuMAPPFrcmsgO+rKUjwKOeJbdcZ6PKNxE",
+			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA256");
+	}
+
+	@Test
 	public void testEncryptSHA() throws Exception {
 		runTests(
 			PasswordEncryptor.TYPE_SHA, "password",

@@ -94,7 +94,8 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
 				DataDefinition.toDTO(
-					DataDefinitionTestUtil.read("data-definition.json")),
+					DataDefinitionTestUtil.read(
+						"localized-data-definition.json")),
 				testGroup.getGroupId());
 
 		DataRecordCollectionResource.Builder builder =
@@ -190,7 +191,8 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
 				DataDefinition.toDTO(
-					DataDefinitionTestUtil.read("data-definition.json")),
+					DataDefinitionTestUtil.read(
+						"localized-data-definition.json")),
 				testGroup.getGroupId());
 
 		_dataDefinitionId = dataDefinition.getId();
@@ -319,7 +321,8 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
 				DataDefinition.toDTO(
-					DataDefinitionTestUtil.read("data-definition.json")),
+					DataDefinitionTestUtil.read(
+						"localized-data-definition.json")),
 				testGroup.getGroupId());
 
 		_dataDefinitionId = dataDefinition.getId();

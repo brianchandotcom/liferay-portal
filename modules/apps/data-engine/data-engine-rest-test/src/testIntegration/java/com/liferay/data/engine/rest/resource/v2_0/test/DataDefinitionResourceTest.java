@@ -498,7 +498,8 @@ public class DataDefinitionResourceTest
 			dataDefinitionResource.postDataDefinitionByContentType(
 				"INVALID",
 				DataDefinition.toDTO(
-					DataDefinitionTestUtil.read("data-definition.json")));
+					DataDefinitionTestUtil.read(
+						"localized-data-definition.json")));
 
 			Assert.fail("An exception must be thrown");
 		}

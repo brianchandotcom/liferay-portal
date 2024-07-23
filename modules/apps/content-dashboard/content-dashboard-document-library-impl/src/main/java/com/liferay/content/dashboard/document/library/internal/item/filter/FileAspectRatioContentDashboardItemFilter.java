@@ -46,8 +46,6 @@ public class FileAspectRatioContentDashboardItemFilter
 	public DropdownItem getDropdownItem() {
 		return DropdownItemBuilder.setDropdownItems(
 			DropdownItemListBuilder.add(
-				_getDropdownItem(AspectRatio.ANY)
-			).add(
 				_getDropdownItem(AspectRatio.WIDE)
 			).add(
 				_getDropdownItem(AspectRatio.TALL)
@@ -144,10 +142,6 @@ public class FileAspectRatioContentDashboardItemFilter
 			_portal.getCurrentCompleteURL(_httpServletRequest),
 			portletResponse.getNamespace() + getParameterName());
 
-		if (Objects.equals(aspectRatio, AspectRatio.ANY)) {
-			return url;
-		}
-
 		return HttpComponentsUtil.addParameter(
 			url, portletResponse.getNamespace() + getParameterName(),
 			aspectRatio.getType());
@@ -157,10 +151,6 @@ public class FileAspectRatioContentDashboardItemFilter
 		List<String> parameterValues = getParameterValues();
 
 		if (ListUtil.isEmpty(parameterValues)) {
-			if (Objects.equals(AspectRatio.ANY, aspectRatio)) {
-				return true;
-			}
-
 			return false;
 		}
 
@@ -173,7 +163,7 @@ public class FileAspectRatioContentDashboardItemFilter
 
 	private enum AspectRatio {
 
-		ANY("any"), SQUARE("square"), TALL("tall"), WIDE("wide");
+		SQUARE("square"), TALL("tall"), WIDE("wide");
 
 		public static AspectRatio parse(String type) {
 			for (AspectRatio aspectRatio : values()) {

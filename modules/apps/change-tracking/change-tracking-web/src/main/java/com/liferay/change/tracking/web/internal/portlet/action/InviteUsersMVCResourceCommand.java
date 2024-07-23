@@ -5,6 +5,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.configuration.CTEmailNotificationConfiguration;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
@@ -12,9 +13,17 @@ import com.liferay.change.tracking.constants.PublicationRoleConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
+import com.liferay.mail.kernel.model.MailMessage;
+import com.liferay.mail.kernel.service.MailService;
+import com.liferay.mail.kernel.template.MailTemplate;
+import com.liferay.mail.kernel.template.MailTemplateContext;
+import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
+import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -31,14 +40,19 @@ import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.EscapableObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -52,7 +66,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.mail.internet.InternetAddress;
+
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -228,6 +245,7 @@ public class InviteUsersMVCResourceCommand
 			if (userGroupRoles.isEmpty()) {
 				_sendNotificationEvent(
 					ctCollectionId, userIds[i], roleValues[i], themeDisplay);
+				_sendEmail(ctCollectionId, userIds[i], themeDisplay);
 			}
 		}
 
@@ -283,6 +301,94 @@ public class InviteUsersMVCResourceCommand
 		return role;
 	}
 
+	private void _sendEmail(
+			long ctCollectionId, long receiverUserId, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (UserNotificationManagerUtil.isDeliver(
+				receiverUserId, CTPortletKeys.PUBLICATIONS, 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_EMAIL)) {
+
+			try {
+				User user = themeDisplay.getUser();
+
+				String fromName = user.getFullName();
+				String fromAddress = user.getEmailAddress();
+
+				User receiverUser = _userLocalService.getUser(receiverUserId);
+
+				String toName = receiverUser.getFullName();
+				String toAddress = receiverUser.getEmailAddress();
+
+				CTEmailNotificationConfiguration
+					ctEmailNotificationConfiguration =
+						_configurationProvider.getCompanyConfiguration(
+							CTEmailNotificationConfiguration.class,
+							themeDisplay.getCompanyId());
+
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
+
+				MailTemplateContextBuilder mailTemplateContextBuilder =
+					MailTemplateFactoryUtil.createMailTemplateContextBuilder();
+
+				mailTemplateContextBuilder.put(
+					"[$FROM_ADDRESS$]", new EscapableObject<>(fromAddress));
+				mailTemplateContextBuilder.put(
+					"[$FROM_NAME$]", new EscapableObject<>(fromName));
+				mailTemplateContextBuilder.put(
+					"[$PORTAL_PUBLICATION_REVIEW_CHANGES_URL$]",
+					PortletURLBuilder.create(
+						_portal.getControlPanelPortletURL(
+							serviceContext.getRequest(),
+							serviceContext.getScopeGroup(),
+							CTPortletKeys.PUBLICATIONS, 0, 0,
+							PortletRequest.RENDER_PHASE)
+					).setMVCRenderCommandName(
+						"/change_tracking/view_changes"
+					).setParameter(
+						"ctCollectionId", ctCollectionId
+					).buildString());
+				mailTemplateContextBuilder.put(
+					"[$PORTAL_URL$]", themeDisplay.getPortalURL());
+				mailTemplateContextBuilder.put(
+					"[$TO_NAME$]", new EscapableObject<>(toName));
+
+				MailTemplateContext mailTemplateContext =
+					mailTemplateContextBuilder.build();
+
+				LocalizedValuesMap subjectLocalizedValuesMap =
+					ctEmailNotificationConfiguration.invitationEmailSubject();
+
+				MailTemplate subjectMailTemplate =
+					MailTemplateFactoryUtil.createMailTemplate(
+						subjectLocalizedValuesMap.get(user.getLocale()), false);
+
+				LocalizedValuesMap bodyLocalizedValuesMap =
+					ctEmailNotificationConfiguration.invitationEmailBody();
+
+				MailTemplate bodyMailTemplate =
+					MailTemplateFactoryUtil.createMailTemplate(
+						bodyLocalizedValuesMap.get(user.getLocale()), true);
+
+				MailMessage mailMessage = new MailMessage(
+					new InternetAddress(fromAddress, fromName),
+					new InternetAddress(toAddress),
+					subjectMailTemplate.renderAsString(
+						user.getLocale(), mailTemplateContext),
+					bodyMailTemplate.renderAsString(
+						user.getLocale(), mailTemplateContext),
+					true);
+
+				_mailService.sendEmail(mailMessage);
+			}
+			catch (Exception exception) {
+				throw new SystemException(exception);
+			}
+		}
+	}
+
 	private void _sendNotificationEvent(
 			long ctCollectionId, long receiverUserId, int roleValue,
 			ThemeDisplay themeDisplay)
@@ -319,6 +425,9 @@ public class InviteUsersMVCResourceCommand
 	}
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
@@ -326,6 +435,9 @@ public class InviteUsersMVCResourceCommand
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private MailService _mailService;
 
 	@Reference
 	private Portal _portal;

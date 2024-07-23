@@ -160,7 +160,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addFileEntryType(String, long, long, long, String, Map, Map, long,
+	 *             #addFileEntryType(String, long, long, long, String, Map, Map, int,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -218,6 +218,16 @@ public class DLFileEntryTypeLocalServiceImpl
 			LocaleUtil.getDefault());
 
 		return dlFileEntryTypePersistence.update(dlFileEntryType);
+	}
+
+	@Override
+	public void deleteDLFileEntryType(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		dlFileEntryTypeLocalService.deleteFileEntryType(
+			getFileEntryTypeByExternalReferenceCode(
+				externalReferenceCode, groupId));
 	}
 
 	@Override
@@ -317,6 +327,14 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	@Override
+	public DLFileEntryType fetchFileEntryTypeByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return dlFileEntryTypePersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public DLFileEntryType getBasicDocumentDLFileEntryType()
 		throws NoSuchFileEntryTypeException {
 
@@ -362,6 +380,15 @@ public class DLFileEntryTypeLocalServiceImpl
 			StringUtil.trim(fileEntryTypeKey));
 
 		return dlFileEntryTypePersistence.findByG_F(groupId, fileEntryTypeKey);
+	}
+
+	@Override
+	public DLFileEntryType getFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return dlFileEntryTypePersistence.findByERC_G(
+			externalReferenceCode, groupId);
 	}
 
 	@Override

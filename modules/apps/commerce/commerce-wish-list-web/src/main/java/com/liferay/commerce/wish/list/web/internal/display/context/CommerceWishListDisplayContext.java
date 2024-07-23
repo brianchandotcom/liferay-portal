@@ -338,7 +338,7 @@ public class CommerceWishListDisplayContext {
 			_commerceWishListService.fetchCommerceWishList(
 				_commerceWishListRequestHelper.getScopeGroupId(),
 				_commerceWishListRequestHelper.getUserId(), true,
-				new CommerceWishListNameComparator(true));
+				CommerceWishListNameComparator.getInstance(true));
 
 		if (commerceWishList != null) {
 			defaultCommerceWishListId =

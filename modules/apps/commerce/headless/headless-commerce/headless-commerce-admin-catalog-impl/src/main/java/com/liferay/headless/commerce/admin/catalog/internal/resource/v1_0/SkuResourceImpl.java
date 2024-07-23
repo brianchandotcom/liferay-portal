@@ -473,7 +473,9 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 		// Unit of Measure
 
-		if (sku.getSkuUnitOfMeasures() == null) {
+		if ((sku.getSkuUnitOfMeasures() == null) ||
+			(sku.getSkuUnitOfMeasures().length == 0)) {
+
 			SkuUtil.updateCommercePriceEntries(
 				_commercePriceEntryLocalService, _commercePriceListLocalService,
 				_configurationProvider, cpInstance,

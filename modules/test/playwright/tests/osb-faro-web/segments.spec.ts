@@ -9,10 +9,8 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
-import {createChannel, switchChannel} from './utils/channel';
+import {createChannel} from './utils/channel';
 import {
 	goToDistributionTabAndSelectAttribute,
 	viewBreakdownRechartsData,
@@ -21,11 +19,7 @@ import {changeEventDisplayName} from './utils/event-definitions';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {waitForLoading} from './utils/loading';
 import {Nanites, runNanites} from './utils/nanites';
-import {
-	navigateTo,
-	navigateToACSitesPageViaURL,
-	navigateToACWorkspace,
-} from './utils/navigation';
+import {navigateTo, navigateToACSitesPageViaURL} from './utils/navigation';
 import {
 	addSegmentField,
 	addStaticMember,

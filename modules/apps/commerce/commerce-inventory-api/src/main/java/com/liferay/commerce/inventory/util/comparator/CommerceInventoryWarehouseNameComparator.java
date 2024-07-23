@@ -21,8 +21,14 @@ public class CommerceInventoryWarehouseNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CommerceInventoryWarehouseNameComparator(boolean ascending) {
-		_ascending = ascending;
+	public static CommerceInventoryWarehouseNameComparator getInstance(
+		boolean ascending) {
+
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -62,6 +68,18 @@ public class CommerceInventoryWarehouseNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceInventoryWarehouseNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceInventoryWarehouseNameComparator
+		_INSTANCE_ASCENDING = new CommerceInventoryWarehouseNameComparator(
+			true);
+
+	private static final CommerceInventoryWarehouseNameComparator
+		_INSTANCE_DESCENDING = new CommerceInventoryWarehouseNameComparator(
+			false);
 
 	private final boolean _ascending;
 

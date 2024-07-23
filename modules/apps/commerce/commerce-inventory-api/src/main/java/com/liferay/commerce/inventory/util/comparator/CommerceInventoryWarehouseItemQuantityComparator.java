@@ -22,12 +22,14 @@ public class CommerceInventoryWarehouseItemQuantityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"quantity"};
 
-	public CommerceInventoryWarehouseItemQuantityComparator() {
-		this(false);
-	}
+	public static CommerceInventoryWarehouseItemQuantityComparator getInstance(
+		boolean ascending) {
 
-	public CommerceInventoryWarehouseItemQuantityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -66,6 +68,20 @@ public class CommerceInventoryWarehouseItemQuantityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceInventoryWarehouseItemQuantityComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final CommerceInventoryWarehouseItemQuantityComparator
+		_INSTANCE_ASCENDING =
+			new CommerceInventoryWarehouseItemQuantityComparator(true);
+
+	private static final CommerceInventoryWarehouseItemQuantityComparator
+		_INSTANCE_DESCENDING =
+			new CommerceInventoryWarehouseItemQuantityComparator(false);
 
 	private final boolean _ascending;
 

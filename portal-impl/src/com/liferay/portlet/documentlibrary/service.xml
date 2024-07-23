@@ -166,7 +166,7 @@
 			<finder-column name="fileVersionId" />
 		</finder>
 	</entity>
-	<entity human-name="document library file entry type" local-service="true" name="DLFileEntryType" remote-service="true" uad-dir-path="../modules/apps/document-library/document-library-uad/src/main/java" uad-package-path="com.liferay.document.library" uuid="true">
+	<entity external-reference-code="group" human-name="document library file entry type" local-service="true" name="DLFileEntryType" remote-service="true" uad-dir-path="../modules/apps/document-library/document-library-uad/src/main/java" uad-package-path="com.liferay.document.library" uuid="true">
 
 		<!-- PK fields -->
 

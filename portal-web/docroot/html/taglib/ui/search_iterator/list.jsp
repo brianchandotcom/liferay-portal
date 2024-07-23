@@ -276,7 +276,7 @@ if (fixedHeader) {
 					}
 				%>
 
-					<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" id="<%= rowElementId %>" <%= AUIUtil.buildData(data) %>>
+					<tr aria-label="<%= searchContainerRowAriaLabel %>" class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" id="<%= rowElementId %>" <%= AUIUtil.buildData(data) %> tabindex="<%= searchContainerRowTabindex %>">
 
 						<%
 						for (int j = 0; j < entries.size(); j++) {

@@ -6,7 +6,6 @@
 --%>
 
 <%@ include file="/html/taglib/init.jsp" %>
-
 <%@ page import="com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry" %><%@
 page import="com.liferay.taglib.ui.SearchIteratorTag" %>
 
@@ -19,7 +18,9 @@ boolean fixedHeader = GetterUtil.getBoolean((String)request.getAttribute("lifera
 String markupView = (String)request.getAttribute("liferay-ui:search-iterator:markupView");
 boolean paginate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:search-iterator:paginate"));
 ResultRowSplitter resultRowSplitter = (ResultRowSplitter)request.getAttribute("liferay-ui:search-iterator:resultRowSplitter");
+String searchContainerRowAriaLabel = GetterUtil.getString((String)request.getAttribute("liferay-ui:search-container-row:ariaLabel"));
 String searchContainerRowCssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:search-container-row:cssClass"));
+String searchContainerRowTabindex = GetterUtil.getString((String)request.getAttribute("liferay-ui:search-container-row:tabindex"));
 String searchResultCssClass = (String)request.getAttribute("liferay-ui:search-iterator:searchResultCssClass");
 String type = (String)request.getAttribute("liferay-ui:search:type");
 

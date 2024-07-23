@@ -139,6 +139,8 @@ public interface ResultRow {
 
 	public void addText(String align, String valign, String name, String href);
 
+	public String getAriaLabel();
+
 	public String getClassHoverName();
 
 	public String getClassName();
@@ -161,6 +163,8 @@ public interface ResultRow {
 
 	public String getState();
 
+	public String getTabindex();
+
 	public boolean isBold();
 
 	public boolean isRestricted();
@@ -168,6 +172,8 @@ public interface ResultRow {
 	public boolean isSkip();
 
 	public void removeSearchEntry(int pos);
+
+	public void setAriaLabel(String ariaLabel);
 
 	public void setBold(boolean bold);
 
@@ -192,5 +198,7 @@ public interface ResultRow {
 	public void setSkip(boolean skip);
 
 	public void setState(String state);
+
+	public void setTabindex(String tabindex);
 
 }

@@ -37,9 +37,11 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 		var="entriesSearch"
 	>
 		<liferay-ui:search-container-row
+			ariaLabel='<%= itemSelectorViewDescriptorRendererDisplayContext.isMultipleSelection() ? StringPool.BLANK : LanguageUtil.get(request, "press-enter-to-select-the-item-and-close-the-modal") %>'
 			className="Object"
 			keyProperty="<%= itemSelectorViewDescriptor.getKeyProperty() %>"
 			modelVar="entry"
+			tabindex='<%= itemSelectorViewDescriptorRendererDisplayContext.isMultipleSelection() ? StringPool.BLANK : "0" %>'
 		>
 
 			<%

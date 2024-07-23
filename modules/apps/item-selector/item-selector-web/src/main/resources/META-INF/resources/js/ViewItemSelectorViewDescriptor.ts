@@ -49,20 +49,38 @@ export default function ({
 		});
 	};
 
+	const onBlurHandler = delegate(
+		document.getElementById(`${namespace}entriesContainer`)!,
+		'blur',
+		'tbody tr',
+		(event: DelegatedEvent<any>) => {
+			event.target.classList.remove('table-focus');
+		}
+	);
+
 	const onClickHandler = delegate(
 		document.getElementById(`${namespace}entriesContainer`)!,
 		'click',
-		'.entry',
+		'tbody tr',
 		(event: DelegatedEvent<MouseEvent>) => {
 			updateSelectedCard(event);
 			dispatchSelectEvent(event);
 		}
 	);
 
+	const onFocusHandler = delegate(
+		document.getElementById(`${namespace}entriesContainer`)!,
+		'focus',
+		'tbody tr',
+		(event: DelegatedEvent<any>) => {
+			event.target.classList.add('table-focus');
+		}
+	);
+
 	const onKeydownHandler = delegate(
 		document.getElementById(`${namespace}entriesContainer`)!,
 		'keydown',
-		'.entry',
+		'tbody tr',
 		(event: DelegatedEvent<KeyboardEvent>) => {
 			if (event.code === 'Enter') {
 				updateSelectedCard(event);
@@ -73,7 +91,9 @@ export default function ({
 
 	return {
 		dispose() {
+			onBlurHandler.dispose();
 			onClickHandler.dispose();
+			onFocusHandler.dispose();
 			onKeydownHandler.dispose();
 		},
 	};

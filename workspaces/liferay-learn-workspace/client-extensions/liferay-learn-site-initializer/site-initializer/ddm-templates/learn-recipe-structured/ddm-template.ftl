@@ -1,14 +1,15 @@
 <script>
 	var A = new AUI();
-	var collapsibleContent = document.getElementById('collapsibleContent');
 
 	function checkScreenSize() {
+		var collapsibleContent = document.getElementById('collapsibleContent');
+
 		if (window.innerWidth >= 768) {
 			collapsibleContent.style.display = "block";
+			return;
 		}
-		else {
-			collapsibleContent.style.display = "none";
-		}
+
+		collapsibleContent.style.display = "none";
 	}
 
 	document.addEventListener('DOMContentLoaded', function() {

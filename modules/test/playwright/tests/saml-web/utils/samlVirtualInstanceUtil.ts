@@ -13,9 +13,9 @@ import performLogin, {performLogout} from '../../../utils/performLogin';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {connectSpAndIdp} from './samlProviderConnectionUtil';
 
-export const DEFAULT_IDP_NAME = 'idp';
+export const DEFAULT_IDP_NAME = 'www.able.com';
 export const DEFAULT_IDP_URL = `http://${DEFAULT_IDP_NAME}:8080`;
-export const DEFAULT_SP_NAME = 'sp';
+export const DEFAULT_SP_NAME = 'www.baker.com';
 export const DEFAULT_SP_URL = `http://${DEFAULT_SP_NAME}:8080`;
 
 export async function createServiceProviderVirtualInstance(

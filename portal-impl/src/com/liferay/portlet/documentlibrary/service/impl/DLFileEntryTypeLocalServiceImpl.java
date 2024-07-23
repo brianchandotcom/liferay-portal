@@ -5,6 +5,7 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.document.library.kernel.exception.DuplicateDLFileEntryTypeExternalReferenceCodeException;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryTypeException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
@@ -29,6 +30,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -92,10 +94,10 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	@Override
 	public DLFileEntryType addFileEntryType(
-			long userId, long groupId, long dataDefinitionId,
-			String fileEntryTypeKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, int scope,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long dataDefinitionId, String fileEntryTypeKey,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			int scope, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userPersistence.findByPrimaryKey(userId);
@@ -118,6 +120,8 @@ public class DLFileEntryTypeLocalServiceImpl
 			}
 		}
 
+		_validateExternalReferenceCode(externalReferenceCode, groupId);
+
 		_validateFileEntryTypeKey(groupId, fileEntryTypeKey);
 
 		_validateDDMStructures(fileEntryTypeKey, new long[] {dataDefinitionId});
@@ -126,6 +130,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			counterLocalService.increment());
 
 		dlFileEntryType.setUuid(fileEntryTypeUuid);
+		dlFileEntryType.setExternalReferenceCode(externalReferenceCode);
 		dlFileEntryType.setGroupId(groupId);
 		dlFileEntryType.setCompanyId(user.getCompanyId());
 		dlFileEntryType.setUserId(user.getUserId());
@@ -161,9 +166,10 @@ public class DLFileEntryTypeLocalServiceImpl
 	@Deprecated
 	@Override
 	public DLFileEntryType addFileEntryType(
-			long userId, long groupId, long dataDefinitionId,
-			String fileEntryTypeKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long dataDefinitionId, String fileEntryTypeKey,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addFileEntryType(
@@ -782,6 +788,25 @@ public class DLFileEntryTypeLocalServiceImpl
 				throw new NoSuchMetadataSetException(
 					"{ddmStructureId=" + ddmStructureId + "}");
 			}
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		DLFileEntryType dlFileEntryType =
+			dlFileEntryTypePersistence.fetchByERC_G(
+				externalReferenceCode, groupId);
+
+		if (dlFileEntryType != null) {
+			throw new DuplicateDLFileEntryTypeExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate file entry type external reference code ",
+					externalReferenceCode, " in group ", groupId));
 		}
 	}
 

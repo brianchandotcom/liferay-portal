@@ -286,6 +286,21 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro publishLayout(displayPageTemplateEntryName = null, groupName = null, site = null, privateLayout = null) {
+		Variables.assertDefined(parameterList = "${displayPageTemplateEntryName},${groupName}");
+
+		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
+			groupKey = ${groupName},
+			site = ${site});
+
+		var plid = JSONLayoutpagetemplateSetter.setDisplayPageTemplatePlid(
+			displayPageTemplateEntryName = ${displayPageTemplateEntryName},
+			groupId = ${groupId});
+
+		JSONLayoutAPI._publishLayoutByPlid(plid = ${plid});
+	}
+
+	@summary = "Default summary"
 	macro setLayoutPageTemplateEntryAsDefault(groupName = null, site = null, layoutPageTemplateEntryName = null, type = null) {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${type}");
 

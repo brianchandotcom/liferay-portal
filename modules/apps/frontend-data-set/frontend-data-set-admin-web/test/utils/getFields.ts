@@ -4,8 +4,9 @@
  */
 
 import {
-	INVALID_FIELDS,
-	getValidFields, ISchemas,
+	BLACKLISTED_FIELDS,
+	ISchemas,
+	getValidFields,
 } from '../../src/main/resources/META-INF/resources/js/utils/getFields';
 import {IField} from '../../src/main/resources/META-INF/resources/js/utils/types';
 
@@ -15,7 +16,7 @@ import {IField} from '../../src/main/resources/META-INF/resources/js/utils/types
  * B points to C using scalar field via $ref
  * C points to A using array field via $ref
  */
-const nestedSchemas : ISchemas = {
+const nestedSchemas: ISchemas = {
 	A: {
 		properties: {
 			a_b: {
@@ -79,6 +80,10 @@ const simpleSchema = {
 				},
 				type: 'array',
 			},
+			'scopeKey': {
+				readOnly: true,
+				type: 'string',
+			},
 			'userNames': {
 				additionalProperties: {
 					type: 'string',
@@ -89,17 +94,23 @@ const simpleSchema = {
 				default: 'com.liferay.object.rest.dto.v1_0.Simple',
 				type: 'string',
 			},
+			'x-schema-name': {
+				default: 'Simple',
+				readOnly: true,
+				type: 'string',
+			},
 		},
 		type: 'object',
 	},
 } as ISchemas;
 
-function assertChildren(f: IField, childrenNames: string[]) {
-	if (childrenNames.length) {
+function assertChildren(f: IField | undefined, childrenNames: string[]) {
+	if (f && childrenNames.length) {
 		expect(f.children).toBeDefined();
 		expect(f.children?.length).toEqual(childrenNames.length);
-		childrenNames.forEach((childName, index) =>
-			expect(f.children[index]?.name).toEqual(childName)
+		childrenNames.forEach(
+			(childName, index) =>
+				f.children && expect(f.children[index]?.name).toEqual(childName)
 		);
 	}
 	else {
@@ -116,8 +127,8 @@ describe('getValidFields', () => {
 		const result = getValidFields({
 			contextPath: '',
 			schemaName: 'Simple',
-			schemaStack: [],
 			schemas: simpleSchema,
+			visitedFields: [],
 		});
 
 		const expectedValidFields = result.map((item) => item.label);
@@ -127,8 +138,10 @@ describe('getValidFields', () => {
 			'label',
 			'label_i18n',
 			'old_codes',
+			'scopeKey',
 			'userNames',
 			'x-class-name',
+			'x-schema-name',
 		]);
 
 		expect(expectedValidFields).toEqual([
@@ -140,15 +153,15 @@ describe('getValidFields', () => {
 
 		expect(expectedValidFields).not.toContain('label_i18n');
 
-		expect(expectedValidFields).not.toContain(INVALID_FIELDS);
+		expect(expectedValidFields).not.toContain(BLACKLISTED_FIELDS);
 	});
 
 	it('Non scalar (arrays and object) fields are not sortable, scalar fields are', () => {
 		const result = getValidFields({
 			contextPath: '',
 			schemaName: 'Simple',
-			schemaStack: [],
 			schemas: simpleSchema,
+			visitedFields: [],
 		});
 
 		const expectedValidScalarFields = result.filter(
@@ -173,8 +186,8 @@ describe('getValidFields', () => {
 		const result = getValidFields({
 			contextPath: '',
 			schemaName: 'A',
-			schemaStack: [],
 			schemas: nestedSchemas,
+			visitedFields: [],
 		});
 
 		/* Excerpt of tree for field a_b:
@@ -204,27 +217,39 @@ describe('getValidFields', () => {
 		 */
 
 		const a_b = result.find((item) => item.label === 'a_b');
-		expect(a_b.name).toEqual('a_b.*');
-		assertChildren(a_b, ['a_b.*b_c.*']);
+		expect(a_b?.name).toEqual('a_b.*');
 
-		const b_c = a_b.children[0];
-		assertChildren(b_c, ['a_b.*b_c.*c_a[]*']);
+		if (a_b) {
+			assertChildren(a_b, ['a_b.*b_c.*']);
 
-		const c_a = b_c.children[0];
-		assertChildren(c_a, ['a_b.*b_c.*c_a[]*a_b.*', 'a_b.*b_c.*c_a[]*c.*']);
+			const b_c = a_b.children && a_b?.children[0];
+			if (b_c) {
+				assertChildren(b_c, ['a_b.*b_c.*c_a[]*']);
 
-		// no loops
+				const c_a = b_c.children && b_c.children[0];
+				if (c_a) {
+					assertChildren(c_a, [
+						'a_b.*b_c.*c_a[]*a_b.*',
+						'a_b.*b_c.*c_a[]*c.*',
+					]);
 
-		assertChildren(c_a.children[0], []);
-		assertChildren(c_a.children[1], []);
+					// no loops
+
+					if (c_a.children && c_a.children.length) {
+						assertChildren(c_a.children[0], []);
+						assertChildren(c_a.children[1], []);
+					}
+				}
+			}
+		}
 	});
 
 	it('Include children properties from schemas referenced via x-map-properties property, no loops', () => {
 		const result = getValidFields({
 			contextPath: '',
 			schemaName: 'A',
-			schemaStack: [],
 			schemas: nestedSchemas,
+			visitedFields: [],
 		});
 
 		/* Excerpt of tree for field c
@@ -254,18 +279,21 @@ describe('getValidFields', () => {
 		*/
 
 		const c = result.find((item) => item.label === 'c');
-		expect(c.name).toEqual('c.*');
-		assertChildren(c, ['c.*c_a[]*']);
+		expect(c?.name).toEqual('c.*');
+		c && assertChildren(c, ['c.*c_a[]*']);
 
-		const c_a = c.children[0];
-		assertChildren(c_a, ['c.*c_a[]*a_b.*', 'c.*c_a[]*c.*']);
+		if (c) {
+			const c_a = c.children && c.children[0];
+			assertChildren(c_a, ['c.*c_a[]*a_b.*', 'c.*c_a[]*c.*']);
+			if (c_a) {
+				const a_b = c_a.children && c_a.children[0];
+				assertChildren(a_b, ['c.*c_a[]*a_b.*b_c.*']);
 
-		const a_b = c_a.children[0];
-		assertChildren(a_b, ['c.*c_a[]*a_b.*b_c.*']);
+				// no loops
 
-		// no loops
-
-		assertChildren(a_b.children[0], []);
-		assertChildren(c_a.children[1], []);
+				a_b?.children && assertChildren(a_b.children[0], []);
+				c_a.children && assertChildren(c_a.children[1], []);
+			}
+		}
 	});
 });

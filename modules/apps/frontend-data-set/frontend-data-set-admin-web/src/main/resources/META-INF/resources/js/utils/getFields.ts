@@ -14,7 +14,7 @@ import {fetch} from 'frontend-js-web';
 import openDefaultFailureToast from './openDefaultFailureToast';
 import {EFieldFormat, EFieldType, IField} from './types';
 
-export const INVALID_FIELDS = [
+export const BLACKLISTED_FIELDS = [
 	'actions',
 	'scopeKey',
 	'x-class-name',
@@ -35,30 +35,30 @@ interface IProperties {
 	[key: string]: IProperty;
 }
 
-export interface ISchemas {
+interface ISchemas {
 	[key: string]: {
 		properties: IProperties;
 		type: string;
 	};
 }
 
-const filterSchemaProperty = (propertyKey: string) => {
+const validSchemaPropertyFilter = (propertyKey: string) => {
 	return (
-		!INVALID_FIELDS.includes(propertyKey) &&
+		!BLACKLISTED_FIELDS.includes(propertyKey) &&
 		!propertyKey.includes(LOCALIZABLE_PROPERTY_SUFFIX)
 	);
 };
 
-export function getValidFields({
+function getValidFields({
 	contextPath,
 	schemaName,
-	schemaStack,
 	schemas,
+	visitedFields,
 }: {
 	contextPath: string;
 	schemaName: string;
-	schemaStack: string[];
 	schemas: ISchemas;
+	visitedFields: string[];
 }): Array<IField> {
 	const fields: Array<IField> = [];
 
@@ -69,7 +69,7 @@ export function getValidFields({
 	}
 
 	Object.keys(properties)
-		.filter(filterSchemaProperty)
+		.filter(validSchemaPropertyFilter)
 		.map((propertyKey) => {
 			const propertyValue = properties[propertyKey];
 
@@ -122,12 +122,12 @@ export function getValidFields({
 				!contextPath.includes(FDS_NESTED_FIELD_NAME_DELIMITER) &&
 				!contextPath.includes(FDS_ARRAY_FIELD_NAME_DELIMITER);
 
-			if (targetSchemaName && !schemaStack.includes(targetSchemaName)) {
+			if (targetSchemaName && !visitedFields.includes(targetSchemaName)) {
 				field.children = getValidFields({
 					contextPath: field.name,
 					schemaName: targetSchemaName,
-					schemaStack: [...schemaStack, targetSchemaName],
 					schemas,
+					visitedFields: [...visitedFields, targetSchemaName],
 				});
 			}
 
@@ -165,8 +165,8 @@ export default async function getFields({
 	return getValidFields({
 		contextPath: '',
 		schemaName: restSchema,
-		schemaStack: [],
 		schemas,
+		visitedFields: [],
 	});
 }
 

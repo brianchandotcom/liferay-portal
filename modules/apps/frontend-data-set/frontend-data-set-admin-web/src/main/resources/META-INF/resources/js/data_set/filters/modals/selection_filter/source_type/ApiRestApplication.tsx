@@ -212,6 +212,7 @@ function ApiRestApplication({
 			contextPath: '',
 			schemaName: restSchema,
 			schemas,
+			visitedFields: [],
 		});
 
 		setFields(

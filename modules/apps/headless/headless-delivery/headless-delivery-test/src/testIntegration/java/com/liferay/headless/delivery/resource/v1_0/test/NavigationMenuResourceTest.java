@@ -371,7 +371,19 @@ public class NavigationMenuResourceTest
 			testGroup.getGroupId(), _randomNavigationMenu(false));
 	}
 
-	private NavigationMenuResource _buildNavigationMenuResource() {
+	private void _assertNavigationMenuItem(
+		String name, Map<String, String> nameI18nMap,
+		NavigationMenuItem navigationMenuItem, String type,
+		boolean useCustomName) {
+
+		Assert.assertEquals(name, navigationMenuItem.getName());
+		Assert.assertEquals(nameI18nMap, navigationMenuItem.getName_i18n());
+		Assert.assertEquals(type, navigationMenuItem.getType());
+		Assert.assertEquals(
+			useCustomName, navigationMenuItem.getUseCustomName());
+	}
+
+	private NavigationMenuResource _buildNavigationMenuResource(Locale locale) {
 		NavigationMenuResource.Builder builder =
 			NavigationMenuResource.builder();
 

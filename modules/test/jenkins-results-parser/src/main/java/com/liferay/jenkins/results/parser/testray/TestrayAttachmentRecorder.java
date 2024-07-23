@@ -63,7 +63,9 @@ public class TestrayAttachmentRecorder {
 			else {
 				_recordDockerLogs();
 				_recordFailureMessages();
+				_recordGCLogs();
 				_recordGradlePluginsFiles();
+				_recordJStacks();
 				_recordLiferayLogs();
 				_recordLiferayOSGiLogs();
 				_recordPlaywrightReportFile();
@@ -523,6 +525,29 @@ public class TestrayAttachmentRecorder {
 		}
 	}
 
+	private void _recordGCLogs() {
+		File sourceGCLogsDir = new File(System.getenv("BUILD_DIR"), "gc");
+
+		if (!sourceGCLogsDir.exists()) {
+			return;
+		}
+
+		File destinationGCLogsDir = new File(_getRecordedFilesBuildDir(), "gc");
+
+		for (File sourceGCLogFile : sourceGCLogsDir.listFiles()) {
+			try {
+				JenkinsResultsParserUtil.copy(
+					sourceGCLogFile,
+					new File(
+						destinationGCLogsDir,
+						sourceGCLogFile.getName() + ".txt"));
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+	}
+
 	private void _recordGradlePluginsFiles() {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			_getPortalGitWorkingDirectory();
@@ -603,6 +628,30 @@ public class TestrayAttachmentRecorder {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
+		}
+	}
+
+	private void _recordJStacks() {
+		File sourceJStacksDir = new File(System.getenv("BUILD_DIR"), "jstacks");
+
+		if (!sourceJStacksDir.exists()) {
+			return;
+		}
+
+		File destinationJStacksDir = new File(
+			_getRecordedFilesBuildDir(), "jstacks");
+
+		for (File sourceJStackFile : sourceJStacksDir.listFiles()) {
+			try {
+				JenkinsResultsParserUtil.copy(
+					sourceJStackFile,
+					new File(
+						destinationJStacksDir,
+						sourceJStackFile.getName() + ".txt"));
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
 		}
 	}
 

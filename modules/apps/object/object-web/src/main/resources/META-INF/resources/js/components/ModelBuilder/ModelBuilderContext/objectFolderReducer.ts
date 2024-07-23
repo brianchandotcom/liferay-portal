@@ -733,17 +733,45 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 
 			const newObjectDefinitionNodes = objectDefinitionNodes.map(
 				(objectDefinitionNode) => {
-					if (
+					const isSelected =
 						objectDefinitionNode.data?.id ===
-						updatedObjectDefinitionNodeId
-					) {
-						return {
-							...objectDefinitionNode,
-							position: newObjectDefinitionNodePosition,
-						};
-					}
+						updatedObjectDefinitionNodeId;
 
-					return objectDefinitionNode;
+					return {
+						...objectDefinitionNode,
+						data: {
+							...objectDefinitionNode.data,
+							objectFields:
+								objectDefinitionNode.data?.objectFields.map(
+									(objectField) => {
+										return {
+											...objectField,
+											selected: false,
+										};
+									}
+								),
+							selected: isSelected,
+						},
+						...(isSelected && {
+							position: newObjectDefinitionNodePosition,
+						}),
+					} as Node<ObjectDefinitionNodeData>;
+				}
+			);
+
+			const newObjectRelationshipEdges = objectRelationshipEdges.map(
+				(objectRelationshipEdge) => {
+					return {
+						...objectRelationshipEdge,
+						data: objectRelationshipEdge.data?.map(
+							(objectRelationshipEdgeData) => {
+								return {
+									...objectRelationshipEdgeData,
+									selected: false,
+								};
+							}
+						),
+					} as Edge<ObjectRelationshipEdgeData[]>;
 				}
 			);
 
@@ -751,7 +779,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				...state,
 				elements: [
 					...newObjectDefinitionNodes,
-					...objectRelationshipEdges,
+					...newObjectRelationshipEdges,
 				],
 				selectedObjectFolder: updatedObjectFolder,
 			};

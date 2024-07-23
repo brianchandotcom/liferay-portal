@@ -5,6 +5,7 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
+import com.liferay.document.library.kernel.exception.DuplicateDLFileEntryTypeExternalReferenceCodeException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
@@ -26,9 +27,14 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -37,6 +43,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -3345,6 +3352,273 @@ public class DLFileEntryTypePersistenceImpl
 	private static final String _FINDER_COLUMN_G_F_FILEENTRYTYPEKEY_3 =
 		"(dlFileEntryType.fileEntryTypeKey IS NULL OR dlFileEntryType.fileEntryTypeKey = '')";
 
+	private FinderPath _finderPathFetchByERC_G;
+	private FinderPath _finderPathCountByERC_G;
+
+	/**
+	 * Returns the document library file entry type where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchFileEntryTypeException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching document library file entry type
+	 * @throws NoSuchFileEntryTypeException if a matching document library file entry type could not be found
+	 */
+	@Override
+	public DLFileEntryType findByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchFileEntryTypeException {
+
+		DLFileEntryType dlFileEntryType = fetchByERC_G(
+			externalReferenceCode, groupId);
+
+		if (dlFileEntryType == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", groupId=");
+			sb.append(groupId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchFileEntryTypeException(sb.toString());
+		}
+
+		return dlFileEntryType;
+	}
+
+	/**
+	 * Returns the document library file entry type where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
+	 */
+	@Override
+	public DLFileEntryType fetchByERC_G(
+		String externalReferenceCode, long groupId) {
+
+		return fetchByERC_G(externalReferenceCode, groupId, true);
+	}
+
+	/**
+	 * Returns the document library file entry type where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
+	 */
+	@Override
+	public DLFileEntryType fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					DLFileEntryType.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {externalReferenceCode, groupId};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = FinderCacheUtil.getResult(
+					_finderPathFetchByERC_G, finderArgs, this);
+			}
+
+			if (result instanceof DLFileEntryType) {
+				DLFileEntryType dlFileEntryType = (DLFileEntryType)result;
+
+				if (!Objects.equals(
+						externalReferenceCode,
+						dlFileEntryType.getExternalReferenceCode()) ||
+					(groupId != dlFileEntryType.getGroupId())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_SELECT_DLFILEENTRYTYPE_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(groupId);
+
+					List<DLFileEntryType> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							FinderCacheUtil.putResult(
+								_finderPathFetchByERC_G, finderArgs, list);
+						}
+					}
+					else {
+						DLFileEntryType dlFileEntryType = list.get(0);
+
+						result = dlFileEntryType;
+
+						cacheResult(dlFileEntryType);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (DLFileEntryType)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the document library file entry type where externalReferenceCode = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the document library file entry type that was removed
+	 */
+	@Override
+	public DLFileEntryType removeByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchFileEntryTypeException {
+
+		DLFileEntryType dlFileEntryType = findByERC_G(
+			externalReferenceCode, groupId);
+
+		return remove(dlFileEntryType);
+	}
+
+	/**
+	 * Returns the number of document library file entry types where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the number of matching document library file entry types
+	 */
+	@Override
+	public int countByERC_G(String externalReferenceCode, long groupId) {
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					DLFileEntryType.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			FinderPath finderPath = _finderPathCountByERC_G;
+
+			Object[] finderArgs = new Object[] {externalReferenceCode, groupId};
+
+			Long count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_DLFILEENTRYTYPE_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(groupId);
+
+					count = (Long)query.uniqueResult();
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2 =
+		"dlFileEntryType.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3 =
+		"(dlFileEntryType.externalReferenceCode IS NULL OR dlFileEntryType.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_GROUPID_2 =
+		"dlFileEntryType.groupId = ?";
+
 	public DLFileEntryTypePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3395,6 +3669,14 @@ public class DLFileEntryTypePersistenceImpl
 				new Object[] {
 					dlFileEntryType.getGroupId(),
 					dlFileEntryType.getFileEntryTypeKey()
+				},
+				dlFileEntryType);
+
+			FinderCacheUtil.putResult(
+				_finderPathFetchByERC_G,
+				new Object[] {
+					dlFileEntryType.getExternalReferenceCode(),
+					dlFileEntryType.getGroupId()
 				},
 				dlFileEntryType);
 		}
@@ -3512,6 +3794,16 @@ public class DLFileEntryTypePersistenceImpl
 				_finderPathCountByG_F, args, Long.valueOf(1));
 			FinderCacheUtil.putResult(
 				_finderPathFetchByG_F, args, dlFileEntryTypeModelImpl);
+
+			args = new Object[] {
+				dlFileEntryTypeModelImpl.getExternalReferenceCode(),
+				dlFileEntryTypeModelImpl.getGroupId()
+			};
+
+			FinderCacheUtil.putResult(
+				_finderPathCountByERC_G, args, Long.valueOf(1));
+			FinderCacheUtil.putResult(
+				_finderPathFetchByERC_G, args, dlFileEntryTypeModelImpl);
 		}
 	}
 
@@ -3656,6 +3948,69 @@ public class DLFileEntryTypePersistenceImpl
 			String uuid = PortalUUIDUtil.generate();
 
 			dlFileEntryType.setUuid(uuid);
+		}
+
+		if (Validator.isNull(dlFileEntryType.getExternalReferenceCode())) {
+			dlFileEntryType.setExternalReferenceCode(dlFileEntryType.getUuid());
+		}
+		else {
+			if (!Objects.equals(
+					dlFileEntryTypeModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					dlFileEntryType.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = dlFileEntryType.getCompanyId();
+
+					long groupId = dlFileEntryType.getGroupId();
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = dlFileEntryType.getPrimaryKey();
+					}
+
+					try {
+						dlFileEntryType.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								DLFileEntryType.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								dlFileEntryType.getExternalReferenceCode(),
+								null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			DLFileEntryType ercDLFileEntryType = fetchByERC_G(
+				dlFileEntryType.getExternalReferenceCode(),
+				dlFileEntryType.getGroupId());
+
+			if (isNew) {
+				if (ercDLFileEntryType != null) {
+					throw new DuplicateDLFileEntryTypeExternalReferenceCodeException(
+						"Duplicate document library file entry type with external reference code " +
+							dlFileEntryType.getExternalReferenceCode() +
+								" and group " + dlFileEntryType.getGroupId());
+				}
+			}
+			else {
+				if ((ercDLFileEntryType != null) &&
+					(dlFileEntryType.getFileEntryTypeId() !=
+						ercDLFileEntryType.getFileEntryTypeId())) {
+
+					throw new DuplicateDLFileEntryTypeExternalReferenceCodeException(
+						"Duplicate document library file entry type with external reference code " +
+							dlFileEntryType.getExternalReferenceCode() +
+								" and group " + dlFileEntryType.getGroupId());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -4545,6 +4900,7 @@ public class DLFileEntryTypePersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("externalReferenceCode");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
@@ -4578,6 +4934,9 @@ public class DLFileEntryTypePersistenceImpl
 
 		_uniqueIndexColumnNames.add(
 			new String[] {"groupId", "fileEntryTypeKey"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"externalReferenceCode", "groupId"});
 	}
 
 	/**
@@ -4693,6 +5052,16 @@ public class DLFileEntryTypePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "fileEntryTypeKey"}, false);
+
+		_finderPathFetchByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, true);
+
+		_finderPathCountByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, false);
 
 		DLFileEntryTypeUtil.setPersistence(this);
 	}

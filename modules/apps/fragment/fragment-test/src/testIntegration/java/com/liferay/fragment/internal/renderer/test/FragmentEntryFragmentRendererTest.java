@@ -6,6 +6,8 @@
 package com.liferay.fragment.internal.renderer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
@@ -13,17 +15,23 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.test.util.FragmentTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -70,6 +78,10 @@ public class FragmentEntryFragmentRendererTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, FragmentEntryFragmentRendererTest.class.getSimpleName(), null);
+
 		_group = GroupTestUtil.addGroup(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0);
 
@@ -141,6 +153,23 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	@Test
+	@TestInfo("LPD-32054")
+	public void testShouldOnlyCacheFragmentEntryLinkInProductionMode()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _getFragmentEntry(true);
+
+		Assert.assertTrue(_fragmentEntryLinkIsCacheable(fragmentEntry));
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			Assert.assertFalse(_fragmentEntryLinkIsCacheable(fragmentEntry));
+		}
+	}
+
+	@Test
 	public void testUpdateCacheableFragmentEntryLink() throws Exception {
 		FragmentEntry fragmentEntry = _getFragmentEntry(true);
 
@@ -188,6 +217,34 @@ public class FragmentEntryFragmentRendererTest {
 			fragmentEntryLink, LocaleUtil.US);
 
 		Assert.assertTrue(content.contains(fragmentEntry.getHtml()));
+	}
+
+	private boolean _fragmentEntryLinkIsCacheable(FragmentEntry fragmentEntry)
+		throws PortalException {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_defaultSegmentsExperienceId, _layout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				_serviceContext);
+
+		fragmentEntryLink.setCtCollectionId(RandomTestUtil.nextLong());
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		defaultFragmentRendererContext.setLocale(LocaleUtil.US);
+
+		return ReflectionTestUtil.invoke(
+			_fragmentRenderer, "_isCacheable",
+			new Class<?>[] {
+				FragmentEntryLink.class, FragmentRendererContext.class
+			},
+			fragmentEntryLink, defaultFragmentRendererContext);
 	}
 
 	private FragmentEntry _getFragmentEntry(boolean cacheable)
@@ -244,7 +301,13 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	@Inject
+	private static CTCollectionLocalService _ctCollectionLocalService;
+
+	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
+	private CTCollection _ctCollection;
 
 	private long _defaultSegmentsExperienceId;
 

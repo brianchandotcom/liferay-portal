@@ -164,6 +164,8 @@ public class SafeReleaseInstanceResourceProviderTest {
 
 		System.runFinalization();
 
+		_waitForFinalization();
+
 		Assert.assertEquals(0, _instances);
 	}
 
@@ -205,6 +207,21 @@ public class SafeReleaseInstanceResourceProviderTest {
 			_instances--;
 		}
 
+	}
+
+	private void _waitForFinalization() {
+		long startTime = System.currentTimeMillis();
+
+		while (_instances > 0) {
+			if ((System.currentTimeMillis() - startTime) > 5000) {
+				break;
+			}
+
+			Thread.yield();
+
+			System.gc();
+			System.runFinalization();
+		}
 	}
 
 	private static int _instances;

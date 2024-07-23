@@ -775,12 +775,6 @@ public class CPTestUtil {
 				CPConstants.PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES;
 		}
 
-		allowedCommerceOptionTypes = ArrayUtil.filter(
-			allowedCommerceOptionTypes,
-			commerceOptionType -> !Objects.equals(
-				CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
-				commerceOptionType));
-
 		return allowedCommerceOptionTypes[0];
 	}
 

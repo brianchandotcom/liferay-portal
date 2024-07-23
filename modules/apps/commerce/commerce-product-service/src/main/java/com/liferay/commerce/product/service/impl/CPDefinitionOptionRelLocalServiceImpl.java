@@ -1132,11 +1132,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		CPOptionConfiguration cpOptionConfiguration =
 			_getCPOptionConfiguration();
 
-		String[] allowedCommerceOptionTypes = ArrayUtil.filter(
-			cpOptionConfiguration.allowedCommerceOptionTypes(),
-			commerceOptionType -> !Objects.equals(
-				CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
-				commerceOptionType));
+		String[] allowedCommerceOptionTypes =
+			cpOptionConfiguration.allowedCommerceOptionTypes();
 
 		if (skuContributor) {
 			allowedCommerceOptionTypes =

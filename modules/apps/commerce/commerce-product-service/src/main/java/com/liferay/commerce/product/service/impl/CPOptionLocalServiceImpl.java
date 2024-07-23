@@ -52,7 +52,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -398,12 +397,6 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 			allowedCommerceOptionTypes =
 				CPConstants.PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES;
 		}
-
-		allowedCommerceOptionTypes = ArrayUtil.filter(
-			allowedCommerceOptionTypes,
-			commerceOptionType -> !Objects.equals(
-				CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
-				commerceOptionType));
 
 		if (ArrayUtil.contains(
 				allowedCommerceOptionTypes, commerceOptionTypeKey)) {

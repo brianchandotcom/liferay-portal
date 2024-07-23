@@ -7,6 +7,7 @@ package com.liferay.site.admin.web.internal.servlet.taglib.util;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -94,7 +96,7 @@ public class SiteActionDropdownItemsProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Mockito.reset(GroupPermissionUtil.class);
+		Mockito.reset(GroupPermissionUtil.class, _group);
 
 		_setUpGroup();
 		_setUpLanguageUtil();
@@ -119,6 +121,60 @@ public class SiteActionDropdownItemsProviderTest {
 		_assertDropdownItem(
 			TreeMapBuilder.put(
 				"deactivate", "/site_admin/deactivate_group"
+			).put(
+				"go-to-x-site-settings",
+				ConfigurationAdminPortletKeys.SITE_SETTINGS
+			).build());
+	}
+
+	@Test
+	public void testGetActionDropdownItemsWithUpdatePermissionAndPrivatePages()
+		throws Exception {
+
+		Mockito.when(
+			GroupPermissionUtil.contains(null, _group, ActionKeys.UPDATE)
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_group.getPrivateLayoutsPageCount()
+		).thenReturn(
+			RandomTestUtil.randomInt()
+		);
+
+		_assertDropdownItem(
+			TreeMapBuilder.put(
+				"deactivate", "/site_admin/deactivate_group"
+			).put(
+				"go-to-x-private-pages", "/group/groupKey/"
+			).put(
+				"go-to-x-site-settings",
+				ConfigurationAdminPortletKeys.SITE_SETTINGS
+			).build());
+	}
+
+	@Test
+	public void testGetActionDropdownItemsWithUpdatePermissionAndPublicPages()
+		throws Exception {
+
+		Mockito.when(
+			GroupPermissionUtil.contains(null, _group, ActionKeys.UPDATE)
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_group.getPublicLayoutsPageCount()
+		).thenReturn(
+			RandomTestUtil.randomInt()
+		);
+
+		_assertDropdownItem(
+			TreeMapBuilder.put(
+				"deactivate", "/site_admin/deactivate_group"
+			).put(
+				"go-to-x-public-pages", "/web/groupKey/"
 			).put(
 				"go-to-x-site-settings",
 				ConfigurationAdminPortletKeys.SITE_SETTINGS
@@ -178,6 +234,32 @@ public class SiteActionDropdownItemsProviderTest {
 		).thenReturn(
 			true
 		);
+
+		Mockito.when(
+			_group.getLayoutRootNodeName(true, null)
+		).thenReturn(
+			"private-pages"
+		);
+
+		Mockito.when(
+			_group.getLayoutRootNodeName(false, null)
+		).thenReturn(
+			"public-pages"
+		);
+
+		Mockito.when(
+			_group.getDisplayURL(
+				Mockito.any(ThemeDisplay.class), Mockito.anyBoolean(),
+				Mockito.anyBoolean())
+		).thenAnswer(
+			(Answer<String>)invocationOnMock -> {
+				if (invocationOnMock.getArgument(1, Boolean.class)) {
+					return "/group/groupKey/";
+				}
+
+				return "/web/groupKey/";
+			}
+		);
 	}
 
 	private void _setUpLanguageUtil() {
@@ -225,11 +307,25 @@ public class SiteActionDropdownItemsProviderTest {
 			_httpServletRequest
 		);
 
-		MockLiferayPortletURL liferayPortletURL = new MockLiferayPortletURL();
+		MockLiferayPortletURL liferayPortletURL1 = new MockLiferayPortletURL();
 
-		liferayPortletURL.setParameter(
+		liferayPortletURL1.setParameter(
+			"portletId", LayoutAdminPortletKeys.GROUP_PAGES);
+		liferayPortletURL1.setPortletId(LayoutAdminPortletKeys.GROUP_PAGES);
+
+		Mockito.when(
+			_portal.getControlPanelPortletURL(
+				_httpServletRequest, _group, LayoutAdminPortletKeys.GROUP_PAGES,
+				0, 0, PortletRequest.RENDER_PHASE)
+		).thenReturn(
+			liferayPortletURL1
+		);
+
+		MockLiferayPortletURL liferayPortletURL2 = new MockLiferayPortletURL();
+
+		liferayPortletURL2.setParameter(
 			"portletId", ConfigurationAdminPortletKeys.SITE_SETTINGS);
-		liferayPortletURL.setPortletId(
+		liferayPortletURL2.setPortletId(
 			ConfigurationAdminPortletKeys.SITE_SETTINGS);
 
 		Mockito.when(
@@ -238,7 +334,7 @@ public class SiteActionDropdownItemsProviderTest {
 				ConfigurationAdminPortletKeys.SITE_SETTINGS, 0, 0,
 				PortletRequest.RENDER_PHASE)
 		).thenReturn(
-			liferayPortletURL
+			liferayPortletURL2
 		);
 
 		portalUtil.setPortal(_portal);

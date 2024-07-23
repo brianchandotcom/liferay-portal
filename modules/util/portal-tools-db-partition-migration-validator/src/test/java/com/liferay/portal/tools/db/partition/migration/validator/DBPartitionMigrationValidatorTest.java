@@ -253,7 +253,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		try {
 			DBPartitionMigrationValidator.main(
 				new String[] {
-					"--export", "--jdbc-url", url, "--output-dir",
+					"export", "--jdbc-url", url, "--output-dir",
 					outputDirectory.getAbsolutePath(), "--password", password,
 					"--schema-name", schemaName, "--user", user
 				});
@@ -333,9 +333,8 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 		try {
 			DBPartitionMigrationValidator.main(
 				new String[] {
-					"--source-file", _getPathString(sourceFileName),
-					"--target-file", _getPathString(targetFileName),
-					"--validate"
+					"validate", "--source-file", _getPathString(sourceFileName),
+					"--target-file", _getPathString(targetFileName)
 				});
 		}
 		catch (RuntimeException runtimeException) {

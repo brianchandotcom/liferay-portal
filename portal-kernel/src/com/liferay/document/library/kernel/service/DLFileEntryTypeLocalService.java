@@ -112,7 +112,7 @@ public interface DLFileEntryTypeLocalService
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addFileEntryType(long, long, long, String, Map, Map, long,
+	 #addFileEntryType(String, long, long, long, String, Map, Map, int,
 	 ServiceContext)}
 	 */
 	@Deprecated
@@ -172,6 +172,10 @@ public interface DLFileEntryTypeLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public DLFileEntryType deleteDLFileEntryType(long fileEntryTypeId)
+		throws PortalException;
+
+	public void deleteDLFileEntryType(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	public void deleteDLFolderDLFileEntryType(
@@ -307,6 +311,10 @@ public interface DLFileEntryTypeLocalService
 		long groupId, String fileEntryTypeKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType fetchFileEntryTypeByExternalReferenceCode(
+		String externalReferenceCode, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -428,6 +436,11 @@ public interface DLFileEntryTypeLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryType getFileEntryType(
 			long groupId, String fileEntryTypeKey)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType getFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -102,7 +102,7 @@ public class DLFileEntryTypeLocalServiceUtil {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addFileEntryType(long, long, long, String, Map, Map, long,
+	 #addFileEntryType(String, long, long, long, String, Map, Map, int,
 	 ServiceContext)}
 	 */
 	@Deprecated
@@ -186,6 +186,13 @@ public class DLFileEntryTypeLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteDLFileEntryType(fileEntryTypeId);
+	}
+
+	public static void deleteDLFileEntryType(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		getService().deleteDLFileEntryType(externalReferenceCode, groupId);
 	}
 
 	public static void deleteDLFolderDLFileEntryType(
@@ -366,6 +373,13 @@ public class DLFileEntryTypeLocalServiceUtil {
 		return getService().fetchFileEntryType(groupId, fileEntryTypeKey);
 	}
 
+	public static DLFileEntryType fetchFileEntryTypeByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return getService().fetchFileEntryTypeByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -532,6 +546,14 @@ public class DLFileEntryTypeLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getFileEntryType(groupId, fileEntryTypeKey);
+	}
+
+	public static DLFileEntryType getFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getFileEntryTypeByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	public static List<DLFileEntryType> getFileEntryTypes(long[] groupIds) {

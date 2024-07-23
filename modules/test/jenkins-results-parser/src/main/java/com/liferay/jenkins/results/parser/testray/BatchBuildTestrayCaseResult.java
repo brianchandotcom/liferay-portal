@@ -208,6 +208,8 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
 
 		testrayAttachments.addAll(_getDockerLogsTestrayAttachments());
+		testrayAttachments.addAll(_getGCLogsTestrayAttachments());
+		testrayAttachments.addAll(_getJStacksTestrayAttachments());
 
 		testrayAttachments.add(_getGradlePluginsAttachment());
 		testrayAttachments.add(_getJenkinsConsoleTestrayAttachment());
@@ -420,6 +422,10 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 		Build build = getBuild();
 
+		if (build == null) {
+			return testrayAttachments;
+		}
+
 		for (URL testrayAttachmentURL : build.getTestrayAttachmentURLs()) {
 			Matcher matcher = _dockerLogsURLPattern.matcher(
 				String.valueOf(testrayAttachmentURL));
@@ -431,6 +437,32 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			testrayAttachments.add(
 				getTestrayAttachment(
 					build, "Docker Log (" + matcher.group("fileName") + ")",
+					getAxisBuildURLPath() + "/" + matcher.group("key")));
+		}
+
+		return testrayAttachments;
+	}
+
+	private List<TestrayAttachment> _getGCLogsTestrayAttachments() {
+		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
+
+		Build build = getBuild();
+
+		if (build == null) {
+			return testrayAttachments;
+		}
+
+		for (URL testrayAttachmentURL : build.getTestrayAttachmentURLs()) {
+			Matcher matcher = _gcLogsURLPattern.matcher(
+				String.valueOf(testrayAttachmentURL));
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			testrayAttachments.add(
+				getTestrayAttachment(
+					build, "GC Log (" + matcher.group("fileName") + ")",
 					getAxisBuildURLPath() + "/" + matcher.group("key")));
 		}
 
@@ -511,6 +543,32 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		return JobPropertyFactory.newJobProperty(basePropertyName, job);
 	}
 
+	private List<TestrayAttachment> _getJStacksTestrayAttachments() {
+		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
+
+		Build build = getBuild();
+
+		if (build == null) {
+			return testrayAttachments;
+		}
+
+		for (URL testrayAttachmentURL : build.getTestrayAttachmentURLs()) {
+			Matcher matcher = _jStacksURLPattern.matcher(
+				String.valueOf(testrayAttachmentURL));
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			testrayAttachments.add(
+				getTestrayAttachment(
+					build, "Docker Log (" + matcher.group("fileName") + ")",
+					getAxisBuildURLPath() + "/" + matcher.group("key")));
+		}
+
+		return testrayAttachments;
+	}
+
 	private TestrayAttachment _getWarningsTestrayAttachment() {
 		return getTestrayAttachment(
 			getBuild(), "Warnings",
@@ -519,6 +577,10 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 	private static final Pattern _dockerLogsURLPattern = Pattern.compile(
 		"https?://.+/(?<key>docker-logs/(?<fileName>[^/]+.log).txt.gz)");
+	private static final Pattern _gcLogsURLPattern = Pattern.compile(
+		"https?://.+/(?<key>gc/(?<fileName>[^/]+.log).txt.gz)");
+	private static final Pattern _jStacksURLPattern = Pattern.compile(
+		"https?://.+/(?<key>jstacks/(?<fileName>[^/]+.log).txt.gz)");
 
 	private final AxisTestClassGroup _axisTestClassGroup;
 	private TopLevelBuildTestrayCaseResult _topLevelBuildTestrayCaseResult;

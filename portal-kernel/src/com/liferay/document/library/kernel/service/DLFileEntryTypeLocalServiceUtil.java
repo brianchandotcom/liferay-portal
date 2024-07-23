@@ -88,15 +88,16 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	public static DLFileEntryType addFileEntryType(
-			long userId, long groupId, long dataDefinitionId,
-			String fileEntryTypeKey, Map<java.util.Locale, String> nameMap,
+			String externalReferenceCode, long userId, long groupId,
+			long dataDefinitionId, String fileEntryTypeKey,
+			Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap, int scope,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFileEntryType(
-			userId, groupId, dataDefinitionId, fileEntryTypeKey, nameMap,
-			descriptionMap, scope, serviceContext);
+			externalReferenceCode, userId, groupId, dataDefinitionId,
+			fileEntryTypeKey, nameMap, descriptionMap, scope, serviceContext);
 	}
 
 	/**
@@ -106,15 +107,16 @@ public class DLFileEntryTypeLocalServiceUtil {
 	 */
 	@Deprecated
 	public static DLFileEntryType addFileEntryType(
-			long userId, long groupId, long dataDefinitionId,
-			String fileEntryTypeKey, Map<java.util.Locale, String> nameMap,
+			String externalReferenceCode, long userId, long groupId,
+			long dataDefinitionId, String fileEntryTypeKey,
+			Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFileEntryType(
-			userId, groupId, dataDefinitionId, fileEntryTypeKey, nameMap,
-			descriptionMap, serviceContext);
+			externalReferenceCode, userId, groupId, dataDefinitionId,
+			fileEntryTypeKey, nameMap, descriptionMap, serviceContext);
 	}
 
 	public static void cascadeFileEntryTypes(

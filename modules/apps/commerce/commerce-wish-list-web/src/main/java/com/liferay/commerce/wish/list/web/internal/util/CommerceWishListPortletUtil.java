@@ -30,8 +30,9 @@ public class CommerceWishListPortletUtil {
 		OrderByComparator<CommerceWishListItem> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new CommerceWishListItemCreateDateComparator(
-				orderByAsc);
+			orderByComparator =
+				CommerceWishListItemCreateDateComparator.getInstance(
+					orderByAsc);
 		}
 
 		return orderByComparator;
@@ -50,11 +51,12 @@ public class CommerceWishListPortletUtil {
 		OrderByComparator<CommerceWishList> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new CommerceWishListCreateDateComparator(
-				orderByAsc);
+			orderByComparator =
+				CommerceWishListCreateDateComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new CommerceWishListNameComparator(orderByAsc);
+			orderByComparator = CommerceWishListNameComparator.getInstance(
+				orderByAsc);
 		}
 
 		return orderByComparator;

@@ -597,6 +597,67 @@ public class NavigationMenuResourceTest
 		};
 	}
 
+	private NavigationMenuItem[] _randomNavigationMenuItems(
+		Layout layout1, Layout layout2, Map<String, String> nameI18nMap1,
+		Map<String, String> nameI18nMap2) {
+
+		return new NavigationMenuItem[] {
+			new NavigationMenuItem() {
+				{
+					name_i18n = nameI18nMap1;
+					type = "navigationMenu";
+					useCustomName = false;
+				}
+			},
+			new NavigationMenuItem() {
+				{
+					link = layout1.getFriendlyURL(LocaleUtil.US);
+					link_i18n = HashMapBuilder.put(
+						"en-US", layout1.getFriendlyURL(LocaleUtil.US)
+					).put(
+						"es-ES", layout1.getFriendlyURL(LocaleUtil.SPAIN)
+					).build();
+					name_i18n = nameI18nMap1;
+					type = "page";
+					useCustomName = true;
+				}
+			},
+			new NavigationMenuItem() {
+				{
+					link = layout1.getFriendlyURL(LocaleUtil.US);
+					link_i18n = HashMapBuilder.put(
+						"en-US", layout1.getFriendlyURL(LocaleUtil.US)
+					).build();
+					name_i18n = nameI18nMap2;
+					type = "page";
+					useCustomName = true;
+				}
+			},
+			new NavigationMenuItem() {
+				{
+					link = layout1.getFriendlyURL(LocaleUtil.US);
+					link_i18n = HashMapBuilder.put(
+						"en-US", layout1.getFriendlyURL(LocaleUtil.US)
+					).build();
+					name_i18n = nameI18nMap1;
+					type = "page";
+					useCustomName = false;
+				}
+			},
+			new NavigationMenuItem() {
+				{
+					link = layout2.getFriendlyURL(LocaleUtil.US);
+					link_i18n = HashMapBuilder.put(
+						"en-US", layout2.getFriendlyURL(LocaleUtil.US)
+					).build();
+					name_i18n = nameI18nMap1;
+					type = "page";
+					useCustomName = false;
+				}
+			}
+		};
+	}
+
 	private void _testGetNavigationMenu(
 			long classPK, long classTypeId, Class<?> clazz, String contentURL,
 			String displayPageType, String title, String type,

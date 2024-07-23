@@ -122,6 +122,46 @@ test.describe('Date range filter creation, edition and cancel', () => {
 			await filtersPage.assertFiltersTableRowCount(1);
 		});
 
+		await test.step('Check cancel edition causes no changes', async () => {
+			await filtersPage
+				.getRowByText(filterName)
+				.locator('.actions-cell button')
+				.click();
+
+			const editButton = filtersPage.page.getByRole('menuitem', {
+				name: 'Edit',
+			});
+
+			await expect(editButton).toBeInViewport();
+
+			await editButton.click();
+
+			const nameInput = filtersPage.newDateRangeFilterModal.nameInput;
+
+			await expect(nameInput).toBeInViewport();
+
+			await expect(nameInput).toBeEnabled();
+
+			await nameInput.fill(filterNewName);
+
+			await filtersPage.cancelAddFilterModal();
+
+			await filtersPage
+				.getRowByText(filterName)
+				.locator('.actions-cell button')
+				.click();
+
+			await expect(editButton).toBeInViewport();
+
+			await editButton.click();
+
+			await expect(nameInput).toHaveValue(filterName);
+
+			await filtersPage.cancelAddFilterModal();
+
+			await filtersPage.assertFiltersTableRowCount(1);
+		});
+
 		await test.step('Edit the filter, change its label @LPS-183056', async () => {
 			await filtersPage
 				.getRowByText(filterName)

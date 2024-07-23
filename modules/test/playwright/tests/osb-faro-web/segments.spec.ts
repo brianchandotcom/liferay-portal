@@ -55,50 +55,58 @@ test(
 	},
 	async ({apiHelpers, page}) => {
 		const channelName = 'My Property - ' + getRandomString();
-		const customEventName = 'CustomEvent' + new Date().getTime();
-		const newCustomEventName = `${customEventName}EV`;
-
-		await test.step('Connect the DXP to AC', async () => {
-			await syncAnalyticsCloud({
-				apiHelpers,
-				channelName,
-				page,
-			});
+		const {channel, project} = await createChannel({
+			apiHelpers,
+			channelName,
 		});
 
-		await test.step('Go to DXP Home Page > Create a custom event', async () => {
-			await page.goto(liferayConfig.environment.baseUrl);
-			await page.waitForTimeout(3000);
+		const customEventName = 'CustomEvent' + new Date().getTime();
 
-			await page.evaluate(
-				({customEventName}) => {
+		await test.step('Send a custom event', async () => {
+			const eventAttributeName = 'propString';
+			const date = new Date();
 
-					// @ts-ignore
-
-					if (window.Analytics) {
-
-						// @ts-ignore
-
-						window.Analytics.track(customEventName, {
-							propBool: true,
-							propDate: '2024-05-20T01:00:00.000',
-							propDuration: 66840000,
-							propNum: 18,
-							propString: 'test',
-						});
-					}
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+				{
+					applicationId: 'CustomEvent',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: date.toISOString(),
+					eventId: customEventName,
+					properties: [
+						{
+							name: eventAttributeName,
+							value: 'testAttribute',
+						},
+					],
+					title: 'Liferay',
+					userId: '1',
 				},
-				{customEventName}
-			);
+			]);
 
-			await page.waitForTimeout(3000);
+			await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+				{
+					applicationId: 'CustomEvent',
+					displayName: customEventName,
+					eventAttributeDefinitions: [
+						{
+							dataType: 'STRING',
+							displayName: eventAttributeName,
+							name: eventAttributeName,
+							type: 'LOCAL',
+						},
+					],
+					name: customEventName,
+					type: 'CUSTOM',
+				},
+			]);
 		});
 
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
-			await navigateToACWorkspace({page});
-			await switchChannel({
-				channelName,
+			await navigateToACSitesPageViaURL({
+				channelID: channel.id,
 				page,
+				projectID: project.groupId,
 			});
 		});
 
@@ -120,6 +128,8 @@ test(
 				pageName: 'Custom Events',
 			});
 		});
+
+		const newCustomEventName = `${customEventName}EV`;
 
 		await test.step('Change the display name of the event', async () => {
 			await changeEventDisplayName({

@@ -282,25 +282,46 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	private String _getName(
-			String type, UnicodeProperties unicodeProperties,
+			Layout layout, String type, UnicodeProperties unicodeProperties,
 			boolean useCustomName)
 		throws JSONException {
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getDefault());
 
+		String preferredLanguageId =
+			contextAcceptLanguage.getPreferredLanguageId();
+
+		if (StringUtil.equals(type, "page")) {
+			if (!useCustomName && (layout == null)) {
+				return null;
+			}
+
+			if (!useCustomName && (layout != null)) {
+				return layout.getName(
+					contextAcceptLanguage.getPreferredLocale());
+			}
+
+			if (useCustomName) {
+				return unicodeProperties.getProperty(
+					"name_" + preferredLanguageId,
+					unicodeProperties.getProperty("name_" + defaultLanguageId));
+			}
+
+			return null;
+		}
+
 		if (useCustomName) {
 			JSONObject customNameJSONObject = _jsonFactory.createJSONObject(
 				unicodeProperties.getProperty("localizedNames"));
 
-			return customNameJSONObject.getString(defaultLanguageId);
+			return customNameJSONObject.getString(
+				preferredLanguageId,
+				customNameJSONObject.getString(defaultLanguageId));
 		}
 
 		if (StringUtil.equals(type, "navigationMenu") ||
 			StringUtil.equals(type, "url")) {
-
-			String preferredLanguageId =
-				contextAcceptLanguage.getPreferredLanguageId();
 
 			return unicodeProperties.getProperty(
 				"name_" + preferredLanguageId,
@@ -601,18 +622,9 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						return i18nMap;
 					});
 				setName(
-					() -> {
-						String name = _getName(
-							navigationMenuItemType, unicodeProperties,
-							getUseCustomName());
-
-						if ((name == null) && (layout != null)) {
-							return layout.getName(
-								contextAcceptLanguage.getPreferredLocale());
-						}
-
-						return name;
-					});
+					() -> _getName(
+						layout, navigationMenuItemType, unicodeProperties,
+						getUseCustomName()));
 				setName_i18n(
 					() -> {
 						if (contextAcceptLanguage.isAcceptAllLanguages()) {

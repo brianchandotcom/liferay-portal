@@ -54,6 +54,7 @@ describe('Sites Dashboard Overview', () => {
 		expect(getAllByText('All Visitors')[1]).toBeTruthy();
 		expect(getByText('Anonymous Visitors')).toBeTruthy();
 		expect(getByText('Known Visitors')).toBeTruthy();
+		expect(getByText('All Search Terms')).toBeInTheDocument();
 
 		expect(container).toMatchSnapshot();
 	});

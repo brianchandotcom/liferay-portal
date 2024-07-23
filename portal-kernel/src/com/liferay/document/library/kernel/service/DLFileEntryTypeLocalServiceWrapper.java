@@ -383,6 +383,15 @@ public class DLFileEntryTypeLocalServiceWrapper
 			fileEntryTypeId);
 	}
 
+	@Override
+	public DLFileEntryType fetchDLFileEntryTypeByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return _dlFileEntryTypeLocalService.
+			fetchDLFileEntryTypeByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the document library file entry type matching the UUID and group.
 	 *
@@ -445,6 +454,16 @@ public class DLFileEntryTypeLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId);
+	}
+
+	@Override
+	public DLFileEntryType getDLFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileEntryTypeLocalService.
+			getDLFileEntryTypeByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	/**

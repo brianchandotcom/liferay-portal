@@ -68,7 +68,7 @@ public class DLFileEntryTypeCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -76,6 +76,8 @@ public class DLFileEntryTypeCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", fileEntryTypeId=");
 		sb.append(fileEntryTypeId);
 		sb.append(", groupId=");
@@ -119,6 +121,13 @@ public class DLFileEntryTypeCacheModel
 		}
 		else {
 			dlFileEntryTypeImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			dlFileEntryTypeImpl.setExternalReferenceCode("");
+		}
+		else {
+			dlFileEntryTypeImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		dlFileEntryTypeImpl.setFileEntryTypeId(fileEntryTypeId);
@@ -190,6 +199,7 @@ public class DLFileEntryTypeCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		fileEntryTypeId = objectInput.readLong();
 
@@ -222,6 +232,13 @@ public class DLFileEntryTypeCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(fileEntryTypeId);
@@ -272,6 +289,7 @@ public class DLFileEntryTypeCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long fileEntryTypeId;
 	public long groupId;
 	public long companyId;

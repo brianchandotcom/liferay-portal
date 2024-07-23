@@ -5,6 +5,7 @@
 
 import {useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
+import usePermission from '~/hooks/usePermission';
 
 import useFormActions from '../../../hooks/useFormActions';
 import useModalContext from '../../../hooks/useModalContext';
@@ -13,7 +14,6 @@ import i18n from '../../../i18n';
 import {TestrayRoutine, testrayRoutineImpl} from '../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../types';
 import EnvironmentFactorsModal from '../../Standalone/EnvironmentFactors/EnviromentFactorsModal';
-import usePermission from '~/hooks/usePermission';
 
 const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const {form} = useFormActions();

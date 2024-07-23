@@ -4,6 +4,7 @@
  */
 
 import {useRef} from 'react';
+import usePermission from '~/hooks/usePermission';
 
 import useFormActions from '../../../../hooks/useFormActions';
 import useModalContext from '../../../../hooks/useModalContext';
@@ -16,7 +17,6 @@ import {
 } from '../../../../services/rest';
 import {Action} from '../../../../types';
 import {UserListView} from '../../../Manage/User';
-import usePermission from '~/hooks/usePermission';
 
 const useBuildTestActions = () => {
 	const {form} = useFormActions();

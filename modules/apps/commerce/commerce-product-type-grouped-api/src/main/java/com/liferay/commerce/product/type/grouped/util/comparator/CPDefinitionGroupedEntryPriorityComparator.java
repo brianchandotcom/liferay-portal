@@ -22,12 +22,14 @@ public class CPDefinitionGroupedEntryPriorityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public CPDefinitionGroupedEntryPriorityComparator() {
-		this(false);
-	}
+	public static CPDefinitionGroupedEntryPriorityComparator getInstance(
+		boolean ascending) {
 
-	public CPDefinitionGroupedEntryPriorityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +66,18 @@ public class CPDefinitionGroupedEntryPriorityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPDefinitionGroupedEntryPriorityComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPDefinitionGroupedEntryPriorityComparator
+		_INSTANCE_ASCENDING = new CPDefinitionGroupedEntryPriorityComparator(
+			true);
+
+	private static final CPDefinitionGroupedEntryPriorityComparator
+		_INSTANCE_DESCENDING = new CPDefinitionGroupedEntryPriorityComparator(
+			false);
 
 	private final boolean _ascending;
 

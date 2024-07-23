@@ -21,12 +21,14 @@ public class CommerceVirtualOrderItemCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CommerceVirtualOrderItemCreateDateComparator() {
-		this(false);
-	}
+	public static CommerceVirtualOrderItemCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public CommerceVirtualOrderItemCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +65,18 @@ public class CommerceVirtualOrderItemCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceVirtualOrderItemCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceVirtualOrderItemCreateDateComparator
+		_INSTANCE_ASCENDING = new CommerceVirtualOrderItemCreateDateComparator(
+			true);
+
+	private static final CommerceVirtualOrderItemCreateDateComparator
+		_INSTANCE_DESCENDING = new CommerceVirtualOrderItemCreateDateComparator(
+			false);
 
 	private final boolean _ascending;
 

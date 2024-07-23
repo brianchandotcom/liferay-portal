@@ -1085,7 +1085,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 				serviceContext.setExpandoBridgeAttributes(null);
 
-				if (sku.getSkuUnitOfMeasures() == null) {
+				if ((sku.getSkuUnitOfMeasures() == null) ||
+					(sku.getSkuUnitOfMeasures().length == 0)) {
+
 					SkuUtil.updateCommercePriceEntries(
 						_commercePriceEntryLocalService,
 						_commercePriceListLocalService, _configurationProvider,

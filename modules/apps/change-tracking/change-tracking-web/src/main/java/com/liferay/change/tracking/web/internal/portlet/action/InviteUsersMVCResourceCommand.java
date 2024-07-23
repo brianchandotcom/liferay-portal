@@ -18,6 +18,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -237,7 +238,10 @@ public class InviteUsersMVCResourceCommand
 			if (userGroupRoles.isEmpty()) {
 				_sendNotificationEvent(
 					ctCollectionId, userIds[i], roleValues[i], themeDisplay);
-				_sendEmail(ctCollectionId, userIds[i], themeDisplay);
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-11212")) {
+					_sendEmail(ctCollectionId, userIds[i], themeDisplay);
+				}
 			}
 		}
 

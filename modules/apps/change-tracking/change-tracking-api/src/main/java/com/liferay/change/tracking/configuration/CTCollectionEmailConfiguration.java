@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
  * @author Brooke Dalton
  */
 @ExtendedObjectClassDefinition(
-	category = "publications",
+	category = "publications", featureFlagKey = "LPD-11212",
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY, strictScope = true
 )
 @Meta.OCD(

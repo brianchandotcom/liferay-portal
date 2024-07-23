@@ -27,6 +27,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -185,7 +186,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		FragmentEntryLink fragmentEntryLink,
 		FragmentRendererContext fragmentRendererContext) {
 
-		if (fragmentEntryLink.isTypeInput() ||
+		if (!CTCollectionThreadLocal.isProductionMode() ||
+			fragmentEntryLink.isTypeInput() ||
 			!fragmentRendererContext.isViewMode() ||
 			(fragmentRendererContext.getPreviewClassPK() > 0) ||
 			!fragmentRendererContext.isUseCachedContent()) {

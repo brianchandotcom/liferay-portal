@@ -175,8 +175,8 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 		try {
 			DBPartitionMigrationValidator.main(
 				new String[] {
-					"--source-file", sourceFileName, "--target-file",
-					targetFileName, "--validate"
+					"validate", "--source-file", sourceFileName,
+					"--target-file", targetFileName
 				});
 		}
 		catch (RuntimeException runtimeException) {

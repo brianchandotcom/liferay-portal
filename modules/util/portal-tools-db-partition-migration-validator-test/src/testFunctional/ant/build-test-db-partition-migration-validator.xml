@@ -38,7 +38,7 @@
 				<then>
 					<exec dir="${liferay.home}/tools/portal-tools-db-partition-migration-validator" executable="/bin/bash" failonerror="false" output="db-partition-migration-validator.log">
 						<arg value="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh" />
-						<arg value="--export" />
+						<arg value="export" />
 						<arg value="--jdbc-url" />
 						<arg value="${database.mysql.url}" />
 						<arg value="--password" />
@@ -58,7 +58,7 @@
 						<then>
 							<exec dir="${liferay.home}/tools/portal-tools-db-partition-migration-validator" executable="/bin/bash" failonerror="false" output="db-partition-migration-validator.log">
 								<arg value="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh" />
-								<arg value="--export" />
+								<arg value="export" />
 								<arg value="--jdbc-url" />
 								<arg value="jdbc:postgresql://${database.postgresql.host}/${database.schema.name}" />
 								<arg value="--password" />
@@ -70,7 +70,7 @@
 						<else>
 							<exec dir="${liferay.home}/tools/portal-tools-db-partition-migration-validator" executable="/bin/bash" failonerror="false" output="db-partition-migration-validator.log">
 								<arg value="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh" />
-								<arg value="--export" />
+								<arg value="export" />
 								<arg value="--jdbc-url" />
 								<arg value="${database.postgresql.url}" />
 								<arg value="--password" />
@@ -94,11 +94,11 @@
 		<sequential>
 			<exec dir="${liferay.home}/tools/portal-tools-db-partition-migration-validator" executable="/bin/bash" failonerror="false" output="db-partition-migration-validator.log">
 				<arg value="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh" />
+				<arg value="validate" />
 				<arg value="--source-file" />
 				<arg value="${source.file.path}" />
 				<arg value="--target-file" />
 				<arg value="${target.file.path}" />
-				<arg value="--validate" />
 			</exec>
 		</sequential>
 	</macrodef>

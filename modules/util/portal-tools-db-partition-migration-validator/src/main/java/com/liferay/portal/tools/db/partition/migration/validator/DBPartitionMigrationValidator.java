@@ -20,10 +20,12 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.migration.validator.util.DatabaseUtil;
 import com.liferay.portal.tools.db.partition.migration.validator.util.ValidatorUtil;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,7 +43,6 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
@@ -51,20 +52,14 @@ import org.apache.commons.cli.ParseException;
 public class DBPartitionMigrationValidator {
 
 	public static void main(String[] args) {
-		if ((args.length != 0) && args[0].equals("--help")) {
-			_printHelp();
-
-			return;
-		}
-
-		for (String arg : args) {
-			if (arg.equals("--export")) {
-				_export(ArrayUtil.remove(args, arg));
+		if (args.length != 0) {
+			if (args[0].equals("export")) {
+				_export(ArrayUtil.remove(args, args[0]));
 
 				_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 			}
-			else if (arg.equals("--validate")) {
-				_validate(ArrayUtil.remove(args, arg));
+			else if (args[0].equals("validate")) {
+				_validate(ArrayUtil.remove(args, args[0]));
 
 				_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 			}
@@ -97,7 +92,9 @@ public class DBPartitionMigrationValidator {
 			commandLine = commandLineParser.parse(options, args);
 		}
 		catch (ParseException parseException) {
-			System.err.println(parseException.getMessage());
+			if (!ArrayUtil.contains(args, "--help")) {
+				System.err.println(parseException.getMessage());
+			}
 
 			_printHelp();
 
@@ -165,16 +162,11 @@ public class DBPartitionMigrationValidator {
 	private static Options _getMainOptions() {
 		Options options = new Options();
 
-		options.addOption(null, "help", false, "Print help message.");
-
-		OptionGroup optionGroup = new OptionGroup();
-
-		optionGroup.addOption(
-			new Option(null, "export", false, "Export database."));
-		optionGroup.addOption(
-			new Option(null, "validate", false, "Validate two databases."));
-
-		options.addOptionGroup(optionGroup);
+		options.addOption(
+			new Option(null, "export", false, "Export validation file."));
+		options.addOption(
+			new Option(
+				null, "validate", false, "Validate source and target files."));
 
 		return options;
 	}
@@ -183,9 +175,11 @@ public class DBPartitionMigrationValidator {
 		Options options = new Options();
 
 		options.addRequiredOption(
-			null, "source-file", true, "Set the path to the source file.");
+			null, "source-file", true,
+			"Set the path to the source validation file.");
 		options.addRequiredOption(
-			null, "target-file", true, "Set the path to the target file.");
+			null, "target-file", true,
+			"Set the path to the target validation file.");
 
 		return options;
 	}
@@ -193,14 +187,15 @@ public class DBPartitionMigrationValidator {
 	private static void _printHelp() {
 		HelpFormatter helpFormatter = new HelpFormatter();
 
-		PrintWriter printWriter = new PrintWriter(System.out);
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		PrintWriter printWriter = new PrintWriter(byteArrayOutputStream);
 
 		helpFormatter.printUsage(
 			printWriter, _HELP_WIDTH,
-			"./db_partition_migration_validator.sh <operation-mode> " +
-				"[operation-parameters]");
-		helpFormatter.printWrapped(
-			printWriter, _HELP_WIDTH, "\nOperation mode:");
+			"./db_partition_migration_validator.sh <command> [parameters]");
+		helpFormatter.printWrapped(printWriter, _HELP_WIDTH, "\nCommands:");
 		helpFormatter.printOptions(
 			printWriter, _HELP_WIDTH, _getMainOptions(), _HELP_LEFT_PAD,
 			_HELP_DESC_PAD);
@@ -217,7 +212,12 @@ public class DBPartitionMigrationValidator {
 
 		printWriter.flush();
 
-		printWriter.close();
+		String helpMessage = byteArrayOutputStream.toString();
+
+		helpMessage = StringUtil.replace(helpMessage, "--export", "export");
+		helpMessage = StringUtil.replace(helpMessage, "--validate", "validate");
+
+		System.out.println(helpMessage);
 	}
 
 	private static LiferayDatabase _read(String path) throws IOException {
@@ -246,7 +246,9 @@ public class DBPartitionMigrationValidator {
 			commandLine = commandLineParser.parse(options, args);
 		}
 		catch (ParseException parseException) {
-			System.err.println(parseException.getMessage());
+			if (!ArrayUtil.contains(args, "--help")) {
+				System.err.println(parseException.getMessage());
+			}
 
 			_printHelp();
 

@@ -30,7 +30,7 @@ public class CommerceCurrencyUtil {
 		OrderByComparator<CommerceCurrency> orderByComparator = null;
 
 		if (orderByCol.equals("priority")) {
-			orderByComparator = new CommerceCurrencyPriorityComparator(
+			orderByComparator = CommerceCurrencyPriorityComparator.getInstance(
 				orderByAsc);
 		}
 

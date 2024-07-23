@@ -236,7 +236,7 @@ public class BaseCommerceContext implements CommerceContext {
 		List<CommerceCurrency> commerceCurrencies =
 			_commerceCurrencyLocalService.getCommerceCurrencies(
 				companyId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new CommerceCurrencyPriorityComparator(true));
+				CommerceCurrencyPriorityComparator.getInstance(true));
 
 		if (!commerceCurrencies.isEmpty()) {
 			commerceCurrency = commerceCurrencies.get(0);

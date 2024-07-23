@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {buildFragment, runScriptsInElement} from 'frontend-js-web';
+import {buildFragment, fetch, runScriptsInElement} from 'frontend-js-web';
 
 import Surface from '../surface/Surface';
 import {
@@ -155,6 +155,32 @@ class HtmlScreen extends RequestScreen {
 		return evaluateTrackedScripts.then(() =>
 			super.evaluateScripts(surfaces)
 		);
+	}
+
+	/**
+	 * @Override
+	 */
+	preloadResources(surfaces) {
+		const tracked = this.virtualQuerySelectorAll_(
+			HtmlScreen.selectors.styles
+		);
+
+		return Promise.all(
+			tracked.map((resource) => {
+				const resourceKey = this.getResourceKey_(resource);
+
+				if (
+					!HtmlScreen.permanentResourcesInDoc[resourceKey] &&
+					resource.href
+				) {
+					return fetch(resource.href).then((response) =>
+						response.ok ? response.text() : Promise.resolve()
+					);
+				}
+
+				return Promise.resolve();
+			})
+		).then(() => super.preloadResources(surfaces));
 	}
 
 	/**

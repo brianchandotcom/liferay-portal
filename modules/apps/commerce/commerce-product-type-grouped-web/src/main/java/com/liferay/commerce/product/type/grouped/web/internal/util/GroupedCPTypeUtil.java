@@ -28,12 +28,14 @@ public class GroupedCPTypeUtil {
 		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator = null;
 
 		if (orderByCol.equals("priority")) {
-			orderByComparator = new CPDefinitionGroupedEntryPriorityComparator(
-				orderByAsc);
+			orderByComparator =
+				CPDefinitionGroupedEntryPriorityComparator.getInstance(
+					orderByAsc);
 		}
 		else if (orderByCol.equals("quantity")) {
-			orderByComparator = new CPDefinitionGroupedEntryQuantityComparator(
-				orderByAsc);
+			orderByComparator =
+				CPDefinitionGroupedEntryQuantityComparator.getInstance(
+					orderByAsc);
 		}
 
 		return orderByComparator;

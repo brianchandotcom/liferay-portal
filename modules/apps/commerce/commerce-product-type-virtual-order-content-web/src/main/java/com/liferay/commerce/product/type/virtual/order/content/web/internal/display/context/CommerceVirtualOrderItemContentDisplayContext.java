@@ -324,7 +324,8 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 					getCommerceVirtualOrderItems(
 						commerceChannelGroupId, commerceAccountId,
 						_searchContainer.getStart(), _searchContainer.getEnd(),
-						new CommerceVirtualOrderItemCreateDateComparator()),
+						CommerceVirtualOrderItemCreateDateComparator.
+							getInstance(false)),
 			_commerceVirtualOrderItemLocalService.
 				getCommerceVirtualOrderItemsCount(
 					commerceChannelGroupId, commerceAccountId));

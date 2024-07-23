@@ -5,31 +5,19 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {liferayConfig} from '../../../../../liferay.config';
-import {
-	MDFRequestFormActivities,
-	MDFRequestFormActivitiesContent,
-} from './MDFRequestFormActivities';
-import {
-	MDFRequestFormGoals,
-	MDFRequestFormGoalsContent,
-} from './MDFRequestFormGoals';
-import {MDFRequestFormReview} from './MDFRequestFormReview';
-
-type FormContent = {
-	activities: MDFRequestFormActivitiesContent[];
-	goals: MDFRequestFormGoalsContent;
-	review?: any;
-};
+import {MDFRequest} from '../../types/mdf';
+import {MDFRequestFormActivitiesPage} from './MDFRequestFormActivitiesPage';
+import {MDFRequestFormGoalsPage} from './MDFRequestFormGoalsPage';
+import {MDFRequestFormReviewPage} from './MDFRequestFormReviewPage';
 
 export class MDFRequestFormPage {
 	readonly backButton: Locator;
 	readonly cancelButton: Locator;
 	readonly continueButton: Locator;
 	readonly form: {
-		activities: MDFRequestFormActivities;
-		goals: MDFRequestFormGoals;
-		review: MDFRequestFormReview;
+		activities: MDFRequestFormActivitiesPage;
+		goals: MDFRequestFormGoalsPage;
+		review: MDFRequestFormReviewPage;
 	};
 	readonly newRequestButton: Locator;
 	readonly page: Page;
@@ -45,9 +33,9 @@ export class MDFRequestFormPage {
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
 		this.form = {
-			activities: new MDFRequestFormActivities(page),
-			goals: new MDFRequestFormGoals(page),
-			review: new MDFRequestFormReview(page),
+			activities: new MDFRequestFormActivitiesPage(page),
+			goals: new MDFRequestFormGoalsPage(page),
+			review: new MDFRequestFormReviewPage(page),
 		};
 		this.page = page;
 		this.previousButton = page.getByRole('button', {name: 'Previous'});
@@ -72,7 +60,7 @@ export class MDFRequestFormPage {
 		await this.continueButton.click();
 	}
 
-	async createNewRequest(form: FormContent) {
+	async createNewRequest(form: MDFRequest) {
 		await this.form.goals.fillForm(form.goals);
 		await this.continue();
 
@@ -86,12 +74,9 @@ export class MDFRequestFormPage {
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(
-			`${liferayConfig.environment.baseUrl}/web${siteUrl}/marketing/mdf-requests/new`,
-			{
-				waitUntil: 'networkidle',
-			}
-		);
+		await this.page.goto(`/web${siteUrl}/marketing/mdf-requests/new`, {
+			waitUntil: 'networkidle',
+		});
 	}
 
 	async reviewMDFRequest(activityContent) {

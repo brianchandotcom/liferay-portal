@@ -6,15 +6,15 @@
 import moment from 'moment';
 
 import {
-	MDFRequestActivityBudgetExpense,
+	MDFRequestActivityExpenseTypes,
 	MDFRequestActivityTactics,
+	MDFRequestActivityTypes,
 	MDFRequestLiferayBusinessSalesGoals,
 	MDFRequestTargetAudienceRoles,
 	MDFRequestTargetMarkets,
-	MDFRequestTypeOfActivity,
-} from './enums';
+} from './constants';
 
-export function generateMDFRequestData() {
+export function createMDFRequest() {
 	return {
 		activities: [
 			{
@@ -23,7 +23,7 @@ export function generateMDFRequestData() {
 				endDate: moment().add(2, 'days').format('YYYY-MM-DD'),
 				expenses: [
 					{
-						type: MDFRequestActivityBudgetExpense.BROADCAST_ADVERTISING,
+						type: MDFRequestActivityExpenseTypes.BROADCAST_ADVERTISING,
 						value: 500,
 					},
 				],
@@ -31,8 +31,7 @@ export function generateMDFRequestData() {
 				marketingActivity: 'Marketing Description',
 				startDate: moment().add(1, 'days').format('YYYY-MM-DD'),
 				tactic: MDFRequestActivityTactics.OTHER,
-				typeOfActivity:
-					MDFRequestTypeOfActivity.MISCELLANEOUS_MARKETING,
+				typeOfActivity: MDFRequestActivityTypes.MISCELLANEOUS_MARKETING,
 			},
 		],
 		goals: {

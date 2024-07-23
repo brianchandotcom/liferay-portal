@@ -55,7 +55,7 @@ export enum MDFRequestTargetMarkets {
 	WHOLESALE_DISTRIBUTION = 'wholesaleDistribution',
 }
 
-export enum MDFRequestTypeOfActivity {
+export enum MDFRequestActivityTypes {
 	EVENT = 'prmtact001',
 	DIGITAL_MARKETING = 'prmtact002',
 	CONTENT_MARKETING = 'prmtact003',
@@ -89,7 +89,7 @@ export enum MDFRequestActivityTactics {
 	OTHER = 'prmtact002prmtct006prmtact003prmtct009prmtact004prmtct008',
 }
 
-export enum MDFRequestActivityBudgetExpense {
+export enum MDFRequestActivityExpenseTypes {
 	BROADCAST_ADVERTISING = 'broadcastAdvertising',
 	COBRANDED_MERCHANDISE = 'cobrandedMerchandise',
 	CONTENT_CREATION = 'contentCreation',

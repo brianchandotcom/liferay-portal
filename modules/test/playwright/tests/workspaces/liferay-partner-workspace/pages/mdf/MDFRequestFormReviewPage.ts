@@ -6,7 +6,7 @@
 import {Page, expect} from '@playwright/test';
 import moment from 'moment';
 
-interface MDFRequestContent {
+interface MDFRequestPageContent {
 	activities: [
 		{
 			activityName: string;
@@ -29,14 +29,14 @@ interface MDFRequestContent {
 	};
 }
 
-export class MDFRequestFormReview {
+export class MDFRequestFormReviewPage {
 	readonly page: Page;
 
 	constructor(page: Page) {
 		this.page = page;
 	}
 
-	async reviewMDFContent(mdfRequestContent: MDFRequestContent) {
+	async reviewMDFContent(mdfRequestPageContent: MDFRequestPageContent) {
 		const {
 			activities: [
 				{
@@ -52,7 +52,7 @@ export class MDFRequestFormReview {
 				overallCampaignDescription: campaignDescription,
 				overallCampaignName: campaignName,
 			},
-		} = mdfRequestContent;
+		} = mdfRequestPageContent;
 
 		const expensePercentage = String(expenses * claimPercent);
 		const leadGeneratedText = leadGenerated ? 'Yes' : 'No';

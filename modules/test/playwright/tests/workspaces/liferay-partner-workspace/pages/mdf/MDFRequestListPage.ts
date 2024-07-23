@@ -5,8 +5,6 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {liferayConfig} from '../../../../../liferay.config';
-
 export class MDFRequestListPage {
 	readonly actionButton: Locator;
 	readonly activityAfterDateInput: Locator;
@@ -16,7 +14,6 @@ export class MDFRequestListPage {
 	readonly activityStatusButton: Locator;
 	readonly applyFilterButton: Locator;
 	readonly cleanSearch: Locator;
-	readonly clearAllFilters: Locator;
 	readonly completedTab: Locator;
 	readonly completeMenuItem: Locator;
 	readonly exportRequestButton: Locator;
@@ -49,9 +46,6 @@ export class MDFRequestListPage {
 		this.activityStatusButton = page.getByRole('button', {name: 'Status'});
 		this.applyFilterButton = page.getByRole('button', {name: 'Apply'});
 		this.cleanSearch = page.getByLabel('Clean Search');
-		this.clearAllFilters = page.getByRole('button', {
-			name: 'Clear All Filters',
-		});
 		this.completedTab = page.getByRole('tab', {
 			exact: true,
 			name: 'Completed',
@@ -71,6 +65,10 @@ export class MDFRequestListPage {
 		this.openTab = page.getByRole('tab', {exact: true, name: 'Open'});
 		this.page = page;
 		this.searchInput = page.getByPlaceholder('Search');
+	}
+
+	async clearAllFilters() {
+		(await this.page.waitForSelector(`text=Clear All Filters`)).click();
 	}
 
 	async createNewMDFRequestButton() {
@@ -155,11 +153,8 @@ export class MDFRequestListPage {
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(
-			`${liferayConfig.environment.baseUrl}/web${siteUrl}/marketing/mdf-requests`,
-			{
-				waitUntil: 'networkidle',
-			}
-		);
+		await this.page.goto(`/web${siteUrl}/marketing/mdf-requests`, {
+			waitUntil: 'networkidle',
+		});
 	}
 }

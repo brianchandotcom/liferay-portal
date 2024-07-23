@@ -15,3 +15,12 @@ export const customFormatDate: IOption = {
 		year: 'numeric',
 	},
 };
+
+export function getDateCustomFormat(
+	rawDate: string,
+	format: Intl.DateTimeFormatOptions
+) {
+	const date = new Date(rawDate);
+
+	return date?.toLocaleDateString('en-US', format);
+}

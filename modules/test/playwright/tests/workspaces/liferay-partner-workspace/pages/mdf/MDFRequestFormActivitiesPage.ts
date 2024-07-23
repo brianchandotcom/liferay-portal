@@ -5,27 +5,13 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {MDFRequestActivity, MDFRequestActivityExpense} from '../../types/mdf';
 import {
-	MDFRequestActivityBudgetExpense,
 	MDFRequestActivityTactics,
-	MDFRequestTypeOfActivity,
-} from './utils/enums';
+	MDFRequestActivityTypes,
+} from '../../utils/constants';
 
-type ExpenseOption = {type: MDFRequestActivityBudgetExpense; value: number};
-
-export type MDFRequestFormActivitiesContent = {
-	activityName: string;
-	claimPercent: number;
-	endDate: string;
-	expenses: ExpenseOption[];
-	leadGenerated: boolean;
-	marketingActivity: string;
-	startDate: string;
-	tactic: MDFRequestActivityTactics;
-	typeOfActivity: MDFRequestTypeOfActivity;
-};
-
-export class MDFRequestFormActivities {
+export class MDFRequestFormActivitiesPage {
 	readonly addActivity: Locator;
 	readonly addExpense: Locator;
 	readonly page: Page;
@@ -94,10 +80,7 @@ export class MDFRequestFormActivities {
 		);
 	}
 
-	async selectTypeOfActivity(
-		index: number,
-		option: MDFRequestTypeOfActivity
-	) {
+	async selectTypeOfActivity(index: number, option: MDFRequestActivityTypes) {
 		await this.typeOfActivity(index).selectOption(option);
 	}
 
@@ -114,7 +97,7 @@ export class MDFRequestFormActivities {
 	async addActivityBudget(
 		activityIndex: number,
 		expenseIndex: number,
-		expense: ExpenseOption
+		expense: MDFRequestActivityExpense
 	) {
 		await this.addExpense.click();
 
@@ -139,7 +122,7 @@ export class MDFRequestFormActivities {
 			startDate,
 			tactic,
 			typeOfActivity,
-		}: MDFRequestFormActivitiesContent
+		}: MDFRequestActivity
 	) {
 		const activityButton = await this.addActivity;
 		await activityButton.click();
@@ -151,7 +134,7 @@ export class MDFRequestFormActivities {
 		await this.selectTactic(activityIndex, tactic);
 
 		if (
-			typeOfActivity === MDFRequestTypeOfActivity.MISCELLANEOUS_MARKETING
+			typeOfActivity === MDFRequestActivityTypes.MISCELLANEOUS_MARKETING
 		) {
 			await this.marketingActivity(activityIndex).fill(marketingActivity);
 		}

@@ -5,8 +5,6 @@
 
 import {Page} from '@playwright/test';
 
-import {liferayConfig} from '../../../../liferay.config';
-
 export class HomePage {
 	readonly page: Page;
 
@@ -15,11 +13,8 @@ export class HomePage {
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(
-			`${liferayConfig.environment.baseUrl}/web${siteUrl}/home`,
-			{
-				waitUntil: 'networkidle',
-			}
-		);
+		await this.page.goto(`/web${siteUrl}/home`, {
+			waitUntil: 'networkidle',
+		});
 	}
 }

@@ -5,25 +5,10 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {
-	MDFRequestAdditionalOptions,
-	MDFRequestLiferayBusinessSalesGoals,
-	MDFRequestTargetAudienceRoles,
-	MDFRequestTargetMarkets,
-} from './utils/enums';
+import {MDFRequestGoal} from '../../types/mdf';
+import {MDFRequestLiferayBusinessSalesGoals} from '../../utils/constants';
 
-export type MDFRequestFormGoalsContent = {
-	additionalOptions?: MDFRequestAdditionalOptions[];
-	companyName: string;
-	liferayBusinessSalesGoals: MDFRequestLiferayBusinessSalesGoals[];
-	liferayBusinessSalesGoalsOther?: string;
-	overallCampaignDescription: string;
-	overallCampaignName: string;
-	targetAudienceRoles: MDFRequestTargetAudienceRoles[];
-	targetMarkets: MDFRequestTargetMarkets[];
-};
-
-export class MDFRequestFormGoals {
+export class MDFRequestFormGoalsPage {
 	readonly additionalOptions: {
 		dxpMigrationUpgrade: Locator;
 		migrationFromCompetitorPlatform: Locator;
@@ -175,7 +160,7 @@ export class MDFRequestFormGoals {
 		overallCampaignName,
 		targetAudienceRoles,
 		targetMarkets,
-	}: MDFRequestFormGoalsContent) {
+	}: MDFRequestGoal) {
 		await this.selectCompany(companyName);
 
 		await this.overallCampaignName.fill(overallCampaignName);

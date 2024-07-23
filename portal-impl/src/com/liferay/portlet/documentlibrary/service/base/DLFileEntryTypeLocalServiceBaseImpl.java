@@ -257,6 +257,23 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 		return dlFileEntryTypePersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public DLFileEntryType fetchDLFileEntryTypeByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return dlFileEntryTypePersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public DLFileEntryType getDLFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return dlFileEntryTypePersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the document library file entry type with the primary key.
 	 *

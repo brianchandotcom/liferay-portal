@@ -91,6 +91,8 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			"portletsBlacklist",
 			spaHelper.getPortletsBlacklistJSONArray(themeDisplay)
 		).put(
+			"preloadCSS", spaHelper.isPreloadCSS()
+		).put(
 			"requestTimeout", spaHelper.getRequestTimeout()
 		).put(
 			"userNotification",

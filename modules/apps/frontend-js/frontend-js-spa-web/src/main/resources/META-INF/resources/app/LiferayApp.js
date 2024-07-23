@@ -73,11 +73,12 @@ class LiferayApp extends App {
 		debugEnabled,
 		navigationExceptionSelectors,
 		portletsBlacklist,
+		preloadCSS,
 		requestTimeout,
 		userNotification,
 		validStatusCodes,
 	}) {
-		super({navigationExceptionSelectors});
+		super({navigationExceptionSelectors, preloadCSS});
 
 		this._cacheExpirationTime = cacheExpirationTime;
 		this._clearScreensCache = clearScreensCache;

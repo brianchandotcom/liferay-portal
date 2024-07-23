@@ -165,6 +165,10 @@ public class SPAHelper {
 		return _log.isDebugEnabled();
 	}
 
+	public boolean isPreloadCSS() {
+		return _spaConfiguration.preloadCSS();
+	}
+
 	@Activate
 	protected void activate(
 			BundleContext bundleContext, Map<String, Object> properties)

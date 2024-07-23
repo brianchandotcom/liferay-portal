@@ -40,6 +40,12 @@ public @interface SPAConfiguration {
 	public String[] customExcludedPaths();
 
 	@Meta.AD(
+		deflt = "false", description = "preload-css-description",
+		name = "preload-css-name", required = false
+	)
+	public boolean preloadCSS();
+
+	@Meta.AD(
 		deflt = "0", description = "request-timeout-description",
 		name = "request-timeout-name", required = false
 	)

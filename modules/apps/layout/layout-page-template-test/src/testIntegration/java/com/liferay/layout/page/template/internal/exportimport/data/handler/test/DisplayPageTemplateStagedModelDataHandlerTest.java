@@ -8,31 +8,49 @@ package com.liferay.layout.page.template.internal.exportimport.data.handler.test
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DateTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -62,6 +80,128 @@ public class DisplayPageTemplateStagedModelDataHandlerTest
 			group.getGroupId(), _classNameId, "BASIC-WEB-CONTENT");
 
 		_classTypeId = ddmStructure.getStructureId();
+	}
+
+	@Test
+	public void testPropagateChangesOfFragmentToLive() throws Exception {
+		initExport();
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, stagingGroup.getCreatorUserId(),
+				stagingGroup.getGroupId(), 0, _classNameId, _classTypeId,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
+				0, 0, 0,
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId()));
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
+		Locale locale = _portal.getSiteDefaultLocale(stagingGroup);
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		String originalText = RandomTestUtil.randomString();
+
+		FragmentEntryLink fragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text", JSONUtil.put(languageId, originalText))
+				).toString(),
+				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), layout,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				null, 0,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, layoutPageTemplateEntry);
+
+		initImport();
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext,
+			(LayoutPageTemplateEntry)readExportedStagedModel(
+				layoutPageTemplateEntry));
+
+		initExport();
+
+		FragmentEntryLink importedFragmentEntryLink =
+			_fragmentEntryLinkLocalService.
+				fetchFragmentEntryLinkByUuidAndGroupId(
+					fragmentEntryLink.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			originalText,
+			_getEditableValue(importedFragmentEntryLink, languageId));
+
+		String updatedText = RandomTestUtil.randomString();
+
+		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+			TestPropsValues.getUserId(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text", JSONUtil.put(languageId, updatedText))
+			).toString());
+
+		importedFragmentEntryLink =
+			_fragmentEntryLinkLocalService.
+				fetchFragmentEntryLinkByUuidAndGroupId(
+					fragmentEntryLink.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			originalText,
+			_getEditableValue(importedFragmentEntryLink, languageId));
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, layoutPageTemplateEntry);
+
+		initImport();
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext,
+			(LayoutPageTemplateEntry)readExportedStagedModel(
+				layoutPageTemplateEntry));
+
+		importedFragmentEntryLink =
+			_fragmentEntryLinkLocalService.
+				fetchFragmentEntryLinkByUuidAndGroupId(
+					fragmentEntryLink.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			updatedText,
+			_getEditableValue(importedFragmentEntryLink, languageId));
+
+		_stagingLocalService.disableStaging(
+			liveGroup,
+			ServiceContextTestUtil.getServiceContext(liveGroup.getGroupId()));
+
+		importedFragmentEntryLink =
+			_fragmentEntryLinkLocalService.
+				fetchFragmentEntryLinkByUuidAndGroupId(
+					fragmentEntryLink.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			updatedText,
+			_getEditableValue(importedFragmentEntryLink, languageId));
 	}
 
 	@Override
@@ -119,6 +259,25 @@ public class DisplayPageTemplateStagedModelDataHandlerTest
 			displayPageTemplate.getType(), importDisplayPageTemplate.getType());
 	}
 
+	private String _getEditableValue(
+			FragmentEntryLink fragmentEntryLink, String languageId)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		JSONObject editableJSONObject = jsonObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		Assert.assertNotNull(editableJSONObject);
+
+		JSONObject textJSONObject = editableJSONObject.getJSONObject(
+			"element-text");
+
+		return textJSONObject.getString(languageId);
+	}
+
 	private long _classNameId;
 	private long _classTypeId;
 
@@ -126,7 +285,26 @@ public class DisplayPageTemplateStagedModelDataHandlerTest
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Inject
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
+	private StagingLocalService _stagingLocalService;
 
 }

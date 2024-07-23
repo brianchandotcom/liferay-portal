@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.util.Arrays;
@@ -135,29 +136,41 @@ public class FileSizeContentDashboardItemFilter
 	}
 
 	private String _getLabel(SizeType sizeType) {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append(_language.get(_httpServletRequest, sizeType.getType()));
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		if (sizeType == SizeType.LARGE) {
-			sb.append(StringPool.GREATER_THAN);
+			sb.append(
+				StringUtil.toLowerCase(
+					_language.get(_httpServletRequest, "from")));
+			sb.append(StringPool.SPACE);
 			sb.append(
 				TextFormatter.formatStorageSize(
 					sizeType.getStartValue(), _httpServletRequest.getLocale()));
 		}
 		else if (sizeType == SizeType.MEDIUM) {
 			sb.append(
+				StringUtil.toLowerCase(
+					_language.get(_httpServletRequest, "from")));
+			sb.append(StringPool.SPACE);
+			sb.append(
 				TextFormatter.formatStorageSize(
 					sizeType.getStartValue(), _httpServletRequest.getLocale()));
-			sb.append(StringPool.LESS_THAN_OR_EQUAL);
+			sb.append(StringPool.SPACE);
+			sb.append(
+				StringUtil.toLowerCase(
+					_language.get(_httpServletRequest, "to")));
+			sb.append(StringPool.SPACE);
 			sb.append(
 				TextFormatter.formatStorageSize(
 					sizeType.getEndValue(), _httpServletRequest.getLocale()));
 		}
 		else {
-			sb.append(StringPool.LESS_THAN_OR_EQUAL);
+			sb.append(_language.get(_httpServletRequest, "up-to"));
+			sb.append(StringPool.SPACE);
 			sb.append(
 				TextFormatter.formatStorageSize(
 					sizeType.getEndValue(), _httpServletRequest.getLocale()));

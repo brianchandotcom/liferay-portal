@@ -23,6 +23,10 @@ public class XMLWorkflowDefinitionFileStylingCheck extends BaseFileCheck {
 			return content;
 		}
 
+		return _formatLabelTags(content);
+	}
+
+	private String _formatLabelTags(String content) {
 		Matcher matcher = _labelTagPattern.matcher(content);
 
 		while (matcher.find()) {

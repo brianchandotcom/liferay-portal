@@ -22,12 +22,14 @@ public class CPDefinitionGroupedEntryQuantityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"quantity"};
 
-	public CPDefinitionGroupedEntryQuantityComparator() {
-		this(false);
-	}
+	public static CPDefinitionGroupedEntryQuantityComparator getInstance(
+		boolean ascending) {
 
-	public CPDefinitionGroupedEntryQuantityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +66,18 @@ public class CPDefinitionGroupedEntryQuantityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPDefinitionGroupedEntryQuantityComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPDefinitionGroupedEntryQuantityComparator
+		_INSTANCE_ASCENDING = new CPDefinitionGroupedEntryQuantityComparator(
+			true);
+
+	private static final CPDefinitionGroupedEntryQuantityComparator
+		_INSTANCE_DESCENDING = new CPDefinitionGroupedEntryQuantityComparator(
+			false);
 
 	private final boolean _ascending;
 

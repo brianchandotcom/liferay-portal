@@ -95,7 +95,6 @@ definition {
 		property database.hypersonic.embedded = "true";
 		property database.types = "hypersonic";
 		property portal.smoke = "false";
-		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginUI(

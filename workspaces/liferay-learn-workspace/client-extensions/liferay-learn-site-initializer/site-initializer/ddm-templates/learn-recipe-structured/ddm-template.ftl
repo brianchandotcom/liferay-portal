@@ -1,6 +1,4 @@
 <script>
-	var A = new AUI();
-
 	function checkScreenSize() {
 		var collapsibleContent = document.getElementById('collapsibleContent');
 

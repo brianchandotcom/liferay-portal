@@ -133,4 +133,14 @@ export class DisplayPageTemplatesPage {
 			'Success:The display page template was published successfully.'
 		);
 	}
+
+	async publishTemplate() {
+		await this.publishButton.waitFor();
+		await this.publishButton.click();
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:The display page template was published successfully.'
+		);
+	}
 }

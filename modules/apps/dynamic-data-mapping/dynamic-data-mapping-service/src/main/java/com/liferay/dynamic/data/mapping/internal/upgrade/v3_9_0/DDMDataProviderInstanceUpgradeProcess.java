@@ -60,21 +60,15 @@ public class DDMDataProviderInstanceUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				String dataProviderInstanceDefinition = resultSet.getString(
-					"definition");
-				String type = resultSet.getString("type_");
-
 				preparedStatement2.setString(
 					1,
 					_upgradeDataProviderInstanceDefinition(
-						dataProviderInstanceDefinition, type));
-
-				long dataProviderInstanceId = resultSet.getLong(
-					"dataProviderInstanceId");
-
+						resultSet.getString("definition"),
+						resultSet.getString("type_")));
 				preparedStatement2.setLong(
 					2, resultSet.getLong("ctCollectionId"));
-				preparedStatement2.setLong(3, dataProviderInstanceId);
+				preparedStatement2.setLong(
+					3, resultSet.getLong("dataProviderInstanceId"));
 
 				preparedStatement2.addBatch();
 			}

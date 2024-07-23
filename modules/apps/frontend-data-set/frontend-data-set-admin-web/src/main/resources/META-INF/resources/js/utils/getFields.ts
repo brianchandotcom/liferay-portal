@@ -37,113 +37,96 @@ interface ISchemas {
 	};
 }
 
+const filterSchemaProperty = (propertyKey: string) => {
+	return (
+		!INVALID_FIELDS.includes(propertyKey) &&
+		!propertyKey.includes(LOCALIZABLE_PROPERTY_SUFFIX)
+	);
+};
+
 function getValidFields({
 	contextPath,
 	schemaName,
+	schemaStack,
 	schemas,
 }: {
 	contextPath: string;
 	schemaName: string;
+	schemaStack: string[];
 	schemas: ISchemas;
 }): Array<IField> {
 	const fields: Array<IField> = [];
 
 	const properties: IProperties = schemas[schemaName]?.properties;
 
-	properties &&
-		Object.keys(properties).map((propertyKey) => {
+	if (!properties) {
+		return fields;
+	}
+
+	Object.keys(properties)
+		.filter(filterSchemaProperty)
+		.map((propertyKey) => {
 			const propertyValue = properties[propertyKey];
-
-			if (INVALID_FIELDS.includes(propertyKey)) {
-				return;
-			}
-
-			if (propertyKey.includes(LOCALIZABLE_PROPERTY_SUFFIX)) {
-				return;
-			}
 
 			const type = propertyValue.type;
 
+			const field: IField = {
+				format: propertyValue.format,
+				label: propertyKey,
+				name: `${contextPath}${propertyKey}`,
+				type,
+			};
+
+			let targetSchemaName;
+
 			if (propertyValue.items?.$ref) {
-				const field: IField = {
-					label: propertyKey,
-					name: `${contextPath}${propertyKey}${FDS_ARRAY_FIELD_NAME_PARENT_SUFFIX}`,
-					sortable: false,
-					type: type ? type : 'array',
-				};
-
-				if (!contextPath.includes(propertyKey)) {
-					field.children = getValidFields({
-						contextPath: `${contextPath}${propertyKey}${FDS_ARRAY_FIELD_NAME_DELIMITER}`,
-						schemaName: propertyValue.items.$ref.replace(
-							/^.*\//,
-							''
-						),
-						schemas,
-					});
-				}
-
-				fields.push(field);
-
-				return;
+				field.name = `${field.name}${FDS_ARRAY_FIELD_NAME_PARENT_SUFFIX}`;
+				field.type = type ? type : 'array';
+				targetSchemaName = propertyValue.items.$ref.replace(
+					/^.*\//,
+					''
+				);
 			}
-
-			if (propertyValue.$ref) {
-				fields.push({
-					children: getValidFields({
-						contextPath: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_DELIMITER}`,
-						schemaName: propertyValue.$ref.replace(/^.*\//, ''),
-						schemas,
-					}),
-					label: propertyKey,
-					name: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_PARENT_SUFFIX}`,
-					sortable: false,
-					type: type ? type : 'object',
-				});
-
-				return;
+			else if (propertyValue.$ref) {
+				field.name = `${field.name}${FDS_NESTED_FIELD_NAME_PARENT_SUFFIX}`;
+				field.type = type ? type : 'object';
+				targetSchemaName = propertyValue.$ref.replace(/^.*\//, '');
 			}
-
-			if (
+			else if (
 				propertyValue.extensions &&
 				propertyValue.extensions['x-parent-map'] === 'properties'
 			) {
 				const schemaNames = Object.keys(schemas);
-				const parentSchemaName = schemaNames.filter((schemaName) => {
+				const parentSchemaName = schemaNames.find((schemaName) => {
 					return (
 						schemaName.toLowerCase() ===
 						propertyKey.toLocaleLowerCase()
 					);
 				});
 
-				if (parentSchemaName.length) {
-					fields.push({
-						children: getValidFields({
-							contextPath: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_DELIMITER}`,
-							schemaName: parentSchemaName[0],
-							schemas,
-						}),
-						label: propertyKey,
-						name: `${contextPath}${propertyKey}${FDS_NESTED_FIELD_NAME_PARENT_SUFFIX}`,
-						sortable: false,
-						type: schemas[parentSchemaName[0]]?.type || 'object',
-					});
-
-					return;
+				if (parentSchemaName) {
+					field.name = `${field.name}${FDS_NESTED_FIELD_NAME_PARENT_SUFFIX}`;
+					field.type = schemas[parentSchemaName]?.type || 'object';
+					targetSchemaName = parentSchemaName;
 				}
 			}
 
-			fields.push({
-				format: propertyValue.format,
-				label: propertyKey,
-				name: `${contextPath}${propertyKey}`,
-				sortable:
-					type !== 'object' &&
-					type !== 'array' &&
-					!contextPath.includes(FDS_NESTED_FIELD_NAME_DELIMITER) &&
-					!contextPath.includes(FDS_ARRAY_FIELD_NAME_DELIMITER),
-				type,
-			});
+			field.sortable =
+				type !== 'object' &&
+				type !== 'array' &&
+				!contextPath.includes(FDS_NESTED_FIELD_NAME_DELIMITER) &&
+				!contextPath.includes(FDS_ARRAY_FIELD_NAME_DELIMITER);
+
+			if (targetSchemaName && !schemaStack.includes(targetSchemaName)) {
+				field.children = getValidFields({
+					contextPath: field.name,
+					schemaName: targetSchemaName,
+					schemaStack: [...schemaStack, targetSchemaName],
+					schemas,
+				});
+			}
+
+			fields.push(field);
 		});
 
 	return fields;
@@ -177,6 +160,7 @@ export default async function getFields({
 	return getValidFields({
 		contextPath: '',
 		schemaName: restSchema,
+		schemaStack: [],
 		schemas,
 	});
 }

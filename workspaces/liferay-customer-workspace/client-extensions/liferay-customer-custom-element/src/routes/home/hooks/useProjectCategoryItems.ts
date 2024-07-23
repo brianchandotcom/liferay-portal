@@ -50,12 +50,10 @@ const useProjectCategoryItems = () => {
 		[myUserAccount?.organizationBriefs]
 	);
 
-	const {data: organizations = []} = useSWR(
-		{
-			key: '/organizations',
-			organizationIds: myFLSOrganizationBriefIds,
-		}
-	);
+	const {data: organizations = []} = useSWR({
+		key: '/organizations',
+		organizationIds: myFLSOrganizationBriefIds,
+	});
 
 	const projectCategoryItems = useMemo(() => {
 		const teamMembersERC = myUserAccount?.accountBriefs?.map(
@@ -71,7 +69,9 @@ const useProjectCategoryItems = () => {
 			.map(({externalReferenceCode}) => externalReferenceCode);
 
 		const organizationProjectsERC = organizations.map(
+
 			// @ts-ignore: Ignoring potential missing externalReferenceCode
+
 			({externalReferenceCode}) => externalReferenceCode
 		);
 

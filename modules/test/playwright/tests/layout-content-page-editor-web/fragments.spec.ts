@@ -18,16 +18,20 @@ import {
 	LEMON_OBJECT_ERC,
 } from '../../setup/wem-site/constants';
 import {checkAccessibility} from '../../utils/checkAccessibility';
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getGlobalSiteId from '../../utils/getGlobalSiteId';
 import getRandomString from '../../utils/getRandomString';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import {displayPageTemplatesTest} from '../layout-page-template-admin-web/fixtures/displayTemplatePagesTest';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
 const test = mergeTests(
 	apiHelpersTest,
+	displayPageTemplatesTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
@@ -259,6 +263,99 @@ test.describe('HTML Fragment', () => {
 
 		await expect(page.getByText('test html')).toBeAttached();
 	});
+});
+
+test.describe('Multiselect Fragment', () => {
+	test(
+		'Allow submit form if the field is required and at least one item is checked',
+		{tag: '@LPD-32038'},
+		async ({
+			context,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			wemSite,
+		}) => {
+
+			// Create a display page for the Lemon Basket objects
+
+			await displayPageTemplatesPage.goto(wemSite.friendlyUrlPath);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.publishNewTemplate({
+				contentType: 'Lemon Basket',
+				name: displayPageTemplateName,
+			});
+
+			displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+			// Add a form container and map it
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Form Container'
+			);
+
+			await page
+				.getByLabel('Content Type')
+				.selectOption('Lemon Basket (Default)');
+
+			// Preview the page with a created object
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					name: 'Select Other Item',
+				}),
+				trigger: page.getByLabel('Preview With'),
+			});
+
+			await clickAndExpectToBeHidden({
+				target: page.locator('.modal-dialog'),
+				trigger: page
+					.frameLocator('iframe[title="Select"]')
+					.getByText('plastic', {exact: false}),
+			});
+
+			const pagePromise = context.waitForEvent('page');
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					name: 'Preview in a New Tab',
+				}),
+				trigger: page
+					.locator('.control-menu-nav-item')
+					.getByLabel('Options', {exact: true}),
+			});
+
+			// Extract classNameId and classPK to build the display page url
+
+			const newPage = await pagePromise;
+
+			const pageURL = new URL(newPage.url());
+
+			const classNameId = pageURL.searchParams.get('classNameId');
+			const classPK = pageURL.searchParams.get('classPK');
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Go to display page url and try the form
+
+			await page.goto(
+				`/web${wemSite.friendlyUrlPath}/e/${displayPageTemplateName}/${classNameId}/${classPK}`
+			);
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
+		}
+	);
 });
 
 test.describe('Slider Fragment', () => {

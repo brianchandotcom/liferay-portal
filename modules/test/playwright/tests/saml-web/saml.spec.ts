@@ -18,6 +18,7 @@ import {
 	DEFAULT_SP_URL,
 	createSpAndIdpUser,
 	deleteVirtualInstance,
+	resetSamlKeystoreManagerTarget,
 	setupSamlInstances,
 	updateSamlKeystoreManagerTarget,
 } from './utils/samlVirtualInstanceUtil';
@@ -158,5 +159,5 @@ test('Create two virtual instances, one IdP and one SP, connect them, perform SP
 
 	await deleteVirtualInstance(DEFAULT_SP_NAME, page);
 
-	await updateSamlKeystoreManagerTarget('Choose an Option', page);
+	await resetSamlKeystoreManagerTarget(page);
 });

@@ -13,12 +13,14 @@ import i18n from '../../../i18n';
 import {TestrayRoutine, testrayRoutineImpl} from '../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../types';
 import EnvironmentFactorsModal from '../../Standalone/EnvironmentFactors/EnviromentFactorsModal';
+import usePermission from '~/hooks/usePermission';
 
 const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const {form} = useFormActions();
 	const navigate = useNavigate();
 	const {removeItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
+	const hasPermission = usePermission(['Testray Administrator']);
 
 	const actionsRef = useRef([
 		{
@@ -33,7 +35,7 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			},
 			icon: 'pencil',
 			name: i18n.translate(isHeaderActions ? 'edit-routine' : 'edit'),
-			permission: 'UPDATE',
+			permission: hasPermission,
 		},
 		{
 			action: (routine) => {
@@ -47,7 +49,7 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			},
 			icon: 'cog',
 			name: i18n.translate('manage-templates'),
-			permission: 'UPDATE',
+			permission: hasPermission,
 		},
 		{
 			action: (routine) => {
@@ -71,7 +73,7 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 
 			icon: 'display',
 			name: i18n.translate('select-default-environment-factors'),
-			permission: 'UPDATE',
+			permission: hasPermission,
 		},
 		{
 			action: (routine, mutate) => {
@@ -92,7 +94,7 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			},
 			icon: 'trash',
 			name: i18n.translate(isHeaderActions ? 'delete-routine' : 'delete'),
-			permission: 'DELETE',
+			permission: hasPermission,
 		},
 	] as Action<TestrayRoutine>[]);
 

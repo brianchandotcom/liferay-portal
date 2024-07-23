@@ -16,11 +16,17 @@ import {
 } from '../../../../services/rest';
 import {Action} from '../../../../types';
 import {UserListView} from '../../../Manage/User';
+import usePermission from '~/hooks/usePermission';
 
 const useBuildTestActions = () => {
 	const {form} = useFormActions();
 	const {removeItemFromList, updateItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
+	const hasPermission = usePermission([
+		'Testray Administrator',
+		'Testray Analyst',
+		'Testray Lead',
+	]);
 
 	const actionsRef = useRef([
 		{
@@ -58,7 +64,7 @@ const useBuildTestActions = () => {
 				}),
 			icon: 'user',
 			name: i18n.translate('assign'),
-			permission: 'UPDATE',
+			permission: hasPermission,
 		},
 		{
 			action: (caseResult, mutate) => {
@@ -85,7 +91,7 @@ const useBuildTestActions = () => {
 						? 'unassign-myself'
 						: 'assign-to-me'
 				),
-			permission: 'UPDATE',
+			permission: hasPermission,
 		},
 		{
 			action: ({testrayCaseResultId}, mutate) =>
@@ -101,7 +107,7 @@ const useBuildTestActions = () => {
 					.catch(form.onError),
 			icon: 'trash',
 			name: i18n.translate('delete'),
-			permission: 'DELETE',
+			permission: hasPermission,
 		},
 	] as Action<TestrayCaseResult>[]);
 

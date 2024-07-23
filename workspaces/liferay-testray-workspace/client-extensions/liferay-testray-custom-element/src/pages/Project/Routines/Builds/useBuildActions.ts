@@ -13,12 +13,17 @@ import useMutate from '../../../../hooks/useMutate';
 import i18n from '../../../../i18n';
 import {TestrayBuild, testrayBuildImpl} from '../../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../../types';
+import usePermission from '~/hooks/usePermission';
 
 const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const formModal = useFormModal();
 	const {removeItemFromList} = useMutate();
 	const {setBuildA, setBuildB} = useAutofillBuild();
 	const navigate = useNavigate();
+	const hasPermission = usePermission([
+		'Testray Administrator',
+		'Testray Lead',
+	]);
 
 	const modal = formModal.modal;
 
@@ -30,13 +35,13 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 		},
 		{
 			action: (build, mutate) => {
-				const buildId = build.id
-					? build.id
-					: (build.testrayBuildId as number);
+				const buildId = build?.id
+					? build?.id
+					: (build?.testrayBuildId as number);
 
-				const buildPromoted = build.id
-					? build.promoted
-					: build.testrayBuildPromoted;
+				const buildPromoted = build?.id
+					? build?.promoted
+					: build?.testrayBuildPromoted;
 
 				testrayBuildImpl
 					.update(buildId, {
@@ -48,9 +53,9 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			},
 			icon: 'star',
 			name: (build) => {
-				const buildPromoted = build.id
-					? build.promoted
-					: build.testrayBuildPromoted;
+				const buildPromoted = build?.id
+					? build?.promoted
+					: build?.testrayBuildPromoted;
 
 				return i18n.translate(buildPromoted ? 'demote' : 'promote');
 			},
@@ -58,17 +63,17 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 		},
 		{
 			action: (build, mutate) => {
-				const buildId = build.id
-					? build.id
-					: (build.testrayBuildId as number);
+				const buildId = build?.id
+					? build?.id
+					: (build?.testrayBuildId as number);
 
-				const buildPromoted = build.id
-					? build.promoted
-					: build.testrayBuildPromoted;
+				const buildPromoted = build?.id
+					? build?.promoted
+					: build?.testrayBuildPromoted;
 
-				const buildArchived = build.id
-					? build.archived
-					: build.testrayBuildArchived;
+				const buildArchived = build?.id
+					? build?.archived
+					: build?.testrayBuildArchived;
 
 				if (!buildPromoted) {
 					testrayBuildImpl
@@ -78,21 +83,21 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 				}
 			},
 			disabled: (build) => {
-				const isPromoted = build.id
-					? build.promoted
-					: build.testrayBuildPromoted;
+				const isPromoted = build?.id
+					? build?.promoted
+					: build?.testrayBuildPromoted;
 
-				const hasTasks = build.id
-					? !!build.tasks.length
-					: !!build.testrayBuildTaskStatus;
+				const hasTasks = build?.id
+					? !!build?.tasks.length
+					: !!build?.testrayBuildTaskStatus;
 
 				return isPromoted || hasTasks;
 			},
 			icon: 'archive',
 			name: (build) => {
-				const buildArchived = build.id
-					? build.archived
-					: build.testrayBuildArchived;
+				const buildArchived = build?.id
+					? build?.archived
+					: build?.testrayBuildArchived;
 
 				return i18n.translate(buildArchived ? 'unarchive' : 'archive');
 			},
@@ -100,9 +105,9 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 		},
 		{
 			action: (build, mutate) => {
-				const buildId = build.id
-					? build.id
-					: (build.testrayBuildId as number);
+				const buildId = build?.id
+					? build?.id
+					: (build?.testrayBuildId as number);
 
 				return testrayBuildImpl
 					.removeResource(buildId)
@@ -121,9 +126,9 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 		},
 		{
 			action: (build) => {
-				const buildId = build.id
-					? build.id
-					: (build.testrayBuildId as number);
+				const buildId = build?.id
+					? build?.id
+					: (build?.testrayBuildId as number);
 
 				setBuildA(buildId);
 
@@ -136,9 +141,9 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 		},
 		{
 			action: (build) => {
-				const buildId = build.id
-					? build.id
-					: (build.testrayBuildId as number);
+				const buildId = build?.id
+					? build?.id
+					: (build?.testrayBuildId as number);
 
 				setBuildB(buildId);
 

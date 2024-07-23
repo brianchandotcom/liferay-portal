@@ -8,6 +8,7 @@ import {useRef} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import {taskSidebarRefresh} from '~/hooks/useSidebarTask';
 
+import usePermission from '~/hooks/usePermission';
 import useFormActions from '../../../hooks/useFormActions';
 import useFormModal from '../../../hooks/useFormModal';
 import useModalContext from '../../../hooks/useModalContext';
@@ -31,6 +32,13 @@ const useSubtasksActions = () => {
 		revalidate: {revalidateSubtask},
 	} = useOutletContext<OutletContext>();
 	const [, setTaskSidebarRefresh] = useAtom(taskSidebarRefresh);
+
+	const hasPermission = usePermission([
+		'Testray Administrator',
+		'Testray Analyst',
+		'Testray Lead',
+	]);
+
 	const {form} = useFormActions();
 	const {updateItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
@@ -63,7 +71,7 @@ const useSubtasksActions = () => {
 						? 'begin-analysis'
 						: 'reanalyze'
 				),
-			permission: 'UPDATE',
+			permission: hasPermission,
 		},
 		{
 			action: (subtask, mutate) =>
@@ -119,7 +127,7 @@ const useSubtasksActions = () => {
 					return i18n.translate('assign-and-reanalyze');
 				}
 			},
-			permission: 'UPDATE',
+			permission: hasPermission,
 		},
 		{
 			action: (subtask) => completeModal.open(subtask),
@@ -128,7 +136,7 @@ const useSubtasksActions = () => {
 				status !== SubtaskStatuses.IN_ANALYSIS,
 			icon: 'polls',
 			name: i18n.sub('complete-x', ''),
-			permission: 'UPDATE',
+			permission: hasPermission,
 		},
 		{
 			action: (subtask, mutate) =>
@@ -150,7 +158,7 @@ const useSubtasksActions = () => {
 			hidden: ({status}) => status === SubtaskStatuses.OPEN,
 			icon: 'polls',
 			name: i18n.translate('return-to-open'),
-			permission: 'UPDATE',
+			permission: hasPermission,
 		},
 	] as Action<TestraySubtask>[]);
 

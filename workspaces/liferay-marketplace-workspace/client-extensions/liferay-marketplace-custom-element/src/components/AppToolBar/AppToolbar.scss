@@ -132,14 +132,13 @@
 			font-size: 0.813rem;
 			font-weight: 600;
 			line-height: 1rem;
+			transition: color 0.3s;
+			transition: background 0.3s;
 
 			&:hover {
 				background: #2b3a4b;
 				color: #ffff;
 			}
-
-			transition: color 0.3s;
-			transition: background 0.3s;
 		}
 
 		&-preview-storefront {
@@ -151,14 +150,13 @@
 			font-weight: 600;
 			height: 32px;
 			line-height: 1rem;
+			transition: color 0.3s;
+			transition: background 0.3s;
 
 			&:hover {
 				background: #0b5fff;
 				color: #ffff;
 			}
-
-			transition: color 0.3s;
-			transition: background 0.3s;
 		}
 	}
 }

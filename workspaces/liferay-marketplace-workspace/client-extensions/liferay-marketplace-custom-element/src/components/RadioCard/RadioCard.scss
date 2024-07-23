@@ -11,6 +11,8 @@
 		flex-direction: column;
 		max-width: 37.5rem;
 		padding: 0.5rem;
+		transition: background-color 0.5s;
+		transition: border 0.5s;
 		width: 100%;
 
 		&-disabled {
@@ -31,9 +33,6 @@
 			height: auto;
 			width: 270px;
 		}
-
-		transition: background-color 0.5s;
-		transition: border 0.5s;
 	}
 
 	&-main-info {
@@ -94,11 +93,11 @@
 			font-size: 1.125rem;
 			font-weight: 600;
 			line-height: 1.25rem;
+			transition: color 0.5s;
 
 			&-selected {
 				color: #004ad7;
 			}
-			transition: color 0.5s;
 		}
 
 		&-icon {

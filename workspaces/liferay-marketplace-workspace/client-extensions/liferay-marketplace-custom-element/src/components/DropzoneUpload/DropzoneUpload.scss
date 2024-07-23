@@ -7,6 +7,7 @@
 		flex-direction: column;
 		height: 15rem;
 		justify-content: center;
+		transition: border-color 0.3s;
 
 		&-active {
 			border-color: #78e5d5;
@@ -23,8 +24,6 @@
 			pointer-events: none;
 			user-select: none;
 		}
-
-		transition: border-color 0.3s;
 	}
 
 	&-document {
@@ -48,14 +47,13 @@
 	}
 
 	&-text {
-		&-container {
-			margin-bottom: 0.813rem;
-		}
-
 		color: #282934;
 		font-size: 1rem;
 		font-weight: 400;
 		line-height: 1.5rem;
+		&-container {
+			margin-bottom: 0.813rem;
+		}
 	}
 
 	&-button {
@@ -63,13 +61,12 @@
 		border: none;
 		border-radius: 0.375rem;
 		height: 2rem;
+		transition: background-color 0.3s;
 		width: 5.813rem;
 
 		&:hover {
 			background-color: #edf3fe;
 		}
-
-		transition: background-color 0.3s;
 
 		&-text {
 			color: #0053f0;

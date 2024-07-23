@@ -5,6 +5,9 @@
 			border: 1px solid #2b3a4b;
 			border-radius: 8px;
 			height: 40px;
+			transition: background-color 0.3s;
+			transition: border 0.3s;
+			transition: color 0.3s;
 			width: 78px;
 
 			&:hover {
@@ -12,10 +15,6 @@
 				border: none;
 				color: #fff;
 			}
-
-			transition: background-color 0.3s;
-			transition: border 0.3s;
-			transition: color 0.3s;
 		}
 
 		&-continue {
@@ -24,6 +23,9 @@
 			border-radius: 8px;
 			color: #fff;
 			height: 40px;
+			transition: background-color 0.3s;
+			transition: border 0.3s;
+			transition: color 0.3s;
 			width: 95px;
 
 			&:hover {
@@ -31,10 +33,6 @@
 				border: 1px solid #0053f0;
 				color: #0053f0;
 			}
-
-			transition: background-color 0.3s;
-			transition: border 0.3s;
-			transition: color 0.3s;
 		}
 
 		&-group {

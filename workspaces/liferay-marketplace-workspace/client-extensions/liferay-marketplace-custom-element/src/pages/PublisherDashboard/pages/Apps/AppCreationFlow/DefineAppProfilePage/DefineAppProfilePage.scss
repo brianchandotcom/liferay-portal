@@ -1,6 +1,21 @@
 .profile-page {
 	&-container {
 		width: 600px;
+
+		.form-control {
+			background-color: #ffff;
+			border: 1px solid #b1b2b9;
+			border-radius: 8px;
+			min-height: 48px;
+
+			.label {
+				background-color: #e6ebf5;
+				border: none;
+				color: #1c3667;
+				font-size: 13px;
+				padding: 8px;
+			}
+		}
 	}
 
 	&-body-container {
@@ -32,17 +47,17 @@ input[type='file'] {
 
 	&-upload-label {
 		border-radius: 6px;
+		transition: background-color 0.3s;
 
 		&:hover {
 			background-color: #0a58e7;
 		}
-
-		transition: background-color 0.3s;
 	}
 
 	&-delete-button {
 		border: 1.2px solid #2b3a4b;
 		border-radius: 0.1875rem;
+		transition: background-color 0.3s;
 
 		&-text {
 			color: #2b3a4b;
@@ -58,7 +73,5 @@ input[type='file'] {
 			border: 1.5px solid #2b3a4b;
 			color: #fff;
 		}
-
-		transition: background-color 0.3s;
 	}
 }

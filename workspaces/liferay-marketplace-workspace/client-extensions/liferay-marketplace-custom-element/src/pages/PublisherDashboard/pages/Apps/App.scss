@@ -41,7 +41,7 @@
 	}
 
 	&-back-button {
-		background: none;
+		background-color: none;
 		border: none;
 		border-radius: 6px;
 		color: #2b3a4b;
@@ -50,6 +50,7 @@
 		height: 2rem;
 		line-height: 1rem;
 		margin-bottom: 1.5rem;
+		transition: background-color 0.3s;
 		width: 7.625rem;
 
 		&-icon {
@@ -62,8 +63,6 @@
 		&:hover {
 			background-color: #e6ebf5;
 		}
-
-		transition: background-color 0.3s;
 	}
 
 	&-app-info {
@@ -146,15 +145,14 @@
 				font-weight: 600;
 				height: 2rem;
 				line-height: 1rem;
+				transition: background 0.3s;
+				transition: color 0.3s;
 				width: 9rem;
 
 				&:hover {
 					background: #0b5fff;
 					color: #ffff;
 				}
-
-				transition: background 0.3s;
-				transition: color 0.3s;
 			}
 
 			&-manage {

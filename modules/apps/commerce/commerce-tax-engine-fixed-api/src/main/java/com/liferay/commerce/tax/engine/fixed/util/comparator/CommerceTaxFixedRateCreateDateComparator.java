@@ -21,12 +21,14 @@ public class CommerceTaxFixedRateCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CommerceTaxFixedRateCreateDateComparator() {
-		this(false);
-	}
+	public static CommerceTaxFixedRateCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public CommerceTaxFixedRateCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +65,18 @@ public class CommerceTaxFixedRateCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceTaxFixedRateCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceTaxFixedRateCreateDateComparator
+		_INSTANCE_ASCENDING = new CommerceTaxFixedRateCreateDateComparator(
+			true);
+
+	private static final CommerceTaxFixedRateCreateDateComparator
+		_INSTANCE_DESCENDING = new CommerceTaxFixedRateCreateDateComparator(
+			false);
 
 	private final boolean _ascending;
 

@@ -21,12 +21,12 @@ public class CPTaxCategoryNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CPTaxCategoryNameComparator() {
-		this(false);
-	}
+	public static CPTaxCategoryNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public CPTaxCategoryNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +63,16 @@ public class CPTaxCategoryNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPTaxCategoryNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPTaxCategoryNameComparator _INSTANCE_ASCENDING =
+		new CPTaxCategoryNameComparator(true);
+
+	private static final CPTaxCategoryNameComparator _INSTANCE_DESCENDING =
+		new CPTaxCategoryNameComparator(false);
 
 	private final boolean _ascending;
 

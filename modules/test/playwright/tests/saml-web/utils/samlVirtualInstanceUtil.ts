@@ -8,6 +8,7 @@ import {liferayConfig} from '../../../liferay.config';
 import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
 import {VirtualInstancesPage} from '../../../pages/portal-instances-web/VirtualInstancesPage';
 import {SamlAdminPage} from '../../../pages/saml-web/SamlAdminPage';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import performLogin, {performLogout} from '../../../utils/performLogin';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {connectSpAndIdp} from './samlProviderConnectionUtil';
@@ -192,4 +193,24 @@ export async function updateSamlKeystoreManagerTarget(target: string, page) {
 	await updateButton.click();
 
 	await waitForSuccessAlert(page);
+}
+
+export async function resetSamlKeystoreManagerTarget(page) {
+	const systemSettingsPage = new SystemSettingsPage(page);
+
+	await systemSettingsPage.goToSystemSetting(
+		'SSO',
+		'SAML KeyStoreManager Implementation Configuration'
+	);
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: systemSettingsPage.page.getByRole('button', { name: 'Actions' }),
+		trigger: systemSettingsPage.page.getByRole('link', { name: 'Reset Default Values' }),
+	});
+
+	systemSettingsPage.page.getByRole('link', { name: 'Reset Default Values' }).click();
+
+	await waitForSuccessAlert(page);
+
 }

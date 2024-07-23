@@ -37,6 +37,8 @@ const updateInputStatus = () => {
 	}
 };
 
+updateInputStatus();
+
 fieldSet.addEventListener('change', updateInputStatus);
 
 if (numberOfOptions < options.length) {

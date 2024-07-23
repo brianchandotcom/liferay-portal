@@ -12,7 +12,10 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef} from 'react';
 
-import {addMappingFields} from '../../../../../app/actions/index';
+import {
+	addMappingFields,
+	selectFragmentForNameEditing,
+} from '../../../../../app/actions/index';
 import {fromControlsId} from '../../../../../app/components/layout_data_items/Collection';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
@@ -99,7 +102,7 @@ const loadCollectionFields = (
 		});
 };
 
-export default function StructureTreeNode({node, setEditingNodeId}) {
+export default function StructureTreeNode({node}) {
 	const activationOrigin = useActivationOrigin();
 	const activeItemIds = useActiveItemIds();
 	const dispatch = useDispatch();
@@ -162,7 +165,6 @@ export default function StructureTreeNode({node, setEditingNodeId}) {
 			isActive={node.activable && isSelected}
 			isMapped={node.mapped}
 			node={node}
-			setEditingNodeId={setEditingNodeId}
 		/>
 	);
 }
@@ -185,7 +187,6 @@ function StructureTreeNodeContent({
 	isActive,
 	isMapped,
 	node,
-	setEditingNodeId,
 }) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const dispatch = useDispatch();
@@ -280,7 +281,11 @@ function StructureTreeNodeContent({
 			);
 		}
 
-		setEditingNodeId(null);
+		dispatch(
+			selectFragmentForNameEditing({
+				itemId: null,
+			})
+		);
 		setText(Liferay.Language.get('name-saved'));
 	};
 
@@ -380,7 +385,11 @@ function StructureTreeNodeContent({
 				onDoubleClick={(event) => {
 					event.stopPropagation();
 					if (canBeRenamed(item)) {
-						setEditingNodeId(item.itemId);
+						dispatch(
+							selectFragmentForNameEditing({
+								itemId: item.itemId,
+							})
+						);
 					}
 				}}
 				ref={

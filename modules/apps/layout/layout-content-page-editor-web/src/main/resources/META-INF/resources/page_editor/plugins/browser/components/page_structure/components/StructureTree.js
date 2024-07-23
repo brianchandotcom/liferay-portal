@@ -113,7 +113,10 @@ export default function PageStructureSidebar() {
 	const [dragAndDropHoveredItemId, setDragAndDropHoveredItemId] =
 		useState(null);
 
-	const [editingNodeId, setEditingNodeId] = useState(null);
+	const editingNodeId = useSelector(
+		(state) => state.selectFragmentForNameEditing?.itemId
+	);
+
 	const [expandedKeys, setExpandedKeys] = useState([]);
 
 	const isMasterPage = config.layoutType === LAYOUT_TYPES.master;
@@ -250,7 +253,6 @@ export default function PageStructureSidebar() {
 					<StructureTreeNodeActions
 						disabled={isMultiSelect}
 						item={item}
-						setEditingNodeId={setEditingNodeId}
 						visible={item.hidden || isHovered || isSelected}
 					/>
 				)}
@@ -461,10 +463,7 @@ export default function PageStructureSidebar() {
 							>
 								<span className="sr-only">{item.name}</span>
 
-								<StructureTreeNode
-									node={item}
-									setEditingNodeId={setEditingNodeId}
-								/>
+								<StructureTreeNode node={item} />
 							</ClayTreeView.ItemStack>
 
 							<ClayTreeView.Group items={item.children}>
@@ -476,10 +475,7 @@ export default function PageStructureSidebar() {
 											{item.name}
 										</span>
 
-										<StructureTreeNode
-											node={item}
-											setEditingNodeId={setEditingNodeId}
-										/>
+										<StructureTreeNode node={item} />
 									</ClayTreeView.Item>
 								)}
 							</ClayTreeView.Group>

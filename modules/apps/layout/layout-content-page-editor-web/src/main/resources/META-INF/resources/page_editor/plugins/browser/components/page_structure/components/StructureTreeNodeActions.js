@@ -12,6 +12,7 @@ import {openToast} from 'frontend-js-web';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
 
+import {selectFragmentForNameEditing} from '../../../../../app/actions';
 import SaveFragmentCompositionModal from '../../../../../app/components/SaveFragmentCompositionModal';
 import hasDropZoneChild from '../../../../../app/components/layout_data_items/hasDropZoneChild';
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragmentEntryTypes';
@@ -36,12 +37,7 @@ import {
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
-export default function StructureTreeNodeActions({
-	disabled,
-	item,
-	setEditingNodeId,
-	visible,
-}) {
+export default function StructureTreeNodeActions({disabled, item, visible}) {
 	const [active, setActive] = useState(false);
 
 	const [openSaveModal, setOpenSaveModal] = useState(false);
@@ -106,7 +102,6 @@ export default function StructureTreeNodeActions({
 					<ActionList
 						item={item}
 						setActive={updateActive}
-						setEditingNodeId={setEditingNodeId}
 						setOpenSaveModal={setOpenSaveModal}
 					/>
 				)}
@@ -122,7 +117,7 @@ export default function StructureTreeNodeActions({
 	);
 }
 
-const ActionList = ({item, setActive, setEditingNodeId, setOpenSaveModal}) => {
+const ActionList = ({item, setActive, setOpenSaveModal}) => {
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.id);
 	const selectItem = useSelectItem();
@@ -220,7 +215,11 @@ const ActionList = ({item, setActive, setEditingNodeId, setOpenSaveModal}) => {
 		if (canBeRenamed(item)) {
 			items.push({
 				action: () => {
-					setEditingNodeId(item.id);
+					dispatch(
+						selectFragmentForNameEditing({
+							itemId: item.id,
+						})
+					);
 				},
 				label: Liferay.Language.get('rename'),
 			});
@@ -261,7 +260,6 @@ const ActionList = ({item, setActive, setEditingNodeId, setOpenSaveModal}) => {
 		setOpenSaveModal,
 		setText,
 		isHidden,
-		setEditingNodeId,
 	]);
 
 	return (

@@ -5,8 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 
@@ -47,19 +45,5 @@ public abstract class BaseAddComponentAnnotationCheck extends BaseUpgradeCheck {
 		JavaClass javaClass);
 
 	protected abstract boolean isValidClassName(String className);
-
-	protected String joinLines(String... lines) {
-		StringBundler sb = new StringBundler((lines.length * 2) - 1);
-
-		for (String line : lines) {
-			if (sb.index() > 0) {
-				sb.append(StringPool.NEW_LINE);
-			}
-
-			sb.append(line);
-		}
-
-		return sb.toString();
-	}
 
 }

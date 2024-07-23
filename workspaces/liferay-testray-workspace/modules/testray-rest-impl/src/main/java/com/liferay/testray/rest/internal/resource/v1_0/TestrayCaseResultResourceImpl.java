@@ -6,14 +6,11 @@
 package com.liferay.testray.rest.internal.resource.v1_0;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -22,10 +19,7 @@ import com.liferay.testray.rest.dto.v1_0.TestrayCaseResult;
 import com.liferay.testray.rest.internal.util.TestrayUtil;
 import com.liferay.testray.rest.resource.v1_0.TestrayCaseResultResource;
 
-import java.net.URI;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -213,11 +207,11 @@ public class TestrayCaseResultResourceImpl
 			String issues, Boolean noComment, Boolean noError, Boolean noIssues,
 			String priority, String status, String testrayCaseName,
 			String testrayCaseTypeIds, String testrayComponentIds,
-			String testrayRunId, String testrayRunName, String testrayTeamIds,
-			String testrayUserId, Pagination pagination)
+			String testrayRunId, String testrayRunName, String testraySubtaskId,
+			String testrayTeamIds, String testrayUserId, Pagination pagination)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(50);
 
 		sb.append("select cr.c_caseResultId_, cr.comment_, cr.dueStatus_, ");
 		sb.append("cr.errors_, cr.issues_, ct.name_ as caseTypeName, c.name_ ");
@@ -316,6 +310,11 @@ public class TestrayCaseResultResourceImpl
 			params.add("%" + testrayRunName + "%");
 		}
 
+		if (Validator.isNotNull(testraySubtaskId)) {
+			sb.append("and cr.r_subtaskToCaseResults_c_subtaskId = ? ");
+			params.add(testraySubtaskId);
+		}
+
 		if (Validator.isNotNull(testrayTeamIds)) {
 			sb.append("and co.r_teamToComponents_c_teamId in (");
 			sb.append(TestrayUtil.interpolateParams(params, testrayTeamIds));
@@ -351,7 +350,6 @@ public class TestrayCaseResultResourceImpl
 				values,
 				value -> new TestrayCaseResult() {
 					{
-						actions = _getActions(value);
 						comment = GetterUtil.getString(value.get("comment_"));
 						error = GetterUtil.getString(value.get("errors_"));
 						flaky = GetterUtil.getBoolean(
@@ -374,17 +372,6 @@ public class TestrayCaseResultResourceImpl
 						testrayTeamName = GetterUtil.getString(
 							value.get("teamName"));
 
-						setUserImgUrl(
-							() -> {
-								if (value.get("portraitId") == null) {
-									return null;
-								}
-
-								return UserConstants.getPortraitURL(
-									"/image", true,
-									GetterUtil.getLong(value.get("portraitId")),
-									GetterUtil.getString(value.get("uuid_")));
-							});
 						setUserName(
 							() -> {
 								FullNameGenerator fullNameGenerator =
@@ -398,55 +385,21 @@ public class TestrayCaseResultResourceImpl
 									GetterUtil.getString(
 										value.get("lastName")));
 							});
+
+						setUserPortraitUrl(
+							() -> {
+								if (value.get("portraitId") == null) {
+									return null;
+								}
+
+								return UserConstants.getPortraitURL(
+									"/image", true,
+									GetterUtil.getLong(value.get("portraitId")),
+									GetterUtil.getString(value.get("uuid_")));
+							});
 					}
 				}),
 			pagination, totalCount);
-	}
-
-	private Map<String, Map<String, String>> _getActions(
-		Map<String, Object> value) {
-
-		try {
-			if (!ArrayUtil.contains(
-					contextUser.getRoleIds(),
-					_roleLocalService.getRole(
-						contextUser.getCompanyId(), "Testray Administrator"
-					).getRoleId()) &&
-				!ArrayUtil.contains(
-					contextUser.getRoleIds(),
-					_roleLocalService.getRole(
-						contextUser.getCompanyId(), "Testray Lead"
-					).getRoleId())) {
-
-				return null;
-			}
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
-
-		URI baseURI = contextUriInfo.getBaseUri();
-
-		String href =
-			baseURI.getScheme() + "://" + baseURI.getAuthority() +
-				"/o/c/caseresults/" + value.get("c_caseResultId_");
-
-		return new HashMap<>(
-			HashMapBuilder.put(
-				"delete",
-				HashMapBuilder.put(
-					"href", href
-				).put(
-					"method", "DELETE"
-				).build()
-			).put(
-				"update",
-				HashMapBuilder.put(
-					"href", href
-				).put(
-					"method", "PUT"
-				).build()
-			).build());
 	}
 
 	@Reference

@@ -23,7 +23,6 @@
 	displayDate = .vars["reserved-article-display-date"].getData()?date("EEE, dd MMM yyyy HH:mm:ss Z")
 
 	formattedDate = displayDate?string["LLLL dd, YYYY"]
-	journalArticleId = .vars["reserved-article-id"].getData()?number
 	journalArticlePK = .vars["reserved-article-resource-prim-key"].getData()?number
 />
 
@@ -50,7 +49,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="component-button text-break recipe-feedback">
 			<a
 				class="btn btn-nm btn-link page-editor__editable" data-lfr-editable-id="link" data-lfr-editable-type="link"
@@ -62,7 +60,6 @@
 			</a>
 		</div>
 	</div>
-
 	<div class="container recipe-main">
 		<div class="row">
 			<div class="col-md-9 recipe-main" id="left-panel">

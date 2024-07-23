@@ -4,7 +4,6 @@
  */
 
 import {useContext} from 'react';
-
 import {TestrayContext} from '~/context/TestrayContext';
 
 const usePermission = (roles: String[]) => {

@@ -6,6 +6,7 @@
 import {useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 import useAutofillBuild from '~/hooks/useAutofillBuild';
+import usePermission from '~/hooks/usePermission';
 import {Liferay} from '~/services/liferay';
 
 import useFormModal from '../../../../hooks/useFormModal';
@@ -13,7 +14,6 @@ import useMutate from '../../../../hooks/useMutate';
 import i18n from '../../../../i18n';
 import {TestrayBuild, testrayBuildImpl} from '../../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../../types';
-import usePermission from '~/hooks/usePermission';
 
 const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const formModal = useFormModal();
@@ -59,7 +59,7 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 
 				return i18n.translate(buildPromoted ? 'demote' : 'promote');
 			},
-			permission: 'UPDATE',
+			permission: hasPermission,
 		},
 		{
 			action: (build, mutate) => {
@@ -101,7 +101,7 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 
 				return i18n.translate(buildArchived ? 'unarchive' : 'archive');
 			},
-			permission: 'UPDATE',
+			permission: hasPermission,
 		},
 		{
 			action: (build, mutate) => {
@@ -122,7 +122,7 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			},
 			icon: 'trash',
 			name: i18n.translate(isHeaderActions ? 'delete-build' : 'delete'),
-			permission: 'DELETE',
+			permission: hasPermission,
 		},
 		{
 			action: (build) => {

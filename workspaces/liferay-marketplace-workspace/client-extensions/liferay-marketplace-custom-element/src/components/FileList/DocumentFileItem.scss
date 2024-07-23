@@ -86,14 +86,13 @@
 		font-weight: 600;
 		height: 2rem;
 		line-height: 1rem;
+		transition: background-color 0.3s;
+		transition: color 0.3s;
 		width: 6.938rem;
 
 		&:hover {
 			background-color: #2b3a4b;
 			color: #fff;
 		}
-
-		transition: background-color 0.3s;
-		transition: color 0.3s;
 	}
 }

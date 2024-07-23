@@ -33,9 +33,6 @@
 	}
 
 	&-link {
-		a {
-			cursor: pointer;
-		}
 		display: flex;
 		font-size: 16px;
 		font-weight: 600;
@@ -43,6 +40,10 @@
 		line-height: 24px;
 		margin-top: -2rem;
 		text-decoration: underline;
+
+		a {
+			cursor: pointer;
+		}
 	}
 
 	&-text {

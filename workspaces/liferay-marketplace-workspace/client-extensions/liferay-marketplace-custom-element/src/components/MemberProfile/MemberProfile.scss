@@ -4,16 +4,15 @@
 		border: none;
 		border-radius: 0.5rem;
 		color: #ffff;
+		transition: background-color 0.3s;
+		transition: border 0.3s;
+		transition: color 0.3s;
 
 		&:hover {
 			background-color: #ffff;
 			border: 1px solid #0053f0;
 			color: #0053f0;
 		}
-
-		transition: background-color 0.3s;
-		transition: border 0.3s;
-		transition: color 0.3s;
 
 		.icon-container-reload {
 			margin-left: 0.4rem;

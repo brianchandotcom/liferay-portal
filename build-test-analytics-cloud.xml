@@ -70,9 +70,66 @@
 						analytics.cloud.repository.dir="${analytics.cloud.faro.dir}"
 					/>
 
-					<local name="portal.gradlew" />
+					<local name="portal.base.dir" />
 
-					<property location="${project.dir}/gradlew" name="portal.gradlew" />
+					<beanshell>
+						<![CDATA[
+							import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+							File analyticsCloudFaroDir = new File(project.getProperty("analytics.cloud.faro.dir"));
+
+							File gradleWrapperDir = analyticsCloudFaroDir.getParentFile();
+
+							File gradleWrapperFile = new File(gradleWrapperDir, "gradlew");
+
+							while (true) {
+								if (gradleWrapperFile.exists()) {
+									break;
+								}
+
+								gradleWrapperDir = gradleWrapperDir.getParentFile();
+
+								if (gradleWrapperDir == null) {
+									break;
+								}
+
+								gradleWrapperFile = new File(gradleWrapperDir, "gradlew");
+							}
+
+							if (gradleWrapperFile.exists()) {
+								project.setProperty("portal.base.dir", JenkinsResultsParserUtil.getCanonicalPath(gradleWrapperFile.getParentFile()));
+
+								project.setProperty("portal.gradlew", JenkinsResultsParserUtil.getCanonicalPath(gradleWrapperFile));
+							}
+							else {
+								project.setProperty("portal.gradlew", "gradle");
+							}
+						]]>
+					</beanshell>
+
+					<if>
+						<and>
+							<available file="${portal.base.dir}" />
+							<not>
+								<equals arg1="${portal.base.dir}" arg2="${project.dir}" />
+							</not>
+						</and>
+						<then>
+							<echo>Set Up Portal for OSB Faro (${portal.base.dir})</echo>
+
+							<execute dir="${portal.base.dir}">
+								ant setup-profile-dxp
+
+								ant setup-sdk
+
+								ant setup-libs
+
+								ant compile
+
+								ant install-portal-snapshots
+							</execute>
+						</then>
+					</if>
 
 					<loadfile
 						property="analytics.cloud.docker.test.yaml.content"

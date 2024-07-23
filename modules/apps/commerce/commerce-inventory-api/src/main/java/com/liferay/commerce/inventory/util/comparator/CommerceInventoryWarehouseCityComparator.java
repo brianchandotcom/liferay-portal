@@ -21,12 +21,14 @@ public class CommerceInventoryWarehouseCityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"city"};
 
-	public CommerceInventoryWarehouseCityComparator() {
-		this(false);
-	}
+	public static CommerceInventoryWarehouseCityComparator getInstance(
+		boolean ascending) {
 
-	public CommerceInventoryWarehouseCityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -66,6 +68,18 @@ public class CommerceInventoryWarehouseCityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceInventoryWarehouseCityComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceInventoryWarehouseCityComparator
+		_INSTANCE_ASCENDING = new CommerceInventoryWarehouseCityComparator(
+			true);
+
+	private static final CommerceInventoryWarehouseCityComparator
+		_INSTANCE_DESCENDING = new CommerceInventoryWarehouseCityComparator(
+			false);
 
 	private final boolean _ascending;
 

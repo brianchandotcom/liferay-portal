@@ -1241,6 +1241,366 @@
 		"to": "UserScreenNameComparator.getInstance(param#0#)"
 	},
 	{
+		"from": "new CommerceCatalogCreateDateComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CommerceCatalogCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceCatalogCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CommerceCatalogCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPAttachmentFileEntryDisplayDateComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPAttachmentFileEntryDisplayDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPAttachmentFileEntryDisplayDateComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPAttachmentFileEntryDisplayDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPAttachmentFileEntryModifiedDateComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPAttachmentFileEntryModifiedDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPAttachmentFileEntryModifiedDateComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPAttachmentFileEntryModifiedDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPAttachmentFileEntryPriorityComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPAttachmentFileEntryPriorityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPAttachmentFileEntryPriorityComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPAttachmentFileEntryPriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPDefinitionDisplayDateComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionDisplayDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPDefinitionDisplayDateComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionDisplayDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPDefinitionLinkPriorityComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionLinkPriorityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPDefinitionLinkPriorityComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionLinkPriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPDefinitionModifiedDateComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionModifiedDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPDefinitionModifiedDateComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionModifiedDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPDefinitionNameComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPDefinitionNameComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPDefinitionOptionRelCreateDateComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionOptionRelCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPDefinitionOptionRelCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionOptionRelCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPDefinitionOptionRelNameComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionOptionRelNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPDefinitionOptionRelNameComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionOptionRelNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPDefinitionOptionRelPriorityComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionOptionRelPriorityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPDefinitionOptionRelPriorityComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionOptionRelPriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPDefinitionOptionValueRelNameComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionOptionValueRelNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPDefinitionOptionValueRelNameComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionOptionValueRelNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPDefinitionOptionValueRelPriorityComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionOptionValueRelPriorityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPDefinitionOptionValueRelPriorityComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionOptionValueRelPriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPDefinitionSpecificationOptionValuePriorityComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionSpecificationOptionValuePriorityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPDefinitionSpecificationOptionValuePriorityComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionSpecificationOptionValuePriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPDefinitionVersionComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionVersionComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPDefinitionVersionComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionVersionComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPInstanceCreateDateComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPInstanceCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPInstanceCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPInstanceCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPInstanceDisplayDateComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPInstanceDisplayDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPInstanceDisplayDateComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPInstanceDisplayDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPInstanceSkuComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPInstanceSkuComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPInstanceSkuComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPInstanceSkuComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPInstanceUnitOfMeasurePriorityComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPInstanceUnitOfMeasurePriorityComparator.getInstance(true)"
+	},
+	{
+		"from": "new CPInstanceUnitOfMeasurePriorityComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPInstanceUnitOfMeasurePriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPMeasurementUnitPriorityComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPMeasurementUnitPriorityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPMeasurementUnitPriorityComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPMeasurementUnitPriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPOptionCategoryModifiedDateComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionCategoryModifiedDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPOptionCategoryModifiedDateComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionCategoryModifiedDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPOptionCategoryPriorityComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionCategoryPriorityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPOptionCategoryPriorityComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionCategoryPriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPOptionCategoryTitleComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionCategoryTitleComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPOptionCategoryTitleComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionCategoryTitleComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPOptionModifiedDateComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionModifiedDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPOptionModifiedDateComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionModifiedDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPOptionNameComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPOptionNameComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPOptionValueNameComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionValueNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPOptionValueNameComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionValueNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPOptionValuePriorityComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionValuePriorityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPOptionValuePriorityComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPOptionValuePriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPSpecificationOptionModifiedDateComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPSpecificationOptionModifiedDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPSpecificationOptionModifiedDateComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPSpecificationOptionModifiedDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPSpecificationOptionTitleComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPSpecificationOptionTitleComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPSpecificationOptionTitleComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPSpecificationOptionTitleComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPTaxCategoryCreateDateComparator()",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPTaxCategoryCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPTaxCategoryCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-29234",
+		"skipParametersValidation": true,
+		"to": "CPTaxCategoryCreateDateComparator.getInstance(param#0#)"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

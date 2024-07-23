@@ -20,12 +20,14 @@ public class CommerceCurrencyPriorityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public CommerceCurrencyPriorityComparator() {
-		this(false);
-	}
+	public static CommerceCurrencyPriorityComparator getInstance(
+		boolean ascending) {
 
-	public CommerceCurrencyPriorityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -61,6 +63,16 @@ public class CommerceCurrencyPriorityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceCurrencyPriorityComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceCurrencyPriorityComparator
+		_INSTANCE_ASCENDING = new CommerceCurrencyPriorityComparator(true);
+
+	private static final CommerceCurrencyPriorityComparator
+		_INSTANCE_DESCENDING = new CommerceCurrencyPriorityComparator(false);
 
 	private final boolean _ascending;
 

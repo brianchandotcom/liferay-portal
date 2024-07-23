@@ -104,10 +104,10 @@ public interface DLFileEntryTypeLocalService
 		long folderId, long[] fileEntryTypeIds);
 
 	public DLFileEntryType addFileEntryType(
-			long userId, long groupId, long dataDefinitionId,
-			String fileEntryTypeKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, int scope,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long dataDefinitionId, String fileEntryTypeKey,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			int scope, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -117,9 +117,10 @@ public interface DLFileEntryTypeLocalService
 	 */
 	@Deprecated
 	public DLFileEntryType addFileEntryType(
-			long userId, long groupId, long dataDefinitionId,
-			String fileEntryTypeKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId,
+			long dataDefinitionId, String fileEntryTypeKey,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void cascadeFileEntryTypes(long userId, DLFolder dlFolder)

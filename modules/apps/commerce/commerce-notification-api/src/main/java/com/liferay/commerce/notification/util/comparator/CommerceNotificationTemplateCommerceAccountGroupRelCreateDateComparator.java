@@ -23,14 +23,15 @@ public class
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator() {
-		this(false);
-	}
+	public static
+		CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator
+			getInstance(boolean ascending) {
 
-	public CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator(
-		boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -71,6 +72,24 @@ public class
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final
+		CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator
+			_INSTANCE_ASCENDING =
+				new CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator(
+					true);
+
+	private static final
+		CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator
+			_INSTANCE_DESCENDING =
+				new CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator(
+					false);
 
 	private final boolean _ascending;
 

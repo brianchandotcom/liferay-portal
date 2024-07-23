@@ -21,14 +21,14 @@ public class CommerceNotificationTemplateModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public CommerceNotificationTemplateModifiedDateComparator() {
-		this(false);
-	}
+	public static CommerceNotificationTemplateModifiedDateComparator
+		getInstance(boolean ascending) {
 
-	public CommerceNotificationTemplateModifiedDateComparator(
-		boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -65,6 +65,20 @@ public class CommerceNotificationTemplateModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceNotificationTemplateModifiedDateComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final CommerceNotificationTemplateModifiedDateComparator
+		_INSTANCE_ASCENDING =
+			new CommerceNotificationTemplateModifiedDateComparator(true);
+
+	private static final CommerceNotificationTemplateModifiedDateComparator
+		_INSTANCE_DESCENDING =
+			new CommerceNotificationTemplateModifiedDateComparator(false);
 
 	private final boolean _ascending;
 

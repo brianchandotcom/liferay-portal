@@ -22,12 +22,14 @@ public class CommerceNotificationQueueEntryPriorityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public CommerceNotificationQueueEntryPriorityComparator() {
-		this(false);
-	}
+	public static CommerceNotificationQueueEntryPriorityComparator getInstance(
+		boolean ascending) {
 
-	public CommerceNotificationQueueEntryPriorityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +66,20 @@ public class CommerceNotificationQueueEntryPriorityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceNotificationQueueEntryPriorityComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final CommerceNotificationQueueEntryPriorityComparator
+		_INSTANCE_ASCENDING =
+			new CommerceNotificationQueueEntryPriorityComparator(true);
+
+	private static final CommerceNotificationQueueEntryPriorityComparator
+		_INSTANCE_DESCENDING =
+			new CommerceNotificationQueueEntryPriorityComparator(false);
 
 	private final boolean _ascending;
 

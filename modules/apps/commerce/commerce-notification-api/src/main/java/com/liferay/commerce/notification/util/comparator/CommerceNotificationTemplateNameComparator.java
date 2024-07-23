@@ -23,12 +23,14 @@ public class CommerceNotificationTemplateNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CommerceNotificationTemplateNameComparator() {
-		this(false);
-	}
+	public static CommerceNotificationTemplateNameComparator getInstance(
+		boolean ascending) {
 
-	public CommerceNotificationTemplateNameComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -68,6 +70,18 @@ public class CommerceNotificationTemplateNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceNotificationTemplateNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceNotificationTemplateNameComparator
+		_INSTANCE_ASCENDING = new CommerceNotificationTemplateNameComparator(
+			true);
+
+	private static final CommerceNotificationTemplateNameComparator
+		_INSTANCE_DESCENDING = new CommerceNotificationTemplateNameComparator(
+			false);
 
 	private final boolean _ascending;
 

@@ -21,14 +21,14 @@ public class CommerceNotificationAttachmentCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CommerceNotificationAttachmentCreateDateComparator() {
-		this(false);
-	}
+	public static CommerceNotificationAttachmentCreateDateComparator
+		getInstance(boolean ascending) {
 
-	public CommerceNotificationAttachmentCreateDateComparator(
-		boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -65,6 +65,20 @@ public class CommerceNotificationAttachmentCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceNotificationAttachmentCreateDateComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final CommerceNotificationAttachmentCreateDateComparator
+		_INSTANCE_ASCENDING =
+			new CommerceNotificationAttachmentCreateDateComparator(true);
+
+	private static final CommerceNotificationAttachmentCreateDateComparator
+		_INSTANCE_DESCENDING =
+			new CommerceNotificationAttachmentCreateDateComparator(false);
 
 	private final boolean _ascending;
 

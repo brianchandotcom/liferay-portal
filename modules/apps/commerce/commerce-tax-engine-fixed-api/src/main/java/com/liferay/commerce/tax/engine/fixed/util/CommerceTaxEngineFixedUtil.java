@@ -31,7 +31,7 @@ public class CommerceTaxEngineFixedUtil {
 
 		if (orderByCol.equals("create-date")) {
 			orderByComparator =
-				new CommerceTaxFixedRateAddressRelCreateDateComparator(
+				CommerceTaxFixedRateAddressRelCreateDateComparator.getInstance(
 					orderByAsc);
 		}
 
@@ -51,7 +51,8 @@ public class CommerceTaxEngineFixedUtil {
 		OrderByComparator<CPTaxCategory> orderByComparator = null;
 
 		if (orderByCol.equals("name")) {
-			orderByComparator = new CPTaxCategoryNameComparator(orderByAsc);
+			orderByComparator = CPTaxCategoryNameComparator.getInstance(
+				orderByAsc);
 		}
 
 		return orderByComparator;

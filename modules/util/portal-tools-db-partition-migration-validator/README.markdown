@@ -16,7 +16,7 @@ This tool validates the compatibility between the source and target databases fo
 Commands:
 
 - `export` Export validation file.
-- `validate` Validate source and target files.
+- `validate` Validate source and target validation files.
 
 Export parameters:
 

@@ -166,7 +166,8 @@ public class DBPartitionMigrationValidator {
 			new Option(null, "export", false, "Export validation file."));
 		options.addOption(
 			new Option(
-				null, "validate", false, "Validate source and target files."));
+				null, "validate", false,
+				"Validate source and target validation files."));
 
 		return options;
 	}

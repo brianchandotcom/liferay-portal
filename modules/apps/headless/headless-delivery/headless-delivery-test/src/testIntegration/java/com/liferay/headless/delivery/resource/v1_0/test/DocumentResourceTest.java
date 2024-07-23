@@ -440,7 +440,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		return _dlFileEntryTypeLocalService.addFileEntryType(
-			group.getCreatorUserId(), group.getGroupId(),
+			null, group.getCreatorUserId(), group.getGroupId(),
 			ddmStructure.getStructureId(), null,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()

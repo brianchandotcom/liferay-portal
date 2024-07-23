@@ -294,7 +294,8 @@ public class CompanyLocalServiceTest {
 				StorageType.DEFAULT.toString(), serviceContext);
 
 			dlFileEntryType = _dlFileEntryTypeLocalService.addFileEntryType(
-				userId, guestGroup.getGroupId(), ddmStructure.getStructureId(),
+				null, userId, guestGroup.getGroupId(),
+				ddmStructure.getStructureId(),
 				CompanyLocalServiceTest.class.getSimpleName(),
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(),

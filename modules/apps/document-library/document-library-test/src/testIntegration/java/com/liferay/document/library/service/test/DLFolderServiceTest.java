@@ -85,7 +85,7 @@ public class DLFolderServiceTest {
 			_group.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		_dlFileEntryType = _dlFileEntryTypeService.addFileEntryType(
-			_group.getGroupId(), _ddmStructure.getStructureId(), null,
+			null, _group.getGroupId(), _ddmStructure.getStructureId(), null,
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

@@ -60,7 +60,7 @@ public class DLFileEntryTypeTableReferenceDefinitionTest
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		return _dlFileEntryTypeLocalService.addFileEntryType(
-			group.getCreatorUserId(), group.getGroupId(),
+			null, group.getCreatorUserId(), group.getGroupId(),
 			ddmStructure.getStructureId(),
 			DLFileEntryTypeTableReferenceDefinitionTest.class.getSimpleName(),
 			HashMapBuilder.put(

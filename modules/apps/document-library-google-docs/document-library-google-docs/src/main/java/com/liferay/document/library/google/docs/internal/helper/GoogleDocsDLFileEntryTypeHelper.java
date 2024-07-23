@@ -121,7 +121,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 		serviceContext.setUserId(guestUserId);
 
 		_dlFileEntryTypeLocalService.addFileEntryType(
-			guestUserId, _company.getGroupId(), ddmStructureId,
+			null, guestUserId, _company.getGroupId(), ddmStructureId,
 			GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY,
 			_getGoogleDriveShortcutNameMap(LanguageUtil.getAvailableLocales()),
 			descriptionMap,

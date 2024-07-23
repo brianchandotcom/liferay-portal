@@ -171,7 +171,7 @@ public class DLFileEntryRepeatableFieldsInfoCollectionProviderTest {
 
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.addFileEntryType(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				ddmStructure.getStructureId(), null,
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),

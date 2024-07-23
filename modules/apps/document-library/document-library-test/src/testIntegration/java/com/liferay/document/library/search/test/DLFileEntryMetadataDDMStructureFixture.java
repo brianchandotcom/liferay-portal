@@ -73,8 +73,8 @@ public class DLFileEntryMetadataDDMStructureFixture {
 
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.addFileEntryType(
-				_dlFixture.getUserId(), groupId, ddmStructure.getStructureId(),
-				null,
+				null, _dlFixture.getUserId(), groupId,
+				ddmStructure.getStructureId(), null,
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(), "New File Entry Type"),
 				Collections.singletonMap(

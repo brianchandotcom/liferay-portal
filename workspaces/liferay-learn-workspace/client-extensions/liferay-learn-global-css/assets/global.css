@@ -1178,13 +1178,13 @@ pre[class*='language-'] {
 		font-weight: 600;
 	}
 
+	.collapsible-content {
+		display: none;
+	}
+
 	.component-button:hover {
 		background: var(--color-action-primary-active-20, #e6edfb);
 		border-radius: var(--border-radius-sm);    
-	}
-
-	.collapsible-content {
-		display: none;
 	}
 
 	.disclaimer {

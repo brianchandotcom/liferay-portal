@@ -19,8 +19,12 @@ import java.nio.ByteBuffer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import jodd.util.StringUtil;
+
+import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.generators.PKCS5S2ParametersGenerator;
 import org.bouncycastle.crypto.params.KeyParameter;
+import org.bouncycastle.jcajce.provider.util.DigestFactory;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -52,7 +56,8 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 				algorithm, encryptedPassword);
 
 			PKCS5S2ParametersGenerator pkcs5S2ParametersGenerator =
-				new PKCS5S2ParametersGenerator();
+				new PKCS5S2ParametersGenerator(
+					pbkdf2EncryptionConfiguration.getDigest());
 
 			pkcs5S2ParametersGenerator.init(
 				plainTextPassword.getBytes(),
@@ -134,6 +139,20 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 						bufferUnderflowException);
 				}
 			}
+
+			int indexOf = StringUtil.indexOfIgnoreCase(algorithm, "SHA");
+
+			if (indexOf < 0) {
+				return;
+			}
+
+			String digest = algorithm.substring(indexOf);
+
+			_digest = DigestFactory.getDigest(digest.split("/")[0]);
+		}
+
+		public Digest getDigest() {
+			return _digest;
 		}
 
 		public int getKeySize() {
@@ -148,6 +167,7 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 			return _saltBytes;
 		}
 
+		private Digest _digest = DigestFactory.getDigest("SHA1");
 		private int _keySize = _KEY_SIZE;
 		private int _rounds = _ROUNDS;
 		private byte[] _saltBytes;

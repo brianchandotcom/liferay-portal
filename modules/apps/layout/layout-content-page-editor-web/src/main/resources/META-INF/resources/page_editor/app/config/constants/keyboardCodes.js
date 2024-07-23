@@ -23,11 +23,15 @@ export const ENTER_KEY_CODE = 'Enter';
 
 export const ESCAPE_KEY_CODE = 'Escape';
 
+export const H_KEY_CODE = 'KeyH';
+
 export const HOME_KEY_CODE = 'Home';
 
 export const META_KEY_CODE = 'Meta';
 
 export const PERIOD_KEY_CODE = 'Period';
+
+export const R_KEY_CODE = 'KeyR';
 
 export const S_KEY_CODE = 'KeyS';
 

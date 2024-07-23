@@ -5,6 +5,7 @@
 
 import React, {useEffect, useRef, useState} from 'react';
 
+import {selectFragmentForNameEditing} from '../actions';
 import {CONTENT_DISPLAY_OPTIONS} from '../config/constants/contentDisplayOptions';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
@@ -15,7 +16,9 @@ import {
 	ARROW_UP_KEY_CODE,
 	BACKSPACE_KEY_CODE,
 	D_KEY_CODE,
+	H_KEY_CODE,
 	PERIOD_KEY_CODE,
+	R_KEY_CODE,
 	S_KEY_CODE,
 	Z_KEY_CODE,
 } from '../config/constants/keyboardCodes';
@@ -35,9 +38,12 @@ import redoThunk from '../thunks/redo';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import undoThunk from '../thunks/undo';
 import canBeDuplicated from '../utils/canBeDuplicated';
+import canBeHidden from '../utils/canBeHidden';
 import canBeRemoved from '../utils/canBeRemoved';
+import canBeRenamed from '../utils/canBeRenamed';
 import canBeSaved from '../utils/canBeSaved';
 import isCtrlOrMeta from '../utils/isCtrlOrMeta';
+import updateItemStyle from '../utils/updateItemStyle';
 import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
 import ShortcutModal from './ShortcutModal';
 
@@ -90,11 +96,40 @@ export default function ShortcutManager() {
 			? layoutData.items[activeItemId]
 			: null;
 
+	const masterLayoutData = useSelector(
+		(state) => state.masterLayout?.masterLayoutData
+	);
+
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
 	const duplicate = () => {
 		dispatch(
 			duplicateItem({
 				itemId: activeItemId,
 				selectItem,
+			})
+		);
+	};
+
+	const hideShow = () => {
+		updateItemStyle({
+			dispatch,
+			itemId: activeItemId,
+			selectedViewportSize,
+			styleName: 'display',
+			styleValue:
+				layoutData.items[activeItemId].config.styles.display === 'none'
+					? 'block'
+					: 'none',
+		});
+	};
+
+	const rename = () => {
+		dispatch(
+			selectFragmentForNameEditing({
+				itemId: activeItemId,
 			})
 		);
 	};
@@ -221,6 +256,21 @@ export default function ShortcutManager() {
 			isKeyCombination: (event) =>
 				isCtrlOrMeta(event) && event.code === D_KEY_CODE,
 		},
+		hideShow: {
+			action: hideShow,
+			canBeExecuted: () =>
+				canUpdatePageStructure &&
+				!!layoutData.items[activeItemId] &&
+				canBeHidden(
+					layoutData.items[activeItemId],
+					layoutData,
+					masterLayoutData,
+					fragmentEntryLinks,
+					selectedViewportSize
+				),
+			isKeyCombination: (event) =>
+				isCtrlOrMeta(event) && event.code === H_KEY_CODE,
+		},
 		hideSidebar: {
 			action: hideSidebar,
 			canBeExecuted: (event) =>
@@ -281,6 +331,17 @@ export default function ShortcutManager() {
 				canBeRemoved(layoutData.items[activeItemId], layoutData) &&
 				!isInteractiveElement(event.target),
 			isKeyCombination: (event) => event.code === BACKSPACE_KEY_CODE,
+		},
+		rename: {
+			action: rename,
+			canBeExecuted: () =>
+				canUpdatePageStructure &&
+				!!layoutData.items[activeItemId] &&
+				canBeRenamed(layoutData.items[activeItemId]),
+			isKeyCombination: (event) =>
+				isCtrlOrMeta(event) &&
+				event.altKey &&
+				event.code === R_KEY_CODE,
 		},
 		save: {
 			action: save,

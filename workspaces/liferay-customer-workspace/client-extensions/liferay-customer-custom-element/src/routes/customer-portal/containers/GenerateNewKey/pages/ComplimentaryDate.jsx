@@ -147,8 +147,13 @@ const ComplimentaryDate = ({
 		setIsLoadingGenerateKey(true);
 
 		try {
+			const updatedActivationKeysItem = state.activationKeys.map(item => ({
+				...item,
+				description: purposeDescription,
+			}));
+
 			if (hasDesiredEntry) {
-				const createKeyPromises = state.activationKeys.map(
+				const createKeyPromises = updatedActivationKeysItem.map(
 					async (item) => {
 						await generateLicenseKey(item);
 					}
@@ -165,7 +170,7 @@ const ComplimentaryDate = ({
 				return true;
 			} else {
 				const results = await Promise.all(
-					state.activationKeys.map(async (item) => {
+					updatedActivationKeysItem.map(async (item) => {
 						await generateLicenseKey(item, isComplimentaryKey);
 					})
 				);
@@ -204,6 +209,7 @@ const ComplimentaryDate = ({
 		navigate,
 		provisioningServerAPI,
 		provisioningService,
+		purposeDescription,
 		sessionId,
 		state.activationKeys,
 		startDate,

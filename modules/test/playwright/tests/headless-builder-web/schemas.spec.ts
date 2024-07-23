@@ -556,6 +556,10 @@ testFeatureFlagsEnabled(
 
 		await schemaPage.page
 			.getByRole('button', {name: 'Organization'})
+			.waitFor({state: 'visible'});
+
+		await schemaPage.page
+			.getByRole('button', {name: 'Organization'})
 			.click();
 
 		await expect(

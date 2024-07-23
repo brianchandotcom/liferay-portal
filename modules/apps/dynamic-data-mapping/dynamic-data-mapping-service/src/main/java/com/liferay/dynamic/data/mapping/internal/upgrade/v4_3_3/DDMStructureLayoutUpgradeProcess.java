@@ -42,7 +42,8 @@ public class DDMStructureLayoutUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select DDMStructureLayout.structureLayoutId, ",
+					"select DDMStructureLayout.ctCollectionId, ",
+					"DDMStructureLayout.structureLayoutId, ",
 					"DDMStructureLayout.definition from DDMStructureLayout ",
 					"inner join DDMStructureVersion on ",
 					"DDMStructureLayout.structureVersionId = ",
@@ -54,7 +55,7 @@ public class DDMStructureLayoutUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStructureLayout set definition = ? where " +
-						"structureLayoutId = ?")) {
+						"ctCollectionId = ? and structureLayoutId = ?")) {
 
 			preparedStatement1.setLong(
 				1, PortalUtil.getClassNameId(DDMFormInstance.class.getName()));
@@ -87,10 +88,10 @@ public class DDMStructureLayoutUpgradeProcess extends UpgradeProcess {
 						1,
 						ddmFormLayoutSerializerSerializeResponse.getContent());
 
-					long structureLayoutId = resultSet.getLong(
-						"structureLayoutId");
-
-					preparedStatement2.setLong(2, structureLayoutId);
+					preparedStatement2.setLong(
+						2, resultSet.getLong("ctCollectionId"));
+					preparedStatement2.setLong(
+						3, resultSet.getLong("structureLayoutId"));
 
 					preparedStatement2.addBatch();
 				}

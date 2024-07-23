@@ -170,6 +170,9 @@ plugins.security.disabled: true</echo>
 			type="both"
 		>
 			<fileset
+				dir="${liferay.home}/data/opensearch2"
+			/>
+			<fileset
 				dir="${opensearch.dir}"
 			/>
 		</chmod>

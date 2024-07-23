@@ -81,7 +81,6 @@ import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutRevisionConstants;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.model.LayoutTemplate;
@@ -560,31 +559,6 @@ public class LayoutStagedModelDataHandler
 				!_isLayoutOutdated(existingLayout, layout)) {
 
 				layouts.put(oldLayoutId, existingLayout);
-
-				return;
-			}
-
-			LayoutFriendlyURL layoutFriendlyURL =
-				_layoutFriendlyURLLocalService.fetchFirstLayoutFriendlyURL(
-					groupId, privateLayout, friendlyURL);
-
-			if ((layoutFriendlyURL != null) && (existingLayout == null)) {
-				Layout mergeFailFriendlyURLLayout =
-					_layoutLocalService.getLayout(layoutFriendlyURL.getPlid());
-
-				_addMergeFailFriendlyURLLayout(mergeFailFriendlyURLLayout);
-
-				if (!_log.isWarnEnabled()) {
-					return;
-				}
-
-				_log.warn(
-					StringBundler.concat(
-						"Layout with layout ID ", layout.getLayoutId(),
-						" cannot be propagated because the friendly URL ",
-						"conflicts with the friendly URL of layout with ",
-						"layout ID ",
-						mergeFailFriendlyURLLayout.getLayoutId()));
 
 				return;
 			}
@@ -1111,35 +1085,6 @@ public class LayoutStagedModelDataHandler
 		}
 		finally {
 			serviceContext.setWorkflowAction(workflowAction);
-		}
-	}
-
-	private void _addMergeFailFriendlyURLLayout(Layout layout)
-		throws Exception {
-
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		layoutSet = _layoutSetLocalService.getLayoutSet(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout());
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		String oldMergeFailFriendlyURLLayouts =
-			settingsUnicodeProperties.getProperty(
-				Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS, StringPool.BLANK);
-
-		String newMergeFailFriendlyURLLayouts = StringUtil.add(
-			oldMergeFailFriendlyURLLayouts, layout.getUuid());
-
-		if (!oldMergeFailFriendlyURLLayouts.equals(
-				newMergeFailFriendlyURLLayouts)) {
-
-			settingsUnicodeProperties.setProperty(
-				Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS,
-				newMergeFailFriendlyURLLayouts);
-
-			_layoutSetLocalService.updateLayoutSet(layoutSet);
 		}
 	}
 

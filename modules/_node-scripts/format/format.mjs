@@ -6,6 +6,7 @@
 import {ESLint} from 'eslint';
 import fg from 'fast-glob';
 import * as fs from 'fs/promises';
+import micromatch from 'micromatch';
 import path from 'path';
 import prettier from 'prettier';
 import stylelint from 'stylelint';
@@ -27,7 +28,7 @@ const GIT_IGNORE_FILE = '.gitignore';
 
 const EXTENSIONS = ['graphql', 'js', 'jsp', 'jspf', 'mjs', 'scss', 'ts', 'tsx'];
 
-async function getFilesToCheck(rootDir) {
+async function getIgoredFiles(rootDir) {
 	const eslintIgnoreFilePath = path.join(rootDir, ESLINT_IGNORE_FILE);
 	const prettierIgnoreFilePath = path.join(rootDir, PRETTIER_IGNORE_FILE);
 	const gitIgnoreFilePath = path.join(rootDir, GIT_IGNORE_FILE);
@@ -38,6 +39,30 @@ async function getFilesToCheck(rootDir) {
 		readIgnoreFile(gitIgnoreFilePath),
 	]);
 
+	return [
+		'**/src/test/**',
+		'**/build_gradle/**',
+		...gitIgnores,
+		...eslintIgnores,
+		...prettierIgnores,
+	].map((ignore) => {
+		if (ignore.startsWith('*') && !ignore.startsWith('**')) {
+			ignore = `**/${ignore}`;
+		}
+
+		if (!ignore.startsWith('*')) {
+			ignore = `**${ignore.startsWith('/') ? '' : '/'}${ignore}`;
+		}
+
+		if (!ignore.endsWith('**') && !ignore.includes('.')) {
+			ignore = `${ignore}${ignore.endsWith('/') ? '' : '/'}**`;
+		}
+
+		return ignore;
+	});
+}
+
+async function getFilesToCheck(rootDir, ignore = []) {
 	const files = await fg(
 		[
 			'**/*.',
@@ -48,27 +73,7 @@ async function getFilesToCheck(rootDir) {
 		{
 			cwd: rootDir,
 			dot: true,
-			ignore: [
-				'**/src/test/**',
-				'**/build_gradle/**',
-				...gitIgnores,
-				...eslintIgnores,
-				...prettierIgnores,
-			].map((ignore) => {
-				if (ignore.startsWith('*') && !ignore.startsWith('**')) {
-					ignore = `**/${ignore}`;
-				}
-
-				if (!ignore.startsWith('*')) {
-					ignore = `**${ignore.startsWith('/') ? '' : '/'}${ignore}`;
-				}
-
-				if (!ignore.endsWith('**') && !ignore.includes('.')) {
-					ignore = `${ignore}${ignore.endsWith('/') ? '' : '/'}**`;
-				}
-
-				return ignore;
-			}),
+			ignore,
 		}
 	);
 
@@ -86,6 +91,8 @@ export default async function format(
 ) {
 	const rootDir = await getRootDir();
 
+	const ignoredFiles = await getIgoredFiles(rootDir);
+
 	let filepaths = [];
 
 	if (all) {
@@ -94,9 +101,9 @@ export default async function format(
 
 		filepaths = (
 			await Promise.all([
-				getFilesToCheck(rootDir),
-				getFilesToCheck(workspacesDir),
-				getFilesToCheck(playwrightDir),
+				getFilesToCheck(rootDir, ignoredFiles),
+				getFilesToCheck(workspacesDir, ignoredFiles),
+				getFilesToCheck(playwrightDir, ignoredFiles),
 			])
 		).flat();
 	}
@@ -104,21 +111,18 @@ export default async function format(
 		filepaths = [filePath];
 	}
 	else {
-		filepaths = (await getGitModifiedFiles())
-			.filter((filepath) =>
-				EXTENSIONS.includes(
+		const modifiedFiles = await getGitModifiedFiles();
 
-					// path.extname includes the '.'
+		filepaths = micromatch(
+			modifiedFiles,
+			EXTENSIONS.map((ext) => `**/*.${ext}`),
+			{ignore: ignoredFiles}
+		).map(
 
-					path.extname(filepath).replace('.', '')
-				)
-			)
-			.map(
+			// make sure the path is absolute
 
-				// make sure the path is absolute
-
-				(filepath) => path.join(rootDir, '..', filepath)
-			);
+			(filepath) => path.join(rootDir, '..', filepath)
+		);
 	}
 
 	if (!filepaths.length) {

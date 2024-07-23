@@ -54,7 +54,7 @@ test('Create, edit, and delete a new virtual instance', async ({
 	expect(
 		await virtualInstancesPage.page
 			.getByRole('row')
-			.getByText(name + ' ' + newName + ' ' + newName + '.com 0 100 No')
+			.getByText(name + ' ' + newName + ' ' + newName + '.com 1 100 No')
 	).toBeVisible();
 
 	await virtualInstancesPage.deleteVirtualInstance(name);

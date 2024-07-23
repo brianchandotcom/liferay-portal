@@ -306,8 +306,9 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		if (dlFileEntryType == null) {
 			dlFileEntryType = _dlFileEntryTypeLocalService.addFileEntryType(
-				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-				ddmStructure.getStructureId(), null,
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(), ddmStructure.getStructureId(),
+				null,
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(), "New File Entry Type"),
 				Collections.singletonMap(

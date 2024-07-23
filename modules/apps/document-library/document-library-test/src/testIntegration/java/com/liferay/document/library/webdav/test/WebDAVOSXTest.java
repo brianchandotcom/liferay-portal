@@ -686,8 +686,9 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 			DLFileEntryType dlFileEntryType =
 				_dlFileEntryTypeLocalService.addFileEntryType(
-					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-					ddmStructure.getStructureId(), null,
+					null, TestPropsValues.getUserId(),
+					TestPropsValues.getGroupId(), ddmStructure.getStructureId(),
+					null,
 					Collections.singletonMap(
 						LocaleUtil.US, RandomTestUtil.randomString()),
 					Collections.singletonMap(
@@ -780,8 +781,9 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 			DLFileEntryType initialDLFileEntryType =
 				_dlFileEntryTypeLocalService.addFileEntryType(
-					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-					ddmStructure.getStructureId(), null,
+					null, TestPropsValues.getUserId(),
+					TestPropsValues.getGroupId(), ddmStructure.getStructureId(),
+					null,
 					Collections.singletonMap(
 						LocaleUtil.US, "New File Entry Type"),
 					Collections.singletonMap(

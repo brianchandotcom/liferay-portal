@@ -495,7 +495,7 @@ public class DDMFormValuesExportImportContentProcessorTest {
 
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.addFileEntryType(
-				TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+				null, TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
 				_ddmStructure.getStructureId(), null,
 				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),

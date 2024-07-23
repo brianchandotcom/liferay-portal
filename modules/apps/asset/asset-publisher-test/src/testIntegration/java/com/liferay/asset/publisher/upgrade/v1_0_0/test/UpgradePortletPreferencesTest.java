@@ -111,8 +111,9 @@ public class UpgradePortletPreferencesTest {
 
 					DLFileEntryType dlFileEntryType =
 						DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-							TestPropsValues.getUserId(), _group.getGroupId(),
-							ddmStructure.getStructureId(), null,
+							null, TestPropsValues.getUserId(),
+							_group.getGroupId(), ddmStructure.getStructureId(),
+							null,
 							Collections.singletonMap(
 								LocaleUtil.US, "New File Entry Type"),
 							Collections.singletonMap(
@@ -167,8 +168,9 @@ public class UpgradePortletPreferencesTest {
 
 					DLFileEntryType dlFileEntryType =
 						DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-							TestPropsValues.getUserId(), _group.getGroupId(),
-							ddmStructure.getStructureId(), null,
+							null, TestPropsValues.getUserId(),
+							_group.getGroupId(), ddmStructure.getStructureId(),
+							null,
 							Collections.singletonMap(
 								LocaleUtil.US, "New File Entry Type"),
 							Collections.singletonMap(

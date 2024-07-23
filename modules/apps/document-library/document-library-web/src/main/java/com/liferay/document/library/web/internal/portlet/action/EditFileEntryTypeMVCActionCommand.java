@@ -197,8 +197,8 @@ public class EditFileEntryTypeMVCActionCommand
 
 		DLFileEntryType fileEntryType =
 			_dlFileEntryTypeService.addFileEntryType(
-				themeDisplay.getScopeGroupId(), dataDefinition.getId(), null,
-				nameMap, descriptionMap, serviceContext);
+				null, themeDisplay.getScopeGroupId(), dataDefinition.getId(),
+				null, nameMap, descriptionMap, serviceContext);
 
 		_dlFileEntryTypeLocalService.addDDMStructureLinks(
 			fileEntryType.getFileEntryTypeId(),

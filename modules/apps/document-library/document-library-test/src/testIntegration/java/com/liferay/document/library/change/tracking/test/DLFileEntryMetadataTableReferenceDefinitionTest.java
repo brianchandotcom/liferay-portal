@@ -99,7 +99,7 @@ public class DLFileEntryMetadataTableReferenceDefinitionTest
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		_dlFileEntryType = _dlFileEntryTypeLocalService.addFileEntryType(
-			group.getCreatorUserId(), group.getGroupId(),
+			null, group.getCreatorUserId(), group.getGroupId(),
 			_ddmStructure.getStructureId(),
 			DLFileEntryMetadataTableReferenceDefinitionTest.class.
 				getSimpleName(),

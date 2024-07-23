@@ -160,7 +160,7 @@ public class ExportImportDisplayPagesTest {
 
 		DLFileEntryType dlFileEntryType1 =
 			_dlFileEntryTypeLocalService.addFileEntryType(
-				TestPropsValues.getUserId(), _group1.getGroupId(),
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				ddmStructure1.getStructureId(), fileEntryTypeKey,
 				dlFileEntryTypeNameMap, null,
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
@@ -174,7 +174,7 @@ public class ExportImportDisplayPagesTest {
 
 		DLFileEntryType dlFileEntryType2 =
 			_dlFileEntryTypeLocalService.addFileEntryType(
-				TestPropsValues.getUserId(), _group2.getGroupId(),
+				null, TestPropsValues.getUserId(), _group2.getGroupId(),
 				ddmStructure2.getStructureId(), fileEntryTypeKey,
 				dlFileEntryTypeNameMap, null,
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
@@ -209,7 +209,7 @@ public class ExportImportDisplayPagesTest {
 
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.addFileEntryType(
-				TestPropsValues.getUserId(), _group1.getGroupId(),
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				ddmStructure.getStructureId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(locale), null,
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,

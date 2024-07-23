@@ -1566,7 +1566,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 		Map<Locale, String> map = LocalizationUtil.getMap(localizedValuesMap);
 
 		return _dlFileEntryTypeLocalService.addFileEntryType(
-			_adminUser.getUserId(), _group.getGroupId(),
+			null, _adminUser.getUserId(), _group.getGroupId(),
 			ddmStructure.getStructureId(), null, map, map,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

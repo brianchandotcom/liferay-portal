@@ -134,7 +134,7 @@ public class DLVideoExternalShortcutDLFileEntryTypeHelper {
 		serviceContext.setUserId(guestUserId);
 
 		_dlFileEntryTypeLocalService.addFileEntryType(
-			guestUserId, _company.getGroupId(), ddmStructureId,
+			null, guestUserId, _company.getGroupId(), ddmStructureId,
 			DLVideoConstants.DL_FILE_ENTRY_TYPE_KEY,
 			_getExternalVideoShortcutNameMap(
 				LanguageUtil.getAvailableLocales()),

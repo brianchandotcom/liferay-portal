@@ -162,91 +162,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110183. Can access to edition of collection items in Collection Items modal."
-	@priority = 4
-	test GoToCollectionItemEditModeViaViewCollectionItemsModal {
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = ${randomSiteName},
-				title = "Web Content Title");
-		}
-
-		task ("Add a blogs entry") {
-			HeadlessBlog.addBlogEntry(
-				content = "Blogs Entry Content",
-				groupName = ${randomSiteName},
-				title = "Blogs Entry Title");
-		}
-
-		task ("Add a document") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "Document Title",
-				groupName = ${randomSiteName},
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_1.jpg");
-		}
-
-		task ("Add a collection page based on recent content collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			ContentPages.addCollectionPage(
-				collectionName = "Recent Content",
-				pageName = "Test Collection Page Name",
-				tabName = "Collection Providers");
-		}
-
-		task ("View assets can be aditable via collection items in pages admin") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
-				WaitForLiferayEvent.initializeLiferayEventLog();
-
-				PagesAdmin.gotoPageEllipsisMenuItem(
-					menuItem = "View Collection Items",
-					pageName = "Test Collection Page Name");
-
-				SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-				Page.gotoCollectionEntryEllipsisItem(
-					item = "Edit Content",
-					tableEntry = ${title});
-
-				ControlMenu.viewHeaderTitle(headerTitle = ${title});
-
-				Navigator.gotoBack();
-			}
-		}
-
-		task ("View assets can be aditable via collection items in page tree") {
-			PagesFinder.goToPagesFinder();
-
-			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
-				WaitForLiferayEvent.initializeLiferayEventLog();
-
-				PagesFinder.gotoPageEllipsisItem(
-					item = "View Collection Items",
-					pageName = "Test Collection Page Name*");
-
-				SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-				Page.gotoCollectionEntryEllipsisItem(
-					item = "Edit Content",
-					tableEntry = ${title});
-
-				ControlMenu.viewHeaderTitle(headerTitle = ${title});
-
-				PageEditor.clickBack();
-
-				ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Collection Page Name");
-
-				PagesFinder.viewPageNameInPagesFinder(pageName = "Test Collection Page Name*");
-			}
-		}
-	}
-
 	@description = "This is a test for LPS-110108. Move child page to parent page level via drag and drop."
 	@priority = 4
 	test MoveChildPageToParentLevel {
@@ -1037,104 +952,27 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110183. Can view information about collection items of collection page via Pages admin."
-	@priority = 5
-	test ViewCollectionItemViaPageFinderAndPageAdmin {
-		property portal.acceptance = "true";
-
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = ${randomSiteName},
-				title = "Web Content Title");
-		}
-
-		task ("Add a blogs entry") {
-			HeadlessBlog.addBlogEntry(
-				content = "Blogs Entry Content",
-				groupName = ${randomSiteName},
-				title = "Blogs Entry Title");
-		}
-
-		task ("Add a document") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "Document Title",
-				groupName = ${randomSiteName},
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_1.jpg");
-		}
-
-		task ("Add a dynamic collection with All Types") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
-				itemType = "All Types",
-				title = "Dynamic Collection");
-		}
-
-		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			ContentPages.addCollectionPage(
-				collectionName = "Dynamic Collection",
-				pageName = "Dynamic Collection Page Name",
-				tabName = "Collections");
-		}
-
-		task ("View header table are shown in collection items via page tree") {
-			PagesFinder.goToPagesFinder();
-
-			PagesFinder.viewPageNameInPagesFinder(pageName = "Dynamic Collection Page Name*");
-
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			PagesFinder.gotoPageEllipsisItem(
-				item = "View Collection Items",
-				pageName = "Dynamic Collection Page Name*");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
-				AssertElementPresent(
-					key_tableHeader = ${tableHeader},
-					locator1 = "LexiconTable#TABLE_HEADER");
-			}
-		}
-
-		task ("View assets are shown in collection items via page tree") {
-			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				LexiconTable.viewTableEntryTitle(tableEntry = ${title});
-			}
-		}
-
-		task ("View header table are shown in collection items via Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View Collection Items",
-				pageName = "Dynamic Collection Page Name");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
-				AssertElementPresent(
-					key_tableHeader = ${tableHeader},
-					locator1 = "LexiconTable#TABLE_HEADER");
-			}
-		}
-
-		task ("View assets are shown in collection items via Pages admin") {
-			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				LexiconTable.viewTableEntryTitle(tableEntry = ${title});
-			}
-		}
-	}
-
-	@description = "This is a test for LPS-110183. Can view more collection items use pagination in Collection Items modal."
+	@description = "This is a test for LPS-110183. Can access to edition and display page of collection items in Collection Items modal."
 	@priority = 4
-	test ViewCollectionItemWithPagination {
-		task ("Add five web contents") {
+	test ViewCollectionItemsModal {
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Web Content DPT",
+				groupName = ${randomSiteName},
+				subType = "Basic Web Content");
+
+			JSONLayoutpagetemplate.publishLayout(
+				displayPageTemplateEntryName = "Web Content DPT",
+				groupName = ${randomSiteName});
+
+			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
+				groupName = ${randomSiteName},
+				layoutPageTemplateEntryName = "Web Content DPT",
+				type = "Display Page Template");
+		}
+
+		task ("Add multiple web content") {
 			for (var n : list "5,4,3,2,1") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
@@ -1143,18 +981,20 @@ definition {
 			}
 		}
 
-		task ("Add a collection page based on highest rated assets collection") {
+		task ("Add a collection page based on recent content collection") {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
-				collectionName = "Highest Rated Assets",
+				collectionName = "Recent Content",
 				pageName = "Test Collection Page Name",
 				tabName = "Collection Providers");
-
-			PageEditor.publish();
 		}
 
-		task ("View all web contents are shown in collection items") {
+		task ("View four web contents are shown in collecion items") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
@@ -1163,25 +1003,11 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			var i = 1;
-
-			for (var rowNumber : list "5,4,3,2,1") {
-				Page.viewCollectionItem(
-					itemName = "Web Content Title ${rowNumber}",
-					key_rowNumber = ${i});
-
-				var i = ${i} + 1;
-			}
-		}
-
-		task ("Change the pagination to four items per page") {
 			Pagination.changePagination(itemsPerPage = 4);
-		}
 
-		task ("View four web contents are shown in collecion items") {
 			var i = 1;
 
-			for (var rowNumber : list "5,4,3,2") {
+			for (var rowNumber : list "1,2,3,4") {
 				Page.viewCollectionItem(
 					itemName = "Web Content Title ${rowNumber}",
 					key_rowNumber = ${i});
@@ -1189,13 +1015,53 @@ definition {
 				var i = ${i} + 1;
 			}
 
-			LexiconTable.viewTableEntryNotPresent(tableEntry = "Web Content Title 1");
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "Web Content Title 5");
 		}
 
-		task ("View first web content is shown in the next page") {
-			Click(locator1 = "Pagination#NEXT_LINK");
+		task ("View assets can be editable via collection items in pages admin") {
+			Page.gotoCollectionEntryEllipsisItem(
+				item = "View Display Page",
+				tableEntry = "Web Content Title 1");
 
-			Page.viewCollectionItem(itemName = "Web Content Title 1");
+			SelectFrameTop();
+
+			PageEditor.clickBack();
+		}
+
+		task ("View assets can be aditable via collection items in pages admin") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View Collection Items",
+				pageName = "Test Collection Page Name");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Page.gotoCollectionEntryEllipsisItem(
+				item = "Edit Content",
+				tableEntry = "Web Content Title 1");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title 1");
+
+			Navigator.gotoBack();
+		}
+
+		task ("View assets can be aditable via collection items in page tree") {
+			PagesFinder.goToPagesFinder();
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			PagesFinder.gotoPageEllipsisItem(
+				item = "View Collection Items",
+				pageName = "Test Collection Page Name*");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Page.gotoCollectionEntryEllipsisItem(
+				item = "Edit Content",
+				tableEntry = "Web Content Title 1");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title 1");
 		}
 	}
 
@@ -1454,117 +1320,6 @@ definition {
 				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
 				permissionFlagged = "true",
 				roleTitle = "Organization User");
-		}
-	}
-
-	@description = "This is a test for LPS-110183. Can access to display page in Collection Items modal when the collection item has associated display page template."
-	@priority = 5
-	test ViewDisplayPageTemplateViaCollectionItems {
-		property portal.acceptance = "true";
-
-		var groupId = JSONGroupSetter.setGroupId(groupName = ${randomSiteName});
-
-		task ("Add a display page template for Web Content Article and Basic Web Content") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Web Content DPT",
-				groupId = ${groupId},
-				subType = "Basic Web Content");
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT");
-
-			PageEditor.publish();
-		}
-
-		task ("Adds a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupId = ${groupId},
-				title = "Web Content Title");
-		}
-
-		task ("Select Web Content DPT as Specific Display Page Template") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			WebContent.editDisplayPage(
-				pageName = "Web Content DPT",
-				pageType = "Display Page Templates");
-
-			PortletEntry.publish();
-		}
-
-		task ("Add a manual collection with Web Content Article item type and Basic Web Content item subtype") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
-				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Manual Collection");
-		}
-
-		task ("Select all web contents as collection item") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
-			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
-				assetType = "Basic Web Content",
-				entryList = "Web Content Title");
-		}
-
-		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			ContentPages.addCollectionPage(
-				collectionName = "Manual Collection",
-				pageName = "Manual Collection Page Name",
-				tabName = "Collections");
-
-			PageEditor.publish();
-		}
-
-		task ("View display page of all web contents via collection items in pages admin") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View Collection Items",
-				pageName = "Manual Collection Page Name");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			Page.gotoCollectionEntryEllipsisItem(
-				item = "View Display Page",
-				tableEntry = "Web Content Title");
-
-			SelectFrameTop();
-
-			Navigator.gotoBack();
-		}
-
-		task ("View display page of all web contents via collection items in page tree") {
-			ProductMenu.gotoHomePage();
-
-			PagesFinder.goToPagesFinder();
-
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			PagesFinder.gotoPageEllipsisItem(
-				item = "View Collection Items",
-				pageName = "Manual Collection Page Name");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			Page.gotoCollectionEntryEllipsisItem(
-				item = "View Display Page",
-				tableEntry = "Web Content Title");
-
-			SelectFrameTop();
-
-			PageEditor.clickBack();
-
-			ControlMenu.viewHeaderTitle(headerTitle = "Manual Collection Page Name");
 		}
 	}
 

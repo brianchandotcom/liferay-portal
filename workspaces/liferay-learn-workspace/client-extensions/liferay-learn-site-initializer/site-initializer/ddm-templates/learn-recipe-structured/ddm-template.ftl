@@ -2,17 +2,6 @@
 	var A = new AUI();
 	var collapsibleContent = document.getElementById('collapsibleContent');
 
-	function toggleCollapse() {
-		if (window.innerWidth < 768) {
-			if (collapsibleContent.style.display === "block") {
-			collapsibleContent.style.display = "none";
-			}
-			else {
-				collapsibleContent.style.display = "block";
-			}
-		}
-	}
-
 	function checkScreenSize() {
 		if (window.innerWidth >= 768) {
 			collapsibleContent.style.display = "block";

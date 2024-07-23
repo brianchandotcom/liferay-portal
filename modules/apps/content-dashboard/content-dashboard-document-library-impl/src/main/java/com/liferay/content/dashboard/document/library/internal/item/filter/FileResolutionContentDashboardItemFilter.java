@@ -51,8 +51,6 @@ public class FileResolutionContentDashboardItemFilter
 	public DropdownItem getDropdownItem() {
 		return DropdownItemBuilder.setDropdownItems(
 			DropdownItemListBuilder.add(
-				_getDropdownItem(Resolution.ANY)
-			).add(
 				_getDropdownItem(Resolution.SMALL)
 			).add(
 				_getDropdownItem(Resolution.MEDIUM)
@@ -153,10 +151,6 @@ public class FileResolutionContentDashboardItemFilter
 	}
 
 	private String _getLabel(Resolution resolution) {
-		if (resolution == Resolution.ANY) {
-			return _language.get(_httpServletRequest, resolution.getType());
-		}
-
 		StringBundler sb = new StringBundler(11);
 
 		sb.append(_language.get(_httpServletRequest, resolution.getType()));
@@ -221,10 +215,6 @@ public class FileResolutionContentDashboardItemFilter
 			_portal.getCurrentCompleteURL(_httpServletRequest),
 			portletResponse.getNamespace() + getParameterName());
 
-		if (Objects.equals(resolution, Resolution.ANY)) {
-			return url;
-		}
-
 		return HttpComponentsUtil.addParameter(
 			url, portletResponse.getNamespace() + getParameterName(),
 			resolution.getType());
@@ -234,10 +224,6 @@ public class FileResolutionContentDashboardItemFilter
 		List<String> parameterValues = getParameterValues();
 
 		if (ListUtil.isEmpty(parameterValues)) {
-			if (Objects.equals(Resolution.ANY, resolution)) {
-				return true;
-			}
-
 			return false;
 		}
 
@@ -250,7 +236,6 @@ public class FileResolutionContentDashboardItemFilter
 
 	private enum Resolution {
 
-		ANY(0, 0, 0, 0, "any"),
 		LARGE(Long.MAX_VALUE, Long.MAX_VALUE, 769, 1025, "large"),
 		MEDIUM(768, 1024, 301, 401, "medium"), SMALL(300, 400, 0, 0, "small");
 

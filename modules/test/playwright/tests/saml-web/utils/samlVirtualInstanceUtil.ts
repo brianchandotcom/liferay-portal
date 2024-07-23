@@ -184,10 +184,14 @@ export async function updateSamlKeystoreManagerTarget(target: string, page) {
 
 	await systemSettingsPage.page.getByRole('option', {name: target}).click();
 
-	let updateButton = await systemSettingsPage.page.getByRole('button', {name: 'Update'});
+	let updateButton = await systemSettingsPage.page.getByRole('button', {
+		name: 'Update',
+	});
 
-	if (! await updateButton.isVisible()) {
-		updateButton = await systemSettingsPage.page.getByRole('button', {name: 'Save'});
+	if (!(await updateButton.isVisible())) {
+		updateButton = await systemSettingsPage.page.getByRole('button', {
+			name: 'Save',
+		});
 	}
 
 	await updateButton.click();
@@ -205,12 +209,15 @@ export async function resetSamlKeystoreManagerTarget(page) {
 
 	await clickAndExpectToBeVisible({
 		autoClick: true,
-		target: systemSettingsPage.page.getByRole('button', { name: 'Actions' }),
-		trigger: systemSettingsPage.page.getByRole('link', { name: 'Reset Default Values' }),
+		target: systemSettingsPage.page.getByRole('button', {name: 'Actions'}),
+		trigger: systemSettingsPage.page.getByRole('link', {
+			name: 'Reset Default Values',
+		}),
 	});
 
-	systemSettingsPage.page.getByRole('link', { name: 'Reset Default Values' }).click();
+	systemSettingsPage.page
+		.getByRole('link', {name: 'Reset Default Values'})
+		.click();
 
 	await waitForSuccessAlert(page);
-
 }

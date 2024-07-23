@@ -37,23 +37,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-176184. Confirm that all fields in the schema are displayed"
-	@ignore = "true"
-	@priority = 5
-	test AssertAllFieldsAreDisplayedInSchema {
-		property portal.acceptance = "true";
-
-		task ("And clicks to add a new filter") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("asserts all fields in the schema are displayed") {
-			Click(locator1 = "DataSet#FILTER_BY_SELECT");
-
-			DataSetAdmin.assertSearchFilters(key_filterList = "creator,externalReferenceCode,id,status,createDate,fieldName,from,modifiedDate,name,r_fdsViewFDSDateFilterRelationship_c_fdsViewId,rendererType,r_fdsViewFDSDateFilterRelationship_c_fdsViewERC,to,type");
-		}
-	}
-
 	@description = "LPS-186878 Confirm that the translated option appears when selecting pt_BR in the translation modal"
 	@ignore = "true"
 	@priority = 3
@@ -265,55 +248,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-183056. Confirm that the filter edit modal is displayed."
-	@ignore = "true"
-	@priority = 3
-	test CanAssertEditFilterModal {
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bike",
-				itemName = "bike",
-				picklistName = "Custom Picklist");
-		}
-
-		task ("And go to the filters tab inside the View test") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Type(
-					locator1 = "DataSet#NEW_FILTER_NAME",
-					value1 = "Test Filter");
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
-
-		task ("And Preselected Values: bike") {
-			DataSetAdmin.selectPreselectedValue(
-				key_sortOption = "bike",
-				picklist = "Custom Picklist",
-				preselectType = "bike");
-		}
-
-		task ("When the user try to edit filter") {
-			Click(
-				key_fieldName = "creator",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("Then the title of the modal is "Edit creator Filter"") {
-			AssertElementPresent(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "Edit creator Filter");
-		}
-	}
-
 	@description = "LPS-176188. Confirm that the field is deleted and a successful message is displayed."
 	@ignore = "true"
 	@priority = 5
@@ -355,81 +289,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#SUCCESS",
 				value1 = "Your request completed successfully.");
-		}
-	}
-
-	@description = "LPS-183056. Confirm that the preselect option shows Ana as the value."
-	@ignore = "true"
-	@priority = 4
-	test CanAssertPreselectShowsAna {
-		task ("And creating two picklist Cars and Names, with two items Civic and Ana") {
-			Picklist.addPicklistViaAPI(picklistName = "Cars");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "Civic",
-				itemName = "Civic",
-				picklistName = "Cars");
-
-			Picklist.addPicklistViaAPI(picklistName = "Names");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "Ana",
-				itemName = "Ana",
-				picklistName = "Names");
-		}
-
-		task ("And go to the filters tab inside the View test") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Type(
-					locator1 = "DataSet#NEW_FILTER_NAME",
-					value1 = "Test Filter");
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
-
-		task ("And Preselected Values Civic") {
-			DataSetAdmin.selectPreselectedValue(
-				key_sortOption = "Civic",
-				picklist = "Cars",
-				preselectType = "Civic");
-		}
-
-		task ("And go to filter edit page") {
-			Click(
-				key_fieldName = "creator",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("And Change the Source Options for Names, Preselected Values to Ana") {
-			DataSetAdmin.selectPreselectedValue(
-				key_sortOption = "Ana",
-				picklist = "Names",
-				preselectType = "Ana");
-		}
-
-		task ("And go to filter edit page again") {
-			Click(
-				key_fieldName = "creator",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("Then Confirm that the Preselected Values field shows Ana, and not Civic") {
-			AssertElementPresent(
-				key_type = "Ana",
-				locator1 = "DataSet#FILTER_SELECTION");
-
-			AssertElementNotPresent(
-				key_type = "Civic",
-				locator1 = "DataSet#FILTER_SELECTION");
 		}
 	}
 
@@ -493,38 +352,6 @@ definition {
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_radioOption = "Include",
 				locator1 = "CommerceEntry#RADIO_BUTTON");
-		}
-	}
-
-	@description = "LPS-176187. Confirm that the Selection option is not displayed."
-	@ignore = "true"
-	@priority = 4
-	test CanAssertSelectionIsNotDisplayed {
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
-		}
-
-		task ("And Add an item to the created picklist") {
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "name1",
-				itemName = "name1",
-				picklistName = "Custom Picklist");
-		}
-
-		task ("And it does not select any custom pick list option in the Source Option drop-down menu") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
-
-		task ("Then asserts the Selection option is not displayed") {
-			AssertElementNotPresent(
-				key_type = "Selection",
-				locator1 = "DataSet#FILTER_SELECTION");
 		}
 	}
 
@@ -697,69 +524,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-183056. Confirm that the filter name has been changed ."
-	@ignore = "true"
-	@priority = 5
-	test CanAssertTheNameFieldIsChanged {
-		property portal.acceptance = "true";
-
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
-
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "bike",
-				itemName = "bike",
-				picklistName = "Custom Picklist");
-		}
-
-		task ("And go to the filters tab inside the View test and create new Filter") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Type(
-					locator1 = "DataSet#NEW_FILTER_NAME",
-					value1 = "TestFilter");
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
-
-		task ("And Preselected Values: bike") {
-			DataSetAdmin.selectPreselectedValue(
-				key_sortOption = "bike",
-				picklist = "Custom Picklist",
-				preselectType = "bike");
-		}
-
-		task ("When the user tries to edit the filter") {
-			Click(
-				key_fieldName = "creator",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-		}
-
-		task ("And Change the name for Filter test modified, click save") {
-			Type(
-				locator1 = "DataSet#NEW_FILTER_NAME",
-				value1 = "Test Filter Edited");
-
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-		}
-
-		task ("Then confirm that the filter name has changed") {
-			AssertElementPresent(
-				chosenFilter = "Test Filter Edited",
-				key_tableColumn = 1,
-				key_tableRow = 1,
-				locator1 = "DataSet#FILTER_TABLE_CELL");
-		}
-	}
-
 	@description = "LPS-183056. Confirm that there is only one option of car in Custom Picklist / Preselected."
 	@ignore = "true"
 	@priority = 4
@@ -822,66 +586,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#SUCCESS",
 				value1 = "Your request completed successfully.");
-		}
-	}
-
-	@description = "LPS-176188. Confirm that an element dragged and dropped below another,will be deprioritized."
-	@ignore = "true"
-	@priority = 3
-	test CanBeDeprioritizedBelowAnother {
-		task ("And adds two or more new filters") {
-			DataSetAdmin.createFilters(
-				filterName = "Filter Test",
-				key_filterList = "id");
-
-			DataSetAdmin.createFilters(
-				filterName = "Second Test",
-				key_filterList = "creator");
-		}
-
-		task ("When an element is dragged and dropped below another element of the list") {
-			DragAndDrop.javaScriptDragAndDropToBottom(
-				key_nameField = "id",
-				key_position = 2,
-				keyName = "creator",
-				locator1 = "DataSet#SELECT_DATASET",
-				locator2 = "DataSet#FIELDS_TABLE");
-		}
-
-		task ("Then this element will be deprioritized") {
-			DataSetAdmin.assertFieldsOnTable(
-				key_position = 2,
-				keyName = "id");
-		}
-	}
-
-	@description = "LPS-176188. Confirm that an element dragged and dropped on top of another element will be prioritized."
-	@ignore = "true"
-	@priority = 3
-	test CanBePrioritizedOverAnother {
-		task ("And adds two or more new filters") {
-			DataSetAdmin.createFilters(
-				filterName = "Filter Test",
-				key_filterList = "id");
-
-			DataSetAdmin.createFilters(
-				filterName = "Second Test",
-				key_filterList = "creator");
-		}
-
-		task ("When an element is dragged and dropped over another element of the list") {
-			DragAndDrop.javaScriptDragAndDropToBottom(
-				key_nameField = "creator",
-				key_position = 1,
-				keyName = "id",
-				locator1 = "DataSet#FIELDS_TABLE",
-				locator2 = "DataSet#SELECT_DATASET");
-		}
-
-		task ("Then this element will be prioritized") {
-			DataSetAdmin.assertFieldsOnTable(
-				key_position = 1,
-				keyName = "creator");
 		}
 	}
 
@@ -1040,96 +744,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-176188. Confirm that the elements of the list can be dragged and dropped."
-	@ignore = "true"
-	@priority = 4
-	test CanInteractDragDrop {
-		task ("And adds two or more filters") {
-			DataSetAdmin.createFilters(
-				filterName = "Filter Test",
-				key_filterList = "id");
-
-			DataSetAdmin.createFilters(
-				filterName = "Second Test",
-				key_filterList = "creator");
-		}
-
-		task ("Then assert the elements in the list can be dragged and dropped") {
-			DragAndDrop.javaScriptDragAndDropToBottom(
-				key_nameField = "id",
-				key_position = 2,
-				keyName = "creator",
-				locator1 = "DataSet#SELECT_DATASET",
-				locator2 = "DataSet#FIELDS_TABLE");
-
-			DataSetAdmin.assertFieldsOnTable(
-				key_position = 1,
-				keyName = "creator");
-
-			DataSetAdmin.assertFieldsOnTable(
-				key_position = 2,
-				keyName = "id");
-		}
-	}
-
-	@description = "LPS-176187. Confirm that only one radio button can be selected."
-	@ignore = "true"
-	@priority = 4
-	test CanOnlyOneRadioButtonIsSelected {
-		task ("And creating a picklist") {
-			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
-		}
-
-		task ("And Add an item to the created picklist") {
-			Picklist.addPicklistItemViaAPI(
-				itemKey = "name1",
-				itemName = "name1",
-				picklistName = "Custom Picklist");
-		}
-
-		task ("And selects an option "creator" in the Filter By field") {
-			for (var key_filterType : list "creator") {
-				LexiconEntry.gotoAdd();
-
-				Select(
-					locator1 = "DataSet#FILTER_BY_SELECT",
-					value1 = ${key_filterType});
-			}
-		}
-
-		task ("And selects the custom picklist option in the Source Option drop-down") {
-			Select(
-				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
-				value1 = "Custom Picklist");
-		}
-
-		task ("Then the Selection option is displayed") {
-			AssertElementPresent(
-				key_type = "Selection",
-				locator1 = "DataSet#FILTER_SELECTION");
-		}
-
-		task ("And asserts the radio buttons "Multiple" and "Single" are present") {
-			AssertElementPresent(
-				locator1 = "Radio#ANY",
-				radioLabel = "Multiple");
-
-			AssertElementPresent(
-				locator1 = "Radio#ANY",
-				radioLabel = "Single");
-		}
-
-		task ("And the user can select only one of the two available radio buttons") {
-			Click.clickAtNotVisible(
-				key_radioOption = "Single",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-
-			AssertNotChecked.assertNotCheckedNotVisible(
-				key_radioOption = "Multiple",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-		}
-	}
-
 	@description = "LPS-176184. Confirm that is possible search filter when click on search icon"
 	@ignore = "true"
 	@priority = 3
@@ -1149,81 +763,6 @@ definition {
 		task ("Then the corresponding result is displayed.") {
 			AssertElementPresent(
 				chosenFilter = "creator",
-				key_tableColumn = 1,
-				key_tableRow = 1,
-				locator1 = "DataSet#FILTER_TABLE_CELL");
-		}
-	}
-
-	@description = "LPS-188333. Confirm that changes in the filters are not autosaved when edit and delete an entry"
-	@priority = 4
-	test FilterChangesAreAutosaved {
-		task ("And the Save and Cancel button are not present") {
-			AssertElementNotPresent(locator1 = "Button#CANCEL");
-
-			AssertElementNotPresent(locator1 = "Button#SAVE");
-		}
-
-		task ("When the user adds 3 filters") {
-			Picklist.addPicklistViaAPI(picklistName = "Transport");
-
-			DataSetAdmin.createFilters(
-				filterName = "Test Filter",
-				filterType = "Selection",
-				key_filterList = "externalReferenceCode,label,fieldName");
-		}
-
-		task ("And edits one of them") {
-			Click(
-				key_fieldName = "externalReferenceCode",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Edit");
-
-			Type(
-				key_text = "Name",
-				locator1 = "TextInput#ANY",
-				value1 = "externalReferenceCode edited");
-
-			Click(
-				key_text = "Save",
-				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
-		}
-
-		task ("Then the changes are autosaved") {
-			Alert.viewSuccessMessage();
-		}
-
-		task ("When the user deletes one of the filters") {
-			Click(
-				key_fieldName = "label",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			MenuItem.click(menuItem = "Delete");
-
-			Click(locator1 = "Button#MODAL_DELETE");
-		}
-
-		task ("Then the filter is deleted") {
-			AssertElementNotPresent(
-				chosenFilter = "label",
-				key_tableColumn = 1,
-				key_tableRow = 1,
-				locator1 = "DataSet#FILTER_TABLE_CELL");
-		}
-
-		task ("When the user reorder the filters") {
-			DragAndDrop.javaScriptDragAndDropToBottom(
-				key_nameField = "externalReferenceCode edited",
-				key_position = 2,
-				keyName = "fieldName",
-				locator1 = "DataSet#SELECT_DATASET",
-				locator2 = "DataSet#FIELDS_TABLE");
-		}
-
-		task ("Then the filters are ordered accordingly to the changes") {
-			AssertElementPresent(
-				chosenFilter = "fieldName",
 				key_tableColumn = 1,
 				key_tableRow = 1,
 				locator1 = "DataSet#FILTER_TABLE_CELL");

@@ -135,6 +135,11 @@ const CreateLicense = () => {
 			const producSpecifications =
 				(product as DeliveryProduct)?.productSpecifications || [];
 
+			const appEntryUUID = getValueFromDeliverySpecifications(
+				producSpecifications,
+				'app-entry-uuid'
+			);
+
 			try {
 				const licenseKey =
 					await marketplaceSpringBootOAuth2.createLicenseKey({
@@ -144,6 +149,7 @@ const CreateLicense = () => {
 							ipAddresses: form.ipAddress,
 							macAddresses: form.macAddress,
 							orderId: orderId as string,
+							productId: appEntryUUID || undefined,
 							productPurchaseKey: form.subscription
 								?.productPurchasedKey as string,
 							productVersion:

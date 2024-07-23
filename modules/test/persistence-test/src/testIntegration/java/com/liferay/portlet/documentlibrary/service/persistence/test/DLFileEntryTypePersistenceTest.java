@@ -6,6 +6,7 @@
 package com.liferay.portlet.documentlibrary.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.exception.DuplicateDLFileEntryTypeExternalReferenceCodeException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
@@ -124,6 +125,9 @@ public class DLFileEntryTypePersistenceTest {
 
 		newDLFileEntryType.setUuid(RandomTestUtil.randomString());
 
+		newDLFileEntryType.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newDLFileEntryType.setGroupId(RandomTestUtil.nextLong());
 
 		newDLFileEntryType.setCompanyId(RandomTestUtil.nextLong());
@@ -162,6 +166,9 @@ public class DLFileEntryTypePersistenceTest {
 		Assert.assertEquals(
 			existingDLFileEntryType.getUuid(), newDLFileEntryType.getUuid());
 		Assert.assertEquals(
+			existingDLFileEntryType.getExternalReferenceCode(),
+			newDLFileEntryType.getExternalReferenceCode());
+		Assert.assertEquals(
 			existingDLFileEntryType.getFileEntryTypeId(),
 			newDLFileEntryType.getFileEntryTypeId());
 		Assert.assertEquals(
@@ -199,6 +206,28 @@ public class DLFileEntryTypePersistenceTest {
 			Time.getShortTimestamp(
 				existingDLFileEntryType.getLastPublishDate()),
 			Time.getShortTimestamp(newDLFileEntryType.getLastPublishDate()));
+	}
+
+	@Test(
+		expected = DuplicateDLFileEntryTypeExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		DLFileEntryType dlFileEntryType = addDLFileEntryType();
+
+		DLFileEntryType newDLFileEntryType = addDLFileEntryType();
+
+		newDLFileEntryType.setGroupId(dlFileEntryType.getGroupId());
+
+		newDLFileEntryType = _persistence.update(newDLFileEntryType);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newDLFileEntryType);
+
+		newDLFileEntryType.setExternalReferenceCode(
+			dlFileEntryType.getExternalReferenceCode());
+
+		_persistence.update(newDLFileEntryType);
 	}
 
 	@Test
@@ -258,6 +287,15 @@ public class DLFileEntryTypePersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_G("null", 0L);
+
+		_persistence.countByERC_G((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DLFileEntryType newDLFileEntryType = addDLFileEntryType();
 
@@ -307,11 +345,11 @@ public class DLFileEntryTypePersistenceTest {
 	protected OrderByComparator<DLFileEntryType> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"DLFileEntryType", "mvccVersion", true, "ctCollectionId", true,
-			"uuid", true, "fileEntryTypeId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "dataDefinitionId", true, "fileEntryTypeKey",
-			true, "name", true, "description", true, "scope", true,
-			"lastPublishDate", true);
+			"uuid", true, "externalReferenceCode", true, "fileEntryTypeId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"dataDefinitionId", true, "fileEntryTypeKey", true, "name", true,
+			"description", true, "scope", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -611,6 +649,17 @@ public class DLFileEntryTypePersistenceTest {
 			ReflectionTestUtil.invoke(
 				dlFileEntryType, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "fileEntryTypeKey"));
+
+		Assert.assertEquals(
+			dlFileEntryType.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				dlFileEntryType, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(dlFileEntryType.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				dlFileEntryType, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected DLFileEntryType addDLFileEntryType() throws Exception {
@@ -623,6 +672,8 @@ public class DLFileEntryTypePersistenceTest {
 		dlFileEntryType.setCtCollectionId(RandomTestUtil.nextLong());
 
 		dlFileEntryType.setUuid(RandomTestUtil.randomString());
+
+		dlFileEntryType.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		dlFileEntryType.setGroupId(RandomTestUtil.nextLong());
 

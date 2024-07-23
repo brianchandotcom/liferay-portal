@@ -283,6 +283,10 @@ public interface DLFileEntryTypeLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryType fetchDLFileEntryType(long fileEntryTypeId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType fetchDLFileEntryTypeByExternalReferenceCode(
+		String externalReferenceCode, long groupId);
+
 	/**
 	 * Returns the document library file entry type matching the UUID and group.
 	 *
@@ -320,6 +324,11 @@ public interface DLFileEntryTypeLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryType getDLFileEntryType(long fileEntryTypeId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType getDLFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

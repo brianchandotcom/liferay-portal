@@ -31,6 +31,10 @@ public class DLFileEntryTypeTable extends BaseTable<DLFileEntryTypeTable> {
 			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DLFileEntryTypeTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<DLFileEntryTypeTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<DLFileEntryTypeTable, Long> fileEntryTypeId =
 		createColumn(
 			"fileEntryTypeId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

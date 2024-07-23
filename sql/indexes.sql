@@ -104,8 +104,9 @@ create unique index IX_5DC2B977 on DLFileEntryMetadata (fileVersionId, DDMStruct
 create index IX_D49AB5D1 on DLFileEntryMetadata (uuid_[$COLUMN_LENGTH:75$]);
 
 create unique index IX_93ED0F06 on DLFileEntryType (groupId, ctCollectionId, dataDefinitionId);
+create unique index IX_8B9CF803 on DLFileEntryType (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_A5C4723D on DLFileEntryType (groupId, ctCollectionId, fileEntryTypeKey[$COLUMN_LENGTH:75$]);
-create unique index IX_C1518AF6 on DLFileEntryType (groupId, uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_476F807A on DLFileEntryType (groupId, ctCollectionId, uuid_[$COLUMN_LENGTH:75$]);
 create index IX_90724726 on DLFileEntryType (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_2E64D9F9 on DLFileEntryTypes_DLFolders (companyId);

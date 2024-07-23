@@ -334,6 +334,13 @@ public class DLFileEntryTypeLocalServiceUtil {
 		return getService().fetchDLFileEntryType(fileEntryTypeId);
 	}
 
+	public static DLFileEntryType fetchDLFileEntryTypeByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return getService().fetchDLFileEntryTypeByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the document library file entry type matching the UUID and group.
 	 *
@@ -387,6 +394,14 @@ public class DLFileEntryTypeLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getDLFileEntryType(fileEntryTypeId);
+	}
+
+	public static DLFileEntryType getDLFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getDLFileEntryTypeByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

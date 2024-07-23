@@ -183,7 +183,13 @@ export async function updateSamlKeystoreManagerTarget(target: string, page) {
 
 	await systemSettingsPage.page.getByRole('option', {name: target}).click();
 
-	await systemSettingsPage.page.getByRole('button', {name: 'Update'}).click();
+	let updateButton = await systemSettingsPage.page.getByRole('button', {name: 'Update'});
+
+	if (! await updateButton.isVisible()) {
+		updateButton = await systemSettingsPage.page.getByRole('button', {name: 'Save'});
+	}
+
+	await updateButton.click();
 
 	await waitForSuccessAlert(page);
 }

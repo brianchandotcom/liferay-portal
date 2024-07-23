@@ -242,7 +242,8 @@ public class CommerceNotificationQueueEntryLocalServiceImpl
 							commerceNotificationQueueEntry.
 								getCommerceNotificationQueueEntryId(),
 							QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-							new CommerceNotificationAttachmentCreateDateComparator());
+							CommerceNotificationAttachmentCreateDateComparator.
+								getInstance(false));
 
 			for (CommerceNotificationAttachment commerceNotificationAttachment :
 					commerceNotificationAttachments) {

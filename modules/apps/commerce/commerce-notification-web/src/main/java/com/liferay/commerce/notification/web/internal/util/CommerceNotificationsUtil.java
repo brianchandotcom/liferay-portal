@@ -32,7 +32,7 @@ public class CommerceNotificationsUtil {
 
 		if (orderByCol.equals("priority")) {
 			orderByComparator =
-				new CommerceNotificationQueueEntryPriorityComparator(
+				CommerceNotificationQueueEntryPriorityComparator.getInstance(
 					orderByAsc);
 		}
 
@@ -54,12 +54,13 @@ public class CommerceNotificationsUtil {
 
 		if (orderByCol.equals("modified-date")) {
 			orderByComparator =
-				new CommerceNotificationTemplateModifiedDateComparator(
+				CommerceNotificationTemplateModifiedDateComparator.getInstance(
 					orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new CommerceNotificationTemplateNameComparator(
-				orderByAsc);
+			orderByComparator =
+				CommerceNotificationTemplateNameComparator.getInstance(
+					orderByAsc);
 		}
 
 		return orderByComparator;

@@ -21,12 +21,14 @@ public class CommerceDiscountRelCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CommerceDiscountRelCreateDateComparator() {
-		this(false);
-	}
+	public static CommerceDiscountRelCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public CommerceDiscountRelCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +65,17 @@ public class CommerceDiscountRelCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceDiscountRelCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceDiscountRelCreateDateComparator
+		_INSTANCE_ASCENDING = new CommerceDiscountRelCreateDateComparator(true);
+
+	private static final CommerceDiscountRelCreateDateComparator
+		_INSTANCE_DESCENDING = new CommerceDiscountRelCreateDateComparator(
+			false);
 
 	private final boolean _ascending;
 

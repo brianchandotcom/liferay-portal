@@ -641,7 +641,7 @@ const RequiredInformation = ({
 };
 
 const RequiredInformationForm = (props) => {
-	const isRenew = props.state?.id === 'renew' ? true : false;
+	const isRenew = props.state?.id === 'renew';
 	const renewKey = props.state?.activationKeys[0];
 
 	const handleDescriptionValue = () => {

@@ -19,13 +19,6 @@
 	});
 </script>
 
-<#assign
-	displayDate = .vars["reserved-article-display-date"].getData()?date("EEE, dd MMM yyyy HH:mm:ss Z")
-
-	formattedDate = displayDate?string["LLLL dd, YYYY"]
-	journalArticlePK = .vars["reserved-article-resource-prim-key"].getData()?number
-/>
-
 <div class="learn-recipe-container">
 	<div class="header-navigation d-flex justify-content-between px-3 mb-3">
 		<div class="learn-recipe-breadcrumbs">
@@ -71,6 +64,11 @@
 							</div>
 						<div class="col text-right">
 							<@liferay_ui["message"] key="published" />
+							<#assign
+								displayDate = .vars["reserved-article-display-date"].getData()?date("EEE, dd MMM yyyy HH:mm:ss Z")
+
+								formattedDate = displayDate?string["LLLL dd, YYYY"]
+							/>
 							${formattedDate}
 						</div>
 					</div>
@@ -244,6 +242,8 @@
 			</a>
 		</div>
 	</div>
+
+	<#assign journalArticlePK = .vars["reserved-article-resource-prim-key"].getData()?number />
 
 	<div class="page-nav-menu">
 		<div class="asset-categories mb-3">

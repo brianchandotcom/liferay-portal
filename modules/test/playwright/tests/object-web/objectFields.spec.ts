@@ -123,9 +123,7 @@ test.describe('Manage object fields through Model Builder', () => {
 
 		await expect(listTypeDefinitionBox).toBeVisible();
 
-		await expect(listTypeDefinitionBox.getByRole('listitem')).toHaveCount(
-			22
-		);
+		await expect(listTypeDefinitionBox.getByRole('option')).toHaveCount(22);
 	});
 
 	test('can show and hide object fields in the object definition node', async ({

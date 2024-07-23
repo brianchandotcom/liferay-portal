@@ -645,7 +645,8 @@ public class FileEntryStagedModelDataHandlerTest
 
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.addFileEntryType(
-				TestPropsValues.getUserId(), groupId, ddmStructureId, null,
+				null, TestPropsValues.getUserId(), groupId, ddmStructureId,
+				null,
 				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,

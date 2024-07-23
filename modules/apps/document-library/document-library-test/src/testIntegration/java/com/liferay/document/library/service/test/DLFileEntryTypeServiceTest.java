@@ -92,7 +92,7 @@ public class DLFileEntryTypeServiceTest {
 			_group.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		_dlFileEntryType1 = DLFileEntryTypeServiceUtil.addFileEntryType(
-			_group.getGroupId(), ddmStructure1.getStructureId(), null,
+			null, _group.getGroupId(), ddmStructure1.getStructureId(), null,
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -101,7 +101,7 @@ public class DLFileEntryTypeServiceTest {
 			_group.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		_dlFileEntryType2 = DLFileEntryTypeServiceUtil.addFileEntryType(
-			_group.getGroupId(), ddmStructure2.getStructureId(), null,
+			null, _group.getGroupId(), ddmStructure2.getStructureId(), null,
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -121,7 +121,7 @@ public class DLFileEntryTypeServiceTest {
 			_group.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		DLFileEntryTypeServiceUtil.addFileEntryType(
-			_group.getGroupId(), ddmStructure.getStructureId(), null,
+			null, _group.getGroupId(), ddmStructure.getStructureId(), null,
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 			serviceContext);
@@ -157,7 +157,7 @@ public class DLFileEntryTypeServiceTest {
 
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				ddmStructure.getStructureId(), null,
 				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
@@ -255,7 +255,7 @@ public class DLFileEntryTypeServiceTest {
 
 			DLFileEntryType dlFileEntryType =
 				DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-					TestPropsValues.getUserId(), _group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					ddmStructure.getStructureId(), null,
 					Collections.singletonMap(LocaleUtil.US, name),
 					Collections.singletonMap(LocaleUtil.US, description),
@@ -293,7 +293,7 @@ public class DLFileEntryTypeServiceTest {
 
 			DLFileEntryType dlFileEntryType =
 				DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-					TestPropsValues.getUserId(), group.getGroupId(),
+					null, TestPropsValues.getUserId(), group.getGroupId(),
 					ddmStructure.getStructureId(), null,
 					Collections.singletonMap(LocaleUtil.US, name),
 					Collections.singletonMap(LocaleUtil.US, description),
@@ -340,7 +340,7 @@ public class DLFileEntryTypeServiceTest {
 
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeServiceUtil.addFileEntryType(
-				_group.getGroupId(), ddmStructure.getStructureId(), null,
+				null, _group.getGroupId(), ddmStructure.getStructureId(), null,
 				Collections.singletonMap(
 					LocaleUtil.US, StringUtil.randomString()),
 				Collections.singletonMap(

@@ -88,7 +88,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDLFileEntryTypeTest {
 			ServiceContextTestUtil.getServiceContext(_depotGroup.getGroupId()));
 
 		_depotDLFileEntryType = _dlFileEntryTypeLocalService.addFileEntryType(
-			_depotGroup.getCreatorUserId(), _depotGroup.getGroupId(),
+			null, _depotGroup.getCreatorUserId(), _depotGroup.getGroupId(),
 			depotDDMStructure.getStructureId(), null,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -112,7 +112,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDLFileEntryTypeTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_dlFileEntryType = _dlFileEntryTypeLocalService.addFileEntryType(
-			_group.getCreatorUserId(), _group.getGroupId(),
+			null, _group.getCreatorUserId(), _group.getGroupId(),
 			ddmStructure.getStructureId(), null,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()

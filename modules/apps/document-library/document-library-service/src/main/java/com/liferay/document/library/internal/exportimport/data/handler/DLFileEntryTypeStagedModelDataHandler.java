@@ -309,7 +309,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 				importedDLFileEntryType =
 					_dlFileEntryTypeLocalService.addFileEntryType(
-						userId, portletDataContext.getScopeGroupId(),
+						null, userId, portletDataContext.getScopeGroupId(),
 						ddmStructureIdsArray[0],
 						fileEntryType.getFileEntryTypeKey(),
 						fileEntryType.getNameMap(),
@@ -345,7 +345,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 			importedDLFileEntryType =
 				_dlFileEntryTypeLocalService.addFileEntryType(
-					userId, portletDataContext.getScopeGroupId(),
+					null, userId, portletDataContext.getScopeGroupId(),
 					ddmStructureIdsArray[0],
 					fileEntryType.getFileEntryTypeKey(),
 					fileEntryType.getNameMap(),

@@ -48,7 +48,7 @@ public class DLFileEntryTypeUADTestUtil {
 			ddmForm);
 
 		return dlFileEntryTypeLocalService.addFileEntryType(
-			userId, groupId, ddmStructure.getStructureId(), null,
+			null, userId, groupId, ddmStructure.getStructureId(), null,
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,

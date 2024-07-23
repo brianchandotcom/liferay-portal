@@ -54,6 +54,10 @@ export class EditVirtualInstancePage {
 	) {
 		await this.goto(webId);
 
+		//add little timeout in order to select "active" text from toggle and not from search container located in prior page
+
+		await this.page.waitForTimeout(500);
+
 		await this.activeToggle.setChecked(active);
 
 		if (mailDomain) {

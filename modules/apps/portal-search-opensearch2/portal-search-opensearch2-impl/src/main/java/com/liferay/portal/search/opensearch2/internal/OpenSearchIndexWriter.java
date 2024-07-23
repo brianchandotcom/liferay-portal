@@ -241,6 +241,8 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 				updateDocumentRequest.setRefresh(true);
 			}
 
+			updateDocumentRequest.setUpsert(true);
+
 			try {
 				_searchEngineAdapter.execute(updateDocumentRequest);
 			}

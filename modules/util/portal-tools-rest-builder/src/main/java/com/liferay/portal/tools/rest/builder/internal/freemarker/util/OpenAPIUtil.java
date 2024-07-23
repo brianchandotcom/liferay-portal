@@ -199,7 +199,6 @@ public class OpenAPIUtil {
 					if (schema.isMergeProperties() &&
 						ConfigUtil.isVersionCompatible(configYAML, 4)) {
 
-						schema.setAllOfSchemas(null);
 						schema.setPropertySchemas(propertySchemas);
 					}
 				}

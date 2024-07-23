@@ -27,7 +27,7 @@ public class CPMeasurementUnitUtil {
 		OrderByComparator<CPMeasurementUnit> orderByComparator = null;
 
 		if (orderByCol.equals("priority")) {
-			orderByComparator = new CPMeasurementUnitPriorityComparator(
+			orderByComparator = CPMeasurementUnitPriorityComparator.getInstance(
 				orderByAsc);
 		}
 

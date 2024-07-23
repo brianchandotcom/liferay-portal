@@ -67,7 +67,8 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 
 		return cpTaxCategoryService.getCPTaxCategories(
 			commerceTaxFixedRateRequestHelper.getCompanyId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new CPTaxCategoryCreateDateComparator());
+			QueryUtil.ALL_POS,
+			CPTaxCategoryCreateDateComparator.getInstance(false));
 	}
 
 	public long getCommerceChannelId() throws PortalException {

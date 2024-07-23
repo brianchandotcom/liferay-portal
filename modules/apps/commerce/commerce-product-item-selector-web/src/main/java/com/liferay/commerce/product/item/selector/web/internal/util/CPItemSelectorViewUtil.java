@@ -39,14 +39,15 @@ public class CPItemSelectorViewUtil {
 		OrderByComparator<CPDefinition> orderByComparator = null;
 
 		if (orderByCol.equals("title")) {
-			orderByComparator = new CPDefinitionNameComparator(orderByAsc);
+			orderByComparator = CPDefinitionNameComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
-			orderByComparator = new CPDefinitionModifiedDateComparator(
+			orderByComparator = CPDefinitionModifiedDateComparator.getInstance(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("display-date")) {
-			orderByComparator = new CPDefinitionDisplayDateComparator(
+			orderByComparator = CPDefinitionDisplayDateComparator.getInstance(
 				orderByAsc);
 		}
 
@@ -92,7 +93,8 @@ public class CPItemSelectorViewUtil {
 		OrderByComparator<CPOption> orderByComparator = null;
 
 		if (orderByCol.equals("modified-date")) {
-			orderByComparator = new CPOptionModifiedDateComparator(orderByAsc);
+			orderByComparator = CPOptionModifiedDateComparator.getInstance(
+				orderByAsc);
 		}
 
 		return orderByComparator;
@@ -132,12 +134,13 @@ public class CPItemSelectorViewUtil {
 		OrderByComparator<CPSpecificationOption> orderByComparator = null;
 
 		if (orderByCol.equals("modified-date")) {
-			orderByComparator = new CPSpecificationOptionModifiedDateComparator(
-				orderByAsc);
+			orderByComparator =
+				CPSpecificationOptionModifiedDateComparator.getInstance(
+					orderByAsc);
 		}
 		else if (orderByCol.equals("title")) {
-			orderByComparator = new CPSpecificationOptionTitleComparator(
-				orderByAsc);
+			orderByComparator =
+				CPSpecificationOptionTitleComparator.getInstance(orderByAsc);
 		}
 
 		return orderByComparator;

@@ -145,7 +145,7 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 
 		return cpInstanceUnitOfMeasurePersistence.findByC_A(
 			cpInstanceId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new CPInstanceUnitOfMeasurePriorityComparator());
+			CPInstanceUnitOfMeasurePriorityComparator.getInstance(true));
 	}
 
 	@Override

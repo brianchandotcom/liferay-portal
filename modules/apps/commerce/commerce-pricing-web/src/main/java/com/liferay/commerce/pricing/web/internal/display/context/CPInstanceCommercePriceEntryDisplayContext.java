@@ -150,7 +150,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 
 		return cpInstance.getCPInstanceUnitOfMeasures(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new CPInstanceUnitOfMeasurePriorityComparator());
+			CPInstanceUnitOfMeasurePriorityComparator.getInstance(true));
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {

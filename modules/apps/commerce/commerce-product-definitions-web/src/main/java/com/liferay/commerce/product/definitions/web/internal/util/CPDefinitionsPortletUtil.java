@@ -53,16 +53,18 @@ public class CPDefinitionsPortletUtil {
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator = null;
 
 		if (orderByCol.equals("display-date")) {
-			orderByComparator = new CPAttachmentFileEntryDisplayDateComparator(
-				orderByAsc);
+			orderByComparator =
+				CPAttachmentFileEntryDisplayDateComparator.getInstance(
+					orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
-			orderByComparator = new CPAttachmentFileEntryModifiedDateComparator(
-				orderByAsc);
+			orderByComparator =
+				CPAttachmentFileEntryModifiedDateComparator.getInstance(
+					orderByAsc);
 		}
 		else if (orderByCol.equals("priority")) {
-			orderByComparator = new CPAttachmentFileEntryPriorityComparator(
-				orderByAsc);
+			orderByComparator =
+				CPAttachmentFileEntryPriorityComparator.getInstance(orderByAsc);
 		}
 
 		return orderByComparator;
@@ -108,7 +110,7 @@ public class CPDefinitionsPortletUtil {
 		OrderByComparator<CPDefinitionLink> orderByComparator = null;
 
 		if (orderByCol.equals("priority")) {
-			orderByComparator = new CPDefinitionLinkPriorityComparator(
+			orderByComparator = CPDefinitionLinkPriorityComparator.getInstance(
 				orderByAsc);
 		}
 
@@ -128,15 +130,16 @@ public class CPDefinitionsPortletUtil {
 		OrderByComparator<CPDefinitionOptionRel> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new CPDefinitionOptionRelCreateDateComparator(
-				orderByAsc);
+			orderByComparator =
+				CPDefinitionOptionRelCreateDateComparator.getInstance(
+					orderByAsc);
 		}
 		else if (orderByCol.equals("priority")) {
-			orderByComparator = new CPDefinitionOptionRelPriorityComparator(
-				orderByAsc);
+			orderByComparator =
+				CPDefinitionOptionRelPriorityComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new CPDefinitionOptionRelNameComparator(
+			orderByComparator = CPDefinitionOptionRelNameComparator.getInstance(
 				orderByAsc);
 		}
 
@@ -184,11 +187,13 @@ public class CPDefinitionsPortletUtil {
 
 		if (orderByCol.equals("priority")) {
 			orderByComparator =
-				new CPDefinitionOptionValueRelPriorityComparator(orderByAsc);
+				CPDefinitionOptionValueRelPriorityComparator.getInstance(
+					orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new CPDefinitionOptionValueRelNameComparator(
-				orderByAsc);
+			orderByComparator =
+				CPDefinitionOptionValueRelNameComparator.getInstance(
+					orderByAsc);
 		}
 
 		return orderByComparator;
@@ -230,15 +235,16 @@ public class CPDefinitionsPortletUtil {
 		OrderByComparator<CPDefinition> orderByComparator = null;
 
 		if (orderByCol.equals("display-date")) {
-			orderByComparator = new CPDefinitionDisplayDateComparator(
+			orderByComparator = CPDefinitionDisplayDateComparator.getInstance(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
-			orderByComparator = new CPDefinitionModifiedDateComparator(
+			orderByComparator = CPDefinitionModifiedDateComparator.getInstance(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new CPDefinitionNameComparator(orderByAsc);
+			orderByComparator = CPDefinitionNameComparator.getInstance(
+				orderByAsc);
 		}
 
 		return orderByComparator;
@@ -286,8 +292,8 @@ public class CPDefinitionsPortletUtil {
 
 		if (orderByCol.equals("priority")) {
 			orderByComparator =
-				new CPDefinitionSpecificationOptionValuePriorityComparator(
-					orderByAsc);
+				CPDefinitionSpecificationOptionValuePriorityComparator.
+					getInstance(orderByAsc);
 		}
 
 		return orderByComparator;
@@ -305,13 +311,15 @@ public class CPDefinitionsPortletUtil {
 		OrderByComparator<CPInstance> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new CPInstanceCreateDateComparator(orderByAsc);
+			orderByComparator = CPInstanceCreateDateComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("display-date")) {
-			orderByComparator = new CPInstanceDisplayDateComparator(orderByAsc);
+			orderByComparator = CPInstanceDisplayDateComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("sku")) {
-			orderByComparator = new CPInstanceSkuComparator(orderByAsc);
+			orderByComparator = CPInstanceSkuComparator.getInstance(orderByAsc);
 		}
 
 		return orderByComparator;

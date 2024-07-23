@@ -215,7 +215,7 @@ public class CPTaxCategoryDisplayContext {
 		OrderByComparator<CPTaxCategory> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new CPTaxCategoryCreateDateComparator(
+			orderByComparator = CPTaxCategoryCreateDateComparator.getInstance(
 				orderByAsc);
 		}
 

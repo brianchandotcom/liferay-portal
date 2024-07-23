@@ -129,7 +129,8 @@ public class CPMeasurementUnitLocalServiceImpl
 		long companyId, int type) {
 
 		return cpMeasurementUnitPersistence.fetchByC_P_T_First(
-			companyId, true, type, new CPMeasurementUnitPriorityComparator());
+			companyId, true, type,
+			CPMeasurementUnitPriorityComparator.getInstance(false));
 	}
 
 	@Override
@@ -137,7 +138,8 @@ public class CPMeasurementUnitLocalServiceImpl
 		long companyId, int type) {
 
 		return cpMeasurementUnitPersistence.fetchByC_P_T_First(
-			companyId, true, type, new CPMeasurementUnitPriorityComparator());
+			companyId, true, type,
+			CPMeasurementUnitPriorityComparator.getInstance(false));
 	}
 
 	@Override

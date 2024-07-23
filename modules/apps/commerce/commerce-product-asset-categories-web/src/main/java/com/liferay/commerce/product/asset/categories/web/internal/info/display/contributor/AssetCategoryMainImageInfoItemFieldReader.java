@@ -54,7 +54,7 @@ public class AssetCategoryMainImageInfoItemFieldReader
 	public Object getValue(AssetCategory assetCategory) {
 		try {
 			CPAttachmentFileEntryPriorityComparator orderByComparator =
-				new CPAttachmentFileEntryPriorityComparator(true);
+				CPAttachmentFileEntryPriorityComparator.getInstance(true);
 
 			List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 				_cpAttachmentFileEntryService.getCPAttachmentFileEntries(

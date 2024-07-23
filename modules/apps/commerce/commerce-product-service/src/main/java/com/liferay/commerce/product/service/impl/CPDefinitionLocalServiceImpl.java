@@ -1328,7 +1328,8 @@ public class CPDefinitionLocalServiceImpl
 					cpDefinitionLocalService.getCProductCPDefinitions(
 						cProduct.getCProductId(),
 						WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, new CPDefinitionVersionComparator());
+						QueryUtil.ALL_POS,
+						CPDefinitionVersionComparator.getInstance(false));
 
 				if (ListUtil.isEmpty(cpDefinitions)) {
 					_cProductLocalService.updatePublishedCPDefinitionId(

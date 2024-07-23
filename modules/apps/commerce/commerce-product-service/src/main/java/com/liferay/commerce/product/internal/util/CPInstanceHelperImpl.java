@@ -476,7 +476,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		Collections.sort(
 			cpDefinitionOptionValueRels,
-			new CPDefinitionOptionValueRelPriorityComparator(true));
+			CPDefinitionOptionValueRelPriorityComparator.getInstance(true));
 
 		return cpDefinitionOptionValueRels;
 	}

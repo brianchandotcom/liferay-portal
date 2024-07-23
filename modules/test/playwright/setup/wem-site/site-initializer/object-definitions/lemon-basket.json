@@ -18,6 +18,19 @@
 		},
 		{
 			"DBType": "String",
+			"businessType": "MultiselectPicklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Lemon Dimensions"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Lemon Dimensions$]",
+			"name": "lemonDimensions",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
 			"businessType": "Picklist",
 			"indexed": true,
 			"indexedAsKeyword": false,

@@ -1,0 +1,23 @@
+[
+	{
+		"key": "large",
+		"name": "Large",
+		"name_i18n": {
+			"en-US": "Large"
+		}
+	},
+	{
+		"key": "medium",
+		"name": "Medium",
+		"name_i18n": {
+			"en-US": "Medium"
+		}
+	},
+	{
+		"key": "small",
+		"name": "Small",
+		"name_i18n": {
+			"en-US": "Small"
+		}
+	}
+]

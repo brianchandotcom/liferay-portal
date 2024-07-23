@@ -1,5 +1,35 @@
 [
 	{
+		"key": "conclusion",
+		"value": {
+			"en-US": "Conclusion"
+		}
+	},
+	{
+		"key": "introduction",
+		"value": {
+			"en-US": "Introduction"
+		}
+	},
+	{
+		"key": "learn-recipe-header-text",
+		"value": {
+			"en-US": "While we make every effort to ensure this Recipe is accurate, it may not always reflect the most recent updates or official guidelines. We appreciate your understanding and encourage you to reach out with any feedback or concerns."
+		}
+	},
+	{
+		"key": "minutes",
+		"value": {
+			"en-US": "Minutes"
+		}
+	},
+	{
+		"key": "none",
+		"value": {
+			"en-US": "None"
+		}
+	},
+	{
 		"key": "not-finding-what-you-are-looking-for",
 		"value": {
 			"en-US": "Not finding what you're looking for?",
@@ -14,6 +44,36 @@
 		}
 	},
 	{
+		"key": "prerequisites",
+		"value": {
+			"en-US": "Prerequisites"
+		}
+	},
+	{
+		"key": "published",
+		"value": {
+			"en-US": "Published"
+		}
+	},
+	{
+		"key": "recipe",
+		"value": {
+			"en-US": "Recipe"
+		}
+	},
+	{
+		"key": "recipes",
+		"value": {
+			"en-US": "Recipes"
+		}
+	},
+	{
+		"key": "steps",
+		"value": {
+			"en-US": "Steps"
+		}
+	},
+	{
 		"key": "submit-feedback",
 		"value": {
 			"en-US": "Submit Feedback",
@@ -21,10 +81,22 @@
 		}
 	},
 	{
+		"key": "tips",
+		"value": {
+			"en-US": "Tips"
+		}
+	},
+	{
 		"key": "try-liferays-help-center",
 		"value": {
 			"en-US": "Try Liferay’s Help Center",
 			"ja-JP": "Liferay のヘルプセンターをお試しください"
+		}
+	},
+	{
+		"key": "was-this-article-helpful",
+		"value": {
+			"en-US": "Was this article helpful?"
 		}
 	}
 ]

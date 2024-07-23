@@ -385,7 +385,6 @@ public class TestrayCaseResultResourceImpl
 									GetterUtil.getString(
 										value.get("lastName")));
 							});
-
 						setUserPortraitUrl(
 							() -> {
 								if (value.get("portraitId") == null) {

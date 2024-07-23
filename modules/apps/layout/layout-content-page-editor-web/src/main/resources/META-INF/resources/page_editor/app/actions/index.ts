@@ -14,6 +14,7 @@ export {default as editFragmentEntryLinkComment} from './editFragmentEntryLinkCo
 export {default as loadReducer} from './loadReducer';
 export {default as switchSidebarPanel} from './switchSidebarPanel';
 export {default as switchViewportSize} from './switchViewportSize';
+export {default as selectFragmentForNameEditing} from './selectFragmentForNameEditing';
 export {default as toggleFragmentHighlighted} from './toggleFragmentHighlighted';
 export {default as toggleShowResolvedComments} from './toggleShowResolvedComments';
 export {default as unloadReducer} from './unloadReducer';

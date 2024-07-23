@@ -1983,7 +1983,7 @@ public class CommerceDiscountLocalServiceImpl
 			CommerceDiscount commerceDiscount =
 				commerceDiscountPersistence.fetchByC_C_First(
 					companyId, couponCode,
-					new CommerceDiscountCreateDateComparator(true));
+					CommerceDiscountCreateDateComparator.getInstance(true));
 
 			if (((commerceDiscountId <= 0) && (commerceDiscount != null)) ||
 				((commerceDiscount != null) &&

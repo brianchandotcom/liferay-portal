@@ -150,7 +150,7 @@ public class CommerceDiscountRelLocalServiceImpl
 
 		return commerceDiscountRelPersistence.fetchByCN_CPK_First(
 			_classNameLocalService.getClassNameId(className), classPK,
-			new CommerceDiscountRelCreateDateComparator());
+			CommerceDiscountRelCreateDateComparator.getInstance(false));
 	}
 
 	@Override

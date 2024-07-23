@@ -31,8 +31,10 @@ import com.liferay.headless.delivery.client.resource.v1_0.NavigationMenuResource
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -221,6 +224,7 @@ public class NavigationMenuResourceTest
 			JournalArticle.class.getName(), journalArticle.getTitle(),
 			"structuredContent", false);
 
+		_testGetNavigationMenuWithSubmenuAndPageNavigationItems();
 	}
 
 	@Override
@@ -759,6 +763,84 @@ public class NavigationMenuResourceTest
 		}
 	}
 
+	private void _testGetNavigationMenuWithSubmenuAndPageNavigationItems()
+		throws Exception {
+
+		Map<Locale, String> layoutNameMap1 = HashMapBuilder.put(
+			LocaleUtil.SPAIN, RandomTestUtil.randomString()
+		).put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		Layout layout1 = LayoutTestUtil.addTypePortletLayout(
+			testGroup.getGroupId(), false, layoutNameMap1,
+			HashMapBuilder.put(
+				LocaleUtil.US,
+				_friendlyURLNormalizer.normalizeWithEncoding(
+					StringPool.SLASH + RandomTestUtil.randomString())
+			).build());
+
+		Map<Locale, String> layoutNameMap2 = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		Layout layout2 = LayoutTestUtil.addTypePortletLayout(
+			testGroup.getGroupId(), false, layoutNameMap2,
+			HashMapBuilder.put(
+				LocaleUtil.US,
+				_friendlyURLNormalizer.normalizeWithEncoding(
+					StringPool.SLASH + RandomTestUtil.randomString())
+			).build());
+
+		Map<String, String> nameI18nMap1 = HashMapBuilder.put(
+			LocaleUtil.SPAIN.toLanguageTag(), RandomTestUtil.randomString()
+		).put(
+			LocaleUtil.US.toLanguageTag(), RandomTestUtil.randomString()
+		).build();
+		Map<String, String> nameI18nMap2 = HashMapBuilder.put(
+			LocaleUtil.US.toLanguageTag(), RandomTestUtil.randomString()
+		).build();
+
+		NavigationMenu postNavigationMenu =
+			navigationMenuResource.postSiteNavigationMenu(
+				testGroup.getGroupId(),
+				_randomNavigationMenu(
+					layout1, layout2, nameI18nMap1, nameI18nMap2));
+
+		NavigationMenuResource navigationMenuResource =
+			_buildNavigationMenuResource(LocaleUtil.SPAIN);
+
+		NavigationMenu getNavigationMenu =
+			navigationMenuResource.getNavigationMenu(
+				postNavigationMenu.getId());
+
+		_assertNavigationMenuItem(
+			nameI18nMap1.get(LocaleUtil.SPAIN.toLanguageTag()), nameI18nMap1,
+			getNavigationMenu.getNavigationMenuItems()[0], "navigationMenu",
+			false);
+		_assertNavigationMenuItem(
+			nameI18nMap1.get(LocaleUtil.SPAIN.toLanguageTag()), nameI18nMap1,
+			getNavigationMenu.getNavigationMenuItems()[1], "page", true);
+		_assertNavigationMenuItem(
+			nameI18nMap2.get(LocaleUtil.US.toLanguageTag()), nameI18nMap2,
+			getNavigationMenu.getNavigationMenuItems()[2], "page", true);
+		_assertNavigationMenuItem(
+			layoutNameMap1.get(LocaleUtil.SPAIN),
+			HashMapBuilder.put(
+				LocaleUtil.US.toLanguageTag(), layoutNameMap1.get(LocaleUtil.US)
+			).put(
+				LocaleUtil.SPAIN.toLanguageTag(),
+				layoutNameMap1.get(LocaleUtil.SPAIN)
+			).build(),
+			getNavigationMenu.getNavigationMenuItems()[3], "page", false);
+		_assertNavigationMenuItem(
+			layoutNameMap2.get(LocaleUtil.US),
+			HashMapBuilder.put(
+				LocaleUtil.US.toLanguageTag(), layoutNameMap2.get(LocaleUtil.US)
+			).build(),
+			getNavigationMenu.getNavigationMenuItems()[4], "page", false);
+	}
+
 	private void _testGetSiteNavigationMenusPage(
 			long classPK, long classTypeId, Class<?> clazz, String contentURL,
 			String displayPageType, String title, String type,
@@ -884,6 +966,9 @@ public class NavigationMenuResourceTest
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Inject
 	private Portal _portal;

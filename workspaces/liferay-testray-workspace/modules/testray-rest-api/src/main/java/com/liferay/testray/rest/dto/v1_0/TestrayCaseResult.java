@@ -23,8 +23,6 @@ import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -44,49 +42,6 @@ public class TestrayCaseResult implements Serializable {
 	public static TestrayCaseResult unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(TestrayCaseResult.class, json);
 	}
-
-	@Schema
-	@Valid
-	public Map<String, Map<String, String>> getActions() {
-		if (_actionsSupplier != null) {
-			actions = _actionsSupplier.get();
-
-			_actionsSupplier = null;
-		}
-
-		return actions;
-	}
-
-	public void setActions(Map<String, Map<String, String>> actions) {
-		this.actions = actions;
-
-		_actionsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setActions(
-		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
-			actionsUnsafeSupplier) {
-
-		_actionsSupplier = () -> {
-			try {
-				return actionsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Map<String, Map<String, String>> actions;
-
-	@JsonIgnore
-	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema
 	public String getComment() {
@@ -870,47 +825,6 @@ public class TestrayCaseResult implements Serializable {
 	private Supplier<String> _testrayTeamNameSupplier;
 
 	@Schema
-	public String getUserImgUrl() {
-		if (_userImgUrlSupplier != null) {
-			userImgUrl = _userImgUrlSupplier.get();
-
-			_userImgUrlSupplier = null;
-		}
-
-		return userImgUrl;
-	}
-
-	public void setUserImgUrl(String userImgUrl) {
-		this.userImgUrl = userImgUrl;
-
-		_userImgUrlSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setUserImgUrl(
-		UnsafeSupplier<String, Exception> userImgUrlUnsafeSupplier) {
-
-		_userImgUrlSupplier = () -> {
-			try {
-				return userImgUrlUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String userImgUrl;
-
-	@JsonIgnore
-	private Supplier<String> _userImgUrlSupplier;
-
-	@Schema
 	public String getUserName() {
 		if (_userNameSupplier != null) {
 			userName = _userNameSupplier.get();
@@ -950,6 +864,47 @@ public class TestrayCaseResult implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _userNameSupplier;
+
+	@Schema
+	public String getUserPortraitUrl() {
+		if (_userPortraitUrlSupplier != null) {
+			userPortraitUrl = _userPortraitUrlSupplier.get();
+
+			_userPortraitUrlSupplier = null;
+		}
+
+		return userPortraitUrl;
+	}
+
+	public void setUserPortraitUrl(String userPortraitUrl) {
+		this.userPortraitUrl = userPortraitUrl;
+
+		_userPortraitUrlSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setUserPortraitUrl(
+		UnsafeSupplier<String, Exception> userPortraitUrlUnsafeSupplier) {
+
+		_userPortraitUrlSupplier = () -> {
+			try {
+				return userPortraitUrlUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String userPortraitUrl;
+
+	@JsonIgnore
+	private Supplier<String> _userPortraitUrlSupplier;
 
 	@Schema
 	public Integer getWarning() {
@@ -1018,18 +973,6 @@ public class TestrayCaseResult implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		Map<String, Map<String, String>> actions = getActions();
-
-		if (actions != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"actions\": ");
-
-			sb.append(_toJSON(actions));
-		}
 
 		String comment = getComment();
 
@@ -1311,22 +1254,6 @@ public class TestrayCaseResult implements Serializable {
 			sb.append("\"");
 		}
 
-		String userImgUrl = getUserImgUrl();
-
-		if (userImgUrl != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userImgUrl\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(userImgUrl));
-
-			sb.append("\"");
-		}
-
 		String userName = getUserName();
 
 		if (userName != null) {
@@ -1339,6 +1266,22 @@ public class TestrayCaseResult implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(userName));
+
+			sb.append("\"");
+		}
+
+		String userPortraitUrl = getUserPortraitUrl();
+
+		if (userPortraitUrl != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userPortraitUrl\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userPortraitUrl));
 
 			sb.append("\"");
 		}

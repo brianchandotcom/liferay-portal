@@ -128,6 +128,76 @@ public class SiteActionDropdownItemsProviderTest {
 	}
 
 	@Test
+	public void testGetActionDropdownItemsWithUpdatePermissionAndNoPublishedPrivatePages()
+		throws Exception {
+
+		Mockito.when(
+			GroupPermissionUtil.contains(null, _group, ActionKeys.UPDATE)
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_group.getPrivateLayoutsPageCount()
+		).thenReturn(
+			RandomTestUtil.randomInt()
+		);
+
+		Mockito.when(
+			_group.getDisplayURL(
+				Mockito.any(ThemeDisplay.class), Mockito.anyBoolean(),
+				Mockito.anyBoolean())
+		).thenReturn(
+			null
+		);
+
+		_assertDropdownItem(
+			TreeMapBuilder.put(
+				"deactivate", "/site_admin/deactivate_group"
+			).put(
+				"go-to-x-private-pages", "privateLayout=true"
+			).put(
+				"go-to-x-site-settings",
+				ConfigurationAdminPortletKeys.SITE_SETTINGS
+			).build());
+	}
+
+	@Test
+	public void testGetActionDropdownItemsWithUpdatePermissionAndNoPublishedPublicPages()
+		throws Exception {
+
+		Mockito.when(
+			GroupPermissionUtil.contains(null, _group, ActionKeys.UPDATE)
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			_group.getPublicLayoutsPageCount()
+		).thenReturn(
+			RandomTestUtil.randomInt()
+		);
+
+		Mockito.when(
+			_group.getDisplayURL(
+				Mockito.any(ThemeDisplay.class), Mockito.anyBoolean(),
+				Mockito.anyBoolean())
+		).thenReturn(
+			null
+		);
+
+		_assertDropdownItem(
+			TreeMapBuilder.put(
+				"deactivate", "/site_admin/deactivate_group"
+			).put(
+				"go-to-x-public-pages", LayoutAdminPortletKeys.GROUP_PAGES
+			).put(
+				"go-to-x-site-settings",
+				ConfigurationAdminPortletKeys.SITE_SETTINGS
+			).build());
+	}
+
+	@Test
 	public void testGetActionDropdownItemsWithUpdatePermissionAndPrivatePages()
 		throws Exception {
 

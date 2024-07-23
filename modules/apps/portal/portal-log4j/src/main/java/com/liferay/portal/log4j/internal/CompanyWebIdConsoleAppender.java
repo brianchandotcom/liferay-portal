@@ -5,8 +5,8 @@
 
 package com.liferay.portal.log4j.internal;
 
-import com.liferay.portal.kernel.log.LogContext;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.io.Serializable;
 
@@ -23,10 +23,10 @@ import org.apache.logging.log4j.core.appender.NullAppender;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.config.plugins.PluginBuilderAttribute;
 import org.apache.logging.log4j.core.config.plugins.PluginBuilderFactory;
+import org.apache.logging.log4j.core.impl.MutableLogEvent;
 import org.apache.logging.log4j.core.util.Constants;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
+import org.apache.logging.log4j.util.SortedArrayStringMap;
+import org.apache.logging.log4j.util.StringMap;
 
 /**
  * @author Hai Yu
@@ -50,7 +50,36 @@ public final class CompanyWebIdConsoleAppender extends AbstractAppender {
 			_appender = _createAppender();
 		}
 
-		_appender.append(logEvent);
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		if (companyId == 0) {
+			_appender.append(logEvent);
+
+			return;
+		}
+
+		MutableLogEvent mutableLogEvent;
+		StringMap contextData;
+
+		if (logEvent instanceof MutableLogEvent) {
+			mutableLogEvent = (MutableLogEvent)logEvent;
+
+			contextData = new SortedArrayStringMap(logEvent.getContextData());
+
+			mutableLogEvent.setContextData(contextData);
+		}
+		else {
+			mutableLogEvent = new MutableLogEvent();
+
+			mutableLogEvent.initFrom(logEvent);
+
+			contextData = (StringMap)mutableLogEvent.getContextData();
+		}
+
+		contextData.putValue(
+			"company.webId", PortalInstancePool.getWebId(companyId));
+
+		_appender.append(mutableLogEvent);
 	}
 
 	public static class Builder
@@ -60,14 +89,6 @@ public final class CompanyWebIdConsoleAppender extends AbstractAppender {
 
 		@Override
 		public CompanyWebIdConsoleAppender build() {
-			if (_serviceRegistration == null) {
-				BundleContext bundleContext =
-					SystemBundleUtil.getBundleContext();
-
-				_serviceRegistration = bundleContext.registerService(
-					LogContext.class, new CompanyWebIdLogContext(), null);
-			}
-
 			return new CompanyWebIdConsoleAppender(
 				_bufferedIo, _bufferSize, _direct, getFilter(), _follow,
 				_immediateFlush, getLayout(), getName(), _target);
@@ -137,8 +158,6 @@ public final class CompanyWebIdConsoleAppender extends AbstractAppender {
 
 		return NullAppender.createAppender(getName());
 	}
-
-	private static volatile ServiceRegistration<?> _serviceRegistration;
 
 	private Appender _appender;
 	private final boolean _bufferedIo;

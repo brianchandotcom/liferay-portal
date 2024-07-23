@@ -512,18 +512,14 @@ test.describe('Manage object entries through View Object Entries', () => {
 		);
 
 		await page.getByPlaceholder('Search', {exact: true}).fill('t 1');
-		await expect(page.getByRole('menuitem', {name: 'test1'})).toBeVisible();
+		await expect(page.getByRole('menuitem')).toContainText('test 1');
 
 		await page.locator('input[value="t 1"]').fill('t 2');
-		await expect(page.getByRole('menuitem', {name: 'test2'})).toBeVisible();
+		await expect(page.getByRole('menuitem')).toContainText('test 2');
 
 		await page.locator('input[value="t 2"]').fill('tes');
-		await expect(
-			page.getByRole('menuitem', {name: 'test 1'})
-		).toBeVisible();
-		await expect(
-			page.getByRole('menuitem', {name: 'test 2'})
-		).toBeVisible();
+		await expect(page.getByRole('menu')).toContainText('test 1');
+		await expect(page.getByRole('menu')).toContainText('test 2');
 	});
 });
 

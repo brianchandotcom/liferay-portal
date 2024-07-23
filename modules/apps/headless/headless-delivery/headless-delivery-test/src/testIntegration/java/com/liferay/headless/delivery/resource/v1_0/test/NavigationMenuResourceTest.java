@@ -62,6 +62,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -387,12 +388,18 @@ public class NavigationMenuResourceTest
 		NavigationMenuResource.Builder builder =
 			NavigationMenuResource.builder();
 
+		Locale builderLocale = LocaleUtil.getDefault();
+
+		if (locale != null) {
+			builderLocale = locale;
+		}
+
 		return builder.authentication(
 			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-		).locale(
-			LocaleUtil.getDefault()
 		).header(
 			"X-Accept-All-Languages", "true"
+		).locale(
+			builderLocale
 		).build();
 	}
 

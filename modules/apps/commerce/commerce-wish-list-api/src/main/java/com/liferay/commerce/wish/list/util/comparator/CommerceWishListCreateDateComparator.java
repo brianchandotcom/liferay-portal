@@ -21,12 +21,14 @@ public class CommerceWishListCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CommerceWishListCreateDateComparator() {
-		this(false);
-	}
+	public static CommerceWishListCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public CommerceWishListCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +65,16 @@ public class CommerceWishListCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceWishListCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceWishListCreateDateComparator
+		_INSTANCE_ASCENDING = new CommerceWishListCreateDateComparator(true);
+
+	private static final CommerceWishListCreateDateComparator
+		_INSTANCE_DESCENDING = new CommerceWishListCreateDateComparator(false);
 
 	private final boolean _ascending;
 

@@ -21,12 +21,14 @@ public class CommerceWishListNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CommerceWishListNameComparator() {
-		this(false);
-	}
+	public static CommerceWishListNameComparator getInstance(
+		boolean ascending) {
 
-	public CommerceWishListNameComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +66,16 @@ public class CommerceWishListNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceWishListNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceWishListNameComparator _INSTANCE_ASCENDING =
+		new CommerceWishListNameComparator(true);
+
+	private static final CommerceWishListNameComparator _INSTANCE_DESCENDING =
+		new CommerceWishListNameComparator(false);
 
 	private final boolean _ascending;
 

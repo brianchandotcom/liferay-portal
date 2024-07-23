@@ -524,6 +524,20 @@ public class NavigationMenuResourceTest
 		return navigationMenu;
 	}
 
+	private NavigationMenu _randomNavigationMenu(
+			Layout layout1, Layout layout2, Map<String, String> nameI18nMap1,
+			Map<String, String> nameI18nMap2)
+		throws Exception {
+
+		NavigationMenu navigationMenu = super.randomNavigationMenu();
+
+		navigationMenu.setNavigationMenuItems(
+			_randomNavigationMenuItems(
+				layout1, layout2, nameI18nMap1, nameI18nMap2));
+
+		return navigationMenu;
+	}
+
 	private NavigationMenuItem[] _randomNavigationMenuItems() {
 		return new NavigationMenuItem[] {
 			new NavigationMenuItem() {

@@ -160,7 +160,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addFileEntryType(long, long, long, String, Map, Map, long,
+	 *             #addFileEntryType(String, long, long, long, String, Map, Map, long,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -173,8 +173,8 @@ public class DLFileEntryTypeLocalServiceImpl
 		throws PortalException {
 
 		return addFileEntryType(
-			userId, groupId, dataDefinitionId, fileEntryTypeKey, nameMap,
-			descriptionMap,
+			externalReferenceCode, userId, groupId, dataDefinitionId,
+			fileEntryTypeKey, nameMap, descriptionMap,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
 			serviceContext);
 	}

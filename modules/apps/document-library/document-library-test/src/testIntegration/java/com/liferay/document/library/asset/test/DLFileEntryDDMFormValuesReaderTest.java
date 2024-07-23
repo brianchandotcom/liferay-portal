@@ -88,7 +88,7 @@ public class DLFileEntryDDMFormValuesReaderTest {
 			DLFileEntryMetadata.class.getName());
 
 		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			ddmStructure.getStructureId(), null,
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),

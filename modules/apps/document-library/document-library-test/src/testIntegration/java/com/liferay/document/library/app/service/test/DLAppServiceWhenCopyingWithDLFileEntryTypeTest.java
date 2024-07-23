@@ -77,7 +77,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		_dlFileEntryType = _dlFileEntryTypeLocalService.addFileEntryType(
-			group.getCreatorUserId(), group.getGroupId(),
+			null, group.getCreatorUserId(), group.getGroupId(),
 			ddmStructure.getStructureId(), null,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()

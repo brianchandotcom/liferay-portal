@@ -1061,7 +1061,7 @@ public class AssetPublisherExportImportTest
 		throws Exception {
 
 		return _dlFileEntryTypeLocalService.addFileEntryType(
-			serviceContext.getUserId(), groupId, ddmStructureId, null,
+			null, serviceContext.getUserId(), groupId, ddmStructureId, null,
 			Collections.singletonMap(LocaleUtil.US, StringUtil.randomString()),
 			Collections.singletonMap(LocaleUtil.US, StringUtil.randomString()),
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,

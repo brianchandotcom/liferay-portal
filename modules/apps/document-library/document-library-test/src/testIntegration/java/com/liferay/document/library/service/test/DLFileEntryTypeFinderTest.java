@@ -328,7 +328,7 @@ public class DLFileEntryTypeFinderTest {
 			_group.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-			_user.getUserId(), _group.getGroupId(),
+			null, _user.getUserId(), _group.getGroupId(),
 			ddmStructure.getStructureId(), null,
 			Collections.singletonMap(LocaleUtil.US, _DL_FILE_ENTRY_TYPE_NAME),
 			Collections.singletonMap(LocaleUtil.US, _DL_FILE_ENTRY_TYPE_NAME),

@@ -5,6 +5,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.configuration.CTCollectionEmailConfiguration;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
@@ -13,8 +14,10 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -31,18 +34,23 @@ import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -53,6 +61,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -228,6 +237,7 @@ public class InviteUsersMVCResourceCommand
 			if (userGroupRoles.isEmpty()) {
 				_sendNotificationEvent(
 					ctCollectionId, userIds[i], roleValues[i], themeDisplay);
+				_sendEmail(ctCollectionId, userIds[i], themeDisplay);
 			}
 		}
 
@@ -283,6 +293,78 @@ public class InviteUsersMVCResourceCommand
 		return role;
 	}
 
+	private void _sendEmail(
+			long ctCollectionId, long receiverUserId, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (UserNotificationManagerUtil.isDeliver(
+				receiverUserId, CTPortletKeys.PUBLICATIONS, 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_EMAIL)) {
+
+			try {
+				User user = themeDisplay.getUser();
+
+				String fromName = user.getFullName();
+				String fromAddress = user.getEmailAddress();
+
+				User receiverUser = _userLocalService.getUser(receiverUserId);
+
+				String toName = receiverUser.getFullName();
+				String toAddress = receiverUser.getEmailAddress();
+
+				CTCollectionEmailConfiguration ctCollectionEmailConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						CTCollectionEmailConfiguration.class,
+						themeDisplay.getCompanyId());
+
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
+
+				SubscriptionSender subscriptionSender =
+					new SubscriptionSender();
+
+				subscriptionSender.setContextAttributes(
+					"[$FROM_ADDRESS$]", fromAddress, "[$FROM_NAME$]", fromName,
+					"[$PORTAL_URL$]", themeDisplay.getPortalURL(),
+					"[$TO_NAME$]", toName);
+				subscriptionSender.setContextAttribute(
+					"[$PORTAL_PUBLICATION_REVIEW_CHANGES_URL$]",
+					PortletURLBuilder.create(
+						_portal.getControlPanelPortletURL(
+							serviceContext.getRequest(),
+							serviceContext.getScopeGroup(),
+							CTPortletKeys.PUBLICATIONS, 0, 0,
+							PortletRequest.RENDER_PHASE)
+					).setMVCRenderCommandName(
+						"/change_tracking/view_changes"
+					).setParameter(
+						"ctCollectionId", ctCollectionId
+					).buildString(),
+					false);
+				subscriptionSender.setFrom(fromAddress, fromName);
+				subscriptionSender.setHtmlFormat(true);
+				subscriptionSender.addRuntimeSubscribers(toAddress, toName);
+				subscriptionSender.setServiceContext(serviceContext);
+				subscriptionSender.setLocalizedBodyMap(
+					_localization.getMap(
+						ctCollectionEmailConfiguration.invitationEmailBody()));
+				subscriptionSender.setLocalizedSubjectMap(
+					_localization.getMap(
+						ctCollectionEmailConfiguration.
+							invitationEmailSubject()));
+				subscriptionSender.setMailId("ctCollectionId", ctCollectionId);
+				subscriptionSender.setNotificationType(
+					UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);
+
+				subscriptionSender.flushNotificationsAsync();
+			}
+			catch (Exception exception) {
+				throw new SystemException(exception);
+			}
+		}
+	}
+
 	private void _sendNotificationEvent(
 			long ctCollectionId, long receiverUserId, int roleValue,
 			ThemeDisplay themeDisplay)
@@ -319,6 +401,9 @@ public class InviteUsersMVCResourceCommand
 	}
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
@@ -326,6 +411,9 @@ public class InviteUsersMVCResourceCommand
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

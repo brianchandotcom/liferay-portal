@@ -632,7 +632,9 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 								_getLocalizedNamesFromProperties(
 									unicodeProperties);
 
-							if (localizedNames.isEmpty() && (layout != null)) {
+							if ((!useCustomName || localizedNames.isEmpty()) &&
+								(layout != null)) {
+
 								localizedNames = layout.getNameMap();
 							}
 

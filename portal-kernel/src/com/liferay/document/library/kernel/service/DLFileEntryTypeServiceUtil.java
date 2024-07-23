@@ -32,15 +32,15 @@ public class DLFileEntryTypeServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static DLFileEntryType addFileEntryType(
-			long groupId, long dataDefinitionId, String fileEntryTypeKey,
-			Map<java.util.Locale, String> nameMap,
+			String externalReferenceCode, long groupId, long dataDefinitionId,
+			String fileEntryTypeKey, Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFileEntryType(
-			groupId, dataDefinitionId, fileEntryTypeKey, nameMap,
-			descriptionMap, serviceContext);
+			externalReferenceCode, groupId, dataDefinitionId, fileEntryTypeKey,
+			nameMap, descriptionMap, serviceContext);
 	}
 
 	public static void deleteFileEntryType(long fileEntryTypeId)

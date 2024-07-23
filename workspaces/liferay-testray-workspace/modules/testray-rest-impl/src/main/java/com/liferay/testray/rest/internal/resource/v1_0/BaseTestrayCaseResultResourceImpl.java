@@ -273,6 +273,10 @@ public abstract class BaseTestrayCaseResultResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "testraySubtaskId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "testrayTeamIds"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -337,6 +341,9 @@ public abstract class BaseTestrayCaseResultResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("testrayRunName")
 			String testrayRunName,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("testraySubtaskId")
+			String testraySubtaskId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("testrayTeamIds")
 			String testrayTeamIds,

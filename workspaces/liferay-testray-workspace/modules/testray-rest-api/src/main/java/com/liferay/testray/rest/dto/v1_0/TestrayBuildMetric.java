@@ -46,49 +46,6 @@ public class TestrayBuildMetric implements Serializable {
 	}
 
 	@Schema
-	@Valid
-	public Map<String, Map<String, String>> getActions() {
-		if (_actionsSupplier != null) {
-			actions = _actionsSupplier.get();
-
-			_actionsSupplier = null;
-		}
-
-		return actions;
-	}
-
-	public void setActions(Map<String, Map<String, String>> actions) {
-		this.actions = actions;
-
-		_actionsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setActions(
-		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
-			actionsUnsafeSupplier) {
-
-		_actionsSupplier = () -> {
-			try {
-				return actionsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Map<String, Map<String, String>> actions;
-
-	@JsonIgnore
-	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
-
-	@Schema
 	public Boolean getTestrayBuildArchived() {
 		if (_testrayBuildArchivedSupplier != null) {
 			testrayBuildArchived = _testrayBuildArchivedSupplier.get();
@@ -492,18 +449,6 @@ public class TestrayBuildMetric implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		Map<String, Map<String, String>> actions = getActions();
-
-		if (actions != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"actions\": ");
-
-			sb.append(_toJSON(actions));
-		}
 
 		Boolean testrayBuildArchived = getTestrayBuildArchived();
 

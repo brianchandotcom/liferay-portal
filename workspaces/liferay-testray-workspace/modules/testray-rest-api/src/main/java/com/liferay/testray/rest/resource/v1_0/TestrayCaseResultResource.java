@@ -56,8 +56,8 @@ public interface TestrayCaseResultResource {
 			String issues, Boolean noComment, Boolean noError, Boolean noIssues,
 			String priority, String status, String testrayCaseName,
 			String testrayCaseTypeIds, String testrayComponentIds,
-			String testrayRunId, String testrayRunName, String testrayTeamIds,
-			String userId, Pagination pagination)
+			String testrayRunId, String testrayRunName, String testraySubtaskId,
+			String testrayTeamIds, String userId, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

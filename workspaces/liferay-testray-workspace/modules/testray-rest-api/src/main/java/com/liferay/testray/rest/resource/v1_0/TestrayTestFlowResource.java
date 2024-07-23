@@ -12,6 +12,9 @@ import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.testray.rest.dto.v1_0.TestraySubtask;
 import com.liferay.testray.rest.dto.v1_0.TestrayTestFlow;
 
 import java.util.Collections;
@@ -43,6 +46,12 @@ public interface TestrayTestFlowResource {
 
 	public TestrayTestFlow putTestrayTestFlowByTestraySubtaskIdTestraySubtask(
 			Long testraySubtaskId, TestrayTestFlow testrayTestFlow)
+		throws Exception;
+
+	public Page<TestraySubtask> getTestrayTestFlowTestraySubtaskPage(
+			String error, String issues, String name, Boolean noIssues,
+			String status, String testrayComponentIds, Long testrayTaskId,
+			String testrayTeamIds, String userId, Pagination pagination)
 		throws Exception;
 
 	public TestrayTestFlow postTestrayTestFlow(Long testrayTaskId)

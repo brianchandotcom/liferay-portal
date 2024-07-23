@@ -20,12 +20,14 @@ public class CPInstanceUnitOfMeasurePriorityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public CPInstanceUnitOfMeasurePriorityComparator() {
-		this(true);
-	}
+	public static CPInstanceUnitOfMeasurePriorityComparator getInstance(
+		boolean ascending) {
 
-	public CPInstanceUnitOfMeasurePriorityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -62,6 +64,18 @@ public class CPInstanceUnitOfMeasurePriorityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPInstanceUnitOfMeasurePriorityComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPInstanceUnitOfMeasurePriorityComparator
+		_INSTANCE_ASCENDING = new CPInstanceUnitOfMeasurePriorityComparator(
+			true);
+
+	private static final CPInstanceUnitOfMeasurePriorityComparator
+		_INSTANCE_DESCENDING = new CPInstanceUnitOfMeasurePriorityComparator(
+			false);
 
 	private final boolean _ascending;
 

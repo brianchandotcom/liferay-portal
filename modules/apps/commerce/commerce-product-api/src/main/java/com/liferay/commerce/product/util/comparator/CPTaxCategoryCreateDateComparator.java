@@ -21,12 +21,14 @@ public class CPTaxCategoryCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CPTaxCategoryCreateDateComparator() {
-		this(false);
-	}
+	public static CPTaxCategoryCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public CPTaxCategoryCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -61,6 +63,16 @@ public class CPTaxCategoryCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPTaxCategoryCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPTaxCategoryCreateDateComparator _INSTANCE_ASCENDING =
+		new CPTaxCategoryCreateDateComparator(true);
+
+	private static final CPTaxCategoryCreateDateComparator
+		_INSTANCE_DESCENDING = new CPTaxCategoryCreateDateComparator(false);
 
 	private final boolean _ascending;
 

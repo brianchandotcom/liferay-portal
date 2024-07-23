@@ -21,12 +21,12 @@ public class CPOptionValueNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CPOptionValueNameComparator() {
-		this(false);
-	}
+	public static CPOptionValueNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public CPOptionValueNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +63,16 @@ public class CPOptionValueNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPOptionValueNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPOptionValueNameComparator _INSTANCE_ASCENDING =
+		new CPOptionValueNameComparator(true);
+
+	private static final CPOptionValueNameComparator _INSTANCE_DESCENDING =
+		new CPOptionValueNameComparator(false);
 
 	private final boolean _ascending;
 

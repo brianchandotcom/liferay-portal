@@ -21,12 +21,14 @@ public class CPDefinitionOptionRelCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CPDefinitionOptionRelCreateDateComparator() {
-		this(false);
-	}
+	public static CPDefinitionOptionRelCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public CPDefinitionOptionRelCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +65,18 @@ public class CPDefinitionOptionRelCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPDefinitionOptionRelCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPDefinitionOptionRelCreateDateComparator
+		_INSTANCE_ASCENDING = new CPDefinitionOptionRelCreateDateComparator(
+			true);
+
+	private static final CPDefinitionOptionRelCreateDateComparator
+		_INSTANCE_DESCENDING = new CPDefinitionOptionRelCreateDateComparator(
+			false);
 
 	private final boolean _ascending;
 

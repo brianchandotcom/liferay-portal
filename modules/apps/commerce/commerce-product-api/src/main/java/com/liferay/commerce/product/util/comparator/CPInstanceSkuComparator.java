@@ -20,12 +20,12 @@ public class CPInstanceSkuComparator extends OrderByComparator<CPInstance> {
 
 	public static final String[] ORDER_BY_FIELDS = {"sku"};
 
-	public CPInstanceSkuComparator() {
-		this(false);
-	}
+	public static CPInstanceSkuComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public CPInstanceSkuComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -60,6 +60,16 @@ public class CPInstanceSkuComparator extends OrderByComparator<CPInstance> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPInstanceSkuComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPInstanceSkuComparator _INSTANCE_ASCENDING =
+		new CPInstanceSkuComparator(true);
+
+	private static final CPInstanceSkuComparator _INSTANCE_DESCENDING =
+		new CPInstanceSkuComparator(false);
 
 	private final boolean _ascending;
 

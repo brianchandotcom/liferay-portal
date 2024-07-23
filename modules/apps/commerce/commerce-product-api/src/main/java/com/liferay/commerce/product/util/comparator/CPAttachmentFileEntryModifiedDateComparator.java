@@ -21,12 +21,14 @@ public class CPAttachmentFileEntryModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public CPAttachmentFileEntryModifiedDateComparator() {
-		this(false);
-	}
+	public static CPAttachmentFileEntryModifiedDateComparator getInstance(
+		boolean ascending) {
 
-	public CPAttachmentFileEntryModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +65,18 @@ public class CPAttachmentFileEntryModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPAttachmentFileEntryModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPAttachmentFileEntryModifiedDateComparator
+		_INSTANCE_ASCENDING = new CPAttachmentFileEntryModifiedDateComparator(
+			true);
+
+	private static final CPAttachmentFileEntryModifiedDateComparator
+		_INSTANCE_DESCENDING = new CPAttachmentFileEntryModifiedDateComparator(
+			false);
 
 	private final boolean _ascending;
 

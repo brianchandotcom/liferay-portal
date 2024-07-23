@@ -21,12 +21,14 @@ public class CPOptionCategoryTitleComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"title"};
 
-	public CPOptionCategoryTitleComparator() {
-		this(false);
-	}
+	public static CPOptionCategoryTitleComparator getInstance(
+		boolean ascending) {
 
-	public CPOptionCategoryTitleComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +66,16 @@ public class CPOptionCategoryTitleComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPOptionCategoryTitleComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPOptionCategoryTitleComparator _INSTANCE_ASCENDING =
+		new CPOptionCategoryTitleComparator(true);
+
+	private static final CPOptionCategoryTitleComparator _INSTANCE_DESCENDING =
+		new CPOptionCategoryTitleComparator(false);
 
 	private final boolean _ascending;
 

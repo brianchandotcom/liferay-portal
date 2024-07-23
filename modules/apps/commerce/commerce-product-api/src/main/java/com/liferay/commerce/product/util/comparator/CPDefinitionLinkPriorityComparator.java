@@ -20,12 +20,14 @@ public class CPDefinitionLinkPriorityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public CPDefinitionLinkPriorityComparator() {
-		this(false);
-	}
+	public static CPDefinitionLinkPriorityComparator getInstance(
+		boolean ascending) {
 
-	public CPDefinitionLinkPriorityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -61,6 +63,16 @@ public class CPDefinitionLinkPriorityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPDefinitionLinkPriorityComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPDefinitionLinkPriorityComparator
+		_INSTANCE_ASCENDING = new CPDefinitionLinkPriorityComparator(true);
+
+	private static final CPDefinitionLinkPriorityComparator
+		_INSTANCE_DESCENDING = new CPDefinitionLinkPriorityComparator(false);
 
 	private final boolean _ascending;
 

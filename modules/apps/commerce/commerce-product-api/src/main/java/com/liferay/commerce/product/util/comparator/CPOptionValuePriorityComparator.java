@@ -20,12 +20,14 @@ public class CPOptionValuePriorityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public CPOptionValuePriorityComparator() {
-		this(false);
-	}
+	public static CPOptionValuePriorityComparator getInstance(
+		boolean ascending) {
 
-	public CPOptionValuePriorityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -60,6 +62,16 @@ public class CPOptionValuePriorityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPOptionValuePriorityComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPOptionValuePriorityComparator _INSTANCE_ASCENDING =
+		new CPOptionValuePriorityComparator(true);
+
+	private static final CPOptionValuePriorityComparator _INSTANCE_DESCENDING =
+		new CPOptionValuePriorityComparator(false);
 
 	private final boolean _ascending;
 

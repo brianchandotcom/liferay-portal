@@ -20,12 +20,14 @@ public class CPDefinitionOptionRelPriorityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public CPDefinitionOptionRelPriorityComparator() {
-		this(false);
-	}
+	public static CPDefinitionOptionRelPriorityComparator getInstance(
+		boolean ascending) {
 
-	public CPDefinitionOptionRelPriorityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -62,6 +64,17 @@ public class CPDefinitionOptionRelPriorityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPDefinitionOptionRelPriorityComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPDefinitionOptionRelPriorityComparator
+		_INSTANCE_ASCENDING = new CPDefinitionOptionRelPriorityComparator(true);
+
+	private static final CPDefinitionOptionRelPriorityComparator
+		_INSTANCE_DESCENDING = new CPDefinitionOptionRelPriorityComparator(
+			false);
 
 	private final boolean _ascending;
 

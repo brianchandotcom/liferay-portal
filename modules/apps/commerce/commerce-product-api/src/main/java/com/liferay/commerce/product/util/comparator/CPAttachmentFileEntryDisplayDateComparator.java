@@ -21,12 +21,14 @@ public class CPAttachmentFileEntryDisplayDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"displayDate"};
 
-	public CPAttachmentFileEntryDisplayDateComparator() {
-		this(false);
-	}
+	public static CPAttachmentFileEntryDisplayDateComparator getInstance(
+		boolean ascending) {
 
-	public CPAttachmentFileEntryDisplayDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +65,18 @@ public class CPAttachmentFileEntryDisplayDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPAttachmentFileEntryDisplayDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPAttachmentFileEntryDisplayDateComparator
+		_INSTANCE_ASCENDING = new CPAttachmentFileEntryDisplayDateComparator(
+			true);
+
+	private static final CPAttachmentFileEntryDisplayDateComparator
+		_INSTANCE_DESCENDING = new CPAttachmentFileEntryDisplayDateComparator(
+			false);
 
 	private final boolean _ascending;
 

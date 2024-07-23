@@ -22,12 +22,14 @@ public class CPDefinitionOptionRelNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CPDefinitionOptionRelNameComparator() {
-		this(false);
-	}
+	public static CPDefinitionOptionRelNameComparator getInstance(
+		boolean ascending) {
 
-	public CPDefinitionOptionRelNameComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -65,6 +67,16 @@ public class CPDefinitionOptionRelNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPDefinitionOptionRelNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPDefinitionOptionRelNameComparator
+		_INSTANCE_ASCENDING = new CPDefinitionOptionRelNameComparator(true);
+
+	private static final CPDefinitionOptionRelNameComparator
+		_INSTANCE_DESCENDING = new CPDefinitionOptionRelNameComparator(false);
 
 	private final boolean _ascending;
 

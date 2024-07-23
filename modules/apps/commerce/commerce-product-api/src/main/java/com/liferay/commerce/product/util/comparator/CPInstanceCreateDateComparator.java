@@ -21,12 +21,14 @@ public class CPInstanceCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CPInstanceCreateDateComparator() {
-		this(false);
-	}
+	public static CPInstanceCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public CPInstanceCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +61,16 @@ public class CPInstanceCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPInstanceCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPInstanceCreateDateComparator _INSTANCE_ASCENDING =
+		new CPInstanceCreateDateComparator(true);
+
+	private static final CPInstanceCreateDateComparator _INSTANCE_DESCENDING =
+		new CPInstanceCreateDateComparator(false);
 
 	private final boolean _ascending;
 

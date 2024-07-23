@@ -21,12 +21,14 @@ public class CPOptionModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public CPOptionModifiedDateComparator() {
-		this(false);
-	}
+	public static CPOptionModifiedDateComparator getInstance(
+		boolean ascending) {
 
-	public CPOptionModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +61,16 @@ public class CPOptionModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPOptionModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPOptionModifiedDateComparator _INSTANCE_ASCENDING =
+		new CPOptionModifiedDateComparator(true);
+
+	private static final CPOptionModifiedDateComparator _INSTANCE_DESCENDING =
+		new CPOptionModifiedDateComparator(false);
 
 	private final boolean _ascending;
 

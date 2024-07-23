@@ -20,12 +20,12 @@ public class CPOptionNameComparator extends OrderByComparator<CPOption> {
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CPOptionNameComparator() {
-		this(false);
-	}
+	public static CPOptionNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public CPOptionNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -60,6 +60,16 @@ public class CPOptionNameComparator extends OrderByComparator<CPOption> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPOptionNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPOptionNameComparator _INSTANCE_ASCENDING =
+		new CPOptionNameComparator(true);
+
+	private static final CPOptionNameComparator _INSTANCE_DESCENDING =
+		new CPOptionNameComparator(false);
 
 	private final boolean _ascending;
 

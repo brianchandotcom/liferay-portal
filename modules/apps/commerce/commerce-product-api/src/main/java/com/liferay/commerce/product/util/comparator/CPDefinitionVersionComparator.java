@@ -20,12 +20,12 @@ public class CPDefinitionVersionComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"version"};
 
-	public CPDefinitionVersionComparator() {
-		this(false);
-	}
+	public static CPDefinitionVersionComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public CPDefinitionVersionComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -60,6 +60,16 @@ public class CPDefinitionVersionComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CPDefinitionVersionComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CPDefinitionVersionComparator _INSTANCE_ASCENDING =
+		new CPDefinitionVersionComparator(true);
+
+	private static final CPDefinitionVersionComparator _INSTANCE_DESCENDING =
+		new CPDefinitionVersionComparator(false);
 
 	private final boolean _ascending;
 

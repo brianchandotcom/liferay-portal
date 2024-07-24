@@ -376,10 +376,8 @@ public class DLFileEntryTypeServiceTest {
 
 	@Test
 	public void testLocalizedSiteUpdateFileEntryType() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
 
@@ -394,7 +392,7 @@ public class DLFileEntryTypeServiceTest {
 
 			DLFileEntryType dlFileEntryType =
 				DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-					null, TestPropsValues.getUserId(), group.getGroupId(),
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					ddmStructure.getStructureId(), null,
 					Collections.singletonMap(LocaleUtil.US, name),
 					Collections.singletonMap(LocaleUtil.US, description),

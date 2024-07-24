@@ -7,7 +7,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<style type="text/css">
+<aui:style type="text/css">
 	a {
 		border: 2px solid #1C75B9;
 		border-radius: 4px;
@@ -41,7 +41,7 @@
 		max-width: 960px;
 		padding: 6em 4em;
 	}
-</style>
+</aui:style>
 
 <div class="error">
 	<img src="<%= PortalUtil.getPathContext(request) %>/images/logo.svg" />

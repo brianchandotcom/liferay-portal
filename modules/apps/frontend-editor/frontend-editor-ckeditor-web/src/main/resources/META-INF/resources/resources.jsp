@@ -16,11 +16,11 @@ String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKE
 <liferay-util:html-top
 	outputKey="com.liferay.frontend.editor.ckeditor.web#/resources.jsp"
 >
-	<style type="text/css">
+	<aui:style type="text/css">
 		table.cke_dialog {
 			position: absolute !important;
 		}
-	</style>
+	</aui:style>
 
 	<%
 	long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR);

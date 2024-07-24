@@ -7,7 +7,7 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
-<style type="text/css">
+<aui:style type="text/css">
 	.build-info {
 		color: #555;
 		font-size: 11px;
@@ -34,7 +34,7 @@
 		font-weight: bold;
 		margin: 0 0 2px 0;
 	}
-</style>
+</aui:style>
 
 <%
 Map<String, String> orderProducts = (Map<String, String>)request.getAttribute("ORDER_PRODUCTS");

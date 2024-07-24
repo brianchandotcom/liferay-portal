@@ -13,11 +13,11 @@ WikiPageItemSelectorViewDisplayContext wikiPageItemSelectorViewDisplayContext = 
 SearchContainer<WikiPage> wikiPagesSearchContainer = wikiPageItemSelectorViewDisplayContext.getSearchContainer(request, liferayPortletResponse, renderRequest);
 %>
 
-<style type="text/css">
+<aui:style type="text/css">
 	.portlet-item-selector .wiki-page-item {
 		cursor: pointer;
 	}
-</style>
+</aui:style>
 
 <%
 String searchURL = HttpComponentsUtil.removeParameter(

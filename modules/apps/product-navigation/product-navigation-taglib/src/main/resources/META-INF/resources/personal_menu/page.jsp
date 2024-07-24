@@ -28,7 +28,7 @@ if (size != null) {
 }
 %>
 
-<style type="text/css">
+<aui:style type="text/css">
 	.dropdown-menu-personal-menu {
 		max-height: none;
 		z-index: 1021;
@@ -49,7 +49,7 @@ if (size != null) {
 	div.personal-menu-dropdown .dropdown-item {
 		color: #6B6C7E;
 	}
-</style>
+</aui:style>
 
 <div class="personal-menu-dropdown" id="<%= namespace %>personal_menu_dropdown">
 	<c:choose>

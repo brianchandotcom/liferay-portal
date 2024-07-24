@@ -107,6 +107,7 @@ type Categories = {
 	externalReferenceCode: string;
 	id: string;
 	name: string;
+	value?: string;
 	vocabulary: string;
 };
 

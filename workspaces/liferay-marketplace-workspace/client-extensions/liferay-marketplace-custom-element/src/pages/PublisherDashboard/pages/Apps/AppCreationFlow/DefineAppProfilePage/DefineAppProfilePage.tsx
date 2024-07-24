@@ -6,35 +6,35 @@
 /* eslint-disable react/no-unescaped-entities */
 
 import {filesize} from 'filesize';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 import {UploadedFile} from '../../../../../../components/FileList/FileList';
 import {Header} from '../../../../../../components/Header/Header';
 import {Input} from '../../../../../../components/Input/Input';
-import {MultiSelect} from '../../../../../../components/MultiSelect/MultiSelect';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../../../../../components/Section/Section';
-import {
-	createApp,
-	createImage,
-	getCategories,
-	getVocabularies,
-	updateApp,
-} from '../../../../../../utils/api';
+import {createApp, createImage, updateApp} from '../../../../../../utils/api';
 import {submitBase64EncodedFile} from '../../../../../../utils/util';
 import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 
 import './DefineAppProfilePage.scss';
+import MultiSelect from '../../../../../../components/MultiSelect/MultiSelect';
 import UploadLogo from '../../../../../../components/UploadLogo/UploadLogo';
 import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
+import i18n from '../../../../../../i18n';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {getRandomID} from '../../../../../../utils/string';
 
 type DefineAppProfilePageProps = {
+	categories: VocabDropdownItem[];
+	isLoading: boolean;
 	onClickBack: () => void;
 	onClickContinue: () => void;
+	productType: Categories;
+	setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+	tags: VocabDropdownItem[];
 };
 
 type VocabDropdownItem = {
@@ -42,8 +42,13 @@ type VocabDropdownItem = {
 } & Categories;
 
 export function DefineAppProfilePage({
+	categories,
+	isLoading,
 	onClickBack,
 	onClickContinue,
+	productType,
+	setLoading,
+	tags,
 }: DefineAppProfilePageProps) {
 	const [
 		{
@@ -58,10 +63,6 @@ export function DefineAppProfilePage({
 		dispatch,
 	] = useAppContext();
 	const {channel} = useMarketplaceContext();
-	const [categories, setCategories] = useState<VocabDropdownItem[]>([]);
-	const [productType, setProductType] = useState<Categories>();
-	const [tags, setTags] = useState<VocabDropdownItem[]>([]);
-	const [isLoading, setLoading] = useState<boolean>(false);
 
 	const handleLogoUpload = (files: FileList) => {
 		const file = files[0];
@@ -170,82 +171,33 @@ export function DefineAppProfilePage({
 		onClickContinue();
 	};
 
-	useEffect(() => {
-		const getData = async () => {
-			const vocabulariesResponse = await getVocabularies();
+	const [multiSelectText, setMultiSelectText] = useState({
+		categories: '',
+		tags: '',
+	});
 
-			let categoryVocabId = 0;
-			let productTypeVocabId = 0;
-			let tagVocabId = 0;
+	const onChangeMultiSelect = (event: any) => {
+		setMultiSelectText((prevState) => ({
+			...prevState,
+			[event.target.name]: event.target.value,
+		}));
+	};
 
-			vocabulariesResponse.items.forEach(
-				(vocab: {id: number; name: string}) => {
-					if (vocab.name === 'Marketplace App Category') {
-						categoryVocabId = vocab.id;
-					}
+	const getFilteredItems = (
+		selectedItems: {[key: string]: string}[],
+		defaultItems: VocabDropdownItem[]
+	) =>
+		defaultItems?.filter(
+			(defaultCategory) =>
+				!selectedItems?.some(
+					(category) => defaultCategory.value === category.value
+				)
+		);
 
-					if (vocab.name === 'Marketplace App Tags') {
-						tagVocabId = vocab.id;
-					}
-
-					if (vocab.name === 'Marketplace Product Type') {
-						productTypeVocabId = vocab.id;
-					}
-				}
-			);
-
-			const categoriesList = await getCategories({
-				vocabId: categoryVocabId,
-			});
-			const tagsList = await getCategories({vocabId: tagVocabId});
-
-			const productTypeList = await getCategories({
-				vocabId: productTypeVocabId,
-			});
-
-			const appProductType = productTypeList.find(
-				(productType) => productType.name === 'App'
-			);
-
-			if (appProductType) {
-				setProductType({
-					externalReferenceCode: appProductType.externalReferenceCode,
-					id: appProductType.id,
-					name: appProductType.name,
-					vocabulary: 'Marketplace Product Type',
-				});
-			}
-
-			const categoriesDropdownItems = categoriesList.map((category) => {
-				return {
-					checked: false,
-					externalReferenceCode: category.externalReferenceCode,
-					id: category.id,
-					label: category.name,
-					name: category.name,
-					value: category.name,
-					vocabulary: 'Marketplace App Category',
-				};
-			});
-
-			const tagsDropdownItems = tagsList.map((tag) => {
-				return {
-					checked: false,
-					externalReferenceCode: tag.externalReferenceCode,
-					id: tag.id,
-					label: tag.name,
-					name: tag.name,
-					value: tag.name,
-					vocabulary: 'Marketplace App Tags',
-				};
-			});
-
-			setCategories(categoriesDropdownItems);
-			setTags(tagsDropdownItems);
-		};
-
-		getData();
-	}, []);
+	const defaultSourceItems = {
+		categories: categories ?? [],
+		tags: tags ?? [],
+	};
 
 	return (
 		<div className="profile-page-container">
@@ -323,10 +275,24 @@ export function DefineAppProfilePage({
 							value={appDescription}
 						/>
 
-						<MultiSelect<VocabDropdownItem>
-							items={categories}
-							label="Categories"
-							onChange={(value) =>
+						<MultiSelect
+							inputName="categories"
+							label={i18n.translate('categories')}
+							multiselectKey={`cat-${
+								getFilteredItems(
+									appCategories,
+									defaultSourceItems?.categories
+								).length
+							}`}
+							onChange={(value: string) =>
+								onChangeMultiSelect({
+									target: {
+										name: 'categories',
+										value,
+									},
+								})
+							}
+							onItemsChange={(value: {[key: string]: string}[]) =>
 								dispatch({
 									payload: {
 										value,
@@ -334,16 +300,35 @@ export function DefineAppProfilePage({
 									type: TYPES.UPDATE_APP_CATEGORIES,
 								})
 							}
-							placeholder="Select categories"
+							placeholder={i18n.translate('select-categories')}
 							required
+							selectedItems={appCategories}
+							sourceItems={getFilteredItems(
+								appCategories,
+								defaultSourceItems?.categories
+							)}
 							tooltip="Choose the Marketplace category that most accurately describes what your app does. Users looking for specific types of apps will often browse categories by searching on a specific category name in the main Marketplace home page. Having your app listed under the appropriate category will help them find your app."
-							value={appCategories}
+							value={multiSelectText?.categories}
 						/>
 
-						<MultiSelect<VocabDropdownItem>
-							items={tags}
-							label="Tags"
-							onChange={(value) =>
+						<MultiSelect
+							inputName="tags"
+							label={i18n.translate('tags')}
+							multiselectKey={`tag-${
+								getFilteredItems(
+									appTags,
+									defaultSourceItems?.tags
+								).length
+							}`}
+							onChange={(value: string) =>
+								onChangeMultiSelect({
+									target: {
+										name: 'tags',
+										value,
+									},
+								})
+							}
+							onItemsChange={(value: {[key: string]: string}[]) =>
 								dispatch({
 									payload: {
 										value,
@@ -351,10 +336,15 @@ export function DefineAppProfilePage({
 									type: TYPES.UPDATE_APP_TAGS,
 								})
 							}
-							placeholder="Select tags"
+							placeholder={i18n.translate('select-tags')}
 							required
+							selectedItems={appTags}
+							sourceItems={getFilteredItems(
+								appTags,
+								defaultSourceItems?.tags
+							)}
 							tooltip="Tags help to describe your app in the Marketplace. Select the tags most relevant to your app. They can be changed if needed."
-							value={appTags}
+							value={multiSelectText?.tags}
 						/>
 					</div>
 				</Section>

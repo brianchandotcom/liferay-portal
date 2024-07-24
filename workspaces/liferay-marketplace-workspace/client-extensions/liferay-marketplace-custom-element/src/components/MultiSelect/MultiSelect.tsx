@@ -3,79 +3,46 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Select, {MultiValue, StylesConfig} from 'react-select';
-import makeAnimated from 'react-select/animated';
+import ClayMultiSelect from '@clayui/multi-select';
 
+import {getIconSpriteMap} from '../../liferay/constants';
 import {FieldBase} from '../FieldBase';
 
 type MultiSelectProps<T> = {
 	className?: string;
 	helpMessage?: string;
 	hideFeedback?: boolean;
-	items: T[];
+	inputName: string;
 	label?: string;
 	localized?: boolean;
+	multiselectKey: string;
 	onChange: (values: T) => void;
+	onItemsChange: (values: T) => void;
 	placeholder?: string;
 	required?: boolean;
+	selectedItems: T[];
+	sourceItems: T[];
 	tooltip?: string;
-	value?: MultiValue<any>;
+	value?: string;
 };
 
-const colourStyles: StylesConfig<any, true> = {
-	control: (styles) =>
-		({
-			...styles,
-			':focus-within': {
-				backgroundColor: '#f0f5ff',
-				border: '1px solid #80acff',
-				boxShadow: '0 0 0 0.125rem #fff, 0 0 0 0.25rem #80acff',
-				transition: 'all ease-in-out .3s',
-			},
-			':hover': {
-				background: '1px solid #f0f5ff',
-				outline: 'none',
-				transition: 'all ease-in-out .3s',
-			},
-			'border': '1px solid #B1B2B9',
-			'borderRadius': '8px',
-			'boxShadow': 'none',
-			'transition': 'all ease-in-out .3s',
-		}) as any,
-
-	multiValue: (styles) =>
-		({
-			...styles,
-			backgroundColor: '#f0f5ff',
-			borderRadius: '4px',
-			color: '#1C3667',
-		}) as any,
-	multiValueRemove: (styles) =>
-		({
-			...styles,
-			':hover': {
-				backgroundColor: '#80acff',
-				color: 'white',
-			},
-			'color': '#1C3667',
-		}) as any,
-};
-
-export function MultiSelect<T>({
+const MultiSelect: React.FC<MultiSelectProps<any>> = ({
 	className,
 	helpMessage,
 	hideFeedback,
-	items,
+	inputName,
 	label,
 	localized,
+	multiselectKey,
 	onChange,
+	onItemsChange,
 	placeholder,
 	required,
+	selectedItems,
+	sourceItems,
 	tooltip,
 	value,
-}: MultiSelectProps<T>) {
-	const animatedComponents = makeAnimated();
-
+}) => {
 	return (
 		<FieldBase
 			className={className}
@@ -86,16 +53,19 @@ export function MultiSelect<T>({
 			required={required}
 			tooltip={tooltip}
 		>
-			<Select
-				className="multiselect-container-form-control"
-				components={animatedComponents}
-				isMulti
-				onChange={(newValue) => newValue && onChange(newValue as T)}
-				options={items}
-				placeholder={placeholder}
-				styles={colourStyles}
+			<ClayMultiSelect
+				{...{placeholder}}
+				inputName={inputName}
+				items={selectedItems}
+				key={multiselectKey}
+				onChange={onChange}
+				onItemsChange={onItemsChange}
+				sourceItems={sourceItems}
+				spritemap={getIconSpriteMap()}
 				value={value}
 			/>
 		</FieldBase>
 	);
-}
+};
+
+export default MultiSelect;

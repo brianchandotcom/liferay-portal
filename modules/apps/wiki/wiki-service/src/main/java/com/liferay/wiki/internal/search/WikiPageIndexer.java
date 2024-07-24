@@ -263,8 +263,7 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 		WikiPage wikiPage = _wikiPageLocalService.fetchWikiPage(classPK);
 
 		if (wikiPage != null) {
-			_reindexEveryVersionOfResourcePrimKey(
-				wikiPage.getResourcePrimKey());
+			doReindex(wikiPage);
 
 			return;
 		}

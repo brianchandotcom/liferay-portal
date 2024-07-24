@@ -281,14 +281,10 @@ public class DLFileEntryTypeServiceTest {
 				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		// Configure folder
-
 		DLAppLocalServiceUtil.updateFolder(
 			folder.getFolderId(), folder.getParentFolderId(), folder.getName(),
 			folder.getDescription(),
 			_getFolderServiceContext(dlFileEntryType1, dlFileEntryType2));
-
-		// Add file to folder
 
 		String name = "Test.txt";
 		byte[] bytes = _CONTENT.getBytes();
@@ -301,8 +297,6 @@ public class DLFileEntryTypeServiceTest {
 
 		assertFileEntryType(fileEntry, dlFileEntryType1);
 
-		// Add file to subfolder
-
 		fileEntry = DLAppServiceUtil.addFileEntry(
 			null, _group.getGroupId(), subfolder.getFolderId(), name,
 			ContentTypes.TEXT_PLAIN, name, StringPool.BLANK, StringPool.BLANK,
@@ -310,8 +304,6 @@ public class DLFileEntryTypeServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		assertFileEntryType(fileEntry, dlFileEntryType1);
-
-		// Configure subfolder
 
 		DLAppLocalServiceUtil.updateFolder(
 			subfolder.getFolderId(), subfolder.getParentFolderId(),

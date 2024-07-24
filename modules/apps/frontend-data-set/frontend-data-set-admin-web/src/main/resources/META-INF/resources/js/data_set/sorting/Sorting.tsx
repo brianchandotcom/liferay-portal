@@ -579,7 +579,7 @@ const Sorting = ({
 				},
 			],
 			status: 'warning',
-			title: Liferay.Language.get('delete-filter'),
+			title: Liferay.Language.get('delete-sorting'),
 		});
 	};
 

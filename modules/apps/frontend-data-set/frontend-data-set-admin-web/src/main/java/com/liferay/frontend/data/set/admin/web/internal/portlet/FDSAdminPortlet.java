@@ -424,7 +424,6 @@ public class FDSAdminPortlet extends MVCPortlet {
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
 						_language.get(locale, "preselected-values"),
 						"preselectedValues", false)));
-
 		ObjectField itemKeyObjectField = ObjectFieldUtil.createObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, true, false, null,

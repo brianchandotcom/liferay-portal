@@ -48,6 +48,7 @@ import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selec
 import selectCanUpdatePageStructure from '../../../../../app/selectors/selectCanUpdatePageStructure';
 import selectLayoutDataItemLabel from '../../../../../app/selectors/selectLayoutDataItemLabel';
 import canActivateEditable from '../../../../../app/utils/canActivateEditable';
+import {deepEqual} from '../../../../../app/utils/checkDeepEqual';
 import {DragAndDropContextProvider} from '../../../../../app/utils/drag_and_drop/useDragAndDrop';
 import isMapped from '../../../../../app/utils/editable_value/isMapped';
 import isMappedToCollection from '../../../../../app/utils/editable_value/isMappedToCollection';
@@ -165,10 +166,6 @@ export default function PageStructureSidebar() {
 			selectedViewportSize,
 		]
 	);
-
-	const setExpandedNodes = (expandedNodes) => {
-		setExpandedKeys(Array.from(expandedNodes));
-	};
 
 	const handleNodeFocus = () => {
 		const focusedItem =
@@ -293,8 +290,9 @@ export default function PageStructureSidebar() {
 	);
 
 	useEffect(() => {
-		if (Liferay.FeatureFlags['LPD-18221']) {
-			if (activeItemIds.length) {
+		if (Liferay.FeatureFlags['LPD-18221'] && activeItemIds.length) {
+			const getExpandedKeys = () => {
+				const expandedKeys = [];
 				let layoutDataActiveItem = null;
 
 				activeItemIds.forEach((itemId) => {
@@ -306,17 +304,25 @@ export default function PageStructureSidebar() {
 						return;
 					}
 
-					setExpandedKeys((previousExpanedKeys) => [
-						...new Set([
-							...previousExpanedKeys,
-							...getAncestorsIds(
-								layoutDataActiveItem,
-								layoutData
-							),
-						]),
-					]);
+					expandedKeys.push(
+						...getAncestorsIds(layoutDataActiveItem, layoutData)
+					);
 				});
-			}
+
+				return expandedKeys;
+			};
+
+			setExpandedKeys((prevState) => {
+				const nextState = [
+					...new Set([...prevState, ...getExpandedKeys()]),
+				];
+
+				if (deepEqual(prevState, nextState)) {
+					return prevState;
+				}
+
+				return nextState;
+			});
 		}
 		else {
 			if (activeItemIds) {
@@ -412,7 +418,9 @@ export default function PageStructureSidebar() {
 						open: <ClayIcon symbol="plus" />,
 					}}
 					items={nodes}
-					onExpandedChange={setExpandedNodes}
+					onExpandedChange={(expandedNodes) => {
+						setExpandedKeys(Array.from(expandedNodes));
+					}}
 					onItemsChange={() => {}}
 					showExpanderOnHover={false}
 				>

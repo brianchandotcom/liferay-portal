@@ -9,28 +9,28 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class EditVirtualInstancePage {
-	readonly applicationsMenuPage;
-	readonly saveButton: Locator;
 	readonly page: Page;
-	readonly virtualHostField: Locator;
+
+	readonly activeToggle: Locator;
+	readonly applicationsMenuPage;
 	readonly mailDomainField: Locator;
 	readonly maxUsersField: Locator;
-	readonly activeToggle: Locator;
+	readonly saveButton: Locator;
 	readonly successMessage: Locator;
+	readonly virtualHostField: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 
-		this.saveButton = page.getByRole('button', {name: 'Save'});
-		this.virtualHostField = this.page.getByLabel('Virtual Host');
+		this.activeToggle = this.page.getByText('Active');
+		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.mailDomainField = this.page.getByLabel('Mail Domain');
 		this.maxUsersField = this.page.getByLabel('Max Users');
-		this.activeToggle = this.page.getByText('Active');
-
+		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
 		);
+		this.virtualHostField = this.page.getByLabel('Virtual Host');
 	}
 
 	async goto(webId: string) {

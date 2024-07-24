@@ -3837,7 +3837,7 @@ public class BundleSiteInitializerTest {
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			_group.getCompanyId());
 
-		AssetCategory testAssetCategory =
+		AssetCategory assetCategory =
 			_assetCategoryLocalService.
 				fetchAssetCategoryByExternalReferenceCode(
 					"TESTASSETCATEGORY1", companyGroup.getGroupId());
@@ -3859,8 +3859,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(sxpBlueprint);
 		Assert.assertEquals(
-			valueJSONObject.getLong("value"),
-			testAssetCategory.getCategoryId());
+			valueJSONObject.getLong("value"), assetCategory.getCategoryId());
 		_assertSearchableAssetTypes(
 			new String[] {
 				"com.liferay.document.library.kernel.model.DLFileEntry"

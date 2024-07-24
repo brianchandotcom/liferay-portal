@@ -7,8 +7,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTemplate" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@

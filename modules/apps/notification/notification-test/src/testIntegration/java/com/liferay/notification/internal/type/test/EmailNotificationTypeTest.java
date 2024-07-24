@@ -101,7 +101,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.text.SimpleDateFormat;
 
- import java.time.chrono.IsoChronology;
+import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 
@@ -112,7 +112,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -474,123 +473,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	@Test
-	public void testSendNotificationToCurrentUser() throws Exception {
-		NotificationTemplate notificationTemplate =
-			notificationTemplateLocalService.addNotificationTemplate(
-				NotificationTemplateUtil.createNotificationContext(
-					TestPropsValues.getUser(),0, RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(),
-					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
-					Arrays.asList(
-						NotificationRecipientSettingUtil.
-							createNotificationRecipientSetting(
-								NotificationRecipientSettingConstants.NAME_FROM,
-								"[%CURRENT_USER_EMAIL_ADDRESS%]"),
-						NotificationRecipientSettingUtil.
-							createNotificationRecipientSetting(
-								NotificationRecipientSettingConstants.
-									NAME_FROM_NAME,
-								Collections.singletonMap(
-									LocaleUtil.US,
-									"[%CURRENT_USER_FIRST_NAME%]")),
-						NotificationRecipientSettingUtil.
-							createNotificationRecipientSetting(
-								NotificationRecipientSettingConstants.
-									NAME_SINGLE_RECIPIENT,
-								Boolean.FALSE.toString()),
-						NotificationRecipientSettingUtil.
-							createNotificationRecipientSetting(
-								NotificationRecipientSettingConstants.NAME_TO,
-								"[%CURRENT_USER_EMAIL_ADDRESS%]")),
-					RandomTestUtil.randomString(),
-					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
-
-		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, false, true, false, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionTestUtil.getRandomName(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"textObjectField"
-					).build()));
-
-		objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
-			RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_NOTIFICATION,
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-			UnicodePropertiesBuilder.put(
-				"notificationTemplateId",
-				notificationTemplate.getNotificationTemplateId()
-			).build(),
-			false);
-
-		objectDefinition =
-			objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				objectDefinition.getObjectDefinitionId());
-
-		_user = _addUser();
-
-		Role role = _addRoleUser(
-			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY},
-			objectDefinition, _user);
-
-		_addResourcePermission(ActionKeys.UPDATE, objectDefinition, role);
-
-		_roleLocalService.addUserRole(_user.getUserId(), role.getRoleId());
-
-		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
-			dtoConverterContext, objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"textObjectField", RandomTestUtil.randomString()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		List<NotificationQueueEntry> notificationQueueEntries =
-			notificationQueueEntryLocalService.getNotificationEntries(
-				NotificationConstants.TYPE_EMAIL,
-				NotificationQueueEntryConstants.STATUS_SENT);
-
-		int expectedNotificationQueueEntriesCount = 1;
-
-		Assert.assertEquals(
-			notificationQueueEntries.toString(),
-			expectedNotificationQueueEntriesCount,
-			notificationQueueEntries.size());
-
-		if (expectedNotificationQueueEntriesCount == 0) {
-			return;
-		}
-
-		MailServiceTestUtil.clearMessages();
-
-		notificationQueueEntryLocalService.deleteNotificationQueueEntry(
-			notificationQueueEntries.get(0));
-
-		_objectEntryLocalService.deleteObjectEntry(objectEntry.getId());
-
-		objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-	}
-
-	@FeatureFlags("LPD-11165")
-	@Test
 	public void testSendNotificationWithRoles() throws Exception {
 		AccountEntry accountEntry1 = _addAccountEntry();
 
@@ -918,6 +800,120 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationTemplate2);
 	}
 
+	@Test
+	public void testSendNotificationWithRolesToCurrentUser() throws Exception {
+		NotificationTemplate notificationTemplate =
+			notificationTemplateLocalService.addNotificationTemplate(
+				NotificationTemplateUtil.createNotificationContext(
+					TestPropsValues.getUser(), 0, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
+					Arrays.asList(
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_FROM,
+								"test@liferay.com"),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_FROM_NAME,
+								Collections.singletonMap(
+									LocaleUtil.US, "Test")),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.
+									NAME_SINGLE_RECIPIENT,
+								Boolean.FALSE.toString()),
+						NotificationRecipientSettingUtil.
+							createNotificationRecipientSetting(
+								NotificationRecipientSettingConstants.NAME_TO,
+								"[%CURRENT_USER_EMAIL_ADDRESS%]")),
+					RandomTestUtil.randomString(),
+					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, false, true, false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"textObjectField"
+					).build()));
+
+		_addObjectAction(
+			objectDefinition.getObjectDefinitionId(),
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			notificationTemplate.getNotificationTemplateId());
+
+		_addObjectAction(
+			objectDefinition.getObjectDefinitionId(),
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			notificationTemplate.getNotificationTemplateId());
+
+		objectDefinition =
+			objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		String originalName = PrincipalThreadLocal.getName();
+
+		_user = _addUser();
+
+		Role role = _addRoleUserWithPermission(
+			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY}, objectDefinition,
+			_user);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), objectDefinition.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, "0", role.getRoleId(),
+			ActionKeys.UPDATE);
+
+		_roleLocalService.addUserRole(_user.getUserId(), role.getRoleId());
+
+		// Notification sent on after add
+
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+			dtoConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectField", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_testSendNotificationWithRolesToCurrentUser();
+
+		// Notification sent on after update
+
+		objectEntryManager.updateObjectEntry(
+			_user.getCompanyId(), dtoConverterContext,
+			objectEntry.getExternalReferenceCode(), objectDefinition,
+			objectEntry, ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_testSendNotificationWithRolesToCurrentUser();
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry.getId());
+
+		objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		PermissionThreadLocal.setPermissionChecker(originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(originalName);
+	}
+
 	private AccountEntry _addAccountEntry() throws Exception {
 		return _accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(),
@@ -976,19 +972,23 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				Collections.singletonList(objectField.getObjectFieldId())));
 	}
 
-	private void _addResourcePermission(
-		String actionId, ObjectDefinition objectDefinition, Role role)
+	private void _addObjectAction(
+			long objectDefinitionId, String objectAction,
+			long objectNotificationTemplateId)
 		throws Exception {
 
-		String name = objectDefinition.getClassName();
-
-		if (Objects.equals(actionId, ObjectActionKeys.ADD_OBJECT_ENTRY)) {
-			name = objectDefinition.getResourceName();
-		}
-
-		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY, "0",
-			role.getRoleId(), actionId);
+		objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinitionId, true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_NOTIFICATION, objectAction,
+			UnicodePropertiesBuilder.put(
+				"notificationTemplateId", objectNotificationTemplateId
+			).build(),
+			false);
 	}
 
 	private Role _addRole(int type, User user) throws Exception {
@@ -997,8 +997,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			null, type, null, null);
 	}
 
-	private Role _addRoleUser(
-		String[] actionIds, ObjectDefinition objectDefinition, User user)
+	private Role _addRoleUserWithPermission(
+			String[] actionIds, ObjectDefinition objectDefinition, User user)
 		throws Exception {
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
@@ -1010,8 +1010,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		}
 
 		_resourcePermissionLocalService.setResourcePermissions(
-			TestPropsValues.getCompanyId(), name, ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(), actionIds);
+			TestPropsValues.getCompanyId(), name,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			actionIds);
 
 		_userLocalService.addRoleUser(role.getRoleId(), user);
 
@@ -1347,6 +1349,37 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
+	private void _testSendNotificationWithRolesToCurrentUser()
+		throws Exception {
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		int expectedNotificationQueueEntriesCount = 1;
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(),
+			expectedNotificationQueueEntriesCount,
+			notificationQueueEntries.size());
+
+		Map<String, Object> notificationRecipientSettingsMap =
+			NotificationRecipientSettingUtil.
+				getNotificationRecipientSettingsMap(
+					notificationQueueEntries.get(0));
+
+		AssertUtils.assertEqualsSorted(
+			StringUtil.split(_user.getEmailAddress()),
+			StringUtil.split(
+				String.valueOf(notificationRecipientSettingsMap.get("to"))));
+
+		MailServiceTestUtil.clearMessages();
+
+		notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+			notificationQueueEntries.get(0));
+	}
+
 	private static Map<String, Object> _freeMarkerTermValues;
 	private static HttpServletRequest _originalHttpServletRequest;
 
@@ -1395,10 +1428,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	private OrganizationLocalService _organizationLocalService;
 
 	@Inject
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
+	private PortletFileRepository _portletFileRepository;
 
 	@Inject
-	private PortletFileRepository _portletFileRepository;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;
@@ -1411,4 +1444,5 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@Inject
 	private UserLocalService _userLocalService;
+
 }

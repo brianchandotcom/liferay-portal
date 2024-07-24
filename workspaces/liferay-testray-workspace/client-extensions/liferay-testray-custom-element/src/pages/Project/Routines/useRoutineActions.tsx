@@ -18,10 +18,10 @@ import EnvironmentFactorsModal from '../../Standalone/EnvironmentFactors/Envirom
 
 const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const {form} = useFormActions();
-	const navigate = useNavigate();
-	const {removeItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
+	const {removeItemFromList} = useMutate();
 	const hasPermission = usePermission([TestrayRole.TESTRAY_ADMINISTRATOR]);
+	const navigate = useNavigate();
 
 	const actionsRef = useRef([
 		{

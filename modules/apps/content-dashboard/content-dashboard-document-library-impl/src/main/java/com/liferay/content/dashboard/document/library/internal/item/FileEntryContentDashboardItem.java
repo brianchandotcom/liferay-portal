@@ -648,7 +648,7 @@ public class FileEntryContentDashboardItem
 			return null;
 		}
 
-		FileVersion fileVersion;
+		FileVersion fileVersion = null;
 
 		try {
 			fileVersion = _fileEntry.getFileVersion();

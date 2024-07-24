@@ -78,10 +78,10 @@ public class FileResolutionContentDashboardItemFilterProviderTest {
 
 	@Test
 	public void testGetContentDashboardItemFilter() throws Exception {
-		FileEntry mediumResolutionFileEntry = _addDLFileEntry(
-			"dependencies/medium-image.jpeg");
 		FileEntry largeResolutionFileEntry = _addDLFileEntry(
 			"dependencies/large-image.jpg");
+		FileEntry mediumResolutionFileEntry = _addDLFileEntry(
+			"dependencies/medium-image.jpeg");
 		FileEntry smallResolutionFileEntry = _addDLFileEntry(
 			"dependencies/small-image.jpeg");
 
@@ -89,8 +89,8 @@ public class FileResolutionContentDashboardItemFilterProviderTest {
 
 		Assert.assertEquals(documents.toString(), 3, documents.size());
 
-		_assertGetDocuments(mediumResolutionFileEntry, "medium");
 		_assertGetDocuments(largeResolutionFileEntry, "large");
+		_assertGetDocuments(mediumResolutionFileEntry, "medium");
 		_assertGetDocuments(smallResolutionFileEntry, "small");
 	}
 

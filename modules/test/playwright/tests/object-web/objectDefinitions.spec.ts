@@ -50,6 +50,57 @@ test.describe('Manage object definitions through Model Builder', () => {
 		page.setViewportSize({height: 1080, width: 1920});
 	});
 
+	test('assert presence of selected node style on click and its transition after dragging an unselected one', async ({
+		apiHelpers,
+		modelBuilderPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		const commerceOrderItemLabel = 'Commerce Order Item';
+
+		objectDefinitions.push(objectDefinition);
+
+		await modelBuilderPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderPage.toggleSidebarsButton.click();
+
+		await modelBuilderPage.fitViewButton.click();
+
+		await modelBuilderPage.objectDefinitionNodes
+			.filter({hasText: commerceOrderItemLabel})
+			.click();
+
+		await expect(
+			modelBuilderPage.objectDefinitionNodes.filter({
+				hasText: commerceOrderItemLabel,
+			})
+		).toHaveClass(/selected/);
+
+		await modelBuilderPage.dragNodeThroughDiagram(
+			objectDefinition.label['en_US'],
+			1400,
+			940
+		);
+
+		await modelBuilderPage.fitViewButton.click();
+
+		await expect(
+			modelBuilderPage.objectDefinitionNodes.filter({
+				hasText: commerceOrderItemLabel,
+			})
+		).not.toHaveClass(/selected/);
+
+		await expect(
+			modelBuilderPage.objectDefinitionNodes.filter({
+				hasText: objectDefinition.label['en_US'],
+			})
+		).toHaveClass(/selected/);
+	});
+
 	test('can create an object definition by model builder', async ({
 		modalAddObjectDefinitionPage,
 		modelBuilderPage,

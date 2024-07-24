@@ -15,6 +15,7 @@ export class ModelBuilderPage {
 	readonly deleteObjectDefinitionOption: Locator;
 	readonly deleteObjectRelationshipButton: Locator;
 	readonly deleteTrashButton: Locator;
+	readonly diagramArea: Locator;
 	readonly editInPageViewOption: Locator;
 	readonly editObjectFolderDetailsButton: Locator;
 	readonly fitViewButton: Locator;
@@ -60,6 +61,7 @@ export class ModelBuilderPage {
 		this.deleteTrashButton = page
 			.getByRole('tabpanel')
 			.getByTitle('Delete');
+		this.diagramArea = page.locator('.react-flow');
 		this.editInPageViewOption = page.getByRole('menuitem', {
 			name: 'Edit in page view',
 		});
@@ -263,6 +265,18 @@ export class ModelBuilderPage {
 			objectRelationshipName
 		);
 		await this.modalDeleteObjectRelationshipConfirmationButton.click();
+	}
+
+	async dragNodeThroughDiagram(
+		objectDefinitionLabel: string,
+		targetX: number,
+		targetY: number
+	) {
+		await this.objectDefinitionNodes
+			.getByText(objectDefinitionLabel, {exact: true})
+			.dragTo(this.diagramArea, {
+				targetPosition: {x: targetX, y: targetY},
+			});
 	}
 
 	async fillNewObjectFieldLabel(objectFieldLabel: string) {

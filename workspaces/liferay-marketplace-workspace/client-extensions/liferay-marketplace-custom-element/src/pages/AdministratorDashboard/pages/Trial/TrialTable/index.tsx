@@ -20,6 +20,7 @@ import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
 import useMarketplaceSpringBootOAuth2 from '../../../../../hooks/useMarketplaceSpringBootOAuth2';
 import i18n from '../../../../../i18n';
 import HeadlessCommerceAdminOrderImpl from '../../../../../services/rest/HeadlessCommerceAdminOrder';
+import NewTrialModal from './NewTrialModal';
 
 type TrialTableProps = {
 	items: Order[];
@@ -50,6 +51,7 @@ const safeRunner = async (promise: any) => {
 const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 	const [processing, setProcessing] = useState(false);
 	const [selectedTrial, setSelectedTrial] = useState<Order>();
+	const newTrialModal = useModal();
 	const modal = useModal();
 
 	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
@@ -111,15 +113,19 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 
 	return (
 		<>
+			<div className="d-flex justify-content-between">
+				<h1 className="mb-1">{i18n.translate('recent-trials')}</h1>
 
-		<div className='d-flex justify-content-between'>
-		   <h1 className="mb-1">{i18n.translate('recent-trials')}</h1>
+				<ClayButton
+					onClick={() => newTrialModal.onOpenChange(true)}
+					size="sm"
+				>
+					New Trial
+				</ClayButton>
+			</div>
 
-           <ClayButton size='sm'>New Trial</ClayButton>
-		</div>
-			
 			<Table
-				className='mt-3'
+				className="mt-3"
 				columns={[
 					{
 						key: 'id',
@@ -129,11 +135,15 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 						title: i18n.translate('id'),
 					},
 					{
+						key: 'orderItems',
+						render: (orderItems) => orderItems[0]?.name.en_US,
+						title: i18n.translate('product'),
+					},
+					{
 						key: 'account',
 						render: (account) => account?.name,
 						title: i18n.translate('user-account'),
 					},
-
 					{
 						key: 'orderStatusInfo',
 						render: (orderStatusInfo) => (
@@ -296,6 +306,12 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 					'Order'
 				)}
 			</Modal>
+
+			{newTrialModal.open && (
+				<>
+					<NewTrialModal {...newTrialModal} revalidate={revalidate} />
+				</>
+			)}
 		</>
 	);
 };

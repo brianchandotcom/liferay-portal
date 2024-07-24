@@ -79,7 +79,7 @@ const useTrialMetrics = (param: FilterType) => {
 
 	const requestsParams = [
 		new URLSearchParams({
-			fields: 'id,account,orderStatusInfo,createDate,customFields,name,accountId',
+			fields: 'id,account,orderStatusInfo,createDate,customFields,name,accountId,orderItems',
 			filter: trialSearchBuilder.clone().build(),
 			nestedFields: 'account,orderItems',
 			pageSize: '30',

@@ -974,3 +974,104 @@ test(
 		});
 	}
 );
+
+test(
+	'Segment Overview distribution filtered by text',
+	{
+		tag: '@Legacy',
+	},
+	async ({apiHelpers, page}) => {
+		const channelName = 'My Property - ' + getRandomString();
+		const {channel, project} = await createChannel({
+			apiHelpers,
+			channelName,
+		});
+
+		const knownIndividualName = 'ac';
+		const knownIndividual = [
+			generateIndividual({
+				name: knownIndividualName,
+			}),
+		];
+
+		await test.step('Create the known individual directly in the AC database', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals: knownIndividual,
+			});
+		});
+
+		const date = new Date();
+
+		await test.step('Create an event for the individual to appear in AC', async () => {
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+				knownIndividual.map((individual) => ({
+					applicationId: 'Page',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: date.toISOString(),
+					eventId: 'pageViewed',
+					title: 'Liferay',
+					userId: individual.id,
+				}))
+			);
+		});
+
+		await test.step('Create a session for the known individual', async () => {
+			await apiHelpers.jsonWebServicesOSBAsah.createSessions(
+				knownIndividual.map((individual) => ({
+					channelId: channel.id,
+					id: individual.id,
+					sessionEnd: date.toISOString(),
+					sessionStart: date.toISOString(),
+					userId: individual.id,
+				}))
+			);
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACSitesPageViaURL({
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+		});
+
+		await test.step('Go to Segments > Create a Static Segment', async () => {
+			await navigateTo({page, pageName: 'Segments'});
+
+			await createStaticSegment(page);
+
+			await setSegmentName({page, segmentName: 'Test Static Segment'});
+
+			await addStaticMember({
+				memberNames: knownIndividualName,
+				page,
+			});
+
+			await saveSegment(page);
+		});
+
+		await test.step('Add a new breakdown by familyName attribute', async () => {
+			await addBreakdownByAttribute({
+				attributeName: 'familyName',
+				page,
+			});
+		});
+
+		await test.step('Check if the correct results appear (familyName and maximum count)', async () => {
+			await viewBreakdownRechartsData({
+				attributeValue: 'smith',
+				maxCount: '1',
+				page,
+			});
+		});
+
+		await test.step('delete channel', async () => {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+				`[${channel.id}]`,
+				project.groupId
+			);
+		});
+	}
+);

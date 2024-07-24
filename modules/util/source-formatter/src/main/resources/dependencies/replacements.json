@@ -1325,6 +1325,294 @@
 		"to": "LayoutSetPrototypeCreateDateComparator.getInstance(param#0#)"
 	},
 	{
+		"from": "new CommerceCurrencyPriorityComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceCurrencyPriorityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceCurrencyPriorityComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceCurrencyPriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceDiscountCommerceAccountGroupRelCreateDateComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceDiscountCommerceAccountGroupRelCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceDiscountCommerceAccountGroupRelCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceDiscountCommerceAccountGroupRelCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceDiscountCreateDateComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceDiscountCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceDiscountCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceDiscountCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceDiscountRelCreateDateComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceDiscountRelCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceDiscountRelCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceDiscountRelCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceDiscountRuleCreateDateComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceDiscountRuleCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceDiscountRuleCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceDiscountRuleCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceInventoryReplenishmentItemAvailabilityDateComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceInventoryReplenishmentItemAvailabilityDateComparator.getInstance(true)"
+	},
+	{
+		"from": "new CommerceInventoryReplenishmentItemAvailabilityDateComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceInventoryReplenishmentItemAvailabilityDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceInventoryWarehouseCityComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceInventoryWarehouseCityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceInventoryWarehouseCityComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceInventoryWarehouseCityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceInventoryWarehouseItemQuantityComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceInventoryWarehouseItemQuantityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceInventoryWarehouseItemQuantityComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceInventoryWarehouseItemQuantityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceInventoryWarehouseItemWarehouseNameComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceInventoryWarehouseItemWarehouseNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceInventoryWarehouseItemWarehouseNameComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceInventoryWarehouseItemWarehouseNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceInventoryWarehouseNameComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceInventoryWarehouseNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceInventoryWarehouseNameComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceInventoryWarehouseNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceNotificationAttachmentCreateDateComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceNotificationAttachmentCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceNotificationAttachmentCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceNotificationAttachmentCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceNotificationQueueEntryPriorityComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceNotificationQueueEntryPriorityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceNotificationQueueEntryPriorityComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceNotificationQueueEntryPriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceNotificationTemplateCommerceAccountGroupRelCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceNotificationTemplateModifiedDateComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceNotificationTemplateModifiedDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceNotificationTemplateModifiedDateComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceNotificationTemplateModifiedDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceNotificationTemplateNameComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceNotificationTemplateNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceNotificationTemplateNameComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceNotificationTemplateNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceTaxFixedRateAddressRelCreateDateComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceTaxFixedRateAddressRelCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceTaxFixedRateAddressRelCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceTaxFixedRateAddressRelCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceTaxFixedRateCreateDateComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceTaxFixedRateCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceTaxFixedRateCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceTaxFixedRateCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceVirtualOrderItemCreateDateComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceVirtualOrderItemCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceVirtualOrderItemCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceVirtualOrderItemCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceWishListCreateDateComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceWishListCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceWishListCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceWishListCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceWishListItemCreateDateComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceWishListItemCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceWishListItemCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceWishListItemCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceWishListNameComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceWishListNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceWishListNameComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CommerceWishListNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPDefinitionGroupedEntryPriorityComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionGroupedEntryPriorityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPDefinitionGroupedEntryPriorityComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionGroupedEntryPriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPDefinitionGroupedEntryQuantityComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionGroupedEntryQuantityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPDefinitionGroupedEntryQuantityComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CPDefinitionGroupedEntryQuantityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CPTaxCategoryNameComparator()",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CPTaxCategoryNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new CPTaxCategoryNameComparator(boolean paramName)",
+		"issueKey": "LPD-27027",
+		"skipParametersValidation": true,
+		"to": "CPTaxCategoryNameComparator.getInstance(param#0#)"
+	},
+	{
 		"from": "new CommercePriceEntryUOMCreateDateComparator()",
 		"issueKey": "LPD-28067",
 		"skipParametersValidation": true,

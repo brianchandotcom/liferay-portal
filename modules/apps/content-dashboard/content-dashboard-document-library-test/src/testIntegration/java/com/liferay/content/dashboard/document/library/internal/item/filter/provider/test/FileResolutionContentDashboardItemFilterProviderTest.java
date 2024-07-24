@@ -81,9 +81,9 @@ public class FileResolutionContentDashboardItemFilterProviderTest {
 		FileEntry largeResolutionFileEntry = _addDLFileEntry(
 			"dependencies/large_image.jpg");
 		FileEntry mediumResolutionFileEntry = _addDLFileEntry(
-			"dependencies/medium_image.jpeg");
+			"dependencies/medium_image.jpg");
 		FileEntry smallResolutionFileEntry = _addDLFileEntry(
-			"dependencies/small_image.jpeg");
+			"dependencies/small_image.jpg");
 
 		List<Document> documents = _getDocuments(_getMockHttpServletRequest());
 

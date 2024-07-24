@@ -129,7 +129,7 @@ public class ElasticsearchQueryTranslatorTest {
 
 		termsFilter.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-		Integer defaultMaxTermsCount = ReflectionTestUtil.getFieldValue(
+		Integer maxTermsCount = ReflectionTestUtil.getFieldValue(
 			QueryUtil.class, "_maxTermsCount");
 
 		_setMaxTermsCount(10);
@@ -144,7 +144,7 @@ public class ElasticsearchQueryTranslatorTest {
 
 		_assertTermsCount(4, termsFilter);
 
-		_setMaxTermsCount(defaultMaxTermsCount);
+		_setMaxTermsCount(maxTermsCount);
 	}
 
 	@Test
@@ -153,7 +153,7 @@ public class ElasticsearchQueryTranslatorTest {
 
 		termsQuery.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-		Integer defaultMaxTermsCount = ReflectionTestUtil.getFieldValue(
+		Integer maxTermsCount = ReflectionTestUtil.getFieldValue(
 			QueryUtil.class, "_maxTermsCount");
 
 		_setMaxTermsCount(10);
@@ -168,7 +168,7 @@ public class ElasticsearchQueryTranslatorTest {
 
 		_assertTermsCount(4, termsQuery);
 
-		_setMaxTermsCount(defaultMaxTermsCount);
+		_setMaxTermsCount(maxTermsCount);
 	}
 
 	private void _assertBoost(Query query) {

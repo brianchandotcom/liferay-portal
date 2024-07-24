@@ -1515,6 +1515,17 @@
 			</attribute>
 		</attributes>
 	</component>
+	<component dynamicAttributes="false" name="Style" parentClass="com.liferay.taglib.util.PositionTagSupport" writeJSP="false">
+		<description>Creates a style component in which to write CSS.</description>
+		<attributes>
+			<attribute>
+				<description>The type attribute of the standard style tag.</description>
+				<name>type</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+		</attributes>
+	</component>
 	<component dynamicAttributes="false" name="TranslationManager">
 		<description>Creates a UI component for managing translation of associated content. Deprecated as of Athanasius (7.4.x), replaced by <code>liferay-frontend:translation-manager</code>.</description>
 		<attributes>

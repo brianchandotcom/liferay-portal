@@ -79,11 +79,11 @@ public class FileResolutionContentDashboardItemFilterProviderTest {
 	@Test
 	public void testGetContentDashboardItemFilter() throws Exception {
 		FileEntry largeResolutionFileEntry = _addDLFileEntry(
-			"dependencies/large-image.jpg");
+			"dependencies/large_image.jpg");
 		FileEntry mediumResolutionFileEntry = _addDLFileEntry(
-			"dependencies/medium-image.jpeg");
+			"dependencies/medium_image.jpeg");
 		FileEntry smallResolutionFileEntry = _addDLFileEntry(
-			"dependencies/small-image.jpeg");
+			"dependencies/small_image.jpeg");
 
 		List<Document> documents = _getDocuments(_getMockHttpServletRequest());
 

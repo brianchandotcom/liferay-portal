@@ -467,7 +467,7 @@ public class FileEntryContentDashboardItemTest {
 			_language.get(LocaleUtil.getDefault(), "tall"), "jpeg", "183x275",
 			"6 KB",
 			_getVersionableContentDashboardItem(
-				"dependencies/small-image.jpeg", 1));
+				"dependencies/small_image.jpeg", 1));
 		_assertSpecificInformationList(
 			_language.get(LocaleUtil.getDefault(), "wide"), "jpeg", "277x182",
 			"8 KB",
@@ -477,12 +477,12 @@ public class FileEntryContentDashboardItemTest {
 			_language.get(LocaleUtil.getDefault(), "wide"), "jpeg", "500x333",
 			"42 KB",
 			_getVersionableContentDashboardItem(
-				"dependencies/medium-image.jpeg", 1));
+				"dependencies/medium_image.jpeg", 1));
 		_assertSpecificInformationList(
 			_language.get(LocaleUtil.getDefault(), "wide"), "jpg", "1920x1080",
 			"281 KB",
 			_getVersionableContentDashboardItem(
-				"dependencies/large-image.jpg", 1));
+				"dependencies/large_image.jpg", 1));
 	}
 
 	@Test

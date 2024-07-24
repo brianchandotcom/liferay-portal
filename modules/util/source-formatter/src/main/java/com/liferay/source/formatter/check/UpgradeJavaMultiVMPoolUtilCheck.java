@@ -40,7 +40,7 @@ public class UpgradeJavaMultiVMPoolUtilCheck
 		if (content.contains(_WARNING_CASE_TYPE)) {
 			addMessage(
 				fileName,
-				"Could not resolve types for MultiVMPool.getPortalCache(). " +
+				"Unable to resolve types for MultiVMPool.getPortalCache(). " +
 					"Replace 'TO_BE_REPLACED' with the correct type");
 		}
 

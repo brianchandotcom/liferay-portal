@@ -102,7 +102,7 @@ public class UpgradeJavaGetLayoutDisplayPageObjectProviderCheck
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Could not resolve variable className for new ",
+					"Unable to resolve variable className for new ",
 					"InfoItemReference(). Replace ",
 					"'TO_BE_REPLACED_FOR_CLASSNAME' with the correct type"));
 		}

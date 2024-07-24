@@ -72,7 +72,7 @@ public class UpgradeJavaBaseFragmentCollectionContributorExtendedClassesCheck
 
 		throw new Exception(
 			StringBundler.concat(
-				"Could not find FragmentCollectionKey in Java Class ",
+				"Unable to find FragmentCollectionKey in Java Class ",
 				javaClass.getName(), ". Please add FragmentCollectionKey to ",
 				"method getFragmentCollectionKey"));
 	}

@@ -158,7 +158,7 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 			"upgrade/UpgradeJavaGetLayoutDisplayPageObjectProviderCheck." +
 				"testjava",
 			StringBundler.concat(
-				"Could not resolve variable className for new ",
+				"Unable to resolve variable className for new ",
 				"InfoItemReference(). Replace 'TO_BE_REPLACED_FOR_CLASSNAME' ",
 				"with the correct type"));
 	}
@@ -186,7 +186,7 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testUpgradeJavaMultiVMPoolUtilCheck() throws Exception {
 		test(
 			"upgrade/UpgradeJavaMultiVMPoolUtilCheck.testjava",
-			"Could not resolve types for MultiVMPool.getPortalCache(). " +
+			"Unable to resolve types for MultiVMPool.getPortalCache(). " +
 				"Replace 'TO_BE_REPLACED' with the correct type");
 	}
 

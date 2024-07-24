@@ -5,42 +5,19 @@
 
 package com.liferay.commerce.internal.object.validation.rule.test;
 
-import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
-import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
-import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
-import com.liferay.commerce.product.constants.CommerceChannelConstants;
-import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShipmentItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentLocalService;
-import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -52,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,8 +39,8 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlags("LPD-10562")
 @RunWith(Arquillian.class)
-public class
-	CommerceReturnCommerceOrderStatusObjectValidationRuleEngineImplTest {
+public class CommerceReturnCommerceOrderStatusObjectValidationRuleEngineImplTest
+	extends BaseObjectValidationRuleEngineImplTestCase {
 
 	@ClassRule
 	@Rule
@@ -72,53 +48,6 @@ public class
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@Before
-	public void setUp() throws Exception {
-		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
-
-		_group = GroupTestUtil.addGroup();
-
-		_user = UserTestUtil.addUser();
-
-		PrincipalThreadLocal.setName(_user.getUserId());
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user));
-
-		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_group.getCompanyId());
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId());
-
-		_commerceChannel = CommerceChannelLocalServiceUtil.addCommerceChannel(
-			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			_group.getGroupId(), "Test Channel",
-			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
-			_commerceCurrency.getCode(), _serviceContext);
-
-		_accountEntry = CommerceAccountTestUtil.addBusinessAccountEntry(
-			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + "@liferay.com",
-			RandomTestUtil.randomString(), new long[] {_user.getUserId()}, null,
-			_serviceContext);
-
-		_commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
-			_group.getGroupId(), _user.getUserId(),
-			_accountEntry.getAccountEntryId(),
-			_commerceCurrency.getCommerceCurrencyId());
-
-		_commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
-			_commerceOrder, _user.getUserId(), false);
-
-		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
-			_commerceOrder, _user.getUserId());
-
-		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
-			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
-			_user.getUserId(), true);
-	}
 
 	@Test
 	public void testCommerceReturnCommerceOrderStatusObjectValidationRuleEngineImpl()
@@ -134,7 +63,7 @@ public class
 							HashMapBuilder.put(
 								"r_commerceOrderToCommerceReturns_" +
 									"commerceOrderId",
-								_commerceOrder.getCommerceOrderId()
+								commerceOrder.getCommerceOrderId()
 							).build()
 						).build()
 					).build(),
@@ -145,15 +74,15 @@ public class
 
 		CommerceShipment commerceShipment =
 			_commerceShipmentLocalService.addCommerceShipment(
-				_commerceOrder.getCommerceOrderId(), _serviceContext);
+				commerceOrder.getCommerceOrderId(), serviceContext);
 
 		for (CommerceOrderItem commerceOrderItem :
-				_commerceOrder.getCommerceOrderItems()) {
+				commerceOrder.getCommerceOrderItems()) {
 
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
 				_commerceInventoryWarehouseLocalService.
 					getCommerceInventoryWarehouses(
-						_commerceChannel.getGroupId(),
+						commerceChannel.getGroupId(),
 						commerceOrderItem.getSku());
 
 			CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -163,19 +92,19 @@ public class
 				null, commerceShipment.getCommerceShipmentId(),
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				commerceOrderItem.getQuantity(), null, true, _serviceContext);
+				commerceOrderItem.getQuantity(), null, true, serviceContext);
 		}
 
 		_commerceShipmentLocalService.updateStatus(
 			commerceShipment.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED);
 
-		_commerceOrder = _commerceOrderLocalService.getCommerceOrder(
-			_commerceOrder.getCommerceOrderId());
+		commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			commerceOrder.getCommerceOrderId());
 
-		_commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
-			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
-			_user.getUserId(), true);
+		commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
+			commerceOrder, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
+			user.getUserId(), true);
 
 		results =
 			_commerceReturnCommerceOrderStatusObjectValidationRuleEngineImpl.
@@ -187,7 +116,7 @@ public class
 							HashMapBuilder.put(
 								"r_commerceOrderToCommerceReturns_" +
 									"commerceOrderId",
-								_commerceOrder.getCommerceOrderId()
+								commerceOrder.getCommerceOrderId()
 							).build()
 						).build()
 					).build(),
@@ -197,21 +126,9 @@ public class
 			GetterUtil.getBoolean(results.get("validationCriteriaMet")));
 	}
 
-	@DeleteAfterTestRun
-	private AccountEntry _accountEntry;
-
-	@DeleteAfterTestRun
-	private CommerceChannel _commerceChannel;
-
-	@DeleteAfterTestRun
-	private CommerceCurrency _commerceCurrency;
-
 	@Inject
 	private CommerceInventoryWarehouseLocalService
 		_commerceInventoryWarehouseLocalService;
-
-	@DeleteAfterTestRun
-	private CommerceOrder _commerceOrder;
 
 	@Inject
 	private CommerceOrderEngine _commerceOrderEngine;
@@ -230,13 +147,5 @@ public class
 
 	@Inject
 	private CommerceShipmentLocalService _commerceShipmentLocalService;
-
-	@DeleteAfterTestRun
-	private Group _group;
-
-	private ServiceContext _serviceContext;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 }

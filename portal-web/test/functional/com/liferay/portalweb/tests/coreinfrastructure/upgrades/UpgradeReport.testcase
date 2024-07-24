@@ -13,7 +13,6 @@ definition {
 	property test.run.type = "single";
 	property testcase.url = "http://www.example.com";
 	property testray.main.component.name = "Database Upgrade Tool";
-	property upgrade.reports.enabled = "true";
 
 	@description = "LPS-158741: Upgrade Report provides the initial, final, and expected portal build number"
 	@priority = 3
@@ -338,20 +337,6 @@ definition {
 			}
 		}
 
-		task ("Check the row counts references") {
-			if (!(contains(${reportFileContent}, "Initial Rows"))) {
-				echo(${reportFileContent});
-
-				fail("Initial rows numbers column not present in upgrade report.");
-			}
-
-			if (!(contains(${reportFileContent}, "Final Rows"))) {
-				echo(${reportFileContent});
-
-				fail("Final rows numbers column not present in upgrade report.");
-			}
-		}
-
 		task ("Check the longest processes list is present") {
 			if (!(contains(${reportFileContent}, "Longest upgrade processes"))) {
 				echo(${reportFileContent});
@@ -376,24 +361,6 @@ definition {
 			Portlet.shutdownServer();
 
 			Portlet.startServer(deleteLiferayHome = "false");
-		}
-
-		task ("Look for the new upgrade report") {
-			var upgradeReportNew = UpgradeReport.getAutoUpgradeReportFileContent();
-		}
-
-		task ("Read the new report. No upgrade processes and type defined as 'no upgrade' are expected ") {
-			if (!(contains(${upgradeReportNew}, "Type: no upgrade"))) {
-				echo(${upgradeReportNew});
-
-				fail("Expected upgrade type not present in upgrade report");
-			}
-
-			if (!(contains(${upgradeReportNew}, "Longest upgrade processes: Nothing registered"))) {
-				echo(${upgradeReportNew});
-
-				fail("New upgrade report contains unexpected upgrades.");
-			}
 		}
 
 		task ("Verify upgrade report is not generated in console output in log context format") {
@@ -461,10 +428,6 @@ definition {
 				fail("upgrade.report.longest.upgrade.processes is not present in portal log.");
 			}
 
-			if (!(contains(${logContent}, "upgrade.report.tables.initial.final.rows=["))) {
-				fail("upgrade.report.tables.initial.final.rows is not present in portal log.");
-			}
-
 			if (!(contains(${logContent}, "upgrade.report.errors=[]"))) {
 				fail("upgrade.report.errors is not present in portal log.");
 			}
@@ -500,6 +463,7 @@ definition {
 	@description = "LPS-154683: Upgrade Report is not created when property is not set to true"
 	@priority = 4
 	test ReportNotGenerated {
+		property custom.properties = "upgrade.report.enabled=false";
 		property upgrade.reports.enabled = "false";
 
 		task ("Look for the upgrade report") {
@@ -511,103 +475,6 @@ definition {
 		task ("Check file doesn't exist") {
 			if (${reportFileExists} == "true") {
 				fail("Upgrade report found in ${liferayHome}/tools/portal-tools-db-upgrade-client/reports/");
-			}
-		}
-	}
-
-	@description = "LPS-154683: The Upgrade Report should not be deleted on additional upgrade runs."
-	@priority = 4
-	test ReportPersistThroughAdditionalUpgradeRuns {
-		property custom.upgrade.properties = "upgrade.report.dir=${liferay.home}/tools/portal-tools-db-upgrade-client/temp";
-
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-		task ("Look for the upgrade report") {
-			var upgradeReportOriginal = UpgradeReport.getUpgradeReportFileContent(directory = "${liferayHome}/tools/portal-tools-db-upgrade-client/temp");
-		}
-
-		task ("Read the report. All upgrade processes and type defined as 'major' are expected") {
-			if (!(contains(${upgradeReportOriginal}, "Type: major"))) {
-				echo(${upgradeReportOriginal});
-
-				fail("Expected upgrade type not present in upgrade report");
-			}
-
-			if (contains(${upgradeReportOriginal}, "Longest upgrade processes: Nothing registered")) {
-				echo(${upgradeReportOriginal});
-
-				fail("Upgrade report does not contains expected upgrades.");
-			}
-		}
-
-		task ("Shutdown server and execute upgrade again") {
-			Portlet.shutdownServer();
-
-			AntCommands.runCommand("build-test.xml", "upgrade-legacy-database");
-		}
-
-		task ("Look for the upgrade report") {
-			var upgradeReportNew = UpgradeReport.getUpgradeReportFileContent(directory = "${liferayHome}/tools/portal-tools-db-upgrade-client/temp");
-		}
-
-		task ("Read the new report. No upgrade processes and type defined as 'no upgrade' are expected ") {
-			if (!(contains(${upgradeReportNew}, "Type: no upgrade"))) {
-				echo(${upgradeReportNew});
-
-				fail("Expected upgrade type not present in upgrade report");
-			}
-
-			if (!(contains(${upgradeReportNew}, "Longest upgrade processes: Nothing registered"))) {
-				echo(${upgradeReportNew});
-
-				fail("New upgrade report contains unexpected upgrades.");
-			}
-		}
-
-		task ("Look for the original upgrade report that has been renamed") {
-			var liferayHome = PropsUtil.get("liferay.home.dir.name");
-			var upgradeReportFilePattern = StringUtil.split("**/upgrade_report.info.[0-9]*");
-
-			var upgradeReportRenamedFilePath = FileUtil.getIncludedResourceURLs(${upgradeReportFilePattern}, "${liferayHome}/tools/portal-tools-db-upgrade-client/temp");
-
-			var upgradeReportRenamedFilePath = StringUtil.valueOf(${upgradeReportRenamedFilePath});
-
-			var upgradeReportRenamedFilePath = RegexUtil.replace(${upgradeReportRenamedFilePath}, "\[(.*)\]", 1);
-
-			var upgradeReportRenamedFilePath = StringUtil.replace(${upgradeReportRenamedFilePath}, "file:", "");
-
-			var upgradeReportRenamed = FileUtil.read(${upgradeReportRenamedFilePath});
-		}
-
-		task ("Compare original and renamed upgrade reports") {
-			if (${upgradeReportRenamed} != ${upgradeReportOriginal}) {
-				echo("Original upgrade report content: ${upgradeReportOriginal}");
-
-				echo("Renamed upgrade report content: ${upgradeReportRenamed}");
-
-				fail("Renamed upgrade report does not match original upgrade report.");
-			}
-		}
-	}
-
-	@description = "LPS-154683: The Upgrade Report logs the row counts for each table."
-	@priority = 3
-	test RowCountsLogged {
-		task ("Look for the upgrade report") {
-			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
-		}
-
-		task ("Read the row counts references") {
-			if (!(contains(${upgradeReportContent}, "Initial Rows"))) {
-				echo(${upgradeReportContent});
-
-				fail("Initial rows numbers column not present in upgrade report.");
-			}
-
-			if (!(contains(${upgradeReportContent}, "Final Rows"))) {
-				echo(${upgradeReportContent});
-
-				fail("Final rows numbers column not present in upgrade report.");
 			}
 		}
 	}

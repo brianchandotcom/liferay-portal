@@ -9,46 +9,45 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class IdentityProviderConnectionsPage {
-	readonly applicationsMenuPage;
 	readonly page: Page;
-	readonly nameField: Locator;
-	readonly entityIdField: Locator;
-	readonly enabledField: Locator;
 
+	readonly applicationsMenuPage;
 	readonly clockSkewField: Locator;
+	readonly enabledField: Locator;
+	readonly entityIdField: Locator;
 	readonly forceAuthnToggle: Locator;
-	readonly unknownUsersAreStrangersToggle: Locator;
-	readonly metadataUrlField: Locator;
-	readonly nameIdentifierFormatField: Locator;
 	readonly keepAliveUrlField: Locator;
+	readonly metadataUrlField: Locator;
+	readonly nameField: Locator;
+	readonly nameIdentifierFormatField: Locator;
 	readonly saveButton: Locator;
 	readonly successMessage: Locator;
+	readonly unknownUsersAreStrangersToggle: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 
-		this.nameField = page.getByLabel('Name').first();
-		this.entityIdField = page.getByLabel('Entity ID');
-		this.enabledField = page.getByText('Enabled', {exact: true});
+		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.clockSkewField = page.getByLabel('Clock Skew');
+		this.enabledField = page.getByText('Enabled', {exact: true});
+		this.entityIdField = page.getByLabel('Entity ID');
 		this.forceAuthnToggle = page.getByText('Force Authn', {
 			exact: true,
 		});
-
-		this.unknownUsersAreStrangersToggle = page.getByText(
-			'Unknown Users Are Strangers'
-		);
-		this.metadataUrlField = page.getByLabel('Metadata URL', {exact: true});
-		this.nameIdentifierFormatField = page.getByLabel(
-			'Name Identifier Format'
-		);
 		this.keepAliveUrlField = page
 			.getByRole('group', {name: 'Keep Alive'})
 			.getByRole('textbox');
+		this.metadataUrlField = page.getByLabel('Metadata URL', {exact: true});
+		this.nameField = page.getByLabel('Name').first();
+		this.nameIdentifierFormatField = page.getByLabel(
+			'Name Identifier Format'
+		);
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
+		);
+		this.unknownUsersAreStrangersToggle = page.getByText(
+			'Unknown Users Are Strangers'
 		);
 	}
 

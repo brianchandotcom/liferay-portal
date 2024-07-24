@@ -9,53 +9,54 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class ServiceProviderConnectionsPage {
-	readonly applicationsMenuPage;
 	readonly page: Page;
-	readonly nameField: Locator;
-	readonly entityIdField: Locator;
-	readonly enabledField: Locator;
+
+	readonly applicationsMenuPage;
 	readonly assertionLifetimeField: Locator;
+	readonly attributesEnabledToggle: Locator;
+	readonly attributesField: Locator;
+	readonly attributesNamespaceEnabledToggle: Locator;
+	readonly enabledField: Locator;
+	readonly entityIdField: Locator;
 	readonly forceEncryptionToggle: Locator;
+	readonly keepAliveUrlField: Locator;
 	readonly metadataUrlField: Locator;
+	readonly nameField: Locator;
 	readonly nameIdentifierFormatField: Locator;
 	readonly nameIdentifierAttributeNameField: Locator;
-	readonly attributesEnabledToggle: Locator;
-	readonly attributesNamespaceEnabledToggle: Locator;
-	readonly attributesField: Locator;
-	readonly keepAliveUrlField: Locator;
 	readonly saveButton: Locator;
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 
-		this.nameField = page.getByLabel('Name').first();
-		this.entityIdField = page.getByLabel('Entity ID');
-		this.enabledField = page.getByText('Enabled', {exact: true});
+		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.assertionLifetimeField = page.getByLabel('Assertion Lifetime');
-		this.forceEncryptionToggle = page.getByText('Force Encryption', {
-			exact: true,
-		});
-		this.metadataUrlField = page.getByLabel('Metadata URL', {exact: true});
-		this.nameIdentifierFormatField = page.getByLabel(
-			'Name Identifier Format'
-		);
-		this.nameIdentifierAttributeNameField = page.getByLabel(
-			'Name Identifier Attribute Name'
-		);
 		this.attributesEnabledToggle = page.getByText('Attributes Enabled', {
 			exact: true,
 		});
-		this.attributesNamespaceEnabledToggle = page.getByText(
-			'Attributes Namespace Enabled'
-		);
 		this.attributesField = page
 			.getByRole('group', {name: 'Attributes'})
 			.getByRole('textbox');
+		this.attributesNamespaceEnabledToggle = page.getByText(
+			'Attributes Namespace Enabled'
+		);
+		this.enabledField = page.getByText('Enabled', {exact: true});
+		this.entityIdField = page.getByLabel('Entity ID');
+		this.forceEncryptionToggle = page.getByText('Force Encryption', {
+			exact: true,
+		});
 		this.keepAliveUrlField = page
 			.getByRole('group', {name: 'Keep Alive'})
 			.getByRole('textbox');
+		this.metadataUrlField = page.getByLabel('Metadata URL', {exact: true});
+		this.nameField = page.getByLabel('Name').first();
+		this.nameIdentifierAttributeNameField = page.getByLabel(
+			'Name Identifier Attribute Name'
+		);
+		this.nameIdentifierFormatField = page.getByLabel(
+			'Name Identifier Format'
+		);
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.successMessage = page.getByText(
 			'Your request completed successfully'

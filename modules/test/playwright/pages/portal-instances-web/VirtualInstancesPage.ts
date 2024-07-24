@@ -9,42 +9,47 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class VirtualInstancesPage {
-	readonly applicationsMenuPage;
-	readonly newVirtualInstanceButton: Locator;
 	readonly page: Page;
+
+	readonly addInstanceActive: Locator;
+	readonly addInstanceAddButton: Locator;
 	private addInstanceFrame: FrameLocator;
-	readonly addInstanceWebIdField: Locator;
-	readonly addInstanceVirtualHost: Locator;
 	readonly addInstanceMailDomain: Locator;
 	readonly addInstanceMaxUsers: Locator;
-	readonly addInstanceActive: Locator;
+	readonly addInstanceVirtualHost: Locator;
 	readonly addInstanceVirtualInstanceInitializer: Locator;
-	readonly addInstanceAddButton: Locator;
+	readonly addInstanceWebIdField: Locator;
+	readonly applicationsMenuPage;
 	readonly errorMessage: Locator;
+	readonly newVirtualInstanceButton: Locator;
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 
-		this.newVirtualInstanceButton = page.getByRole('button', {name: 'Add'});
+		this.addInstanceAddButton = page.getByText('Add', {exact: true});
 		this.addInstanceFrame = page.frameLocator(
 			'iframe[title="Add Instance"]'
 		);
-		this.addInstanceWebIdField = this.addInstanceFrame.getByLabel('Web ID');
-		this.addInstanceVirtualHost =
-			this.addInstanceFrame.getByLabel('Virtual Host');
+
+		this.addInstanceActive = this.addInstanceFrame.getByText('Active');
+
 		this.addInstanceMailDomain =
 			this.addInstanceFrame.getByLabel('Mail Domain');
 		this.addInstanceMaxUsers =
 			this.addInstanceFrame.getByLabel('Max Users');
-		this.addInstanceActive = this.addInstanceFrame.getByText('Active');
+		this.addInstanceVirtualHost =
+			this.addInstanceFrame.getByLabel('Virtual Host');
 		this.addInstanceVirtualInstanceInitializer =
 			this.addInstanceFrame.getByLabel('Virtual Instance Initializer');
-		this.addInstanceAddButton = page.getByText('Add', {exact: true});
+		this.addInstanceWebIdField = this.addInstanceFrame.getByLabel('Web ID');
+		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+
 		this.errorMessage = this.addInstanceFrame.getByText(
 			'Error:Please enter a valid'
 		);
+
+		this.newVirtualInstanceButton = page.getByRole('button', {name: 'Add'});
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
 		);

@@ -8,26 +8,23 @@ import {Locator, Page, expect} from '@playwright/test';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class SamlAdminPage {
-	readonly applicationsMenuPage;
 	readonly page: Page;
-	readonly entityIdField: Locator;
+
+	readonly applicationsMenuPage;
 	readonly enabledField: Locator;
+	readonly entityIdField: Locator;
 	readonly samlRoleField: Locator;
 	readonly saveButton: Locator;
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
+
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-
-		this.saveButton = page.getByRole('button', {name: 'Save'});
-
 		this.enabledField = page.getByText('Enabled');
 		this.entityIdField = page.getByLabel('Entity ID');
 		this.samlRoleField = page.getByLabel('SAML Role');
-
 		this.saveButton = page.getByRole('button', {name: 'Save'});
-
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
 		);

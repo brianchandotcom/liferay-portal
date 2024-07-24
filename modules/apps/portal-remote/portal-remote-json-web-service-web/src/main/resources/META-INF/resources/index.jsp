@@ -8,9 +8,9 @@
 <%@ include file="/init.jsp" %>
 
 <c:if test="<%= PropsValues.JSONWS_WEB_SERVICE_API_DISCOVERABLE %>">
-	<style>
+	<aui:style>
 		<%@ include file="/css.jspf" %>
-	</style>
+	</aui:style>
 
 	<div id="wrapper">
 		<header class="card fixed-top px-3 rounded-0" id="banner" role="banner">

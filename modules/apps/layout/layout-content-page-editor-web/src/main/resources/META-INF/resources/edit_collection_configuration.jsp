@@ -22,7 +22,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "filter-collection"));
 <portlet:actionURL name="/layout_content_page_editor/update_collection_configuration" var="updateCollectionConfigurationURL" />
 
 <liferay-util:html-top>
-	<style type="text/css">
+	<aui:style type="text/css">
 		.edit-collection-configuration-form .sheet {
 			padding: 0;
 		}
@@ -30,7 +30,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "filter-collection"));
 		.edit-collection-configuration-form .sheet-footer {
 			padding: 0 1.5rem;
 		}
-	</style>
+	</aui:style>
 </liferay-util:html-top>
 
 <liferay-frontend:edit-form

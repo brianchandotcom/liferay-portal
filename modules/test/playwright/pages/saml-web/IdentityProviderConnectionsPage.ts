@@ -51,16 +51,6 @@ export class IdentityProviderConnectionsPage {
 		);
 	}
 
-	async goToIdentityProviderConnectionsTab() {
-		await this.applicationsMenuPage.goToSamlAdmin();
-		await this.page
-			.getByRole('tab', {name: 'Identity Provider Connections'})
-			.click();
-		expect(
-			await this.page.getByRole('button', {name: 'Add Identity Provider'})
-		).toBeVisible();
-	}
-
 	async addIdentityProviderConnection(
 		name: string,
 		entityId = name,
@@ -141,6 +131,16 @@ export class IdentityProviderConnectionsPage {
 			nameIdentifierFormat,
 			keepAliveUrl
 		);
+	}
+
+	async goToIdentityProviderConnectionsTab() {
+		await this.applicationsMenuPage.goToSamlAdmin();
+		await this.page
+			.getByRole('tab', {name: 'Identity Provider Connections'})
+			.click();
+		expect(
+			await this.page.getByRole('button', {name: 'Add Identity Provider'})
+		).toBeVisible();
 	}
 
 	private async populateAndSaveIdentityProviderConnectionDetails(

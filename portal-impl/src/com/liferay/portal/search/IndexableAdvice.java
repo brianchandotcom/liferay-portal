@@ -24,12 +24,9 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
-import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.util.PortalInstances;
 
 import java.lang.annotation.Annotation;
@@ -190,29 +187,15 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 			Object[] arguments, Object result)
 		throws SearchException {
 
-		if (indexableContext._transactionAttribute == null) {
+		if (indexableContext._transactionConfig == null) {
 			_doReindex(indexer, indexableContext, arguments, result);
 
 			return;
 		}
 
-		TransactionConfig.Builder transactionConfigBuilder =
-			new TransactionConfig.Builder();
-
-		TransactionConfig transactionConfig =
-			transactionConfigBuilder.setIsolation(
-				indexableContext._transactionAttribute.getIsolation()
-			).setPropagation(
-				indexableContext._transactionAttribute.getPropagation()
-			).setReadOnly(
-				indexableContext._transactionAttribute.isReadOnly()
-			).setStrictReadOnly(
-				indexableContext._transactionAttribute.isStrictReadOnly()
-			).build();
-
 		try {
 			TransactionInvokerUtil.invoke(
-				transactionConfig,
+				indexableContext._transactionConfig,
 				() -> {
 					_doReindex(indexer, indexableContext, arguments, result);
 
@@ -243,16 +226,17 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 			_indexableType = indexableType;
 			_serviceContextIndex = serviceContextIndex;
 
-			org.springframework.transaction.interceptor.TransactionAttribute
-				transactionAttribute = TransactionAttributeBuilder.build(
-					transactional);
-
-			if (transactionAttribute == null) {
-				_transactionAttribute = null;
+			if (transactional == null) {
+				_transactionConfig = null;
 			}
 			else {
-				_transactionAttribute = new TransactionAttributeAdapter(
-					transactionAttribute);
+				_transactionConfig = TransactionConfig.Factory.create(
+					transactional.isolation(), transactional.propagation(),
+					transactional.readOnly(), transactional.timeout(),
+					transactional.rollbackFor(),
+					transactional.rollbackForClassName(),
+					transactional.noRollbackFor(),
+					transactional.noRollbackForClassName());
 			}
 		}
 
@@ -260,7 +244,7 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 		private final IndexableType _indexableType;
 		private final String _name;
 		private final int _serviceContextIndex;
-		private final TransactionAttribute _transactionAttribute;
+		private final TransactionConfig _transactionConfig;
 
 	}
 

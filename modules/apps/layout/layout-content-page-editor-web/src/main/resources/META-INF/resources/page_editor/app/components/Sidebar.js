@@ -17,6 +17,7 @@ import MappingSidebar from '../../plugins/mapping/components/MappingSidebar';
 import ContentsSidebar from '../../plugins/page_content/components/ContentsSidebar';
 import PageDesignOptionsSidebar from '../../plugins/page_design_options/components/PageDesignOptionsSidebar';
 import RulesSidebar from '../../plugins/page_rules/components/RulesSidebar';
+import {openKeyboardShortcutsModal} from '../actions';
 import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
@@ -84,6 +85,15 @@ export default function Sidebar() {
 	});
 
 	const [openShortcutModal, setOpenShorcutModal] = useState(false);
+
+	const toggleShortcutModalAction = (isOpen = false) => {
+		setOpenShorcutModal(isOpen);
+		dispatch(
+			openKeyboardShortcutsModal({
+				isOpen,
+			})
+		);
+	};
 
 	useEffect(() => {
 		const wrapper = document.getElementById('wrapper');
@@ -344,7 +354,7 @@ export default function Sidebar() {
 					displayType="unstyled"
 					id={`${sidebarId}keyboard_shortcuts`}
 					key="keyboard_shortcuts"
-					onClick={() => setOpenShorcutModal(true)}
+					onClick={() => toggleShortcutModalAction(true)}
 					size="sm"
 					symbol="question-circle-full"
 					tabIndex={0}
@@ -353,7 +363,7 @@ export default function Sidebar() {
 
 				{openShortcutModal && (
 					<ShortcutModal
-						onCloseModal={() => setOpenShorcutModal(false)}
+						onCloseModal={() => toggleShortcutModalAction(false)}
 					/>
 				)}
 

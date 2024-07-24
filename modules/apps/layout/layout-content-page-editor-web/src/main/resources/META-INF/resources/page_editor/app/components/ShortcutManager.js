@@ -5,7 +5,10 @@
 
 import React, {useEffect, useRef, useState} from 'react';
 
-import {selectFragmentForNameEditing} from '../actions';
+import {
+	openKeyboardShortcutsModal,
+	selectFragmentForNameEditing,
+} from '../actions';
 import {CONTENT_DISPLAY_OPTIONS} from '../config/constants/contentDisplayOptions';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
@@ -74,7 +77,10 @@ export default function ShortcutManager() {
 	const dispatch = useDispatch();
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const [openSaveModal, setOpenSaveModal] = useState(false);
-	const [openShortcutModal, setOpenShorcutModal] = useState(false);
+	const [openShortcutModal, setOpenShortcutModal] = useState(false);
+	const isShortcutModalOpen = useSelector(
+		(state) => state.openKeyboardShortcutsModal?.isOpen
+	);
 	const selectItem = useSelectItem();
 	const state = useSelector((state) => state);
 	const sidebarHidden = state.sidebar.hidden;
@@ -190,7 +196,23 @@ export default function ShortcutManager() {
 	};
 
 	const openShortcutModalAction = () => {
-		setOpenShorcutModal(true);
+		if (!isShortcutModalOpen) {
+			setOpenShortcutModal(true);
+			dispatch(
+				openKeyboardShortcutsModal({
+					isOpen: true,
+				})
+			);
+		}
+	};
+
+	const closeShortcutModalAction = () => {
+		setOpenShortcutModal(false);
+		dispatch(
+			openKeyboardShortcutsModal({
+				isOpen: false,
+			})
+		);
 	};
 
 	const remove = () => {
@@ -426,7 +448,7 @@ export default function ShortcutManager() {
 
 			{openShortcutModal && (
 				<ShortcutModal
-					onCloseModal={() => setOpenShorcutModal(false)}
+					onCloseModal={() => closeShortcutModalAction()}
 				/>
 			)}
 		</>

@@ -21,8 +21,8 @@ import {UserListView} from '../../../Manage/User';
 
 const useBuildTestActions = () => {
 	const {form} = useFormActions();
-	const {removeItemFromList, updateItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
+	const {removeItemFromList, updateItemFromList} = useMutate();
 	const hasPermission = usePermission([
 		TestrayRole.TESTRAY_ADMINISTRATOR,
 		TestrayRole.TESTRAY_ANALYST,

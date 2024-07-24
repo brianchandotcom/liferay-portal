@@ -8,6 +8,7 @@ import {useRef} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import usePermission from '~/hooks/usePermission';
 import {taskSidebarRefresh} from '~/hooks/useSidebarTask';
+import {TestrayRole} from '~/util/constants';
 
 import useFormActions from '../../../hooks/useFormActions';
 import useFormModal from '../../../hooks/useFormModal';
@@ -20,7 +21,6 @@ import {testraySubtaskImpl} from '../../../services/rest/TestraySubtask';
 import {Action} from '../../../types';
 import {SubtaskStatuses} from '../../../util/statuses';
 import {UserListView} from '../../Manage/User';
-import {TestrayRole} from '~/util/constants';
 
 type OutletContext = {
 	revalidate: {
@@ -29,21 +29,19 @@ type OutletContext = {
 };
 
 const useSubtasksActions = () => {
+	const [, setTaskSidebarRefresh] = useAtom(taskSidebarRefresh);
+	const {forceRefetch, modal: completeModal} = useFormModal();
+	const {form} = useFormActions();
+	const {onOpenModal, state} = useModalContext();
 	const {
 		revalidate: {revalidateSubtask},
 	} = useOutletContext<OutletContext>();
-	const [, setTaskSidebarRefresh] = useAtom(taskSidebarRefresh);
-
+	const {updateItemFromList} = useMutate();
 	const hasPermission = usePermission([
 		TestrayRole.TESTRAY_ADMINISTRATOR,
 		TestrayRole.TESTRAY_ANALYST,
 		TestrayRole.TESTRAY_LEAD,
 	]);
-
-	const {form} = useFormActions();
-	const {updateItemFromList} = useMutate();
-	const {onOpenModal, state} = useModalContext();
-	const {forceRefetch, modal: completeModal} = useFormModal();
 
 	const actionsRef = useRef([
 		{

@@ -17,14 +17,14 @@ import {TestrayBuild, testrayBuildImpl} from '../../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../../types';
 
 const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
-	const formModal = useFormModal();
 	const {removeItemFromList} = useMutate();
 	const {setBuildA, setBuildB} = useAutofillBuild();
-	const navigate = useNavigate();
+	const formModal = useFormModal();
 	const hasPermission = usePermission([
 		TestrayRole.TESTRAY_ADMINISTRATOR,
 		TestrayRole.TESTRAY_LEAD,
 	]);
+	const navigate = useNavigate();
 
 	const modal = formModal.modal;
 

@@ -200,7 +200,7 @@ public class IndexerRequestBufferExecutorUtil {
 					indexerRequest.getModelClassName(),
 					indexerRequest.getModelPrimaryKey());
 
-				if (!(baseModel instanceof ClassedModel)) {
+				if (baseModel == null) {
 					mergedIndexerRequests.add(indexerRequest);
 
 					continue;

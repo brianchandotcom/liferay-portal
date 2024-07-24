@@ -70,7 +70,8 @@ export default function UndoRedo({
 		titleInputComponent = component;
 	});
 
-	const handleUndo = (newStep) => {
+	const handleUndo = () => {
+		const newStep = step - 1;
 		const nextStep = history[newStep];
 
 		if (nextStep.selectedLanguageId !== selectedLanguageId) {
@@ -164,7 +165,8 @@ export default function UndoRedo({
 		});
 	};
 
-	const handleRedo = (newStep) => {
+	const handleRedo = () => {
+		const newStep = step + 1;
 		const nextStep = history[newStep];
 
 		if (nextStep.selectedLanguageId !== selectedLanguageId) {
@@ -425,7 +427,7 @@ export default function UndoRedo({
 				displayType="secondary"
 				onClick={() => {
 					Liferay.fire('journal:redo');
-					handleRedo(step + 1);
+					handleRedo();
 				}}
 				size="sm"
 				symbol="redo"

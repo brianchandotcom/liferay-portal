@@ -300,9 +300,17 @@ public class SiteActionDropdownItemsProviderTest {
 
 	private void _setUpGroup() {
 		Mockito.when(
-			_group.isActive()
-		).thenReturn(
-			true
+			_group.getDisplayURL(
+				Mockito.any(ThemeDisplay.class), Mockito.anyBoolean(),
+				Mockito.anyBoolean())
+		).thenAnswer(
+			(Answer<String>)invocationOnMock -> {
+				if (invocationOnMock.getArgument(1, Boolean.class)) {
+					return "/group/groupKey/";
+				}
+
+				return "/web/groupKey/";
+			}
 		);
 
 		Mockito.when(
@@ -318,17 +326,9 @@ public class SiteActionDropdownItemsProviderTest {
 		);
 
 		Mockito.when(
-			_group.getDisplayURL(
-				Mockito.any(ThemeDisplay.class), Mockito.anyBoolean(),
-				Mockito.anyBoolean())
-		).thenAnswer(
-			(Answer<String>)invocationOnMock -> {
-				if (invocationOnMock.getArgument(1, Boolean.class)) {
-					return "/group/groupKey/";
-				}
-
-				return "/web/groupKey/";
-			}
+			_group.isActive()
+		).thenReturn(
+			true
 		);
 	}
 

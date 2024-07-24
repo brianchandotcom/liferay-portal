@@ -12,10 +12,13 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
+import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -83,6 +86,16 @@ public abstract class BaseObjectValidationRuleEngineImplTestCase {
 		commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 			commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
 			user.getUserId(), true);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(group.getGroupId());
+
+		CommerceTestUtil.updateBackOrderCPDefinitionInventory(
+			cpInstance.getCPDefinition());
+
+		commerceOrderItem = commerceOrder.getCommerceOrderItems(
+		).get(
+			0
+		);
 	}
 
 	@DeleteAfterTestRun
@@ -96,6 +109,9 @@ public abstract class BaseObjectValidationRuleEngineImplTestCase {
 
 	@DeleteAfterTestRun
 	protected CommerceOrder commerceOrder;
+
+	@DeleteAfterTestRun
+	protected CommerceOrderItem commerceOrderItem;
 
 	@DeleteAfterTestRun
 	protected Group group;

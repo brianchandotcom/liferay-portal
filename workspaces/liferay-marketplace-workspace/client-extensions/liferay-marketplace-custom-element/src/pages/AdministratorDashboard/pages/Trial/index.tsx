@@ -12,7 +12,7 @@ import i18n from '../../../../i18n';
 import InfoCard from '../../components/InfoCard';
 import useTrialMetrics from '../../hooks/useTrialMetrics';
 import TrialTable from './TrialTable';
-import { ORDER_WORKFLOW_STATUS_CODE } from '../../../../enums/Order';
+import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../enums/Order';
 
 const getAvailabilityResourceLabel = (availability: Availability) => {
 	if (availability.fallback) {
@@ -26,7 +26,10 @@ const Trial = () => {
 	const {availability, expired, isLoading, mutate, orderTableData, orders} =
 		useTrialMetrics('week');
 
-	const expiredTrials = orderTableData?.items?.filter((status: PlacedOrder) => status.orderStatusInfo.code === ORDER_WORKFLOW_STATUS_CODE.COMPLETED)
+	const expiredTrials = orderTableData?.items?.filter(
+		(status: PlacedOrder) =>
+			status.orderStatusInfo.code === ORDER_WORKFLOW_STATUS_CODE.COMPLETED
+	);
 
 	return (
 		<Page pageRendererProps={{isLoading}}>

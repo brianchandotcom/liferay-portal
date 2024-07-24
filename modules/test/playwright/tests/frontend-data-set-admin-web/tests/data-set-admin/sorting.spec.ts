@@ -62,6 +62,59 @@ test.describe('Sorting in Data Set Manager', () => {
 		});
 	});
 
+	test('Delete confirmation message is displayed @LPD-12725', async ({
+		dataSetManagerApiHelpers,
+		page,
+		sortingPage,
+	}) => {
+		await test.step('Create sorting options', async () => {
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: true,
+				fieldName: 'id',
+				label_i18n: {en_US: 'ID'},
+				orderType: 'asc',
+			});
+		});
+
+		await test.step('Navigate to Sorting section', async () => {
+			await sortingPage.goto({
+				dataSetLabel,
+			});
+		});
+
+		await test.step('Click on the delete action', async () => {
+			const tableRow = sortingPage.sortingTable.locator('tr', {
+				has: page.locator('text="ID"'),
+			});
+
+			await tableRow
+				.getByRole('cell', {name: 'Actions'})
+				.getByRole('button')
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Delete'}).click();
+		});
+
+		await test.step('Check that the delete message is displayed', async () => {
+			await expect(
+				page.getByText(
+					'Are you sure you want to delete this sorting? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Click on delete button to check that delete button exists and is clickable', async () => {
+			await page.getByRole('button', {name: 'Delete'}).click();
+		});
+
+		await test.step('Wait for success message to be displayed', async () => {
+			await expect(
+				page.getByText('Success:Your request completed successfully.')
+			).toBeVisible();
+		});
+	});
+
 	test('Sorting options can be reordered and changes are persisted @LPD-9468', async ({
 		dataSetManagerApiHelpers,
 		sortingPage,

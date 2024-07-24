@@ -156,6 +156,10 @@
 							/>
 						</div>
 					</#if>
+					
+					<#if (currentStep.Step.Resources.Code.getData())??>
+						${currentStep.Step.Resources.Code.getData()}
+					</#if>
 				</#list>
 			</ol>
 		</#if>

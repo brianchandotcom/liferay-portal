@@ -778,6 +778,72 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"headless-builder/endpoints", Http.Method.POST
 			).toString(),
 			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"The value is invalid for object field " +
+					"\"r_apiApplicationToAPIEndpoints_c_apiApplicationId\""
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringPool.FORWARD_SLASH +
+						StringUtil.toLowerCase(RandomTestUtil.randomString())
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					_objectEntry.getObjectEntryId()
+				).put(
+					"retrieveType",
+					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
+				).put(
+					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"The value is invalid for object field " +
+					"\"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId\""
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringPool.FORWARD_SLASH +
+						StringUtil.toLowerCase(RandomTestUtil.randomString())
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					apiApplicationJSONObject1.getLong("id")
+				).put(
+					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					_objectEntry.getObjectEntryId()
+				).put(
+					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					_objectEntry.getObjectEntryId()
+				).put(
+					"retrieveType",
+					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
+				).put(
+					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
 	}
 
 	@Test

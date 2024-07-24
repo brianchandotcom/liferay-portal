@@ -37,8 +37,8 @@ const SubtaskOutlet = () => {
 	} = useOutletContext<OutletContext>();
 
 	const buildId = String(testrayTask?.build?.id);
-	const routineId = String(testrayTask?.build?.routine?.id);
 	const projectId = String(testrayTask?.build?.project?.id);
+	const routineId = String(testrayTask?.build?.routine?.id);
 
 	const {
 		data: testraySubtask,

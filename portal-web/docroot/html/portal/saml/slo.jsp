@@ -13,7 +13,7 @@ JSONObject samlSloContextJSONObject = (JSONObject)request.getAttribute("SAML_SLO
 JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("samlSloRequestInfos");
 %>
 
-<style type="text/css">
+<aui:style type="text/css">
 	.portlet-msg-no-support-label {
 		background-image: url(<%= themeDisplay.getPathThemeImages() %>/arrows/02_x.png);
 	}
@@ -37,7 +37,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 		display: inline-block;
 		margin-left: 10px;
 	}
-</style>
+</aui:style>
 
 <h3>
 	<liferay-ui:message key="signing-out-from-services" />

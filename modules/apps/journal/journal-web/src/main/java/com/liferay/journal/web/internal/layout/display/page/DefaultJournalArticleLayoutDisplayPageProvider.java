@@ -21,6 +21,11 @@ public class DefaultJournalArticleLayoutDisplayPageProvider
 	extends JournalArticleLayoutDisplayPageProvider {
 
 	@Override
+	public String getDefaultURLSeparator() {
+		return JournalArticleConstants.CANONICAL_URL_SEPARATOR;
+	}
+
+	@Override
 	public String getURLSeparator() {
 		return JournalArticleConstants.CANONICAL_URL_SEPARATOR;
 	}

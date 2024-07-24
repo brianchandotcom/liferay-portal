@@ -47,7 +47,9 @@ public class PoshiTestFailureMessageGenerator
 		Matcher poshiTestFailureMatcher = _poshiTestFailurePattern.matcher(
 			consoleText);
 
-		if (!poshiTestFailureMatcher.find()) {
+		String errorMessage = getMessage(consoleText);
+
+		if (!poshiTestFailureMatcher.find() || (errorMessage == null)) {
 			return null;
 		}
 
@@ -58,7 +60,7 @@ public class PoshiTestFailureMessageGenerator
 			Dom4JUtil.getNewElement(
 				"p", null, "POSHI Test Failure: ",
 				Dom4JUtil.getNewElement("strong", null, failedPoshiTaskToken)),
-			Dom4JUtil.toCodeSnippetElement(getMessage(consoleText)));
+			Dom4JUtil.toCodeSnippetElement(errorMessage));
 	}
 
 	private static final String _TOKEN_JAVA_LANG_EXCEPTION =

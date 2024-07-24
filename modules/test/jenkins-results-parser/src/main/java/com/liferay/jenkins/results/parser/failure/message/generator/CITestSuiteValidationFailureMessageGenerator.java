@@ -30,11 +30,17 @@ public class CITestSuiteValidationFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(String consoleText) {
-		return Dom4JUtil.getNewElement(
-			"div", null,
-			Dom4JUtil.getNewElement("p", null, getMessage(consoleText)),
-			Dom4JUtil.getNewElement(
-				"p", null, _TOKEN_IS_NOT_A_VALID_TEST_SUITE));
+		String errorMessage = getMessage(consoleText);
+
+		if (errorMessage != null) {
+			return Dom4JUtil.getNewElement(
+				"div", null,
+				Dom4JUtil.getNewElement("p", null, getMessage(consoleText)),
+				Dom4JUtil.getNewElement(
+					"p", null, _TOKEN_IS_NOT_A_VALID_TEST_SUITE));
+		}
+
+		return null;
 	}
 
 	private static final String _TOKEN_IS_NOT_A_VALID_TEST_SUITE =

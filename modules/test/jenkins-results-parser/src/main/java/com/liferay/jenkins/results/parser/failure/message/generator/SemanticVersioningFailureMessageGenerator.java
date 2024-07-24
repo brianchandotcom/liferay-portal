@@ -41,16 +41,23 @@ public class SemanticVersioningFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		return Dom4JUtil.getNewElement(
-			"div", null,
-			Dom4JUtil.getNewElement(
-				"p", null, "Please fix ",
-				Dom4JUtil.getNewElement("strong", null, "semantic versioning"),
-				" on ",
+		String errorMessage = getMessage(build);
+
+		if (errorMessage != null) {
+			return Dom4JUtil.getNewElement(
+				"div", null,
 				Dom4JUtil.getNewElement(
-					"strong", null,
-					getBaseBranchAnchorElement(build.getTopLevelBuild())),
-				Dom4JUtil.toCodeSnippetElement(getMessage(build))));
+					"p", null, "Please fix ",
+					Dom4JUtil.getNewElement(
+						"strong", null, "semantic versioning"),
+					" on ",
+					Dom4JUtil.getNewElement(
+						"strong", null,
+						getBaseBranchAnchorElement(build.getTopLevelBuild())),
+					Dom4JUtil.toCodeSnippetElement(errorMessage)));
+		}
+
+		return null;
 	}
 
 	private static final String _TOKEN_SEMVER_INCORRECT =

@@ -35,7 +35,13 @@ public class InvalidGitCommitSHAFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		return Dom4JUtil.toCodeSnippetElement(getMessage(build));
+		String errorMessage = getMessage(build);
+
+		if (errorMessage != null) {
+			return Dom4JUtil.toCodeSnippetElement(getMessage(build));
+		}
+
+		return null;
 	}
 
 	private static final String _TOKEN_SHA = "SHA";

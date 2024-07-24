@@ -27,7 +27,13 @@ public class CIFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 	@Override
 	public Element getMessageElement(String consoleText) {
-		return Dom4JUtil.toCodeSnippetElement(getMessage(consoleText));
+		String errorMessage = getMessage(consoleText);
+
+		if (errorMessage != null) {
+			return Dom4JUtil.toCodeSnippetElement(getMessage(consoleText));
+		}
+
+		return null;
 	}
 
 	@Override

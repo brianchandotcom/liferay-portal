@@ -65,6 +65,7 @@ public class FileEntryWebServerTest extends BaseWebServerTestCase {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

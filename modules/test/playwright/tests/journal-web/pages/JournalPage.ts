@@ -27,7 +27,9 @@ export class JournalPage {
 		this.createBasicWebContentLink = this.page.getByRole('menuitem', {
 			name: 'Basic Web Content',
 		});
-		this.newButton = page.getByText('New', {exact: true});
+		this.newButton = page.locator(
+			'button[data-qa-id="creationMenuNewButton"].d-md-flex.d-none'
+		);
 		this.permissionsFrameLocator = page.frameLocator(
 			'iframe[title="Permissions"]'
 		);

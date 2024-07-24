@@ -318,6 +318,32 @@ autoSaveAsDraftTest(
 );
 
 baseTest(
+	'Check alert message of duplicated friendly URL in french',
+	{
+		tag: '@LPD-32185',
+	},
+	async ({journalEditArticlePage, page, site}) => {
+		await page.goto(`/fr/`);
+		await journalEditArticlePage.createBasicArticleWithFriendlyURL(
+			site,
+			page,
+			'Contenu web basique'
+		);
+		await journalEditArticlePage.createBasicArticleWithFriendlyURL(
+			site,
+			page,
+			'Contenu web basique'
+		);
+
+		await expect(
+			page
+				.locator('#ToastAlertContainer')
+				.getByText('test', {exact: true})
+		).toBeVisible();
+	}
+);
+
+baseTest(
 	'LPD-31427: Select web content display template with the Preview feature',
 	async ({journalEditArticlePage, page, site}) => {
 		page.on('dialog', (dialog) => dialog.accept());

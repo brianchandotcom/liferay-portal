@@ -126,25 +126,26 @@ public class FriendlyURLNormalizerImplTest {
 
 	@Test
 	public void testNormalizeWithEncodingPeriodsAndSlashes() throws Exception {
-		_testNormalizeWithEncodingPeriodAndSlashesUnicode("friendlyUrl");
 		_testNormalizeWithEncodingPeriodAndSlashesUnicode("\u5F15");
-		_testNormalizeWithEncodingPeriodAndSlashesUnicode("テスト");
-		_testNormalizeWithEncodingPeriodAndSlashesUnicode("اختبار");
 		_testNormalizeWithEncodingPeriodAndSlashesUnicode("\uD801\uDC37");
+		_testNormalizeWithEncodingPeriodAndSlashesUnicode("friendlyUrl");
+		_testNormalizeWithEncodingPeriodAndSlashesUnicode("اختبار");
+		_testNormalizeWithEncodingPeriodAndSlashesUnicode("テスト");
 		_testNormalizeWithEncodingPeriodAndSlashesUnicode(
 			String.valueOf(Character.MAX_HIGH_SURROGATE));
+
 		Assert.assertEquals(
 			"-",
 			_friendlyURLNormalizerImpl.normalizeWithEncodingPeriodsAndSlashes(
 				"./"));
 		Assert.assertEquals(
-			URLEncoder.encode("テ-ス-ト-テ-abc"),
-			_friendlyURLNormalizerImpl.normalizeWithEncodingPeriodsAndSlashes(
-				"テ-ス/ト.テ-//..../abc"));
-		Assert.assertEquals(
 			"friendly-url-1",
 			_friendlyURLNormalizerImpl.normalizeWithEncodingPeriodsAndSlashes(
 				"friendly-url------/././.-1"));
+		Assert.assertEquals(
+			URLEncoder.encode("テ-ス-ト-テ-abc"),
+			_friendlyURLNormalizerImpl.normalizeWithEncodingPeriodsAndSlashes(
+				"テ-ス/ト.テ-//..../abc"));
 	}
 
 	@Test

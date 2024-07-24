@@ -60,16 +60,10 @@ export class PublisherAppPage {
 				ram: page.getByPlaceholder('Enter the required RAM'),
 			},
 			profile: {
-				categories: page
-					.locator('div')
-					.filter({hasText: /^Select categories$/})
-					.nth(2),
+				categories: page.getByPlaceholder('Select categories'),
 				description: page.getByPlaceholder('Enter app description'),
 				name: page.getByPlaceholder('Enter app name'),
-				tags: page
-					.locator('div')
-					.filter({hasText: /^Select tags$/})
-					.nth(2),
+				tags: page.getByPlaceholder('Select tags'),
 			},
 			support: {
 				publisherWebsiteUrl: page

@@ -33,7 +33,13 @@ public class FormatFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 	@Override
 	public Element getMessageElement(String consoleText) {
-		return Dom4JUtil.toCodeSnippetElement(getMessage(consoleText));
+		String errorMessage = getMessage(consoleText);
+
+		if (errorMessage != null) {
+			return Dom4JUtil.toCodeSnippetElement(errorMessage);
+		}
+
+		return null;
 	}
 
 	private static final String _TOKEN_UNABLE_TO_FORMAT = "Unable to format";

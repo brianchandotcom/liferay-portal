@@ -31,11 +31,17 @@ public class PoshiValidationFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(String consoleText) {
-		return Dom4JUtil.getNewElement(
-			"div", null,
-			Dom4JUtil.getNewElement(
-				"p", null, "POSHI Validation Failure",
-				Dom4JUtil.toCodeSnippetElement(getMessage(consoleText))));
+		String errorMessage = getMessage(consoleText);
+
+		if (errorMessage != null) {
+			return Dom4JUtil.getNewElement(
+				"div", null,
+				Dom4JUtil.getNewElement(
+					"p", null, "POSHI Validation Failure",
+					Dom4JUtil.toCodeSnippetElement(errorMessage)));
+		}
+
+		return null;
 	}
 
 	private static final Pattern _poshiFailurePattern = Pattern.compile(

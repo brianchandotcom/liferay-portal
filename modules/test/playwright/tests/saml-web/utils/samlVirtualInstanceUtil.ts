@@ -23,10 +23,10 @@ export async function createIdentityProviderVirtualInstance(
 	entityId = name,
 	page
 ) {
-	await _createSamlVirtualInstance(name, entityId, 'Identity Provider', page);
+	await createSamlVirtualInstance(name, entityId, 'Identity Provider', page);
 }
 
-async function _createSamlVirtualInstance(
+async function createSamlVirtualInstance(
 	name: string,
 	entityId: string,
 	samlRole: string,
@@ -64,7 +64,7 @@ export async function createServiceProviderVirtualInstance(
 	entityId: string,
 	page
 ) {
-	await _createSamlVirtualInstance(name, entityId, 'Service Provider', page);
+	await createSamlVirtualInstance(name, entityId, 'Service Provider', page);
 }
 
 export async function createSpAndIdpUser(

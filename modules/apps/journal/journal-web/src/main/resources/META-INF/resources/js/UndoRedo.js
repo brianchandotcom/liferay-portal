@@ -48,17 +48,30 @@ export default function UndoRedo({
 		step: 0,
 	});
 
+	let descriptionInputComponent;
+	let friendlyURLInputComponent;
+	let titleInputComponent;
+
+	Liferay.componentReady(
+		`${portletNamespace}${META_FIELD_NAMES.description}`
+	).then((component) => {
+		descriptionInputComponent = component;
+	});
+
+	Liferay.componentReady(
+		`${portletNamespace}${META_FIELD_NAMES.friendlyURL}`
+	).then((component) => {
+		friendlyURLInputComponent = component;
+	});
+
+	Liferay.componentReady(
+		`${portletNamespace}${META_FIELD_NAMES.title}`
+	).then((component) => {
+		titleInputComponent = component;
+	});
+
 	const handleUndo = (newStep) => {
-		const descriptionInputComponent = Liferay.component(
-			`${portletNamespace}${META_FIELD_NAMES.description}`
-		);
-		const friendlyURLInputComponent = Liferay.component(
-			`${portletNamespace}${META_FIELD_NAMES.friendlyURL}`
-		);
 		const nextStep = history[newStep];
-		const titleInputComponent = Liferay.component(
-			`${portletNamespace}${META_FIELD_NAMES.title}`
-		);
 
 		if (nextStep.selectedLanguageId !== selectedLanguageId) {
 			const selectedLanguageIdInput = document.getElementById(
@@ -152,16 +165,7 @@ export default function UndoRedo({
 	};
 
 	const handleRedo = (newStep) => {
-		const descriptionInputComponent = Liferay.component(
-			`${portletNamespace}${META_FIELD_NAMES.description}`
-		);
-		const friendlyURLInputComponent = Liferay.component(
-			`${portletNamespace}${META_FIELD_NAMES.friendlyURL}`
-		);
 		const nextStep = history[newStep];
-		const titleInputComponent = Liferay.component(
-			`${portletNamespace}${META_FIELD_NAMES.title}`
-		);
 
 		if (nextStep.selectedLanguageId !== selectedLanguageId) {
 			const selectedLanguageIdInput = document.getElementById(
@@ -250,20 +254,8 @@ export default function UndoRedo({
 				`${portletNamespace}defaultLanguageId`
 			);
 
-			const descriptionInputComponent = Liferay.componentReady(
-				`${portletNamespace}${META_FIELD_NAMES.description}`
-			);
-
-			const friendlyURLInputComponent = Liferay.componentReady(
-				`${portletNamespace}${META_FIELD_NAMES.friendlyURL}`
-			);
-
 			const selectedLanguageIdInput = document.getElementById(
 				`${portletNamespace}languageId`
-			);
-
-			const titleInputComponent = Liferay.componentReady(
-				`${portletNamespace}${META_FIELD_NAMES.title}`
 			);
 
 			Promise.all([
@@ -312,7 +304,7 @@ export default function UndoRedo({
 				}
 			);
 		},
-		[history, portletNamespace, selectedLanguageId, step]
+		[descriptionInputComponent, friendlyURLInputComponent, history, portletNamespace, selectedLanguageId, step, titleInputComponent]
 	);
 
 	const resetStoreState = useCallback(
@@ -321,20 +313,8 @@ export default function UndoRedo({
 				`${portletNamespace}defaultLanguageId`
 			);
 
-			const descriptionInputComponent = Liferay.componentReady(
-				`${portletNamespace}${META_FIELD_NAMES.description}`
-			);
-
-			const friendlyURLInputComponent = Liferay.componentReady(
-				`${portletNamespace}${META_FIELD_NAMES.friendlyURL}`
-			);
-
 			const selectedLanguageIdInput = document.getElementById(
 				`${portletNamespace}languageId`
-			);
-
-			const titleInputComponent = Liferay.componentReady(
-				`${portletNamespace}${META_FIELD_NAMES.title}`
 			);
 
 			Promise.all([
@@ -384,7 +364,7 @@ export default function UndoRedo({
 				}
 			);
 		},
-		[portletNamespace]
+		[descriptionInputComponent, friendlyURLInputComponent, portletNamespace, titleInputComponent]
 	);
 
 	const localeChangeHandler = useCallback(

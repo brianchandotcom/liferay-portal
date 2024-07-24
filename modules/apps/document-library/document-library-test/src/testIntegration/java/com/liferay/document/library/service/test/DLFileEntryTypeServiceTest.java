@@ -81,10 +81,6 @@ public class DLFileEntryTypeServiceTest {
 			DLFileEntryTypeServiceUtil.getFileEntryTypesCount(
 				new long[] {_group.getGroupId()});
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), DLFileEntryMetadata.class.getName());
 
@@ -92,7 +88,8 @@ public class DLFileEntryTypeServiceTest {
 			null, _group.getGroupId(), ddmStructure.getStructureId(), null,
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
 
 		Assert.assertEquals(
 			fileEntryTypesCount + 1,
@@ -340,9 +337,6 @@ public class DLFileEntryTypeServiceTest {
 
 	@Test
 	public void testLocalizedSiteAddFileEntryType() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
 		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
 
 		try {
@@ -361,7 +355,8 @@ public class DLFileEntryTypeServiceTest {
 					Collections.singletonMap(LocaleUtil.US, name),
 					Collections.singletonMap(LocaleUtil.US, description),
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
-					serviceContext);
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId()));
 
 			Assert.assertEquals(
 				name, dlFileEntryType.getName(LocaleUtil.US, true));
@@ -376,9 +371,6 @@ public class DLFileEntryTypeServiceTest {
 
 	@Test
 	public void testLocalizedSiteUpdateFileEntryType() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
 		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
 
 		try {
@@ -397,7 +389,8 @@ public class DLFileEntryTypeServiceTest {
 					Collections.singletonMap(LocaleUtil.US, name),
 					Collections.singletonMap(LocaleUtil.US, description),
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
-					serviceContext);
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId()));
 
 			name = RandomTestUtil.randomString();
 			description = RandomTestUtil.randomString();
@@ -423,10 +416,6 @@ public class DLFileEntryTypeServiceTest {
 
 	@Test
 	public void testUpdateFileEntryTypeWithEmptyDDMForm() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), DLFileEntryMetadata.class.getName());
 
@@ -444,7 +433,8 @@ public class DLFileEntryTypeServiceTest {
 					LocaleUtil.US, StringUtil.randomString()),
 				Collections.singletonMap(
 					LocaleUtil.US, StringUtil.randomString()),
-				serviceContext);
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
 
 		DLFileEntryTypeServiceUtil.updateFileEntryType(
 			dlFileEntryType.getFileEntryTypeId(),

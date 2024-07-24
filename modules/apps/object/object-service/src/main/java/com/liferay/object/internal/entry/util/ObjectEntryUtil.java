@@ -76,6 +76,8 @@ public class ObjectEntryUtil {
 			}
 		).put(
 			"preferredLanguageId", preferredLanguageId
+		).put(
+			"userId", user.getUserId()
 		);
 	}
 

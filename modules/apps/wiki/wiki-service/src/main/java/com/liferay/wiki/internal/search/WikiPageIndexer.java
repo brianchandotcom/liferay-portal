@@ -283,7 +283,7 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 
 	@Override
 	protected void doReindex(WikiPage wikiPage) throws Exception {
-		_reindexDocument(wikiPage);
+		_reindexEveryVersionOfResourcePrimKey(wikiPage.getResourcePrimKey());
 	}
 
 	@Reference

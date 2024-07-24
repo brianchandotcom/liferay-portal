@@ -134,7 +134,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -3834,32 +3833,18 @@ public class BundleSiteInitializerTest {
 			sxpBlueprint.getConfiguration());
 		Assert.assertEquals("Test SXBlueprint 1", sxpBlueprint.getTitle());
 
-		Group companyGroup = _groupLocalService.getCompanyGroup(
-			_group.getCompanyId());
-
-		AssetCategory assetCategory =
-			_assetCategoryLocalService.
-				fetchAssetCategoryByExternalReferenceCode(
-					"TESTASSETCATEGORY1", companyGroup.getGroupId());
-
 		sxpBlueprint =
 			sxpBlueprintResource.getSXPBlueprintByExternalReferenceCode(
 				"TESTSXPBLUEPRINT2");
 
-		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray(
-			sxpBlueprint.getElementInstances()[0].getUiConfigurationValues(
-			).get(
-				"values"
-			).toString());
-
-		JSONObject valueJSONObject = JSONFactoryUtil.createJSONObject(
-			valuesJSONArray.get(
-				0
-			).toString());
-
 		Assert.assertNotNull(sxpBlueprint);
-		Assert.assertEquals(
-			valueJSONObject.getLong("value"), assetCategory.getCategoryId());
+		Assert.assertFalse(
+			sxpBlueprint.toString(
+			).contains(
+				"[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-" +
+					"vocabularies/company/test-asset-vocabulary-1/test-asset-" +
+						"category-1.json$]"
+			));
 		_assertSearchableAssetTypes(
 			new String[] {
 				"com.liferay.document.library.kernel.model.DLFileEntry"

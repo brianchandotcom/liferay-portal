@@ -86,7 +86,7 @@ describe('ShortcutManager', () => {
 		);
 	});
 
-	it('triggers show shorcuts modal when pressing shift + ?', () => {
+	it('triggers show shortcuts modal when pressing shift + ?', () => {
 		renderComponent();
 
 		jest.useFakeTimers();

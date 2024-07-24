@@ -49,48 +49,48 @@ definition {
 	@summary = "Default summary"
 	macro configureEmailNotificationTemplate(cc = null, bcc = null, emailBody = null, subject = null, name = null, fromName = null, description = null, fromAddress = null, entryTo = null) {
 		Type(
-			key_text = "Name",
-			locator1 = "TextInput#ANY",
+			inputFieldId = "name",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = ${name});
 
 		Type(
-			key_text = "To",
-			locator1 = "TextInput#ANY",
+			inputFieldId = "primaryRecipients",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = ${entryTo});
 
 		Type(
-			key_text = "From Address",
-			locator1 = "TextInput#ANY",
+			inputFieldId = "fromAddress",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = ${fromAddress});
 
 		Type(
-			key_text = "From Name",
-			locator1 = "TextInput#ANY",
+			inputFieldId = "fromName",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = ${fromName});
 
 		Type(
-			key_text = "Subject",
-			locator1 = "TextInput#ANY",
+			inputFieldId = "subject",
+			locator1 = "TextInput#INPUT_ID",
 			value1 = ${subject});
 
 		if (isSet(bcc)) {
 			Type(
-				key_text = "BCC",
-				locator1 = "TextInput#ANY",
+				inputFieldId = "secondaryRecipientsBCC",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = ${bcc});
 		}
 
 		if (isSet(cc)) {
 			Type(
-				key_text = "CC",
-				locator1 = "TextInput#ANY",
+				inputFieldId = "secondaryRecipientsCC",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = ${cc});
 		}
 
 		if (isSet(description)) {
 			Type(
-				key_text = "description",
-				locator1 = "TextArea#ANY",
+				key_fieldId = "description",
+				locator1 = "TextArea#ANY_ID",
 				value1 = ${description});
 		}
 
@@ -168,57 +168,57 @@ definition {
 
 		if (isSet(name)) {
 			Type(
-				key_text = "Name",
-				locator1 = "TextInput#ANY",
+				inputFieldId = "name",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = ${name});
 		}
 
 		if (isSet(description)) {
 			Type(
-				key_text = "description",
-				locator1 = "TextArea#ANY",
+				key_fieldId = "description",
+				locator1 = "TextArea#ANY_ID",
 				value1 = ${description});
 		}
 
 		if (isSet(cc)) {
 			Type(
-				key_text = "CC",
-				locator1 = "TextInput#ANY",
+				inputFieldId = "secondaryRecipientsCC",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = ${cc});
 		}
 
 		if (isSet(bcc)) {
 			Type(
-				key_text = "BCC",
-				locator1 = "TextInput#ANY",
+				inputFieldId = "secondaryRecipientsBCC",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = ${bcc});
 		}
 
 		if (isSet(entryTo)) {
 			Type(
-				key_text = "To",
-				locator1 = "TextInput#ANY",
+				inputFieldId = "primaryRecipients",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = ${entryTo});
 		}
 
 		if (isSet(fromAddress)) {
 			Type(
-				key_text = "From Address",
-				locator1 = "TextInput#ANY",
+				inputFieldId = "fromAddress",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = ${fromAddress});
 		}
 
 		if (isSet(fromName)) {
 			Type(
-				key_text = "From Name",
-				locator1 = "TextInput#ANY",
+				inputFieldId = "fromName",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = ${fromName});
 		}
 
 		if (isSet(subject)) {
 			Type(
-				key_text = "Subject",
-				locator1 = "TextInput#ANY",
+				inputFieldId = "subject",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = ${subject});
 		}
 
@@ -250,38 +250,38 @@ definition {
 
 		if (${notificationType} == "Email") {
 			AssertTextEquals(
-				key_text = "Name",
-				locator1 = "TextInput#ANY",
+				inputFieldId = "name",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = ${name});
 
 			AssertTextEquals(
-				key_text = "From Address",
-				locator1 = "TextInput#ANY",
+				inputFieldId = "fromAddress",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = ${fromAddress});
 
 			AssertTextEquals(
-				key_text = "From Name",
-				locator1 = "TextInput#ANY",
+				inputFieldId = "fromName",
+				locator1 = "TextInput#INPUT_ID",
 				value1 = ${fromName});
 
 			if (isSet(bcc)) {
 				AssertTextEquals(
-					key_text = "BCC",
-					locator1 = "TextInput#ANY",
+					inputFieldId = "secondaryRecipientsBCC",
+					locator1 = "TextInput#INPUT_ID",
 					value1 = ${bcc});
 			}
 
 			if (isSet(cc)) {
 				AssertTextEquals(
-					key_text = "CC",
-					locator1 = "TextInput#ANY",
+					inputFieldId = "secondaryRecipientsCC",
+					locator1 = "TextInput#INPUT_ID",
 					value1 = ${cc});
 			}
 
 			if (isSet(description)) {
 				AssertTextEquals(
-					key_text = "description",
-					locator1 = "TextArea#ANY",
+					key_fieldId = "description",
+					locator1 = "TextArea#ANY_ID",
 					value1 = ${description});
 			}
 
@@ -297,8 +297,8 @@ definition {
 
 			if (isSet(entryTo)) {
 				AssertTextEquals(
-					key_text = "To",
-					locator1 = "TextInput#ANY",
+					inputFieldId = "primaryRecipients",
+					locator1 = "TextInput#INPUT_ID",
 					value1 = ${entryTo});
 			}
 
@@ -310,8 +310,8 @@ definition {
 
 			if (isSet(subject)) {
 				AssertTextEquals(
-					key_text = "Subject",
-					locator1 = "TextInput#ANY",
+					inputFieldId = "subject",
+					locator1 = "TextInput#INPUT_ID",
 					value1 = ${subject});
 			}
 		}

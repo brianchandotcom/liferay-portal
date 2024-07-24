@@ -68,9 +68,9 @@ public class SiteInitializerUtil {
 	}
 
 	public static String replace(
-		String s, Map<String, String> stringUtilReplaceValues,
 		Map<String, String> classNameIdStringUtilReplaceValues,
-		Map<String, String> releaseInfoStringUtilReplaceValues) {
+		Map<String, String> releaseInfoStringUtilReplaceValues, String s,
+		Map<String, String> stringUtilReplaceValues) {
 
 		HashMap<String, String> aggregatedStringUtilReplaceValues =
 			HashMapBuilder.putAll(

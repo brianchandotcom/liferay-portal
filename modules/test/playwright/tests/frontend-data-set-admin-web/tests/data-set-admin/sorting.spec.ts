@@ -211,6 +211,14 @@ test.describe('Sorting in Data Set Manager', () => {
 
 			await expect(page.getByLabel('Order Type')).toBeVisible();
 		});
+
+		await test.step('Check the options of the Order Type input are "Ascending" and "Descending"', async () => {
+			const orderTypeInput = await page
+				.getByLabel('Order Type')
+				.textContent();
+
+			expect(orderTypeInput).toEqual('AscendingDescending');
+		});
 	});
 
 	test('Sorting can be created, edited, and deleted @LPD-19465', async ({

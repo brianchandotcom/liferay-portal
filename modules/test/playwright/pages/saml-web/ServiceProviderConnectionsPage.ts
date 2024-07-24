@@ -63,16 +63,6 @@ export class ServiceProviderConnectionsPage {
 		);
 	}
 
-	async goToServiceProviderConnectionsTab() {
-		await this.applicationsMenuPage.goToSamlAdmin();
-		await this.page
-			.getByRole('tab', {name: 'Service Provider Connections'})
-			.click();
-		expect(
-			await this.page.getByRole('button', {name: 'Add Service Provider'})
-		).toBeVisible();
-	}
-
 	async addServiceProviderConnection(
 		name: string,
 		entityId = name,
@@ -165,6 +155,16 @@ export class ServiceProviderConnectionsPage {
 			attributes,
 			keepAliveUrl
 		);
+	}
+
+	async goToServiceProviderConnectionsTab() {
+		await this.applicationsMenuPage.goToSamlAdmin();
+		await this.page
+			.getByRole('tab', {name: 'Service Provider Connections'})
+			.click();
+		expect(
+			await this.page.getByRole('button', {name: 'Add Service Provider'})
+		).toBeVisible();
 	}
 
 	private async populateAndSaveServiceProviderConnectionDetails(

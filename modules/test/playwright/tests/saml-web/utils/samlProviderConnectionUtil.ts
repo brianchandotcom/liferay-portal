@@ -9,30 +9,6 @@ import {ServiceProviderConnectionsPage} from '../../../pages/saml-web/ServicePro
 
 const _DEFAULT_METADATA_PATH = '/c/portal/saml/metadata';
 
-export async function connectSpAndIdp(
-	idpName: string,
-	spName: string,
-	idpEntityId = idpName,
-	spEntityId = spName,
-	page
-) {
-	await addServiceProviderConnection(
-		idpName,
-		spName,
-		spName,
-		spEntityId,
-		page
-	);
-
-	await addIdentityProviderConnection(
-		idpName,
-		spName,
-		idpName,
-		idpEntityId,
-		page
-	);
-}
-
 async function addIdentityProviderConnection(
 	idpName: string,
 	spDomain: string,
@@ -86,4 +62,28 @@ async function addServiceProviderConnection(
 	);
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
+}
+
+export async function connectSpAndIdp(
+	idpName: string,
+	spName: string,
+	idpEntityId = idpName,
+	spEntityId = spName,
+	page
+) {
+	await addServiceProviderConnection(
+		idpName,
+		spName,
+		spName,
+		spEntityId,
+		page
+	);
+
+	await addIdentityProviderConnection(
+		idpName,
+		spName,
+		idpName,
+		idpEntityId,
+		page
+	);
 }

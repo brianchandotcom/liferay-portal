@@ -18,14 +18,6 @@ export const DEFAULT_IDP_URL = `http://${DEFAULT_IDP_NAME}:8080`;
 export const DEFAULT_SP_NAME = 'www.baker.com';
 export const DEFAULT_SP_URL = `http://${DEFAULT_SP_NAME}:8080`;
 
-export async function createServiceProviderVirtualInstance(
-	name: string,
-	entityId: string,
-	page
-) {
-	await _createSamlVirtualInstance(name, entityId, 'Service Provider', page);
-}
-
 export async function createIdentityProviderVirtualInstance(
 	name = DEFAULT_IDP_NAME,
 	entityId = name,
@@ -34,44 +26,45 @@ export async function createIdentityProviderVirtualInstance(
 	await _createSamlVirtualInstance(name, entityId, 'Identity Provider', page);
 }
 
-export async function deleteVirtualInstance(name: string, page) {
-	const virtualInstancesPage = new VirtualInstancesPage(page);
-
-	await virtualInstancesPage.deleteVirtualInstance(name);
-}
-
-export async function setupSamlInstances(
-	idpInstanceName = DEFAULT_IDP_NAME,
-	spInstanceName = DEFAULT_SP_NAME,
-	idpEntityId = idpInstanceName,
-	spEntityId = spInstanceName,
+async function _createSamlVirtualInstance(
+	name: string,
+	entityId: string,
+	samlRole: string,
 	page
 ) {
-	await createIdentityProviderVirtualInstance(
-		idpInstanceName,
-		idpEntityId,
-		page
+	const virtualInstancesPage = new VirtualInstancesPage(page);
+
+	await virtualInstancesPage.addNewVirtualInstance(
+		undefined,
+		undefined,
+		name,
+		undefined
 	);
 
-	// Create new sp virtual instance
+	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 
-	await page.goto('/');
+	liferayConfig.environment.baseUrl = `http://${name}:8080`;
 
-	await createServiceProviderVirtualInstance(
-		spInstanceName,
-		spEntityId,
-		page
+	await performLogin(
+		page,
+		'test',
+		liferayConfig.environment.baseUrl,
+		`@${name}.com`
 	);
 
-	// Add a new connection for each provider, of the opposite provider
+	const samlAdminPage = new SamlAdminPage(page);
 
-	await connectSpAndIdp(
-		idpInstanceName,
-		spInstanceName,
-		idpEntityId,
-		spEntityId,
-		page
-	);
+	await samlAdminPage.configureSAML(true, entityId, samlRole);
+
+	liferayConfig.environment.baseUrl = defaultBaseUrl;
+}
+
+export async function createServiceProviderVirtualInstance(
+	name: string,
+	entityId: string,
+	page
+) {
+	await _createSamlVirtualInstance(name, entityId, 'Service Provider', page);
 }
 
 export async function createSpAndIdpUser(
@@ -139,37 +132,67 @@ export async function createSpAndIdpUser(
 	return userAccount;
 }
 
-async function _createSamlVirtualInstance(
-	name: string,
-	entityId: string,
-	samlRole: string,
-	page
-) {
+export async function deleteVirtualInstance(name: string, page) {
 	const virtualInstancesPage = new VirtualInstancesPage(page);
 
-	await virtualInstancesPage.addNewVirtualInstance(
-		undefined,
-		undefined,
-		name,
-		undefined
+	await virtualInstancesPage.deleteVirtualInstance(name);
+}
+
+export async function resetSamlKeystoreManagerTarget(page) {
+	const systemSettingsPage = new SystemSettingsPage(page);
+
+	await systemSettingsPage.goToSystemSetting(
+		'SSO',
+		'SAML KeyStoreManager Implementation Configuration'
 	);
 
-	const defaultBaseUrl = liferayConfig.environment.baseUrl;
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: systemSettingsPage.page.getByRole('button', {name: 'Actions'}),
+		trigger: systemSettingsPage.page.getByRole('link', {
+			name: 'Reset Default Values',
+		}),
+	});
 
-	liferayConfig.environment.baseUrl = `http://${name}:8080`;
+	systemSettingsPage.page
+		.getByRole('link', {name: 'Reset Default Values'})
+		.click();
 
-	await performLogin(
-		page,
-		'test',
-		liferayConfig.environment.baseUrl,
-		`@${name}.com`
+	await waitForSuccessAlert(page);
+}
+
+export async function setupSamlInstances(
+	idpInstanceName = DEFAULT_IDP_NAME,
+	spInstanceName = DEFAULT_SP_NAME,
+	idpEntityId = idpInstanceName,
+	spEntityId = spInstanceName,
+	page
+) {
+	await createIdentityProviderVirtualInstance(
+		idpInstanceName,
+		idpEntityId,
+		page
 	);
 
-	const samlAdminPage = new SamlAdminPage(page);
+	// Create new sp virtual instance
 
-	await samlAdminPage.configureSAML(true, entityId, samlRole);
+	await page.goto('/');
 
-	liferayConfig.environment.baseUrl = defaultBaseUrl;
+	await createServiceProviderVirtualInstance(
+		spInstanceName,
+		spEntityId,
+		page
+	);
+
+	// Add a new connection for each provider, of the opposite provider
+
+	await connectSpAndIdp(
+		idpInstanceName,
+		spInstanceName,
+		idpEntityId,
+		spEntityId,
+		page
+	);
 }
 
 export async function updateSamlKeystoreManagerTarget(target: string, page) {
@@ -195,29 +218,6 @@ export async function updateSamlKeystoreManagerTarget(target: string, page) {
 	}
 
 	await updateButton.click();
-
-	await waitForSuccessAlert(page);
-}
-
-export async function resetSamlKeystoreManagerTarget(page) {
-	const systemSettingsPage = new SystemSettingsPage(page);
-
-	await systemSettingsPage.goToSystemSetting(
-		'SSO',
-		'SAML KeyStoreManager Implementation Configuration'
-	);
-
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: systemSettingsPage.page.getByRole('button', {name: 'Actions'}),
-		trigger: systemSettingsPage.page.getByRole('link', {
-			name: 'Reset Default Values',
-		}),
-	});
-
-	systemSettingsPage.page
-		.getByRole('link', {name: 'Reset Default Values'})
-		.click();
 
 	await waitForSuccessAlert(page);
 }

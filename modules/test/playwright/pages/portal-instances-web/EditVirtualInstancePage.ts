@@ -33,18 +33,6 @@ export class EditVirtualInstancePage {
 		this.virtualHostField = this.page.getByLabel('Virtual Host');
 	}
 
-	async goto(webId: string) {
-		await this.applicationsMenuPage.goToVirtualInstances();
-
-		const row = await this.page.getByRole('row').filter({hasText: webId});
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: 'Edit'}),
-			trigger: row.getByRole('button', {name: 'Show Actions'}),
-		});
-	}
-
 	async editVirtualInstance(
 		active = true,
 		webId: string,
@@ -74,5 +62,17 @@ export class EditVirtualInstancePage {
 
 		await this.saveButton.click();
 		await expect(await this.successMessage).toBeVisible();
+	}
+
+	async goto(webId: string) {
+		await this.applicationsMenuPage.goToVirtualInstances();
+
+		const row = await this.page.getByRole('row').filter({hasText: webId});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Edit'}),
+			trigger: row.getByRole('button', {name: 'Show Actions'}),
+		});
 	}
 }

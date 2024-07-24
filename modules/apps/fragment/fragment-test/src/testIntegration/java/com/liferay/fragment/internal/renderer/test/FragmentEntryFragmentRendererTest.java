@@ -159,13 +159,13 @@ public class FragmentEntryFragmentRendererTest {
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(true);
 
-		Assert.assertTrue(_fragmentEntryLinkIsCacheable(fragmentEntry));
+		Assert.assertTrue(_isFragmentEntryLinkCacheable(fragmentEntry));
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					ctCollection.getCtCollectionId())) {
 
-			Assert.assertFalse(_fragmentEntryLinkIsCacheable(fragmentEntry));
+			Assert.assertFalse(_isFragmentEntryLinkCacheable(fragmentEntry));
 		}
 		finally {
 			_ctCollectionLocalService.deleteCTCollection(ctCollection);
@@ -222,32 +222,6 @@ public class FragmentEntryFragmentRendererTest {
 		Assert.assertTrue(content.contains(fragmentEntry.getHtml()));
 	}
 
-	private boolean _fragmentEntryLinkIsCacheable(FragmentEntry fragmentEntry)
-		throws PortalException {
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
-				_defaultSegmentsExperienceId, _layout.getPlid(),
-				fragmentEntry.getCss(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
-				StringPool.BLANK, 0, null, fragmentEntry.getType(),
-				_serviceContext);
-
-		DefaultFragmentRendererContext defaultFragmentRendererContext =
-			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		defaultFragmentRendererContext.setLocale(LocaleUtil.US);
-
-		return ReflectionTestUtil.invoke(
-			_fragmentRenderer, "_isCacheable",
-			new Class<?>[] {
-				FragmentEntryLink.class, FragmentRendererContext.class
-			},
-			fragmentEntryLink, defaultFragmentRendererContext);
-	}
-
 	private FragmentEntry _getFragmentEntry(boolean cacheable)
 		throws Exception {
 
@@ -299,6 +273,32 @@ public class FragmentEntryFragmentRendererTest {
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return themeDisplay;
+	}
+
+	private boolean _isFragmentEntryLinkCacheable(FragmentEntry fragmentEntry)
+		throws PortalException {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_defaultSegmentsExperienceId, _layout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				_serviceContext);
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		defaultFragmentRendererContext.setLocale(LocaleUtil.US);
+
+		return ReflectionTestUtil.invoke(
+			_fragmentRenderer, "_isCacheable",
+			new Class<?>[] {
+				FragmentEntryLink.class, FragmentRendererContext.class
+			},
+			fragmentEntryLink, defaultFragmentRendererContext);
 	}
 
 	@Inject

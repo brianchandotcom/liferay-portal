@@ -283,20 +283,7 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 
 	@Override
 	protected void doReindex(WikiPage wikiPage) throws Exception {
-		if (!wikiPage.isHead() ||
-			(!wikiPage.isApproved() && !wikiPage.isInTrash())) {
-
-			return;
-		}
-
-		if (Validator.isNotNull(wikiPage.getRedirectTitle())) {
-			return;
-		}
-
-		_indexWriterHelper.updateDocument(
-			wikiPage.getCompanyId(), getDocument(wikiPage));
-
-		_reindexAttachments(wikiPage);
+		_reindexDocument(wikiPage);
 	}
 
 	@Reference
@@ -324,6 +311,23 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 		}
 	}
 
+	private void _reindexDocument(WikiPage wikiPage) throws Exception {
+		if (!wikiPage.isHead() ||
+			(!wikiPage.isApproved() && !wikiPage.isInTrash())) {
+
+			return;
+		}
+
+		if (Validator.isNotNull(wikiPage.getRedirectTitle())) {
+			return;
+		}
+
+		_indexWriterHelper.updateDocument(
+			wikiPage.getCompanyId(), getDocument(wikiPage));
+
+		_reindexAttachments(wikiPage);
+	}
+
 	private void _reindexEveryVersionOfResourcePrimKey(long resourcePrimKey)
 		throws Exception {
 
@@ -340,7 +344,7 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 
 		for (WikiPage wikiPage : wikiPages) {
 			if (wikiPage.getPrimaryKey() == latestWikiPage.getPrimaryKey()) {
-				doReindex(wikiPage);
+				_reindexDocument(wikiPage);
 			}
 			else {
 				_deleteDocument(wikiPage);

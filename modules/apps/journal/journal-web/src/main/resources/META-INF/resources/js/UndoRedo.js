@@ -64,11 +64,11 @@ export default function UndoRedo({
 		friendlyURLInputComponent = component;
 	});
 
-	Liferay.componentReady(
-		`${portletNamespace}${META_FIELD_NAMES.title}`
-	).then((component) => {
-		titleInputComponent = component;
-	});
+	Liferay.componentReady(`${portletNamespace}${META_FIELD_NAMES.title}`).then(
+		(component) => {
+			titleInputComponent = component;
+		}
+	);
 
 	const handleUndo = () => {
 		const newStep = step - 1;
@@ -263,21 +263,15 @@ export default function UndoRedo({
 			const newHistory = {
 				defaultLanguageId: defaultLanguageIdInput.value,
 				descriptionInputComponent:
-					descriptionInputComponent.getValue(
-						selectedLanguageId
-					),
-				descriptionTranslatedLanguages:
-					descriptionInputComponent
-						.get('translatedLanguages')
-						.values(),
+					descriptionInputComponent.getValue(selectedLanguageId),
+				descriptionTranslatedLanguages: descriptionInputComponent
+					.get('translatedLanguages')
+					.values(),
 				friendlyURLInputComponent:
-					friendlyURLInputComponent.getValue(
-						selectedLanguageId
-					),
-				friendlyURLTranslatedLanguages:
-					friendlyURLInputComponent
-						.get('translatedLanguages')
-						.values(),
+					friendlyURLInputComponent.getValue(selectedLanguageId),
+				friendlyURLTranslatedLanguages: friendlyURLInputComponent
+					.get('translatedLanguages')
+					.values(),
 				name: fieldName,
 				selectedLanguageId: selectedLanguageIdInput.value,
 				titleInputComponent:
@@ -294,7 +288,15 @@ export default function UndoRedo({
 				step: step + 1,
 			});
 		},
-		[descriptionInputComponent, friendlyURLInputComponent, history, portletNamespace, selectedLanguageId, step, titleInputComponent]
+		[
+			descriptionInputComponent,
+			friendlyURLInputComponent,
+			history,
+			portletNamespace,
+			selectedLanguageId,
+			step,
+			titleInputComponent,
+		]
 	);
 
 	const resetStoreState = useCallback(
@@ -309,22 +311,18 @@ export default function UndoRedo({
 
 			const newHistory = {
 				defaultLanguageId: defaultLanguageIdInput.value,
-				descriptionInputComponent:
-					descriptionInputComponent.getValue(
-						selectedLanguageIdInput.value
-					),
-				descriptionTranslatedLanguages:
-					descriptionInputComponent
-						.get('translatedLanguages')
-						.values(),
-				friendlyURLInputComponent:
-					friendlyURLInputComponent.getValue(
-						selectedLanguageIdInput.value
-					),
-				friendlyURLTranslatedLanguages:
-					friendlyURLInputComponent
-						.get('translatedLanguages')
-						.values(),
+				descriptionInputComponent: descriptionInputComponent.getValue(
+					selectedLanguageIdInput.value
+				),
+				descriptionTranslatedLanguages: descriptionInputComponent
+					.get('translatedLanguages')
+					.values(),
+				friendlyURLInputComponent: friendlyURLInputComponent.getValue(
+					selectedLanguageIdInput.value
+				),
+				friendlyURLTranslatedLanguages: friendlyURLInputComponent
+					.get('translatedLanguages')
+					.values(),
 				name: fieldName,
 				selectedLanguageId: selectedLanguageIdInput.value,
 				titleInputComponent: titleInputComponent.getValue(
@@ -342,7 +340,12 @@ export default function UndoRedo({
 				step: 0,
 			});
 		},
-		[descriptionInputComponent, friendlyURLInputComponent, portletNamespace, titleInputComponent]
+		[
+			descriptionInputComponent,
+			friendlyURLInputComponent,
+			portletNamespace,
+			titleInputComponent,
+		]
 	);
 
 	const localeChangeHandler = useCallback(

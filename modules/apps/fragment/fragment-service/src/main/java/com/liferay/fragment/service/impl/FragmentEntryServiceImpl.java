@@ -195,7 +195,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 				_getFragmentEntryGroupByStep(
 					groupId, fragmentCollectionId, name, status)
 			).as(
-				"fragmentCompositionsAndFragmentEntriesTable",
+				"tempFCAndFETable",
 				FragmentCompositionsAndFragmentEntriesTable.INSTANCE
 			);
 
@@ -260,7 +260,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 						groupId, fragmentCollectionId, name, status)
 				)
 			).as(
-				"fragmentCompositionsAndFragmentEntriesTable"
+				"tempFCAndFETable"
 			);
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
@@ -742,7 +742,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		private FragmentCompositionsAndFragmentEntriesTable() {
 			super(
-				"FragmentCompositionsAndFragmentEntriesTable",
+				"tempFCAndFETable",
 				FragmentCompositionsAndFragmentEntriesTable::new);
 		}
 

@@ -11,10 +11,10 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -78,14 +78,14 @@ public class DLFileEntryTypeServiceTest {
 	@Test
 	public void testAddFileEntryTypeWithEmptyDDMForm() throws Exception {
 		int fileEntryTypesCount =
-			DLFileEntryTypeServiceUtil.getFileEntryTypesCount(
+			_dlFileEntryTypeService.getFileEntryTypesCount(
 				new long[] {_group.getGroupId()});
 
 		_addFileEntryType(null);
 
 		Assert.assertEquals(
 			fileEntryTypesCount + 1,
-			DLFileEntryTypeServiceUtil.getFileEntryTypesCount(
+			_dlFileEntryTypeService.getFileEntryTypesCount(
 				new long[] {_group.getGroupId()}));
 	}
 
@@ -108,8 +108,7 @@ public class DLFileEntryTypeServiceTest {
 	public void testAddFileEntryTypeWithNonemptyDDMForm() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
-		byte[] testFileBytes = FileUtil.getBytes(
-			getClass(), _TEST_DDM_STRUCTURE);
+		byte[] testFileBytes = _file.getBytes(getClass(), _TEST_DDM_STRUCTURE);
 
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
@@ -128,7 +127,7 @@ public class DLFileEntryTypeServiceTest {
 		serviceContext.setLanguageId(LocaleUtil.toLanguageId(user.getLocale()));
 
 		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+			_dlFileEntryTypeLocalService.addFileEntryType(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				ddmStructure.getStructureId(), null,
 				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
@@ -161,7 +160,7 @@ public class DLFileEntryTypeServiceTest {
 
 		Assert.assertTrue(hasUserLocale);
 
-		DLFileEntryTypeLocalServiceUtil.deleteFileEntryType(dlFileEntryType);
+		_dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
 	}
 
 	@Test
@@ -171,17 +170,15 @@ public class DLFileEntryTypeServiceTest {
 		_addFileEntryType("12345678");
 
 		Assert.assertNotNull(
-			DLFileEntryTypeServiceUtil.
-				fetchFileEntryTypeByExternalReferenceCode(
-					"12345678", _group.getGroupId()));
+			_dlFileEntryTypeService.fetchFileEntryTypeByExternalReferenceCode(
+				"12345678", _group.getGroupId()));
 
-		DLFileEntryTypeServiceUtil.deleteDLFileEntryType(
+		_dlFileEntryTypeService.deleteDLFileEntryType(
 			"12345678", _group.getGroupId());
 
 		Assert.assertNull(
-			DLFileEntryTypeServiceUtil.
-				fetchFileEntryTypeByExternalReferenceCode(
-					"12345678", _group.getGroupId()));
+			_dlFileEntryTypeService.fetchFileEntryTypeByExternalReferenceCode(
+				"12345678", _group.getGroupId()));
 	}
 
 	@Test
@@ -189,40 +186,38 @@ public class DLFileEntryTypeServiceTest {
 		throws Exception {
 
 		Assert.assertNull(
-			DLFileEntryTypeServiceUtil.
-				fetchFileEntryTypeByExternalReferenceCode(
-					"12345678", _group.getGroupId()));
+			_dlFileEntryTypeService.fetchFileEntryTypeByExternalReferenceCode(
+				"12345678", _group.getGroupId()));
 
 		_addFileEntryType("12345678");
 
 		Assert.assertNotNull(
-			DLFileEntryTypeServiceUtil.
-				fetchFileEntryTypeByExternalReferenceCode(
-					"12345678", _group.getGroupId()));
+			_dlFileEntryTypeService.fetchFileEntryTypeByExternalReferenceCode(
+				"12345678", _group.getGroupId()));
 	}
 
 	@Test
 	public void testFileEntryTypeRestrictions() throws Exception {
-		Folder folder = DLAppLocalServiceUtil.addFolder(
+		Folder folder = _dlAppLocalService.addFolder(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
 			StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		Folder subfolder = DLAppLocalServiceUtil.addFolder(
+		Folder subfolder = _dlAppLocalService.addFolder(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			folder.getFolderId(), "SubFolder AA", StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_basicDocumentDLFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+			_dlFileEntryTypeLocalService.getFileEntryType(
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
 		DLFileEntryType dlFileEntryType1 = _addFileEntryType(null);
 
 		DLFileEntryType dlFileEntryType2 = _addFileEntryType(null);
 
-		DLAppLocalServiceUtil.updateFolder(
+		_dlAppLocalService.updateFolder(
 			folder.getFolderId(), folder.getParentFolderId(), folder.getName(),
 			folder.getDescription(),
 			_getFolderServiceContext(dlFileEntryType1, dlFileEntryType2));
@@ -230,7 +225,7 @@ public class DLFileEntryTypeServiceTest {
 		String name = "Test.txt";
 		byte[] bytes = _CONTENT.getBytes();
 
-		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+		FileEntry fileEntry = _dlAppService.addFileEntry(
 			null, _group.getGroupId(), folder.getFolderId(), name,
 			ContentTypes.TEXT_PLAIN, name, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, bytes, null, null, null,
@@ -238,7 +233,7 @@ public class DLFileEntryTypeServiceTest {
 
 		assertFileEntryType(fileEntry, dlFileEntryType1);
 
-		fileEntry = DLAppServiceUtil.addFileEntry(
+		fileEntry = _dlAppService.addFileEntry(
 			null, _group.getGroupId(), subfolder.getFolderId(), name,
 			ContentTypes.TEXT_PLAIN, name, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, bytes, null, null, null,
@@ -246,13 +241,13 @@ public class DLFileEntryTypeServiceTest {
 
 		assertFileEntryType(fileEntry, dlFileEntryType1);
 
-		DLAppLocalServiceUtil.updateFolder(
+		_dlAppLocalService.updateFolder(
 			subfolder.getFolderId(), subfolder.getParentFolderId(),
 			subfolder.getName(), subfolder.getDescription(),
 			_getFolderServiceContext(_basicDocumentDLFileEntryType));
 
 		assertFileEntryType(
-			DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId()),
+			_dlAppService.getFileEntry(fileEntry.getFileEntryId()),
 			_basicDocumentDLFileEntryType);
 	}
 
@@ -261,13 +256,13 @@ public class DLFileEntryTypeServiceTest {
 		_addFileEntryType("12345678");
 
 		Assert.assertNotNull(
-			DLFileEntryTypeServiceUtil.getFileEntryTypeByExternalReferenceCode(
+			_dlFileEntryTypeService.getFileEntryTypeByExternalReferenceCode(
 				"12345678", _group.getGroupId()));
 
-		DLFileEntryTypeServiceUtil.deleteDLFileEntryType(
+		_dlFileEntryTypeService.deleteDLFileEntryType(
 			"12345678", _group.getGroupId());
 
-		DLFileEntryTypeServiceUtil.getFileEntryTypeByExternalReferenceCode(
+		_dlFileEntryTypeService.getFileEntryTypeByExternalReferenceCode(
 			"12345678", _group.getGroupId());
 	}
 
@@ -285,7 +280,7 @@ public class DLFileEntryTypeServiceTest {
 				new Locale[] {LocaleUtil.SPAIN}, LocaleUtil.SPAIN);
 
 			DLFileEntryType dlFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				_dlFileEntryTypeLocalService.addFileEntryType(
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					ddmStructure.getStructureId(), null,
 					Collections.singletonMap(LocaleUtil.US, name),
@@ -319,7 +314,7 @@ public class DLFileEntryTypeServiceTest {
 				new Locale[] {LocaleUtil.SPAIN}, LocaleUtil.SPAIN);
 
 			DLFileEntryType dlFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				_dlFileEntryTypeLocalService.addFileEntryType(
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					ddmStructure.getStructureId(), null,
 					Collections.singletonMap(LocaleUtil.US, name),
@@ -331,12 +326,12 @@ public class DLFileEntryTypeServiceTest {
 			name = RandomTestUtil.randomString();
 			description = RandomTestUtil.randomString();
 
-			DLFileEntryTypeLocalServiceUtil.updateFileEntryType(
+			_dlFileEntryTypeLocalService.updateFileEntryType(
 				dlFileEntryType.getFileEntryTypeId(),
 				Collections.singletonMap(LocaleUtil.US, name),
 				Collections.singletonMap(LocaleUtil.US, description));
 
-			dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+			dlFileEntryType = _dlFileEntryTypeLocalService.getFileEntryType(
 				dlFileEntryType.getFileEntryTypeId());
 
 			Assert.assertEquals(
@@ -361,12 +356,12 @@ public class DLFileEntryTypeServiceTest {
 
 		DLFileEntryType dlFileEntryType = _addFileEntryType(null);
 
-		DLFileEntryTypeServiceUtil.updateFileEntryType(
+		_dlFileEntryTypeService.updateFileEntryType(
 			dlFileEntryType.getFileEntryTypeId(),
 			Collections.singletonMap(LocaleUtil.US, StringUtil.randomString()),
 			Collections.singletonMap(LocaleUtil.US, StringUtil.randomString()));
 
-		dlFileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(
+		dlFileEntryType = _dlFileEntryTypeService.getFileEntryType(
 			dlFileEntryType.getFileEntryTypeId());
 
 		List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(
@@ -392,7 +387,7 @@ public class DLFileEntryTypeServiceTest {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), DLFileEntryMetadata.class.getName());
 
-		return DLFileEntryTypeServiceUtil.addFileEntryType(
+		return _dlFileEntryTypeService.addFileEntryType(
 			externalReferenceCode, _group.getGroupId(),
 			ddmStructure.getStructureId(), null,
 			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
@@ -430,6 +425,21 @@ public class DLFileEntryTypeServiceTest {
 
 	@Inject(filter = "ddm.form.deserializer.type=xsd")
 	private DDMFormDeserializer _ddmFormDeserializer;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLAppService _dlAppService;
+
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Inject
+	private DLFileEntryTypeService _dlFileEntryTypeService;
+
+	@Inject
+	private File _file;
 
 	@DeleteAfterTestRun
 	private Group _group;

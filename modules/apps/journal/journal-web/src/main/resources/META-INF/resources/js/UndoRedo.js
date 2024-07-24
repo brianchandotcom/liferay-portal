@@ -258,51 +258,39 @@ export default function UndoRedo({
 				`${portletNamespace}languageId`
 			);
 
-			Promise.all([
-				descriptionInputComponent,
-				titleInputComponent,
-				friendlyURLInputComponent,
-			]).then(
-				([
-					descriptionInputComponent,
-					titleInputComponent,
-					friendlyURLInputComponent,
-				]) => {
-					const newHistory = {
-						defaultLanguageId: defaultLanguageIdInput.value,
-						descriptionInputComponent:
-							descriptionInputComponent.getValue(
-								selectedLanguageId
-							),
-						descriptionTranslatedLanguages:
-							descriptionInputComponent
-								.get('translatedLanguages')
-								.values(),
-						friendlyURLInputComponent:
-							friendlyURLInputComponent.getValue(
-								selectedLanguageId
-							),
-						friendlyURLTranslatedLanguages:
-							friendlyURLInputComponent
-								.get('translatedLanguages')
-								.values(),
-						name: fieldName,
-						selectedLanguageId: selectedLanguageIdInput.value,
-						titleInputComponent:
-							titleInputComponent.getValue(selectedLanguageId),
-						titleTranslatedLanguages: titleInputComponent
-							.get('translatedLanguages')
-							.values(),
-					};
+			const newHistory = {
+				defaultLanguageId: defaultLanguageIdInput.value,
+				descriptionInputComponent:
+					descriptionInputComponent.getValue(
+						selectedLanguageId
+					),
+				descriptionTranslatedLanguages:
+					descriptionInputComponent
+						.get('translatedLanguages')
+						.values(),
+				friendlyURLInputComponent:
+					friendlyURLInputComponent.getValue(
+						selectedLanguageId
+					),
+				friendlyURLTranslatedLanguages:
+					friendlyURLInputComponent
+						.get('translatedLanguages')
+						.values(),
+				name: fieldName,
+				selectedLanguageId: selectedLanguageIdInput.value,
+				titleInputComponent:
+					titleInputComponent.getValue(selectedLanguageId),
+				titleTranslatedLanguages: titleInputComponent
+					.get('translatedLanguages')
+					.values(),
+			};
 
-					setState({
-						defaultLanguageId: defaultLanguageIdInput.value,
-						history: [...history.slice(0, step + 1), newHistory],
-						selectedLanguageId: selectedLanguageIdInput.value,
-						step: step + 1,
-					});
-				}
-			);
+			setState({
+				defaultLanguageId: defaultLanguageIdInput.value,
+				history: [...history.slice(0, step + 1), newHistory],
+				selectedLanguageId: selectedLanguageIdInput.value,
+				step: step + 1,
+			});
 		},
 		[descriptionInputComponent, friendlyURLInputComponent, history, portletNamespace, selectedLanguageId, step, titleInputComponent]
 	);
@@ -317,52 +305,40 @@ export default function UndoRedo({
 				`${portletNamespace}languageId`
 			);
 
-			Promise.all([
-				descriptionInputComponent,
-				titleInputComponent,
-				friendlyURLInputComponent,
-			]).then(
-				([
-					descriptionInputComponent,
-					titleInputComponent,
-					friendlyURLInputComponent,
-				]) => {
-					const newHistory = {
-						defaultLanguageId: defaultLanguageIdInput.value,
-						descriptionInputComponent:
-							descriptionInputComponent.getValue(
-								selectedLanguageIdInput.value
-							),
-						descriptionTranslatedLanguages:
-							descriptionInputComponent
-								.get('translatedLanguages')
-								.values(),
-						friendlyURLInputComponent:
-							friendlyURLInputComponent.getValue(
-								selectedLanguageIdInput.value
-							),
-						friendlyURLTranslatedLanguages:
-							friendlyURLInputComponent
-								.get('translatedLanguages')
-								.values(),
-						name: fieldName,
-						selectedLanguageId: selectedLanguageIdInput.value,
-						titleInputComponent: titleInputComponent.getValue(
-							selectedLanguageIdInput.value
-						),
-						titleTranslatedLanguages: titleInputComponent
-							.get('translatedLanguages')
-							.values(),
-					};
+			const newHistory = {
+				defaultLanguageId: defaultLanguageIdInput.value,
+				descriptionInputComponent:
+					descriptionInputComponent.getValue(
+						selectedLanguageIdInput.value
+					),
+				descriptionTranslatedLanguages:
+					descriptionInputComponent
+						.get('translatedLanguages')
+						.values(),
+				friendlyURLInputComponent:
+					friendlyURLInputComponent.getValue(
+						selectedLanguageIdInput.value
+					),
+				friendlyURLTranslatedLanguages:
+					friendlyURLInputComponent
+						.get('translatedLanguages')
+						.values(),
+				name: fieldName,
+				selectedLanguageId: selectedLanguageIdInput.value,
+				titleInputComponent: titleInputComponent.getValue(
+					selectedLanguageIdInput.value
+				),
+				titleTranslatedLanguages: titleInputComponent
+					.get('translatedLanguages')
+					.values(),
+			};
 
-					setState({
-						defaultLanguageId: defaultLanguageIdInput.value,
-						history: [newHistory],
-						selectedLanguageId: selectedLanguageIdInput.value,
-						step: 0,
-					});
-				}
-			);
+			setState({
+				defaultLanguageId: defaultLanguageIdInput.value,
+				history: [newHistory],
+				selectedLanguageId: selectedLanguageIdInput.value,
+				step: 0,
+			});
 		},
 		[descriptionInputComponent, friendlyURLInputComponent, portletNamespace, titleInputComponent]
 	);

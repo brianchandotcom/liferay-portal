@@ -1435,7 +1435,6 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-
 	</tag>
 	<tag>
 		<description>Creates a select field (or combo box) for holding <![CDATA[<code>&lt;aui:option&gt;</code>]]> components.</description>
@@ -1641,6 +1640,24 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<description>Creates a style component in which to write CSS.</description>
+		<name>style</name>
+		<tag-class>com.liferay.taglib.aui.StyleTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>The SPA mode (off, permanent, temporary, ...).</description>
+			<name>senna</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The type attribute of the standard style tag.</description>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<description>Creates a UI component for managing translation of associated content.</description>

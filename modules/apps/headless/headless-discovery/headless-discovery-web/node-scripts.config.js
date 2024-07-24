@@ -3,16 +3,12 @@
  * SPDX-License-Identifier: [LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// eslint-disable-next-line @liferay/no-extraneous-dependencies
 const {polyfillNode} = require('esbuild-plugin-polyfill-node');
 const fs = require('fs/promises');
 const path = require('path');
 
-const outdir = path.resolve(
-	'build',
-	'node',
-	'packageRunBuild',
-	'resources'
-);
+const outdir = path.resolve('build', 'node', 'packageRunBuild', 'resources');
 
 module.exports = {
 	customBuild: {

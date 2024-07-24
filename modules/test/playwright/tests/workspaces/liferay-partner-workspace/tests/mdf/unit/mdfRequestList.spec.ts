@@ -10,7 +10,11 @@ import {partnerPagesTest} from '../../../fixtures/partnerPagesTest';
 export const test = mergeTests(partnerPagesTest);
 
 test.describe('MDF Request List', () => {
-	test('Open MDF Request List', async ({mdfRequestListPage, page, partnerSite}) => {
+	test('Open MDF Request List', async ({
+		mdfRequestListPage,
+		page,
+		partnerSite,
+	}) => {
 		await mdfRequestListPage.goto(partnerSite.friendlyUrlPath);
 
 		const heading = await page.getByRole('heading', {

@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from "../product-navigation-applications-menu/ApplicationsMenuPage";
+import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class CommerceInstanceSettingsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
@@ -16,10 +16,17 @@ export class CommerceInstanceSettingsPage {
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.catalogLink = page.getByRole('link', {exact:true, name: 'Catalog'});
+		this.catalogLink = page.getByRole('link', {
+			exact: true,
+			name: 'Catalog',
+		});
 		this.page = page;
-		this.showUnselectableOptionsCheckbox = page.getByLabel('Show Unselectable Options');
-		this.submitConfigurationButton = page.getByTestId('submitConfiguration');
+		this.showUnselectableOptionsCheckbox = page.getByLabel(
+			'Show Unselectable Options'
+		);
+		this.submitConfigurationButton = page.getByTestId(
+			'submitConfiguration'
+		);
 	}
 
 	async goto() {

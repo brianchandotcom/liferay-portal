@@ -4,7 +4,7 @@
  */
 
 import getNamedArguments from '../util/getNamedArguments.mjs';
-import maybeUpdateNodeScriptsHash from '../util/maybeMaybeUpdateNodeScriptsHash.mjs';
+import maybeUpdateNodeScriptsHash from '../util/maybeUpdateNodeScriptsHash.mjs';
 import mainBase from './index.mjs';
 
 /**

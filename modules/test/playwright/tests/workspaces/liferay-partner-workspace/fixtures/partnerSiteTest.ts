@@ -10,7 +10,7 @@ import {partnerHelperTest} from './partnerHelperTest';
 
 export const test = mergeTests(
 	loginTest({screenName: 'test'}),
-	partnerHelperTest,
+	partnerHelperTest
 );
 
 export interface PartnerSite {
@@ -20,7 +20,10 @@ export interface PartnerSite {
 export const partnerSiteTest = test.extend<PartnerSite>({
 	partnerSite: [
 		async ({partnerHelper}, use) => {
-			const site = await partnerHelper.apiHelpers.headlessSite.getSiteByERC('LIFERAY_PARTNER');
+			const site =
+				await partnerHelper.apiHelpers.headlessSite.getSiteByERC(
+					'LIFERAY_PARTNER'
+				);
 
 			expect(site.id).toBeGreaterThan(0);
 

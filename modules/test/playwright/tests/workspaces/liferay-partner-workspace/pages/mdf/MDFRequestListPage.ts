@@ -15,8 +15,11 @@ export class MDFRequestListPage {
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(`${liferayConfig.environment.baseUrl}/web${siteUrl}/marketing/mdf-requests`, {
-			waitUntil: 'networkidle',
-		});
+		await this.page.goto(
+			`${liferayConfig.environment.baseUrl}/web${siteUrl}/marketing/mdf-requests`,
+			{
+				waitUntil: 'networkidle',
+			}
+		);
 	}
 }

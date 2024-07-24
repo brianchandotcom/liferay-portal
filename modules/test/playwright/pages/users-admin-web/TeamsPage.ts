@@ -5,7 +5,6 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {getRandomInt} from '../../utils/getRandomInt';
 import {ProductMenuPage} from '../product-navigation-control-menu-web/ProductMenuPage';
 import {searchTableRowByValue} from './UsersAndOrganizationsPage';
 

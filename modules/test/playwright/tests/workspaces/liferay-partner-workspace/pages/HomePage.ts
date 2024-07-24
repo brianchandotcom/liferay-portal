@@ -15,8 +15,11 @@ export class HomePage {
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(`${liferayConfig.environment.baseUrl}/web${siteUrl}/home`, {
-			waitUntil: 'networkidle',
-		});
+		await this.page.goto(
+			`${liferayConfig.environment.baseUrl}/web${siteUrl}/home`,
+			{
+				waitUntil: 'networkidle',
+			}
+		);
 	}
 }

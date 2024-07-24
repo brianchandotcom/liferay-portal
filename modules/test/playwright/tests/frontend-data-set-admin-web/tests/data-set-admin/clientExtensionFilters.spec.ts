@@ -55,7 +55,6 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
 		filtersPage,
 		page,
 	}) => {
-		const fieldLabel = getRandomString();
 		const filterLabel = getRandomString();
 
 		await test.step('"No default filters were created." message appears when there are no filters', async () => {
@@ -118,14 +117,13 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
 		filtersPage,
 		page,
 	}) => {
-		const fieldLabel = getRandomString();
 		const filterLabel = getRandomString();
 
 		await test.step('Create a client extension filter', async () => {
 			await filtersPage.createClientExtensionFilter({
+				clientExtension: clientExtensionName,
 				filterBy: DATE_FIELD_NAME,
 				name: filterLabel,
-				clientExtension: clientExtensionName,
 			});
 
 			await filtersPage.saveAddFilterModal();
@@ -142,9 +140,9 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
 
 		await test.step('Fill a client extension filter modal and close without saving', async () => {
 			await filtersPage.createClientExtensionFilter({
+				clientExtension: clientExtensionName,
 				filterBy: NAME_FIELD_NAME,
 				name: filterLabel,
-				clientExtension: clientExtensionName,
 			});
 
 			await filtersPage.closeAddFilterModal();
@@ -152,9 +150,9 @@ test.describe('Client Extension Filters in Data Set Manager', () => {
 
 		await test.step('Fill a client extension filter modal and cancel the creation', async () => {
 			await filtersPage.createClientExtensionFilter({
+				clientExtension: clientExtensionName,
 				filterBy: NAME_FIELD_NAME,
 				name: filterLabel,
-				clientExtension: clientExtensionName,
 			});
 
 			await filtersPage.cancelAddFilterModal();

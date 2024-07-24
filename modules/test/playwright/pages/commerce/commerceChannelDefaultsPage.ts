@@ -113,7 +113,7 @@ export class CommerceChannelDefaultsPage {
 			name: 'Save',
 		});
 		this.channelEntry = (channelEntryName: string) => {
-			return page.getByTestId(new RegExp(`.*${channelEntryName}.*`, "g"));
+			return page.getByTestId(new RegExp(`.*${channelEntryName}.*`, 'g'));
 		};
 		this.channelEntryAddButton = (channelEntryName: string) => {
 			return this.channelEntry(channelEntryName).getByRole('button', {

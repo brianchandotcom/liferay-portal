@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -133,6 +134,37 @@ public class DLFileEntryTypeServiceTest {
 	}
 
 	@Test
+	public void testAddFileEntryTypeWithEmptyOrNullExternalReferenceCode()
+		throws Exception {
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), DLFileEntryMetadata.class.getName());
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeServiceUtil.addFileEntryType(
+				null, _group.getGroupId(), ddmStructure.getStructureId(), null,
+				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertNotNull(dlFileEntryType);
+		Assert.assertNotNull(dlFileEntryType.getExternalReferenceCode());
+
+		ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), DLFileEntryMetadata.class.getName());
+
+		dlFileEntryType = DLFileEntryTypeServiceUtil.addFileEntryType(
+			StringPool.BLANK, _group.getGroupId(),
+			ddmStructure.getStructureId(), null,
+			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertNotNull(dlFileEntryType);
+		Assert.assertNotNull(dlFileEntryType.getExternalReferenceCode());
+	}
+
+	@Test
 	public void testAddFileEntryTypeWithNonemptyDDMForm() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -193,6 +225,34 @@ public class DLFileEntryTypeServiceTest {
 	}
 
 	@Test
+	public void testDeleteFileEntryTypeByExternalReferenceCode()
+		throws Exception {
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), DLFileEntryMetadata.class.getName());
+
+		DLFileEntryTypeServiceUtil.addFileEntryType(
+			"12345678", _group.getGroupId(), ddmStructure.getStructureId(),
+			null,
+			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertNotNull(
+			DLFileEntryTypeServiceUtil.
+				fetchFileEntryTypeByExternalReferenceCode(
+					"12345678", _group.getGroupId()));
+
+		DLFileEntryTypeServiceUtil.deleteDLFileEntryType(
+			"12345678", _group.getGroupId());
+
+		Assert.assertNull(
+			DLFileEntryTypeServiceUtil.
+				fetchFileEntryTypeByExternalReferenceCode(
+					"12345678", _group.getGroupId()));
+	}
+
+	@Test
 	public void testFileEntryTypeRestrictions() throws Exception {
 
 		// Configure folder
@@ -235,6 +295,29 @@ public class DLFileEntryTypeServiceTest {
 		assertFileEntryType(
 			DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId()),
 			_basicDocumentDLFileEntryType);
+	}
+
+	@Test(expected = PortalException.class)
+	public void testGetFileEntryTypeByExternalReferenceCode() throws Exception {
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), DLFileEntryMetadata.class.getName());
+
+		DLFileEntryTypeServiceUtil.addFileEntryType(
+			"12345678", _group.getGroupId(), ddmStructure.getStructureId(),
+			null,
+			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertNotNull(
+			DLFileEntryTypeServiceUtil.getFileEntryTypeByExternalReferenceCode(
+				"12345678", _group.getGroupId()));
+
+		DLFileEntryTypeServiceUtil.deleteDLFileEntryType(
+			"12345678", _group.getGroupId());
+
+		DLFileEntryTypeServiceUtil.getFileEntryTypeByExternalReferenceCode(
+			"12345678", _group.getGroupId());
 	}
 
 	@Test

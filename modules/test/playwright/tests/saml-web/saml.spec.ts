@@ -29,38 +29,6 @@ export const test = mergeTests(
 	virtualInstancesPagesTest
 );
 
-test('Create, edit, and delete a new virtual instance', async ({
-	editVirtualInstancePage,
-	virtualInstancesPage,
-}) => {
-	const name = getRandomString();
-
-	await virtualInstancesPage.addNewVirtualInstance(
-		undefined,
-		undefined,
-		name,
-		undefined
-	);
-
-	const newName = getRandomString();
-
-	await editVirtualInstancePage.editVirtualInstance(
-		false,
-		name,
-		newName + '.com',
-		'100',
-		newName
-	);
-
-	expect(
-		await virtualInstancesPage.page
-			.getByRole('row')
-			.getByText(name + ' ' + newName + ' ' + newName + '.com 1 100 No')
-	).toBeVisible();
-
-	await virtualInstancesPage.deleteVirtualInstance(name);
-});
-
 test('Create two virtual instances, one IdP and one SP, connect them, perform SP initiated SSO, perform SP initiated SLO', async ({
 	browser,
 	page,
@@ -160,4 +128,36 @@ test('Create two virtual instances, one IdP and one SP, connect them, perform SP
 	await deleteVirtualInstance(DEFAULT_SP_NAME, page);
 
 	await resetSamlKeystoreManagerTarget(page);
+});
+
+test('Create, edit, and delete a new virtual instance', async ({
+	editVirtualInstancePage,
+	virtualInstancesPage,
+}) => {
+	const name = getRandomString();
+
+	await virtualInstancesPage.addNewVirtualInstance(
+		undefined,
+		undefined,
+		name,
+		undefined
+	);
+
+	const newName = getRandomString();
+
+	await editVirtualInstancePage.editVirtualInstance(
+		false,
+		name,
+		newName + '.com',
+		'100',
+		newName
+	);
+
+	expect(
+		await virtualInstancesPage.page
+			.getByRole('row')
+			.getByText(name + ' ' + newName + ' ' + newName + '.com 1 100 No')
+	).toBeVisible();
+
+	await virtualInstancesPage.deleteVirtualInstance(name);
 });

@@ -387,13 +387,15 @@ public class TestrayCaseResultResourceImpl
 							});
 						setUserPortraitUrl(
 							() -> {
-								if (value.get("portraitId") == null) {
+								long portraitId = GetterUtil.getLong(
+									value.get("portraitId"));
+
+								if (portraitId == 0) {
 									return null;
 								}
 
 								return UserConstants.getPortraitURL(
-									"/image", true,
-									GetterUtil.getLong(value.get("portraitId")),
+									"/image", true, portraitId,
 									GetterUtil.getString(value.get("uuid_")));
 							});
 					}

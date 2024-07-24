@@ -338,14 +338,6 @@ public class SiteActionDropdownItemsProviderTest {
 		Language language = Mockito.mock(Language.class);
 
 		Mockito.when(
-			language.get(
-				Mockito.any(HttpServletRequest.class), Mockito.anyString())
-		).thenAnswer(
-			(Answer<String>)invocationOnMock -> invocationOnMock.getArgument(
-				1, String.class)
-		);
-
-		Mockito.when(
 			language.format(
 				Mockito.any(HttpServletRequest.class), Mockito.anyString(),
 				Mockito.any(Object.class))
@@ -354,6 +346,14 @@ public class SiteActionDropdownItemsProviderTest {
 				invocationOnMock.getArgument(1, String.class), StringPool.DASH,
 				GetterUtil.getString(
 					invocationOnMock.getArgument(2, Object.class)))
+		);
+
+		Mockito.when(
+			language.get(
+				Mockito.any(HttpServletRequest.class), Mockito.anyString())
+		).thenAnswer(
+			(Answer<String>)invocationOnMock -> invocationOnMock.getArgument(
+				1, String.class)
 		);
 
 		languageUtil.setLanguage(language);

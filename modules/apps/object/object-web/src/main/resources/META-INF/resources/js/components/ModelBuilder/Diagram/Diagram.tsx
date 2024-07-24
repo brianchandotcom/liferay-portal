@@ -275,6 +275,7 @@ function DiagramBuilder() {
 				connectionLineStyle={{stroke: '#0B5FFF'}}
 				connectionLineType={ConnectionLineType.SmoothStep}
 				connectionMode={ConnectionMode.Loose}
+				dir="ltr"
 				edgeTypes={EDGE_TYPES}
 				elements={elements}
 				minZoom={0.1}

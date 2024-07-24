@@ -159,10 +159,6 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			"<(?i)link ", "<link " + nonceAttribute + " ");
 		content = content.replaceAll(
 			"<(?i)link>", "<link " + nonceAttribute + "");
-		content = content.replaceAll(
-			"<(?i)style ", "<style " + nonceAttribute + " ");
-		content = content.replaceAll(
-			"<(?i)style>", "<style " + nonceAttribute + ">");
 
 		Pattern pattern = Pattern.compile(
 			"\\{.*nonce=\".{" + nonce.length() + "}\".*\\}");

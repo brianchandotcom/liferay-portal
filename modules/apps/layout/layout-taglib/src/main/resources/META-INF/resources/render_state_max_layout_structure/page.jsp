@@ -7,11 +7,11 @@
 
 <%@ include file="/render_state_max_layout_structure/init.jsp" %>
 
-<style type="text/css">
+<aui:style type="text/css">
 	.master-layout-fragment .portlet-header {
 		display: none;
 	}
-</style>
+</aui:style>
 
 <%
 RenderMaxStateLayoutStructureDisplayContext renderMaxStateLayoutStructureDisplayContext = new RenderMaxStateLayoutStructureDisplayContext();

@@ -13,7 +13,7 @@ SearchContainer<AccountUserDisplay> accountUsersDisplaySearchContainer = Account
 AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementToolbarDisplayContext = new AccountUsersAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountUsersDisplaySearchContainer);
 %>
 
-<style type="text/css">
+<aui:style type="text/css">
 	.lfr-search-container-wrapper .text-muted a {
 		color: #a7a9bc;
 	}
@@ -22,7 +22,7 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 		color: #6b6c7e !important;
 		font-style: normal !important;
 	}
-</style>
+</aui:style>
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= accountUsersAdminManagementToolbarDisplayContext %>"

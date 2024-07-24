@@ -555,10 +555,26 @@ public abstract class BaseBuild implements Build {
 		for (FailureMessageGenerator failureMessageGenerator :
 				getFailureMessageGenerators()) {
 
-			String failureMessage = failureMessageGenerator.getMessage(this);
+			try {
+				String failureMessage = failureMessageGenerator.getMessage(
+					this);
 
-			if (failureMessage != null) {
-				return failureMessage;
+				if (failureMessage != null) {
+					return failureMessage;
+				}
+			}
+			catch (Exception exception) {
+				exception.printStackTrace();
+
+				Class<?> clazz = failureMessageGenerator.getClass();
+
+				String className = clazz.getName();
+
+				NotificationUtil.sendEmail(
+					"Failure message generator exception, class name is: " +
+						className,
+					"Notification Util", "Failure Message Generator",
+					"calum.ragan@liferay.com");
 			}
 		}
 

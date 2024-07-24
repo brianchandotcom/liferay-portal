@@ -192,7 +192,7 @@ class App extends EventEmitter {
 		 * @default false
 		 * @protected
 		 */
-		this.preloadCSS = config.preloadCSS;
+		this.preloadCSS = !!config?.preloadCSS;
 
 		/**
 		 * Holds the redirect path containing the query parameters.

@@ -4,16 +4,17 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayModal, {useModal} from '@clayui/modal';
-import useSWR from 'swr';
-import HeadlessCommerceAdminCatalogImpl from '../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {ClaySelect} from '@clayui/form';
-import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
+import ClayModal, {useModal} from '@clayui/modal';
 import {useState} from 'react';
-import headlessCommerceDeliveryCart from '../../../../../services/rest/HeadlessCommerceDeliveryCart';
-import useMarketplaceSpringBootOAuth2 from '../../../../../hooks/useMarketplaceSpringBootOAuth2';
+import useSWR from 'swr';
+
+import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import {ORDER_TYPES} from '../../../../../enums/Order';
+import useMarketplaceSpringBootOAuth2 from '../../../../../hooks/useMarketplaceSpringBootOAuth2';
 import {Liferay} from '../../../../../liferay/liferay';
+import HeadlessCommerceAdminCatalogImpl from '../../../../../services/rest/HeadlessCommerceAdminCatalog';
+import headlessCommerceDeliveryCart from '../../../../../services/rest/HeadlessCommerceDeliveryCart';
 
 type NewTrialModal = ReturnType<typeof useModal> & {
 	revalidate: () => void;
@@ -29,11 +30,11 @@ const NewTrialModal: React.FC<NewTrialModal> = ({
 	revalidate,
 }) => {
 	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
-	const [selectedApp, setSelectedApp] = useState({
+	const {channel, myUserAccount} = useMarketplaceContext();
+	const [selectedTrial, setSelectedTrial] = useState({
 		accountId: '',
 		productId: '',
 	});
-	const {channel, myUserAccount} = useMarketplaceContext();
 	const {data: apps} = useSWR<APIResponse<ProductWithPurchasable>>(
 		'administrator-dashboard/trial',
 		() =>
@@ -44,25 +45,22 @@ const NewTrialModal: React.FC<NewTrialModal> = ({
 				})
 			)
 	);
-
-	const cloudApps = apps?.items?.filter((product) =>
-		product?.productSpecifications.some(
-			({specificationKey, value}) =>
-				specificationKey === 'type' && value.en_US === 'cloud'
-		)
-	);
-
-	const publishedCloudApps = cloudApps?.filter(
-		(app) => app.productStatus === 0
-	);
-
 	const {accountBriefs} = myUserAccount;
 
+	const publishedCloudApps = apps?.items?.filter(
+		(product) =>
+			product?.productSpecifications?.some(
+				(spec) =>
+					spec.specificationKey === 'type' &&
+					spec.value.en_US === 'cloud'
+			) && product.productStatus === 0
+	);
+
 	const onSubmit = async () => {
-		const accountId = Number(selectedApp.accountId);
+		const accountId = Number(selectedTrial.accountId);
 
 		const skus = apps?.items?.find(
-			(app) => app.productId === Number(selectedApp.productId)
+			(app) => app.productId === Number(selectedTrial.productId)
 		);
 
 		const skuId = skus?.skus?.find((sku) => sku.purchasable === true);
@@ -75,7 +73,7 @@ const NewTrialModal: React.FC<NewTrialModal> = ({
 						currency: channel.currencyCode,
 						discount: 0,
 					},
-					productId: Number(selectedApp.productId),
+					productId: Number(selectedTrial.productId),
 					quantity: 1,
 					settings: {
 						maxQuantity: 1,
@@ -108,22 +106,22 @@ const NewTrialModal: React.FC<NewTrialModal> = ({
 				<div className="mb-5">
 					<h5>Cloud Products</h5>
 					<ClaySelect
-						value={selectedApp.productId}
+						aria-label="Select App"
+						id="selectApp"
 						onChange={({target}) => {
-							setSelectedApp({
-								...selectedApp,
+							setSelectedTrial({
+								...selectedTrial,
 								productId: target.value,
 							});
 						}}
-						aria-label="Select App"
-						id="selectApp"
+						value={selectedTrial.productId}
 					>
 						<ClaySelect.Option
+							aria-hidden
+							disabled
 							key="placeholderApp"
 							label="Select an App"
 							value=""
-							disabled
-							aria-hidden
 						/>
 						{publishedCloudApps?.map((app, index) => (
 							<ClaySelect.Option
@@ -138,22 +136,22 @@ const NewTrialModal: React.FC<NewTrialModal> = ({
 				<>
 					<h5>Select Account</h5>
 					<ClaySelect
-						value={selectedApp.accountId || ''}
+						aria-label="Select Account"
+						id="selectAccount"
 						onChange={({target}) => {
-							setSelectedApp({
-								...selectedApp,
+							setSelectedTrial({
+								...selectedTrial,
 								accountId: target.value,
 							});
 						}}
-						aria-label="Select Account"
-						id="selectAccount"
+						value={selectedTrial.accountId || ''}
 					>
 						<ClaySelect.Option
+							aria-hidden
+							disabled
 							key="placeholderAccount"
 							label="Select an Account"
 							value=""
-							disabled
-							aria-hidden
 						/>
 						{accountBriefs?.map((account, index) => (
 							<ClaySelect.Option
@@ -170,8 +168,8 @@ const NewTrialModal: React.FC<NewTrialModal> = ({
 				last={
 					<ClayButton
 						disabled={
-							!selectedApp.accountId.length ||
-							!selectedApp.productId.length
+							!selectedTrial.accountId.length ||
+							!selectedTrial.productId.length
 						}
 						onClick={onSubmit}
 					>

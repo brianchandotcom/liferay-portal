@@ -8,11 +8,11 @@ import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 
 import Page from '../../../../components/Page';
+import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import InfoCard from '../../components/InfoCard';
 import useTrialMetrics from '../../hooks/useTrialMetrics';
 import TrialTable from './TrialTable';
-import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../enums/Order';
 
 const getAvailabilityResourceLabel = (availability: Availability) => {
 	if (availability.fallback) {

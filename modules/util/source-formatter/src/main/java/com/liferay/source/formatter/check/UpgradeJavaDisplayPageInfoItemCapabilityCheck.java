@@ -5,9 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +25,7 @@ public class UpgradeJavaDisplayPageInfoItemCapabilityCheck
 			return content;
 		}
 
-		String annotationContent = _joinLines(
+		String annotationContent = joinLines(
 			"@Reference(",
 			String.format(
 				"\t\ttarget = \"(info.item.capability.key=\" + " +
@@ -43,20 +40,6 @@ public class UpgradeJavaDisplayPageInfoItemCapabilityCheck
 		return new String[] {
 			"com.liferay.info.item.capability.InfoItemCapability"
 		};
-	}
-
-	private String _joinLines(String... lines) {
-		StringBundler sb = new StringBundler((lines.length * 2) - 1);
-
-		for (String line : lines) {
-			if (sb.index() > 0) {
-				sb.append(StringPool.NEW_LINE);
-			}
-
-			sb.append(line);
-		}
-
-		return sb.toString();
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

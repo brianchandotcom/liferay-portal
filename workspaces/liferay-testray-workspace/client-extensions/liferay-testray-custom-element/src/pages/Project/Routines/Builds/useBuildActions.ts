@@ -8,13 +8,13 @@ import {useNavigate} from 'react-router-dom';
 import useAutofillBuild from '~/hooks/useAutofillBuild';
 import usePermission from '~/hooks/usePermission';
 import {Liferay} from '~/services/liferay';
+import {TestrayRole} from '~/util/constants';
 
 import useFormModal from '../../../../hooks/useFormModal';
 import useMutate from '../../../../hooks/useMutate';
 import i18n from '../../../../i18n';
 import {TestrayBuild, testrayBuildImpl} from '../../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../../types';
-import {TestrayRole} from '~/util/constants';
 
 const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const formModal = useFormModal();

@@ -97,6 +97,8 @@ test.describe('Sorting in Data Set Manager', () => {
 		});
 
 		await test.step('Check that the delete message is displayed', async () => {
+			await expect(page.getByText('Delete Sorting')).toBeVisible();
+
 			await expect(
 				page.getByText(
 					'Are you sure you want to delete this sorting? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.'

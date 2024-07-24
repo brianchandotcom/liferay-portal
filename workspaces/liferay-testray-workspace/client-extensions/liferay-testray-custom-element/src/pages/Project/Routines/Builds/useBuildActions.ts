@@ -22,8 +22,8 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const {setBuildA, setBuildB} = useAutofillBuild();
 	const navigate = useNavigate();
 	const hasPermission = usePermission([
-		TestrayRole.ADMINISTRATOR,
-		TestrayRole.LEAD,
+		TestrayRole.TESTRAY_ADMINISTRATOR,
+		TestrayRole.TESTRAY_LEAD,
 	]);
 
 	const modal = formModal.modal;

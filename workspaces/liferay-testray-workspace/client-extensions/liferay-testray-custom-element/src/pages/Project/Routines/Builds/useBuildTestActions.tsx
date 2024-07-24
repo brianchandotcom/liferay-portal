@@ -24,9 +24,9 @@ const useBuildTestActions = () => {
 	const {removeItemFromList, updateItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
 	const hasPermission = usePermission([
-		TestrayRole.ADMINISTRATOR,
-		TestrayRole.ANALYST,
-		TestrayRole.LEAD,
+		TestrayRole.TESTRAY_ADMINISTRATOR,
+		TestrayRole.TESTRAY_ANALYST,
+		TestrayRole.TESTRAY_LEAD,
 	]);
 
 	const actionsRef = useRef([

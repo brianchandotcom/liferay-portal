@@ -21,7 +21,7 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const navigate = useNavigate();
 	const {removeItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
-	const hasPermission = usePermission([TestrayRole.ADMINISTRATOR]);
+	const hasPermission = usePermission([TestrayRole.TESTRAY_ADMINISTRATOR]);
 
 	const actionsRef = useRef([
 		{

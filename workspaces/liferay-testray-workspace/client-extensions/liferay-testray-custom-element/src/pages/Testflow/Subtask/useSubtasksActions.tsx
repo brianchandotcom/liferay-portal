@@ -20,6 +20,7 @@ import {testraySubtaskImpl} from '../../../services/rest/TestraySubtask';
 import {Action} from '../../../types';
 import {SubtaskStatuses} from '../../../util/statuses';
 import {UserListView} from '../../Manage/User';
+import {TestrayRole} from '~/util/constants';
 
 type OutletContext = {
 	revalidate: {
@@ -34,9 +35,9 @@ const useSubtasksActions = () => {
 	const [, setTaskSidebarRefresh] = useAtom(taskSidebarRefresh);
 
 	const hasPermission = usePermission([
-		'Testray Administrator',
-		'Testray Analyst',
-		'Testray Lead',
+		TestrayRole.TESTRAY_ADMINISTRATOR,
+		TestrayRole.TESTRAY_ANALYST,
+		TestrayRole.TESTRAY_LEAD,
 	]);
 
 	const {form} = useFormActions();

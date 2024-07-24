@@ -36,9 +36,9 @@ export enum StatusesProgressScore {
 }
 
 export enum TestrayRole {
-	ADMINISTRATOR = 'Testray Administrator',
-	ANALYST = 'Testray Analyst',
-	LEAD = 'Testray Lead',
+	TESTRAY_ADMINISTRATOR = 'Testray Administrator',
+	TESTRAY_ANALYST = 'Testray Analyst',
+	TESTRAY_LEAD = 'Testray Lead',
 }
 
 export const chartClassNames = {

@@ -19,12 +19,18 @@ public class GradleTaskFailureMessageGenerator
 
 	@Override
 	public String getMessage(String consoleText) {
-		try {
-			return Dom4JUtil.format(getMessageElement(consoleText));
+		Element errorMessageElement = getMessageElement(consoleText);
+
+		if (errorMessageElement != null) {
+			try {
+				return Dom4JUtil.format(errorMessageElement);
+			}
+			catch (IOException ioException) {
+				return ioException.getMessage();
+			}
 		}
-		catch (IOException ioException) {
-			return ioException.getMessage();
-		}
+
+		return null;
 	}
 
 	@Override

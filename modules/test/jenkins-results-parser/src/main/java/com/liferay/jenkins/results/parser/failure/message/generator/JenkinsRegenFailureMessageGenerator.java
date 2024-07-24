@@ -37,7 +37,13 @@ public class JenkinsRegenFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		return Dom4JUtil.toCodeSnippetElement(getMessage(build));
+		String errorMessage = getMessage(build);
+
+		if (errorMessage != null) {
+			return Dom4JUtil.toCodeSnippetElement(errorMessage);
+		}
+
+		return null;
 	}
 
 	private static final String _TOKEN_BUILD_FAILED = "BUILD FAILED";

@@ -143,18 +143,13 @@ public class DBSchemaDefinitionExporter {
 	private void _generateReport(DBType exportDBType, String path)
 		throws Exception {
 
+		Set<String> dbTableNames = _getDBTableNames();
+		Set<String> exportTableNames = _getExportTableNames(path);
+		String installedPatchNames = StringUtil.merge(
+			PatcherValues.INSTALLED_PATCH_NAMES, StringPool.COMMA_AND_SPACE);
 		Release release = _releaseLocalService.fetchRelease(
 			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
-		String buildDate = Time.getSimpleDate(
-			release.getBuildDate(), DateUtil.ISO_8601_PATTERN);
-
-		Set<String> dbTableNames = _getDBTableNames();
-		String exportDate = Time.getSimpleDate(
-			new Date(), DateUtil.ISO_8601_PATTERN);
-		Set<String> exportTableNames = _getExportTableNames(path);
-		String installedPatches = StringUtil.merge(
-			PatcherValues.INSTALLED_PATCH_NAMES, StringPool.COMMA_AND_SPACE);
 		String missingTableNames = StringUtil.merge(
 			SetUtil.asymmetricDifference(dbTableNames, exportTableNames),
 			StringPool.COMMA_AND_SPACE);
@@ -163,16 +158,16 @@ public class DBSchemaDefinitionExporter {
 			new File(path, "db_schema_definition_export_report.info"),
 			StringUtil.merge(
 				new Object[] {
-					"Export date: " + exportDate,
-					"Portal schema version: " + release.getSchemaVersion(),
-					"Portal build number: " + release.getBuildNumber(),
-					"Portal build date: " + buildDate,
-					"Installed patches: " + installedPatches,
+					"Database tables: " + dbTableNames.size(),
 					"Database type: " + DBManagerUtil.getDBType(),
 					"Export database type: " + exportDBType,
-					"Database tables: " + dbTableNames.size(),
+					"Export date: " + _toString(new Date()),
 					"Export tables: " + exportTableNames.size(),
-					"Missing tables: " + missingTableNames
+					"Installed patches: " + installedPatchNames,
+					"Missing tables: " + missingTableNames,
+					"Portal build date: " + _toString(release.getBuildDate()),
+					"Portal build number: " + release.getBuildNumber(),
+					"Portal schema version: " + release.getSchemaVersion()
 				},
 				StringPool.NEW_LINE));
 	}
@@ -216,6 +211,10 @@ public class DBSchemaDefinitionExporter {
 		}
 
 		return tableNames;
+	}
+
+	private String _toString(Date date) {
+		return Time.getSimpleDate(date, DateUtil.ISO_8601_PATTERN);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

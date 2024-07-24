@@ -1,5 +1,5 @@
 {
-	"@generated": "3e76998db8c3d948f4cd675edae04a115854c695",
+	"@generated": "01f6246aaf8e0ac65bfb661aba889db633b9f638",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -23,6 +23,7 @@
 			]
 		},
 		"rootDir": "../../../../../../../..",
+		"skipLibCheck": true,
 		"sourceMap": false,
 		"strict": true,
 		"target": "esnext",

@@ -23,7 +23,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -159,17 +158,40 @@ public class FragmentEntryFragmentRendererTest {
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(true);
 
-		Assert.assertTrue(_isFragmentEntryLinkCacheable(fragmentEntry));
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_defaultSegmentsExperienceId, _layout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				_serviceContext);
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		defaultFragmentRendererContext.setLocale(LocaleUtil.US);
+
+		Assert.assertTrue(
+			_isFragmentEntryLinkCacheable(
+				fragmentEntryLink, defaultFragmentRendererContext));
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					ctCollection.getCtCollectionId())) {
 
-			Assert.assertFalse(_isFragmentEntryLinkCacheable(fragmentEntry));
+			Assert.assertFalse(
+				_isFragmentEntryLinkCacheable(
+					fragmentEntryLink, defaultFragmentRendererContext));
 		}
 		finally {
 			_ctCollectionLocalService.deleteCTCollection(ctCollection);
 		}
+
+		Assert.assertTrue(
+			_isFragmentEntryLinkCacheable(
+				fragmentEntryLink, defaultFragmentRendererContext));
 	}
 
 	@Test
@@ -275,23 +297,9 @@ public class FragmentEntryFragmentRendererTest {
 		return themeDisplay;
 	}
 
-	private boolean _isFragmentEntryLinkCacheable(FragmentEntry fragmentEntry)
-		throws PortalException {
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
-				_defaultSegmentsExperienceId, _layout.getPlid(),
-				fragmentEntry.getCss(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
-				StringPool.BLANK, 0, null, fragmentEntry.getType(),
-				_serviceContext);
-
-		DefaultFragmentRendererContext defaultFragmentRendererContext =
-			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		defaultFragmentRendererContext.setLocale(LocaleUtil.US);
+	private boolean _isFragmentEntryLinkCacheable(
+		FragmentEntryLink fragmentEntryLink,
+		FragmentRendererContext defaultFragmentRendererContext) {
 
 		return ReflectionTestUtil.invoke(
 			_fragmentRenderer, "_isCacheable",

@@ -23,7 +23,7 @@ Export parameters:
 - `--jdbc-url <arg>` Set the JDBC URL.
 - `--output-dir <arg>` Set the output directory.
 - `--password <arg>` Set the database user password.
-- `--schema-name <arg>` Set the database schema name.
+- `--schema-name <arg>` Set the schema name.
 - `--user <arg>` Set the database user name.
 
 Validate parameters:

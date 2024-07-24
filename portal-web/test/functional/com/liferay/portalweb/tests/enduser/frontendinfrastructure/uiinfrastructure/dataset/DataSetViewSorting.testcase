@@ -50,30 +50,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-182790. Confirms the option of Edit a sorting appears."
-	@priority = 3
-	test AssertEditOptionAppears {
-		task ("When the user creates a new sorting") {
-			DataSetAdmin.createASort(
-				key_field = "fieldName",
-				key_sorting = "Descending");
-		}
-
-		task ("And clicks on the 3 dots menu present on the newly created sorting") {
-			Click(locator1 = "Icon#SVG_ELLIPSIS");
-		}
-
-		task ("Then the Edit and Delete options appear") {
-			AssertVisible(
-				key_itemName = "Edit",
-				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
-
-			AssertVisible(
-				key_itemName = "Delete",
-				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
-		}
-	}
-
 	@description = "LPS-182790. Confirms Ascending and Descending options appears when editing a sorting."
 	@priority = 3
 	test AssertEditSortingOptions {

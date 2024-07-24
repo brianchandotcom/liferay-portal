@@ -78,10 +78,6 @@ public class FragmentEntryFragmentRendererTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_ctCollection = _ctCollectionLocalService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, FragmentEntryFragmentRendererTest.class.getSimpleName(), null);
-
 		_group = GroupTestUtil.addGroup(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0);
 
@@ -157,15 +153,22 @@ public class FragmentEntryFragmentRendererTest {
 	public void testShouldOnlyCacheFragmentEntryLinkInProductionMode()
 		throws Exception {
 
+		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, FragmentEntryFragmentRendererTest.class.getSimpleName(), null);
+
 		FragmentEntry fragmentEntry = _getFragmentEntry(true);
 
 		Assert.assertTrue(_fragmentEntryLinkIsCacheable(fragmentEntry));
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
+					ctCollection.getCtCollectionId())) {
 
 			Assert.assertFalse(_fragmentEntryLinkIsCacheable(fragmentEntry));
+		}
+		finally {
+			_ctCollectionLocalService.deleteCTCollection(ctCollection);
 		}
 	}
 
@@ -305,9 +308,6 @@ public class FragmentEntryFragmentRendererTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@DeleteAfterTestRun
-	private CTCollection _ctCollection;
 
 	private long _defaultSegmentsExperienceId;
 

@@ -156,8 +156,12 @@ public class JobPropertyFactory {
 
 		sb.append(testSuiteName);
 		sb.append("_");
-		sb.append(testBatchName);
-		sb.append("_");
+
+		if (testBatchName != null) {
+			sb.append(testBatchName);
+			sb.append("_");
+		}
+
 		sb.append(ruleName);
 		sb.append("_");
 		sb.append(job.getJobName());

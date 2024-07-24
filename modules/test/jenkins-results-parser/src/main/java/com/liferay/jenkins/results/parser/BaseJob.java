@@ -1323,6 +1323,12 @@ public abstract class BaseJob implements Job {
 		return new ArrayList<>();
 	}
 
+	protected void recordJobProperties(List<JobProperty> jobProperties) {
+		for (JobProperty jobProperty : jobProperties) {
+			recordJobProperty(jobProperty);
+		}
+	}
+
 	protected void recordJobProperty(JobProperty jobProperty) {
 		if ((jobProperty == null) || _jobProperties.contains(jobProperty)) {
 			return;

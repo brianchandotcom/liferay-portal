@@ -6,6 +6,9 @@
 package com.liferay.jenkins.results.parser.test.suite;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
 import com.liferay.jenkins.results.parser.test.batch.TestBatchFactory;
 
@@ -23,9 +26,12 @@ import java.util.Properties;
  */
 public class RelevantRule implements Comparable<RelevantRule> {
 
-	public RelevantRule(String filePath, String name, Properties properties) {
+	public RelevantRule(
+		String filePath, String name, Job job, Properties properties) {
+
 		_filePath = filePath;
 		_name = name;
+		_job = job;
 		_properties = properties;
 	}
 
@@ -122,14 +128,17 @@ public class RelevantRule implements Comparable<RelevantRule> {
 
 	public List<TestBatch> getTestBatches() {
 		if (_testBatches == null) {
+			JobProperty testBatchNamesJobProperty =
+				getTestBatchNamesJobProperty();
+
 			String testBatchNamesPropertyValue =
-				JenkinsResultsParserUtil.getProperty(
-					getProperties(), "test.batch.names", getName(),
-					getTestSuiteName());
+				testBatchNamesJobProperty.getValue();
 
 			if (testBatchNamesPropertyValue == null) {
 				return Collections.emptyList();
 			}
+
+			_testBatchNamesJobPropertyList.add(testBatchNamesJobProperty);
 
 			_testBatches = new ArrayList<>();
 
@@ -144,6 +153,26 @@ public class RelevantRule implements Comparable<RelevantRule> {
 		}
 
 		return _testBatches;
+	}
+
+	public List<JobProperty> getTestBatchNamesJobProperties() {
+		return _testBatchNamesJobPropertyList;
+	}
+
+	public JobProperty getTestBatchNamesJobProperty() {
+		File propertiesFile = new File(_filePath);
+
+		File propertiesBaseDir = propertiesFile.getParentFile();
+
+		JobProperty.Type jobPropertyType = JobProperty.Type.DEFAULT_TEST_DIR;
+
+		if (!_filePath.endsWith("liferay-portal/test.properties")) {
+			jobPropertyType = JobProperty.Type.MODULE_TEST_DIR;
+		}
+
+		return JobPropertyFactory.newJobProperty(
+			"test.batch.names", "relevant", null, _name, _job,
+			propertiesBaseDir, jobPropertyType, true);
 	}
 
 	public String getTestSuiteName() {
@@ -203,10 +232,13 @@ public class RelevantRule implements Comparable<RelevantRule> {
 	}
 
 	private final String _filePath;
+	private final Job _job;
 	private List<PathMatcher> _modifiedFilesExcludesPathMatchers;
 	private List<PathMatcher> _modifiedFilesIncludesPathMatchers;
 	private final String _name;
 	private final Properties _properties;
 	private List<TestBatch> _testBatches;
+	private final List<JobProperty> _testBatchNamesJobPropertyList =
+		new ArrayList<>();
 
 }

@@ -246,7 +246,7 @@ public class FileEntryContentDashboardItemTest {
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg",
-			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+			MimeTypesUtil.getExtensionContentType("image/jpg"),
 			new byte[0], null, null, null, _serviceContext);
 
 		VersionableContentDashboardItem<FileEntry>
@@ -454,30 +454,27 @@ public class FileEntryContentDashboardItemTest {
 		_assertSpecificInformationList(
 			null, "jpg", null, "0 B", _getVersionableContentDashboardItem(1));
 		_assertSpecificInformationList(
-			_language.get(LocaleUtil.getDefault(), "square"), "jpeg", "225x225",
+			_language.get(LocaleUtil.getDefault(), "square"), "jpg", "225x225",
 			"7 KB",
-			_getVersionableContentDashboardItem(
-				"dependencies/225x225.jpeg", 1));
+			_getVersionableContentDashboardItem("dependencies/225x225.jpg", 1));
 		_assertSpecificInformationList(
-			_language.get(LocaleUtil.getDefault(), "tall"), "jpeg", "183x275",
+			_language.get(LocaleUtil.getDefault(), "tall"), "jpg", "183x275",
+			"6 KB",
+			_getVersionableContentDashboardItem("dependencies/183x275.jpg", 1));
+		_assertSpecificInformationList(
+			_language.get(LocaleUtil.getDefault(), "tall"), "jpg", "183x275",
 			"6 KB",
 			_getVersionableContentDashboardItem(
-				"dependencies/183x275.jpeg", 1));
+				"dependencies/small_image.jpg", 1));
 		_assertSpecificInformationList(
-			_language.get(LocaleUtil.getDefault(), "tall"), "jpeg", "183x275",
-			"6 KB",
-			_getVersionableContentDashboardItem(
-				"dependencies/small_image.jpeg", 1));
-		_assertSpecificInformationList(
-			_language.get(LocaleUtil.getDefault(), "wide"), "jpeg", "277x182",
+			_language.get(LocaleUtil.getDefault(), "wide"), "jpg", "277x182",
 			"8 KB",
-			_getVersionableContentDashboardItem(
-				"dependencies/277x182.jpeg", 1));
+			_getVersionableContentDashboardItem("dependencies/277x182.jpg", 1));
 		_assertSpecificInformationList(
-			_language.get(LocaleUtil.getDefault(), "wide"), "jpeg", "500x333",
+			_language.get(LocaleUtil.getDefault(), "wide"), "jpg", "500x333",
 			"42 KB",
 			_getVersionableContentDashboardItem(
-				"dependencies/medium_image.jpeg", 1));
+				"dependencies/medium_image.jpg", 1));
 		_assertSpecificInformationList(
 			_language.get(LocaleUtil.getDefault(), "wide"), "jpg", "1920x1080",
 			"281 KB",
@@ -535,7 +532,7 @@ public class FileEntryContentDashboardItemTest {
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"example.jpg",
-			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+			MimeTypesUtil.getExtensionContentType("image/jpg"),
 			new byte[0], null, null, null, _serviceContext);
 
 		VersionableContentDashboardItem<FileEntry>
@@ -592,7 +589,7 @@ public class FileEntryContentDashboardItemTest {
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"example.jpg",
-			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+			MimeTypesUtil.getExtensionContentType("image/jpg"),
 			new byte[0], null, null, null, _serviceContext);
 
 		VersionableContentDashboardItem<FileEntry>

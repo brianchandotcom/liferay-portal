@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaVariableTypeCheck" files="portal-search-opensearch2-impl/src/main/java/com/liferay/portal/search/opensearch2/internal/util/QueryUtil\.java" />
+	</source-check>
+</suppressions>

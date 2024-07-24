@@ -247,9 +247,7 @@ public class TestrayTestFlowResourceImpl
 								long portraitId = GetterUtil.getLong(
 									value.get("portraitId"));
 
-								if ((portraitId == 0) ||
-									(value.get("portraitId") == null)) {
-
+								if (portraitId == 0) {
 									return null;
 								}
 

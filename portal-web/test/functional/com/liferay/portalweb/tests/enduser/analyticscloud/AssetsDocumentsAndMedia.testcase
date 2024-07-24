@@ -849,7 +849,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8118 | Test Summary: Document known individuals list shows the individuals who have viewed the documents"
 	@priority = 5
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments {
-		var usernameList = "ac,liferay";
+		var usernameList = "ac,liferay,userac";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay";
 
@@ -861,24 +861,18 @@ definition {
 				userScreenName = ${name});
 		}
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "Download DM",
-			documentTitleList = "DM AC Title",
+			documentTitleList = "DM AC Title,DM AC Title,DM AC Title",
 			emailList = ${emailList},
 			pageName = "AC Page",
 			siteName = "Site Name");
 
-		JSONUser.addUser(
-			userEmailAddress = "userac@liferay.com",
-			userFirstName = "userac",
-			userLastName = "userac",
-			userScreenName = "userac");
-
 		ACUtils.navigateToSitePageWithUser(
-			actionType = "Download DM",
-			documentTitleList = "DM AC Title",
+			actionType = "View DM",
+			documentTitleList = "DM AC Title,DM AC Title,DM AC Title",
 			emailList = "userac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
@@ -887,7 +881,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = ${propertyName});
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToAssets();
 

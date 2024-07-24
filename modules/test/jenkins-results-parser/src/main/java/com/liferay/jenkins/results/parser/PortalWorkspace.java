@@ -353,6 +353,10 @@ public class PortalWorkspace extends BaseWorkspace {
 	}
 
 	private void _configureOSBFaroWorkspaceGitRepository() {
+		if (_osbFaroGitHubURL == null) {
+			return;
+		}
+
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			getPortalWorkspaceGitRepository();
 
@@ -471,7 +475,6 @@ public class PortalWorkspace extends BaseWorkspace {
 
 	private boolean _commitOSBAsahModule;
 	private String _osbAsahGitHubURL;
-	private String _osbFaroGitHubURL =
-		"https://github.com/liferay/liferay-portal/tree/master";
+	private String _osbFaroGitHubURL;
 
 }

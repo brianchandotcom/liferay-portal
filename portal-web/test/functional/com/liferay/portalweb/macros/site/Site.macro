@@ -977,9 +977,9 @@ definition {
 				userRole = ${userRole});
 
 			AssertVisible(
-				key_menuItem = "Leave",
+				key_menuItem = "Leave Site",
 				locator1 = "MenuItem#ANY_MENU_ITEM",
-				value1 = "Leave");
+				value1 = "Leave Site");
 		}
 	}
 
@@ -1000,7 +1000,7 @@ definition {
 			listEntrySubtitle = "2 Users");
 
 		LexiconList.clickEllipsisItem(
-			item = "Leave",
+			item = "Leave Site",
 			listEntry = ${siteName},
 			userRole = ${userRole});
 
@@ -1626,9 +1626,9 @@ definition {
 			value1 = "Add Child Site");
 
 		AssertTextEquals(
-			key_menuItem = "Leave",
+			key_menuItem = "Leave Site",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
-			value1 = "Leave");
+			value1 = "Leave Site");
 
 		AssertTextEquals(
 			key_menuItem = "Deactivate",

@@ -1519,6 +1519,12 @@
 		<description>Creates a style component in which to write CSS.</description>
 		<attributes>
 			<attribute>
+				<description>The SPA mode (off, permanent, temporary, ...).</description>
+				<name>senna</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<description>The type attribute of the standard style tag.</description>
 				<name>type</name>
 				<inputType>java.lang.String</inputType>

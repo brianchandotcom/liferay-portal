@@ -95,12 +95,31 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 		IndexableContext indexableContext =
 			aopMethodInvocation.getAdviceMethodContext();
 
+		Transactional transactional = indexableContext._transactional;
+
+		TransactionConfig transactionConfig;
+
+		if (transactional != null) {
+			transactionConfig = TransactionConfig.Factory.create(
+				transactional.isolation(), transactional.propagation(),
+				transactional.readOnly(), transactional.timeout(),
+				transactional.rollbackFor(),
+				transactional.rollbackForClassName(),
+				transactional.noRollbackFor(),
+				transactional.noRollbackForClassName());
+		}
+		else {
+			transactionConfig = null;
+		}
+
 		String name = indexableContext._name;
 
 		Indexer<Object> indexer = IndexerRegistryUtil.getIndexer(name);
 
 		if (indexer != null) {
-			_reindex(indexer, indexableContext, arguments, result);
+			_reindex(
+				transactionConfig, indexer, indexableContext, arguments,
+				result);
 
 			return;
 		}
@@ -119,14 +138,28 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 				try (SafeCloseable safeCloseable =
 						CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
-					_reindex(curIndexer, indexableContext, arguments, result);
+					_reindex(
+						transactionConfig, curIndexer, indexableContext,
+						arguments, result);
 				}
 
 				return null;
 			});
 	}
 
-	private void _doReindex(
+	private int _getServiceContextParameterIndex(Method method) {
+		Class<?>[] parameterTypes = method.getParameterTypes();
+
+		for (int i = parameterTypes.length - 1; i >= 0; i--) {
+			if (ServiceContext.class.isAssignableFrom(parameterTypes[i])) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	private void _reindex(
 			Indexer<Object> indexer, IndexableContext indexableContext,
 			Object[] arguments, Object result)
 		throws SearchException {
@@ -170,34 +203,23 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 		}
 	}
 
-	private int _getServiceContextParameterIndex(Method method) {
-		Class<?>[] parameterTypes = method.getParameterTypes();
-
-		for (int i = parameterTypes.length - 1; i >= 0; i--) {
-			if (ServiceContext.class.isAssignableFrom(parameterTypes[i])) {
-				return i;
-			}
-		}
-
-		return -1;
-	}
-
 	private void _reindex(
-			Indexer<Object> indexer, IndexableContext indexableContext,
-			Object[] arguments, Object result)
+			TransactionConfig transactionConfig, Indexer<Object> indexer,
+			IndexableContext indexableContext, Object[] arguments,
+			Object result)
 		throws SearchException {
 
-		if (indexableContext._transactionConfig == null) {
-			_doReindex(indexer, indexableContext, arguments, result);
+		if (transactionConfig == null) {
+			_reindex(indexer, indexableContext, arguments, result);
 
 			return;
 		}
 
 		try {
 			TransactionInvokerUtil.invoke(
-				indexableContext._transactionConfig,
+				transactionConfig,
 				() -> {
-					_doReindex(indexer, indexableContext, arguments, result);
+					_reindex(indexer, indexableContext, arguments, result);
 
 					return null;
 				});
@@ -225,26 +247,14 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 			_name = name;
 			_indexableType = indexableType;
 			_serviceContextIndex = serviceContextIndex;
-
-			if (transactional == null) {
-				_transactionConfig = null;
-			}
-			else {
-				_transactionConfig = TransactionConfig.Factory.create(
-					transactional.isolation(), transactional.propagation(),
-					transactional.readOnly(), transactional.timeout(),
-					transactional.rollbackFor(),
-					transactional.rollbackForClassName(),
-					transactional.noRollbackFor(),
-					transactional.noRollbackForClassName());
-			}
+			_transactional = transactional;
 		}
 
 		private final String _callbackKey;
 		private final IndexableType _indexableType;
 		private final String _name;
 		private final int _serviceContextIndex;
-		private final TransactionConfig _transactionConfig;
+		private final Transactional _transactional;
 
 	}
 

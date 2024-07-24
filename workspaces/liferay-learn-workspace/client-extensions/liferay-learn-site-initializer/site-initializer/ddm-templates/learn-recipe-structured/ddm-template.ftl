@@ -42,6 +42,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="component-button text-break recipe-feedback">
 			<a
 				class="btn btn-nm btn-link page-editor__editable" data-lfr-editable-id="link" data-lfr-editable-type="link"
@@ -53,6 +54,7 @@
 			</a>
 		</div>
 	</div>
+
 	<div class="container recipe-main">
 		<div class="row">
 			<div class="col-md-9 recipe-main" id="left-panel">

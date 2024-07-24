@@ -230,13 +230,12 @@ public abstract class BaseInputFragmentRendererTestCase {
 
 		defaultFragmentRendererContext.setMode(mode);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest(objectDefinition);
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
 		fragmentRenderer.render(
-			defaultFragmentRendererContext, mockHttpServletRequest,
+			defaultFragmentRendererContext,
+			getMockHttpServletRequest(objectDefinition),
 			mockHttpServletResponse);
 
 		String content = mockHttpServletResponse.getContentAsString();

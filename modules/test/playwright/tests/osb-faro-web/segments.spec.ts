@@ -12,6 +12,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {createChannel} from './utils/channel';
 import {
+	addBreakdownByAttribute,
 	goToDistributionTabAndSelectAttribute,
 	viewBreakdownRechartsData,
 } from './utils/distribution';
@@ -834,7 +835,7 @@ test(
 );
 
 test(
-	'Segment distribution chart can be filtered by date property',
+	'Segment distribution can be filtered by date',
 	{
 		tag: '@Legacy',
 	},
@@ -845,25 +846,38 @@ test(
 			channelName,
 		});
 
-		const knownIndividualName = 'ac';
-		const knownIndividual = [
+		const firstIndividualName = 'ac';
+		const secondndividualName = 'dxp';
+		const individuals = [
 			generateIndividual({
-				name: knownIndividualName,
+				name: firstIndividualName,
+			}),
+			generateIndividual({
+				name: secondndividualName,
 			}),
 		];
 
-		await test.step('Create the known individuals directly in the AC database', async () => {
+		const birthDateFirstIndividual = '2008-06-11';
+		const updatedIndividuals = [
+			{
+				...individuals[0],
+				birthDate: `${birthDateFirstIndividual}T00:00:00.000Z`,
+			},
+			...individuals.slice(1),
+		];
+
+		await test.step('Create the 2 individuals directly in the AC database', async () => {
 			await createIndividuals({
 				apiHelpers,
-				individuals: knownIndividual,
+				individuals: updatedIndividuals,
 			});
 		});
 
 		const date = new Date();
 
-		await test.step('Create an event for the individual to appear in AC', async () => {
+		await test.step('Create an event for the individuals to appear in AC', async () => {
 			await apiHelpers.jsonWebServicesOSBAsah.createEvents(
-				knownIndividual.map((individual) => ({
+				updatedIndividuals.map((individual) => ({
 					applicationId: 'Page',
 					canonicalUrl: 'https://www.liferay.com',
 					channelId: channel.id,
@@ -875,9 +889,9 @@ test(
 			);
 		});
 
-		await test.step('Create a session for the known individual', async () => {
+		await test.step('Create a session for the known individuals', async () => {
 			await apiHelpers.jsonWebServicesOSBAsah.createSessions(
-				knownIndividual.map((individual) => ({
+				updatedIndividuals.map((individual) => ({
 					channelId: channel.id,
 					id: individual.id,
 					sessionEnd: date.toISOString(),
@@ -903,11 +917,32 @@ test(
 			await setSegmentName({page, segmentName: 'Test Static Segment'});
 
 			await addStaticMember({
-				memberNames: `${knownIndividualName}@liferay.com`,
+				memberNames: [firstIndividualName, secondndividualName],
 				page,
 			});
 
 			await saveSegment(page);
+		});
+
+		await test.step('Add a new breakdown by birthDate attribute', async () => {
+			await addBreakdownByAttribute({
+				attributeName: 'birthDate',
+				page,
+			});
+		});
+
+		await test.step('Check if the correct results appear (birthDates and maximum counts)', async () => {
+			await viewBreakdownRechartsData({
+				attributeValue: '1970-01-01',
+				maxCount: '1',
+				page,
+			});
+
+			await viewBreakdownRechartsData({
+				attributeValue: birthDateFirstIndividual,
+				maxCount: '1',
+				page,
+			});
 		});
 
 		await test.step('Click on distribution tab and select birthDate attribute', async () => {
@@ -917,9 +952,15 @@ test(
 			});
 		});
 
-		await test.step('Check if the correct results appear (birthdate and maximum count)', async () => {
+		await test.step('Check if the correct results appear (birthDates and maximum counts)', async () => {
 			await viewBreakdownRechartsData({
 				attributeValue: '1970-01-01',
+				maxCount: '1',
+				page,
+			});
+
+			await viewBreakdownRechartsData({
+				attributeValue: birthDateFirstIndividual,
 				maxCount: '1',
 				page,
 			});

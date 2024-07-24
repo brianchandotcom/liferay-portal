@@ -18,8 +18,10 @@ import java.nio.file.PathMatcher;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Kenji Heigel
@@ -138,7 +140,7 @@ public class RelevantRule implements Comparable<RelevantRule> {
 				return Collections.emptyList();
 			}
 
-			_testBatchNamesJobPropertyList.add(testBatchNamesJobProperty);
+			_testBatchNamesJobProperties.add(testBatchNamesJobProperty);
 
 			_testBatches = new ArrayList<>();
 
@@ -155,8 +157,8 @@ public class RelevantRule implements Comparable<RelevantRule> {
 		return _testBatches;
 	}
 
-	public List<JobProperty> getTestBatchNamesJobProperties() {
-		return _testBatchNamesJobPropertyList;
+	public Set<JobProperty> getTestBatchNamesJobProperties() {
+		return _testBatchNamesJobProperties;
 	}
 
 	public JobProperty getTestBatchNamesJobProperty() {
@@ -238,7 +240,7 @@ public class RelevantRule implements Comparable<RelevantRule> {
 	private final String _name;
 	private final Properties _properties;
 	private List<TestBatch> _testBatches;
-	private final List<JobProperty> _testBatchNamesJobPropertyList =
-		new ArrayList<>();
+	private final Set<JobProperty> _testBatchNamesJobProperties =
+		new HashSet<>();
 
 }

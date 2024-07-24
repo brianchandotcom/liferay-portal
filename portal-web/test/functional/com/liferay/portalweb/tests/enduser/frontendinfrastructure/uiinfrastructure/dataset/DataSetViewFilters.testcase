@@ -223,75 +223,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-176188. Confirm that the Delete option is present."
-	@ignore = "true"
-	@priority = 3
-	test CanAssertDeleteIsPresent {
-		task ("And adds a filter") {
-			DataSetAdmin.createFilters(
-				filterName = "Test Filter",
-				key_filterList = "id");
-		}
-
-		task ("When the user clicks the ellipsis //3 dots menu") {
-			Click(
-				key_fieldName = "id",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
-		}
-
-		task ("Then assert the Delete option is present") {
-			AssertElementPresent(
-				key_text = "Delete",
-				locator1 = "Button#ANY");
-		}
-	}
-
-	@description = "LPS-176188. Confirm that the field is deleted and a successful message is displayed."
-	@ignore = "true"
-	@priority = 5
-	test CanAssertFilterIsDeleted {
-		property portal.acceptance = "true";
-
-		task ("And adds a filter") {
-			DataSetAdmin.createFilters(
-				filterName = "Test Filter",
-				key_filterList = "creator");
-		}
-
-		task ("When the user selects the Delete option in the 3 dots menu") {
-			Click(
-				key_fieldName = "creator",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
-		}
-
-		task ("Then the modal with a confirmation message is displayed") {
-			AssertElementPresent(
-				key_modalText = "Are you sure you want to delete this filter? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
-				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
-		}
-
-		task ("And confirms the deletion") {
-			Button.clickDelete();
-		}
-
-		task ("Then assert the field is deleted") {
-			AssertElementNotPresent(
-				key_nameField = "creator",
-				key_position = 1,
-				locator1 = "DataSet#FIELDS_TABLE");
-		}
-
-		task ("And a successful message is displayed") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#SUCCESS",
-				value1 = "Your request completed successfully.");
-		}
-	}
-
 	@description = "LPS-183056. Confirm that the "Multiple" and "Include" radio buttons are deselected."
 	@ignore = "true"
 	@priority = 4
@@ -586,41 +517,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#SUCCESS",
 				value1 = "Your request completed successfully.");
-		}
-	}
-
-	@description = "LPS-176188. Confirm that the field is not deleted by clicking the Cancel button."
-	@ignore = "true"
-	@priority = 3
-	test CanCancelButtonDeleteFilter {
-		task ("And adds a filter") {
-			DataSetAdmin.createFilters(
-				filterName = "Filter Test",
-				key_filterList = "from");
-		}
-
-		task ("When the user selects the Delete option in the 3 dots menu") {
-			Click(
-				key_fieldName = "from",
-				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
-		}
-
-		task ("Then the modal with a confirmation message is displayed") {
-			AssertElementPresent(
-				key_modalText = "Are you sure you want to delete this filter? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
-				locator1 = "DataSet#DELETE_DATA_SET_MODAL_BODY");
-		}
-
-		task ("And cancels the deletion") {
-			Button.clickCancel();
-		}
-
-		task ("Then assert the field is not deleted and it still appears in the Visualization Modes tab table") {
-			DataSetAdmin.assertFieldsOnTable(
-				key_position = 1,
-				keyName = "from");
 		}
 	}
 

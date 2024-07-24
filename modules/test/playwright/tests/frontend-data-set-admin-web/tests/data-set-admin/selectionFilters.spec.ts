@@ -71,13 +71,23 @@ test.afterEach(async ({dataSetManagerApiHelpers, picklistApiHelpers}) => {
 	await picklistApiHelpers.deletePicklist(picklistName);
 });
 
-test('Create a selection filter of type "Object Picklist"', async ({
-	filtersPage,
-	page,
-}) => {
-	await test.step('Can not create a selection filter without filling mandatory fields', async () => {
-		await filtersPage.openNewFilterModal({
-			dropdownItemLabel: 'Selection',
+test.describe('Filters in Data Set Manager', () => {
+	test('Can create and delete a selection filter from picklist source', async ({
+		filtersPage,
+		page,
+	}) => {
+		await test.step('Can not create a selection filter without filling mandatory fields', async () => {
+			await filtersPage.openNewFilterModal({
+				dropdownItemLabel: 'Selection',
+			});
+
+			await filtersPage.saveAddFilterModal();
+
+			await expect(page.getByText('This field is required.')).toHaveCount(
+				3
+			);
+
+			await filtersPage.cancelAddFilterModal();
 		});
 
 		await filtersPage.saveAddFilterModal();
@@ -123,10 +133,69 @@ test('Create a selection filter of type "Object Picklist"', async ({
 		await filtersPage.saveAddFilterModal();
 	});
 
-	await test.step('Check that the selection filter is also the list', async () => {
-		await expect(
-			page.getByRole('cell', {
-				exact: true,
+		await test.step('Delete the filter, but cancel action', async () => {
+			await filtersPage
+				.getRowByText(SELECTION_PICKLIST_FILTER_NAME)
+				.locator('.actions-cell button')
+				.click();
+
+			const deleteButton = filtersPage.page.getByRole('menuitem', {
+				name: 'Delete',
+			});
+
+			await expect(deleteButton).toBeInViewport();
+
+			await deleteButton.click();
+
+			const cancelDeleteButton = page.getByRole('button', {name: 'Cancel'});
+
+			await cancelDeleteButton.waitFor();
+
+			await cancelDeleteButton.click();
+		});
+
+		await test.step('Check that the selection filter is still in the list', async () => {
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_PICKLIST_FILTER_NAME,
+				})
+			).toBeVisible();
+		});
+
+		await test.step('Delete the filter', async () => {
+			await filtersPage
+				.getRowByText(SELECTION_PICKLIST_FILTER_NAME)
+				.locator('.actions-cell button')
+				.click();
+
+			const deleteButton = filtersPage.page.getByRole('menuitem', {
+				name: 'Delete',
+			});
+
+			await expect(deleteButton).toBeInViewport();
+
+			await deleteButton.click();
+
+			const confirmDeleteButton = page.getByRole('button', {name: 'Delete'});
+
+			await confirmDeleteButton.waitFor();
+
+			await confirmDeleteButton.click();
+		});
+
+		await test.step('Check that the selection filter is no longer in the list', async () => {
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_PICKLIST_FILTER_NAME,
+				})
+			).not.toBeVisible();
+		});
+
+		await test.step('Create a selection filter from picklist source without preselected values', async () => {
+			await filtersPage.createSelectionFilterPicklist({
+				filterBy: 'name',
 				name: SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME,
 			})
 		).toBeVisible();

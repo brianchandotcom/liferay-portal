@@ -136,12 +136,12 @@
 										</svg>
 
 										<span>
-											<@liferay_ui["message"] key="${current_Note.NoteType.getData()}" />
+											<@liferay_ui["message"] key="${currentNote.NoteType.getData()}" />
 										</span>
 									</div>
 
 									<div class="adm-body">
-										${current_Note.NoteText.getData()}
+										${currentNote.NoteText.getData()}
 									</div>
 								</div>
 							</#if>

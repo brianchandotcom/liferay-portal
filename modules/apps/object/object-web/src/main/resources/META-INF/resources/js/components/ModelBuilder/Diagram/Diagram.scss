@@ -7,7 +7,7 @@
 
 .lfr__object-model-builder-controls {
 	bottom: 170px !important;
-	left: 20px !important;
+	inset-inline-start: 20px !important;
 }
 
 .lfr-objects__model-builder-diagram {
@@ -37,8 +37,15 @@
 			}
 
 			&.sidebars-open {
-				margin-left: 300px;
 				top: #{$top};
+
+				[dir='ltr'] & {
+					margin-inline-start: 300px;
+				}
+
+				[dir='rtl'] & {
+					margin-inline-start: 320px;
+				}
 			}
 		}
 	}

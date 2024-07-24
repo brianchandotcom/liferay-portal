@@ -362,14 +362,6 @@ public class SiteActionDropdownItemsProviderTest {
 	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
-		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
-
-		Mockito.when(
-			_portal.getHttpServletRequest(_liferayPortletRequest)
-		).thenReturn(
-			_httpServletRequest
-		);
-
 		MockLiferayPortletURL mockLiferayPortletURL1 = new MockLiferayPortletURL();
 
 		mockLiferayPortletURL1.setParameter(
@@ -399,6 +391,14 @@ public class SiteActionDropdownItemsProviderTest {
 				PortletRequest.RENDER_PHASE)
 		).thenReturn(
 			mockLiferayPortletURL2
+		);
+
+		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
+
+		Mockito.when(
+			_portal.getHttpServletRequest(_liferayPortletRequest)
+		).thenReturn(
+			_httpServletRequest
 		);
 
 		portalUtil.setPortal(_portal);

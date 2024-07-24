@@ -129,7 +129,7 @@ public class ElasticsearchQueryTranslatorTest {
 
 		termsFilter.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-		Integer maxTermsCount = ReflectionTestUtil.getFieldValue(
+		int maxTermsCount = ReflectionTestUtil.getFieldValue(
 			QueryUtil.class, "_maxTermsCount");
 
 		_setMaxTermsCount(10);
@@ -153,7 +153,7 @@ public class ElasticsearchQueryTranslatorTest {
 
 		termsQuery.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-		Integer maxTermsCount = ReflectionTestUtil.getFieldValue(
+		int maxTermsCount = ReflectionTestUtil.getFieldValue(
 			QueryUtil.class, "_maxTermsCount");
 
 		_setMaxTermsCount(10);
@@ -200,10 +200,9 @@ public class ElasticsearchQueryTranslatorTest {
 			queryString, expected, StringUtil.count(queryString, "terms"));
 	}
 
-	private void _setMaxTermsCount(Integer maxTermsCount) {
-		ReflectionTestUtil.invoke(
-			QueryUtil.class, "_setMaxTermsCount",
-			new Class<?>[] {Integer.class}, maxTermsCount);
+	private void _setMaxTermsCount(int maxTermsCount) {
+		ReflectionTestUtil.setFieldValue(
+			QueryUtil.class, "_maxTermsCount", maxTermsCount);
 	}
 
 	private static final Float _BOOST = 1.5F;

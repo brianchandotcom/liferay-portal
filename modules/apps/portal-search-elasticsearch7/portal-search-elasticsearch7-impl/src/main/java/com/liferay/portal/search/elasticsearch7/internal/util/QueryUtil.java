@@ -49,14 +49,6 @@ public class QueryUtil {
 		return boolQueryBuilder;
 	}
 
-	private static void _setMaxTermsCount(Integer maxTermsCount) {
-		_maxTermsCount = maxTermsCount;
-	}
-
-	private static Integer _maxTermsCount;
-
-	static {
-		_setMaxTermsCount(65536);
-	}
+	private static int _maxTermsCount = 65536;
 
 }

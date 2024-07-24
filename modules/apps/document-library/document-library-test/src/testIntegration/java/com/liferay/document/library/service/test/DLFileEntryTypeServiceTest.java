@@ -73,39 +73,6 @@ public class DLFileEntryTypeServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_folder = DLAppLocalServiceUtil.addFolder(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
-			StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		_subfolder = DLAppLocalServiceUtil.addFolder(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), "SubFolder AA", StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		_basicDocumentDLFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-
-		DDMStructure ddmStructure1 = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), DLFileEntryMetadata.class.getName());
-
-		_dlFileEntryType1 = DLFileEntryTypeServiceUtil.addFileEntryType(
-			null, _group.getGroupId(), ddmStructure1.getStructureId(), null,
-			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
-			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		DDMStructure ddmStructure2 = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), DLFileEntryMetadata.class.getName());
-
-		_dlFileEntryType2 = DLFileEntryTypeServiceUtil.addFileEntryType(
-			null, _group.getGroupId(), ddmStructure2.getStructureId(), null,
-			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
-			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@Test
@@ -253,14 +220,73 @@ public class DLFileEntryTypeServiceTest {
 	}
 
 	@Test
+	public void testFetchFileEntryTypeByExternalReferenceCode()
+		throws Exception {
+
+		Assert.assertNull(
+			DLFileEntryTypeServiceUtil.
+				fetchFileEntryTypeByExternalReferenceCode(
+					"12345678", _group.getGroupId()));
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), DLFileEntryMetadata.class.getName());
+
+		DLFileEntryTypeServiceUtil.addFileEntryType(
+			"12345678", _group.getGroupId(), ddmStructure.getStructureId(),
+			null,
+			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+			Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertNotNull(
+			DLFileEntryTypeServiceUtil.
+				fetchFileEntryTypeByExternalReferenceCode(
+					"12345678", _group.getGroupId()));
+	}
+
+	@Test
 	public void testFileEntryTypeRestrictions() throws Exception {
+		Folder folder = DLAppLocalServiceUtil.addFolder(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
+			StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Folder subfolder = DLAppLocalServiceUtil.addFolder(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			folder.getFolderId(), "SubFolder AA", StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_basicDocumentDLFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
+		DDMStructure ddmStructure1 = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), DLFileEntryMetadata.class.getName());
+
+		DLFileEntryType dlFileEntryType1 =
+			DLFileEntryTypeServiceUtil.addFileEntryType(
+				null, _group.getGroupId(), ddmStructure1.getStructureId(), null,
+				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		DDMStructure ddmStructure2 = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), DLFileEntryMetadata.class.getName());
+
+		DLFileEntryType dlFileEntryType2 =
+			DLFileEntryTypeServiceUtil.addFileEntryType(
+				null, _group.getGroupId(), ddmStructure2.getStructureId(), null,
+				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+				Collections.singletonMap(LocaleUtil.US, "New File Entry Type"),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		// Configure folder
 
 		DLAppLocalServiceUtil.updateFolder(
-			_folder.getFolderId(), _folder.getParentFolderId(),
-			_folder.getName(), _folder.getDescription(),
-			_getFolderServiceContext(_dlFileEntryType1, _dlFileEntryType2));
+			folder.getFolderId(), folder.getParentFolderId(), folder.getName(),
+			folder.getDescription(),
+			_getFolderServiceContext(dlFileEntryType1, dlFileEntryType2));
 
 		// Add file to folder
 
@@ -268,28 +294,28 @@ public class DLFileEntryTypeServiceTest {
 		byte[] bytes = _CONTENT.getBytes();
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			null, _group.getGroupId(), _folder.getFolderId(), name,
+			null, _group.getGroupId(), folder.getFolderId(), name,
 			ContentTypes.TEXT_PLAIN, name, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, bytes, null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		assertFileEntryType(fileEntry, _dlFileEntryType1);
+		assertFileEntryType(fileEntry, dlFileEntryType1);
 
 		// Add file to subfolder
 
 		fileEntry = DLAppServiceUtil.addFileEntry(
-			null, _group.getGroupId(), _subfolder.getFolderId(), name,
+			null, _group.getGroupId(), subfolder.getFolderId(), name,
 			ContentTypes.TEXT_PLAIN, name, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, bytes, null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		assertFileEntryType(fileEntry, _dlFileEntryType1);
+		assertFileEntryType(fileEntry, dlFileEntryType1);
 
 		// Configure subfolder
 
 		DLAppLocalServiceUtil.updateFolder(
-			_subfolder.getFolderId(), _subfolder.getParentFolderId(),
-			_subfolder.getName(), _subfolder.getDescription(),
+			subfolder.getFolderId(), subfolder.getParentFolderId(),
+			subfolder.getName(), subfolder.getDescription(),
 			_getFolderServiceContext(_basicDocumentDLFileEntryType));
 
 		assertFileEntryType(
@@ -486,16 +512,6 @@ public class DLFileEntryTypeServiceTest {
 	private DDMFormDeserializer _ddmFormDeserializer;
 
 	@DeleteAfterTestRun
-	private DLFileEntryType _dlFileEntryType1;
-
-	@DeleteAfterTestRun
-	private DLFileEntryType _dlFileEntryType2;
-
-	private Folder _folder;
-
-	@DeleteAfterTestRun
 	private Group _group;
-
-	private Folder _subfolder;
 
 }

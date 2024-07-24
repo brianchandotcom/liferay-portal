@@ -46,6 +46,15 @@
 				],
 				"tokenizer": "standard"
 			},
+			"liferay_analyzer_pt_BR": {
+				"filter": [
+					"lowercase",
+					"brazilian_stop",
+					"liferay_filter_synonym_pt_BR",
+					"brazilian_stemmer"
+				],
+				"tokenizer": "standard"
+			},
 			"reverse_keyword_lowercase": {
 				"filter": [
 					"lowercase",
@@ -64,6 +73,14 @@
 				"max_gram": 10,
 				"min_gram": 1,
 				"type": "ngram"
+			},
+			"brazilian_stemmer": {
+				"language": "brazilian",
+				"type": "stemmer"
+			},
+			"brazilian_stop": {
+				"stopwords": "_brazilian_",
+				"type": "stop"
 			},
 			"english_possessive_stemmer": {
 				"language": "possessive_english",
@@ -98,6 +115,12 @@
 				"type": "synonym_graph"
 			},
 			"liferay_filter_synonym_es": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_pt_BR": {
 				"lenient": true,
 				"synonyms": [
 				],

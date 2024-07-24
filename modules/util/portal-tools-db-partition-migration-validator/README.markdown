@@ -34,7 +34,7 @@ Validate parameters:
 ## Examples
 
 ```
-./db_partition_migration_validator.sh export --jdbc-url "jdbc:mysql://localhost:3306/defaultSchema" --password xyz123 --user xyz --schema-name lpartition_1234
-./db_partition_migration_validator.sh export --jdbc-url "jdbc:mysql://localhost:3306/defaultSchema" --password xyz123 --user xyz
+./db_partition_migration_validator.sh export --jdbc-url "jdbc:mysql://localhost:3306/defaultSchema" --password xyz123 --user xyz123 --schema-name lpartition_1234
+./db_partition_migration_validator.sh export --jdbc-url "jdbc:mysql://localhost:3306/defaultSchema" --password xyz123 --user xyz123
 ./db_partition_migration_validator.sh validate --source-file source.json --target-file target.json
 ```

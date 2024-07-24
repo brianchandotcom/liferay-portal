@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
+import com.liferay.jenkins.results.parser.Dom4JUtil;
+
 import org.dom4j.Element;
 
 /**
@@ -15,7 +17,7 @@ public class NodeSourceFormatFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessageElement(String consoleText) {
+	public String getMessage(String consoleText) {
 		if (!consoleText.contains(":packageRunCheckFormat FAILED")) {
 			return null;
 		}
@@ -28,7 +30,18 @@ public class NodeSourceFormatFailureMessageGenerator
 
 		end = consoleText.lastIndexOf("\n", end);
 
-		return getConsoleTextSnippetElement(consoleText, false, start, end);
+		return getConsoleTextSnippet(consoleText, false, start, end);
+	}
+
+	@Override
+	public Element getMessageElement(String consoleText) {
+		String errorMessage = getMessage(consoleText);
+
+		if (errorMessage != null) {
+			return Dom4JUtil.toCodeSnippetElement(errorMessage);
+		}
+
+		return null;
 	}
 
 }

@@ -38,7 +38,13 @@ public class CompileFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(String consoleText) {
-		return Dom4JUtil.toCodeSnippetElement(getMessage(consoleText));
+		String errorMessage = getMessage(consoleText);
+
+		if (errorMessage != null) {
+			return Dom4JUtil.toCodeSnippetElement(errorMessage);
+		}
+
+		return null;
 	}
 
 }

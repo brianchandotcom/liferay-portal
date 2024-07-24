@@ -38,7 +38,9 @@ public class IntegrationTestTimeoutFailureMessageGenerator
 	public Element getMessageElement(String consoleText) {
 		Matcher matcher = _pattern.matcher(consoleText);
 
-		if (!matcher.find()) {
+		String errorMessage = getMessage(consoleText);
+
+		if (!matcher.find() || (errorMessage == null)) {
 			return null;
 		}
 

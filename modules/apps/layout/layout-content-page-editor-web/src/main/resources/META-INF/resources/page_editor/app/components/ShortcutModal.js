@@ -93,11 +93,9 @@ function KeyboardShorcut({description, keyCombinations}) {
 				<kbd className="c-kbd text-secondary">
 					{keyCombinations.map((key, index) => (
 						<React.Fragment key={index}>
-							<kbd className="c-kbd">{key}</kbd>
+							{key}
 
-							{index < keyCombinations.length - 1 ? (
-								<span className="c-kbd-separator">+</span>
-							) : null}
+							{index < keyCombinations.length - 1 ? <>+</> : null}
 						</React.Fragment>
 					))}
 				</kbd>

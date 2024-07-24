@@ -14,6 +14,7 @@ import useMutate from '../../../../hooks/useMutate';
 import i18n from '../../../../i18n';
 import {TestrayBuild, testrayBuildImpl} from '../../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../../types';
+import {TestrayRole} from '~/util/constants';
 
 const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const formModal = useFormModal();
@@ -21,8 +22,8 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const {setBuildA, setBuildB} = useAutofillBuild();
 	const navigate = useNavigate();
 	const hasPermission = usePermission([
-		'Testray Administrator',
-		'Testray Lead',
+		TestrayRole.ADMINISTRATOR,
+		TestrayRole.LEAD,
 	]);
 
 	const modal = formModal.modal;

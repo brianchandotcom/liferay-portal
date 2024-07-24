@@ -14,13 +14,14 @@ import i18n from '../../../i18n';
 import {TestrayRoutine, testrayRoutineImpl} from '../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../types';
 import EnvironmentFactorsModal from '../../Standalone/EnvironmentFactors/EnviromentFactorsModal';
+import {TestrayRole} from '~/util/constants';
 
 const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const {form} = useFormActions();
 	const navigate = useNavigate();
 	const {removeItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
-	const hasPermission = usePermission(['Testray Administrator']);
+	const hasPermission = usePermission([TestrayRole.ADMINISTRATOR]);
 
 	const actionsRef = useRef([
 		{

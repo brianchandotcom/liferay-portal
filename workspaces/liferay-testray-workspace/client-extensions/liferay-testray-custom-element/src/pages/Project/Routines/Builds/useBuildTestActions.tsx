@@ -17,15 +17,16 @@ import {
 } from '../../../../services/rest';
 import {Action} from '../../../../types';
 import {UserListView} from '../../../Manage/User';
+import {TestrayRole} from '~/util/constants';
 
 const useBuildTestActions = () => {
 	const {form} = useFormActions();
 	const {removeItemFromList, updateItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
 	const hasPermission = usePermission([
-		'Testray Administrator',
-		'Testray Analyst',
-		'Testray Lead',
+		TestrayRole.ADMINISTRATOR,
+		TestrayRole.ANALYST,
+		TestrayRole.LEAD,
 	]);
 
 	const actionsRef = useRef([

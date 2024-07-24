@@ -19,6 +19,10 @@ public class UpgradeJavaDisplayPageInfoItemCapabilityCheck
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (!fileName.endsWith(".java")) {
+			return content;
+		}
+
 		Matcher matcher = _pattern.matcher(content);
 
 		if (!matcher.find()) {

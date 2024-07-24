@@ -79,8 +79,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 		}
 	)
 
-	@JsonTypeInfo(include= JsonTypeInfo.As.PROPERTY, property="${schema.discriminator.propertyName}",
-	use= JsonTypeInfo.Id.NAME)
+	@JsonTypeInfo(
+		include= JsonTypeInfo.As.PROPERTY, property="${schema.discriminator.propertyName}",
+		use= JsonTypeInfo.Id.NAME, visible = true
+	)
 </#if>
 
 <#assign dtoParentClassName = freeMarkerTool.getDTOParentClassName(openAPIYAML, schemaName)! />

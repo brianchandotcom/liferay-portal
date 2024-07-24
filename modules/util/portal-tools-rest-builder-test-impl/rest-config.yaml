@@ -8,6 +8,7 @@ application:
 author: "Alejandro Tardín"
 changeTrackingEnabled: true
 clientDir: "../portal-tools-rest-builder-test-client/src/main/java"
+compatibilityVersion: 6
 forcePredictableOperationId: true
 generateGraphQL: false
 implDir: "../portal-tools-rest-builder-test-impl/src/main/java"

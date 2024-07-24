@@ -235,8 +235,6 @@ public class FragmentEntryFragmentRendererTest {
 				StringPool.BLANK, 0, null, fragmentEntry.getType(),
 				_serviceContext);
 
-		fragmentEntryLink.setCtCollectionId(RandomTestUtil.nextLong());
-
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 

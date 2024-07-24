@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
 import com.liferay.jenkins.results.parser.test.suite.RelevantTestSuite;
 
@@ -14,6 +15,7 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.PathMatcher;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -115,7 +117,14 @@ public class PortalAcceptancePullRequestJob
 
 		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(this);
 
-		return relevantTestSuite.getTestBatches();
+		List<TestBatch> testBatches = relevantTestSuite.getTestBatches();
+
+		Set<JobProperty> testBatchJobProperties =
+			relevantTestSuite.getTestBatchNamesJobProperties();
+
+		recordJobProperties(new ArrayList<>(testBatchJobProperties));
+
+		return testBatches;
 	}
 
 	private boolean _hasMatchingFiles(List<PathMatcher> pathMatchers) {

@@ -49,9 +49,9 @@ public class FunctionalBatchBuildTestrayCaseResult
 	public String getErrors() {
 		TestResult testResult = getTestResult();
 
-		if (testResult == null) {
-			Build build = getBuild();
+		Build build = getBuild();
 
+		if (testResult == null) {
 			if (build == null) {
 				return "Unable to run build on CI";
 			}
@@ -78,6 +78,10 @@ public class FunctionalBatchBuildTestrayCaseResult
 		}
 
 		String errorMessage = testResult.getErrorDetails();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
+			errorMessage = build.getFailureMessage();
+		}
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(errorMessage)) {
 			return "Failed for unknown reason";

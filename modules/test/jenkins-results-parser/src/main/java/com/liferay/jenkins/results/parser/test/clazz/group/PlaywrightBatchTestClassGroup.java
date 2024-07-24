@@ -161,8 +161,9 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				recordJobProperties(relevantPlaywrightJobProperties);
 			}
 		}
-
-		addDefaultProjectJobProperty(batchName);
+		else {
+			addDefaultProjectJobProperty(batchName);
+		}
 
 		setTestClasses();
 	}

@@ -27,6 +27,7 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
+	@Override
 	public void setUp() {
 		super.setUp();
 

@@ -100,6 +100,16 @@ export default function ShortcutManager() {
 		(state) => state.masterLayout?.masterLayoutData
 	);
 
+	const [isReady, setIsReady] = useState(false);
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setIsReady(true);
+
+			return () => clearTimeout(timer);
+		}, [2000]);
+	}, []);
+
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -398,6 +408,16 @@ export default function ShortcutManager() {
 
 	return (
 		<>
+			<div aria-live="polite" className="sr-only">
+				{isReady && (
+					<>
+						{Liferay.Language.get(
+							'to-open-keyboard-shortcuts-modal-press'
+						)}
+					</>
+				)}
+			</div>
+
 			{openSaveModal && (
 				<SaveFragmentCompositionModal
 					onCloseModal={() => setOpenSaveModal(false)}

@@ -247,6 +247,22 @@ public abstract class BaseWorkspace implements Workspace {
 			GitRepositoryFactory.getWorkspaceGitRepository(
 				this.jsonObject.getString("primary_repository_name"),
 				this.jsonObject.getString("primary_upstream_branch_name"));
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		String workspaceRepositoryDirNames = jsonObject.getString(
+			"workspace_repository_dir_names");
+
+		_workspaceGitRepositories = new HashMap<>();
+
+		for (final String workspaceRepositoryDirName :
+				workspaceRepositoryDirNames.split(",")) {
+
+			_workspaceGitRepositories.put(
+				workspaceRepositoryDirName,
+				buildDatabase.getWorkspaceGitRepository(
+					workspaceRepositoryDirName));
+		}
 	}
 
 	protected BaseWorkspace(

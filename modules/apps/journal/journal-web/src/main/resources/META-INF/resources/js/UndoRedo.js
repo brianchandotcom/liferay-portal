@@ -353,6 +353,25 @@ export default function UndoRedo({
 		[portletNamespace, resetStoreState]
 	);
 
+	const handleUpdateFriendlyURL = useCallback(
+		({friendlyURL}) => {
+			const newHistory = history.map((step) => {
+				if (step.titleInputValue) {
+					step.friendlyURLInputValue = friendlyURL;
+				}
+
+				return step;
+			});
+			setState((prevState) => {
+				return {
+					...prevState,
+					history: newHistory,
+				};
+			});
+		},
+		[history]
+	);
+
 	useEffect(() => {
 		Liferay.after('journal:localeChanged', localeChangeHandler);
 		Liferay.after(
@@ -376,6 +395,17 @@ export default function UndoRedo({
 			Liferay.detach('journal:storeState', handleStoreState);
 		};
 	}, [handleStoreState]);
+
+	useEffect(() => {
+		Liferay.on('journal:update-friendly-url', handleUpdateFriendlyURL);
+
+		return () => {
+			Liferay.detach(
+				'journal:update-friendly-url',
+				handleUpdateFriendlyURL
+			);
+		};
+	}, [handleUpdateFriendlyURL]);
 
 	return (
 		<>

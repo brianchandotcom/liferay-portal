@@ -403,6 +403,10 @@ export default function _JournalPortlet({
 								friendlyUrlInputComponent.updateInput(
 									friendlyURL
 								);
+
+								Liferay.fire('journal:update-friendly-url', {
+									friendlyURL,
+								});
 							}
 						}
 					}

@@ -93,36 +93,6 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title",
-				"The value is invalid for object field " +
-					"\"r_apiApplicationToAPIEndpoints_c_apiApplicationId\""
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"httpMethod", "get"
-				).put(
-					"name", RandomTestUtil.randomString()
-				).put(
-					"path",
-					StringPool.FORWARD_SLASH +
-						StringUtil.toLowerCase(RandomTestUtil.randomString())
-				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-					_objectEntry.getObjectEntryId()
-				).put(
-					"retrieveType",
-					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
-				).put(
-					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
-				).toString(),
-				"headless-builder/endpoints", Http.Method.POST
-			).toString(),
-			JSONCompareMode.STRICT);
-
 		JSONObject apiApplicationJSONObject1 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
@@ -133,41 +103,6 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title",
-				"The value is invalid for object field " +
-					"\"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId\""
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"httpMethod", "get"
-				).put(
-					"name", RandomTestUtil.randomString()
-				).put(
-					"path",
-					StringPool.FORWARD_SLASH +
-						StringUtil.toLowerCase(RandomTestUtil.randomString())
-				).put(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-					apiApplicationJSONObject1.getLong("id")
-				).put(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
-					_objectEntry.getObjectEntryId()
-				).put(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
-					_objectEntry.getObjectEntryId()
-				).put(
-					"retrieveType",
-					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
-				).put(
-					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
-				).toString(),
-				"headless-builder/endpoints", Http.Method.POST
-			).toString(),
-			JSONCompareMode.STRICT);
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
@@ -642,12 +577,27 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/endpoints", Http.Method.POST);
 
-		JSONAssert.assertEquals(
+		JSONObject apiApplicationJSONObject2 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-				apiApplicationJSONObject1.get("id")
+				"applicationStatus", "published"
+			).put(
+				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).put(
+				"title", RandomTestUtil.randomString()
 			).toString(),
-			apiEndpointJSONObject.toString(), JSONCompareMode.LENIENT);
+			"headless-builder/applications", Http.Method.POST);
+
+		JSONObject apiSchemaJSONObject3 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"mainObjectDefinitionERC",
+				_objectDefinition.getExternalReferenceCode()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				apiApplicationJSONObject2.getLong("id")
+			).toString(),
+			"headless-builder/schemas", Http.Method.POST);
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -675,28 +625,6 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"headless-builder/endpoints", Http.Method.POST
 			).toString(),
 			JSONCompareMode.STRICT);
-
-		JSONObject apiApplicationJSONObject2 = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).put(
-				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
-			"headless-builder/applications", Http.Method.POST);
-
-		JSONObject apiSchemaJSONObject3 = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"mainObjectDefinitionERC",
-				_objectDefinition.getExternalReferenceCode()
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"r_apiApplicationToAPISchemas_c_apiApplicationId",
-				apiApplicationJSONObject2.getLong("id")
-			).toString(),
-			"headless-builder/schemas", Http.Method.POST);
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -769,6 +697,79 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
 					apiSchemaJSONObject2.getLong("id")
+				).put(
+					"retrieveType",
+					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
+				).put(
+					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				apiApplicationJSONObject1.get("id")
+			).toString(),
+			apiEndpointJSONObject.toString(), JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"The value is invalid for object field " +
+					"\"r_apiApplicationToAPIEndpoints_c_apiApplicationId\""
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringPool.FORWARD_SLASH +
+						StringUtil.toLowerCase(RandomTestUtil.randomString())
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					_objectEntry.getObjectEntryId()
+				).put(
+					"retrieveType",
+					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
+				).put(
+					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"The value is invalid for object field " +
+					"\"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId\""
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringPool.FORWARD_SLASH +
+						StringUtil.toLowerCase(RandomTestUtil.randomString())
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					apiApplicationJSONObject1.getLong("id")
+				).put(
+					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					_objectEntry.getObjectEntryId()
+				).put(
+					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					_objectEntry.getObjectEntryId()
 				).put(
 					"retrieveType",
 					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()

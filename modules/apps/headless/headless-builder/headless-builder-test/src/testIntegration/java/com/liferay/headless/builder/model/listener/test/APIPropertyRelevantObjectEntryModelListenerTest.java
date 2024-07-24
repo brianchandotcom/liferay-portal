@@ -479,28 +479,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			"A related API property must belong to the same API schema.",
 			jsonObject.get("title"));
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"description", RandomTestUtil.randomString()
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"objectFieldERC", _objectField1.getExternalReferenceCode()
-			).put(
-				"r_apiPropertyToAPIProperties_c_apiPropertyId",
-				apiApplicationJSONObject.getLong("id")
-			).put(
-				"r_apiSchemaToAPIProperties_c_apiSchemaId",
-				apiSchemaJSONObject1.get("id")
-			).toString(),
-			"headless-builder/properties", Http.Method.POST);
-
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"The value is invalid for object field " +
-				"\"r_apiPropertyToAPIProperties_c_apiPropertyId\"",
-			jsonObject.get("title"));
-
 		String name = RandomTestUtil.randomString();
 
 		JSONObject recordAPIPropertyJSONObject =
@@ -552,6 +530,28 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
 			"API property name must be unique.", jsonObject.get("title"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"objectFieldERC", _objectField1.getExternalReferenceCode()
+			).put(
+				"r_apiPropertyToAPIProperties_c_apiPropertyId",
+				apiApplicationJSONObject.getLong("id")
+			).put(
+				"r_apiSchemaToAPIProperties_c_apiSchemaId",
+				apiSchemaJSONObject1.get("id")
+			).toString(),
+			"headless-builder/properties", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"The value is invalid for object field " +
+				"\"r_apiPropertyToAPIProperties_c_apiPropertyId\"",
+			jsonObject.get("title"));
 
 		apiPropertyJSONObject1 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(

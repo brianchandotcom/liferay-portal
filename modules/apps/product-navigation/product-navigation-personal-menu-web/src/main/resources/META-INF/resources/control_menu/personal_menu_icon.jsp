@@ -7,7 +7,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<style type="text/css">
+<aui:style type="text/css">
 	#impersonate-user-icon {
 		color: #272833;
 	}
@@ -28,7 +28,7 @@
 	#personal-menu-icon-wrapper .lexicon-icon {
 		margin-top: -.25rem;
 	}
-</style>
+</aui:style>
 
 <li class="control-menu-nav-item">
 	<span class="user-avatar-link">

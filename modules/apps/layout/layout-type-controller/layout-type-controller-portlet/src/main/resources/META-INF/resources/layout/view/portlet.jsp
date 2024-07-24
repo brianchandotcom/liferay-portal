@@ -31,11 +31,11 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 		<liferay-layout:render-state-max-layout-structure />
 	</c:when>
 	<c:otherwise>
-		<style type="text/css">
+		<aui:style type="text/css">
 			.master-layout-fragment .portlet-header {
 				display: none;
 			}
-		</style>
+		</aui:style>
 
 		<%
 		PortletLayoutDisplayContext portletLayoutDisplayContext = (PortletLayoutDisplayContext)request.getAttribute(PortletLayoutTypeControllerWebKeys.PORTLET_LAYOUT_DISPLAY_CONTEXT);

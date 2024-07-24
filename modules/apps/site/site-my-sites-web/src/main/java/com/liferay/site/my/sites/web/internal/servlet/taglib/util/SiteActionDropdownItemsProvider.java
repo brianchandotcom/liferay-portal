@@ -140,7 +140,7 @@ public class SiteActionDropdownItemsProvider {
 					"removeUserIds", _themeDisplay.getUserId()
 				).buildString());
 			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "leave"));
+				LanguageUtil.get(_httpServletRequest, "leave-site"));
 		};
 	}
 

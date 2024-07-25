@@ -38,11 +38,9 @@ public class PoshiTestSelector extends BaseTestSelector {
 		validate();
 
 		addPoshiQuery();
-
-		JenkinsResultsParserUtil.validatePQL(_poshiQuery, propertiesFile);
 	}
 
-	public void addPoshiQuery() {
+	public void addPoshiQuery() throws RelevantRuleConfigurationException {
 		JobProperty poshiJobProperty = getJobProperty(
 			TEST_BATCH_RUN_PROPERTY_QUERY, JobProperty.Type.MODULE_TEST_DIR);
 
@@ -52,6 +50,15 @@ public class PoshiTestSelector extends BaseTestSelector {
 			_poshiJobProperties.add(poshiJobProperty);
 
 			_poshiQuery = poshiJobProperty.getValue();
+
+			try {
+				JenkinsResultsParserUtil.validatePQL(
+					_poshiQuery, getPropertiesFile());
+			}
+			catch (Exception exception) {
+				throw new RelevantRuleConfigurationException(
+					exception.getMessage());
+			}
 		}
 	}
 

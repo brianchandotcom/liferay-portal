@@ -15,6 +15,7 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.BillingAddressUtil;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.BillingAddressResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -96,8 +97,9 @@ public class BillingAddressResourceImpl extends BaseBillingAddressResourceImpl {
 		}
 
 		BillingAddressUtil.addOrUpdateBillingAddress(
-			_commerceAddressService, _commerceOrderService, commerceOrder,
-			billingAddress, _serviceContextHelper.getServiceContext());
+			_commerceAddressService, _commerceOrderService, _countryService,
+			commerceOrder, billingAddress,
+			_serviceContextHelper.getServiceContext());
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
@@ -110,7 +112,7 @@ public class BillingAddressResourceImpl extends BaseBillingAddressResourceImpl {
 		throws Exception {
 
 		BillingAddressUtil.addOrUpdateBillingAddress(
-			_commerceAddressService, _commerceOrderService,
+			_commerceAddressService, _commerceOrderService, _countryService,
 			_commerceOrderService.getCommerceOrder(id), billingAddress,
 			_serviceContextHelper.getServiceContext());
 
@@ -130,6 +132,9 @@ public class BillingAddressResourceImpl extends BaseBillingAddressResourceImpl {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CountryService _countryService;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

@@ -6583,7 +6583,7 @@ information. Make sure to commit in all format-javadoc results.
 		</trycatch>
 	</target>
 
-	<target name="modules-integration-bundle-db2111-jdk8">
+	<target name="modules-integration-bundle-db2111-jdk11_open">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-modules-integration-test
@@ -6601,7 +6601,7 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="modules-integration-bundle-db2111-jdk11_open">
+	<target name="modules-integration-bundle-db2111-jdk21_zulu">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-modules-integration-test
@@ -6657,24 +6657,6 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="modules-integration-bundle-hypersonic20-jdk8">
-		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
-
-		<run-modules-integration-test
-			database.type="hypersonic"
-			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.license.xml.url="${test.license.xml.url}"
-			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
-			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
-			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
-			test.portal.bundle.version="${test.portal.bundle.version}"
-			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
-			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.sql.zip.url="${test.sql.zip.url}"
-		/>
-	</target>
-
 	<target name="modules-integration-bundle-hypersonic20-jdk11_open">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
@@ -6693,7 +6675,25 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="modules-integration-bundle-mariadb102-jdk8">
+	<target name="modules-integration-bundle-hypersonic20-jdk21_zulu">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-modules-integration-test
+			database.type="hypersonic"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="modules-integration-bundle-mariadb102-jdk11_open">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-modules-integration-test
@@ -6711,7 +6711,7 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="modules-integration-bundle-mariadb102-jdk11_open">
+	<target name="modules-integration-bundle-mariadb102-jdk21_zulu">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-modules-integration-test
@@ -6858,25 +6858,6 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="modules-integration-bundle-oracle193-jdk8">
-		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
-
-		<run-modules-integration-test
-			database.type="oracle"
-			database.version="19.3.0.0.0"
-			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.license.xml.url="${test.license.xml.url}"
-			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
-			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
-			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
-			test.portal.bundle.version="${test.portal.bundle.version}"
-			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
-			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.sql.zip.url="${test.sql.zip.url}"
-		/>
-	</target>
-
 	<target name="modules-integration-bundle-oracle193-jdk11_open">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
@@ -6896,7 +6877,26 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="modules-integration-bundle-postgresql121-jdk8">
+	<target name="modules-integration-bundle-oracle193-jdk21_zulu">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-modules-integration-test
+			database.type="oracle"
+			database.version="19.3.0.0.0"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="modules-integration-bundle-postgresql121-jdk21_zulu">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-modules-integration-test
@@ -6972,7 +6972,7 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="modules-integration-bundle-sqlserver2017-jdk8">
+	<target name="modules-integration-bundle-sqlserver2017-jdk21_zulu">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-modules-integration-test

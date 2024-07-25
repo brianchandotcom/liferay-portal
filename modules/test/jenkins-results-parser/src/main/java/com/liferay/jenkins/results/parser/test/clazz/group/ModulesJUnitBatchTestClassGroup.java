@@ -12,7 +12,6 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.batch.JUnitTestBatch;
-import com.liferay.jenkins.results.parser.test.batch.JUnitTestSelector;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,8 +40,6 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
-
-		_testBatch = null;
 	}
 
 	protected ModulesJUnitBatchTestClassGroup(
@@ -50,8 +47,6 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		JUnitTestBatch jUnitTestBatch) {
 
 		super(batchName, portalTestClassJob, jUnitTestBatch);
-
-		_testBatch = jUnitTestBatch;
 	}
 
 	@Override
@@ -92,10 +87,6 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 	@Override
 	protected List<JobProperty> getRelevantExcludesJobProperties() {
-		if (_testBatch != null) {
-			return _getTestSelectorExcludesJobProperties();
-		}
-
 		Set<File> modifiedModuleDirsList = new HashSet<>();
 
 		try {
@@ -136,10 +127,6 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 	@Override
 	protected List<JobProperty> getRelevantIncludesJobProperties() {
-		if (_testBatch != null) {
-			return _getTestSelectorIncludesJobProperties();
-		}
-
 		if (includeStableTestSuite && isStableTestSuiteBatch()) {
 			return super.getRelevantIncludesJobProperties();
 		}
@@ -399,19 +386,5 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		return bndBndProperties.getProperty("Bundle-SymbolicName");
 	}
-
-	private List<JobProperty> _getTestSelectorExcludesJobProperties() {
-		JUnitTestSelector jUnitTestSelector = _testBatch.getTestSelector();
-
-		return jUnitTestSelector.getExcludesJobProperties();
-	}
-
-	private List<JobProperty> _getTestSelectorIncludesJobProperties() {
-		JUnitTestSelector jUnitTestSelector = _testBatch.getTestSelector();
-
-		return jUnitTestSelector.getIncludesJobProperties();
-	}
-
-	private JUnitTestBatch _testBatch;
 
 }

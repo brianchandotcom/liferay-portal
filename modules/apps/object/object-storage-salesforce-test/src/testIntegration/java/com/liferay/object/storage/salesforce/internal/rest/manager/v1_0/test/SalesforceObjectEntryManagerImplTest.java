@@ -321,10 +321,11 @@ public class SalesforceObjectEntryManagerImplTest
 
 	@Test
 	public void testGetObjectEntries() throws Exception {
-		String title1 = "a" + RandomTestUtil.randomString();
-		String title2 = "b" + RandomTestUtil.randomString();
-		String title3 = "c" + RandomTestUtil.randomString();
-		String title4 = "d" + RandomTestUtil.randomString();
+		String title1 = null;
+		String title2 = "a" + RandomTestUtil.randomString();
+		String title3 = "b" + RandomTestUtil.randomString();
+		String title4 = "c" + RandomTestUtil.randomString();
+		String title5 = "d" + RandomTestUtil.randomString();
 
 		Date date = RandomTestUtil.nextDate();
 
@@ -346,9 +347,15 @@ public class SalesforceObjectEntryManagerImplTest
 		ObjectEntry objectEntry4 = _addObjectEntry(
 			"queued", date, true, null, title4);
 		ObjectEntry objectEntry5 = _addObjectEntry(
-			"queued", date, false, null, null);
+			"queued", date, false, null, title5);
 
 		// And/or with equals/not equals expression
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter", buildEqualsExpressionFilterString("title", null)
+			).build(),
+			objectEntry1);
 
 		String filterString = StringBundler.concat(
 			"(objectDefinitionId eq ",
@@ -499,12 +506,6 @@ public class SalesforceObjectEntryManagerImplTest
 			).build(),
 			objectEntry2, objectEntry3, objectEntry4);
 
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter", buildEqualsExpressionFilterString("title", null)
-			).build(),
-			objectEntry5);
-
 		// Range expression
 
 		testGetObjectEntries(
@@ -578,7 +579,7 @@ public class SalesforceObjectEntryManagerImplTest
 			Map<String, String> context, Sort[] sorts)
 		throws Exception {
 
-		if (sorts == null) {
+		if ((sorts == null) || !context.containsKey("sort")) {
 			sorts = new Sort[] {SortFactoryUtil.create("title", false)};
 		}
 

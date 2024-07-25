@@ -240,19 +240,20 @@ public class BookmarksUtil {
 		OrderByComparator<BookmarksEntry> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new EntryCreateDateComparator(orderByAsc);
+			orderByComparator = EntryCreateDateComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
 			orderByComparator = new EntryModifiedDateComparator(orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new EntryNameComparator(orderByAsc);
+			orderByComparator = EntryNameComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("priority")) {
-			orderByComparator = new EntryPriorityComparator(orderByAsc);
+			orderByComparator = EntryPriorityComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("url")) {
-			orderByComparator = new EntryURLComparator(orderByAsc);
+			orderByComparator = EntryURLComparator.getInstance(orderByAsc);
 		}
 
 		return orderByComparator;

@@ -519,7 +519,7 @@ public class BookmarksFolderLocalServiceImpl
 					return bookmarksFolderPersistence.findByGtF_C_P_NotS(
 						previousId, companyId, parentPrimaryKey,
 						WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
-						size, new FolderIdComparator(true));
+						size, FolderIdComparator.getInstance(true));
 				}
 
 				@Override

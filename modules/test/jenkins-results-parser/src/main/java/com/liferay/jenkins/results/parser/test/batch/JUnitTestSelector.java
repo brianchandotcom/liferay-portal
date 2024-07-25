@@ -19,14 +19,6 @@ import java.util.Properties;
  */
 public class JUnitTestSelector extends BaseTestSelector {
 
-	public static final String
-		MODULES_INCLUDES_REQUIRED_TEST_BATCH_CLASS_NAMES_EXCLUDES =
-			"modules.includes.required.test.batch.class.names.excludes";
-
-	public static final String
-		MODULES_INCLUDES_REQUIRED_TEST_BATCH_CLASS_NAMES_INCLUDES =
-			"modules.includes.required.test.batch.class.names.includes";
-
 	public JUnitTestSelector(
 			File propertiesFile, Properties properties, String batchName,
 			String relevantRuleName, String testSuiteName)
@@ -38,12 +30,7 @@ public class JUnitTestSelector extends BaseTestSelector {
 
 		validate();
 
-		addJobProperties();
-	}
-
-	public void addJobProperties() {
-		_excludesJobProperties.add(getExcludesJobProperty());
-		_includesJobProperties.add(getIncludesJobProperty());
+		_addJobProperties();
 	}
 
 	public List<JobProperty> getExcludesJobProperties() {
@@ -52,7 +39,7 @@ public class JUnitTestSelector extends BaseTestSelector {
 
 	public JobProperty getExcludesJobProperty() {
 		return getJobProperty(
-			MODULES_INCLUDES_REQUIRED_TEST_BATCH_CLASS_NAMES_EXCLUDES,
+			_MODULES_INCLUDES_REQUIRED_TEST_BATCH_CLASS_NAMES_EXCLUDES,
 			JobProperty.Type.MODULE_EXCLUDE_GLOB);
 	}
 
@@ -62,7 +49,7 @@ public class JUnitTestSelector extends BaseTestSelector {
 
 	public JobProperty getIncludesJobProperty() {
 		return getJobProperty(
-			MODULES_INCLUDES_REQUIRED_TEST_BATCH_CLASS_NAMES_INCLUDES,
+			_MODULES_INCLUDES_REQUIRED_TEST_BATCH_CLASS_NAMES_INCLUDES,
 			JobProperty.Type.MODULE_INCLUDE_GLOB);
 	}
 
@@ -91,8 +78,21 @@ public class JUnitTestSelector extends BaseTestSelector {
 
 	@Override
 	public void validate() throws RelevantRuleConfigurationException {
-		validate(MODULES_INCLUDES_REQUIRED_TEST_BATCH_CLASS_NAMES_INCLUDES);
+		validate(_MODULES_INCLUDES_REQUIRED_TEST_BATCH_CLASS_NAMES_INCLUDES);
 	}
+
+	private void _addJobProperties() {
+		_excludesJobProperties.add(getExcludesJobProperty());
+		_includesJobProperties.add(getIncludesJobProperty());
+	}
+
+	private static final String
+		_MODULES_INCLUDES_REQUIRED_TEST_BATCH_CLASS_NAMES_EXCLUDES =
+			"modules.includes.required.test.batch.class.names.excludes";
+
+	private static final String
+		_MODULES_INCLUDES_REQUIRED_TEST_BATCH_CLASS_NAMES_INCLUDES =
+			"modules.includes.required.test.batch.class.names.includes";
 
 	private final List<JobProperty> _excludesJobProperties = new ArrayList<>();
 	private final List<JobProperty> _includesJobProperties = new ArrayList<>();

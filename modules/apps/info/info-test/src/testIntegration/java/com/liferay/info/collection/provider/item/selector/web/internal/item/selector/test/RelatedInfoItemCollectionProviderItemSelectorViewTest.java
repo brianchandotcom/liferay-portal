@@ -6,14 +6,19 @@
 package com.liferay.info.collection.provider.item.selector.web.internal.item.selector.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -21,6 +26,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -76,6 +82,76 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewTest {
 		finally {
 			serviceRegistration.unregister();
 		}
+	}
+
+	@Test
+	public void testGetAvailableRelatedInfoItemCollectionProvidersForAssetCategory() {
+		List<RelatedInfoItemCollectionProvider<?, ?>>
+			relatedInfoItemCollectionProviders = ReflectionTestUtil.invoke(
+				_itemSelectorView, "_getRelatedInfoItemCollectionProviders",
+				new Class<?>[] {
+					RelatedInfoItemCollectionProviderItemSelectorCriterion.class
+				},
+				_getRelatedInfoItemCollectionProviderItemSelectorCriterion(
+					Collections.singletonList(AssetCategory.class.getName())));
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				relatedInfoItemCollectionProviders,
+				relatedInfoItemCollectionProvider -> Objects.equals(
+					relatedInfoItemCollectionProvider.getLabel(
+						LocaleUtil.getSiteDefault()),
+					LanguageUtil.get(
+						LocaleUtil.getSiteDefault(),
+						"items-with-this-category"))));
+		Assert.assertTrue(
+			ListUtil.exists(
+				relatedInfoItemCollectionProviders,
+				relatedInfoItemCollectionProvider -> Objects.equals(
+					relatedInfoItemCollectionProvider.getLabel(
+						LocaleUtil.getSiteDefault()),
+					LanguageUtil.get(
+						LocaleUtil.getSiteDefault(),
+						"blogs-with-this-category"))));
+	}
+
+	@Test
+	public void testGetAvailableRelatedInfoItemCollectionProvidersForAssetEntry() {
+		List<RelatedInfoItemCollectionProvider<?, ?>>
+			relatedInfoItemCollectionProviders = ReflectionTestUtil.invoke(
+				_itemSelectorView, "_getRelatedInfoItemCollectionProviders",
+				new Class<?>[] {
+					RelatedInfoItemCollectionProviderItemSelectorCriterion.class
+				},
+				_getRelatedInfoItemCollectionProviderItemSelectorCriterion(
+					Collections.singletonList(AssetEntry.class.getName())));
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				relatedInfoItemCollectionProviders,
+				relatedInfoItemCollectionProvider -> Objects.equals(
+					relatedInfoItemCollectionProvider.getLabel(
+						LocaleUtil.getSiteDefault()),
+					LanguageUtil.get(
+						LocaleUtil.getSiteDefault(),
+						"categories-for-this-item"))));
+		Assert.assertTrue(
+			ListUtil.exists(
+				relatedInfoItemCollectionProviders,
+				relatedInfoItemCollectionProvider -> Objects.equals(
+					relatedInfoItemCollectionProvider.getLabel(
+						LocaleUtil.getSiteDefault()),
+					LanguageUtil.get(
+						LocaleUtil.getSiteDefault(),
+						"items-with-same-categories"))));
+		Assert.assertTrue(
+			ListUtil.exists(
+				relatedInfoItemCollectionProviders,
+				relatedInfoItemCollectionProvider -> Objects.equals(
+					relatedInfoItemCollectionProvider.getLabel(
+						LocaleUtil.getSiteDefault()),
+					LanguageUtil.get(
+						LocaleUtil.getSiteDefault(), "related-assets"))));
 	}
 
 	@Test

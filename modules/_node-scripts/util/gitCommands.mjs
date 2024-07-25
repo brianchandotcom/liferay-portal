@@ -13,7 +13,7 @@ export async function getUpstreamCommitHash() {
 	let commitHash;
 
 	try {
-		const {stdout} = await $`git rev-parse s${upstreamBranch}`;
+		const {stdout} = await $`git rev-parse ${upstreamBranch}`;
 
 		commitHash = stdout;
 	}

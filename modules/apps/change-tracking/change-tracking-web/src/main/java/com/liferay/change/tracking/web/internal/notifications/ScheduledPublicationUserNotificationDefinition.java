@@ -30,6 +30,10 @@ public class ScheduledPublicationUserNotificationDefinition
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(
+				"email", UserNotificationDeliveryConstants.TYPE_EMAIL, false,
+				false));
+		addUserNotificationDeliveryType(
+			new UserNotificationDeliveryType(
 				"website", UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
 				true));
 	}

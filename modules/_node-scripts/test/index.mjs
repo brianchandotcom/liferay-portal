@@ -13,6 +13,10 @@ import runConcurrentTasks, {
 import runJest from './jest/runJest.mjs';
 
 export default async function (sync = false) {
+	const originalNodeEnv = process.env.NODE_ENV;
+
+	process.env.NODE_ENV = 'test';
+
 	const args = process.argv.slice(3);
 
 	/**
@@ -110,6 +114,8 @@ export default async function (sync = false) {
 			console.log(results.join('\n'));
 		}
 	}
+
+	process.env.NODE_ENV = originalNodeEnv;
 }
 
 function getEnvVars(value) {

@@ -252,6 +252,7 @@ export default function EditNotificationTemplate({
 							bccType: recipients[0].bccType ?? 'email',
 							cc: recipients[0].cc ?? '',
 							ccType: recipients[0].ccType ?? 'email',
+							toType: recipients[0].toType ?? 'email',
 						},
 					];
 				}

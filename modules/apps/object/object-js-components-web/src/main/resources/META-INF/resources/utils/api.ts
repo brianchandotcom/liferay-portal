@@ -57,6 +57,7 @@ type Recipient = {
 	from: string;
 	fromName: LocalizedValue<string>;
 	to: LocalizedValue<string>;
+	toType: string;
 };
 
 export interface NotificationTemplate {

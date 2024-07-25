@@ -17,10 +17,12 @@ import org.elasticsearch.index.query.QueryBuilders;
  */
 public class QueryUtil {
 
+	public static Integer maxTermsCount = 65536;
+
 	public static AbstractQueryBuilder<? extends AbstractQueryBuilder<?>>
 		translateTerms(String field, String[] terms) {
 
-		if (terms.length <= _maxTermsCount) {
+		if (terms.length <= maxTermsCount) {
 			return QueryBuilders.termsQuery(field, terms);
 		}
 
@@ -31,7 +33,7 @@ public class QueryUtil {
 		for (String term : terms) {
 			termsList.add(term);
 
-			if (termsList.size() == _maxTermsCount) {
+			if (termsList.size() == maxTermsCount) {
 				boolQueryBuilder.should(
 					QueryBuilders.termsQuery(
 						field, termsList.toArray(new String[0])));
@@ -47,16 +49,6 @@ public class QueryUtil {
 		}
 
 		return boolQueryBuilder;
-	}
-
-	private static void _setMaxTermsCount(Integer maxTermsCount) {
-		_maxTermsCount = maxTermsCount;
-	}
-
-	private static Integer _maxTermsCount;
-
-	static {
-		_setMaxTermsCount(65536);
 	}
 
 }

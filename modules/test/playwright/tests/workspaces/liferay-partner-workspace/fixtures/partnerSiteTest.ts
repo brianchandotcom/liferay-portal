@@ -27,7 +27,9 @@ export const partnerSiteTest = test.extend<IPartnerSite>({
 
 			expect(site.id).toBeGreaterThan(0);
 
-			await page.goto(`web${site.friendlyUrlPath}`);
+			await page.goto(`web${site.friendlyUrlPath}`, {
+				waitUntil: 'commit',
+			});
 
 			use(site);
 		},

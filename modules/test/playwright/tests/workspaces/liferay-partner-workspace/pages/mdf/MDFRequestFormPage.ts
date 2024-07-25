@@ -75,7 +75,7 @@ export class MDFRequestFormPage {
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(`/web${siteUrl}/marketing/mdf-requests/new`, {
-			waitUntil: 'networkidle',
+			waitUntil: 'commit',
 		});
 	}
 

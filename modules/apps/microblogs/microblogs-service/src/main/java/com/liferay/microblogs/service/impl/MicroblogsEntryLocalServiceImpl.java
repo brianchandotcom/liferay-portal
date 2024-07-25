@@ -371,7 +371,7 @@ public class MicroblogsEntryLocalServiceImpl
 
 		return microblogsEntryPersistence.findByT_P(
 			type, parentMicroblogsEntryId, start, end,
-			new EntryCreateDateComparator(true));
+			EntryCreateDateComparator.getInstance(true));
 	}
 
 	@Override

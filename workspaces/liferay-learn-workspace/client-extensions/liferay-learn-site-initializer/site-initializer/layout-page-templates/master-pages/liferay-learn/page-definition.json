@@ -4,6 +4,9 @@
 		"pageElements": [
 			{
 				"definition": {
+					"cssClasses": [
+						"learn-nav-bar"
+					],
 					"customCSS": ".[$FRAGMENT_CLASS$] {\npadding-bottom: 7rem;\n}",
 					"fragment": {
 						"key": "public-sites-navigation",

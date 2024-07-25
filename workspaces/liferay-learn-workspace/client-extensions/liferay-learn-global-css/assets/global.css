@@ -1171,6 +1171,27 @@ pre[class*='language-'] {
 	}
 }
 
+.learn-nav-bar {
+	.personal-menu-dropdown {
+		padding: 0.5rem !important;
+		.sticker-lg {
+			color: var(--color-neutral-4);
+			font-size: 1.1rem !important;
+			height: 1.8rem !important;
+			width: 1.8rem !important;
+		}
+		
+		&:hover {
+			background-color: var(--color-action-primary-hover-lighten);
+			border-radius: 8px;
+			opacity: 1;
+			.sticker-lg {
+				color: var(--color-action-primary-hover, #0053f0);
+			}
+		}
+	}
+}
+
 .learn-recipe-container {
 	.btn-link {
 		font-family: var(--font-family-sans-serif);

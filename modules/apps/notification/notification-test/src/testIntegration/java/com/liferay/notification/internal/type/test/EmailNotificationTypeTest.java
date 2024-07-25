@@ -1017,6 +1017,12 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			expectedNotificationQueueEntriesCount,
 			notificationQueueEntries.size());
 
+		Assert.assertTrue(
+			MailServiceTestUtil.lastMailMessageContains(
+				ListUtil.toString(
+					getTermValuesNames(getTermValues()), StringPool.BLANK,
+					StringPool.SEMICOLON)));
+
 		_assertNotificationQueueEntry(
 			user2.getEmailAddress() + ",bcc@liferay.com",
 			TempFileEntryUtil.getOriginalTempFileName(fileEntry.getFileName()),

@@ -87,6 +87,7 @@ import java.text.SimpleDateFormat;
 
 import java.time.Month;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -536,30 +537,14 @@ public class BaseNotificationTypeTest {
 			expectedTermValues.toString(), expectedTermValues.size(),
 			actualTermValues.size());
 
+		List<String> expectedTermValuesNames = getTermValuesNames(
+			expectedTermValues);
+
 		for (int i = 0; i < actualTermValues.size(); i++) {
-			Object expectedTermValue = expectedTermValues.get(i);
-			Object actualTermValue = actualTermValues.get(i);
+			String expectedTermValueName = expectedTermValuesNames.get(i);
+			String actualTermValue = actualTermValues.get(i);
 
-			if (expectedTermValue instanceof List) {
-				List<ListEntry> listTypeEntries =
-					(List<ListEntry>)expectedTermValue;
-
-				Assert.assertEquals(
-					StringUtil.merge(
-						TransformUtil.transform(
-							listTypeEntries, ListEntry::getName),
-						StringPool.COMMA_AND_SPACE),
-					actualTermValue);
-			}
-			else if (expectedTermValue instanceof ListEntry) {
-				ListEntry listEntry = (ListEntry)expectedTermValue;
-
-				Assert.assertEquals(listEntry.getName(), actualTermValue);
-			}
-			else {
-				Assert.assertEquals(
-					String.valueOf(expectedTermValue), actualTermValue);
-			}
+			Assert.assertEquals(expectedTermValueName, actualTermValue);
 		}
 	}
 
@@ -667,6 +652,32 @@ public class BaseNotificationTypeTest {
 			ListUtil.fromMapValues(_parentAuthorTermValues),
 			ListUtil.fromMapValues(childObjectEntryValues),
 			ListUtil.fromMapValues(parentObjectEntryValues));
+	}
+
+	protected List<String> getTermValuesNames(List<Object> termValues) {
+		List<String> termValuesNames = new ArrayList<>();
+
+		for (Object termValue : termValues) {
+			if (termValue instanceof List) {
+				List<ListEntry> listTypeEntries = (List<ListEntry>)termValue;
+
+				termValuesNames.add(
+					StringUtil.merge(
+						TransformUtil.transform(
+							listTypeEntries, ListEntry::getName),
+						StringPool.COMMA_AND_SPACE));
+			}
+			else if (termValue instanceof ListEntry) {
+				ListEntry listEntry = (ListEntry)termValue;
+
+				termValuesNames.add(listEntry.getName());
+			}
+			else {
+				termValuesNames.add(String.valueOf(termValue));
+			}
+		}
+
+		return termValuesNames;
 	}
 
 	@DeleteAfterTestRun

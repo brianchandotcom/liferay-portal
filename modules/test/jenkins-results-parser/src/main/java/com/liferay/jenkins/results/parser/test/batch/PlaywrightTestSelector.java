@@ -19,9 +19,6 @@ import java.util.Set;
  */
 public class PlaywrightTestSelector extends BaseTestSelector {
 
-	public static final String PLAYWRIGHT_TEST_PROJECT =
-		"playwright.test.project";
-
 	public PlaywrightTestSelector(
 			File propertiesFile, Properties properties, String batchName,
 			String relevantRuleName, String testSuiteName)
@@ -35,7 +32,7 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 
 		_playwrightJobProperties.add(
 			getJobProperty(
-				PLAYWRIGHT_TEST_PROJECT, JobProperty.Type.MODULE_TEST_DIR));
+				_PLAYWRIGHT_TEST_PROJECT, JobProperty.Type.MODULE_TEST_DIR));
 	}
 
 	public Set<JobProperty> getPlaywrightJobProperties() {
@@ -57,8 +54,11 @@ public class PlaywrightTestSelector extends BaseTestSelector {
 
 	@Override
 	public void validate() throws RelevantRuleConfigurationException {
-		validate(PLAYWRIGHT_TEST_PROJECT);
+		validate(_PLAYWRIGHT_TEST_PROJECT);
 	}
+
+	private static final String _PLAYWRIGHT_TEST_PROJECT =
+		"playwright.test.project";
 
 	private final Set<JobProperty> _playwrightJobProperties = new HashSet<>();
 

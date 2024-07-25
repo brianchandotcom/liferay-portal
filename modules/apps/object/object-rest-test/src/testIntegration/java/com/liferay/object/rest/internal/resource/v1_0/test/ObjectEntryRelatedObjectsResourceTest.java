@@ -12,12 +12,14 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.rest.test.util.UserAccountTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -47,6 +49,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -1241,6 +1244,41 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@Test
+	public void testPutObjectEntryRelatedObjectEntryDraft() throws Exception {
+		_enableObjectEntryDraft(_objectDefinition1);
+		_enableObjectEntryDraft(_objectDefinition2);
+
+		long objectEntryId1 = _addObjectEntryDraft(
+			_objectDefinition1, _OBJECT_FIELD_NAME_1);
+		long objectEntryId2 = _addObjectEntryDraft(
+			_objectDefinition2, _OBJECT_FIELD_NAME_2);
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			_objectDefinition1, _objectDefinition2,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			String.format(
+				"%s/%d/%s/%d", _objectDefinition1.getRESTContextPath(),
+				objectEntryId1, objectRelationship.getName(), objectEntryId2),
+			Http.Method.PUT);
+
+		Assert.assertEquals(objectEntryId2, jsonObject.getLong("id"));
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		Assert.assertEquals(
+			objectEntryId1, jsonObject.getLong(objectField.getName()));
+
+		JSONObject statusJSONObject = jsonObject.getJSONObject("status");
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, statusJSONObject.getInt("code"));
+	}
+
+	@Test
 	public void testPutObjectEntryRelatedSystemObject() throws Exception {
 		_userSystemObjectDefinitionManager =
 			_systemObjectDefinitionManagerRegistry.
@@ -1303,6 +1341,21 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		jsonArray = jsonObject.getJSONArray("items");
 
 		_assertEquals(_user1, jsonArray);
+	}
+
+	private long _addObjectEntryDraft(
+			ObjectDefinition objectDefinition, String objectFieldName)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				objectFieldName, RandomTestUtil.randomString()
+			).put(
+				"status", JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
+			).toString(),
+			objectDefinition.getRESTContextPath(), Http.Method.POST);
+
+		return jsonObject.getLong("id");
 	}
 
 	private ObjectRelationship _addObjectRelationship(
@@ -1399,6 +1452,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		return userAccountJSONObject.put(
 			systemObjectFieldName, systemObjectFieldValue);
+	}
+
+	private void _enableObjectEntryDraft(ObjectDefinition objectDefinition) {
+		objectDefinition.setEnableObjectEntryDraft(true);
+
+		_objectDefinitionLocalService.updateObjectDefinition(objectDefinition);
 	}
 
 	private String _getEndpoint(
@@ -1988,6 +2047,10 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	private ObjectEntry _objectEntry2;
 	private ObjectEntry _objectEntry3;
 	private ObjectEntry _objectEntry4;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
+
 	private ObjectRelationship _objectRelationship;
 
 	@Inject

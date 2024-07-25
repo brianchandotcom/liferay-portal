@@ -304,13 +304,20 @@ public class TestrayServer {
 			getHTTPAuthorization());
 	}
 
-	public String requestPost(String urlPath, String requestData)
+	public String requestPost(
+			boolean checkCache, String urlPath, String requestData)
 		throws IOException {
 
 		return JenkinsResultsParserUtil.toString(
-			getTestrayURL(urlPath), true,
+			getTestrayURL(urlPath), checkCache,
 			JenkinsResultsParserUtil.HttpRequestMethod.POST, requestData,
 			getHTTPAuthorization());
+	}
+
+	public String requestPost(String urlPath, String requestData)
+		throws IOException {
+
+		return requestPost(false, urlPath, requestData);
 	}
 
 	public void setHTTPAuthorization(
@@ -372,16 +379,8 @@ public class TestrayServer {
 	}
 
 	protected List<JSONObject> requestGraphQL(
-			String entityName, String[] entityFields, String filter,
-			String sort)
-		throws IOException {
-
-		return requestGraphQL(entityName, entityFields, filter, sort, 0, 0);
-	}
-
-	protected List<JSONObject> requestGraphQL(
-			String entityName, String[] entityFields, String filter,
-			String sort, long maxCount, int pageSize)
+			boolean checkCache, String entityName, String[] entityFields,
+			String filter, String sort, long maxCount, int pageSize)
 		throws IOException {
 
 		if (maxCount <= 0) {
@@ -389,7 +388,7 @@ public class TestrayServer {
 		}
 
 		if (pageSize <= 0) {
-			pageSize = 1000;
+			pageSize = 200;
 		}
 
 		if (pageSize >= maxCount) {
@@ -442,7 +441,8 @@ public class TestrayServer {
 			long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 			JSONObject responseJSONObject = new JSONObject(
-				requestPost("/o/graphql", requestJSONObject.toString()));
+				requestPost(
+					checkCache, "/o/graphql", requestJSONObject.toString()));
 
 			String duration = JenkinsResultsParserUtil.toDurationString(
 				JenkinsResultsParserUtil.getCurrentTimeMillis() - start);
@@ -483,6 +483,23 @@ public class TestrayServer {
 		}
 
 		return entityJSONObjects;
+	}
+
+	protected List<JSONObject> requestGraphQL(
+			String entityName, String[] entityFields, String filter,
+			String sort)
+		throws IOException {
+
+		return requestGraphQL(entityName, entityFields, filter, sort, 0, 0);
+	}
+
+	protected List<JSONObject> requestGraphQL(
+			String entityName, String[] entityFields, String filter,
+			String sort, long maxCount, int pageSize)
+		throws IOException {
+
+		return requestGraphQL(
+			false, entityName, entityFields, filter, sort, maxCount, pageSize);
 	}
 
 	private void _importCaseResultsFromCI(TopLevelBuild topLevelBuild) {

@@ -197,8 +197,8 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 		try {
 			List<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"caseResults", TestrayCaseResult.FIELD_NAMES, sb.toString(),
-				null);
+				true, "caseResults", TestrayCaseResult.FIELD_NAMES,
+				sb.toString(), null, 0, 1000);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
 				TestrayCaseResult testrayCaseResult =

@@ -4607,10 +4607,6 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 
-		url = fixURL(url);
-
-		String key = url.replace("//", "/");
-
 		if (url.startsWith("file:")) {
 			url = fixFileURL(url);
 		}
@@ -4620,7 +4616,8 @@ public class JenkinsResultsParserUtil {
 					System.out.println("Loading " + url);
 				}
 
-				File cachedFile = _getCacheFile(_PREFIX_TO_STRING_CACHE + key);
+				File cachedFile = _getCacheFile(
+					_generateToStringCacheKey(url, postContent));
 
 				if ((cachedFile != null) && cachedFile.exists()) {
 					return new FileInputStream(cachedFile);
@@ -5304,25 +5301,19 @@ public class JenkinsResultsParserUtil {
 						line = bufferedReader.readLine();
 					}
 
-					int bytes = sb.length();
+					String content = sb.toString();
 
-					if (expectResponse && (bytes == 0) && (i < 1)) {
+					if (expectResponse && isNullOrEmpty(content) && (i < 1)) {
 						System.out.println(
 							"Unable to get response, retrying request");
 
 						continue;
 					}
 
-					String content = sb.toString();
-
-					if (checkCache && !url.startsWith("file:") &&
-						(bytes < (3 * 1024 * 1024))) {
-
-						url = fixURL(url);
-
-						String key = url.replace("//", "/");
-
-						saveToCacheFile(_PREFIX_TO_STRING_CACHE + key, content);
+					if (checkCache && !url.startsWith("file:")) {
+						saveToCacheFile(
+							_generateToStringCacheKey(url, postContent),
+							content);
 					}
 
 					return content;
@@ -6117,6 +6108,20 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	private static String _generateToStringCacheKey(
+		String urlString, String postContent) {
+
+		String key = fixURL(urlString);
+
+		key.replace("//", "/");
+
+		if (!isNullOrEmpty(postContent)) {
+			key += postContent;
+		}
+
+		return key;
+	}
+
 	private static File _getCacheFile(String key) {
 		String fileName = combine(
 			System.getProperty("java.io.tmpdir"), "/jenkins-cached-files/",
@@ -6724,8 +6729,6 @@ public class JenkinsResultsParserUtil {
 	private static final long _MILLIS_SECOND = 1000L;
 
 	private static final int _MILLIS_TIMEOUT_DEFAULT = 1000 * 60 * 5;
-
-	private static final String _PREFIX_TO_STRING_CACHE = "toStringCache-";
 
 	private static final int _RETRIES_SIZE_MAX_DEFAULT = 3;
 

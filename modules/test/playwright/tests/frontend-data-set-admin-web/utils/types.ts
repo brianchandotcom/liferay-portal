@@ -13,8 +13,9 @@ export type ItemActionTypes =
 export type ModalVariantTypes = 'full-screen' | 'lg' | 'sm';
 export type VisualizationMode = 'Cards' | 'List' | 'Table';
 interface IBaseAction {
+	headlessActionKey?: string;
 	icon: string;
-	name: string;
+	label: string;
 	title?: string;
 	url?: string;
 	variant?: ModalVariantTypes;
@@ -26,8 +27,10 @@ export interface ICreationAction extends IBaseAction {
 
 export interface IItemAction extends IBaseAction {
 	confirmationMessage?: string;
+	confirmationMessageType?: string;
+	errorStatusMessage?: string;
 	method?: AsyncActionMethod;
-	permissionKey?: string;
+	successStatusMessage?: string;
 	type: ItemActionTypes;
 }
 

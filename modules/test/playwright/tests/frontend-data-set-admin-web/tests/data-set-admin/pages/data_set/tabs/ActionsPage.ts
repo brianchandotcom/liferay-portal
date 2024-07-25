@@ -3,73 +3,85 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {ICreationAction, IItemAction} from '../../../../../utils/types';
 import {DataSetPage} from '../DataSetPage';
 
 export class ActionsPage {
-	readonly creationActionsTab: Locator;
-	readonly dataSetPage: DataSetPage;
-	readonly itemActionsTab: Locator;
-	readonly newItemActionPlusButton: Locator;
-	readonly newCreationActionPlusButton: Locator;
-	readonly newActionForm: {
+	readonly actionForm: {
 		addIconButton: Locator;
 		cancelButton: Locator;
+		changeIconButton: Locator;
 		confirmationMessageInput: Locator;
-		headlessPermissionKeyInput: Locator;
+		confirmationMessageTypeSelect: Locator;
+		headlessActionKeyInput: Locator;
+		iconInput: Locator;
+		labelInput: Locator;
 		methodSelect: Locator;
-		nameInput: Locator;
-		permissionKeyInput: Locator;
 		saveButton: Locator;
 		selectIconModal: {
 			iconsList: Locator;
 			searchInput: Locator;
 		};
 		typeSelect: Locator;
-		urlText: Locator;
+		urlInput: Locator;
 		variantSelect: Locator;
 	};
+	readonly creationActionsTab: Locator;
+	readonly creationActionsTable: Locator;
+	readonly dataSetPage: DataSetPage;
+	readonly deletionConfirmationModal: Locator;
+	readonly itemActionsTab: Locator;
+	readonly itemActionsTable: Locator;
+	readonly newItemActionPlusButton: Locator;
+	readonly newCreationActionPlusButton: Locator;
 	readonly newCreationActionButton: Locator;
 	readonly newItemActionButton: Locator;
 	readonly noActionsWereCreatedMessage: Locator;
 	readonly page: Page;
+	private readonly tabsContainer: Locator;
 
 	constructor(page: Page) {
-		this.creationActionsTab = page.getByRole('tab', {
-			name: 'Creation Actions',
-		});
-		this.dataSetPage = new DataSetPage(page);
-		this.itemActionsTab = page.getByRole('tab', {name: 'Item Actions'});
-		this.newItemActionPlusButton = page.getByTitle('New Item Action');
-		this.newCreationActionPlusButton = page.getByText(
-			'New Creation Action'
-		);
-		this.newActionForm = {
+		this.actionForm = {
 			addIconButton: page.getByLabel('add-icon'),
 			cancelButton: page.getByRole('button', {name: 'Cancel'}),
-			confirmationMessageInput: page.getByLabel('Confirmation Message', {
-				exact: true,
-			}),
-			headlessPermissionKeyInput: page.getByLabel(
-				'Headless Action KeyRequired',
-				{exact: true}
+			changeIconButton: page.getByLabel('change-icon'),
+			confirmationMessageInput: page.getByPlaceholder(
+				'Add a message here.'
 			),
-			methodSelect: page.getByLabel('MethodRequired', {exact: true}),
-			nameInput: page.getByPlaceholder('Action Name'),
-			permissionKeyInput: page.getByLabel('Headless Action Key', {
+			confirmationMessageTypeSelect: page.getByLabel('Message Type', {
 				exact: true,
 			}),
+			headlessActionKeyInput: page.getByPlaceholder('Add a value here.'),
+			iconInput: page.getByPlaceholder('No Icon Selected'),
+			labelInput: page.getByPlaceholder('Action Name'),
+			methodSelect: page.getByLabel('MethodRequired', {exact: true}),
 			saveButton: page.getByRole('button', {name: 'Save'}),
 			selectIconModal: {
 				iconsList: page.getByRole('listitem'),
 				searchInput: page.getByPlaceholder('Search'),
 			},
 			typeSelect: page.getByLabel('TypeRequired', {exact: true}),
-			urlText: page.getByPlaceholder('Add a URL here.'),
+			urlInput: page.getByPlaceholder('Add a URL here.'),
 			variantSelect: page.getByLabel('VariantRequired', {exact: true}),
 		};
+		this.creationActionsTab = page.getByRole('tab', {
+			name: 'Creation Actions',
+		});
+		this.creationActionsTable = page.locator(
+			'.creation-actions-tab-pane table'
+		);
+		this.dataSetPage = new DataSetPage(page);
+		this.deletionConfirmationModal = page
+			.getByRole('dialog')
+			.and(page.getByLabel('Delete Action'));
+		this.itemActionsTab = page.getByRole('tab', {name: 'Item Actions'});
+		this.itemActionsTable = page.locator('.item-actions-tab-pane table');
+		this.newItemActionPlusButton = page.getByTitle('New Item Action');
+		this.newCreationActionPlusButton = page.getByText(
+			'New Creation Action'
+		);
 		this.newCreationActionButton = page.getByText('New Creation Action');
 		this.newItemActionButton = page.getByText('New Item Action');
 		this.noActionsWereCreatedMessage = page
@@ -77,6 +89,7 @@ export class ActionsPage {
 			.nth(0)
 			.locator('.c-empty-state-title');
 		this.page = page;
+		this.tabsContainer = page.locator('.actions-tabs');
 	}
 
 	async goto({dataSetLabel}: {dataSetLabel: string}) {
@@ -87,47 +100,93 @@ export class ActionsPage {
 		await this.dataSetPage.selectTab('Actions');
 	}
 
+	async gotoCreationActionsTab({dataSetLabel}: {dataSetLabel: string}) {
+		await this.goto({
+			dataSetLabel,
+		});
+
+		await this.selectTab('Creation Actions');
+	}
+
+	async gotoItemActionsTab({dataSetLabel}: {dataSetLabel: string}) {
+		await this.goto({
+			dataSetLabel,
+		});
+
+		await this.selectTab('Item Actions');
+	}
+
 	async createCreationAction(creationActionProps: ICreationAction) {
-		await this.creationActionsTab.click();
-
-		await this.newCreationActionPlusButton.waitFor({state: 'visible'});
-
 		await this.newCreationActionPlusButton.click();
 
-		await this.createAction({...creationActionProps});
+		await this.fillActionFormValues({...creationActionProps});
+
+		await this.actionForm.saveButton.click();
 	}
 
 	async createItemAction(itemActionProps: IItemAction) {
-		await this.itemActionsTab.click();
-
 		await this.newItemActionPlusButton.click();
 
-		await this.createAction({...itemActionProps});
+		await this.fillItemActionFormValues({...itemActionProps});
+
+		await this.actionForm.saveButton.click();
 	}
 
-	private async createAction(actionProps: ICreationAction | IItemAction) {
-		await this.newActionForm.nameInput.fill(actionProps.name);
-		await this.newActionForm.addIconButton.click();
+	async fillItemActionFormValues(itemActionProps: IItemAction) {
+		const {confirmationMessage, confirmationMessageType} = itemActionProps;
 
-		await this.newActionForm.selectIconModal.searchInput.fill(
+		if (confirmationMessage) {
+			this.actionForm.confirmationMessageInput.fill(confirmationMessage);
+		}
+
+		if (confirmationMessageType) {
+			this.actionForm.confirmationMessageTypeSelect.selectOption(
+				confirmationMessageType
+			);
+		}
+
+		await this.fillActionFormValues({...itemActionProps});
+	}
+
+	private async fillActionFormValues(
+		actionProps: ICreationAction | IItemAction
+	) {
+		await this.actionForm.labelInput.fill(actionProps.label);
+
+		const iconSelected = Boolean(
+			await this.actionForm.iconInput.inputValue()
+		);
+
+		if (iconSelected) {
+			await this.actionForm.changeIconButton.click();
+		}
+		else {
+			await this.actionForm.addIconButton.click();
+		}
+
+		await this.actionForm.selectIconModal.searchInput.fill(
 			actionProps.icon
 		);
-		await this.newActionForm.selectIconModal.iconsList
+		await this.actionForm.selectIconModal.iconsList
 			.getByText(actionProps.icon, {exact: true})
 			.click();
 
-		await this.newActionForm.typeSelect.selectOption(actionProps.type);
+		const typeDisabled = await this.actionForm.typeSelect.isDisabled();
+
+		if (!typeDisabled) {
+			await this.actionForm.typeSelect.selectOption(actionProps.type);
+		}
 
 		if (actionProps.type === 'modal') {
-			await this.newActionForm.variantSelect.waitFor({state: 'visible'});
-			await this.newActionForm.variantSelect.selectOption(
+			await this.actionForm.variantSelect.waitFor({state: 'visible'});
+			await this.actionForm.variantSelect.selectOption(
 				actionProps.variant
 			);
 		}
 
 		if (actionProps.type === 'modal' || actionProps.type === 'sidePanel') {
 			const actionTitle = !actionProps.title
-				? `${actionProps.name} title`
+				? `${actionProps.label} title`
 				: `${actionProps.title}`;
 
 			await this.page.getByPlaceholder('Add the title').click();
@@ -137,34 +196,32 @@ export class ActionsPage {
 		}
 
 		if (actionProps.type === 'async') {
-			await this.newActionForm.methodSelect.selectOption(
-				actionProps.method
-			);
+			await this.actionForm.methodSelect.selectOption(actionProps.method);
 		}
 
 		if (actionProps.type !== 'headless') {
-			await this.newActionForm.urlText.fill(actionProps.url);
+			await this.actionForm.urlInput.fill(actionProps.url);
 		}
 
-		if ('permissionKey' in actionProps) {
-			if (actionProps.type === 'headless') {
-				await this.newActionForm.headlessPermissionKeyInput.fill(
-					actionProps.permissionKey
-				);
-			}
-			else {
-				await this.newActionForm.permissionKeyInput.fill(
-					actionProps.permissionKey
-				);
-			}
-		}
-
-		if ('confirmationMessage' in actionProps) {
-			this.newActionForm.confirmationMessageInput.fill(
-				actionProps.confirmationMessage
+		if (actionProps.headlessActionKey) {
+			await this.actionForm.headlessActionKeyInput.fill(
+				actionProps.headlessActionKey
 			);
 		}
+	}
 
-		await this.newActionForm.saveButton.click();
+	private async selectTab(tabLabel: string) {
+		const tabButton = this.tabsContainer.getByRole('tab', {
+			exact: true,
+			name: tabLabel,
+		});
+
+		await tabButton.click();
+
+		await tabButton.and(this.page.locator('.active')).waitFor();
+
+		await expect(
+			this.page.locator('.loading-animation')
+		).not.toBeInViewport();
 	}
 }

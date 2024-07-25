@@ -104,10 +104,8 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 			return;
 		}
 
-		if (!enablePublications || enableManageRemotely) {
-			redirectURL.setParameter(
-				"mvcRenderCommandName", "/change_tracking/view_settings");
-		}
+		redirectURL.setParameter(
+			"mvcRenderCommandName", "/change_tracking/view_settings");
 
 		hideDefaultSuccessMessage(actionRequest);
 

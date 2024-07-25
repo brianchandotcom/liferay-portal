@@ -17,7 +17,7 @@
 	<liferay-ui:error key="stagingEnabled" message="staging-is-enabled-for-at-least-one-site-or-asset-library-in-the-current-virtual-instance" />
 
 	<div class="form-group">
-		<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enablePublications" type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isPublicationsEnabled() %>" />
+		<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enablePublications" onChange='<%= liferayPortletResponse.getNamespace() + "autoSave();" %>' type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isPublicationsEnabled() %>" />
 	</div>
 </clay:sheet-section>
 
@@ -29,7 +29,7 @@
 			<div class="sheet-text"><liferay-ui:message key="manage-remotely-help" /></div>
 
 			<div class="form-group">
-				<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enableManageRemotely" type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isRemoteEnabled() %>" />
+				<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enableManageRemotely" onChange='<%= liferayPortletResponse.getNamespace() + "autoSave();" %>' type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isRemoteEnabled() %>" />
 
 				<aui:input label="client-id" name="clientId" placeholder="remote-client-id-placeholder" readonly="<%= publicationsConfigurationDisplayContext.isRemoteEnabled() %>" type="input" value="<%= publicationsConfigurationDisplayContext.getRemoteClientId() %>" />
 
@@ -46,7 +46,7 @@
 		<div class="sheet-text"><liferay-ui:message key="sandbox-only-help" /></div>
 
 		<div class="form-group">
-			<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enableSandboxOnly" type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isSandboxOnlyEnabled() %>" />
+			<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enableSandboxOnly" onChange='<%= liferayPortletResponse.getNamespace() + "autoSave();" %>' type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isSandboxOnlyEnabled() %>" />
 		</div>
 	</clay:sheet-section>
 </div>
@@ -58,14 +58,10 @@
 		<div class="sheet-text"><liferay-ui:message key="allow-unapproved-changes-help" /></div>
 
 		<div class="form-group">
-			<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enableUnapprovedChanges" type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isUnapprovedChangesAllowed() %>" />
+			<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enableUnapprovedChanges" onChange='<%= liferayPortletResponse.getNamespace() + "autoSave();" %>' type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isUnapprovedChangesAllowed() %>" />
 		</div>
 	</clay:sheet-section>
 </div>
-
-<clay:sheet-footer>
-	<aui:button primary="<%= true %>" type="submit" value="save" />
-</clay:sheet-footer>
 
 <aui:script>
 	Liferay.Util.toggleBoxes(
@@ -85,4 +81,8 @@
 		'<portlet:namespace />manageRemotely',
 		<%= publicationsConfigurationDisplayContext.isPublicationsEnabled() ? false : null %>
 	);
+
+	function <portlet:namespace />autoSave() {
+		submitForm(document.<portlet:namespace />fm);
+	}
 </aui:script>

@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -636,8 +637,8 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 		if (billingAddress != null) {
 			commerceOrder = BillingAddressUtil.addOrUpdateBillingAddress(
-				_commerceAddressService, _commerceOrderService, commerceOrder,
-				billingAddress, serviceContext);
+				_commerceAddressService, _commerceOrderService, _countryService,
+				commerceOrder, billingAddress, serviceContext);
 		}
 
 		// Shipping Address
@@ -646,8 +647,8 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 		if (shippingAddress != null) {
 			commerceOrder = ShippingAddressUtil.addOrUpdateShippingAddress(
-				_commerceAddressService, _commerceOrderService, commerceOrder,
-				shippingAddress, serviceContext);
+				_commerceAddressService, _commerceOrderService, _countryService,
+				commerceOrder, shippingAddress, serviceContext);
 		}
 
 		return commerceOrder;
@@ -941,6 +942,9 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 	@Reference
 	private CommerceShippingMethodService _commerceShippingMethodService;
+
+	@Reference
+	private CountryService _countryService;
 
 	@Reference
 	private CPInstanceService _cpInstanceService;

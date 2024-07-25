@@ -12,7 +12,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -26,19 +26,19 @@ public class ShippingAddressUtil {
 	public static CommerceOrder addOrUpdateShippingAddress(
 			CommerceAddressService commerceAddressService,
 			CommerceOrderService commerceOrderService,
-			CommerceOrder commerceOrder, ShippingAddress shippingAddress,
-			ServiceContext serviceContext)
+			CountryService countryService, CommerceOrder commerceOrder,
+			ShippingAddress shippingAddress, ServiceContext serviceContext)
 		throws Exception {
 
 		if (commerceOrder.getShippingAddressId() > 0) {
 			return _updateCommerceOrderShippingAddress(
-				commerceAddressService, commerceOrderService, commerceOrder,
-				shippingAddress, serviceContext);
+				commerceAddressService, commerceOrderService, countryService,
+				commerceOrder, shippingAddress, serviceContext);
 		}
 
 		CommerceAddress commerceAddress = _addCommerceAddress(
-			commerceAddressService, commerceOrder, shippingAddress,
-			serviceContext);
+			commerceAddressService, countryService, commerceOrder,
+			shippingAddress, serviceContext);
 
 		return commerceOrderService.updateShippingAddress(
 			commerceOrder.getCommerceOrderId(), commerceAddress.getName(),
@@ -51,11 +51,11 @@ public class ShippingAddressUtil {
 
 	private static CommerceAddress _addCommerceAddress(
 			CommerceAddressService commerceAddressService,
-			CommerceOrder commerceOrder, ShippingAddress shippingAddress,
-			ServiceContext serviceContext)
+			CountryService countryService, CommerceOrder commerceOrder,
+			ShippingAddress shippingAddress, ServiceContext serviceContext)
 		throws Exception {
 
-		Country country = CountryLocalServiceUtil.getCountryByA2(
+		Country country = countryService.getCountryByA2(
 			commerceOrder.getCompanyId(), shippingAddress.getCountryISOCode());
 
 		return commerceAddressService.addCommerceAddress(
@@ -69,7 +69,16 @@ public class ShippingAddressUtil {
 			false, serviceContext);
 	}
 
-	private static long _getCountryId(Country country) {
+	private static long _getCountryId(
+		CommerceAddress commerceAddress, Country country,
+		ShippingAddress shippingAddress) {
+
+		if (Validator.isNull(shippingAddress.getCountryISOCode()) &&
+			(commerceAddress != null)) {
+
+			return commerceAddress.getCountryId();
+		}
+
 		if (country == null) {
 			return 0;
 		}
@@ -141,19 +150,16 @@ public class ShippingAddressUtil {
 	private static CommerceOrder _updateCommerceOrderShippingAddress(
 			CommerceAddressService commerceAddressService,
 			CommerceOrderService commerceOrderService,
-			CommerceOrder commerceOrder, ShippingAddress shippingAddress,
-			ServiceContext serviceContext)
+			CountryService countryService, CommerceOrder commerceOrder,
+			ShippingAddress shippingAddress, ServiceContext serviceContext)
 		throws Exception {
 
 		CommerceAddress commerceAddress =
 			commerceAddressService.fetchCommerceAddress(
 				commerceOrder.getShippingAddressId());
 
-		Country country = null;
-
-		if (commerceAddress != null) {
-			country = commerceAddress.getCountry();
-		}
+		Country country = countryService.fetchCountryByA2(
+			commerceOrder.getCompanyId(), shippingAddress.getCountryISOCode());
 
 		return commerceOrderService.updateShippingAddress(
 			commerceOrder.getCommerceOrderId(), shippingAddress.getName(),
@@ -168,7 +174,7 @@ public class ShippingAddressUtil {
 			shippingAddress.getCity(),
 			GetterUtil.get(shippingAddress.getZip(), _getZip(commerceAddress)),
 			_getRegionId(commerceAddress, country, shippingAddress),
-			_getCountryId(country),
+			_getCountryId(commerceAddress, country, shippingAddress),
 			GetterUtil.get(
 				shippingAddress.getPhoneNumber(),
 				_getPhoneNumber(commerceAddress)),

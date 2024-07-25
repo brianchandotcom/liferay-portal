@@ -190,6 +190,45 @@ test.describe('Sorting in Data Set Manager', () => {
 		});
 	});
 
+	test('In the New Sort modal, the Label and Sort By fields are required', async ({
+		page,
+		sortingPage,
+	}) => {
+		await test.step('Navigate to Sorting section', async () => {
+			await sortingPage.goto({
+				dataSetLabel,
+			});
+		});
+
+		await test.step('Open new sort modal', async () => {
+			await sortingPage.openAddSortingModal();
+		});
+
+		await test.step('Check that save button is disabled when "Sort By" is not selected', async () => {
+			await page.getByLabel('Label').fill('ID');
+			await page.getByLabel('Sort By').selectOption('');
+
+			await expect(
+				page.locator('.liferay-modal').getByRole('button', {
+					exact: true,
+					name: 'Save',
+				})
+			).toBeDisabled();
+		});
+
+		await test.step('Check that save button is disabled when "Label" is empty', async () => {
+			await page.getByLabel('Label').fill('');
+			await page.getByLabel('Sort By').selectOption('id');
+
+			await expect(
+				page.locator('.liferay-modal').getByRole('button', {
+					exact: true,
+					name: 'Save',
+				})
+			).toBeDisabled();
+		});
+	});
+
 	test('In the New Sort modal, the Order Type input only appears when default is checked @LPD-19465', async ({
 		page,
 		sortingPage,

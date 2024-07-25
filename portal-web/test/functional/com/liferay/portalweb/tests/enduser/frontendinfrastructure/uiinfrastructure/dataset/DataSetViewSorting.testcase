@@ -50,46 +50,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-185324. Confirm that the new default classification modal is displayed, the field is required."
-	@priority = 4
-	test CanAssertFieldIsRequired {
-		task ("And adds a new default sort, on "+" button or "New Default Sort" button") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("And the new default sort modal is displayed") {
-			AssertElementPresent(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "New Default Sort");
-		}
-
-		task ("Then Field is required") {
-			AssertElementPresent(
-				key_text = "Field",
-				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
-		}
-	}
-
-	@description = "LPS-185325. Confirm that the new default classification modal is displayed, the sorting is required."
-	@priority = 4
-	test CanAssertSortingIsRequired {
-		task ("And adds a new default sort, on "+" button or "New Default Sort" button") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("And the new default sort modal is displayed") {
-			AssertElementPresent(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "New Default Sort");
-		}
-
-		task ("Then Sorting is required") {
-			AssertElementPresent(
-				key_text = "Sorting",
-				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
-		}
-	}
-
 	@description = "LPS-182790. Confirms it's possible to cancel a sorting deletion."
 	@priority = 4
 	test CanCancelDeleteSorting {

@@ -88,13 +88,10 @@ public class UpgradeDocumentLibraryTest {
 		try {
 			StartupHelperUtil.setUpgrading(true);
 
-			_updateClassName(
-				_CLASS_NAME, classNameId,
-				connection);
+			_updateClassName(_CLASS_NAME, classNameId, connection);
 
 			Assert.assertEquals(
-				_CLASS_NAME,
-				_getValue(classNameId, connection));
+				_CLASS_NAME, _getValue(classNameId, connection));
 
 			UpgradeProcess upgradeProcess = new UpgradeDocumentLibrary();
 
@@ -112,8 +109,7 @@ public class UpgradeDocumentLibraryTest {
 		}
 	}
 
-	private long _getClassNameId(
-			String className, Connection connection)
+	private long _getClassNameId(String className, Connection connection)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -131,8 +127,7 @@ public class UpgradeDocumentLibraryTest {
 		}
 	}
 
-	private String _getValue(
-			long classNameId, Connection connection)
+	private String _getValue(long classNameId, Connection connection)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(

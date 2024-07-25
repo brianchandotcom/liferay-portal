@@ -45,7 +45,7 @@
 			"required": false
 		}
 	],
-	"panelCategoryKey": "control_panel.object",
+	"panelCategoryKey": "applications_menu.applications.content",
 	"pluralLabel": {
 		"en_US": "Team Members Invitation"
 	},

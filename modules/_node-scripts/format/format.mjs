@@ -100,12 +100,6 @@ export default async function format(
 			getIgnoredFiles(playwrightDir),
 		]);
 
-	const allIgnored = [
-		...rootIgnored,
-		...workspacesIgnored,
-		...playwrightIgnored,
-	];
-
 	let filepaths = [];
 
 	if (all) {
@@ -123,11 +117,41 @@ export default async function format(
 	else {
 		const modifiedFiles = await getGitModifiedFiles();
 
-		filepaths = micromatch(
-			modifiedFiles,
-			EXTENSIONS.map((ext) => `**/*.${ext}`),
-			{ignore: allIgnored}
-		).map(
+		const filteredModifiedFiles = [];
+
+		for (const file of modifiedFiles) {
+			if (file.startsWith('modules/test/playwright/')) {
+				filteredModifiedFiles.push(
+					...micromatch(
+						[file],
+						EXTENSIONS.map((ext) => `**/*.${ext}`),
+						{ignore: playwrightIgnored}
+					)
+				);
+			}
+
+			if (file.startsWith('modules/')) {
+				filteredModifiedFiles.push(
+					...micromatch(
+						[file],
+						EXTENSIONS.map((ext) => `**/*.${ext}`),
+						{ignore: rootIgnored}
+					)
+				);
+			}
+
+			if (file.startsWith('workspaces/')) {
+				filteredModifiedFiles.push(
+					...micromatch(
+						[file],
+						EXTENSIONS.map((ext) => `**/*.${ext}`),
+						{ignore: workspacesIgnored}
+					)
+				);
+			}
+		}
+
+		filepaths = filteredModifiedFiles.map(
 
 			// make sure the path is absolute
 

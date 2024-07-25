@@ -42,7 +42,7 @@ public class CommerceReturn {
 		_returnStatus = (String)objectEntryValues.get("returnStatus");
 		_status = objectEntry.getStatus();
 		_totalAmount = new BigDecimal(
-			String.valueOf(objectEntryValues.get("totalAmount")));
+			GetterUtil.getDouble(objectEntryValues.get("totalAmount")));
 	}
 
 	public long getAccountId() {

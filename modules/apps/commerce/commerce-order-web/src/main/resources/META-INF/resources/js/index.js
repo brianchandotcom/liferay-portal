@@ -9,6 +9,7 @@ export {default as CommerceStatusDataRenderer} from './CommerceStatusDataRendere
 export {default as deleteCommerceOrdersPropsTransformer} from './deleteCommerceOrdersPropsTransformer';
 export {default as deleteCommerceReturnsPropsTransformer} from './deleteCommerceReturnsPropsTransformer';
 export {default as editCommerceOrderType} from './editCommerceOrderType';
+export {default as editCommerceReturn} from './editCommerceReturn';
 export {default as qualifiers} from './qualifiers';
 export {default as summary} from './summary';
 export {default as termsDescriptionHandler} from './termsDescriptionHandler';

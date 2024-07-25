@@ -22,12 +22,15 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 </liferay-portlet:renderURL>
 
 <commerce-ui:header
+	actions="<%= commerceReturnEditDisplayContext.getHeaderActionModels() %>"
+	additionalStatusLabel="<%= commerceReturn.getReturnStatus() %>"
+	additionalStatusLabelStyle="<%= CommerceReturnConstants.getReturnStatusLabelStyle(commerceReturn.getReturnStatus()) %>"
 	bean="<%= commerceReturn.getObjectEntry() %>"
 	externalReferenceCode="<%= commerceReturn.getExternalReferenceCode() %>"
 	externalReferenceCodeEditUrl="<%= editCommerceReturnExternalReferenceCodeURL %>"
 	model="<%= CommerceReturn.class %>"
 	thumbnailUrl="<%= commerceReturnEditDisplayContext.getCommerceReturnAccountEntryThumbnailURL() %>"
-	title="<%= String.valueOf(commerceReturn.getId()) %>"
+	title="<%= String.valueOf(commerceReturnEditDisplayContext.getCommerceReturnId()) %>"
 />
 
 <div id="<portlet:namespace />editReturnContainer">
@@ -38,3 +41,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 		portletURL="<%= currentURLObj %>"
 	/>
 </div>
+
+<liferay-frontend:component
+	module="{editCommerceReturn} from commerce-order-web"
+/>

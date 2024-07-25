@@ -389,7 +389,7 @@ public class TestrayServer {
 		}
 
 		if (pageSize <= 0) {
-			pageSize = 200;
+			pageSize = 1000;
 		}
 
 		if (pageSize >= maxCount) {

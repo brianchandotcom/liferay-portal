@@ -7,7 +7,10 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import getRandomString from '../../utils/getRandomString';
+import { userData} from '../../utils/performLogin';
 import {PORTLET_URLS} from '../../utils/portletUrls';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+
 
 export class ChangeTrackingPage {
 	readonly page: Page;
@@ -22,20 +25,98 @@ export class ChangeTrackingPage {
 		this.tabsContainer = page.locator('nav.navbar');
 	}
 
-	async addComment() {
+	async addComment(comment?: string) {
 		await this.openComments();
 
 		const commentTextBox = this.page.getByRole('textbox', {
 			name: 'Comment',
 		});
 
-		await commentTextBox.fill(getRandomString());
+		if(!comment) {
+			comment = getRandomString();
+		}
+
+		await commentTextBox.fill(comment);
 
 		await this.page.getByRole('button', {name: 'Reply'}).waitFor();
 
 		await this.page.getByRole('button', {name: 'Reply'}).click();
 
 		await expect(this.page.getByText('1 Comment')).toBeVisible();
+	}
+
+	async addUserToPublication(ctCollectionName, role, user){
+		await this.goToReviewChanges(ctCollectionName);
+
+		await this.page.getByLabel('View Collaborators').click();
+		
+		await this.page.getByLabel('can view').click();
+
+		await this.page.getByRole('menuitem', {name: role}).click();
+
+		await this.page.getByPlaceholder(
+			'Enter name or email address.'
+		).fill(user.emailAddress);
+
+		await this.page.getByRole('option', {name: user.name}).click();
+
+		await this.page.getByLabel('Submit').click();
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:Users were invited successfully.'
+		);
+	}
+
+	async addUserWithPublicationsUserRole() {
+		const apiHelpers = new ApiHelpers(this.page);
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+		
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			'Publications User',
+			user.id
+		);
+
+		return user;
+	}
+
+	async assertPublicationCommentsCRUDPermissions() {
+		const comment = getRandomString();
+
+		await this.addComment(comment);
+	
+		await this.editComment(comment, getRandomString());
+	
+		await this.deleteComment();
+	}
+
+	async deleteComment() {
+		await this.page.locator('.autofit-col > .autofit-row > div:nth-child(2) > .dropdown > .dropdown-toggle').click();
+
+		await this.page.getByRole('menuitem', { name: 'Delete' }).click();
+	
+		await this.page.getByRole('button', { name: 'Delete' }).click();
+	
+		await expect(this.page.getByText('No comments yet.')).toBeVisible();
+	}
+	
+	async editComment(comment, content) {
+		await this.page.locator('.autofit-col > .autofit-row > div:nth-child(2) > .dropdown > .dropdown-toggle').click();
+
+		await this.page.getByRole('menuitem', { name: 'Edit' }).click();
+
+		await this.page.getByText(comment).fill(content);
+
+		await this.page.getByRole('button', { name: 'Save' }).click();
+
+		await expect(this.page.getByText(content)).toBeVisible();
 	}
 
 	async goto() {

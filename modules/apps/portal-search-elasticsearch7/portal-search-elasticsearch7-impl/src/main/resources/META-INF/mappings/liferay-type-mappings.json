@@ -1273,6 +1273,7 @@
 			"template_pt": {
 				"mapping": {
 					"analyzer": "portuguese",
+					"search_analyzer": "liferay_analyzer_pt_PT",
 					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"

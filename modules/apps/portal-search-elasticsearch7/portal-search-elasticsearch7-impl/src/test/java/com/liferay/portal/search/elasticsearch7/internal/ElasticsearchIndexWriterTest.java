@@ -105,6 +105,21 @@ public class ElasticsearchIndexWriterTest extends BaseIndexingTestCase {
 	}
 
 	@Test
+	public void testPartiallyUpdateDocumentUpsertsMissingDocument()
+		throws SearchException {
+
+		Document document = createDocument(
+			Field.TITLE, "text", Field.CONTENT, "example");
+
+		_indexWriter.partiallyUpdateDocument(createSearchContext(), document);
+
+		_documents.add(document);
+
+		_assertOnlyOne(Field.CONTENT, "example");
+		_assertOnlyOne(Field.TITLE, "text");
+	}
+
+	@Test
 	public void testUpdateDocument() throws SearchException {
 		Document document = addDocument(Field.TITLE, "text");
 

@@ -21,14 +21,15 @@ public class LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator() {
-		this(false);
-	}
+	public static
+		LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator
+			getInstance(boolean ascending) {
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator(
-		boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -38,7 +39,8 @@ public class LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator
 
 			LayoutPageTemplateCollectionNameComparator
 				layoutPageTemplateCollectionNameComparator =
-					new LayoutPageTemplateCollectionNameComparator();
+					LayoutPageTemplateCollectionNameComparator.getInstance(
+						false);
 
 			return layoutPageTemplateCollectionNameComparator.compare(
 				(LayoutPageTemplateCollection)object1,
@@ -50,7 +52,7 @@ public class LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator
 
 			LayoutPageTemplateEntryNameComparator
 				layoutPageTemplateEntryNameComparator =
-					new LayoutPageTemplateEntryNameComparator();
+					LayoutPageTemplateEntryNameComparator.getInstance(false);
 
 			return layoutPageTemplateEntryNameComparator.compare(
 				(LayoutPageTemplateEntry)object1,
@@ -91,6 +93,24 @@ public class LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final
+		LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator
+			_INSTANCE_ASCENDING =
+				new LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator(
+					true);
+
+	private static final
+		LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator
+			_INSTANCE_DESCENDING =
+				new LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator(
+					false);
 
 	private final boolean _ascending;
 

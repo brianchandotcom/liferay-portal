@@ -25,12 +25,14 @@ public class LayoutPageTemplateCollectionCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public LayoutPageTemplateCollectionCreateDateComparator() {
-		this(true);
-	}
+	public static LayoutPageTemplateCollectionCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public LayoutPageTemplateCollectionCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -67,6 +69,20 @@ public class LayoutPageTemplateCollectionCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private LayoutPageTemplateCollectionCreateDateComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final LayoutPageTemplateCollectionCreateDateComparator
+		_INSTANCE_ASCENDING =
+			new LayoutPageTemplateCollectionCreateDateComparator(true);
+
+	private static final LayoutPageTemplateCollectionCreateDateComparator
+		_INSTANCE_DESCENDING =
+			new LayoutPageTemplateCollectionCreateDateComparator(false);
 
 	private final boolean _ascending;
 

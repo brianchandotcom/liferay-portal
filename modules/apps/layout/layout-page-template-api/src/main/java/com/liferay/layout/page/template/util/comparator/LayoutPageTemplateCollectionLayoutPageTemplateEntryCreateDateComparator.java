@@ -22,14 +22,15 @@ public class
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator() {
-		this(false);
-	}
+	public static
+		LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator
+			getInstance(boolean ascending) {
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator(
-		boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -39,7 +40,8 @@ public class
 
 			LayoutPageTemplateCollectionCreateDateComparator
 				layoutPageTemplateCollectionCreateDateComparator =
-					new LayoutPageTemplateCollectionCreateDateComparator();
+					LayoutPageTemplateCollectionCreateDateComparator.
+						getInstance(true);
 
 			return layoutPageTemplateCollectionCreateDateComparator.compare(
 				(LayoutPageTemplateCollection)object1,
@@ -51,7 +53,8 @@ public class
 
 			LayoutPageTemplateEntryCreateDateComparator
 				layoutPageTemplateEntryCreateDateComparator =
-					new LayoutPageTemplateEntryCreateDateComparator();
+					LayoutPageTemplateEntryCreateDateComparator.getInstance(
+						true);
 
 			return layoutPageTemplateEntryCreateDateComparator.compare(
 				(LayoutPageTemplateEntry)object1,
@@ -92,6 +95,24 @@ public class
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final
+		LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator
+			_INSTANCE_ASCENDING =
+				new LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator(
+					true);
+
+	private static final
+		LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator
+			_INSTANCE_DESCENDING =
+				new LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator(
+					false);
 
 	private final boolean _ascending;
 

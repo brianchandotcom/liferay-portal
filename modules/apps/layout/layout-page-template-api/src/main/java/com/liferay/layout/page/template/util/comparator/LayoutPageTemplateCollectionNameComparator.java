@@ -25,12 +25,14 @@ public class LayoutPageTemplateCollectionNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public LayoutPageTemplateCollectionNameComparator() {
-		this(false);
-	}
+	public static LayoutPageTemplateCollectionNameComparator getInstance(
+		boolean ascending) {
 
-	public LayoutPageTemplateCollectionNameComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -70,6 +72,18 @@ public class LayoutPageTemplateCollectionNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private LayoutPageTemplateCollectionNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final LayoutPageTemplateCollectionNameComparator
+		_INSTANCE_ASCENDING = new LayoutPageTemplateCollectionNameComparator(
+			true);
+
+	private static final LayoutPageTemplateCollectionNameComparator
+		_INSTANCE_DESCENDING = new LayoutPageTemplateCollectionNameComparator(
+			false);
 
 	private final boolean _ascending;
 

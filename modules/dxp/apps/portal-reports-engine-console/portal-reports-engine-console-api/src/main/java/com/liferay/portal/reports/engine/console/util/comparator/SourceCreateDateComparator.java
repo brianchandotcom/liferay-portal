@@ -20,12 +20,12 @@ public class SourceCreateDateComparator extends OrderByComparator<Source> {
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public SourceCreateDateComparator() {
-		this(false);
-	}
+	public static SourceCreateDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public SourceCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -58,6 +58,16 @@ public class SourceCreateDateComparator extends OrderByComparator<Source> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private SourceCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final SourceCreateDateComparator _INSTANCE_ASCENDING =
+		new SourceCreateDateComparator(true);
+
+	private static final SourceCreateDateComparator _INSTANCE_DESCENDING =
+		new SourceCreateDateComparator(false);
 
 	private final boolean _ascending;
 

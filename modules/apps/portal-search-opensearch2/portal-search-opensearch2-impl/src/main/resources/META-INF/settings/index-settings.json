@@ -126,6 +126,16 @@
 				"tokenizer": "standard",
 				"type": "custom"
 			},
+			"liferay_analyzer_pt_PT": {
+				"filter": [
+					"lowercase",
+					"portuguese_stop",
+					"liferay_filter_synonym_pt_PT",
+					"portuguese_stemmer"
+				],
+				"tokenizer": "standard",
+				"type": "custom"
+			},
 			"liferay_analyzer_sv": {
 				"filter": [
 					"lowercase",
@@ -332,11 +342,25 @@
 				],
 				"type": "synonym_graph"
 			},
+			"liferay_filter_synonym_pt_PT": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
 			"liferay_filter_synonym_sv": {
 				"lenient": true,
 				"synonyms": [
 				],
 				"type": "synonym_graph"
+			},
+			"portuguese_stemmer": {
+				"language": "light_portuguese",
+				"type": "stemmer"
+			},
+			"portuguese_stop": {
+				"stopwords": "_portuguese_",
+				"type": "stop"
 			},
 			"spanish_stemmer": {
 				"language": "light_spanish",

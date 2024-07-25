@@ -35,7 +35,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			total="<%= WikiPageLocalServiceUtil.getPagesCount(wikiPage.getNodeId(), wikiPage.getTitle()) %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), searchContainer.getStart(), searchContainer.getEnd(), new PageVersionComparator()) %>"
+				results="<%= WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), searchContainer.getStart(), searchContainer.getEnd(), PageVersionComparator.getInstance(false)) %>"
 			/>
 
 			<liferay-ui:search-container-row

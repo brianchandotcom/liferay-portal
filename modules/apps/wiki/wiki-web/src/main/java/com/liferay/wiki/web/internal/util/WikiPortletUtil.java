@@ -30,11 +30,11 @@ public class WikiPortletUtil {
 		}
 
 		if (orderByCol.equals("lastPostDate")) {
-			return new NodeLastPostDateComparator(orderByAsc);
+			return NodeLastPostDateComparator.getInstance(orderByAsc);
 		}
 
 		if (orderByCol.equals("name")) {
-			return new NodeNameComparator(orderByAsc);
+			return NodeNameComparator.getInstance(orderByAsc);
 		}
 
 		return null;
@@ -50,19 +50,19 @@ public class WikiPortletUtil {
 		}
 
 		if (orderByCol.equals("createDate")) {
-			return new PageCreateDateComparator(orderByAsc);
+			return PageCreateDateComparator.getInstance(orderByAsc);
 		}
 
 		if (orderByCol.equals("modifiedDate")) {
-			return new PageModifiedDateComparator(orderByAsc);
+			return PageModifiedDateComparator.getInstance(orderByAsc);
 		}
 
 		if (orderByCol.equals("title")) {
-			return new PageTitleComparator(orderByAsc);
+			return PageTitleComparator.getInstance(orderByAsc);
 		}
 
 		if (orderByCol.equals("version")) {
-			return new PageVersionComparator(orderByAsc);
+			return PageVersionComparator.getInstance(orderByAsc);
 		}
 
 		return null;

@@ -28,7 +28,7 @@ const GIT_IGNORE_FILE = '.gitignore';
 
 const EXTENSIONS = ['graphql', 'js', 'jsp', 'jspf', 'mjs', 'scss', 'ts', 'tsx'];
 
-async function getIgoredFiles(rootDir) {
+async function getIgnoredFiles(rootDir) {
 	const eslintIgnoreFilePath = path.join(rootDir, ESLINT_IGNORE_FILE);
 	const prettierIgnoreFilePath = path.join(rootDir, PRETTIER_IGNORE_FILE);
 	const gitIgnoreFilePath = path.join(rootDir, GIT_IGNORE_FILE);
@@ -95,9 +95,9 @@ export default async function format(
 
 	const [rootIgnored, workspacesIgnored, playwrightIgnored] =
 		await Promise.all([
-			getIgoredFiles(rootDir),
-			getIgoredFiles(workspacesDir),
-			getIgoredFiles(playwrightDir),
+			getIgnoredFiles(rootDir),
+			getIgnoredFiles(workspacesDir),
+			getIgnoredFiles(playwrightDir),
 		]);
 
 	const allIgnored = [

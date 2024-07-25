@@ -58,7 +58,7 @@ public class LayoutRelevanceSearchTest {
 		List<Layout> fooSearchLayouts = _layoutLocalService.getLayouts(
 			_group.getGroupId(), false, "foo",
 			new String[] {LayoutConstants.TYPE_CONTENT}, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new LayoutRelevanceComparator());
+			QueryUtil.ALL_POS, LayoutRelevanceComparator.getInstance(true));
 
 		Assert.assertNotNull(fooSearchLayouts);
 		Assert.assertEquals(
@@ -67,7 +67,7 @@ public class LayoutRelevanceSearchTest {
 		List<Layout> barSearchLayouts = _layoutLocalService.getLayouts(
 			_group.getGroupId(), false, "bar",
 			new String[] {LayoutConstants.TYPE_CONTENT}, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new LayoutRelevanceComparator());
+			QueryUtil.ALL_POS, LayoutRelevanceComparator.getInstance(true));
 
 		Assert.assertNotNull(barSearchLayouts);
 		Assert.assertEquals(

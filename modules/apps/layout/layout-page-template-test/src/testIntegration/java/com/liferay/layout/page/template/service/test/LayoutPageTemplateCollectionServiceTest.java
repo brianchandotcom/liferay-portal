@@ -535,7 +535,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator =
-			new LayoutPageTemplateCollectionNameComparator(true);
+			LayoutPageTemplateCollectionNameComparator.getInstance(true);
 
 		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
 			_layoutPageTemplateCollectionService.
@@ -550,8 +550,8 @@ public class LayoutPageTemplateCollectionServiceTest {
 		Assert.assertEquals(
 			firstLayoutPageTemplateCollection, layoutPageTemplateCollection);
 
-		orderByComparator = new LayoutPageTemplateCollectionNameComparator(
-			false);
+		orderByComparator =
+			LayoutPageTemplateCollectionNameComparator.getInstance(false);
 
 		layoutPageTemplateCollections =
 			_layoutPageTemplateCollectionService.
@@ -640,7 +640,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 			LayoutPageTemplateCollectionTypeConstants.BASIC, serviceContext);
 
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator =
-			new LayoutPageTemplateCollectionNameComparator(true);
+			LayoutPageTemplateCollectionNameComparator.getInstance(true);
 
 		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
 			_layoutPageTemplateCollectionService.
@@ -655,8 +655,8 @@ public class LayoutPageTemplateCollectionServiceTest {
 		Assert.assertEquals(
 			firstLayoutPageTemplateCollection, layoutPageTemplateCollection);
 
-		orderByComparator = new LayoutPageTemplateCollectionNameComparator(
-			false);
+		orderByComparator =
+			LayoutPageTemplateCollectionNameComparator.getInstance(false);
 
 		layoutPageTemplateCollections =
 			_layoutPageTemplateCollectionService.

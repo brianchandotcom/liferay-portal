@@ -852,7 +852,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 							WorkflowConstants.STATUS_APPROVED) {
 
 					MessageCreateDateComparator comparator =
-						new MessageCreateDateComparator(true);
+						MessageCreateDateComparator.getInstance(true);
 
 					MBMessage[] prevAndNextMessages =
 						mbMessagePersistence.findByT_S_PrevAndNext(
@@ -2226,7 +2226,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = mbMessagePersistence.findByC_C_First(
 			_classNameLocalService.getClassNameId(className), classPK,
-			new MessageCreateDateComparator(true));
+			MessageCreateDateComparator.getInstance(true));
 
 		return message.getMessageId();
 	}

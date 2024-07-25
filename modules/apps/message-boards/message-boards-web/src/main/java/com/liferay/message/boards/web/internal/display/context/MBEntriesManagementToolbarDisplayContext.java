@@ -401,24 +401,26 @@ public class MBEntriesManagementToolbarDisplayContext {
 		String entriesNavigation = _getEntriesNavigation();
 
 		if (entriesNavigation.equals("all")) {
-			orderByComparator = new MBObjectsComparator(orderByAsc);
+			orderByComparator = MBObjectsComparator.getInstance(orderByAsc);
 		}
 		else if (entriesNavigation.equals("threads")) {
 			if (orderByCol.equals("modified-date")) {
-				orderByComparator = new ThreadModifiedDateComparator(
+				orderByComparator = ThreadModifiedDateComparator.getInstance(
 					orderByAsc);
 			}
 			else if (orderByCol.equals("title")) {
-				orderByComparator = new ThreadTitleComparator<>(orderByAsc);
+				orderByComparator = ThreadTitleComparator.getInstance(
+					orderByAsc);
 			}
 		}
 		else if (entriesNavigation.equals("categories")) {
 			if (orderByCol.equals("modified-date")) {
-				orderByComparator = new CategoryModifiedDateComparator(
+				orderByComparator = CategoryModifiedDateComparator.getInstance(
 					orderByAsc);
 			}
 			else if (orderByCol.equals("title")) {
-				orderByComparator = new CategoryTitleComparator<>(orderByAsc);
+				orderByComparator = CategoryTitleComparator.getInstance(
+					orderByAsc);
 			}
 		}
 

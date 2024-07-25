@@ -40,6 +40,18 @@ public class FacetBucketUtil {
 		return false;
 	}
 
+	private static boolean _containsFieldNameFieldValue(
+		String fieldName, String fieldValue, String[] parts) {
+
+		for (String pair : parts) {
+			if (pair.equals(fieldName + "=" + fieldValue)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static boolean _isNestedValueInBucket(
 		Field field, String term, NestedFacet nestedFacet) {
 
@@ -81,18 +93,6 @@ public class FacetBucketUtil {
 			Validator.isNotNull(upper) && (value.compareTo(upper) <= 0)) {
 
 			return true;
-		}
-
-		return false;
-	}
-
-	private static boolean _containsFieldNameFieldValue(
-		String fieldName, String fieldValue, String[] parts) {
-
-		for (String pair : parts) {
-			if (pair.equals(fieldName + "=" + fieldValue)) {
-				return true;
-			}
 		}
 
 		return false;

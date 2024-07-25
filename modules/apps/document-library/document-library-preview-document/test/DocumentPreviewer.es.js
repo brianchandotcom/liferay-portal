@@ -36,4 +36,18 @@ describe('document-library-preview-document', () => {
 
 		expect(asFragment()).toMatchSnapshot();
 	});
+
+	it('renders a document previewer with alt attribute', () => {
+		const {asFragment} = render(
+			<DocumentPreviewer
+				alt="alt text"
+				baseImageURL="http://localhost/document-images/"
+				initialPage={1}
+				spritemap="icons.svg"
+				totalPages={10}
+			/>
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+	});
 });

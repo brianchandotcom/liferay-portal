@@ -20,12 +20,14 @@ public class SiteNavigationMenuNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public SiteNavigationMenuNameComparator() {
-		this(false);
-	}
+	public static SiteNavigationMenuNameComparator getInstance(
+		boolean ascending) {
 
-	public SiteNavigationMenuNameComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +65,16 @@ public class SiteNavigationMenuNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private SiteNavigationMenuNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final SiteNavigationMenuNameComparator _INSTANCE_ASCENDING =
+		new SiteNavigationMenuNameComparator(true);
+
+	private static final SiteNavigationMenuNameComparator _INSTANCE_DESCENDING =
+		new SiteNavigationMenuNameComparator(false);
 
 	private final boolean _ascending;
 

@@ -23,12 +23,14 @@ public class SiteNavigationMenuCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public SiteNavigationMenuCreateDateComparator() {
-		this(false);
-	}
+	public static SiteNavigationMenuCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public SiteNavigationMenuCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -65,6 +67,17 @@ public class SiteNavigationMenuCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private SiteNavigationMenuCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final SiteNavigationMenuCreateDateComparator
+		_INSTANCE_ASCENDING = new SiteNavigationMenuCreateDateComparator(true);
+
+	private static final SiteNavigationMenuCreateDateComparator
+		_INSTANCE_DESCENDING = new SiteNavigationMenuCreateDateComparator(
+			false);
 
 	private final boolean _ascending;
 

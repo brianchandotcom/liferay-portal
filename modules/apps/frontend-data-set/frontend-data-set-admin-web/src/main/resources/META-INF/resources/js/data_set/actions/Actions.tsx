@@ -297,6 +297,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 						<ClayTabs
 							activation="automatic"
 							active={activeTab}
+							className="actions-tabs"
 							onActiveChange={(tab: number) => {
 								setActiveTab(tab);
 
@@ -313,11 +314,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 						</ClayTabs>
 
 						<ClayTabs.Content active={activeTab} fade>
-							<ClayTabs.TabPane
-								aria-labelledby={Liferay.Language.get(
-									'actions'
-								)}
-							>
+							<ClayTabs.TabPane className="item-actions-tab-pane">
 								<ActionList
 									actions={actions}
 									createAction={createAction}
@@ -333,11 +330,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 								/>
 							</ClayTabs.TabPane>
 
-							<ClayTabs.TabPane
-								aria-labelledby={Liferay.Language.get(
-									'new-creation-action'
-								)}
-							>
+							<ClayTabs.TabPane className="creation-actions-tab-pane">
 								<ActionList
 									actions={actions}
 									createAction={createAction}

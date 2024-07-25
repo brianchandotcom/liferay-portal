@@ -19,12 +19,12 @@ public class EntryTypeComparator extends OrderByComparator<TrashEntry> {
 
 	public static final String[] ORDER_BY_FIELDS = {"classNameId"};
 
-	public EntryTypeComparator() {
-		this(false);
-	}
+	public static EntryTypeComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public EntryTypeComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +63,16 @@ public class EntryTypeComparator extends OrderByComparator<TrashEntry> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private EntryTypeComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final EntryTypeComparator _INSTANCE_ASCENDING =
+		new EntryTypeComparator(true);
+
+	private static final EntryTypeComparator _INSTANCE_DESCENDING =
+		new EntryTypeComparator(false);
 
 	private final boolean _ascending;
 

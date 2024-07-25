@@ -7,6 +7,7 @@ package com.liferay.portal.log4j.internal;
 
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.Serializable;
 
@@ -52,7 +53,10 @@ public final class CompanyWebIdConsoleAppender extends AbstractAppender {
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 
-		if (companyId == 0) {
+		if ((companyId == 0) ||
+			!ArrayUtil.contains(
+				PortalInstancePool.getCompanyIds(), companyId)) {
+
 			_appender.append(logEvent);
 
 			return;

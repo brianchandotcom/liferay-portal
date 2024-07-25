@@ -7,10 +7,13 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
-import {createChannel} from './utils/channel';
+import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
+import {createChannel, switchChannel} from './utils/channel';
 import {
 	addBreakdownByAttribute,
 	goToDistributionTabAndSelectAttribute,
@@ -20,7 +23,12 @@ import {changeEventDisplayName} from './utils/event-definitions';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {waitForLoading} from './utils/loading';
 import {Nanites, runNanites} from './utils/nanites';
-import {navigateTo, navigateToACSitesPageViaURL} from './utils/navigation';
+import {
+	navigateTo,
+	navigateToACSitesPageViaURL,
+	navigateToACWorkspace,
+} from './utils/navigation';
+import {createSitePage, navigateToSitePage} from './utils/portal';
 import {
 	addSegmentField,
 	addStaticMember,
@@ -45,6 +53,9 @@ import {
 export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
@@ -1071,6 +1082,88 @@ test(
 			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
 				`[${channel.id}]`,
 				project.groupId
+			);
+		});
+	}
+);
+
+test(
+	'Check events criteria shows which data source data came from',
+	{
+		tag: '@LRAC-8233',
+	},
+	async ({apiHelpers, page}) => {
+		const pageTitle = 'AC Page';
+		const sitePage = await createSitePage({
+			apiHelpers,
+			pageTitle,
+		});
+
+		const channelName = 'My Property - ' + getRandomString();
+
+		await test.step('Connect the DXP to AC', async () => {
+			await syncAnalyticsCloud({
+				apiHelpers,
+				channelName,
+				page,
+			});
+		});
+
+		await test.step('Go to AC Page', async () => {
+			await navigateToSitePage({
+				page,
+				pageName: pageTitle,
+			});
+			await page.waitForTimeout(10000);
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACWorkspace({page});
+			await switchChannel({
+				channelName,
+				page,
+			});
+		});
+
+		await test.step('Access the dynamic segment creation page > Add the Viewed Page criteria', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Segments',
+			});
+
+			await createDynamicSegment(page);
+
+			await addSegmentField({
+				criterionName: 'Viewed Page',
+				criterionType: 'Events',
+				page,
+			});
+		});
+
+		await test.step('Click on the Select button of the Viewed Page criteria', async () => {
+			await page.getByRole('button', {name: 'Select'}).click();
+		});
+
+		await test.step('Check that the modal displays the page that was interacted and the data source that originated the data', async () => {
+			await viewNameOnTableList({
+				itemNames: pageTitle,
+				page,
+			});
+
+			await expect(
+				page.locator(
+					`tr:has-text("${pageTitle}"):has-text("Liferay DXP")`
+				)
+			).toBeVisible({
+				timeout: 100 * 1000,
+			});
+		});
+
+		await test.step('Delete page created in DXP during automation execution', async () => {
+			await page.goto(liferayConfig.environment.baseUrl);
+
+			await apiHelpers.jsonWebServicesLayout.deleteLayout(
+				String(sitePage.id)
 			);
 		});
 	}

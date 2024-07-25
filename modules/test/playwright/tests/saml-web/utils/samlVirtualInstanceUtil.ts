@@ -9,6 +9,7 @@ import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemS
 import {VirtualInstancesPage} from '../../../pages/portal-instances-web/VirtualInstancesPage';
 import {SamlAdminPage} from '../../../pages/saml-web/SamlAdminPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import performLogin, {performLogout} from '../../../utils/performLogin';
 import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {connectSpAndIdp} from './samlProviderConnectionUtil';
@@ -19,27 +20,22 @@ export const DEFAULT_SP_NAME = 'www.baker.com';
 export const DEFAULT_SP_URL = `http://${DEFAULT_SP_NAME}:8080`;
 
 export async function createIdentityProviderVirtualInstance(
+	page,
 	name = DEFAULT_IDP_NAME,
-	entityId = name,
-	page
+	entityId = name
 ) {
-	await createSamlVirtualInstance(name, entityId, 'Identity Provider', page);
+	await createSamlVirtualInstance(entityId, name, page, 'Identity Provider');
 }
 
 async function createSamlVirtualInstance(
-	name: string,
 	entityId: string,
-	samlRole: string,
-	page
+	name: string,
+	page,
+	samlRole: string
 ) {
 	const virtualInstancesPage = new VirtualInstancesPage(page);
 
-	await virtualInstancesPage.addNewVirtualInstance(
-		undefined,
-		undefined,
-		name,
-		undefined
-	);
+	await virtualInstancesPage.addNewVirtualInstance(name);
 
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 
@@ -60,19 +56,18 @@ async function createSamlVirtualInstance(
 }
 
 export async function createServiceProviderVirtualInstance(
-	name: string,
 	entityId: string,
+	name: string,
 	page
 ) {
-	await createSamlVirtualInstance(name, entityId, 'Service Provider', page);
+	await createSamlVirtualInstance(entityId, name, page, 'Service Provider');
 }
 
 export async function createSpAndIdpUser(
+	browser,
 	idpInstanceName = DEFAULT_IDP_NAME,
 	spInstanceName = DEFAULT_SP_NAME,
-	userId: number,
-	page,
-	browser
+	userId = getRandomInt()
 ) {
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 
@@ -162,16 +157,16 @@ export async function resetSamlKeystoreManagerTarget(page) {
 }
 
 export async function setupSamlInstances(
+	page,
 	idpInstanceName = DEFAULT_IDP_NAME,
-	spInstanceName = DEFAULT_SP_NAME,
 	idpEntityId = idpInstanceName,
-	spEntityId = spInstanceName,
-	page
+	spInstanceName = DEFAULT_SP_NAME,
+	spEntityId = spInstanceName
 ) {
 	await createIdentityProviderVirtualInstance(
+		page,
 		idpInstanceName,
-		idpEntityId,
-		page
+		idpEntityId
 	);
 
 	// Create new sp virtual instance
@@ -179,8 +174,8 @@ export async function setupSamlInstances(
 	await page.goto('/');
 
 	await createServiceProviderVirtualInstance(
-		spInstanceName,
 		spEntityId,
+		spInstanceName,
 		page
 	);
 
@@ -188,14 +183,14 @@ export async function setupSamlInstances(
 
 	await connectSpAndIdp(
 		idpInstanceName,
+		page,
 		spInstanceName,
 		idpEntityId,
-		spEntityId,
-		page
+		spEntityId
 	);
 }
 
-export async function updateSamlKeystoreManagerTarget(target: string, page) {
+export async function updateSamlKeystoreManagerTarget(page, target: string) {
 	const systemSettingsPage = new SystemSettingsPage(page);
 
 	await systemSettingsPage.goToSystemSetting(

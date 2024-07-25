@@ -9,8 +9,6 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class ServiceProviderConnectionsPage {
-	readonly page: Page;
-
 	readonly applicationsMenuPage;
 	readonly assertionLifetimeField: Locator;
 	readonly attributesEnabledToggle: Locator;
@@ -22,14 +20,13 @@ export class ServiceProviderConnectionsPage {
 	readonly keepAliveUrlField: Locator;
 	readonly metadataUrlField: Locator;
 	readonly nameField: Locator;
-	readonly nameIdentifierFormatField: Locator;
 	readonly nameIdentifierAttributeNameField: Locator;
+	readonly nameIdentifierFormatField: Locator;
+	readonly page: Page;
 	readonly saveButton: Locator;
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
-
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.assertionLifetimeField = page.getByLabel('Assertion Lifetime');
 		this.attributesEnabledToggle = page.getByText('Attributes Enabled', {
@@ -57,6 +54,7 @@ export class ServiceProviderConnectionsPage {
 		this.nameIdentifierFormatField = page.getByLabel(
 			'Name Identifier Format'
 		);
+		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
@@ -64,18 +62,18 @@ export class ServiceProviderConnectionsPage {
 	}
 
 	async addServiceProviderConnection(
+		metadataURL: string,
 		name: string,
-		entityId = name,
-		enabled = true,
 		assertionLifetime?: string,
-		forceEncrytion?: boolean,
-		metadataURL?: string,
-		nameIdentifierFormat?: string,
-		nameIdentifierAttributeName = 'emailAddress',
+		attributes?: string,
 		attributesEnabled?: boolean,
 		attributesNamespaceEnabled?: boolean,
-		attributes?: string,
-		keepAliveUrl?: string
+		enabled = true,
+		entityId = name,
+		forceEncrytion?: boolean,
+		keepAliveUrl?: string,
+		nameIdentifierAttributeName = 'emailAddress',
+		nameIdentifierFormat?: string
 	) {
 		await this.goToServiceProviderConnectionsTab();
 
@@ -85,17 +83,17 @@ export class ServiceProviderConnectionsPage {
 
 		await this.populateAndSaveServiceProviderConnectionDetails(
 			name,
-			entityId,
-			enabled,
 			assertionLifetime,
-			forceEncrytion,
-			metadataURL,
-			nameIdentifierFormat,
-			nameIdentifierAttributeName,
+			attributes,
 			attributesEnabled,
 			attributesNamespaceEnabled,
-			attributes,
-			keepAliveUrl
+			enabled,
+			entityId,
+			forceEncrytion,
+			keepAliveUrl,
+			metadataURL,
+			nameIdentifierAttributeName,
+			nameIdentifierFormat
 		);
 	}
 
@@ -119,17 +117,17 @@ export class ServiceProviderConnectionsPage {
 
 	async editServiceProviderConnection(
 		name: string,
-		entityId?: string,
-		enabled?: boolean,
 		assertionLifetime?: string,
-		forceEncrytion?: boolean,
-		metadataURL?: string,
-		nameIdentifierFormat?: string,
-		nameIdentifierAttributeName?: string,
+		attributes?: string,
 		attributesEnabled?: boolean,
 		attributesNamespaceEnabled?: boolean,
-		attributes?: string,
-		keepAliveUrl?: string
+		enabled?: boolean,
+		entityId?: string,
+		forceEncrytion?: boolean,
+		keepAliveUrl?: string,
+		metadataURL?: string,
+		nameIdentifierAttributeName?: string,
+		nameIdentifierFormat?: string
 	) {
 		await this.goToServiceProviderConnectionsTab();
 
@@ -143,17 +141,17 @@ export class ServiceProviderConnectionsPage {
 
 		await this.populateAndSaveServiceProviderConnectionDetails(
 			name,
-			entityId,
-			enabled,
 			assertionLifetime,
-			forceEncrytion,
-			metadataURL,
-			nameIdentifierFormat,
-			nameIdentifierAttributeName,
+			attributes,
 			attributesEnabled,
 			attributesNamespaceEnabled,
-			attributes,
-			keepAliveUrl
+			enabled,
+			entityId,
+			forceEncrytion,
+			keepAliveUrl,
+			metadataURL,
+			nameIdentifierAttributeName,
+			nameIdentifierFormat
 		);
 	}
 
@@ -169,50 +167,26 @@ export class ServiceProviderConnectionsPage {
 
 	private async populateAndSaveServiceProviderConnectionDetails(
 		name: string,
-		entityId?: string,
-		enabled?: boolean,
 		assertionLifetime?: string,
-		forceEncrytion?: boolean,
-		metadataURL?: string,
-		nameIdentifierFormat?: string,
-		nameIdentifierAttributeName?: string,
+		attributes?: string,
 		attributesEnabled?: boolean,
 		attributesNamespaceEnabled?: boolean,
-		attributes?: string,
-		keepAliveUrl?: string
+		enabled?: boolean,
+		entityId?: string,
+		forceEncrytion?: boolean,
+		keepAliveUrl?: string,
+		metadataURL?: string,
+		nameIdentifierAttributeName?: string,
+		nameIdentifierFormat?: string
 	) {
 		await this.nameField.fill(name);
-
-		if (entityId) {
-			await this.entityIdField.fill(entityId);
-		}
-
-		if (enabled !== undefined) {
-			await this.enabledField.setChecked(enabled);
-		}
 
 		if (assertionLifetime) {
 			await this.assertionLifetimeField.fill(assertionLifetime);
 		}
 
-		if (forceEncrytion !== undefined) {
-			await this.forceEncryptionToggle.setChecked(forceEncrytion);
-		}
-
-		if (metadataURL) {
-			await this.metadataUrlField.fill(metadataURL);
-		}
-
-		if (nameIdentifierFormat) {
-			await this.nameIdentifierFormatField.selectOption(
-				nameIdentifierFormat
-			);
-		}
-
-		if (nameIdentifierAttributeName) {
-			await this.nameIdentifierAttributeNameField.fill(
-				nameIdentifierAttributeName
-			);
+		if (attributes) {
+			await this.attributesField.fill(attributes);
 		}
 
 		if (attributesEnabled !== undefined) {
@@ -225,12 +199,36 @@ export class ServiceProviderConnectionsPage {
 			);
 		}
 
-		if (attributes) {
-			await this.attributesField.fill(attributes);
+		if (enabled !== undefined) {
+			await this.enabledField.setChecked(enabled);
+		}
+
+		if (entityId) {
+			await this.entityIdField.fill(entityId);
+		}
+
+		if (forceEncrytion !== undefined) {
+			await this.forceEncryptionToggle.setChecked(forceEncrytion);
 		}
 
 		if (keepAliveUrl) {
 			await this.keepAliveUrlField.fill(keepAliveUrl);
+		}
+
+		if (metadataURL) {
+			await this.metadataUrlField.fill(metadataURL);
+		}
+
+		if (nameIdentifierAttributeName) {
+			await this.nameIdentifierAttributeNameField.fill(
+				nameIdentifierAttributeName
+			);
+		}
+
+		if (nameIdentifierFormat) {
+			await this.nameIdentifierFormatField.selectOption(
+				nameIdentifierFormat
+			);
 		}
 
 		await this.saveButton.click();

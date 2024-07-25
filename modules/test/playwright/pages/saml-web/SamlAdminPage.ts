@@ -8,21 +8,19 @@ import {Locator, Page, expect} from '@playwright/test';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class SamlAdminPage {
-	readonly page: Page;
-
 	readonly applicationsMenuPage;
 	readonly enabledField: Locator;
 	readonly entityIdField: Locator;
+	readonly page: Page;
 	readonly samlRoleField: Locator;
 	readonly saveButton: Locator;
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
-
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.enabledField = page.getByText('Enabled');
 		this.entityIdField = page.getByLabel('Entity ID');
+		this.page = page;
 		this.samlRoleField = page.getByLabel('SAML Role');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.successMessage = page.getByText(
@@ -82,8 +80,8 @@ export class SamlAdminPage {
 	}
 
 	private async createOrReplaceCertificate(
-		encryption = false,
 		commonName = 'test',
+		encryption = false,
 		keyAlgorithm = 'RSA',
 		keyLength = '2048',
 		keyPassword = 'test'

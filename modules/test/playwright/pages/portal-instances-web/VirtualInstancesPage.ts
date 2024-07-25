@@ -9,11 +9,8 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class VirtualInstancesPage {
-	readonly page: Page;
-
 	readonly addInstanceActive: Locator;
 	readonly addInstanceAddButton: Locator;
-	private addInstanceFrame: FrameLocator;
 	readonly addInstanceMailDomain: Locator;
 	readonly addInstanceMaxUsers: Locator;
 	readonly addInstanceVirtualHost: Locator;
@@ -22,11 +19,12 @@ export class VirtualInstancesPage {
 	readonly applicationsMenuPage;
 	readonly errorMessage: Locator;
 	readonly newVirtualInstanceButton: Locator;
+	readonly page: Page;
 	readonly successMessage: Locator;
 
-	constructor(page: Page) {
-		this.page = page;
+	private addInstanceFrame: FrameLocator;
 
+	constructor(page: Page) {
 		this.addInstanceAddButton = page.getByText('Add', {exact: true});
 		this.addInstanceFrame = page.frameLocator(
 			'iframe[title="Add Instance"]'
@@ -50,15 +48,16 @@ export class VirtualInstancesPage {
 		);
 
 		this.newVirtualInstanceButton = page.getByRole('button', {name: 'Add'});
+		this.page = page;
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
 		);
 	}
 
 	async addNewVirtualInstance(
+		name: string,
 		active = true,
 		maxUsers = '0',
-		name: string,
 		virtualInstanceInitializer = ''
 	) {
 		await this.applicationsMenuPage.goToVirtualInstances();

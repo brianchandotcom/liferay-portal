@@ -11,10 +11,10 @@ const _DEFAULT_METADATA_PATH = '/c/portal/saml/metadata';
 
 async function addIdentityProviderConnection(
 	idpName: string,
+	page,
 	spDomain: string,
 	idpDomain = idpName,
-	idpEntityId = idpName,
-	page
+	idpEntityId = idpName
 ) {
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 
@@ -25,13 +25,11 @@ async function addIdentityProviderConnection(
 	);
 
 	await identityProviderConnectionsPage.addIdentityProviderConnection(
+		`http://${idpDomain}:8080${_DEFAULT_METADATA_PATH}`,
 		idpName,
-		idpEntityId,
 		undefined,
 		undefined,
-		undefined,
-		undefined,
-		`http://${idpDomain}:8080${_DEFAULT_METADATA_PATH}`
+		idpEntityId
 	);
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
@@ -39,10 +37,10 @@ async function addIdentityProviderConnection(
 
 async function addServiceProviderConnection(
 	idpDomain: string,
+	page,
 	spName: string,
 	spDomain = spName,
-	spEntityId = spName,
-	page
+	spEntityId = spName
 ) {
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 
@@ -53,12 +51,14 @@ async function addServiceProviderConnection(
 	);
 
 	await serviceProviderConnectionsPage.addServiceProviderConnection(
+		`http://${spDomain}:8080${_DEFAULT_METADATA_PATH}`,
 		spName,
-		spEntityId,
 		undefined,
 		undefined,
 		undefined,
-		`http://${spDomain}:8080${_DEFAULT_METADATA_PATH}`
+		undefined,
+		undefined,
+		spEntityId
 	);
 
 	liferayConfig.environment.baseUrl = defaultBaseUrl;
@@ -66,24 +66,24 @@ async function addServiceProviderConnection(
 
 export async function connectSpAndIdp(
 	idpName: string,
+	page,
 	spName: string,
 	idpEntityId = idpName,
-	spEntityId = spName,
-	page
+	spEntityId = spName
 ) {
 	await addServiceProviderConnection(
 		idpName,
+		page,
 		spName,
 		spName,
-		spEntityId,
-		page
+		spEntityId
 	);
 
 	await addIdentityProviderConnection(
 		idpName,
+		page,
 		spName,
 		idpName,
-		idpEntityId,
-		page
+		idpEntityId
 	);
 }

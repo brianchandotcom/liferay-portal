@@ -9,8 +9,6 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class IdentityProviderConnectionsPage {
-	readonly page: Page;
-
 	readonly applicationsMenuPage;
 	readonly clockSkewField: Locator;
 	readonly enabledField: Locator;
@@ -20,13 +18,12 @@ export class IdentityProviderConnectionsPage {
 	readonly metadataUrlField: Locator;
 	readonly nameField: Locator;
 	readonly nameIdentifierFormatField: Locator;
+	readonly page: Page;
 	readonly saveButton: Locator;
 	readonly successMessage: Locator;
 	readonly unknownUsersAreStrangersToggle: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
-
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.clockSkewField = page.getByLabel('Clock Skew');
 		this.enabledField = page.getByText('Enabled', {exact: true});
@@ -42,6 +39,7 @@ export class IdentityProviderConnectionsPage {
 		this.nameIdentifierFormatField = page.getByLabel(
 			'Name Identifier Format'
 		);
+		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
@@ -52,15 +50,15 @@ export class IdentityProviderConnectionsPage {
 	}
 
 	async addIdentityProviderConnection(
+		metadataURL: string,
 		name: string,
-		entityId = name,
-		enabled = true,
 		clockSkew?: string,
+		enabled = true,
+		entityId = name,
 		forceAuthn?: boolean,
-		unknownUsersAreStrangers?: boolean,
-		metadataURL?: string,
+		keepAliveUrl?: string,
 		nameIdentifierFormat?: string,
-		keepAliveUrl?: string
+		unknownUsersAreStrangers?: boolean
 	) {
 		await this.goToIdentityProviderConnectionsTab();
 
@@ -70,14 +68,14 @@ export class IdentityProviderConnectionsPage {
 
 		await this.populateAndSaveIdentityProviderConnectionDetails(
 			name,
-			entityId,
-			enabled,
 			clockSkew,
+			enabled,
+			entityId,
 			forceAuthn,
-			unknownUsersAreStrangers,
+			keepAliveUrl,
 			metadataURL,
 			nameIdentifierFormat,
-			keepAliveUrl
+			unknownUsersAreStrangers
 		);
 	}
 
@@ -101,14 +99,14 @@ export class IdentityProviderConnectionsPage {
 
 	async editIdentityProviderConnection(
 		name: string,
-		entityId?: string,
-		enabled?: boolean,
 		clockSkew?: string,
+		enabled?: boolean,
+		entityId?: string,
 		forceAuthn?: boolean,
-		unknownUsersAreStrangers?: boolean,
+		keepAliveUrl?: string,
 		metadataURL?: string,
 		nameIdentifierFormat?: string,
-		keepAliveUrl?: string
+		unknownUsersAreStrangers?: boolean
 	) {
 		await this.goToIdentityProviderConnectionsTab();
 
@@ -122,14 +120,14 @@ export class IdentityProviderConnectionsPage {
 
 		await this.populateAndSaveIdentityProviderConnectionDetails(
 			name,
-			entityId,
-			enabled,
 			clockSkew,
+			enabled,
+			entityId,
 			forceAuthn,
-			unknownUsersAreStrangers,
+			keepAliveUrl,
 			metadataURL,
 			nameIdentifierFormat,
-			keepAliveUrl
+			unknownUsersAreStrangers
 		);
 	}
 
@@ -145,37 +143,35 @@ export class IdentityProviderConnectionsPage {
 
 	private async populateAndSaveIdentityProviderConnectionDetails(
 		name: string,
-		entityId?: string,
-		enabled?: boolean,
 		clockSkew?: string,
+		enabled?: boolean,
+		entityId?: string,
 		forceAuthn?: boolean,
-		unknownUsersAreStrangers?: boolean,
+		keepAliveUrl?: string,
 		metadataURL?: string,
 		nameIdentifierFormat?: string,
-		keepAliveUrl?: string
+		unknownUsersAreStrangers?: boolean
 	) {
 		await this.nameField.fill(name);
 
-		if (entityId) {
-			await this.entityIdField.fill(entityId);
+		if (clockSkew) {
+			await this.clockSkewField.fill(clockSkew);
 		}
 
 		if (enabled !== undefined) {
 			await this.enabledField.setChecked(enabled);
 		}
 
-		if (clockSkew) {
-			await this.clockSkewField.fill(clockSkew);
+		if (entityId) {
+			await this.entityIdField.fill(entityId);
 		}
 
 		if (forceAuthn !== undefined) {
 			await this.forceAuthnToggle.setChecked(forceAuthn);
 		}
 
-		if (unknownUsersAreStrangers !== undefined) {
-			await this.unknownUsersAreStrangersToggle.setChecked(
-				unknownUsersAreStrangers
-			);
+		if (keepAliveUrl) {
+			await this.keepAliveUrlField.fill(keepAliveUrl);
 		}
 
 		if (metadataURL) {
@@ -188,8 +184,10 @@ export class IdentityProviderConnectionsPage {
 			);
 		}
 
-		if (keepAliveUrl) {
-			await this.keepAliveUrlField.fill(keepAliveUrl);
+		if (unknownUsersAreStrangers !== undefined) {
+			await this.unknownUsersAreStrangersToggle.setChecked(
+				unknownUsersAreStrangers
+			);
 		}
 
 		await this.saveButton.click();

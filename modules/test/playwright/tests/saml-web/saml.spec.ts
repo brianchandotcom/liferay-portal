@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {loginTest} from '../../fixtures/loginTest';
 import {samlAdminPagesTest} from '../../fixtures/samlAdminPagesTest';
 import {virtualInstancesPagesTest} from '../../fixtures/virtualInstancesPagesTest';
-import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import {performLogout} from '../../utils/performLogin';
 import {
@@ -38,22 +37,18 @@ test('Create two virtual instances, one IdP and one SP, connect them, perform SP
 	// certificates in one instance
 
 	await updateSamlKeystoreManagerTarget(
-		'Document Library Keystore Manager',
-		page
+		page,
+		'Document Library Keystore Manager'
 	);
 
-	await setupSamlInstances(undefined, undefined, undefined, undefined, page);
+	await setupSamlInstances(page, undefined, undefined);
 
 	// Create a user with identical credentials on each instance
 
-	const userId = getRandomInt();
-
 	const userAccount = await createSpAndIdpUser(
+		browser,
 		DEFAULT_IDP_NAME,
-		DEFAULT_SP_NAME,
-		userId,
-		page,
-		browser
+		DEFAULT_SP_NAME
 	);
 
 	// Create new page on SP virtual instance
@@ -136,18 +131,13 @@ test('Create, edit, and delete a new virtual instance', async ({
 }) => {
 	const name = getRandomString();
 
-	await virtualInstancesPage.addNewVirtualInstance(
-		undefined,
-		undefined,
-		name,
-		undefined
-	);
+	await virtualInstancesPage.addNewVirtualInstance(name);
 
 	const newName = getRandomString();
 
 	await editVirtualInstancePage.editVirtualInstance(
-		false,
 		name,
+		false,
 		newName + '.com',
 		'100',
 		newName

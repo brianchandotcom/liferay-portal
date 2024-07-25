@@ -9,23 +9,21 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class EditVirtualInstancePage {
-	readonly page: Page;
-
 	readonly activeToggle: Locator;
 	readonly applicationsMenuPage;
 	readonly mailDomainField: Locator;
 	readonly maxUsersField: Locator;
+	readonly page: Page;
 	readonly saveButton: Locator;
 	readonly successMessage: Locator;
 	readonly virtualHostField: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
-
 		this.activeToggle = this.page.getByText('Active');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.mailDomainField = this.page.getByLabel('Mail Domain');
 		this.maxUsersField = this.page.getByLabel('Max Users');
+		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
@@ -34,8 +32,8 @@ export class EditVirtualInstancePage {
 	}
 
 	async editVirtualInstance(
-		active = true,
 		webId: string,
+		active = true,
 		mailDomain?: string,
 		maxUsers?: string,
 		virtualHost?: string

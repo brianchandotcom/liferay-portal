@@ -18,7 +18,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -63,7 +63,8 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewTest {
 						RelatedInfoItemCollectionProviderItemSelectorCriterion.
 							class
 					},
-					_getRelatedInfoItemCollectionProviderItemSelectorCriterion());
+					_getRelatedInfoItemCollectionProviderItemSelectorCriterion(
+						Collections.singletonList(TestItem.class.getName())));
 
 			Assert.assertEquals(
 				relatedInfoItemCollectionProviders.toString(), 1,
@@ -94,7 +95,8 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewTest {
 						RelatedInfoItemCollectionProviderItemSelectorCriterion.
 							class
 					},
-					_getRelatedInfoItemCollectionProviderItemSelectorCriterion());
+					_getRelatedInfoItemCollectionProviderItemSelectorCriterion(
+						Collections.singletonList(TestItem.class.getName())));
 
 			Assert.assertEquals(
 				relatedInfoItemCollectionProviders.toString(), 0,
@@ -106,7 +108,8 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewTest {
 	}
 
 	private RelatedInfoItemCollectionProviderItemSelectorCriterion
-		_getRelatedInfoItemCollectionProviderItemSelectorCriterion() {
+		_getRelatedInfoItemCollectionProviderItemSelectorCriterion(
+			List<String> sourceItemTypes) {
 
 		RelatedInfoItemCollectionProviderItemSelectorCriterion
 			relatedInfoItemCollectionProviderItemSelectorCriterion =
@@ -116,7 +119,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorViewTest {
 			setDesiredItemSelectorReturnTypes(
 				new InfoListProviderItemSelectorReturnType());
 		relatedInfoItemCollectionProviderItemSelectorCriterion.
-			setSourceItemTypes(Arrays.asList(TestItem.class.getName()));
+			setSourceItemTypes(sourceItemTypes);
 
 		return relatedInfoItemCollectionProviderItemSelectorCriterion;
 	}

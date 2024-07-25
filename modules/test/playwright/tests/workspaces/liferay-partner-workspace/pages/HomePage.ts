@@ -14,7 +14,7 @@ export class HomePage {
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(`/web${siteUrl}/home`, {
-			waitUntil: 'networkidle',
+			waitUntil: 'commit',
 		});
 	}
 }

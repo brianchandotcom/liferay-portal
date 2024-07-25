@@ -78,7 +78,7 @@ public class WikiUtil {
 
 		List<WikiPage> pages = wikiPageLocalService.getPages(
 			nodeId, title, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new PageVersionComparator(true));
+			PageVersionComparator.getInstance(true));
 
 		for (WikiPage page : pages) {
 			if ((page.getVersion() < sourceVersion) &&

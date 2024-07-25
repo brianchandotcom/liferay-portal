@@ -3,9 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {getRandomInt} from '../../../../utils/getRandomInt';
+
+export const companyName = 'Partner Account' + getRandomInt();
+
 export const mdfRequestMock = {
 	claimPercent: 0.5,
-	companyName: 'Deathray, Inc.*',
+	companyName,
 	convertedTotalCostOfExpense: 50000,
 	convertedTotalMDFRequestAmount: 25000,
 	liferayBusinessSalesGoals: 'Lead generation',

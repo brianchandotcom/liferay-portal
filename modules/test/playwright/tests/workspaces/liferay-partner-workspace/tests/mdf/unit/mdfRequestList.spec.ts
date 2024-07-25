@@ -5,44 +5,27 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {getRandomInt} from '../../../../../../utils/getRandomInt';
 import {partnerPagesTest} from '../../../fixtures/partnerPagesTest';
-import {mdfRequestMock} from '../../../mocks/mdfMock';
+import {companyName, mdfRequestMock} from '../../../mocks/mdfMock';
 import {customFormatDate, getDateCustomFormat} from '../../../utils/date';
 
 export const test = mergeTests(partnerPagesTest);
 
 test.describe('MDF Request List', () => {
-	let mdfRequest;
 	let partnerAccount;
-	let userAccount;
+	let mdfRequest;
 
 	test.beforeEach(
 		async ({mdfRequestListPage, partnerHelper, partnerSite}) => {
-			partnerAccount =
-				await partnerHelper.apiHelpers.headlessAdminUser.postAccount({
-					name: 'Partner Account' + getRandomInt(),
-					type: 'business',
-				});
-			userAccount =
-				await partnerHelper.apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-					'test@liferay.com'
-				);
+			partnerAccount = await partnerHelper.createAccountUser({
+				name: companyName,
+				type: 'business',
+			});
 
-			const rolesResponse =
-				await partnerHelper.apiHelpers.headlessAdminUser.getAccountRoles(
-					partnerAccount.id
-				);
-
-			const role = rolesResponse?.items?.filter(
-				(role) => role.name === '[Account] Partner Manager (PM)'
-			);
-
-			await partnerHelper.apiHelpers.headlessAdminUser.assignUserToAccountRole(
-				partnerAccount.id,
-				role[0].id,
-				userAccount.id
-			);
+			await partnerHelper.assignUserToAccountRole({
+				accountId: partnerAccount.id,
+				accountRole: '[Account] Partner Manager (PM)',
+			});
 
 			mdfRequest = await partnerHelper.createMDFRequest({
 				data: mdfRequestMock,
@@ -58,9 +41,6 @@ test.describe('MDF Request List', () => {
 		);
 		await partnerHelper.apiHelpers.headlessAdminUser.deleteAccount(
 			partnerAccount.id
-		);
-		await partnerHelper.apiHelpers.headlessAdminUser.deleteAccount(
-			userAccount.id
 		);
 	});
 

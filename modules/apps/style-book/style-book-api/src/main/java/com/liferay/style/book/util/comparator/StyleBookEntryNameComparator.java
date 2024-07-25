@@ -21,12 +21,12 @@ public class StyleBookEntryNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public StyleBookEntryNameComparator() {
-		this(false);
-	}
+	public static StyleBookEntryNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public StyleBookEntryNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +63,16 @@ public class StyleBookEntryNameComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private StyleBookEntryNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final StyleBookEntryNameComparator _INSTANCE_ASCENDING =
+		new StyleBookEntryNameComparator(true);
+
+	private static final StyleBookEntryNameComparator _INSTANCE_DESCENDING =
+		new StyleBookEntryNameComparator(false);
 
 	private final boolean _ascending;
 

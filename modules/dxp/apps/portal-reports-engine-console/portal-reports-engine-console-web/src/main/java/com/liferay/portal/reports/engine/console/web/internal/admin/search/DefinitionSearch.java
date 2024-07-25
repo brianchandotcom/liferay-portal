@@ -80,7 +80,7 @@ public class DefinitionSearch extends SearchContainer<Definition> {
 			orderByAsc = true;
 		}
 
-		return new DefinitionCreateDateComparator(orderByAsc);
+		return DefinitionCreateDateComparator.getInstance(orderByAsc);
 	}
 
 }

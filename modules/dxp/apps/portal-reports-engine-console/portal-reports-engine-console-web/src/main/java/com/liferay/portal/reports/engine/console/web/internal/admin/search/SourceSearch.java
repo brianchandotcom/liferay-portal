@@ -69,7 +69,7 @@ public class SourceSearch extends SearchContainer<Source> {
 			orderByAsc = true;
 		}
 
-		return new SourceCreateDateComparator(orderByAsc);
+		return SourceCreateDateComparator.getInstance(orderByAsc);
 	}
 
 }

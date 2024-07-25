@@ -88,7 +88,7 @@ public class EntrySearch extends SearchContainer<Entry> {
 			orderByAsc = true;
 		}
 
-		return new EntryCreateDateComparator(orderByAsc);
+		return EntryCreateDateComparator.getInstance(orderByAsc);
 	}
 
 }

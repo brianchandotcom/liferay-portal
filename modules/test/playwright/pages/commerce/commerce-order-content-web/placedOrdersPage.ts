@@ -16,12 +16,15 @@ export class PlacedOrdersPage {
 	readonly configurationMenuItem: Locator;
 	readonly layoutsPage: CommerceLayoutsPage;
 	readonly optionsButton: Locator;
+	readonly orderAccountName: (accountName: string) => Locator;
 	readonly orderItemActionsButton: Locator;
 	readonly orderItemActionsButtonEdit: Locator;
 	readonly page: Page;
 	readonly pageLabel: Locator;
 	readonly pageTitle: Locator;
 	readonly panelList: Locator;
+	readonly searchButton: Locator;
+	readonly searchInput: Locator;
 	readonly shippingAddress: Locator;
 	readonly viewButton: Locator;
 
@@ -49,6 +52,8 @@ export class PlacedOrdersPage {
 				'#portlet_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet'
 			)
 			.getByLabel('Options');
+		this.orderAccountName = (accountName: string) =>
+			page.getByText(accountName);
 		this.orderItemActionsButton = page.getByRole('button', {
 			name: 'Actions',
 		});
@@ -65,6 +70,8 @@ export class PlacedOrdersPage {
 		this.panelList = page
 			.getByTestId('specificationFacetPanel')
 			.getByRole('button');
+		this.searchButton = page.getByRole('button', {name: 'Search'});
+		this.searchInput = page.getByPlaceholder('Search');
 		this.shippingAddress = page.getByTestId('commerceShippingAddress');
 		this.viewButton = page.getByLabel('View');
 	}

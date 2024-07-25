@@ -24,12 +24,14 @@ public class SiteNavigationMenuItemOrderComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"order"};
 
-	public SiteNavigationMenuItemOrderComparator() {
-		this(true);
-	}
+	public static SiteNavigationMenuItemOrderComparator getInstance(
+		boolean ascending) {
 
-	public SiteNavigationMenuItemOrderComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -106,6 +108,16 @@ public class SiteNavigationMenuItemOrderComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private SiteNavigationMenuItemOrderComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final SiteNavigationMenuItemOrderComparator
+		_INSTANCE_ASCENDING = new SiteNavigationMenuItemOrderComparator(true);
+
+	private static final SiteNavigationMenuItemOrderComparator
+		_INSTANCE_DESCENDING = new SiteNavigationMenuItemOrderComparator(false);
 
 	private final boolean _ascending;
 

@@ -23,12 +23,14 @@ public class SiteNavigationMenuModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public SiteNavigationMenuModifiedDateComparator() {
-		this(false);
-	}
+	public static SiteNavigationMenuModifiedDateComparator getInstance(
+		boolean ascending) {
 
-	public SiteNavigationMenuModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -65,6 +67,18 @@ public class SiteNavigationMenuModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private SiteNavigationMenuModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final SiteNavigationMenuModifiedDateComparator
+		_INSTANCE_ASCENDING = new SiteNavigationMenuModifiedDateComparator(
+			true);
+
+	private static final SiteNavigationMenuModifiedDateComparator
+		_INSTANCE_DESCENDING = new SiteNavigationMenuModifiedDateComparator(
+			false);
 
 	private final boolean _ascending;
 

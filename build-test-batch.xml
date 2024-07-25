@@ -6820,7 +6820,7 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="modules-integration-bundle-mysql57-jdk11_open">
+	<target name="modules-integration-bundle-mysql57-jdk17_open">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-modules-integration-test

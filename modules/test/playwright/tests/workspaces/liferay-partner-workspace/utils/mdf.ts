@@ -6,12 +6,12 @@
 import moment from 'moment';
 
 import {
-	MDFRequestActivityExpenseTypes,
-	MDFRequestActivityTactics,
-	MDFRequestActivityTypes,
-	MDFRequestLiferayBusinessSalesGoals,
-	MDFRequestTargetAudienceRoles,
-	MDFRequestTargetMarkets,
+	EMDFRequestActivityExpenseTypes,
+	EMDFRequestActivityTactics,
+	EMDFRequestActivityTypes,
+	EMDFRequestLiferayBusinessSalesGoals,
+	EMDFRequestTargetAudienceRoles,
+	EMDFRequestTargetMarkets,
 } from './constants';
 
 export function createMDFRequest(companyName: string) {
@@ -23,31 +23,31 @@ export function createMDFRequest(companyName: string) {
 				endDate: moment().add(2, 'days').format('YYYY-MM-DD'),
 				expenses: [
 					{
-						type: MDFRequestActivityExpenseTypes.BROADCAST_ADVERTISING,
+						type: EMDFRequestActivityExpenseTypes.BROADCAST_ADVERTISING,
 						value: 500,
 					},
 				],
 				leadGenerated: false,
 				marketingActivity: 'Marketing Description',
 				startDate: moment().add(1, 'days').format('YYYY-MM-DD'),
-				tactic: MDFRequestActivityTactics.OTHER,
-				typeOfActivity: MDFRequestActivityTypes.MISCELLANEOUS_MARKETING,
+				tactic: EMDFRequestActivityTactics.OTHER,
+				typeOfActivity: EMDFRequestActivityTypes.MISCELLANEOUS_MARKETING,
 			},
 		],
 		goals: {
 			companyName,
 			liferayBusinessSalesGoals: [
-				MDFRequestLiferayBusinessSalesGoals.LEAD_GENERATION,
+				EMDFRequestLiferayBusinessSalesGoals.LEAD_GENERATION,
 			],
 			overallCampaignDescription: 'Campaign Description',
 			overallCampaignName: 'Campaign Name',
 			targetAudienceRoles: [
-				MDFRequestTargetAudienceRoles.C_LEVEL_EXECUTIVE_VP,
-				MDFRequestTargetAudienceRoles.ADMINISTRATOR,
+				EMDFRequestTargetAudienceRoles.C_LEVEL_EXECUTIVE_VP,
+				EMDFRequestTargetAudienceRoles.ADMINISTRATOR,
 			],
 			targetMarkets: [
-				MDFRequestTargetMarkets.AEROSPACE_DEFENSE,
-				MDFRequestTargetMarkets.AGRICULTURE,
+				EMDFRequestTargetMarkets.AEROSPACE_DEFENSE,
+				EMDFRequestTargetMarkets.AGRICULTURE,
 			],
 		},
 	};

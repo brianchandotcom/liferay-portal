@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export enum MDFRequestLiferayBusinessSalesGoals {
+export enum EMDFRequestLiferayBusinessSalesGoals {
 	LEAD_GENERATION = 'leadGeneration',
 	NURTURE_EXISTING_PROSPECTS = 'nurtureExistingProspects',
 	OTHER = 'other',
 	THOUGHT_LEADERSHIP = 'thoughtLeadership',
 }
 
-export enum MDFRequestTargetAudienceRoles {
+export enum EMDFRequestTargetAudienceRoles {
 	ADMINISTRATOR = 'administrator',
 	ASSOCIATE_ANALYST = 'associateAnalyst',
 	C_LEVEL_EXECUTIVE_VP = 'cLevelExecutiveVP',
@@ -21,12 +21,12 @@ export enum MDFRequestTargetAudienceRoles {
 	PROJECT_MANAGER = 'projectManager',
 }
 
-export enum MDFRequestAdditionalOptions {
+export enum EMDFRequestAdditionalOptions {
 	DXP_MIGRATION_UPGRADE = 'dxpMigrationUpgrade',
 	MIGRATION_FROM_COMPETITOR_PLATFORM = 'migrationFromCompetitorPlatform',
 }
 
-export enum MDFRequestTargetMarkets {
+export enum EMDFRequestTargetMarkets {
 	AEROSPACE_DEFENSE = 'aerospaceDefense',
 	AGRICULTURE = 'agriculture',
 	AUTOMOTIVE = 'automotive',
@@ -55,14 +55,14 @@ export enum MDFRequestTargetMarkets {
 	WHOLESALE_DISTRIBUTION = 'wholesaleDistribution',
 }
 
-export enum MDFRequestActivityTypes {
+export enum EMDFRequestActivityTypes {
 	EVENT = 'prmtact001',
 	DIGITAL_MARKETING = 'prmtact002',
 	CONTENT_MARKETING = 'prmtact003',
 	MISCELLANEOUS_MARKETING = 'prmtact004',
 }
 
-export enum MDFRequestActivityTactics {
+export enum EMDFRequestActivityTactics {
 	IN_PERSON_NETWORKING_EVENT_SEMINAR_MEET_UP = 'prmtact001prmtct001',
 	IN_PERSON_INDUSTRY_CONFERENCE_TRADE_SHOW = 'prmtact001prmtct002',
 	WEBINAR = 'prmtact001prmtct003',
@@ -89,7 +89,7 @@ export enum MDFRequestActivityTactics {
 	OTHER = 'prmtact002prmtct006prmtact003prmtct009prmtact004prmtct008',
 }
 
-export enum MDFRequestActivityExpenseTypes {
+export enum EMDFRequestActivityExpenseTypes {
 	BROADCAST_ADVERTISING = 'broadcastAdvertising',
 	COBRANDED_MERCHANDISE = 'cobrandedMerchandise',
 	CONTENT_CREATION = 'contentCreation',

@@ -6,7 +6,7 @@
 import {Page, expect} from '@playwright/test';
 import moment from 'moment';
 
-interface MDFRequestPageContent {
+interface IMDFRequestPageContent {
 	activities: [
 		{
 			activityName: string;
@@ -36,7 +36,7 @@ export class MDFRequestFormReviewPage {
 		this.page = page;
 	}
 
-	async reviewMDFContent(mdfRequestPageContent: MDFRequestPageContent) {
+	async reviewMDFContent(mdfRequestPageContent: IMDFRequestPageContent) {
 		const {
 			activities: [
 				{

@@ -5,7 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {MDFRequest} from '../../types/mdf';
+import {TMDFRequest} from '../../types/mdf';
 import {MDFRequestFormActivitiesPage} from './MDFRequestFormActivitiesPage';
 import {MDFRequestFormGoalsPage} from './MDFRequestFormGoalsPage';
 import {MDFRequestFormReviewPage} from './MDFRequestFormReviewPage';
@@ -60,7 +60,7 @@ export class MDFRequestFormPage {
 		await this.continueButton.click();
 	}
 
-	async createNewRequest(form: MDFRequest) {
+	async createNewRequest(form: TMDFRequest) {
 		await this.form.goals.fillForm(form.goals);
 		await this.continue();
 

@@ -4,46 +4,46 @@
  */
 
 import {
-	MDFRequestActivityExpenseTypes,
-	MDFRequestActivityTactics,
-	MDFRequestActivityTypes,
-	MDFRequestAdditionalOptions,
-	MDFRequestLiferayBusinessSalesGoals,
-	MDFRequestTargetAudienceRoles,
-	MDFRequestTargetMarkets,
+	EMDFRequestActivityExpenseTypes,
+	EMDFRequestActivityTactics,
+	EMDFRequestActivityTypes,
+	EMDFRequestAdditionalOptions,
+	EMDFRequestLiferayBusinessSalesGoals,
+	EMDFRequestTargetAudienceRoles,
+	EMDFRequestTargetMarkets,
 } from '../utils/constants';
 
-export type MDFRequestActivityExpense = {
-	type: MDFRequestActivityExpenseTypes;
+export type TMDFRequestActivityExpense = {
+	type: EMDFRequestActivityExpenseTypes;
 	value: number;
 };
 
-export type MDFRequestActivity = {
+export type TMDFRequestActivity = {
 	activityName: string;
 	claimPercent: number;
 	endDate: string;
-	expenses: MDFRequestActivityExpense[];
+	expenses: TMDFRequestActivityExpense[];
 	leadGenerated: boolean;
 	marketingActivity: string;
 	startDate: string;
-	tactic: MDFRequestActivityTactics;
-	typeOfActivity: MDFRequestActivityTypes;
+	tactic: EMDFRequestActivityTactics;
+	typeOfActivity: EMDFRequestActivityTypes;
 };
 
-export type MDFRequestGoal = {
-	additionalOptions?: MDFRequestAdditionalOptions[];
+export type TMDFRequestGoal = {
+	additionalOptions?: EMDFRequestAdditionalOptions[];
 	companyName: string;
-	liferayBusinessSalesGoals: MDFRequestLiferayBusinessSalesGoals[];
+	liferayBusinessSalesGoals: EMDFRequestLiferayBusinessSalesGoals[];
 	liferayBusinessSalesGoalsOther?: string;
 	overallCampaignDescription: string;
 	overallCampaignName: string;
-	targetAudienceRoles: MDFRequestTargetAudienceRoles[];
-	targetMarkets: MDFRequestTargetMarkets[];
+	targetAudienceRoles: EMDFRequestTargetAudienceRoles[];
+	targetMarkets: EMDFRequestTargetMarkets[];
 };
 
-export type MDFRequest = {
-	activities: MDFRequestActivity[];
-	goals: MDFRequestGoal;
+export type TMDFRequest = {
+	activities: TMDFRequestActivity[];
+	goals: TMDFRequestGoal;
 	review?: any;
 };
 

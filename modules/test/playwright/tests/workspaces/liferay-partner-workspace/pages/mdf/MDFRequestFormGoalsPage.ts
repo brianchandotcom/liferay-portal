@@ -5,8 +5,8 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {MDFRequestGoal} from '../../types/mdf';
-import {MDFRequestLiferayBusinessSalesGoals} from '../../utils/constants';
+import {TMDFRequestGoal} from '../../types/mdf';
+import {EMDFRequestLiferayBusinessSalesGoals} from '../../utils/constants';
 
 export class MDFRequestFormGoalsPage {
 	readonly additionalOptions: {
@@ -160,7 +160,7 @@ export class MDFRequestFormGoalsPage {
 		overallCampaignName,
 		targetAudienceRoles,
 		targetMarkets,
-	}: MDFRequestGoal) {
+	}: TMDFRequestGoal) {
 		await this.selectCompany(companyName);
 
 		await this.overallCampaignName.fill(overallCampaignName);
@@ -168,7 +168,7 @@ export class MDFRequestFormGoalsPage {
 		await this.overallCampaignDescription.fill(overallCampaignDescription);
 
 		for (const option of liferayBusinessSalesGoals) {
-			if (option === MDFRequestLiferayBusinessSalesGoals.OTHER) {
+			if (option === EMDFRequestLiferayBusinessSalesGoals.OTHER) {
 				this.fillLiferayBusinessSalesGoalsOther(
 					liferayBusinessSalesGoalsOther
 				);

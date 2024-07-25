@@ -5,10 +5,10 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {MDFRequestActivity, MDFRequestActivityExpense} from '../../types/mdf';
+import {TMDFRequestActivity, TMDFRequestActivityExpense} from '../../types/mdf';
 import {
-	MDFRequestActivityTactics,
-	MDFRequestActivityTypes,
+	EMDFRequestActivityTactics,
+	EMDFRequestActivityTypes,
 } from '../../utils/constants';
 
 export class MDFRequestFormActivitiesPage {
@@ -80,11 +80,11 @@ export class MDFRequestFormActivitiesPage {
 		);
 	}
 
-	async selectTypeOfActivity(index: number, option: MDFRequestActivityTypes) {
+	async selectTypeOfActivity(index: number, option: EMDFRequestActivityTypes) {
 		await this.typeOfActivity(index).selectOption(option);
 	}
 
-	async selectTactic(index: number, option: MDFRequestActivityTactics) {
+	async selectTactic(index: number, option: EMDFRequestActivityTactics) {
 		await this.tactic(index).selectOption(option);
 	}
 
@@ -97,7 +97,7 @@ export class MDFRequestFormActivitiesPage {
 	async addActivityBudget(
 		activityIndex: number,
 		expenseIndex: number,
-		expense: MDFRequestActivityExpense
+		expense: TMDFRequestActivityExpense
 	) {
 		await this.addExpense.click();
 
@@ -122,7 +122,7 @@ export class MDFRequestFormActivitiesPage {
 			startDate,
 			tactic,
 			typeOfActivity,
-		}: MDFRequestActivity
+		}: TMDFRequestActivity
 	) {
 		const activityButton = await this.addActivity;
 		await activityButton.click();
@@ -134,7 +134,7 @@ export class MDFRequestFormActivitiesPage {
 		await this.selectTactic(activityIndex, tactic);
 
 		if (
-			typeOfActivity === MDFRequestActivityTypes.MISCELLANEOUS_MARKETING
+			typeOfActivity === EMDFRequestActivityTypes.MISCELLANEOUS_MARKETING
 		) {
 			await this.marketingActivity(activityIndex).fill(marketingActivity);
 		}

@@ -12,13 +12,13 @@ import {partnerSiteTest} from './partnerSiteTest';
 
 export const test = mergeTests(partnerSiteTest);
 
-export interface PartnerPages {
+export interface IPartnerPages {
 	homePage: HomePage;
 	mdfRequestFormPage: MDFRequestFormPage;
 	mdfRequestListPage: MDFRequestListPage;
 }
 
-export const partnerPagesTest = test.extend<PartnerPages>({
+export const partnerPagesTest = test.extend<IPartnerPages>({
 	homePage: async ({page}, use) => {
 		await use(new HomePage(page));
 	},

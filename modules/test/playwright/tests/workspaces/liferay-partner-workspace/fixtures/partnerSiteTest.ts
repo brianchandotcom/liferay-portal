@@ -13,11 +13,11 @@ export const test = mergeTests(
 	partnerHelperTest
 );
 
-export interface PartnerSite {
+export interface IPartnerSite {
 	partnerSite: Site;
 }
 
-export const partnerSiteTest = test.extend<PartnerSite>({
+export const partnerSiteTest = test.extend<IPartnerSite>({
 	partnerSite: [
 		async ({page, partnerHelper}, use) => {
 			const site =

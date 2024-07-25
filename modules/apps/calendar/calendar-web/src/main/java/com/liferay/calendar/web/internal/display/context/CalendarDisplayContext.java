@@ -496,7 +496,7 @@ public class CalendarDisplayContext {
 		}
 
 		calendarResourceSearch.setOrderByComparator(
-			new CalendarResourceNameComparator(orderByAsc));
+			CalendarResourceNameComparator.getInstance(orderByAsc));
 		calendarResourceSearch.setOrderByType(getOrderByType());
 
 		CalendarResourceDisplayTerms displayTerms =

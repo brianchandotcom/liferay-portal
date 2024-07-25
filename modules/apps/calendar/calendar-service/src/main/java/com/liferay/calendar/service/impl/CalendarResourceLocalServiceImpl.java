@@ -208,7 +208,7 @@ public class CalendarResourceLocalServiceImpl
 	@Override
 	public CalendarResource fetchCalendarResource(long groupId, String code) {
 		return calendarResourcePersistence.fetchByG_C_First(
-			groupId, code, new CalendarResourceCodeComparator());
+			groupId, code, CalendarResourceCodeComparator.getInstance(false));
 	}
 
 	@Override

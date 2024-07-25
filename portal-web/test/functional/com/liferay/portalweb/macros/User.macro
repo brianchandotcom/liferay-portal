@@ -2230,19 +2230,31 @@ definition {
 	macro loginPG(idpName = null, password = null, virtualHostsURL = null, userScreenName = null, userEmailAddress = null, newPassword = null, rememberMeChecked = null, nodePort = null) {
 		if (isSet(virtualHostsURL)) {
 			var portalURL = ${virtualHostsURL};
+
+			JSONUser.agreeToTermsAndAnswerReminderQuery(
+				portalURL = ${portalURL},
+				userEmailAddress = ${userEmailAddress});
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else if (isSet(nodePort)) {
 			var portalURL = "http://localhost:${nodePort}";
+
+			JSONUser.agreeToTermsAndAnswerReminderQuery(
+				portalURL = ${portalURL},
+				userEmailAddress = ${userEmailAddress});
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
+
+			JSONUser.agreeToTermsAndAnswerReminderQuery(
+				portalURL = ${portalURL},
+				userEmailAddress = ${userEmailAddress});
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
-
-		JSONUser.agreeToTermsAndAnswerReminderQuery(
-			portalURL = ${portalURL},
-			userEmailAddress = ${userEmailAddress});
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest?SM_USER=${userEmailAddress}");
 
 		// TODO Remove below macro after password reminder gets completely cleaned out with JSON
 

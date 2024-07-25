@@ -164,7 +164,7 @@ const ComplimentaryDate = ({
 				setIsLoadingGenerateKey(false);
 
 				navigate(urlPreviousPage, {
-					state: {newKeyGeneratedAlert: true},
+					state: {isMultipleKeys: state.activationKeys.length > 1, newKeyGeneratedAlert: true},
 				});
 
 				return true;
@@ -180,7 +180,7 @@ const ComplimentaryDate = ({
 				setIsLoadingGenerateKey(false);
 
 				navigate(urlPreviousPage, {
-					state: {newKeyGeneratedAlert: true},
+					state: {isMultipleKeys: state.activationKeys.length > 1, newKeyGeneratedAlert: true},
 				});
 
 				return true;

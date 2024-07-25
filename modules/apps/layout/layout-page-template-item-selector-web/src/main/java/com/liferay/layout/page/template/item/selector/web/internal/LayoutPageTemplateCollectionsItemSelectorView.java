@@ -219,7 +219,8 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 			}
 
 			searchContainer.setOrderByComparator(
-				new LayoutPageTemplateCollectionNameComparator(orderByAsc));
+				LayoutPageTemplateCollectionNameComparator.getInstance(
+					orderByAsc));
 			searchContainer.setOrderByType(orderByType);
 
 			String keywords = ParamUtil.getString(

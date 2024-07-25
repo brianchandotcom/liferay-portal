@@ -33,12 +33,13 @@ public class LayoutPageTemplatePortletUtil {
 
 		if (orderByCol.equals("create-date")) {
 			orderByComparator =
-				new LayoutPageTemplateCollectionCreateDateComparator(
+				LayoutPageTemplateCollectionCreateDateComparator.getInstance(
 					orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new LayoutPageTemplateCollectionNameComparator(
-				orderByAsc);
+			orderByComparator =
+				LayoutPageTemplateCollectionNameComparator.getInstance(
+					orderByAsc);
 		}
 
 		return orderByComparator;
@@ -57,12 +58,13 @@ public class LayoutPageTemplatePortletUtil {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new LayoutPageTemplateEntryCreateDateComparator(
-				orderByAsc);
+			orderByComparator =
+				LayoutPageTemplateEntryCreateDateComparator.getInstance(
+					orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new LayoutPageTemplateEntryNameComparator(
-				orderByAsc);
+			orderByComparator =
+				LayoutPageTemplateEntryNameComparator.getInstance(orderByAsc);
 		}
 
 		return orderByComparator;

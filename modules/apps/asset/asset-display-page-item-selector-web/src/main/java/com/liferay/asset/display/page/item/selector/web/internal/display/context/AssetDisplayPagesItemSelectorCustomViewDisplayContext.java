@@ -233,13 +233,13 @@ public class AssetDisplayPagesItemSelectorCustomViewDisplayContext {
 
 		if (orderByCol.equals("create-date")) {
 			orderByComparator =
-				new LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator(
-					orderByAsc);
+				LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator.
+					getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
 			orderByComparator =
-				new LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator(
-					orderByAsc);
+				LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator.
+					getInstance(orderByAsc);
 		}
 
 		return orderByComparator;

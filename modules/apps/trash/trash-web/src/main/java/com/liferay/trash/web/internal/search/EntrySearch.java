@@ -100,13 +100,14 @@ public class EntrySearch extends SearchContainer<TrashEntry> {
 		OrderByComparator<TrashEntry> orderByComparator = null;
 
 		if (orderByCol.equals("removed-by")) {
-			orderByComparator = new EntryUserNameComparator(orderByAsc);
+			orderByComparator = EntryUserNameComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("removed-date")) {
-			orderByComparator = new EntryCreateDateComparator(orderByAsc);
+			orderByComparator = EntryCreateDateComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("type")) {
-			orderByComparator = new EntryTypeComparator(orderByAsc);
+			orderByComparator = EntryTypeComparator.getInstance(orderByAsc);
 		}
 
 		return orderByComparator;

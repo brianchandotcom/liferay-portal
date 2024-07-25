@@ -106,11 +106,21 @@ public class RelevantRuleValidation {
 
 		StringBuilder sb = new StringBuilder();
 
+		int i = 1;
+
 		for (Exception exception :
 				RelevantRuleConfigurationException.getExceptions()) {
 
+			if (i == 1) {
+				sb.append("The following issues were found:");
+			}
+
 			sb.append("\n");
+			sb.append(i);
+			sb.append(". ");
 			sb.append(exception.getMessage());
+
+			i++;
 		}
 
 		if (sb.length() > 0) {

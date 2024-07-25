@@ -16,7 +16,7 @@ export class VirtualInstancesPage {
 	readonly addInstanceVirtualHost: Locator;
 	readonly addInstanceVirtualInstanceInitializer: Locator;
 	readonly addInstanceWebIdField: Locator;
-	readonly applicationsMenuPage;
+	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly errorMessage: Locator;
 	readonly newVirtualInstanceButton: Locator;
 	readonly page: Page;

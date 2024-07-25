@@ -8,7 +8,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class SamlAdminPage {
-	readonly applicationsMenuPage;
+	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly enabledField: Locator;
 	readonly entityIdField: Locator;
 	readonly page: Page;

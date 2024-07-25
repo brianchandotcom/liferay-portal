@@ -9,7 +9,7 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class ServiceProviderConnectionsPage {
-	readonly applicationsMenuPage;
+	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly assertionLifetimeField: Locator;
 	readonly attributesEnabledToggle: Locator;
 	readonly attributesField: Locator;

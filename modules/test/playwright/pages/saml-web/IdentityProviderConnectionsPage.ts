@@ -9,7 +9,7 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class IdentityProviderConnectionsPage {
-	readonly applicationsMenuPage;
+	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly clockSkewField: Locator;
 	readonly enabledField: Locator;
 	readonly entityIdField: Locator;

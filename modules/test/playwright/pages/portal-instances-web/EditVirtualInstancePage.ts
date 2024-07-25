@@ -10,7 +10,7 @@ import {ApplicationsMenuPage} from '../product-navigation-applications-menu/Appl
 
 export class EditVirtualInstancePage {
 	readonly activeToggle: Locator;
-	readonly applicationsMenuPage;
+	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly mailDomainField: Locator;
 	readonly maxUsersField: Locator;
 	readonly page: Page;

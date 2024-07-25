@@ -87,6 +87,7 @@ import java.text.SimpleDateFormat;
 
 import java.time.Month;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -530,36 +531,20 @@ public class BaseNotificationTypeTest {
 	}
 
 	protected void assertTermValues(
-		List<Object> expectedTermValues, List<String> actualTermValues) {
+		List<Object> expectedObjectTermValues, List<String> actualTermValues) {
 
 		Assert.assertEquals(
-			expectedTermValues.toString(), expectedTermValues.size(),
-			actualTermValues.size());
+			expectedObjectTermValues.toString(),
+			expectedObjectTermValues.size(), actualTermValues.size());
+
+		List<String> expectedTermValuesValues = getTermValuesValues(
+			expectedObjectTermValues);
 
 		for (int i = 0; i < actualTermValues.size(); i++) {
-			Object expectedTermValue = expectedTermValues.get(i);
-			Object actualTermValue = actualTermValues.get(i);
+			String expectedTermValue = expectedTermValuesValues.get(i);
+			String actualTermValue = actualTermValues.get(i);
 
-			if (expectedTermValue instanceof List) {
-				List<ListEntry> listTypeEntries =
-					(List<ListEntry>)expectedTermValue;
-
-				Assert.assertEquals(
-					StringUtil.merge(
-						TransformUtil.transform(
-							listTypeEntries, ListEntry::getName),
-						StringPool.COMMA_AND_SPACE),
-					actualTermValue);
-			}
-			else if (expectedTermValue instanceof ListEntry) {
-				ListEntry listEntry = (ListEntry)expectedTermValue;
-
-				Assert.assertEquals(listEntry.getName(), actualTermValue);
-			}
-			else {
-				Assert.assertEquals(
-					String.valueOf(expectedTermValue), actualTermValue);
-			}
+			Assert.assertEquals(expectedTermValue, actualTermValue);
 		}
 	}
 
@@ -667,6 +652,32 @@ public class BaseNotificationTypeTest {
 			ListUtil.fromMapValues(_parentAuthorTermValues),
 			ListUtil.fromMapValues(childObjectEntryValues),
 			ListUtil.fromMapValues(parentObjectEntryValues));
+	}
+
+	protected List<String> getTermValuesValues(List<Object> termValues) {
+		List<String> termValuesValues = new ArrayList<>();
+
+		for (Object termValue : termValues) {
+			if (termValue instanceof List) {
+				List<ListEntry> listTypeEntries = (List<ListEntry>)termValue;
+
+				termValuesValues.add(
+					StringUtil.merge(
+						TransformUtil.transform(
+							listTypeEntries, ListEntry::getName),
+						StringPool.COMMA_AND_SPACE));
+			}
+			else if (termValue instanceof ListEntry) {
+				ListEntry listEntry = (ListEntry)termValue;
+
+				termValuesValues.add(listEntry.getName());
+			}
+			else {
+				termValuesValues.add(String.valueOf(termValue));
+			}
+		}
+
+		return termValuesValues;
 	}
 
 	@DeleteAfterTestRun

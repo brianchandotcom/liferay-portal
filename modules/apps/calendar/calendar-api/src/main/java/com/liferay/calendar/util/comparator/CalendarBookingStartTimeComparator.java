@@ -22,12 +22,14 @@ public class CalendarBookingStartTimeComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"startTime", "createDate"};
 
-	public CalendarBookingStartTimeComparator() {
-		this(false);
-	}
+	public static CalendarBookingStartTimeComparator getInstance(
+		boolean ascending) {
 
-	public CalendarBookingStartTimeComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -71,6 +73,16 @@ public class CalendarBookingStartTimeComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CalendarBookingStartTimeComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CalendarBookingStartTimeComparator
+		_INSTANCE_ASCENDING = new CalendarBookingStartTimeComparator(true);
+
+	private static final CalendarBookingStartTimeComparator
+		_INSTANCE_DESCENDING = new CalendarBookingStartTimeComparator(false);
 
 	private final boolean _ascending;
 

@@ -23,12 +23,14 @@ public class CalendarResourceCodeComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"code", "name"};
 
-	public CalendarResourceCodeComparator() {
-		this(false);
-	}
+	public static CalendarResourceCodeComparator getInstance(
+		boolean ascending) {
 
-	public CalendarResourceCodeComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -73,6 +75,16 @@ public class CalendarResourceCodeComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CalendarResourceCodeComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CalendarResourceCodeComparator _INSTANCE_ASCENDING =
+		new CalendarResourceCodeComparator(true);
+
+	private static final CalendarResourceCodeComparator _INSTANCE_DESCENDING =
+		new CalendarResourceCodeComparator(false);
 
 	private final boolean _ascending;
 

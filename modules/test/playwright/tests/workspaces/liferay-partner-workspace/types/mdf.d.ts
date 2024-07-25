@@ -46,3 +46,12 @@ export type MDFRequest = {
 	goals: MDFRequestGoal;
 	review?: any;
 };
+
+export type TPartnerAccount = {
+	currency?: string;
+	externalReferenceCode?: string;
+	id?: number;
+	name: string;
+	partnerCountry?: string;
+	type?: string;
+};

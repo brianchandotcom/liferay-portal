@@ -14,7 +14,7 @@ import {
 	MDFRequestTargetMarkets,
 } from './constants';
 
-export function createMDFRequest() {
+export function createMDFRequest(companyName: string) {
 	return {
 		activities: [
 			{
@@ -35,7 +35,7 @@ export function createMDFRequest() {
 			},
 		],
 		goals: {
-			companyName: 'Deathray, Inc.*',
+			companyName,
 			liferayBusinessSalesGoals: [
 				MDFRequestLiferayBusinessSalesGoals.LEAD_GENERATION,
 			],

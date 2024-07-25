@@ -5,42 +5,29 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {getRandomInt} from '../../../../../../utils/getRandomInt';
 import {partnerPagesTest} from '../../../fixtures/partnerPagesTest';
+import {companyName} from '../../../mocks/mdfMock';
 import {createMDFRequest} from '../../../utils/mdf';
 
 export const test = mergeTests(partnerPagesTest);
 
 test.describe('MDF Request Form', () => {
 	let partnerAccount;
-	let userAccount;
 
 	test.beforeEach(
 		async ({mdfRequestFormPage, partnerHelper, partnerSite}) => {
-			partnerAccount =
-				await partnerHelper.apiHelpers.headlessAdminUser.postAccount({
-					name: 'Partner Account' + getRandomInt(),
-					type: 'business',
-				});
-			userAccount =
-				await partnerHelper.apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-					'test@liferay.com'
-				);
+			partnerAccount = await partnerHelper.createAccountUser({
+				currency: 'USD',
+				externalReferenceCode: '0017000000b3ScRAAU',
+				name: companyName,
+				partnerCountry: 'US',
+				type: 'business',
+			});
 
-			const rolesResponse =
-				await partnerHelper.apiHelpers.headlessAdminUser.getAccountRoles(
-					partnerAccount.id
-				);
-
-			const role = rolesResponse?.items?.filter(
-				(role) => role.name === '[Account] Partner Manager (PM)'
-			);
-
-			await partnerHelper.apiHelpers.headlessAdminUser.assignUserToAccountRole(
-				partnerAccount.id,
-				role[0].id,
-				userAccount.id
-			);
+			await partnerHelper.assignUserToAccountRole({
+				accountId: partnerAccount.id,
+				accountRole: '[Account] Partner Manager (PM)',
+			});
 
 			await mdfRequestFormPage.goto(partnerSite.friendlyUrlPath);
 		}
@@ -49,9 +36,6 @@ test.describe('MDF Request Form', () => {
 	test.afterEach(async ({partnerHelper}) => {
 		await partnerHelper.apiHelpers.headlessAdminUser.deleteAccount(
 			partnerAccount.id
-		);
-		await partnerHelper.apiHelpers.headlessAdminUser.deleteAccount(
-			userAccount.id
 		);
 	});
 
@@ -64,7 +48,7 @@ test.describe('MDF Request Form', () => {
 	});
 
 	test('Create a New MDF Request', async ({mdfRequestFormPage}) => {
-		const mdfRequestData = createMDFRequest();
+		const mdfRequestData = createMDFRequest(companyName);
 
 		await mdfRequestFormPage.createNewRequest(mdfRequestData);
 		await mdfRequestFormPage.reviewMDFRequest(mdfRequestData);

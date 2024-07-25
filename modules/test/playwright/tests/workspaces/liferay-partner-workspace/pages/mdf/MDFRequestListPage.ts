@@ -54,7 +54,10 @@ export class MDFRequestListPage {
 		this.exportRequestButton = page.getByRole('link', {
 			name: 'Export MDF Report',
 		});
-		this.filterButton = page.getByRole('button', {name: 'Filter'});
+		this.filterButton = page.getByRole('button', {
+			exact: true,
+			name: 'Filter',
+		});
 		this.mdfRequestHeading = page.getByText('MDF Requests');
 		this.newRequestButton = page.getByRole('button', {
 			name: 'New Request',
@@ -68,7 +71,11 @@ export class MDFRequestListPage {
 	}
 
 	async clearAllFilters() {
-		(await this.page.waitForSelector(`text=Clear All Filters`)).click();
+		await this.page
+			.getByRole('button', {
+				name: 'Clear All Filters',
+			})
+			.click();
 	}
 
 	async createNewMDFRequestButton() {

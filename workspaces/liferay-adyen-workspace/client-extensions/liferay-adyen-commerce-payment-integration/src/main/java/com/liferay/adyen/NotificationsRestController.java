@@ -173,10 +173,9 @@ public class NotificationsRestController extends BaseRestController {
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				"liferay-adyen-payment-integration-oauth-application-" +
 					"headless-server"),
-			StringBundler.concat(
-				"/o/headless-commerce-admin-payment/v1.0/payments/?filter=",
-				"relatedItemId eq ",
-				notificationRequestItem.getMerchantReference()));
+			"/o/headless-commerce-admin-payment/v1.0/payments/?filter=" +
+				"relatedItemId eq " +
+					notificationRequestItem.getMerchantReference());
 
 		JSONArray itemsJSONArray = paymentsJSONObject.getJSONArray("items");
 

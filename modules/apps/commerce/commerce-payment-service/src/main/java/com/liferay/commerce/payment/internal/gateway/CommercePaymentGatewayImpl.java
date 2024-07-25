@@ -114,19 +114,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 					commercePaymentEntry.getType());
 		}
 		catch (Exception exception) {
-			if (exception.getCause() instanceof SystemException) {
-				Throwable throwable = exception.getCause();
-
-				if (throwable instanceof ORMException) {
-					throwable = throwable.getCause();
-
-					if (throwable instanceof OptimisticLockException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(_ADYEN_ERROR);
-						}
-					}
-				}
-			}
+			_logOptimisticLockException(exception);
 		}
 
 		CommercePaymentEntryAuditConfiguration
@@ -306,19 +294,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 					commercePaymentEntry.getType());
 		}
 		catch (Exception exception) {
-			if (exception.getCause() instanceof SystemException) {
-				Throwable throwable = exception.getCause();
-
-				if (throwable instanceof ORMException) {
-					throwable = throwable.getCause();
-
-					if (throwable instanceof OptimisticLockException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(_ADYEN_ERROR);
-						}
-					}
-				}
-			}
+			_logOptimisticLockException(exception);
 		}
 
 		CommercePaymentEntryAuditConfiguration
@@ -461,8 +437,27 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 			CommercePaymentEntryAuditConfiguration.class, companyId);
 	}
 
-	private static final String _ADYEN_ERROR =
-		"Double call, probably from Adyen. Bug on their side, nothing to do";
+	private void _logOptimisticLockException(Exception exception) {
+		if (!(exception.getCause() instanceof SystemException)) {
+			return;
+		}
+
+		Throwable throwable = exception.getCause();
+
+		if (!(throwable instanceof ORMException)) {
+			return;
+		}
+
+		throwable = throwable.getCause();
+
+		if (!(throwable instanceof OptimisticLockException) ||
+			!_log.isDebugEnabled()) {
+
+			return;
+		}
+
+		_log.debug("Ignore duplicate calls. See LPD-28950.", exception);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePaymentGatewayImpl.class);

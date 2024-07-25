@@ -98,6 +98,7 @@ public class SynonymSearchTest {
 
 			_company = CompanyTestUtil.addCompany();
 
+			addSynonymSet("carro,automovel");
 			addSynonymSet("dxp,portal");
 			addSynonymSet("efectivo,productivo");
 			addSynonymSet("effectief,productief");
@@ -125,6 +126,7 @@ public class SynonymSearchTest {
 	public void testSearchOnLocalesWithDefaultSynonymFilters()
 		throws Exception {
 
+		doAssertSearch("carro", Field.TITLE, LocaleUtil.PORTUGAL, 2);
 		doAssertSearch("dxp", Field.TITLE, LocaleUtil.US, 2);
 		doAssertSearch("efectivo", Field.TITLE, LocaleUtil.SPAIN, 2);
 		doAssertSearch("effectief", Field.TITLE, LocaleUtil.NETHERLANDS, 2);
@@ -178,6 +180,8 @@ public class SynonymSearchTest {
 			).put(
 				LocaleUtil.NETHERLANDS, "effectief"
 			).put(
+				LocaleUtil.PORTUGAL, "carro"
+			).put(
 				LocaleUtil.SPAIN, "efectivo"
 			).put(
 				LocaleUtil.US, "dxp"
@@ -201,6 +205,8 @@ public class SynonymSearchTest {
 				LocaleUtil.HUNGARY, "produktív"
 			).put(
 				LocaleUtil.NETHERLANDS, "productief"
+			).put(
+				LocaleUtil.PORTUGAL, "automovel"
 			).put(
 				LocaleUtil.SPAIN, "productivo"
 			).put(
@@ -286,7 +292,7 @@ public class SynonymSearchTest {
 				"liferay_filter_synonym_es", "liferay_filter_synonym_fi",
 				"liferay_filter_synonym_fr", "liferay_filter_synonym_hu",
 				"liferay_filter_synonym_nl", "liferay_filter_synonym_pt_BR",
-				"liferay_filter_synonym_sv"
+				"liferay_filter_synonym_pt_PT", "liferay_filter_synonym_sv"
 			}
 		).build();
 	}

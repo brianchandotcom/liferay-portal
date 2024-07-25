@@ -36,10 +36,6 @@ const messageNewKeyGeneratedAlert = i18n.translate(
 	'activation-key-was-generated-successfully'
 );
 
-const messageNewKeyGeneratedAlertForComplimentary = i18n.translate(
-	'complimentary-key-was-generated-successfully'
-);
-
 const messageDeactivateKey = i18n.translate(
 	'activation-keys-were-deactivated-successfully'
 );
@@ -60,6 +56,10 @@ const ActivationKeysTable = ({
 	const [downloadStatus, setDownloadStatus] = useState('');
 	const {state} = useLocation();
 	const {setHasSideMenu} = useOutletContext();
+
+	const messageNewKeyGeneratedAlertForComplimentary = i18n.translate(
+		state?.isMultipleKeys ? 'complimentary-keys-were-generated-successfully' : 'complimentary-key-was-generated-successfully'
+	);
 
 	useEffect(() => {
 		setHasSideMenu(true);

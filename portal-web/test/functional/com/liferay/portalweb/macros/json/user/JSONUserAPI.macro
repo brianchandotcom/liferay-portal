@@ -241,8 +241,7 @@ definition {
 		var companyId = JSONCompany.getCompanyIdNoSelenium(
 			creatorEmailAddress = ${creatorEmailAddress},
 			creatorPassword = ${creatorPassword},
-			portalInstanceName = ${portalInstanceName},
-			portalURL = ${specificURL});
+			portalInstanceName = ${portalInstanceName});
 
 		if (isSet(specificURL)) {
 			var portalURL = ${specificURL};

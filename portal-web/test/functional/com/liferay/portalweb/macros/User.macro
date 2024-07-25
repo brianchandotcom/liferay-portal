@@ -2228,34 +2228,20 @@ definition {
 
 	@summary = "Default summary"
 	macro loginPG(idpName = null, password = null, virtualHostsURL = null, userScreenName = null, userEmailAddress = null, newPassword = null, rememberMeChecked = null, nodePort = null) {
+		JSONUser.agreeToTermsAndAnswerReminderQuery(
+			portalURL = ${virtualHostsURL},
+			userEmailAddress = ${userEmailAddress});
+
 		if (isSet(virtualHostsURL)) {
-			var portalURL = ${virtualHostsURL};
-
-			JSONUser.agreeToTermsAndAnswerReminderQuery(
-				portalURL = ${portalURL},
-				userEmailAddress = ${userEmailAddress});
-
 			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else if (isSet(nodePort)) {
 			var baseURL = "http://localhost:${nodePort}";
 
-			var portalURL = ${baseURL};
-
-			JSONUser.agreeToTermsAndAnswerReminderQuery(
-				portalURL = ${portalURL},
-				userEmailAddress = ${userEmailAddress});
-
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
 			var baseURL = JSONCompany.getPortalURL();
-
-			var portalURL = ${baseURL};
-
-			JSONUser.agreeToTermsAndAnswerReminderQuery(
-				portalURL = ${portalURL},
-				userEmailAddress = ${userEmailAddress});
 
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}

@@ -672,7 +672,7 @@ public class SiteInitializerSerializerImpl
 		List<StyleBookEntry> styleBookEntries =
 			_styleBookEntryLocalService.getStyleBookEntries(
 				groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StyleBookEntryNameComparator(true));
+				StyleBookEntryNameComparator.getInstance(true));
 
 		for (StyleBookEntry styleBookEntry : styleBookEntries) {
 			styleBookEntry.populateZipWriter(

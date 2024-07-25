@@ -24,12 +24,12 @@ public class ThreadLastPostDateComparator extends OrderByComparator<MBThread> {
 
 	public static final String[] ORDER_BY_FIELDS = {"lastPostDate", "threadId"};
 
-	public ThreadLastPostDateComparator() {
-		this(false);
-	}
+	public static ThreadLastPostDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public ThreadLastPostDateComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -76,6 +76,16 @@ public class ThreadLastPostDateComparator extends OrderByComparator<MBThread> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private ThreadLastPostDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final ThreadLastPostDateComparator _INSTANCE_ASCENDING =
+		new ThreadLastPostDateComparator(true);
+
+	private static final ThreadLastPostDateComparator _INSTANCE_DESCENDING =
+		new ThreadLastPostDateComparator(false);
 
 	private final boolean _ascending;
 

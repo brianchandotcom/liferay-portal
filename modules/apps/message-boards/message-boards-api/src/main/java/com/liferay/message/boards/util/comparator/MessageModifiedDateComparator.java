@@ -21,8 +21,12 @@ public class MessageModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public MessageModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+	public static MessageModifiedDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -55,6 +59,16 @@ public class MessageModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private MessageModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final MessageModifiedDateComparator _INSTANCE_ASCENDING =
+		new MessageModifiedDateComparator(true);
+
+	private static final MessageModifiedDateComparator _INSTANCE_DESCENDING =
+		new MessageModifiedDateComparator(false);
 
 	private final boolean _ascending;
 

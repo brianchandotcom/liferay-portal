@@ -20,12 +20,12 @@ public class CategoryTitleComparator<T> extends OrderByComparator<T> {
 
 	public static final String[] ORDER_BY_FIELDS = {"name", "modifiedDate"};
 
-	public CategoryTitleComparator() {
-		this(false);
-	}
+	public static CategoryTitleComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public CategoryTitleComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -70,6 +70,16 @@ public class CategoryTitleComparator<T> extends OrderByComparator<T> {
 
 		return null;
 	}
+
+	private CategoryTitleComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CategoryTitleComparator _INSTANCE_ASCENDING =
+		new CategoryTitleComparator(true);
+
+	private static final CategoryTitleComparator _INSTANCE_DESCENDING =
+		new CategoryTitleComparator(false);
 
 	private final boolean _ascending;
 

@@ -24,12 +24,12 @@ public class ThreadTitleComparator<T> extends OrderByComparator<T> {
 		"priority", "title", "modifiedDate"
 	};
 
-	public ThreadTitleComparator() {
-		this(false);
-	}
+	public static ThreadTitleComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public ThreadTitleComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -74,6 +74,16 @@ public class ThreadTitleComparator<T> extends OrderByComparator<T> {
 
 		return null;
 	}
+
+	private ThreadTitleComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final ThreadTitleComparator _INSTANCE_ASCENDING =
+		new ThreadTitleComparator(true);
+
+	private static final ThreadTitleComparator _INSTANCE_DESCENDING =
+		new ThreadTitleComparator(false);
 
 	private final boolean _ascending;
 

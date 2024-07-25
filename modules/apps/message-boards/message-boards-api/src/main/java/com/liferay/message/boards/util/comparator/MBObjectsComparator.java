@@ -29,12 +29,12 @@ public class MBObjectsComparator<T> extends OrderByComparator<T> {
 		"modelCategory", "priority", "modifiedDate", "name", "modelId"
 	};
 
-	public MBObjectsComparator() {
-		this(false);
-	}
+	public static MBObjectsComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public MBObjectsComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -85,6 +85,16 @@ public class MBObjectsComparator<T> extends OrderByComparator<T> {
 
 		return null;
 	}
+
+	private MBObjectsComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final MBObjectsComparator _INSTANCE_ASCENDING =
+		new MBObjectsComparator(true);
+
+	private static final MBObjectsComparator _INSTANCE_DESCENDING =
+		new MBObjectsComparator(false);
 
 	private final boolean _ascending;
 

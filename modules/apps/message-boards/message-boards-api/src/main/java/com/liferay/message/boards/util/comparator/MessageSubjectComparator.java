@@ -24,8 +24,12 @@ public class MessageSubjectComparator extends OrderByComparator<MBMessage> {
 		"priority", "subject", "modifiedDate"
 	};
 
-	public MessageSubjectComparator(boolean ascending) {
-		_ascending = ascending;
+	public static MessageSubjectComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -60,6 +64,16 @@ public class MessageSubjectComparator extends OrderByComparator<MBMessage> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private MessageSubjectComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final MessageSubjectComparator _INSTANCE_ASCENDING =
+		new MessageSubjectComparator(true);
+
+	private static final MessageSubjectComparator _INSTANCE_DESCENDING =
+		new MessageSubjectComparator(false);
 
 	private final boolean _ascending;
 

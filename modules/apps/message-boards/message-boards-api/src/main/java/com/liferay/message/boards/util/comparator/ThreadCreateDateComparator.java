@@ -22,12 +22,12 @@ public class ThreadCreateDateComparator extends OrderByComparator<MBThread> {
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public ThreadCreateDateComparator() {
-		this(false);
-	}
+	public static ThreadCreateDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public ThreadCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -60,6 +60,16 @@ public class ThreadCreateDateComparator extends OrderByComparator<MBThread> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private ThreadCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final ThreadCreateDateComparator _INSTANCE_ASCENDING =
+		new ThreadCreateDateComparator(true);
+
+	private static final ThreadCreateDateComparator _INSTANCE_DESCENDING =
+		new ThreadCreateDateComparator(false);
 
 	private final boolean _ascending;
 

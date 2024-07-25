@@ -20,8 +20,12 @@ public class MessageCreateDateComparator extends OrderByComparator<MBMessage> {
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public MessageCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+	public static MessageCreateDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -54,6 +58,16 @@ public class MessageCreateDateComparator extends OrderByComparator<MBMessage> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private MessageCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final MessageCreateDateComparator _INSTANCE_ASCENDING =
+		new MessageCreateDateComparator(true);
+
+	private static final MessageCreateDateComparator _INSTANCE_DESCENDING =
+		new MessageCreateDateComparator(false);
 
 	private final boolean _ascending;
 

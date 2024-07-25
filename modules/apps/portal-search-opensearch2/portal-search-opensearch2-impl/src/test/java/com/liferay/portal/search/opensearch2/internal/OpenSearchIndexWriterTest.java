@@ -107,6 +107,21 @@ public class OpenSearchIndexWriterTest extends BaseIndexingTestCase {
 	}
 
 	@Test
+	public void testPartiallyUpdateDocumentUpsertsMissingDocument()
+		throws SearchException {
+
+		Document document = createDocument(
+			Field.TITLE, Field.CONTENT, "text", "example");
+
+		_indexWriter.partiallyUpdateDocument(createSearchContext(), document);
+
+		_documents.add(document);
+
+		_assertOnlyOne(Field.CONTENT, "example");
+		_assertOnlyOne(Field.TITLE, "text");
+	}
+
+	@Test
 	public void testUpdateDocument() throws SearchException {
 		Document document = addDocument(Field.TITLE, "text");
 

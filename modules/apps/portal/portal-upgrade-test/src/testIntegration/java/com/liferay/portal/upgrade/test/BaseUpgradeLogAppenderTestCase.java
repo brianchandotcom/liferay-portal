@@ -158,10 +158,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		}
 
 		if (reportsDir.exists()) {
-			File reportFile = new File(reportsDir, "upgrade_report.info");
+			String[] filePaths = FileUtil.listFiles(reportsDir);
 
-			if (reportFile.exists()) {
-				reportFile.delete();
+			for (String filePath : filePaths) {
+				File reportFile = new File(reportsDir, filePath);
+
+				if (reportFile.exists()) {
+					reportFile.delete();
+				}
 			}
 
 			reportsDir.delete();
@@ -170,6 +174,63 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_upgradeReportLogger.removeAppender(_logContextAppender);
 
 		_logContextAppender.stop();
+	}
+
+	@Test
+	public void testAdditionalUpgradeReport() throws Exception {
+		_appender.stop();
+
+		_assertReport("Type: major");
+		_assertLogContextContains("upgrade.report.type", "major");
+
+		Date date = new Date(0);
+
+		_updatePortalRelease(
+			new Version(1, 0, 0), date, ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
+
+		_appender.start();
+
+		_updatePortalRelease(_initialSchemaVersion, date, _initialBuildNumber);
+
+		_appender.stop();
+
+		_assertReport("Type: major");
+		_assertLogContextContains("upgrade.report.type", "major");
+
+		File reportsDir = null;
+
+		if (Validator.isBlank(_upgradeReportDir)) {
+			reportsDir = new File(getFilePath(), "reports");
+		}
+		else {
+			reportsDir = new File(_upgradeReportDir);
+		}
+
+		String pattern = "upgrade_report\\.info\\.[0-9]*";
+
+		Pattern regexPattern = Pattern.compile(pattern);
+
+		File renamedReportFile = null;
+
+		String[] filePaths = FileUtil.listFiles(reportsDir);
+
+		for (String filePath : filePaths) {
+			File file = new File(reportsDir, filePath);
+
+			Matcher matcher = regexPattern.matcher(file.getName());
+
+			if (matcher.matches()) {
+				renamedReportFile = file;
+			}
+		}
+
+		Assert.assertTrue(renamedReportFile.exists());
+
+		String renamedReportContent = FileUtil.read(renamedReportFile);
+
+		Assert.assertTrue(
+			StringUtil.contains(
+				renamedReportContent, "Type: major", StringPool.BLANK));
 	}
 
 	@Test

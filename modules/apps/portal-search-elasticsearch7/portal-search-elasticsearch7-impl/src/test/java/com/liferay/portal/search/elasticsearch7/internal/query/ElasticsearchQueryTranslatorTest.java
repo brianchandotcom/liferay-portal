@@ -6,7 +6,6 @@
 package com.liferay.portal.search.elasticsearch7.internal.query;
 
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslatorFixture;
@@ -129,22 +128,21 @@ public class ElasticsearchQueryTranslatorTest {
 
 		termsFilter.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-		Integer maxTermsCount = ReflectionTestUtil.getFieldValue(
-			QueryUtil.class, "_maxTermsCount");
+		Integer maxTermsCount = QueryUtil.maxTermsCount;
 
-		_setMaxTermsCount(10);
+		QueryUtil.maxTermsCount = 10;
 
 		_assertTermsCount(1, termsFilter);
 
-		_setMaxTermsCount(5);
+		QueryUtil.maxTermsCount = 5;
 
 		_assertTermsCount(2, termsFilter);
 
-		_setMaxTermsCount(3);
+		QueryUtil.maxTermsCount = 3;
 
 		_assertTermsCount(4, termsFilter);
 
-		_setMaxTermsCount(maxTermsCount);
+		QueryUtil.maxTermsCount = maxTermsCount;
 	}
 
 	@Test
@@ -153,22 +151,21 @@ public class ElasticsearchQueryTranslatorTest {
 
 		termsQuery.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-		Integer maxTermsCount = ReflectionTestUtil.getFieldValue(
-			QueryUtil.class, "_maxTermsCount");
+		Integer maxTermsCount = QueryUtil.maxTermsCount;
 
-		_setMaxTermsCount(10);
+		QueryUtil.maxTermsCount = 10;
 
 		_assertTermsCount(1, termsQuery);
 
-		_setMaxTermsCount(5);
+		QueryUtil.maxTermsCount = 5;
 
 		_assertTermsCount(2, termsQuery);
 
-		_setMaxTermsCount(3);
+		QueryUtil.maxTermsCount = 3;
 
 		_assertTermsCount(4, termsQuery);
 
-		_setMaxTermsCount(maxTermsCount);
+		QueryUtil.maxTermsCount = maxTermsCount;
 	}
 
 	private void _assertBoost(Query query) {
@@ -198,12 +195,6 @@ public class ElasticsearchQueryTranslatorTest {
 
 		Assert.assertEquals(
 			queryString, expected, StringUtil.count(queryString, "terms"));
-	}
-
-	private void _setMaxTermsCount(Integer maxTermsCount) {
-		ReflectionTestUtil.invoke(
-			QueryUtil.class, "_setMaxTermsCount",
-			new Class<?>[] {Integer.class}, maxTermsCount);
 	}
 
 	private static final Float _BOOST = 1.5F;

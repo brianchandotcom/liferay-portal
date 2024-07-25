@@ -7,9 +7,10 @@
 >
 	<name>Recipe Workflow</name>
 	<description>A single approver can approve a workflow content.</description>
-	<version>2</version>
+	<version>18</version>
 	<state>
 		<name>created</name>
+		<description>Begin a workflow.</description>
 		<metadata>
 			<![CDATA[
 				{
@@ -60,15 +61,30 @@
 				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
+				<name>Notification approve email</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Congrats, your recipe article has been approved by ${userName}. You can find your recipe article live on <a href="https://learn.liferay.com">Learn</a> by searching the related keywords.]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+			<notification>
 				<name>Notification approve</name>
 				<description>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Your submission was approved by ${userName}.]]>
+					<![CDATA[Congrats, your recipe article has been approved by ${userName}. You can find your recipe article live on Learn by searching the related keywords.]]>
 				</template>
 				<template-language>freemarker</template-language>
-				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
 					<user />
@@ -109,15 +125,30 @@
 				<execution-type>onAssignment</execution-type>
 			</action>
 			<notification>
+				<name>Creator Modification Notification Email</name>
+				<description>
+					<![CDATA[]]>
+				</description>
+				<template>
+					<![CDATA[Hi, your recipe article has been rejected by ${userName}, with the following comment: ${taskComments}. You may update and re-submit the recipe by logging into <a href="https://learn.liferay.com">Learn</a>.]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+			<notification>
 				<name>Creator Modification Notification</name>
 				<description>
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Your submission was rejected by ${userName}, please modify and resubmit.]]>
+					<![CDATA[Hi, your recipe article has been rejected by ${userName}, with the following comment: ${taskComments}. You may update and re-submit the recipe by logging into Learn.]]>
 				</template>
 				<template-language>freemarker</template-language>
-				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
 					<user />
@@ -154,16 +185,19 @@
 				{
 					"xy": [
 						165,
-						292
+						290.9999771118164
 					]
 				}
 			]]>
 		</metadata>
 		<actions>
 			<notification>
-				<name>Review Notification</name>
+				<name>Review Notification Email</name>
+				<description>
+					<![CDATA[]]>
+				</description>
 				<template>
-					<![CDATA[${userName} sent you a ${entryType} for review in the workflow.]]>
+					<![CDATA[${userName} submitted a recipe article for review in the workflow. Please login to <a href="https://learn.liferay.com">Learn</a> to review and take action.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
@@ -174,16 +208,19 @@
 				<execution-type>onAssignment</execution-type>
 			</notification>
 			<notification>
-				<name>Review Completion Notification</name>
+				<name>Review Notification</name>
+				<description>
+					<![CDATA[]]>
+				</description>
 				<template>
-					<![CDATA[Your submission was reviewed<#if taskComments?has_content> and the reviewer applied the following ${taskComments}</#if>.]]>
+					<![CDATA[${userName} submitted a recipe article for review in the workflow. Please login to Learn to review and take action.]]>
 				</template>
 				<template-language>freemarker</template-language>
-				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<user />
+					<assignees />
 				</recipients>
-				<execution-type>onExit</execution-type>
+				<execution-type>onAssignment</execution-type>
 			</notification>
 		</actions>
 		<assignments>

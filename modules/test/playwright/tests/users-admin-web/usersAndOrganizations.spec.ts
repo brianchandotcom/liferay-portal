@@ -411,3 +411,66 @@ test('LPD-33048 Last login visibility', async ({usersAndOrganizationsPage}) => {
 		usersAndOrganizationsPage.tableOrderLastLoginDateItem
 	).toBeVisible();
 });
+
+test('LPD-29981 Check custom field is escaped', async ({
+	page,
+	usersAndOrganizationsPage,
+}) => {
+	await page.goto('/');
+
+	await usersAndOrganizationsPage.goToUsers();
+	await usersAndOrganizationsPage.openOptionsMenu();
+
+	await usersAndOrganizationsPage.manageCustomFieldsOptionsMenuItem.click();
+
+	await page.getByRole('link', {name: 'Add Custom Field'}).click();
+
+	const dropdownOptionButton = page.getByRole('link', {
+		name: 'Dropdown Option',
+	});
+
+	await dropdownOptionButton.waitFor({state: 'visible'});
+	await dropdownOptionButton.click();
+
+	const customFieldLabel = page.getByLabel('Field Name Required');
+
+	await customFieldLabel.waitFor({state: 'visible'});
+	await customFieldLabel.click();
+	await customFieldLabel.fill('fieldTest');
+
+	const customFieldValue = page.getByLabel('Values Required Enter one');
+
+	await customFieldValue.waitFor({state: 'visible'});
+	await customFieldValue.click();
+	await customFieldValue.fill('a & b');
+
+	const saveButton = page.getByRole('button', {
+		name: 'Save',
+	});
+
+	await saveButton.waitFor({state: 'visible'});
+	await saveButton.click();
+
+	await expect(
+		page.getByText('Success:Your request completed successfully.')
+	).toBeVisible();
+
+	await usersAndOrganizationsPage.goToUsers();
+	await (await usersAndOrganizationsPage.usersTableRowLink('test')).click();
+
+	const customFieldDropDownLabel = page.getByLabel('Fieldtest', {
+		exact: true,
+	});
+
+	await customFieldDropDownLabel.waitFor({state: 'visible'});
+
+	const customFieldDropDownOptions = await page.evaluate(() => {
+		const selection = document.querySelector('[title="field-test"]');
+
+		// @ts-ignore
+
+		return [...selection.options].some((option) => option.text === 'a & b');
+	});
+
+	expect(customFieldDropDownOptions).toBeTruthy();
+});

@@ -64,6 +64,15 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	public List<JobProperty> getExcludesJobProperties() {
+		if (_jUnitTestBatch != null) {
+			List<JobProperty> testBatchJobProperties =
+				getTestSelectorExcludesJobProperties();
+
+			recordJobProperties(testBatchJobProperties);
+
+			return testBatchJobProperties;
+		}
+
 		List<JobProperty> excludesJobProperties = new ArrayList<>();
 
 		excludesJobProperties.addAll(getRequiredExcludesJobProperties());
@@ -105,6 +114,15 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	public List<JobProperty> getIncludesJobProperties() {
+		if (_jUnitTestBatch != null) {
+			List<JobProperty> testBatchJobProperties =
+				getTestSelectorIncludesJobProperties();
+
+			recordJobProperties(testBatchJobProperties);
+
+			return testBatchJobProperties;
+		}
+
 		List<JobProperty> includesJobProperties = new ArrayList<>();
 
 		includesJobProperties.addAll(getRequiredIncludesJobProperties());
@@ -566,6 +584,18 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				JobProperty.Type.INCLUDE_GLOB));
 
 		return includesJobProperties;
+	}
+
+	protected List<JobProperty> getTestSelectorExcludesJobProperties() {
+		JUnitTestSelector jUnitTestSelector = _jUnitTestBatch.getTestSelector();
+
+		return jUnitTestSelector.getExcludesJobProperties();
+	}
+
+	protected List<JobProperty> getTestSelectorIncludesJobProperties() {
+		JUnitTestSelector jUnitTestSelector = _jUnitTestBatch.getTestSelector();
+
+		return jUnitTestSelector.getIncludesJobProperties();
 	}
 
 	@Override

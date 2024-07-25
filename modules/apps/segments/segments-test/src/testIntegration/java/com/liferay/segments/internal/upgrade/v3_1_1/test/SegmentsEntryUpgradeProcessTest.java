@@ -6,9 +6,10 @@
 package com.liferay.segments.internal.upgrade.v3_1_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.dao.orm.Criterion;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -24,9 +25,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.model.SegmentsEntryTable;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import org.junit.After;
@@ -102,41 +105,21 @@ public class SegmentsEntryUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		DynamicQuery dynamicQuery = _segmentsEntryLocalService.dynamicQuery();
-
-		Criterion criterion = RestrictionsFactoryUtil.eq("active", true);
-
-		dynamicQuery = dynamicQuery.add(criterion);
-
-		Assert.assertEquals(
-			5, _segmentsEntryLocalService.dynamicQueryCount(dynamicQuery));
+		Assert.assertEquals(5, _countActiveSegments());
 
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator, _CLASS_NAME);
 
 		upgradeProcess.upgrade();
 
-		dynamicQuery = _segmentsEntryLocalService.dynamicQuery();
+		EntityCacheUtil.clearCache();
 
-		dynamicQuery = dynamicQuery.add(criterion);
+		Assert.assertEquals(1, _countActiveSegments());
 
-		Assert.assertEquals(
-			1, _segmentsEntryLocalService.dynamicQueryCount(dynamicQuery));
-
-		dynamicQuery = _segmentsEntryLocalService.dynamicQuery();
-
-		dynamicQuery = dynamicQuery.add(
-			criterion
-		).add(
-			RestrictionsFactoryUtil.or(
-				RestrictionsFactoryUtil.eq("criteria", "%deviceScreen%"),
-				RestrictionsFactoryUtil.or(
-					RestrictionsFactoryUtil.eq("criteria", "%deviceModel%"),
-					RestrictionsFactoryUtil.eq("criteria", "%deviceBrand%")))
-		);
-
-		Assert.assertEquals(
-			0, _segmentsEntryLocalService.dynamicQueryCount(dynamicQuery));
+		Assert.assertFalse(_isActive("%deviceBrand%"));
+		Assert.assertFalse(_isActive("%deviceModel%"));
+		Assert.assertFalse(_isActive("%deviceScreenResolutionHeight%"));
+		Assert.assertFalse(_isActive("%deviceScreenResolutionWidth%"));
 	}
 
 	private void _addSegmentsEntry(String criteria, Locale locale)
@@ -148,6 +131,33 @@ public class SegmentsEntryUpgradeProcessTest {
 			Collections.singletonMap(locale, RandomTestUtil.randomString()),
 			true, criteria, SegmentsEntryConstants.SOURCE_DEFAULT,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	private int _countActiveSegments() {
+		return _segmentsEntryLocalService.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				SegmentsEntryTable.INSTANCE
+			).where(
+				SegmentsEntryTable.INSTANCE.active.eq(true)
+			));
+	}
+
+	private boolean _isActive(String criteria) {
+		Expression<String> criteriaExpression =
+			DSLFunctionFactoryUtil.castClobText(
+				SegmentsEntryTable.INSTANCE.criteria);
+
+		List<Boolean> results = _segmentsEntryLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				SegmentsEntryTable.INSTANCE.active
+			).from(
+				SegmentsEntryTable.INSTANCE
+			).where(
+				criteriaExpression.like(criteria)
+			));
+
+		return results.get(0);
 	}
 
 	private static final String _CLASS_NAME =

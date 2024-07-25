@@ -37,8 +37,8 @@ public class DDMValidationUpgradeProcess extends UpgradeProcess {
 						"DDMStructure where classNameId = ? ");
 			PreparedStatement selectPreparedStatement2 =
 				connection.prepareStatement(
-					"select structureVersionId, definition from " +
-						"DDMStructureVersion where structureId = ?");
+					"select ctCollectionId, structureVersionId, definition " +
+						"from DDMStructureVersion where structureId = ?");
 			PreparedStatement updatePreparedStatement1 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -48,7 +48,7 @@ public class DDMValidationUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStructureVersion set definition = ? where " +
-						"structureVersionId = ?")) {
+						"ctCollectionId = ? and structureVersionId = ?")) {
 
 			_upgradeDDMStructure(
 				selectPreparedStatement1, selectPreparedStatement2,
@@ -151,7 +151,9 @@ public class DDMValidationUpgradeProcess extends UpgradeProcess {
 					updatePreparedStatement.setString(
 						1, definitionJSONObject.toString());
 					updatePreparedStatement.setLong(
-						2, resultSet.getLong("structureVersionId"));
+						2, resultSet.getLong("ctCollectionId"));
+					updatePreparedStatement.setLong(
+						3, resultSet.getLong("structureVersionId"));
 
 					updatePreparedStatement.addBatch();
 				}

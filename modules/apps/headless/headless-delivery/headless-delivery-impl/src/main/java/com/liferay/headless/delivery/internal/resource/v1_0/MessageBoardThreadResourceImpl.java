@@ -187,7 +187,7 @@ public class MessageBoardThreadResourceImpl
 							status, contextUser.getUserId(), true,
 							pagination.getStartPosition(),
 							pagination.getEndPosition(),
-							new ThreadCreateDateComparator())),
+							ThreadCreateDateComparator.getInstance(false))),
 					mbThread -> _toMessageBoardThread(mbThread, true)),
 				pagination,
 				_mbThreadService.getThreadsCount(

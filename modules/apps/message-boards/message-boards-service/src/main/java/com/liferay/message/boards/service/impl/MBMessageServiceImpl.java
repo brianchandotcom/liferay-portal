@@ -450,7 +450,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		int lastIntervalStart = 0;
 		boolean listNotExhausted = true;
 		MessageCreateDateComparator comparator =
-			new MessageCreateDateComparator(false);
+			MessageCreateDateComparator.getInstance(false);
 
 		while ((messages.size() < max) && listNotExhausted) {
 			List<MBMessage> messageList =
@@ -528,7 +528,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		int lastIntervalStart = 0;
 		boolean listNotExhausted = true;
 		MessageCreateDateComparator comparator =
-			new MessageCreateDateComparator(false);
+			MessageCreateDateComparator.getInstance(false);
 
 		while ((messages.size() < max) && listNotExhausted) {
 			List<MBMessage> messageList =
@@ -584,7 +584,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		int lastIntervalStart = 0;
 		boolean listNotExhausted = true;
 		MessageCreateDateComparator comparator =
-			new MessageCreateDateComparator(false);
+			MessageCreateDateComparator.getInstance(false);
 
 		while ((messages.size() < max) && listNotExhausted) {
 			List<MBMessage> messageList =
@@ -631,7 +631,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		int lastIntervalStart = 0;
 		boolean listNotExhausted = true;
 		MessageCreateDateComparator comparator =
-			new MessageCreateDateComparator(false);
+			MessageCreateDateComparator.getInstance(false);
 
 		while ((messages.size() < max) && listNotExhausted) {
 			List<MBMessage> messageList =
@@ -780,7 +780,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				ActionKeys.VIEW)) {
 
 			MessageCreateDateComparator comparator =
-				new MessageCreateDateComparator(false);
+				MessageCreateDateComparator.getInstance(false);
 
 			List<MBMessage> threadMessages =
 				mbMessageLocalService.getThreadMessages(

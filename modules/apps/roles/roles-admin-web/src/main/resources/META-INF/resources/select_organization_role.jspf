@@ -19,13 +19,20 @@ List<Organization> organizations = null;
 String organizationIds = ParamUtil.getString(request, "organizationIds");
 
 if (step == 1) {
-	organizations = OrganizationLocalServiceUtil.getOrganizations(StringUtil.split(organizationIds, 0L));
+	String keywords = ParamUtil.getString(request, "keywords");
+
+	if (Validator.isNull(keywords)) {
+		organizations = OrganizationLocalServiceUtil.getOrganizations(StringUtil.split(organizationIds, 0L));
+	}
+	else {
+		organizations = OrganizationLocalServiceUtil.search(selUser.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, keywords, null, null, null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
 
 	if (filterManageableOrganizations) {
 		organizations = UsersAdminUtil.filterOrganizations(permissionChecker, organizations);
 	}
 
-	if (organizations.size() == 1) {
+	if (Validator.isNull(keywords) && (organizations.size() == 1)) {
 		step = 2;
 
 		Organization organization = organizations.get(0);

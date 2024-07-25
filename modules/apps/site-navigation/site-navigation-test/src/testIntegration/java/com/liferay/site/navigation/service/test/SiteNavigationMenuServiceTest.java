@@ -340,7 +340,7 @@ public class SiteNavigationMenuServiceTest {
 			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), "Name", QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
-				new SiteNavigationMenuCreateDateComparator(true));
+				SiteNavigationMenuCreateDateComparator.getInstance(true));
 
 		Assert.assertEquals(
 			Arrays.asList(siteNavigationMenu1, siteNavigationMenu2),
@@ -348,7 +348,7 @@ public class SiteNavigationMenuServiceTest {
 
 		siteNavigationMenus = _siteNavigationMenuService.getSiteNavigationMenus(
 			_group.getGroupId(), "Name", QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new SiteNavigationMenuCreateDateComparator(false));
+			SiteNavigationMenuCreateDateComparator.getInstance(false));
 
 		Assert.assertEquals(
 			Arrays.asList(siteNavigationMenu2, siteNavigationMenu1),
@@ -406,7 +406,7 @@ public class SiteNavigationMenuServiceTest {
 		List<SiteNavigationMenu> siteNavigationMenus =
 			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new SiteNavigationMenuCreateDateComparator(true));
+				SiteNavigationMenuCreateDateComparator.getInstance(true));
 
 		Assert.assertEquals(
 			Arrays.asList(
@@ -415,7 +415,7 @@ public class SiteNavigationMenuServiceTest {
 
 		siteNavigationMenus = _siteNavigationMenuService.getSiteNavigationMenus(
 			_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new SiteNavigationMenuCreateDateComparator(false));
+			SiteNavigationMenuCreateDateComparator.getInstance(false));
 
 		Assert.assertEquals(
 			Arrays.asList(
@@ -435,7 +435,7 @@ public class SiteNavigationMenuServiceTest {
 		List<SiteNavigationMenu> siteNavigationMenus =
 			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new SiteNavigationMenuNameComparator(true));
+				SiteNavigationMenuNameComparator.getInstance(true));
 
 		Assert.assertEquals(
 			Arrays.asList(
@@ -444,7 +444,7 @@ public class SiteNavigationMenuServiceTest {
 
 		siteNavigationMenus = _siteNavigationMenuService.getSiteNavigationMenus(
 			_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new SiteNavigationMenuNameComparator(false));
+			SiteNavigationMenuNameComparator.getInstance(false));
 
 		Assert.assertEquals(
 			Arrays.asList(
@@ -467,7 +467,8 @@ public class SiteNavigationMenuServiceTest {
 		List<SiteNavigationMenu> siteNavigationMenus =
 			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), "Name", QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new SiteNavigationMenuNameComparator(true));
+				QueryUtil.ALL_POS,
+				SiteNavigationMenuNameComparator.getInstance(true));
 
 		Assert.assertEquals(
 			Arrays.asList(siteNavigationMenu1, siteNavigationMenu2),
@@ -475,7 +476,7 @@ public class SiteNavigationMenuServiceTest {
 
 		siteNavigationMenus = _siteNavigationMenuService.getSiteNavigationMenus(
 			_group.getGroupId(), "Name", QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new SiteNavigationMenuNameComparator(false));
+			SiteNavigationMenuNameComparator.getInstance(false));
 
 		Assert.assertEquals(
 			Arrays.asList(siteNavigationMenu2, siteNavigationMenu1),

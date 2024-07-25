@@ -299,7 +299,7 @@ public class TestrayServer {
 
 	public String requestGet(String urlPath) throws IOException {
 		return JenkinsResultsParserUtil.toString(
-			getTestrayURL(urlPath), false,
+			getTestrayURL(urlPath), true,
 			JenkinsResultsParserUtil.HttpRequestMethod.GET, null,
 			getHTTPAuthorization());
 	}
@@ -308,7 +308,7 @@ public class TestrayServer {
 		throws IOException {
 
 		return JenkinsResultsParserUtil.toString(
-			getTestrayURL(urlPath), false,
+			getTestrayURL(urlPath), true,
 			JenkinsResultsParserUtil.HttpRequestMethod.POST, requestData,
 			getHTTPAuthorization());
 	}

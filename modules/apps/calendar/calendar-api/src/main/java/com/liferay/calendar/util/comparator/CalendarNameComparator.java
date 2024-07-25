@@ -20,12 +20,12 @@ public class CalendarNameComparator extends OrderByComparator<Calendar> {
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CalendarNameComparator() {
-		this(false);
-	}
+	public static CalendarNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public CalendarNameComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -60,6 +60,16 @@ public class CalendarNameComparator extends OrderByComparator<Calendar> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CalendarNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CalendarNameComparator _INSTANCE_ASCENDING =
+		new CalendarNameComparator(true);
+
+	private static final CalendarNameComparator _INSTANCE_DESCENDING =
+		new CalendarNameComparator(false);
 
 	private final boolean _ascending;
 

@@ -7,21 +7,39 @@ import {$} from 'execa';
 
 import {GIT_ORIGIN_NAME, LIFERAY_WORKING_BRANCH} from './constants.mjs';
 
-export async function getUpstreamCommitHash() {
-	const upstreamBranch = `${GIT_ORIGIN_NAME}/${LIFERAY_WORKING_BRANCH}`;
+export async function getRemoteBranchHash(remoteName, branchName) {
+	const {stdout} = await $`git ls-remote ${remoteName} ${branchName}`;
 
+	return stdout.match(/^\w+/)[0];
+}
+
+export async function getUpstreamCommitHash() {
 	let commitHash;
 
 	try {
-		const {stdout} = await $`git rev-parse ${upstreamBranch}`;
-
-		commitHash = stdout;
+		commitHash = await getRemoteBranchHash(
+			GIT_ORIGIN_NAME,
+			LIFERAY_WORKING_BRANCH
+		);
 	}
 	catch (error) {
-		const {stdout} =
-			await $`git rev-parse ${await getUpstreamRemoteName()}/${LIFERAY_WORKING_BRANCH}`;
+		const remoteName = await getUpstreamRemoteName();
 
-		commitHash = stdout;
+		console.log(
+			`ℹ️ Remote '${GIT_ORIGIN_NAME}' not found. Using '${remoteName}' instead.`
+		);
+
+		try {
+			commitHash = await getRemoteBranchHash(
+				remoteName,
+				LIFERAY_WORKING_BRANCH
+			);
+		}
+		catch (error) {
+			throw new Error(
+				`Could not find remote '${remoteName}/${LIFERAY_WORKING_BRANCH}'.`
+			);
+		}
 	}
 
 	return commitHash;

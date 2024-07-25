@@ -87,11 +87,11 @@ public class UpgradeDocumentLibraryTest {
 			StartupHelperUtil.setUpgrading(true);
 
 			_updateClassName(
-				_LEGACY_RAW_METADATA_PROCESSOR_CLASS_NAME, classNameId,
+				_CLASS_NAME, classNameId,
 				connection);
 
 			Assert.assertEquals(
-				_LEGACY_RAW_METADATA_PROCESSOR_CLASS_NAME,
+				_CLASS_NAME,
 				_getValueFromClassName(classNameId, connection));
 
 			UpgradeProcess upgradeProcess = new UpgradeDocumentLibrary();
@@ -166,7 +166,7 @@ public class UpgradeDocumentLibraryTest {
 		PortalUpgradeProcess.updateSchemaVersion(connection, version);
 	}
 
-	private static final String _LEGACY_RAW_METADATA_PROCESSOR_CLASS_NAME =
+	private static final String _CLASS_NAME =
 		"com.liferay.document.library.kernel.util.RawMetadataProcessor";
 
 	private static final Version _ORIGINAL_SCHEMA_VERSION = new Version(

@@ -11,12 +11,13 @@ import useSWR from 'swr';
 
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import {ORDER_TYPES} from '../../../../../enums/Order';
+import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../../enums/Product';
 import useMarketplaceSpringBootOAuth2 from '../../../../../hooks/useMarketplaceSpringBootOAuth2';
 import {Liferay} from '../../../../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import headlessCommerceDeliveryCart from '../../../../../services/rest/HeadlessCommerceDeliveryCart';
 
-type NewTrialModal = ReturnType<typeof useModal> & {
+type NewTrialModalProps = ReturnType<typeof useModal> & {
 	revalidate: () => void;
 };
 
@@ -24,7 +25,7 @@ interface ProductWithPurchasable extends Product {
 	skus: (SKU & {purchasable: boolean})[];
 }
 
-const NewTrialModal: React.FC<NewTrialModal> = ({
+const NewTrialModal: React.FC<NewTrialModalProps> = ({
 	observer,
 	onOpenChange,
 	revalidate,
@@ -36,7 +37,7 @@ const NewTrialModal: React.FC<NewTrialModal> = ({
 		productId: '',
 	});
 	const {data: apps} = useSWR<APIResponse<ProductWithPurchasable>>(
-		'administrator-dashboard/trial',
+		'administrator-dashboard/trial/products',
 		() =>
 			HeadlessCommerceAdminCatalogImpl.getProducts(
 				new URLSearchParams({
@@ -53,7 +54,7 @@ const NewTrialModal: React.FC<NewTrialModal> = ({
 				(spec) =>
 					spec.specificationKey === 'type' &&
 					spec.value.en_US === 'cloud'
-			) && product.productStatus === 0
+			) && product.productStatus === PRODUCT_WORKFLOW_STATUS_CODE.APPROVED
 	);
 
 	const onSubmit = async () => {
@@ -63,7 +64,7 @@ const NewTrialModal: React.FC<NewTrialModal> = ({
 			(app) => app.productId === Number(selectedTrial.productId)
 		);
 
-		const skuId = skus?.skus?.find((sku) => sku.purchasable === true);
+		const sku = skus?.skus?.find((sku) => sku.purchasable);
 
 		const cart = await headlessCommerceDeliveryCart.createCart(channel.id, {
 			accountId,
@@ -78,7 +79,7 @@ const NewTrialModal: React.FC<NewTrialModal> = ({
 					settings: {
 						maxQuantity: 1,
 					},
-					skuId: skuId?.id as number,
+					skuId: sku?.id as number,
 				},
 			],
 			currencyCode: channel.currencyCode,

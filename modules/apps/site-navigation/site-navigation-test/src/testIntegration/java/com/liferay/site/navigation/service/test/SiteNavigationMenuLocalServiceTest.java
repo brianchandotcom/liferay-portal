@@ -377,7 +377,7 @@ public class SiteNavigationMenuLocalServiceTest {
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "dd");
 
 		OrderByComparator<SiteNavigationMenu> orderByComparator =
-			new SiteNavigationMenuNameComparator(true);
+			SiteNavigationMenuNameComparator.getInstance(true);
 
 		List<SiteNavigationMenu> siteNavigationMenus =
 			_siteNavigationMenuLocalService.getSiteNavigationMenus(
@@ -405,7 +405,7 @@ public class SiteNavigationMenuLocalServiceTest {
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "dd");
 
 		OrderByComparator<SiteNavigationMenu> orderByComparator =
-			new SiteNavigationMenuNameComparator(false);
+			SiteNavigationMenuNameComparator.getInstance(false);
 
 		List<SiteNavigationMenu> siteNavigationMenus =
 			_siteNavigationMenuLocalService.getSiteNavigationMenus(
@@ -430,7 +430,7 @@ public class SiteNavigationMenuLocalServiceTest {
 			_group, "bb Menu Name");
 
 		OrderByComparator<SiteNavigationMenu> orderByComparator =
-			new SiteNavigationMenuNameComparator(true);
+			SiteNavigationMenuNameComparator.getInstance(true);
 
 		List<SiteNavigationMenu> siteNavigationMenus =
 			_siteNavigationMenuLocalService.getSiteNavigationMenus(
@@ -454,7 +454,7 @@ public class SiteNavigationMenuLocalServiceTest {
 			_group, "bb Menu Name");
 
 		OrderByComparator<SiteNavigationMenu> orderByComparator =
-			new SiteNavigationMenuNameComparator(false);
+			SiteNavigationMenuNameComparator.getInstance(false);
 
 		List<SiteNavigationMenu> descSiteNavigationMenus =
 			_siteNavigationMenuLocalService.getSiteNavigationMenus(

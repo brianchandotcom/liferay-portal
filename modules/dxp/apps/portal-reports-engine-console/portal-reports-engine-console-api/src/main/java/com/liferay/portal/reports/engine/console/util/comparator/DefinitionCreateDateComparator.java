@@ -23,12 +23,14 @@ public class DefinitionCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public DefinitionCreateDateComparator() {
-		this(false);
-	}
+	public static DefinitionCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public DefinitionCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -61,6 +63,16 @@ public class DefinitionCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private DefinitionCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final DefinitionCreateDateComparator _INSTANCE_ASCENDING =
+		new DefinitionCreateDateComparator(true);
+
+	private static final DefinitionCreateDateComparator _INSTANCE_DESCENDING =
+		new DefinitionCreateDateComparator(false);
 
 	private final boolean _ascending;
 

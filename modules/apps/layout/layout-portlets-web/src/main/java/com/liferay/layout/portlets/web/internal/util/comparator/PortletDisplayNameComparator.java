@@ -15,8 +15,12 @@ import com.liferay.portal.kernel.util.OrderByComparator;
  */
 public class PortletDisplayNameComparator extends OrderByComparator<Portlet> {
 
-	public PortletDisplayNameComparator(boolean ascending) {
-		_ascending = ascending;
+	public static PortletDisplayNameComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -48,6 +52,16 @@ public class PortletDisplayNameComparator extends OrderByComparator<Portlet> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private PortletDisplayNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final PortletDisplayNameComparator _INSTANCE_ASCENDING =
+		new PortletDisplayNameComparator(true);
+
+	private static final PortletDisplayNameComparator _INSTANCE_DESCENDING =
+		new PortletDisplayNameComparator(false);
 
 	private final boolean _ascending;
 

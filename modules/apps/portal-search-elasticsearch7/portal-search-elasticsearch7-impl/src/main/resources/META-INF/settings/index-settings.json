@@ -17,6 +17,16 @@
 				"filter": "lowercase",
 				"tokenizer": "keyword"
 			},
+			"liferay_analyzer_de": {
+				"filter": [
+					"lowercase",
+					"german_stop",
+					"liferay_filter_synonym_de",
+					"german_normalization",
+					"german_stemmer"
+				],
+				"tokenizer": "standard"
+			},
 			"liferay_analyzer_en": {
 				"filter": [
 					"english_possessive_stemmer",
@@ -66,6 +76,20 @@
 			"english_stop": {
 				"stopwords": "_english_",
 				"type": "stop"
+			},
+			"german_stemmer": {
+				"language": "light_german",
+				"type": "stemmer"
+			},
+			"german_stop": {
+				"stopwords": "_german_",
+				"type": "stop"
+			},
+			"liferay_filter_synonym_de": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
 			},
 			"liferay_filter_synonym_en": {
 				"lenient": true,

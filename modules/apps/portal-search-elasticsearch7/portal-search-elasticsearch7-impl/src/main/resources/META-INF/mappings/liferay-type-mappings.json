@@ -991,6 +991,7 @@
 			"template_de": {
 				"mapping": {
 					"analyzer": "german",
+					"search_analyzer": "liferay_analyzer_de",
 					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"

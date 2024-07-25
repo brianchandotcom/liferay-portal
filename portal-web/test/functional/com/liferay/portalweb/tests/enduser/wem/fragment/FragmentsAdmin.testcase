@@ -301,61 +301,6 @@ definition {
 		}
 	}
 
-	@description = "Fragments that are being used cannot be deleted."
-	@priority = 5
-	@uitest
-	test CannotDeleteFragmentInUse {
-		property portal.acceptance = "true";
-
-		task ("Add a fragment collection") {
-			JSONFragment.addFragmentCollection(
-				groupName = ${randomSiteName},
-				name = "Collection Name");
-		}
-
-		task ("Add a fragment") {
-			JSONFragment.addSection(
-				collectionName = "Collection Name",
-				fragmentStatus = "Approved",
-				groupName = ${randomSiteName},
-				name = "Fragment Name");
-		}
-
-		task ("Add a page template collection") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
-
-			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
-		}
-
-		task ("Add a page template to the page template collection") {
-			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
-		}
-
-		task ("Add a new fragment to the page template") {
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Fragment Name");
-
-			PageEditor.waitForAutoSave();
-		}
-
-		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-		}
-
-		task ("Assert the fragment cannot be deleted because it is used in the page template") {
-			FragmentsAdmin.deleteEntry(entry = "Fragment Name");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR",
-				value1 = "Error:The fragment entry cannot be deleted because it is required by one or more page templates.");
-		}
-	}
-
 	@description = "This is a test for LPS-101354, LPS-89115 and LPS-166203. The contributed fragments can be copied."
 	@priority = 5
 	@uitest

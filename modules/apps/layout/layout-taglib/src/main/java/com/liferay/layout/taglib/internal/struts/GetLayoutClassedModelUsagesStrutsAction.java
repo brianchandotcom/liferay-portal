@@ -95,7 +95,8 @@ public class GetLayoutClassedModelUsagesStrutsAction implements StrutsAction {
 			_layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
 				classNameId, classPK, delta * (pageIndex - 1),
 				delta * pageIndex,
-				new LayoutClassedModelUsageModifiedDateComparator(false));
+				LayoutClassedModelUsageModifiedDateComparator.getInstance(
+					false));
 
 		for (LayoutClassedModelUsage layoutClassedModelUsage :
 				layoutClassedModelUsages) {

@@ -248,7 +248,8 @@ public class LayoutClassedModelUsagesDisplayContext {
 		}
 
 		layoutClassedModelUsagesSearchContainer.setOrderByComparator(
-			new LayoutClassedModelUsageModifiedDateComparator(orderByAsc));
+			LayoutClassedModelUsageModifiedDateComparator.getInstance(
+				orderByAsc));
 		layoutClassedModelUsagesSearchContainer.setOrderByType(
 			_getOrderByType());
 

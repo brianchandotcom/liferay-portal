@@ -33,8 +33,8 @@ public class DDMValidationUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement selectPreparedStatement1 =
 				connection.prepareStatement(
-					"select structureId, definition from DDMStructure where " +
-						"classNameId = ? ");
+					"select ctCollectionId, structureId, definition from " +
+						"DDMStructure where classNameId = ? ");
 			PreparedStatement selectPreparedStatement2 =
 				connection.prepareStatement(
 					"select structureVersionId, definition from " +
@@ -43,7 +43,7 @@ public class DDMValidationUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStructure set definition = ? where " +
-						"structureId = ?");
+						"ctCollectionId = ? and structureId = ?");
 			PreparedStatement updatePreparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -118,10 +118,12 @@ public class DDMValidationUpgradeProcess extends UpgradeProcess {
 				if (_upgradeDefinition(definitionJSONObject)) {
 					updatePreparedStatement1.setString(
 						1, definitionJSONObject.toString());
+					updatePreparedStatement1.setLong(
+						2, resultSet.getLong("ctCollectionId"));
 
 					long structureId = resultSet.getLong("structureId");
 
-					updatePreparedStatement1.setLong(2, structureId);
+					updatePreparedStatement1.setLong(3, structureId);
 
 					updatePreparedStatement1.addBatch();
 

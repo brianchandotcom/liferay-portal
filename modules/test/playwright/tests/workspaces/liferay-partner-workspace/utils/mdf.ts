@@ -4,7 +4,7 @@
  */
 
 import moment from 'moment';
-
+import {getRandomInt} from '../../../../utils/getRandomInt';
 import {
 	EMDFRequestActivityExpenseTypes,
 	EMDFRequestActivityTactics,
@@ -13,42 +13,21 @@ import {
 	EMDFRequestTargetAudienceRoles,
 	EMDFRequestTargetMarkets,
 } from './constants';
+import { TAccount } from '../types/account';
+import { TUserAccount } from '../types/user';
+import { TMDFRequest } from '../types/mdf';
+import { mdfRequestMock } from '../mocks/mdfMock';
 
-export function createMDFRequest(companyName: string) {
-	return {
-		activities: [
-			{
-				activityName: 'Test Activity',
-				claimPercent: 0.5,
-				endDate: moment().add(2, 'days').format('YYYY-MM-DD'),
-				expenses: [
-					{
-						type: EMDFRequestActivityExpenseTypes.BROADCAST_ADVERTISING,
-						value: 500,
-					},
-				],
-				leadGenerated: false,
-				marketingActivity: 'Marketing Description',
-				startDate: moment().add(1, 'days').format('YYYY-MM-DD'),
-				tactic: EMDFRequestActivityTactics.OTHER,
-				typeOfActivity: EMDFRequestActivityTypes.MISCELLANEOUS_MARKETING,
-			},
-		],
-		goals: {
-			companyName,
-			liferayBusinessSalesGoals: [
-				EMDFRequestLiferayBusinessSalesGoals.LEAD_GENERATION,
-			],
-			overallCampaignDescription: 'Campaign Description',
-			overallCampaignName: 'Campaign Name',
-			targetAudienceRoles: [
-				EMDFRequestTargetAudienceRoles.C_LEVEL_EXECUTIVE_VP,
-				EMDFRequestTargetAudienceRoles.ADMINISTRATOR,
-			],
-			targetMarkets: [
-				EMDFRequestTargetMarkets.AEROSPACE_DEFENSE,
-				EMDFRequestTargetMarkets.AGRICULTURE,
-			],
-		},
-	};
+const namespace = getRandomInt();
+
+export function generateMDFRequestData(parnterAccount: TAccount, userAccount: TUserAccount): TMDFRequest {
+	let mdfRequest = mdfRequestMock;
+
+	mdfRequest.activities[0].endDate = moment().add(2, 'days').format('YYYY-MM-DD');
+	mdfRequest.activities[0].startDate = moment().add(1, 'days').format('YYYY-MM-DD');
+	mdfRequest.goals.companyName = parnterAccount.name;
+	mdfRequest.submitDate = moment().format('YYYY-MM-DD');
+	mdfRequest.userId = Number(userAccount.id);
+	
+	return mdfRequest;
 }

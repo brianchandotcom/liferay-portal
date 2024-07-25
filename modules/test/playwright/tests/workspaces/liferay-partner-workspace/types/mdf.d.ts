@@ -43,15 +43,11 @@ export type TMDFRequestGoal = {
 
 export type TMDFRequest = {
 	activities: TMDFRequestActivity[];
+	convertedTotalMDFRequestAmount: number;
 	goals: TMDFRequestGoal;
-	review?: any;
-};
-
-export type TPartnerAccount = {
-	currency?: string;
-	externalReferenceCode?: string;
 	id?: number;
-	name: string;
-	partnerCountry?: string;
-	type?: string;
+	review?: any;
+	submitDate?: string;
+	totalMDFRequestAmount: number;
+	userId?: number;
 };

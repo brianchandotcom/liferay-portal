@@ -6,37 +6,46 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {partnerPagesTest} from '../../../fixtures/partnerPagesTest';
-import {companyName} from '../../../mocks/mdfMock';
-import {createMDFRequest} from '../../../utils/mdf';
+import {accountPlatinumMock} from '../../../mocks/accountMock';
+import {userCOMMock} from '../../../mocks/userMock';
+import {generateMDFRequestData} from '../../../utils/mdf';
+import {EAccountRoles} from '../../../utils/constants';
+import { TAccount } from '../../../types/account';
+import { TUserAccount } from '../../../types/user';
 
 export const test = mergeTests(partnerPagesTest);
 
 test.describe('MDF Request Form', () => {
-	let partnerAccount;
+	let accountPlatinum: TAccount;
+	let userCOM: TUserAccount;
 
 	test.beforeEach(
 		async ({mdfRequestFormPage, partnerHelper, partnerSite}) => {
-			partnerAccount = await partnerHelper.createAccountUser({
-				currency: 'USD',
-				externalReferenceCode: '0017000000b3ScRAAU',
-				name: companyName,
-				partnerCountry: 'US',
-				type: 'business',
-			});
+			accountPlatinum = await partnerHelper.apiHelpers.headlessAdminUser.postAccount(
+				accountPlatinumMock
+			);
+			userCOM = await partnerHelper.apiHelpers.headlessAdminUser.postUserAccount(
+				userCOMMock
+			);
 
-			await partnerHelper.assignUserToAccountRole({
-				accountId: partnerAccount.id,
-				accountRole: '[Account] Partner Manager (PM)',
-			});
+			await partnerHelper.assignUserToAccountRole(accountPlatinum.id, EAccountRoles.PARTNER_MANAGER, Number(userCOM.id));
 
 			await mdfRequestFormPage.goto(partnerSite.friendlyUrlPath);
 		}
 	);
 
 	test.afterEach(async ({partnerHelper}) => {
-		await partnerHelper.apiHelpers.headlessAdminUser.deleteAccount(
-			partnerAccount.id
-		);
+		if (accountPlatinum) {
+			await partnerHelper.apiHelpers.headlessAdminUser.deleteAccount(
+				accountPlatinum.id
+			);
+		}
+
+		if (userCOM) {
+			await partnerHelper.apiHelpers.headlessAdminUser.deleteUserAccount(
+				Number(userCOM.id)
+			);
+		}
 	});
 
 	test('Open MDF Request Form', async ({page}) => {
@@ -48,7 +57,7 @@ test.describe('MDF Request Form', () => {
 	});
 
 	test('Create a New MDF Request', async ({mdfRequestFormPage}) => {
-		const mdfRequestData = createMDFRequest(companyName);
+		const mdfRequestData = generateMDFRequestData(accountPlatinum, userCOM);
 
 		await mdfRequestFormPage.createNewRequest(mdfRequestData);
 		await mdfRequestFormPage.reviewMDFRequest(mdfRequestData);

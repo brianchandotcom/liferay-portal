@@ -6,7 +6,8 @@
 import {Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
-import {TPartnerAccount} from '../types/mdf';
+import { TMDFRequest } from '../types/mdf';
+import { TRole } from '../types/role';
 
 export class PartnerHelper {
 	readonly apiHelpers: ApiHelpers;
@@ -15,78 +16,41 @@ export class PartnerHelper {
 		this.apiHelpers = new ApiHelpers(page);
 	}
 
-	async assignUserToAccountRole({accountId, accountRole}) {
+	async assignUserToAccountRole(accountId: number, roleName: string, userId: number) {
 		try {
-			const user =
-				await this.apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-					'test@liferay.com'
-				);
-
 			const rolesResponse =
 				await this.apiHelpers.headlessAdminUser.getAccountRoles(
 					accountId
 				);
 
 			const filteredAccountRole = rolesResponse?.items?.filter(
-				(role) => role.name === accountRole
+				(role: TRole) => role.name === roleName
 			);
 
 			await this.apiHelpers.headlessAdminUser.assignUserToAccountRole(
 				accountId,
 				filteredAccountRole[0].id,
-				user.id
+				userId
 			);
 		}
 		catch (error) {
-			console.error('Error when trying to assign user to role', error);
+			console.error('Error when trying to assign user to account role', error);
+
 			throw error;
 		}
 	}
 
-	async createAccountUser({
-		currency,
-		externalReferenceCode,
-		name,
-		partnerCountry,
-		type,
-	}: TPartnerAccount) {
-		const partnerAccount = {
-			currency,
-			externalReferenceCode,
-			name,
-			partnerCountry,
-			type,
-		};
-
+	async createMDFRequest(mdfRequest: TMDFRequest) {
 		try {
-			const account =
-				await this.apiHelpers.headlessAdminUser.postAccount(
-					partnerAccount
-				);
-
-			await this.apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-				account.id,
-				['test@liferay.com']
-			);
-
-			return account;
-		}
-		catch (error) {
-			console.error('Error when trying to create account', error);
-			throw error;
-		}
-	}
-
-	async createMDFRequest({data}) {
-		try {
-			const mdfRequest = await this.apiHelpers.post('/o/c/mdfrequests', {
-				data,
+			const mdfRequestData = await this.apiHelpers.post('/o/c/mdfrequests', {
+				data: mdfRequest,
 			});
 
-			return mdfRequest;
+			return mdfRequestData;
 		}
 		catch (error) {
 			console.error('Error when trying to create an MDF Request', error);
+
 			throw error;
 		}
 	}

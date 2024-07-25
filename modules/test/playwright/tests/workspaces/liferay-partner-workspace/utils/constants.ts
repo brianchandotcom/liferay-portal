@@ -3,6 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+export enum EAccountRoles {
+	PARTNER_MANAGER = '[Account] Partner Manager (PM)'
+}
+
 export enum EMDFRequestLiferayBusinessSalesGoals {
 	LEAD_GENERATION = 'leadGeneration',
 	NURTURE_EXISTING_PROSPECTS = 'nurtureExistingProspects',
@@ -105,4 +109,8 @@ export enum EMDFRequestActivityExpenseTypes {
 	ROOM_RENTAL = 'roomRental',
 	SOCIAL_MARKETING = 'socialMarketing',
 	SPONSORSHIP_FEE = 'sponsorshipFee',
+}
+
+export enum ERegularRoles {
+	CHANNEL_OPERATIONS_MANAGER = 'Channel Operations Manager (COM)'
 }

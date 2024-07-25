@@ -4,23 +4,47 @@
  */
 
 import {getRandomInt} from '../../../../utils/getRandomInt';
+import { EMDFRequestActivityExpenseTypes, EMDFRequestActivityTactics, EMDFRequestActivityTypes, EMDFRequestLiferayBusinessSalesGoals, EMDFRequestTargetAudienceRoles, EMDFRequestTargetMarkets } from '../utils/constants';
 
-export const companyName = 'Partner Account' + getRandomInt();
+const namespace = getRandomInt();
 
 export const mdfRequestMock = {
-	claimPercent: 0.5,
-	companyName,
-	convertedTotalCostOfExpense: 50000,
+	activities: [
+		{
+			activityName: 'Test Activity' + namespace,
+			claimPercent: 0.5,
+			endDate: '2024-07-12',
+			expenses: [
+				{
+					type: EMDFRequestActivityExpenseTypes.BROADCAST_ADVERTISING,
+					value: 500,
+				},
+			],
+			leadGenerated: false,
+			marketingActivity: 'Marketing Description',
+			startDate: '2024-07-11',
+			tactic: EMDFRequestActivityTactics.OTHER,
+			typeOfActivity: EMDFRequestActivityTypes.MISCELLANEOUS_MARKETING,
+		},
+	],
 	convertedTotalMDFRequestAmount: 25000,
-	liferayBusinessSalesGoals: 'Lead generation',
-	liferayBusinessSalesGoalsOther: '',
-	maxDateActivity: '2024-07-12',
-	minDateActivity: '2024-07-11',
-	overallCampaignDescription: 'Campaign Description',
-	overallCampaignName: 'Test Campaign',
+	goals: {
+		companyName: 'Test Company ' + namespace,
+		liferayBusinessSalesGoals: [
+			EMDFRequestLiferayBusinessSalesGoals.LEAD_GENERATION,
+		],
+		overallCampaignDescription: 'Campaign Description',
+		overallCampaignName: 'Campaign Name' + namespace,
+		targetAudienceRoles: [
+			EMDFRequestTargetAudienceRoles.C_LEVEL_EXECUTIVE_VP,
+			EMDFRequestTargetAudienceRoles.ADMINISTRATOR,
+		],
+		targetMarkets: [
+			EMDFRequestTargetMarkets.AEROSPACE_DEFENSE,
+			EMDFRequestTargetMarkets.AGRICULTURE,
+		],
+	},
 	submitDate: '2024-07-10T18:11:39.346Z',
-	targetAudienceRoles: 'C-Level/Executive/VP; Independent Contractor',
-	targetMarkets: 'Aerospace & Defense; Agriculture',
-	totalCostOfExpense: 0,
 	totalMDFRequestAmount: 25000,
+	userId: 0
 };

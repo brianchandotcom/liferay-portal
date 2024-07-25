@@ -281,10 +281,9 @@ definition {
 
 	@summary = "Default summary"
 	macro generateSandboxedPublicationName(userScreenName = null) {
-		var sandboxTime = DateUtil.getFormattedCurrentDate("h:mm", "UTC");
 		var sandboxDate = DateUtil.getFormattedCurrentDate("M/d/yy", "UTC");
 
-		var sandboxedPublicationName = "${userScreenName} - ${sandboxDate} ${sandboxTime}";
+		var sandboxedPublicationName = "${userScreenName} - ${sandboxDate}";
 
 		return ${sandboxedPublicationName};
 	}

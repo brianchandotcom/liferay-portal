@@ -85,7 +85,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 
 		classNameId = PortalUtil.getClassNameId(
-			_LEGACY_RAW_METADATA_PROCESSOR_CLASS_NAME);
+			"com.liferay.document.library.kernel.util.RawMetadataProcessor");
 
 		if (classNameId == 0) {
 			return;
@@ -183,8 +183,5 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			}
 		}
 	}
-
-	private static final String _LEGACY_RAW_METADATA_PROCESSOR_CLASS_NAME =
-		"com.liferay.document.library.kernel.util.RawMetadataProcessor";
 
 }

@@ -20,12 +20,12 @@ public class LayoutModifiedDateComparator extends OrderByComparator<Layout> {
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public LayoutModifiedDateComparator() {
-		this(false);
-	}
+	public static LayoutModifiedDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public LayoutModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -58,6 +58,16 @@ public class LayoutModifiedDateComparator extends OrderByComparator<Layout> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private LayoutModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final LayoutModifiedDateComparator _INSTANCE_ASCENDING =
+		new LayoutModifiedDateComparator(true);
+
+	private static final LayoutModifiedDateComparator _INSTANCE_DESCENDING =
+		new LayoutModifiedDateComparator(false);
 
 	private final boolean _ascending;
 

@@ -20,12 +20,12 @@ public class LayoutCreateDateComparator extends OrderByComparator<Layout> {
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public LayoutCreateDateComparator() {
-		this(true);
-	}
+	public static LayoutCreateDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public LayoutCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -58,6 +58,16 @@ public class LayoutCreateDateComparator extends OrderByComparator<Layout> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private LayoutCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final LayoutCreateDateComparator _INSTANCE_ASCENDING =
+		new LayoutCreateDateComparator(true);
+
+	private static final LayoutCreateDateComparator _INSTANCE_DESCENDING =
+		new LayoutCreateDateComparator(false);
 
 	private final boolean _ascending;
 

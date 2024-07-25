@@ -196,7 +196,8 @@ public class RecurrenceUtil {
 		List<CalendarBooking> calendarBookings) {
 
 		calendarBookings = ListUtil.sort(
-			calendarBookings, new CalendarBookingStartTimeComparator(false));
+			calendarBookings,
+			CalendarBookingStartTimeComparator.getInstance(false));
 
 		CalendarBooking lastCalendarBooking = calendarBookings.get(0);
 

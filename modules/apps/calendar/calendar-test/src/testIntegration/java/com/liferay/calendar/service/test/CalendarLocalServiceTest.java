@@ -86,7 +86,7 @@ public class CalendarLocalServiceTest {
 			_group.getCompanyId(), new long[] {_group.getGroupId()},
 			new long[] {calendarResource.getCalendarResourceId()},
 			nameMap.get(locale), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new CalendarNameComparator());
+			CalendarNameComparator.getInstance(false));
 
 		Assert.assertEquals(
 			actualCalendars.toString(), 1, actualCalendars.size());

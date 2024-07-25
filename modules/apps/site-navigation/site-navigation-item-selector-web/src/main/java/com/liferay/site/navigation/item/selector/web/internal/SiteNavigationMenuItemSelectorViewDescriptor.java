@@ -135,10 +135,11 @@ public class SiteNavigationMenuItemSelectorViewDescriptor
 		}
 
 		if (orderByCol.equals("modified-date")) {
-			return new SiteNavigationMenuModifiedDateComparator(orderByAsc);
+			return SiteNavigationMenuModifiedDateComparator.getInstance(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			return new SiteNavigationMenuNameComparator(orderByAsc);
+			return SiteNavigationMenuNameComparator.getInstance(orderByAsc);
 		}
 
 		return null;

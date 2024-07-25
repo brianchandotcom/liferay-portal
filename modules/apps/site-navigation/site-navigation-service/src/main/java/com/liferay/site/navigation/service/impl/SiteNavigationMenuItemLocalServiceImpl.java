@@ -290,7 +290,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		return siteNavigationMenuItemPersistence.findByS_P(
 			siteNavigationMenuId, parentSiteNavigationMenuItemId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new SiteNavigationMenuItemOrderComparator());
+			SiteNavigationMenuItemOrderComparator.getInstance(true));
 	}
 
 	@Override

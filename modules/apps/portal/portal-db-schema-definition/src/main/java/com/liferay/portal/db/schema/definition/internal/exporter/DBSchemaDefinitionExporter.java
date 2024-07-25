@@ -158,16 +158,18 @@ public class DBSchemaDefinitionExporter {
 			new File(dirName, "db_schema_definition_export_report.info"),
 			StringUtil.merge(
 				new Object[] {
-					"Database tables: " + dbTableNames.size(),
-					"Database type: " + DBManagerUtil.getDBType(),
-					"Export database type: " + exportDBType,
 					"Export date: " + _toString(new Date()),
-					"Export tables: " + exportTableNames.size(),
-					"Installed patches: " + installedPatchNames,
-					"Missing tables: " + missingTableNames,
 					"Portal build date: " + _toString(release.getBuildDate()),
 					"Portal build number: " + release.getBuildNumber(),
-					"Portal schema version: " + release.getSchemaVersion()
+					"Portal installed patches: " + installedPatchNames,
+					"Portal schema version: " + release.getSchemaVersion(),
+					StringPool.NEW_LINE,
+					"Database type: " + DBManagerUtil.getDBType(),
+					"Export database type: " + exportDBType,
+					StringPool.NEW_LINE,
+					"Database tables: " + dbTableNames.size(),
+					"Export tables: " + exportTableNames.size(),
+					StringPool.NEW_LINE, "Missing tables: " + missingTableNames
 				},
 				StringPool.NEW_LINE));
 	}

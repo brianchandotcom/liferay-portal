@@ -171,7 +171,7 @@ public class DefaultObjectEntryManagerImpl
 
 		_objectRelationshipService.addObjectRelationshipMappingTableValues(
 			objectRelationship.getObjectRelationshipId(), primaryKey1,
-			primaryKey2, new ServiceContext());
+			primaryKey2, ServiceContextUtil.createServiceContext(primaryKey2));
 
 		return getObjectEntry(
 			dtoConverterContext,

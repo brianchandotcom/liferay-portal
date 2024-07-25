@@ -7,6 +7,7 @@ package com.liferay.object.rest.internal.util;
 
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
+import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -27,6 +28,26 @@ public class ServiceContextUtil {
 			objectEntry, userId);
 
 		serviceContext.setLanguageId(LocaleUtil.toLanguageId(locale));
+
+		return serviceContext;
+	}
+
+	public static ServiceContext createServiceContext(long objectEntryId) {
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			ObjectEntryLocalServiceUtil.fetchObjectEntry(objectEntryId);
+
+		if (serviceBuilderObjectEntry == null) {
+			return new ServiceContext();
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		if (serviceBuilderObjectEntry.getStatus() ==
+				WorkflowConstants.STATUS_DRAFT) {
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
 
 		return serviceContext;
 	}

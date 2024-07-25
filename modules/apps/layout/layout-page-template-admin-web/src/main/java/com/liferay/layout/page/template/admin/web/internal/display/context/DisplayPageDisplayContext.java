@@ -575,16 +575,16 @@ public class DisplayPageDisplayContext {
 		}
 
 		if (Objects.equals(getOrderByCol(), "create-date")) {
-			return new LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator(
-				orderByAsc);
+			return LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator.
+				getInstance(orderByAsc);
 		}
 		else if (Objects.equals(getOrderByCol(), "modified-date")) {
-			return new LayoutPageTemplateCollectionLayoutPageTemplateEntryModifiedDateComparator(
-				orderByAsc);
+			return LayoutPageTemplateCollectionLayoutPageTemplateEntryModifiedDateComparator.
+				getInstance(orderByAsc);
 		}
 		else if (Objects.equals(getOrderByCol(), "name")) {
-			return new LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator(
-				orderByAsc);
+			return LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator.
+				getInstance(orderByAsc);
 		}
 
 		return null;

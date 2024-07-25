@@ -1712,7 +1712,7 @@ public class ContentPageEditorDisplayContext {
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
-				new LayoutPageTemplateEntryNameComparator(true));
+				LayoutPageTemplateEntryNameComparator.getInstance(true));
 
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 				layoutPageTemplateEntries) {

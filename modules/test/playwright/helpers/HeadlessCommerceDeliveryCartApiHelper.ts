@@ -22,6 +22,7 @@ type TCart = {
 	cartItems?: TCartItem[];
 	currencyCode?: string;
 	id?: number;
+	paymentMethod?: string;
 };
 
 export class HeadlessCommerceDeliveryCartApiHelper {

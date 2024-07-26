@@ -33,6 +33,8 @@ type TOrder = {
 	paymentStatusInfo?: number;
 	shippingAddressId?: string;
 	shippingAmount?: number;
+	shippingMethod?: string;
+	shippingOption?: string;
 };
 
 type TOrderItem = {

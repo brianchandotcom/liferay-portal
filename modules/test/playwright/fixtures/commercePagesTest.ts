@@ -34,6 +34,7 @@ import {CommerceAdminProductDetailsProductOptionsPage} from '../pages/commerce/c
 import {CommerceAdminProductDetailsProductRelationsPage} from '../pages/commerce/commerceAdminProductDetailsProductRelationsPage';
 import {CommerceAdminProductPage} from '../pages/commerce/commerceAdminProductPage';
 import {CommerceAdminReturnsPage} from '../pages/commerce/commerceAdminReturnsPage';
+import {CommerceAdminShipmentsPage} from '../pages/commerce/commerceAdminShipmentsPage';
 import {CommerceCatalogPage} from '../pages/commerce/commerceCatalogPage';
 import {CommerceCatalogSystemSettingsPage} from '../pages/commerce/commerceCatalogSystemSettingsPage';
 import {CommerceChannelDefaultsPage} from '../pages/commerce/commerceChannelDefaultsPage';
@@ -59,6 +60,7 @@ const commercePagesTest = test.extend<{
 	commerceAdminProductDetailsProductRelationsPage: CommerceAdminProductDetailsProductRelationsPage;
 	commerceAdminProductPage: CommerceAdminProductPage;
 	commerceAdminReturnsPage: CommerceAdminReturnsPage;
+	commerceAdminShipmentsPage: CommerceAdminShipmentsPage;
 	commerceCartPage: CommerceCartPage;
 	commerceCartSummaryPage: CommerceCartSummaryPage;
 	commerceCatalogPage: CommerceCatalogPage;
@@ -127,6 +129,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminReturnsPage: async ({page}, use) => {
 		await use(new CommerceAdminReturnsPage(page));
+	},
+	commerceAdminShipmentsPage: async ({page}, use) => {
+		await use(new CommerceAdminShipmentsPage(page));
 	},
 	commerceCartPage: async ({page}, use) => {
 		await use(new CommerceCartPage(page));

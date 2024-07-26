@@ -20,6 +20,7 @@ export class ApplicationsMenuPage {
 	private readonly commerceOrdersMenuItem: Locator;
 	private readonly commercePanelButton: Locator;
 	private readonly commerceReturnsMenuItem: Locator;
+	private readonly commerceShipmentsMenuItem: Locator;
 	private readonly commerceSpecificationsMenuItem: Locator;
 	private readonly controlPanelButton: Locator;
 	private readonly customFieldsMenuItem: Locator;
@@ -95,6 +96,10 @@ export class ApplicationsMenuPage {
 		this.commerceReturnsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Returns',
+		});
+		this.commerceShipmentsMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Shipments',
 		});
 		this.commerceSpecificationsMenuItem = page.getByRole('menuitem', {
 			exact: true,
@@ -346,6 +351,11 @@ export class ApplicationsMenuPage {
 	async goToCommerceReturns() {
 		await this.goToCommercePanel();
 		await this.commerceReturnsMenuItem.click();
+	}
+
+	async goToCommerceShipments(checkTabVisibility = true) {
+		await this.goToCommercePanel(checkTabVisibility);
+		await this.commerceShipmentsMenuItem.click();
 	}
 
 	async goToCommerceSpecifications() {

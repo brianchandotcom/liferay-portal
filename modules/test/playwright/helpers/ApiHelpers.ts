@@ -22,6 +22,7 @@ import {HeadlessCommerceAdminInventoryApiHelper} from './HeadlessCommerceAdminIn
 import {HeadlessCommerceAdminOrderApiHelper} from './HeadlessCommerceAdminOrderApiHelper';
 import {HeadlessCommerceAdminPaymentApiHelper} from './HeadlessCommerceAdminPaymentApiHelper';
 import {HeadlessCommerceAdminPricingApiHelper} from './HeadlessCommerceAdminPricingApiHelper';
+import {HeadlessCommerceAdminShipmentApiHelper} from './HeadlessCommerceAdminShipmentApiHelper';
 import {HeadlessCommerceDeliveryCartApiHelper} from './HeadlessCommerceDeliveryCartApiHelper';
 import {HeadlessCommerceDeliveryCatalogApiHelper} from './HeadlessCommerceDeliveryCatalogApiHelper';
 import {HeadlessCommerceReturnApiHelper} from './HeadlessCommerceReturnApiHelper';
@@ -77,6 +78,7 @@ export class ApiHelpers {
 	readonly headlessCommerceAdminOrder: HeadlessCommerceAdminOrderApiHelper;
 	readonly headlessCommerceAdminPaymentApiHelper: HeadlessCommerceAdminPaymentApiHelper;
 	readonly headlessCommerceAdminPricing: HeadlessCommerceAdminPricingApiHelper;
+	readonly headlessCommerceAdminShipment: HeadlessCommerceAdminShipmentApiHelper;
 	readonly headlessCommerceDeliveryCatalog: HeadlessCommerceDeliveryCatalogApiHelper;
 	readonly headlessCommerceDeliveryCart: HeadlessCommerceDeliveryCartApiHelper;
 	readonly headlessCommerceReturn: HeadlessCommerceReturnApiHelper;
@@ -132,6 +134,8 @@ export class ApiHelpers {
 			new HeadlessCommerceAdminPaymentApiHelper(this);
 		this.headlessCommerceAdminPricing =
 			new HeadlessCommerceAdminPricingApiHelper(this);
+		this.headlessCommerceAdminShipment =
+			new HeadlessCommerceAdminShipmentApiHelper(this);
 		this.headlessCommerceDeliveryCatalog =
 			new HeadlessCommerceDeliveryCatalogApiHelper(this);
 		this.headlessCommerceDeliveryCart =
@@ -417,6 +421,12 @@ export class DataApiHelpers extends ApiHelpers {
 					break;
 				case 'skuUnitOfMeasure':
 					await this.headlessCommerceAdminCatalog.deleteSkuUnitOfMeasure(
+						item.id
+					);
+
+					break;
+				case 'shipment':
+					await this.headlessCommerceAdminShipment.deleteShipment(
 						item.id
 					);
 

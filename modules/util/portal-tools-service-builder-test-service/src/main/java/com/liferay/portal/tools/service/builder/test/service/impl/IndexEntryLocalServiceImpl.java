@@ -20,6 +20,7 @@ import com.liferay.portal.tools.service.builder.test.service.base.IndexEntryLoca
 public class IndexEntryLocalServiceImpl extends IndexEntryLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public IndexEntry addIndexEntry(long companyId, String name) {
 		long indexEntryId = counterLocalService.increment();
 
@@ -31,7 +32,8 @@ public class IndexEntryLocalServiceImpl extends IndexEntryLocalServiceBaseImpl {
 		return indexEntryPersistence.updateImpl(indexEntry);
 	}
 
-	public boolean addKeywordsEntry(
+	@Override
+	public boolean addKeywordsEntryIndexEntry(
 		long keywordsEntryId, IndexEntry indexEntry) {
 
 		if (!super.addKeywordsEntryIndexEntry(keywordsEntryId, indexEntry)) {

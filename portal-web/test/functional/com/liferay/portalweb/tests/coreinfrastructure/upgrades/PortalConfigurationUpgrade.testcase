@@ -2,6 +2,7 @@
 definition {
 
 	property custom.properties = "layout.user.access.via.plid.enabled=true";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "true";
 	property portal.smoke.upgrades = "true";
 	property portal.upstream = "true";

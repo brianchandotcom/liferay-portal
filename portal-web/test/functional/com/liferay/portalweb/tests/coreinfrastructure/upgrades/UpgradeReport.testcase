@@ -54,6 +54,8 @@ definition {
 	@description = "LPS-154683: Upgrade Report provides the type and version of the database"
 	@priority = 3
 	test DatabaseLogged {
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
+
 		task ("Look for the upgrade report") {
 			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
 		}

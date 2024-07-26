@@ -362,6 +362,7 @@ definition {
 	@priority = 5
 	test ViewInstanceCurrenciesAvailable {
 		property environment.acceptance = "true";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 

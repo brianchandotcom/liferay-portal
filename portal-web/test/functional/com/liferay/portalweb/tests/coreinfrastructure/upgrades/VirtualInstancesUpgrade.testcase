@@ -17,6 +17,7 @@ definition {
 	@priority = 4
 	test ViewVirtualInstancesArchive7310 {
 		property data.archive.type = "data-archive-virtual-instances";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "7.3.10";
 		property test.run.environment = "EE";
 
@@ -26,6 +27,7 @@ definition {
 	@priority = 4
 	test ViewVirtualInstancesArchive7413U33 {
 		property data.archive.type = "data-archive-virtual-instances";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
 		property test.assert.warning.exceptions = "false";
 		property test.run.environment = "EE";

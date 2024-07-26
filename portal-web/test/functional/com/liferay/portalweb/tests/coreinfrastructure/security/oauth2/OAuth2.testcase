@@ -992,6 +992,8 @@ definition {
 	@description = "This is a use case for LRQA-40687. User can add and edit external application on the OAuth 2 administration page."
 	@priority = 5
 	test ExternalApplicationCanBeAddedAndEdited {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1169,7 +1171,10 @@ definition {
 	@description = "This is a use case for LRQA-41000. User can view and revoke granted authorizations."
 	@priority = 5
 	test GrantedAuthorizationsCanBeRevoked {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property environment.acceptance = "true";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.liferay.virtual.instance = "false";

@@ -2,6 +2,7 @@
 definition {
 
 	property ci.retries.disabled = "true";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property dummy.socket.proxy.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";

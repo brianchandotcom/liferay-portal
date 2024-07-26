@@ -4110,7 +4110,10 @@ definition {
 	@priority = 4
 	test SPInitiatedSSOSyncsUserAttributesFromIdPToSPDefaultMapping {
 		property app.server.bundles.size = "0";
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property environment.acceptance = "true";
+		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "quarantine";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
@@ -5208,6 +5211,8 @@ definition {
 	@description = "This is a use case for LPS-50687. Sign into portal by executing a SP initiated SSO login. This is done by clicking on the 'Sign In' link in the top menu on the SP. After the SP is logged in, and if both instances has the same user and email address, the IdP will also be logged in."
 	@priority = 4
 	test ViewSPInitiatedSSO {
+		property app.server.types = "jboss,tcserver,tomcat,wildfly";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -5452,7 +5457,9 @@ definition {
 	@description = "This is a use case for LPS-180198 TC-1 and TC-4: The user could be assigned to an existing user group at Portal, during login using Okta as SAML IDP (AC-1), and the missing user group is not created at Portal."
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaAndUserGroups {
+		property app.server.types = "jboss,tcserver,tomcat,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -5512,7 +5519,9 @@ definition {
 	@description = "This is a use case for LPS-180198 TC-5: Verify the user group could be assigned even if it's not present at first time login from Okta."
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaUserGroupCanBeAssignedLater {
+		property app.server.types = "jboss,tcserver,tomcat,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -5590,7 +5599,9 @@ definition {
 	@description = "This is a use case for LPS-180198 TC-3: The user's non-existing user group at Portal is not created when logging in using Okta as SAML IDP."
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaUserGroupsAreNotCreatedDuringLogin {
+		property app.server.types = "jboss,tcserver,tomcat,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -5648,7 +5659,9 @@ definition {
 	@description = "This is a use case for LPS-180198 TC-2: The user could be assigned to multiple existing user groups at the Portal, during login using Okta as SAML IDP."
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaWithMultipleUserGroups {
+		property app.server.types = "jboss,tcserver,tomcat,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";

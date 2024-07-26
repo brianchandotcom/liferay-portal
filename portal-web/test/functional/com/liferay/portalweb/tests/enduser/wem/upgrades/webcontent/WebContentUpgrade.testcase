@@ -2,6 +2,7 @@
 definition {
 
 	property ci.retries.disabled = "true";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.liferay.virtual.instance = "false";
@@ -226,6 +227,7 @@ definition {
 	@priority = 4
 	test ViewSpecificDisplayPageTemplateArchive72104 {
 		property data.archive.type = "data-archive-display-page-templates";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "7.2.10.4";
 
 		ValidateWebContentUpgrade.viewSpecificDisplayPageTemplateViaAssetPublisher();
@@ -343,6 +345,7 @@ definition {
 	@priority = 4
 	test ViewWebContentWithImageArchive7110 {
 		property data.archive.type = "data-archive-web-content-with-image";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "7.1.10";
 
 		task ("View image is shown in field after upgrade") {
@@ -387,6 +390,7 @@ definition {
 	@priority = 5
 	test ViewWebContentWithNoDisplayPageTemplateArchive73101 {
 		property data.archive.type = "data-archive-web-content-with-no-display-page-template";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "7.3.10.1";
 
 		ValidateWebContentUpgrade.viewWebContentWithNoDisplayPageTemplate();
@@ -426,6 +430,7 @@ definition {
 	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive71103 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "7.1.10.3";
 		property test.run.environment = "EE";
 
@@ -436,6 +441,7 @@ definition {
 	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive72101 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "7.2.10.1";
 		property test.run.environment = "EE";
 
@@ -446,6 +452,7 @@ definition {
 	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive73101 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "7.3.10.1";
 		property test.run.environment = "EE";
 
@@ -456,6 +463,7 @@ definition {
 	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive701014 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "7.0.10.14";
 		property test.run.environment = "EE";
 

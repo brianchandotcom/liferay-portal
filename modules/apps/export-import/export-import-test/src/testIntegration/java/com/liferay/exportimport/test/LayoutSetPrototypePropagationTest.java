@@ -86,6 +86,7 @@ import com.liferay.sites.kernel.util.Sites;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -323,9 +324,13 @@ public class LayoutSetPrototypePropagationTest
 		Layout prototypeLayout1 = LayoutTestUtil.addTypeContentLayout(
 			_layoutSetPrototypeGroup);
 
+		Locale locale = _portal.getSiteDefaultLocale(_layoutSetPrototypeGroup);
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
 		prototypeLayout1 = _layoutLocalService.updateFriendlyURL(
 			TestPropsValues.getUserId(), prototypeLayout1.getPlid(), "/page-a",
-			LocaleUtil.US.toString());
+			languageId);
 
 		ContentLayoutTestUtil.publishLayout(
 			prototypeLayout1.fetchDraftLayout(), prototypeLayout1);
@@ -340,7 +345,7 @@ public class LayoutSetPrototypePropagationTest
 
 		prototypeLayout1 = _layoutLocalService.updateFriendlyURL(
 			TestPropsValues.getUserId(), prototypeLayout1.getPlid(), "/page-a0",
-			LocaleUtil.US.toString());
+			languageId);
 
 		ContentLayoutTestUtil.publishLayout(
 			prototypeLayout1.fetchDraftLayout(), prototypeLayout1);
@@ -363,7 +368,7 @@ public class LayoutSetPrototypePropagationTest
 
 		prototypeLayout2 = _layoutLocalService.updateFriendlyURL(
 			TestPropsValues.getUserId(), prototypeLayout2.getPlid(), "/page-a",
-			LocaleUtil.US.toString());
+			languageId);
 
 		ContentLayoutTestUtil.publishLayout(
 			prototypeLayout2.fetchDraftLayout(), prototypeLayout2);
@@ -387,7 +392,7 @@ public class LayoutSetPrototypePropagationTest
 
 		Assert.assertTrue(
 			layout2.getFriendlyURL(
-				LocaleUtil.US
+				locale
 			).startsWith(
 				"/page-a"
 			));

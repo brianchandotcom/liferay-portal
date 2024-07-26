@@ -96,7 +96,7 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 
 			Layout layout = themeDisplay.getLayout();
 
-			if (!StringUtil.equals(layout.getFriendlyURL(), "/manage")) {
+			if (!StringUtil.matches(layout.getFriendlyURL(), "/manage")) {
 				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 					layout.getGroupId(), false, "/manage");
 			}

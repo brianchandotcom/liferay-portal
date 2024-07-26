@@ -174,7 +174,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		boolean listNotExhausted = true;
 
 		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, false, 0, 0, new EntryDisplayDateComparator());
+			status, false, 0, 0, EntryDisplayDateComparator.getInstance(false));
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
@@ -238,13 +238,14 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		BlogsEntry[] entries =
 			blogsEntryPersistence.filterFindByG_D_S_PrevAndNext(
 				entryId, entry.getGroupId(), entry.getDisplayDate(),
-				WorkflowConstants.STATUS_APPROVED, new EntryIdComparator(true));
+				WorkflowConstants.STATUS_APPROVED,
+				EntryIdComparator.getInstance(true));
 
 		if (entries[0] == null) {
 			entries[0] = blogsEntryPersistence.fetchByG_LtD_S_Last(
 				entry.getGroupId(), entry.getDisplayDate(),
 				WorkflowConstants.STATUS_APPROVED,
-				new EntryDisplayDateComparator(true));
+				EntryDisplayDateComparator.getInstance(true));
 
 			if ((entries[0] != null) &&
 				!_blogsEntryModelResourcePermission.contains(
@@ -258,7 +259,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			entries[2] = blogsEntryPersistence.fetchByG_GtD_S_First(
 				entry.getGroupId(), entry.getDisplayDate(),
 				WorkflowConstants.STATUS_APPROVED,
-				new EntryDisplayDateComparator(true));
+				EntryDisplayDateComparator.getInstance(true));
 
 			if ((entries[2] != null) &&
 				!_blogsEntryModelResourcePermission.contains(
@@ -399,7 +400,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		boolean listNotExhausted = true;
 
 		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, false, 0, 0, new EntryDisplayDateComparator());
+			status, false, 0, 0, EntryDisplayDateComparator.getInstance(false));
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
@@ -485,7 +486,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		boolean listNotExhausted = true;
 
 		QueryDefinition<BlogsEntry> queryDefinition = new QueryDefinition<>(
-			status, false, 0, 0, new EntryDisplayDateComparator());
+			status, false, 0, 0, EntryDisplayDateComparator.getInstance(false));
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);

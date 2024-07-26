@@ -149,7 +149,7 @@ public class BlogsViewDisplayContext {
 							WorkflowConstants.STATUS_SCHEDULED
 						},
 						searchContainer.getStart(), searchContainer.getEnd(),
-						new EntryModifiedDateComparator())),
+						EntryModifiedDateComparator.getInstance(false))),
 				getUnpublishedEntriesCount());
 		}
 		else {

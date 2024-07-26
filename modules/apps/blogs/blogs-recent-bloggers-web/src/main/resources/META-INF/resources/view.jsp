@@ -55,7 +55,7 @@ else {
 
 				int entriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(group.getGroupId(), user2.getUserId(), WorkflowConstants.STATUS_APPROVED);
 
-				List<BlogsEntry> entries = BlogsEntryServiceUtil.getGroupUserEntries(group.getGroupId(), user2.getUserId(), WorkflowConstants.STATUS_APPROVED, 0, max, new EntryModifiedDateComparator());
+				List<BlogsEntry> entries = BlogsEntryServiceUtil.getGroupUserEntries(group.getGroupId(), user2.getUserId(), WorkflowConstants.STATUS_APPROVED, 0, max, EntryModifiedDateComparator.getInstance(false));
 
 				if (entries.isEmpty()) {
 					if (!selectionMethod.equals("users")) {
@@ -66,7 +66,7 @@ else {
 
 					entriesCount = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId, user2.getUserId(), WorkflowConstants.STATUS_APPROVED);
 
-					entries = BlogsEntryServiceUtil.getGroupUserEntries(scopeGroupId, user2.getUserId(), WorkflowConstants.STATUS_APPROVED, 0, max, new EntryModifiedDateComparator());
+					entries = BlogsEntryServiceUtil.getGroupUserEntries(scopeGroupId, user2.getUserId(), WorkflowConstants.STATUS_APPROVED, 0, max, EntryModifiedDateComparator.getInstance(false));
 
 					if (entries.isEmpty()) {
 						continue;

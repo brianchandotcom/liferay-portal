@@ -220,10 +220,11 @@ public class BlogsUtil {
 		}
 
 		if (orderByCol.equals("display-date")) {
-			orderByComparator = new EntryDisplayDateComparator(orderByAsc);
+			orderByComparator = EntryDisplayDateComparator.getInstance(
+				orderByAsc);
 		}
 		else {
-			orderByComparator = new EntryTitleComparator(orderByAsc);
+			orderByComparator = EntryTitleComparator.getInstance(orderByAsc);
 		}
 
 		return orderByComparator;

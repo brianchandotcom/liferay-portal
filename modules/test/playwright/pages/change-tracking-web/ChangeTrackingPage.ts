@@ -91,24 +91,38 @@ export class ChangeTrackingPage {
 		const comment = getRandomString();
 
 		await this.addComment(comment);
+
+		const editedComment = getRandomString();
 	
-		await this.editComment(comment, getRandomString());
+		await this.editComment(comment, editedComment);
 	
-		await this.deleteComment();
+		await this.deleteComment(editedComment);
 	}
 
-	async deleteComment() {
-		await this.page.locator('.autofit-col > .autofit-row > div:nth-child(2) > .dropdown > .dropdown-toggle').click();
+	async deleteComment(comment) {
+		const commentsDiv = this.page.locator('div.publications-comments');
+
+		if (!commentsDiv) {
+			await this.openComments();
+		}
+
+		await this.page.locator('div.comment-row').filter({hasText: comment}).locator('button.dropdown-toggle').click();
 
 		await this.page.getByRole('menuitem', { name: 'Delete' }).click();
 	
 		await this.page.getByRole('button', { name: 'Delete' }).click();
 	
-		await expect(this.page.getByText('No comments yet.')).toBeVisible();
+		await expect(this.page.getByText(comment)).toBeHidden();
 	}
 	
 	async editComment(comment, content) {
-		await this.page.locator('.autofit-col > .autofit-row > div:nth-child(2) > .dropdown > .dropdown-toggle').click();
+		const commentsDiv = this.page.locator('div.publications-comments');
+
+		if (!commentsDiv) {
+			await this.openComments();
+		}
+
+		await this.page.locator('div.comment-row').filter({hasText: comment}).locator('button.dropdown-toggle').click();
 
 		await this.page.getByRole('menuitem', { name: 'Edit' }).click();
 

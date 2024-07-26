@@ -784,12 +784,20 @@ public class LayoutStagedModelDataHandler
 						groupId, privateLayout, parentLayoutFriendlyURL);
 			}
 
-			if (importedParentLayout == null) {
+			if ((importedParentLayout == null) ||
+				(importedParentLayout.getPlid() == importedLayout.getPlid())) {
+
 				importedParentLayout = layouts.get(parentLayoutId);
 			}
 
-			parentPlid = importedParentLayout.getPlid();
-			parentLayoutId = importedParentLayout.getLayoutId();
+			if (importedParentLayout != null) {
+				parentPlid = importedParentLayout.getPlid();
+				parentLayoutId = importedParentLayout.getLayoutId();
+			}
+			else {
+				parentPlid = 0;
+				parentLayoutId = 0;
+			}
 		}
 
 		if (_log.isDebugEnabled()) {

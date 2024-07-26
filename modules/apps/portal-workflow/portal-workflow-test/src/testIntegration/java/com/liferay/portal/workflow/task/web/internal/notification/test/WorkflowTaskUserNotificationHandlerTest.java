@@ -12,14 +12,18 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -82,25 +86,53 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			StringUtil.randomString(),
 			new Date(System.currentTimeMillis() - Time.SECOND), serviceContext);
 
+		Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.CONTROL_PANEL);
+
+		Layout controlPanelLayout = LayoutLocalServiceUtil.fetchDefaultLayout(
+			controlPanelGroup.getGroupId(), true);
+
+		Layout controlPanelVirtualLayout = new VirtualLayout(
+			controlPanelLayout,
+			GroupLocalServiceUtil.getGroup(
+				TestPropsValues.getCompanyId(), GroupConstants.GUEST));
+
+		UserNotificationEvent userNotificationEvent =
+			_getUserNotificationEvent();
+
+		UserNotificationFeedEntry userNotificationFeedEntry = _interpret(
+			group,
+			controlPanelVirtualLayout,
+			serviceContext, userNotificationEvent);
+
+		Assert.assertEquals(
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASK,
+					controlPanelVirtualLayout.getPlid(), PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/edit_workflow_task.jsp"
+			).setParameter(
+				"workflowTaskId",
+				() -> {
+					JSONObject jsonObject = _jsonFactory.createJSONObject(
+						userNotificationEvent.getPayload());
+
+					return jsonObject.get("workflowTaskId");
+				}
+			).setWindowState(
+				WindowState.MAXIMIZED
+			).buildString(),
+			userNotificationFeedEntry.getLink());
+
 		Layout layout =
 			PersonalApplicationURLUtil.
 				getOrAddEmbeddedPersonalApplicationLayout(
 					TestPropsValues.getUser(), group, false);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(group));
-
-		serviceContext.setRequest(mockHttpServletRequest);
-
-		UserNotificationEvent userNotificationEvent =
-			_getUserNotificationEvent();
-
-		UserNotificationFeedEntry userNotificationFeedEntry =
-			_userNotificationHandler.interpret(
-				userNotificationEvent, serviceContext);
+		 userNotificationFeedEntry = _interpret(
+			group, LayoutTestUtil.addTypeContentLayout(group), serviceContext,
+			userNotificationEvent);
 
 		Assert.assertEquals(
 			PortletURLBuilder.create(
@@ -123,15 +155,18 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			userNotificationFeedEntry.getLink());
 	}
 
-	private ThemeDisplay _getThemeDisplay(Group group) throws Exception {
+	private ThemeDisplay _getThemeDisplay(Group group, Layout layout)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setLayout(LayoutTestUtil.addTypeContentLayout(group));
+		themeDisplay.setLayout(layout);
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setSiteGroupId(group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
 	}
@@ -155,6 +190,23 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		}
 
 		return null;
+	}
+
+	private UserNotificationFeedEntry _interpret(
+			Group group, Layout layout, ServiceContext serviceContext,
+			UserNotificationEvent userNotificationEvent)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(group, layout));
+
+		serviceContext.setRequest(mockHttpServletRequest);
+
+		return _userNotificationHandler.interpret(
+			userNotificationEvent, serviceContext);
 	}
 
 	@Inject

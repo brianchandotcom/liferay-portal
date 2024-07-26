@@ -867,7 +867,12 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		String originalName = PrincipalThreadLocal.getName();
 
-		_user = _addUser();
+		_user = UserTestUtil.addUser();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		PrincipalThreadLocal.setName(_user.getUserId());
 
 		Role role = _addRoleUserWithPermission(
 			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY}, objectDefinition,
@@ -1017,17 +1022,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		_userLocalService.addRoleUser(role.getRoleId(), user);
 
 		return role;
-	}
-
-	private User _addUser() throws Exception {
-		User user = UserTestUtil.addUser();
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-
-		PrincipalThreadLocal.setName(user.getUserId());
-
-		return user;
 	}
 
 	private void _assertNotificationQueueEntry(

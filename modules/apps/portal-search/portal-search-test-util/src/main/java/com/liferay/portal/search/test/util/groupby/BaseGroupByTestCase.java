@@ -58,7 +58,8 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 						"one",
 						Arrays.asList(
 							"companyId", "entryClassName", "entryClassPK",
-							"groupId", SORT_FIELD, "uid", "userName"),
+							"groupId", SORT_FIELD, "timestamp", "uid",
+							"userName"),
 						hits, indexingTestHelper));
 			});
 	}

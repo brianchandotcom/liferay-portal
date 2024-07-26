@@ -8,6 +8,8 @@ package com.liferay.exportimport.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
@@ -43,6 +45,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -55,6 +59,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -67,6 +72,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
@@ -304,6 +311,86 @@ public class LayoutSetPrototypePropagationTest
 			mergeFailFriendlyURLLayouts.toString(),
 			initialMergeFailFriendlyURLLayouts.size(),
 			mergeFailFriendlyURLLayouts.size());
+	}
+
+	@Test
+	@TestInfo("LPD-31491")
+	public void testLayoutPropagationWithFriendlyUrlConflictWithParentLayout()
+		throws Exception {
+
+		setLinkEnabled(true);
+
+		Layout prototypeLayout1 = LayoutTestUtil.addTypeContentLayout(
+			_layoutSetPrototypeGroup);
+
+		prototypeLayout1 = _layoutLocalService.updateFriendlyURL(
+			TestPropsValues.getUserId(), prototypeLayout1.getPlid(), "/page-a",
+			LocaleUtil.US.toString());
+
+		ContentLayoutTestUtil.publishLayout(
+			prototypeLayout1.fetchDraftLayout(), prototypeLayout1);
+
+		propagateChanges(group);
+
+		Layout layout1 = _layoutLocalService.getLayoutByUuidAndGroupId(
+			prototypeLayout1.getUuid(), group.getGroupId(),
+			prototypeLayout1.isPrivateLayout());
+
+		Assert.assertEquals("/page-a", layout1.getFriendlyURL());
+
+		prototypeLayout1 = _layoutLocalService.updateFriendlyURL(
+			TestPropsValues.getUserId(), prototypeLayout1.getPlid(), "/page-a0",
+			LocaleUtil.US.toString());
+
+		ContentLayoutTestUtil.publishLayout(
+			prototypeLayout1.fetchDraftLayout(), prototypeLayout1);
+
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
+				_layoutSetPrototypeGroup.getGroupId(),
+				_portal.getClassNameId(
+					ResourceActionsUtil.getCompositeModelName(
+						Layout.class.getName(),
+						String.valueOf(prototypeLayout1.isPrivateLayout()))),
+				"/page-a");
+
+		_friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
+			friendlyURLEntryLocalization.getFriendlyURLEntryId(),
+			friendlyURLEntryLocalization.getLanguageId());
+
+		Layout prototypeLayout2 = LayoutTestUtil.addTypeContentLayout(
+			_layoutSetPrototypeGroup);
+
+		prototypeLayout2 = _layoutLocalService.updateFriendlyURL(
+			TestPropsValues.getUserId(), prototypeLayout2.getPlid(), "/page-a",
+			LocaleUtil.US.toString());
+
+		ContentLayoutTestUtil.publishLayout(
+			prototypeLayout2.fetchDraftLayout(), prototypeLayout2);
+
+		prototypeLayout1 = _layoutLocalService.updateParentLayoutId(
+			prototypeLayout1.getPlid(), prototypeLayout2.getPlid());
+
+		propagateChanges(group);
+
+		layout1 = _layoutLocalService.getLayoutByUuidAndGroupId(
+			prototypeLayout1.getUuid(), group.getGroupId(),
+			prototypeLayout1.isPrivateLayout());
+
+		Assert.assertEquals("/page-a0", layout1.getFriendlyURL());
+
+		Layout layout2 = _layoutLocalService.getLayoutByUuidAndGroupId(
+			prototypeLayout2.getUuid(), group.getGroupId(),
+			prototypeLayout2.isPrivateLayout());
+
+		Assert.assertEquals(layout2.getPlid(), layout1.getParentPlid());
+
+		Assert.assertTrue(
+			layout2.getFriendlyURL(
+				LocaleUtil.US
+			).startsWith(
+				"/page-a"
+			));
 	}
 
 	@Test
@@ -1413,6 +1500,9 @@ public class LayoutSetPrototypePropagationTest
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetPrototypePropagationTest.class);
 
+	@Inject
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
 	private int _initialLayoutCount;
 	private int _initialPrototypeLayoutsCount;
 
@@ -1437,6 +1527,9 @@ public class LayoutSetPrototypePropagationTest
 	@DeleteAfterTestRun
 	private Layout _layoutSetPrototypeLayout;
 
+	@Inject
+	private Portal _portal;
+
 	private String _portletId;
 
 	@Inject
@@ -1450,6 +1543,9 @@ public class LayoutSetPrototypePropagationTest
 		_portletPreferenceValueLocalService;
 
 	private Layout _prototypeLayout;
+
+	@Inject
+	private ResourceActions _resourceActions;
 
 	@Inject
 	private Sites _sites;

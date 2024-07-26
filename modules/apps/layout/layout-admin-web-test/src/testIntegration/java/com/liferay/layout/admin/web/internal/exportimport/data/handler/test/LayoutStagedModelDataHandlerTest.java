@@ -15,16 +15,12 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
-import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -50,7 +46,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DateTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -62,7 +57,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -268,137 +262,6 @@ public class LayoutStagedModelDataHandlerTest
 
 		Assert.assertNotEquals(
 			layout.getMasterLayoutPlid(), importedLayout.getMasterLayoutPlid());
-	}
-
-	@Test
-	@TestInfo("LPD-31491")
-	public void testPropagateSiteTemplatePageWithFriendlyUrlConflict()
-		throws Exception {
-
-		initExport();
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
-
-		layout = _layoutLocalService.updateFriendlyURL(
-			TestPropsValues.getUserId(), layout.getPlid(), "/page-a",
-			LocaleUtil.US.toString());
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, layout);
-
-		initImport();
-
-		portletDataContext.setParameterMap(_getLayoutSetPrototypesParameters());
-
-		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED,
-			ExportImportLifecycleConstants.
-				PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS,
-			portletDataContext.getExportImportProcessId(),
-			PortletDataContextFactoryUtil.clonePortletDataContext(
-				portletDataContext));
-
-		Layout exportedLayout = (Layout)readExportedStagedModel(layout);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedLayout);
-
-		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED,
-			ExportImportLifecycleConstants.
-				PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS,
-			portletDataContext.getExportImportProcessId(),
-			PortletDataContextFactoryUtil.clonePortletDataContext(
-				portletDataContext));
-
-		initExport();
-
-		layout = _layoutLocalService.updateFriendlyURL(
-			TestPropsValues.getUserId(), layout.getPlid(), "/page-a0",
-			LocaleUtil.US.toString());
-
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
-				stagingGroup.getGroupId(),
-				_portal.getClassNameId(
-					_resourceActions.getCompositeModelName(
-						Layout.class.getName(),
-						String.valueOf(layout.isPrivateLayout()))),
-				"/page-a");
-
-		_friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
-			friendlyURLEntryLocalization.getFriendlyURLEntryId(),
-			friendlyURLEntryLocalization.getLanguageId());
-
-		Layout layoutB = LayoutTestUtil.addTypeContentLayout(stagingGroup);
-
-		Layout draftLayoutB = layoutB.fetchDraftLayout();
-
-		ContentLayoutTestUtil.publishLayout(draftLayoutB, layoutB);
-
-		layoutB = _layoutLocalService.updateFriendlyURL(
-			TestPropsValues.getUserId(), layoutB.getPlid(), "/page-a",
-			LocaleUtil.US.toString());
-
-		layout = _layoutLocalService.updateParentLayoutId(
-			layout.getPlid(), layoutB.getPlid());
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, layoutB);
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, layout);
-
-		initImport();
-
-		portletDataContext.setParameterMap(_getLayoutSetPrototypesParameters());
-
-		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED,
-			ExportImportLifecycleConstants.
-				PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS,
-			portletDataContext.getExportImportProcessId(),
-			PortletDataContextFactoryUtil.clonePortletDataContext(
-				portletDataContext));
-
-		exportedLayout = (Layout)readExportedStagedModel(layout);
-
-		Layout exportedLayoutB = (Layout)readExportedStagedModel(layoutB);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedLayoutB);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedLayout);
-
-		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED,
-			ExportImportLifecycleConstants.
-				PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS,
-			portletDataContext.getExportImportProcessId(),
-			PortletDataContextFactoryUtil.clonePortletDataContext(
-				portletDataContext));
-
-		Layout importedLayoutB = _layoutLocalService.getLayoutByUuidAndGroupId(
-			layoutB.getUuid(), liveGroup.getGroupId(),
-			layoutB.isPrivateLayout());
-		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
-			layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
-
-		Assert.assertEquals(
-			importedLayoutB.getPlid(), importedLayout.getParentPlid());
-		Assert.assertEquals("/page-a0", importedLayout.getFriendlyURL());
-
-		Assert.assertTrue(
-			importedLayoutB.getFriendlyURL(
-				LocaleUtil.US
-			).startsWith(
-				"/page-a"
-			));
 	}
 
 	@Test
@@ -896,55 +759,6 @@ public class LayoutStagedModelDataHandlerTest
 			layout.getPlid());
 	}
 
-	private Map<String, String[]> _getLayoutSetPrototypesParameters() {
-		return LinkedHashMapBuilder.put(
-			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
-			new String[] {Boolean.FALSE.toString()}
-		).put(
-			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
-			new String[] {Boolean.FALSE.toString()}
-		).put(
-			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
-			new String[] {
-				PortletDataHandlerKeys.
-					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE
-			}
-		).put(
-			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.THEME_REFERENCE,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
-			new String[] {Boolean.FALSE.toString()}
-		).put(
-			PortletDataHandlerKeys.USER_ID_STRATEGY,
-			new String[] {UserIdStrategy.CURRENT_USER_ID}
-		).build();
-	}
-
 	private ServiceRegistration<Portlet> _registerTestPortlet() {
 		Bundle bundle = FrameworkUtil.getBundle(
 			LayoutStagedModelDataHandlerTest.class);
@@ -1099,9 +913,6 @@ public class LayoutStagedModelDataHandlerTest
 
 	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
-
-	@Inject
-	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
 
 	@Inject
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;

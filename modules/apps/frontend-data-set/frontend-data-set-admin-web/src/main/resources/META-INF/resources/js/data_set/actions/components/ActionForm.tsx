@@ -24,22 +24,13 @@ import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 import {IAction} from '../Actions';
 
-const ACTION_METHOD = {
-	DELETE: 'DELETE',
-	GET: 'GET',
-	PATCH: 'PATCH',
-	POST: 'POST',
-};
-
-const ACTION_METHODS = () => {
-	const methods = [];
-
-	for (const method in ACTION_METHOD) {
-		methods.push({label: method, value: method});
-	}
-
-	return methods;
-};
+enum EActionMethod {
+	DELETE = 'DELETE',
+	GET = 'GET',
+	PATCH = 'PATCH',
+	POST = 'POST',
+	PUT = 'PUT',
+}
 
 const ACTION_TYPE = {
 	ASYNC: 'async',
@@ -180,7 +171,7 @@ const ActionForm = ({
 
 		setActionData({
 			...actionData,
-			method: type === ACTION_TYPE.ASYNC ? ACTION_METHOD.DELETE : '',
+			method: type === ACTION_TYPE.ASYNC ? EActionMethod.DELETE : '',
 			modalSize: type === ACTION_TYPE.MODAL ? MODAL_SIZES[0].value : '',
 			type,
 		});
@@ -581,7 +572,12 @@ const ActionForm = ({
 												method: event.target.value,
 											})
 										}
-										options={ACTION_METHODS()}
+										options={Object.values(
+											EActionMethod
+										).map((method) => ({
+											label: method,
+											value: method,
+										}))}
 										placeholder={Liferay.Language.get(
 											'please-select-an-option'
 										)}

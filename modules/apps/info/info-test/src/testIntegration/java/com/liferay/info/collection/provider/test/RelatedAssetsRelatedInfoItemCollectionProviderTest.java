@@ -42,7 +42,10 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutServiceContextHelper;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -71,6 +74,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -177,6 +181,27 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 			layout, segmentsExperienceId);
 	}
 
+	@Test
+	@TestInfo("LPS-127024")
+	public void testMapInfoFieldInCollectionDisplayNestedInCollectionDisplay()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		_mapInfoFieldInCollectionDisplayNestedInCollectionDisplay(
+			layout, segmentsExperienceId);
+
+		_assertRenderLayoutHTML(
+			_getInfoItemAttributesMap(
+				JournalArticle.class.getName(),
+				_journalArticle.getResourcePrimKey(), _journalArticle),
+			2, layout, segmentsExperienceId);
+	}
+
 	private void _addAssetLinks() throws Exception {
 		AssetEntry blogsEntryAssetEntry = _assetEntryLocalService.getEntry(
 			BlogsEntry.class.getName(), _blogsEntry.getEntryId());
@@ -275,6 +300,38 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 			layout, null, 0, segmentsExperienceId);
 	}
 
+	private void _addInfoFieldInCollectionDisplayToLayout(
+			Layout layout, String parentItemId, long segmentsExperienceId)
+		throws Exception {
+
+		ContentLayoutTestUtil.addCollectionDisplayToLayout(
+			JSONUtil.put(
+				"itemType", AssetEntry.class.getName()
+			).put(
+				"key",
+				"com.liferay.asset.internal.info.collection.provider." +
+					"RelatedAssetsRelatedInfoItemCollectionProvider"
+			).put(
+				"type", InfoListProviderItemSelectorReturnType.class.getName()
+			),
+			layout, _layoutStructureProvider, null, parentItemId, 0,
+			segmentsExperienceId,
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				segmentsExperienceId, layout.getPlid(), _fragmentEntry.getCss(),
+				_fragmentEntry.getHtml(), _fragmentEntry.getJs(),
+				_fragmentEntry.getConfiguration(),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text",
+						JSONUtil.put("collectionFieldId", "AssetEntry_title"))
+				).toString(),
+				StringPool.BLANK, 0, _fragmentEntry.getFragmentEntryKey(),
+				_fragmentEntry.getType(), _serviceContext));
+	}
+
 	private JournalArticle _addJournalArticle() throws Exception {
 		return JournalTestUtil.addArticle(
 			_group.getGroupId(),
@@ -282,7 +339,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 	}
 
 	private void _assertRenderLayoutHTML(
-			Map<String, Object> attributes, Layout layout,
+			Map<String, Object> attributes, int count, Layout layout,
 			long segmentsExperienceId)
 		throws Exception {
 
@@ -290,18 +347,20 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 			attributes, layout, _layoutServiceContextHelper,
 			_layoutStructureProvider, segmentsExperienceId);
 
-		Assert.assertTrue(
-			html,
-			StringUtil.contains(
-				html, _blogsEntry.getTitle(), StringPool.BLANK));
-		Assert.assertTrue(
-			html,
-			StringUtil.contains(
-				html, _dlFileEntry.getTitle(), StringPool.BLANK));
-		Assert.assertTrue(
-			html,
-			StringUtil.contains(
-				html, _journalArticle.getTitle(), StringPool.BLANK));
+		Assert.assertEquals(
+			html, count, StringUtil.count(html, _blogsEntry.getTitle()));
+		Assert.assertEquals(
+			html, count, StringUtil.count(html, _dlFileEntry.getTitle()));
+		Assert.assertEquals(
+			html, count, StringUtil.count(html, _journalArticle.getTitle()));
+	}
+
+	private void _assertRenderLayoutHTML(
+			Map<String, Object> attributes, Layout layout,
+			long segmentsExperienceId)
+		throws Exception {
+
+		_assertRenderLayoutHTML(attributes, 1, layout, segmentsExperienceId);
 	}
 
 	private Map<String, Object> _getInfoItemAttributesMap(
@@ -409,32 +468,45 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 		_addHeadingWithMappedField(
 			draftLayout, mappedField, segmentsExperienceId);
 
-		ContentLayoutTestUtil.addCollectionDisplayToLayout(
+		_addInfoFieldInCollectionDisplayToLayout(
+			draftLayout, null, segmentsExperienceId);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+	}
+
+	private void _mapInfoFieldInCollectionDisplayNestedInCollectionDisplay(
+			Layout layout, long segmentsExperienceId)
+		throws Exception {
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		String itemId = ContentLayoutTestUtil.addCollectionDisplayToLayout(
 			JSONUtil.put(
 				"itemType", AssetEntry.class.getName()
 			).put(
 				"key",
 				"com.liferay.asset.internal.info.collection.provider." +
-					"RelatedAssetsRelatedInfoItemCollectionProvider"
+					"HighestRatedAssetsInfoCollectionProvider"
 			).put(
 				"type", InfoListProviderItemSelectorReturnType.class.getName()
 			),
 			draftLayout, _layoutStructureProvider, null, null, 0,
-			segmentsExperienceId,
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
-				segmentsExperienceId, draftLayout.getPlid(),
-				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
-				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put(
-						"element-text",
-						JSONUtil.put("collectionFieldId", "AssetEntry_title"))
-				).toString(),
-				StringPool.BLANK, 0, _fragmentEntry.getFragmentEntryKey(),
-				_fragmentEntry.getType(), _serviceContext));
+			segmentsExperienceId);
+
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				draftLayout.getPlid(), segmentsExperienceId);
+
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)
+					layoutStructure.getLayoutStructureItem(itemId);
+
+		List<String> childrenItemIds =
+			collectionStyledLayoutStructureItem.getChildrenItemIds();
+
+		_addInfoFieldInCollectionDisplayToLayout(
+			draftLayout, childrenItemIds.get(0), segmentsExperienceId);
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 	}

@@ -23,8 +23,9 @@
 		<actions>
 			<notification>
 				<name>Notification</name>
-				<template><![CDATA[The file sent by ${userName} on the ${siteName} website has been submitted.
-				]]></template>
+				<template>
+					<![CDATA[The file sent by ${userName} on the ${siteName} website has been submitted.]]>
+				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<recipients>

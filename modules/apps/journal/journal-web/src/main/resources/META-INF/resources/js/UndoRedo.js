@@ -132,37 +132,7 @@ export default function UndoRedo({
 			selectedLanguageIdInput.value = nextStep.selectedLanguageId;
 		}
 
-		descriptionInputComponent.updateInputLanguage(
-			nextStep.descriptionInputComponent,
-			nextStep.selectedLanguageId
-		);
-
-		friendlyURLInputComponent.updateInputLanguage(
-			nextStep.friendlyURLInputComponent,
-			nextStep.selectedLanguageId
-		);
-
-		titleInputComponent.updateInputLanguage(
-			nextStep.titleInputComponent,
-			nextStep.selectedLanguageId
-		);
-
-		descriptionInputComponent.updateInput(
-			nextStep.descriptionInputComponent
-		);
-
-		friendlyURLInputComponent.updateInput(
-			nextStep.friendlyURLInputComponent
-		);
-
-		titleInputComponent.updateInput(nextStep.titleInputComponent);
-
-		setState({
-			defaultLanguageId: nextStep.defaultLanguageId,
-			history,
-			selectedLanguageId: nextStep.selectedLanguageId,
-			step: newStep,
-		});
+		updateMetadataFields(nextStep, newStep);
 	};
 
 	const handleRedo = () => {
@@ -217,37 +187,7 @@ export default function UndoRedo({
 			titleInputComponent.selectFlag(nextStep.selectedLanguageId);
 		}
 
-		descriptionInputComponent.updateInputLanguage(
-			nextStep.descriptionInputComponent,
-			nextStep.selectedLanguageId
-		);
-
-		friendlyURLInputComponent.updateInputLanguage(
-			nextStep.friendlyURLInputComponent,
-			nextStep.selectedLanguageId
-		);
-
-		titleInputComponent.updateInputLanguage(
-			nextStep.titleInputComponent,
-			nextStep.selectedLanguageId
-		);
-
-		descriptionInputComponent.updateInput(
-			nextStep.descriptionInputComponent
-		);
-
-		friendlyURLInputComponent.updateInput(
-			nextStep.friendlyURLInputComponent
-		);
-
-		titleInputComponent.updateInput(nextStep.titleInputComponent);
-
-		setState({
-			defaultLanguageId: nextStep.defaultLanguageId,
-			history,
-			selectedLanguageId: nextStep.selectedLanguageId,
-			step: newStep,
-		});
+		updateMetadataFields(nextStep, newStep);
 	};
 
 	const handleStoreState = useCallback(
@@ -298,6 +238,36 @@ export default function UndoRedo({
 			titleInputComponent,
 		]
 	);
+
+	const updateMetadataFields = (step, newStep) => {
+		descriptionInputComponent.updateInputLanguage(
+			step.descriptionInputComponent,
+			step.selectedLanguageId
+		);
+
+		friendlyURLInputComponent.updateInputLanguage(
+			step.friendlyURLInputComponent,
+			step.selectedLanguageId
+		);
+
+		titleInputComponent.updateInputLanguage(
+			step.titleInputComponent,
+			step.selectedLanguageId
+		);
+
+		descriptionInputComponent.updateInput(step.descriptionInputComponent);
+
+		friendlyURLInputComponent.updateInput(step.friendlyURLInputComponent);
+
+		titleInputComponent.updateInput(step.titleInputComponent);
+
+		setState({
+			defaultLanguageId: step.defaultLanguageId,
+			history,
+			selectedLanguageId: step.selectedLanguageId,
+			step: newStep,
+		});
+	};
 
 	const resetStoreState = useCallback(
 		({fieldName}) => {

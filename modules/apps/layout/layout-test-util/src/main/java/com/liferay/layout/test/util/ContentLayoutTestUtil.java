@@ -89,6 +89,19 @@ public class ContentLayoutTestUtil {
 			FragmentEntryLink... fragmentEntryLinks)
 		throws Exception {
 
+		return addCollectionDisplayToLayout(
+			collectionJSONObject, layout, layoutStructureProvider,
+			StringPool.BLANK, parentItemId, position, segmentsExperienceId,
+			fragmentEntryLinks);
+	}
+
+	public static String addCollectionDisplayToLayout(
+			JSONObject collectionJSONObject, Layout layout,
+			LayoutStructureProvider layoutStructureProvider, String listStyle,
+			String parentItemId, int position, long segmentsExperienceId,
+			FragmentEntryLink... fragmentEntryLinks)
+		throws Exception {
+
 		LayoutStructure layoutStructure =
 			layoutStructureProvider.getLayoutStructure(
 				layout.getPlid(), segmentsExperienceId);
@@ -100,6 +113,8 @@ public class ContentLayoutTestUtil {
 		JSONObject addItemJSONObject = addItemToLayout(
 			JSONUtil.put(
 				"collection", collectionJSONObject
+			).put(
+				"listStyle", listStyle
 			).toString(),
 			LayoutDataItemTypeConstants.TYPE_COLLECTION, layout, parentItemId,
 			position, segmentsExperienceId);

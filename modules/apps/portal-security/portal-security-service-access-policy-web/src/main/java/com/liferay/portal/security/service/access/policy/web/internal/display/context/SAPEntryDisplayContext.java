@@ -52,7 +52,7 @@ public class SAPEntryDisplayContext {
 		}
 
 		sapEntrySearchContainer.setOrderByComparator(
-			new SAPEntryNameComparator(orderByAsc));
+			SAPEntryNameComparator.getInstance(orderByAsc));
 
 		sapEntrySearchContainer.setOrderByType(orderByType);
 		sapEntrySearchContainer.setResultsAndTotal(

@@ -977,7 +977,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	private void _addObjectAction(
-			long objectDefinitionId, String objectAction,
+			long objectDefinitionId, String objectActionTriggerKey,
 			long objectNotificationTemplateId)
 		throws Exception {
 
@@ -988,7 +988,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_NOTIFICATION, objectAction,
+			ObjectActionExecutorConstants.KEY_NOTIFICATION,
+			objectActionTriggerKey,
 			UnicodePropertiesBuilder.put(
 				"notificationTemplateId", objectNotificationTemplateId
 			).build(),

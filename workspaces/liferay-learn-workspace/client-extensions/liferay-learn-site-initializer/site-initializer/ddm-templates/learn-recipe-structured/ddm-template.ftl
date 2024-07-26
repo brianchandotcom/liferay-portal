@@ -172,10 +172,10 @@
 							/>
 						</div>
 					</#if>
-					<#if currentStep.Step.Resources.Code.getData()?has_content>
+					<#if currentStep.Step.Resources.code.getData()?has_content>
 					   <div class="code-toolbar">
 						  <pre class="language-bash" tabindex="0">
-					  	   <code class="language-bash" id="code-content">${currentStep.Step.Resources.Code.getData()}</code>
+					  	   <code class="language-bash" id="code-content">${currentStep.Step.Resources.code.getData()}</code>
 						  </pre>
 
 							<div class="toolbar">

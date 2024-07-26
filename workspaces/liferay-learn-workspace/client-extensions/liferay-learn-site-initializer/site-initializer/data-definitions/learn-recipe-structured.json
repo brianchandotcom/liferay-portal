@@ -198,7 +198,7 @@
 										"columns": [
 											{
 												"fields": [
-													"Text51057352"
+													"RichText73862708"
 												],
 												"size": 12
 											}
@@ -247,49 +247,22 @@
 								},
 								{
 									"customProperties": {
-										"autocomplete": false,
-										"confirmationErrorMessage": {
-											"en_US": ""
-										},
-										"confirmationLabel": {
-											"en_US": ""
-										},
-										"dataSourceType": "",
 										"dataType": "string",
-										"ddmDataProviderInstanceId": [
-										],
-										"ddmDataProviderInstanceOutput": [
-										],
-										"direction": [
-											"vertical"
-										],
-										"displayStyle": "multiline",
+										"editorConfig": null,
 										"fieldNamespace": "",
-										"fieldReference": "Code",
-										"hideField": false,
-										"labelAtStructureLevel": true,
-										"nativeField": false,
-										"options": {
-										},
-										"placeholder": {
-											"en_US": ""
-										},
-										"requireConfirmation": false,
-										"tooltip": {
-											"en_US": ""
-										},
+										"fieldReference": "code",
 										"visibilityExpression": ""
 									},
 									"defaultValue": {
 									},
-									"fieldType": "text",
-									"indexType": "keyword",
+									"fieldType": "rich_text",
+									"indexType": "text",
 									"indexable": true,
 									"label": {
 										"en_US": "Code"
 									},
 									"localizable": true,
-									"name": "Text51057352",
+									"name": "RichText73862708",
 									"nestedDataDefinitionFields": [
 									],
 									"readOnly": false,
@@ -527,6 +500,7 @@
 				"fieldNamespace": "",
 				"fieldReference": "timeToFinish",
 				"hideField": false,
+				"htmlAutocompleteAttribute": "null",
 				"inputMask": false,
 				"inputMaskFormat": {
 					"en_US": ""
@@ -544,21 +518,16 @@
 						}
 					}
 				},
-				"objectFieldName": "",
 				"placeholder": {
 					"en_US": ""
 				},
 				"requireConfirmation": false,
-				"requiredErrorMessage": {
-					"en_US": ""
-				},
 				"tooltip": {
 					"en_US": ""
 				},
 				"visibilityExpression": ""
 			},
 			"defaultValue": {
-				"en_US": ""
 			},
 			"fieldType": "numeric",
 			"indexType": "keyword",

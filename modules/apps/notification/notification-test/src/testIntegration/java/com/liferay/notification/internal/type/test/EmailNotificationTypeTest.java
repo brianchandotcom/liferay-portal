@@ -852,7 +852,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			objectDefinition.getObjectDefinitionId(),
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 			notificationTemplate.getNotificationTemplateId());
-
 		_addObjectAction(
 			objectDefinition.getObjectDefinitionId(),
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
@@ -1357,11 +1356,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				NotificationConstants.TYPE_EMAIL,
 				NotificationQueueEntryConstants.STATUS_SENT);
 
-		int expectedNotificationQueueEntriesCount = 1;
-
 		Assert.assertEquals(
-			notificationQueueEntries.toString(),
-			expectedNotificationQueueEntriesCount,
+			notificationQueueEntries.toString(), 1,
 			notificationQueueEntries.size());
 
 		Map<String, Object> notificationRecipientSettingsMap =

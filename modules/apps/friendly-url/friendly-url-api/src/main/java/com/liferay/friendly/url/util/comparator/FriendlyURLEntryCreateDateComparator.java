@@ -21,12 +21,14 @@ public class FriendlyURLEntryCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public FriendlyURLEntryCreateDateComparator() {
-		this(true);
-	}
+	public static FriendlyURLEntryCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public FriendlyURLEntryCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -63,6 +65,16 @@ public class FriendlyURLEntryCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private FriendlyURLEntryCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final FriendlyURLEntryCreateDateComparator
+		_INSTANCE_ASCENDING = new FriendlyURLEntryCreateDateComparator(true);
+
+	private static final FriendlyURLEntryCreateDateComparator
+		_INSTANCE_DESCENDING = new FriendlyURLEntryCreateDateComparator(false);
 
 	private final boolean _ascending;
 

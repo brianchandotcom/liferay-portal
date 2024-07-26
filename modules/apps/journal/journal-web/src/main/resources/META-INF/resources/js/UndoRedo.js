@@ -28,17 +28,17 @@ export default function UndoRedo({
 		history: [
 			{
 				defaultLanguageId: initialDefaultLanguageId,
-				descriptionInputComponent:
+				descriptionInputValue:
 					initialFields[`${META_FIELD_NAMES.description}`][
 						`${initialDefaultLanguageId}`
 					] || '',
-				friendlyURLInputComponent:
+				friendlyURLInputValue:
 					initialFields[`${META_FIELD_NAMES.friendlyURL}`][
 						`${initialDefaultLanguageId}`
 					] || '',
 				name: 'Reset',
 				selectedLanguageId: languageId,
-				titleInputComponent:
+				titleInputValue:
 					initialFields[`${META_FIELD_NAMES.title}`][
 						`${initialDefaultLanguageId}`
 					] || '',
@@ -202,19 +202,19 @@ export default function UndoRedo({
 
 			const newHistory = {
 				defaultLanguageId: defaultLanguageIdInput.value,
-				descriptionInputComponent:
+				descriptionInputValue:
 					descriptionInputComponent.getValue(selectedLanguageId),
 				descriptionTranslatedLanguages: descriptionInputComponent
 					.get('translatedLanguages')
 					.values(),
-				friendlyURLInputComponent:
+				friendlyURLInputValue:
 					friendlyURLInputComponent.getValue(selectedLanguageId),
 				friendlyURLTranslatedLanguages: friendlyURLInputComponent
 					.get('translatedLanguages')
 					.values(),
 				name: fieldName,
 				selectedLanguageId: selectedLanguageIdInput.value,
-				titleInputComponent:
+				titleInputValue:
 					titleInputComponent.getValue(selectedLanguageId),
 				titleTranslatedLanguages: titleInputComponent
 					.get('translatedLanguages')
@@ -241,25 +241,25 @@ export default function UndoRedo({
 
 	const updateMetadataFields = (step, newStep) => {
 		descriptionInputComponent.updateInputLanguage(
-			step.descriptionInputComponent,
+			step.descriptionInputValue,
 			step.selectedLanguageId
 		);
 
 		friendlyURLInputComponent.updateInputLanguage(
-			step.friendlyURLInputComponent,
+			step.friendlyURLInputValue,
 			step.selectedLanguageId
 		);
 
 		titleInputComponent.updateInputLanguage(
-			step.titleInputComponent,
+			step.titleInputValue,
 			step.selectedLanguageId
 		);
 
-		descriptionInputComponent.updateInput(step.descriptionInputComponent);
+		descriptionInputComponent.updateInput(step.descriptionInputValue);
 
-		friendlyURLInputComponent.updateInput(step.friendlyURLInputComponent);
+		friendlyURLInputComponent.updateInput(step.friendlyURLInputValue);
 
-		titleInputComponent.updateInput(step.titleInputComponent);
+		titleInputComponent.updateInput(step.titleInputValue);
 
 		setState({
 			defaultLanguageId: step.defaultLanguageId,
@@ -281,13 +281,13 @@ export default function UndoRedo({
 
 			const newHistory = {
 				defaultLanguageId: defaultLanguageIdInput.value,
-				descriptionInputComponent: descriptionInputComponent.getValue(
+				descriptionInputValue: descriptionInputComponent.getValue(
 					selectedLanguageIdInput.value
 				),
 				descriptionTranslatedLanguages: descriptionInputComponent
 					.get('translatedLanguages')
 					.values(),
-				friendlyURLInputComponent: friendlyURLInputComponent.getValue(
+				friendlyURLInputValue: friendlyURLInputComponent.getValue(
 					selectedLanguageIdInput.value
 				),
 				friendlyURLTranslatedLanguages: friendlyURLInputComponent
@@ -295,7 +295,7 @@ export default function UndoRedo({
 					.values(),
 				name: fieldName,
 				selectedLanguageId: selectedLanguageIdInput.value,
-				titleInputComponent: titleInputComponent.getValue(
+				titleInputValue: titleInputComponent.getValue(
 					selectedLanguageIdInput.value
 				),
 				titleTranslatedLanguages: titleInputComponent

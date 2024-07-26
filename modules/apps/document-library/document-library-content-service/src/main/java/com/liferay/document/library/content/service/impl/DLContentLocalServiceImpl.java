@@ -189,7 +189,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		throws NoSuchContentException {
 
 		OrderByComparator<DLContent> orderByComparator =
-			new DLContentVersionComparator();
+			DLContentVersionComparator.getInstance(false);
 
 		List<DLContent> dlContents = dlContentPersistence.findByC_R_P(
 			companyId, repositoryId, path, 0, 1, orderByComparator);
@@ -208,7 +208,7 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 
 		if (version.isEmpty()) {
 			OrderByComparator<DLContent> orderByComparator =
-				new DLContentVersionComparator();
+				DLContentVersionComparator.getInstance(false);
 
 			List<DLContent> dlContents = dlContentPersistence.findByC_R_P(
 				companyId, repositoryId, path, 0, 1, orderByComparator);

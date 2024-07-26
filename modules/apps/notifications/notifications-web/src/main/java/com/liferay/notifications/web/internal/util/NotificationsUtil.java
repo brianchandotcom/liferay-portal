@@ -46,8 +46,8 @@ public class NotificationsUtil {
 							userId, _DELIVERY_TYPE, true, actionRequired,
 							searchContainer.getStart(),
 							searchContainer.getEnd(),
-							new UserNotificationEventTimestampComparator(
-								orderByType.equals("asc"))),
+							UserNotificationEventTimestampComparator.
+								getInstance(orderByType.equals("asc"))),
 				UserNotificationEventLocalServiceUtil.
 					getDeliveredUserNotificationEventsCount(
 						userId, _DELIVERY_TYPE, true, actionRequired));
@@ -68,8 +68,8 @@ public class NotificationsUtil {
 							userId, _DELIVERY_TYPE, true, actionRequired,
 							archived, searchContainer.getStart(),
 							searchContainer.getEnd(),
-							new UserNotificationEventTimestampComparator(
-								orderByType.equals("asc"))),
+							UserNotificationEventTimestampComparator.
+								getInstance(orderByType.equals("asc"))),
 				UserNotificationEventLocalServiceUtil.
 					getArchivedUserNotificationEventsCount(
 						userId, _DELIVERY_TYPE, true, actionRequired,

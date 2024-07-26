@@ -78,6 +78,9 @@ public class CommerceCartContentHealthStatus
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
+		layoutTypePortlet.setLayoutTemplateId(
+			PrincipalThreadLocal.getUserId(), "1_column", false);
+
 		layoutTypePortlet.addPortletId(
 			PrincipalThreadLocal.getUserId(),
 			CommercePortletKeys.COMMERCE_CART_CONTENT);

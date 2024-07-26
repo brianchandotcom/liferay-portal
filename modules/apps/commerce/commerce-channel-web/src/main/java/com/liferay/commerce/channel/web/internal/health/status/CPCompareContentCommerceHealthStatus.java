@@ -78,6 +78,9 @@ public class CPCompareContentCommerceHealthStatus
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
+		layoutTypePortlet.setLayoutTemplateId(
+			PrincipalThreadLocal.getUserId(), "1_column", false);
+
 		layoutTypePortlet.addPortletId(
 			PrincipalThreadLocal.getUserId(),
 			CPPortletKeys.CP_COMPARE_CONTENT_WEB);

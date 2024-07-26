@@ -147,7 +147,7 @@ function getFormatDate(format: 'API' | 'UI'): string {
 	}
 }
 
-function getRandomFieldEntryValue(
+function getRandomObjectFieldEntryValue(
 	format: 'API' | 'UI',
 	listTypeDefinitionItems: string[],
 	objectFieldBusinessType: ObjectFieldBusinessTypes
@@ -309,7 +309,7 @@ export async function mockObjectFields({
 			objectEntry = {
 				...objectEntry,
 				[objectFieldBusinessTypesLabelName[objectFieldBusinessType]
-					.name]: getRandomFieldEntryValue(
+					.name]: getRandomObjectFieldEntryValue(
 					objectEntryReturn.format,
 					listTypeDefinitionItems,
 					objectFieldBusinessType as ObjectFieldBusinessTypes

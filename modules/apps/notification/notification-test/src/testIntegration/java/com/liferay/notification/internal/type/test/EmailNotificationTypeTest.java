@@ -874,9 +874,23 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		PrincipalThreadLocal.setName(_user.getUserId());
 
-		Role role = _addRoleUserWithPermission(
-			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY}, objectDefinition,
-			_user);
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		String name = objectDefinition.getClassName();
+
+		String[] actionIds = {ObjectActionKeys.ADD_OBJECT_ENTRY};
+
+		if (ArrayUtil.contains(actionIds, ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+			name = objectDefinition.getResourceName();
+		}
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), name,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			actionIds);
+
+		_userLocalService.addRoleUser(role.getRoleId(), _user);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(), objectDefinition.getClassName(),
@@ -1000,29 +1014,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		return _roleLocalService.addRole(
 			user.getUserId(), null, 0, RandomTestUtil.randomString(), null,
 			null, type, null, null);
-	}
-
-	private Role _addRoleUserWithPermission(
-			String[] actionIds, ObjectDefinition objectDefinition, User user)
-		throws Exception {
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		String name = objectDefinition.getClassName();
-
-		if (ArrayUtil.contains(actionIds, ObjectActionKeys.ADD_OBJECT_ENTRY)) {
-			name = objectDefinition.getResourceName();
-		}
-
-		_resourcePermissionLocalService.setResourcePermissions(
-			TestPropsValues.getCompanyId(), name,
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
-			actionIds);
-
-		_userLocalService.addRoleUser(role.getRoleId(), user);
-
-		return role;
 	}
 
 	private void _assertNotificationQueueEntry(

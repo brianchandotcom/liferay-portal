@@ -63,22 +63,20 @@ public final class CompanyWebIdConsoleAppender extends AbstractAppender {
 		}
 
 		MutableLogEvent mutableLogEvent;
-		StringMap contextData;
 
 		if (logEvent instanceof MutableLogEvent) {
 			mutableLogEvent = (MutableLogEvent)logEvent;
 
-			contextData = new SortedArrayStringMap(logEvent.getContextData());
-
-			mutableLogEvent.setContextData(contextData);
+			mutableLogEvent.setContextData(
+				new SortedArrayStringMap(logEvent.getContextData()));
 		}
 		else {
 			mutableLogEvent = new MutableLogEvent();
 
 			mutableLogEvent.initFrom(logEvent);
-
-			contextData = (StringMap)mutableLogEvent.getContextData();
 		}
+
+		StringMap contextData = (StringMap)mutableLogEvent.getContextData();
 
 		contextData.putValue(
 			"company.webId", PortalInstancePool.getWebId(companyId));

@@ -318,13 +318,18 @@ export class FiltersPage {
 
 		if (preselectedValues.length) {
 			await this.page
+				.getByRole('option', {name: preselectedValues[0]}).waitFor();
+
+			await this.page
 				.getByRole('option', {name: preselectedValues[0]})
 				.click();
+
 			await this.page
 				.locator('label')
 				.filter({hasText: filterMode})
 				.click();
 		}
+		
 		await this.page.getByText(selectionType).click();
 	}
 

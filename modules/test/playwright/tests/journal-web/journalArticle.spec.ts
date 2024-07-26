@@ -287,7 +287,7 @@ baseTest(
 
 		await page.getByText('Content', {exact: true}).waitFor();
 
-		await page.getByRole('link', { name: 'Default Template' }).click();
+		await page.getByRole('link', {name: 'Default Template'}).click();
 
 		await page.getByRole('button', {name: 'Clear'}).waitFor();
 
@@ -299,12 +299,13 @@ baseTest(
 
 		await expect(templateName).toHaveValue('No Template');
 
-		await page.getByRole('link', { name: 'Default Template' }).click();
+		await page.getByRole('link', {name: 'Default Template'}).click();
 
 		await page
 			.locator(
 				'[id="_com_liferay_journal_web_portlet_JournalPortlet_previewWithTemplate"]'
-			).waitFor();
+			)
+			.waitFor();
 
 		await page
 			.locator(
@@ -318,11 +319,11 @@ baseTest(
 
 		const dialogIFrame = page.frameLocator('iframe[title="Title"]');
 
-		await dialogIFrame.getByTitle('ddm-template-id')
+		await dialogIFrame
+			.getByTitle('ddm-template-id')
 			.selectOption('Basic Web Content');
 
-		await dialogIFrame.getByRole('button', {name: 'Apply'})
-			.click();
+		await dialogIFrame.getByRole('button', {name: 'Apply'}).click();
 
 		await page.getByText('Content', {exact: true}).waitFor();
 

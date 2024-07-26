@@ -34,7 +34,11 @@ test('LPD-30098 Invite user as admin', async ({
 
 	const user2 = await changeTrackingPage.addUserWithPublicationsUserRole();
 
-	await changeTrackingPage.addUserToPublication(ctCollection.name, 'Admin', user1);
+	await changeTrackingPage.addUserToPublication(
+		ctCollection.name,
+		'Admin',
+		user1
+	);
 
 	await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 

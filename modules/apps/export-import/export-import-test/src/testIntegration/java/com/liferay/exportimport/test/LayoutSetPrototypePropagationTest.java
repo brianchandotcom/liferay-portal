@@ -319,10 +319,8 @@ public class LayoutSetPrototypePropagationTest
 	public void testLayoutPropagationWithFriendlyUrlConflictWithParentLayout()
 		throws Exception {
 
-		setLinkEnabled(true);
-
-		Layout prototypeLayout1 = LayoutTestUtil.addTypeContentLayout(
-			_layoutSetPrototypeGroup);
+		Layout prototypeLayout1 = LayoutTestUtil.addTypePortletLayout(
+			_layoutSetPrototypeGroup.getGroupId(), true);
 
 		Locale locale = _portal.getSiteDefaultLocale(_layoutSetPrototypeGroup);
 
@@ -347,9 +345,6 @@ public class LayoutSetPrototypePropagationTest
 			TestPropsValues.getUserId(), prototypeLayout1.getPlid(), "/page-a0",
 			languageId);
 
-		ContentLayoutTestUtil.publishLayout(
-			prototypeLayout1.fetchDraftLayout(), prototypeLayout1);
-
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
 				_layoutSetPrototypeGroup.getGroupId(),
@@ -363,17 +358,14 @@ public class LayoutSetPrototypePropagationTest
 			friendlyURLEntryLocalization.getFriendlyURLEntryId(),
 			friendlyURLEntryLocalization.getLanguageId());
 
-		Layout prototypeLayout2 = LayoutTestUtil.addTypeContentLayout(
-			_layoutSetPrototypeGroup);
+		Layout prototypeLayout2 = LayoutTestUtil.addTypePortletLayout(
+			_layoutSetPrototypeGroup.getGroupId(), true);
 
 		prototypeLayout2 = _layoutLocalService.updateFriendlyURL(
 			TestPropsValues.getUserId(), prototypeLayout2.getPlid(), "/page-a",
 			languageId);
 
-		ContentLayoutTestUtil.publishLayout(
-			prototypeLayout2.fetchDraftLayout(), prototypeLayout2);
-
-		prototypeLayout1 = _layoutLocalService.updateParentLayoutId(
+		_layoutLocalService.updateParentLayoutId(
 			prototypeLayout1.getPlid(), prototypeLayout2.getPlid());
 
 		propagateChanges(group);

@@ -253,6 +253,45 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
+	public void testGetDLStorageSizeAfterZeroTimeout() throws Exception {
+		_appender.start();
+
+		try (SafeCloseable safeCloseable =
+				_setUpgradeReportDLStorageSizeTimeout(0)) {
+
+			Object upgradeReport = ReflectionTestUtil.getFieldValue(
+				_appender, "_upgradeReport");
+
+			ReflectionTestUtil.setFieldValue(
+				upgradeReport, "_dlSizeThread",
+				new Thread() {
+
+					@Override
+					public void run() {
+						try {
+							sleep(5 * Time.SECOND);
+						}
+						catch (InterruptedException interruptedException) {
+							throw new RuntimeException(interruptedException);
+						}
+					}
+
+				});
+
+			_appender.stop();
+
+			if (_reportContent == null) {
+				_reportContent = _getReportContent();
+			}
+
+			Assert.assertFalse(
+				StringUtil.contains(
+					_reportContent, "Document library storage size: ",
+					StringPool.BLANK));
+		}
+	}
+
+	@Test
 	public void testGetDLStorageSizeInGb() throws Exception {
 		_appender.start();
 

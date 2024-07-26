@@ -24,12 +24,14 @@ public class FriendlyURLEntryLocalizationComparator
 		"friendlyURLEntryLocalizationId"
 	};
 
-	public FriendlyURLEntryLocalizationComparator() {
-		this(false);
-	}
+	public static FriendlyURLEntryLocalizationComparator getInstance(
+		boolean ascending) {
 
-	public FriendlyURLEntryLocalizationComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -66,6 +68,17 @@ public class FriendlyURLEntryLocalizationComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private FriendlyURLEntryLocalizationComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final FriendlyURLEntryLocalizationComparator
+		_INSTANCE_ASCENDING = new FriendlyURLEntryLocalizationComparator(true);
+
+	private static final FriendlyURLEntryLocalizationComparator
+		_INSTANCE_DESCENDING = new FriendlyURLEntryLocalizationComparator(
+			false);
 
 	private final boolean _ascending;
 

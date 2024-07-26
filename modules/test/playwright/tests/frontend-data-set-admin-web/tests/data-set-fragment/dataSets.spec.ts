@@ -67,15 +67,19 @@ test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers}) => {
 
 	dataSetERCs.length = 0;
 
-	await test.step('Move article to trash', async () => {
-		await apiHelpers.jsonWebServicesJournal.moveArticleToTrash(
-			siteId,
-			article.articleId
-		);
-	});
+	if (article) {
+		await test.step('Move article to trash', async () => {
+			await apiHelpers.jsonWebServicesJournal.moveArticleToTrash(
+				siteId,
+				article.articleId
+			);
+		});
+	}
 });
 
-test('Data Set can be added to the fragment', async ({
+test('Data Set can be added to the fragment and the fragment can be removed', {
+	tag: '@LPS-172403'
+}, async ({
 	dataSetManagerApiHelpers,
 	fdsFragmentPage,
 	layout,
@@ -122,6 +126,29 @@ test('Data Set can be added to the fragment', async ({
 				.locator('.dnd-th')
 				.allInnerTexts()
 		).toEqual(['ID', 'Name', '']);
+	});
+
+	await test.step('Remove Data Set Fragment from the page', async() => {
+		await fdsFragmentPage.editPage({layout});
+
+		await fdsFragmentPage.fdsTableWrapper.click();
+
+		const dataSetFragmentOptionsButton = page.locator('.page-editor__topper__item.tbar-item').getByLabel('Options');
+		await dataSetFragmentOptionsButton.click();
+
+		const dataSetFragmentOptionsDropdownId = await dataSetFragmentOptionsButton.evaluate(node => node.getAttribute('aria-controls'));
+		await page.locator(`#${dataSetFragmentOptionsDropdownId}`).waitFor();
+
+		await page
+			.locator(`#${dataSetFragmentOptionsDropdownId}`)
+			.getByRole('menuitem', {name: 'Delete'})
+			.click();
+	});
+
+	await test.step('Assert that the Data Set Fragment is not available on the page', async () => {
+		await expect(page.getByText('Place fragments or widgets here.')).toBeInViewport();
+
+		await expect(await fdsFragmentPage.fdsTableWrapper).not.toBeInViewport();
 	});
 });
 

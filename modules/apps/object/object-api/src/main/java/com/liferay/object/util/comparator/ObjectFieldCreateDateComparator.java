@@ -21,12 +21,14 @@ public class ObjectFieldCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public ObjectFieldCreateDateComparator() {
-		this(false);
-	}
+	public static ObjectFieldCreateDateComparator getInstance(
+		boolean ascending) {
 
-	public ObjectFieldCreateDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +61,16 @@ public class ObjectFieldCreateDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private ObjectFieldCreateDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final ObjectFieldCreateDateComparator _INSTANCE_ASCENDING =
+		new ObjectFieldCreateDateComparator(true);
+
+	private static final ObjectFieldCreateDateComparator _INSTANCE_DESCENDING =
+		new ObjectFieldCreateDateComparator(false);
 
 	private final boolean _ascending;
 

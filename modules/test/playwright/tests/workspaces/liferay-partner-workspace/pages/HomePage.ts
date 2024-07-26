@@ -7,13 +7,15 @@ import {Page} from '@playwright/test';
 
 export class HomePage {
 	readonly page: Page;
+	readonly site: Site;
 
-	constructor(page: Page) {
+	constructor(page: Page, site: Site) {
 		this.page = page;
+		this.site = site;
 	}
 
-	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(`/web${siteUrl}/home`, {
+	async goto() {
+		await this.page.goto(`/web${this.site.friendlyUrlPath}/home`, {
 			waitUntil: 'commit',
 		});
 	}

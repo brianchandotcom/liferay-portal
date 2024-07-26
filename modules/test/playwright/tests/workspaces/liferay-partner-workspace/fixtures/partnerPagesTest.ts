@@ -19,13 +19,13 @@ export interface IPartnerPages {
 }
 
 export const partnerPagesTest = test.extend<IPartnerPages>({
-	homePage: async ({page}, use) => {
-		await use(new HomePage(page));
+	homePage: async ({page, partnerSite}, use) => {
+		await use(new HomePage(page, partnerSite));
 	},
-	mdfRequestFormPage: async ({page}, use) => {
-		await use(new MDFRequestFormPage(page));
+	mdfRequestFormPage: async ({page, partnerSite}, use) => {
+		await use(new MDFRequestFormPage(page, partnerSite));
 	},
-	mdfRequestListPage: async ({page}, use) => {
-		await use(new MDFRequestListPage(page));
+	mdfRequestListPage: async ({page, partnerSite}, use) => {
+		await use(new MDFRequestListPage(page, partnerSite));
 	},
 });

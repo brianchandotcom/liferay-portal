@@ -23,12 +23,13 @@ export class MDFRequestFormPage {
 	readonly page: Page;
 	readonly previousButton: Locator;
 	readonly saveAsDraftButton: Locator;
+	readonly site: Site;
 	readonly seeMDFHomeButton: Locator;
 	readonly statusDropdown: Locator;
 	readonly submitButton: Locator;
 	readonly successMessage: Locator;
 
-	constructor(page: Page) {
+	constructor(page: Page, site: Site) {
 		this.backButton = page.getByText('← Back');
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
@@ -45,6 +46,7 @@ export class MDFRequestFormPage {
 		this.seeMDFHomeButton = page.getByRole('button', {
 			name: 'See MDF Home',
 		});
+		this.site = site;
 		this.statusDropdown = page
 			.locator('liferay-partner-custom-element div')
 			.nth(2);
@@ -73,10 +75,13 @@ export class MDFRequestFormPage {
 		await this.continue();
 	}
 
-	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(`/web${siteUrl}/marketing/mdf-requests/new`, {
-			waitUntil: 'commit',
-		});
+	async goto() {
+		await this.page.goto(
+			`web/${this.site.friendlyUrlPath}/marketing/mdf-requests/new`,
+			{
+				waitUntil: 'commit',
+			}
+		);
 	}
 
 	async reviewMDFRequest(activityContent) {

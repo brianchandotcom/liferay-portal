@@ -6,8 +6,9 @@
 import {Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
-import { TMDFRequest } from '../types/mdf';
-import { TRole } from '../types/role';
+import {TMDFRequest} from '../types/mdf';
+import {TRole} from '../types/role';
+import {TUserAccount} from '../types/user';
 
 export class PartnerHelper {
 	readonly apiHelpers: ApiHelpers;
@@ -53,5 +54,28 @@ export class PartnerHelper {
 
 			throw error;
 		}
+	}
+
+	async deleteMDFRequest(mdfRequestId: number) {
+		await this.apiHelpers.delete(`/o/c/mdfrequests/${mdfRequestId}`);
+	}
+
+	async performLogin(page: Page, user: TUserAccount) {
+		await page.goto('/c/portal/login', {
+			waitUntil: 'commit',
+		});
+
+		const signInButton = await page.getByRole('button', {name: 'Sign In'});
+
+		if (signInButton) {
+			await page.getByLabel('Email Address').fill(user.emailAddress);
+			await page.getByLabel('Password').fill(user.password);
+
+			await signInButton.click();
+		}
+	}
+
+	async performLogout(page: Page) {
+		await page.waitForResponse('/c/portal/logout');
 	}
 }

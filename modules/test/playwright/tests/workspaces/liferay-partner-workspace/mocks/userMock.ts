@@ -7,6 +7,12 @@ import {getRandomInt} from '../../../../utils/getRandomInt';
 
 const namespace = getRandomInt();
 
+export const userAdminMock = {
+	emailAddress: 'test@liferay.com',
+	name: 'Test',
+	password: 'test',
+};
+
 export const userCOMMock = {
 	emailAddress: 'com' + namespace + '@liferaytest.com',
 	name: 'Channel Opperations Manager (COM) ' + namespace,

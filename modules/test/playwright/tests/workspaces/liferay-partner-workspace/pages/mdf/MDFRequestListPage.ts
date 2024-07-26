@@ -24,8 +24,9 @@ export class MDFRequestListPage {
 	readonly openTab: Locator;
 	readonly page: Page;
 	readonly searchInput: Locator;
+	readonly site: Site;
 
-	constructor(page: Page) {
+	constructor(page: Page, site: Site) {
 		this.actionButton = page
 			.getByRole('cell', {name: 'Action Button'})
 			.first();
@@ -68,6 +69,7 @@ export class MDFRequestListPage {
 		this.openTab = page.getByRole('tab', {exact: true, name: 'Open'});
 		this.page = page;
 		this.searchInput = page.getByPlaceholder('Search');
+		this.site = site;
 	}
 
 	async clearAllFilters() {
@@ -159,9 +161,12 @@ export class MDFRequestListPage {
 		return this.page.getByRole('cell', {name: status}).first();
 	}
 
-	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(`/web${siteUrl}/marketing/mdf-requests`, {
-			waitUntil: 'commit',
-		});
+	async goto() {
+		await this.page.goto(
+			`/web${this.site.friendlyUrlPath}/marketing/mdf-requests`,
+			{
+				waitUntil: 'commit',
+			}
+		);
 	}
 }

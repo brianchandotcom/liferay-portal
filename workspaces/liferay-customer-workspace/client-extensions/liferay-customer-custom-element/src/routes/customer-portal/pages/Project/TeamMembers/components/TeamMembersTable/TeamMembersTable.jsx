@@ -11,6 +11,7 @@ import {useCallback, useEffect, useState} from 'react';
 import useProvisioningLicenseKeys from '~/common/hooks/useProvisioningLicenseKeys';
 import {assignUserAccountWithAccountAndAccountRole} from '~/common/services/liferay/graphql/queries';
 import {getRolesFiltered} from '~/common/utils/getProjectRoles';
+import isSupportSeatRole from '~/common/utils/isSupportSeatRole';
 import {rolesHighPriorityContacts} from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import i18n from '../../../../../../../common/I18n';
 import StatusTag from '../../../../../../../common/components/StatusTag';
@@ -80,6 +81,9 @@ const TeamMembersTable = ({
 
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
 
+	const unlimitedRequestersAccount =
+	koroneikiAccount?.maxRequestors === MAXIMUM_REQUESTORS_DEFAULT;
+
 	const [
 		supportSeatsCount,
 		{
@@ -107,11 +111,11 @@ const TeamMembersTable = ({
 		remainingAdmins = remainingAdmins < 0 ? 0 : remainingAdmins;
 
 		setAvailableSupportSeatsCount(
-			koroneikiAccount?.maxRequestors === MAXIMUM_REQUESTORS_DEFAULT
-				? UNLIMITED_RESQUESTORS
+			unlimitedRequestersAccount 
+				? UNLIMITED_RESQUESTORS 
 				: remainingAdmins
 		);
-	}, [koroneikiAccount, supportSeatsCount]);
+	}, [koroneikiAccount, supportSeatsCount, unlimitedRequestersAccount]);
 
 	const userAccounts =
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.items;
@@ -282,6 +286,33 @@ const TeamMembersTable = ({
 		});
 	};
 
+	const handleSaveDisabled = () => {
+		if (!selectedAccountRoleItem || updating) {
+			return true;
+		}
+	
+		if (unlimitedRequestersAccount) {
+			return false;
+		}
+	
+		const noSupportSeatsAvailable = availableSupportSeatsCount === 0;
+		const selectedSupportSeatRole = isSupportSeatRole(selectedAccountRoleItem?.label);
+		const currentAccountRoles = currentUserEditing.selectedAccountSummary.roleBriefs;
+		
+		if (noSupportSeatsAvailable) {
+			for (const role of currentAccountRoles) {
+				if (isSupportSeatRole(role.name)) {
+					return false;
+				}
+			}
+
+			return selectedSupportSeatRole;
+		}
+	
+		return availableSupportSeatsCount <= 0;
+	};
+	
+
 	return (
 		<>
 			{open && currentUserRemoving !== undefined && !loadingModal && (
@@ -438,10 +469,7 @@ const TeamMembersTable = ({
 												);
 											}}
 											onSave={() => handleEdit()}
-											saveDisabled={
-												!selectedAccountRoleItem ||
-												updating
-											}
+											saveDisabled={handleSaveDisabled()}
 											userAccount={userAccount}
 										/>
 									),

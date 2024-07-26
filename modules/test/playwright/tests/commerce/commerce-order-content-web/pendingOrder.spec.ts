@@ -307,10 +307,7 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 			'Sales agent can receive email notifications'
 		);
 
-		const orders =
-			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
-
-		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+		await apiHelpers.objectAdmin.deleteObjectAction(objectAction.id);
 
 		const notificationQueueEntry =
 			await apiHelpers.notification.getNotificationQueueEntriesPage(
@@ -321,8 +318,6 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 			notificationQueueEntry.items[0].id
 		);
 
-		await apiHelpers.objectAdmin.deleteObjectAction(objectAction.id);
-
 		await apiHelpers.notification.deleteNotificationTemplate(
 			notificationTemplate.id
 		);
@@ -331,6 +326,11 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 			roles.items[0].id,
 			user.id
 		);
+
+		const orders =
+			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
 	}
 });
 

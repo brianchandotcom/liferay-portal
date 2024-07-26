@@ -26,7 +26,8 @@ public class PushNotificationsUtil {
 		}
 
 		if (orderByCol.equals("platform")) {
-			return new PushNotificationsDevicePlatformComparator(orderByAsc);
+			return PushNotificationsDevicePlatformComparator.getInstance(
+				orderByAsc);
 		}
 
 		return null;

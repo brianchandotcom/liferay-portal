@@ -34,7 +34,6 @@ const TeamMemberInputs = ({
 	errors,
 	id,
 	invite,
-	onSelectRole,
 	options,
 	placeholderEmail,
 	selectOnChange,
@@ -100,12 +99,10 @@ const TeamMemberInputs = ({
 	}, [bannedDomains, invite?.email, provisioningService]);
 
 	const isAdministratorOrRequestorRoleSelected =
-		invite?.role?.name === ROLE_TYPES.requester.name ||
-		invite?.role?.name === ROLE_TYPES.admin.name;
-
-	useEffect(() => {
-		onSelectRole(isAdministratorOrRequestorRoleSelected);
-	}, [onSelectRole, isAdministratorOrRequestorRoleSelected]);
+		invite?.role?.some(role => 
+			role.name === ROLE_TYPES.requester.name ||
+			role.name === ROLE_TYPES.admin.name
+		);
 
 	const optionsFormatted = useMemo(
 		() =>

@@ -79,7 +79,6 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -876,28 +875,18 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		String name = objectDefinition.getClassName();
+		_userLocalService.addRoleUser(role.getRoleId(), _user);
 
-		String[] actionIds = {ObjectActionKeys.ADD_OBJECT_ENTRY};
-
-		if (ArrayUtil.contains(actionIds, ObjectActionKeys.ADD_OBJECT_ENTRY)) {
-			name = objectDefinition.getResourceName();
-		}
-
-		_resourcePermissionLocalService.setResourcePermissions(
-			TestPropsValues.getCompanyId(), name,
+		resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), objectDefinition.getResourceName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
-			actionIds);
-
-		_userLocalService.addRoleUser(role.getRoleId(), _user);
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(), objectDefinition.getClassName(),
 			ResourceConstants.SCOPE_COMPANY, "0", role.getRoleId(),
 			ActionKeys.UPDATE);
-
-		_roleLocalService.addUserRole(_user.getUserId(), role.getRoleId());
 
 		// Notification sent on after add
 

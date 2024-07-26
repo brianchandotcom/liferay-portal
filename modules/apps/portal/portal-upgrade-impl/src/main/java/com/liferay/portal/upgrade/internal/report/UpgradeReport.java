@@ -285,6 +285,10 @@ public class UpgradeReport {
 		).put(
 			"document.library.storage.size",
 			() -> {
+				if (PropsValues.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT == 0) {
+					return null;
+				}
+
 				if (!StringUtil.endsWith(
 						PropsValues.DL_STORE_IMPL, "FileSystemStore")) {
 

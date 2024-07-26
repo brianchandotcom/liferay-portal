@@ -105,7 +105,7 @@ public class SegmentsEntryUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		Assert.assertEquals(5, _countActiveSegments());
+		Assert.assertEquals(5, _getActiveSegmentEntriesCount());
 
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator, _CLASS_NAME);
@@ -114,7 +114,7 @@ public class SegmentsEntryUpgradeProcessTest {
 
 		EntityCacheUtil.clearCache();
 
-		Assert.assertEquals(1, _countActiveSegments());
+		Assert.assertEquals(1, _getActiveSegmentEntriesCount());
 
 		Assert.assertFalse(_isActive("%deviceBrand%"));
 		Assert.assertFalse(_isActive("%deviceModel%"));
@@ -133,7 +133,7 @@ public class SegmentsEntryUpgradeProcessTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
-	private int _countActiveSegments() {
+	private int _getActiveSegmentEntriesCount() {
 		return _segmentsEntryLocalService.dslQueryCount(
 			DSLQueryFactoryUtil.count(
 			).from(

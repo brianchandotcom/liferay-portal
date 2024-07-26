@@ -158,7 +158,7 @@ public class ObjectDefinitionUtil {
 							serviceBuilderObjectDefinition.
 								getObjectDefinitionId(),
 							QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-							new ObjectFieldCreateDateComparator(true)),
+							ObjectFieldCreateDateComparator.getInstance(true)),
 						objectField -> objectFieldDTOConverter.toDTO(
 							new DefaultDTOConverterContext(
 								false, null, null, null, locale, null, null),

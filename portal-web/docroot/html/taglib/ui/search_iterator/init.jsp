@@ -6,6 +6,7 @@
 --%>
 
 <%@ include file="/html/taglib/init.jsp" %>
+
 <%@ page import="com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry" %><%@
 page import="com.liferay.taglib.ui.SearchIteratorTag" %>
 

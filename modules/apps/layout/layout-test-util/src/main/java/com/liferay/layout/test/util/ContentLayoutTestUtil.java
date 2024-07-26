@@ -84,7 +84,7 @@ public class ContentLayoutTestUtil {
 
 	public static String addCollectionDisplayToLayout(
 			JSONObject collectionJSONObject, Layout layout,
-			LayoutStructureProvider layoutStructureProvider,
+			LayoutStructureProvider layoutStructureProvider, String listStyle,
 			String parentItemId, int position, long segmentsExperienceId,
 			FragmentEntryLink... fragmentEntryLinks)
 		throws Exception {
@@ -100,6 +100,8 @@ public class ContentLayoutTestUtil {
 		JSONObject addItemJSONObject = addItemToLayout(
 			JSONUtil.put(
 				"collection", collectionJSONObject
+			).put(
+				"listStyle", listStyle
 			).toString(),
 			LayoutDataItemTypeConstants.TYPE_COLLECTION, layout, parentItemId,
 			position, segmentsExperienceId);

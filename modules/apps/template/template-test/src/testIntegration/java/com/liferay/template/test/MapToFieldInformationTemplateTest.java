@@ -184,7 +184,7 @@ public class MapToFieldInformationTemplateTest {
 			).put(
 				"type", InfoListProviderItemSelectorReturnType.class.getName()
 			),
-			_draftLayout, _layoutStructureProvider, null, 0,
+			_draftLayout, _layoutStructureProvider, null, null, 0,
 			_segmentsExperienceId,
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,

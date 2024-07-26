@@ -197,7 +197,7 @@ public class FriendlyURLEntryLocalServiceImpl
 				friendlyURLEntry.getGroupId(),
 				friendlyURLEntry.getClassNameId(),
 				friendlyURLEntry.getClassPK(),
-				new FriendlyURLEntryCreateDateComparator());
+				FriendlyURLEntryCreateDateComparator.getInstance(true));
 
 			if (friendlyURLEntry == null) {
 				_friendlyURLEntryMappingPersistence.remove(

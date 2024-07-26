@@ -114,7 +114,7 @@ public class FileEntryInfoItemFriendlyURLProvider
 
 	private final FriendlyURLEntryLocalizationComparator
 		_friendlyURLEntryLocalizationComparator =
-			new FriendlyURLEntryLocalizationComparator();
+			FriendlyURLEntryLocalizationComparator.getInstance(false);
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

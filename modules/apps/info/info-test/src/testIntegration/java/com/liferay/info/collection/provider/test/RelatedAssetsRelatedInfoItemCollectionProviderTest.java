@@ -6,13 +6,17 @@
 package com.liferay.info.collection.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.link.service.AssetLinkLocalService;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -33,6 +37,7 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
@@ -68,6 +73,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -193,7 +199,9 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 				layout.getPlid());
 
 		_mapInfoFieldInCollectionDisplayNestedInCollectionDisplay(
-			layout, segmentsExperienceId);
+			"com.liferay.asset.internal.info.collection.provider." +
+			"HighestRatedAssetsInfoCollectionProvider",
+			layout, null, segmentsExperienceId);
 
 		_assertRenderLayoutHTML(
 			_getInfoItemAttributesMap(
@@ -202,27 +210,105 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 			2, layout, segmentsExperienceId);
 	}
 
+	@Test
+	@TestInfo("LPS-127024")
+	public void testMapInfoFieldInCollectionDisplayNestedInCollectionDisplayWithAssetEntriesWithSameAssetCategory()
+		throws Exception {
+
+		Layout layout = _addDefaultDisplayPageTemplateLayout(
+			_portal.getClassNameId(AssetCategory.class.getName()), 0);
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		_mapInfoFieldInCollectionDisplayNestedInCollectionDisplay(
+			"com.liferay.asset.categories.admin.web.internal.info.collection." +
+				"provider.AssetEntriesWithSameAssetCategoryRelatedInfoItem" +
+					"CollectionProvider",
+			layout, "AssetCategory_name", segmentsExperienceId);
+
+		AssetCategory assetCategory = _addAssetCategory();
+
+		String html = _assertRenderLayoutHTML(
+			_getInfoItemAttributesMap(
+				AssetCategory.class.getName(), assetCategory.getCategoryId(),
+				assetCategory),
+			2, layout, segmentsExperienceId);
+
+		Assert.assertTrue(
+			html,
+			StringUtil.contains(
+				html, assetCategory.getName(), StringPool.BLANK));
+	}
+
+	private AssetCategory _addAssetCategory() throws Exception {
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		long[] assetCategoryIds = {assetCategory.getCategoryId()};
+
+		_blogsEntryLocalService.updateAsset(
+			TestPropsValues.getUserId(), _blogsEntry, assetCategoryIds,
+			new String[0],
+			new long[] {
+				_dlFileEntryAssetEntry.getEntryId(),
+				_journalArticleAssetEntry.getEntryId()
+			},
+			null);
+		_journalArticleLocalService.updateAsset(
+			TestPropsValues.getUserId(), _journalArticle, assetCategoryIds,
+			new String[0],
+			new long[] {
+				_blogsEntryAssetEntry.getEntryId(),
+				_dlFileEntryAssetEntry.getEntryId()
+			},
+			null);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId(),
+				assetCategoryIds);
+
+		serviceContext.setAssetLinkEntryIds(
+			new long[] {
+				_blogsEntryAssetEntry.getEntryId(),
+				_journalArticleAssetEntry.getEntryId()
+			});
+
+		_dlAppService.updateFileEntry(
+			_dlFileEntry.getFileEntryId(), _dlFileEntry.getFileName(),
+			_dlFileEntry.getMimeType(), _dlFileEntry.getTitle(),
+			StringPool.BLANK, _dlFileEntry.getDescription(), StringPool.BLANK,
+			DLVersionNumberIncrease.MINOR, new byte[0], null, null, null,
+			serviceContext);
+
+		return assetCategory;
+	}
+
 	private void _addAssetLinks() throws Exception {
-		AssetEntry blogsEntryAssetEntry = _assetEntryLocalService.getEntry(
+		_blogsEntryAssetEntry = _assetEntryLocalService.getEntry(
 			BlogsEntry.class.getName(), _blogsEntry.getEntryId());
-		AssetEntry dlFileEntryAssetEntry = _assetEntryLocalService.getEntry(
+		_dlFileEntryAssetEntry = _assetEntryLocalService.getEntry(
 			DLFileEntry.class.getName(), _dlFileEntry.getFileEntryId());
 
 		_assetLinkLocalService.addLink(
-			TestPropsValues.getUserId(), blogsEntryAssetEntry.getEntryId(),
-			dlFileEntryAssetEntry.getEntryId(), 0, 1);
+			TestPropsValues.getUserId(), _blogsEntryAssetEntry.getEntryId(),
+			_dlFileEntryAssetEntry.getEntryId(), 0, 1);
 
-		AssetEntry journalArticleAssetEntry = _assetEntryLocalService.getEntry(
+		_journalArticleAssetEntry = _assetEntryLocalService.getEntry(
 			JournalArticle.class.getName(),
 			_journalArticle.getResourcePrimKey());
 
 		_assetLinkLocalService.addLink(
-			TestPropsValues.getUserId(), blogsEntryAssetEntry.getEntryId(),
-			journalArticleAssetEntry.getEntryId(), 0, 1);
-
+			TestPropsValues.getUserId(), _blogsEntryAssetEntry.getEntryId(),
+			_journalArticleAssetEntry.getEntryId(), 0, 1);
 		_assetLinkLocalService.addLink(
-			TestPropsValues.getUserId(), dlFileEntryAssetEntry.getEntryId(),
-			journalArticleAssetEntry.getEntryId(), 0, 1);
+			TestPropsValues.getUserId(), _dlFileEntryAssetEntry.getEntryId(),
+			_journalArticleAssetEntry.getEntryId(), 0, 1);
 	}
 
 	private BlogsEntry _addBlogsEntry() throws Exception {
@@ -338,7 +424,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
-	private void _assertRenderLayoutHTML(
+	private String _assertRenderLayoutHTML(
 			Map<String, Object> attributes, int count, Layout layout,
 			long segmentsExperienceId)
 		throws Exception {
@@ -353,6 +439,8 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 			html, count, StringUtil.count(html, _dlFileEntry.getTitle()));
 		Assert.assertEquals(
 			html, count, StringUtil.count(html, _journalArticle.getTitle()));
+
+		return html;
 	}
 
 	private void _assertRenderLayoutHTML(
@@ -475,18 +563,22 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 	}
 
 	private void _mapInfoFieldInCollectionDisplayNestedInCollectionDisplay(
-			Layout layout, long segmentsExperienceId)
+			String infoCollectionProviderKey, Layout layout, String mappedField,
+			long segmentsExperienceId)
 		throws Exception {
 
 		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (Validator.isNotNull(mappedField)) {
+			_addHeadingWithMappedField(
+				draftLayout, mappedField, segmentsExperienceId);
+		}
 
 		String itemId = ContentLayoutTestUtil.addCollectionDisplayToLayout(
 			JSONUtil.put(
 				"itemType", AssetEntry.class.getName()
 			).put(
-				"key",
-				"com.liferay.asset.internal.info.collection.provider." +
-					"HighestRatedAssetsInfoCollectionProvider"
+				"key", infoCollectionProviderKey
 			).put(
 				"type", InfoListProviderItemSelectorReturnType.class.getName()
 			),
@@ -518,6 +610,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 	private AssetLinkLocalService _assetLinkLocalService;
 
 	private BlogsEntry _blogsEntry;
+	private AssetEntry _blogsEntryAssetEntry;
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
@@ -526,6 +619,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 	private DLAppService _dlAppService;
 
 	private DLFileEntry _dlFileEntry;
+	private AssetEntry _dlFileEntryAssetEntry;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
@@ -554,6 +648,11 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	private JournalArticle _journalArticle;
+	private AssetEntry _journalArticleAssetEntry;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
 	private String _languageId;
 
 	@Inject

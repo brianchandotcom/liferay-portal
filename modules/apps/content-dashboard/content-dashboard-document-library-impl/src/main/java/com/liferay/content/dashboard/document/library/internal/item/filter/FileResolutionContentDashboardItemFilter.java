@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -150,38 +151,47 @@ public class FileResolutionContentDashboardItemFilter
 	}
 
 	private String _getLabel(Resolution resolution) {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(_language.get(_httpServletRequest, resolution.getType()));
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		if (resolution == Resolution.LARGE) {
-			sb.append(_language.get(_httpServletRequest, "from"));
-			sb.append(StringPool.SPACE);
 			sb.append(
-				_getResolutionLabel(
-					resolution._startLengthValue, resolution._startWidthValue));
+				StringUtil.toLowerCase(
+					_language.format(
+						_httpServletRequest, "from-x",
+						new Object[] {
+							_getResolutionLabel(
+								resolution._startLengthValue,
+								resolution._startWidthValue)
+						})));
 		}
 		else if (resolution == Resolution.MEDIUM) {
-			sb.append(_language.get(_httpServletRequest, "from"));
-			sb.append(StringPool.SPACE);
 			sb.append(
-				_getResolutionLabel(
-					resolution._startLengthValue, resolution._startWidthValue));
-			sb.append(StringPool.SPACE);
-			sb.append(_language.get(_httpServletRequest, "to"));
-			sb.append(StringPool.SPACE);
-			sb.append(
-				_getResolutionLabel(
-					resolution._endLengthValue, resolution._endWidthValue));
+				StringUtil.toLowerCase(
+					_language.format(
+						_httpServletRequest, "from-x-to-x",
+						new Object[] {
+							_getResolutionLabel(
+								resolution._startLengthValue,
+								resolution._startWidthValue),
+							_getResolutionLabel(
+								resolution._endLengthValue,
+								resolution._endWidthValue)
+						})));
 		}
 		else if (resolution == Resolution.SMALL) {
-			sb.append(_language.get(_httpServletRequest, "up-to"));
-			sb.append(StringPool.SPACE);
 			sb.append(
-				_getResolutionLabel(
-					resolution._endLengthValue, resolution._endWidthValue));
+				StringUtil.toLowerCase(
+					_language.format(
+						_httpServletRequest, "up-to-x",
+						new Object[] {
+							_getResolutionLabel(
+								resolution._endLengthValue,
+								resolution._endWidthValue)
+						})));
 		}
 
 		sb.append(StringPool.CLOSE_PARENTHESIS);

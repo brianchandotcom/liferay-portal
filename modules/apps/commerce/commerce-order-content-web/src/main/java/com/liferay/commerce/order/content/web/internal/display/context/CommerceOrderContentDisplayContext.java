@@ -1131,7 +1131,7 @@ public class CommerceOrderContentDisplayContext {
 		).setRedirect(
 			_cpRequestHelper.getCurrentURL()
 		).setParameter(
-			"commerceOrderId", getCommerceOrderId()
+			"commerceOrderId", getCommerceOrder().getCommerceOrderId()
 		).buildPortletURL();
 	}
 

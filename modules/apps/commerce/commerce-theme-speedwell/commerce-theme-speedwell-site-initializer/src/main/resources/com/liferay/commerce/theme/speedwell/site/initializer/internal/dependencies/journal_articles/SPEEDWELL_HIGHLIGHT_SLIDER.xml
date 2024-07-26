@@ -3,7 +3,7 @@
 <root available-locales="[$LOCALE$]" default-locale="[$LOCALE$]">
 	<dynamic-element index-type="text" instance-id="sgad" name="Image2x9w" type="image">
 		<dynamic-element index-type="text" instance-id="mykc" name="captionImage" type="image">
-			<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Slider_01_detail.jpg$]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[[$Slider_01_detail.jpg$]]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="vnvz" name="captionCategory" type="text">
 			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Wheel Rim]]></dynamic-content>
@@ -17,11 +17,11 @@
 		<dynamic-element index-type="keyword" instance-id="whjf" name="captionButtonUrl" type="link_to_layout">
 			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$GROUP_ID$]]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Slider_01.jpg$]]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[[$Slider_01.jpg$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="jrvy" name="Image2x9w" type="image">
 		<dynamic-element index-type="text" instance-id="lyek" name="captionImage" type="image">
-			<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Slider_02_detail.jpg$]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[[$Slider_02_detail.jpg$]]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="agbv" name="captionCategory" type="text">
 			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Wheel Rim]]></dynamic-content>
@@ -35,11 +35,11 @@
 		<dynamic-element index-type="keyword" instance-id="oskg" name="captionButtonUrl" type="link_to_layout">
 			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$GROUP_ID$]]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Slider_02.jpg$]]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[[$Slider_02.jpg$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="quue" name="Image2x9w" type="image">
 		<dynamic-element index-type="text" instance-id="qydk" name="captionImage" type="image">
-			<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Slider_03_detail.jpg$]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[[$Slider_03_detail.jpg$]]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="mopk" name="captionCategory" type="text">
 			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Wheel Rim]]></dynamic-content>
@@ -53,11 +53,11 @@
 		<dynamic-element index-type="keyword" instance-id="yqqd" name="captionButtonUrl" type="link_to_layout">
 			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$GROUP_ID$]]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Slider_03.jpg$]]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[[$Slider_03.jpg$]]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="ecec" name="Image2x9w" type="image">
 		<dynamic-element index-type="text" instance-id="nqzp" name="captionImage" type="image">
-			<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Slider_01_detail.jpg$]]]></dynamic-content>
+			<dynamic-content language-id="[$LOCALE$]"><![CDATA[[$Slider_01_detail.jpg$]]]></dynamic-content>
 		</dynamic-element>
 		<dynamic-element index-type="keyword" instance-id="ampz" name="captionCategory" type="text">
 			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Special wheel rim]]></dynamic-content>
@@ -71,6 +71,6 @@
 		<dynamic-element index-type="keyword" instance-id="geho" name="captionButtonUrl" type="link_to_layout">
 			<dynamic-content language-id="[$LOCALE$]"><![CDATA[2@public@[$GROUP_ID$]]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content language-id="[$LOCALE$]"> <![CDATA[[$Header_02.jpg$]]]></dynamic-content>
+		<dynamic-content language-id="[$LOCALE$]"><![CDATA[[$Header_02.jpg$]]]></dynamic-content>
 	</dynamic-element>
 </root>

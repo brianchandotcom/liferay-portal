@@ -9,14 +9,14 @@
 	<description>A single approver can approve a workflow content.</description>
 	<state>
 		<name>created</name>
-		<metadata> <![CDATA[
+		<metadata><![CDATA[
 				{
 					"xy": [
 						165,
 						76
 					]
 				}
-			]]> </metadata>
+			]]></metadata>
 		<initial>true</initial>
 		<labels>
 			<label language-id="en_US">created</label>
@@ -34,7 +34,7 @@
 	</state>
 	<state>
 		<name>approved</name>
-		<metadata> <![CDATA[
+		<metadata><![CDATA[
 				{
 					"xy": [
 						539,
@@ -42,16 +42,16 @@
 					],
 					"terminal": true
 				}
-			]]> </metadata>
+			]]></metadata>
 		<actions>
 			<action>
 				<name>approve</name>
-				<script> <![CDATA[
+				<script><![CDATA[
 						import com.liferay.portal.kernel.workflow.WorkflowConstants;
 						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 
 						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
-					]]> </script>
+					]]></script>
 				<script-language>groovy</script-language>
 				<execution-type>onEntry</execution-type>
 			</action>
@@ -63,24 +63,24 @@
 	<task>
 		<name>update</name>
 		<description>Ask a user to work on the item.</description>
-		<metadata> <![CDATA[
+		<metadata><![CDATA[
 				{
 					"xy": [
 						164,
 						533
 					]
 				}
-			]]> </metadata>
+			]]></metadata>
 		<actions>
 			<action>
 				<name>reject</name>
-				<script> <![CDATA[
+				<script><![CDATA[
 						import com.liferay.portal.kernel.workflow.WorkflowConstants;
 						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 
 						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("denied"), workflowContext);
 						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("pending"), workflowContext);
-					]]> </script>
+					]]></script>
 				<script-language>groovy</script-language>
 				<execution-type>onAssignment</execution-type>
 			</action>
@@ -118,14 +118,14 @@
 	<task>
 		<name>review</name>
 		<description>Ask a user to work on the item.</description>
-		<metadata> <![CDATA[
+		<metadata><![CDATA[
 				{
 					"xy": [
 						165,
 						292
 					]
 				}
-			]]> </metadata>
+			]]></metadata>
 		<actions>
 			<notification>
 				<name>Review Notification</name>
@@ -229,7 +229,7 @@
 					<timer-action>
 						<name>My Act1</name>
 						<description>Check</description>
-						<script> <![CDATA[print("Timer 1")]]> </script>
+						<script><![CDATA[print("Timer 1")]]></script>
 						<script-language>groovy</script-language>
 						<priority>1</priority>
 					</timer-action>
@@ -251,7 +251,7 @@
 					<timer-action>
 						<name>Anishq</name>
 						<description />
-						<script> <![CDATA[print("Timer 2")]]> </script>
+						<script><![CDATA[print("Timer 2")]]></script>
 						<script-language>groovy</script-language>
 						<priority>1</priority>
 					</timer-action>

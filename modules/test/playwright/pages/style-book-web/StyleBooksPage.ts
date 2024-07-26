@@ -40,8 +40,6 @@ export class StyleBooksPage {
 	}
 
 	async deleteStyleBook(styleBookName: string) {
-		await this.goto();
-
 		await this.page
 			.locator(
 				'input[name=_com_liferay_style_book_web_internal_portlet_StyleBookPortlet_keywords][type=search]'

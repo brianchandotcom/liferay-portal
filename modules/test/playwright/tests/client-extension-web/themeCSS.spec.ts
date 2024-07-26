@@ -123,6 +123,8 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 
 	const styleBookName = getRandomString();
 
+	await styleBooksPage.goto();
+
 	await styleBooksPage.createStyleBook(styleBookName);
 
 	// Assert that the frontend token set defined in the frontendTokenDefinition.json file is available in the style book.
@@ -132,6 +134,8 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 	await expect(frontendTokenSetLabel).toBeVisible();
 
 	// Clean up
+
+	await styleBooksPage.goto();
 
 	await styleBooksPage.deleteStyleBook(styleBookName);
 

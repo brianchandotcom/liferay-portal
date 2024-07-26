@@ -91,6 +91,294 @@
 		"to": "HttpComponentsUtil.${methodName}"
 	},
 	{
+		"from": "new CalendarBookingStartTimeComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "CalendarBookingStartTimeComparator.getInstance(false)"
+	},
+	{
+		"from": "new CalendarBookingStartTimeComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "CalendarBookingStartTimeComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CalendarNameComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "CalendarNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new CalendarNameComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "CalendarNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CalendarResourceCodeComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "CalendarResourceCodeComparator.getInstance(false)"
+	},
+	{
+		"from": "new CalendarResourceCodeComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "CalendarResourceCodeComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CalendarResourceNameComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "CalendarResourceNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new CalendarResourceNameComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "CalendarResourceNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new DefinitionCreateDateComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "DefinitionCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new DefinitionCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "DefinitionCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new EntryCreateDateComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "EntryCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new EntryCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "EntryCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new EntryNameComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "EntryNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new EntryNameComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "EntryNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new EntryPriorityComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "EntryPriorityComparator.getInstance(false)"
+	},
+	{
+		"from": "new EntryPriorityComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "EntryPriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new EntryTypeComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "EntryTypeComparator.getInstance(false)"
+	},
+	{
+		"from": "new EntryTypeComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "EntryTypeComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new EntryURLComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "EntryURLComparator.getInstance(false)"
+	},
+	{
+		"from": "new EntryURLComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "EntryURLComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new EntryUserNameComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "EntryUserNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new EntryUserNameComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "EntryUserNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new NodeLastPostDateComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "NodeLastPostDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new NodeLastPostDateComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "NodeLastPostDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new NodeNameComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "NodeNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new NodeNameComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "NodeNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new PageCreateDateComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "PageCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new PageCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "PageCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new PageModifiedDateComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "PageModifiedDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new PageModifiedDateComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "PageModifiedDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new PageTitleComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "PageTitleComparator.getInstance(false)"
+	},
+	{
+		"from": "new PageTitleComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "PageTitleComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new PageVersionComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "PageVersionComparator.getInstance(false)"
+	},
+	{
+		"from": "new PageVersionComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "PageVersionComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new SiteNavigationMenuCreateDateComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "SiteNavigationMenuCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new SiteNavigationMenuCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "SiteNavigationMenuCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new SiteNavigationMenuItemOrderComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "SiteNavigationMenuItemOrderComparator.getInstance(true)"
+	},
+	{
+		"from": "new SiteNavigationMenuItemOrderComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "SiteNavigationMenuItemOrderComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new SiteNavigationMenuModifiedDateComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "SiteNavigationMenuModifiedDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new SiteNavigationMenuModifiedDateComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "SiteNavigationMenuModifiedDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new SiteNavigationMenuNameComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "SiteNavigationMenuNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new SiteNavigationMenuNameComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "SiteNavigationMenuNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new SourceCreateDateComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "SourceCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new SourceCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "SourceCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new StyleBookEntryCreateDateComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "StyleBookEntryCreateDateComparator.getInstance(true)"
+	},
+	{
+		"from": "new StyleBookEntryCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "StyleBookEntryCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new StyleBookEntryNameComparator()",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "StyleBookEntryNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new StyleBookEntryNameComparator(boolean paramName)",
+		"issueKey": "LPD-25955",
+		"skipParametersValidation": true,
+		"to": "StyleBookEntryNameComparator.getInstance(param#0#)"
+	},
+	{
 		"from": "new AssetListEntryCreateDateComparator()",
 		"issueKey": "LPD-26157",
 		"skipParametersValidation": true,

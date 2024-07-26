@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
  * @author Paulo Albuquerque
  */
 @RunWith(Arquillian.class)
-public abstract class BaseDDMStructureLayoutUpgradeProcessTestCase
+public abstract class BaseDDMStructureLayoutCTUpgradeProcessTestCase
 	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule

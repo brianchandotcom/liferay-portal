@@ -26,12 +26,12 @@ public class EntryModifiedDateComparator extends OrderByComparator<BlogsEntry> {
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate", "entryId"};
 
-	public EntryModifiedDateComparator() {
-		this(false);
-	}
+	public static EntryModifiedDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public EntryModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -78,6 +78,16 @@ public class EntryModifiedDateComparator extends OrderByComparator<BlogsEntry> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private EntryModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final EntryModifiedDateComparator _INSTANCE_ASCENDING =
+		new EntryModifiedDateComparator(true);
+
+	private static final EntryModifiedDateComparator _INSTANCE_DESCENDING =
+		new EntryModifiedDateComparator(false);
 
 	private final boolean _ascending;
 

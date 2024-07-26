@@ -21,12 +21,12 @@ public class EntryIdComparator extends OrderByComparator<BlogsEntry> {
 
 	public static final String[] ORDER_BY_FIELDS = {"entryId"};
 
-	public EntryIdComparator() {
-		this(false);
-	}
+	public static EntryIdComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public EntryIdComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -70,6 +70,16 @@ public class EntryIdComparator extends OrderByComparator<BlogsEntry> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private EntryIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final EntryIdComparator _INSTANCE_ASCENDING =
+		new EntryIdComparator(true);
+
+	private static final EntryIdComparator _INSTANCE_DESCENDING =
+		new EntryIdComparator(false);
 
 	private final boolean _ascending;
 

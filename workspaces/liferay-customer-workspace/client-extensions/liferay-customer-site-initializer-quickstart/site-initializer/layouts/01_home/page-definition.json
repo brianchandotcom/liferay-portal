@@ -51,7 +51,7 @@
 								"widgetConfig": {
 									"properties": "route=home"
 								},
-								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:LIFERAY-CUSTOMER-CUSTOM-ELEMENT$]"
+								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:LXC:liferay-customer-custom-element$]"
 							}
 						},
 						"type": "Widget"

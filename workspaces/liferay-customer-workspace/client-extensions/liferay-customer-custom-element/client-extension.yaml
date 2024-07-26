@@ -6,9 +6,20 @@ liferay-customer-custom-element:
         - "*.css"
     friendlyURLMapping: liferay-customer-custom-element
     htmlElementName: liferay-customer-custom-element
-    instanceable: true
+    instanceable: false
     name: Liferay Customer Custom Element
     portletCategoryName: category.client-extensions
+    properties:
+        about-the-overview-page-url: https://help.liferay.com/hc/en-us/articles/8714747922445-About-the-Overview-Page-Video-Tutorial-
+        account-settings-url: https://liferay.okta.com/enduser/settings
+        article-deactivate-key-url: https://help.liferay.com/hc/en-us/articles/20425297160845
+        article-getting-started-with-liferay-enterprise-search-url: https://help.liferay.com/hc/en-us/articles/13528042483597
+        article-notified-when-my-activation-key-is-about-to-expire-url: https://help.liferay.com/hc/en-us/articles/19716265300493
+        article-what-is-my-instance-sizing-value-url: https://help.liferay.com/hc/en-us/articles/360025762932#h_01H3YAFQ7B5H1ZHCXZX7E64SJ1
+        feature-flags: LPS-185004,LPS-185063,LPS-180001,LPS-186175,LPS-148342,LPS-181031,LPS-187767,LPS-191380,LPS-194304,LPS-192494,LPS-148366,LPS-153478,LPS-159127,LPS-159359,LPS-194304,ISSD-100,ISSD-78,ISSD-119
+        import-date: 2022/11/17
+        okta-session-api: https://login-dev.liferay.com/api/v1/sessions
+        provisioning-server-api: https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0
     type: customElement
     urls:
         - "*.js"

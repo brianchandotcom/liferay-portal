@@ -40,10 +40,17 @@ let structuredContentTitle;
 const structuredContentDataSetConfig = {
 	erc: getRandomString(),
 	label: getRandomString(),
-	name: getRandomString(),
 	restApplication: '/headless-delivery/v1.0',
 	restEndpoint: '/v1.0/sites/{siteId}/structured-contents',
 	restSchema: 'StructuredContent',
+};
+
+const adminUserDataSetConfig = {
+	erc: getRandomString(),
+	label: getRandomString(),
+	restApplication: '/headless-admin-user/v1.0',
+	restEndpoint: '/v1.0/roles',
+	restSchema: 'Role',
 };
 
 test.beforeEach(async ({dataSetManagerApiHelpers}) => {
@@ -228,6 +235,36 @@ test('Data Set can use different sources of data: StructuredContentSchema, UserS
 		});
 	});
 
+	await test.step('Create an Admin User Schema (Roles) Data Set and add fields', async () => {
+		dataSetERCs.push(adminUserDataSetConfig.erc);
+
+		await dataSetManagerApiHelpers.createDataSet({
+			erc: adminUserDataSetConfig.erc,
+			label: adminUserDataSetConfig.label,
+			restApplication: adminUserDataSetConfig.restApplication,
+			restEndpoint: adminUserDataSetConfig.restEndpoint,
+			restSchema: adminUserDataSetConfig.restSchema,
+		});
+
+		await dataSetManagerApiHelpers.createDataSetField({
+			dataSetERC: adminUserDataSetConfig.erc,
+			label_i18n: {
+				en_US: 'Role Type',
+			},
+			name: 'roleType',
+			sortable: false,
+			type: 'string',
+		});
+
+		await dataSetManagerApiHelpers.createDataSetField({
+			dataSetERC: adminUserDataSetConfig.erc,
+			label_i18n: {en_US: 'Name'},
+			name: 'name',
+			sortable: false,
+			type: 'string',
+		});
+	});
+
 	await test.step('Configure Structured Content Schema Data Set fragment', async () => {
 		await fdsFragmentPage.configureDataSetFragment({
 			dataSetLabel: structuredContentDataSetConfig.label,
@@ -257,5 +294,71 @@ test('Data Set can use different sources of data: StructuredContentSchema, UserS
 				.locator('.dnd-td')
 				.allInnerTexts()
 		).toEqual([structuredContentTitle, structuredContentDescription, '']);
+	});
+
+	await test.step('Confirm that we can change the Data Set and display the Roles Data Set', async() => {
+		await fdsFragmentPage.editPage({layout});
+		await fdsFragmentPage.fdsTableWrapper.click();
+
+		await page
+			.getByRole('button', {name: 'Select Data Set View'})
+			.click();
+		
+		await page
+			.getByRole('menuitem', {name: 'Select Data Set View...'})
+			.click();
+
+		await page.getByRole('dialog').isVisible();
+
+		await page.getByRole('heading', {name: 'Select'}).isVisible();
+
+		await page
+			.frameLocator('iframe[title="Select"]')
+			.locator('.fds-admin-item-selector')
+			.waitFor({state: 'visible'});
+
+		await page
+			.frameLocator('iframe[title="Select"]')
+			.locator('li')
+			.filter({hasText: adminUserDataSetConfig.label})
+			.first()
+			.click();
+
+		await page
+			.frameLocator('iframe[title="Select"]')
+			.getByRole('button', {name: 'Save'})
+			.click();
+
+		await fdsFragmentPage.publishPage();
+
+		await fdsFragmentPage.goToPage({layout});
+
+		await page
+			.locator('.data-set-content-wrapper')
+			.waitFor({state: 'visible'});
+	});
+
+	await test.step('Assert that the User Schema (Roles) Data Set is available on the page', async () => {
+		await fdsFragmentPage.fdsTableWrapper.waitFor({
+			state: 'visible',
+		});
+
+		await expect(await fdsFragmentPage.fdsTableWrapper).toBeInViewport();
+
+		expect(
+			await page
+				.locator('.dnd-thead > div')
+				.first()
+				.locator('.dnd-th')
+				.allInnerTexts()
+		).toEqual(['Role Type', 'Name', '']);
+
+		expect(
+			await page
+				.locator('.dnd-tbody > .dnd-tr')
+				.first()
+				.locator('.dnd-td')
+				.allInnerTexts()
+		).toEqual(['organization', 'Account Manager', '']);
 	});
 });

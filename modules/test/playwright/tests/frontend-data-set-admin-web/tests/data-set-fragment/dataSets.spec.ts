@@ -37,6 +37,14 @@ let siteId;
 let structuredContentId;
 let structuredContentTitle;
 
+const adminUserDataSetConfig = {
+	erc: getRandomString(),
+	label: getRandomString(),
+	restApplication: '/headless-admin-user/v1.0',
+	restEndpoint: '/v1.0/roles',
+	restSchema: 'Role',
+};
+
 const structuredContentDataSetConfig = {
 	erc: getRandomString(),
 	label: getRandomString(),
@@ -45,12 +53,12 @@ const structuredContentDataSetConfig = {
 	restSchema: 'StructuredContent',
 };
 
-const adminUserDataSetConfig = {
+const taxonomyVocabularyDataSetConfig = {
 	erc: getRandomString(),
 	label: getRandomString(),
-	restApplication: '/headless-admin-user/v1.0',
-	restEndpoint: '/v1.0/roles',
-	restSchema: 'Role',
+	restApplication: '/headless-admin-taxonomy/v1.0',
+	restEndpoint: '/v1.0/sites/{siteId}/taxonomy-vocabularies',
+	restSchema: 'TaxonomyVocabulary',
 };
 
 test.beforeEach(async ({dataSetManagerApiHelpers}) => {
@@ -183,7 +191,9 @@ test('Data Set selection modal shows a "No results found" message when there are
 	});
 });
 
-test('Data Set can use different sources of data: StructuredContentSchema, UserSchema, TaxonomyVocabularySchema', async ({
+test('Data Set can use different sources of data: StructuredContentSchema, UserSchema, TaxonomyVocabularySchema', {
+	tag: ['@LPS-172403', '@LPS-190724']
+}, async ({
 	apiHelpers,
 	dataSetManagerApiHelpers,
 	fdsFragmentPage,
@@ -262,6 +272,36 @@ test('Data Set can use different sources of data: StructuredContentSchema, UserS
 			name: 'name',
 			sortable: false,
 			type: 'string',
+		});
+	});
+
+	await test.step('Create a Taxonomy Vocabulary Data Set and add fields', async () => {
+		dataSetERCs.push(taxonomyVocabularyDataSetConfig.erc);
+
+		await dataSetManagerApiHelpers.createDataSet({
+			erc: taxonomyVocabularyDataSetConfig.erc,
+			label: taxonomyVocabularyDataSetConfig.label,
+			restApplication: taxonomyVocabularyDataSetConfig.restApplication,
+			restEndpoint: taxonomyVocabularyDataSetConfig.restEndpoint,
+			restSchema: taxonomyVocabularyDataSetConfig.restSchema,
+		});
+
+		await dataSetManagerApiHelpers.createDataSetField({
+			dataSetERC: taxonomyVocabularyDataSetConfig.erc,
+			label_i18n: {
+				en_US: 'Vocabulary Name',
+			},
+			name: 'name',
+			sortable: false,
+			type: 'string',
+		});
+
+		await dataSetManagerApiHelpers.createDataSetField({
+			dataSetERC: taxonomyVocabularyDataSetConfig.erc,
+			label_i18n: {en_US: 'Number of Categories'},
+			name: 'numberOfTaxonomyCategories',
+			sortable: false,
+			type: 'integer',
 		});
 	});
 
@@ -360,5 +400,71 @@ test('Data Set can use different sources of data: StructuredContentSchema, UserS
 				.locator('.dnd-td')
 				.allInnerTexts()
 		).toEqual(['organization', 'Account Manager', '']);
+	});
+
+	await test.step('Confirm that we can change the Data Set and display the Taxonomy Vocabulary Data Set', async() => {
+		await fdsFragmentPage.editPage({layout});
+		await fdsFragmentPage.fdsTableWrapper.click();
+
+		await page
+			.getByRole('button', {name: 'Select Data Set View'})
+			.click();
+		
+		await page
+			.getByRole('menuitem', {name: 'Select Data Set View...'})
+			.click();
+
+		await page.getByRole('dialog').isVisible();
+
+		await page.getByRole('heading', {name: 'Select'}).isVisible();
+
+		await page
+			.frameLocator('iframe[title="Select"]')
+			.locator('.fds-admin-item-selector')
+			.waitFor({state: 'visible'});
+
+		await page
+			.frameLocator('iframe[title="Select"]')
+			.locator('li')
+			.filter({hasText: taxonomyVocabularyDataSetConfig.label})
+			.first()
+			.click();
+
+		await page
+			.frameLocator('iframe[title="Select"]')
+			.getByRole('button', {name: 'Save'})
+			.click();
+
+		await fdsFragmentPage.publishPage();
+
+		await fdsFragmentPage.goToPage({layout});
+
+		await page
+			.locator('.data-set-content-wrapper')
+			.waitFor({state: 'visible'});
+	});
+
+	await test.step('Assert that the Taxonomy Vocabulary Data Set is available on the page', async () => {
+		await fdsFragmentPage.fdsTableWrapper.waitFor({
+			state: 'visible',
+		});
+
+		await expect(await fdsFragmentPage.fdsTableWrapper).toBeInViewport();
+
+		expect(
+			await page
+				.locator('.dnd-thead > div')
+				.first()
+				.locator('.dnd-th')
+				.allInnerTexts()
+		).toEqual(['Vocabulary Name', 'Number of Categories', '']);
+
+		expect(
+			await page
+				.locator('.dnd-tbody > .dnd-tr')
+				.first()
+				.locator('.dnd-td')
+				.allInnerTexts()
+		).toEqual(['Topic', '0', '']);
 	});
 });

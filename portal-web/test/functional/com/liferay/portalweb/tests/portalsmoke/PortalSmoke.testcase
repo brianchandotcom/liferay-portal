@@ -68,6 +68,7 @@ definition {
 	@priority = 5
 	test SmokeWithDeveloperProperties {
 		property custom.properties = "include-and-override=portal-developer.properties";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property osgi.module.configuration.file.names = "com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration";
 		property osgi.module.configurations = "cacheEnabled=\"false\"";
 		property portal.smoke = "false";

@@ -360,7 +360,7 @@ public class LayoutSetPrototypePropagationTest
 			TestPropsValues.getUserId(), prototypeLayout2.getPlid(), "/page-a",
 			languageId);
 
-		_layoutLocalService.updateParentLayoutId(
+		prototypeLayout1 = _layoutLocalService.updateParentLayoutId(
 			prototypeLayout1.getPlid(), prototypeLayout2.getPlid());
 
 		_propagateChanges(1, 1);
@@ -373,6 +373,25 @@ public class LayoutSetPrototypePropagationTest
 		Assert.assertNull(
 			_layoutLocalService.fetchLayoutByFriendlyURL(
 				group.getGroupId(), false, "/page-a"));
+
+		_layoutLocalService.updateFriendlyURL(
+			TestPropsValues.getUserId(), prototypeLayout1.getPlid(),
+			prototypeLayout1.getFriendlyURL(locale), languageId);
+		_layoutLocalService.updateFriendlyURL(
+			TestPropsValues.getUserId(), prototypeLayout2.getPlid(),
+			prototypeLayout2.getFriendlyURL(locale), languageId);
+
+		_sites.removeMergeFailFriendlyURLLayouts(group.getPublicLayoutSet());
+
+		_propagateChanges(0, 2);
+
+		Layout layout2 = _layoutLocalService.getLayoutByFriendlyURL(
+			group.getGroupId(), false, "/page-a");
+
+		layout1 = _layoutLocalService.getLayoutByFriendlyURL(
+			group.getGroupId(), false, "/page-a0");
+
+		Assert.assertEquals(layout2.getPlid(), layout1.getParentPlid());
 	}
 
 	@Test

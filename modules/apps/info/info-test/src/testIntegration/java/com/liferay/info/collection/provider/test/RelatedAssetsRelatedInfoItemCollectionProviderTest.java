@@ -189,29 +189,6 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 
 	@Test
 	@TestInfo("LPS-127024")
-	public void testMapInfoFieldInCollectionDisplayNestedInCollectionDisplay()
-		throws Exception {
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
-
-		_mapInfoFieldInCollectionDisplayNestedInCollectionDisplay(
-			"com.liferay.asset.internal.info.collection.provider." +
-			"HighestRatedAssetsInfoCollectionProvider",
-			layout, null, segmentsExperienceId);
-
-		_assertRenderLayoutHTML(
-			_getInfoItemAttributesMap(
-				JournalArticle.class.getName(),
-				_journalArticle.getResourcePrimKey(), _journalArticle),
-			2, layout, segmentsExperienceId);
-	}
-
-	@Test
-	@TestInfo("LPS-127024")
 	public void testMapInfoFieldInCollectionDisplayNestedInCollectionDisplayWithAssetEntriesWithSameAssetCategory()
 		throws Exception {
 
@@ -240,6 +217,29 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 			html,
 			StringUtil.contains(
 				html, assetCategory.getName(), StringPool.BLANK));
+	}
+
+	@Test
+	@TestInfo("LPS-127024")
+	public void testMapInfoFieldInCollectionDisplayNestedInCollectionDisplayWithHighestRatedAssets()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		_mapInfoFieldInCollectionDisplayNestedInCollectionDisplay(
+			"com.liferay.asset.internal.info.collection.provider." +
+				"HighestRatedAssetsInfoCollectionProvider",
+			layout, null, segmentsExperienceId);
+
+		_assertRenderLayoutHTML(
+			_getInfoItemAttributesMap(
+				JournalArticle.class.getName(),
+				_journalArticle.getResourcePrimKey(), _journalArticle),
+			2, layout, segmentsExperienceId);
 	}
 
 	private AssetCategory _addAssetCategory() throws Exception {

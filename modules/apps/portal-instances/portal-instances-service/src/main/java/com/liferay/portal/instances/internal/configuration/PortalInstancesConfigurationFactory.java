@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
@@ -65,14 +66,21 @@ public class PortalInstancesConfigurationFactory {
 				null, webId, virtualHostname, mx, maxUsers, active, null, null,
 				null, null, null, null);
 
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setWithSafeCloseable(
-						company.getCompanyId())) {
+			Company finalCompany = company;
 
-				_portalInstancesLocalService.initializePortalInstance(
-					company.getCompanyId(),
-					portalInstancesConfiguration.siteInitializerKey());
-			}
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					try (SafeCloseable safeCloseable =
+							CompanyThreadLocal.setWithSafeCloseable(
+								finalCompany.getCompanyId())) {
+
+						_portalInstancesLocalService.initializePortalInstance(
+							finalCompany.getCompanyId(),
+							portalInstancesConfiguration.siteInitializerKey());
+					}
+
+					return null;
+				});
 		}
 		else {
 			if (company.getCompanyId() ==

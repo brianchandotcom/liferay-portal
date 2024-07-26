@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -120,6 +121,20 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 			portalInstance.getVirtualHost(), portalInstance.getDomain(), 0,
 			true);
 
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				try (SafeCloseable safeCloseable =
+						CompanyThreadLocal.setWithSafeCloseable(
+							company.getCompanyId())) {
+
+					_portalInstancesLocalService.initializePortalInstance(
+						company.getCompanyId(),
+						portalInstance.getSiteInitializerKey());
+				}
+
+				return null;
+			});
+
 		if (admin != null) {
 			User defaultAdminUser = _userLocalService.getUserByEmailAddress(
 				company.getCompanyId(),
@@ -149,14 +164,6 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 				contact.getFacebookSn(), contact.getJabberSn(),
 				contact.getSkypeSn(), contact.getTwitterSn(),
 				contact.getJobTitle(), null, null, null, null, null, null);
-		}
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
-					company.getCompanyId())) {
-
-			_portalInstancesLocalService.initializePortalInstance(
-				company.getCompanyId(), portalInstance.getSiteInitializerKey());
 		}
 
 		_portalInstancesLocalService.synchronizePortalInstances();

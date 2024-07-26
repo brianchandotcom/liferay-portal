@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -143,13 +144,19 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		String siteInitializerKey = ParamUtil.getString(
 			actionRequest, "siteInitializerKey");
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
-					company.getCompanyId())) {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				try (SafeCloseable safeCloseable =
+						 CompanyThreadLocal.setWithSafeCloseable(
+							 company.getCompanyId())) {
 
-			_portalInstancesLocalService.initializePortalInstance(
-				company.getCompanyId(), siteInitializerKey);
-		}
+					_portalInstancesLocalService.initializePortalInstance(
+						company.getCompanyId(),
+						siteInitializerKey);
+				}
+
+				return null;
+			});
 
 		_synchronizePortalInstances();
 	}

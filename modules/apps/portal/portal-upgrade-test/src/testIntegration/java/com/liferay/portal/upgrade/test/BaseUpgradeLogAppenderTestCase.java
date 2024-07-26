@@ -88,9 +88,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED",
 			_originalUpgradeLogContextEnabled);
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "UPGRADE_REPORT_ENABLED",
-			_originalUpgradeReportEnabled);
 	}
 
 	@Before
@@ -639,9 +636,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_originalUpgradeLogContextEnabled =
 			ReflectionTestUtil.getAndSetFieldValue(
 				PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED", true);
-
-		_originalUpgradeReportEnabled = ReflectionTestUtil.getAndSetFieldValue(
-			PropsValues.class, "UPGRADE_REPORT_ENABLED", true);
 	}
 
 	protected abstract String getFilePath();
@@ -789,7 +783,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		Pattern.compile("(\\w+_?):(\\d+|-):(\\d+|-)");
 	private static boolean _originalUpgradeClient;
 	private static boolean _originalUpgradeLogContextEnabled;
-	private static boolean _originalUpgradeReportEnabled;
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
 

@@ -263,6 +263,18 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			};
 		}
 
+		case TYPES.UPDATE_APP_SUPPORT_PHONE: {
+			const {id, value} = action.payload;
+
+			return {
+				...state,
+				supportPhone: {
+					id,
+					value,
+				},
+			};
+		}
+
 		case TYPES.UPDATE_APP_SUPPORT_URL: {
 			const {id, value} = action.payload;
 

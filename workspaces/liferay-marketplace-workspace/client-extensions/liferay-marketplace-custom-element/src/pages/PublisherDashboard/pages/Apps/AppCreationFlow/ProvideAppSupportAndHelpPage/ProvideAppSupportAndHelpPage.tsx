@@ -40,6 +40,7 @@ export function ProvideAppSupportAndHelpPage({
 			priceModel,
 			publisherWebsiteURL,
 			supportEmail,
+			supportPhone,
 			supportURL,
 		},
 		dispatch,
@@ -70,6 +71,11 @@ export function ProvideAppSupportAndHelpPage({
 			},
 			{
 				specificationKey:
+					PRODUCT_SUPPORT_SPECIFICATION_KEY.SUPPORT_PHONE,
+				value: supportPhone?.value,
+			},
+			{
+				specificationKey:
 					PRODUCT_SUPPORT_SPECIFICATION_KEY.APP_USAGE_TERMS_URL,
 				value: appUsageTermsURL?.value,
 			},
@@ -90,6 +96,7 @@ export function ProvideAppSupportAndHelpPage({
 			appUsageTermsURL?.value,
 			publisherWebsiteURL?.value,
 			supportEmail?.value,
+			supportPhone?.value,
 			supportURL?.value,
 		]
 	);
@@ -158,6 +165,22 @@ export function ProvideAppSupportAndHelpPage({
 				/>
 
 				<Input
+					label="Support Phone"
+					onChange={({target}) =>
+						dispatch({
+							payload: {
+								id: supportPhone?.id,
+								value: target.value,
+							},
+							type: TYPES.UPDATE_APP_SUPPORT_PHONE,
+						})
+					}
+					placeholder="Enter Support Phone"
+					required={isPaidApp}
+					value={supportPhone.value}
+				/>
+
+				<Input
 					label="App usage terms (EULA) URL"
 					onChange={({target}) =>
 						dispatch({
@@ -209,6 +232,7 @@ export function ProvideAppSupportAndHelpPage({
 						? processing
 						: processing ||
 							!supportEmail.value.length ||
+							!supportPhone.value.length ||
 							!publisherWebsiteURL.value.length
 				}
 				isLoading={processing}

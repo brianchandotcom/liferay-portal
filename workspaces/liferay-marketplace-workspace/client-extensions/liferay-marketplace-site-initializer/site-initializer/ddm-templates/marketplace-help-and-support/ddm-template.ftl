@@ -1,3 +1,24 @@
+<style>
+	.help-and-support-link {
+		color: inherit;
+		cursor: pointer;
+		text-decoration: none;
+	}
+
+	.help-and-support-link:hover {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.help-and-support-link-icon {
+		color: rgb(133, 140, 148);
+	}
+
+	.help-and-support-link-arrow {
+		fill: rgb(133, 140, 148);
+	}
+</style>
+
 <#if (_CUSTOM_FIELD_Documentation.getData())?has_content && (_CUSTOM_FIELD_Documentation.getData())?starts_with("https")>
 	<a class="bg-whiteColor pb-2 pl-4 pr-4 pt-2" href="${_CUSTOM_FIELD_Documentation.getData()}" style="border-color: var(--neutral-9);border-style: solid; border-width: 0 0 2px 0;align-items:center;color:var(--body-color);cursor:pointer;display:flex;justify-content:space-between;text-decoration:none;" target="_blank">
 		<svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="doc" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="2" y="1" width="12" height="14"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.673 2.666c0-.733.594-1.333 1.327-1.333h4.78c.353 0 .693.14.94.393l3.22 3.22c.253.247.393.587.393.94v7.447c0 .733-.6 1.333-1.333 1.333H3.993c-.733 0-1.326-.6-1.326-1.333l.006-10.667Zm5.994-.333v3c0 .367.3.667.666.667h3L8.667 2.333Z" fill="#000"/></mask><g mask="url(#doc)"><path fill="var(--neutral-5)" d="M0 0h16v16H0z"/></g></svg>
@@ -7,14 +28,6 @@
 		<svg class="link-arrow" style="margin-left:auto;" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="arrow" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="4" width="6" height="8"><path d="m6 10.584 2.587-2.587L6 5.41a.664.664 0 1 1 .94-.94L10 7.53c.26.26.26.68 0 .94l-3.06 3.06c-.26.26-.68.26-.94 0a.678.678 0 0 1 0-.946Z" fill="#000"/></mask><g mask="url(#arrow)"><path fill="var(--neutral-5)" d="M0 0h16v16H0z"/></g></svg>
 	</a>
 </#if>
-
-<a class="bg-whiteColor pb-2 pl-4 pr-4 pt-2" href="https://www.liferay.com/en/legal/marketplace-terms-of-service" style="border-color: var(--neutral-9);border-style: solid; border-width: 0 0 2px 0;align-items:center;color:var(--body-color);cursor:pointer;display:flex;justify-content:space-between;text-decoration:none;" target="_blank">
-	<svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="terms" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1" y="1" width="14" height="14"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.333 1.333h-8C4.6 1.333 4 1.933 4 2.666v8C4 11.4 4.6 12 5.333 12h8c.734 0 1.334-.6 1.334-1.334v-8c0-.733-.6-1.333-1.334-1.333ZM2 4c-.367 0-.667.3-.667.666v8.667c0 .733.6 1.333 1.334 1.333h8.666c.367 0 .667-.3.667-.666 0-.367-.3-.667-.667-.667h-8a.669.669 0 0 1-.666-.667v-8C2.667 4.3 2.367 4 2 4Zm4.667 3.333H12c.367 0 .667-.3.667-.667 0-.366-.3-.666-.667-.666H6.667C6.3 6 6 6.3 6 6.666c0 .367.3.667.667.667ZM9.333 10H6.667A.669.669 0 0 1 6 9.333c0-.367.3-.667.667-.667h2.666c.367 0 .667.3.667.667 0 .367-.3.667-.667.667ZM6.667 4.666H12c.367 0 .667-.3.667-.666 0-.367-.3-.667-.667-.667H6.667C6.3 3.333 6 3.633 6 4c0 .366.3.666.667.666Z" fill="#000"/></mask><g mask="url(#terms)"><path fill="var(--neutral-5)" d="M0 0h16v16H0z"/></g></svg>
-
-	<span class="copy-text ml-1">${languageUtil.get(locale, "terms-and-conditions", "Terms & Conditions")}</span>
-
-	<svg class="link-arrow" style="margin-left:auto;" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="arrow" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="4" width="6" height="8"><path d="m6 10.584 2.587-2.587L6 5.41a.664.664 0 1 1 .94-.94L10 7.53c.26.26.26.68 0 .94l-3.06 3.06c-.26.26-.68.26-.94 0a.678.678 0 0 1 0-.946Z" fill="#000"/></mask><g mask="url(#arrow)"><path fill="var(--neutral-5)" d="M0 0h16v16H0z"/></g></svg>
-</a>
 
 <#if (_CUSTOM_FIELD_Source.getData())?has_content && (_CUSTOM_FIELD_Source.getData())?starts_with("https")>
 	<a class="bg-whiteColor pb-2 pl-4 pr-4 pt-2" href="${_CUSTOM_FIELD_Source.getData()}" style="border-color: var(--neutral-9);border-style: solid; border-width: 0 0 2px 0;align-items:center;color:var(--body-color);cursor:pointer;display:flex;justify-content:space-between;text-decoration:none;" target="_blank">
@@ -35,3 +48,211 @@
 		<svg class="link-arrow" style="margin-left:auto;" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="arrow" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="4" width="6" height="8"><path d="m6 10.584 2.587-2.587L6 5.41a.664.664 0 1 1 .94-.94L10 7.53c.26.26.26.68 0 .94l-3.06 3.06c-.26.26-.68.26-.94 0a.678.678 0 0 1 0-.946Z" fill="#000"/></mask><g mask="url(#arrow)"><path fill="var(--neutral-5)" d="M0 0h16v16H0z"/></g></svg>
 	</a>
 </#if>
+
+<#if (CPDefinition_cProductId.getData())??>
+	<#assign productId = CPDefinition_cProductId.getData() />
+</#if>
+
+<#if themeDisplay?has_content>
+	<#assign scopeGroupId = themeDisplay.getScopeGroupId() />
+</#if>
+
+<#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${scopeGroupId}'") />
+
+<#if channel?has_content>
+	<#assign channelId = channel.items[0].id />
+</#if>
+
+<#assign
+	productId = CPDefinition_cProductId.getData()
+	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=categories,images,productSpecifications")
+	catalogName = product.catalogName
+	productImage = product.images![]
+	solutionHeaderImages = productImage?filter(image -> image.tags?seq_contains("app icon"))
+/>
+
+<#if product.productSpecifications?has_content>
+	<#assign
+		productSpecifications = product.productSpecifications
+
+		supportEmailFiltered = productSpecifications?filter(specification -> stringUtil.equals(specification.specificationKey, "supportemailaddress"))
+		supportUrlFiltered = productSpecifications?filter(specification -> stringUtil.equals(specification.specificationKey, "supporturl"))
+		supporPhoneFiltered = productSpecifications?filter(specification -> stringUtil.equals(specification.specificationKey, "supportphone"))
+	/>
+
+	<#if supportEmailFiltered?has_content>
+		<#assign
+			supportEmail = supportEmailFiltered[0].value
+		/>
+	</#if>
+
+	<#if supportUrlFiltered?has_content>
+		<#assign supportUrl = supportUrlFiltered[0].value?trim?replace(' ', '') />
+
+		<#if supportUrl?starts_with("http://") || supportUrl?starts_with("https://")>
+			<#assign sanitizedUrl = supportUrl />
+		<#else>
+			<#assign sanitizedUrl = "https://" + supportUrl />
+		</#if>
+	</#if>
+
+	<#if supporPhoneFiltered?has_content>
+		<#assign
+			supporPhone = supporPhoneFiltered[0].value
+		/>
+	</#if>
+</#if>
+
+<div class="d-flex flex-column">
+	<div class="d-flex">
+		<span class="help-and-support-link-icon">
+			<@clay["icon"] symbol="envelope-closed" />
+		</span>
+
+		<a class="d-flex w-100 justify-content-between help-and-support-link" onClick="openModal()">
+			<span class="copy-text ml-1 help-and-support-link">
+				${languageUtil.get(locale, "publisher-support", "Publisher Support")}
+			</span>
+
+			<svg class="link-arrow help-and-support-link-arrow" fill="none" height="16" style="margin-left: auto" width="16" xmlns="http://www.w3.org/2000/svg">
+				<mask height="8"id="arrow" maskUnits="userSpaceOnUse" style="mask-type: alpha" width="6" x="5" y="4">
+					<path d="m6 10.584 2.587-2.587L6 5.41a.664.664 0 1 1 .94-.94L10 7.53c.26.26.26.68 0 .94l-3.06 3.06c-.26.26-.68.26-.94 0a.678.678 0 0 1 0-.946Z" fill="#000" />
+				</mask>
+
+				<g mask="url(#arrow)">
+					<path d="M0 0h16v16H0z" fill="var(--neutral-5)" />
+				</g>
+			</svg>
+		</a>
+	</div>
+
+	<div class="d-flex">
+		<span class="help-and-support-link-icon">
+			<@clay["icon"] symbol="document" />
+		</span>
+
+		<a class="d-flex w-100 justify-content-between help-and-support-link" href="https://www.liferay.com/en/legal/marketplace-terms-of-service" target="_blank">
+			<span class="copy-text ml-1 help-and-support-link">
+				${languageUtil.get(locale, "terms-and-conditions", "Terms & Conditions")}
+			</span>
+
+			<svg class="link-arrow help-and-support-link-arrow" fill="none" height="16" style="margin-left: auto" width="16" xmlns="http://www.w3.org/2000/svg">
+				<mask height="8"id="arrow" maskUnits="userSpaceOnUse" style="mask-type: alpha" width="6" x="5" y="4">
+					<path d="m6 10.584 2.587-2.587L6 5.41a.664.664 0 1 1 .94-.94L10 7.53c.26.26.26.68 0 .94l-3.06 3.06c-.26.26-.68.26-.94 0a.678.678 0 0 1 0-.946Z" fill="#000" />
+				</mask>
+
+				<g mask="url(#arrow)">
+					<path fill="var(--neutral-5)" d="M0 0h16v16H0z" />
+				</g>
+			</svg>
+		</a>
+	</div>
+</div>
+
+<script>
+	function modalBody(){
+		return `
+			<#if catalogName?has_content>
+				<div class="align-items-center d-flex flex-row mb-3">
+					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3" style="background: #E2E2E4; border-radius:50%; height:40px; overflow:hidden; width:40px;">
+						<#if solutionHeaderImages?has_content>
+							<#list solutionHeaderImages as image>
+								<#assign imageSourceSplitedUrl = image.src?split("/o") />
+
+								<#if imageSourceSplitedUrl?has_content>
+									<#assign productThumbnail = "/o/${imageSourceSplitedUrl[1]}" />
+
+									<img alt="Slide ${image?index}" class="catalog-icon" src="${productThumbnail}" style="height: 40px; object-fit: contain; width: 40px;">
+								</#if>
+							</#list>
+						<#else>
+							<@clay["icon"]
+								style="fill:#6B6C7E;"
+								symbol="picture"
+							/>
+						</#if>
+					</span>
+
+					<div class="d-flex flex-column">
+						<#if catalogName?has_content>
+							<h3 class="font-weight-bold mb-0">
+								${catalogName}
+							</h3>
+						</#if>
+					</div>
+				</div>
+			</#if>
+
+			<#if sanitizedUrl?has_content && supportUrl?has_content>
+				<div class="align-items-center d-flex flex-row mb-3">
+					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3" style="background: #E2E2E4; border-radius:50%; height:40px; width:40px;">
+						<@clay["icon"]
+							style="fill:#6B6C7E;"
+							symbol="globe"
+						/>
+					</span>
+
+					<div class="d-flex flex-column">
+						<span class="text-black-50">Publisher website URL</span>
+
+						<#if supportUrl?has_content>
+							<a href="${sanitizedUrl}" target="_blank" class="font-weight-bold">
+								${sanitizedUrl}
+							</a>
+						</#if>
+					</div>
+				</div>
+			</#if>
+
+			<#if supportEmail?has_content>
+				<div class="align-items-center d-flex flex-row mb-3">
+					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3" style="background: #E2E2E4; border-radius:50%; height:40px; width:40px;">
+						<@clay["icon"] style="fill:#6B6C7E;"symbol="envelope-closed" />
+					</span>
+
+					<div class="d-flex flex-column">
+						<span class="text-black-50">Support Email</span>
+
+						<#if supportEmail?has_content>
+							<a class="font-weight-bold" href="mailto:${supportEmail}" target="_blank">
+								${supportEmail}
+							</a>
+						</#if>
+					</div>
+				</div>
+			</#if>
+
+			<#if supporPhone?has_content>
+				<div class="d-flex flex-row align-items-center mb-3">
+					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3" style="background: #E2E2E4; border-radius:50%; height:40px; width:40px;">
+						<@clay["icon"]
+							style="fill:#6B6C7E;"
+							symbol="phone"
+						/>
+					</span>
+
+					<div class="d-flex flex-column">
+						<span class="text-black-50">Phone</span>
+
+						<#if supporPhone?has_content>
+							<a class="font-weight-bold" href="tel:${supporPhone}" target="_blank">
+								${supporPhone}
+							</a>
+						</#if>
+					</div>
+				</div>
+			</#if>
+		`
+	}
+
+	function openModal() {
+		Liferay.Util.openModal({
+			bodyHTML:modalBody(),
+			center: true,
+			headerCssClass:"pt-2",
+			headerHTML: "<h2>Publisher Support Contact Info</h2>",
+			size: "md",
+		})
+	}
+
+</script>

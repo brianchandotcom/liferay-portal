@@ -168,6 +168,14 @@
 		"title": "Support URL"
 	},
 	{
+		"categoryKey": "app-support-and-help",
+		"cpDefinitionExternalReferenceCode": "MKT-SUPPORT-PHONE",
+		"description": "",
+		"facetable": false,
+		"key": "supportphone",
+		"title": "Support Phone"
+	},
+	{
 		"categoryKey": "product-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-PRODUCT-NOTES",
 		"description": "General notes about the app or solution.",

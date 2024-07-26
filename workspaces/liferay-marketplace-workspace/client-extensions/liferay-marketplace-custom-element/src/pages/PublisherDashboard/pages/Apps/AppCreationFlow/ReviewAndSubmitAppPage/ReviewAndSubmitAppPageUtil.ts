@@ -42,9 +42,16 @@ export const supportAndHelpMap = new Map<string, {icon: string; title: string}>(
 			},
 		],
 		[
-			'supporturl',
+			'supportphone',
 			{
 				icon: 'phone',
+				title: 'Support Phone',
+			},
+		],
+		[
+			'supporturl',
+			{
+				icon: 'link',
 				title: 'Support URL',
 			},
 		],

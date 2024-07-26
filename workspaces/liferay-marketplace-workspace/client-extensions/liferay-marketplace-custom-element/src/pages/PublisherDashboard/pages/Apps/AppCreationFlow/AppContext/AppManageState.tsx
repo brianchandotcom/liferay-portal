@@ -55,6 +55,7 @@ export type InitialStateProps = {
 	skuTrialId: number;
 	skuVersionId: number;
 	supportEmail: Specification;
+	supportPhone: Specification;
 	supportURL: Specification;
 	versionName?: string;
 };
@@ -87,6 +88,7 @@ const initialState = {
 		ram: '',
 	},
 	supportEmail: {value: ''},
+	supportPhone: {value: ''},
 	supportURL: {value: ''},
 } as unknown as InitialStateProps;
 

@@ -130,12 +130,13 @@ export function ReviewAndSubmitAppPage({
 
 				if (
 					[
-						'supportemailaddress',
-						'supporturl',
-						'publisherwebsiteurl',
-						'appusagetermsurl',
 						'appdocumentationurl',
 						'appinstallationguideurl',
+						'appusagetermsurl',
+						'publisherwebsiteurl',
+						'supportemailaddress',
+						'supportphone',
+						'supporturl',
 					].includes(specificationKey)
 				) {
 					supportAndHelpCardInfos.push({

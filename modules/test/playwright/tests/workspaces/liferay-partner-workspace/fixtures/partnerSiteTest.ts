@@ -5,10 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {partnerHelperTest} from './partnerHelperTest';
 
 export const test = mergeTests(
+	apiHelpersTest,
 	loginTest({screenName: 'test'}),
 	partnerHelperTest
 );
@@ -19,11 +21,9 @@ export interface IPartnerSite {
 
 export const partnerSiteTest = test.extend<IPartnerSite>({
 	partnerSite: [
-		async ({page, partnerHelper}, use) => {
+		async ({apiHelpers, page}, use) => {
 			const site =
-				await partnerHelper.apiHelpers.headlessSite.getSiteByERC(
-					'LIFERAY_PARTNER'
-				);
+				await apiHelpers.headlessSite.getSiteByERC('LIFERAY_PARTNER');
 
 			expect(site.id).toBeGreaterThan(0);
 

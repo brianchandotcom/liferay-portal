@@ -8,10 +8,10 @@ import {expect, mergeTests} from '@playwright/test';
 import {partnerPagesTest} from '../../../fixtures/partnerPagesTest';
 import {accountPlatinumMock} from '../../../mocks/accountMock';
 import {userCOMMock} from '../../../mocks/userMock';
-import {generateMDFRequestData} from '../../../utils/mdf';
-import {EAccountRoles} from '../../../utils/constants';
 import { TAccount } from '../../../types/account';
 import { TUserAccount } from '../../../types/user';
+import {EAccountRoles} from '../../../utils/constants';
+import {generateMDFRequestData} from '../../../utils/mdf';
 
 export const test = mergeTests(partnerPagesTest);
 
@@ -20,9 +20,23 @@ test.describe('MDF Request Form', () => {
 	let userCOM: TUserAccount;
 
 	test.beforeEach(
-		async ({mdfRequestFormPage, partnerHelper, partnerSite}) => {
-			accountPlatinum = await partnerHelper.apiHelpers.headlessAdminUser.postAccount(
-				accountPlatinumMock
+		async ({
+			apiHelpers,
+			mdfRequestFormPage,
+			partnerHelper,
+			partnerSite,
+		}) => {
+			accountPlatinum =
+				await apiHelpers.headlessAdminUser.postAccount(
+					accountPlatinumMock
+				);
+			userCOM =
+				await apiHelpers.headlessAdminUser.postUserAccount(userCOMMock);
+
+			await partnerHelper.assignUserToAccountRole(
+				accountPlatinum.id,
+				EAccountRoles.PARTNER_MANAGER,
+				Number(userCOM.id)
 			);
 			userCOM = await partnerHelper.apiHelpers.headlessAdminUser.postUserAccount(
 				userCOMMock
@@ -34,15 +48,15 @@ test.describe('MDF Request Form', () => {
 		}
 	);
 
-	test.afterEach(async ({partnerHelper}) => {
+	test.afterEach(async ({apiHelpers}) => {
 		if (accountPlatinum) {
-			await partnerHelper.apiHelpers.headlessAdminUser.deleteAccount(
+			await apiHelpers.headlessAdminUser.deleteAccount(
 				accountPlatinum.id
 			);
 		}
 
 		if (userCOM) {
-			await partnerHelper.apiHelpers.headlessAdminUser.deleteUserAccount(
+			await apiHelpers.headlessAdminUser.deleteUserAccount(
 				Number(userCOM.id)
 			);
 		}

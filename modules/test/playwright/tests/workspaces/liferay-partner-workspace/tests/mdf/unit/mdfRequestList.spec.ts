@@ -6,14 +6,14 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {partnerPagesTest} from '../../../fixtures/partnerPagesTest';
-import {customFormatDate, getDateCustomFormat} from '../../../utils/date';
 import { accountPlatinumMock } from '../../../mocks/accountMock';
 import { userCOMMock } from '../../../mocks/userMock';
-import { EAccountRoles } from '../../../utils/constants';
-import { generateMDFRequestData } from '../../../utils/mdf';
 import { TAccount } from '../../../types/account';
-import { TUserAccount } from '../../../types/user';
 import { TMDFRequest } from '../../../types/mdf';
+import { TUserAccount } from '../../../types/user';
+import { EAccountRoles } from '../../../utils/constants';
+import {customFormatDate, getDateCustomFormat} from '../../../utils/date';
+import { generateMDFRequestData } from '../../../utils/mdf';
 
 export const test = mergeTests(partnerPagesTest);
 
@@ -23,12 +23,23 @@ test.describe('MDF Request List', () => {
 	let mdfRequest: TMDFRequest;
 
 	test.beforeEach(
-		async ({mdfRequestListPage, partnerHelper, partnerSite}) => {
-			accountPlatinum = await partnerHelper.apiHelpers.headlessAdminUser.postAccount(
-				accountPlatinumMock
-			);
-			userCOM = await partnerHelper.apiHelpers.headlessAdminUser.postUserAccount(
-				userCOMMock
+		async ({
+			apiHelpers,
+			mdfRequestListPage,
+			partnerHelper,
+			partnerSite,
+		}) => {
+			accountPlatinum =
+				await apiHelpers.headlessAdminUser.postAccount(
+					accountPlatinumMock
+				);
+			userCOM =
+				await apiHelpers.headlessAdminUser.postUserAccount(userCOMMock);
+
+			await partnerHelper.assignUserToAccountRole(
+				accountPlatinum.id,
+				EAccountRoles.PARTNER_MANAGER,
+				Number(userCOM.id)
 			);
 
 			await partnerHelper.assignUserToAccountRole(accountPlatinum.id, EAccountRoles.PARTNER_MANAGER, Number(userCOM.id));
@@ -41,23 +52,21 @@ test.describe('MDF Request List', () => {
 		}
 	);
 
-	test.afterEach(async ({partnerHelper}) => {
+	test.afterEach(async ({apiHelpers}) => {
 		if (accountPlatinum) {
-			await partnerHelper.apiHelpers.headlessAdminUser.deleteAccount(
+			await apiHelpers.headlessAdminUser.deleteAccount(
 				accountPlatinum.id
 			);
 		}
 
 		if (userCOM) {
-			await partnerHelper.apiHelpers.headlessAdminUser.deleteUserAccount(
+			await apiHelpers.headlessAdminUser.deleteUserAccount(
 				Number(userCOM.id)
 			);
 		}
 
 		if (mdfRequest) {
-			await partnerHelper.apiHelpers.delete(
-				`/o/c/mdfrequests/${mdfRequest.id}`
-			);
+			await apiHelpers.delete(`/o/c/mdfrequests/${mdfRequest.id}`);
 		}
 	});
 

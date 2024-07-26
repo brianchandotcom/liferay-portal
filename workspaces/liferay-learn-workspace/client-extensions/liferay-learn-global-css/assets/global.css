@@ -1397,6 +1397,13 @@ pre[class*='language-'] {
 	}
 }
 
+.learn-sites-dropdown {
+	.lfr-layout-structure-item-basic-component-html {
+		padding-top: 1px;
+		width: auto;
+	}
+}
+
 .liferay-nav-item,
 .liferay-nav-item a {
 	border: 1px solid transparent;

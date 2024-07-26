@@ -60,6 +60,9 @@
 						"pageElements": [
 							{
 								"definition": {
+									"cssClasses": [
+										"learn-sites-dropdown"
+									],
 									"customCSS": ".[$FRAGMENT_CLASS$] {\n    background: var(--white);\n    border-radius: 10px;\n    box-shadow: var(--elevation-fluffy-1);\n    text-align: left;\n    width: 15rem;\n    z-index: 10;\n}",
 									"fragmentStyle": {
 										"paddingBottom": "2",

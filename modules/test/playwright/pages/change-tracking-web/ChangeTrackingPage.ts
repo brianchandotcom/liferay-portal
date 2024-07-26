@@ -7,10 +7,9 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../helpers/ApiHelpers';
 import getRandomString from '../../utils/getRandomString';
-import { userData} from '../../utils/performLogin';
+import {userData} from '../../utils/performLogin';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
-
 
 export class ChangeTrackingPage {
 	readonly page: Page;
@@ -32,7 +31,7 @@ export class ChangeTrackingPage {
 			name: 'Comment',
 		});
 
-		if(!comment) {
+		if (!comment) {
 			comment = getRandomString();
 		}
 
@@ -45,18 +44,18 @@ export class ChangeTrackingPage {
 		await expect(this.page.getByText('1 Comment')).toBeVisible();
 	}
 
-	async addUserToPublication(ctCollectionName, role, user){
+	async addUserToPublication(ctCollectionName, role, user) {
 		await this.goToReviewChanges(ctCollectionName);
 
 		await this.page.getByLabel('View Collaborators').click();
-		
+
 		await this.page.getByLabel('can view').click();
 
 		await this.page.getByRole('menuitem', {name: role}).click();
 
-		await this.page.getByPlaceholder(
-			'Enter name or email address.'
-		).fill(user.emailAddress);
+		await this.page
+			.getByPlaceholder('Enter name or email address.')
+			.fill(user.emailAddress);
 
 		await this.page.getByRole('option', {name: user.name}).click();
 
@@ -78,7 +77,7 @@ export class ChangeTrackingPage {
 			password: 'test',
 			surname: user.familyName,
 		};
-		
+
 		await apiHelpers.headlessAdminUser.assignUserToRole(
 			'Publications User',
 			user.id
@@ -93,9 +92,9 @@ export class ChangeTrackingPage {
 		await this.addComment(comment);
 
 		const editedComment = getRandomString();
-	
+
 		await this.editComment(comment, editedComment);
-	
+
 		await this.deleteComment(editedComment);
 	}
 
@@ -106,15 +105,19 @@ export class ChangeTrackingPage {
 			await this.openComments();
 		}
 
-		await this.page.locator('div.comment-row').filter({hasText: comment}).locator('button.dropdown-toggle').click();
+		await this.page
+			.locator('div.comment-row')
+			.filter({hasText: comment})
+			.locator('button.dropdown-toggle')
+			.click();
 
-		await this.page.getByRole('menuitem', { name: 'Delete' }).click();
-	
-		await this.page.getByRole('button', { name: 'Delete' }).click();
-	
+		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+
 		await expect(this.page.getByText(comment)).toBeHidden();
 	}
-	
+
 	async editComment(comment, content) {
 		const commentsDiv = this.page.locator('div.publications-comments');
 
@@ -122,13 +125,17 @@ export class ChangeTrackingPage {
 			await this.openComments();
 		}
 
-		await this.page.locator('div.comment-row').filter({hasText: comment}).locator('button.dropdown-toggle').click();
+		await this.page
+			.locator('div.comment-row')
+			.filter({hasText: comment})
+			.locator('button.dropdown-toggle')
+			.click();
 
-		await this.page.getByRole('menuitem', { name: 'Edit' }).click();
+		await this.page.getByRole('menuitem', {name: 'Edit'}).click();
 
 		await this.page.getByText(comment).fill(content);
 
-		await this.page.getByRole('button', { name: 'Save' }).click();
+		await this.page.getByRole('button', {name: 'Save'}).click();
 
 		await expect(this.page.getByText(content)).toBeVisible();
 	}

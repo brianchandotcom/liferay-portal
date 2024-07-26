@@ -199,8 +199,6 @@ test('Data Set can use different sources of data: StructuredContentSchema, UserS
 			groupId: siteId,
 			titleMap: {en_US: structuredContentTitle},
 		});
-
-		console.log(article);
 	});
 
 	await test.step('Configure Structured Content Schema Data Set fragment', async () => {

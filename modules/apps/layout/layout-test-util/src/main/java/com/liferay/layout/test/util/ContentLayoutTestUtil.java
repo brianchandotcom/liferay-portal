@@ -294,9 +294,9 @@ public class ContentLayoutTestUtil {
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkServiceUtil.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), layout.getGroupId(), 0,
-				segmentsExperienceId, layout.getPlid(), StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK,
+				null, layout.getGroupId(), 0, 0, segmentsExperienceId,
+				layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK,
 				fragmentRenderer.getConfiguration(
 					defaultFragmentRendererContext),
 				editableValues, StringPool.BLANK, 0, fragmentRenderer.getKey(),

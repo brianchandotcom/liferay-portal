@@ -330,16 +330,11 @@ public class LayoutSetPrototypePropagationTest
 			TestPropsValues.getUserId(), prototypeLayout1.getPlid(), "/page-a",
 			languageId);
 
-		ContentLayoutTestUtil.publishLayout(
-			prototypeLayout1.fetchDraftLayout(), prototypeLayout1);
+		_propagateChanges(0, 1);
 
-		propagateChanges(group);
-
-		Layout layout1 = _layoutLocalService.getLayoutByUuidAndGroupId(
-			prototypeLayout1.getUuid(), group.getGroupId(),
-			prototypeLayout1.isPrivateLayout());
-
-		Assert.assertEquals("/page-a", layout1.getFriendlyURL());
+		Assert.assertNotNull(
+			_layoutLocalService.getLayoutByFriendlyURL(
+				group.getGroupId(), false, "/page-a"));
 
 		prototypeLayout1 = _layoutLocalService.updateFriendlyURL(
 			TestPropsValues.getUserId(), prototypeLayout1.getPlid(), "/page-a0",
@@ -368,26 +363,16 @@ public class LayoutSetPrototypePropagationTest
 		_layoutLocalService.updateParentLayoutId(
 			prototypeLayout1.getPlid(), prototypeLayout2.getPlid());
 
-		propagateChanges(group);
+		_propagateChanges(1, 1);
 
-		layout1 = _layoutLocalService.getLayoutByUuidAndGroupId(
-			prototypeLayout1.getUuid(), group.getGroupId(),
-			prototypeLayout1.isPrivateLayout());
+		Layout layout1 = _layoutLocalService.getLayoutByFriendlyURL(
+			group.getGroupId(), false, "/page-a0");
 
-		Assert.assertEquals("/page-a0", layout1.getFriendlyURL());
+		Assert.assertEquals(0, layout1.getParentPlid());
 
-		Layout layout2 = _layoutLocalService.getLayoutByUuidAndGroupId(
-			prototypeLayout2.getUuid(), group.getGroupId(),
-			prototypeLayout2.isPrivateLayout());
-
-		Assert.assertEquals(layout2.getPlid(), layout1.getParentPlid());
-
-		Assert.assertTrue(
-			layout2.getFriendlyURL(
-				locale
-			).startsWith(
-				"/page-a"
-			));
+		Assert.assertNull(
+			_layoutLocalService.fetchLayoutByFriendlyURL(
+				group.getGroupId(), false, "/page-a"));
 	}
 
 	@Test
@@ -1449,6 +1434,31 @@ public class LayoutSetPrototypePropagationTest
 		return PortletIdCodec.encode(
 			editableValuesJSONObject.getString("portletId"),
 			editableValuesJSONObject.getString("instanceId"));
+	}
+
+	private void _propagateChanges(int failCount, int layoutCount)
+		throws Exception {
+
+		LayoutSet layoutSet = group.getPublicLayoutSet();
+
+		List<Layout> initialMergeFailFriendlyURLLayouts =
+			layoutSet.getMergeFailFriendlyURLLayouts();
+
+		propagateChanges(group);
+
+		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			layoutSet.getLayoutSetId());
+
+		List<Layout> mergeFailFriendlyURLLayouts =
+			layoutSet.getMergeFailFriendlyURLLayouts();
+
+		Assert.assertEquals(
+			mergeFailFriendlyURLLayouts.toString(),
+			initialMergeFailFriendlyURLLayouts.size() + failCount,
+			mergeFailFriendlyURLLayouts.size());
+
+		Assert.assertEquals(
+			_initialLayoutCount + layoutCount, getGroupLayoutCount());
 	}
 
 	private void _registerTestPortlet(String portletName) {

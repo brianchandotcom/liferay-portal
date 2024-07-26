@@ -497,7 +497,7 @@ class App extends EventEmitter {
 			})
 			.then(() =>
 				this.preloadCSS
-					? nextScreen.preloadResources(this.surfaces)
+					? nextScreen.preloadStyles(this.surfaces)
 					: Promise.resolve()
 			)
 			.then(() => nextScreen.flip(this.surfaces))

@@ -207,13 +207,13 @@ class Screen extends Cacheable {
 	}
 
 	/**
-	 * Allows a screen to preload resources (like CSS, images) before flipping
-	 * so that the UI flip transition is smooth.
+	 * Allows a screen to preload CSS stylesheets before flipping so that the UI
+	 * transition is smooth.
 	 * @param {!object} surfaces Map of surfaces to flip keyed by surface id.
 	 * @return {!Promise} This returns a promise, which will pause the
 	 *     navigation until it is resolved.
 	 */
-	preloadResources() {
+	preloadStyles() {
 		return Promise.resolve();
 	}
 

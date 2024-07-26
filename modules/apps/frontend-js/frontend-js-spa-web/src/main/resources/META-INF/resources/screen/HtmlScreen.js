@@ -160,7 +160,7 @@ class HtmlScreen extends RequestScreen {
 	/**
 	 * @Override
 	 */
-	preloadResources(surfaces) {
+	preloadStyles(surfaces) {
 		const tracked = this.virtualQuerySelectorAll_(
 			HtmlScreen.selectors.styles
 		);
@@ -180,7 +180,7 @@ class HtmlScreen extends RequestScreen {
 
 				return Promise.resolve();
 			})
-		).then(() => super.preloadResources(surfaces));
+		).then(() => super.preloadStyles(surfaces));
 	}
 
 	/**

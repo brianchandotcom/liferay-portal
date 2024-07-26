@@ -133,6 +133,7 @@ test(
 		await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
 
 		await pageEditorPage.mapFormFragment(formId, 'Lemon Basket', [
+			'Lemon Dimensions',
 			'Material',
 		]);
 

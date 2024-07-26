@@ -11,6 +11,7 @@ import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import clickRowAction from '../../utils/clickRowAction';
 import getRowByText from '../../utils/getRowByText';
+import getSelectOptionLabels from '../../utils/getSelectOptionLabels';
 import {ItemActionTypes} from '../../utils/types';
 import {actionsPageTest} from './fixtures/actionsPageTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
@@ -57,6 +58,56 @@ test(
 			await expect(actionsPage.noActionsWereCreatedMessage).toContainText(
 				'No actions were created.'
 			);
+		});
+	}
+);
+
+test(
+	'Assert available selection options in item action form',
+	{tag: '@LPD-11300'},
+	async ({actionsPage}) => {
+		await test.step('Go to item actions tab', async () => {
+			await actionsPage.gotoItemActionsTab({dataSetLabel});
+		});
+
+		await test.step('Open new item actions form', async () => {
+			await actionsPage.newItemActionPlusButton.click();
+
+			await expect(
+				actionsPage.page.getByText('Display Options')
+			).toBeInViewport();
+		});
+
+		await test.step('Asset action type options', async () => {
+			expect(
+				await getSelectOptionLabels(actionsPage.actionForm.typeSelect)
+			).toEqual(['Async', 'Headless', 'Link', 'Modal', 'Side Panel']);
+		});
+
+		await test.step('Asset confirmation message type options', async () => {
+			expect(
+				await getSelectOptionLabels(
+					actionsPage.actionForm.confirmationMessageTypeSelect
+				)
+			).toEqual(['Info', 'Secondary', 'Success', 'Danger', 'Warning']);
+		});
+
+		await test.step('Asset method options for `Async` action type', async () => {
+			await actionsPage.actionForm.typeSelect.selectOption('Async');
+
+			expect(
+				await getSelectOptionLabels(actionsPage.actionForm.methodSelect)
+			).toEqual(['DELETE', 'GET', 'PATCH', 'POST', 'PUT']);
+		});
+
+		await test.step('Asset variant options for `Modal` action type', async () => {
+			await actionsPage.actionForm.typeSelect.selectOption('Modal');
+
+			expect(
+				await getSelectOptionLabels(
+					actionsPage.actionForm.variantSelect
+				)
+			).toEqual(['Full Screen', 'Large', 'Small']);
 		});
 	}
 );

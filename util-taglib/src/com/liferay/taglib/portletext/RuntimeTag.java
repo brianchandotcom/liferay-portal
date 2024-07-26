@@ -303,10 +303,6 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			httpServletRequest.setAttribute(
 				WebKeys.SETTINGS_SCOPE, settingsScope);
 
-			PortletRenderParts portletRenderParts = null;
-
-			boolean writeObject = false;
-
 			String layoutMode = ParamUtil.getString(
 				httpServletRequest, "p_l_mode", Constants.VIEW);
 
@@ -321,8 +317,6 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 						PortletKeys.PREFS_PLID_SHARED, portletInstanceKey,
 						defaultPreferences);
-
-					writeObject = true;
 				}
 
 				if (persistSettings) {
@@ -347,21 +341,16 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 							portletLayoutListener.onAddToLayout(
 								portletInstanceKey, themeDisplay.getPlid());
 						}
-
-						writeObject = true;
 					}
 				}
 			}
 
-			if (writeObject) {
-				portletRenderParts = PortletRenderUtil.getPortletRenderParts(
+			PortletRenderParts portletRenderParts =
+				PortletRenderUtil.getPortletRenderParts(
 					httpServletRequest, StringPool.BLANK, portlet);
-			}
 
-			if (portletRenderParts != null) {
-				PortletRenderUtil.writeHeaderPaths(
-					httpServletResponse, portletRenderParts);
-			}
+			PortletRenderUtil.writeHeaderPaths(
+				httpServletResponse, portletRenderParts);
 
 			embeddedPortletIds.push(embeddedPortletId);
 
@@ -388,10 +377,8 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 
 			embeddedPortletIds.pop();
 
-			if (portletRenderParts != null) {
-				PortletRenderUtil.writeFooterPaths(
-					httpServletResponse, portletRenderParts);
-			}
+			PortletRenderUtil.writeFooterPaths(
+				httpServletResponse, portletRenderParts);
 		}
 		finally {
 			restrictPortletServletRequest.mergeSharedAttributes();

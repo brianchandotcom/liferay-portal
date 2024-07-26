@@ -22,7 +22,7 @@ import CustomerPortal from './routes/customer-portal';
 import Home from './routes/home';
 import Onboarding from './routes/onboarding';
 
-const ELEMENT_ID = 'liferay-remote-app-customer-portal';
+const ELEMENT_ID = 'liferay-customer-custom-element';
 
 const AppRoutes = {
 	home: Home,

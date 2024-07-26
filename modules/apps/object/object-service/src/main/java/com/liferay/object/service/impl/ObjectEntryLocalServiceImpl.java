@@ -3295,10 +3295,20 @@ public class ObjectEntryLocalServiceImpl
 
 				ddmExpression.setVariables(columns);
 
+				String output = GetterUtil.getString(
+					objectFieldSettingsValues.get("output"));
+
+				Class<?> javaType = Double.class;
+
+				if (Objects.equals(output, "Integer")) {
+					javaType = Integer.class;
+				}
+
 				try {
 					Expression<?> expression = ddmExpression.getDSLExpression();
 
-					selectExpressions.add(expression.as(objectField.getName()));
+					selectExpressions.add(
+						expression.as(objectField.getName(), javaType));
 				}
 				catch (Exception exception) {
 					_log.error(exception);

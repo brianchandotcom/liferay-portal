@@ -56,7 +56,7 @@ if (Validator.isNotNull(backURL)) {
 				total="<%= subscriptionsCount %>"
 			>
 				<liferay-ui:search-container-results
-					results="<%= SubscriptionLocalServiceUtil.getUserSubscriptions(user.getUserId(), searchContainer.getStart(), searchContainer.getEnd(), new SubscriptionClassNameIdComparator(true)) %>"
+					results="<%= SubscriptionLocalServiceUtil.getUserSubscriptions(user.getUserId(), searchContainer.getStart(), searchContainer.getEnd(), SubscriptionClassNameIdComparator.getInstance(true)) %>"
 				/>
 
 				<liferay-ui:search-container-row

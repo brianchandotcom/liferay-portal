@@ -19,12 +19,12 @@ public class DLContentVersionComparator extends OrderByComparator<DLContent> {
 
 	public static final String[] ORDER_BY_FIELDS = {"version"};
 
-	public DLContentVersionComparator() {
-		this(false);
-	}
+	public static DLContentVersionComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public DLContentVersionComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +59,16 @@ public class DLContentVersionComparator extends OrderByComparator<DLContent> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private DLContentVersionComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final DLContentVersionComparator _INSTANCE_ASCENDING =
+		new DLContentVersionComparator(true);
+
+	private static final DLContentVersionComparator _INSTANCE_DESCENDING =
+		new DLContentVersionComparator(false);
 
 	private final boolean _ascending;
 

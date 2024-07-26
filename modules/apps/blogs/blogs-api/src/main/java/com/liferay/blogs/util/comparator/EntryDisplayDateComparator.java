@@ -24,12 +24,12 @@ public class EntryDisplayDateComparator extends OrderByComparator<BlogsEntry> {
 
 	public static final String[] ORDER_BY_FIELDS = {"displayDate", "entryId"};
 
-	public EntryDisplayDateComparator() {
-		this(false);
-	}
+	public static EntryDisplayDateComparator getInstance(boolean ascending) {
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
 
-	public EntryDisplayDateComparator(boolean ascending) {
-		_ascending = ascending;
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -76,6 +76,16 @@ public class EntryDisplayDateComparator extends OrderByComparator<BlogsEntry> {
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private EntryDisplayDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final EntryDisplayDateComparator _INSTANCE_ASCENDING =
+		new EntryDisplayDateComparator(true);
+
+	private static final EntryDisplayDateComparator _INSTANCE_DESCENDING =
+		new EntryDisplayDateComparator(false);
 
 	private final boolean _ascending;
 

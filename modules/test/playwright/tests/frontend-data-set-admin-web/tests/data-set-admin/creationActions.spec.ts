@@ -12,6 +12,7 @@ import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import clickRowAction from '../../utils/clickRowAction';
 import getRowByText from '../../utils/getRowByText';
+import getSelectOptionLabels from '../../utils/getSelectOptionLabels';
 import {actionsPageTest} from './fixtures/actionsPageTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 
@@ -63,6 +64,40 @@ test(
 			await expect(actionsPage.noActionsWereCreatedMessage).toContainText(
 				'No actions were created.'
 			);
+		});
+	}
+);
+
+test(
+	'Assert available selection options in creation action form',
+	{tag: '@LPD-11245'},
+	async ({actionsPage}) => {
+		await test.step('Go to creation actions tab', async () => {
+			await actionsPage.gotoCreationActionsTab({dataSetLabel});
+		});
+
+		await test.step('Open new item actions form', async () => {
+			await actionsPage.newCreationActionPlusButton.click();
+
+			await expect(
+				actionsPage.page.getByText('Display Options')
+			).toBeInViewport();
+		});
+
+		await test.step('Asset action type options', async () => {
+			expect(
+				await getSelectOptionLabels(actionsPage.actionForm.typeSelect)
+			).toEqual(['Link', 'Modal', 'Side Panel']);
+		});
+
+		await test.step('Asset variant options for `Modal` action type', async () => {
+			await actionsPage.actionForm.typeSelect.selectOption('Modal');
+
+			expect(
+				await getSelectOptionLabels(
+					actionsPage.actionForm.variantSelect
+				)
+			).toEqual(['Full Screen', 'Large', 'Small']);
 		});
 	}
 );

@@ -5,26 +5,26 @@
 
 package com.liferay.portal.log4j.internal;
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.log.LogContext;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.log.Log4jLogContextLogWrapper;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.PrintStream;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -44,7 +44,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.osgi.framework.ServiceRegistration;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 /**
  * @author Hai Yu
@@ -59,59 +60,55 @@ public class Log4jConfigUtilTest {
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
-	public void testCompanyWebIdLogContextDisabled() {
-		ServiceTrackerList<LogContext> serviceTrackerList =
-			ReflectionTestUtil.invoke(
-				Log4jLogContextLogWrapper.class, "_createServiceTrackerList",
-				new Class<?>[0]);
+	public void testCompanyWebIdConsoleAppender() throws Exception {
+		PrintStream systemOut = System.out;
 
-		List<LogContext> logContexts = serviceTrackerList.toList();
+		try (MockedStatic<CompanyThreadLocal> companyThreadLocalMockedStatic =
+				Mockito.mockStatic(CompanyThreadLocal.class);
+			MockedStatic<PortalInstancePool> portalInstancePoolMockedStatic =
+				Mockito.mockStatic(PortalInstancePool.class);
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+			PrintStream printStream = new PrintStream(byteArrayOutputStream)) {
 
-		Assert.assertTrue(logContexts.isEmpty());
+			System.setOut(printStream);
 
-		Log4jConfigUtil.configureLog4J(
-			_generateXMLConfigurationContent(
-				StringUtil.randomString(), _ALL, _CONSOLE));
+			Logger logger = (Logger)LogManager.getLogger(
+				StringUtil.randomString());
 
-		logContexts = serviceTrackerList.toList();
+			Log4jConfigUtil.configureLog4J(
+				_generateXMLConfigurationContent(
+					logger.getName(), _INFO, _COMPANY_WEB_ID_CONSOLE));
 
-		Assert.assertTrue(logContexts.isEmpty());
-	}
+			_assertAppenders(logger, _COMPANY_WEB_ID_CONSOLE);
 
-	@NewEnv(type = NewEnv.Type.CLASSLOADER)
-	@Test
-	public void testCompanyWebIdLogContextEnabled() {
-		ServiceTrackerList<LogContext> serviceTrackerList =
-			ReflectionTestUtil.invoke(
-				Log4jLogContextLogWrapper.class, "_createServiceTrackerList",
-				new Class<?>[0]);
+			long companyId = RandomTestUtil.randomLong();
 
-		List<LogContext> logContexts = serviceTrackerList.toList();
+			portalInstancePoolMockedStatic.when(
+				() -> PortalInstancePool.getWebId(companyId)
+			).thenReturn(
+				"test.com"
+			);
 
-		Assert.assertTrue(logContexts.isEmpty());
+			_testCompanyWebIdConsoleAppender(
+				companyThreadLocalMockedStatic, portalInstancePoolMockedStatic,
+				byteArrayOutputStream, logger, 0L, new long[0],
+				"Test Log Message", "Test Log Message");
 
-		Log4jConfigUtil.configureLog4J(
-			_generateCompanyWebIdLogContextConfigurationContent());
+			_testCompanyWebIdConsoleAppender(
+				companyThreadLocalMockedStatic, portalInstancePoolMockedStatic,
+				byteArrayOutputStream, logger, companyId, new long[0],
+				"Test Log Message", "Test Log Message");
 
-		logContexts = serviceTrackerList.toList();
-
-		Assert.assertEquals(
-			logContexts.toString(), 1, serviceTrackerList.size());
-
-		LogContext logContext = logContexts.get(0);
-
-		Assert.assertTrue(logContext instanceof CompanyWebIdLogContext);
-		Assert.assertEquals("company", logContext.getName());
-
-		ServiceRegistration<?> serviceRegistration =
-			ReflectionTestUtil.getFieldValue(
-				CompanyWebIdConsoleAppender.class, "_serviceRegistration");
-
-		serviceRegistration.unregister();
-
-		logContexts = serviceTrackerList.toList();
-
-		Assert.assertTrue(logContexts.isEmpty());
+			_testCompanyWebIdConsoleAppender(
+				companyThreadLocalMockedStatic, portalInstancePoolMockedStatic,
+				byteArrayOutputStream, logger, companyId,
+				new long[] {companyId}, "Test Log Message",
+				"test.com Test Log Message");
+		}
+		finally {
+			System.setOut(systemOut);
+		}
 	}
 
 	@Test
@@ -449,18 +446,6 @@ public class Log4jConfigUtilTest {
 		return sb.toString();
 	}
 
-	private String _generateCompanyWebIdLogContextConfigurationContent() {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<?xml version=\"1.0\"?><Configuration strict=\"true\">");
-		sb.append("<Appenders><Appender name=\"");
-		sb.append(StringUtil.randomString());
-		sb.append("\" type=\"CompanyWebIdConsole\"><Layout type=\"");
-		sb.append("PatternLayout\"/></Appender></Appenders></Configuration>");
-
-		return sb.toString();
-	}
-
 	private String _generateLog4j1XMLConfigurationContent() {
 		StringBundler sb = new StringBundler(5);
 
@@ -483,6 +468,10 @@ public class Log4jConfigUtilTest {
 			initialCapacity = initialCapacity + 1;
 		}
 
+		if (ArrayUtil.contains(appenderTypes, _COMPANY_WEB_ID_CONSOLE, false)) {
+			initialCapacity = initialCapacity + 2;
+		}
+
 		StringBundler sb = new StringBundler(initialCapacity);
 
 		sb.append("<?xml version=\"1.0\"?><Configuration strict=\"true\">");
@@ -499,6 +488,10 @@ public class Log4jConfigUtilTest {
 
 				if (appenderType.equals(_CONSOLE)) {
 					sb.append("<Layout type=\"PatternLayout\"/>");
+				}
+				else if (appenderType.equals(_COMPANY_WEB_ID_CONSOLE)) {
+					sb.append("<Layout pattern=\"%X{company.webId} %m%n");
+					sb.append("\" type=\"PatternLayout\"/>");
 				}
 
 				sb.append("</Appender>");
@@ -522,6 +515,34 @@ public class Log4jConfigUtilTest {
 		sb.append("</Logger></Loggers></Configuration>");
 
 		return sb.toString();
+	}
+
+	private void _testCompanyWebIdConsoleAppender(
+		MockedStatic<CompanyThreadLocal> companyThreadLocalMockedStatic,
+		MockedStatic<PortalInstancePool> portalInstancePoolMockedStatic,
+		ByteArrayOutputStream byteArrayOutputStream, Logger logger,
+		long companyId, long[] availableCompanyIds, String logMessage,
+		String expectedLogMessage) {
+
+		companyThreadLocalMockedStatic.when(
+			CompanyThreadLocal::getCompanyId
+		).thenReturn(
+			companyId
+		);
+
+		portalInstancePoolMockedStatic.when(
+			PortalInstancePool::getCompanyIds
+		).thenReturn(
+			availableCompanyIds
+		);
+
+		byteArrayOutputStream.reset();
+
+		logger.log(org.apache.logging.log4j.Level.INFO, logMessage);
+
+		String actualLogMessage = byteArrayOutputStream.toString();
+
+		Assert.assertEquals(expectedLogMessage, actualLogMessage.trim());
 	}
 
 	private void _testGetCompanyLogDirectory(boolean enabled) throws Exception {
@@ -598,6 +619,8 @@ public class Log4jConfigUtilTest {
 	}
 
 	private static final String _ALL = "ALL";
+
+	private static final String _COMPANY_WEB_ID_CONSOLE = "CompanyWebIdConsole";
 
 	private static final String _CONSOLE = "CONSOLE";
 

@@ -112,7 +112,7 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 			model="<%= CommerceOrder.class %>"
 			thumbnailUrl="<%= commerceOrderContentDisplayContext.getCommerceAccountThumbnailURL() %>"
 			title="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>"
-			transitionPortletURL="<%= commerceOrderContentDisplayContext.getTransitionOrderPortletURL() %>"
+			transitionPortletURL="<%= commerceOrderContentDisplayContext.getTransitionOrderPortletURL(commerceOrder) %>"
 		/>
 	</div>
 

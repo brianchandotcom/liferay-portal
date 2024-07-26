@@ -844,7 +844,7 @@ public class CommerceOrderContentDisplayContext {
 			}
 
 			String transitionOrderPortletURLString = PortletURLBuilder.create(
-				getTransitionOrderPortletURL()
+				getTransitionOrderPortletURL(commerceOrder)
 			).setParameter(
 				"transitionName", transitionName
 			).buildString();
@@ -1121,7 +1121,9 @@ public class CommerceOrderContentDisplayContext {
 			QueryUtil.ALL_POS);
 	}
 
-	public PortletURL getTransitionOrderPortletURL() throws PortalException {
+	public PortletURL getTransitionOrderPortletURL(
+		CommerceOrder commerceOrder) {
+
 		return PortletURLBuilder.createActionURL(
 			_cpRequestHelper.getLiferayPortletResponse()
 		).setActionName(
@@ -1131,7 +1133,7 @@ public class CommerceOrderContentDisplayContext {
 		).setRedirect(
 			_cpRequestHelper.getCurrentURL()
 		).setParameter(
-			"commerceOrderId", getCommerceOrderId()
+			"commerceOrderId", commerceOrder.getCommerceOrderId()
 		).buildPortletURL();
 	}
 

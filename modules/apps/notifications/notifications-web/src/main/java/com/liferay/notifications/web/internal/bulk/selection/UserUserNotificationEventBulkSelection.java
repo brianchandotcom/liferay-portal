@@ -55,8 +55,8 @@ public class UserUserNotificationEventBulkSelection
 						_userNotificationEventLocalService.
 							getUserNotificationEvents(
 								_userId, start, end,
-								new UserNotificationEventUserNotificationEventIdOrderByComparator(
-									true));
+								UserNotificationEventUserNotificationEventIdOrderByComparator.
+									getInstance(true));
 
 					for (UserNotificationEvent userNotificationEvent :
 							userNotificationEvents) {

@@ -117,6 +117,105 @@ test.describe('Sorting in Data Set Manager', () => {
 		});
 	});
 
+	test('Edit action can be cancelled @LPD-12725', async ({
+		dataSetManagerApiHelpers,
+		page,
+		sortingPage,
+	}) => {
+		await test.step('Create ID sorting', async () => {
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: true,
+				fieldName: 'id',
+				label_i18n: {en_US: 'ID'},
+				orderType: 'asc',
+			});
+		});
+
+		await test.step('Navigate to Sorting section', async () => {
+			await sortingPage.goto({
+				dataSetLabel,
+			});
+		});
+
+		await test.step('Click on the edit action', async () => {
+			const tableRow = sortingPage.sortingTable.locator('tr', {
+				has: page.locator('text="ID"'),
+			});
+
+			await tableRow
+				.getByRole('cell', {name: 'Actions'})
+				.getByRole('button')
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Edit'}).click();
+		});
+
+		await test.step('Change "Label" and "Sort By" inputs to "dateCreated"', async () => {
+			await page.getByLabel('Label').fill('dateCreated');
+			await page.getByLabel('Sort By').selectOption('dateCreated');
+		});
+
+		await test.step('Click cancel', async () => {
+			await page.getByRole('button', {name: 'Cancel'}).click();
+		});
+
+		await test.step('Check that changes are not applied', async () => {
+			const tableRow = sortingPage.sortingTable.locator('tr', {
+				has: page.locator('text="dateCreated"'),
+			});
+
+			expect(tableRow).not.toBeVisible();
+		});
+	});
+
+	test('Delete action can be cancelled @LPD-12725', async ({
+		dataSetManagerApiHelpers,
+		page,
+		sortingPage,
+	}) => {
+		await test.step('Create ID sorting', async () => {
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: true,
+				fieldName: 'id',
+				label_i18n: {en_US: 'ID'},
+				orderType: 'asc',
+			});
+		});
+
+		await test.step('Navigate to Sorting section', async () => {
+			await sortingPage.goto({
+				dataSetLabel,
+			});
+		});
+
+		await test.step('Click on the delete action', async () => {
+			const tableRow = sortingPage.sortingTable.locator('tr', {
+				has: page.locator('text="ID"'),
+			});
+
+			await tableRow
+				.getByRole('cell', {name: 'Actions'})
+				.getByRole('button')
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Delete'}).click();
+		});
+
+		await test.step('Click cancel', async () => {
+			await page.getByRole('button', {name: 'Cancel'}).click();
+		});
+
+		await test.step('Check that ID still exists', async () => {
+			const tableRow = sortingPage.sortingTable.locator('tr', {
+				has: page.locator('text="ID"'),
+			});
+
+			expect(tableRow).toBeVisible();
+		});
+	});
+
 	test('Sorting options can be reordered and changes are persisted @LPD-9468', async ({
 		dataSetManagerApiHelpers,
 		sortingPage,

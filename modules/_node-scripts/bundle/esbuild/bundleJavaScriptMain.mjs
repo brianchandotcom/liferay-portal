@@ -59,23 +59,26 @@ export default async function bundleJavaScriptMain(
 	await runEsbuild(esbuildConfig, 'main');
 
 	await Promise.all([
-		fs.writeFile(
-			BUILD_LANGUAGE_JSON_PATH,
-			formatLanguageJSON(languageJSON),
-			'utf-8'
-		),
 		relocateSourcemap(
 			path.join(BUILD_MAIN_EXPORTS_PATH, 'index.js.map'),
 			projectWebContextPath
 		),
+		writeLanguageJSON(languageJSON),
 	]);
 }
 
-function formatLanguageJSON(languageJSON) {
+async function writeLanguageJSON(languageJSON) {
+	if (!languageJSON.keys.length) {
+		return;
+	}
 
 	// Dedupe language keys before writing them
 
 	languageJSON.keys = [...new Set(languageJSON.keys)];
 
-	return objectSF(languageJSON);
+	await fs.writeFile(
+		BUILD_LANGUAGE_JSON_PATH,
+		objectSF(languageJSON),
+		'utf-8'
+	);
 }

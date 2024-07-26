@@ -22,10 +22,14 @@ public class UserNotificationEventUserNotificationEventIdOrderByComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"userNotificationEventId"};
 
-	public UserNotificationEventUserNotificationEventIdOrderByComparator(
-		boolean ascending) {
+	public static UserNotificationEventUserNotificationEventIdOrderByComparator
+		getInstance(boolean ascending) {
 
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -57,6 +61,24 @@ public class UserNotificationEventUserNotificationEventIdOrderByComparator
 	public String[] getOrderByFields() {
 		return ORDER_BY_FIELDS;
 	}
+
+	private UserNotificationEventUserNotificationEventIdOrderByComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final
+		UserNotificationEventUserNotificationEventIdOrderByComparator
+			_INSTANCE_ASCENDING =
+				new UserNotificationEventUserNotificationEventIdOrderByComparator(
+					true);
+
+	private static final
+		UserNotificationEventUserNotificationEventIdOrderByComparator
+			_INSTANCE_DESCENDING =
+				new UserNotificationEventUserNotificationEventIdOrderByComparator(
+					false);
 
 	private final boolean _ascending;
 

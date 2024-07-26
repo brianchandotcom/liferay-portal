@@ -22,8 +22,14 @@ public class UserNotificationEventTimestampComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"timestamp"};
 
-	public UserNotificationEventTimestampComparator(boolean ascending) {
-		_ascending = ascending;
+	public static UserNotificationEventTimestampComparator getInstance(
+		boolean ascending) {
+
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -55,6 +61,18 @@ public class UserNotificationEventTimestampComparator
 	public String[] getOrderByFields() {
 		return ORDER_BY_FIELDS;
 	}
+
+	private UserNotificationEventTimestampComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final UserNotificationEventTimestampComparator
+		_INSTANCE_ASCENDING = new UserNotificationEventTimestampComparator(
+			true);
+
+	private static final UserNotificationEventTimestampComparator
+		_INSTANCE_DESCENDING = new UserNotificationEventTimestampComparator(
+			false);
 
 	private final boolean _ascending;
 

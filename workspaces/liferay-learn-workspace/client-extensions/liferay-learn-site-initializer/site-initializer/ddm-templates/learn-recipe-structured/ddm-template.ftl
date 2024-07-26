@@ -17,6 +17,20 @@
 	window.addEventListener('resize', function() {
 		checkScreenSize();
 	});
+
+	function copyContent() {
+		let codeContent = document.getElementById('code-content').innerText;
+
+		navigator.clipboard.writeText(codeContent).then(function() {
+			let button = document.querySelector('.copy-to-clipboard-button');
+
+			button.setAttribute('data-copy-state', 'copy-success');
+
+			setTimeout(function() {
+				button.setAttribute('data-copy-state', 'copy');
+			}, 3000);
+		})
+	}
 </script>
 
 <div class="learn-recipe-container">
@@ -158,9 +172,20 @@
 							/>
 						</div>
 					</#if>
+					<#if currentStep.Step.Resources.Code.getData()?has_content>
+					   <div class="code-toolbar">
+						  <pre class="language-bash" tabindex="0">
+					  	   <code class="language-bash" id="code-content">${currentStep.Step.Resources.Code.getData()}</code>
+						  </pre>
 
-					<#if (currentStep.Step.Resources.Code.getData())??>
-						${currentStep.Step.Resources.Code.getData()}
+							<div class="toolbar">
+							   <div class="toolbar-item">
+									  <button class="copy-to-clipboard-button" type="button" data-copy-state="copy" onclick="copyContent()">
+										   <span>Copy</span>
+										 </button>
+								   </div>
+						   </div>
+					   </div>
 					</#if>
 				</#list>
 			</ol>

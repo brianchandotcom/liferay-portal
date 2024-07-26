@@ -182,6 +182,7 @@ definition {
 	test CanImportLDAPUserWithBlankPassword {
 		property apacheds.blank.user.password.enabled = "true";
 		property app.server.types = "tomcat";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property environment.acceptance = "false";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -233,6 +234,7 @@ definition {
 	test CanLoginViaLDAPWithPasswordCreation {
 		property apacheds.blank.user.password.enabled = "true";
 		property app.server.types = "tomcat";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property environment.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

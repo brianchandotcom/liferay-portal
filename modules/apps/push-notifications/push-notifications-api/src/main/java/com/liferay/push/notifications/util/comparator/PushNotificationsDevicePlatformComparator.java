@@ -21,12 +21,14 @@ public class PushNotificationsDevicePlatformComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"platform"};
 
-	public PushNotificationsDevicePlatformComparator() {
-		this(true);
-	}
+	public static PushNotificationsDevicePlatformComparator getInstance(
+		boolean ascending) {
 
-	public PushNotificationsDevicePlatformComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +66,18 @@ public class PushNotificationsDevicePlatformComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private PushNotificationsDevicePlatformComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final PushNotificationsDevicePlatformComparator
+		_INSTANCE_ASCENDING = new PushNotificationsDevicePlatformComparator(
+			true);
+
+	private static final PushNotificationsDevicePlatformComparator
+		_INSTANCE_DESCENDING = new PushNotificationsDevicePlatformComparator(
+			false);
 
 	private final boolean _ascending;
 

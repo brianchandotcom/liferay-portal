@@ -366,7 +366,7 @@ const EditFDSSortModalContent = ({
 				<ClayForm.Group>
 					<p className="text-secondary">
 						{Liferay.Language.get(
-							'create-a-sorting-option-for-the-dataset-fragment.-add-a-label-name-and-choose-a-field-to-be-displayed-in-the-sorting-dropdown'
+							'create-a-sorting-option-for-the-dataset-fragment'
 						)}
 					</p>
 

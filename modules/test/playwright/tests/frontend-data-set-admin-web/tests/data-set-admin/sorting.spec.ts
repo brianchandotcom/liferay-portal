@@ -289,6 +289,54 @@ test.describe('Sorting in Data Set Manager', () => {
 		});
 	});
 
+	test('The search bar filters the results @LPD-9468', async ({
+		dataSetManagerApiHelpers,
+		page,
+		sortingPage,
+	}) => {
+		await test.step('Create sorting options', async () => {
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: true,
+				fieldName: 'id',
+				label_i18n: {en_US: 'ID'},
+				orderType: 'asc',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: false,
+				fieldName: 'name',
+				label_i18n: {en_US: 'Name'},
+			});
+		});
+
+		await test.step('Navigate to Sorting section', async () => {
+			await sortingPage.goto({
+				dataSetLabel,
+			});
+		});
+
+		await test.step('Enter in a search term that does not exist', async () => {
+			await page.getByPlaceholder('Search').fill('nothing');
+		});
+
+		await test.step('Check that "No Results Found" is displayed', async () => {
+			await expect(page.getByText('No Results Found')).toBeVisible();
+		});
+
+		await test.step('Enter in a search term to only show ID', async () => {
+			await page.getByPlaceholder('Search').fill('ID');
+		});
+
+		await test.step('Check that only "ID" appears in the table', async () => {
+			const tableLabelCellTexts =
+				await sortingPage.getTableColumnInnerTexts(2);
+
+			expect(tableLabelCellTexts).toEqual(['ID']);
+		});
+	});
+
 	test('In the New Sort modal, the Label and Sort By fields are required', async ({
 		page,
 		sortingPage,

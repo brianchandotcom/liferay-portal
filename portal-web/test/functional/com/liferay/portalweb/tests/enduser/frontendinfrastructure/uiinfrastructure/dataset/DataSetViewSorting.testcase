@@ -50,34 +50,4 @@ definition {
 		}
 	}
 
-	@description = "LPS-185327. Confirm that the search bar responds when we search for one of the options."
-	@priority = 4
-	test CanSearchSortingInSearchBar {
-		task ("And adding a new default sort/the fields are selected ") {
-			DataSetAdmin.createASort(
-				key_field = "fieldName",
-				key_sorting = "Descending");
-		}
-
-		task ("And then the search bar responds when we search one of the options listed") {
-			Type(
-				locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-				value1 = "fieldName");
-
-			DataSetAdmin.assertFieldsOnTable(
-				key_position = 1,
-				keyName = "fieldName");
-		}
-
-		task ("Then the search bar responds when we search for a non-existent option") {
-			Type(
-				locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-				value1 = "any");
-
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_STATE_INFO",
-				value1 = "No Results Found");
-		}
-	}
-
 }

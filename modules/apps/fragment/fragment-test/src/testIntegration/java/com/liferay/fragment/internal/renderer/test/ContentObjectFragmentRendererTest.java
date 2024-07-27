@@ -25,8 +25,16 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -35,6 +43,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -94,6 +103,77 @@ public class ContentObjectFragmentRendererTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	public void testRenderContentWithoutPermissionsInEditMode()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink();
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(UserTestUtil.addUser()));
+
+			Role guestRole = RoleLocalServiceUtil.getRole(
+				TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+			ResourcePermissionLocalServiceUtil.removeResourcePermission(
+				TestPropsValues.getCompanyId(), JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(_journalArticle.getResourcePrimKey()),
+				guestRole.getRoleId(), ActionKeys.VIEW);
+
+			String content = _render(
+				fragmentEntryLink, FragmentEntryLinkConstants.EDIT);
+
+			Assert.assertTrue(
+				content.contains(
+					LanguageUtil.get(
+						LocaleUtil.getSiteDefault(),
+						"this-content-cannot-be-displayed-due-to-permission-" +
+							"restrictions")));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+	}
+
+	@Test
+	public void testRenderContentWithoutPermissionsInViewMode()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink();
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(UserTestUtil.addUser()));
+
+			Role guestRole = RoleLocalServiceUtil.getRole(
+				TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+			ResourcePermissionLocalServiceUtil.removeResourcePermission(
+				TestPropsValues.getCompanyId(), JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(_journalArticle.getResourcePrimKey()),
+				guestRole.getRoleId(), ActionKeys.VIEW);
+
+			String content = _render(
+				fragmentEntryLink, FragmentEntryLinkConstants.VIEW);
+
+			Assert.assertTrue(content.isEmpty());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
 	}
 
 	@Test

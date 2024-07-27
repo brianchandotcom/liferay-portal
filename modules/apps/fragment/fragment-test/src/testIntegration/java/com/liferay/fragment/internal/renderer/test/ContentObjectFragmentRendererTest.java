@@ -24,7 +24,11 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -35,6 +39,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.struts.Definition;
+import com.liferay.portal.struts.TilesUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -42,8 +48,11 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.test.util.TemplateTestUtil;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -78,6 +87,13 @@ public class ContentObjectFragmentRendererTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -103,6 +119,55 @@ public class ContentObjectFragmentRendererTest {
 			_addFragmentEntryLink(), FragmentEntryLinkConstants.VIEW);
 
 		Assert.assertTrue(content.isEmpty());
+	}
+
+	@Test
+	public void testRenderRestoredContentInEditMode() throws Exception {
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink();
+
+		_journalArticle = _journalArticleLocalService.moveArticleToTrash(
+			TestPropsValues.getUserId(), _journalArticle);
+
+		String content = _render(
+			fragmentEntryLink, FragmentEntryLinkConstants.EDIT);
+
+		Assert.assertTrue(
+			content.contains(
+				LanguageUtil.get(
+					LocaleUtil.getSiteDefault(),
+					"the-selected-content-is-no-longer-available.-please-" +
+						"select-another")));
+
+		_journalArticleLocalService.restoreArticleFromTrash(
+			TestPropsValues.getUserId(), _journalArticle);
+
+		content = _render(fragmentEntryLink, FragmentEntryLinkConstants.EDIT);
+
+		Assert.assertTrue(
+			content.contains(
+				_journalArticle.getTitle(LocaleUtil.getSiteDefault())));
+	}
+
+	@Test
+	public void testRenderRestoredContentInViewMode() throws Exception {
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink();
+
+		_journalArticle = _journalArticleLocalService.moveArticleToTrash(
+			TestPropsValues.getUserId(), _journalArticle);
+
+		String content = _render(
+			fragmentEntryLink, FragmentEntryLinkConstants.VIEW);
+
+		Assert.assertTrue(content.isEmpty());
+
+		_journalArticleLocalService.restoreArticleFromTrash(
+			TestPropsValues.getUserId(), _journalArticle);
+
+		content = _render(fragmentEntryLink, FragmentEntryLinkConstants.VIEW);
+
+		Assert.assertTrue(
+			content.contains(
+				_journalArticle.getTitle(LocaleUtil.getSiteDefault())));
 	}
 
 	@Test
@@ -172,19 +237,41 @@ public class ContentObjectFragmentRendererTest {
 			FragmentConstants.TYPE_COMPONENT, _serviceContext);
 	}
 
-	private HttpServletRequest _getMockHttpServletRequest() {
+	private HttpServletRequest _getMockHttpServletRequest() throws Exception {
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		httpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+			TilesUtil.DEFINITION,
+			new Definition(StringPool.BLANK, new HashMap<>()));
+		httpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(httpServletRequest));
+
+		_serviceContext.setRequest(httpServletRequest);
 
 		return httpServletRequest;
 	}
 
-	private ThemeDisplay _getThemeDisplay() {
+	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
+
+		LayoutSet layoutSet = _group.getPublicLayoutSet();
+
+		themeDisplay.setLookAndFeel(
+			layoutSet.getTheme(), layoutSet.getColorScheme());
+
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setRealUser(TestPropsValues.getUser());
+		themeDisplay.setRequest(httpServletRequest);
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
 	}
@@ -206,6 +293,9 @@ public class ContentObjectFragmentRendererTest {
 
 		return mockHttpServletResponse.getContentAsString();
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private FragmentCollectionContributorRegistry

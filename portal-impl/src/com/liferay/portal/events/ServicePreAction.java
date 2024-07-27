@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
@@ -946,17 +945,8 @@ public class ServicePreAction extends Action {
 		// Permission checker
 
 		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if ((permissionChecker == null) ||
-			(permissionChecker.getUserId() != user.getUserId())) {
-
-			permissionChecker = PermissionCheckerFactoryUtil.create(user);
-
-			if (initPermissionChecker) {
-				PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			}
-		}
+			PermissionThreadLocal.getPermissionChecker(
+				user, initPermissionChecker);
 
 		// Cookie support
 

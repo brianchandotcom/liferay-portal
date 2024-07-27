@@ -57,9 +57,6 @@ export class JournalPage {
 		await this.page.keyboard.press('Control+KeyA');
 		await this.page.keyboard.press('Backspace');
 		await this.page.keyboard.type(content);
-
-		await this.articleTitleInput.click();
-		await this.articleTitleInput.press('Backspace');
 	}
 
 	async goToCreateArticle(structureName?: string) {

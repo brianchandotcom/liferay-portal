@@ -8,6 +8,7 @@ package com.liferay.portal.search;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
@@ -23,6 +24,9 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.util.PortalInstances;
 
 import java.lang.annotation.Annotation;
@@ -58,7 +62,8 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 
 		return new IndexableContext(
 			indexable.callbackKey(), returnType.getName(), indexable.type(),
-			_getServiceContextParameterIndex(method));
+			_getServiceContextParameterIndex(method),
+			(Transactional)annotations.get(Transactional.class));
 	}
 
 	@Override
@@ -87,15 +92,34 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 			return;
 		}
 
+		TransactionConfig transactionConfig;
+
 		IndexableContext indexableContext =
 			aopMethodInvocation.getAdviceMethodContext();
+
+		Transactional transactional = indexableContext._transactional;
+
+		if (transactional != null) {
+			transactionConfig = TransactionConfig.Factory.create(
+				transactional.isolation(), transactional.propagation(),
+				transactional.readOnly(), transactional.timeout(),
+				transactional.rollbackFor(),
+				transactional.rollbackForClassName(),
+				transactional.noRollbackFor(),
+				transactional.noRollbackForClassName());
+		}
+		else {
+			transactionConfig = null;
+		}
 
 		String name = indexableContext._name;
 
 		Indexer<Object> indexer = IndexerRegistryUtil.getIndexer(name);
 
 		if (indexer != null) {
-			_reindex(indexer, indexableContext, arguments, result);
+			_reindex(
+				transactionConfig, indexer, indexableContext, arguments,
+				result);
 
 			return;
 		}
@@ -114,7 +138,9 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 				try (SafeCloseable safeCloseable =
 						CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
-					_reindex(curIndexer, indexableContext, arguments, result);
+					_reindex(
+						transactionConfig, curIndexer, indexableContext,
+						arguments, result);
 				}
 
 				return null;
@@ -177,6 +203,32 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 		}
 	}
 
+	private void _reindex(
+			TransactionConfig transactionConfig, Indexer<Object> indexer,
+			IndexableContext indexableContext, Object[] arguments,
+			Object result)
+		throws SearchException {
+
+		if (transactionConfig == null) {
+			_reindex(indexer, indexableContext, arguments, result);
+
+			return;
+		}
+
+		try {
+			TransactionInvokerUtil.invoke(
+				transactionConfig,
+				() -> {
+					_reindex(indexer, indexableContext, arguments, result);
+
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			ReflectionUtil.throwException(throwable);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexableAdvice.class);
 
@@ -189,18 +241,20 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 
 		private IndexableContext(
 			String callbackKey, String name, IndexableType indexableType,
-			int serviceContextIndex) {
+			int serviceContextIndex, Transactional transactional) {
 
 			_callbackKey = callbackKey;
 			_name = name;
 			_indexableType = indexableType;
 			_serviceContextIndex = serviceContextIndex;
+			_transactional = transactional;
 		}
 
 		private final String _callbackKey;
 		private final IndexableType _indexableType;
 		private final String _name;
 		private final int _serviceContextIndex;
+		private final Transactional _transactional;
 
 	}
 

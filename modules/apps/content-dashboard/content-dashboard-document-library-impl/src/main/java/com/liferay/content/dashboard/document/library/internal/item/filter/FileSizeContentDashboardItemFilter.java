@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.util.Arrays;
@@ -135,32 +136,47 @@ public class FileSizeContentDashboardItemFilter
 	}
 
 	private String _getLabel(SizeType sizeType) {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(_language.get(_httpServletRequest, sizeType.getType()));
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		if (sizeType == SizeType.LARGE) {
-			sb.append(StringPool.GREATER_THAN);
 			sb.append(
-				TextFormatter.formatStorageSize(
-					sizeType.getStartValue(), _httpServletRequest.getLocale()));
+				StringUtil.toLowerCase(
+					_language.format(
+						_httpServletRequest, "from-x",
+						new Object[] {
+							TextFormatter.formatStorageSize(
+								sizeType.getStartValue(),
+								_httpServletRequest.getLocale())
+						})));
 		}
 		else if (sizeType == SizeType.MEDIUM) {
 			sb.append(
-				TextFormatter.formatStorageSize(
-					sizeType.getStartValue(), _httpServletRequest.getLocale()));
-			sb.append(StringPool.LESS_THAN_OR_EQUAL);
-			sb.append(
-				TextFormatter.formatStorageSize(
-					sizeType.getEndValue(), _httpServletRequest.getLocale()));
+				StringUtil.toLowerCase(
+					_language.format(
+						_httpServletRequest, "from-x-to-x",
+						new Object[] {
+							TextFormatter.formatStorageSize(
+								sizeType.getStartValue(),
+								_httpServletRequest.getLocale()),
+							TextFormatter.formatStorageSize(
+								sizeType.getEndValue(),
+								_httpServletRequest.getLocale())
+						})));
 		}
 		else {
-			sb.append(StringPool.LESS_THAN_OR_EQUAL);
 			sb.append(
-				TextFormatter.formatStorageSize(
-					sizeType.getEndValue(), _httpServletRequest.getLocale()));
+				StringUtil.toLowerCase(
+					_language.format(
+						_httpServletRequest, "up-to-x",
+						new Object[] {
+							TextFormatter.formatStorageSize(
+								sizeType.getEndValue(),
+								_httpServletRequest.getLocale())
+						})));
 		}
 
 		sb.append(StringPool.CLOSE_PARENTHESIS);

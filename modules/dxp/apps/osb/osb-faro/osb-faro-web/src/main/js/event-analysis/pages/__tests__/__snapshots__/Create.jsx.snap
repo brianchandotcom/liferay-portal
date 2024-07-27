@@ -30,6 +30,16 @@ exports[`Event Analysis Create should render 1`] = `
                 Home
               </a>
             </li>
+            <li
+              class="breadcrumb-item"
+            >
+              <a
+                class="breadcrumb-text-truncate breadcrumb-link"
+                href="/workspace/123/456/event-analysis"
+              >
+                Event Analysis
+              </a>
+            </li>
           </ol>
         </div>
         <div

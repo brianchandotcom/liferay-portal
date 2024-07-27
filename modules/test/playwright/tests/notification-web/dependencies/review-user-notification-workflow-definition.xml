@@ -145,8 +145,7 @@
 					<![CDATA[]]>
 				</description>
 				<template>
-					<![CDATA[Your submission was reviewed<#if taskComments?has_content> and the reviewer applied the following ${taskComments}</#if>.
-]]>
+					<![CDATA[Your submission was reviewed<#if taskComments?has_content> and the reviewer applied the following ${taskComments}</#if>.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>

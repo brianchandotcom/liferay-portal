@@ -1,0 +1,299 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.content.dashboard.document.library.internal.item.filter;
+
+import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.RangeTermFilter;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+
+import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author Mikel Lorza
+ */
+public class FileResolutionContentDashboardItemFilter
+	implements ContentDashboardItemFilter {
+
+	public FileResolutionContentDashboardItemFilter(
+		HttpServletRequest httpServletRequest, Language language,
+		Portal portal) {
+
+		_httpServletRequest = httpServletRequest;
+		_language = language;
+		_portal = portal;
+	}
+
+	@Override
+	public DropdownItem getDropdownItem() {
+		return DropdownItemBuilder.setDropdownItems(
+			DropdownItemListBuilder.add(
+				_getDropdownItem(Resolution.SMALL)
+			).add(
+				_getDropdownItem(Resolution.MEDIUM)
+			).add(
+				_getDropdownItem(Resolution.LARGE)
+			).build()
+		).setLabel(
+			_language.get(_httpServletRequest, "resolution")
+		).setType(
+			"contextual"
+		).build();
+	}
+
+	@Override
+	public Filter getFilter() {
+		List<String> parameterValues = getParameterValues();
+
+		if (ListUtil.isEmpty(parameterValues)) {
+			return null;
+		}
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		if (ListUtil.isEmpty(parameterValues)) {
+			return booleanFilter;
+		}
+
+		Resolution resolution = Resolution.parse(parameterValues.get(0));
+
+		if (resolution != null) {
+			booleanFilter.add(
+				new RangeTermFilter(
+					"imageLength_sortable", true, true,
+					String.valueOf(resolution.getStartLengthValue()),
+					String.valueOf(resolution.getEndLengthValue())),
+				BooleanClauseOccur.MUST);
+
+			booleanFilter.add(
+				new RangeTermFilter(
+					"imageWidth_sortable", true, true,
+					String.valueOf(resolution.getStartWidthValue()),
+					String.valueOf(resolution.getEndWidthValue())),
+				BooleanClauseOccur.MUST);
+		}
+
+		return booleanFilter;
+	}
+
+	@Override
+	public String getIcon() {
+		return null;
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		return _language.get(locale, "filter-by-resolution");
+	}
+
+	@Override
+	public String getName() {
+		return "resolution";
+	}
+
+	@Override
+	public String getParameterLabel(Locale locale) {
+		return _language.get(locale, "resolution");
+	}
+
+	@Override
+	public String getParameterName() {
+		return "resolution";
+	}
+
+	@Override
+	public List<String> getParameterValues() {
+		return Arrays.asList(
+			ParamUtil.getStringValues(_httpServletRequest, getParameterName()));
+	}
+
+	@Override
+	public Type getType() {
+		return Type.SUBMENU;
+	}
+
+	@Override
+	public String getURL() {
+		return null;
+	}
+
+	private DropdownItem _getDropdownItem(Resolution resolution) {
+		return DropdownItemBuilder.setActive(
+			_isSelected(resolution)
+		).setHref(
+			_getURL(resolution)
+		).setLabel(
+			_getLabel(resolution)
+		).build();
+	}
+
+	private String _getLabel(Resolution resolution) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_language.get(_httpServletRequest, resolution.getType()));
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		if (resolution == Resolution.LARGE) {
+			sb.append(
+				StringUtil.toLowerCase(
+					_language.format(
+						_httpServletRequest, "from-x",
+						new Object[] {
+							_getResolutionLabel(
+								resolution._startLengthValue,
+								resolution._startWidthValue)
+						})));
+		}
+		else if (resolution == Resolution.MEDIUM) {
+			sb.append(
+				StringUtil.toLowerCase(
+					_language.format(
+						_httpServletRequest, "from-x-to-x",
+						new Object[] {
+							_getResolutionLabel(
+								resolution._startLengthValue,
+								resolution._startWidthValue),
+							_getResolutionLabel(
+								resolution._endLengthValue,
+								resolution._endWidthValue)
+						})));
+		}
+		else if (resolution == Resolution.SMALL) {
+			sb.append(
+				StringUtil.toLowerCase(
+					_language.format(
+						_httpServletRequest, "up-to-x",
+						new Object[] {
+							_getResolutionLabel(
+								resolution._endLengthValue,
+								resolution._endWidthValue)
+						})));
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
+	}
+
+	private String _getResolutionLabel(long length, long width) {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(width);
+		sb.append("x");
+		sb.append(length);
+
+		return sb.toString();
+	}
+
+	private String _getURL(Resolution resolution) {
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		String url = HttpComponentsUtil.removeParameter(
+			_portal.getCurrentCompleteURL(_httpServletRequest),
+			portletResponse.getNamespace() + getParameterName());
+
+		return HttpComponentsUtil.addParameter(
+			url, portletResponse.getNamespace() + getParameterName(),
+			resolution.getType());
+	}
+
+	private boolean _isSelected(Resolution resolution) {
+		List<String> parameterValues = getParameterValues();
+
+		if (ListUtil.isEmpty(parameterValues)) {
+			return false;
+		}
+
+		return Objects.equals(parameterValues.get(0), resolution.getType());
+	}
+
+	private final HttpServletRequest _httpServletRequest;
+	private final Language _language;
+	private final Portal _portal;
+
+	private enum Resolution {
+
+		LARGE(Long.MAX_VALUE, Long.MAX_VALUE, 769, 1025, "large"),
+		MEDIUM(768, 1024, 301, 401, "medium"), SMALL(300, 400, 0, 0, "small");
+
+		public static Resolution parse(String type) {
+			for (Resolution resolution : values()) {
+				if (Objects.equals(resolution.getType(), type)) {
+					return resolution;
+				}
+			}
+
+			return null;
+		}
+
+		public long getEndLengthValue() {
+			return _endLengthValue;
+		}
+
+		public long getEndWidthValue() {
+			return _endWidthValue;
+		}
+
+		public long getStartLengthValue() {
+			return _startLengthValue;
+		}
+
+		public long getStartWidthValue() {
+			return _startWidthValue;
+		}
+
+		public String getType() {
+			return _type;
+		}
+
+		@Override
+		public String toString() {
+			return _type;
+		}
+
+		private Resolution(
+			long endLengthValue, long endWidthValue, long startLengthValue,
+			long startWidthValue, String type) {
+
+			_endLengthValue = endLengthValue;
+			_endWidthValue = endWidthValue;
+			_startLengthValue = startLengthValue;
+			_startWidthValue = startWidthValue;
+			_type = type;
+		}
+
+		private final long _endLengthValue;
+		private final long _endWidthValue;
+		private final long _startLengthValue;
+		private final long _startWidthValue;
+		private final String _type;
+
+	}
+
+}

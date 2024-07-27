@@ -27,6 +27,7 @@ import {getSafeRangeSelectors} from 'shared/util/util';
 import {hasChanges} from 'shared/util/react';
 import {omit} from 'lodash';
 import {Routes, toRoute} from 'shared/util/router';
+import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useHistory, useParams} from 'react-router-dom';
 import {useMutation} from '@apollo/react-hooks';
@@ -79,6 +80,9 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 	rangeSelectors: initialRangeSelectors
 }) => {
 	const history = useHistory();
+
+	const {selectedChannel} = useChannelContext();
+
 	const {channelId, groupId, id: eventAnalysisId = null} = useParams();
 
 	const [compareToPrevious, setCompareToPrevious] = useState<boolean>(
@@ -231,8 +235,9 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: Liferay.Language.get('home')
-					})
+						label: selectedChannel?.name
+					}),
+					breadcrumbs.getEventAnalysis({channelId, groupId})
 				]}
 				groupId={groupId}
 			>

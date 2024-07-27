@@ -22,6 +22,8 @@ public class XMLWhitespaceCheck extends WhitespaceCheck {
 		content = content.replaceAll("([\n\t]<\\!--) (<)", "$1$2");
 
 		content = StringUtil.replace(content, "> -->\n", ">-->\n");
+		content = StringUtil.replace(content, "> <![CDATA[", "><![CDATA[");
+		content = StringUtil.replace(content, "]]> <", "]]><");
 
 		content = super.formatClosingTag(content);
 

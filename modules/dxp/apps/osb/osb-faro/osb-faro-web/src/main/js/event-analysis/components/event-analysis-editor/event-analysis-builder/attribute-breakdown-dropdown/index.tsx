@@ -28,6 +28,51 @@ import {useQuery} from '@apollo/react-hooks';
 
 const connector = connect(null, {close, open});
 
+const IndividualAttributes = [
+	{
+		dataType: DataTypes.String,
+		displayName: 'jobTitle',
+		id: 'jobTitle',
+		name: 'jobTitle',
+		type: AttributeTypes.Global
+	},
+	{
+		dataType: DataTypes.String,
+		displayName: 'languageId',
+		id: 'languageId',
+		name: 'languageId',
+		type: AttributeTypes.Global
+	},
+	{
+		dataType: DataTypes.String,
+		displayName: Liferay.Language.get('role'),
+		id: 'role',
+		name: 'role',
+		type: AttributeTypes.Local
+	},
+	{
+		dataType: DataTypes.String,
+		displayName: Liferay.Language.get('site-membership'),
+		id: 'group',
+		name: 'group',
+		type: AttributeTypes.Local
+	},
+	{
+		dataType: DataTypes.String,
+		displayName: Liferay.Language.get('team'),
+		id: 'team',
+		name: 'team',
+		type: AttributeTypes.Local
+	},
+	{
+		dataType: DataTypes.String,
+		displayName: Liferay.Language.get('user-group'),
+		id: 'userGroup',
+		name: 'userGroup',
+		type: AttributeTypes.Local
+	}
+];
+
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface IAttributeBreakdownDropdownProps extends PropsFromRedux {
@@ -129,6 +174,17 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 												),
 											tabId: AttributeOwnerTypes.Event,
 											title: Liferay.Language.get('event')
+										},
+										{
+											onClick: () =>
+												setAttributeOwnerType(
+													AttributeOwnerTypes.Individual
+												),
+											tabId:
+												AttributeOwnerTypes.Individual,
+											title: Liferay.Language.get(
+												'individual'
+											)
 										}
 									]}
 									title={Liferay.Language.get('attributes')}
@@ -148,27 +204,39 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 											eventAttributeDefinitions: Attribute[];
 										};
 									}) => {
-										const modifieldEventAttributeDefinitions = attribute
-											? eventAttributeDefinitions.map(
-													eventAttributeDefinition => {
-														if (
-															attribute.id ===
-															eventAttributeDefinition.id
-														) {
-															return attribute;
-														}
+										let modifiedEventAttributeDefinitions = [];
 
-														return eventAttributeDefinition;
-													}
-											  )
-											: eventAttributeDefinitions;
+										if (
+											attributeOwnerType ===
+											AttributeOwnerTypes.Event
+										) {
+											modifiedEventAttributeDefinitions = attribute
+												? eventAttributeDefinitions.map(
+														eventAttributeDefinition => {
+															if (
+																attribute.id ===
+																eventAttributeDefinition.id
+															) {
+																return attribute;
+															}
+
+															return eventAttributeDefinition;
+														}
+												  )
+												: eventAttributeDefinitions;
+										} else if (
+											attributeOwnerType ===
+											AttributeOwnerTypes.Individual
+										) {
+											modifiedEventAttributeDefinitions = IndividualAttributes;
+										}
 
 										return (
 											<BaseDropdown.SearchableList
 												activeId={attributeId}
 												disabledIds={disabledIds}
 												items={
-													modifieldEventAttributeDefinitions
+													modifiedEventAttributeDefinitions
 												}
 												onEditClick={(
 													attribute: Attribute

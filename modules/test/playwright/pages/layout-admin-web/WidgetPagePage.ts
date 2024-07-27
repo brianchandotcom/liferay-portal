@@ -68,6 +68,7 @@ export class WidgetPagePage {
 			.locator('.sidebar-body__add-panel__tab-item')
 			.filter({hasText: portletName})
 			.getByRole('button', {name: 'Add Content'})
+			.first()
 			.click();
 
 		await waitForSuccessAlert(

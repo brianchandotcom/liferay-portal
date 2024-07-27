@@ -5,20 +5,56 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {searchTableRowByValue} from '../account-admin-web/AccountsPage';
+export const searchTableRowByValue = async function (
+	tableLocator: Locator,
+	colPosition: number,
+	value: string,
+	strictEqual: boolean = false
+) {
+	await tableLocator.elementHandle();
+
+	const rows = await tableLocator.getByRole('row').all();
+
+	for await (const row of rows) {
+		const column = row.getByRole('cell').nth(colPosition).first();
+
+		const colValue = (await column.allInnerTexts()).join('');
+
+		if (
+			(strictEqual && colValue === value) ||
+			(!strictEqual &&
+				colValue.toLowerCase().indexOf(value.toLowerCase()) >= 0)
+		) {
+			return {column, row};
+		}
+	}
+
+	throw new Error(`Cannot locate table row with value ${value}`);
+};
 
 export class OrganizationUsersPage {
+	readonly filterButton: Locator;
 	readonly page: Page;
+	readonly removeMenuItem: Locator;
+	readonly screenName: (screenName: string) => Promise<Locator>;
 	readonly usersTable: Locator;
 	readonly usersTableRow: (
 		colPosition: number,
 		value: string,
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
-	readonly usersTableRowLink: (name: string) => Promise<Locator>;
+	readonly usersTableRowActions: (screenName: string) => Promise<Locator>;
+	readonly usersTableRowLink: (screenName: string) => Promise<Locator>;
 
 	constructor(page: Page) {
+		this.filterButton = page.getByRole('button', {name: 'Filter'});
 		this.page = page;
+		this.removeMenuItem = page.getByRole('menuitem', {
+			name: 'Remove',
+		});
+		this.screenName = async (screenName: string) => {
+			return page.getByText(screenName);
+		};
 		this.usersTable = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_organizationUsersSearchContainer'
 		);
@@ -34,16 +70,29 @@ export class OrganizationUsersPage {
 				strictEqual
 			);
 		};
-		this.usersTableRowLink = async (name: string) => {
-			const accountsTableRow = await this.usersTableRow(1, name, true);
+		this.usersTableRowActions = async (screenName: string) => {
+			const usersTableRow = await this.usersTableRow(1, screenName);
 
-			if (accountsTableRow && accountsTableRow.column) {
-				return accountsTableRow.row.getByRole('link', {
-					name,
+			if (usersTableRow && usersTableRow.column) {
+				return usersTableRow.row.getByLabel('Show Actions');
+			}
+
+			throw new Error(
+				`Cannot locate user row with screenName ${screenName}`
+			);
+		};
+		this.usersTableRowLink = async (screenName: string) => {
+			const usersTableRow = await this.usersTableRow(1, screenName);
+
+			if (usersTableRow && usersTableRow.column) {
+				return usersTableRow.column.getByRole('link', {
+					name: screenName,
 				});
 			}
 
-			throw new Error(`Cannot locate user row with name ${name}`);
+			throw new Error(
+				`Cannot locate user row with screenName ${screenName}`
+			);
 		};
 	}
 }

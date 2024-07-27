@@ -73,7 +73,7 @@ export async function viewBreakdownRechartsData({
 
 		const lastTickValue = await lastTick.textContent();
 
-		expect(card.getByText(attributeValue)).toBeVisible();
+		expect(card.getByText(attributeValue).first()).toBeVisible();
 		expect(lastTickValue).toEqual(maxCount);
 	}
 	else {
@@ -89,7 +89,7 @@ export async function viewBreakdownRechartsData({
 
 		const lastTickValue = await lastTick.textContent();
 
-		expect(page.getByText(attributeValue)).toBeVisible();
+		expect(page.getByText(attributeValue).first()).toBeVisible();
 		expect(lastTickValue).toEqual(maxCount);
 	}
 }

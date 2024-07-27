@@ -213,7 +213,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				contentDashboardItem.getSpecificInformationList(LocaleUtil.US);
 
 		Assert.assertEquals(
-			String.valueOf(specificInformationList), 6,
+			String.valueOf(specificInformationList), 7,
 			specificInformationList.size());
 
 		JSONObject specificFieldsJSONObject = jsonObject.getJSONObject(

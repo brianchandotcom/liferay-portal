@@ -18,6 +18,7 @@ export class PagesAdminPage {
 	readonly page: Page;
 
 	readonly addButton: Locator;
+	readonly addPageButton: Locator;
 	readonly addPageIFrame: FrameLocator;
 	readonly addTemplatePageButton: Locator;
 	readonly blankTypeButton: Locator;
@@ -34,6 +35,10 @@ export class PagesAdminPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.addPageButton = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Page',
+		});
 		this.addPageIFrame = page.frameLocator('iframe[title="Add Page"]');
 		this.addButton = this.addPageIFrame.getByRole('button', {name: 'Add'});
 		this.addTemplatePageButton = page.getByRole('menuitem', {

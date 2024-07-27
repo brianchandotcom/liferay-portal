@@ -332,8 +332,7 @@ public class WebServerServlet extends HttpServlet {
 			PrincipalThreadLocal.setPassword(
 				PortalUtil.getUserPassword(httpServletRequest));
 
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
+			PermissionThreadLocal.getPermissionChecker(user, true);
 
 			_checkResourcePermission(httpServletRequest, httpServletResponse);
 
@@ -1903,7 +1902,8 @@ public class WebServerServlet extends HttpServlet {
 				PortalUtil.getCompanyId(httpServletRequest));
 		}
 
-		return PermissionCheckerFactoryUtil.create(user);
+		return PermissionThreadLocal.getPermissionChecker(
+			user, !user.isGuestUser());
 	}
 
 	private String _getPortletId(

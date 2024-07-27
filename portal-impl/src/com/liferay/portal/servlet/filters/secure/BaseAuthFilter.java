@@ -16,8 +16,6 @@ import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
@@ -189,25 +187,13 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 	protected void initThreadLocals(User user) throws Exception {
 		CompanyThreadLocal.setCompanyId(user.getCompanyId());
 
-		long userId = user.getUserId();
-
-		PrincipalThreadLocal.setName(userId);
+		PrincipalThreadLocal.setName(user.getUserId());
 
 		if (!_usePermissionChecker) {
 			return;
 		}
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if ((permissionChecker != null) &&
-			(permissionChecker.getUserId() == userId)) {
-
-			return;
-		}
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+		PermissionThreadLocal.getPermissionChecker(user, true);
 	}
 
 	@Override

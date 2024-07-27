@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.http.header.customizer.FileEntryHttpHeaderCustomizer;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -65,7 +65,8 @@ public class CacheControlFileEntryHttpHeaderCustomizer
 			fileEntry.getCompanyId());
 
 		if (!_dlFileEntryModelResourcePermission.contains(
-				PermissionCheckerFactoryUtil.create(company.getGuestUser()),
+				PermissionThreadLocal.getPermissionChecker(
+					company.getGuestUser(), false),
 				fileEntry.getPrimaryKey(), ActionKeys.VIEW)) {
 
 			return currentValue;

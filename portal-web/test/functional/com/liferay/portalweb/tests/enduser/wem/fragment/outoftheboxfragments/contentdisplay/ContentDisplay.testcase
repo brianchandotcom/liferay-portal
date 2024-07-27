@@ -159,64 +159,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-97182. Given a content page with a configured Content fragment, when the content is deleted the fragment should not be visible in view mode and a message should be shown in page editor."
-	@priority = 4
-	test DeletedContentIsInvisible {
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content",
-				groupName = "Test Site Name",
-				title = "WebContent Title");
-		}
-
-		task ("Add a Content Display to a content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Content Display");
-		}
-
-		task ("Select the web content in Content Display") {
-			PageEditor.editContentDisplay(
-				fragmentName = "Content Display",
-				webcontent = "true",
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "WebContent Title");
-
-			PageEditor.publish();
-		}
-
-		task ("Delete the web content") {
-			JSONWebcontent.deleteWebContent(
-				groupName = "Test Site Name",
-				title = "WebContent Title");
-		}
-
-		task ("View the Content Display is not shown at view mode") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page Name",
-				siteName = "Test Site Name");
-
-			AssertElementNotPresent(
-				assetType = "journal",
-				index = 1,
-				locator1 = "Fragment#CONTENT_DISPLAY_TEXT");
-
-			AssertElementNotPresent(locator1 = "Portlet#MESSAGE_INFO");
-		}
-
-		task ("View the warning message shown in Content Display in page editor") {
-			ContentPages.gotoPageEditor();
-
-			PageEditor.viewFragmentMessageInfo(
-				fragmentName = "Content Display",
-				messageInfo = "The selected content is no longer available. Please select another.");
-		}
-	}
-
 	@description = "This is a test for LPS-142166. The user could display blogs entry when item type is blogs entry."
 	@priority = 4
 	test DisplayBlogsEntryWhenItemTypeIsBlogsEntry {

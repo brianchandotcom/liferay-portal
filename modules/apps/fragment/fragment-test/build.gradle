@@ -19,6 +19,8 @@ dependencies {
 	testIntegrationImplementation project(":apps:fragment:fragment-service")
 	testIntegrationImplementation project(":apps:info:info-api")
 	testIntegrationImplementation project(":apps:item-selector:item-selector-api")
+	testIntegrationImplementation project(":apps:journal:journal-api")
+	testIntegrationImplementation project(":apps:journal:journal-test-util")
 	testIntegrationImplementation project(":apps:layout:layout-api")
 	testIntegrationImplementation project(":apps:layout:layout-display-page-api")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
@@ -37,5 +39,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:segments:segments-api")
 	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationImplementation project(":apps:template:template-api")
+	testIntegrationImplementation project(":apps:template:template-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

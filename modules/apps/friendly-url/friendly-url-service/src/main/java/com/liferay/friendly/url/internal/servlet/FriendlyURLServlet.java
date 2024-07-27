@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -229,7 +229,8 @@ public class FriendlyURLServlet extends HttpServlet {
 				User user = _getUser(httpServletRequest);
 
 				PermissionChecker permissionChecker =
-					PermissionCheckerFactoryUtil.create(user);
+					PermissionThreadLocal.getPermissionChecker(
+						user, !user.isGuestUser());
 
 				if (!LayoutPermissionUtil.contains(
 						permissionChecker, layout, ActionKeys.VIEW)) {

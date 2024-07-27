@@ -105,6 +105,17 @@ public class ContentObjectFragmentRendererTest {
 		Assert.assertTrue(content.isEmpty());
 	}
 
+	@Test
+	public void testRenderWithoutConfiguredContentInViewMode()
+		throws Exception {
+
+		String content = _render(
+			_addFragmentEntryLink(StringPool.BLANK),
+			FragmentEntryLinkConstants.VIEW);
+
+		Assert.assertTrue(content.isEmpty());
+	}
+
 	private FragmentEntryLink _addFragmentEntryLink() throws Exception {
 		TemplateEntry templateEntry = TemplateTestUtil.addTemplateEntry(
 			JournalArticle.class.getName(),

@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +21,24 @@ public class PermissionThreadLocal {
 
 	public static PermissionChecker getPermissionChecker() {
 		return _permissionChecker.get();
+	}
+
+	public static PermissionChecker getPermissionChecker(
+		User user, boolean setThreadLocal) {
+
+		PermissionChecker permissionChecker = _permissionChecker.get();
+
+		if ((permissionChecker == null) ||
+			(permissionChecker.getUserId() != user.getUserId())) {
+
+			permissionChecker = PermissionCheckerFactoryUtil.create(user);
+
+			if (setThreadLocal) {
+				_permissionChecker.set(permissionChecker);
+			}
+		}
+
+		return permissionChecker;
 	}
 
 	public static boolean isAddResource() {

@@ -384,8 +384,9 @@ public class CompanyImpl extends CompanyBaseImpl {
 		return companySecurityBag._updatePasswordRequired;
 	}
 
-	public void setCompanySecurityBag(Object companySecurityBag) {
-		_companySecurityBag = (CompanySecurityBag)companySecurityBag;
+	@Override
+	public void setCompanySecurityBag(CompanySecurityBag companySecurityBag) {
+		_companySecurityBag = companySecurityBag;
 	}
 
 	@Override

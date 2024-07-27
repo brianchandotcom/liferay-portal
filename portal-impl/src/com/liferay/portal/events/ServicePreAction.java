@@ -948,12 +948,14 @@ public class ServicePreAction extends Action {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if ((initPermissionChecker && (permissionChecker == null)) ||
+		if ((permissionChecker == null) ||
 			(permissionChecker.getUserId() != user.getUserId())) {
 
 			permissionChecker = PermissionCheckerFactoryUtil.create(user);
 
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			if (initPermissionChecker) {
+				PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			}
 		}
 
 		// Cookie support

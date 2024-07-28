@@ -4321,11 +4321,8 @@ public class PortalImpl implements Portal {
 			if ((portletId != null) && (group != null) &&
 				(group.isStaged() || group.isStagingGroup())) {
 
-				Group liveGroup = group;
-
-				if (group.isStagingGroup()) {
-					liveGroup = group.getLiveGroup();
-				}
+				Group liveGroup =
+					group.isStagingGroup() ? group.getLiveGroup() : group;
 
 				if (liveGroup.isStaged() &&
 					!liveGroup.isStagedPortlet(portletId)) {
@@ -4341,15 +4338,50 @@ public class PortalImpl implements Portal {
 						scopeGroupId = _getScopeGroupId(
 							themeDisplay, liveGroupLayout, portletId);
 					}
-					else if (checkStagingGroup &&
-							 !liveGroup.isStagedRemotely()) {
-
-						Group stagingGroup = liveGroup.getStagingGroup();
-
-						scopeGroupId = stagingGroup.getGroupId();
-					}
 					else {
-						scopeGroupId = liveGroup.getGroupId();
+						String scopeType = _getScopeType(
+							portletId, themeDisplay, layout);
+
+						if (scopeType.equals("company")) {
+							scopeGroupId = _getScopeGroupId(
+								themeDisplay, layout, portletId);
+						}
+						else if (scopeType.equals("layout")) {
+							if (layout.isTypeContent()) {
+								Layout draftLayout = _getDraftLayout(
+									liveGroupLayout.getPlid());
+
+								if (draftLayout != null) {
+									scopeGroupId = _getScopeGroupId(
+										themeDisplay, draftLayout, portletId);
+								}
+							}
+							else {
+								scopeGroupId = liveGroup.getGroupId();
+							}
+						}
+						else {
+							if (checkStagingGroup &&
+								!liveGroup.isStagedRemotely()) {
+
+								Group stagingGroup =
+									liveGroup.getStagingGroup();
+
+								scopeGroupId = stagingGroup.getGroupId();
+							}
+							else if (layout.isTypeContent()) {
+								Layout draftLayout = _getDraftLayout(
+									liveGroupLayout.getPlid());
+
+								if (draftLayout != null) {
+									scopeGroupId = _getScopeGroupId(
+										themeDisplay, draftLayout, portletId);
+								}
+							}
+							else {
+								scopeGroupId = liveGroup.getGroupId();
+							}
+						}
 					}
 				}
 			}
@@ -7459,6 +7491,22 @@ public class PortalImpl implements Portal {
 		return _LOCALHOST;
 	}
 
+	private Layout _getDraftLayout(long plid) throws PortalException {
+		Layout originalLayout = LayoutLocalServiceUtil.getLayout(plid);
+
+		if (originalLayout.isDraftLayout()) {
+			return originalLayout;
+		}
+
+		Layout draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(plid);
+
+		if (draftLayout == null) {
+			draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(plid);
+		}
+
+		return draftLayout;
+	}
+
 	private String _getGroupFriendlyURL(
 			Group group, LayoutSet layoutSet, ThemeDisplay themeDisplay,
 			boolean canonicalURL, boolean controlPanel)
@@ -7905,6 +7953,25 @@ public class PortalImpl implements Portal {
 		}
 
 		return scopeGroup.getGroupId();
+	}
+
+	private String _getScopeType(
+		String portletId, ThemeDisplay themeDisplay, Layout layout) {
+
+		PortletPreferences portletPreferences = null;
+
+		if (themeDisplay == null) {
+			portletPreferences =
+				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+					layout, portletId);
+		}
+		else {
+			portletPreferences = themeDisplay.getStrictLayoutPortletSetup(
+				layout, portletId);
+		}
+
+		return GetterUtil.getString(
+			portletPreferences.getValue("lfrScopeType", null));
 	}
 
 	private Group _getSiteGroup(long groupId) {

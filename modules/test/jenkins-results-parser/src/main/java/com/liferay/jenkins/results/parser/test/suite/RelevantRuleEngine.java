@@ -81,6 +81,16 @@ public class RelevantRuleEngine {
 		return matchingRelevantRules;
 	}
 
+	public List<String> getRelevantRuleNames(List<RelevantRule> relevantRules) {
+		List<String> relevantRuleNames = new ArrayList<>();
+
+		for (RelevantRule relevantRule : relevantRules) {
+			relevantRuleNames.add(relevantRule.getName());
+		}
+
+		return relevantRuleNames;
+	}
+
 	public String getTestSuiteName() {
 		return _testSuiteName;
 	}

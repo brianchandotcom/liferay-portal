@@ -62,6 +62,10 @@ public class RelevantTestSuite {
 
 		Collections.sort(relevantRules);
 
+		System.out.println(
+			"There are " + relevantRules.size() + " matching relevant rules: " +
+				_relevantRuleEngine.getRelevantRuleNames(relevantRules));
+
 		for (RelevantRule relevantRule : relevantRules) {
 			for (TestBatch testBatch : relevantRule.getTestBatches()) {
 				if (testBatches.contains(testBatch)) {

@@ -151,6 +151,8 @@ public abstract class BaseJob implements Job {
 			if (relevantEngineEnabled &&
 				Objects.equals(getTestSuiteName(), "relevant")) {
 
+				System.out.println("Relevant engine is enabled.");
+
 				_batchTestClassGroups.addAll(
 					getBatchTestClassGroups(getTestBatches()));
 			}

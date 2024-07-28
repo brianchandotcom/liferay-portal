@@ -683,11 +683,11 @@ public class AnalyticsBatchExportImportManagerImpl
 	}
 
 	private Http.Options _getOptions(long companyId) {
+		Http.Options options = new Http.Options();
+
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
 				companyId);
-
-		Http.Options options = new Http.Options();
 
 		options.addHeader(
 			"OSB-Asah-Data-Source-ID",

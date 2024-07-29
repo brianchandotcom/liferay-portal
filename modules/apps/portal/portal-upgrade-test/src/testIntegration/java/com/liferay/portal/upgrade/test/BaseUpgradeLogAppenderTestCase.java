@@ -262,22 +262,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			Object upgradeReport = ReflectionTestUtil.getFieldValue(
 				_appender, "_upgradeReport");
 
-			ReflectionTestUtil.setFieldValue(
-				upgradeReport, "_dlSizeThread",
-				new Thread() {
-
-					@Override
-					public void run() {
-						try {
-							sleep(5 * Time.SECOND);
-						}
-						catch (InterruptedException interruptedException) {
-							throw new RuntimeException(interruptedException);
-						}
-					}
-
-				});
-
 			_appender.stop();
 
 			if (_reportContent == null) {

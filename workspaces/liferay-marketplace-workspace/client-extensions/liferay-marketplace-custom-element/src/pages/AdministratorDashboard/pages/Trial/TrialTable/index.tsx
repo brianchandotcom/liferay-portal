@@ -19,6 +19,8 @@ import Table from '../../../../../components/Table/Table';
 import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
 import useMarketplaceSpringBootOAuth2 from '../../../../../hooks/useMarketplaceSpringBootOAuth2';
 import i18n from '../../../../../i18n';
+import {Liferay} from '../../../../../liferay/liferay';
+import CommerceSelectAccountImpl from '../../../../../services/rest/CommerceSelectAccount';
 import HeadlessCommerceAdminOrderImpl from '../../../../../services/rest/HeadlessCommerceAdminOrder';
 import NewTrialModal from './NewTrialModal';
 
@@ -72,6 +74,25 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 	};
 
 	const itemsDropdown = [
+		{
+			id: 1,
+			name: i18n.translate('customer-dashboard'),
+			onClick: (order: Order) =>
+				CommerceSelectAccountImpl.selectAccount(order?.accountId).then(
+					() => {
+						Liferay.CommerceContext.account = {
+							accountId: order?.accountId,
+						};
+
+						Liferay.Util.navigate(
+							Liferay.ThemeDisplay.getLayoutURL().replace(
+								'/administrator-dashboard',
+								`/customer-dashboard`
+							) + '#/solutions'
+						);
+					}
+				),
+		},
 		{
 			id: 1,
 			name: i18n.translate('go-to-trial'),

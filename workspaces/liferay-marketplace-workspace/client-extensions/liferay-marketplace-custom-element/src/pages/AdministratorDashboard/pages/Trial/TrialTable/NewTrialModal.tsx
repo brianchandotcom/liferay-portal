@@ -3,15 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Autocomplete from '@clayui/autocomplete';
 import ClayButton from '@clayui/button';
 import {ClaySelect} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import useSWR from 'swr';
 
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
+import SearchBuilder from '../../../../../core/SearchBuilder';
 import {ORDER_TYPES} from '../../../../../enums/Order';
-import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../../enums/Product';
+import useDebounce from '../../../../../hooks/useDebounce';
 import useMarketplaceSpringBootOAuth2 from '../../../../../hooks/useMarketplaceSpringBootOAuth2';
 import {Liferay} from '../../../../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../services/rest/HeadlessCommerceAdminCatalog';
@@ -21,83 +23,116 @@ type NewTrialModalProps = ReturnType<typeof useModal> & {
 	revalidate: () => void;
 };
 
-interface ProductWithPurchasable extends Product {
+type ProductWithPurchasable = {
 	skus: (SKU & {purchasable: boolean})[];
-}
+} & Product;
 
 const NewTrialModal: React.FC<NewTrialModalProps> = ({
 	observer,
 	onOpenChange,
 	revalidate,
 }) => {
-	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
+	const [search, setSearch] = useState('');
 	const {channel, myUserAccount} = useMarketplaceContext();
-	const [selectedTrial, setSelectedTrial] = useState({
+	const debouncedSearch = useDebounce(search, 1000);
+	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
+	const [selectedTrial, setSelectedTrial] = useState<{
+		accountId: string;
+		product: Product;
+	}>({
 		accountId: '',
-		productId: '',
+		product: {} as Product,
 	});
-	const {data: apps} = useSWR<APIResponse<ProductWithPurchasable>>(
-		'administrator-dashboard/trial/products',
-		() =>
-			HeadlessCommerceAdminCatalogImpl.getProducts(
-				new URLSearchParams({
-					'nestedFields': 'productSpecifications,skus',
-					'skus.accountId': '-1',
-				})
-			)
+	const {data: apps, isValidating} = useSWR<
+		APIResponse<ProductWithPurchasable>
+	>(`administrator-dashboard/trial/products/${debouncedSearch}`, () =>
+		HeadlessCommerceAdminCatalogImpl.getProducts(
+			new URLSearchParams({
+				'filter': SearchBuilder.contains('name', debouncedSearch),
+				'nestedFields': 'productSpecifications,skus',
+				'pageSize': '10',
+				'skus.accountId': '-1',
+			})
+		)
 	);
-	const {accountBriefs} = myUserAccount;
 
-	const publishedCloudApps = apps?.items?.filter(
-		(product) =>
-			product?.productSpecifications?.some(
-				(spec) =>
-					spec.specificationKey === 'type' &&
-					spec.value.en_US === 'cloud'
-			) && product.productStatus === PRODUCT_WORKFLOW_STATUS_CODE.APPROVED
+	const publishedApps = useMemo(
+		() =>
+			(apps?.items ?? []).map((product) => ({
+				...product,
+				productName: product.name.en_US,
+			})),
+		[apps]
 	);
+
+	const {accountBriefs = []} = myUserAccount;
 
 	const onSubmit = async () => {
 		const accountId = Number(selectedTrial.accountId);
 
+		const isDXP = selectedTrial.product?.productSpecifications?.some(
+			(spec) =>
+				spec.specificationKey === 'type' && spec.value.en_US === 'dxp'
+		);
+
+		if (isDXP) {
+			return Liferay.Util.openToast({
+				message: 'Not possible to create Trial, for DXP Apps',
+				type: 'danger',
+			});
+		}
+
 		const skus = apps?.items?.find(
-			(app) => app.productId === Number(selectedTrial.productId)
+			(app) => app.productId === Number(selectedTrial.product.productId)
 		);
 
 		const sku = skus?.skus?.find((sku) => sku.purchasable);
 
-		const cart = await headlessCommerceDeliveryCart.createCart(channel.id, {
-			accountId,
-			cartItems: [
+		try {
+			const cart = await headlessCommerceDeliveryCart.createCart(
+				channel.id,
 				{
-					price: {
-						currency: channel.currencyCode,
-						discount: 0,
-					},
-					productId: Number(selectedTrial.productId),
-					quantity: 1,
-					settings: {
-						maxQuantity: 1,
-					},
-					skuId: sku?.id as number,
-				},
-			],
-			currencyCode: channel.currencyCode,
-			orderTypeExternalReferenceCode: ORDER_TYPES.SOLUTIONS7,
-		});
+					accountId,
+					cartItems: [
+						{
+							price: {
+								currency: channel.currencyCode,
+								discount: 0,
+							},
+							productId: Number(selectedTrial.product.productId),
+							quantity: 1,
+							settings: {
+								maxQuantity: 1,
+							},
+							skuId: sku?.id as number,
+						},
+					],
+					currencyCode: channel.currencyCode,
+					orderTypeExternalReferenceCode: ORDER_TYPES.SOLUTIONS7,
+				}
+			);
 
-		await headlessCommerceDeliveryCart.checkoutCart(cart.id);
+			await headlessCommerceDeliveryCart.checkoutCart(cart.id);
 
-		await marketplaceSpringBootOAuth2.provisioningTrial(cart.id);
+			await marketplaceSpringBootOAuth2.provisioningTrial(cart.id);
 
-		onOpenChange(false);
+			onOpenChange(false);
 
-		await revalidate();
+			await revalidate();
 
-		Liferay.Util.openToast({
-			message: 'Trial created successfully',
-			type: 'success',
-		});
+			setTimeout(() => revalidate(), 5000);
+
+			Liferay.Util.openToast({
+				message: 'Trial created successfully',
+				type: 'success',
+			});
+		}
+		catch (error) {
+			Liferay.Util.openToast({
+				message: 'Not possible to create Trial',
+				type: 'danger',
+			});
+		}
 	};
 
 	return (
@@ -106,63 +141,69 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({
 			<ClayModal.Body className="pb-8">
 				<div className="mb-5">
 					<h5>Cloud Products</h5>
-					<ClaySelect
-						aria-label="Select App"
-						id="selectApp"
-						onChange={({target}) => {
-							setSelectedTrial({
-								...selectedTrial,
-								productId: target.value,
-							});
+
+					<Autocomplete
+						filterKey="productName"
+						items={publishedApps}
+						loadingState={isValidating ? 1 : 4}
+						messages={{
+							loading: 'Loading...',
+							notFound: 'No results found',
 						}}
-						value={selectedTrial.productId}
+						onChange={setSearch}
+						onItemsChange={() => {}}
+						placeholder="Enter the name of the Product"
+						value={search}
 					>
-						<ClaySelect.Option
-							aria-hidden
-							disabled
-							key="placeholderApp"
-							label="Select an App"
-							value=""
-						/>
-						{publishedCloudApps?.map((app, index) => (
-							<ClaySelect.Option
-								key={index}
-								label={app.name.en_US}
-								value={app.productId}
-							/>
-						))}
-					</ClaySelect>
+						{(product) => (
+							<Autocomplete.Item
+								disabled={true}
+								key={product.productId}
+								onClick={() =>
+									setSelectedTrial({
+										...selectedTrial,
+										product,
+									})
+								}
+								{...({} as any)}
+							>
+								{product.productName}
+							</Autocomplete.Item>
+						)}
+					</Autocomplete>
 				</div>
 
-				<>
-					<h5>Select Account</h5>
-					<ClaySelect
-						aria-label="Select Account"
-						id="selectAccount"
-						onChange={({target}) => {
-							setSelectedTrial({
-								...selectedTrial,
-								accountId: target.value,
-							});
-						}}
-						value={selectedTrial.accountId || ''}
-					>
-						<ClaySelect.Option
-							aria-hidden
-							disabled
-							key="placeholderAccount"
-							label="Select an Account"
-							value=""
-						/>
-						{accountBriefs?.map((account, index) => (
+				<h5>Select Account</h5>
+				<ClaySelect
+					aria-label="Select Account"
+					id="selectAccount"
+					onChange={({target}) => {
+						setSelectedTrial({
+							...selectedTrial,
+							accountId: target.value,
+						});
+					}}
+					value={selectedTrial.accountId || ''}
+				>
+					<ClaySelect.Option
+						aria-hidden
+						disabled
+						key="placeholderAccount"
+						label="Select an Account"
+						value=""
+					/>
+					{accountBriefs
+						.sort((accountA, accountB) =>
+							accountA.name.localeCompare(accountB.name)
+						)
+						.map((account, index) => (
 							<ClaySelect.Option
 								key={index}
 								label={account.name}
 								value={account.id}
 							/>
 						))}
-					</ClaySelect>
-				</>
+				</ClaySelect>
 			</ClayModal.Body>
 
 			<ClayModal.Footer
@@ -170,7 +211,7 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({
 					<ClayButton
 						disabled={
 							!selectedTrial.accountId.length ||
-							!selectedTrial.productId.length
+							!Object.keys(selectedTrial.product).length
 						}
 						onClick={onSubmit}
 					>

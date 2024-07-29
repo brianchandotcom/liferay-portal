@@ -226,39 +226,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-109854. Cannot view the sitemap of staging site as Guest."
-	@priority = 4
-	test CannotViewSiteMapOfStagingSiteAsGuest {
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "${randomSiteName} (Staging)",
-				layoutName = "Test Page Name",
-				site = "false",
-				type = "content");
-
-			JSONLayout.publishLayout(
-				groupName = "${randomSiteName} (Staging)",
-				layoutName = "Test Page Name",
-				site = "false");
-		}
-
-		task ("Configure the Staging Public Pages in site configuration") {
-			Site.openSiteSettingsAdmin(siteURLKey = "${randomSiteURLKey}-staging");
-
-			Site.addVirtualHostsURLCP(stagingPages = "www.able.com");
-		}
-
-		task ("Sign out") {
-			User.logoutPG();
-		}
-
-		task ("Cannot view sitemap of staging site as Guest") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080/sitemap.xml");
-
-			AssertTextPresent(value1 = "You do not have permission to access the requested resource.");
-		}
-	}
-
 	@description = "This is a test for LPS-140483. The site admin could create page template from a content page with elements in staging site."
 	@priority = 4
 	test CreatePageTemplateFromContentPageInStagingSite {

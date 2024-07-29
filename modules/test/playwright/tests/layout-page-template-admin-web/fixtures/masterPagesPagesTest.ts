@@ -9,7 +9,7 @@ import {test} from '@playwright/test';
 
 import {MasterPagesPage} from '../pages/MasterPagesPage';
 
-const masterPagesTest = test.extend<{
+const masterPagesPagesTest = test.extend<{
 	masterPagesPage: MasterPagesPage;
 }>({
 	masterPagesPage: async ({page}, use) => {
@@ -17,4 +17,4 @@ const masterPagesTest = test.extend<{
 	},
 });
 
-export {masterPagesTest};
+export {masterPagesPagesTest};

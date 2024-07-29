@@ -12,10 +12,10 @@ import {wemSiteTest} from '../../fixtures/wemSiteTest';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
-import {displayPageTemplatesTest} from './fixtures/displayTemplatePagesTest';
+import {displayPageTemplatesPagesTest} from './fixtures/displayPageTemplatesPagesTest';
 
 const test = mergeTests(
-	displayPageTemplatesTest,
+	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-11377': true,
 		'LPD-20213': true,

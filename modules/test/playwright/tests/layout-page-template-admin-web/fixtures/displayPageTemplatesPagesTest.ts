@@ -9,7 +9,7 @@ import {test} from '@playwright/test';
 
 import {DisplayPageTemplatesPage} from '../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
 
-const displayPageTemplatesTest = test.extend<{
+const displayPageTemplatesPagesTest = test.extend<{
 	displayPageTemplatesPage: DisplayPageTemplatesPage;
 }>({
 	displayPageTemplatesPage: async ({page}, use) => {
@@ -17,4 +17,4 @@ const displayPageTemplatesTest = test.extend<{
 	},
 });
 
-export {displayPageTemplatesTest};
+export {displayPageTemplatesPagesTest};

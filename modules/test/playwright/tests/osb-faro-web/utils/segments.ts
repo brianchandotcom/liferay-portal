@@ -3,10 +3,31 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {SegmentConditions} from './selectors';
 import {searchByTerm} from './utils';
+
+export async function addNestedSegmentField({
+	criterionName,
+	criterionType,
+	nestedSegmentField,
+	page,
+}: {
+	criterionName: string;
+	criterionType: string;
+	nestedSegmentField: string;
+	page: Page;
+}) {
+	await page.locator('button.dropdown-toggle.btn-outline-secondary').click();
+	await page.getByRole('menuitem', {name: criterionType}).click();
+
+	await dragAndDropCriteriaItem({
+		page,
+		nestedSegmentField,
+		segmentField: criterionName,
+	});
+}
 
 export async function addSegmentField({
 	criterionName,
@@ -14,7 +35,7 @@ export async function addSegmentField({
 	page,
 }: {
 	criterionName: string;
-	criterionType?: string;
+	criterionType: string;
 	page: Page;
 }) {
 	await page.locator('button.dropdown-toggle.btn-outline-secondary').click();

@@ -21,16 +21,22 @@ export class SitesPage {
 	constructor(page: Page) {
 		this.page = page;
 
-		this.addButton = this.addSiteIFrame.getByRole('button', {name: 'Add'});
+		this.addButton = page
+			.frameLocator('iframe[title="Add Site"]')
+			.getByRole('button', {name: 'Add'});
 		this.addSiteButton = page.getByRole('link', {name: 'Add Site'});
 		this.addSiteIFrame = page.frameLocator('iframe[title="Add Site"]');
 		this.customSiteTemplatesItem = page.getByRole('menuitem', {
 			name: 'Custom Site Templates',
 		});
-		this.defaultPagesAsPrivateCheck = this.addSiteIFrame.getByLabel(
-			'Create default pages as private (available only to members). If unchecked, they will be public (available to anyone).'
-		);
-		this.nameBox = this.addSiteIFrame.getByLabel('Name Required');
+		this.defaultPagesAsPrivateCheck = page
+			.frameLocator('iframe[title="Add Site"]')
+			.getByLabel(
+				'Create default pages as private (available only to members). If unchecked, they will be public (available to anyone).'
+			);
+		this.nameBox = page
+			.frameLocator('iframe[title="Add Site"]')
+			.getByLabel('Name Required');
 		this.uiElementsPage = new UIElementsPage(page);
 	}
 

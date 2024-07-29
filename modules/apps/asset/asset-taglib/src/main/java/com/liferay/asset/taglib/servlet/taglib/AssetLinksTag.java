@@ -175,6 +175,8 @@ public class AssetLinksTag extends IncludeTag {
 	}
 
 	private List<Tuple> _getAssetLinkEntries() throws Exception {
+		List<Tuple> assetLinkEntries = new ArrayList<>();
+
 		HttpServletRequest httpServletRequest = getRequest();
 
 		ThemeDisplay themeDisplay =
@@ -194,8 +196,6 @@ public class AssetLinksTag extends IncludeTag {
 
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(portletResponse);
-
-		List<Tuple> assetLinkEntries = new ArrayList<>();
 
 		List<AssetLink> assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(
 			_assetEntryId, false);
@@ -275,6 +275,8 @@ public class AssetLinksTag extends IncludeTag {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
+		String viewURL = null;
+
 		PortletURL viewAssetURL = null;
 
 		if (_portletURL != null) {
@@ -308,8 +310,6 @@ public class AssetLinksTag extends IncludeTag {
 
 			viewAssetURL.setParameter("urlTitle", urlTitle);
 		}
-
-		String viewURL = null;
 
 		if (_viewInContext) {
 			String noSuchEntryRedirect = viewAssetURL.toString();

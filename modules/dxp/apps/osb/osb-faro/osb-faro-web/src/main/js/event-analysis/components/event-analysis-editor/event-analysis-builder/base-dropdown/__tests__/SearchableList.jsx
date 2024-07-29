@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchableList from '../SearchableList';
-import {render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
@@ -59,5 +59,21 @@ describe('BaseDropdownSearchableList', () => {
 
 		expect(container.querySelectorAll('.disabled').length).toBe(2);
 		expect(container.querySelector('.active')).toBeNull();
+	});
+
+	it('should hide info card', () => {
+		const {container, getByText, rerender} = render(<WrappedComponent />);
+
+		const element = getByText('Test 1');
+
+		fireEvent.mouseOver(element);
+
+		expect(container.querySelector('.info-card-popover-root')).toBeTruthy();
+
+		rerender(<WrappedComponent showInfoCard={false} />);
+
+		fireEvent.mouseOver(element);
+
+		expect(container.querySelector('.info-card-popover-root')).toBeNull();
 	});
 });

@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -506,6 +507,7 @@ public class CalendarBookingLocalServiceTest {
 		Assert.assertTrue(secondChildCalendarBooking.isDenied());
 	}
 
+	@FeatureFlags("LPD-31212")
 	@Test
 	public void testAddCalendarBookingWithVideoDescription() throws Exception {
 		ServiceContext serviceContext = createServiceContext();

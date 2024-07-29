@@ -1836,6 +1836,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(8);
 	}
 
+	@FeatureFlags("LPD-31212")
 	@Test
 	public void testAddObjectEntryWithRichTextObjectField() throws Exception {
 		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(

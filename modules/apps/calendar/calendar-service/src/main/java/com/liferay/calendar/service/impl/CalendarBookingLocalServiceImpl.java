@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -63,6 +64,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -150,9 +153,21 @@ public class CalendarBookingLocalServiceImpl
 		long calendarBookingId = counterLocalService.increment();
 
 		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
-			descriptionMap.put(
-				entry.getKey(),
-				_htmlParser.extractText(HtmlUtil.escape(entry.getValue())));
+			String description = null;
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPD-31212")) {
+				description = SanitizerUtil.sanitize(
+					calendar.getCompanyId(), calendar.getGroupId(), userId,
+					CalendarBooking.class.getName(), calendarBookingId,
+					ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+					entry.getValue(), null);
+			}
+			else {
+				description = _htmlParser.extractText(
+					HtmlUtil.escape(entry.getValue()));
+			}
+
+			descriptionMap.put(entry.getKey(), description);
 		}
 
 		TimeZone timeZone = _getTimeZone(calendar, allDay);
@@ -1200,9 +1215,21 @@ public class CalendarBookingLocalServiceImpl
 		}
 
 		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
-			descriptionMap.put(
-				entry.getKey(),
-				_htmlParser.extractText(HtmlUtil.escape(entry.getValue())));
+			String description = null;
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPD-31212")) {
+				description = SanitizerUtil.sanitize(
+					calendar.getCompanyId(), calendar.getGroupId(), userId,
+					CalendarBooking.class.getName(), calendarBookingId,
+					ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+					entry.getValue(), null);
+			}
+			else {
+				description = _htmlParser.extractText(
+					HtmlUtil.escape(entry.getValue()));
+			}
+
+			descriptionMap.put(entry.getKey(), description);
 		}
 
 		TimeZone timeZone = _getTimeZone(calendar, allDay);

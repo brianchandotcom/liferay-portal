@@ -9,9 +9,14 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -86,7 +91,21 @@ public class RichTextObjectFieldBusinessType
 			return value;
 		}
 
-		return _htmlParser.extractText(HtmlUtil.escape(String.valueOf(value)));
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-31212")) {
+			ObjectDefinition objectDefinition =
+				objectField.getObjectDefinition();
+
+			value = SanitizerUtil.sanitize(
+				objectField.getCompanyId(), 0, objectField.getUserId(),
+				objectDefinition.getClassName(), 0, ContentTypes.TEXT_HTML,
+				Sanitizer.MODE_ALL, String.valueOf(value), null);
+		}
+		else {
+			value = _htmlParser.extractText(
+				HtmlUtil.escape(String.valueOf(value)));
+		}
+
+		return value;
 	}
 
 	@Reference

@@ -336,6 +336,7 @@
 			"template_nl": {
 				"mapping": {
 					"analyzer": "dutch",
+					"search_analyzer": "liferay_analyzer_nl",
 					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"

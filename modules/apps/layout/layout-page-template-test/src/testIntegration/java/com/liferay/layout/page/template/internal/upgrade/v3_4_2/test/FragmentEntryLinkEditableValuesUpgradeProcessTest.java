@@ -1,0 +1,209 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.layout.page.template.internal.upgrade.v3_4_2.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Lourdes Fernández Besada
+ */
+@RunWith(Arquillian.class)
+public class FragmentEntryLinkEditableValuesUpgradeProcessTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-separator");
+
+		_group = GroupTestUtil.addGroup();
+
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
+	}
+
+	@Test
+	public void testUpgrade() throws Exception {
+		_assertUpgrade(
+			_jsonFactory.createJSONObject(), _jsonFactory.createJSONObject());
+
+		JSONObject jsonObject = JSONUtil.put(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_assertUpgrade(jsonObject, jsonObject);
+
+		String expected = RandomTestUtil.randomString();
+
+		_assertUpgrade(
+			JSONUtil.put("bottomSpacing", expected),
+			JSONUtil.put("bottomSpacing", expected));
+		_assertUpgrade(
+			JSONUtil.put("bottomSpacing", expected),
+			JSONUtil.put("verticalSpace", expected));
+	}
+
+	private void _assertEditableValues(
+			JSONObject expectedJSONObject, FragmentEntryLink fragmentEntryLink)
+		throws Exception {
+
+		JSONObject editablesJSONObject = JSONFactoryUtil.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		JSONObject configurationJSONObject = editablesJSONObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		Assert.assertTrue(
+			configurationJSONObject.toString(),
+			JSONUtil.equals(expectedJSONObject, configurationJSONObject));
+	}
+
+	private void _assertFragmentEntryLink(
+			JSONObject expectedJSONObject, long fragmentEntryLinkId,
+			Layout layout)
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				fragmentEntryLinkId);
+
+		Assert.assertEquals(layout.getPlid(), fragmentEntryLink.getPlid());
+		Assert.assertEquals(
+			_segmentsExperienceId, fragmentEntryLink.getSegmentsExperienceId());
+
+		_assertEditableValues(expectedJSONObject, fragmentEntryLink);
+	}
+
+	private void _assertUpgrade(
+			JSONObject expectedJSONObject, JSONObject jsonObject)
+		throws Exception {
+
+		Layout draftLayout = _layout.fetchDraftLayout();
+
+		FragmentEntryLink draftFragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					jsonObject
+				).toString(),
+				_fragmentEntry.getCss(), _fragmentEntry.getConfiguration(),
+				_fragmentEntry.getFragmentEntryId(), _fragmentEntry.getHtml(),
+				_fragmentEntry.getJs(), draftLayout,
+				_fragmentEntry.getFragmentEntryKey(), _segmentsExperienceId,
+				_fragmentEntry.getType());
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, _layout);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				_layout.getGroupId(),
+				draftFragmentEntryLink.getFragmentEntryLinkId(),
+				_layout.getPlid());
+
+		Assert.assertNotNull(fragmentEntryLink);
+
+		_runUpgrade();
+
+		_assertFragmentEntryLink(
+			expectedJSONObject, draftFragmentEntryLink.getFragmentEntryLinkId(),
+			draftLayout);
+		_assertFragmentEntryLink(
+			expectedJSONObject, fragmentEntryLink.getFragmentEntryLinkId(),
+			_layout);
+	}
+
+	private void _runUpgrade() throws Exception {
+		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+			_upgradeStepRegistrator, _CLASS_NAME);
+
+		upgradeProcess.upgrade();
+
+		_entityCache.clearCache();
+		_multiVMPool.clear();
+	}
+
+	private static final String _CLASS_NAME =
+		"com.liferay.layout.page.template.internal.upgrade.v3_4_2." +
+			"FragmentEntryLinkEditableValuesUpgradeProcess";
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
+	)
+	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private EntityCache _entityCache;
+
+	@Inject
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
+
+	private FragmentEntry _fragmentEntry;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
+
+	private Layout _layout;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
+
+	private long _segmentsExperienceId;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+}

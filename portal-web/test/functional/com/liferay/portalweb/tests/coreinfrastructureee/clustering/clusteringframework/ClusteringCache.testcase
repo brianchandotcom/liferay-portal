@@ -44,7 +44,7 @@ definition {
 
 		Portlet.addPG(portletName = "ClusterSampleSessionReplication");
 
-		AssertElementPresent(locator1 = "ClusterSamplePortlet#NO_SESSION_DATA_MESSAGE");
+		AssertElementPresent(locator1 = "ClusterSamplePortlet#GENERATED_DATA_MESSAGE");
 
 		Clustering.deployClusteringModule(nodePort = 9080);
 

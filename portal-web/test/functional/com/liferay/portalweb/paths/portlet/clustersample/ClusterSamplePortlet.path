@@ -10,9 +10,10 @@
 </thead>
 
 <tbody>
+
 <tr>
-	<td>NO_SESSION_DATA_MESSAGE</td>
-	<td>//div[@class='portlet-body']//p[contains(.,'No session data exists, generating a new one with random string:')]</td>
+	<td>GENERATED_DATA_MESSAGE</td>
+	<td>//div[@class='portlet-body' and contains(.,'Generated Cluster Sample Data')]</td>
 	<td></td>
 </tr>
 <tr>

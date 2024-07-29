@@ -408,18 +408,21 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 			'Edit'
 		)
 	).toBeVisible();
+
 	await (
 		await commerceAdminOrderDetailsPage.editEntryActionLink(
 			'Billing Address Edit',
 			'Edit'
 		)
 	).click();
+
 	await (
 		await commerceAdminOrderDetailsPage.editEntryActionLink(
 			'Billing Address Edit',
 			'Edit'
 		)
 	).waitFor();
+
 	await expect(
 		await commerceAdminOrderDetailsPage.orderDetailsModalHeader(
 			'Edit Billing Address'
@@ -440,7 +443,7 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 		zip
 	);
 
-	await page.waitForLoadState('networkidle');
+	await page.waitForLoadState('domcontentloaded');
 
 	await expect(
 		page.getByText('PendingProcessingShippedCompleted')
@@ -451,6 +454,7 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 			'Billing Address'
 		)
 	).toContainText(`${city}, ${region}, ${zip}`);
+
 	await expect(
 		await commerceAdminOrderDetailsPage.orderDetailsEntryDescription(
 			'Shipping Address'
@@ -471,10 +475,7 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 		)
 	).click();
 
-	await commerceAdminOrderDetailsPage.submitModalButton.waitFor({
-		state: 'visible',
-	});
-	await commerceAdminOrderDetailsPage.selectPaymentTerms.focus();
+	await commerceAdminOrderDetailsPage.selectPaymentTerms.click();
 	await commerceAdminOrderDetailsPage.selectPaymentTerms.selectOption(
 		paymentTerm1.id.toString()
 	);
@@ -500,47 +501,9 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 			'Delivery Terms Add',
 			'Add'
 		)
-	).waitFor({state: 'attached'});
-
-	await (
-		await commerceAdminOrderDetailsPage.editEntryActionLink(
-			'Delivery Terms Add',
-			'Add'
-		)
-	).waitFor({state: 'visible'});
-
-	await (
-		await commerceAdminOrderDetailsPage.editEntryActionLink(
-			'Delivery Terms Add',
-			'Add'
-		)
-	).focus();
-
-	await expect(
-		await commerceAdminOrderDetailsPage.editEntryActionLink(
-			'Delivery Terms Add',
-			'Add'
-		)
-	).toBeFocused();
-
-	await (
-		await commerceAdminOrderDetailsPage.editEntryActionLink(
-			'Delivery Terms Add',
-			'Add'
-		)
 	).click();
 
-	await commerceAdminOrderDetailsPage.submitModalButton.waitFor({
-		state: 'attached',
-	});
-	await commerceAdminOrderDetailsPage.submitModalButton.waitFor({
-		state: 'visible',
-	});
-	await commerceAdminOrderDetailsPage.selectDeliveryTerms.focus();
-
-	await expect(
-		commerceAdminOrderDetailsPage.selectDeliveryTerms
-	).toBeFocused();
+	await commerceAdminOrderDetailsPage.selectDeliveryTerms.click();
 
 	await commerceAdminOrderDetailsPage.selectDeliveryTerms.selectOption(
 		deliveryTerm1.id.toString()

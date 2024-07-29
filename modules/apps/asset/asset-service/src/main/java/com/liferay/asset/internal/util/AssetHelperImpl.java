@@ -353,14 +353,14 @@ public class AssetHelperImpl implements AssetHelper {
 			String redirect)
 		throws Exception {
 
+		List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
+			new ArrayList<>();
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		Locale locale = themeDisplay.getLocale();
-
-		List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
-			new ArrayList<>();
 
 		for (long classNameId : classNameIds) {
 			String className = _portal.getClassName(classNameId);

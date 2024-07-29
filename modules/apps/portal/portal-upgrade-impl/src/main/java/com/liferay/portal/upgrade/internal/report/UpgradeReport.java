@@ -286,7 +286,7 @@ public class UpgradeReport {
 			"document.library.storage.size",
 			() -> {
 				if (PropsValues.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT == 0) {
-					return null;
+					return "Disabled";
 				}
 
 				if (!StringUtil.endsWith(

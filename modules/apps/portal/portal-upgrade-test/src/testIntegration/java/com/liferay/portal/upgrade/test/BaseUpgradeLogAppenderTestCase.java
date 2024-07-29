@@ -253,7 +253,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testGetDLStorageSizeAfterZeroTimeout() throws Exception {
+	public void testGetDLStorageSizeDisabled() throws Exception {
 		_appender.start();
 
 		try (SafeCloseable safeCloseable =
@@ -284,10 +284,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				_reportContent = _getReportContent();
 			}
 
-			Assert.assertFalse(
+			Assert.assertTrue(
 				StringUtil.contains(
-					_reportContent, "Document library storage size: ",
-					StringPool.BLANK));
+					_reportContent, "Document library storage size: Disabled"));
 		}
 	}
 

@@ -106,7 +106,7 @@ else {
 								<liferay-ui:message key="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>" />
 							</span>
 							<span class="author">
-								<liferay-ui:message key="<%= workflowTask.getUserName() %>" />
+								<liferay-ui:message key="<%= HtmlUtil.escape(workflowTask.getUserName()) %>" />
 							</span>
 							<span class="task-name" id="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>">
 								<liferay-ui:message key="<%= workflowTask.getLabel(workflowTaskDisplayContext.getTaskContentLocale()) %>" />
@@ -162,7 +162,7 @@ else {
 					<liferay-ui:search-container-column-text
 						href="<%= rowURL %>"
 						name="author"
-						value="<%= workflowTask.getUserName() %>"
+						value="<%= HtmlUtil.escape(workflowTask.getUserName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

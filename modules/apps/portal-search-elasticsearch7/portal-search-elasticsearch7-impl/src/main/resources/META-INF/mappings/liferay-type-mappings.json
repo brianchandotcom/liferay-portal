@@ -1181,6 +1181,7 @@
 			"template_it": {
 				"mapping": {
 					"analyzer": "italian",
+					"search_analyzer": "liferay_analyzer_it",
 					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"

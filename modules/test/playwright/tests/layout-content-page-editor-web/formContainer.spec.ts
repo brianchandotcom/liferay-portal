@@ -91,7 +91,6 @@ test('Shows correct options in picklist field selected as title in related objec
 
 	await pageEditorPage.mapFormFragment(formId, 'Lemon', [
 		'Lemon Size',
-		'Lemon Dimensions',
 		'Lemon Basket to Lemons',
 	]);
 

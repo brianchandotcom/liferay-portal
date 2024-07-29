@@ -24,6 +24,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -55,15 +60,26 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 				_amImageConfigurationHelper.getAMImageConfigurationEntries(
 					fileEntry.getCompanyId()),
 				amImageConfigurationEntry -> {
-					AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
-						_getAdaptiveMediaFromConfigurationEntry(
-							fileEntry, amImageConfigurationEntry);
+					try {
+						AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
+							_getAdaptiveMediaFromConfigurationEntry(
+								fileEntry, amImageConfigurationEntry);
 
-					if (_getWidth(adaptiveMedia) <= 0) {
+						if (_getWidth(adaptiveMedia) <= 0) {
+							return null;
+						}
+
+						return adaptiveMedia;
+					}
+					catch (PrincipalException.MustHavePermission
+								principalException) {
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(principalException);
+						}
+
 						return null;
 					}
-
-					return adaptiveMedia;
 				});
 
 		adaptiveMedias.sort(_comparator);
@@ -115,9 +131,18 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 	}
 
 	private AdaptiveMedia<AMProcessor<FileVersion>>
-		_getAdaptiveMediaFromConfigurationEntry(
-			FileEntry fileEntry,
-			AMImageConfigurationEntry amImageConfigurationEntry) {
+			_getAdaptiveMediaFromConfigurationEntry(
+				FileEntry fileEntry,
+				AMImageConfigurationEntry amImageConfigurationEntry)
+		throws PortalException {
+
+		ModelResourcePermission<?> fileEntryModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				FileEntry.class.getName());
+
+		fileEntryModelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(),
+			fileEntry.getFileEntryId(), ActionKeys.DOWNLOAD);
 
 		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
 			_findAdaptiveMedia(fileEntry, amImageConfigurationEntry);

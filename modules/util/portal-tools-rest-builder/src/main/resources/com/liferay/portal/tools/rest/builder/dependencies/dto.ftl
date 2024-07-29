@@ -447,20 +447,26 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 	}
 
 	public String toString() {
+
+		<#assign
+			toStringEnumSchemas = enumSchemas
+			toStringProperties = properties
+		/>
+
 		StringBundler sb = new StringBundler();
 
 		<#if dtoParentClassName?has_content>
 			<#assign
 				dtoParentSchema = allSchemas[dtoParentClassName]
-				enumSchemas = enumSchemas + freeMarkerTool.getDTOEnumSchemas(configYAML, openAPIYAML, dtoParentSchema)
-				properties = properties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, dtoParentSchema, allSchemas)
+				toStringEnumSchemas = toStringEnumSchemas + freeMarkerTool.getDTOEnumSchemas(configYAML, openAPIYAML, dtoParentSchema)
+				toStringProperties = toStringProperties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, dtoParentSchema, allSchemas)
 			/>
 		</#if>
 
 		sb.append("{");
 
-		<#list properties?keys as propertyName>
-			<#assign propertyType = properties[propertyName] />
+		<#list toStringProperties?keys as propertyName>
+			<#assign propertyType = toStringProperties[propertyName] />
 
 			<#if stringUtil.equals(propertyType, "Date") || stringUtil.equals(propertyType, "Date[]")>
 				DateFormat liferayToJSONDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -469,10 +475,10 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 			</#if>
 		</#list>
 
-		<#list properties?keys as propertyName>
+		<#list toStringProperties?keys as propertyName>
 			<#assign
 				capitalizedPropertyName = propertyName?cap_first
-				propertyType = properties[propertyName]
+				propertyType = toStringProperties[propertyName]
 				propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)!
 			/>
 
@@ -482,7 +488,7 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 				</#if>
 			</#if>
 
-			<#if enumSchemas?keys?seq_contains(propertyType)>
+			<#if toStringEnumSchemas?keys?seq_contains(propertyType)>
 				<#assign capitalizedPropertyName = propertyType />
 			</#if>
 
@@ -520,7 +526,7 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 						sb.append("[");
 
 						for (int i = 0; i < ${propertyName}.length; i++) {
-							<#if stringUtil.equals(propertyType, "Date[]") || stringUtil.equals(propertyType, "Object[]") || stringUtil.equals(propertyType, "String[]") || enumSchemas?keys?seq_contains(propertyType)>
+							<#if stringUtil.equals(propertyType, "Date[]") || stringUtil.equals(propertyType, "Object[]") || stringUtil.equals(propertyType, "String[]") || toStringEnumSchemas?keys?seq_contains(propertyType)>
 								sb.append("\"");
 
 								<#if stringUtil.equals(propertyType, "Date[]")>
@@ -547,7 +553,7 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 
 						sb.append("]");
 					<#else>
-						<#if stringUtil.equals(propertyType, "Date") || stringUtil.equals(propertyType, "String") || enumSchemas?keys?seq_contains(propertyType)>
+						<#if stringUtil.equals(propertyType, "Date") || stringUtil.equals(propertyType, "String") || toStringEnumSchemas?keys?seq_contains(propertyType)>
 							sb.append("\"");
 
 							<#if stringUtil.equals(propertyType, "Date")>

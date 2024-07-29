@@ -25,6 +25,14 @@ import '../../../css/Actions.scss';
 import sortItems from '../../utils/sortItems';
 import {IOrderable} from '../../utils/types';
 
+export enum EActionType {
+	ASYNC = 'async',
+	HEADLESS = 'headless',
+	LINK = 'link',
+	MODAL = 'modal',
+	SIDEPANEL = 'sidePanel',
+}
+
 const SECTIONS = {
 	CREATION_ACTIONS: 'creation-actions',
 	EDIT_CREATION_ACTION: 'edit-creation-action',
@@ -68,7 +76,7 @@ interface IAction extends IOrderable {
 	title_i18n?: {
 		[key: string]: string;
 	};
-	type: string;
+	type: EActionType;
 	url: string;
 }
 

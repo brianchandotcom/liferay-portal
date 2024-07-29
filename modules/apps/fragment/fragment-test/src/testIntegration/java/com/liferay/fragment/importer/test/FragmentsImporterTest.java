@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -109,6 +110,7 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
+	@TestInfo("LPS-151013")
 	public void testImportFragmentResourcesCreatesNewResourceWithoutPropagation()
 		throws Exception {
 
@@ -116,6 +118,7 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
+	@TestInfo("LPS-151013")
 	public void testImportFragmentResourcesCreatesNoNewResourceWithPropagation()
 		throws Exception {
 

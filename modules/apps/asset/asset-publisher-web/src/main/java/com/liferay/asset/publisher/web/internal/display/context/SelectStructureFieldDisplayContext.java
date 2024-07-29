@@ -100,6 +100,13 @@ public class SelectStructureFieldDisplayContext {
 	}
 
 	public List<SelectOption> getSelectOptions() throws PortalException {
+		List<SelectOption> selectOptions = new ArrayList<>();
+
+		selectOptions.add(
+			new SelectOption(
+				LanguageUtil.get(_themeDisplay.getLocale(), "none"),
+				StringPool.BLANK));
+
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				_getClassName());
@@ -109,13 +116,6 @@ public class SelectStructureFieldDisplayContext {
 
 		ClassType classType = classTypeReader.getClassType(
 			_getClassTypeId(), _themeDisplay.getLocale());
-
-		List<SelectOption> selectOptions = new ArrayList<>();
-
-		selectOptions.add(
-			new SelectOption(
-				LanguageUtil.get(_themeDisplay.getLocale(), "none"),
-				StringPool.BLANK));
 
 		for (ClassTypeField classTypeField : classType.getClassTypeFields()) {
 			selectOptions.add(

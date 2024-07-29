@@ -58,14 +58,14 @@ public class LayoutScopesItemSelectorViewDisplayContext
 
 	@Override
 	public GroupSearch getGroupSearch() throws Exception {
+		GroupSearch groupSearch = new GroupSearch(
+			getPortletRequest(), portletURL);
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		long groupId = getGroupId();
-
-		GroupSearch groupSearch = new GroupSearch(
-			getPortletRequest(), portletURL);
 
 		groupSearch.setResultsAndTotal(
 			() -> _filterLayoutGroups(

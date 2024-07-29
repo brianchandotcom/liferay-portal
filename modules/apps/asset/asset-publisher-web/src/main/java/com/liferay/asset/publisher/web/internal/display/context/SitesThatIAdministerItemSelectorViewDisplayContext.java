@@ -49,12 +49,12 @@ public class SitesThatIAdministerItemSelectorViewDisplayContext
 
 	@Override
 	public GroupSearch getGroupSearch() throws Exception {
+		GroupSearch groupSearch = new GroupSearch(
+			getPortletRequest(), portletURL);
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		GroupSearch groupSearch = new GroupSearch(
-			getPortletRequest(), portletURL);
 
 		groupSearch.setResultsAndTotal(
 			GroupLocalServiceUtil.search(

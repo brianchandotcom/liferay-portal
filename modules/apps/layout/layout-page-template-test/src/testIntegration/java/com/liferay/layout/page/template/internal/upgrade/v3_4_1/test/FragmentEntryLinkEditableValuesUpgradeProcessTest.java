@@ -56,33 +56,51 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_fragmentEntry =
-			_fragmentCollectionContributorRegistry.getFragmentEntry(
-				"BASIC_COMPONENT-heading");
-
 		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
+	public void testUpgradeBasicComponentSeparator() throws Exception {
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-separator");
+
+		String expected = RandomTestUtil.randomString();
+
+		_assertUpgrade(
+			JSONUtil.put("separatorColor", expected), fragmentEntry,
+			JSONUtil.put("borderColor", expected));
+	}
+
+	@Test
 	public void testUpgradeBorderRadius() throws Exception {
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
 		_assertUpgrade(
-			_jsonFactory.createJSONObject(), _jsonFactory.createJSONObject());
+			_jsonFactory.createJSONObject(), fragmentEntry,
+			_jsonFactory.createJSONObject());
 		_assertUpgrade(
-			_jsonFactory.createJSONObject(),
+			_jsonFactory.createJSONObject(), fragmentEntry,
 			JSONUtil.put("borderRadius", RandomTestUtil.randomString()));
 		_assertUpgrade(
-			JSONUtil.put("borderRadius", "0.375rem"),
+			JSONUtil.put("borderRadius", "0.375rem"), fragmentEntry,
 			JSONUtil.put("borderRadius", "lg"));
 		_assertUpgrade(
-			JSONUtil.put("borderRadius", StringPool.BLANK),
+			JSONUtil.put("borderRadius", StringPool.BLANK), fragmentEntry,
 			JSONUtil.put("borderRadius", "none"));
 		_assertUpgrade(
-			JSONUtil.put("borderRadius", "0.1875rem"),
+			JSONUtil.put("borderRadius", "0.1875rem"), fragmentEntry,
 			JSONUtil.put("borderRadius", "sm"));
 	}
 
 	@Test
 	public void testUpgradeMarginBottom() throws Exception {
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
 		String expectedMarginBottom = String.valueOf(
 			RandomTestUtil.randomInt());
 
@@ -90,88 +108,103 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest {
 			"marginBottom", expectedMarginBottom);
 
 		_assertUpgrade(
-			expectedJSONObject,
+			expectedJSONObject, fragmentEntry,
 			JSONUtil.put(
 				"bottomSpacing", expectedMarginBottom
 			).put(
 				"marginBottom", String.valueOf(RandomTestUtil.randomInt())
 			));
 		_assertUpgrade(
-			expectedJSONObject,
+			expectedJSONObject, fragmentEntry,
 			JSONUtil.put("marginBottom", expectedMarginBottom));
 	}
 
 	@Test
 	public void testUpgradeShadow() throws Exception {
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
 		_assertUpgrade(
-			_jsonFactory.createJSONObject(),
+			_jsonFactory.createJSONObject(), fragmentEntry,
 			JSONUtil.put("boxShadow", RandomTestUtil.randomString()));
 		_assertUpgrade(
 			JSONUtil.put("shadow", "0 1rem 3rem rgba(0, 0, 0, .175)"),
-			JSONUtil.put("boxShadow", "lg"));
+			fragmentEntry, JSONUtil.put("boxShadow", "lg"));
 		_assertUpgrade(
 			JSONUtil.put("shadow", "0 .125rem .25rem rgba(0, 0, 0, .075)"),
-			JSONUtil.put("boxShadow", "sm"));
+			fragmentEntry, JSONUtil.put("boxShadow", "sm"));
 	}
 
 	@Test
 	public void testUpgradeTextAlign() throws Exception {
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
 		String expectedTextAlign = RandomTestUtil.randomString();
 
 		JSONObject expectedJSONObject = JSONUtil.put(
 			"textAlign", expectedTextAlign);
 
 		_assertUpgrade(
-			expectedJSONObject, JSONUtil.put("buttonAlign", expectedTextAlign));
+			expectedJSONObject, fragmentEntry,
+			JSONUtil.put("buttonAlign", expectedTextAlign));
 		_assertUpgrade(
-			expectedJSONObject,
+			expectedJSONObject, fragmentEntry,
 			JSONUtil.put("contentAlign", expectedTextAlign));
 		_assertUpgrade(
-			expectedJSONObject, JSONUtil.put("imageAlign", expectedTextAlign));
+			expectedJSONObject, fragmentEntry,
+			JSONUtil.put("imageAlign", expectedTextAlign));
 		_assertUpgrade(
-			expectedJSONObject, JSONUtil.put("textAlign", expectedTextAlign));
+			expectedJSONObject, fragmentEntry,
+			JSONUtil.put("textAlign", expectedTextAlign));
 	}
 
 	@Test
 	public void testUpgradeTextColor() throws Exception {
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
 		_assertUpgrade(
-			JSONUtil.put("textColor", "#DA1414"),
+			JSONUtil.put("textColor", "#DA1414"), fragmentEntry,
 			JSONUtil.put("textColor", JSONUtil.put("cssClass", "danger")));
 		_assertUpgrade(
-			JSONUtil.put("textColor", "#272833"),
+			JSONUtil.put("textColor", "#272833"), fragmentEntry,
 			JSONUtil.put("textColor", JSONUtil.put("cssClass", "dark")));
 		_assertUpgrade(
-			JSONUtil.put("textColor", "#393A4A"),
+			JSONUtil.put("textColor", "#393A4A"), fragmentEntry,
 			JSONUtil.put("textColor", JSONUtil.put("cssClass", "gray-dark")));
 		_assertUpgrade(
-			JSONUtil.put("textColor", "#2E5AAC"),
+			JSONUtil.put("textColor", "#2E5AAC"), fragmentEntry,
 			JSONUtil.put("textColor", JSONUtil.put("cssClass", "info")));
 		_assertUpgrade(
-			JSONUtil.put("textColor", "#F1F2F5"),
+			JSONUtil.put("textColor", "#F1F2F5"), fragmentEntry,
 			JSONUtil.put("textColor", JSONUtil.put("cssClass", "light")));
 		_assertUpgrade(
-			JSONUtil.put("textColor", "#F7F8F9"),
+			JSONUtil.put("textColor", "#F7F8F9"), fragmentEntry,
 			JSONUtil.put("textColor", JSONUtil.put("cssClass", "lighter")));
 		_assertUpgrade(
-			JSONUtil.put("textColor", "#0B5FFF"),
+			JSONUtil.put("textColor", "#0B5FFF"), fragmentEntry,
 			JSONUtil.put("textColor", JSONUtil.put("cssClass", "primary")));
 		_assertUpgrade(
-			JSONUtil.put("textColor", "#6B6C7E"),
+			JSONUtil.put("textColor", "#6B6C7E"), fragmentEntry,
 			JSONUtil.put("textColor", JSONUtil.put("cssClass", "secondary")));
 		_assertUpgrade(
-			JSONUtil.put("textColor", "#287D3C"),
+			JSONUtil.put("textColor", "#287D3C"), fragmentEntry,
 			JSONUtil.put("textColor", JSONUtil.put("cssClass", "success")));
 		_assertUpgrade(
-			JSONUtil.put("textColor", "#B95000"),
+			JSONUtil.put("textColor", "#B95000"), fragmentEntry,
 			JSONUtil.put("textColor", JSONUtil.put("cssClass", "warning")));
 		_assertUpgrade(
-			JSONUtil.put("textColor", "#FFFFFF"),
+			JSONUtil.put("textColor", "#FFFFFF"), fragmentEntry,
 			JSONUtil.put("textColor", JSONUtil.put("cssClass", "white")));
 
 		String expectedTextColor = RandomTestUtil.randomString();
 
 		_assertUpgrade(
-			JSONUtil.put("textColor", expectedTextColor),
+			JSONUtil.put("textColor", expectedTextColor), fragmentEntry,
 			JSONUtil.put(
 				"textColor", JSONUtil.put("cssClass", expectedTextColor)));
 
@@ -180,7 +213,7 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest {
 			JSONUtil.put(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
 
-		_assertUpgrade(expectedJSONObject, expectedJSONObject);
+		_assertUpgrade(expectedJSONObject, fragmentEntry, expectedJSONObject);
 	}
 
 	private void _assertEditableValues(
@@ -216,7 +249,8 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest {
 	}
 
 	private void _assertUpgrade(
-			JSONObject expectedJSONObject, JSONObject jsonObject)
+			JSONObject expectedJSONObject, FragmentEntry fragmentEntry,
+			JSONObject jsonObject)
 		throws Exception {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
@@ -233,11 +267,11 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest {
 						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 					jsonObject
 				).toString(),
-				_fragmentEntry.getCss(), _fragmentEntry.getConfiguration(),
-				_fragmentEntry.getFragmentEntryId(), _fragmentEntry.getHtml(),
-				_fragmentEntry.getJs(), draftLayout,
-				_fragmentEntry.getFragmentEntryKey(), segmentsExperienceId,
-				_fragmentEntry.getType());
+				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), draftLayout,
+				fragmentEntry.getFragmentEntryKey(), segmentsExperienceId,
+				fragmentEntry.getType());
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
@@ -284,8 +318,6 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest {
 	@Inject
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
-
-	private FragmentEntry _fragmentEntry;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

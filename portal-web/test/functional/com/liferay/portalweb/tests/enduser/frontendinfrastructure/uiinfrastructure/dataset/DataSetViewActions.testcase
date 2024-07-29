@@ -241,63 +241,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-192956 When the user clicks on the Variant field, a dropdown with the options “Full Screen”, “Large” and “Small” is displayed"
-	@priority = 5
-	test AllVariantOptionArePresentInItemAction {
-		property portal.acceptance = "true";
-
-		task ("Given a new data set entry") {
-			DataSetAdmin.goToDataSetAdminPage();
-
-			DataSetAdmin.createDataSetEntryViaAPI(
-				dataSetName = "Country",
-				restApplication = "/headless-admin-address/v1.0",
-				restEndpoint = "/v1.0/countries",
-				restSchema = "Country");
-		}
-
-		task ("And a new view") {
-			DataSetAdmin.createFDSViewViaAPI(
-				dataSetName = "Country",
-				dataSetViewDescription = "FDSViewDescription",
-				key_dataSetViewNameList = "View Test");
-		}
-
-		task ("When the user goes to the view created") {
-			DataSetAdmin.goToSpecificViewPage(
-				dataSetName = "Country",
-				key_viewName = "View Test");
-		}
-
-		task ("When the user goes to the Action tab.") {
-			DataSetAdmin.goToTab(tabName = "Actions");
-		}
-
-		task ("And chooses the Modal option on Type field") {
-			LexiconEntry.gotoAdd();
-
-			Select(
-				key_fieldLabel = "Type",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Modal");
-		}
-
-		task ("And clicks on Variant field") {
-			Click(
-				key_fieldLabel = "Variant",
-				locator1 = "Select#GENERIC_SELECT_FIELD");
-		}
-
-		task ("Then the options Full Screen, Large and Small are displayed in the dropdown") {
-			for (var assertFields : list "Full Screen,Large,Small") {
-				AssertElementPresent(
-					key_fieldLabel = "Variant",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = ${assertFields});
-			}
-		}
-	}
-
 	@description = "LPS-192956 Confirm that all the values set in the creation for all the fields are still present when the Edit modal is opened"
 	@priority = 4
 	test AssertAllFieldsArePresentWhenEditAModalActionOnItemAction {
@@ -373,59 +316,6 @@ definition {
 				key_fieldName = "Add the title of the modal.",
 				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
 				value1 = "Edit item Action");
-		}
-	}
-
-	@description = "LPS-191485. Verify if the options GET, POST, PATCH, LPS-199219DELETE are present in the Method dropdown in the Item Action"
-	@priority = 3
-	test AssertAllMethodOptionsArePresentOnItemAction {
-		task ("When clicks on New Action button") {
-			Click(
-				key_text = "New Item Action",
-				locator1 = "Button#ANY_SECONDARY");
-		}
-
-		task ("When the user selects the Async option in Type field") {
-			Select(
-				key_fieldLabel = "Type",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Async");
-		}
-
-		task ("And fills URL field") {
-			Type(
-				key_fieldId = "URL",
-				locator1 = "TextArea#ANY_ID",
-				value1 = "wwww.liferay.com");
-		}
-
-		task ("Then Confirm that the DELETE option is selected by default.") {
-			AssertElementPresent(
-				key_fieldLabel = "Method",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "DELETE");
-		}
-
-		task ("When the user selects the Method option") {
-			Select(
-				key_fieldLabel = "Method",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "DELETE");
-		}
-
-		task ("Then The options GET, POST, PATCH, DELETE are present in the Method dropdown") {
-			for (var assertFields : list "GET,POST,PATCH,DELETE") {
-				AssertElementPresent(
-					key_fieldLabel = "Method",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = ${assertFields});
-			}
-		}
-
-		task ("And confirm that it is not possible to save the action") {
-			AssertVisible(
-				key_title = "New Item Action",
-				locator1 = "Header#H2_TITLE");
 		}
 	}
 

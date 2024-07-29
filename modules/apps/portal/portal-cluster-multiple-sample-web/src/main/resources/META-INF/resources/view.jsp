@@ -5,11 +5,12 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ page import="com.liferay.portal.cluster.multiple.sample.web.internal.ClusterSampleData" %>
+<%@ page import="com.liferay.portal.cluster.multiple.sample.web.internal.ClusterSampleData" %><%@
+page import="com.liferay.portal.kernel.servlet.PortalSessionContext" %>
+
+<%@ page import="javax.servlet.http.HttpSession" %>
 
 <portlet:defineObjects />
 
@@ -33,42 +34,60 @@ ClusterSampleData clusterSampleData = new ClusterSampleData();
 	</li>
 </ul>
 
+<div class="logged-in-session-count">
+	<h4> Logged In Session Count: </h4>
+
+	<%
+	int count = 0;
+
+	for (HttpSession httpSession : PortalSessionContext.values()) {
+		if (httpSession.getAttribute("USER_ID") != null) {
+			count++;
+		}
+	}
+
+	out.println(count);
+	%>
+
+</div>
+
 <div class="h4">Session Data:</div>
 
 <%
 ClusterSampleData portletSessionClusterSampleData = (ClusterSampleData)portletSession.getAttribute(ClusterSampleData.class.getName());
+
+if (portletSessionClusterSampleData == null) {
+	portletSessionClusterSampleData = clusterSampleData;
+	portletSession.setAttribute(ClusterSampleData.class.getName(), clusterSampleData);
+
+	out.println("Generated Cluster Sample Data: ");
+}
+else {
+	out.println("Existing Cluster Sample Data: ");
+}
 %>
 
-<c:choose>
-	<c:when test="<%= portletSessionClusterSampleData != null %>">
-		<p>Following data is stored in the portlet session:</p>
+<p>Following data is stored in the portlet session:</p>
 
-		<ul>
-			<li>
-				<b>Stored Data:</b> <%= portletSessionClusterSampleData.getData() %>
-			</li>
-			<li>
-				<b>Stored Timestamp:</b> <%= portletSessionClusterSampleData.getTimestamp() %>
-			</li>
-		</ul>
+<ul>
+	<li>
+		<b>Stored Data:</b> <p class="stored-data" ><%= portletSessionClusterSampleData.getData() %> </p>
+	</li>
+	<li>
+		<b>Stored Timestamp:</b> <%= portletSessionClusterSampleData.getTimestamp() %>
+	</li>
+	<li>
+		<b>Session Id: </b> <p class="session-id"><%= portletSession.getId() %></p>
+	</li>
+</ul>
 
-		<p>The data was stored by:</p>
+<p>The data was stored by:</p>
 
-		<ul>
-			<li>
-				<b>Computer Name:</b> <%= portletSessionClusterSampleData.getComputerName() %>
-			</li>
-			<li>
-				<b>Liferay Home:</b> <%= portletSessionClusterSampleData.getLiferayHome() %>
-			</li>
-		</ul>
-	</c:when>
-	<c:otherwise>
-
-		<%
-		portletSession.setAttribute(ClusterSampleData.class.getName(), clusterSampleData);
-		%>
-
-		<p>No session data exists, generating a new one with random string: <i><%= clusterSampleData.getData() %></i></p>
-	</c:otherwise>
-</c:choose>
+<ul>
+	<li>
+		<b>Computer Name:</b> <%= portletSessionClusterSampleData.getComputerName() %>
+	</li>
+	<li>
+		<b>Liferay Home:</b> <%= portletSessionClusterSampleData.getLiferayHome() %>
+	</li>
+</ul>

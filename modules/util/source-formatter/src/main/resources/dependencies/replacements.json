@@ -317,6 +317,138 @@
 		"to": "FolderIdComparator.getInstance(param#0#)"
 	},
 	{
+		"from": "new DLContentVersionComparator()",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "DLContentVersionComparator.getInstance(false)"
+	},
+	{
+		"from": "new DLContentVersionComparator(boolean paramName)",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "DLContentVersionComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new EntryDisplayDateComparator()",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "EntryDisplayDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new EntryDisplayDateComparator(boolean paramName)",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "EntryDisplayDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new EntryIdComparator()",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "EntryIdComparator.getInstance(false)"
+	},
+	{
+		"from": "new EntryIdComparator(boolean paramName)",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "EntryIdComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new EntryModifiedDateComparator()",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "EntryModifiedDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new EntryModifiedDateComparator(boolean paramName)",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "EntryModifiedDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new EntryTitleComparator()",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "EntryTitleComparator.getInstance(false)"
+	},
+	{
+		"from": "new EntryTitleComparator(boolean paramName)",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "EntryTitleComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new FriendlyURLEntryCreateDateComparator()",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "FriendlyURLEntryCreateDateComparator.getInstance(true)"
+	},
+	{
+		"from": "new FriendlyURLEntryCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "FriendlyURLEntryCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new FriendlyURLEntryLocalizationComparator()",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "FriendlyURLEntryLocalizationComparator.getInstance(false)"
+	},
+	{
+		"from": "new FriendlyURLEntryLocalizationComparator(boolean paramName)",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "FriendlyURLEntryLocalizationComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new ObjectFieldCreateDateComparator()",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "ObjectFieldCreateDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new ObjectFieldCreateDateComparator(boolean paramName)",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "ObjectFieldCreateDateComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new PushNotificationsDevicePlatformComparator()",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "PushNotificationsDevicePlatformComparator.getInstance(true)"
+	},
+	{
+		"from": "new PushNotificationsDevicePlatformComparator(boolean paramName)",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "PushNotificationsDevicePlatformComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new SAPEntryNameComparator()",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "SAPEntryNameComparator.getInstance(false)"
+	},
+	{
+		"from": "new SAPEntryNameComparator(boolean paramName)",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "SAPEntryNameComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new SubscriptionClassNameIdComparator()",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "SubscriptionClassNameIdComparator.getInstance(false)"
+	},
+	{
+		"from": "new SubscriptionClassNameIdComparator(boolean paramName)",
+		"issueKey": "LPD-26560",
+		"skipParametersValidation": true,
+		"to": "SubscriptionClassNameIdComparator.getInstance(param#0#)"
+	},
+	{
 		"from": "new CategoryModifiedDateComparator()",
 		"issueKey": "LPD-26703",
 		"skipParametersValidation": true,

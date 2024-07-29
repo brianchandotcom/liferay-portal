@@ -22,12 +22,10 @@ const DetailsContent = ({
 	languageTag = 'en',
 	modifiedDate,
 	preview,
-	specificFields,
+	specificFields = [],
 	title,
 	viewURLs = [],
 }) => {
-	const specificItems = Object.values(specificFields);
-
 	return (
 		<>
 			<>
@@ -44,7 +42,7 @@ const DetailsContent = ({
 			<CollapsibleSection title={Liferay.Language.get('properties')}>
 				<div className="sidebar-section">
 					<SpecificFields
-						fields={specificItems}
+						fields={specificFields}
 						languageTag={languageTag}
 					/>
 
@@ -91,7 +89,7 @@ DetailsContent.propTypes = {
 	classPK: PropTypes.string.isRequired,
 	createDate: PropTypes.string.isRequired,
 	modifiedDate: PropTypes.string.isRequired,
-	specificFields: PropTypes.object.isRequired,
+	specificFields: PropTypes.array.isRequired,
 	viewURLs: PropTypes.array.isRequired,
 };
 

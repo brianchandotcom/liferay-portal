@@ -203,7 +203,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					}
 				).put(
 					"specificFields",
-					_getSpecificFieldsJSONObject(contentDashboardItem, locale)
+					_getSpecificFieldsJSONArray(contentDashboardItem, locale)
 				).put(
 					"subscribe",
 					_getSubscribeJSONObject(
@@ -478,10 +478,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		return null;
 	}
 
-	private JSONObject _getSpecificFieldsJSONObject(
+	private JSONArray _getSpecificFieldsJSONArray(
 		ContentDashboardItem contentDashboardItem, Locale locale) {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		List<ContentDashboardItem.SpecificInformation<?>>
 			specificInformationList =
@@ -490,12 +490,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		for (ContentDashboardItem.SpecificInformation specificInformation :
 				specificInformationList) {
 
-			jsonObject.put(
-				specificInformation.getKey(),
-				specificInformation.toJSONObject(_language, locale));
+			jsonArray.put(specificInformation.toJSONObject(_language, locale));
 		}
 
-		return jsonObject;
+		return jsonArray;
 	}
 
 	private JSONObject _getSubscribeContentDashboardItemActionJSONObject(

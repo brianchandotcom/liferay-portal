@@ -18,11 +18,13 @@
 		checkScreenSize();
 	});
 
-	function copyContent() {
-		let codeContent = document.getElementById('code-content').innerText;
+	function copyContent(button) {
+		let codeToolbar = button.closest('.code-toolbar');
 
-		navigator.clipboard.writeText(codeContent).then(function() {
-			let button = document.querySelector('.copy-to-clipboard-button');
+		let codeContent = codeToolbar.querySelector('code.language-bash').innerText;
+
+		if (codeContent) {
+			navigator.clipboard.writeText(codeContent).then(function() {
 
 			button.setAttribute('data-copy-state', 'copy-success');
 
@@ -31,6 +33,7 @@
 			}, 3000);
 		})
 	}
+}
 </script>
 
 <div class="learn-recipe-container">
@@ -172,20 +175,21 @@
 							/>
 						</div>
 					</#if>
+
 					<#if currentStep.Step.Resources.code.getData()?has_content>
-					   <div class="code-toolbar">
-						  <pre class="language-bash" tabindex="0">
-					  	   <code class="language-bash" id="code-content">${currentStep.Step.Resources.code.getData()}</code>
-						  </pre>
+						<div class="code-toolbar">
+							<pre class="language-bash" tabindex="0">
+								<code class="language-bash">${currentStep.Step.Resources.code.getData()}</code>
+							</pre>
 
 							<div class="toolbar">
-							   <div class="toolbar-item">
-									  <button class="copy-to-clipboard-button" type="button" data-copy-state="copy" onclick="copyContent()">
-										   <span>Copy</span>
-										 </button>
-								   </div>
-						   </div>
-					   </div>
+								<div class="toolbar-item">
+									<button class="copy-to-clipboard-button" type="button" data-copy-state="copy" onclick="copyContent(this)">
+										<span>Copy</span>
+									</button>
+								</div>
+							</div>
+						</div>
 					</#if>
 				</#list>
 			</ol>

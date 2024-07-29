@@ -259,18 +259,11 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		try (SafeCloseable safeCloseable =
 				_setUpgradeReportDLStorageSizeTimeout(0)) {
 
-			Object upgradeReport = ReflectionTestUtil.getFieldValue(
-				_appender, "_upgradeReport");
-
 			_appender.stop();
 
-			if (_reportContent == null) {
-				_reportContent = _getReportContent();
-			}
-
-			Assert.assertTrue(
-				StringUtil.contains(
-					_reportContent, "Document library storage size: Disabled"));
+			_assertLogContextContains(
+				"upgrade.report.document.library.storage.size", "Disabled");
+			_assertReport("Document library storage size: Disabled");
 		}
 	}
 

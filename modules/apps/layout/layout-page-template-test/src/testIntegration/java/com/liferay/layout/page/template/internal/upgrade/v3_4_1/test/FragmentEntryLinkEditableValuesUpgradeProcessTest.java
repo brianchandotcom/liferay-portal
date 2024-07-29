@@ -73,6 +73,29 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest {
 	}
 
 	@Test
+	public void testUpgradeBasicComponentVideo() throws Exception {
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-video");
+
+		String expectedVideoHeight = RandomTestUtil.randomString();
+		String expectedVideoWidth = RandomTestUtil.randomString();
+
+		_assertUpgrade(
+			JSONUtil.put(
+				"videoHeight", expectedVideoHeight
+			).put(
+				"videoWidth", expectedVideoWidth
+			),
+			fragmentEntry,
+			JSONUtil.put(
+				"height", expectedVideoHeight
+			).put(
+				"width", expectedVideoWidth
+			));
+	}
+
+	@Test
 	public void testUpgradeBorderRadius() throws Exception {
 		FragmentEntry fragmentEntry =
 			_fragmentCollectionContributorRegistry.getFragmentEntry(

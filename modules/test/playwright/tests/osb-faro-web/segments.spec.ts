@@ -30,6 +30,7 @@ import {
 } from './utils/navigation';
 import {createSitePage, navigateToSitePage} from './utils/portal';
 import {
+	addNestedSegmentField,
 	addSegmentField,
 	addStaticMember,
 	createDynamicSegment,
@@ -42,6 +43,7 @@ import {
 	selectAsset,
 	selectOperator,
 	setSegmentName,
+	viewSegmentCriteriaCard,
 } from './utils/segments';
 import {SegmentConditions} from './utils/selectors';
 import {
@@ -1168,6 +1170,134 @@ test(
 
 			await apiHelpers.jsonWebServicesLayout.deleteLayout(
 				String(sitePage.id)
+			);
+		});
+	}
+);
+
+test(
+	'Segment criterias nest correctly in the criteria card',
+	{
+		tag: '@Legacy',
+	},
+	async ({apiHelpers, page}) => {
+		const channelName = 'My Property - ' + getRandomString();
+		const {channel, project} = await createChannel({
+			apiHelpers,
+			channelName,
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACSitesPageViaURL({
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+		});
+
+		await test.step('Create dynamic segment with a nested criterion', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Segments',
+			});
+
+			await createDynamicSegment(page);
+
+			await test.step('Add email criteria and fill in', async () => {
+				await addSegmentField({
+					criterionName: 'email',
+					criterionType: 'Individual Attributes',
+					page,
+				});
+
+				await selectOperator({
+					operator: 'contains',
+					operatorField: SegmentConditions.criteriaCondition,
+					page,
+				});
+
+				await editCriteriaAttributeValue({
+					attributeValue: '@liferay.com',
+					page,
+				});
+			});
+
+			await test.step('Add jobTitle criteria and fill in', async () => {
+				await addSegmentField({
+					criterionName: 'jobTitle',
+					criterionType: 'Individual Attributes',
+					page,
+				});
+
+				await selectOperator({
+					index: 1,
+					operator: 'does not contain',
+					operatorField: SegmentConditions.criteriaCondition,
+					page,
+				});
+
+				await editCriteriaAttributeValue({
+					attributeValue: 'engineer',
+					index: 1,
+					page,
+				});
+			});
+
+			await test.step('Add the familyName criteria as a nested criteria of the jobTitle and fill in', async () => {
+				await addNestedSegmentField({
+					criterionName: 'familyName',
+					criterionType: 'Individual Attributes',
+					nestedSegmentField: 'jobTitle',
+					page,
+				});
+
+				await editCriteriaAttributeValue({
+					attributeValue: 'Smith',
+					index: 2,
+					page,
+				});
+
+				await editCriteriaConjunction({
+					index: 1,
+					page,
+				});
+			});
+
+			await setSegmentName({
+				page,
+				segmentName: 'Test Dynamic Segment',
+			});
+
+			await saveSegment(page);
+		});
+
+		await test.step('Check the criteria in the Segment Criteria card and verify if two of the criteria are nested', async () => {
+			await viewSegmentCriteriaCard({
+				criteriaRowIndex: 0,
+				criteriaRowValue: 'Individual email contains "@liferay.com"',
+				page,
+			});
+
+			await viewSegmentCriteriaCard({
+				criteriaRowIndex: 0,
+				criteriaRowValue:
+					'Individual jobTitle does not contain "engineer"',
+				page,
+				parent: page.locator('.criteria-group').nth(1),
+			});
+
+			await viewSegmentCriteriaCard({
+				criteriaRowIndex: 1,
+				criteriaRowValue: 'Individual familyName is "Smith"',
+				page,
+				parent: page.locator('.criteria-group').nth(1),
+			});
+		});
+
+		await test.step('Delete channel', async () => {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+				`[${channel.id}]`,
+				project.groupId
 			);
 		});
 	}

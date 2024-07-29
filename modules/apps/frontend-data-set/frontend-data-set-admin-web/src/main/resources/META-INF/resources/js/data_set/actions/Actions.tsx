@@ -318,7 +318,12 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 						</ClayTabs>
 
 						<ClayTabs.Content active={activeTab} fade>
-							<ClayTabs.TabPane className="item-actions-tab-pane">
+							<ClayTabs.TabPane
+								aria-label={Liferay.Language.get(
+									'item-actions'
+								)}
+								className="item-actions-tab-pane"
+							>
 								<ActionList
 									actions={actions}
 									createAction={createAction}
@@ -334,7 +339,12 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 								/>
 							</ClayTabs.TabPane>
 
-							<ClayTabs.TabPane className="creation-actions-tab-pane">
+							<ClayTabs.TabPane
+								aria-label={Liferay.Language.get(
+									'creation-actions'
+								)}
+								className="creation-actions-tab-pane"
+							>
 								<ActionList
 									actions={actions}
 									createAction={createAction}

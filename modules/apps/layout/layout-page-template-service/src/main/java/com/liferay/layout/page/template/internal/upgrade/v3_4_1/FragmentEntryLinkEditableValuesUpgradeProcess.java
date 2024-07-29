@@ -30,14 +30,14 @@ public class FragmentEntryLinkEditableValuesUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select fragmentEntryLinkId,editableValues,rendererKey from " +
-					"FragmentEntryLink where rendererKey like " +
-						"'BASIC_COMPONENT%'");
+				"select ctCollectionId, fragmentEntryLinkId, editableValues, " +
+					"rendererKey from FragmentEntryLink where rendererKey " +
+						"like 'BASIC_COMPONENT%'");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update FragmentEntryLink set editableValues = ? where " +
-						"fragmentEntryLinkId = ?");
+						"ctCollectionId = ? and fragmentEntryLinkId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -86,7 +86,9 @@ public class FragmentEntryLinkEditableValuesUpgradeProcess
 
 				preparedStatement2.setString(1, editablesJSONObject.toString());
 				preparedStatement2.setLong(
-					2, resultSet.getLong("fragmentEntryLinkId"));
+					2, resultSet.getLong("ctCollectionId"));
+				preparedStatement2.setLong(
+					3, resultSet.getLong("fragmentEntryLinkId"));
 
 				preparedStatement2.addBatch();
 			}

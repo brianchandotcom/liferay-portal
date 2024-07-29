@@ -321,11 +321,19 @@ public class DLFileEntryModelDocumentContributor
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), _getIndexVersionLabel(dlFileEntry))) {
 
-			return StreamUtil.toString(
+			String string = StreamUtil.toString(
 				_dlStore.getFileAsStream(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
 					_getIndexVersionLabel(dlFileEntry)));
+
+			if (string.length() <= PropsValues.DL_FILE_INDEXING_MAX_SIZE) {
+				return string;
+			}
+
+			_dlStore.deleteFile(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), _getIndexVersionLabel(dlFileEntry));
 		}
 
 		InputStream inputStream = _getInputStream(dlFileEntry);

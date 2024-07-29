@@ -12,8 +12,6 @@ CommerceReturnContentDisplayContext commerceReturnContentDisplayContext = (Comme
 
 CommerceReturn commerceReturn = commerceReturnContentDisplayContext.getCommerceReturn();
 
-String returnStatus = commerceReturn.getReturnStatus();
-
 String note = StringPool.BLANK;
 
 if (commerceReturn != null) {
@@ -32,8 +30,8 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 
 <commerce-ui:header
 	actions="<%= commerceReturnContentDisplayContext.getHeaderActionModels() %>"
-	additionalStatusLabel="<%= returnStatus %>"
-	additionalStatusLabelStyle="<%= CommerceReturnConstants.getReturnStatusLabelStyle(returnStatus) %>"
+	additionalStatusLabel="<%= commerceReturn.getReturnStatus() %>"
+	additionalStatusLabelStyle="<%= CommerceReturnConstants.getReturnStatusLabelStyle(commerceReturn.getReturnStatus()) %>"
 	bean="<%= (commerceReturn == null) ? null : commerceReturn.getObjectEntry() %>"
 	beanIdLabel='<%= (commerceReturn == null) ? null : "id" %>'
 	externalReferenceCode="<%= (commerceReturn == null) ? StringPool.BLANK : commerceReturn.getExternalReferenceCode() %>"

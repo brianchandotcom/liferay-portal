@@ -6,6 +6,7 @@
 package com.liferay.commerce.model;
 
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
 
@@ -28,7 +29,7 @@ public class CommerceReturnItem {
 			String.valueOf(objectEntryValues.get("amount")));
 		_authorized = new BigDecimal(
 			String.valueOf(objectEntryValues.get("authorized")));
-		_authorizeReturnWithoutReturningProducts = Boolean.parseBoolean(
+		_authorizeReturnWithoutReturningProducts = GetterUtil.getBoolean(
 			String.valueOf(
 				objectEntryValues.get(
 					"authorizeReturnWithoutReturningProducts")));
@@ -54,10 +55,6 @@ public class CommerceReturnItem {
 
 	public BigDecimal getAuthorized() {
 		return _authorized;
-	}
-
-	public Boolean getAuthorizeReturnWithoutReturningProducts() {
-		return _authorizeReturnWithoutReturningProducts;
 	}
 
 	public long getCommerceOrderItemId() {
@@ -102,6 +99,10 @@ public class CommerceReturnItem {
 
 	public int getStatus() {
 		return _status;
+	}
+
+	public Boolean isAuthorizeReturnWithoutReturningProducts() {
+		return _authorizeReturnWithoutReturningProducts;
 	}
 
 	private final BigDecimal _amount;

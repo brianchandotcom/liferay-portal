@@ -507,13 +507,15 @@ public class CommerceReturnContentDisplayContext {
 	public String getReturnStatusDisplayType() {
 		String returnStatus = getReturnStatus();
 
-		if (returnStatus.equals(CommerceReturnConstants.RETURN_STATUS_DRAFT)) {
-			return "info";
-		}
-		else if (returnStatus.equals(
-					CommerceReturnConstants.RETURN_STATUS_COMPLETED)) {
+		if (returnStatus.equals(
+				CommerceReturnConstants.RETURN_STATUS_COMPLETED)) {
 
 			return "success";
+		}
+		else if (returnStatus.equals(
+					CommerceReturnConstants.RETURN_STATUS_DRAFT)) {
+
+			return "info";
 		}
 
 		return StringPool.BLANK;

@@ -674,6 +674,11 @@ pre[class*='language-'] {
 			border-color: var(--color-action-neutral-hover-10, #eaecee);
 		}
 
+		ul {
+			max-height: 100vh;
+			overflow-y: auto;
+		}
+
 		.learn-article-nav-item {
 			font-family: var(--font-family-sans-serif);
 			font-size: 1rem;

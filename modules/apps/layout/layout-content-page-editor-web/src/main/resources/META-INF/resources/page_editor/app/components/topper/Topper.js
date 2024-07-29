@@ -288,6 +288,7 @@ function TopperContent({
 									)}
 									disabled={isMultiSelect}
 									displayType="unstyled"
+									onClick={(event) => event.stopPropagation()}
 									size="sm"
 									title={Liferay.Language.get('comments')}
 								>

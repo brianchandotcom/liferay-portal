@@ -297,9 +297,13 @@ test.describe('Multiselect Fragment', () => {
 				'Form Container'
 			);
 
-			await page
-				.getByLabel('Content Type')
-				.selectOption('Lemon Basket (Default)');
+			const fragmentId =
+				await pageEditorPage.getFragmentId('Form Container');
+
+			await pageEditorPage.mapFormFragment(
+				fragmentId,
+				'Lemon Basket (Default)'
+			);
 
 			// Preview the page with a created object
 

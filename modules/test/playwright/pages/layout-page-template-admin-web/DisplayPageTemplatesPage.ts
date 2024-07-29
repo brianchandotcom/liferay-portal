@@ -94,7 +94,7 @@ export class DisplayPageTemplatesPage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async publishNewTemplate({
+	async createTemplate({
 		contentSubtype,
 		contentType,
 		name,
@@ -104,8 +104,10 @@ export class DisplayPageTemplatesPage {
 		name: string;
 	}) {
 		await this.newButton.click();
+
 		await this.page.getByRole('button', {name: 'Blank'}).click();
 		await this.page.getByLabel('Name', {exact: true}).fill(name);
+
 		await this.page
 			.getByLabel('Content Type')
 			.selectOption({label: contentType});
@@ -123,13 +125,7 @@ export class DisplayPageTemplatesPage {
 			'Success:The display page template was created successfully.'
 		);
 
-		await this.publishButton.waitFor();
-		await this.publishButton.click();
-
-		await waitForSuccessAlert(
-			this.page,
-			'Success:The display page template was published successfully.'
-		);
+		await this.publishTemplate();
 	}
 
 	async publishTemplate() {

@@ -283,7 +283,7 @@ test.describe('Multiselect Fragment', () => {
 
 			const displayPageTemplateName = getRandomString();
 
-			await displayPageTemplatesPage.publishNewTemplate({
+			await displayPageTemplatesPage.createTemplate({
 				contentType: 'Lemon Basket',
 				name: displayPageTemplateName,
 			});

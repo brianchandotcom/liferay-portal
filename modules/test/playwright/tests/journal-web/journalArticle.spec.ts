@@ -531,7 +531,7 @@ prefixUrlTest(
 
 		const displayPageTemplateName = getRandomString();
 
-		await displayPageTemplatesPage.publishNewTemplate({
+		await displayPageTemplatesPage.createTemplate({
 			contentSubtype: 'Basic Web Content',
 			contentType: 'Web Content Article',
 			name: displayPageTemplateName,

@@ -143,6 +143,55 @@ test.describe('Filters in Data Set Manager', () => {
 		await filtersPage.saveAddFilterModal();
 	});
 
+		await test.step('Create a selection filter from picklist source without preselected values', async () => {
+			await filtersPage.createSelectionFilterPicklist({
+				filterBy: 'name',
+				name: SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME,
+				preselectedValues: [],
+				selectionType: 'Single',
+				source: picklistName,
+				sourceType: 'Object Picklist',
+			});
+
+			await filtersPage.saveAddFilterModal();
+		});
+
+		await test.step('Check that the selection filter is also the list', async () => {
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME,
+				})
+			).toBeVisible();
+		});
+
+		await test.step('Can search for a filter', async () => {
+			await filtersPage.searchInput.click();
+			await filtersPage.searchInput.fill(SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME);
+
+			await filtersPage.searchButton.click();
+
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_PICKLIST_FILTER_NAME,
+				})
+			).not
+			.toBeVisible();
+
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME,
+				})
+			).toBeVisible();
+
+			await filtersPage.searchInput.click();
+			await filtersPage.searchInput.fill('');
+
+			await filtersPage.searchButton.click();
+		});
+
 		await test.step('Delete the filter, but cancel action', async () => {
 			await filtersPage
 				.getRowByText(SELECTION_PICKLIST_FILTER_NAME)
@@ -201,28 +250,6 @@ test.describe('Filters in Data Set Manager', () => {
 					name: SELECTION_PICKLIST_FILTER_NAME,
 				})
 			).not.toBeVisible();
-		});
-
-		await test.step('Create a selection filter from picklist source without preselected values', async () => {
-			await filtersPage.createSelectionFilterPicklist({
-				filterBy: 'name',
-				name: SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME,
-				preselectedValues: [],
-				selectionType: 'Single',
-				source: picklistName,
-				sourceType: 'Object Picklist',
-			});
-
-			await filtersPage.saveAddFilterModal();
-		});
-
-		await test.step('Check that the selection filter is also the list', async () => {
-			await expect(
-				page.getByRole('cell', {
-					exact: true,
-					name: SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME,
-				})
-			).toBeVisible();
 		});
 	});
 

@@ -64,7 +64,9 @@ export class FiltersPage {
 	private readonly newFilterModal: NewFilterModal;
 	private readonly newSelectionFilterModal: NewSelectionFilterModal;
 	readonly page: Page;
-
+	readonly searchInput: Locator;
+	readonly searchButton: Locator;
+	
 	constructor(page: Page) {
 		this.dataSetPage = new DataSetPage(page);
 		this.filterTable = page.getByRole('table');
@@ -143,6 +145,8 @@ export class FiltersPage {
 				.filter({hasText: 'SourceRequired'}),
 		};
 		this.page = page;
+		this.searchButton = page.getByLabel('Search');
+		this.searchInput = page.getByPlaceholder('Search');
 	}
 
 	async goto({dataSetLabel}: {dataSetLabel: string}) {

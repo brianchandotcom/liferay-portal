@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.persistence.CompanyUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -46,12 +47,16 @@ public class CreateAccountMVCRenderCommandTest {
 	public void setUp() {
 		_companySecurityStrangers = PropsUtil.get(
 			PropsKeys.COMPANY_SECURITY_STRANGERS);
+
+		CompanyUtil.clearCache();
 	}
 
 	@After
 	public void tearDown() {
 		PropsUtil.set(
 			PropsKeys.COMPANY_SECURITY_STRANGERS, _companySecurityStrangers);
+
+		CompanyUtil.clearCache();
 	}
 
 	@Test

@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.persistence.CompanyUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -22,7 +23,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsUtil;
 
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -59,6 +62,18 @@ public class UserServiceWhenCompanySecurityStrangersWithMXDisabledTest {
 		PropsUtil.set(
 			PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
 			_companySecurityStrangersWithMX);
+
+		CompanyUtil.clearCache();
+	}
+
+	@Before
+	public void setUp() {
+		CompanyUtil.clearCache();
+	}
+
+	@After
+	public void tearDown() {
+		CompanyUtil.clearCache();
 	}
 
 	@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)

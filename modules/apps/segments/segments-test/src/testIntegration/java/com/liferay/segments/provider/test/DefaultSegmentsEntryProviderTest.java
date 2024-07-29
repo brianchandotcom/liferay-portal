@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -212,6 +213,7 @@ public class DefaultSegmentsEntryProviderTest {
 	}
 
 	@Test
+	@TestInfo("LPS-127109")
 	public void testGetSegmentsEntryIdsWithContextCriterionAndGuestUserWithoutSignedInContext()
 		throws Exception {
 

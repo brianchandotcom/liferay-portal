@@ -595,59 +595,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-127109. Segments with both context and model criteria are correctly evaluated with guest users."
-	@priority = 4
-	test ViewContentFromCorrectExperienceAsGuestUser {
-		task ("Given create Segments with two properties") {
-			JSONSegmentsentry.addSegmentWithProperties(
-				contentTypeList = "Session,User",
-				filterStringList = "(languageId eq 'en_US'):(contains(emailAddress, 'liferay.com'))",
-				groupName = ${randomSiteName},
-				segmentName = "Test Segment Name");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-
-			PageEditor.editFragmentText(
-				fragmentName = "Heading",
-				id = "element-text",
-				text = "Default");
-
-			PageEditor.addExperience(
-				experienceName = "New Experience",
-				segmentName = "Test Segment Name");
-
-			PageEditor.editFragmentText(
-				fragmentName = "Heading",
-				id = "element-text",
-				text = "EMEA Guild");
-
-			PageEditor.prioritizeExperience(experienceName = "New Experience");
-
-			PageEditor.publish();
-		}
-
-		task ("When the guest user accesses to the content page") {
-			User.logoutPG();
-
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-		}
-
-		task ("Then the guest user should view the content from Default experience") {
-			ContentPages.viewFragmentText(
-				fragmentName = "heading",
-				id = "element-text",
-				text = "Default");
-		}
-	}
-
 	@description = "This is a test for LPS-187444. Deleted experience resets widget configuration on default experience"
 	@priority = 4
 	test ViewDisplayedWebContentPersistedInAssetPublisherAfterDeleteExperience {

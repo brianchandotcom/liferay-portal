@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {waitForSuccessAlert} from '../../../../../../../utils/waitForSuccessAlert';
 import {ICreationAction, IItemAction} from '../../../../../utils/types';
 import {DataSetPage} from '../DataSetPage';
 
@@ -15,15 +16,16 @@ export class ActionsPage {
 		changeIconButton: Locator;
 		confirmationMessageInput: Locator;
 		confirmationMessageTypeSelect: Locator;
+		deleteIconButton: Locator;
+		errorStatusMessageInput: Locator;
 		headlessActionKeyInput: Locator;
 		iconInput: Locator;
 		labelInput: Locator;
 		methodSelect: Locator;
 		saveButton: Locator;
-		selectIconModal: {
-			iconsList: Locator;
-			searchInput: Locator;
-		};
+		selectIconModal: Locator;
+		successStatusMessageInput: Locator;
+		titleInput: Locator;
 		typeSelect: Locator;
 		urlInput: Locator;
 		variantSelect: Locator;
@@ -40,28 +42,34 @@ export class ActionsPage {
 	readonly newItemActionButton: Locator;
 	readonly noActionsWereCreatedMessage: Locator;
 	readonly page: Page;
-	private readonly tabsContainer: Locator;
+	readonly statusMessagesTabs: Locator;
+	private readonly actionsTabs: Locator;
 
 	constructor(page: Page) {
 		this.actionForm = {
-			addIconButton: page.getByLabel('add-icon'),
+			addIconButton: page.getByLabel('Add Icon'),
 			cancelButton: page.getByRole('button', {name: 'Cancel'}),
-			changeIconButton: page.getByLabel('change-icon'),
-			confirmationMessageInput: page.getByPlaceholder(
-				'Add a message here.'
+			changeIconButton: page.getByLabel('Change Icon'),
+			confirmationMessageInput: page.getByTestId(
+				'confirmationMessageInput'
 			),
 			confirmationMessageTypeSelect: page.getByLabel('Message Type', {
 				exact: true,
 			}),
+			deleteIconButton: page.getByLabel('Remove Icon'),
+			errorStatusMessageInput: page.getByTestId(
+				'errorStatusMessageInput'
+			),
 			headlessActionKeyInput: page.getByPlaceholder('Add a value here.'),
 			iconInput: page.getByPlaceholder('No Icon Selected'),
 			labelInput: page.getByPlaceholder('Action Name'),
 			methodSelect: page.getByLabel('MethodRequired', {exact: true}),
 			saveButton: page.getByRole('button', {name: 'Save'}),
-			selectIconModal: {
-				iconsList: page.getByRole('listitem'),
-				searchInput: page.getByPlaceholder('Search'),
-			},
+			selectIconModal: page.locator('.dsm-actions-icon-selection-modal'),
+			successStatusMessageInput: page.getByTestId(
+				'successStatusMessageInput'
+			),
+			titleInput: page.getByLabel('Title', {exact: true}),
 			typeSelect: page.getByLabel('TypeRequired', {exact: true}),
 			urlInput: page.getByPlaceholder('Add a URL here.'),
 			variantSelect: page.getByLabel('VariantRequired', {exact: true}),
@@ -89,7 +97,8 @@ export class ActionsPage {
 			.nth(0)
 			.locator('.c-empty-state-title');
 		this.page = page;
-		this.tabsContainer = page.locator('.actions-tabs');
+		this.statusMessagesTabs = page.locator('.status-messages-tabs');
+		this.actionsTabs = page.locator('.actions-tabs');
 	}
 
 	async goto({dataSetLabel}: {dataSetLabel: string}) {
@@ -105,7 +114,10 @@ export class ActionsPage {
 			dataSetLabel,
 		});
 
-		await this.selectTab('Creation Actions');
+		await this.selectTab({
+			container: this.actionsTabs,
+			label: 'Creation Actions',
+		});
 	}
 
 	async gotoItemActionsTab({dataSetLabel}: {dataSetLabel: string}) {
@@ -113,15 +125,20 @@ export class ActionsPage {
 			dataSetLabel,
 		});
 
-		await this.selectTab('Item Actions');
+		await this.selectTab({
+			container: this.actionsTabs,
+			label: 'Item Actions',
+		});
 	}
 
 	async createCreationAction(creationActionProps: ICreationAction) {
 		await this.newCreationActionPlusButton.click();
 
-		await this.fillActionFormValues({...creationActionProps});
+		await this.fillCreationActionFormValues({...creationActionProps});
 
 		await this.actionForm.saveButton.click();
+
+		await waitForSuccessAlert(this.page);
 	}
 
 	async createItemAction(itemActionProps: IItemAction) {
@@ -130,10 +147,37 @@ export class ActionsPage {
 		await this.fillItemActionFormValues({...itemActionProps});
 
 		await this.actionForm.saveButton.click();
+
+		await waitForSuccessAlert(this.page);
+	}
+
+	async fillCreationActionFormValues(creationActionProps: ICreationAction) {
+		const typeDisabled = await this.actionForm.typeSelect.isDisabled();
+
+		if (!typeDisabled) {
+			await this.actionForm.typeSelect.selectOption(
+				creationActionProps.type
+			);
+		}
+
+		await this.fillActionFormValues({...creationActionProps});
 	}
 
 	async fillItemActionFormValues(itemActionProps: IItemAction) {
-		const {confirmationMessage, confirmationMessageType} = itemActionProps;
+		const {
+			confirmationMessage,
+			confirmationMessageType,
+			errorStatusMessage,
+			method,
+			successStatusMessage,
+			type,
+		} = itemActionProps;
+
+		const typeDisabled = await this.actionForm.typeSelect.isDisabled();
+
+		if (!typeDisabled) {
+			await this.actionForm.typeSelect.selectOption(type);
+		}
 
 		if (confirmationMessage) {
 			this.actionForm.confirmationMessageInput.fill(confirmationMessage);
@@ -145,75 +189,84 @@ export class ActionsPage {
 			);
 		}
 
+		if (method) {
+			await this.actionForm.methodSelect.selectOption(method);
+		}
+
+		if (successStatusMessage) {
+			await this.actionForm.successStatusMessageInput.fill(
+				successStatusMessage
+			);
+		}
+
+		if (errorStatusMessage) {
+			await this.selectTab({
+				container: this.statusMessagesTabs,
+				label: 'Error',
+			});
+
+			await this.actionForm.errorStatusMessageInput.fill(
+				errorStatusMessage
+			);
+		}
+
 		await this.fillActionFormValues({...itemActionProps});
 	}
 
 	private async fillActionFormValues(
 		actionProps: ICreationAction | IItemAction
 	) {
-		await this.actionForm.labelInput.fill(actionProps.label);
+		const {headlessActionKey, icon, label, title, url, variant} =
+			actionProps;
+
+		if (headlessActionKey) {
+			await this.actionForm.headlessActionKeyInput.fill(
+				headlessActionKey
+			);
+		}
+
+		await this.actionForm.labelInput.fill(label);
 
 		const iconSelected = Boolean(
 			await this.actionForm.iconInput.inputValue()
 		);
 
-		if (iconSelected) {
-			await this.actionForm.changeIconButton.click();
+		if (icon) {
+			if (iconSelected) {
+				await this.actionForm.changeIconButton.click();
+			}
+			else {
+				await this.actionForm.addIconButton.click();
+			}
+
+			await this.actionForm.selectIconModal
+				.getByRole('listitem')
+				.getByText(icon, {exact: true})
+				.click();
 		}
-		else {
-			await this.actionForm.addIconButton.click();
-		}
-
-		await this.actionForm.selectIconModal.searchInput.fill(
-			actionProps.icon
-		);
-		await this.actionForm.selectIconModal.iconsList
-			.getByText(actionProps.icon, {exact: true})
-			.click();
-
-		const typeDisabled = await this.actionForm.typeSelect.isDisabled();
-
-		if (!typeDisabled) {
-			await this.actionForm.typeSelect.selectOption(actionProps.type);
+		else if (iconSelected) {
+			await this.actionForm.deleteIconButton.click();
 		}
 
-		if (actionProps.type === 'modal') {
+		if (title) {
+			await this.actionForm.titleInput.fill(title);
+		}
+
+		if (url) {
+			await this.actionForm.urlInput.fill(url);
+		}
+
+		if (variant) {
 			await this.actionForm.variantSelect.waitFor({state: 'visible'});
-			await this.actionForm.variantSelect.selectOption(
-				actionProps.variant
-			);
-		}
 
-		if (actionProps.type === 'modal' || actionProps.type === 'sidePanel') {
-			const actionTitle = !actionProps.title
-				? `${actionProps.label} title`
-				: `${actionProps.title}`;
-
-			await this.page.getByPlaceholder('Add the title').click();
-			await this.page
-				.getByPlaceholder('Add the title')
-				.fill(`${actionTitle}`);
-		}
-
-		if (actionProps.type === 'async') {
-			await this.actionForm.methodSelect.selectOption(actionProps.method);
-		}
-
-		if (actionProps.type !== 'headless') {
-			await this.actionForm.urlInput.fill(actionProps.url);
-		}
-
-		if (actionProps.headlessActionKey) {
-			await this.actionForm.headlessActionKeyInput.fill(
-				actionProps.headlessActionKey
-			);
+			await this.actionForm.variantSelect.selectOption(variant);
 		}
 	}
 
-	private async selectTab(tabLabel: string) {
-		const tabButton = this.tabsContainer.getByRole('tab', {
+	async selectTab({container, label}: {container: Locator; label: string}) {
+		const tabButton = container.getByRole('tab', {
 			exact: true,
-			name: tabLabel,
+			name: label,
 		});
 
 		await tabButton.click();

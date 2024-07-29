@@ -8,11 +8,20 @@ import {Locator, expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
+import {waitForSuccessAlert} from '../../../../utils/waitForSuccessAlert';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
+import checkHelperTooltip from '../../utils/checkHelperTooltip';
+import checkLocalized from '../../utils/checkLocalized';
+import checkRequired from '../../utils/checkRequired';
 import clickRowAction from '../../utils/clickRowAction';
 import getRowByText from '../../utils/getRowByText';
 import getSelectOptionLabels from '../../utils/getSelectOptionLabels';
-import {ItemActionTypes} from '../../utils/types';
+import {
+	EAsyncActionMethod,
+	EConfirmationMessageType,
+	EItemActionType,
+	EModalActionVariant,
+} from '../../utils/types';
 import {actionsPageTest} from './fixtures/actionsPageTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 
@@ -47,27 +56,19 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 });
 
 test(
-	'There is a message if there are no item actions',
+	'Check interactive options in item action form',
 	{tag: '@LPD-11300'},
-	async ({actionsPage}) => {
+	async ({actionsPage, page}) => {
+		const form = actionsPage.actionForm;
+
 		await test.step('Go to item actions tab', async () => {
 			await actionsPage.gotoItemActionsTab({dataSetLabel});
 		});
 
-		await test.step('Assert message informing that there are no actions created', async () => {
+		await test.step('Assert message exists informing that there are no actions created', async () => {
 			await expect(actionsPage.noActionsWereCreatedMessage).toContainText(
 				'No actions were created.'
 			);
-		});
-	}
-);
-
-test(
-	'Assert available selection options in item action form',
-	{tag: '@LPD-11300'},
-	async ({actionsPage}) => {
-		await test.step('Go to item actions tab', async () => {
-			await actionsPage.gotoItemActionsTab({dataSetLabel});
 		});
 
 		await test.step('Open new item actions form', async () => {
@@ -78,36 +79,464 @@ test(
 			).toBeInViewport();
 		});
 
-		await test.step('Asset action type options', async () => {
-			expect(
-				await getSelectOptionLabels(actionsPage.actionForm.typeSelect)
-			).toEqual(['Async', 'Headless', 'Link', 'Modal', 'Side Panel']);
-		});
+		await test.step('Check options of selections', async () => {
+			expect(await getSelectOptionLabels(form.typeSelect)).toEqual([
+				'Async',
+				'Headless',
+				'Link',
+				'Modal',
+				'Side Panel',
+			]);
 
-		await test.step('Asset confirmation message type options', async () => {
 			expect(
-				await getSelectOptionLabels(
-					actionsPage.actionForm.confirmationMessageTypeSelect
-				)
+				await getSelectOptionLabels(form.confirmationMessageTypeSelect)
 			).toEqual(['Info', 'Secondary', 'Success', 'Danger', 'Warning']);
+
+			await form.typeSelect.selectOption('Async');
+
+			expect(await getSelectOptionLabels(form.methodSelect)).toEqual([
+				'DELETE',
+				'GET',
+				'PATCH',
+				'POST',
+				'PUT',
+			]);
+
+			await form.typeSelect.selectOption('Modal');
+
+			expect(await getSelectOptionLabels(form.variantSelect)).toEqual([
+				'Full Screen',
+				'Large',
+				'Small',
+			]);
 		});
 
-		await test.step('Asset method options for `Async` action type', async () => {
-			await actionsPage.actionForm.typeSelect.selectOption('Async');
+		await test.step('Check localizable inputs', async () => {
+			await checkLocalized({
+				formElements: [form.labelInput, form.confirmationMessageInput],
+				page,
+			});
 
-			expect(
-				await getSelectOptionLabels(actionsPage.actionForm.methodSelect)
-			).toEqual(['DELETE', 'GET', 'PATCH', 'POST', 'PUT']);
+			await form.typeSelect.selectOption('Async');
+
+			await actionsPage.selectTab({
+				container: actionsPage.statusMessagesTabs,
+				label: 'Success',
+			});
+
+			await expect(form.successStatusMessageInput).toBeVisible();
+
+			await checkLocalized({
+				formElements: [form.successStatusMessageInput],
+				page,
+			});
+
+			await actionsPage.selectTab({
+				container: actionsPage.statusMessagesTabs,
+				label: 'Error',
+			});
+
+			await expect(form.errorStatusMessageInput).toBeVisible();
+
+			await checkLocalized({
+				formElements: [form.errorStatusMessageInput],
+				page,
+			});
+
+			await form.typeSelect.selectOption('Modal');
+
+			await checkLocalized({
+				formElements: [form.titleInput],
+				page,
+			});
 		});
 
-		await test.step('Asset variant options for `Modal` action type', async () => {
-			await actionsPage.actionForm.typeSelect.selectOption('Modal');
+		await test.step('Check helper tooltips', async () => {
+			await checkHelperTooltip({
+				formElement: form.headlessActionKeyInput,
+				page,
+				text: "This key is used to display the action if the user has the permission for it by checking if the key is present in the data item's actions array.",
+			});
 
-			expect(
-				await getSelectOptionLabels(
-					actionsPage.actionForm.variantSelect
-				)
-			).toEqual(['Full Screen', 'Large', 'Small']);
+			await checkHelperTooltip({
+				formElement: form.confirmationMessageInput,
+				page,
+				text: 'The user will see this message before performing the action. No message will be displayed if the message is empty.',
+			});
+
+			await form.typeSelect.selectOption('Async');
+
+			await actionsPage.selectTab({
+				container: actionsPage.statusMessagesTabs,
+				label: 'Success',
+			});
+
+			await expect(form.successStatusMessageInput).toBeVisible();
+
+			await checkHelperTooltip({
+				formElement: form.successStatusMessageInput,
+				page,
+				text: 'The user will see this message if the action is successful.',
+			});
+
+			await actionsPage.selectTab({
+				container: actionsPage.statusMessagesTabs,
+				label: 'Error',
+			});
+
+			await expect(form.errorStatusMessageInput).toBeVisible();
+
+			await checkHelperTooltip({
+				formElement: form.errorStatusMessageInput,
+				page,
+				text: 'The user will see this message if the action fails.',
+			});
+		});
+
+		await test.step('Filter icon selection ', async () => {
+			await form.addIconButton.click();
+
+			const icon: string = 'chip';
+
+			await form.selectIconModal.getByPlaceholder('Search').fill(icon);
+
+			const iconsList = form.selectIconModal.getByRole('list');
+
+			const iconsListItem = iconsList.getByText(icon, {exact: true});
+
+			await expect(iconsListItem).toBeVisible();
+
+			await expect(iconsList.getByRole('listitem')).toHaveCount(1);
+
+			await form.selectIconModal
+				.getByRole('button', {name: 'Close'})
+				.click();
+
+			expect(form.iconInput).toHaveValue('');
+		});
+
+		await test.step('Validate entire form on save', async () => {
+			await form.typeSelect.selectOption('Link');
+
+			await form.saveButton.click();
+
+			await checkRequired({
+				formElements: [form.labelInput, form.urlInput],
+				page,
+			});
+
+			await form.typeSelect.selectOption('Headless');
+
+			await form.saveButton.click();
+
+			await checkRequired({
+				formElements: [form.labelInput, form.headlessActionKeyInput],
+				page,
+			});
+		});
+
+		await test.step('Validate required form elements individually', async () => {
+			await form.typeSelect.selectOption('Link');
+
+			await form.labelInput.fill(getRandomString());
+			await form.labelInput.clear();
+
+			await form.urlInput.fill(getRandomString());
+			await form.urlInput.clear();
+
+			await checkRequired({
+				formElements: [form.labelInput, form.urlInput],
+				page,
+			});
+
+			await form.typeSelect.selectOption('Headless');
+
+			await form.headlessActionKeyInput.fill(getRandomString());
+			await form.headlessActionKeyInput.clear();
+
+			await checkRequired({
+				formElements: [form.headlessActionKeyInput],
+				page,
+			});
+		});
+	}
+);
+
+test(
+	'Create and edit item action of type "Async"',
+	{tag: '@LPD-11300'},
+	async ({actionsPage, page}) => {
+		let confirmationMessage: string = getRandomString();
+		let confirmationMessageType: EConfirmationMessageType =
+			EConfirmationMessageType.INFO;
+		let errorStatusMessage: string = getRandomString();
+		let headlessActionKey: string = getRandomString();
+		let icon: string = 'catalog';
+		let label: string = getRandomString();
+		let method: EAsyncActionMethod = EAsyncActionMethod.GET;
+		let successStatusMessage: string = getRandomString();
+		const type: EItemActionType = EItemActionType.ASYNC;
+		let url: string = getRandomString();
+
+		await test.step('Go to item actions tab', async () => {
+			await actionsPage.gotoItemActionsTab({dataSetLabel});
+		});
+
+		await test.step('Create an item action of type "Async"', async () => {
+			await actionsPage.createItemAction({
+				confirmationMessage,
+				confirmationMessageType,
+				errorStatusMessage,
+				headlessActionKey,
+				icon,
+				label,
+				method,
+				successStatusMessage,
+				type,
+				url,
+			});
+		});
+
+		let actionRow: Locator;
+
+		await test.step('Check that the item action is in the list', async () => {
+			await expect(actionsPage.itemActionsTab).toBeInViewport();
+
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.itemActionsTable,
+				text: label,
+			});
+
+			await expect(actionRow.getByRole('cell')).toContainText([
+				icon,
+				label,
+				type,
+			]);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert saved values match values on creation', async () => {
+			const form = actionsPage.actionForm;
+
+			await expect(form.confirmationMessageInput).toHaveValue(
+				confirmationMessage
+			);
+			await expect(form.confirmationMessageTypeSelect).toHaveValue(
+				confirmationMessageType
+			);
+			await expect(form.errorStatusMessageInput).toHaveValue(
+				errorStatusMessage
+			);
+			await expect(form.headlessActionKeyInput).toHaveValue(
+				headlessActionKey
+			);
+			await expect(form.iconInput).toHaveValue(icon);
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.methodSelect).toHaveValue(method);
+			await expect(form.successStatusMessageInput).toHaveValue(
+				successStatusMessage
+			);
+			await expect(form.typeSelect).toHaveValue(type);
+			await expect(form.urlInput).toHaveValue(url);
+		});
+
+		await test.step('Change form values to minimum requirements and save', async () => {
+			confirmationMessage = '';
+			confirmationMessageType = EConfirmationMessageType.WARNING;
+			errorStatusMessage = '';
+			headlessActionKey = '';
+			icon = '';
+			label = getRandomString();
+			method = EAsyncActionMethod.DELETE;
+			successStatusMessage = '';
+			url = getRandomString();
+
+			await actionsPage.fillItemActionFormValues({
+				confirmationMessage,
+				confirmationMessageType,
+				errorStatusMessage,
+				headlessActionKey,
+				icon,
+				label,
+				method,
+				successStatusMessage,
+				type,
+				url,
+			});
+
+			await actionsPage.actionForm.saveButton.click();
+
+			await waitForSuccessAlert(page);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.itemActionsTable,
+				text: label,
+			});
+
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert form values have changed', async () => {
+			const form = actionsPage.actionForm;
+
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.methodSelect).toHaveValue(
+				EAsyncActionMethod.DELETE
+			);
+			await expect(form.urlInput).toHaveValue(url);
+		});
+	}
+);
+
+test(
+	'Create and edit item action of type "Headless"',
+	{tag: '@LPD-11300'},
+	async ({actionsPage, page}) => {
+		let confirmationMessage: string = getRandomString();
+		let confirmationMessageType: EConfirmationMessageType =
+			EConfirmationMessageType.SUCCESS;
+		let errorStatusMessage: string = getRandomString();
+		let headlessActionKey: string = getRandomString();
+		let icon: string = 'heading';
+		let label: string = getRandomString();
+		let successStatusMessage: string = getRandomString();
+		const type: EItemActionType = EItemActionType.HEADLESS;
+
+		await test.step('Go to item actions tab', async () => {
+			await actionsPage.gotoItemActionsTab({dataSetLabel});
+		});
+
+		await test.step('Create an item action of type "Headless"', async () => {
+			await actionsPage.createItemAction({
+				confirmationMessage,
+				confirmationMessageType,
+				errorStatusMessage,
+				headlessActionKey,
+				icon,
+				label,
+				successStatusMessage,
+				type,
+			});
+		});
+
+		let actionRow: Locator;
+
+		await test.step('Check that the item action is in the list', async () => {
+			await expect(actionsPage.itemActionsTab).toBeInViewport();
+
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.itemActionsTable,
+				text: label,
+			});
+
+			await expect(actionRow.getByRole('cell')).toContainText([
+				icon,
+				label,
+				type,
+			]);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert saved values match values on creation', async () => {
+			const form = actionsPage.actionForm;
+
+			await expect(form.confirmationMessageInput).toHaveValue(
+				confirmationMessage
+			);
+			await expect(form.confirmationMessageTypeSelect).toHaveValue(
+				confirmationMessageType
+			);
+			await expect(form.errorStatusMessageInput).toHaveValue(
+				errorStatusMessage
+			);
+			await expect(form.headlessActionKeyInput).toHaveValue(
+				headlessActionKey
+			);
+			await expect(form.iconInput).toHaveValue(icon);
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.successStatusMessageInput).toHaveValue(
+				successStatusMessage
+			);
+			await expect(form.typeSelect).toHaveValue(type);
+		});
+
+		await test.step('Change form values to minimum requirements and save', async () => {
+			confirmationMessage = '';
+			confirmationMessageType = EConfirmationMessageType.WARNING;
+			errorStatusMessage = '';
+			headlessActionKey = getRandomString();
+			icon = '';
+			label = getRandomString();
+			successStatusMessage = '';
+
+			await actionsPage.fillItemActionFormValues({
+				confirmationMessage,
+				confirmationMessageType,
+				errorStatusMessage,
+				headlessActionKey,
+				icon,
+				label,
+				successStatusMessage,
+				type,
+			});
+
+			await actionsPage.actionForm.saveButton.click();
+
+			await waitForSuccessAlert(page);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.itemActionsTable,
+				text: label,
+			});
+
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert form values have changed', async () => {
+			const form = actionsPage.actionForm;
+
+			await expect(form.headlessActionKeyInput).toHaveValue(
+				headlessActionKey
+			);
+			await expect(form.labelInput).toHaveValue(label);
 		});
 	}
 );
@@ -117,18 +546,19 @@ test(
 	{tag: '@LPD-11300'},
 	async ({actionsPage, page}) => {
 		let confirmationMessage: string = getRandomString();
-		let confirmationMessageType: string = 'info';
+		let confirmationMessageType: EConfirmationMessageType =
+			EConfirmationMessageType.INFO;
 		let headlessActionKey: string = getRandomString();
 		let icon: string = 'arrow-right-full';
 		let label: string = getRandomString();
-		const type: ItemActionTypes = 'link';
+		const type: EItemActionType = EItemActionType.LINK;
 		let url: string = getRandomString();
 
 		await test.step('Go to item actions tab', async () => {
 			await actionsPage.gotoItemActionsTab({dataSetLabel});
 		});
 
-		await test.step('Create an item action', async () => {
+		await test.step('Create an item action of type "Link"', async () => {
 			await actionsPage.createItemAction({
 				confirmationMessage,
 				confirmationMessageType,
@@ -140,18 +570,18 @@ test(
 			});
 		});
 
-		let itemActionRow: Locator;
+		let actionRow: Locator;
 
 		await test.step('Check that the item action is in the list', async () => {
 			await expect(actionsPage.itemActionsTab).toBeInViewport();
 
-			itemActionRow = await getRowByText({
+			actionRow = await getRowByText({
 				page,
 				table: actionsPage.itemActionsTable,
 				text: label,
 			});
 
-			await expect(itemActionRow.getByRole('cell')).toContainText([
+			await expect(actionRow.getByRole('cell')).toContainText([
 				icon,
 				label,
 				type,
@@ -162,7 +592,7 @@ test(
 			await clickRowAction({
 				actionLabel: 'Edit',
 				page,
-				row: itemActionRow,
+				row: actionRow,
 			});
 
 			await expect(page.getByText('Display Options')).toBeInViewport();
@@ -171,30 +601,30 @@ test(
 		await test.step('Assert saved values match values on creation', async () => {
 			const form = actionsPage.actionForm;
 
-			await expect(form.labelInput).toHaveValue(label);
-			await expect(form.iconInput).toHaveValue(icon);
-			await expect(form.typeSelect).toHaveValue(type);
-			await expect(form.urlInput).toHaveValue(url);
-			await expect(form.headlessActionKeyInput).toHaveValue(
-				headlessActionKey
-			);
 			await expect(form.confirmationMessageInput).toHaveValue(
 				confirmationMessage
 			);
 			await expect(form.confirmationMessageTypeSelect).toHaveValue(
 				confirmationMessageType
 			);
+			await expect(form.headlessActionKeyInput).toHaveValue(
+				headlessActionKey
+			);
+			await expect(form.iconInput).toHaveValue(icon);
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.typeSelect).toHaveValue(type);
+			await expect(form.urlInput).toHaveValue(url);
 		});
 
 		await test.step('Assert type cannot be changed', async () => {
 			await expect(actionsPage.actionForm.typeSelect).toBeDisabled();
 		});
 
-		await test.step('Change form values and save', async () => {
-			confirmationMessage = getRandomString();
-			confirmationMessageType = 'warning';
-			headlessActionKey = getRandomString();
-			icon = 'check-circle-full';
+		await test.step('Change form values to minimum requirements and save', async () => {
+			confirmationMessage = '';
+			confirmationMessageType = EConfirmationMessageType.WARNING;
+			headlessActionKey = '';
+			icon = '';
 			label = getRandomString();
 			url = getRandomString();
 
@@ -209,10 +639,12 @@ test(
 			});
 
 			await actionsPage.actionForm.saveButton.click();
+
+			await waitForSuccessAlert(page);
 		});
 
 		await test.step('Open edit page of the saved item', async () => {
-			itemActionRow = await getRowByText({
+			actionRow = await getRowByText({
 				page,
 				table: actionsPage.itemActionsTable,
 				text: label,
@@ -221,7 +653,7 @@ test(
 			await clickRowAction({
 				actionLabel: 'Edit',
 				page,
-				row: itemActionRow,
+				row: actionRow,
 			});
 
 			await expect(page.getByText('Display Options')).toBeInViewport();
@@ -231,18 +663,271 @@ test(
 			const form = actionsPage.actionForm;
 
 			await expect(form.labelInput).toHaveValue(label);
-			await expect(form.iconInput).toHaveValue(icon);
-			await expect(form.typeSelect).toHaveValue(type);
 			await expect(form.urlInput).toHaveValue(url);
-			await expect(form.headlessActionKeyInput).toHaveValue(
-				headlessActionKey
-			);
+		});
+	}
+);
+
+test(
+	'Create and edit item action of type "Modal"',
+	{tag: '@LPD-11300'},
+	async ({actionsPage, page}) => {
+		let confirmationMessage: string = getRandomString();
+		let confirmationMessageType: EConfirmationMessageType =
+			EConfirmationMessageType.DANGER;
+		let headlessActionKey: string = getRandomString();
+		let icon: string = 'check';
+		let label: string = getRandomString();
+		let title: string = getRandomString();
+		const type: EItemActionType = EItemActionType.MODAL;
+		let url: string = getRandomString();
+		let variant: EModalActionVariant = EModalActionVariant.SMALL;
+
+		await test.step('Go to item actions tab', async () => {
+			await actionsPage.gotoItemActionsTab({dataSetLabel});
+		});
+
+		await test.step('Create an item action of type "Modal"', async () => {
+			await actionsPage.createItemAction({
+				confirmationMessage,
+				confirmationMessageType,
+				headlessActionKey,
+				icon,
+				label,
+				title,
+				type,
+				url,
+				variant,
+			});
+		});
+
+		let actionRow: Locator;
+
+		await test.step('Check that the item action is in the list', async () => {
+			await expect(actionsPage.itemActionsTab).toBeInViewport();
+
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.itemActionsTable,
+				text: label,
+			});
+
+			await expect(actionRow.getByRole('cell')).toContainText([
+				icon,
+				label,
+				type,
+			]);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert saved values match values on creation', async () => {
+			const form = actionsPage.actionForm;
+
 			await expect(form.confirmationMessageInput).toHaveValue(
 				confirmationMessage
 			);
 			await expect(form.confirmationMessageTypeSelect).toHaveValue(
 				confirmationMessageType
 			);
+			await expect(form.headlessActionKeyInput).toHaveValue(
+				headlessActionKey
+			);
+			await expect(form.iconInput).toHaveValue(icon);
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.typeSelect).toHaveValue(type);
+			await expect(form.urlInput).toHaveValue(url);
+			await expect(form.variantSelect).toHaveValue(variant);
+		});
+
+		await test.step('Assert type cannot be changed', async () => {
+			await expect(actionsPage.actionForm.typeSelect).toBeDisabled();
+		});
+
+		await test.step('Change form values to minimum requirements and save', async () => {
+			confirmationMessage = '';
+			confirmationMessageType = EConfirmationMessageType.WARNING;
+			headlessActionKey = '';
+			icon = '';
+			label = getRandomString();
+			title = '';
+			url = getRandomString();
+			variant = EModalActionVariant.LARGE;
+
+			await actionsPage.fillItemActionFormValues({
+				confirmationMessage,
+				confirmationMessageType,
+				headlessActionKey,
+				icon,
+				label,
+				title,
+				type,
+				url,
+				variant,
+			});
+
+			await actionsPage.actionForm.saveButton.click();
+
+			await waitForSuccessAlert(page);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.itemActionsTable,
+				text: label,
+			});
+
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert form values have changed', async () => {
+			const form = actionsPage.actionForm;
+
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.urlInput).toHaveValue(url);
+			await expect(form.variantSelect).toHaveValue(variant);
+		});
+	}
+);
+
+test(
+	'Create and edit item action of type "Side Panel"',
+	{tag: '@LPD-11300'},
+	async ({actionsPage, page}) => {
+		let confirmationMessage: string = getRandomString();
+		let confirmationMessageType: EConfirmationMessageType =
+			EConfirmationMessageType.DANGER;
+		let headlessActionKey: string = getRandomString();
+		let icon: string = 'book';
+		let label: string = getRandomString();
+		let title: string = getRandomString();
+		const type: EItemActionType = EItemActionType.SIDE_PANEL;
+		let url: string = getRandomString();
+
+		await test.step('Go to item actions tab', async () => {
+			await actionsPage.gotoItemActionsTab({dataSetLabel});
+		});
+
+		await test.step('Create an item action of type "Side Panel"', async () => {
+			await actionsPage.createItemAction({
+				confirmationMessage,
+				confirmationMessageType,
+				headlessActionKey,
+				icon,
+				label,
+				title,
+				type,
+				url,
+			});
+		});
+
+		let actionRow: Locator;
+
+		await test.step('Check that the item action is in the list', async () => {
+			await expect(actionsPage.itemActionsTab).toBeInViewport();
+
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.itemActionsTable,
+				text: label,
+			});
+
+			await expect(actionRow.getByRole('cell')).toContainText([
+				icon,
+				label,
+				type,
+			]);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert saved values match values on creation', async () => {
+			const form = actionsPage.actionForm;
+
+			await expect(form.confirmationMessageInput).toHaveValue(
+				confirmationMessage
+			);
+			await expect(form.confirmationMessageTypeSelect).toHaveValue(
+				confirmationMessageType
+			);
+			await expect(form.headlessActionKeyInput).toHaveValue(
+				headlessActionKey
+			);
+			await expect(form.iconInput).toHaveValue(icon);
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.typeSelect).toHaveValue(type);
+			await expect(form.urlInput).toHaveValue(url);
+		});
+
+		await test.step('Change form values to minimum requirements and save', async () => {
+			confirmationMessage = '';
+			confirmationMessageType = EConfirmationMessageType.INFO;
+			headlessActionKey = '';
+			icon = '';
+			label = getRandomString();
+			title = '';
+			url = getRandomString();
+
+			await actionsPage.fillItemActionFormValues({
+				confirmationMessage,
+				confirmationMessageType,
+				headlessActionKey,
+				icon,
+				label,
+				title,
+				type,
+				url,
+			});
+
+			await actionsPage.actionForm.saveButton.click();
+
+			await waitForSuccessAlert(page);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.itemActionsTable,
+				text: label,
+			});
+
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert form values have changed', async () => {
+			const form = actionsPage.actionForm;
+
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.urlInput).toHaveValue(url);
 		});
 	}
 );
@@ -255,20 +940,23 @@ test(
 			await actionsPage.gotoItemActionsTab({dataSetLabel});
 		});
 
-		await test.step('Click on the "New Item Action" button', async () => {
-			await actionsPage.newItemActionButton.click();
+		await test.step('Open new item actions form', async () => {
+			await actionsPage.newItemActionPlusButton.click();
+
+			await expect(
+				actionsPage.page.getByText('Display Options')
+			).toBeInViewport();
 		});
 
-		await test.step('Add some information in the fields', async () => {
-			await actionsPage.actionForm.labelInput.fill('Test Item Action');
-			await actionsPage.actionForm.typeSelect.selectOption('link');
+		await test.step('Add some information in the form', async () => {
+			await actionsPage.actionForm.labelInput.fill(getRandomString());
 		});
 
 		await test.step('Cancel the creation of the item action', async () => {
 			await actionsPage.actionForm.cancelButton.click();
 		});
 
-		await test.step('Check that the item action was not created', async () => {
+		await test.step('Check that no actions were created', async () => {
 			await expect(actionsPage.noActionsWereCreatedMessage).toContainText(
 				'No actions were created.'
 			);
@@ -289,7 +977,7 @@ test(
 				},
 				dataSetERC,
 				label_i18n: {en_US: actionLabel},
-				type: 'link',
+				type: EItemActionType.LINK,
 			});
 		});
 

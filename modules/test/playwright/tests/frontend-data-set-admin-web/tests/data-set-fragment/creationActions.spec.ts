@@ -11,6 +11,7 @@ import {isolatedLayoutTest} from '../../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
+import {ECreationActionType} from '../../utils/types';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 
 let dataSetERC: string;
@@ -127,7 +128,7 @@ test.describe('Creation Actions in Data Set fragment', () => {
 				dataSetERC,
 				label_i18n: {en_US: firstActionLabel},
 				title_i18n: {en_US: 'Modal title'},
-				type: 'modal',
+				type: ECreationActionType.MODAL,
 			});
 
 			await dataSetManagerApiHelpers.createDataSetCreationAction({

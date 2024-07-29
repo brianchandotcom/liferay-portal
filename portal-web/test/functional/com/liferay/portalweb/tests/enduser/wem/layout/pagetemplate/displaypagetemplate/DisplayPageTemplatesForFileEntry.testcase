@@ -1,0 +1,101 @@
+@component-name = "portal-content-management"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Document Management";
+
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = ${randomSiteName},
+				subType = "Basic Web Content");
+		}
+	}
+
+	@description = "This is a test for LPS-128645. Map custom field to text fragment."
+	@priority = 4
+	test MapCustomFieldToTextFragment {
+		task ("Add a custom field for Document") {
+			CustomFields.openCustomFieldAdmin();
+
+			CustomFields.addCP(
+				customFieldName = "Short Description",
+				customFieldType = "Input Field",
+				customInputDataType = "Text",
+				resourceName = "Document");
+		}
+
+		task ("Add a document based on Basic Document") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = ${siteURLKey});
+
+			DMDocument.addCP(
+				customFieldText = "This is a short description",
+				dmDocumentFile = "Document_1.jpg",
+				dmDocumentTitle = "DM Title");
+		}
+
+		task ("Add a display page template with Document and Basic Document") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Document",
+				displayPageName = "DPT Name",
+				subType = "Basic Document");
+		}
+
+		task ("Add a Heading fragment to display page template") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map custom field to editable field of Heading") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Short Description",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.publish();
+		}
+
+		task ("Mark the display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "DPT Name");
+		}
+
+		task ("Assert the mapped custom field is shown in display page template") {
+			var fileEntryId = JSONDocument.getFileEntryId(
+				dmDocumentTitle = "DM Title",
+				groupName = ${randomSiteName});
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/d/${fileEntryId}");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "DM Title");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "This is a short description");
+		}
+	}
+
+}

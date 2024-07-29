@@ -145,6 +145,17 @@ public class SaveScimConfigurationMVCActionCommand
 			_oAuth2AuthorizationService.revokeAllOAuth2Authorizations(
 				oAuth2Application.getOAuth2ApplicationId());
 		}
+		else if (Objects.equals(cmd, "reset")) {
+			OAuth2Application oAuth2Application =
+				_oAuth2ApplicationLocalService.getOAuth2Application(
+					themeDisplay.getCompanyId(), scimClientId);
+
+			_oAuth2AuthorizationService.revokeAllOAuth2Authorizations(
+				oAuth2Application.getOAuth2ApplicationId());
+
+			_oAuth2ApplicationLocalService.deleteOAuth2Application(
+				oAuth2Application);
+		}
 		else {
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(

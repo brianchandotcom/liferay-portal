@@ -165,4 +165,26 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 			});
 		});
 	}
+
+	var resetSCIMClientData = document.getElementById(
+		'<portlet:namespace />resetSCIMClientData'
+	);
+
+	if (resetSCIMClientData) {
+		resetSCIMClientData.addEventListener('click', (event) => {
+			Liferay.Util.openConfirmModal({
+				message:
+					'<liferay-ui:message key="are-you-sure-you-want-to-reset-all-scim-client-data" />',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						var form = window.document['<portlet:namespace />fm'];
+						form['<portlet:namespace /><%= Constants.CMD %>'].value =
+							'reset';
+
+						form.submit();
+					}
+				},
+			});
+		});
+	}
 </script>

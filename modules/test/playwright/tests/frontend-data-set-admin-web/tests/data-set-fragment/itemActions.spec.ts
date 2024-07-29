@@ -11,6 +11,11 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import {liferayConfig} from '../../../../liferay.config';
 import getRandomString from '../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
+import {
+	EAsyncActionMethod,
+	EItemActionType,
+	EModalActionVariant,
+} from '../../utils/types';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 
 const LINK_ITEM_ACTION_NAME = 'Link item action';
@@ -108,7 +113,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 				},
 				dataSetERC,
 				label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
-				type: 'link',
+				type: EItemActionType.LINK,
 			});
 		});
 
@@ -164,24 +169,24 @@ test.describe('Item Actions in Data Set fragment', () => {
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
 				label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
-				type: 'link',
+				type: EItemActionType.LINK,
 			});
 
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
 				label_i18n: {en_US: MODAL_ITEM_ACTION_NAME},
-				modalSize: 'sm',
+				modalSize: EModalActionVariant.SMALL,
 				title_i18n: {en_US: MODAL_ITEM_ACTION_TITLE},
-				type: 'modal',
+				type: EItemActionType.MODAL,
 				url: liferayConfig.environment.baseUrl,
 			});
 
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
 				label_i18n: {en_US: SIDE_PANEL_ITEM_ACTION_NAME},
-				modalSize: 'sm',
+				modalSize: EModalActionVariant.SMALL,
 				title_i18n: {en_US: SIDE_PANEL_ITEM_ACTION_NAME},
-				type: 'sidePanel',
+				type: EItemActionType.SIDE_PANEL,
 				url: liferayConfig.environment.baseUrl,
 			});
 		});
@@ -320,7 +325,6 @@ test.describe('Item Actions in Data Set fragment', () => {
 		page,
 	}) => {
 		const ASYNC_ITEM_ACTION_NAME = 'Async item action';
-		const ASYNC_ITEM_ACTION_METHOD = 'DELETE';
 		const ASYNC_ITEM_ACTION_URL = '/o/data-set-manager/table-sections/{id}';
 		const HEADLESS_ITEM_ACTION_NAME = 'Headless item action';
 		const HEADLESS_ITEM_ACTION_PERMISSION_KEY = 'delete';
@@ -332,14 +336,14 @@ test.describe('Item Actions in Data Set fragment', () => {
 				dataSetERC,
 				label_i18n: {en_US: HEADLESS_ITEM_ACTION_NAME},
 				permissionKey: HEADLESS_ITEM_ACTION_PERMISSION_KEY,
-				type: 'headless',
+				type: EItemActionType.HEADLESS,
 			});
 
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
 				label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
-				method: ASYNC_ITEM_ACTION_METHOD,
-				type: 'async',
+				method: EAsyncActionMethod.DELETE,
+				type: EItemActionType.ASYNC,
 				url: ASYNC_ITEM_ACTION_URL,
 			});
 
@@ -349,7 +353,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 					en_US: NON_AVAILABLE_HEADLESS_ITEM_ACTION_NAME,
 				},
 				permissionKey: 'remove',
-				type: 'headless',
+				type: EItemActionType.HEADLESS,
 			});
 		});
 
@@ -483,7 +487,6 @@ test.describe('Item Actions in Data Set fragment', () => {
 		page,
 	}) => {
 		const ASYNC_ITEM_ACTION_NAME = 'Async item action';
-		const ASYNC_ITEM_ACTION_METHOD = 'DELETE';
 		const ASYNC_ITEM_ACTION_WRONG_URL =
 			'/o/data-set-manager/table-sections/{foo}';
 
@@ -491,8 +494,8 @@ test.describe('Item Actions in Data Set fragment', () => {
 			await dataSetManagerApiHelpers.createDataSetItemAction({
 				dataSetERC,
 				label_i18n: {en_US: ASYNC_ITEM_ACTION_NAME},
-				method: ASYNC_ITEM_ACTION_METHOD,
-				type: 'async',
+				method: EAsyncActionMethod.DELETE,
+				type: EItemActionType.ASYNC,
 				url: ASYNC_ITEM_ACTION_WRONG_URL,
 			});
 		});

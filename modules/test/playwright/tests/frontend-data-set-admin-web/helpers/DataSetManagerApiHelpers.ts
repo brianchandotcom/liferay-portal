@@ -18,10 +18,10 @@ import {
 	TABLE_SECTION_DATA_SET_RELATIONSHIP,
 } from '../utils/constants';
 import {
-	AsyncActionMethod,
-	CreationActionTypes,
-	ItemActionTypes,
-	ModalVariantTypes,
+	EAsyncActionMethod,
+	ECreationActionType,
+	EItemActionType,
+	EModalActionVariant,
 } from '../utils/types';
 
 const DEFAULT_DATA_SET_ERC = 'sampleDataSetERC';
@@ -111,19 +111,19 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		dataSetERC = DEFAULT_DATA_SET_ERC,
 		icon,
 		label_i18n = {en_US: 'Default Creation Action'},
-		modalSize = 'full-screen',
+		modalSize = EModalActionVariant.FULL_SCREEN,
 		permissionKey,
 		title_i18n,
-		type = 'link',
+		type = ECreationActionType.LINK,
 		url = liferayConfig.environment.baseUrl,
 	}: {
 		dataSetERC?: string;
 		icon?: string;
 		label_i18n?: {[key: string]: string};
-		modalSize?: ModalVariantTypes;
+		modalSize?: EModalActionVariant;
 		permissionKey?;
 		title_i18n?: {[key: string]: string};
-		type?: CreationActionTypes;
+		type?: ECreationActionType;
 		url?: string;
 	}) {
 		const endpointUrl = `${this.baseUrl}data-set-manager/actions`;
@@ -255,11 +255,11 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		icon,
 		label_i18n = {en_US: 'Default Item Action'},
 		method,
-		modalSize = 'full-screen',
+		modalSize = EModalActionVariant.FULL_SCREEN,
 		permissionKey,
 		successMessage_i18n,
 		title_i18n,
-		type = 'link',
+		type = EItemActionType.LINK,
 		url = liferayConfig.environment.baseUrl,
 	}: {
 		confirmationMessageType?: string;
@@ -268,12 +268,12 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		errorMessage_i18n?: {[key: string]: string};
 		icon?: string;
 		label_i18n?: {[key: string]: string};
-		method?: AsyncActionMethod;
-		modalSize?: ModalVariantTypes;
-		permissionKey?;
+		method?: EAsyncActionMethod;
+		modalSize?: EModalActionVariant;
+		permissionKey?: string;
 		successMessage_i18n?: {[key: string]: string};
 		title_i18n?: {[key: string]: string};
-		type?: ItemActionTypes;
+		type?: EItemActionType;
 		url?: string;
 	}) {
 		const endpointUrl = `${this.baseUrl}data-set-manager/actions`;

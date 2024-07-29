@@ -7,20 +7,18 @@ import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
-import {liferayConfig} from '../../../../liferay.config';
 import getRandomString from '../../../../utils/getRandomString';
+import {waitForSuccessAlert} from '../../../../utils/waitForSuccessAlert';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
+import checkHelperTooltip from '../../utils/checkHelperTooltip';
+import checkLocalized from '../../utils/checkLocalized';
+import checkRequired from '../../utils/checkRequired';
 import clickRowAction from '../../utils/clickRowAction';
 import getRowByText from '../../utils/getRowByText';
 import getSelectOptionLabels from '../../utils/getSelectOptionLabels';
+import {ECreationActionType, EModalActionVariant} from '../../utils/types';
 import {actionsPageTest} from './fixtures/actionsPageTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
-
-const LINK_CREATION_ACTION_NAME = 'Link creation action';
-const MODAL_CREATION_ACTION_NAME = 'Modal creation action';
-const MODAL_CREATION_ACTION_TITLE = 'Modal creation title';
-const SIDE_PANEL_CREATION_ACTION_NAME = 'Side Panel creation action';
-const SIDE_PANEL_CREATION_ACTION_TITLE = 'Side Panel creation title';
 
 export const test = mergeTests(
 	actionsPageTest,
@@ -53,30 +51,22 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 });
 
 test(
-	'There is a message if there are no creation actions',
+	'Check interactive options in creation action form',
 	{tag: '@LPD-11245'},
-	async ({actionsPage}) => {
+	async ({actionsPage, page}) => {
+		const form = actionsPage.actionForm;
+
 		await test.step('Go to creation actions tab', async () => {
 			await actionsPage.gotoCreationActionsTab({dataSetLabel});
 		});
 
-		await test.step('Assert no creation actions are created', async () => {
+		await test.step('Assert message exists informing that there are no actions created', async () => {
 			await expect(actionsPage.noActionsWereCreatedMessage).toContainText(
 				'No actions were created.'
 			);
 		});
-	}
-);
 
-test(
-	'Assert available selection options in creation action form',
-	{tag: '@LPD-11245'},
-	async ({actionsPage}) => {
-		await test.step('Go to creation actions tab', async () => {
-			await actionsPage.gotoCreationActionsTab({dataSetLabel});
-		});
-
-		await test.step('Open new item actions form', async () => {
+		await test.step('Open new creation actions form', async () => {
 			await actionsPage.newCreationActionPlusButton.click();
 
 			await expect(
@@ -84,113 +74,451 @@ test(
 			).toBeInViewport();
 		});
 
-		await test.step('Asset action type options', async () => {
-			expect(
-				await getSelectOptionLabels(actionsPage.actionForm.typeSelect)
-			).toEqual(['Link', 'Modal', 'Side Panel']);
+		await test.step('Check options of selections', async () => {
+			expect(await getSelectOptionLabels(form.typeSelect)).toEqual([
+				'Link',
+				'Modal',
+				'Side Panel',
+			]);
+
+			await form.typeSelect.selectOption('Modal');
+
+			expect(await getSelectOptionLabels(form.variantSelect)).toEqual([
+				'Full Screen',
+				'Large',
+				'Small',
+			]);
 		});
 
-		await test.step('Asset variant options for `Modal` action type', async () => {
-			await actionsPage.actionForm.typeSelect.selectOption('Modal');
+		await test.step('Check localizable inputs', async () => {
+			await checkLocalized({
+				formElements: [form.labelInput],
+				page,
+			});
 
-			expect(
-				await getSelectOptionLabels(
-					actionsPage.actionForm.variantSelect
-				)
-			).toEqual(['Full Screen', 'Large', 'Small']);
+			await form.typeSelect.selectOption('Modal');
+
+			await checkLocalized({
+				formElements: [form.titleInput],
+				page,
+			});
+		});
+
+		await test.step('Check helper tooltips', async () => {
+			await checkHelperTooltip({
+				formElement: form.headlessActionKeyInput,
+				page,
+				text: "This key is used to display the action if the user has the permission for it by checking if the key is present in the data item's actions array.",
+			});
+		});
+
+		await test.step('Validate entire form on save', async () => {
+			await form.typeSelect.selectOption('Link');
+
+			await form.saveButton.click();
+
+			await checkRequired({
+				formElements: [form.labelInput, form.urlInput],
+				page,
+			});
+		});
+
+		await test.step('Validate required form elements individually', async () => {
+			await form.typeSelect.selectOption('Link');
+
+			await form.labelInput.fill(getRandomString());
+			await form.labelInput.clear();
+
+			await form.urlInput.fill(getRandomString());
+			await form.urlInput.clear();
+
+			await checkRequired({
+				formElements: [form.labelInput, form.urlInput],
+				page,
+			});
 		});
 	}
 );
 
 test(
-	'Can create a creation action of type "Link"',
+	'Create and edit a creation action of type "Link"',
 	{tag: '@LPD-11245'},
 	async ({actionsPage, page}) => {
+		let headlessActionKey: string = getRandomString();
+		let icon: string = 'arrow-right-full';
+		let label: string = getRandomString();
+		const type: ECreationActionType = ECreationActionType.LINK;
+		let url: string = getRandomString();
+
 		await test.step('Go to creation actions tab', async () => {
 			await actionsPage.gotoCreationActionsTab({dataSetLabel});
 		});
 
-		await test.step('Create a creation action', async () => {
+		await test.step('Create a creation action of type "Link"', async () => {
 			await actionsPage.createCreationAction({
-				icon: 'arrow-right-full',
-				label: LINK_CREATION_ACTION_NAME,
-				type: 'link',
-				url: liferayConfig.environment.baseUrl,
+				headlessActionKey,
+				icon,
+				label,
+				type,
+				url,
 			});
 		});
+
+		let actionRow: Locator;
 
 		await test.step('Check that the creation action is in the list', async () => {
 			await expect(actionsPage.creationActionsTab).toBeInViewport();
 
-			await expect(
-				page.getByRole('cell', {
-					exact: true,
-					name: LINK_CREATION_ACTION_NAME,
-				})
-			).toBeVisible();
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.creationActionsTable,
+				text: label,
+			});
+
+			await expect(actionRow.getByRole('cell')).toContainText([
+				icon,
+				label,
+				type,
+			]);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert saved values match values on creation', async () => {
+			const form = actionsPage.actionForm;
+
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.iconInput).toHaveValue(icon);
+			await expect(form.typeSelect).toHaveValue(type);
+			await expect(form.urlInput).toHaveValue(url);
+			await expect(form.headlessActionKeyInput).toHaveValue(
+				headlessActionKey
+			);
+		});
+
+		await test.step('Assert type cannot be changed', async () => {
+			await expect(actionsPage.actionForm.typeSelect).toBeDisabled();
+		});
+
+		await test.step('Change form values to minimum requirements and save', async () => {
+			headlessActionKey = '';
+			icon = '';
+			label = getRandomString();
+			url = getRandomString();
+
+			await actionsPage.fillCreationActionFormValues({
+				headlessActionKey,
+				icon,
+				label,
+				type,
+				url,
+			});
+
+			await actionsPage.actionForm.saveButton.click();
+
+			await waitForSuccessAlert(page);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.creationActionsTable,
+				text: label,
+			});
+
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert form values have changed', async () => {
+			const form = actionsPage.actionForm;
+
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.urlInput).toHaveValue(url);
 		});
 	}
 );
 
 test(
-	'Can create a creation action of type "Modal"',
+	'Create and edit a creation action of type "Modal"',
 	{tag: '@LPD-11245'},
 	async ({actionsPage, page}) => {
+		let headlessActionKey: string = getRandomString();
+		let icon: string = 'check';
+		let label: string = getRandomString();
+		let title: string = getRandomString();
+		const type: ECreationActionType = ECreationActionType.MODAL;
+		let url: string = getRandomString();
+		let variant = EModalActionVariant.LARGE;
+
 		await test.step('Go to creation actions tab', async () => {
 			await actionsPage.gotoCreationActionsTab({dataSetLabel});
 		});
 
-		await test.step('Create a creation action', async () => {
+		await test.step('Create a creation action of type "Modal"', async () => {
 			await actionsPage.createCreationAction({
-				icon: 'arrow-right-full',
-				label: MODAL_CREATION_ACTION_NAME,
-				title: MODAL_CREATION_ACTION_TITLE,
-				type: 'modal',
-				url: liferayConfig.environment.baseUrl,
-				variant: 'sm',
+				headlessActionKey,
+				icon,
+				label,
+				title,
+				type,
+				url,
+				variant,
 			});
 		});
+
+		let actionRow: Locator;
 
 		await test.step('Check that the creation action is in the list', async () => {
 			await expect(actionsPage.creationActionsTab).toBeInViewport();
 
-			await expect(
-				page.getByRole('cell', {
-					exact: true,
-					name: MODAL_CREATION_ACTION_NAME,
-				})
-			).toBeVisible();
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.creationActionsTable,
+				text: label,
+			});
+
+			await expect(actionRow.getByRole('cell')).toContainText([
+				icon,
+				label,
+				type,
+			]);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert saved values match values on creation', async () => {
+			const form = actionsPage.actionForm;
+
+			await expect(form.headlessActionKeyInput).toHaveValue(
+				headlessActionKey
+			);
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.iconInput).toHaveValue(icon);
+			await expect(form.titleInput).toHaveValue(title);
+			await expect(form.typeSelect).toHaveValue(type);
+			await expect(form.urlInput).toHaveValue(url);
+			await expect(form.variantSelect).toHaveValue(variant);
+		});
+
+		await test.step('Assert type cannot be changed', async () => {
+			await expect(actionsPage.actionForm.typeSelect).toBeDisabled();
+		});
+
+		await test.step('Change form values to minimum requirements and save', async () => {
+			headlessActionKey = '';
+			icon = '';
+			label = getRandomString();
+			title = '';
+			url = getRandomString();
+			variant = EModalActionVariant.FULL_SCREEN;
+
+			await actionsPage.fillCreationActionFormValues({
+				headlessActionKey,
+				icon,
+				label,
+				title,
+				type,
+				url,
+				variant,
+			});
+
+			await actionsPage.actionForm.saveButton.click();
+
+			await waitForSuccessAlert(page);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.creationActionsTable,
+				text: label,
+			});
+
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert form values have changed', async () => {
+			const form = actionsPage.actionForm;
+
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.urlInput).toHaveValue(url);
 		});
 	}
 );
 
 test(
-	'Can create a creation action of type "Side Panel"',
+	'Create and edit a creation action of type "Side Panel"',
 	{tag: '@LPD-11245'},
 	async ({actionsPage, page}) => {
+		let headlessActionKey: string = getRandomString();
+		let icon: string = 'check';
+		let label: string = getRandomString();
+		let title: string = getRandomString();
+		const type: ECreationActionType = ECreationActionType.MODAL;
+		let url: string = getRandomString();
+
 		await test.step('Go to creation actions tab', async () => {
 			await actionsPage.gotoCreationActionsTab({dataSetLabel});
 		});
 
-		await test.step('Create a creation action', async () => {
+		await test.step('Create a creation action of type "Side Panel"', async () => {
 			await actionsPage.createCreationAction({
-				icon: 'arrow-right-full',
-				label: SIDE_PANEL_CREATION_ACTION_NAME,
-				title: SIDE_PANEL_CREATION_ACTION_TITLE,
-				type: 'sidePanel',
-				url: liferayConfig.environment.baseUrl,
+				headlessActionKey,
+				icon,
+				label,
+				title,
+				type,
+				url,
 			});
 		});
+
+		let actionRow: Locator;
 
 		await test.step('Check that the creation action is in the list', async () => {
 			await expect(actionsPage.creationActionsTab).toBeInViewport();
 
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.creationActionsTable,
+				text: label,
+			});
+
+			await expect(actionRow.getByRole('cell')).toContainText([
+				icon,
+				label,
+				type,
+			]);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert saved values match values on creation', async () => {
+			const form = actionsPage.actionForm;
+
+			await expect(form.headlessActionKeyInput).toHaveValue(
+				headlessActionKey
+			);
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.iconInput).toHaveValue(icon);
+			await expect(form.titleInput).toHaveValue(title);
+			await expect(form.typeSelect).toHaveValue(type);
+			await expect(form.urlInput).toHaveValue(url);
+		});
+
+		await test.step('Assert type cannot be changed', async () => {
+			await expect(actionsPage.actionForm.typeSelect).toBeDisabled();
+		});
+
+		await test.step('Change form values to minimum requirements and save', async () => {
+			headlessActionKey = '';
+			icon = '';
+			label = getRandomString();
+			title = '';
+			url = getRandomString();
+
+			await actionsPage.fillCreationActionFormValues({
+				headlessActionKey,
+				icon,
+				label,
+				title,
+				type,
+				url,
+			});
+
+			await actionsPage.actionForm.saveButton.click();
+
+			await waitForSuccessAlert(page);
+		});
+
+		await test.step('Open edit page of the saved item', async () => {
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.creationActionsTable,
+				text: label,
+			});
+
+			await clickRowAction({
+				actionLabel: 'Edit',
+				page,
+				row: actionRow,
+			});
+
+			await expect(page.getByText('Display Options')).toBeInViewport();
+		});
+
+		await test.step('Assert form values have changed', async () => {
+			const form = actionsPage.actionForm;
+
+			await expect(form.labelInput).toHaveValue(label);
+			await expect(form.urlInput).toHaveValue(url);
+		});
+	}
+);
+
+test(
+	'Cancel creating a creation action',
+	{tag: '@LPD-11245'},
+	async ({actionsPage}) => {
+		await test.step('Go to creation actions tab', async () => {
+			await actionsPage.gotoCreationActionsTab({dataSetLabel});
+		});
+
+		await test.step('Open new creation actions form', async () => {
+			await actionsPage.newCreationActionPlusButton.click();
+
 			await expect(
-				page.getByRole('cell', {
-					exact: true,
-					name: SIDE_PANEL_CREATION_ACTION_NAME,
-				})
-			).toBeVisible();
+				actionsPage.page.getByText('Display Options')
+			).toBeInViewport();
+		});
+
+		await test.step('Add some information in the form', async () => {
+			await actionsPage.actionForm.labelInput.fill(getRandomString());
+		});
+
+		await test.step('Cancel the creation of the item action', async () => {
+			await actionsPage.actionForm.cancelButton.click();
+		});
+
+		await test.step('Check that no actions were created', async () => {
+			await expect(actionsPage.noActionsWereCreatedMessage).toContainText(
+				'No actions were created.'
+			);
 		});
 	}
 );
@@ -205,7 +533,7 @@ test(
 			await dataSetManagerApiHelpers.createDataSetCreationAction({
 				dataSetERC,
 				label_i18n: {en_US: actionLabel},
-				type: 'link',
+				type: ECreationActionType.LINK,
 			});
 		});
 

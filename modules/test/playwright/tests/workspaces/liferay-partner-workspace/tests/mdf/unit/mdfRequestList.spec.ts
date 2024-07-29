@@ -7,7 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {partnerPagesTest} from '../../../fixtures/partnerPagesTest';
 import {accountPlatinumMock} from '../../../mocks/accountMock';
-import {userAdminMock, userCOMMock} from '../../../mocks/userMock';
+import {userCOMMock} from '../../../mocks/userMock';
 import {TAccount} from '../../../types/account';
 import {TMDFRequest} from '../../../types/mdf';
 import {TUserAccount} from '../../../types/user';
@@ -22,13 +22,15 @@ test.describe('MDF Request List', () => {
 	let userCOM: TUserAccount;
 	let mdfRequest: TMDFRequest;
 
-	test.beforeEach(async ({apiHelpers, page, partnerHelper}) => {
-		await partnerHelper.performLogin(page, userAdminMock);
-
+	test.beforeEach(async ({partnerHelper}) => {
 		accountPlatinum =
-			await apiHelpers.headlessAdminUser.postAccount(accountPlatinumMock);
+			await partnerHelper.apiHelpers.headlessAdminUser.postAccount(
+				accountPlatinumMock
+			);
 		userCOM =
-			await apiHelpers.headlessAdminUser.postUserAccount(userCOMMock);
+			await partnerHelper.apiHelpers.headlessAdminUser.postUserAccount(
+				userCOMMock
+			);
 
 		await partnerHelper.assignUserToAccountRole(
 			accountPlatinum.id,
@@ -39,26 +41,20 @@ test.describe('MDF Request List', () => {
 		const mdfRequestData = generateMDFRequestData(accountPlatinum, userCOM);
 
 		mdfRequest = await partnerHelper.createMDFRequest(mdfRequestData);
-
-		await partnerHelper.performLogout(page);
 	});
 
-	test.afterEach(async ({apiHelpers, page, partnerHelper}) => {
-		await partnerHelper.performLogin(page, userAdminMock);
-
+	test.afterEach(async ({partnerHelper}) => {
 		if (accountPlatinum) {
-			await apiHelpers.headlessAdminUser.deleteAccount(
+			await partnerHelper.apiHelpers.headlessAdminUser.deleteAccount(
 				accountPlatinum.id
 			);
 		}
 
 		if (userCOM) {
-			await apiHelpers.headlessAdminUser.deleteUserAccount(
+			await partnerHelper.apiHelpers.headlessAdminUser.deleteUserAccount(
 				Number(userCOM.id)
 			);
 		}
-
-		await partnerHelper.performLogout(page);
 
 		if (mdfRequest) {
 			await partnerHelper.deleteMDFRequest(mdfRequest.id);
@@ -72,7 +68,7 @@ test.describe('MDF Request List', () => {
 			name: 'MDF Requests',
 		});
 
-		expect(heading).toBeTruthy();
+		await expect(heading).toBeTruthy();
 	});
 
 	test('Display MDF Resquest List', async ({mdfRequestListPage}) => {

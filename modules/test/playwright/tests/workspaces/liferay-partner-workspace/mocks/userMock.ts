@@ -4,22 +4,23 @@
  */
 
 import {getRandomInt} from '../../../../utils/getRandomInt';
+import {TUserAccount} from '../types/user';
 
 const namespace = getRandomInt();
 
-export const userAdminMock = {
+export const userAdminMock: TUserAccount = {
 	emailAddress: 'test@liferay.com',
 	name: 'Test',
 	password: 'test',
 };
 
-export const userCOMMock = {
+export const userCOMMock: TUserAccount = {
 	emailAddress: 'com' + namespace + '@liferaytest.com',
 	name: 'Channel Opperations Manager (COM) ' + namespace,
 	password: 'test',
 };
 
-export const userPMMock = {
+export const userPMMock: TUserAccount = {
 	emailAddress: 'pm' + namespace + '@partnertest.com',
 	name: 'Partner Manager (PM) ' + namespace,
 	password: 'test',

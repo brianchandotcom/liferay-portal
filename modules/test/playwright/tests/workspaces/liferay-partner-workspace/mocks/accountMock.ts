@@ -4,19 +4,16 @@
  */
 
 import {getRandomInt} from '../../../../utils/getRandomInt';
+import {TAccount, TPartnerAccount} from '../types/account';
 
 const namespace = getRandomInt();
 
-export const accountPlatinumMock = {
-	currency: 'USD',
-	externalReferenceCode: '0017000000b3ScRAAU',
-	level: 'Platinum',
+export const accountPlatinumMock: TAccount = {
 	name: 'Account Platinum ' + namespace,
-	partnerCountry: 'US',
 	type: 'business',
 }
 
-export const accountGoldMock = {
+export const accountGoldMock: TPartnerAccount = {
 	currency: 'USD',
 	externalReferenceCode: '0017000000b3ScRAAU',
 	level: 'Gold',
@@ -25,7 +22,7 @@ export const accountGoldMock = {
 	type: 'business',
 }
 
-export const accountSilverMock = {
+export const accountSilverMock: TPartnerAccount = {
 	currency: 'USD',
 	externalReferenceCode: '0017000000b3ScRAAU',
 	level: 'Silver',

@@ -5,6 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {PartnerHelper} from '../../helpers/PartnerHelper';
+
 export class MDFRequestListPage {
 	readonly actionButton: Locator;
 	readonly activityAfterDateInput: Locator;
@@ -23,53 +25,60 @@ export class MDFRequestListPage {
 	readonly noEntriesFoundMessage: Locator;
 	readonly openTab: Locator;
 	readonly page: Page;
+	readonly partnerHelper: PartnerHelper;
 	readonly searchInput: Locator;
 	readonly site: Site;
 
-	constructor(page: Page, site: Site) {
-		this.actionButton = page
+	constructor(partnerHelper: PartnerHelper) {
+		this.page = partnerHelper.page;
+		this.partnerHelper = partnerHelper;
+		this.site = partnerHelper.site;
+
+		this.actionButton = this.page
 			.getByRole('cell', {name: 'Action Button'})
 			.first();
-		this.activityAfterDateInput = page
+		this.activityAfterDateInput = this.page
 			.locator('div')
 			.filter({hasText: /^Activity Date On Or After$/})
 			.locator('#basicInputText');
-		this.activityBeforeDateInput = page
+		this.activityBeforeDateInput = this.page
 			.locator('div')
 			.filter({hasText: /^Activity Date On Or Before$/})
 			.locator('#basicInputText');
-		this.activityPartnerButton = page.getByRole('button', {
+		this.activityPartnerButton = this.page.getByRole('button', {
 			name: 'Partner',
 		});
-		this.activityPeriodButton = page.getByRole('button', {
+		this.activityPeriodButton = this.page.getByRole('button', {
 			name: 'Activity Period',
 		});
-		this.activityStatusButton = page.getByRole('button', {name: 'Status'});
-		this.applyFilterButton = page.getByRole('button', {name: 'Apply'});
-		this.cleanSearch = page.getByLabel('Clean Search');
-		this.completedTab = page.getByRole('tab', {
+		this.activityStatusButton = this.page.getByRole('button', {
+			name: 'Status',
+		});
+		this.applyFilterButton = this.page.getByRole('button', {name: 'Apply'});
+		this.cleanSearch = this.page.getByLabel('Clean Search');
+		this.completedTab = this.page.getByRole('tab', {
 			exact: true,
 			name: 'Completed',
 		});
-		this.completeMenuItem = page.getByRole('menuitem', {name: 'Complete'});
-		this.exportRequestButton = page.getByRole('link', {
+		this.completeMenuItem = this.page.getByRole('menuitem', {
+			name: 'Complete',
+		});
+		this.exportRequestButton = this.page.getByRole('link', {
 			name: 'Export MDF Report',
 		});
-		this.filterButton = page.getByRole('button', {
+		this.filterButton = this.page.getByRole('button', {
 			exact: true,
 			name: 'Filter',
 		});
-		this.mdfRequestHeading = page.getByText('MDF Requests');
-		this.newRequestButton = page.getByRole('button', {
+		this.mdfRequestHeading = this.page.getByText('MDF Requests');
+		this.newRequestButton = this.page.getByRole('button', {
 			name: 'New Request',
 		});
-		this.noEntriesFoundMessage = page.getByText(
+		this.noEntriesFoundMessage = this.page.getByText(
 			'Info:No entries were found'
 		);
-		this.openTab = page.getByRole('tab', {exact: true, name: 'Open'});
-		this.page = page;
-		this.searchInput = page.getByPlaceholder('Search');
-		this.site = site;
+		this.openTab = this.page.getByRole('tab', {exact: true, name: 'Open'});
+		this.searchInput = this.page.getByPlaceholder('Search');
 	}
 
 	async clearAllFilters() {

@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {PartnerHelper} from '../../helpers/PartnerHelper';
 import {TMDFRequest} from '../../types/mdf';
 import {MDFRequestFormActivitiesPage} from './MDFRequestFormActivitiesPage';
 import {MDFRequestFormGoalsPage} from './MDFRequestFormGoalsPage';
@@ -21,6 +22,7 @@ export class MDFRequestFormPage {
 	};
 	readonly newRequestButton: Locator;
 	readonly page: Page;
+	readonly partnerHelper: PartnerHelper;
 	readonly previousButton: Locator;
 	readonly saveAsDraftButton: Locator;
 	readonly site: Site;
@@ -29,31 +31,33 @@ export class MDFRequestFormPage {
 	readonly submitButton: Locator;
 	readonly successMessage: Locator;
 
-	constructor(page: Page, site: Site) {
-		this.backButton = page.getByText('← Back');
-		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
-		this.continueButton = page.getByRole('button', {name: 'Continue'});
+	constructor(partnerHelper) {
+		this.page = partnerHelper.page;
+		this.partnerHelper = partnerHelper;
+		this.site = partnerHelper.site;
+
+		this.backButton = this.page.getByText('← Back');
+		this.cancelButton = this.page.getByRole('button', {name: 'Cancel'});
+		this.continueButton = this.page.getByRole('button', {name: 'Continue'});
 		this.form = {
-			activities: new MDFRequestFormActivitiesPage(page),
-			goals: new MDFRequestFormGoalsPage(page),
-			review: new MDFRequestFormReviewPage(page),
+			activities: new MDFRequestFormActivitiesPage(this.page),
+			goals: new MDFRequestFormGoalsPage(this.page),
+			review: new MDFRequestFormReviewPage(this.page),
 		};
-		this.page = page;
-		this.previousButton = page.getByRole('button', {name: 'Previous'});
-		this.saveAsDraftButton = page.getByRole('button', {
+		this.previousButton = this.page.getByRole('button', {name: 'Previous'});
+		this.saveAsDraftButton = this.page.getByRole('button', {
 			name: 'Save as Draft',
 		});
-		this.seeMDFHomeButton = page.getByRole('button', {
+		this.seeMDFHomeButton = this.page.getByRole('button', {
 			name: 'See MDF Home',
 		});
-		this.site = site;
-		this.statusDropdown = page
+		this.statusDropdown = this.page
 			.locator('liferay-partner-custom-element div')
 			.nth(2);
-		this.submitButton = page.getByRole('button', {
+		this.submitButton = this.page.getByRole('button', {
 			name: 'Submit',
 		});
-		this.successMessage = page.getByText('Success!');
+		this.successMessage = this.page.getByText('Success!');
 	}
 
 	async continue() {
@@ -77,7 +81,7 @@ export class MDFRequestFormPage {
 
 	async goto() {
 		await this.page.goto(
-			`web/${this.site.friendlyUrlPath}/marketing/mdf-requests/new`,
+			`/web${this.site.friendlyUrlPath}/marketing/mdf-requests/new`,
 			{
 				waitUntil: 'commit',
 			}

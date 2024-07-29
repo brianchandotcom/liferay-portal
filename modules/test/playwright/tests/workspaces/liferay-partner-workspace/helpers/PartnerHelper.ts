@@ -12,9 +12,14 @@ import {TUserAccount} from '../types/user';
 
 export class PartnerHelper {
 	readonly apiHelpers: ApiHelpers;
+	readonly page: Page;
+	readonly site: Site;
 
-	constructor(page: Page) {
-		this.apiHelpers = new ApiHelpers(page);
+	constructor(page: Page, site: Site) {
+		this.page = page;
+		this.site = site;
+
+		this.apiHelpers = new ApiHelpers(this.page);
 	}
 
 	async assignUserToAccountRole(accountId: number, roleName: string, userId: number) {
@@ -60,22 +65,20 @@ export class PartnerHelper {
 		await this.apiHelpers.delete(`/o/c/mdfrequests/${mdfRequestId}`);
 	}
 
-	async performLogin(page: Page, user: TUserAccount) {
-		await page.goto('/c/portal/login', {
-			waitUntil: 'commit',
+	async performLogin(user: TUserAccount) {
+		await this.page.goto('/c/portal/login');
+
+		const signInButton = await this.page.getByRole('button', {
+			name: 'Sign In',
 		});
 
-		const signInButton = await page.getByRole('button', {name: 'Sign In'});
+		await this.page.getByLabel('Email Address').fill(user.emailAddress);
+		await this.page.getByLabel('Password').fill(user.password);
 
-		if (signInButton) {
-			await page.getByLabel('Email Address').fill(user.emailAddress);
-			await page.getByLabel('Password').fill(user.password);
-
-			await signInButton.click();
-		}
+		await signInButton.click();
 	}
 
-	async performLogout(page: Page) {
-		await page.waitForResponse('/c/portal/logout');
+	async performLogout() {
+		await this.page.goto('/c/portal/logout');
 	}
 }

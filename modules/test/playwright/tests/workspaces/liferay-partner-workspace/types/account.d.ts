@@ -11,7 +11,7 @@ export type TAccount = {
 };
 
 export type TPartnerAccount = TAccount & {
-	currency: string;
-	name: string;
-	partnerCountry: string;
+	currency?: string;
+	level?: string;
+	partnerCountry?: string;
 };

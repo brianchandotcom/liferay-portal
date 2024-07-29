@@ -5,18 +5,22 @@
 
 import {Page} from '@playwright/test';
 
+import {PartnerHelper} from '../helpers/PartnerHelper';
+
 export class HomePage {
 	readonly page: Page;
+	readonly partnerHelper: PartnerHelper;
 	readonly site: Site;
 
-	constructor(page: Page, site: Site) {
-		this.page = page;
-		this.site = site;
+	constructor(partnerHelper) {
+		this.page = partnerHelper.page;
+		this.partnerHelper = partnerHelper;
+		this.site = partnerHelper.site;
 	}
 
 	async goto() {
-		await this.page.goto(`/web${this.site.friendlyUrlPath}/home`, {
-			waitUntil: 'commit',
-		});
+		await this.page.goto(
+			`/web${this.partnerHelper.site.friendlyUrlPath}/home`
+		);
 	}
 }

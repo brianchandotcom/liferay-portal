@@ -7,7 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {partnerPagesTest} from '../../../fixtures/partnerPagesTest';
 import {accountPlatinumMock} from '../../../mocks/accountMock';
-import {userAdminMock, userPMMock} from '../../../mocks/userMock';
+import {userPMMock} from '../../../mocks/userMock';
 import {TAccount} from '../../../types/account';
 import {TUserAccount} from '../../../types/user';
 import {EAccountRoles} from '../../../utils/constants';
@@ -19,65 +19,51 @@ test.describe('MDF Request Form', () => {
 	let accountPlatinum: TAccount;
 	let userPM: TUserAccount;
 
-	test.beforeEach(async ({apiHelpers, page, partnerHelper}) => {
-		await partnerHelper.performLogin(page, userAdminMock);
-
+	test.beforeEach(async ({partnerHelper}) => {
 		accountPlatinum =
-			await apiHelpers.headlessAdminUser.postAccount(accountPlatinumMock);
-		userPM = await apiHelpers.headlessAdminUser.postUserAccount(userPMMock);
+			await partnerHelper.apiHelpers.headlessAdminUser.postAccount(
+				accountPlatinumMock
+			);
+		userPM =
+			await partnerHelper.apiHelpers.headlessAdminUser.postUserAccount(
+				userPMMock
+			);
 
 		await partnerHelper.assignUserToAccountRole(
-			accountPlatinum.id,
+			Number(accountPlatinum.id),
 			EAccountRoles.PARTNER_MANAGER,
 			Number(userPM.id)
 		);
-
-		await partnerHelper.performLogout(page);
 	});
 
-	test.afterEach(async ({apiHelpers, page, partnerHelper}) => {
-		await partnerHelper.performLogin(page, userAdminMock);
-
+	test.afterEach(async ({partnerHelper}) => {
 		if (accountPlatinum) {
-			await apiHelpers.headlessAdminUser.deleteAccount(
-				accountPlatinum.id
+			await partnerHelper.apiHelpers.headlessAdminUser.deleteAccount(
+				Number(accountPlatinum.id)
 			);
 		}
 
 		if (userPM) {
-			await apiHelpers.headlessAdminUser.deleteUserAccount(
+			await partnerHelper.apiHelpers.headlessAdminUser.deleteUserAccount(
 				Number(userPM.id)
 			);
 		}
-
-		await partnerHelper.performLogout(page);
 	});
 
 	test('Open MDF Request Form', async ({
 		mdfRequestFormPage,
-		page,
 		partnerHelper,
 	}) => {
-		await partnerHelper.performLogin(page, userPM);
-
 		await mdfRequestFormPage.goto();
 
-		const heading = await page.getByRole('heading', {
+		const heading = await partnerHelper.page.getByRole('heading', {
 			name: 'MDF Request',
 		});
 
-		expect(heading).toBeTruthy();
-
-		await partnerHelper.performLogout(page);
+		await expect(heading).toBeTruthy();
 	});
 
-	test('Create a New MDF Request', async ({
-		mdfRequestFormPage,
-		page,
-		partnerHelper,
-	}) => {
-		await partnerHelper.performLogin(page, userPM);
-
+	test('Create a New MDF Request', async ({mdfRequestFormPage}) => {
 		await mdfRequestFormPage.goto();
 
 		const mdfRequestData = generateMDFRequestData(accountPlatinum, userPM);
@@ -88,7 +74,5 @@ test.describe('MDF Request Form', () => {
 		await mdfRequestFormPage.submitButton.click();
 
 		await expect(mdfRequestFormPage.successMessage).toBeVisible();
-
-		await partnerHelper.performLogout(page);
 	});
 });

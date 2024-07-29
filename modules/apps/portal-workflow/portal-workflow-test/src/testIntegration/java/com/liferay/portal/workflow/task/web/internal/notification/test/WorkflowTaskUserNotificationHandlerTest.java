@@ -100,45 +100,34 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		UserNotificationEvent userNotificationEvent =
 			_getUserNotificationEvent();
 
-		UserNotificationFeedEntry userNotificationFeedEntry = _interpret(
-			group,
-			controlPanelVirtualLayout,
-			serviceContext, userNotificationEvent);
-
-		Assert.assertEquals(
-			PortletURLBuilder.create(
-				PortletURLFactoryUtil.create(
-					serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASK,
-					controlPanelVirtualLayout.getPlid(), PortletRequest.RENDER_PHASE)
-			).setMVCPath(
-				"/edit_workflow_task.jsp"
-			).setParameter(
-				"workflowTaskId",
-				() -> {
-					JSONObject jsonObject = _jsonFactory.createJSONObject(
-						userNotificationEvent.getPayload());
-
-					return jsonObject.get("workflowTaskId");
-				}
-			).setWindowState(
-				WindowState.MAXIMIZED
-			).buildString(),
-			userNotificationFeedEntry.getLink());
+		_assertLink(
+			controlPanelVirtualLayout.getPlid(), group,
+			controlPanelVirtualLayout, serviceContext, userNotificationEvent);
 
 		Layout layout =
 			PersonalApplicationURLUtil.
 				getOrAddEmbeddedPersonalApplicationLayout(
 					TestPropsValues.getUser(), group, false);
 
-		 userNotificationFeedEntry = _interpret(
-			group, LayoutTestUtil.addTypeContentLayout(group), serviceContext,
-			userNotificationEvent);
+		_assertLink(
+			layout.getPlid(), group, LayoutTestUtil.addTypeContentLayout(group),
+			serviceContext, userNotificationEvent);
+	}
+
+	private void _assertLink(
+			long expectedPlid, Group group, Layout layout,
+			ServiceContext serviceContext,
+			UserNotificationEvent userNotificationEvent)
+		throws Exception {
+
+		UserNotificationFeedEntry userNotificationFeedEntry = _interpret(
+			group, layout, serviceContext, userNotificationEvent);
 
 		Assert.assertEquals(
 			PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
 					serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASK,
-					layout.getPlid(), PortletRequest.RENDER_PHASE)
+					expectedPlid, PortletRequest.RENDER_PHASE)
 			).setMVCPath(
 				"/edit_workflow_task.jsp"
 			).setParameter(

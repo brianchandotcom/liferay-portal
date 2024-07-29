@@ -30,9 +30,7 @@ export class DisplayPageTemplatesPage {
 
 	async clickMoreActions(name: string) {
 		await this.page
-			.locator(
-				'#_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_displayPagesSearchContainer .card-page-item'
-			)
+			.locator('.card-page-item')
 			.filter({hasText: name})
 			.getByLabel('More actions')
 			.click();
@@ -80,11 +78,11 @@ export class DisplayPageTemplatesPage {
 	}
 
 	async markAsDefault(name: string) {
-		await this.clickMoreActions(name);
-
 		this.page.once('dialog', (dialog) => {
 			dialog.accept().catch(() => {});
 		});
+
+		await this.clickMoreActions(name);
 
 		await this.page
 			.getByRole('menuitem', {

@@ -95,6 +95,16 @@
 				],
 				"tokenizer": "standard"
 			},
+			"liferay_analyzer_it": {
+				"filter": [
+					"italian_elision",
+					"lowercase",
+					"italian_stop",
+					"liferay_filter_synonym_it",
+					"italian_stemmer"
+				],
+				"tokenizer": "standard"
+			},
 			"liferay_analyzer_nl": {
 				"filter": [
 					"lowercase",
@@ -267,6 +277,41 @@
 				"stopwords": "_hungarian_",
 				"type": "stop"
 			},
+			"italian_elision": {
+				"articles": [
+					"c",
+					"l",
+					"all",
+					"dall",
+					"dell",
+					"nell",
+					"sull",
+					"coll",
+					"pell",
+					"gl",
+					"agl",
+					"dagl",
+					"degl",
+					"negl",
+					"sugl",
+					"un",
+					"m",
+					"t",
+					"s",
+					"v",
+					"d"
+				],
+				"articles_case": true,
+				"type": "elision"
+			},
+			"italian_stemmer": {
+				"language": "light_italian",
+				"type": "stemmer"
+			},
+			"italian_stop": {
+				"stopwords": "_italian_",
+				"type": "stop"
+			},
 			"liferay_filter_synonym_ar": {
 				"lenient": true,
 				"synonyms": [
@@ -310,6 +355,12 @@
 				"type": "synonym_graph"
 			},
 			"liferay_filter_synonym_hu": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_it": {
 				"lenient": true,
 				"synonyms": [
 				],

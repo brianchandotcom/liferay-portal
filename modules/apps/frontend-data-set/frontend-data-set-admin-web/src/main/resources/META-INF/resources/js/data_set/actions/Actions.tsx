@@ -10,7 +10,11 @@ import ClayTabs from '@clayui/tabs';
 import {fetch, openModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {API_URL, OBJECT_RELATIONSHIP} from '../../utils/constants';
+import {
+	API_URL,
+	DEFAULT_FETCH_HEADERS,
+	OBJECT_RELATIONSHIP,
+} from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {IDataSetSectionProps} from '../DataSet';
@@ -145,7 +149,9 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 			setActiveSection(SECTIONS.CREATION_ACTIONS);
 		}
 
-		const response = await fetch(url);
+		const response = await fetch(url, {
+			headers: DEFAULT_FETCH_HEADERS,
+		});
 
 		if (!response.ok) {
 			setLoading(false);
@@ -198,6 +204,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 						processClose();
 
 						fetch(item.actions.delete.href, {
+							headers: DEFAULT_FETCH_HEADERS,
 							method: item.actions.delete.method,
 						})
 							.then(() => {
@@ -244,10 +251,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 				body: JSON.stringify({
 					[actionTypeOrder]: order,
 				}),
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				},
+				headers: DEFAULT_FETCH_HEADERS,
 				method: 'PATCH',
 			}
 		);

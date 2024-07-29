@@ -19,7 +19,11 @@ import {FDSViewType} from '../../../FDSViews';
 import RequiredMark from '../../../components/RequiredMark';
 import Search from '../../../components/Search';
 import ValidationFeedback from '../../../components/ValidationFeedback';
-import {API_URL, OBJECT_RELATIONSHIP} from '../../../utils/constants';
+import {
+	API_URL,
+	DEFAULT_FETCH_HEADERS,
+	OBJECT_RELATIONSHIP,
+} from '../../../utils/constants';
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 import {IAction} from '../Actions';
@@ -234,10 +238,7 @@ const ActionForm = ({
 
 		const response = await fetch(apiURL, {
 			body: JSON.stringify(body),
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
+			headers: DEFAULT_FETCH_HEADERS,
 			method: fetchMethod,
 		});
 

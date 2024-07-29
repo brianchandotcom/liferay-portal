@@ -46,6 +46,16 @@
 				],
 				"tokenizer": "standard"
 			},
+			"liferay_analyzer_nl": {
+				"filter": [
+					"lowercase",
+					"dutch_stop",
+					"liferay_filter_synonym_nl",
+					"dutch_stemmer",
+					"dutch_override"
+				],
+				"tokenizer": "standard"
+			},
 			"liferay_analyzer_pt_BR": {
 				"filter": [
 					"lowercase",
@@ -82,6 +92,23 @@
 				"stopwords": "_brazilian_",
 				"type": "stop"
 			},
+			"dutch_override": {
+				"rules": [
+					"fiets=>fiets",
+					"bromfiets=>bromfiets",
+					"ei=>eier",
+					"kind=>kinder"
+				],
+				"type": "stemmer_override"
+			},
+			"dutch_stemmer": {
+				"language": "dutch",
+				"type": "stemmer"
+			},
+			"dutch_stop": {
+				"stopwords": "_dutch_",
+				"type": "stop"
+			},
 			"english_possessive_stemmer": {
 				"language": "possessive_english",
 				"type": "stemmer"
@@ -115,6 +142,12 @@
 				"type": "synonym_graph"
 			},
 			"liferay_filter_synonym_es": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_nl": {
 				"lenient": true,
 				"synonyms": [
 				],

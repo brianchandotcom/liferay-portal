@@ -34,4 +34,22 @@ public interface PortalInstancesConfiguration {
 	@Meta.AD(type = Meta.Type.String)
 	public String virtualHostname();
 
+	@Meta.AD(required = false, type = Meta.Type.String)
+	public String adminPassword();
+
+	@Meta.AD(required = false, type = Meta.Type.String)
+	public String adminScreenName();
+
+	@Meta.AD(required = false, type = Meta.Type.String)
+	public String adminEmailAddress();
+
+	@Meta.AD(required = false, type = Meta.Type.String)
+	public String adminFirstName();
+
+	@Meta.AD(required = false, type = Meta.Type.String)
+	public String adminMiddleName();
+
+	@Meta.AD(required = false, type = Meta.Type.String)
+	public String adminLastName();
+
 }

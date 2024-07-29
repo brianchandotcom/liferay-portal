@@ -17,6 +17,7 @@ interface ISearchableListProps {
 	onItemOptionsClick?: (item: Attribute) => void;
 	onQueryChange: (query: string) => void;
 	query: string;
+	showInfoCard?: boolean;
 	showOptionsCondition?: (item: Attribute) => boolean;
 	uneditableIds?: string[];
 }
@@ -30,6 +31,7 @@ const SearchableList: React.FC<ISearchableListProps> = ({
 	onItemOptionsClick,
 	onQueryChange,
 	query,
+	showInfoCard,
 	showOptionsCondition = () => false,
 	uneditableIds
 }) => {
@@ -88,6 +90,7 @@ const SearchableList: React.FC<ISearchableListProps> = ({
 												)
 										: null
 								}
+								showInfoCard={showInfoCard}
 							/>
 						);
 					})}

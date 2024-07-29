@@ -287,6 +287,10 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 												}
 												onQueryChange={setQuery}
 												query={query}
+												showInfoCard={
+													attributeOwnerType ===
+													AttributeOwnerTypes.Event
+												}
 												showOptionsCondition={
 													hasOptions
 												}

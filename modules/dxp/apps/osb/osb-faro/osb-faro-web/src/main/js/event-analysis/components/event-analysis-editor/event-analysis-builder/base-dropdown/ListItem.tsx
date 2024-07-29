@@ -16,6 +16,7 @@ interface IListItemProps {
 	onClick: () => void;
 	onEditClick: () => void;
 	onOptionsClick: (item: any) => void;
+	showInfoCard?: boolean;
 }
 
 const ListItem: React.FC<IListItemProps> = ({
@@ -25,7 +26,8 @@ const ListItem: React.FC<IListItemProps> = ({
 	item,
 	onClick,
 	onEditClick,
-	onOptionsClick
+	onOptionsClick,
+	showInfoCard = true
 }) => {
 	const _overlayRef = useRef<any>();
 
@@ -99,26 +101,28 @@ const ListItem: React.FC<IListItemProps> = ({
 				)}
 			</ClayDropdown.Item>
 
-			<InfoCardPopover
-				dataType={
-					isAttribute(item as Attribute)
-						? (item as Attribute).dataType
-						: null
-				}
-				description={description}
-				name={displayName || name}
-				onEditClick={
-					editable
-						? () => {
-								if (_overlayRef && _overlayRef.current) {
-									_overlayRef.current.hideOverlay();
-								}
+			{showInfoCard && (
+				<InfoCardPopover
+					dataType={
+						isAttribute(item as Attribute)
+							? (item as Attribute).dataType
+							: null
+					}
+					description={description}
+					name={displayName || name}
+					onEditClick={
+						editable
+							? () => {
+									if (_overlayRef && _overlayRef.current) {
+										_overlayRef.current.hideOverlay();
+									}
 
-								onEditClick();
-						  }
-						: null
-				}
-			/>
+									onEditClick();
+							  }
+							: null
+					}
+				/>
+			)}
 		</Overlay>
 	);
 };

@@ -18,13 +18,13 @@
 		checkScreenSize();
 	});
 
-	function copyContent(button) {
+	function copyToClipboard(button) {
 		let codeToolbar = button.closest('.code-toolbar');
 
-		let codeContent = codeToolbar.querySelector('code.language-bash').innerText;
+		let codeText = codeToolbar.querySelector('code.language-bash').innerText;
 
-		if (codeContent) {
-			navigator.clipboard.writeText(codeContent).then(function() {
+		if (codeText) {
+			navigator.clipboard.writeText(codeText).then(function() {
 
 			button.setAttribute('data-copy-state', 'copy-success');
 
@@ -184,7 +184,12 @@
 
 							<div class="toolbar">
 								<div class="toolbar-item">
-									<button class="copy-to-clipboard-button" type="button" data-copy-state="copy" onclick="copyContent(this)">
+									<button 
+										class="copy-to-clipboard-button" 
+										data-copy-state="copy" 
+										onclick="copyToClipboard(this)"
+										type="button" 
+									>
 										<span>Copy</span>
 									</button>
 								</div>

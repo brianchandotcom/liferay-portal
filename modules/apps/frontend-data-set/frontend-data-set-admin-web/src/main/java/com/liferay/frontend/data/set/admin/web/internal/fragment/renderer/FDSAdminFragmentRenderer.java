@@ -1001,7 +1001,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 				String label = (String)properties.get("label");
 
-				if (label.equals(StringPool.BLANK)) {
+				if (Validator.isNull(label)) {
 					Map<String, String> labelI18n =
 						(Map<String, String>)properties.get("label_i18n");
 

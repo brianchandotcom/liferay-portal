@@ -18,12 +18,12 @@ import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {JournalEditArticlePage} from '../journal-web/pages/JournalEditArticlePage';
 import {JournalPage} from '../journal-web/pages/JournalPage';
-import {displayPageTemplatesTest} from './fixtures/displayTemplatePagesTest';
+import {displayPageTemplatesPagesTest} from './fixtures/displayPageTemplatesPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
 	blogsPagesTest,
-	displayPageTemplatesTest,
+	displayPageTemplatesPagesTest,
 	documentLibraryPagesTest,
 	isolatedSiteTest,
 	journalPagesTest,

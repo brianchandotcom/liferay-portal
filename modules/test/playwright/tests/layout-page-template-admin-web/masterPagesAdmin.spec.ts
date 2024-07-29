@@ -10,13 +10,13 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import getRandomString from '../../utils/getRandomString';
-import {masterPagesTest} from './fixtures/masterPagesTest';
+import {masterPagesPagesTest} from './fixtures/masterPagesPagesTest';
 
 export const test = mergeTests(
 	pagesAdminPagesTest,
 	isolatedSiteTest,
 	loginTest(),
-	masterPagesTest,
+	masterPagesPagesTest,
 	pageEditorPagesTest
 );
 

@@ -24,16 +24,22 @@
 		let codeText = codeToolbar.querySelector('code.language-bash').innerText;
 
 		if (codeText) {
-			navigator.clipboard.writeText(codeText).then(function() {
+			navigator.clipboard.writeText(
+				codeText
+			).then(
+				function() {
+					button.setAttribute('data-copy-state', 'copy-success');
 
-			button.setAttribute('data-copy-state', 'copy-success');
-
-			setTimeout(function() {
-				button.setAttribute('data-copy-state', 'copy');
-			}, 3000);
-		})
+					setTimeout(
+						function() {
+							button.setAttribute('data-copy-state', 'copy');
+						},
+						3000
+					);
+				}
+			)
+		}
 	}
-}
 </script>
 
 <div class="learn-recipe-container">

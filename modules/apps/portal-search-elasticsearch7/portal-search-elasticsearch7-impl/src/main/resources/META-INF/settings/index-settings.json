@@ -84,6 +84,15 @@
 				],
 				"tokenizer": "standard"
 			},
+			"liferay_analyzer_sv": {
+				"filter": [
+					"lowercase",
+					"swedish_stop",
+					"liferay_filter_synonym_sv",
+					"swedish_stemmer"
+				],
+				"tokenizer": "standard"
+			},
 			"reverse_keyword_lowercase": {
 				"filter": [
 					"lowercase",
@@ -225,12 +234,26 @@
 				],
 				"type": "synonym_graph"
 			},
+			"liferay_filter_synonym_sv": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
 			"spanish_stemmer": {
 				"language": "light_spanish",
 				"type": "stemmer"
 			},
 			"spanish_stop": {
 				"stopwords": "_spanish_",
+				"type": "stop"
+			},
+			"swedish_stemmer": {
+				"language": "swedish",
+				"type": "stemmer"
+			},
+			"swedish_stop": {
+				"stopwords": "_swedish_",
 				"type": "stop"
 			}
 		}

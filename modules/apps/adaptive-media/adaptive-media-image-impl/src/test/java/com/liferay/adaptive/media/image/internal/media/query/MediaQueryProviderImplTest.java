@@ -624,6 +624,24 @@ public class MediaQueryProviderImplTest {
 	}
 
 	@Test
+	public void testReturnsNoMediaQueriesIfThereAreNoDownloadPermission()
+		throws Exception {
+
+		_configureFileEntryPermission(false);
+
+		_addConfigs(
+			_createAMImageConfigurationEntry(
+				"uuid", 450, 800, "http://small.adaptive.com"),
+			_createAMImageConfigurationEntry(
+				"uuid", 900, 1601, "http://small.hd.adaptive.com"));
+
+		List<MediaQuery> mediaQueries = _mediaQueryProviderImpl.getMediaQueries(
+			_fileEntry);
+
+		Assert.assertEquals(mediaQueries.toString(), 0, mediaQueries.size());
+	}
+
+	@Test
 	public void testUsesTheValuesFromConfigIfNoAdaptiveMediasArePresent()
 		throws Exception {
 

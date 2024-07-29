@@ -43,12 +43,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -115,7 +114,7 @@ public class DLFileEntryModelDocumentContributorTest {
 			Assert.assertNotEquals(
 				"overriden",
 				document.get(
-					PortalUtil.getSiteDefaultLocale(dlFileEntry.getGroupId()),
+					_portal.getSiteDefaultLocale(dlFileEntry.getGroupId()),
 					Field.CONTENT));
 		}
 	}
@@ -146,7 +145,7 @@ public class DLFileEntryModelDocumentContributorTest {
 			Assert.assertEquals(
 				"overriden",
 				document.get(
-					PortalUtil.getSiteDefaultLocale(dlFileEntry.getGroupId()),
+					_portal.getSiteDefaultLocale(dlFileEntry.getGroupId()),
 					Field.CONTENT));
 		}
 	}
@@ -209,7 +208,7 @@ public class DLFileEntryModelDocumentContributorTest {
 				document, dlFileEntry);
 
 			String content = document.get(
-				PortalUtil.getSiteDefaultLocale(dlFileEntry.getGroupId()),
+				_portal.getSiteDefaultLocale(dlFileEntry.getGroupId()),
 				Field.CONTENT);
 
 			Assert.assertEquals(
@@ -223,7 +222,7 @@ public class DLFileEntryModelDocumentContributorTest {
 					document, dlFileEntry);
 
 				content = document.get(
-					PortalUtil.getSiteDefaultLocale(dlFileEntry.getGroupId()),
+					_portal.getSiteDefaultLocale(dlFileEntry.getGroupId()),
 					Field.CONTENT);
 
 				Assert.assertEquals(100, content.length());
@@ -430,7 +429,7 @@ public class DLFileEntryModelDocumentContributorTest {
 		throws Exception {
 
 		DLFileEntry dlFileEntry = _addDLFileEntry(
-			ContentTypes.IMAGE_PNG, FileUtil.getBytes(getClass(), fileName));
+			ContentTypes.IMAGE_PNG, _file.getBytes(getClass(), fileName));
 
 		FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
 
@@ -499,6 +498,9 @@ public class DLFileEntryModelDocumentContributorTest {
 
 	@Inject
 	private DLStore _dlStore;
+
+	@Inject
+	private File _file;
 
 	@DeleteAfterTestRun
 	private Group _group;

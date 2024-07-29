@@ -449,6 +449,14 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
+		<#if dtoParentClassName?has_content>
+			<#assign
+				dtoParentSchema = allSchemas[dtoParentClassName]
+				enumSchemas = enumSchemas + freeMarkerTool.getDTOEnumSchemas(configYAML, openAPIYAML, dtoParentSchema)
+				properties = properties + freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, dtoParentSchema, allSchemas)
+			/>
+		</#if>
+
 		sb.append("{");
 
 		<#list properties?keys as propertyName>
@@ -464,9 +472,15 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 		<#list properties?keys as propertyName>
 			<#assign
 				capitalizedPropertyName = propertyName?cap_first
-				propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)
 				propertyType = properties[propertyName]
+				propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)!
 			/>
+
+			<#if dtoParentClassName?has_content>
+				<#if !propertySchema?has_content>
+					<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, dtoParentSchema, allSchemas) />
+				</#if>
+			</#if>
 
 			<#if enumSchemas?keys?seq_contains(propertyType)>
 				<#assign capitalizedPropertyName = propertyType />

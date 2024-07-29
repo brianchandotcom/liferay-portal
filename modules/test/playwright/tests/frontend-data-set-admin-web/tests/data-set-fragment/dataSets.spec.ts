@@ -92,80 +92,92 @@ test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers}) => {
 	}
 });
 
-test('Data Set can be added to the fragment and the fragment can be removed', {
-	tag: '@LPS-172403'
-}, async ({
-	dataSetManagerApiHelpers,
-	fdsFragmentPage,
-	layout,
-	page,
-}) => {
-	await test.step('Add fields, so data is displayed', async () => {
-		await dataSetManagerApiHelpers.createDataSetField({
-			dataSetERC,
-			label_i18n: {
-				en_US: 'ID',
-			},
-			name: 'id',
-			sortable: true,
-			type: 'string',
+test(
+	'Data Set can be added to the fragment and the fragment can be removed',
+	{
+		tag: '@LPS-172403',
+	},
+	async ({dataSetManagerApiHelpers, fdsFragmentPage, layout, page}) => {
+		await test.step('Add fields, so data is displayed', async () => {
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC,
+				label_i18n: {
+					en_US: 'ID',
+				},
+				name: 'id',
+				sortable: true,
+				type: 'string',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC,
+				label_i18n: {en_US: 'Name'},
+				name: 'name',
+				sortable: true,
+				type: 'string',
+			});
 		});
 
-		await dataSetManagerApiHelpers.createDataSetField({
-			dataSetERC,
-			label_i18n: {en_US: 'Name'},
-			name: 'name',
-			sortable: true,
-			type: 'string',
-		});
-	});
-
-	await test.step('Configure Data Set fragment', async () => {
-		await fdsFragmentPage.configureDataSetFragment({
-			dataSetLabel,
-			layout,
-		});
-	});
-
-	await test.step('Assert that the Data Set is available on the page', async () => {
-		await fdsFragmentPage.fdsTableWrapper.waitFor({
-			state: 'visible',
+		await test.step('Configure Data Set fragment', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
 		});
 
-		await expect(await fdsFragmentPage.fdsTableWrapper).toBeInViewport();
+		await test.step('Assert that the Data Set is available on the page', async () => {
+			await fdsFragmentPage.fdsTableWrapper.waitFor({
+				state: 'visible',
+			});
 
-		expect(
+			await expect(
+				await fdsFragmentPage.fdsTableWrapper
+			).toBeInViewport();
+
+			expect(
+				await page
+					.locator('.dnd-thead > div')
+					.first()
+					.locator('.dnd-th')
+					.allInnerTexts()
+			).toEqual(['ID', 'Name', '']);
+		});
+
+		await test.step('Remove Data Set Fragment from the page', async () => {
+			await fdsFragmentPage.editPage({layout});
+
+			await fdsFragmentPage.fdsTableWrapper.click();
+
+			const dataSetFragmentOptionsButton = page
+				.locator('.page-editor__topper__item.tbar-item')
+				.getByLabel('Options');
+			await dataSetFragmentOptionsButton.click();
+
+			const dataSetFragmentOptionsDropdownId =
+				await dataSetFragmentOptionsButton.evaluate((node) =>
+					node.getAttribute('aria-controls')
+				);
 			await page
-				.locator('.dnd-thead > div')
-				.first()
-				.locator('.dnd-th')
-				.allInnerTexts()
-		).toEqual(['ID', 'Name', '']);
-	});
+				.locator(`#${dataSetFragmentOptionsDropdownId}`)
+				.waitFor();
 
-	await test.step('Remove Data Set Fragment from the page', async() => {
-		await fdsFragmentPage.editPage({layout});
+			await page
+				.locator(`#${dataSetFragmentOptionsDropdownId}`)
+				.getByRole('menuitem', {name: 'Delete'})
+				.click();
+		});
 
-		await fdsFragmentPage.fdsTableWrapper.click();
+		await test.step('Assert that the Data Set Fragment is not available on the page', async () => {
+			await expect(
+				page.getByText('Place fragments or widgets here.')
+			).toBeInViewport();
 
-		const dataSetFragmentOptionsButton = page.locator('.page-editor__topper__item.tbar-item').getByLabel('Options');
-		await dataSetFragmentOptionsButton.click();
-
-		const dataSetFragmentOptionsDropdownId = await dataSetFragmentOptionsButton.evaluate(node => node.getAttribute('aria-controls'));
-		await page.locator(`#${dataSetFragmentOptionsDropdownId}`).waitFor();
-
-		await page
-			.locator(`#${dataSetFragmentOptionsDropdownId}`)
-			.getByRole('menuitem', {name: 'Delete'})
-			.click();
-	});
-
-	await test.step('Assert that the Data Set Fragment is not available on the page', async () => {
-		await expect(page.getByText('Place fragments or widgets here.')).toBeInViewport();
-
-		await expect(await fdsFragmentPage.fdsTableWrapper).not.toBeInViewport();
-	});
-});
+			await expect(
+				await fdsFragmentPage.fdsTableWrapper
+			).not.toBeInViewport();
+		});
+	}
+);
 
 test('Data Set selection modal shows a "No results found" message when there are no Data Sets created', async ({
 	dataSetManagerApiHelpers,
@@ -191,280 +203,295 @@ test('Data Set selection modal shows a "No results found" message when there are
 	});
 });
 
-test('Data Set can use different sources of data: StructuredContentSchema, UserSchema, TaxonomyVocabularySchema', {
-	tag: ['@LPS-172403', '@LPS-190724']
-}, async ({
-	apiHelpers,
-	dataSetManagerApiHelpers,
-	fdsFragmentPage,
-	layout,
-	page,
-}) => {
-	const structuredContentDescription = getRandomString();
-	structuredContentTitle = 'Sample Structured Content title';
-	structuredContentId = await getBasicWebContentStructureId(apiHelpers);
+test(
+	'Data Set can use different sources of data: StructuredContentSchema, UserSchema, TaxonomyVocabularySchema',
+	{
+		tag: ['@LPS-172403', '@LPS-190724'],
+	},
+	async ({
+		apiHelpers,
+		dataSetManagerApiHelpers,
+		fdsFragmentPage,
+		layout,
+		page,
+	}) => {
+		const structuredContentDescription = getRandomString();
+		structuredContentTitle = 'Sample Structured Content title';
+		structuredContentId = await getBasicWebContentStructureId(apiHelpers);
 
-	siteId = await page.evaluate(() => {
-		return Liferay.ThemeDisplay.getSiteGroupId();
-	});
-
-	await test.step('Create a Structured Content Schema Data Set and add fields', async () => {
-		dataSetERCs.push(structuredContentDataSetConfig.erc);
-
-		await dataSetManagerApiHelpers.createDataSet({
-			erc: structuredContentDataSetConfig.erc,
-			label: structuredContentDataSetConfig.label,
-			restApplication: structuredContentDataSetConfig.restApplication,
-			restEndpoint: structuredContentDataSetConfig.restEndpoint,
-			restSchema: structuredContentDataSetConfig.restSchema,
+		siteId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getSiteGroupId();
 		});
 
-		await dataSetManagerApiHelpers.createDataSetField({
-			dataSetERC: structuredContentDataSetConfig.erc,
-			label_i18n: {
-				en_US: 'Title',
-			},
-			name: 'title',
-			sortable: false,
-			type: 'string',
+		await test.step('Create a Structured Content Schema Data Set and add fields', async () => {
+			dataSetERCs.push(structuredContentDataSetConfig.erc);
+
+			await dataSetManagerApiHelpers.createDataSet({
+				erc: structuredContentDataSetConfig.erc,
+				label: structuredContentDataSetConfig.label,
+				restApplication: structuredContentDataSetConfig.restApplication,
+				restEndpoint: structuredContentDataSetConfig.restEndpoint,
+				restSchema: structuredContentDataSetConfig.restSchema,
+			});
+
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC: structuredContentDataSetConfig.erc,
+				label_i18n: {
+					en_US: 'Title',
+				},
+				name: 'title',
+				sortable: false,
+				type: 'string',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC: structuredContentDataSetConfig.erc,
+				label_i18n: {en_US: 'Description'},
+				name: 'description',
+				sortable: false,
+				type: 'string',
+			});
+
+			article = await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: structuredContentId,
+				descriptionMap: {en_US: structuredContentDescription},
+				groupId: siteId,
+				titleMap: {en_US: structuredContentTitle},
+			});
 		});
 
-		await dataSetManagerApiHelpers.createDataSetField({
-			dataSetERC: structuredContentDataSetConfig.erc,
-			label_i18n: {en_US: 'Description'},
-			name: 'description',
-			sortable: false,
-			type: 'string',
+		await test.step('Create an Admin User Schema (Roles) Data Set and add fields', async () => {
+			dataSetERCs.push(adminUserDataSetConfig.erc);
+
+			await dataSetManagerApiHelpers.createDataSet({
+				erc: adminUserDataSetConfig.erc,
+				label: adminUserDataSetConfig.label,
+				restApplication: adminUserDataSetConfig.restApplication,
+				restEndpoint: adminUserDataSetConfig.restEndpoint,
+				restSchema: adminUserDataSetConfig.restSchema,
+			});
+
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC: adminUserDataSetConfig.erc,
+				label_i18n: {
+					en_US: 'Role Type',
+				},
+				name: 'roleType',
+				sortable: false,
+				type: 'string',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC: adminUserDataSetConfig.erc,
+				label_i18n: {en_US: 'Name'},
+				name: 'name',
+				sortable: false,
+				type: 'string',
+			});
 		});
 
-		article = await apiHelpers.jsonWebServicesJournal.addWebContent({
-			ddmStructureId: structuredContentId,
-			descriptionMap: {en_US: structuredContentDescription},
-			groupId: siteId,
-			titleMap: {en_US: structuredContentTitle},
-		});
-	});
+		await test.step('Create a Taxonomy Vocabulary Data Set and add fields', async () => {
+			dataSetERCs.push(taxonomyVocabularyDataSetConfig.erc);
 
-	await test.step('Create an Admin User Schema (Roles) Data Set and add fields', async () => {
-		dataSetERCs.push(adminUserDataSetConfig.erc);
+			await dataSetManagerApiHelpers.createDataSet({
+				erc: taxonomyVocabularyDataSetConfig.erc,
+				label: taxonomyVocabularyDataSetConfig.label,
+				restApplication:
+					taxonomyVocabularyDataSetConfig.restApplication,
+				restEndpoint: taxonomyVocabularyDataSetConfig.restEndpoint,
+				restSchema: taxonomyVocabularyDataSetConfig.restSchema,
+			});
 
-		await dataSetManagerApiHelpers.createDataSet({
-			erc: adminUserDataSetConfig.erc,
-			label: adminUserDataSetConfig.label,
-			restApplication: adminUserDataSetConfig.restApplication,
-			restEndpoint: adminUserDataSetConfig.restEndpoint,
-			restSchema: adminUserDataSetConfig.restSchema,
-		});
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC: taxonomyVocabularyDataSetConfig.erc,
+				label_i18n: {
+					en_US: 'Vocabulary Name',
+				},
+				name: 'name',
+				sortable: false,
+				type: 'string',
+			});
 
-		await dataSetManagerApiHelpers.createDataSetField({
-			dataSetERC: adminUserDataSetConfig.erc,
-			label_i18n: {
-				en_US: 'Role Type',
-			},
-			name: 'roleType',
-			sortable: false,
-			type: 'string',
-		});
-
-		await dataSetManagerApiHelpers.createDataSetField({
-			dataSetERC: adminUserDataSetConfig.erc,
-			label_i18n: {en_US: 'Name'},
-			name: 'name',
-			sortable: false,
-			type: 'string',
-		});
-	});
-
-	await test.step('Create a Taxonomy Vocabulary Data Set and add fields', async () => {
-		dataSetERCs.push(taxonomyVocabularyDataSetConfig.erc);
-
-		await dataSetManagerApiHelpers.createDataSet({
-			erc: taxonomyVocabularyDataSetConfig.erc,
-			label: taxonomyVocabularyDataSetConfig.label,
-			restApplication: taxonomyVocabularyDataSetConfig.restApplication,
-			restEndpoint: taxonomyVocabularyDataSetConfig.restEndpoint,
-			restSchema: taxonomyVocabularyDataSetConfig.restSchema,
+			await dataSetManagerApiHelpers.createDataSetField({
+				dataSetERC: taxonomyVocabularyDataSetConfig.erc,
+				label_i18n: {en_US: 'Number of Categories'},
+				name: 'numberOfTaxonomyCategories',
+				sortable: false,
+				type: 'integer',
+			});
 		});
 
-		await dataSetManagerApiHelpers.createDataSetField({
-			dataSetERC: taxonomyVocabularyDataSetConfig.erc,
-			label_i18n: {
-				en_US: 'Vocabulary Name',
-			},
-			name: 'name',
-			sortable: false,
-			type: 'string',
+		await test.step('Configure Structured Content Schema Data Set fragment', async () => {
+			await fdsFragmentPage.configureDataSetFragment({
+				dataSetLabel: structuredContentDataSetConfig.label,
+				layout,
+			});
 		});
 
-		await dataSetManagerApiHelpers.createDataSetField({
-			dataSetERC: taxonomyVocabularyDataSetConfig.erc,
-			label_i18n: {en_US: 'Number of Categories'},
-			name: 'numberOfTaxonomyCategories',
-			sortable: false,
-			type: 'integer',
+		await test.step('Assert that the Data Set is available on the page', async () => {
+			await fdsFragmentPage.fdsTableWrapper.waitFor({
+				state: 'visible',
+			});
+
+			await expect(
+				await fdsFragmentPage.fdsTableWrapper
+			).toBeInViewport();
+
+			expect(
+				await page
+					.locator('.dnd-thead > div')
+					.first()
+					.locator('.dnd-th')
+					.allInnerTexts()
+			).toEqual(['Title', 'Description', '']);
+
+			expect(
+				await page
+					.locator('.dnd-tbody > .dnd-tr')
+					.first()
+					.locator('.dnd-td')
+					.allInnerTexts()
+			).toEqual([
+				structuredContentTitle,
+				structuredContentDescription,
+				'',
+			]);
 		});
-	});
 
-	await test.step('Configure Structured Content Schema Data Set fragment', async () => {
-		await fdsFragmentPage.configureDataSetFragment({
-			dataSetLabel: structuredContentDataSetConfig.label,
-			layout,
-		});
-	});
+		await test.step('Confirm that we can change the Data Set and display the Roles Data Set', async () => {
+			await fdsFragmentPage.editPage({layout});
+			await fdsFragmentPage.fdsTableWrapper.click();
 
-	await test.step('Assert that the Data Set is available on the page', async () => {
-		await fdsFragmentPage.fdsTableWrapper.waitFor({
-			state: 'visible',
-		});
-
-		await expect(await fdsFragmentPage.fdsTableWrapper).toBeInViewport();
-
-		expect(
 			await page
-				.locator('.dnd-thead > div')
-				.first()
-				.locator('.dnd-th')
-				.allInnerTexts()
-		).toEqual(['Title', 'Description', '']);
+				.getByRole('button', {name: 'Select Data Set View'})
+				.click();
 
-		expect(
 			await page
-				.locator('.dnd-tbody > .dnd-tr')
+				.getByRole('menuitem', {name: 'Select Data Set View...'})
+				.click();
+
+			await page.getByRole('dialog').isVisible();
+
+			await page.getByRole('heading', {name: 'Select'}).isVisible();
+
+			await page
+				.frameLocator('iframe[title="Select"]')
+				.locator('.fds-admin-item-selector')
+				.waitFor({state: 'visible'});
+
+			await page
+				.frameLocator('iframe[title="Select"]')
+				.locator('li')
+				.filter({hasText: adminUserDataSetConfig.label})
 				.first()
-				.locator('.dnd-td')
-				.allInnerTexts()
-		).toEqual([structuredContentTitle, structuredContentDescription, '']);
-	});
+				.click();
 
-	await test.step('Confirm that we can change the Data Set and display the Roles Data Set', async() => {
-		await fdsFragmentPage.editPage({layout});
-		await fdsFragmentPage.fdsTableWrapper.click();
+			await page
+				.frameLocator('iframe[title="Select"]')
+				.getByRole('button', {name: 'Save'})
+				.click();
 
-		await page
-			.getByRole('button', {name: 'Select Data Set View'})
-			.click();
-		
-		await page
-			.getByRole('menuitem', {name: 'Select Data Set View...'})
-			.click();
+			await fdsFragmentPage.publishPage();
 
-		await page.getByRole('dialog').isVisible();
+			await fdsFragmentPage.goToPage({layout});
 
-		await page.getByRole('heading', {name: 'Select'}).isVisible();
-
-		await page
-			.frameLocator('iframe[title="Select"]')
-			.locator('.fds-admin-item-selector')
-			.waitFor({state: 'visible'});
-
-		await page
-			.frameLocator('iframe[title="Select"]')
-			.locator('li')
-			.filter({hasText: adminUserDataSetConfig.label})
-			.first()
-			.click();
-
-		await page
-			.frameLocator('iframe[title="Select"]')
-			.getByRole('button', {name: 'Save'})
-			.click();
-
-		await fdsFragmentPage.publishPage();
-
-		await fdsFragmentPage.goToPage({layout});
-
-		await page
-			.locator('.data-set-content-wrapper')
-			.waitFor({state: 'visible'});
-	});
-
-	await test.step('Assert that the User Schema (Roles) Data Set is available on the page', async () => {
-		await fdsFragmentPage.fdsTableWrapper.waitFor({
-			state: 'visible',
+			await page
+				.locator('.data-set-content-wrapper')
+				.waitFor({state: 'visible'});
 		});
 
-		await expect(await fdsFragmentPage.fdsTableWrapper).toBeInViewport();
+		await test.step('Assert that the User Schema (Roles) Data Set is available on the page', async () => {
+			await fdsFragmentPage.fdsTableWrapper.waitFor({
+				state: 'visible',
+			});
 
-		expect(
-			await page
-				.locator('.dnd-thead > div')
-				.first()
-				.locator('.dnd-th')
-				.allInnerTexts()
-		).toEqual(['Role Type', 'Name', '']);
+			await expect(
+				await fdsFragmentPage.fdsTableWrapper
+			).toBeInViewport();
 
-		expect(
-			await page
-				.locator('.dnd-tbody > .dnd-tr')
-				.first()
-				.locator('.dnd-td')
-				.allInnerTexts()
-		).toEqual(['organization', 'Account Manager', '']);
-	});
+			expect(
+				await page
+					.locator('.dnd-thead > div')
+					.first()
+					.locator('.dnd-th')
+					.allInnerTexts()
+			).toEqual(['Role Type', 'Name', '']);
 
-	await test.step('Confirm that we can change the Data Set and display the Taxonomy Vocabulary Data Set', async() => {
-		await fdsFragmentPage.editPage({layout});
-		await fdsFragmentPage.fdsTableWrapper.click();
-
-		await page
-			.getByRole('button', {name: 'Select Data Set View'})
-			.click();
-		
-		await page
-			.getByRole('menuitem', {name: 'Select Data Set View...'})
-			.click();
-
-		await page.getByRole('dialog').isVisible();
-
-		await page.getByRole('heading', {name: 'Select'}).isVisible();
-
-		await page
-			.frameLocator('iframe[title="Select"]')
-			.locator('.fds-admin-item-selector')
-			.waitFor({state: 'visible'});
-
-		await page
-			.frameLocator('iframe[title="Select"]')
-			.locator('li')
-			.filter({hasText: taxonomyVocabularyDataSetConfig.label})
-			.first()
-			.click();
-
-		await page
-			.frameLocator('iframe[title="Select"]')
-			.getByRole('button', {name: 'Save'})
-			.click();
-
-		await fdsFragmentPage.publishPage();
-
-		await fdsFragmentPage.goToPage({layout});
-
-		await page
-			.locator('.data-set-content-wrapper')
-			.waitFor({state: 'visible'});
-	});
-
-	await test.step('Assert that the Taxonomy Vocabulary Data Set is available on the page', async () => {
-		await fdsFragmentPage.fdsTableWrapper.waitFor({
-			state: 'visible',
+			expect(
+				await page
+					.locator('.dnd-tbody > .dnd-tr')
+					.first()
+					.locator('.dnd-td')
+					.allInnerTexts()
+			).toEqual(['organization', 'Account Manager', '']);
 		});
 
-		await expect(await fdsFragmentPage.fdsTableWrapper).toBeInViewport();
+		await test.step('Confirm that we can change the Data Set and display the Taxonomy Vocabulary Data Set', async () => {
+			await fdsFragmentPage.editPage({layout});
+			await fdsFragmentPage.fdsTableWrapper.click();
 
-		expect(
 			await page
-				.locator('.dnd-thead > div')
-				.first()
-				.locator('.dnd-th')
-				.allInnerTexts()
-		).toEqual(['Vocabulary Name', 'Number of Categories', '']);
+				.getByRole('button', {name: 'Select Data Set View'})
+				.click();
 
-		expect(
 			await page
-				.locator('.dnd-tbody > .dnd-tr')
+				.getByRole('menuitem', {name: 'Select Data Set View...'})
+				.click();
+
+			await page.getByRole('dialog').isVisible();
+
+			await page.getByRole('heading', {name: 'Select'}).isVisible();
+
+			await page
+				.frameLocator('iframe[title="Select"]')
+				.locator('.fds-admin-item-selector')
+				.waitFor({state: 'visible'});
+
+			await page
+				.frameLocator('iframe[title="Select"]')
+				.locator('li')
+				.filter({hasText: taxonomyVocabularyDataSetConfig.label})
 				.first()
-				.locator('.dnd-td')
-				.allInnerTexts()
-		).toEqual(['Topic', '0', '']);
-	});
-});
+				.click();
+
+			await page
+				.frameLocator('iframe[title="Select"]')
+				.getByRole('button', {name: 'Save'})
+				.click();
+
+			await fdsFragmentPage.publishPage();
+
+			await fdsFragmentPage.goToPage({layout});
+
+			await page
+				.locator('.data-set-content-wrapper')
+				.waitFor({state: 'visible'});
+		});
+
+		await test.step('Assert that the Taxonomy Vocabulary Data Set is available on the page', async () => {
+			await fdsFragmentPage.fdsTableWrapper.waitFor({
+				state: 'visible',
+			});
+
+			await expect(
+				await fdsFragmentPage.fdsTableWrapper
+			).toBeInViewport();
+
+			expect(
+				await page
+					.locator('.dnd-thead > div')
+					.first()
+					.locator('.dnd-th')
+					.allInnerTexts()
+			).toEqual(['Vocabulary Name', 'Number of Categories', '']);
+
+			expect(
+				await page
+					.locator('.dnd-tbody > .dnd-tr')
+					.first()
+					.locator('.dnd-td')
+					.allInnerTexts()
+			).toEqual(['Topic', '0', '']);
+		});
+	}
+);

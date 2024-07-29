@@ -19,10 +19,10 @@ export class EditVirtualInstancePage {
 	readonly virtualHostField: Locator;
 
 	constructor(page: Page) {
-		this.activeToggle = this.page.getByText('Active');
+		this.activeToggle = page.getByText('Active');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.mailDomainField = this.page.getByLabel('Mail Domain');
-		this.maxUsersField = this.page.getByLabel('Max Users');
+		this.mailDomainField = page.getByLabel('Mail Domain');
+		this.maxUsersField = page.getByLabel('Max Users');
 		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.successMessage = page.getByText(

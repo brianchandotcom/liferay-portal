@@ -220,6 +220,10 @@ public class
 	}
 
 	private ServiceContext _getServiceContext() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		httpServletRequest.setAttribute(
@@ -227,10 +231,6 @@ public class
 			new MockLiferayPortletActionResponse());
 		httpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
 
 		serviceContext.setRequest(httpServletRequest);
 

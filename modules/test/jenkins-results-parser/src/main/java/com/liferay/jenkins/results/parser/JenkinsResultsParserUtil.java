@@ -4607,6 +4607,8 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 
+		url = fixURL(url);
+
 		if (url.startsWith("file:")) {
 			url = fixFileURL(url);
 		}

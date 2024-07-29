@@ -7,7 +7,7 @@
 >
 	<name>Recipe Workflow</name>
 	<description>A single approver can approve a workflow content.</description>
-	<version>18</version>
+	<version>1</version>
 	<state>
 		<name>created</name>
 		<description>Begin a workflow.</description>

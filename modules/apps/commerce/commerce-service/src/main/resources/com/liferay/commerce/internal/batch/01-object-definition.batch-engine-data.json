@@ -31,6 +31,7 @@
 					"objectDefinitionExternalReferenceCode1": "L_COMMERCE_RETURN",
 					"objectDefinitionExternalReferenceCode2": "L_COMMERCE_RETURN_ITEM",
 					"objectDefinitionName2": "CommerceReturnItem",
+					"objectDefinitionSystem2": true,
 					"objectField": {
 						"DBType": "Long",
 						"businessType": "Relationship",

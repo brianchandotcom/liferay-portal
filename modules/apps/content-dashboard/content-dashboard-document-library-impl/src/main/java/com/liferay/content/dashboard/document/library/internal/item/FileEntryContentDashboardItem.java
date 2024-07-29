@@ -397,6 +397,11 @@ public class FileEntryContentDashboardItem
 
 		return Arrays.asList(
 			new SpecificInformation<>(
+				"size", SpecificInformation.Type.STRING, _getSize(locale)),
+			new SpecificInformation<>(
+				"resolution", SpecificInformation.Type.STRING,
+				_getResolution(tiffImageLength, tiffImageWidth)),
+			new SpecificInformation<>(
 				"content-dashboard-aspect-ratio",
 				SpecificInformation.Type.STRING,
 				_getAspectRatio(tiffImageLength, tiffImageWidth, locale)),
@@ -407,11 +412,6 @@ public class FileEntryContentDashboardItem
 			new SpecificInformation<>(
 				"latest-version-url", SpecificInformation.Type.URL,
 				_getLatestVersionURL()),
-			new SpecificInformation<>(
-				"resolution", SpecificInformation.Type.STRING,
-				_getResolution(tiffImageLength, tiffImageWidth)),
-			new SpecificInformation<>(
-				"size", SpecificInformation.Type.STRING, _getSize(locale)),
 			new SpecificInformation<>(
 				"webdav-help", "web-dav-url", SpecificInformation.Type.URL,
 				_getWebDAVURL()));

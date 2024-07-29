@@ -18,7 +18,7 @@ export async function createDPTandMarkAsDefault({
 
 	const displayPageTemplateName = getRandomString();
 
-	await displayPageTemplatesPage.publishNewTemplate({
+	await displayPageTemplatesPage.createTemplate({
 		contentType: 'Blogs Entry',
 		name: displayPageTemplateName,
 	});

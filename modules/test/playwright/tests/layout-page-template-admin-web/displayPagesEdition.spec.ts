@@ -38,7 +38,7 @@ test('Allow mapping repeatable fields collection provider', async ({
 
 	const displayPageTemplateName = getRandomString();
 
-	await displayPageTemplatesPage.publishNewTemplate({
+	await displayPageTemplatesPage.createTemplate({
 		contentSubtype: 'Animal',
 		contentType: 'Web Content Article',
 		name: displayPageTemplateName,
@@ -126,7 +126,7 @@ test('Allow mapping editables to fields of related object', async ({
 
 	const displayPageTemplateName = getRandomString();
 
-	await displayPageTemplatesPage.publishNewTemplate({
+	await displayPageTemplatesPage.createTemplate({
 		contentType: 'Lemon',
 		name: displayPageTemplateName,
 	});

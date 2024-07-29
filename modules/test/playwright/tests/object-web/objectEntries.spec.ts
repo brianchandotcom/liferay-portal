@@ -210,7 +210,7 @@ test.describe('Manage object entries through Page Templates', () => {
 
 		const displayPageTemplateName = getRandomString();
 
-		await displayPageTemplatesPage.publishNewTemplate({
+		await displayPageTemplatesPage.createTemplate({
 			contentType: objectDefinition.label['en_US'],
 			name: displayPageTemplateName,
 		});

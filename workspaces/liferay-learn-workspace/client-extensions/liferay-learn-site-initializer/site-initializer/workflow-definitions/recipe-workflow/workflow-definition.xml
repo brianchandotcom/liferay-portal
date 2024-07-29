@@ -61,30 +61,12 @@
 				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
-				<name>Notification approve email</name>
-				<description>
-					<![CDATA[]]>
-				</description>
+				<name>Approve notification</name>
 				<template>
 					<![CDATA[Congrats, your recipe article has been approved by ${userName}. You can find your recipe article live on <a href="https://learn.liferay.com">Learn</a> by searching the related keywords.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
-				<notification-type>user-notification</notification-type>
-				<recipients receptionType="to">
-					<user />
-				</recipients>
-				<execution-type>onEntry</execution-type>
-			</notification>
-			<notification>
-				<name>Notification approve</name>
-				<description>
-					<![CDATA[]]>
-				</description>
-				<template>
-					<![CDATA[Congrats, your recipe article has been approved by ${userName}. You can find your recipe article live on Learn by searching the related keywords.]]>
-				</template>
-				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
 					<user />
@@ -125,30 +107,12 @@
 				<execution-type>onAssignment</execution-type>
 			</action>
 			<notification>
-				<name>Creator Modification Notification Email</name>
-				<description>
-					<![CDATA[]]>
-				</description>
+				<name>Creator modification notification</name>
 				<template>
 					<![CDATA[Hi, your recipe article has been rejected by ${userName}, with the following comment: ${taskComments}. You may update and re-submit the recipe by logging into <a href="https://learn.liferay.com">Learn</a>.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
-				<notification-type>user-notification</notification-type>
-				<recipients receptionType="to">
-					<user />
-				</recipients>
-				<execution-type>onAssignment</execution-type>
-			</notification>
-			<notification>
-				<name>Creator Modification Notification</name>
-				<description>
-					<![CDATA[]]>
-				</description>
-				<template>
-					<![CDATA[Hi, your recipe article has been rejected by ${userName}, with the following comment: ${taskComments}. You may update and re-submit the recipe by logging into Learn.]]>
-				</template>
-				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
 					<user />
@@ -192,30 +156,12 @@
 		</metadata>
 		<actions>
 			<notification>
-				<name>Review Notification Email</name>
-				<description>
-					<![CDATA[]]>
-				</description>
+				<name>Review notification</name>
 				<template>
 					<![CDATA[${userName} submitted a recipe article for review in the workflow. Please login to <a href="https://learn.liferay.com">Learn</a> to review and take action.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
-				<notification-type>user-notification</notification-type>
-				<recipients receptionType="to">
-					<assignees />
-				</recipients>
-				<execution-type>onAssignment</execution-type>
-			</notification>
-			<notification>
-				<name>Review Notification</name>
-				<description>
-					<![CDATA[]]>
-				</description>
-				<template>
-					<![CDATA[${userName} submitted a recipe article for review in the workflow. Please login to Learn to review and take action.]]>
-				</template>
-				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
 					<assignees />

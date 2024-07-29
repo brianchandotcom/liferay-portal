@@ -143,6 +143,30 @@ describe('ItemSelector', () => {
 		expect(openItemSelector).not.toBeCalled();
 	});
 
+	it('does not show recent collection page contents in the recent items', () => {
+		const pageContents = [
+			{classNameId: '001', classPK: '002', title: 'Mapped Item Title'},
+			{
+				classNameId: '29536',
+				classPK: '33175',
+				subtype: 'Web Content Article - Basic Web Content',
+				title: 'Mapped Collection',
+				type: Liferay.Language.get('collection'),
+			},
+		];
+
+		const {getByLabelText, getByText, queryByText} = renderItemSelector({
+			pageContents,
+		});
+
+		fireEvent.click(getByLabelText('select-itemSelectorLabel'));
+
+		expect(getByText('Mapped Item Title')).toBeInTheDocument();
+		expect(queryByText('Mapped Collection')).not.toBeInTheDocument();
+
+		expect(openItemSelector).not.toBeCalled();
+	});
+
 	it('removes selected item correctly when clear button is clicked', () => {
 		const selectedItemTitle = 'itemTitle';
 

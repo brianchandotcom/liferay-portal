@@ -103,14 +103,15 @@ public class ClientExtensionServicePreActionTest {
 		Layout controlPanelLayout = _layoutLocalService.fetchDefaultLayout(
 			controlPanelGroup.getGroupId(), true);
 
-		_assertThemeCSSURLs(controlPanelLayout, Collections.emptyMap(), false);
+		_assertThemeCSSURLs(
+			controlPanelLayout, Collections.emptyMap(), false, false);
 
 		_assertThemeCSSURLs(
 			controlPanelLayout,
 			HashMapBuilder.put(
 				"p_l_mode", Constants.PREVIEW
 			).build(),
-			false);
+			false, false);
 
 		_assertThemeCSSURLs(
 			controlPanelLayout,
@@ -120,7 +121,7 @@ public class ClientExtensionServicePreActionTest {
 				"p_p_id",
 				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET
 			).build(),
-			false);
+			false, false);
 
 		_assertThemeCSSURLs(
 			controlPanelLayout,
@@ -136,7 +137,7 @@ public class ClientExtensionServicePreActionTest {
 					"_selPlid"),
 				String.valueOf(_layout.getPlid())
 			).build(),
-			true);
+			true, false);
 	}
 
 	@Test
@@ -184,7 +185,7 @@ public class ClientExtensionServicePreActionTest {
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_assertThemeCSSURLs(_layout, Collections.emptyMap(), true);
+		_assertThemeCSSURLs(_layout, Collections.emptyMap(), true, false);
 	}
 
 	@Test
@@ -198,7 +199,28 @@ public class ClientExtensionServicePreActionTest {
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_assertThemeCSSURLs(_layout, Collections.emptyMap(), true);
+		_assertThemeCSSURLs(_layout, Collections.emptyMap(), true, false);
+	}
+
+	@Test
+	public void testProcessServicePreActionLayoutThemeCSSForRTL()
+		throws Exception {
+
+		_addThemeCSSClientExtensionEntry();
+
+		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class), _layout.getPlid(),
+			_clientExtensionEntry.getExternalReferenceCode(),
+			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_assertThemeCSSURLs(
+			_layout,
+			HashMapBuilder.put(
+				"languageId", "ar"
+			).build(),
+			true, true);
 	}
 
 	@Test
@@ -256,7 +278,7 @@ public class ClientExtensionServicePreActionTest {
 
 		_layout = _layoutLocalService.updateLayout(_layout);
 
-		_assertThemeCSSURLs(_layout, Collections.emptyMap(), true);
+		_assertThemeCSSURLs(_layout, Collections.emptyMap(), true, false);
 	}
 
 	private void _addFaviconClientExtensionEntry() throws Exception {
@@ -287,7 +309,11 @@ public class ClientExtensionServicePreActionTest {
 				UnicodePropertiesBuilder.create(
 					true
 				).put(
+					"clayRTLURL", _RTL_URL_CLAY_CSS
+				).put(
 					"clayURL", _URL_CLAY_CSS
+				).put(
+					"mainRTLURL", _RTL_URL_MAIN_CSS
 				).put(
 					"mainURL", _URL_MAIN_CSS
 				).buildString());
@@ -308,7 +334,7 @@ public class ClientExtensionServicePreActionTest {
 
 	private void _assertThemeCSSURLs(
 			Layout layout, Map<String, String> params,
-			boolean clientExtensionApplied)
+			boolean clientExtensionApplied, boolean rtl)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -318,8 +344,8 @@ public class ClientExtensionServicePreActionTest {
 			(ThemeDisplay)mockHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String expectedClayCSSURL = _URL_CLAY_CSS;
-		String expectedMainCSSURL = _URL_MAIN_CSS;
+		String expectedClayCSSURL = rtl ? _RTL_URL_CLAY_CSS : _URL_CLAY_CSS;
+		String expectedMainCSSURL = rtl ? _RTL_URL_MAIN_CSS : _URL_MAIN_CSS;
 
 		if (!clientExtensionApplied) {
 			expectedClayCSSURL = themeDisplay.getClayCSSURL();
@@ -403,6 +429,12 @@ public class ClientExtensionServicePreActionTest {
 			new LifecycleEvent(
 				mockHttpServletRequest, new MockHttpServletResponse()));
 	}
+
+	private static final String _RTL_URL_CLAY_CSS =
+		"http://" + RandomTestUtil.randomString() + ".com/styles_rtl.css";
+
+	private static final String _RTL_URL_MAIN_CSS =
+		"http://" + RandomTestUtil.randomString() + ".com/main_rtl.css";
 
 	private static final String _URL_CLAY_CSS =
 		"http://" + RandomTestUtil.randomString() + ".com/styles.css";

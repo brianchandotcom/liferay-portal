@@ -1,10 +1,4 @@
-assemble:
-    - from: build/buildTheme/img
-      into: static/img
-assemble:
-    - from: build/buildTheme/images
-      into: static/images
-liferay-sample-theme-css-1:
+theme-css-with-rtl-css-properties:
     clayRTLURL: css/clay_rtl.css
     clayURL: css/clay.css
     mainRTLURL: css/main_rtl.css

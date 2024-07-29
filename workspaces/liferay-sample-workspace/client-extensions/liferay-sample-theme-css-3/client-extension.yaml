@@ -5,8 +5,10 @@ assemble:
     - from: build/buildTheme/images
       into: static/images
 liferay-sample-theme-css-3:
+    clayRTLURL: css/clay_rtl.css
     clayURL: css/clay.css
     frontendTokenDefinitionJSON: src/frontend-token-definition.json
+    mainRTLURL: css/main_rtl.css
     mainURL: css/main.css
     name: Liferay Sample Theme CSS 3
     type: themeCSS

@@ -3,7 +3,7 @@ import groovy.json.JsonSlurper
 task runGradleTest
 
 runGradleTest {
-	dependsOn ":theme-css-with-empty-frontend-token-definition-json:createClientExtensionConfig", ":theme-css-with-frontend-token-definition-json:createClientExtensionConfig", ":theme-css-without-frontend-token-definition-json:createClientExtensionConfig"
+	dependsOn ":theme-css-with-empty-frontend-token-definition-json:createClientExtensionConfig", ":theme-css-with-frontend-token-definition-json:createClientExtensionConfig", ":theme-css-without-frontend-token-definition-json:createClientExtensionConfig", ":theme-css-with-rtl-css-properties:createClientExtensionConfig"
 
 	doLast {
 		_testClientExtensionConfigJSON("theme-css-with-empty-frontend-token-definition-json") {
@@ -30,6 +30,19 @@ runGradleTest {
 			String typeSettings = String.valueOf(value.get("typeSettings"))
 
 			assert !typeSettings.contains("frontendTokenDefinitionJSON")
+		}
+
+		_testClientExtensionConfigJSON("theme-css-with-rtl-css-properties") {
+			value ->
+
+			assert value instanceof Map
+
+			String typeSettings = String.valueOf(value.get("typeSettings"))
+
+			assert typeSettings.contains("clayURL=css/clay.css")
+			assert typeSettings.contains("mainURL=css/main.css")
+			assert typeSettings.contains("clayRTLURL=css/clay_rtl.css")
+			assert typeSettings.contains("mainRTLURL=css/main_rtl.css")
 		}
 	}
 }

@@ -22,10 +22,26 @@ ThemeCSSCET themeCSSCET = editClientExtensionEntryDisplayContext.getCET();
 </aui:field-wrapper>
 
 <aui:field-wrapper cssClass="form-group">
+	<aui:input label="main-rtl-css-url" name="mainRTLURL" type="text" value="<%= themeCSSCET.getMainRTLURL() %>" />
+
+	<div class="form-text">
+		<liferay-ui:message key="this-css-replaces-main-css-for-right-to-left-languages" />
+	</div>
+</aui:field-wrapper>
+
+<aui:field-wrapper cssClass="form-group">
 	<aui:input label="clay-css-url" name="clayURL" type="text" value="<%= themeCSSCET.getClayURL() %>" />
 
 	<div class="form-text">
 		<liferay-ui:message key="this-css-replaces-clay-css" />
+	</div>
+</aui:field-wrapper>
+
+<aui:field-wrapper cssClass="form-group">
+	<aui:input label="clay-rtl-css-url" name="clayRTLURL" type="text" value="<%= themeCSSCET.getClayRTLURL() %>" />
+
+	<div class="form-text">
+		<liferay-ui:message key="this-css-replaces-clay-css-for-right-to-left-languages" />
 	</div>
 </aui:field-wrapper>
 

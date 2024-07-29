@@ -18,6 +18,11 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ThemeCSSCET extends CET {
 
 	@CETProperty(
+		defaultValue = "", name = "clayRTLURL", type = CETProperty.Type.URL
+	)
+	public String getClayRTLURL();
+
+	@CETProperty(
 		defaultValue = "", name = "clayURL", type = CETProperty.Type.URL
 	)
 	public String getClayURL();
@@ -27,6 +32,11 @@ public interface ThemeCSSCET extends CET {
 		type = CETProperty.Type.String
 	)
 	public String getFrontendTokenDefinitionJSON();
+
+	@CETProperty(
+		defaultValue = "", name = "mainRTLURL", type = CETProperty.Type.URL
+	)
+	public String getMainRTLURL();
 
 	@CETProperty(
 		defaultValue = "", name = "mainURL", type = CETProperty.Type.URL

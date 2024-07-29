@@ -237,7 +237,10 @@ function hasUnmappedRequiredField(
 
 	const requiredFields = fields
 		.flatMap((fieldSet) => fieldSet.fields)
-		.filter((field) => field.required);
+		.filter(
+			(field) =>
+				field.required && !field.key.includes('ObjectRelationship')
+		);
 
 	return requiredFields.some(
 		(field) =>

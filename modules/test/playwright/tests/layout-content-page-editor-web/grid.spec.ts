@@ -63,7 +63,7 @@ test('Grid background image can be customized', async ({
 
 	const card = page
 		.frameLocator('iframe[title="Select"]')
-		.locator('[data-title="echo-logo.png"]');
+		.locator('[data-title="liferay_logo.png"]');
 
 	await clickAndExpectToBeHidden({
 		target: page.locator('.modal-dialog'),
@@ -78,7 +78,7 @@ test('Grid background image can be customized', async ({
 		await pageEditorPage
 			.getFragment(gridId)
 			.evaluate((element) => getComputedStyle(element).background)
-	).toEqual(expect.stringContaining('echo-logo-png'));
+	).toEqual(expect.stringContaining('liferay_logo-png'));
 });
 
 test('Grid content is also duplicated', async ({

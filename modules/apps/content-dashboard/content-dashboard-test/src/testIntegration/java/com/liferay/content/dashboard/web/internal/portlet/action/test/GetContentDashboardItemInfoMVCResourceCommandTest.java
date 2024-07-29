@@ -216,15 +216,15 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			String.valueOf(specificInformationList), 7,
 			specificInformationList.size());
 
-		JSONObject specificFieldsJSONObject = jsonObject.getJSONObject(
+		JSONArray specificFieldsJSONArray = jsonObject.getJSONArray(
 			"specificFields");
 
-		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
-				specificInformationList) {
+		for (int i = 0; i < specificInformationList.size(); i++) {
+			ContentDashboardItem.SpecificInformation<?> specificInformation =
+				specificInformationList.get(i);
 
 			JSONObject specificFieldJSONObject =
-				specificFieldsJSONObject.getJSONObject(
-					specificInformation.getKey());
+				specificFieldsJSONArray.getJSONObject(i);
 
 			JSONObject specificInformationJSONObject =
 				specificInformation.toJSONObject(

@@ -114,7 +114,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testGetFileSpecificFields() throws Exception {
+	public void testGetFileEntrySpecificFields() throws Exception {
 		JSONObject jsonObject = _serveResource(
 			_createContentDashboardFileItem());
 

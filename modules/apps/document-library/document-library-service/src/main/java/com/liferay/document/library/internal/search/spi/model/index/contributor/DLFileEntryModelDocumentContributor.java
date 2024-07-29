@@ -316,16 +316,18 @@ public class DLFileEntryModelDocumentContributor
 	private String _extractText(DLFileEntry dlFileEntry)
 		throws IOException, PortalException {
 
+		String indexVersionLabel = _getIndexVersionLabel(dlFileEntry);
+
 		if (_dlIndexerConfiguration.cacheTextExtraction() &&
 			_dlStore.hasFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), _getIndexVersionLabel(dlFileEntry))) {
+				dlFileEntry.getName(), indexVersionLabel)) {
 
 			String string = StreamUtil.toString(
 				_dlStore.getFileAsStream(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					_getIndexVersionLabel(dlFileEntry)));
+					indexVersionLabel));
 
 			if (string.length() <= PropsValues.DL_FILE_INDEXING_MAX_SIZE) {
 				return string;
@@ -333,7 +335,7 @@ public class DLFileEntryModelDocumentContributor
 
 			_dlStore.deleteFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), _getIndexVersionLabel(dlFileEntry));
+				dlFileEntry.getName(), indexVersionLabel);
 		}
 
 		InputStream inputStream = _getInputStream(dlFileEntry);
@@ -353,7 +355,7 @@ public class DLFileEntryModelDocumentContributor
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName()
 				).versionLabel(
-					_getIndexVersionLabel(dlFileEntry)
+					indexVersionLabel
 				).build(),
 				text.getBytes(StandardCharsets.UTF_8));
 		}

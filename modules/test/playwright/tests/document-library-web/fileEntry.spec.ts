@@ -15,6 +15,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {performLogout} from '../../utils/performLogin';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 
@@ -73,6 +74,46 @@ baseTest(
 		await expect(
 			page.locator('dd.list-group-item[data-title="test"]')
 		).toHaveAttribute('id', /_entries_1$/);
+	}
+);
+
+baseTest(
+	'Check if Ordering by Modified Date working, after editing a document',
+	{
+		tag: '@LPD-32483',
+	},
+	async ({documentLibraryEditFilePage, documentLibraryPage, page, site}) => {
+		const title = getRandomString();
+		await documentLibraryEditFilePage.publishNewBasicFileEntry(
+			title,
+			site.friendlyUrlPath
+		);
+
+		const title2 = getRandomString();
+		await documentLibraryEditFilePage.publishNewBasicFileEntry(
+			title2,
+			site.friendlyUrlPath
+		);
+
+		await documentLibraryPage.editFileEntry(title);
+		await documentLibraryEditFilePage.descriptionInput.fill(
+			getRandomString()
+		);
+		await documentLibraryEditFilePage.publishButton.click();
+		await waitForSuccessAlert(
+			page,
+			'Success:Your request completed successfully.'
+		);
+		await page.reload();
+
+		await documentLibraryPage.orderBy('Modified Date');
+		await documentLibraryPage.orderBy('Descending');
+
+		await expect(
+			page
+				.locator(`dd.card-page-item[data-title="${title}"]`)
+				.getAttribute('id')
+		).resolves.toMatch(/_entries_1$/);
 	}
 );
 

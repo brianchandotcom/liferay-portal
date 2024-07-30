@@ -124,6 +124,8 @@ public class BlogsEntryAssetRenderer
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
+		String summary = HtmlUtil.escape(_entry.getDescription());
+
 		int abstractLength = AssetHelper.ASSET_ENTRY_ABSTRACT_LENGTH;
 
 		if (portletRequest != null) {
@@ -132,8 +134,6 @@ public class BlogsEntryAssetRenderer
 					WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH),
 				AssetHelper.ASSET_ENTRY_ABSTRACT_LENGTH);
 		}
-
-		String summary = HtmlUtil.escape(_entry.getDescription());
 
 		if (Validator.isNull(summary)) {
 			summary = StringUtil.shorten(

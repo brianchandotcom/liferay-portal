@@ -2,7 +2,7 @@ Bundle-Description: Creates a Liferay service wrapper module project extending a
 Bundle-Name: Liferay Project Templates Service Wrapper
 Bundle-SymbolicName: com.liferay.project.templates.service.wrapper
 Bundle-Version: 1.0.189
-Liferay-Versions: [7,8.0)
+Liferay-Versions: [7,2025.0)
 -removeheaders:\
 	Import-Package,\
 	Private-Package,\

@@ -73,6 +73,8 @@ public class GetCategoriesStrutsAction implements StrutsAction {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
+		List<AssetCategory> categories = Collections.emptyList();
+
 		long scopeGroupId = ParamUtil.getLong(
 			httpServletRequest, "scopeGroupId");
 		long categoryId = ParamUtil.getLong(httpServletRequest, "categoryId");
@@ -82,8 +84,6 @@ public class GetCategoriesStrutsAction implements StrutsAction {
 			httpServletRequest, "start", QueryUtil.ALL_POS);
 		int end = ParamUtil.getInteger(
 			httpServletRequest, "end", QueryUtil.ALL_POS);
-
-		List<AssetCategory> categories = Collections.emptyList();
 
 		if (categoryId > 0) {
 			if (scopeGroupId > 0) {

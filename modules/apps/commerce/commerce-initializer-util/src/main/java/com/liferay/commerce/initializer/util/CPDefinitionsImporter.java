@@ -168,11 +168,12 @@ public class CPDefinitionsImporter {
 	protected ServiceContext getServiceContext(long scopeGroupId, long userId)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
 		ServiceContext serviceContext = new ServiceContext();
 
+		User user = _userLocalService.getUser(userId);
+
 		serviceContext.setCompanyId(user.getCompanyId());
+
 		serviceContext.setScopeGroupId(scopeGroupId);
 		serviceContext.setUserId(userId);
 

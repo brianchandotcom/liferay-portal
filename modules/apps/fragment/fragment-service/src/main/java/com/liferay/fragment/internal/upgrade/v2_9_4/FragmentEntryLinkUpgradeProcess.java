@@ -99,7 +99,6 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 					_getFragmentEntryType(
 						ctCollectionId, resultSet1.getString("editableValues"),
 						resultSet1.getLong("fragmentEntryId")));
-
 				preparedStatement2.setLong(2, ctCollectionId);
 
 				preparedStatement2.setLong(

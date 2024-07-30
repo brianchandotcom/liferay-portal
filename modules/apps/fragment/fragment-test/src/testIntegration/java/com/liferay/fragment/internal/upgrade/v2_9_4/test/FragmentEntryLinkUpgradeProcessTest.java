@@ -122,7 +122,6 @@ public class FragmentEntryLinkUpgradeProcessTest
 			FragmentConstants.TYPE_COMPONENT,
 			draftLayoutFragmentEntryLink.getFragmentEntryLinkId(),
 			publishedLayoutFragmentEntryLink.getFragmentEntryLinkId());
-
 		_assertFragmentEntryLinksType(
 			FragmentConstants.TYPE_PORTLET,
 			draftLayoutPortletFragmentEntryLink.getFragmentEntryLinkId(),

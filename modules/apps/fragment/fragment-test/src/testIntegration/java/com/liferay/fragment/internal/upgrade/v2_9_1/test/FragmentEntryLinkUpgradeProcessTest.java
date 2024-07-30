@@ -130,7 +130,6 @@ public class FragmentEntryLinkUpgradeProcessTest
 			_getPublishedLayoutFragmentEntryLink(
 				editableValuesJSONObject1,
 				draftLayoutFragmentEntryLink1.getFragmentEntryLinkId());
-
 		FragmentEntryLink publishedLayoutFragmentEntryLink2 =
 			_getPublishedLayoutFragmentEntryLink(
 				editableValuesJSONObject2,
@@ -144,7 +143,6 @@ public class FragmentEntryLinkUpgradeProcessTest
 				draftLayoutFragmentEntryLink1.getFragmentEntryLinkId()),
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
 				publishedLayoutFragmentEntryLink1.getFragmentEntryLinkId()));
-
 		_assertFragmentEntryLinkEditableValues(
 			editableValuesJSONObject2,
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(

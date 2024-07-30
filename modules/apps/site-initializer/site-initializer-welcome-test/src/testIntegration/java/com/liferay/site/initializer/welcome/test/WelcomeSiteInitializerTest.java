@@ -43,8 +43,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -124,8 +122,6 @@ public class WelcomeSiteInitializerTest {
 	public void testCreateAccountLayoutUtilityPageEntryPageDefinition()
 		throws Exception {
 
-		UserTestUtil.setUser(TestPropsValues.getUser());
-
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, _serviceContext.getUserId(), _group.getGroupId(), 0, 0,
@@ -167,8 +163,6 @@ public class WelcomeSiteInitializerTest {
 	public void testForgotPasswordLayoutUtilityPageEntryPageDefinition()
 		throws Exception {
 
-		UserTestUtil.setUser(TestPropsValues.getUser());
-
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
 				null, _serviceContext.getUserId(), _group.getGroupId(), 0, 0,
@@ -208,8 +202,6 @@ public class WelcomeSiteInitializerTest {
 	@FeatureFlags("LPD-6378")
 	@Test
 	public void testInitialize() throws PortalException {
-		UserTestUtil.setUser(TestPropsValues.getUser());
-
 		SiteInitializer siteInitializer =
 			_siteInitializerRegistry.getSiteInitializer(
 				"com.liferay.site.initializer.welcome");
@@ -242,8 +234,6 @@ public class WelcomeSiteInitializerTest {
 	@Test
 	public void testLoginLayoutUtilityPageEntryPageDefinition()
 		throws Exception {
-
-		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(

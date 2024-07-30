@@ -9,6 +9,7 @@ import {searchTableRowByValue} from './UsersAndOrganizationsPage';
 
 export class EditUserPage {
 	readonly confirmButton: Locator;
+	readonly customField: (fieldName: string) => Promise<Locator>;
 	readonly emailAddressInput: Locator;
 	readonly generateWebDAVPasswordButton: Locator;
 	readonly membershipsAccountsTableRow: (
@@ -54,6 +55,17 @@ export class EditUserPage {
 	readonly yourPasswordInput: Locator;
 
 	constructor(page: Page) {
+		this.customField = async (fieldName: string) => {
+			await page.getByText('Custom Fields').waitFor({timeout: 15 * 1000});
+
+			const customField = await page.getByText(fieldName);
+
+			if (customField.isVisible()) {
+				return customField;
+			}
+
+			throw new Error(`Cannot locate Custom Field ${fieldName}`);
+		};
 		this.emailAddressInput = page.getByLabel('Email Address');
 		this.generateWebDAVPasswordButton = page.getByTestId(
 			'generateWebDAVPasswordButton'

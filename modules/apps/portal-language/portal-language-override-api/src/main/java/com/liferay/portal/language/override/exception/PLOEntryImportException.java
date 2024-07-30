@@ -2,28 +2,44 @@
  * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 package com.liferay.portal.language.override.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
+
 /**
- * @author Drew Brokke
+ * @author Thiago Buarque
  */
 public class PLOEntryImportException extends PortalException {
 
-	public PLOEntryImportException() {
+	public static class InvalidPropertiesFile extends PLOEntryImportException {
+
+		public InvalidPropertiesFile() {
+			super("Invalid properties file");
+		}
+
 	}
 
-	public PLOEntryImportException(String msg) {
+	public static class InvalidTranslations extends PLOEntryImportException {
+
+		public InvalidTranslations(List<Exception> exceptions) {
+			super("Unable to import translations");
+
+			_exceptions = exceptions;
+		}
+
+		public List<Exception> getExceptions() {
+			return _exceptions;
+		}
+
+		private final List<Exception> _exceptions;
+
+	}
+
+	private PLOEntryImportException(String msg) {
 		super(msg);
-	}
-
-	public PLOEntryImportException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public PLOEntryImportException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

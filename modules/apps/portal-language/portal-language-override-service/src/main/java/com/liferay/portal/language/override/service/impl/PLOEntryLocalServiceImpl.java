@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.language.override.exception.ImportTranslationsException;
+import com.liferay.portal.language.override.exception.PLOEntryImportException;
 import com.liferay.portal.language.override.exception.PLOEntryKeyException;
 import com.liferay.portal.language.override.exception.PLOEntryLanguageIdException;
 import com.liferay.portal.language.override.exception.PLOEntryValueException;
@@ -30,7 +30,7 @@ import java.io.InputStreamReader;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -139,10 +139,10 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 			new InputStreamReader(inputStream, StandardCharsets.UTF_8));
 
 		if (properties.isEmpty()) {
-			throw new ImportTranslationsException.InvalidPropertiesFile();
+			throw new PLOEntryImportException.InvalidPropertiesFile();
 		}
 
-		Map<Class<?>, Exception> exceptions = new HashMap<>();
+		List<Exception> exceptions = new ArrayList<>();
 
 		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			try {
@@ -151,13 +151,12 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 					(String)entry.getValue());
 			}
 			catch (Exception exception) {
-				exceptions.putIfAbsent(exception.getClass(), exception);
+				exceptions.add(exception);
 			}
 		}
 
 		if (!exceptions.isEmpty()) {
-			throw new ImportTranslationsException.InvalidTranslations(
-				exceptions);
+			throw new PLOEntryImportException.InvalidTranslations(exceptions);
 		}
 	}
 

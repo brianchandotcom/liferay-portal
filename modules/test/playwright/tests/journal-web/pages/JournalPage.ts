@@ -133,11 +133,11 @@ export class JournalPage {
 	}
 
 	async changeView(viewName: string) {
-		await this.page
-			.getByLabel('Select View, Currently Selected: ')
-			.waitFor();
-		await this.page.getByLabel('Select View, Currently Selected: ').click();
-		await this.page.getByRole('menuitem', {name: viewName}).click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: viewName}),
+			trigger: this.page.getByLabel('Select View, Currently Selected: '),
+		});
 	}
 
 	async publishArticle() {

@@ -517,17 +517,19 @@ baseTest(
 
 		await journalPage.changeView('list');
 
-		await page.getByLabel(`Actions for ${title}`).waitFor();
-		await page.getByLabel(`Actions for ${title}`).click();
-
-		await page.getByRole('menuitem', {name: 'View History'}).click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'View History'}),
+			trigger: page.getByLabel(`Actions for ${title}`),
+		});
 
 		await journalPage.changeView('cards');
 
-		await page.getByLabel(`More Actions`).waitFor();
-		await page.getByLabel(`More Actions`).click();
-
-		await page.getByRole('menuitem', {name: 'Compare to...'}).click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Compare to...'}),
+			trigger: page.getByLabel(`More Actions`),
+		});
 
 		await expect(
 			page.getByRole('heading', {name: 'Compare Versions'})

@@ -163,7 +163,7 @@ public interface ResultRow {
 
 	public String getState();
 
-	public String getTabindex();
+	public String getTabIndex();
 
 	public boolean isBold();
 
@@ -199,6 +199,6 @@ public interface ResultRow {
 
 	public void setState(String state);
 
-	public void setTabindex(String tabindex);
+	public void setTabIndex(String tabIndex);
 
 }

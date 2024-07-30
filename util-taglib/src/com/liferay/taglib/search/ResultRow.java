@@ -52,7 +52,7 @@ public class ResultRow
 
 	public ResultRow(
 		String rowId, Object object, String primaryKey, int pos, boolean bold,
-		String ariaLabel, String cssClass, String state, String tabindex) {
+		String ariaLabel, String cssClass, String state, String tabIndex) {
 
 		_rowId = rowId;
 		_object = object;
@@ -62,7 +62,7 @@ public class ResultRow
 		_ariaLabel = ariaLabel;
 		_cssClass = cssClass;
 		_state = state;
-		_tabindex = tabindex;
+		_tabIndex = tabIndex;
 
 		_searchEntries = new ArrayList<>();
 	}
@@ -550,8 +550,8 @@ public class ResultRow
 	}
 
 	@Override
-	public String getTabindex() {
-		return _tabindex;
+	public String getTabIndex() {
+		return _tabIndex;
 	}
 
 	@Override
@@ -644,8 +644,8 @@ public class ResultRow
 	}
 
 	@Override
-	public void setTabindex(String tabindex) {
-		_tabindex = tabindex;
+	public void setTabIndex(String tabIndex) {
+		_tabIndex = tabIndex;
 	}
 
 	private String _ariaLabel;
@@ -663,6 +663,6 @@ public class ResultRow
 	private final List<SearchEntry> _searchEntries;
 	private boolean _skip;
 	private String _state;
-	private String _tabindex;
+	private String _tabIndex;
 
 }

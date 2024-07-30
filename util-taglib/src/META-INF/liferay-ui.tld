@@ -2756,7 +2756,7 @@
 		</attribute>
 		<attribute>
 			<description>Sets the tabindex attribute on the table row.</description>
-			<name>tabindex</name>
+			<name>tabIndex</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

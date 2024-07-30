@@ -61,7 +61,7 @@ export default function ({
 	const onClickHandler = delegate(
 		document.getElementById(`${namespace}entriesContainer`)!,
 		'click',
-		'tbody tr',
+		'.entry',
 		(event: DelegatedEvent<MouseEvent>) => {
 			updateSelectedCard(event);
 			dispatchSelectEvent(event);
@@ -80,7 +80,7 @@ export default function ({
 	const onKeydownHandler = delegate(
 		document.getElementById(`${namespace}entriesContainer`)!,
 		'keydown',
-		'tbody tr',
+		'.entry',
 		(event: DelegatedEvent<KeyboardEvent>) => {
 			if (event.code === 'Enter') {
 				updateSelectedCard(event);

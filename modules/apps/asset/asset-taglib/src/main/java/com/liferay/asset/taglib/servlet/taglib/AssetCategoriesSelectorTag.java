@@ -190,13 +190,13 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	}
 
 	protected List<String[]> getCategoryIdsTitles() {
+		List<String[]> categoryIdsTitles = new ArrayList<>();
+
 		HttpServletRequest httpServletRequest = getRequest();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		List<String[]> categoryIdsTitles = new ArrayList<>();
 
 		String categoryIds = StringPool.BLANK;
 

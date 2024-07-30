@@ -138,7 +138,8 @@ public abstract class BaseJob implements Job {
 			Properties buildProperties;
 
 			try {
-				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+				buildProperties = JenkinsResultsParserUtil.getBuildProperties(
+					false);
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(
@@ -146,7 +147,9 @@ public abstract class BaseJob implements Job {
 			}
 
 			boolean relevantEngineEnabled = Boolean.parseBoolean(
-				buildProperties.getProperty("relevant.engine.enabled"));
+				buildProperties.getProperty(
+					JenkinsResultsParserUtil.combine(
+						"relevant.engine.enabled[", _jobName, "]")));
 
 			if (relevantEngineEnabled &&
 				Objects.equals(getTestSuiteName(), "relevant")) {

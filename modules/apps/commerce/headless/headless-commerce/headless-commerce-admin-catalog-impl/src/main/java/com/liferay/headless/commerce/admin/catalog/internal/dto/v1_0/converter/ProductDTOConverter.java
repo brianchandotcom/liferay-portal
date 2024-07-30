@@ -76,6 +76,17 @@ public class ProductDTOConverter
 			{
 				setActions(dtoConverterContext::getActions);
 				setActive(() -> !cpDefinition.isInactive());
+				setCatalogExternalReferenceCode(
+					() -> {
+						CommerceCatalog commerceCatalog =
+							cpDefinition.getCommerceCatalog();
+
+						if (commerceCatalog == null) {
+							return null;
+						}
+
+						return commerceCatalog.getExternalReferenceCode();
+					});
 				setCatalogId(() -> _getCommerceCatalogId(cpDefinition));
 				setCategories(
 					() -> TransformUtil.transformToArray(

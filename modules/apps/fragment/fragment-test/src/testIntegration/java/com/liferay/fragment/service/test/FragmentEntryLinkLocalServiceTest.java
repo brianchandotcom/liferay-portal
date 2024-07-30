@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -795,6 +796,7 @@ public class FragmentEntryLinkLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPS-118241")
 	public void testUpdateFragmentEntryLinkWithPropagationAndNewEditableItems()
 		throws Exception {
 
@@ -840,6 +842,7 @@ public class FragmentEntryLinkLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPS-118241")
 	public void testUpdateFragmentEntryLinkWithPropagationAndUpdatedEditableItems()
 		throws Exception {
 

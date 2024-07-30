@@ -513,10 +513,10 @@ public class SegmentsDisplayContext {
 		String orderByCol = _getOrderByCol();
 
 		if (orderByCol.equals("modified-date")) {
-			return new SegmentsEntryModifiedDateComparator(orderByAsc);
+			return SegmentsEntryModifiedDateComparator.getInstance(orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			return new SegmentsEntryNameComparator(orderByAsc);
+			return SegmentsEntryNameComparator.getInstance(orderByAsc);
 		}
 
 		return null;

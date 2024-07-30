@@ -708,14 +708,9 @@ public interface BaseProjectTemplatesTestCase {
 		Collection<? extends Diff> diffs = diff.getChildren();
 
 		if (diffs.isEmpty()) {
-			String diffNewer = diff.getNewer(
-			).toString();
-			String diffOlder = diff.getOlder(
-			).toString();
-
 			Assert.assertEquals(
-				"Bundle " + bundleFile1 + " " + diffNewer + " and " +
-					bundleFile2 + " " + diffOlder + " do not match",
+				"Bundle " + bundleFile1 + " " + diff.getNewer() + " and " +
+					bundleFile2 + " " + diff.getOlder() + " do not match",
 				aQute.bnd.service.diff.Delta.UNCHANGED.toString(),
 				String.valueOf(diff.getDelta()));
 

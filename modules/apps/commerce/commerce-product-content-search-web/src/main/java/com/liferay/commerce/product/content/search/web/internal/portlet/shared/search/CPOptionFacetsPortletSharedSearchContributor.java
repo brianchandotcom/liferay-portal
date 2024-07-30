@@ -246,14 +246,13 @@ public class CPOptionFacetsPortletSharedSearchContributor
 			int frequencyThreshold, int maxTerms, RenderRequest renderRequest)
 		throws PortalException {
 
+		List<Facet> facets = new ArrayList<>();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<Facet> facets = new ArrayList<>();
-
 		AssetCategory assetCategory = (AssetCategory)renderRequest.getAttribute(
 			WebKeys.ASSET_CATEGORY);
-
 		SearchContext searchContext = buildSearchContext(renderRequest);
 
 		if (assetCategory != null) {

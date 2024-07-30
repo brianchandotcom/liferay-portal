@@ -77,14 +77,14 @@ public class CPPriceRangeFacetsPortletSharedSearchContributor
 			RenderRequest renderRequest, SearchContext searchContext)
 		throws PortalException {
 
+		Facet facet = _rangeFacetFactory.newInstance(searchContext);
+
 		CPPriceRangeFacetsPortletInstanceConfiguration
 			cpPriceRangeFacetsPortletInstanceConfiguration =
 				_configurationProvider.getPortletInstanceConfiguration(
 					CPPriceRangeFacetsPortletInstanceConfiguration.class,
 					(ThemeDisplay)renderRequest.getAttribute(
 						WebKeys.THEME_DISPLAY));
-
-		Facet facet = _rangeFacetFactory.newInstance(searchContext);
 
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 

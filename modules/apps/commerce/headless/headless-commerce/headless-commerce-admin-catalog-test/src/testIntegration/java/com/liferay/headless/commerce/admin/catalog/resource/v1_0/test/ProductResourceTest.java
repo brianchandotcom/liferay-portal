@@ -250,6 +250,32 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPostProduct() throws Exception {
+		super.testPostProduct();
+
+		Product randomProduct = randomProduct();
+
+		randomProduct.setCatalogId((Long)null);
+		randomProduct.setCatalogExternalReferenceCode(
+			_commerceCatalog.getExternalReferenceCode());
+
+		Product postProduct = testPostProduct_addProduct(randomProduct);
+
+		Product getProduct = productResource.getProduct(
+			postProduct.getProductId());
+
+		Product expectedPostProduct = postProduct.clone();
+
+		BaseProductResourceTestCase.BeanTestUtil.copyProperties(
+			postProduct, expectedPostProduct);
+
+		assertEquals(expectedPostProduct, getProduct);
+
+		assertValid(getProduct);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"active", "catalogId", "description", "externalReferenceCode",

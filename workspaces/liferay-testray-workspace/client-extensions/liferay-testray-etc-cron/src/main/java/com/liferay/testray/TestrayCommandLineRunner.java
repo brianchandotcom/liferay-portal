@@ -44,10 +44,9 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 				"/o/c/builds"
 			).queryParam(
 				"filter",
-				"archived eq false and promoted eq false and dateCreated lt " +
-					_currentDateTime.minusDays(_maxDaysOpened)
-			).queryParam(
-				"nestedFields", "buildToTasks"
+				"archived eq false and promoted eq false and (not (" +
+					"buildToTasks/id ne '0')) and dateCreated lt " +
+						_currentDateTime.minusDays(_maxDaysOpened)
 			).queryParam(
 				"pageSize", "-1"
 			).build()
@@ -57,13 +56,6 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			if (!jsonObject.getJSONArray(
-					"buildToTasks"
-				).isEmpty()) {
-
-				continue;
-			}
 
 			jsonObject.put(
 				"archived", true

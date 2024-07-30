@@ -123,6 +123,18 @@ public class RoleLocalServiceTest {
 	}
 
 	@Test
+	public void testAddRoleWithoutExternalReferenceCode() throws Exception {
+		_role = _roleLocalService.addRole(
+			TestPropsValues.getUserId(), null, 0, RandomTestUtil.randomString(),
+			null,
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			RoleConstants.TYPE_REGULAR, null, null);
+
+		Assert.assertNotNull(_role.getExternalReferenceCode());
+	}
+
+	@Test
 	public void testDeleteRole() throws Exception {
 		_group = GroupTestUtil.addGroup();
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);

@@ -114,6 +114,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -125,35 +126,19 @@ import java.util.Set;
  */
 public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
-	/**
-	 * Adds a role with additional parameters. The user is reindexed after role
-	 * is added.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  className the name of the class for which the role is created
-	 *         (optionally <code>null</code>)
-	 * @param  classPK the primary key of the class for which the role is
-	 *         created (optionally <code>0</code>)
-	 * @param  name the role's name
-	 * @param  titleMap the role's localized titles (optionally
-	 *         <code>null</code>)
-	 * @param  descriptionMap the role's localized descriptions (optionally
-	 *         <code>null</code>)
-	 * @param  type the role's type (optionally <code>0</code>)
-	 * @param  subtype the role's subtype (optionally <code>null</code>)
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set expando bridge attributes for the
-	 *         role.
-	 * @return the role
-	 */
 	@Override
 	public Role addRole(
-			long userId, String className, long classPK, String name,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			int type, String subtype, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, String className,
+			long classPK, String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, int type, String subtype,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Role
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
 
 		User user = _userPersistence.findByPrimaryKey(userId);
 
@@ -176,6 +161,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			role.setUuid(serviceContext.getUuid());
 		}
 
+		role.setExternalReferenceCode(externalReferenceCode);
 		role.setCompanyId(user.getCompanyId());
 		role.setUserId(user.getUserId());
 		role.setUserName(user.getFullName());
@@ -1874,6 +1860,31 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		reindex(userId);
 	}
 
+	@Override
+	public Role updateExternalReferenceCode(
+			long roleId, String externalReferenceCode)
+		throws PortalException {
+
+		return updateExternalReferenceCode(
+			getRole(roleId), externalReferenceCode);
+	}
+
+	@Override
+	public Role updateExternalReferenceCode(
+			Role role, String externalReferenceCode)
+		throws PortalException {
+
+		if (Objects.equals(
+				role.getExternalReferenceCode(), externalReferenceCode)) {
+
+			return role;
+		}
+
+		role.setExternalReferenceCode(externalReferenceCode);
+
+		return updateRole(role);
+	}
+
 	/**
 	 * Updates the role with the primary key.
 	 *
@@ -1948,7 +1959,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 			try {
 				role = roleLocalService.addRole(
-					user.getUserId(), null, 0, name, null,
+					null, user.getUserId(), null, 0, name, null,
 					LocalizationUtil.getLocalizationMap(description), type,
 					null, null);
 			}

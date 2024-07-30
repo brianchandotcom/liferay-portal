@@ -38,29 +38,12 @@ import java.util.Map;
  */
 public class RoleServiceImpl extends RoleServiceBaseImpl {
 
-	/**
-	 * Adds a role. The user is reindexed after role is added.
-	 *
-	 * @param  className the name of the class for which the role is created
-	 * @param  classPK the primary key of the class for which the role is
-	 *         created (optionally <code>0</code>)
-	 * @param  name the role's name
-	 * @param  titleMap the role's localized titles (optionally
-	 *         <code>null</code>)
-	 * @param  descriptionMap the role's localized descriptions (optionally
-	 *         <code>null</code>)
-	 * @param  type the role's type (optionally <code>0</code>)
-	 * @param  subtype the role's subtype (optionally <code>null</code>)
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set the expando bridge attributes for the
-	 *         role.
-	 * @return the role
-	 */
 	@Override
 	public Role addRole(
-			String className, long classPK, String name,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			int type, String subtype, ServiceContext serviceContext)
+			String externalReferenceCode, String className, long classPK,
+			String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, int type, String subtype,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		PortalPermissionUtil.check(getPermissionChecker(), ActionKeys.ADD_ROLE);
@@ -68,8 +51,8 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 		User user = getUser();
 
 		Role role = roleLocalService.addRole(
-			user.getUserId(), className, classPK, name, titleMap,
-			descriptionMap, type, subtype, serviceContext);
+			externalReferenceCode, user.getUserId(), className, classPK, name,
+			titleMap, descriptionMap, type, subtype, serviceContext);
 
 		if (type == RoleConstants.TYPE_ORGANIZATION) {
 			OrganizationMembershipPolicyUtil.verifyPolicy(role);
@@ -396,6 +379,27 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 
 		RoleMembershipPolicyUtil.propagateRoles(
 			new long[] {userId}, null, roleIds);
+	}
+
+	@Override
+	public Role updateExternalReferenceCode(
+			long roleId, String externalReferenceCode)
+		throws PortalException {
+
+		return updateExternalReferenceCode(
+			getRole(roleId), externalReferenceCode);
+	}
+
+	@Override
+	public Role updateExternalReferenceCode(
+			Role role, String externalReferenceCode)
+		throws PortalException {
+
+		RolePermissionUtil.check(
+			getPermissionChecker(), role.getRoleId(), ActionKeys.UPDATE);
+
+		return roleLocalService.updateExternalReferenceCode(
+			role, externalReferenceCode);
 	}
 
 	/**

@@ -22,8 +22,14 @@ export class PartnerHelper {
 		this.apiHelpers = new ApiHelpers(this.page);
 	}
 
-	async assignUserToAccountRole(accountId: number, roleName: string, userId: number) {
+	async assignUserToAccountRole(accountId: number, roleName: string, userEmailAddress: string) {
 		try {
+
+			const user =
+				await this.apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+					userEmailAddress
+				);
+
 			const rolesResponse =
 				await this.apiHelpers.headlessAdminUser.getAccountRoles(
 					accountId
@@ -36,7 +42,7 @@ export class PartnerHelper {
 			await this.apiHelpers.headlessAdminUser.assignUserToAccountRole(
 				accountId,
 				filteredAccountRole[0].id,
-				userId
+				Number(user.id)
 			);
 		}
 		catch (error) {

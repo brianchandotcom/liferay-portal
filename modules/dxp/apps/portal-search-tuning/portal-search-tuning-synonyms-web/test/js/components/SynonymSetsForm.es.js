@@ -53,7 +53,7 @@ describe('SynonymSetsForm', () => {
 			/>
 		);
 
-		expect(getByText('create-synonym-set')).toBeInTheDocument();
+		expect(getByText('new-synonym-set')).toBeInTheDocument();
 	});
 
 	it('has description text', () => {

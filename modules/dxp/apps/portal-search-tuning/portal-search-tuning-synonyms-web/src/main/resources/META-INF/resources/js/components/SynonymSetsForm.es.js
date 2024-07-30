@@ -132,7 +132,7 @@ class SynonymSetsForm extends Component {
 		return (
 			<div className="synonym-sets-form">
 				<div className="sheet-title">
-					{Liferay.Language.get('create-synonym-set')}
+					{Liferay.Language.get('new-synonym-set')}
 				</div>
 
 				<div className="sheet-text">

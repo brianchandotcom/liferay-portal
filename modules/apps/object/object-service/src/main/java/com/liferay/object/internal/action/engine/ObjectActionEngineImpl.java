@@ -302,6 +302,10 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				(Map<String, Object>)payloadJSONObject.get(
 					"model" + objectDefinition.getName());
 
+			if (map == null) {
+				return 0L;
+			}
+
 			return (long)map.get(objectDefinition.getPKObjectFieldName());
 		}
 

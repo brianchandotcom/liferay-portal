@@ -572,9 +572,9 @@ definition {
 
 				ApplicationsMenu.gotoSite(site = "Test Site Name");
 
-				ControlMenu.viewHeaderDraftTitle(headerTitle = "Test Page Name");
-
-				ContentPages.gotoPageEditor();
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
 
 				PageEditor.addFragment(
 					collectionName = "Layout Elements",

@@ -166,7 +166,7 @@ public class ViewSharedAssetsDisplayContext {
 				() -> _sharingEntryLocalService.getToUserSharingEntries(
 					_themeDisplay.getUserId(), classNameId,
 					searchContainer.getStart(), searchContainer.getEnd(),
-					new SharingEntryModifiedDateComparator(
+					SharingEntryModifiedDateComparator.getInstance(
 						Objects.equals(getSortingOrder(), "asc"))),
 				_sharingEntryLocalService.getToUserSharingEntriesCount(
 					_themeDisplay.getUserId(), classNameId));
@@ -176,7 +176,7 @@ public class ViewSharedAssetsDisplayContext {
 				() -> _sharingEntryLocalService.getFromUserSharingEntries(
 					_themeDisplay.getUserId(), classNameId,
 					searchContainer.getStart(), searchContainer.getEnd(),
-					new SharingEntryModifiedDateComparator(
+					SharingEntryModifiedDateComparator.getInstance(
 						Objects.equals(getSortingOrder(), "asc"))),
 				_sharingEntryLocalService.getFromUserSharingEntriesCount(
 					_themeDisplay.getUserId(), classNameId));

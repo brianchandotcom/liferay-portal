@@ -313,6 +313,17 @@ public class DBSchemaDefinitionExporter {
 			SetUtil.asymmetricDifference(dbTableNames, exportTableNames),
 			StringPool.COMMA_AND_SPACE);
 
+		if (DBPartition.isPartitionEnabled()) {
+			return StringUtil.merge(
+				new Object[] {
+					"Default instance database tables: " + dbTableNames.size(),
+					"Default instance export tables: " +
+						exportTableNames.size(),
+					"Default instance missing tables: " + missingTableNames
+				},
+				StringPool.NEW_LINE);
+		}
+
 		return StringUtil.merge(
 			new Object[] {
 				"Database tables: " + dbTableNames.size(),

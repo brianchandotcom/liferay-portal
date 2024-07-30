@@ -207,7 +207,7 @@ public class ViewMembershipRequestsDisplayContext {
 		}
 
 		siteMembershipSearchContainer.setOrderByComparator(
-			new MembershipRequestCreateDateComparator(orderByAsc));
+			MembershipRequestCreateDateComparator.getInstance(orderByAsc));
 		siteMembershipSearchContainer.setOrderByType(getOrderByType());
 		siteMembershipSearchContainer.setResultsAndTotal(
 			() -> MembershipRequestLocalServiceUtil.search(

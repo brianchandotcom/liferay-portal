@@ -49,6 +49,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>ImportTranslations</exception>
 		<exception>PLOEntryKey</exception>
 		<exception>PLOEntryLanguageId</exception>
 		<exception>PLOEntryValue</exception>

@@ -51,6 +51,8 @@ public class DisplayContextUtil {
 	public static Map<Long, String> getSiteNames(
 		long ctCollectionId, boolean showHideable, ThemeDisplay themeDisplay) {
 
+		Map<Long, String> siteNames = new LinkedHashMap<>();
+
 		Searcher searcher = _searcherSnapshot.get();
 
 		SearchRequestBuilderFactory searchRequestBuilderFactory =
@@ -102,8 +104,6 @@ public class DisplayContextUtil {
 		SearchResponse searchResponse = searcher.search(
 			searchRequestBuilder.build());
 
-		Map<Long, String> siteNames = new LinkedHashMap<>();
-
 		for (Document document : searchResponse.getDocuments()) {
 			siteNames.put(
 				document.getLong(Field.GROUP_ID),
@@ -115,6 +115,8 @@ public class DisplayContextUtil {
 
 	public static Map<Long, String> getTypeNames(
 		long ctCollectionId, boolean showHideable, ThemeDisplay themeDisplay) {
+
+		Map<Long, String> typeNames = new LinkedHashMap<>();
 
 		Searcher searcher = _searcherSnapshot.get();
 
@@ -149,8 +151,6 @@ public class DisplayContextUtil {
 
 		SearchResponse searchResponse = searcher.search(
 			searchRequestBuilder.build());
-
-		Map<Long, String> typeNames = new LinkedHashMap<>();
 
 		for (Document document : searchResponse.getDocuments()) {
 			typeNames.put(

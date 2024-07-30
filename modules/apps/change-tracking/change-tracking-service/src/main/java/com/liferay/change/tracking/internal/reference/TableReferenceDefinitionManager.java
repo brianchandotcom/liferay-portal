@@ -58,14 +58,14 @@ public class TableReferenceDefinitionManager {
 	}
 
 	public Map<Long, TableReferenceInfo<?>> getCombinedTableReferenceInfos() {
-		_ensureOpened();
-
 		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos =
 			_combinedTableReferenceInfos;
 
 		if (combinedTableReferenceInfos != null) {
 			return combinedTableReferenceInfos;
 		}
+
+		_ensureOpened();
 
 		synchronized (this) {
 			combinedTableReferenceInfos = new HashMap<>();

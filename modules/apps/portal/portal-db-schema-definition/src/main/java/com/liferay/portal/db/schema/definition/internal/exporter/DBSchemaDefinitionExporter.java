@@ -13,12 +13,14 @@ import com.liferay.portal.db.schema.definition.internal.partition.DBSchemaPartit
 import com.liferay.portal.db.schema.definition.internal.sql.writer.SQLWriter;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.patcher.PatcherValues;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -195,6 +197,10 @@ public class DBSchemaDefinitionExporter {
 		return tableNames;
 	}
 
+	private Set<String> _getDBViewNames(long companyId) throws Exception {
+		return _getDBTableNamesByType(companyId, "VIEW");
+	}
+
 	private Set<String> _getExportTableNames(String dirName, long companyId)
 		throws Exception {
 
@@ -230,11 +236,69 @@ public class DBSchemaDefinitionExporter {
 		return tableNames;
 	}
 
+	private Set<String> _getExportViewNames(String dirName, long companyId)
+		throws Exception {
+
+		return _getExportTableNames(
+			dirName, companyId, "create or replace view",
+			line -> {
+				String[] parts = line.split(StringPool.SPACE);
+
+				return parts[4].substring(parts[4].indexOf(StringPool.PERIOD));
+			});
+	}
+
 	private String _printCompanyTablesInfo(String dirName) throws Exception {
 		StringBundler sb = new StringBundler(
 			_printDefaultCompanyTablesInfo(dirName));
 
+		if (!DBPartition.isPartitionEnabled()) {
+			return sb.toString();
+		}
+
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				if (companyId == PortalInstancePool.getDefaultCompanyId()) {
+					return;
+				}
+
+				sb.append(
+					_printCompanyTablesInfo(dirName, companyId, "tables"));
+				sb.append(_printCompanyTablesInfo(dirName, companyId, "views"));
+			});
+
 		return sb.toString();
+	}
+
+	private String _printCompanyTablesInfo(
+			String dirName, long companyId, String type)
+		throws Exception {
+
+		Set<String> dbTableNames =
+			StringUtil.equals(type, "views") ? _getDBViewNames(companyId) :
+				_getDBTableNames(companyId);
+		Set<String> exportTableNames = StringUtil.equals(type, "views") ?
+			_getExportViewNames(dirName, companyId) :
+				_getExportTableNames(dirName, companyId);
+
+		String missingTableNames = StringUtil.merge(
+			SetUtil.asymmetricDifference(dbTableNames, exportTableNames),
+			StringPool.COMMA_AND_SPACE);
+
+		return StringUtil.merge(
+			new Object[] {
+				StringPool.NEW_LINE, StringPool.NEW_LINE,
+				StringBundler.concat(
+					"Virtual instance ", companyId, " database ", type, ": ",
+					dbTableNames.size()),
+				StringBundler.concat(
+					"Virtual instance ", companyId, " export ", type, ": ",
+					exportTableNames.size()),
+				StringBundler.concat(
+					"Virtual instance ", companyId, " missing ", type, ": ",
+					missingTableNames)
+			},
+			StringPool.NEW_LINE);
 	}
 
 	private String _printDefaultCompanyTablesInfo(String dirName)
@@ -264,6 +328,9 @@ public class DBSchemaDefinitionExporter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DBSchemaDefinitionExporter.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

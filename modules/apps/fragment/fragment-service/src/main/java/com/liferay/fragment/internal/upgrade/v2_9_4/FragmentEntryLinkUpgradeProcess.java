@@ -37,11 +37,15 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 		};
 	}
 
-	private int _getFragmentEntryType(long fragmentEntryId) throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select type_ from FragmentEntry where fragmentEntryId = ? ")) {
+	private int _getFragmentEntryType(long ctCollectionId, long fragmentEntryId)
+		throws Exception {
 
-			preparedStatement.setLong(1, fragmentEntryId);
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select type_ from FragmentEntry where ctCollectionId = ? " +
+					"and fragmentEntryId = ? ")) {
+
+			preparedStatement.setLong(1, ctCollectionId);
+			preparedStatement.setLong(2, fragmentEntryId);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -54,7 +58,7 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 	}
 
 	private int _getFragmentEntryType(
-			String editableValues, long fragmentEntryId)
+			long ctCollectionId, String editableValues, long fragmentEntryId)
 		throws Exception {
 
 		if (Validator.isNotNull(editableValues)) {
@@ -73,31 +77,35 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
-		return _getFragmentEntryType(fragmentEntryId);
+		return _getFragmentEntryType(ctCollectionId, fragmentEntryId);
 	}
 
 	private void _updateFragmentEntryType() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select fragmentEntryLinkId, fragmentEntryId, editableValues " +
-					"from FragmentEntryLink");
+				"select ctCollectionId, fragmentEntryLinkId, " +
+					"fragmentEntryId, editableValues from FragmentEntryLink");
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update FragmentEntryLink set type_ = ? where " +
-						"fragmentEntryLinkId = ?")) {
+						"ctCollectionId = ? and fragmentEntryLinkId = ?")) {
 
 			while (resultSet1.next()) {
 				long fragmentEntryLinkId = resultSet1.getLong(
 					"fragmentEntryLinkId");
 
+				long ctCollectionId = resultSet1.getLong("ctCollectionId");
 				long fragmentEntryId = resultSet1.getLong("fragmentEntryId");
 				String editableValues = resultSet1.getString("editableValues");
 
 				preparedStatement2.setInt(
-					1, _getFragmentEntryType(editableValues, fragmentEntryId));
+					1,
+					_getFragmentEntryType(
+						ctCollectionId, editableValues, fragmentEntryId));
 
-				preparedStatement2.setLong(2, fragmentEntryLinkId);
+				preparedStatement2.setLong(2, ctCollectionId);
+				preparedStatement2.setLong(3, fragmentEntryLinkId);
 
 				preparedStatement2.addBatch();
 			}

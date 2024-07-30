@@ -64,7 +64,6 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -172,7 +171,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.ComparisonFailure;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9518,9 +9516,6 @@ public class ObjectEntryResourceTest {
 				manyToOneDepth1JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
 						"externalReferenceCode", "ERC1_1"
-					).put(
-						"status",
-						JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
 					).toString(),
 					endpoint2, Http.Method.POST)
 		);
@@ -9550,9 +9545,6 @@ public class ObjectEntryResourceTest {
 				manyToOneDepth2JSONObjects[1] = HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
 						"externalReferenceCode", "ERC1_2"
-					).put(
-						"status",
-						JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
 					).toString(),
 					endpoint3, Http.Method.POST)
 		);
@@ -9705,6 +9697,9 @@ public class ObjectEntryResourceTest {
 			_testSortByFieldName(
 				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
 				String.format("%s/id", _objectRelationship1.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
+				String.format("%s/status", _objectRelationship1.getName()));
 
 			// Depth 2
 
@@ -9738,6 +9733,11 @@ public class ObjectEntryResourceTest {
 				endpoint1, jsonObject1, jsonObject2, jsonObject3, jsonObject4,
 				String.format(
 					"%s/%s/id", _objectRelationship1.getName(),
+					_objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
+				String.format(
+					"%s/%s/status", _objectRelationship1.getName(),
 					_objectRelationship2.getName()));
 			_testSortByFieldName(
 				endpoint1, jsonObject3, jsonObject4, jsonObject1, jsonObject2,
@@ -9780,24 +9780,6 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/userId", _objectRelationship1.getName(),
 					_objectRelationship2.getName()));
-
-			// TODO LPD-20530
-
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint1, jsonObject1, jsonObject2, jsonObject3,
-					jsonObject4,
-					String.format(
-						"%s/status", _objectRelationship1.getName())));
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint1, jsonObject1, jsonObject2, jsonObject3,
-					jsonObject4,
-					String.format(
-						"%s/%s/status", _objectRelationship1.getName(),
-						_objectRelationship2.getName())));
 		}
 		finally {
 			if (jsonObject1 != null) {
@@ -10810,6 +10792,9 @@ public class ObjectEntryResourceTest {
 			_testSortByFieldName(
 				endpoint1, jsonObject1, jsonObject2,
 				String.format("%s/id", _objectRelationship1.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject2, jsonObject1,
+				String.format("%s/status", _objectRelationship1.getName()));
 
 			// Depth 2
 
@@ -10843,6 +10828,11 @@ public class ObjectEntryResourceTest {
 				endpoint1, jsonObject1, jsonObject2,
 				String.format(
 					"%s/%s/id", _objectRelationship1.getName(),
+					_objectRelationship2.getName()));
+			_testSortByFieldName(
+				endpoint1, jsonObject2, jsonObject1,
+				String.format(
+					"%s/%s/status", _objectRelationship1.getName(),
 					_objectRelationship2.getName()));
 			_testSortByFieldName(
 				endpoint1, jsonObject2, jsonObject1,
@@ -10885,22 +10875,6 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/userId", _objectRelationship1.getName(),
 					_objectRelationship2.getName()));
-
-			// TODO LPD-20530
-
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint1, jsonObject2, jsonObject1,
-					String.format(
-						"%s/status", _objectRelationship1.getName())));
-			_assertFailure(
-				ComparisonFailure.class,
-				() -> _testSortByFieldName(
-					endpoint1, jsonObject2, jsonObject1,
-					String.format(
-						"%s/%s/status", _objectRelationship1.getName(),
-						_objectRelationship2.getName())));
 		}
 		finally {
 			for (JSONObject jsonObject :
@@ -11274,24 +11248,6 @@ public class ObjectEntryResourceTest {
 				)
 			).toString(),
 			nestedObjectEntriesJSONArray.toString(), JSONCompareMode.LENIENT);
-	}
-
-	private void _assertFailure(
-		Class<?> clazz, UnsafeRunnable<Exception> unsafeRunnable) {
-
-		try {
-			unsafeRunnable.run();
-
-			Assert.fail();
-		}
-		catch (Throwable throwable) {
-			Class<?> throwableClass = throwable.getClass();
-
-			Assert.assertTrue(
-				throwableClass.getName() + " is not an instance of " +
-					clazz.getName(),
-				clazz.isInstance(throwable));
-		}
 	}
 
 	private void _assertFilteredObjectEntries(

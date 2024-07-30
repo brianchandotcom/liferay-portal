@@ -16,6 +16,7 @@ import getRandomString from '../../utils/getRandomString';
 import {
 	connectToAnalyticsCloud,
 	disconnectFromAnalyticsCloud,
+	goNextStep,
 	goToAnalyticsCloudInstanceSettings,
 	syncAllContacts,
 	syncSite,
@@ -118,7 +119,11 @@ async function connectACToDXP({
 		page,
 	});
 
+	await goNextStep(page);
+
 	await syncAllContacts(page);
+
+	await goNextStep(page);
 
 	await page.getByRole('button', {name: 'Finish'}).click();
 }

@@ -458,6 +458,19 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"CPSpecificationOption", "listTypeDefinitionId LONG"));
 
+		registry.register(
+			"5.16.0", "5.17.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"CPOptionCategory", "CPOptionCategoryId"}
+					};
+				}
+
+			});
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

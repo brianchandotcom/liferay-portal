@@ -11,7 +11,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
-import performLogin, {performLogout} from '../../utils/performLogin';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {blogsPagesTest} from '../blogs-web/fixtures/blogsPagesTest';
 
 export const test = mergeTests(
@@ -72,6 +72,25 @@ test('send user back to my workflow tasks page after assign another user to revi
 	workflowTaskDetailsPage,
 	workflowTasksPage,
 }) => {
+	const user = await apiHelpers.headlessAdminUser.postUserAccount({
+		familyName: '<script>alert(0);</script>',
+	});
+
+	userData[user.alternateName] = {
+		name: user.givenName,
+		password: 'test',
+		surname: '&lt;script&gt;alert(0);&lt;/script&gt;',
+	};
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		'Administrator',
+		user.id
+	);
+
+	await performLogout(page);
+
+	await performLogin(page, user.alternateName);
+
 	workflowDefinitionName = 'Workflow Definition' + getRandomString();
 
 	workflowXMLDefinition = readFileSync(
@@ -87,11 +106,6 @@ test('send user back to my workflow tasks page after assign another user to revi
 		);
 
 	workflowDefinitionId = workflowDefinition.id;
-
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.company.admin@liferay.com'
-		);
 
 	await processBuilderPage.goto();
 
@@ -126,7 +140,13 @@ test('send user back to my workflow tasks page after assign another user to revi
 
 	await performLogout(page);
 
-	await performLogin(page, user.alternateName);
+	await performLogin(page, 'test');
+
+	page.on('dialog', async (dialog) => {
+		dialog.accept();
+
+		expect(dialog.message(), 'This alert should not be shown').toBeNull();
+	});
 
 	await workflowTasksPage.goToAssignedToMyRoles();
 
@@ -140,12 +160,7 @@ test('send user back to my workflow tasks page after assign another user to revi
 
 	await page.waitForLoadState('networkidle');
 
-	const user2 =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'test@liferay.com'
-		);
-
-	await workflowTaskDetailsPage.selectAssignee(user2.id.toString());
+	await workflowTaskDetailsPage.selectAssignee(user.id.toString());
 
 	await workflowTaskDetailsPage.doneAssigneeButton.click();
 

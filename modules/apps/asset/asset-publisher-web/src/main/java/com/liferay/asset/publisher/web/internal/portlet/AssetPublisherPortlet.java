@@ -433,10 +433,10 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		List<AssetEntry> assetEntries = new ArrayList<>();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		List<AssetEntry> assetEntries = new ArrayList<>();
 
 		SearchContainer<AssetEntry> searchContainer = new SearchContainer();
 

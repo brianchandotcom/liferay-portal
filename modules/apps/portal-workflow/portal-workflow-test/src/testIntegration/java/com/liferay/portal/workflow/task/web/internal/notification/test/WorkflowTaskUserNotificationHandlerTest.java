@@ -91,11 +91,9 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
 			TestPropsValues.getCompanyId(), GroupConstants.CONTROL_PANEL);
 
-		Layout controlPanelLayout = LayoutLocalServiceUtil.fetchDefaultLayout(
-			controlPanelGroup.getGroupId(), true);
-
-		Layout controlPanelVirtualLayout = new VirtualLayout(
-			controlPanelLayout,
+		Layout controlPanelLayout = new VirtualLayout(
+			LayoutLocalServiceUtil.fetchDefaultLayout(
+				controlPanelGroup.getGroupId(), true),
 			GroupLocalServiceUtil.getGroup(
 				TestPropsValues.getCompanyId(), GroupConstants.GUEST));
 
@@ -103,8 +101,8 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			_getUserNotificationEvent();
 
 		_assertLink(
-			controlPanelVirtualLayout.getPlid(), group,
-			controlPanelVirtualLayout, serviceContext, userNotificationEvent);
+			controlPanelLayout.getPlid(), group,
+			controlPanelLayout, serviceContext, userNotificationEvent);
 
 		Layout layout =
 			PersonalApplicationURLUtil.

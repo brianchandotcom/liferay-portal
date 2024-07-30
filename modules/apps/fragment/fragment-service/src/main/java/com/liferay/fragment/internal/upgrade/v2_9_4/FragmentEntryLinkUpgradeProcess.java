@@ -92,20 +92,18 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 						"ctCollectionId = ? and fragmentEntryLinkId = ?")) {
 
 			while (resultSet1.next()) {
-				long fragmentEntryLinkId = resultSet1.getLong(
-					"fragmentEntryLinkId");
-
 				long ctCollectionId = resultSet1.getLong("ctCollectionId");
-				long fragmentEntryId = resultSet1.getLong("fragmentEntryId");
-				String editableValues = resultSet1.getString("editableValues");
 
 				preparedStatement2.setInt(
 					1,
 					_getFragmentEntryType(
-						ctCollectionId, editableValues, fragmentEntryId));
+						ctCollectionId, resultSet1.getString("editableValues"),
+						resultSet1.getLong("fragmentEntryId")));
 
 				preparedStatement2.setLong(2, ctCollectionId);
-				preparedStatement2.setLong(3, fragmentEntryLinkId);
+
+				preparedStatement2.setLong(
+					3, resultSet1.getLong("fragmentEntryLinkId"));
 
 				preparedStatement2.addBatch();
 			}

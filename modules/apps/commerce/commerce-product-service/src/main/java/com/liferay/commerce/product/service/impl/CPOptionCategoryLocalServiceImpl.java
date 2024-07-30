@@ -67,12 +67,16 @@ public class CPOptionCategoryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPOptionCategory addCPOptionCategory(
-			long userId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, double priority, String key,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
 
 		key = _friendlyURLNormalizer.normalize(key);
 
@@ -83,6 +87,7 @@ public class CPOptionCategoryLocalServiceImpl
 		CPOptionCategory cpOptionCategory = cpOptionCategoryPersistence.create(
 			cpOptionCategoryId);
 
+		cpOptionCategory.setExternalReferenceCode(externalReferenceCode);
 		cpOptionCategory.setCompanyId(user.getCompanyId());
 		cpOptionCategory.setUserId(user.getUserId());
 		cpOptionCategory.setUserName(user.getFullName());
@@ -211,12 +216,17 @@ public class CPOptionCategoryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPOptionCategory updateCPOptionCategory(
-			long cpOptionCategoryId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, double priority, String key)
+			String externalReferenceCode, long cpOptionCategoryId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			double priority, String key)
 		throws PortalException {
 
 		CPOptionCategory cpOptionCategory =
 			cpOptionCategoryPersistence.findByPrimaryKey(cpOptionCategoryId);
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
 
 		key = _friendlyURLNormalizer.normalize(key);
 
@@ -224,6 +234,7 @@ public class CPOptionCategoryLocalServiceImpl
 			cpOptionCategory.getCPOptionCategoryId(),
 			cpOptionCategory.getCompanyId(), key);
 
+		cpOptionCategory.setExternalReferenceCode(externalReferenceCode);
 		cpOptionCategory.setTitleMap(titleMap);
 		cpOptionCategory.setDescriptionMap(descriptionMap);
 		cpOptionCategory.setPriority(priority);

@@ -455,11 +455,13 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	}
 
 	private CPDefinition _addOrUpdateProduct(Product product) throws Exception {
-		CommerceCatalog commerceCatalog =
-			_commerceCatalogLocalService.fetchCommerceCatalog(
-				product.getCatalogId());
+		CommerceCatalog commerceCatalog = null;
 
-		if (commerceCatalog == null) {
+		if (product.getCatalogId() != null) {
+			commerceCatalog = _commerceCatalogLocalService.fetchCommerceCatalog(
+				product.getCatalogId());
+		}
+		else if (product.getCatalogExternalReferenceCode() != null) {
 			commerceCatalog =
 				_commerceCatalogLocalService.
 					getCommerceCatalogByExternalReferenceCode(

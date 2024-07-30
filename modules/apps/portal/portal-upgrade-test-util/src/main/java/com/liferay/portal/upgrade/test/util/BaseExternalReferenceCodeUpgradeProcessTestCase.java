@@ -64,8 +64,8 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_dataSource = InfrastructureUtil.getDataSource();
-		_db = DBManagerUtil.getDB();
+		dataSource = InfrastructureUtil.getDataSource();
+		db = DBManagerUtil.getDB();
 	}
 
 	@Before
@@ -110,6 +110,27 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 			addExternalReferenceCodeModels(String tableName)
 		throws PortalException;
 
+	protected void assertExternalReferenceCode(
+			String[] externalReferenceCodes, String tableName)
+		throws Exception {
+
+		try (Connection connection = dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select 1 from ", tableName,
+					" where externalReferenceCode in ('",
+					ArrayUtil.toString(
+						externalReferenceCodes, StringPool.BLANK, "', '"),
+					"') AND groupId = ?"))) {
+
+			preparedStatement.setLong(1, group.getGroupId());
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				Assert.assertFalse(resultSet.next());
+			}
+		}
+	}
+
 	protected abstract ExternalReferenceCodeModel
 			fetchExternalReferenceCodeModel(
 				ExternalReferenceCodeModel externalReferenceCodeModel,
@@ -143,17 +164,43 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 
 	protected abstract Version getVersion();
 
+	protected void updateExternalReferenceCode(
+			String[] externalReferenceCodes, String tableName)
+		throws Exception {
+
+		db.runSQL(
+			StringBundler.concat(
+				"update ", tableName,
+				" set externalReferenceCode = null where ",
+				"externalReferenceCode in ('",
+				ArrayUtil.toString(
+					externalReferenceCodes, StringPool.BLANK, "', '"),
+				"') and groupId =", group.getGroupId()));
+
+		entityCache.clearCache();
+		multiVMPool.clear();
+	}
+
+	protected static DataSource dataSource;
+	protected static DB db;
+
+	@Inject
+	protected EntityCache entityCache;
+
 	@DeleteAfterTestRun
 	protected Group group;
+
+	@Inject
+	protected MultiVMPool multiVMPool;
 
 	protected ServiceContext serviceContext;
 
 	private void _addIndexes(List<IndexMetadata> indexMetadatas)
 		throws Exception {
 
-		try (Connection connection = _dataSource.getConnection()) {
+		try (Connection connection = dataSource.getConnection()) {
 			if (ListUtil.isNotEmpty(indexMetadatas)) {
-				_db.addIndexes(connection, indexMetadatas);
+				db.addIndexes(connection, indexMetadatas);
 			}
 		}
 	}
@@ -182,32 +229,11 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 		}
 	}
 
-	private void _assertExternalReferenceCode(
-			String[] externalReferenceCodes, String tableName)
-		throws Exception {
-
-		try (Connection connection = _dataSource.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select 1 from ", tableName,
-					" where externalReferenceCode in ('",
-					ArrayUtil.toString(
-						externalReferenceCodes, StringPool.BLANK, "', '"),
-					"') AND groupId = ?"))) {
-
-			preparedStatement.setLong(1, group.getGroupId());
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				Assert.assertFalse(resultSet.next());
-			}
-		}
-	}
-
 	private List<IndexMetadata> _dropIndexes(String tableName)
 		throws Exception {
 
-		try (Connection connection = _dataSource.getConnection()) {
-			return _db.dropIndexes(
+		try (Connection connection = dataSource.getConnection()) {
+			return db.dropIndexes(
 				connection, tableName, "externalReferenceCode");
 		}
 	}
@@ -221,9 +247,9 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 			externalReferenceCodeModels,
 			ExternalReferenceCodeModel::getExternalReferenceCode, String.class);
 
-		_updateExternalReferenceCode(externalReferenceCodes, tableName);
+		updateExternalReferenceCode(externalReferenceCodes, tableName);
 
-		_assertExternalReferenceCode(externalReferenceCodes, tableName);
+		assertExternalReferenceCode(externalReferenceCodes, tableName);
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -231,34 +257,8 @@ public abstract class BaseExternalReferenceCodeUpgradeProcessTestCase {
 
 		upgradeProcess.upgrade();
 
-		_entityCache.clearCache();
-		_multiVMPool.clear();
+		entityCache.clearCache();
+		multiVMPool.clear();
 	}
-
-	private void _updateExternalReferenceCode(
-			String[] externalReferenceCodes, String tableName)
-		throws Exception {
-
-		_db.runSQL(
-			StringBundler.concat(
-				"update ", tableName,
-				" set externalReferenceCode = null where ",
-				"externalReferenceCode in ('",
-				ArrayUtil.toString(
-					externalReferenceCodes, StringPool.BLANK, "', '"),
-				"') and groupId =", group.getGroupId()));
-
-		_entityCache.clearCache();
-		_multiVMPool.clear();
-	}
-
-	private static DataSource _dataSource;
-	private static DB _db;
-
-	@Inject
-	private EntityCache _entityCache;
-
-	@Inject
-	private MultiVMPool _multiVMPool;
 
 }

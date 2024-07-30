@@ -49,6 +49,13 @@ export function getToControlsId(collectionId, index, toControlsId) {
 			return null;
 		}
 
+		// If the itemId correspond to a collectionId ignore it,
+		// that id is only applied to the children not to the collection itself.
+
+		if (collectionId === itemId) {
+			return itemId;
+		}
+
 		return toControlsId(
 			`${getCollectionPrefix(collectionId, index)}${itemId}`
 		);
@@ -252,6 +259,7 @@ const ItemContext = ({
 	const contextValue = useMemo(
 		() => ({
 			collectionConfig,
+			collectionId,
 			collectionItem,
 			collectionItemIndex: index,
 			customCollectionSelectorURL,

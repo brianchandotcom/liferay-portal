@@ -2720,9 +2720,9 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = ${billingAddressStreet});
 
-		Button.click(button = "Submit");
-
 		SelectFrameTop();
+
+		Button.click(button = "Submit");
 
 		for (var address : list "${billingAddressStreet},${billingAddressCity}") {
 			AssertTextEquals.assertPartialText(
@@ -2745,9 +2745,9 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = ${shippingAddressStreet});
 
-		Button.click(button = "Submit");
-
 		SelectFrameTop();
+
+		Button.click(button = "Submit");
 
 		for (var address : list "${shippingAddressStreet},${billingAddressCity}") {
 			AssertTextEquals.assertPartialText(

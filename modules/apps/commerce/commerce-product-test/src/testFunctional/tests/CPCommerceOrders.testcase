@@ -1262,7 +1262,8 @@ definition {
 					editedName = "${addressType} Address Name",
 					editedRegion = "Lombardia",
 					editedStreet1 = "${addressType} Street 1",
-					editedZipCode = "${addressType} Zip");
+					editedZipCode = "${addressType} Zip",
+					selectOuterButton = "true");
 
 				Refresh();
 

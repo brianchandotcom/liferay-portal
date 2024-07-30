@@ -20,14 +20,14 @@ public class CommerceShippingFixedOptionRelCountryIdComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"countryId"};
 
-	public CommerceShippingFixedOptionRelCountryIdComparator() {
-		this(false);
-	}
-
-	public CommerceShippingFixedOptionRelCountryIdComparator(
+	public static CommerceShippingFixedOptionRelCountryIdComparator getInstance(
 		boolean ascending) {
 
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +64,20 @@ public class CommerceShippingFixedOptionRelCountryIdComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceShippingFixedOptionRelCountryIdComparator(
+		boolean ascending) {
+
+		_ascending = ascending;
+	}
+
+	private static final CommerceShippingFixedOptionRelCountryIdComparator
+		_INSTANCE_ASCENDING =
+			new CommerceShippingFixedOptionRelCountryIdComparator(true);
+
+	private static final CommerceShippingFixedOptionRelCountryIdComparator
+		_INSTANCE_DESCENDING =
+			new CommerceShippingFixedOptionRelCountryIdComparator(false);
 
 	private final boolean _ascending;
 

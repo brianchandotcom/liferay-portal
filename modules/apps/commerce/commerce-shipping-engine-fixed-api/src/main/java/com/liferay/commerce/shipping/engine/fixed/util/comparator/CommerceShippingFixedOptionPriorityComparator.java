@@ -22,12 +22,14 @@ public class CommerceShippingFixedOptionPriorityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public CommerceShippingFixedOptionPriorityComparator() {
-		this(false);
-	}
+	public static CommerceShippingFixedOptionPriorityComparator getInstance(
+		boolean ascending) {
 
-	public CommerceShippingFixedOptionPriorityComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -64,6 +66,18 @@ public class CommerceShippingFixedOptionPriorityComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceShippingFixedOptionPriorityComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceShippingFixedOptionPriorityComparator
+		_INSTANCE_ASCENDING = new CommerceShippingFixedOptionPriorityComparator(
+			true);
+
+	private static final CommerceShippingFixedOptionPriorityComparator
+		_INSTANCE_DESCENDING =
+			new CommerceShippingFixedOptionPriorityComparator(false);
 
 	private final boolean _ascending;
 

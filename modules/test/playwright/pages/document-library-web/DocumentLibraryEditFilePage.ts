@@ -15,6 +15,7 @@ export class DocumentLibraryEditFilePage {
 	readonly page: Page;
 
 	readonly backButton: Locator;
+	readonly descriptionInput: Locator;
 	readonly documentLibraryPage: DocumentLibraryPage;
 	readonly permissionViewSelector: Locator;
 	readonly publishButton: Locator;
@@ -28,6 +29,9 @@ export class DocumentLibraryEditFilePage {
 		this.page = page;
 
 		this.backButton = page.getByRole('link', {name: 'Back'});
+		this.descriptionInput = page.locator(
+			'#_com_liferay_document_library_web_portlet_DLAdminPortlet_description'
+		);
 		this.documentLibraryPage = new DocumentLibraryPage(page);
 		this.permissionViewSelector = page.getByLabel('Viewable by');
 		this.publishButton = page.getByRole('button', {
@@ -87,7 +91,10 @@ export class DocumentLibraryEditFilePage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async publishNewBasicFileEntry(title: string, siteUrl?: Site['friendlyUrlPath']) {
+	async publishNewBasicFileEntry(
+		title: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
 		await this.goto(siteUrl);
 
 		await this.titleSelector.fill(title);
@@ -98,6 +105,10 @@ export class DocumentLibraryEditFilePage {
 		else {
 			await this.publishButton.click();
 		}
+		await waitForSuccessAlert(
+			this.page,
+			'Success:Your request completed successfully.'
+		);
 	}
 	async publishNewBasicFileEntryWithoutGoTo(title: string) {
 		await this.titleSelector.fill(title);

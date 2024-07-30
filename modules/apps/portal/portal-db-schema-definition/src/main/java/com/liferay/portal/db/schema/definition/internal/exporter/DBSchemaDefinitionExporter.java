@@ -129,8 +129,9 @@ public class DBSchemaDefinitionExporter {
 						file.getAbsolutePath());
 			}
 
-			_generateReport(
-				dbSchemaDefinitionExporterConfiguration.path(), dbType);
+			new DBSchemaDefinitionReport(
+				dbSchemaDefinitionExporterConfiguration.path(), dbType
+			).generateReport();
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -139,202 +140,6 @@ public class DBSchemaDefinitionExporter {
 		finally {
 			_deleteConfiguration((String)properties.get("service.pid"));
 		}
-	}
-
-	private void _generateReport(String dirName, DBType exportDBType)
-		throws Exception {
-
-		String installedPatchNames = StringUtil.merge(
-			PatcherValues.INSTALLED_PATCH_NAMES, StringPool.COMMA_AND_SPACE);
-		Release release = _releaseLocalService.fetchRelease(
-			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-
-		FileUtil.write(
-			new File(dirName, "db_schema_definition_export_report.info"),
-			StringUtil.merge(
-				new Object[] {
-					"Export date: " + _toString(new Date()),
-					"Portal build date: " + _toString(release.getBuildDate()),
-					"Portal build number: " + release.getBuildNumber(),
-					"Portal installed patches: " + installedPatchNames,
-					"Portal schema version: " + release.getSchemaVersion(),
-					StringPool.NEW_LINE,
-					"Database type: " + DBManagerUtil.getDBType(),
-					"Export database type: " + exportDBType,
-					StringPool.NEW_LINE, _printCompanyTablesInfo(dirName)
-				},
-				StringPool.NEW_LINE));
-	}
-
-	private Set<String> _getDBTableNames(long companyId) throws Exception {
-		return _getDBTableNamesByType(companyId, "TABLE");
-	}
-
-	private Set<String> _getDBTableNamesByType(long companyId, String type)
-		throws Exception {
-
-		Set<String> tableNames = new HashSet<>();
-
-		DataSource dataSource = InfrastructureUtil.getDataSource();
-
-		try (Connection connection = dataSource.getConnection()) {
-			DBSchemaPartitionUtil.setPartition(connection, companyId);
-
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-			try (ResultSet resultSet = databaseMetaData.getTables(
-					connection.getCatalog(), connection.getSchema(), null,
-					new String[] {type})) {
-
-				while (resultSet.next()) {
-					tableNames.add(
-						StringUtil.toLowerCase(
-							resultSet.getString("TABLE_NAME")));
-				}
-			}
-		}
-
-		return tableNames;
-	}
-
-	private Set<String> _getDBViewNames(long companyId) throws Exception {
-		return _getDBTableNamesByType(companyId, "VIEW");
-	}
-
-	private Set<String> _getExportTableNames(String dirName, long companyId)
-		throws Exception {
-
-		return _getExportTableNames(
-			dirName, companyId, "create table",
-			line -> line.split(StringPool.SPACE)[2]);
-	}
-
-	private Set<String> _getExportTableNames(
-			String dirName, long companyId, String filter,
-			Function<String, String> function)
-		throws Exception {
-
-		Set<String> tableNames = new HashSet<>();
-
-		String prefix = StringPool.BLANK;
-
-		if (PortalInstancePool.getDefaultCompanyId() != companyId) {
-			prefix = companyId + StringPool.UNDERLINE;
-		}
-
-		String fileContent = StringUtil.toLowerCase(
-			FileUtil.read(new File(dirName, prefix + "tables.sql")));
-
-		String[] lines = StringUtil.split(fileContent, StringPool.NEW_LINE);
-
-		for (String line : lines) {
-			if (StringUtil.startsWith(line, filter)) {
-				tableNames.add(function.apply(line));
-			}
-		}
-
-		return tableNames;
-	}
-
-	private Set<String> _getExportViewNames(String dirName, long companyId)
-		throws Exception {
-
-		return _getExportTableNames(
-			dirName, companyId, "create or replace view",
-			line -> {
-				String[] parts = line.split(StringPool.SPACE);
-
-				return parts[4].substring(parts[4].indexOf(StringPool.PERIOD));
-			});
-	}
-
-	private String _printCompanyTablesInfo(String dirName) throws Exception {
-		StringBundler sb = new StringBundler(
-			_printDefaultCompanyTablesInfo(dirName));
-
-		if (!DBPartition.isPartitionEnabled()) {
-			return sb.toString();
-		}
-
-		_companyLocalService.forEachCompanyId(
-			companyId -> {
-				if (companyId == PortalInstancePool.getDefaultCompanyId()) {
-					return;
-				}
-
-				sb.append(
-					_printCompanyTablesInfo(dirName, companyId, "tables"));
-				sb.append(_printCompanyTablesInfo(dirName, companyId, "views"));
-			});
-
-		return sb.toString();
-	}
-
-	private String _printCompanyTablesInfo(
-			String dirName, long companyId, String type)
-		throws Exception {
-
-		Set<String> dbTableNames =
-			StringUtil.equals(type, "views") ? _getDBViewNames(companyId) :
-				_getDBTableNames(companyId);
-		Set<String> exportTableNames = StringUtil.equals(type, "views") ?
-			_getExportViewNames(dirName, companyId) :
-				_getExportTableNames(dirName, companyId);
-
-		String missingTableNames = StringUtil.merge(
-			SetUtil.asymmetricDifference(dbTableNames, exportTableNames),
-			StringPool.COMMA_AND_SPACE);
-
-		return StringUtil.merge(
-			new Object[] {
-				StringPool.NEW_LINE, StringPool.NEW_LINE,
-				StringBundler.concat(
-					"Virtual instance ", companyId, " database ", type, ": ",
-					dbTableNames.size()),
-				StringBundler.concat(
-					"Virtual instance ", companyId, " export ", type, ": ",
-					exportTableNames.size()),
-				StringBundler.concat(
-					"Virtual instance ", companyId, " missing ", type, ": ",
-					missingTableNames)
-			},
-			StringPool.NEW_LINE);
-	}
-
-	private String _printDefaultCompanyTablesInfo(String dirName)
-		throws Exception {
-
-		Set<String> dbTableNames = _getDBTableNames(
-			PortalInstancePool.getDefaultCompanyId());
-		Set<String> exportTableNames = _getExportTableNames(
-			dirName, PortalInstancePool.getDefaultCompanyId());
-
-		String missingTableNames = StringUtil.merge(
-			SetUtil.asymmetricDifference(dbTableNames, exportTableNames),
-			StringPool.COMMA_AND_SPACE);
-
-		if (DBPartition.isPartitionEnabled()) {
-			return StringUtil.merge(
-				new Object[] {
-					"Default instance database tables: " + dbTableNames.size(),
-					"Default instance export tables: " +
-						exportTableNames.size(),
-					"Default instance missing tables: " + missingTableNames
-				},
-				StringPool.NEW_LINE);
-		}
-
-		return StringUtil.merge(
-			new Object[] {
-				"Database tables: " + dbTableNames.size(),
-				"Export tables: " + exportTableNames.size(),
-				StringPool.NEW_LINE, "Missing tables: " + missingTableNames
-			},
-			StringPool.NEW_LINE);
-	}
-
-	private String _toString(Date date) {
-		return Time.getSimpleDate(date, DateUtil.ISO_8601_PATTERN);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -348,5 +153,212 @@ public class DBSchemaDefinitionExporter {
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;
+
+	private class DBSchemaDefinitionReport {
+
+		public DBSchemaDefinitionReport(String dirName, DBType exportDBType) {
+			_dirName = dirName;
+			_exportDBType = exportDBType;
+		}
+
+		public void generateReport() throws Exception {
+			String installedPatchNames = StringUtil.merge(
+				PatcherValues.INSTALLED_PATCH_NAMES,
+				StringPool.COMMA_AND_SPACE);
+			Release release = _releaseLocalService.fetchRelease(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+			FileUtil.write(
+				new File(_dirName, "db_schema_definition_export_report.info"),
+				StringUtil.merge(
+					new Object[] {
+						"Export date: " + _toString(new Date()),
+						"Portal build date: " +
+							_toString(release.getBuildDate()),
+						"Portal build number: " + release.getBuildNumber(),
+						"Portal installed patches: " + installedPatchNames,
+						"Portal schema version: " + release.getSchemaVersion(),
+						StringPool.NEW_LINE,
+						"Database type: " + DBManagerUtil.getDBType(),
+						"Export database type: " + _exportDBType,
+						StringPool.NEW_LINE, _printCompanyTablesInfo()
+					},
+					StringPool.NEW_LINE));
+		}
+
+		private Set<String> _getDBTableNames(long companyId) throws Exception {
+			return _getDBTableNamesByType(companyId, "TABLE");
+		}
+
+		private Set<String> _getDBTableNamesByType(long companyId, String type)
+			throws Exception {
+
+			Set<String> tableNames = new HashSet<>();
+
+			DataSource dataSource = InfrastructureUtil.getDataSource();
+
+			try (Connection connection = dataSource.getConnection()) {
+				DBSchemaPartitionUtil.setPartition(connection, companyId);
+
+				DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+				try (ResultSet resultSet = databaseMetaData.getTables(
+						connection.getCatalog(), connection.getSchema(), null,
+						new String[] {type})) {
+
+					while (resultSet.next()) {
+						tableNames.add(
+							StringUtil.toLowerCase(
+								resultSet.getString("TABLE_NAME")));
+					}
+				}
+			}
+
+			return tableNames;
+		}
+
+		private Set<String> _getDBViewNames(long companyId) throws Exception {
+			return _getDBTableNamesByType(companyId, "VIEW");
+		}
+
+		private Set<String> _getExportTableNames(long companyId)
+			throws Exception {
+
+			return _getExportTableNames(
+				companyId, "create table",
+				line -> line.split(StringPool.SPACE)[2]);
+		}
+
+		private Set<String> _getExportTableNames(
+				long companyId, String filter,
+				Function<String, String> function)
+			throws Exception {
+
+			Set<String> tableNames = new HashSet<>();
+
+			String prefix = StringPool.BLANK;
+
+			if (PortalInstancePool.getDefaultCompanyId() != companyId) {
+				prefix = companyId + StringPool.UNDERLINE;
+			}
+
+			String fileContent = StringUtil.toLowerCase(
+				FileUtil.read(new File(_dirName, prefix + "tables.sql")));
+
+			String[] lines = StringUtil.split(fileContent, StringPool.NEW_LINE);
+
+			for (String line : lines) {
+				if (StringUtil.startsWith(line, filter)) {
+					tableNames.add(function.apply(line));
+				}
+			}
+
+			return tableNames;
+		}
+
+		private Set<String> _getExportViewNames(long companyId)
+			throws Exception {
+
+			return _getExportTableNames(
+				companyId, "create or replace view",
+				line -> {
+					String[] parts = line.split(StringPool.SPACE);
+
+					return parts[4].substring(
+						parts[4].indexOf(StringPool.PERIOD));
+				});
+		}
+
+		private String _printCompanyTablesInfo() throws Exception {
+			StringBundler sb = new StringBundler(
+				_printDefaultCompanyTablesInfo());
+
+			if (!DBPartition.isPartitionEnabled()) {
+				return sb.toString();
+			}
+
+			_companyLocalService.forEachCompanyId(
+				companyId -> {
+					if (companyId == PortalInstancePool.getDefaultCompanyId()) {
+						return;
+					}
+
+					sb.append(_printCompanyTablesInfo(companyId, "tables"));
+					sb.append(_printCompanyTablesInfo(companyId, "views"));
+				});
+
+			return sb.toString();
+		}
+
+		private String _printCompanyTablesInfo(long companyId, String type)
+			throws Exception {
+
+			Set<String> dbTableNames =
+				StringUtil.equals(type, "views") ? _getDBViewNames(companyId) :
+					_getDBTableNames(companyId);
+			Set<String> exportTableNames =
+				StringUtil.equals(type, "views") ?
+					_getExportViewNames(companyId) :
+						_getExportTableNames(companyId);
+
+			String missingTableNames = StringUtil.merge(
+				SetUtil.asymmetricDifference(dbTableNames, exportTableNames),
+				StringPool.COMMA_AND_SPACE);
+
+			return StringUtil.merge(
+				new Object[] {
+					StringPool.NEW_LINE, StringPool.NEW_LINE,
+					StringBundler.concat(
+						"Virtual instance ", companyId, " database ", type,
+						": ", dbTableNames.size()),
+					StringBundler.concat(
+						"Virtual instance ", companyId, " export ", type, ": ",
+						exportTableNames.size()),
+					StringBundler.concat(
+						"Virtual instance ", companyId, " missing ", type, ": ",
+						missingTableNames)
+				},
+				StringPool.NEW_LINE);
+		}
+
+		private String _printDefaultCompanyTablesInfo() throws Exception {
+			Set<String> dbTableNames = _getDBTableNames(
+				PortalInstancePool.getDefaultCompanyId());
+			Set<String> exportTableNames = _getExportTableNames(
+				PortalInstancePool.getDefaultCompanyId());
+
+			String missingTableNames = StringUtil.merge(
+				SetUtil.asymmetricDifference(dbTableNames, exportTableNames),
+				StringPool.COMMA_AND_SPACE);
+
+			if (DBPartition.isPartitionEnabled()) {
+				return StringUtil.merge(
+					new Object[] {
+						"Default instance database tables: " +
+							dbTableNames.size(),
+						"Default instance export tables: " +
+							exportTableNames.size(),
+						"Default instance missing tables: " + missingTableNames
+					},
+					StringPool.NEW_LINE);
+			}
+
+			return StringUtil.merge(
+				new Object[] {
+					"Database tables: " + dbTableNames.size(),
+					"Export tables: " + exportTableNames.size(),
+					StringPool.NEW_LINE, "Missing tables: " + missingTableNames
+				},
+				StringPool.NEW_LINE);
+		}
+
+		private String _toString(Date date) {
+			return Time.getSimpleDate(date, DateUtil.ISO_8601_PATTERN);
+		}
+
+		private final String _dirName;
+		private final DBType _exportDBType;
+
+	}
 
 }

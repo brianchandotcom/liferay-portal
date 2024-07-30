@@ -279,6 +279,7 @@ const Properties: React.FC = () => {
 				onAddItem={() => onCreatePropertyModalOpenChange(true)}
 				requestFn={fetchProperties}
 				showCheckbox={false}
+				type='properties'
 			/>
 
 			{selectedProperty && assignModalOpen && (

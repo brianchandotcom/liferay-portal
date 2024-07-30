@@ -24,6 +24,7 @@ export interface ITableProps<TRawItem> {
 	onItemsChange?: (items: TFormattedItems) => void;
 	requestFn: (params: TTableRequestParams) => Promise<any>;
 	showCheckbox?: boolean;
+	type?: string;
 }
 
 interface TData<TRawItem> extends TPagination {
@@ -40,6 +41,7 @@ export function Table<TRawItem>({
 	onItemsChange,
 	requestFn,
 	showCheckbox = true,
+	type = 'default',
 }: ITableProps<TRawItem>) {
 	const {filter, formattedItems, keywords, pagination} = useData();
 	const dispatch = useDispatch();
@@ -111,6 +113,7 @@ export function Table<TRawItem>({
 					columns={columns}
 					disabled={disabled}
 					showCheckbox={showCheckbox}
+					type={type}
 				/>
 			</StateRenderer>
 

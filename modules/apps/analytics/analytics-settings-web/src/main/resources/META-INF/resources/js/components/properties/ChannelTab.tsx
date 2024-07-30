@@ -58,6 +58,7 @@ const ChannelTab: React.FC<IChannelTabProps> = ({
 		onItemsChange={onChannelsChange}
 		property={property}
 		requestFn={fetchChannels}
+		type='channel'
 	/>
 );
 

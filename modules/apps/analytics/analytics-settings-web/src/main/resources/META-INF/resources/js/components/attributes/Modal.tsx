@@ -105,6 +105,7 @@ const Modal: React.FC<IModalProps> = ({
 					}
 					onItemsChange={setItems}
 					requestFn={requestFn}
+					type='attribute'
 				/>
 			</ClayModal.Body>
 

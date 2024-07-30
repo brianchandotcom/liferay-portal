@@ -82,6 +82,7 @@ const Modal: React.FC<IModalProps> = ({
 					}}
 					onItemsChange={setItems}
 					requestFn={requestFn}
+					type='people'
 				/>
 			</ClayModal.Body>
 

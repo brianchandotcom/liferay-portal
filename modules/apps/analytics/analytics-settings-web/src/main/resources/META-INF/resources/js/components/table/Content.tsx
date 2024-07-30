@@ -16,18 +16,20 @@ interface IContentProps {
 	columns: TColumn[];
 	disabled: boolean;
 	showCheckbox: boolean;
+	type: string;
 }
 
 const Content: React.FC<IContentProps> = ({
 	columns: headerColumns,
 	disabled,
 	showCheckbox,
+	type,
 }) => {
 	const {filter, formattedItems, rows} = useData();
 	const dispatch = useDispatch();
 
 	return (
-		<ClayTable className="compose-table" hover={!disabled}>
+		<ClayTable className="compose-table" data-testId={type} hover={!disabled}>
 			<ClayTable.Head>
 				<ClayTable.Row>
 					{showCheckbox && <ClayTable.Cell />}

@@ -431,7 +431,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 		}
 
 		searchContainer.setOrderByComparator(
-			new OrganizationUserNameComparator(orderByAsc));
+			OrganizationUserNameComparator.getInstance(orderByAsc));
 		searchContainer.setOrderByType(getOrderByType());
 
 		int status = WorkflowConstants.STATUS_ANY;

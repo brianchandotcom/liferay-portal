@@ -364,18 +364,17 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	}
 
 	private void _assertSpecificFieldsJSONArrayTitles(
-		List<String> expectedTitlesSorted, JSONArray specificFieldsJSONArray) {
+		List<String> expectedTitles, JSONArray specificFieldsJSONArray) {
 
 		Assert.assertEquals(
-			expectedTitlesSorted.size(), specificFieldsJSONArray.length());
+			expectedTitles.size(), specificFieldsJSONArray.length());
 
-		for (int i = 0; i < expectedTitlesSorted.size(); i++) {
+		for (int i = 0; i < expectedTitles.size(); i++) {
 			JSONObject specificFieldJSONObject =
 				specificFieldsJSONArray.getJSONObject(i);
 
 			Assert.assertEquals(
-				expectedTitlesSorted.get(i),
-				specificFieldJSONObject.get("title"));
+				expectedTitles.get(i), specificFieldJSONObject.get("title"));
 		}
 	}
 

@@ -42,12 +42,19 @@ export type TMDFRequestGoal = {
 };
 
 export type TMDFRequest = {
-	activities: TMDFRequestActivity[];
+	activities?: TMDFRequestActivity[];
 	convertedTotalMDFRequestAmount: number;
-	goals: TMDFRequestGoal;
+	goals?: TMDFRequestGoal;
 	id?: number;
 	review?: any;
 	submitDate?: string;
 	totalMDFRequestAmount: number;
 	userId?: number;
 };
+
+export type TMDFRequestDataFromRequest = TMDFRequest & {
+	companyName: string;
+	maxDateActivity: string;
+	minDateActivity: string;
+	overallCampaignName: string;
+}

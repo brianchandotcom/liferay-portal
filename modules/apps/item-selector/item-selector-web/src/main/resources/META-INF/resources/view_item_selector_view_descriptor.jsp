@@ -13,6 +13,9 @@ ItemSelectorViewDescriptorRendererDisplayContext itemSelectorViewDescriptorRende
 ItemSelectorViewDescriptor<Object> itemSelectorViewDescriptor = itemSelectorViewDescriptorRendererDisplayContext.getItemSelectorViewDescriptor();
 
 SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisplayContext.getSearchContainer();
+
+boolean multipleSelection = itemSelectorViewDescriptorRendererDisplayContext.isMultipleSelection();
+boolean listView = Objects.equals(itemSelectorViewDescriptorRendererDisplayContext.getDisplayStyle(), "list");
 %>
 
 <c:if test="<%= itemSelectorViewDescriptor.isShowManagementToolbar() %>">
@@ -37,11 +40,12 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 		var="entriesSearch"
 	>
 		<liferay-ui:search-container-row
-			ariaLabel='<%= itemSelectorViewDescriptorRendererDisplayContext.isMultipleSelection() ? StringPool.BLANK : LanguageUtil.get(request, "press-enter-to-select-the-item-and-close-the-modal") %>'
+			ariaLabel='<%= multipleSelection ? StringPool.BLANK : LanguageUtil.get(request, "press-enter-to-select-the-item-and-close-the-modal") %>'
 			className="Object"
+			cssClass='<%= (listView && !multipleSelection) ? "entry entry-selector" : StringPool.BLANK %>'
 			keyProperty="<%= itemSelectorViewDescriptor.getKeyProperty() %>"
 			modelVar="entry"
-			tabindex='<%= itemSelectorViewDescriptorRendererDisplayContext.isMultipleSelection() ? StringPool.BLANK : "0" %>'
+			tabindex='<%= multipleSelection ? StringPool.BLANK : "0" %>'
 		>
 
 			<%
@@ -209,5 +213,5 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 			"itemSelectorSelectedEvent", HtmlUtil.escapeJS(itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName())
 		).build()
 	%>'
-	module='<%= itemSelectorViewDescriptorRendererDisplayContext.isMultipleSelection() ? "{ViewItemSelectorViewDescriptorMultiple} from item-selector-web" : "{ViewItemSelectorViewDescriptor} from item-selector-web" %>'
+	module='<%= multipleSelection ? "{ViewItemSelectorViewDescriptorMultiple} from item-selector-web" : "{ViewItemSelectorViewDescriptor} from item-selector-web" %>'
 />

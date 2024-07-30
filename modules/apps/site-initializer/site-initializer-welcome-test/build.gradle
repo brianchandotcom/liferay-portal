@@ -4,6 +4,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:headless:headless-delivery:headless-delivery-api")
 	testIntegrationImplementation project(":apps:layout:layout-api")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
+	testIntegrationImplementation project(":apps:layout:layout-test-util")
 	testIntegrationImplementation project(":apps:layout:layout-utility-page-api")
 	testIntegrationImplementation project(":apps:login:login-web-api")
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")

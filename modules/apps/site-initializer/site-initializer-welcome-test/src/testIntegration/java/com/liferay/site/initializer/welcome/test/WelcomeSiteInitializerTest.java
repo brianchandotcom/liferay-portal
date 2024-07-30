@@ -14,6 +14,9 @@ import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureServiceUtil;
+import com.liferay.layout.provider.LayoutStructureProvider;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
@@ -34,6 +37,7 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -44,6 +48,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -68,14 +73,15 @@ import org.junit.runner.RunWith;
  * @author Nikoletta Buza
  * @author Istvan Sajtos
  */
-@FeatureFlags("LPD-6378")
 @RunWith(Arquillian.class)
 public class WelcomeSiteInitializerTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -92,6 +98,28 @@ public class WelcomeSiteInitializerTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
+	@Test
+	@TestInfo("LPS-188909")
+	public void testCannotViewPortalVersionInfoOnHomePage() throws Exception {
+		SiteInitializer siteInitializer =
+			_siteInitializerRegistry.getSiteInitializer(
+				"com.liferay.site.initializer.welcome");
+
+		siteInitializer.initialize(_group.getGroupId());
+
+		Layout layout = _layoutLocalService.fetchDefaultLayout(
+			_group.getGroupId(), false);
+
+		String html = ContentLayoutTestUtil.getRenderLayoutHTML(
+			_layoutLocalService.getLayout(layout.getPlid()),
+			_layoutServiceContextHelper, _layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
+
+		Assert.assertTrue(html.contains("Enjoy using the best DXP on Earth!"));
+	}
+
+	@FeatureFlags("LPD-6378")
 	@Test
 	public void testCreateAccountLayoutUtilityPageEntryPageDefinition()
 		throws Exception {
@@ -134,6 +162,7 @@ public class WelcomeSiteInitializerTest {
 			_removeUUIDs(pageDefinition2.toString()));
 	}
 
+	@FeatureFlags("LPD-6378")
 	@Test
 	public void testForgotPasswordLayoutUtilityPageEntryPageDefinition()
 		throws Exception {
@@ -176,6 +205,7 @@ public class WelcomeSiteInitializerTest {
 			_removeUUIDs(pageDefinition2.toString()));
 	}
 
+	@FeatureFlags("LPD-6378")
 	@Test
 	public void testInitialize() throws PortalException {
 		UserTestUtil.setUser(TestPropsValues.getUser());
@@ -208,6 +238,7 @@ public class WelcomeSiteInitializerTest {
 					LayoutUtilityPageEntryConstants.TYPE_LOGIN));
 	}
 
+	@FeatureFlags("LPD-6378")
 	@Test
 	public void testLoginLayoutUtilityPageEntryPageDefinition()
 		throws Exception {
@@ -383,6 +414,12 @@ public class WelcomeSiteInitializerTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
+
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
 
 	@Inject
 	private LayoutUtilityPageEntryLocalService

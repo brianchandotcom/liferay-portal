@@ -198,10 +198,10 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			boolean includeNonvisibleAssets, int type)
 		throws Exception {
 
+		List<AssetEntry> assetEntries = new ArrayList<>();
+
 		String[] assetEntryXmls = portletPreferences.getValues(
 			"assetEntryXml", new String[0]);
-
-		List<AssetEntry> assetEntries = new ArrayList<>();
 
 		List<String> missingAssetEntryUuids = new ArrayList<>();
 
@@ -390,9 +390,9 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			String[] overrideAllAssetTagNames, String[] overrideAllKeywords)
 		throws PortalException {
 
-		long[] groupIds = getGroupIds(portletPreferences, groupId, layout);
-
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		long[] groupIds = getGroupIds(portletPreferences, groupId, layout);
 
 		_setCategoriesAndTagsAndKeywords(
 			assetEntryQuery, portletPreferences, groupIds,

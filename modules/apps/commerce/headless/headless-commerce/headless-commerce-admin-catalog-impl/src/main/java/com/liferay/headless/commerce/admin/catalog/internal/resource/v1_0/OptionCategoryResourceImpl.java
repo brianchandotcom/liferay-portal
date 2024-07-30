@@ -123,7 +123,7 @@ public class OptionCategoryResourceImpl extends BaseOptionCategoryResourceImpl {
 		throws Exception {
 
 		return _cpOptionCategoryService.addCPOptionCategory(
-			LanguageUtils.getLocalizedMap(optionCategory.getTitle()),
+			null, LanguageUtils.getLocalizedMap(optionCategory.getTitle()),
 			LanguageUtils.getLocalizedMap(optionCategory.getDescription()),
 			GetterUtil.get(optionCategory.getPriority(), 0D),
 			optionCategory.getKey(),
@@ -147,7 +147,7 @@ public class OptionCategoryResourceImpl extends BaseOptionCategoryResourceImpl {
 			_cpOptionCategoryService.getCPOptionCategory(id);
 
 		return _cpOptionCategoryService.updateCPOptionCategory(
-			cpOptionCategory.getCPOptionCategoryId(),
+			null, cpOptionCategory.getCPOptionCategoryId(),
 			LanguageUtils.getLocalizedMap(optionCategory.getTitle()),
 			LanguageUtils.getLocalizedMap(optionCategory.getDescription()),
 			GetterUtil.get(

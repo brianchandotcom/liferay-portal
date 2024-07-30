@@ -66,7 +66,8 @@ public class CPDefinitionSpecificationOptionValueTableReferenceDefinitionTest
 			false);
 
 		_cpOptionCategory = _cpOptionCategoryLocalService.addCPOptionCategory(
-			TestPropsValues.getUserId(), RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomDouble(),
 			CPDefinitionSpecificationOptionValueTableReferenceDefinitionTest.

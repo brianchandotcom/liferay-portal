@@ -57,7 +57,8 @@ public class ProductSpecificationResourceTest
 			testGroup.getGroupId(), "simple", true, false);
 
 		_cpOptionCategory = _cpOptionCategoryLocalService.addCPOptionCategory(
-			_user.getUserId(), RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), _user.getUserId(),
+			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
 			_serviceContext);

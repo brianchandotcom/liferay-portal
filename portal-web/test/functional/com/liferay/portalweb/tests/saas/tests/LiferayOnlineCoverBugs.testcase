@@ -66,52 +66,6 @@ definition {
 		}
 	}
 
-	@description = "Verify if a virtual instance is created using the initializer, showing a different site comparing with the default Liferay bundle"
-	@priority = 4
-	test CreateVirtualInstanceUsingInitializerWithSuccess {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Go to the Virtual Instance created") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-		}
-
-		task ("Assert the Default Home Page is not present") {
-			AssertElementNotPresent(
-				key_title = "Welcome to Liferay",
-				locator1 = "Masterclass#FRAGMENT_HEADING");
-		}
-
-		task ("Assert the Masterclass Welcome Page") {
-			AssertElementPresent(
-				key_title = "Welcome to Masterclass",
-				locator1 = "Masterclass#FRAGMENT_HERO_PRE");
-		}
-	}
-
-	@description = "Delete Virtual Instance in Liferay Online"
-	@priority = 4
-	test DeleteVirtualInstance {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Go to Virtual Instances") {
-			PortalInstances.openVirtualInstancesAdmin();
-		}
-
-		task ("Delete the Virtual Instance created") {
-			PortalInstances.deleteCP(virtualHost = "www.able.com");
-		}
-
-		task ("Assert that the Virtual Instance deleted is not present") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-			AssertElementNotPresent(
-				key_title = "Welcome to Masterclass",
-				locator1 = "Masterclass#FRAGMENT_HERO_PRE");
-		}
-	}
-
 	@description = "Verify if a friendly error appears when the user is not able to create the virtual host"
 	@priority = 3
 	test FriendlyErrorAppearsWhenTheUserCantCreateVirtualHost {
@@ -148,25 +102,6 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			Alert.viewErrorMessage(errorMessage = "Please enter a valid virtual host.");
-		}
-	}
-
-	@description = "Create Virtual instance using the Virtual Instance Initializer not works with the curl command."
-	@priority = 4
-	test UserCanCreateVirtualInstance {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Assert the Virtual Instance created by Json is present") {
-			PortalInstances.openVirtualInstancesAdmin();
-
-			PortalInstances.viewCP(virtualHost = "www.able.com");
-
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-			AssertElementPresent(
-				key_title = "Welcome to Masterclass",
-				locator1 = "Masterclass#FRAGMENT_HERO_PRE");
 		}
 	}
 

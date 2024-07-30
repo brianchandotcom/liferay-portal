@@ -79,16 +79,16 @@ public class LiferayDeltaManager extends DeltaManager {
 
 		liferayDeltaManager.setExpireSessionsOnShutdown(
 			isExpireSessionsOnShutdown());
-		liferayDeltaManager.setNotifySessionListenersOnReplication(
-			isNotifyContainerListenersOnReplication());
 		liferayDeltaManager.setNotifyContainerListenersOnReplication(
 			isNotifyContainerListenersOnReplication());
-		liferayDeltaManager.setStateTransferTimeout(getStateTransferTimeout());
+		liferayDeltaManager.setNotifySessionListenersOnReplication(
+			isNotifyContainerListenersOnReplication());
 		liferayDeltaManager.setSendAllSessions(isSendAllSessions());
 		liferayDeltaManager.setSendAllSessionsSize(getSendAllSessionsSize());
 		liferayDeltaManager.setSendAllSessionsWaitTime(
 			getSendAllSessionsWaitTime());
 		liferayDeltaManager.setStateTimestampDrop(isStateTimestampDrop());
+		liferayDeltaManager.setStateTransferTimeout(getStateTransferTimeout());
 
 		return liferayDeltaManager;
 	}

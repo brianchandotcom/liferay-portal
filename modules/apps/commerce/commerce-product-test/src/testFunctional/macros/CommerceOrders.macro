@@ -543,7 +543,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editOrderAddressCP(editedCountry = null, editedName = null, editedStreet1 = null, editedCity = null, editedZipCode = null, editedRegion = null) {
+	macro editOrderAddressCP(editedCountry = null, editedName = null, editedStreet1 = null, editedCity = null, editedZipCode = null, editedRegion = null, selectOuterButton = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		if (IsElementPresent(locator1 = "Button#PLUS")) {
@@ -594,6 +594,10 @@ definition {
 			Select(
 				locator1 = "Select#REGION",
 				value1 = ${editedRegion});
+		}
+
+		if (isSet(selectOuterButton) && (${selectOuterButton} == "true")) {
+			SelectFrameTop();
 		}
 
 		Button.click(button = "Submit");

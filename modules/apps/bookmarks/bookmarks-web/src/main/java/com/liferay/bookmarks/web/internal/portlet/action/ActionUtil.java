@@ -35,10 +35,10 @@ public class ActionUtil {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
+		List<BookmarksEntry> entries = new ArrayList<>();
+
 		long[] entryIds = ParamUtil.getLongValues(
 			httpServletRequest, "rowIdsBookmarksEntry");
-
-		List<BookmarksEntry> entries = new ArrayList<>();
 
 		for (long entryId : entryIds) {
 			entries.add(BookmarksEntryServiceUtil.getEntry(entryId));
@@ -56,9 +56,9 @@ public class ActionUtil {
 	public static BookmarksEntry getEntry(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long entryId = ParamUtil.getLong(httpServletRequest, "entryId");
-
 		BookmarksEntry entry = null;
+
+		long entryId = ParamUtil.getLong(httpServletRequest, "entryId");
 
 		if (entryId > 0) {
 			entry = BookmarksEntryServiceUtil.getEntry(entryId);
@@ -81,9 +81,9 @@ public class ActionUtil {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long folderId = ParamUtil.getLong(httpServletRequest, "folderId");
-
 		BookmarksFolder folder = null;
+
+		long folderId = ParamUtil.getLong(httpServletRequest, "folderId");
 
 		if ((folderId > 0) &&
 			(folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
@@ -117,10 +117,10 @@ public class ActionUtil {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
+		List<BookmarksFolder> folders = new ArrayList<>();
+
 		long[] folderIds = ParamUtil.getLongValues(
 			httpServletRequest, "rowIdsBookmarksFolder");
-
-		List<BookmarksFolder> folders = new ArrayList<>();
 
 		for (long folderId : folderIds) {
 			if ((folderId > 0) &&

@@ -48,11 +48,10 @@ public class CPPublisherWebHelper {
 			PortletPreferences portletPreferences, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		String[] catalogEntryXmls = portletPreferences.getValues(
-			"catalogEntryXml", new String[0]);
-
 		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
 
+		String[] catalogEntryXmls = portletPreferences.getValues(
+			"catalogEntryXml", new String[0]);
 		List<Long> missingAssetCPDefinitionIds = new ArrayList<>();
 
 		for (String catalogEntryXml : catalogEntryXmls) {

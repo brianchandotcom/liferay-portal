@@ -387,6 +387,8 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 			long groupId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		long commerceAccountId = AccountConstants.ACCOUNT_ENTRY_ID_GUEST;
+
 		CommerceContext commerceContext = _commerceContextFactory.create(
 			httpServletRequest);
 
@@ -405,8 +407,6 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 				_log.debug(portalException);
 			}
 		}
-
-		long commerceAccountId = AccountConstants.ACCOUNT_ENTRY_ID_GUEST;
 
 		AccountEntry accountEntry =
 			_commerceAccountHelper.getCurrentAccountEntry(

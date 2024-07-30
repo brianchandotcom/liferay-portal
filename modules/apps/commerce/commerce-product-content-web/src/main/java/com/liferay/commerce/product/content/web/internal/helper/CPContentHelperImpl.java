@@ -482,12 +482,12 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
 	public BigDecimal getMinOrderQuantity(long cpDefinitionId) {
+		BigDecimal minOrderQuantity =
+			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
+
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
-
-		BigDecimal minOrderQuantity =
-			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
 
 		if (cpDefinitionInventory != null) {
 			minOrderQuantity = cpDefinitionInventory.getMinOrderQuantity();

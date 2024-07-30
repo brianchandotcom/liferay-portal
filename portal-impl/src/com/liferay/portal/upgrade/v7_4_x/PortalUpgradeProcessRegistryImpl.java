@@ -432,6 +432,9 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(31, 3, 0), RememberMeTokenTable.create());
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 4, 0), new UpgradeRoleExternalReferenceCode());
 	}
 
 }

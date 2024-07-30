@@ -1,0 +1,7 @@
+{
+	"cacheable": false,
+	"fragmentEntryKey": "stepper",
+	"icon": "breadcrumb",
+	"name": "stepper",
+	"type": "component"
+}

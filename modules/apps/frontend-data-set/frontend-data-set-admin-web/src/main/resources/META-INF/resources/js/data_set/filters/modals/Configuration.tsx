@@ -149,6 +149,8 @@ function Configuration({
 				})}
 			>
 				<label htmlFor={selectedFieldFormElementId}>
+					{Liferay.Language.get('filter-by')}
+
 					<RequiredMark />
 				</label>
 

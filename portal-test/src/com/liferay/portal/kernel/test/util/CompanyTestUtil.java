@@ -97,6 +97,13 @@ public class CompanyTestUtil {
 
 		UserLocalServiceUtil.updateUser(user);
 
+		// Reset thread locals
+
+		CompanyThreadLocal.setCompanyId(companyId);
+
+		LocaleThreadLocal.setDefaultLocale(
+			LocaleUtil.fromLanguageId(defaultLanguageId, false));
+
 		// Reset company supported locales
 
 		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
@@ -109,13 +116,6 @@ public class CompanyTestUtil {
 		// Reset company locales cache
 
 		LanguageUtil.resetAvailableLocales(companyId);
-
-		// Reset thread locals
-
-		CompanyThreadLocal.setCompanyId(companyId);
-
-		LocaleThreadLocal.setDefaultLocale(
-			LocaleUtil.fromLanguageId(defaultLanguageId, false));
 	}
 
 	private static final TransactionConfig _transactionConfig;

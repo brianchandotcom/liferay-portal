@@ -26,6 +26,11 @@ import org.json.JSONObject;
 public abstract class BaseTestClass implements TestClass {
 
 	@Override
+	public void addTestClassMethod(TestClassMethod testClassMethod) {
+		_testClassMethods.add(testClassMethod);
+	}
+
+	@Override
 	public int compareTo(TestClass testClass) {
 		if (testClass == null) {
 			throw new NullPointerException("Test class is null");
@@ -211,10 +216,6 @@ public abstract class BaseTestClass implements TestClass {
 
 	protected void addTestClassMethod(String methodName) {
 		addTestClassMethod(false, methodName);
-	}
-
-	protected void addTestClassMethod(TestClassMethod testClassMethod) {
-		_testClassMethods.add(testClassMethod);
 	}
 
 	protected BatchTestClassGroup getBatchTestClassGroup() {

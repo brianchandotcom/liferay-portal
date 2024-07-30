@@ -29,7 +29,7 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 	public boolean bypassCITestRelevant() {
 		setUp();
 
-		Properties buildProperties;
+		Properties buildProperties = null;
 
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties(

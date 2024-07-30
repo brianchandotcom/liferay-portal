@@ -7,15 +7,21 @@ package com.liferay.portal.language.override.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.language.override.exception.PLOEntryImportException;
 import com.liferay.portal.language.override.exception.PLOEntryKeyException;
 import com.liferay.portal.language.override.exception.PLOEntryLanguageIdException;
 import com.liferay.portal.language.override.exception.PLOEntryValueException;
@@ -23,6 +29,15 @@ import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
+import java.nio.charset.StandardCharsets;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -89,6 +104,150 @@ public class PLOEntryLocalServiceTest {
 				RandomTestUtil.randomString(), languageId, StringPool.BLANK));
 	}
 
+	@Test
+	public void testAddOrUpdatePLOEntryRollback() throws Throwable {
+		String key = RandomTestUtil.randomString();
+
+		Locale locale = LocaleUtil.getDefault();
+
+		try {
+			TransactionInvokerUtil.invoke(
+				TransactionConfig.Factory.create(
+					Propagation.REQUIRED, new Class<?>[] {Exception.class}),
+				() -> {
+					_addOrUpdatePLOEntry(
+						key, LanguageUtil.getLanguageId(locale),
+						RandomTestUtil.randomString());
+
+					throw new Exception("Unable to add PLOEntry");
+				});
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				"Unable to add PLOEntry", exception.getMessage());
+
+			Assert.assertEquals(key, _language.get(locale, key));
+		}
+	}
+
+	@Test
+	public void testDeletePLOEntry() throws PortalException {
+		String key = RandomTestUtil.randomString();
+		Locale locale = LocaleUtil.getDefault();
+		String value = RandomTestUtil.randomString();
+
+		PLOEntry ploEntry = _addOrUpdatePLOEntry(
+			key, LanguageUtil.getLanguageId(locale), value);
+
+		Assert.assertEquals(value, _language.get(locale, key));
+
+		_ploEntryLocalService.deletePLOEntry(ploEntry.getPloEntryId());
+
+		Assert.assertEquals(key, _language.get(locale, key));
+	}
+
+	@Test
+	public void testDeletePLOEntryRollback() throws Throwable {
+		String key = RandomTestUtil.randomString();
+		Locale locale = LocaleUtil.getDefault();
+		String value = RandomTestUtil.randomString();
+
+		PLOEntry ploEntry = _addOrUpdatePLOEntry(
+			key, LanguageUtil.getLanguageId(locale), value);
+
+		try {
+			TransactionInvokerUtil.invoke(
+				TransactionConfig.Factory.create(
+					Propagation.REQUIRED, new Class<?>[] {Exception.class}),
+				() -> {
+					_ploEntryLocalService.deletePLOEntry(
+						ploEntry.getPloEntryId());
+
+					throw new Exception("Unable to delete PLOEntry");
+				});
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				"Unable to delete PLOEntry", exception.getMessage());
+
+			Assert.assertEquals(value, _language.get(locale, key));
+		}
+	}
+
+	@Test
+	public void testImportPLOEntries() throws IOException, PortalException {
+		String key1 = RandomTestUtil.randomString();
+		String key2 = RandomTestUtil.randomString();
+		String value1 = RandomTestUtil.randomString();
+		String value2 = RandomTestUtil.randomString();
+
+		String propertiesString = StringBundler.concat(
+			key1, StringPool.EQUAL, value1, StringPool.NEW_LINE, key2,
+			StringPool.EQUAL, value2);
+
+		_ploEntryLocalService.importPLOEntries(
+			TestPropsValues.getCompanyId(),
+			new ByteArrayInputStream(
+				propertiesString.getBytes(StandardCharsets.UTF_8)),
+			LanguageUtil.getLanguageId(LocaleUtil.US),
+			TestPropsValues.getUserId());
+
+		Assert.assertEquals(value1, _language.get(LocaleUtil.US, key1));
+
+		Assert.assertEquals(value2, _language.get(LocaleUtil.US, key2));
+	}
+
+	@Test
+	public void testImportPLOEntriesRollback()
+		throws IOException, PortalException {
+
+		String key1 = "good-key";
+		String key2 = "key-with-empty-value";
+
+		String propertiesString = StringBundler.concat(
+			key1, StringPool.EQUAL, RandomTestUtil.randomString(),
+			StringPool.NEW_LINE, key2, StringPool.EQUAL, StringPool.NEW_LINE,
+			StringPool.EQUAL, RandomTestUtil.randomString());
+
+		try {
+			_ploEntryLocalService.importPLOEntries(
+				TestPropsValues.getCompanyId(),
+				new ByteArrayInputStream(
+					propertiesString.getBytes(StandardCharsets.UTF_8)),
+				LanguageUtil.getLanguageId(LocaleUtil.US),
+				TestPropsValues.getUserId());
+
+			Assert.fail();
+		}
+		catch (PLOEntryImportException.InvalidTranslations
+					ploEntryImportException) {
+
+			List<Exception> exceptions =
+				ploEntryImportException.getExceptions();
+
+			Assert.assertEquals(exceptions.toString(), 2, exceptions.size());
+
+			List<Class<?>> expectedClasses = Arrays.asList(
+				new Class<?>[] {
+					PLOEntryValueException.MustNotBeNull.class,
+					PLOEntryKeyException.MustNotBeNull.class
+				});
+
+			for (Exception exception : exceptions) {
+				Assert.assertTrue(
+					expectedClasses.contains(exception.getClass()));
+			}
+		}
+
+		Assert.assertEquals(key1, _language.get(LocaleUtil.US, key1));
+
+		Assert.assertEquals(key2, _language.get(LocaleUtil.US, key2));
+	}
+
 	private PLOEntry _addOrUpdatePLOEntry(
 			String key, String languageId, String value)
 		throws PortalException {
@@ -123,6 +282,9 @@ public class PLOEntryLocalServiceTest {
 				LanguageResources.getResourceBundle(LocaleUtil.getDefault()),
 				key));
 	}
+
+	@Inject
+	private Language _language;
 
 	@Inject
 	private PLOEntryLocalService _ploEntryLocalService;

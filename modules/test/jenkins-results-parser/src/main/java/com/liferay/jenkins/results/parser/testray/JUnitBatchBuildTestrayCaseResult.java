@@ -215,7 +215,7 @@ public class JUnitBatchBuildTestrayCaseResult
 			return new ArrayList<>();
 		}
 
-		return super.getLiferayLogTestrayAttachments();
+		return super.getLiferayOSGiLogTestrayAttachments();
 	}
 
 	private List<TestClassResult> _getTestClassResults() {

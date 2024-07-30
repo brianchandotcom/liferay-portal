@@ -77,9 +77,9 @@ definition {
 				siteName = ${siteName},
 				userScreenName = "usersn");
 
-			UserBar.gotoMySite(siteName = "Test Site Name");
-
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
@@ -103,9 +103,9 @@ definition {
 				siteName = ${siteName},
 				userScreenName = "usersn");
 
-			UserBar.gotoMySite(siteName = "Test Site Name");
-
-			ContentPages.gotoPageEditor();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 

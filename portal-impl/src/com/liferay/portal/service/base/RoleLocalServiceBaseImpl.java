@@ -253,6 +253,21 @@ public abstract class RoleLocalServiceBaseImpl
 		return rolePersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
+	@Override
+	public Role fetchRoleByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return rolePersistence.fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	@Override
+	public Role getRoleByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return rolePersistence.findByERC_C(externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the role with the primary key.
 	 *

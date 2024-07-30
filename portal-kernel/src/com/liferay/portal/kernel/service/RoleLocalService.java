@@ -78,33 +78,6 @@ public interface RoleLocalService
 	public boolean addGroupRoles(long groupId, long[] roleIds);
 
 	/**
-	 * Adds a role with additional parameters. The user is reindexed after role
-	 * is added.
-	 *
-	 * @param userId the primary key of the user
-	 * @param className the name of the class for which the role is created
-	 (optionally <code>null</code>)
-	 * @param classPK the primary key of the class for which the role is
-	 created (optionally <code>0</code>)
-	 * @param name the role's name
-	 * @param titleMap the role's localized titles (optionally
-	 <code>null</code>)
-	 * @param descriptionMap the role's localized descriptions (optionally
-	 <code>null</code>)
-	 * @param type the role's type (optionally <code>0</code>)
-	 * @param subtype the role's subtype (optionally <code>null</code>)
-	 * @param serviceContext the service context to be applied (optionally
-	 <code>null</code>). Can set expando bridge attributes for the
-	 role.
-	 * @return the role
-	 */
-	public Role addRole(
-			long userId, String className, long classPK, String name,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			int type, String subtype, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
 	 * Adds the role to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -116,6 +89,13 @@ public interface RoleLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Role addRole(Role role);
+
+	public Role addRole(
+			String externalReferenceCode, long userId, String className,
+			long classPK, String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, int type, String subtype,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException
@@ -336,6 +316,10 @@ public interface RoleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Role fetchRole(long companyId, String name);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role fetchRoleByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
 	/**
 	 * Returns the role with the matching UUID and company.
 	 *
@@ -484,6 +468,11 @@ public interface RoleLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Role getRole(long companyId, String name) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role getRoleByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
 
 	/**
 	 * Returns the role with the matching UUID and company.
@@ -1005,6 +994,14 @@ public interface RoleLocalService
 	 * @param roleIds the primary keys of the roles
 	 */
 	public void unsetUserRoles(long userId, long[] roleIds)
+		throws PortalException;
+
+	public Role updateExternalReferenceCode(
+			long roleId, String externalReferenceCode)
+		throws PortalException;
+
+	public Role updateExternalReferenceCode(
+			Role role, String externalReferenceCode)
 		throws PortalException;
 
 	/**

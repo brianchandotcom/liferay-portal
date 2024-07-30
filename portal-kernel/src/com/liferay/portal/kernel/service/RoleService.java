@@ -48,29 +48,11 @@ public interface RoleService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.RoleServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the role remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RoleServiceUtil} if injection and service tracking are not available.
 	 */
-
-	/**
-	 * Adds a role. The user is reindexed after role is added.
-	 *
-	 * @param className the name of the class for which the role is created
-	 * @param classPK the primary key of the class for which the role is
-	 created (optionally <code>0</code>)
-	 * @param name the role's name
-	 * @param titleMap the role's localized titles (optionally
-	 <code>null</code>)
-	 * @param descriptionMap the role's localized descriptions (optionally
-	 <code>null</code>)
-	 * @param type the role's type (optionally <code>0</code>)
-	 * @param subtype the role's subtype (optionally <code>null</code>)
-	 * @param serviceContext the service context to be applied (optionally
-	 <code>null</code>). Can set the expando bridge attributes for the
-	 role.
-	 * @return the role
-	 */
 	public Role addRole(
-			String className, long classPK, String name,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			int type, String subtype, ServiceContext serviceContext)
+			String externalReferenceCode, String className, long classPK,
+			String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, int type, String subtype,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -252,6 +234,14 @@ public interface RoleService extends BaseService {
 	 * @param roleIds the primary keys of the roles
 	 */
 	public void unsetUserRoles(long userId, long[] roleIds)
+		throws PortalException;
+
+	public Role updateExternalReferenceCode(
+			long roleId, String externalReferenceCode)
+		throws PortalException;
+
+	public Role updateExternalReferenceCode(
+			Role role, String externalReferenceCode)
 		throws PortalException;
 
 	/**

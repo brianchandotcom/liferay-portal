@@ -2256,6 +2256,56 @@ public interface RolePersistence
 		long companyId, long classNameId, long[] classPKs, int type);
 
 	/**
+	 * Returns the role where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchRoleException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching role
+	 * @throws NoSuchRoleException if a matching role could not be found
+	 */
+	public Role findByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchRoleException;
+
+	/**
+	 * Returns the role where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching role, or <code>null</code> if a matching role could not be found
+	 */
+	public Role fetchByERC_C(String externalReferenceCode, long companyId);
+
+	/**
+	 * Returns the role where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching role, or <code>null</code> if a matching role could not be found
+	 */
+	public Role fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
+
+	/**
+	 * Removes the role where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the role that was removed
+	 */
+	public Role removeByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchRoleException;
+
+	/**
+	 * Returns the number of roles where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching roles
+	 */
+	public int countByERC_C(String externalReferenceCode, long companyId);
+
+	/**
 	 * Caches the role in the entity cache if it is enabled.
 	 *
 	 * @param role the role

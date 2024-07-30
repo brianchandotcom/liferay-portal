@@ -342,6 +342,7 @@ create index IX_A37A0588 on ResourcePermission (roleId);
 create index IX_F4555981 on ResourcePermission (scope);
 
 create unique index IX_CC85CC2C on Role_ (companyId, ctCollectionId, classNameId, classPK);
+create unique index IX_C849CE46 on Role_ (companyId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_D11C3796 on Role_ (companyId, ctCollectionId, name[$COLUMN_LENGTH:75$]);
 create index IX_F436EC8E on Role_ (name[$COLUMN_LENGTH:75$]);
 create index IX_5EB4E2FB on Role_ (subtype[$COLUMN_LENGTH:75$]);

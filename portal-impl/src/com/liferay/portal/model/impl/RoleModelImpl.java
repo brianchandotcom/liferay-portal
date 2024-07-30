@@ -71,13 +71,14 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"roleId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"title", Types.VARCHAR}, {"description", Types.CLOB},
-		{"type_", Types.INTEGER}, {"subtype", Types.VARCHAR}
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"roleId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"title", Types.VARCHAR},
+		{"description", Types.CLOB}, {"type_", Types.INTEGER},
+		{"subtype", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -87,6 +88,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("roleId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -103,7 +105,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Role_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,roleId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description TEXT null,type_ INTEGER,subtype VARCHAR(75) null,primary key (roleId, ctCollectionId))";
+		"create table Role_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,roleId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description TEXT null,type_ INTEGER,subtype VARCHAR(75) null,primary key (roleId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Role_";
 
@@ -160,25 +162,31 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SUBTYPE_COLUMN_BITMASK = 16L;
+	public static final long NAME_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 32L;
+	public static final long SUBTYPE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long TYPE_COLUMN_BITMASK = 64L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
 	public static final String MAPPING_TABLE_GROUPS_ROLES_NAME = "Groups_Roles";
 
@@ -309,6 +317,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 			attributeGetterFunctions.put(
 				"ctCollectionId", Role::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", Role::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode", Role::getExternalReferenceCode);
 			attributeGetterFunctions.put("roleId", Role::getRoleId);
 			attributeGetterFunctions.put("companyId", Role::getCompanyId);
 			attributeGetterFunctions.put("userId", Role::getUserId);
@@ -345,6 +355,9 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 				(BiConsumer<Role, Long>)Role::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<Role, String>)Role::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<Role, String>)Role::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"roleId", (BiConsumer<Role, Long>)Role::setRoleId);
 			attributeSetterBiConsumers.put(
@@ -435,6 +448,35 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1090,6 +1132,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		roleImpl.setMvccVersion(getMvccVersion());
 		roleImpl.setCtCollectionId(getCtCollectionId());
 		roleImpl.setUuid(getUuid());
+		roleImpl.setExternalReferenceCode(getExternalReferenceCode());
 		roleImpl.setRoleId(getRoleId());
 		roleImpl.setCompanyId(getCompanyId());
 		roleImpl.setUserId(getUserId());
@@ -1118,6 +1161,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		roleImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		roleImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		roleImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		roleImpl.setRoleId(this.<Long>getColumnOriginalValue("roleId"));
 		roleImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
 		roleImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
@@ -1219,6 +1264,16 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			roleCacheModel.uuid = null;
+		}
+
+		roleCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode = roleCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			roleCacheModel.externalReferenceCode = null;
 		}
 
 		roleCacheModel.roleId = getRoleId();
@@ -1354,6 +1409,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _roleId;
 	private long _companyId;
 	private long _userId;
@@ -1404,6 +1460,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("roleId", _roleId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1448,31 +1506,33 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("roleId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("roleId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("classNameId", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("classPK", 1024L);
+		columnBitmasks.put("classNameId", 1024L);
 
-		columnBitmasks.put("name", 2048L);
+		columnBitmasks.put("classPK", 2048L);
 
-		columnBitmasks.put("title", 4096L);
+		columnBitmasks.put("name", 4096L);
 
-		columnBitmasks.put("description", 8192L);
+		columnBitmasks.put("title", 8192L);
 
-		columnBitmasks.put("type_", 16384L);
+		columnBitmasks.put("description", 16384L);
 
-		columnBitmasks.put("subtype", 32768L);
+		columnBitmasks.put("type_", 32768L);
+
+		columnBitmasks.put("subtype", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

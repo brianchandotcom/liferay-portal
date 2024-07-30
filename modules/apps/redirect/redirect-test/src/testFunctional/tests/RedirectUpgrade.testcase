@@ -1,4 +1,4 @@
-@component-name = "portal-publications"
+@component-name = "portal-site-management"
 definition {
 
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
@@ -7,8 +7,7 @@ definition {
 	property test.assert.warning.exceptions = "true";
 	property test.liferay.virtual.instance = "false";
 	property test.run.type = "single";
-	property testray.component.names = "Upgrades WEM";
-	property testray.main.component.name = "URL Redirections";
+	property testray.main.component.name = "Upgrades Site Management";
 
 	setUp {
 		SignIn.signIn();

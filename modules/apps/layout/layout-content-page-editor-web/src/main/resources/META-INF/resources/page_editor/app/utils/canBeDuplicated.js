@@ -26,7 +26,7 @@ export default function canBeDuplicated(
 			const fragmentEntryLink =
 				fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
-			const portletId = fragmentEntryLink.editableValues.portletId;
+			const portletId = fragmentEntryLink?.editableValues.portletId;
 
 			const widget = portletId && getWidget(widgets, portletId);
 

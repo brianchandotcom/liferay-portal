@@ -45,7 +45,7 @@ export default function TopperItemActions({disabled, item}) {
 	const isInputFragment =
 		item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
 		fragmentEntryLinks[item.config.fragmentEntryLinkId]
-			.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input;
+			?.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input;
 
 	const dropdownItems = useMemo(() => {
 		const items = [];

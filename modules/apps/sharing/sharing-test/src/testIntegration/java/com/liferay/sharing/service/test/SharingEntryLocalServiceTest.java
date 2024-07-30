@@ -658,7 +658,7 @@ public class SharingEntryLocalServiceTest {
 			List<SharingEntry> ascendingSharingEntries =
 				_sharingEntryLocalService.getToUserSharingEntries(
 					_toUser.getUserId(), classNameId, 0, 2,
-					new SharingEntryModifiedDateComparator(true));
+					SharingEntryModifiedDateComparator.getInstance(true));
 
 			Assert.assertEquals(sharingEntry1, ascendingSharingEntries.get(0));
 			Assert.assertEquals(sharingEntry2, ascendingSharingEntries.get(1));
@@ -666,7 +666,7 @@ public class SharingEntryLocalServiceTest {
 			List<SharingEntry> descendingSharingEntries =
 				_sharingEntryLocalService.getToUserSharingEntries(
 					_toUser.getUserId(), classNameId, 0, 2,
-					new SharingEntryModifiedDateComparator(false));
+					SharingEntryModifiedDateComparator.getInstance(false));
 
 			Assert.assertEquals(sharingEntry2, descendingSharingEntries.get(0));
 			Assert.assertEquals(sharingEntry1, descendingSharingEntries.get(1));
@@ -981,7 +981,7 @@ public class SharingEntryLocalServiceTest {
 		List<SharingEntry> sharingEntries =
 			_sharingEntryLocalService.getFromUserSharingEntries(
 				_fromUser.getUserId(), classNameId, 0, 2,
-				new SharingEntryModifiedDateComparator());
+				SharingEntryModifiedDateComparator.getInstance(false));
 
 		Assert.assertEquals(
 			sharingEntries.toString(), 1, sharingEntries.size());

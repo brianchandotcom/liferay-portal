@@ -4,8 +4,10 @@
  */
 
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
 import {liferayConfig} from '../../../liferay.config';
 import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
+import {AddCustomFieldPage} from '../../../pages/expando-web/AddCustomFieldPage';
 import {VirtualInstancesPage} from '../../../pages/portal-instances-web/VirtualInstancesPage';
 import {SamlAdminPage} from '../../../pages/saml-web/SamlAdminPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
@@ -18,6 +20,26 @@ export const DEFAULT_IDP_NAME = 'www.able.com';
 export const DEFAULT_IDP_URL = `http://${DEFAULT_IDP_NAME}:8080`;
 export const DEFAULT_SP_NAME = 'www.baker.com';
 export const DEFAULT_SP_URL = `http://${DEFAULT_SP_NAME}:8080`;
+
+export async function createCustomField(
+	browser,
+	customField: TCustomField,
+	instanceName: string
+) {
+	const defaultBaseUrl = liferayConfig.environment.baseUrl;
+
+	liferayConfig.environment.baseUrl = `http://${instanceName}:8080`;
+
+	const page = await performSamlSafeAdminLogin(browser, instanceName);
+
+	const addCustomFieldPage = new AddCustomFieldPage(page);
+
+	await addCustomFieldPage.addCustomField(customField);
+
+	await performLogout(page);
+
+	liferayConfig.environment.baseUrl = defaultBaseUrl;
+}
 
 export async function createIdentityProviderVirtualInstance(
 	browser,

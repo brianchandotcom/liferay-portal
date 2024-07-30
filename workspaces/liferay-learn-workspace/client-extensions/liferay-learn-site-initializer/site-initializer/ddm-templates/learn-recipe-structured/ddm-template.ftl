@@ -194,7 +194,7 @@
 										class="copy-to-clipboard-button" 
 										data-copy-state="copy" 
 										onclick="copyToClipboard(this)"
-										type="button" 
+										type="button"
 									>
 										<span>Copy</span>
 									</button>

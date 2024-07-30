@@ -6,7 +6,6 @@
 package com.liferay.portal.osgi.web.portlet.container.embedded.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
@@ -214,31 +213,26 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 
 		setUpPortlet(
 			testPortlet, new HashMapDictionary<>(), TEST_PORTLET_ID + "1");
-
 		setUpPortlet(
 			testPortlet, new HashMapDictionary<>(), TEST_PORTLET_ID + "2");
 
 		TestRuntimePortlet testRuntimePortlet = new TestRuntimePortlet();
 
-		String[] portletPaths = {
-			RandomTestUtil.randomString() + "-footer.css",
-			RandomTestUtil.randomString() + "-footer.js",
-			RandomTestUtil.randomString() + "-header.css",
-			RandomTestUtil.randomString() + "-header.js"
+		String[] paths = {
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString()
 		};
 
 		setUpPortlet(
 			testRuntimePortlet,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"com.liferay.portlet.footer-portlet-css", "/" + portletPaths[0]
+				"com.liferay.portlet.footer-portlet-css", "/" + paths[0]
 			).put(
-				"com.liferay.portlet.footer-portlet-javascript",
-				"/" + portletPaths[1]
+				"com.liferay.portlet.footer-portlet-javascript", "/" + paths[1]
 			).put(
-				"com.liferay.portlet.header-portlet-css", "/" + portletPaths[2]
+				"com.liferay.portlet.header-portlet-css", "/" + paths[2]
 			).put(
-				"com.liferay.portlet.header-portlet-javascript",
-				"/" + portletPaths[3]
+				"com.liferay.portlet.header-portlet-javascript", "/" + paths[3]
 			).build(),
 			"testRuntimePortletId", false);
 
@@ -252,16 +246,9 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 
 		String body = response.getBody();
 
-		for (String portletPath : portletPaths) {
-			Assert.assertTrue(
-				StringBundler.concat(
-					"Page body should contain '", portletPath, "'"),
-				body.contains(portletPath));
-
-			Assert.assertTrue(
-				StringBundler.concat(
-					"Page body should contain '", portletPath, "' only once."),
-				body.indexOf(portletPath) == body.lastIndexOf(portletPath));
+		for (String path : paths) {
+			Assert.assertTrue(body.contains(path));
+			Assert.assertTrue(body.indexOf(path) == body.lastIndexOf(path));
 		}
 	}
 

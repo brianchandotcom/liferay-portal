@@ -20,6 +20,10 @@ import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect, ConnectedProps} from 'react-redux';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {DISPLAY_NAME} from 'shared/util/pagination';
+import {
+	getModifiedEventAttributeDefinitions,
+	getTabs
+} from '../attribute-dropdown-util';
 import {OrderByDirections} from 'shared/util/constants';
 import {SafeResults} from 'shared/hoc/util';
 import {useQuery} from '@apollo/react-hooks';
@@ -114,16 +118,7 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 							<div className='d-flex flex-column'>
 								<BaseDropdown.Header
 									activeTabId={attributeOwnerType}
-									tabs={[
-										{
-											onClick: () =>
-												setAttributeOwnerType(
-													AttributeOwnerTypes.Event
-												),
-											tabId: AttributeOwnerTypes.Event,
-											title: Liferay.Language.get('event')
-										}
-									]}
+									tabs={getTabs(setAttributeOwnerType)}
 									title={Liferay.Language.get('attributes')}
 								/>
 
@@ -141,20 +136,13 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 											eventAttributeDefinitions: Attribute[];
 										};
 									}) => {
-										const modifieldEventAttributeDefinitions = attribute
-											? eventAttributeDefinitions.map(
-													eventAttributeDefinition => {
-														if (
-															attribute.id ===
-															eventAttributeDefinition.id
-														) {
-															return attribute;
-														}
-
-														return eventAttributeDefinition;
-													}
-											  )
-											: eventAttributeDefinitions;
+										const modifieldEventAttributeDefinitions = getModifiedEventAttributeDefinitions(
+											{
+												attribute,
+												attributeOwnerType,
+												eventAttributeDefinitions
+											}
+										);
 
 										return (
 											<BaseDropdown.SearchableList
@@ -188,6 +176,10 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 												}}
 												onQueryChange={setQuery}
 												query={query}
+												showInfoCard={
+													attributeOwnerType ===
+													AttributeOwnerTypes.Event
+												}
 												uneditableIds={uneditableIds}
 											/>
 										);

@@ -22,56 +22,15 @@ import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect, ConnectedProps} from 'react-redux';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {DISPLAY_NAME} from 'shared/util/pagination';
+import {
+	getModifiedEventAttributeDefinitions,
+	getTabs
+} from '../attribute-dropdown-util';
 import {OrderByDirections} from 'shared/util/constants';
 import {SafeResults} from 'shared/hoc/util';
 import {useQuery} from '@apollo/react-hooks';
 
 const connector = connect(null, {close, open});
-
-const IndividualAttributes = [
-	{
-		dataType: DataTypes.String,
-		displayName: 'jobTitle',
-		id: 'jobTitle',
-		name: 'jobTitle',
-		type: AttributeTypes.Global
-	},
-	{
-		dataType: DataTypes.String,
-		displayName: 'languageId',
-		id: 'languageId',
-		name: 'languageId',
-		type: AttributeTypes.Global
-	},
-	{
-		dataType: DataTypes.String,
-		displayName: Liferay.Language.get('role'),
-		id: 'role',
-		name: 'role',
-		type: AttributeTypes.Local
-	},
-	{
-		dataType: DataTypes.String,
-		displayName: Liferay.Language.get('site-membership'),
-		id: 'group',
-		name: 'group',
-		type: AttributeTypes.Local
-	},
-	{
-		dataType: DataTypes.String,
-		displayName: Liferay.Language.get('team'),
-		id: 'team',
-		name: 'team',
-		type: AttributeTypes.Local
-	},
-	{
-		dataType: DataTypes.String,
-		displayName: Liferay.Language.get('user-group'),
-		id: 'userGroup',
-		name: 'userGroup',
-		type: AttributeTypes.Local
-	}
-];
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -166,27 +125,7 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 							<div className='d-flex flex-column'>
 								<BaseDropdown.Header
 									activeTabId={attributeOwnerType}
-									tabs={[
-										{
-											onClick: () =>
-												setAttributeOwnerType(
-													AttributeOwnerTypes.Event
-												),
-											tabId: AttributeOwnerTypes.Event,
-											title: Liferay.Language.get('event')
-										},
-										{
-											onClick: () =>
-												setAttributeOwnerType(
-													AttributeOwnerTypes.Individual
-												),
-											tabId:
-												AttributeOwnerTypes.Individual,
-											title: Liferay.Language.get(
-												'individual'
-											)
-										}
-									]}
+									tabs={getTabs(setAttributeOwnerType)}
 									title={Liferay.Language.get('attributes')}
 								/>
 
@@ -204,32 +143,13 @@ const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = (
 											eventAttributeDefinitions: Attribute[];
 										};
 									}) => {
-										let modifiedEventAttributeDefinitions = [];
-
-										if (
-											attributeOwnerType ===
-											AttributeOwnerTypes.Event
-										) {
-											modifiedEventAttributeDefinitions = attribute
-												? eventAttributeDefinitions.map(
-														eventAttributeDefinition => {
-															if (
-																attribute.id ===
-																eventAttributeDefinition.id
-															) {
-																return attribute;
-															}
-
-															return eventAttributeDefinition;
-														}
-												  )
-												: eventAttributeDefinitions;
-										} else if (
-											attributeOwnerType ===
-											AttributeOwnerTypes.Individual
-										) {
-											modifiedEventAttributeDefinitions = IndividualAttributes;
-										}
+										const modifiedEventAttributeDefinitions = getModifiedEventAttributeDefinitions(
+											{
+												attribute,
+												attributeOwnerType,
+												eventAttributeDefinitions
+											}
+										);
 
 										return (
 											<BaseDropdown.SearchableList

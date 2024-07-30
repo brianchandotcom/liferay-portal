@@ -22,12 +22,14 @@ public class SavedContentEntryClassNameIdComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"classNameId"};
 
-	public SavedContentEntryClassNameIdComparator() {
-		this(false);
-	}
+	public static SavedContentEntryClassNameIdComparator getInstance(
+		boolean ascending) {
 
-	public SavedContentEntryClassNameIdComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -74,6 +76,17 @@ public class SavedContentEntryClassNameIdComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private SavedContentEntryClassNameIdComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final SavedContentEntryClassNameIdComparator
+		_INSTANCE_ASCENDING = new SavedContentEntryClassNameIdComparator(true);
+
+	private static final SavedContentEntryClassNameIdComparator
+		_INSTANCE_DESCENDING = new SavedContentEntryClassNameIdComparator(
+			false);
 
 	private final boolean _ascending;
 

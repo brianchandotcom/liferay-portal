@@ -9,9 +9,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.schema.definition.internal.configuration.DBSchemaDefinitionExporterConfiguration;
+import com.liferay.portal.db.schema.definition.internal.partition.DBSchemaPartitionUtil;
 import com.liferay.portal.db.schema.definition.internal.sql.writer.SQLWriter;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -40,6 +42,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.sql.DataSource;
 
@@ -139,16 +142,10 @@ public class DBSchemaDefinitionExporter {
 	private void _generateReport(String dirName, DBType exportDBType)
 		throws Exception {
 
-		Set<String> dbTableNames = _getDBTableNames();
-		Set<String> exportTableNames = _getExportTableNames(dirName);
 		String installedPatchNames = StringUtil.merge(
 			PatcherValues.INSTALLED_PATCH_NAMES, StringPool.COMMA_AND_SPACE);
 		Release release = _releaseLocalService.fetchRelease(
 			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-
-		String missingTableNames = StringUtil.merge(
-			SetUtil.asymmetricDifference(dbTableNames, exportTableNames),
-			StringPool.COMMA_AND_SPACE);
 
 		FileUtil.write(
 			new File(dirName, "db_schema_definition_export_report.info"),
@@ -162,25 +159,30 @@ public class DBSchemaDefinitionExporter {
 					StringPool.NEW_LINE,
 					"Database type: " + DBManagerUtil.getDBType(),
 					"Export database type: " + exportDBType,
-					StringPool.NEW_LINE,
-					"Database tables: " + dbTableNames.size(),
-					"Export tables: " + exportTableNames.size(),
-					StringPool.NEW_LINE, "Missing tables: " + missingTableNames
+					StringPool.NEW_LINE, _printCompanyTablesInfo(dirName)
 				},
 				StringPool.NEW_LINE));
 	}
 
-	private Set<String> _getDBTableNames() throws Exception {
+	private Set<String> _getDBTableNames(long companyId) throws Exception {
+		return _getDBTableNamesByType(companyId, "TABLE");
+	}
+
+	private Set<String> _getDBTableNamesByType(long companyId, String type)
+		throws Exception {
+
 		Set<String> tableNames = new HashSet<>();
 
 		DataSource dataSource = InfrastructureUtil.getDataSource();
 
 		try (Connection connection = dataSource.getConnection()) {
+			DBSchemaPartitionUtil.setPartition(connection, companyId);
+
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 			try (ResultSet resultSet = databaseMetaData.getTables(
 					connection.getCatalog(), connection.getSchema(), null,
-					new String[] {"TABLE"})) {
+					new String[] {type})) {
 
 				while (resultSet.next()) {
 					tableNames.add(
@@ -193,23 +195,67 @@ public class DBSchemaDefinitionExporter {
 		return tableNames;
 	}
 
-	private Set<String> _getExportTableNames(String dirName) throws Exception {
+	private Set<String> _getExportTableNames(String dirName, long companyId)
+		throws Exception {
+
+		return _getExportTableNames(
+			dirName, companyId, "create table",
+			line -> line.split(StringPool.SPACE)[2]);
+	}
+
+	private Set<String> _getExportTableNames(
+			String dirName, long companyId, String filter,
+			Function<String, String> function)
+		throws Exception {
+
 		Set<String> tableNames = new HashSet<>();
 
-		String[] lines = StringUtil.split(
-			StringUtil.toLowerCase(
-				FileUtil.read(new File(dirName, "tables.sql"))),
-			StringPool.NEW_LINE);
+		String prefix = StringPool.BLANK;
+
+		if (PortalInstancePool.getDefaultCompanyId() != companyId) {
+			prefix = companyId + StringPool.UNDERLINE;
+		}
+
+		String fileContent = StringUtil.toLowerCase(
+			FileUtil.read(new File(dirName, prefix + "tables.sql")));
+
+		String[] lines = StringUtil.split(fileContent, StringPool.NEW_LINE);
 
 		for (String line : lines) {
-			if (StringUtil.startsWith(line, "create table")) {
-				String[] parts = line.split(StringPool.SPACE);
-
-				tableNames.add(parts[2]);
+			if (StringUtil.startsWith(line, filter)) {
+				tableNames.add(function.apply(line));
 			}
 		}
 
 		return tableNames;
+	}
+
+	private String _printCompanyTablesInfo(String dirName) throws Exception {
+		StringBundler sb = new StringBundler(
+			_printDefaultCompanyTablesInfo(dirName));
+
+		return sb.toString();
+	}
+
+	private String _printDefaultCompanyTablesInfo(String dirName)
+		throws Exception {
+
+		Set<String> dbTableNames = _getDBTableNames(
+			PortalInstancePool.getDefaultCompanyId());
+		Set<String> exportTableNames = _getExportTableNames(
+			dirName, PortalInstancePool.getDefaultCompanyId());
+
+		String missingTableNames = StringUtil.merge(
+			SetUtil.asymmetricDifference(dbTableNames, exportTableNames),
+			StringPool.COMMA_AND_SPACE);
+
+		return StringUtil.merge(
+			new Object[] {
+				"Database tables: " + dbTableNames.size(),
+				"Export tables: " + exportTableNames.size(),
+				StringPool.NEW_LINE, "Missing tables: " + missingTableNames
+			},
+			StringPool.NEW_LINE);
 	}
 
 	private String _toString(Date date) {

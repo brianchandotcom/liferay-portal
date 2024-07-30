@@ -452,6 +452,8 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 	private Map<Node, Collection<Node>> _getNodeMap(
 		List<Node> nodes, Map<Node, Collection<Edge>> edgeMap) {
 
+		Map<Node, Collection<Node>> nodeMap = new HashMap<>();
+
 		Deque<Edge> backtraceEdges = new LinkedList<>();
 		Set<Edge> cyclingEdges = new HashSet<>();
 		Set<Edge> resolvedEdges = new HashSet<>();
@@ -462,8 +464,6 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 					edge, edgeMap, backtraceEdges, cyclingEdges, resolvedEdges);
 			}
 		}
-
-		Map<Node, Collection<Node>> nodeMap = new HashMap<>();
 
 		for (Edge edge : resolvedEdges) {
 			Collection<Node> children = nodeMap.computeIfAbsent(

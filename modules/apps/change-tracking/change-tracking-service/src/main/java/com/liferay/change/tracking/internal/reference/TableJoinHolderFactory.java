@@ -208,9 +208,10 @@ public class TableJoinHolderFactory {
 	private static List<BridgePredicate> _getBridgePredicates(
 		JoinStep joinStep) {
 
+		List<BridgePredicate> bridgePredicates = new LinkedList<>();
+
 		Queue<DefaultPredicate> defaultPredicateQueue = new LinkedList<>();
 		Queue<Expression<?>> expressionQueue = new LinkedList<>();
-		List<BridgePredicate> bridgePredicates = new LinkedList<>();
 
 		ASTNode astNode = joinStep;
 

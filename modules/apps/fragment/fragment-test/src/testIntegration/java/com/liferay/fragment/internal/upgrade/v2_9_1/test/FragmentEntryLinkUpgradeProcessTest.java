@@ -12,7 +12,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -54,86 +54,103 @@ public class FragmentEntryLinkUpgradeProcessTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
 	}
 
 	@Test
 	public void testUpgrade() throws Exception {
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		Assert.assertNotNull(draftLayout);
-
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid());
+		JSONObject emptyJSONObject = _jsonFactory.createJSONObject();
 
 		JSONObject editableValuesJSONObject = JSONUtil.put(
 			FragmentEntryProcessorConstants.
 				KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
-			JSONFactoryUtil.createJSONObject()
+			emptyJSONObject
 		).put(
 			FragmentEntryProcessorConstants.
 				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-			JSONFactoryUtil.createJSONObject()
+			emptyJSONObject
 		).put(
 			FragmentEntryProcessorConstants.
 				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-			JSONFactoryUtil.createJSONObject()
+			emptyJSONObject
 		);
 
 		FragmentEntryLink draftLayoutFragmentEntryLink =
-			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-				editableValuesJSONObject.toString(), draftLayout,
-				segmentsExperienceId);
+			_addFragmentEntryLinkToDraftLayout(editableValuesJSONObject);
 
-		Assert.assertTrue(
-			draftLayoutFragmentEntryLink.getEditableValues(),
-			JSONUtil.equals(
-				editableValuesJSONObject,
-				JSONFactoryUtil.createJSONObject(
-					draftLayoutFragmentEntryLink.getEditableValues())));
-
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+		ContentLayoutTestUtil.publishLayout(
+			_layout.fetchDraftLayout(), _layout);
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				layout.getGroupId(), layout.getPlid());
+				_layout.getGroupId(), _layout.getPlid());
 
 		Assert.assertEquals(
 			fragmentEntryLinks.toString(), 1, fragmentEntryLinks.size());
 
 		FragmentEntryLink publishedLayoutFragmentEntryLink =
-			fragmentEntryLinks.get(0);
-
-		Assert.assertTrue(
-			publishedLayoutFragmentEntryLink.getEditableValues(),
-			JSONUtil.equals(
+			_getPublishedLayoutFragmentEntryLink(
 				editableValuesJSONObject,
-				JSONFactoryUtil.createJSONObject(
-					publishedLayoutFragmentEntryLink.getEditableValues())));
+				draftLayoutFragmentEntryLink.getFragmentEntryLinkId());
 
 		_runUpgrade();
 
-		draftLayoutFragmentEntryLink =
+		_assertFragmentEntryLinkEditableValues(
+			emptyJSONObject,
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				draftLayoutFragmentEntryLink.getFragmentEntryLinkId());
-
-		Assert.assertTrue(
-			draftLayoutFragmentEntryLink.getEditableValues(),
-			JSONUtil.isEmpty(
-				JSONFactoryUtil.createJSONObject(
-					draftLayoutFragmentEntryLink.getEditableValues())));
-
-		publishedLayoutFragmentEntryLink =
+				draftLayoutFragmentEntryLink.getFragmentEntryLinkId()),
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				publishedLayoutFragmentEntryLink.getFragmentEntryLinkId());
+				publishedLayoutFragmentEntryLink.getFragmentEntryLinkId()));
+	}
 
-		Assert.assertTrue(
-			publishedLayoutFragmentEntryLink.getEditableValues(),
-			JSONUtil.isEmpty(
-				JSONFactoryUtil.createJSONObject(
-					publishedLayoutFragmentEntryLink.getEditableValues())));
+	private FragmentEntryLink _addFragmentEntryLinkToDraftLayout(
+			JSONObject editableValuesJSONObject)
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				editableValuesJSONObject.toString(), _layout.fetchDraftLayout(),
+				_segmentsExperienceId);
+
+		_assertFragmentEntryLinkEditableValues(
+			editableValuesJSONObject, fragmentEntryLink);
+
+		return fragmentEntryLink;
+	}
+
+	private void _assertFragmentEntryLinkEditableValues(
+			JSONObject expectedJSONObject,
+			FragmentEntryLink... fragmentEntryLinks)
+		throws Exception {
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			Assert.assertTrue(
+				fragmentEntryLink.getEditableValues(),
+				JSONUtil.equals(
+					expectedJSONObject,
+					_jsonFactory.createJSONObject(
+						fragmentEntryLink.getEditableValues())));
+		}
+	}
+
+	private FragmentEntryLink _getPublishedLayoutFragmentEntryLink(
+			JSONObject expectedJSONObject, long originalFragmentEntryLinkId)
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				_group.getGroupId(), originalFragmentEntryLinkId,
+				_layout.getPlid());
+
+		_assertFragmentEntryLinkEditableValues(
+			expectedJSONObject, fragmentEntryLink);
+
+		return fragmentEntryLink;
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -159,7 +176,14 @@ public class FragmentEntryLinkUpgradeProcessTest {
 	private Group _group;
 
 	@Inject
+	private JSONFactory _jsonFactory;
+
+	private Layout _layout;
+
+	@Inject
 	private MultiVMPool _multiVMPool;
+
+	private long _segmentsExperienceId;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

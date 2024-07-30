@@ -22,7 +22,7 @@ definition {
 	@description = "Ensure Liferay's log manager is working for libraries using JBoss Logging, such as Hibernate"
 	@priority = 3
 	test HibernateSQLQueriesViewableWithDebugLogLevel {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,wildfly";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

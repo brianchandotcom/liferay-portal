@@ -60,7 +60,7 @@
 			},
 			tidio: '#tidio-chat',
 			zendesk: '#launcher,#webWidget',
-			zendesk_web_widget_classic: '#launcher',
+			zendesk_web_widget_classic: '#launcher,#webWidget',
 		};
 
 		Object.entries(clickToChatProviders).forEach(([key, action]) => {

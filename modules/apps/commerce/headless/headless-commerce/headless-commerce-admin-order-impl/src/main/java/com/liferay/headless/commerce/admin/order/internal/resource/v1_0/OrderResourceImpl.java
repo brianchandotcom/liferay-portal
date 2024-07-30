@@ -637,8 +637,8 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 		if (billingAddress != null) {
 			commerceOrder = BillingAddressUtil.addOrUpdateBillingAddress(
-				_commerceAddressService, _commerceOrderService, _countryService,
-				commerceOrder, billingAddress, serviceContext);
+				billingAddress, _commerceAddressService, commerceOrder,
+				_commerceOrderService, _countryService, serviceContext);
 		}
 
 		// Shipping Address
@@ -647,8 +647,8 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 		if (shippingAddress != null) {
 			commerceOrder = ShippingAddressUtil.addOrUpdateShippingAddress(
-				_commerceAddressService, _commerceOrderService, _countryService,
-				commerceOrder, shippingAddress, serviceContext);
+				_commerceAddressService, commerceOrder, _commerceOrderService,
+				_countryService, shippingAddress, serviceContext);
 		}
 
 		return commerceOrder;

@@ -25,16 +25,17 @@ import com.liferay.portal.kernel.util.Validator;
 public class BillingAddressUtil {
 
 	public static CommerceOrder addOrUpdateBillingAddress(
+			BillingAddress billingAddress,
 			CommerceAddressService commerceAddressService,
+			CommerceOrder commerceOrder,
 			CommerceOrderService commerceOrderService,
-			CountryService countryService, CommerceOrder commerceOrder,
-			BillingAddress billingAddress, ServiceContext serviceContext)
+			CountryService countryService, ServiceContext serviceContext)
 		throws Exception {
 
 		if (commerceOrder.getBillingAddressId() > 0) {
 			return _updateCommerceOrderBillingAddress(
-				commerceAddressService, commerceOrderService, countryService,
-				commerceOrder, billingAddress, serviceContext);
+				billingAddress, commerceAddressService, commerceOrder,
+				commerceOrderService, countryService, serviceContext);
 		}
 
 		CommerceAddress commerceAddress = _addCommerceAddress(
@@ -150,10 +151,11 @@ public class BillingAddressUtil {
 	}
 
 	private static CommerceOrder _updateCommerceOrderBillingAddress(
+			BillingAddress billingAddress,
 			CommerceAddressService commerceAddressService,
+			CommerceOrder commerceOrder,
 			CommerceOrderService commerceOrderService,
-			CountryService countryService, CommerceOrder commerceOrder,
-			BillingAddress billingAddress, ServiceContext serviceContext)
+			CountryService countryService, ServiceContext serviceContext)
 		throws Exception {
 
 		CommerceAddress commerceAddress =

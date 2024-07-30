@@ -119,8 +119,8 @@ public class ShippingAddressResourceImpl
 		}
 
 		ShippingAddressUtil.addOrUpdateShippingAddress(
-			_commerceAddressService, _commerceOrderService, _countryService,
-			commerceOrder, shippingAddress,
+			_commerceAddressService, commerceOrder, _commerceOrderService,
+			_countryService, shippingAddress,
 			_serviceContextHelper.getServiceContext());
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
@@ -134,8 +134,8 @@ public class ShippingAddressResourceImpl
 		throws Exception {
 
 		ShippingAddressUtil.addOrUpdateShippingAddress(
-			_commerceAddressService, _commerceOrderService, _countryService,
-			_commerceOrderService.getCommerceOrder(id), shippingAddress,
+			_commerceAddressService, _commerceOrderService.getCommerceOrder(id),
+			_commerceOrderService, _countryService, shippingAddress,
 			_serviceContextHelper.getServiceContext());
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();

@@ -25,15 +25,16 @@ public class ShippingAddressUtil {
 
 	public static CommerceOrder addOrUpdateShippingAddress(
 			CommerceAddressService commerceAddressService,
+			CommerceOrder commerceOrder,
 			CommerceOrderService commerceOrderService,
-			CountryService countryService, CommerceOrder commerceOrder,
-			ShippingAddress shippingAddress, ServiceContext serviceContext)
+			CountryService countryService, ShippingAddress shippingAddress,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (commerceOrder.getShippingAddressId() > 0) {
 			return _updateCommerceOrderShippingAddress(
-				commerceAddressService, commerceOrderService, countryService,
-				commerceOrder, shippingAddress, serviceContext);
+				commerceAddressService, commerceOrder, commerceOrderService,
+				countryService, shippingAddress, serviceContext);
 		}
 
 		CommerceAddress commerceAddress = _addCommerceAddress(
@@ -149,9 +150,10 @@ public class ShippingAddressUtil {
 
 	private static CommerceOrder _updateCommerceOrderShippingAddress(
 			CommerceAddressService commerceAddressService,
+			CommerceOrder commerceOrder,
 			CommerceOrderService commerceOrderService,
-			CountryService countryService, CommerceOrder commerceOrder,
-			ShippingAddress shippingAddress, ServiceContext serviceContext)
+			CountryService countryService, ShippingAddress shippingAddress,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		CommerceAddress commerceAddress =

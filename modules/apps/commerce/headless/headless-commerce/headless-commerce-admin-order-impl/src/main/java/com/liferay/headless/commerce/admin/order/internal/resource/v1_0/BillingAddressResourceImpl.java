@@ -97,8 +97,8 @@ public class BillingAddressResourceImpl extends BaseBillingAddressResourceImpl {
 		}
 
 		BillingAddressUtil.addOrUpdateBillingAddress(
-			_commerceAddressService, _commerceOrderService, _countryService,
-			commerceOrder, billingAddress,
+			billingAddress, _commerceAddressService, commerceOrder,
+			_commerceOrderService, _countryService,
 			_serviceContextHelper.getServiceContext());
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
@@ -112,9 +112,9 @@ public class BillingAddressResourceImpl extends BaseBillingAddressResourceImpl {
 		throws Exception {
 
 		BillingAddressUtil.addOrUpdateBillingAddress(
-			_commerceAddressService, _commerceOrderService, _countryService,
-			_commerceOrderService.getCommerceOrder(id), billingAddress,
-			_serviceContextHelper.getServiceContext());
+			billingAddress, _commerceAddressService,
+			_commerceOrderService.getCommerceOrder(id), _commerceOrderService,
+			_countryService, _serviceContextHelper.getServiceContext());
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 

@@ -260,7 +260,11 @@ public class ObjectEntryVariablesUtil {
 				contentType, objectDefinition, oldValues, payloadJSONObject);
 
 			if (variables == null) {
-				return payloadJSONObject.toMap();
+				return HashMapBuilder.<String, Object>putAll(
+					allowedVariables
+				).putAll(
+					payloadJSONObject.toMap()
+				).build();
 			}
 
 			allowedVariables.put(

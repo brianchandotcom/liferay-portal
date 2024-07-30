@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.language.override.model.PLOEntry;
@@ -30,23 +31,38 @@ public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 
 	@Override
 	public void onAfterCreate(PLOEntry ploEntry) {
-		_updatePLOLanguageOverrideProvider(MethodType.ADD, ploEntry);
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_updatePLOLanguageOverrideProvider(MethodType.ADD, ploEntry);
 
-		_notifyCluster(MethodType.ADD, ploEntry);
+				_notifyCluster(MethodType.ADD, ploEntry);
+
+				return null;
+			});
 	}
 
 	@Override
 	public void onAfterRemove(PLOEntry ploEntry) {
-		_updatePLOLanguageOverrideProvider(MethodType.REMOVE, ploEntry);
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_updatePLOLanguageOverrideProvider(MethodType.REMOVE, ploEntry);
 
-		_notifyCluster(MethodType.REMOVE, ploEntry);
+				_notifyCluster(MethodType.REMOVE, ploEntry);
+
+				return null;
+			});
 	}
 
 	@Override
 	public void onAfterUpdate(PLOEntry originalPLOEntry, PLOEntry ploEntry) {
-		_updatePLOLanguageOverrideProvider(MethodType.UPDATE, ploEntry);
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_updatePLOLanguageOverrideProvider(MethodType.UPDATE, ploEntry);
 
-		_notifyCluster(MethodType.UPDATE, ploEntry);
+				_notifyCluster(MethodType.UPDATE, ploEntry);
+
+				return null;
+			});
 	}
 
 	private static void _onNotify(MethodType methodType, PLOEntry ploEntry)

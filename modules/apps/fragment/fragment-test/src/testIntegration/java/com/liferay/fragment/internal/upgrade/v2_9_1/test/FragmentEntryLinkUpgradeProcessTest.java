@@ -13,6 +13,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -172,6 +173,7 @@ public class FragmentEntryLinkUpgradeProcessTest
 			upgradeProcess.upgrade();
 		}
 
+		_entityCache.clearCache();
 		_multiVMPool.clear();
 	}
 
@@ -240,6 +242,9 @@ public class FragmentEntryLinkUpgradeProcessTest
 		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private EntityCache _entityCache;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

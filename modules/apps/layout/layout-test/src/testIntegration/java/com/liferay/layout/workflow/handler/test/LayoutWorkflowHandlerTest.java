@@ -569,7 +569,6 @@ public class LayoutWorkflowHandlerTest {
 			String[] values = currentParameterMap.get(entry.getKey());
 
 			Assert.assertEquals(values.toString(), 1, values.length);
-
 			Assert.assertEquals(entry.getValue(), values[0]);
 		}
 	}

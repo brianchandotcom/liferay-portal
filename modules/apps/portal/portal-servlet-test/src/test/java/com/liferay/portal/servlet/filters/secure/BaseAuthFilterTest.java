@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControl;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.security.access.control.AccessControlImpl;
+import com.liferay.portal.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PropsValues;
@@ -95,7 +97,9 @@ public class BaseAuthFilterTest {
 
 		User testUser = _setupUser(WorkflowConstants.STATUS_APPROVED);
 
-		Assert.assertTrue(!_assertUserLocalServiceMock(testUser));
+		Assert.assertTrue(
+			!_isHttpSessionInvalidWithStaticMocks(
+				testUser, HttpAuthorizationHeader.SCHEME_BASIC));
 	}
 
 	@Test
@@ -104,7 +108,9 @@ public class BaseAuthFilterTest {
 
 		User testUser = _setupUser(WorkflowConstants.STATUS_INACTIVE);
 
-		Assert.assertTrue(_assertUserLocalServiceMock(testUser));
+		Assert.assertTrue(
+			_isHttpSessionInvalidWithStaticMocks(
+				testUser, HttpAuthorizationHeader.SCHEME_BASIC));
 	}
 
 	@Test
@@ -113,7 +119,9 @@ public class BaseAuthFilterTest {
 
 		User testUser = _setupUser(WorkflowConstants.STATUS_APPROVED);
 
-		Assert.assertTrue(!_assertUserLocalServiceMock(testUser));
+		Assert.assertTrue(
+			!_isHttpSessionInvalidWithStaticMocks(
+				testUser, HttpAuthorizationHeader.SCHEME_DIGEST));
 	}
 
 	@Test
@@ -122,7 +130,9 @@ public class BaseAuthFilterTest {
 
 		User testUser = _setupUser(WorkflowConstants.STATUS_INACTIVE);
 
-		Assert.assertTrue(_assertUserLocalServiceMock(testUser));
+		Assert.assertTrue(
+			_isHttpSessionInvalidWithStaticMocks(
+				testUser, HttpAuthorizationHeader.SCHEME_DIGEST));
 	}
 
 	@Test
@@ -281,15 +291,27 @@ public class BaseAuthFilterTest {
 		Assert.assertNull(redirectURL);
 	}
 
-	private boolean _assertUserLocalServiceMock(User user) {
+	private boolean _isHttpSessionInvalidWithStaticMocks(
+		User user, String authHeaderType) {
+
 		try (MockedStatic<UserLocalServiceUtil>
 				userLocalServiceUtilMockedStatic = Mockito.mockStatic(
-					UserLocalServiceUtil.class)) {
+					UserLocalServiceUtil.class);
+			MockedStatic<HttpAuthManagerUtil> httpAuthManagerUtilMockedStatic =
+				Mockito.mockStatic(HttpAuthManagerUtil.class)) {
 
 			userLocalServiceUtilMockedStatic.when(
 				() -> UserLocalServiceUtil.getUser(ArgumentMatchers.anyLong())
 			).thenReturn(
 				user
+			);
+
+			httpAuthManagerUtilMockedStatic.when(
+				() -> HttpAuthManagerUtil.generateChallenge(
+					_mockHttpServletRequest, _mockHttpServletResponse,
+					new HttpAuthorizationHeader(authHeaderType))
+			).then(
+				invocationOnMock -> null
 			);
 
 			_processFilter();

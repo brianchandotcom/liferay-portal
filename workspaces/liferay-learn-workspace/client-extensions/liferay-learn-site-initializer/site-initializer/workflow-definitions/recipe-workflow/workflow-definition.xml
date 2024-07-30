@@ -41,7 +41,7 @@
 		</transitions>
 	</state>
 	<state>
-		<name>Approved</name>
+		<name>approved</name>
 		<description>Conclude the workflow.</description>
 		<metadata>
 			<![CDATA[

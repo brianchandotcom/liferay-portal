@@ -48,3 +48,21 @@ export const mdfRequestMock = {
 	totalMDFRequestAmount: 25000,
 	userId: 0
 };
+
+export const mdfRequestDataMock = {
+	claimPercent: 0.5,
+	companyName: 'Test Company ' + namespace,
+	convertedTotalCostOfExpense: 50000,
+	convertedTotalMDFRequestAmount: 25000,
+	liferayBusinessSalesGoals: 'Lead generation',
+	liferayBusinessSalesGoalsOther: '',
+	maxDateActivity: '2024-07-12',
+	minDateActivity: '2024-07-11',
+	overallCampaignDescription: 'Campaign Description',
+	overallCampaignName: 'Campaign Name' + namespace,
+	submitDate: '2024-07-10T18:11:39.346Z',
+	targetAudienceRoles: 'C-Level/Executive/VP; Independent Contractor',
+	targetMarkets: 'Aerospace & Defense; Agriculture',
+	totalCostOfExpense: 0,
+	totalMDFRequestAmount: 25000,
+};

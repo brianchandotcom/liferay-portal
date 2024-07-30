@@ -4,30 +4,29 @@
  */
 
 import moment from 'moment';
-import {getRandomInt} from '../../../../utils/getRandomInt';
-import {
-	EMDFRequestActivityExpenseTypes,
-	EMDFRequestActivityTactics,
-	EMDFRequestActivityTypes,
-	EMDFRequestLiferayBusinessSalesGoals,
-	EMDFRequestTargetAudienceRoles,
-	EMDFRequestTargetMarkets,
-} from './constants';
+
+import { mdfRequestDataMock, mdfRequestMock } from '../mocks/mdfMock';
 import { TAccount } from '../types/account';
-import { TUserAccount } from '../types/user';
-import { TMDFRequest } from '../types/mdf';
-import { mdfRequestMock } from '../mocks/mdfMock';
+import { TMDFRequest, TMDFRequestDataFromRequest } from '../types/mdf';
 
-const namespace = getRandomInt();
-
-export function generateMDFRequestData(parnterAccount: TAccount, userAccount: TUserAccount): TMDFRequest {
-	let mdfRequest = mdfRequestMock;
+export function generateMDFRequestDataForm(parnterAccount: TAccount): TMDFRequest {
+	const mdfRequest = mdfRequestMock;
 
 	mdfRequest.activities[0].endDate = moment().add(2, 'days').format('YYYY-MM-DD');
 	mdfRequest.activities[0].startDate = moment().add(1, 'days').format('YYYY-MM-DD');
 	mdfRequest.goals.companyName = parnterAccount.name;
 	mdfRequest.submitDate = moment().format('YYYY-MM-DD');
-	mdfRequest.userId = Number(userAccount.id);
 	
 	return mdfRequest;
+}
+
+export function generatedDataFromRequest(parnterAccount: TAccount): TMDFRequestDataFromRequest {
+	const mdfRequestData = mdfRequestDataMock;
+
+	mdfRequestData.companyName = parnterAccount.name;
+	mdfRequestData.maxDateActivity = moment().add(2, 'days').format('YYYY-MM-DD');
+	mdfRequestData.minDateActivity = moment().add(1, 'days').format('YYYY-MM-DD');
+	mdfRequestData.submitDate = new Date().toISOString();
+
+	return mdfRequestData;
 }

@@ -500,8 +500,16 @@ class App extends EventEmitter {
 					? nextScreen.preloadStyles(this.surfaces)
 					: Promise.resolve()
 			)
-			.then(() => nextScreen.flip(this.surfaces))
-			.then(() => nextScreen.evaluateStyles(this.surfaces))
+			.then(() =>
+				this.preloadCSS
+					? nextScreen.evaluateStyles(this.surfaces)
+					: nextScreen.flip(this.surfaces)
+			)
+			.then(() =>
+				this.preloadCSS
+					? nextScreen.flip(this.surfaces)
+					: nextScreen.evaluateStyles(this.surfaces)
+			)
 			.then(() => nextScreen.evaluateScripts(this.surfaces))
 			.then(() => this.maybeUpdateScrollPositionState_())
 			.then(() => this.syncScrollPositionSyncThenAsync_())

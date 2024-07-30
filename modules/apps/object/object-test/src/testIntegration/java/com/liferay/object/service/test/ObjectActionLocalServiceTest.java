@@ -14,9 +14,12 @@ import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
+import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
@@ -71,6 +74,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -293,12 +297,8 @@ public class ObjectActionLocalServiceTest {
 			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency);
 
-		commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
-			commerceOrder, _user.getUserId());
-
-		Assert.assertEquals(
-			CommerceOrderConstants.ORDER_STATUS_PENDING,
-			commerceOrder.getOrderStatus());
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+			commerceOrder, _user.getUserId(), true, true);
 
 		_commerceOrderLocalService.updatePaymentStatus(
 			commerceOrder.getUserId(), commerceOrder.getCommerceOrderId(),
@@ -313,10 +313,50 @@ public class ObjectActionLocalServiceTest {
 			notificationQueueEntries.toString(), 2,
 			notificationQueueEntries.size());
 
+		// Add object action to send an email notification after updating
+		// subscription status
+
+		_objectActionLocalService.deleteObjectAction(objectAction2);
+
+		objectAction2 = _addNotificationTemplateObjectAction(
+			DestinationNames.COMMERCE_SUBSCRIPTION_STATUS,
+			commerceOrderObjectDefinition);
+
+		commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+			commerceOrder, _user.getUserId());
+
+		Assert.assertEquals(
+			CommerceOrderConstants.ORDER_STATUS_PENDING,
+			commerceOrder.getOrderStatus());
+
+		List<CommerceSubscriptionEntry> commerceSubscriptionEntries =
+			_commerceSubscriptionEntryLocalService.
+				getCommerceSubscriptionEntries(
+					_user.getCompanyId(), _commerceChannel.getGroupId(),
+					_user.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null);
+
+		CommerceSubscriptionEntry commerceSubscriptionEntry =
+			commerceSubscriptionEntries.get(0);
+
+		_commerceSubscriptionEngine.suspendRecurringPayment(
+			commerceSubscriptionEntry.getCommerceSubscriptionEntryId());
+
+		notificationQueueEntries =
+			_notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 3,
+			notificationQueueEntries.size());
+
 		_notificationQueueEntryLocalService.deleteNotificationQueueEntry(
 			notificationQueueEntries.get(0));
 		_notificationQueueEntryLocalService.deleteNotificationQueueEntry(
 			notificationQueueEntries.get(1));
+		_notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+			notificationQueueEntries.get(2));
 
 		_objectActionLocalService.deleteObjectAction(objectAction1);
 		_objectActionLocalService.deleteObjectAction(objectAction2);
@@ -2931,6 +2971,13 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Inject
+	private CommerceSubscriptionEngine _commerceSubscriptionEngine;
+
+	@Inject
+	private CommerceSubscriptionEntryLocalService
+		_commerceSubscriptionEntryLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

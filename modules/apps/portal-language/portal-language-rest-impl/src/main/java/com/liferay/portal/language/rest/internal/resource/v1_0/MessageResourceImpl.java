@@ -17,7 +17,8 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.override.model.PLOEntry;
-import com.liferay.portal.language.override.service.PLOEntryLocalService;
+import com.liferay.portal.language.override.model.PLOEntryModel;
+import com.liferay.portal.language.override.service.PLOEntryService;
 import com.liferay.portal.language.rest.dto.v1_0.Message;
 import com.liferay.portal.language.rest.resource.v1_0.MessageResource;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
@@ -25,18 +26,13 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.io.InputStreamReader;
 import java.io.Serializable;
-
-import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javax.ws.rs.BadRequestException;
@@ -61,17 +57,15 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 		}
 
 		if (Validator.isNull(languageId)) {
-			_ploEntryLocalService.deletePLOEntries(
-				contextCompany.getCompanyId(), key);
+			_ploEntryService.deletePLOEntries(key);
 		}
 		else {
-			_ploEntryLocalService.deletePLOEntry(
-				contextCompany.getCompanyId(), key, languageId);
+			_ploEntryService.deletePLOEntry(key, languageId);
 		}
 	}
 
 	@Override
-	public Message getMessage(String key, String languageId) throws Exception {
+	public Message getMessage(String key, String languageId) {
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-27222")) {
 			throw new UnsupportedOperationException();
 		}
@@ -80,18 +74,8 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 
 		message.setKey(() -> key);
 		message.setLanguageId(() -> languageId);
-
-		PLOEntry ploEntry = _ploEntryLocalService.fetchPLOEntry(
-			contextCompany.getCompanyId(), key, languageId);
-
-		if (ploEntry != null) {
-			message.setValue(ploEntry::getValue);
-		}
-		else {
-			message.setValue(
-				() -> _language.get(
-					LocaleUtil.fromLanguageId(languageId), key));
-		}
+		message.setValue(
+			() -> _language.get(LocaleUtil.fromLanguageId(languageId), key));
 
 		return message;
 	}
@@ -128,26 +112,8 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 				"File name must have a \"properties\" file extension");
 		}
 
-		Properties properties = new Properties();
-
-		properties.load(
-			new InputStreamReader(
-				binaryFile.getInputStream(), StandardCharsets.UTF_8));
-
-		if (properties.isEmpty()) {
-			return;
-		}
-
-		Enumeration<String> enumeration =
-			(Enumeration<String>)properties.propertyNames();
-
-		while (enumeration.hasMoreElements()) {
-			String key = enumeration.nextElement();
-
-			_ploEntryLocalService.addOrUpdatePLOEntry(
-				contextCompany.getCompanyId(), contextUser.getUserId(), key,
-				languageId, properties.getProperty(key));
-		}
+		_ploEntryService.importPLOEntries(
+			binaryFile.getInputStream(), languageId);
 	}
 
 	@Override
@@ -170,8 +136,8 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 		}
 
 		List<String> keys = transform(
-			_ploEntryLocalService.getPLOEntries(contextCompany.getCompanyId()),
-			ploEntry -> ploEntry.getKey());
+			_ploEntryService.getPLOEntries(contextCompany.getCompanyId()),
+			PLOEntryModel::getKey);
 
 		String languageId = GetterUtil.getString(parameters.get("languageId"));
 
@@ -210,8 +176,7 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 	private Message _addOrUpdatePLOEntry(Message message)
 		throws PortalException {
 
-		PLOEntry ploEntry = _ploEntryLocalService.addOrUpdatePLOEntry(
-			contextCompany.getCompanyId(), contextUser.getUserId(),
+		PLOEntry ploEntry = _ploEntryService.addOrUpdatePLOEntry(
 			message.getKey(), message.getLanguageId(), message.getValue());
 
 		message.setKey(ploEntry::getKey);
@@ -225,6 +190,6 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 	private Language _language;
 
 	@Reference
-	private PLOEntryLocalService _ploEntryLocalService;
+	private PLOEntryService _ploEntryService;
 
 }

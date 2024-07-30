@@ -113,6 +113,37 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 			return;
 		}
 
+		DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
+
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.LITERAL_NULL) {
+			log(
+				returnVariableDefinitionDetailAST,
+				_MSG_MOVE_VARIABLE_DECLARATION, variableName,
+				getStartLineNumber(slistDetailAST.getFirstChild()));
+
+			return;
+		}
+
+		if (firstChildDetailAST.getType() != TokenTypes.LITERAL_NEW) {
+			return;
+		}
+
+		DetailAST elistDetailAST = firstChildDetailAST.findFirstToken(
+			TokenTypes.ELIST);
+
+		if (elistDetailAST.getChildCount() != 0) {
+			return;
+		}
+
+		DetailAST objBlockDetailAST = firstChildDetailAST.findFirstToken(
+			TokenTypes.OBJBLOCK);
+
+		if (objBlockDetailAST != null) {
+			return;
+		}
+
 		List<DetailAST> childDetailASTList = getAllChildTokens(
 			slistDetailAST, true, TokenTypes.LITERAL_RETURN,
 			TokenTypes.LITERAL_THROW);
@@ -122,35 +153,6 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 					returnVariableDefinitionDetailAST.getLineNo()) {
 
 				return;
-			}
-		}
-
-		List<DetailAST> assignIdentDetailASTList = getAllChildTokens(
-			assignDetailAST, true, TokenTypes.IDENT);
-		List<DetailAST> slistIdentDetailASTList = getAllChildTokens(
-			slistDetailAST, true, TokenTypes.IDENT);
-
-		for (DetailAST assignIdentDetailAST : assignIdentDetailASTList) {
-			DetailAST variableDefinitionDetailAST =
-				getVariableDefinitionDetailAST(
-					assignDetailAST, assignIdentDetailAST.getText(), false);
-
-			if ((variableDefinitionDetailAST != null) &&
-				(variableDefinitionDetailAST.getType() !=
-					TokenTypes.PARAMETER_DEF)) {
-
-				return;
-			}
-
-			for (DetailAST slistIdentDetailAST : slistIdentDetailASTList) {
-				if (StringUtil.equals(
-						assignIdentDetailAST.getText(),
-						slistIdentDetailAST.getText()) &&
-					(slistIdentDetailAST.getLineNo() <
-						returnVariableDefinitionDetailAST.getLineNo())) {
-
-					return;
-				}
 			}
 		}
 

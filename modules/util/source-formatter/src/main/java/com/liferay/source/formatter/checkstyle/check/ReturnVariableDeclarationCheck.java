@@ -117,13 +117,45 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 
 		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-		if (firstChildDetailAST.getType() == TokenTypes.LITERAL_NULL) {
+		if ((firstChildDetailAST.getType() == TokenTypes.LITERAL_NULL) ||
+			(firstChildDetailAST.getType() == TokenTypes.STRING_LITERAL) ||
+			(firstChildDetailAST.getType() == TokenTypes.NUM_DOUBLE) ||
+			(firstChildDetailAST.getType() == TokenTypes.NUM_FLOAT) ||
+			(firstChildDetailAST.getType() == TokenTypes.NUM_INT) ||
+			(firstChildDetailAST.getType() == TokenTypes.NUM_LONG)) {
+
 			log(
 				returnVariableDefinitionDetailAST,
 				_MSG_MOVE_VARIABLE_DECLARATION, variableName,
 				getStartLineNumber(slistDetailAST.getFirstChild()));
 
 			return;
+		}
+
+		if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
+			DetailAST dotDetailAST = firstChildDetailAST.findFirstToken(
+				TokenTypes.DOT);
+
+			if (dotDetailAST == null) {
+				return;
+			}
+
+			List<String> names = getNames(dotDetailAST, false);
+
+			if (names.size() != 2) {
+				return;
+			}
+
+			if (StringUtil.equals(names.get(0), "Collections") &&
+				StringUtil.equals(names.get(1), "emptyList")) {
+
+				log(
+					returnVariableDefinitionDetailAST,
+					_MSG_MOVE_VARIABLE_DECLARATION, variableName,
+					getStartLineNumber(slistDetailAST.getFirstChild()));
+
+				return;
+			}
 		}
 
 		if (firstChildDetailAST.getType() != TokenTypes.LITERAL_NEW) {

@@ -21,12 +21,14 @@ public class CommerceOrderModifiedDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public CommerceOrderModifiedDateComparator() {
-		this(false);
-	}
+	public static CommerceOrderModifiedDateComparator getInstance(
+		boolean ascending) {
 
-	public CommerceOrderModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -59,6 +61,16 @@ public class CommerceOrderModifiedDateComparator
 	public boolean isAscending() {
 		return _ascending;
 	}
+
+	private CommerceOrderModifiedDateComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final CommerceOrderModifiedDateComparator
+		_INSTANCE_ASCENDING = new CommerceOrderModifiedDateComparator(true);
+
+	private static final CommerceOrderModifiedDateComparator
+		_INSTANCE_DESCENDING = new CommerceOrderModifiedDateComparator(false);
 
 	private final boolean _ascending;
 

@@ -37,8 +37,8 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 					connection,
 					StringBundler.concat(
 						"update DDMField set parentFieldId = ? where ",
-						"DDMField.storageId = ? and ",
-						"DDMField.structureVersionId = ? and ",
+						"DDMField.ctCollectionId = ? and DDMField.storageId = ",
+						"? and DDMField.structureVersionId = ? and ",
 						"DDMField.fieldName like ? and DDMField.priority = ",
 						"?"))) {
 
@@ -54,9 +54,10 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 				try (PreparedStatement preparedStatement3 =
 						connection.prepareStatement(
 							StringBundler.concat(
-								"select DDMField.fieldId, DDMField.priority ",
-								"from DDMField where DDMField.storageId = ? ",
-								"and DDMField.structureVersionId = ? and ",
+								"select DDMField.ctCollectionId, ",
+								"DDMField.fieldId, DDMField.priority from ",
+								"DDMField where DDMField.storageId = ? and ",
+								"DDMField.structureVersionId = ? and ",
 								"DDMField.fieldName like ? "))) {
 
 					preparedStatement3.setLong(1, storageId);
@@ -68,11 +69,13 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 					while (resultSet2.next()) {
 						preparedStatement2.setLong(
 							1, resultSet2.getLong("fieldId"));
-						preparedStatement2.setLong(2, storageId);
-						preparedStatement2.setLong(3, structureVersionId);
-						preparedStatement2.setString(4, "content");
 						preparedStatement2.setLong(
-							5, resultSet2.getLong("priority") + 1);
+							2, resultSet2.getLong("ctCollectionId"));
+						preparedStatement2.setLong(3, storageId);
+						preparedStatement2.setLong(4, structureVersionId);
+						preparedStatement2.setString(5, "content");
+						preparedStatement2.setLong(
+							6, resultSet2.getLong("priority") + 1);
 
 						preparedStatement2.addBatch();
 					}
@@ -86,7 +89,8 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 	private void _upgradeDDMStorageLinks() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select DDMStructureVersion.structureId, ",
+					"select DDMStorageLink.ctCollectionId, ",
+					"DDMStructureVersion.structureId, ",
 					"DDMStorageLink.storageLinkId from DDMStorageLink inner ",
 					"join DDMStructureVersion on ",
 					"DDMStructureVersion.structureVersionId = ",
@@ -96,12 +100,15 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
 					"update DDMStorageLink set structureId = ? where " +
-						"storageLinkId = ?");
+						"ctCollectionId = ? and storageLinkId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				preparedStatement2.setLong(1, resultSet.getLong(1));
-				preparedStatement2.setLong(2, resultSet.getLong(2));
+				preparedStatement2.setLong(1, resultSet.getLong("structureId"));
+				preparedStatement2.setLong(
+					2, resultSet.getLong("ctCollectionId"));
+				preparedStatement2.setLong(
+					3, resultSet.getLong("storageLinkId"));
 
 				preparedStatement2.addBatch();
 			}

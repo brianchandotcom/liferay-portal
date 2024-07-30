@@ -147,9 +147,7 @@ public abstract class BaseJob implements Job {
 			}
 
 			boolean relevantEngineEnabled = Boolean.parseBoolean(
-				buildProperties.getProperty(
-					JenkinsResultsParserUtil.combine(
-						"relevant.engine.enabled[", _jobName, "]")));
+				buildProperties.getProperty("relevant.engine.enabled"));
 
 			if (relevantEngineEnabled &&
 				Objects.equals(getTestSuiteName(), "relevant")) {

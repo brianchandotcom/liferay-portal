@@ -14,12 +14,14 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class ArchivedSettingsNameComparator
 	extends OrderByComparator<ArchivedSettings> {
 
-	public ArchivedSettingsNameComparator() {
-		this(false);
-	}
+	public static ArchivedSettingsNameComparator getInstance(
+		boolean ascending) {
 
-	public ArchivedSettingsNameComparator(boolean ascending) {
-		_ascending = ascending;
+		if (ascending) {
+			return _INSTANCE_ASCENDING;
+		}
+
+		return _INSTANCE_DESCENDING;
 	}
 
 	@Override
@@ -38,6 +40,16 @@ public class ArchivedSettingsNameComparator
 
 		return -value;
 	}
+
+	private ArchivedSettingsNameComparator(boolean ascending) {
+		_ascending = ascending;
+	}
+
+	private static final ArchivedSettingsNameComparator _INSTANCE_ASCENDING =
+		new ArchivedSettingsNameComparator(true);
+
+	private static final ArchivedSettingsNameComparator _INSTANCE_DESCENDING =
+		new ArchivedSettingsNameComparator(false);
 
 	private final boolean _ascending;
 

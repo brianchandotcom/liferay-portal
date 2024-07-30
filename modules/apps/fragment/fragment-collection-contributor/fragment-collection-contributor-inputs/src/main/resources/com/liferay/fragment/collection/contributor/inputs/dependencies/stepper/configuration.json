@@ -1,0 +1,20 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": true,
+					"label": "show-bullets-numbers",
+					"name": "showNumbers",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": true,
+					"label": "show-steps-titles",
+					"name": "showTitles",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

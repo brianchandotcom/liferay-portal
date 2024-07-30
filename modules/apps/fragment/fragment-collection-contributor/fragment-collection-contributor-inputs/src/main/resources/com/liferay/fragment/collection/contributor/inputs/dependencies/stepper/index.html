@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-center">
+	<ol class="multi-step-nav multi-step-item-fixed-width my-3 [#if configuration.showTitles]multi-step-indicator-label-top[/#if]">
+		<li class="m-0 multi-step-item multi-step-item-expand" id="${fragmentEntryLinkNamespace}-step-01">
+			<div class="multi-step-divider" />
+
+			<div class="multi-step-indicator">
+				[#if configuration.showTitles]
+					<div class="multi-step-indicator-label" data-lfr-editable-id="step-1-text" data-lfr-editable-type="text">Step 01</div>
+				[/#if]
+
+			<button class="btn btn-unstyled multi-step-icon" data-multi-step-icon="${configuration.showNumbers?then(1, '')}" type="button" />
+			</div>
+		</li>
+		<li class="m-0 multi-step-item" id="${fragmentEntryLinkNamespace}-step-02">
+			<div class="multi-step-divider" />
+
+			<div class="multi-step-indicator">
+				[#if configuration.showTitles]
+					<div class="multi-step-indicator-label" data-lfr-editable-id="step-2-text" data-lfr-editable-type="text">Step 02</div>
+				[/#if]
+
+			<button class="btn btn-unstyled multi-step-icon" data-multi-step-icon="${configuration.showNumbers?then(2, '')}" type="button" />
+			</div>
+		</li>
+	</ol>
+</div>

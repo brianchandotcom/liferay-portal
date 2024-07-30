@@ -34,9 +34,9 @@ public class BindingResultImpl implements MutableBindingResult, Serializable {
 
 	@Override
 	public Set<ParamError> getAllErrors() {
-		_consulted = true;
-
 		Set<ParamError> allErrors = new LinkedHashSet<>();
+
+		_consulted = true;
 
 		allErrors.addAll(_bindingErrors);
 		allErrors.addAll(_validationErrors);
@@ -46,9 +46,9 @@ public class BindingResultImpl implements MutableBindingResult, Serializable {
 
 	@Override
 	public List<String> getAllMessages() {
-		_consulted = true;
-
 		List<String> allMessages = new ArrayList<>();
+
+		_consulted = true;
 
 		for (BindingError bindingError : _bindingErrors) {
 			allMessages.add(bindingError.getMessage());
@@ -63,9 +63,9 @@ public class BindingResultImpl implements MutableBindingResult, Serializable {
 
 	@Override
 	public Set<ParamError> getErrors(String paramName) {
-		_consulted = true;
-
 		Set<ParamError> errors = new LinkedHashSet<>();
+
+		_consulted = true;
 
 		for (BindingError bindingError : _bindingErrors) {
 			if (Objects.equals(bindingError.getParamName(), paramName)) {

@@ -133,7 +133,7 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 		DetailAST elistDetailAST = firstChildDetailAST.findFirstToken(
 			TokenTypes.ELIST);
 
-		if (elistDetailAST.getChildCount() != 0) {
+		if ((elistDetailAST == null) || (elistDetailAST.getChildCount() != 0)) {
 			return;
 		}
 

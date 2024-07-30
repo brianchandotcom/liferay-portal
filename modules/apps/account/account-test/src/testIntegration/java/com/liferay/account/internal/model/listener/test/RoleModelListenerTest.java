@@ -64,7 +64,8 @@ public class RoleModelListenerTest {
 	@Test
 	public void testAddAccountScopedRole() throws Exception {
 		Role role = _roleLocalService.addRole(
-			TestPropsValues.getUserId(), AccountRole.class.getName(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			AccountRole.class.getName(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
@@ -115,7 +116,8 @@ public class RoleModelListenerTest {
 		throws Exception {
 
 		Role role = _roleLocalService.addRole(
-			TestPropsValues.getUserId(), AccountRole.class.getName(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			AccountRole.class.getName(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),

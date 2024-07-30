@@ -722,7 +722,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		if (role == null) {
 			role = _roleLocalService.addRole(
-				serviceContext.getUserId(), null, 0, name,
+				null, serviceContext.getUserId(), null, 0, name,
 				HashMapBuilder.put(
 					serviceContext.getLocale(), name
 				).build(),

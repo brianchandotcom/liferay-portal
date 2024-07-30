@@ -216,8 +216,8 @@ public class PermissionImporterImpl implements PermissionImporter {
 		serviceContext.setUuid(uuid);
 
 		return _roleLocalService.addRole(
-			userId, null, 0, name, titleMap, descriptionMap, type, subtype,
-			serviceContext);
+			null, userId, null, 0, name, titleMap, descriptionMap, type,
+			subtype, serviceContext);
 	}
 
 	private List<String> _getActions(Element element) {

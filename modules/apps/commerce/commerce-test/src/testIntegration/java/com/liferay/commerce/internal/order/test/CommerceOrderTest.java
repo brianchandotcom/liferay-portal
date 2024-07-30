@@ -1102,7 +1102,8 @@ public class CommerceOrderTest {
 
 	private Role _addSalesAgentRole() throws Exception {
 		Role role = _roleLocalService.addRole(
-			_user.getUserId(), null, 0, "Sales Agent",
+			RandomTestUtil.randomString(), _user.getUserId(), null, 0,
+			"Sales Agent",
 			HashMapBuilder.put(
 				_serviceContext.getLocale(), "Sales Agent"
 			).build(),

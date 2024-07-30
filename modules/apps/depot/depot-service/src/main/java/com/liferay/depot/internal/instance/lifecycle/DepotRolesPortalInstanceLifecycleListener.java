@@ -56,7 +56,7 @@ public class DepotRolesPortalInstanceLifecycleListener
 				User user = _userLocalService.getGuestUser(companyId);
 
 				return _roleLocalService.addRole(
-					user.getUserId(), null, 0, name, null,
+					null, user.getUserId(), null, 0, name, null,
 					DepotRoleUtil.getDescriptionMap(_language, name),
 					RoleConstants.TYPE_DEPOT, null, null);
 			}

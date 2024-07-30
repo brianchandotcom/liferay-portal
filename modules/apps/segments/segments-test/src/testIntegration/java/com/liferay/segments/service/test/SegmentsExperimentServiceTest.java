@@ -66,8 +66,9 @@ public class SegmentsExperimentServiceTest {
 		_group = GroupTestUtil.addGroup();
 
 		_role = RoleLocalServiceUtil.addRole(
-			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_SITE, null,
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			StringUtil.randomString(), null, null, RoleConstants.TYPE_SITE,
+			null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_user = UserTestUtil.addGroupUser(_group, _role.getName());

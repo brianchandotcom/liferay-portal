@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -73,20 +74,25 @@ public class RoleModelListenerTest {
 	@Test
 	public void testAddOtherRoleTypes() throws Exception {
 		_roleLocalService.addRole(
-			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_ACCOUNT, null, _serviceContext);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			StringUtil.randomString(), null, null, RoleConstants.TYPE_ACCOUNT,
+			null, _serviceContext);
 		_roleLocalService.addRole(
-			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_DEPOT, null, _serviceContext);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			StringUtil.randomString(), null, null, RoleConstants.TYPE_DEPOT,
+			null, _serviceContext);
 		_roleLocalService.addRole(
-			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_PROVIDER, null, _serviceContext);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			StringUtil.randomString(), null, null, RoleConstants.TYPE_PROVIDER,
+			null, _serviceContext);
 		_roleLocalService.addRole(
-			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_ORGANIZATION, null, _serviceContext);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			StringUtil.randomString(), null, null,
+			RoleConstants.TYPE_ORGANIZATION, null, _serviceContext);
 		_roleLocalService.addRole(
-			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_PUBLICATIONS, null, _serviceContext);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			StringUtil.randomString(), null, null,
+			RoleConstants.TYPE_PUBLICATIONS, null, _serviceContext);
 
 		_assertConfiguration(new String[0]);
 	}
@@ -94,8 +100,9 @@ public class RoleModelListenerTest {
 	@Test
 	public void testAddRole() throws Exception {
 		Role role = _roleLocalService.addRole(
-			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_SITE, null, _serviceContext);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			StringUtil.randomString(), null, null, RoleConstants.TYPE_SITE,
+			null, _serviceContext);
 
 		_assertConfiguration(new String[] {String.valueOf(role.getRoleId())});
 	}
@@ -103,11 +110,13 @@ public class RoleModelListenerTest {
 	@Test
 	public void testDeleteRole() throws Exception {
 		Role role1 = _roleLocalService.addRole(
-			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_REGULAR, null, _serviceContext);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			StringUtil.randomString(), null, null, RoleConstants.TYPE_REGULAR,
+			null, _serviceContext);
 		Role role2 = _roleLocalService.addRole(
-			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
-			null, null, RoleConstants.TYPE_SITE, null, _serviceContext);
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			StringUtil.randomString(), null, null, RoleConstants.TYPE_SITE,
+			null, _serviceContext);
 
 		_assertConfiguration(
 			new String[] {

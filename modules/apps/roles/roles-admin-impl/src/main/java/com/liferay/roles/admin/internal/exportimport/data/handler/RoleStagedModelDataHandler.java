@@ -141,7 +141,7 @@ public class RoleStagedModelDataHandler
 			serviceContext.setUuid(role.getUuid());
 
 			importedRole = _roleLocalService.addRole(
-				userId, null, 0, role.getName(), role.getTitleMap(),
+				null, userId, null, 0, role.getName(), role.getTitleMap(),
 				role.getDescriptionMap(), role.getType(), role.getSubtype(),
 				serviceContext);
 		}

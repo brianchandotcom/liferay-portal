@@ -152,7 +152,7 @@ public class UserGroupIndexerTest {
 
 	private Role _addRole() throws Exception {
 		Role role = roleLocalService.addRole(
-			TestPropsValues.getUserId(), null, 0,
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
 			RandomTestUtil.randomString(
 				NumericStringRandomizerBumper.INSTANCE,
 				UniqueStringRandomizerBumper.INSTANCE),

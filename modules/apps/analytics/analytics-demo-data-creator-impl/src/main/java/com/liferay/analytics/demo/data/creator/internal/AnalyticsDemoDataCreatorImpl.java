@@ -247,7 +247,7 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 
 			try {
 				role = _roleLocalService.addRole(
-					_guestUserId, null, 0, name, null, null,
+					null, _guestUserId, null, 0, name, null, null,
 					RoleConstants.TYPE_REGULAR, null, null);
 			}
 			catch (DuplicateRoleException duplicateRoleException) {

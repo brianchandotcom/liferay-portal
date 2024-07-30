@@ -354,7 +354,7 @@ public class AnnouncementsEntryLocalServiceTest {
 
 	private void _deleteRoleAnnouncements(int roleType) throws Exception {
 		Role role = _roleLocalService.addRole(
-			_user.getUserId(), null, 0,
+			RandomTestUtil.randomString(), _user.getUserId(), null, 0,
 			RandomTestUtil.randomString(
 				NumericStringRandomizerBumper.INSTANCE,
 				UniqueStringRandomizerBumper.INSTANCE),

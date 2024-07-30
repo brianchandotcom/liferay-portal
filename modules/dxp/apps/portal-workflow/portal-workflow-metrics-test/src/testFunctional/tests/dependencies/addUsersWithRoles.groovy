@@ -58,6 +58,6 @@ com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil.addUserGroupRole
 //create a new Role and assign it to created user
 java.util.Map<java.util.Locale, String> titleMap = new java.util.HashMap<java.util.Locale, String>();
 titleMap.put(java.util.Locale.US, i + "Role");
-com.liferay.portal.kernel.model.Role newRole = com.liferay.portal.kernel.service.RoleLocalServiceUtil.addRole(userId, null, 0, i + "Role", titleMap, titleMap, 1, null, null);
+com.liferay.portal.kernel.model.Role newRole = com.liferay.portal.kernel.service.RoleLocalServiceUtil.addRole(null, userId, null, 0, i + "Role", titleMap, titleMap, 1, null, null);
 com.liferay.portal.kernel.service.UserLocalServiceUtil.addRoleUser(newRole.getRoleId(), groupUser);
 }

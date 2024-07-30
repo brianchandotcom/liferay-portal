@@ -204,7 +204,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 		com.liferay.portal.kernel.model.Role serviceBuilderRole =
 			_roleService.addRole(
-				className, 0, role.getName(), _getTitleMap(role),
+				null, className, 0, role.getName(), _getTitleMap(role),
 				_getDescriptionMap(role), type, null,
 				ServiceContextFactory.getInstance(contextHttpServletRequest));
 
@@ -295,7 +295,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 		if (serviceBuilderRole == null) {
 			serviceBuilderRole = _roleService.addRole(
-				className, 0, role.getName(), _getTitleMap(role),
+				null, className, 0, role.getName(), _getTitleMap(role),
 				_getDescriptionMap(role), type, null, serviceContext);
 		}
 		else {

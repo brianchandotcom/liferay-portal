@@ -29,8 +29,8 @@ public class RoleUADTestHelper {
 			UniqueStringRandomizerBumper.INSTANCE);
 
 		return _roleLocalService.addRole(
-			userId, null, 0, name, null, null, RoleConstants.TYPE_REGULAR, null,
-			null);
+			null, userId, null, 0, name, null, null, RoleConstants.TYPE_REGULAR,
+			null, null);
 	}
 
 	public void cleanUpDependencies(List<Role> roles) throws Exception {

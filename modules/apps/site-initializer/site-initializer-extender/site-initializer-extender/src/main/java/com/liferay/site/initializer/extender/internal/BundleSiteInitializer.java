@@ -3625,7 +3625,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 				else {
 					role = _roleLocalService.addRole(
-						serviceContext.getUserId(), null, 0,
+						null, serviceContext.getUserId(), null, 0,
 						jsonObject.getString("name"),
 						SiteInitializerUtil.toMap(
 							jsonObject.getString("name_i18n")),

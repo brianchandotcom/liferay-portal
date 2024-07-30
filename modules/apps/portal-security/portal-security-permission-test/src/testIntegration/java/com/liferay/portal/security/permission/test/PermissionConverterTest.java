@@ -46,7 +46,8 @@ public class PermissionConverterTest {
 	@Test
 	public void testConvertPermissionsRole() throws Exception {
 		Role role = _roleLocalService.addRole(
-			TestPropsValues.getUserId(), null, 0, "Depot Role Example", null,
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			"Depot Role Example", null,
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			RoleConstants.TYPE_DEPOT, null, null);

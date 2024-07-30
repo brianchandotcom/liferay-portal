@@ -109,8 +109,8 @@ public class FileEntryWebServerTest extends BaseWebServerTestCase {
 		FileEntry fileEntry = _addFileEntry(RandomTestUtil.randomString());
 
 		Role regularRole = _roleLocalService.addRole(
-			TestPropsValues.getUserId(), null, 0, RandomTestUtil.randomString(),
-			null,
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			RandomTestUtil.randomString(), null,
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			RoleConstants.TYPE_REGULAR, null, null);

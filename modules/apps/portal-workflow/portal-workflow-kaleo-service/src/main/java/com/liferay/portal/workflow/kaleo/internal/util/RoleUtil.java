@@ -67,7 +67,7 @@ public class RoleUtil {
 			}
 			else {
 				role = RoleLocalServiceUtil.addRole(
-					serviceContext.getUserId(), null, 0, name, null,
+					null, serviceContext.getUserId(), null, 0, name, null,
 					descriptionMap, roleType, null, null);
 			}
 		}

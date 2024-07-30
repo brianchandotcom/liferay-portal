@@ -222,7 +222,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 				_roleTypeContributorProvider.getRoleTypeContributor(type);
 
 			Role role = _roleService.addRole(
-				roleTypeContributor.getClassName(), 0, name, titleMap,
+				null, roleTypeContributor.getClassName(), 0, name, titleMap,
 				descriptionMap, type, subtype, serviceContext);
 
 			String redirect = _portal.escapeRedirect(

@@ -535,8 +535,8 @@ public class CompanyLocalServiceTest {
 				user.getUserId(), userGroup);
 
 			role = _roleLocalService.addRole(
-				userId, Group.class.getName(), group.getClassPK(),
-				StringUtil.randomString(),
+				RandomTestUtil.randomString(), userId, Group.class.getName(),
+				group.getClassPK(), StringUtil.randomString(),
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), StringUtil.randomString()),
 				Collections.emptyMap(), RoleConstants.TYPE_SITE,
@@ -735,8 +735,8 @@ public class CompanyLocalServiceTest {
 				user.getUserId(), userGroup);
 
 			Role role = _roleLocalService.addRole(
-				userId, Group.class.getName(), group.getClassPK(),
-				StringUtil.randomString(),
+				RandomTestUtil.randomString(), userId, Group.class.getName(),
+				group.getClassPK(), StringUtil.randomString(),
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), StringUtil.randomString()),
 				Collections.emptyMap(), RoleConstants.TYPE_SITE,

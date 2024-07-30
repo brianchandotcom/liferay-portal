@@ -67,7 +67,7 @@ public class AccountRoleLocalServiceImpl
 		throws PortalException {
 
 		Role role = _roleLocalService.addRole(
-			userId, AccountRole.class.getName(),
+			null, userId, AccountRole.class.getName(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name, titleMap,
 			descriptionMap, RoleConstants.TYPE_ACCOUNT, null, null);
 

@@ -209,7 +209,7 @@ public class DefaultPortalKaleoManager
 			}
 
 			roleLocalService.addRole(
-				guestUser.getUserId(), null, 0, name, null,
+				null, guestUser.getUserId(), null, 0, name, null,
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), entry.getValue()
 				).build(),

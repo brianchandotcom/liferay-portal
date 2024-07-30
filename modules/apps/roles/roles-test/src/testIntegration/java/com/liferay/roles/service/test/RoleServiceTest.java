@@ -110,22 +110,22 @@ public class RoleServiceTest extends BasePermissionTestCase {
 
 		expectedRoles.add(
 			_roleService.addRole(
-				_className.getClassName(), RandomTestUtil.nextLong(),
-				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), _className.getClassName(),
+				RandomTestUtil.nextLong(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RoleConstants.TYPE_PROVIDER, null, null));
 		expectedRoles.add(
 			_roleService.addRole(
-				_className.getClassName(), RandomTestUtil.nextLong(),
-				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), _className.getClassName(),
+				RandomTestUtil.nextLong(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RoleConstants.TYPE_PROVIDER, null, null));
 		expectedRoles.add(
 			_roleService.addRole(
-				_className.getClassName(), RandomTestUtil.nextLong(),
-				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), _className.getClassName(),
+				RandomTestUtil.nextLong(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RoleConstants.TYPE_PROVIDER, null, null));
@@ -134,8 +134,8 @@ public class RoleServiceTest extends BasePermissionTestCase {
 
 		_roles.add(
 			_roleService.addRole(
-				Role.class.getName(), RandomTestUtil.nextLong(),
-				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), Role.class.getName(),
+				RandomTestUtil.nextLong(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RoleConstants.TYPE_PROVIDER, null, null));

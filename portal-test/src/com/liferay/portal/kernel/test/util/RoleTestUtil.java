@@ -86,8 +86,8 @@ public class RoleTestUtil {
 			}
 
 			role = RoleLocalServiceUtil.addRole(
-				TestPropsValues.getUserId(), null, 0, roleName, null, null,
-				roleType, null, null);
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				null, 0, roleName, null, null, roleType, null, null);
 		}
 
 		return role;

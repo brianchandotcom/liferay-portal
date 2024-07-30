@@ -68,7 +68,8 @@ public class GetEmailNotificationRolesMVCResourceCommandTest {
 		Role accountRole1 = _addAccountRole(user);
 		Role accountRole2 = _addAccountRole(user);
 		Role accountRole3 = _roleLocalService.addRole(
-			user.getUserId(), AccountRole.class.getName(),
+			RandomTestUtil.randomString(), user.getUserId(),
+			AccountRole.class.getName(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
@@ -209,8 +210,8 @@ public class GetEmailNotificationRolesMVCResourceCommandTest {
 
 	private Role _addRole(int type, User user) throws Exception {
 		return _roleLocalService.addRole(
-			user.getUserId(), null, 0, RandomTestUtil.randomString(), null,
-			null, type, null, null);
+			RandomTestUtil.randomString(), user.getUserId(), null, 0,
+			RandomTestUtil.randomString(), null, null, type, null, null);
 	}
 
 	@Inject

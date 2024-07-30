@@ -517,7 +517,8 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 		com.liferay.portal.kernel.model.Role serviceBuilderRole =
 			RoleLocalServiceUtil.addRole(
-				_user.getUserId(), null, 0, role.getName(),
+				RandomTestUtil.randomString(), _user.getUserId(), null, 0,
+				role.getName(),
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), role.getName()
 				).build(),

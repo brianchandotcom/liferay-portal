@@ -1012,8 +1012,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	private Role _addRole(int type, User user) throws Exception {
 		return _roleLocalService.addRole(
-			user.getUserId(), null, 0, RandomTestUtil.randomString(), null,
-			null, type, null, null);
+			RandomTestUtil.randomString(), user.getUserId(), null, 0,
+			RandomTestUtil.randomString(), null, null, type, null, null);
 	}
 
 	private void _assertNotificationQueueEntry(

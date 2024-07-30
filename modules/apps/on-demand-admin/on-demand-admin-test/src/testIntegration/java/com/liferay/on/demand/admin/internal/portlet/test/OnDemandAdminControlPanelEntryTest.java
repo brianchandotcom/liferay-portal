@@ -99,8 +99,8 @@ public class OnDemandAdminControlPanelEntryTest {
 				_onDemandAdminPortlet));
 
 		Role role = _roleLocalService.addRole(
-			companyAdminUser.getUserId(), null, 0,
-			RandomTestUtil.randomString(), null, null,
+			RandomTestUtil.randomString(), companyAdminUser.getUserId(), null,
+			0, RandomTestUtil.randomString(), null, null,
 			RoleConstants.TYPE_REGULAR, null, null);
 
 		RoleTestUtil.addResourcePermission(

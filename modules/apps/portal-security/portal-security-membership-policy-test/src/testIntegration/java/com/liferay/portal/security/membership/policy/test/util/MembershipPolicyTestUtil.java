@@ -100,7 +100,8 @@ public class MembershipPolicyTestUtil {
 		String name = RandomTestUtil.randomString();
 
 		return RoleServiceUtil.addRole(
-			null, 0, name, RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), null, 0, name,
+			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), type,
 			RandomTestUtil.randomString(),
 			populateServiceContext(Role.class, false));

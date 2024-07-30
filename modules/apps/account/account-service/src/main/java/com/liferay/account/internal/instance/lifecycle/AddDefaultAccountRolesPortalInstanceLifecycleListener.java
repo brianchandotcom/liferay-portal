@@ -149,7 +149,7 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 			User guestUser = company.getGuestUser();
 
 			_roleLocalService.addRole(
-				guestUser.getUserId(), null, 0,
+				null, guestUser.getUserId(), null, 0,
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER, null,
 				AccountRoleConstants.roleDescriptionsMap.get(
 					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER),

@@ -56,8 +56,8 @@ public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 
 				if (role == null) {
 					role = _roleLocalService.addRole(
-						_userLocalService.getGuestUserId(companyId), null, 0,
-						RoleConstants.PUBLICATIONS_USER, null,
+						null, _userLocalService.getGuestUserId(companyId), null,
+						0, RoleConstants.PUBLICATIONS_USER, null,
 						HashMapBuilder.put(
 							LocaleUtil.fromLanguageId(
 								UpgradeProcessUtil.getDefaultLanguageId(

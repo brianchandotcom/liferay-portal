@@ -559,7 +559,8 @@ public class CommerceNotificationTest {
 
 		if (_accountAdminRole == null) {
 			_accountAdminRole = _roleLocalService.addRole(
-				_serviceContext.getUserId(), null, 0,
+				RandomTestUtil.randomString(), _serviceContext.getUserId(),
+				null, 0,
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR,
 				Collections.singletonMap(
 					_serviceContext.getLocale(),
@@ -592,7 +593,8 @@ public class CommerceNotificationTest {
 
 		if (_orderManagerRole == null) {
 			_orderManagerRole = _roleLocalService.addRole(
-				_serviceContext.getUserId(), null, 0, "Order Manager",
+				RandomTestUtil.randomString(), _serviceContext.getUserId(),
+				null, 0, "Order Manager",
 				Collections.singletonMap(
 					_serviceContext.getLocale(), "Order Manager"),
 				Collections.emptyMap(), RoleConstants.TYPE_SITE,

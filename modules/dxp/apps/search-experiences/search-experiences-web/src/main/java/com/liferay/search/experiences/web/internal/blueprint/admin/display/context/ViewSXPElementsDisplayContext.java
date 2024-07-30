@@ -71,7 +71,7 @@ public class ViewSXPElementsDisplayContext {
 				dropdownItem.setHref("addSXPElement");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
-						_sxpRequestHelper.getRequest(), "add-element"));
+						_sxpRequestHelper.getRequest(), "new-search-element"));
 				dropdownItem.setTarget("event");
 			});
 

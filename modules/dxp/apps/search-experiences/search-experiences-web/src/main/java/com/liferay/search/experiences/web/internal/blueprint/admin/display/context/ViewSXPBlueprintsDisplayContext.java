@@ -73,7 +73,8 @@ public class ViewSXPBlueprintsDisplayContext {
 				dropdownItem.setHref("addSXPBlueprint");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
-						_sxpRequestHelper.getRequest(), "add-blueprint"));
+						_sxpRequestHelper.getRequest(),
+						"new-search-blueprint"));
 				dropdownItem.setTarget("event");
 			});
 

@@ -174,10 +174,10 @@ public class ViewRendererMVCImpl implements ViewRenderer {
 	}
 
 	private List<ViewEngine> _getViewEngines(BeanManager beanManager) {
+		List<ViewEngine> viewEngines = new ArrayList<>();
+
 		Set<Bean<?>> beans = beanManager.getBeans(
 			_viewEnginesTypeLiteral.getType(), _viewEngines);
-
-		List<ViewEngine> viewEngines = new ArrayList<>();
 
 		Bean<?> bean = beanManager.resolve(beans);
 

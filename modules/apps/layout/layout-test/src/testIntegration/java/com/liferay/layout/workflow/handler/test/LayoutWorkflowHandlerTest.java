@@ -162,6 +162,21 @@ public class LayoutWorkflowHandlerTest {
 			HashMapBuilder.put(
 				"p_l_back_url", themeDisplay.getURLCurrent()
 			).build());
+
+		themeDisplay.setDoAsUserId(RandomTestUtil.randomString());
+		themeDisplay.setDoAsUserLanguageId(RandomTestUtil.randomString());
+
+		_assertGetURLViewInContext(
+			layout.getPlid(),
+			draftLayout.getFriendlyURL(_portal.getSiteDefaultLocale(_group)),
+			mockHttpServletRequest,
+			HashMapBuilder.put(
+				"doAsUserId", themeDisplay.getDoAsUserId()
+			).put(
+				"doAsUserLanguageId", themeDisplay.getDoAsUserLanguageId()
+			).put(
+				"p_l_back_url", themeDisplay.getURLCurrent()
+			).build());
 	}
 
 	@Test

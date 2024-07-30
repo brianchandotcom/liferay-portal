@@ -5,6 +5,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.batch.TestBatch;
+import com.liferay.jenkins.results.parser.test.suite.RelevantTestSuite;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -25,6 +28,33 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
 	public boolean bypassCITestRelevant() {
 		setUp();
+
+		Properties buildProperties;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties(
+				false);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
+		}
+
+		boolean relevantEngineEnabled = Boolean.parseBoolean(
+			buildProperties.getProperty("relevant.engine.enabled"));
+
+		if (relevantEngineEnabled) {
+			RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
+				_getRelevantPortalAcceptancePullRequestJob());
+
+			List<TestBatch> testBatches = relevantTestSuite.getTestBatches();
+
+			if (testBatches.isEmpty()) {
+				return true;
+			}
+
+			return false;
+		}
 
 		String ciTestRelevantBypassFilePathPatterns =
 			JenkinsResultsParserUtil.getCIProperty(
@@ -223,6 +253,23 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 		}
 
 		return testProperties;
+	}
+
+	private PortalAcceptancePullRequestJob
+		_getRelevantPortalAcceptancePullRequestJob() {
+
+		String upstreamBranchName = getUpstreamBranchName();
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			(PortalGitWorkingDirectory)getGitWorkingDirectory();
+
+		portalGitWorkingDirectory.getGitRepositoryName();
+
+		return (PortalAcceptancePullRequestJob)JobFactory.newJob(
+			Job.BuildProfile.DXP, "test-portal-acceptance-pullrequest(master)",
+			null, portalGitWorkingDirectory, upstreamBranchName, null,
+			portalGitWorkingDirectory.getGitRepositoryName(), "relevant",
+			upstreamBranchName);
 	}
 
 	private void _writeAppServerPropertiesFile() {

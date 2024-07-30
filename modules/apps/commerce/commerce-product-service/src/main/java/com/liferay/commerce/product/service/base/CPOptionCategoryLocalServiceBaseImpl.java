@@ -266,6 +266,23 @@ public abstract class CPOptionCategoryLocalServiceBaseImpl
 			uuid, companyId, null);
 	}
 
+	@Override
+	public CPOptionCategory fetchCPOptionCategoryByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return cpOptionCategoryPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public CPOptionCategory getCPOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return cpOptionCategoryPersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the cp option category with the primary key.
 	 *

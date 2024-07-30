@@ -947,6 +947,78 @@ public class CPOptionCategoryUtil {
 	}
 
 	/**
+	 * Returns the cp option category where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCPOptionCategoryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching cp option category
+	 * @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
+	 */
+	public static CPOptionCategory findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPOptionCategoryException {
+
+		return getPersistence().findByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the cp option category where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
+	 */
+	public static CPOptionCategory fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the cp option category where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
+	 */
+	public static CPOptionCategory fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		return getPersistence().fetchByERC_C(
+			externalReferenceCode, companyId, useFinderCache);
+	}
+
+	/**
+	 * Removes the cp option category where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the cp option category that was removed
+	 */
+	public static CPOptionCategory removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPOptionCategoryException {
+
+		return getPersistence().removeByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the number of cp option categories where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching cp option categories
+	 */
+	public static int countByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().countByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
 	 * Caches the cp option category in the entity cache if it is enabled.
 	 *
 	 * @param cpOptionCategory the cp option category

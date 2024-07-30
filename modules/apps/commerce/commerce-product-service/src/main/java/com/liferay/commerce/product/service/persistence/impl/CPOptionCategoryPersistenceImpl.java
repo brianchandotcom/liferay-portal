@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.product.service.persistence.impl;
 
+import com.liferay.commerce.product.exception.DuplicateCPOptionCategoryExternalReferenceCodeException;
 import com.liferay.commerce.product.exception.NoSuchCPOptionCategoryException;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPOptionCategoryTable;
@@ -27,14 +28,20 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -3275,6 +3282,275 @@ public class CPOptionCategoryPersistenceImpl
 	private static final String _FINDER_COLUMN_C_K_KEY_3 =
 		"(cpOptionCategory.key IS NULL OR cpOptionCategory.key = '')";
 
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
+
+	/**
+	 * Returns the cp option category where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCPOptionCategoryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching cp option category
+	 * @throws NoSuchCPOptionCategoryException if a matching cp option category could not be found
+	 */
+	@Override
+	public CPOptionCategory findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchCPOptionCategoryException {
+
+		CPOptionCategory cpOptionCategory = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (cpOptionCategory == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCPOptionCategoryException(sb.toString());
+		}
+
+		return cpOptionCategory;
+	}
+
+	/**
+	 * Returns the cp option category where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
+	 */
+	@Override
+	public CPOptionCategory fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns the cp option category where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
+	 */
+	@Override
+	public CPOptionCategory fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CPOptionCategory.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			Object[] finderArgs = null;
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {externalReferenceCode, companyId};
+			}
+
+			Object result = null;
+
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_finderPathFetchByERC_C, finderArgs, this);
+			}
+
+			if (result instanceof CPOptionCategory) {
+				CPOptionCategory cpOptionCategory = (CPOptionCategory)result;
+
+				if (!Objects.equals(
+						externalReferenceCode,
+						cpOptionCategory.getExternalReferenceCode()) ||
+					(companyId != cpOptionCategory.getCompanyId())) {
+
+					result = null;
+				}
+			}
+
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(_SQL_SELECT_CPOPTIONCATEGORY_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(companyId);
+
+					List<CPOptionCategory> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByERC_C, finderArgs, list);
+						}
+					}
+					else {
+						CPOptionCategory cpOptionCategory = list.get(0);
+
+						result = cpOptionCategory;
+
+						cacheResult(cpOptionCategory);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (CPOptionCategory)result;
+			}
+		}
+	}
+
+	/**
+	 * Removes the cp option category where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the cp option category that was removed
+	 */
+	@Override
+	public CPOptionCategory removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchCPOptionCategoryException {
+
+		CPOptionCategory cpOptionCategory = findByERC_C(
+			externalReferenceCode, companyId);
+
+		return remove(cpOptionCategory);
+	}
+
+	/**
+	 * Returns the number of cp option categories where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching cp option categories
+	 */
+	@Override
+	public int countByERC_C(String externalReferenceCode, long companyId) {
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					CPOptionCategory.class)) {
+
+			externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+			FinderPath finderPath = _finderPathCountByERC_C;
+
+			Object[] finderArgs = new Object[] {
+				externalReferenceCode, companyId
+			};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(_SQL_COUNT_CPOPTIONCATEGORY_WHERE);
+
+				boolean bindExternalReferenceCode = false;
+
+				if (externalReferenceCode.isEmpty()) {
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+				}
+				else {
+					bindExternalReferenceCode = true;
+
+					sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+				}
+
+				sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					if (bindExternalReferenceCode) {
+						queryPos.add(externalReferenceCode);
+					}
+
+					queryPos.add(companyId);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"cpOptionCategory.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(cpOptionCategory.externalReferenceCode IS NULL OR cpOptionCategory.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"cpOptionCategory.companyId = ?";
+
 	public CPOptionCategoryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3310,6 +3586,14 @@ public class CPOptionCategoryPersistenceImpl
 				_finderPathFetchByC_K,
 				new Object[] {
 					cpOptionCategory.getCompanyId(), cpOptionCategory.getKey()
+				},
+				cpOptionCategory);
+
+			finderCache.putResult(
+				_finderPathFetchByERC_C,
+				new Object[] {
+					cpOptionCategory.getExternalReferenceCode(),
+					cpOptionCategory.getCompanyId()
 				},
 				cpOptionCategory);
 		}
@@ -3405,6 +3689,16 @@ public class CPOptionCategoryPersistenceImpl
 			finderCache.putResult(_finderPathCountByC_K, args, Long.valueOf(1));
 			finderCache.putResult(
 				_finderPathFetchByC_K, args, cpOptionCategoryModelImpl);
+
+			args = new Object[] {
+				cpOptionCategoryModelImpl.getExternalReferenceCode(),
+				cpOptionCategoryModelImpl.getCompanyId()
+			};
+
+			finderCache.putResult(
+				_finderPathCountByERC_C, args, Long.valueOf(1));
+			finderCache.putResult(
+				_finderPathFetchByERC_C, args, cpOptionCategoryModelImpl);
 		}
 	}
 
@@ -3546,6 +3840,72 @@ public class CPOptionCategoryPersistenceImpl
 			String uuid = PortalUUIDUtil.generate();
 
 			cpOptionCategory.setUuid(uuid);
+		}
+
+		if (Validator.isNull(cpOptionCategory.getExternalReferenceCode())) {
+			cpOptionCategory.setExternalReferenceCode(
+				cpOptionCategory.getUuid());
+		}
+		else {
+			if (!Objects.equals(
+					cpOptionCategoryModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					cpOptionCategory.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = cpOptionCategory.getCompanyId();
+
+					long groupId = 0;
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = cpOptionCategory.getPrimaryKey();
+					}
+
+					try {
+						cpOptionCategory.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								CPOptionCategory.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								cpOptionCategory.getExternalReferenceCode(),
+								null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			CPOptionCategory ercCPOptionCategory = fetchByERC_C(
+				cpOptionCategory.getExternalReferenceCode(),
+				cpOptionCategory.getCompanyId());
+
+			if (isNew) {
+				if (ercCPOptionCategory != null) {
+					throw new DuplicateCPOptionCategoryExternalReferenceCodeException(
+						"Duplicate cp option category with external reference code " +
+							cpOptionCategory.getExternalReferenceCode() +
+								" and company " +
+									cpOptionCategory.getCompanyId());
+				}
+			}
+			else {
+				if ((ercCPOptionCategory != null) &&
+					(cpOptionCategory.getCPOptionCategoryId() !=
+						ercCPOptionCategory.getCPOptionCategoryId())) {
+
+					throw new DuplicateCPOptionCategoryExternalReferenceCodeException(
+						"Duplicate cp option category with external reference code " +
+							cpOptionCategory.getExternalReferenceCode() +
+								" and company " +
+									cpOptionCategory.getCompanyId());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -4094,6 +4454,7 @@ public class CPOptionCategoryPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("externalReferenceCode");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
@@ -4116,6 +4477,9 @@ public class CPOptionCategoryPersistenceImpl
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
 		_uniqueIndexColumnNames.add(new String[] {"companyId", "key_"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"externalReferenceCode", "companyId"});
 	}
 
 	/**
@@ -4202,6 +4566,16 @@ public class CPOptionCategoryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "key_"}, false);
+
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		CPOptionCategoryUtil.setPersistence(this);
 	}

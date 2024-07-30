@@ -43,7 +43,7 @@ public class CPOptionCategoryServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPOptionCategory
 			addCPOptionCategory(
-				HttpPrincipal httpPrincipal,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				double priority, String key,
@@ -56,8 +56,8 @@ public class CPOptionCategoryServiceHttp {
 				_addCPOptionCategoryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, titleMap, descriptionMap, priority, key,
-				serviceContext);
+				methodKey, externalReferenceCode, titleMap, descriptionMap,
+				priority, key, serviceContext);
 
 			Object returnObj = null;
 
@@ -255,7 +255,8 @@ public class CPOptionCategoryServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPOptionCategory
 			updateCPOptionCategory(
-				HttpPrincipal httpPrincipal, long cpOptionCategoryId,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long cpOptionCategoryId,
 				java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				double priority, String key)
@@ -267,8 +268,8 @@ public class CPOptionCategoryServiceHttp {
 				_updateCPOptionCategoryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpOptionCategoryId, titleMap, descriptionMap,
-				priority, key);
+				methodKey, externalReferenceCode, cpOptionCategoryId, titleMap,
+				descriptionMap, priority, key);
 
 			Object returnObj = null;
 
@@ -304,8 +305,9 @@ public class CPOptionCategoryServiceHttp {
 
 	private static final Class<?>[] _addCPOptionCategoryParameterTypes0 =
 		new Class[] {
-			java.util.Map.class, java.util.Map.class, double.class,
-			String.class, com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, java.util.Map.class, java.util.Map.class,
+			double.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPOptionCategoryParameterTypes1 =
 		new Class[] {long.class};
@@ -320,8 +322,8 @@ public class CPOptionCategoryServiceHttp {
 		};
 	private static final Class<?>[] _updateCPOptionCategoryParameterTypes5 =
 		new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class, double.class,
-			String.class
+			String.class, long.class, java.util.Map.class, java.util.Map.class,
+			double.class, String.class
 		};
 
 }

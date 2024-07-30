@@ -31,6 +31,7 @@ public class CPOptionCategoryServiceWrapper
 
 	@Override
 	public CPOptionCategory addCPOptionCategory(
+			String externalReferenceCode,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			double priority, String key,
@@ -38,7 +39,8 @@ public class CPOptionCategoryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionCategoryService.addCPOptionCategory(
-			titleMap, descriptionMap, priority, key, serviceContext);
+			externalReferenceCode, titleMap, descriptionMap, priority, key,
+			serviceContext);
 	}
 
 	@Override
@@ -86,14 +88,15 @@ public class CPOptionCategoryServiceWrapper
 
 	@Override
 	public CPOptionCategory updateCPOptionCategory(
-			long cpOptionCategoryId,
+			String externalReferenceCode, long cpOptionCategoryId,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			double priority, String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionCategoryService.updateCPOptionCategory(
-			cpOptionCategoryId, titleMap, descriptionMap, priority, key);
+			externalReferenceCode, cpOptionCategoryId, titleMap, descriptionMap,
+			priority, key);
 	}
 
 	@Override

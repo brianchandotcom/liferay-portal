@@ -22,7 +22,6 @@ import Filters from './filters/Filters';
 import Pagination from './pagination/Pagination';
 import Settings from './settings/Settings';
 import Sorting from './sorting/Sorting';
-import SortingDeprecated from './sorting/SortingDeprecated';
 import VisualizationModes from './visualization_modes/VisualizationModes';
 
 const NAVIGATION_BAR_ITEMS = [
@@ -38,15 +37,10 @@ const NAVIGATION_BAR_ITEMS = [
 		Component: Filters,
 		label: Liferay.Language.get('filters'),
 	},
-	Liferay.FeatureFlags['LPD-19465']
-		? {
-				Component: Sorting,
-				label: Liferay.Language.get('sorting'),
-			}
-		: {
-				Component: SortingDeprecated,
-				label: Liferay.Language.get('sorting'),
-			},
+	{
+		Component: Sorting,
+		label: Liferay.Language.get('sorting'),
+	},
 	{
 		Component: Actions,
 		label: Liferay.Language.get('actions'),

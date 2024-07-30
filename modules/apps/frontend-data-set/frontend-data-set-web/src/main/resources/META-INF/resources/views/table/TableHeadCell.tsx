@@ -50,49 +50,25 @@ const TableHeadCell = ({
 
 		let updatedSortedElements: TSort[] = [];
 
-		if (Liferay.FeatureFlags['LPD-19465']) {
-			updatedSortedElements = sorts.map((element) =>
-				element.key === sortingKey
-					? {
-							...element,
-							active: true,
-							direction:
-								element.direction === 'asc' ? 'desc' : 'asc',
-						}
-					: {
-							...element,
-							active: false,
-						}
-			);
+		updatedSortedElements = sorts.map((element) =>
+			element.key === sortingKey
+				? {
+						...element,
+						active: true,
+						direction: element.direction === 'asc' ? 'desc' : 'asc',
+					}
+				: {
+						...element,
+						active: false,
+					}
+		);
 
-			if (!sortingMatch && sortingKey) {
-				updatedSortedElements.push({
-					active: true,
-					direction: 'asc',
-					key: sortingKey,
-				});
-			}
-		}
-		else {
-			updatedSortedElements = sortingMatch
-				? sorts.map((element) =>
-						element.key === sortingKey
-							? {
-									...element,
-									direction:
-										element.direction === 'asc'
-											? 'desc'
-											: 'asc',
-								}
-							: element
-					)
-				: [
-						{
-							direction: 'asc',
-							fieldName,
-							key: sortingKey,
-						},
-					];
+		if (!sortingMatch && sortingKey) {
+			updatedSortedElements.push({
+				active: true,
+				direction: 'asc',
+				key: sortingKey,
+			});
 		}
 
 		viewsDispatch({
@@ -122,20 +98,18 @@ const TableHeadCell = ({
 					<span className="inline-item inline-item-after sorting-icons-wrapper">
 						<ClayIcon
 							className={classNames('sorting-icon', {
-								active: Liferay.FeatureFlags['LPD-19465']
-									? sortingMatch?.direction === 'asc' &&
-										sortingMatch?.active
-									: sortingMatch?.direction === 'asc',
+								active:
+									sortingMatch?.direction === 'asc' &&
+									sortingMatch?.active,
 							})}
 							symbol="order-arrow-up"
 						/>
 
 						<ClayIcon
 							className={classNames('sorting-icon', {
-								active: Liferay.FeatureFlags['LPD-19465']
-									? sortingMatch?.direction === 'desc' &&
-										sortingMatch?.active
-									: sortingMatch?.direction === 'desc',
+								active:
+									sortingMatch?.direction === 'desc' &&
+									sortingMatch?.active,
 							})}
 							symbol="order-arrow-down"
 						/>

@@ -1009,24 +1009,16 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 						LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 				}
 
-				if (FeatureFlagManagerUtil.isEnabled("LPD-19465")) {
-					return JSONUtil.put(
-						"active", properties.get("default")
-					).put(
-						"default", properties.get("default")
-					).put(
-						"direction", properties.get("orderType")
-					).put(
-						"key", properties.get("fieldName")
-					).put(
-						"label", label
-					);
-				}
-
 				return JSONUtil.put(
-					"direction", properties.get("sortingDirection")
+					"active", properties.get("default")
+				).put(
+					"default", properties.get("default")
+				).put(
+					"direction", properties.get("orderType")
 				).put(
 					"key", properties.get("fieldName")
+				).put(
+					"label", label
 				);
 			});
 	}

@@ -727,29 +727,17 @@ public class FDSAdminPortlet extends MVCPortlet {
 
 		List<ObjectField> objectFields = Arrays.asList(
 			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+				ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
+				_language.get(locale, "default"), "default", false),
+			ObjectFieldUtil.createObjectField(
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 				_language.get(locale, "field-name"), "fieldName", true),
 			ObjectFieldUtil.createObjectField(
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-				_language.get(locale, "sorting"), "sortingDirection", true));
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-19465")) {
-			objectFields = Arrays.asList(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
-					ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
-					_language.get(locale, "default"), "default", false),
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-					_language.get(locale, "field-name"), "fieldName", true),
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-					_language.get(locale, "order-type"), "orderType", true));
-		}
+				_language.get(locale, "order-type"), "orderType", true));
 
 		ObjectDefinition fdsSortObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
@@ -760,13 +748,11 @@ public class FDSAdminPortlet extends MVCPortlet {
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT, objectFields);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-19465")) {
-			_enableLocalization(fdsSortObjectDefinition);
+		_enableLocalization(fdsSortObjectDefinition);
 
-			_addLocalizedCustomObjectField(
-				_language.get(locale, "label"), "label",
-				fdsSortObjectDefinition, userId);
-		}
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "label"), "label", fdsSortObjectDefinition,
+			userId);
 
 		_objectDefinitionLocalService.publishSystemObjectDefinition(
 			userId, fdsSortObjectDefinition.getObjectDefinitionId());

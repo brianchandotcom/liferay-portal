@@ -658,7 +658,7 @@ definition {
 			var password = PropsUtil.get("default.admin.password");
 		}
 
-		if ((${appServerType} == "jboss") || (${appServerType} == "weblogic") || (${appServerType} == "websphere") || (${appServerType} == "wildfly")) {
+		if ((${appServerType} == "jboss") || (${appServerType} == "weblogic") || (${appServerType} == "wildfly")) {
 			User.loginPG(
 				password = ${password},
 				userEmailAddress = ${userEmailAddress});

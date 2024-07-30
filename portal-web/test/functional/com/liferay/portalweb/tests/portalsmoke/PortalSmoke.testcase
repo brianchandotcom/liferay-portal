@@ -31,7 +31,7 @@ definition {
 	@description = "Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages."
 	@priority = 5
 	test Smoke {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,wildfly";
 		property database.bare.enabled = "true";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property environment.acceptance = "true";
@@ -95,7 +95,7 @@ definition {
 
 	@priority = 4
 	test SmokeWithEmbeddedHypersonic {
-		property app.server.types = "jboss,tomcat,weblogic,websphere,wildfly";
+		property app.server.types = "jboss,tomcat,weblogic,wildfly";
 		property custom.properties = "passwords.default.policy.change.required=true";
 		property database.hypersonic.embedded = "true";
 		property database.types = "hypersonic";
@@ -116,7 +116,7 @@ definition {
 
 	@priority = 4
 	test SmokeWithJNDI {
-		property app.server.types = "tomcat,wildfly,weblogic,websphere";
+		property app.server.types = "tomcat,wildfly,weblogic";
 		property database.jndi.enabled = "true";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.smoke = "false";

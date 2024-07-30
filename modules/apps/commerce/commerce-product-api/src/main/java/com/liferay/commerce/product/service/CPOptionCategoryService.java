@@ -49,8 +49,9 @@ public interface CPOptionCategoryService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPOptionCategoryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the cp option category remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CPOptionCategoryServiceUtil} if injection and service tracking are not available.
 	 */
 	public CPOptionCategory addCPOptionCategory(
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			double priority, String key, ServiceContext serviceContext)
+			String externalReferenceCode, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, double priority, String key,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteCPOptionCategory(long cpOptionCategoryId)
@@ -77,8 +78,9 @@ public interface CPOptionCategoryService extends BaseService {
 		throws PortalException;
 
 	public CPOptionCategory updateCPOptionCategory(
-			long cpOptionCategoryId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, double priority, String key)
+			String externalReferenceCode, long cpOptionCategoryId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			double priority, String key)
 		throws PortalException;
 
 }

@@ -6,6 +6,7 @@
 package com.liferay.commerce.product.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.product.exception.DuplicateCPOptionCategoryExternalReferenceCodeException;
 import com.liferay.commerce.product.exception.NoSuchCPOptionCategoryException;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalServiceUtil;
@@ -122,6 +123,9 @@ public class CPOptionCategoryPersistenceTest {
 
 		newCPOptionCategory.setUuid(RandomTestUtil.randomString());
 
+		newCPOptionCategory.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newCPOptionCategory.setCompanyId(RandomTestUtil.nextLong());
 
 		newCPOptionCategory.setUserId(RandomTestUtil.nextLong());
@@ -156,6 +160,9 @@ public class CPOptionCategoryPersistenceTest {
 		Assert.assertEquals(
 			existingCPOptionCategory.getUuid(), newCPOptionCategory.getUuid());
 		Assert.assertEquals(
+			existingCPOptionCategory.getExternalReferenceCode(),
+			newCPOptionCategory.getExternalReferenceCode());
+		Assert.assertEquals(
 			existingCPOptionCategory.getCPOptionCategoryId(),
 			newCPOptionCategory.getCPOptionCategoryId());
 		Assert.assertEquals(
@@ -188,6 +195,28 @@ public class CPOptionCategoryPersistenceTest {
 			Time.getShortTimestamp(
 				existingCPOptionCategory.getLastPublishDate()),
 			Time.getShortTimestamp(newCPOptionCategory.getLastPublishDate()));
+	}
+
+	@Test(
+		expected = DuplicateCPOptionCategoryExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		CPOptionCategory cpOptionCategory = addCPOptionCategory();
+
+		CPOptionCategory newCPOptionCategory = addCPOptionCategory();
+
+		newCPOptionCategory.setCompanyId(cpOptionCategory.getCompanyId());
+
+		newCPOptionCategory = _persistence.update(newCPOptionCategory);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newCPOptionCategory);
+
+		newCPOptionCategory.setExternalReferenceCode(
+			cpOptionCategory.getExternalReferenceCode());
+
+		_persistence.update(newCPOptionCategory);
 	}
 
 	@Test
@@ -225,6 +254,15 @@ public class CPOptionCategoryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C("null", 0L);
+
+		_persistence.countByERC_C((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPOptionCategory newCPOptionCategory = addCPOptionCategory();
 
@@ -250,10 +288,11 @@ public class CPOptionCategoryPersistenceTest {
 	protected OrderByComparator<CPOptionCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"CPOptionCategory", "mvccVersion", true, "ctCollectionId", true,
-			"uuid", true, "CPOptionCategoryId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "title", true, "description", true,
-			"priority", true, "key", true, "lastPublishDate", true);
+			"uuid", true, "externalReferenceCode", true, "CPOptionCategoryId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "title", true,
+			"description", true, "priority", true, "key", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -535,6 +574,17 @@ public class CPOptionCategoryPersistenceTest {
 			ReflectionTestUtil.invoke(
 				cpOptionCategory, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "key_"));
+
+		Assert.assertEquals(
+			cpOptionCategory.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				cpOptionCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(cpOptionCategory.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				cpOptionCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected CPOptionCategory addCPOptionCategory() throws Exception {
@@ -547,6 +597,9 @@ public class CPOptionCategoryPersistenceTest {
 		cpOptionCategory.setCtCollectionId(RandomTestUtil.nextLong());
 
 		cpOptionCategory.setUuid(RandomTestUtil.randomString());
+
+		cpOptionCategory.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		cpOptionCategory.setCompanyId(RandomTestUtil.nextLong());
 

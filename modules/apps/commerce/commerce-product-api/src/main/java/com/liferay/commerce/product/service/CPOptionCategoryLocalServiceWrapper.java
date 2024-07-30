@@ -52,14 +52,16 @@ public class CPOptionCategoryLocalServiceWrapper
 
 	@Override
 	public CPOptionCategory addCPOptionCategory(
-			long userId, java.util.Map<java.util.Locale, String> titleMap,
+			String externalReferenceCode, long userId,
+			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			double priority, String key,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionCategoryLocalService.addCPOptionCategory(
-			userId, titleMap, descriptionMap, priority, key, serviceContext);
+			externalReferenceCode, userId, titleMap, descriptionMap, priority,
+			key, serviceContext);
 	}
 
 	/**
@@ -259,6 +261,15 @@ public class CPOptionCategoryLocalServiceWrapper
 			companyId, key);
 	}
 
+	@Override
+	public CPOptionCategory fetchCPOptionCategoryByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _cpOptionCategoryLocalService.
+			fetchCPOptionCategoryByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the cp option category with the matching UUID and company.
 	 *
@@ -338,6 +349,16 @@ public class CPOptionCategoryLocalServiceWrapper
 
 		return _cpOptionCategoryLocalService.getCPOptionCategory(
 			companyId, key);
+	}
+
+	@Override
+	public CPOptionCategory getCPOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpOptionCategoryLocalService.
+			getCPOptionCategoryByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	/**
@@ -427,14 +448,15 @@ public class CPOptionCategoryLocalServiceWrapper
 
 	@Override
 	public CPOptionCategory updateCPOptionCategory(
-			long cpOptionCategoryId,
+			String externalReferenceCode, long cpOptionCategoryId,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			double priority, String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionCategoryLocalService.updateCPOptionCategory(
-			cpOptionCategoryId, titleMap, descriptionMap, priority, key);
+			externalReferenceCode, cpOptionCategoryId, titleMap, descriptionMap,
+			priority, key);
 	}
 
 	@Override

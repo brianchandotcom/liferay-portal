@@ -55,14 +55,16 @@ public class CPOptionCategoryLocalServiceUtil {
 	}
 
 	public static CPOptionCategory addCPOptionCategory(
-			long userId, Map<java.util.Locale, String> titleMap,
+			String externalReferenceCode, long userId,
+			Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap, double priority,
 			String key,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCPOptionCategory(
-			userId, titleMap, descriptionMap, priority, key, serviceContext);
+			externalReferenceCode, userId, titleMap, descriptionMap, priority,
+			key, serviceContext);
 	}
 
 	/**
@@ -236,6 +238,13 @@ public class CPOptionCategoryLocalServiceUtil {
 		return getService().fetchCPOptionCategory(companyId, key);
 	}
 
+	public static CPOptionCategory fetchCPOptionCategoryByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchCPOptionCategoryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the cp option category with the matching UUID and company.
 	 *
@@ -306,6 +315,14 @@ public class CPOptionCategoryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getCPOptionCategory(companyId, key);
+	}
+
+	public static CPOptionCategory getCPOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getCPOptionCategoryByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -384,13 +401,15 @@ public class CPOptionCategoryLocalServiceUtil {
 	}
 
 	public static CPOptionCategory updateCPOptionCategory(
-			long cpOptionCategoryId, Map<java.util.Locale, String> titleMap,
+			String externalReferenceCode, long cpOptionCategoryId,
+			Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap, double priority,
 			String key)
 		throws PortalException {
 
 		return getService().updateCPOptionCategory(
-			cpOptionCategoryId, titleMap, descriptionMap, priority, key);
+			externalReferenceCode, cpOptionCategoryId, titleMap, descriptionMap,
+			priority, key);
 	}
 
 	public static CPOptionCategoryLocalService getService() {

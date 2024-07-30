@@ -100,7 +100,8 @@ create unique index IX_4E312C7F on CPOption (companyId, ctCollectionId, external
 create unique index IX_143B0E52 on CPOption (companyId, ctCollectionId, key_[$COLUMN_LENGTH:75$]);
 create index IX_A64FCE2C on CPOption (uuid_[$COLUMN_LENGTH:75$]);
 
-create unique index IX_D9120F4 on CPOptionCategory (companyId, key_[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_685B389D on CPOptionCategory (companyId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create unique index IX_E4988A74 on CPOptionCategory (companyId, ctCollectionId, key_[$COLUMN_LENGTH:75$]);
 create index IX_ABB730CE on CPOptionCategory (uuid_[$COLUMN_LENGTH:75$]);
 
 create unique index IX_DA77C838 on CPOptionValue (CPOptionId, ctCollectionId, key_[$COLUMN_LENGTH:75$]);

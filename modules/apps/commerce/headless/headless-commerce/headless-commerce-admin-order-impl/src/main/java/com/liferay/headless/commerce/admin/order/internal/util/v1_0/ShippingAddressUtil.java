@@ -159,7 +159,6 @@ public class ShippingAddressUtil {
 		CommerceAddress commerceAddress =
 			commerceAddressService.fetchCommerceAddress(
 				commerceOrder.getShippingAddressId());
-
 		Country country = countryService.fetchCountryByA2(
 			commerceOrder.getCompanyId(), shippingAddress.getCountryISOCode());
 

@@ -66,13 +66,13 @@ public class BillingAddressUtil {
 			billingAddress.getDescription(), billingAddress.getStreet1(),
 			billingAddress.getStreet2(), billingAddress.getStreet3(),
 			billingAddress.getCity(), billingAddress.getZip(),
-			_getRegionId(null, country, billingAddress), country.getCountryId(),
+			_getRegionId(billingAddress, null, country), country.getCountryId(),
 			billingAddress.getPhoneNumber(), false, false, serviceContext);
 	}
 
 	private static long _getCountryId(
-		CommerceAddress commerceAddress, Country country,
-		BillingAddress billingAddress) {
+		BillingAddress billingAddress, CommerceAddress commerceAddress,
+		Country country) {
 
 		if (Validator.isNull(billingAddress.getCountryISOCode()) &&
 			(commerceAddress != null)) {
@@ -104,8 +104,8 @@ public class BillingAddressUtil {
 	}
 
 	private static long _getRegionId(
-			CommerceAddress commerceAddress, Country country,
-			BillingAddress billingAddress)
+			BillingAddress billingAddress, CommerceAddress commerceAddress,
+			Country country)
 		throws Exception {
 
 		if (Validator.isNull(billingAddress.getRegionISOCode()) &&
@@ -161,7 +161,6 @@ public class BillingAddressUtil {
 		CommerceAddress commerceAddress =
 			commerceAddressService.fetchCommerceAddress(
 				commerceOrder.getBillingAddressId());
-
 		Country country = countryService.fetchCountryByA2(
 			commerceOrder.getCompanyId(), billingAddress.getCountryISOCode());
 
@@ -177,8 +176,8 @@ public class BillingAddressUtil {
 				billingAddress.getStreet3(), _getStreet3(commerceAddress)),
 			billingAddress.getCity(),
 			GetterUtil.get(billingAddress.getZip(), _getZip(commerceAddress)),
-			_getRegionId(commerceAddress, country, billingAddress),
-			_getCountryId(commerceAddress, country, billingAddress),
+			_getRegionId(billingAddress, commerceAddress, country),
+			_getCountryId(billingAddress, commerceAddress, country),
 			GetterUtil.get(
 				billingAddress.getPhoneNumber(),
 				_getPhoneNumber(commerceAddress)),

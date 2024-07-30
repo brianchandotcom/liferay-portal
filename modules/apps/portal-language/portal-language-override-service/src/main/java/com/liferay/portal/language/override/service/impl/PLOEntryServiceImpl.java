@@ -13,6 +13,9 @@ import com.liferay.portal.language.override.constants.PLOActionKeys;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.base.PLOEntryServiceBaseImpl;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -84,6 +87,20 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 			getPermissionChecker(), PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
 
 		return ploEntryLocalService.getPLOEntriesCount(companyId);
+	}
+
+	@Override
+	public void importPLOEntries(InputStream inputStream, String languageId)
+		throws IOException, PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		PortalPermissionUtil.check(
+			permissionChecker, PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
+
+		ploEntryLocalService.importPLOEntries(
+			permissionChecker.getCompanyId(), inputStream, languageId,
+			permissionChecker.getUserId());
 	}
 
 	@Override

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.language.override.exception.ImportTranslationsException;
 import com.liferay.portal.language.override.exception.PLOEntryKeyException;
 import com.liferay.portal.language.override.exception.PLOEntryLanguageIdException;
 import com.liferay.portal.language.override.exception.PLOEntryValueException;
@@ -23,10 +24,18 @@ import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.base.PLOEntryLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import java.nio.charset.StandardCharsets;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -116,6 +125,40 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 	@Override
 	public int getPLOEntriesCount(long companyId) {
 		return ploEntryPersistence.countByCompanyId(companyId);
+	}
+
+	@Override
+	public void importPLOEntries(
+			long companyId, InputStream inputStream, String languageId,
+			long userId)
+		throws IOException, PortalException {
+
+		Properties properties = new Properties();
+
+		properties.load(
+			new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+
+		if (properties.isEmpty()) {
+			throw new ImportTranslationsException.InvalidPropertiesFile();
+		}
+
+		Map<Class<?>, Exception> exceptions = new HashMap<>();
+
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			try {
+				addOrUpdatePLOEntry(
+					companyId, userId, (String)entry.getKey(), languageId,
+					(String)entry.getValue());
+			}
+			catch (Exception exception) {
+				exceptions.putIfAbsent(exception.getClass(), exception);
+			}
+		}
+
+		if (!exceptions.isEmpty()) {
+			throw new ImportTranslationsException.InvalidTranslations(
+				exceptions);
+		}
 	}
 
 	@Override

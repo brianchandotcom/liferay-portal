@@ -841,6 +841,44 @@ definition {
 			url = "${portalURL}/web/test-site-name/test-source-page");
 	}
 
+	@description = "This is a test for LPS-163801. The page designer could save page changes after changing the site default language."
+	@priority = 3
+	test SavePageChangesAfterChangingSiteDefaultLanguage {
+		task ("Given a page designer has a page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("When the page designer changes the site default language to the Spanish") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ProductMenu.changeDefaultLanguage(defaultPortalLanguage = "Spanish (Spain)");
+		}
+
+		task ("Then the page designer could save page changes") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			PagesAdmin.editName(pageNameEdit = "Nombre de la página de prueba");
+
+			Navigator.gotoBack();
+
+			WaitForPageLoad();
+
+			Navigator.ensureLocaleURL(locale = "es");
+
+			AssertVisible(
+				key_itemName = "Nombre de la página de prueba",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
+		}
+	}
+
 	@description = "This ensures that the temporary redirection can be performed when accessing the old friendly URL of a blog entry displayed with a display page template."
 	@priority = 4
 	test TemporaryRedirectionCanBePerformedWhenAccessingBlogOldFriendlyURL {

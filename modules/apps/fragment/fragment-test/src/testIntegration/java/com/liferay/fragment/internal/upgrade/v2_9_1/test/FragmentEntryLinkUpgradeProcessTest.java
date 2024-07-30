@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
@@ -66,7 +67,7 @@ public class FragmentEntryLinkUpgradeProcessTest {
 	public void testUpgrade() throws Exception {
 		JSONObject emptyJSONObject = _jsonFactory.createJSONObject();
 
-		JSONObject editableValuesJSONObject = JSONUtil.put(
+		JSONObject editableValuesJSONObject1 = JSONUtil.put(
 			FragmentEntryProcessorConstants.
 				KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 			emptyJSONObject
@@ -80,8 +81,34 @@ public class FragmentEntryLinkUpgradeProcessTest {
 			emptyJSONObject
 		);
 
-		FragmentEntryLink draftLayoutFragmentEntryLink =
-			_addFragmentEntryLinkToDraftLayout(editableValuesJSONObject);
+		FragmentEntryLink draftLayoutFragmentEntryLink1 =
+			_addFragmentEntryLinkToDraftLayout(editableValuesJSONObject1);
+
+		JSONObject editableValuesJSONObject2 = JSONUtil.put(
+			FragmentEntryProcessorConstants.
+				KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+			JSONUtil.put(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString())
+		).put(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			JSONUtil.put(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString())
+		).put(
+			FragmentEntryProcessorConstants.
+				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+			JSONUtil.put(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString())
+		).put(
+			RandomTestUtil.randomString(),
+			JSONUtil.put(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString())
+		).put(
+			RandomTestUtil.randomString(), emptyJSONObject
+		);
+
+		FragmentEntryLink draftLayoutFragmentEntryLink2 =
+			_addFragmentEntryLinkToDraftLayout(editableValuesJSONObject2);
 
 		ContentLayoutTestUtil.publishLayout(
 			_layout.fetchDraftLayout(), _layout);
@@ -91,21 +118,33 @@ public class FragmentEntryLinkUpgradeProcessTest {
 				_layout.getGroupId(), _layout.getPlid());
 
 		Assert.assertEquals(
-			fragmentEntryLinks.toString(), 1, fragmentEntryLinks.size());
+			fragmentEntryLinks.toString(), 2, fragmentEntryLinks.size());
 
-		FragmentEntryLink publishedLayoutFragmentEntryLink =
+		FragmentEntryLink publishedLayoutFragmentEntryLink1 =
 			_getPublishedLayoutFragmentEntryLink(
-				editableValuesJSONObject,
-				draftLayoutFragmentEntryLink.getFragmentEntryLinkId());
+				editableValuesJSONObject1,
+				draftLayoutFragmentEntryLink1.getFragmentEntryLinkId());
+
+		FragmentEntryLink publishedLayoutFragmentEntryLink2 =
+			_getPublishedLayoutFragmentEntryLink(
+				editableValuesJSONObject2,
+				draftLayoutFragmentEntryLink2.getFragmentEntryLinkId());
 
 		_runUpgrade();
 
 		_assertFragmentEntryLinkEditableValues(
 			emptyJSONObject,
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				draftLayoutFragmentEntryLink.getFragmentEntryLinkId()),
+				draftLayoutFragmentEntryLink1.getFragmentEntryLinkId()),
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				publishedLayoutFragmentEntryLink.getFragmentEntryLinkId()));
+				publishedLayoutFragmentEntryLink1.getFragmentEntryLinkId()));
+
+		_assertFragmentEntryLinkEditableValues(
+			editableValuesJSONObject2,
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				draftLayoutFragmentEntryLink2.getFragmentEntryLinkId()),
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				publishedLayoutFragmentEntryLink2.getFragmentEntryLinkId()));
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToDraftLayout(

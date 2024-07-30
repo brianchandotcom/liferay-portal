@@ -24,6 +24,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CTConfiguration {
 
 	@Meta.AD(
+		description = "show-all-data-when-reviewing-changes-help",
+		name = "show-all-data-when-reviewing-changes", required = false
+	)
+	public boolean showAllData();
+
+	@Meta.AD(
 		description = "hidden-applications-help", name = "hidden-applications",
 		required = false
 	)

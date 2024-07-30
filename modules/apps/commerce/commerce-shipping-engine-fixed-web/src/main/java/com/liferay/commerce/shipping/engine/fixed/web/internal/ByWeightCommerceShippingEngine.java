@@ -150,7 +150,8 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 			getCommerceShippingFixedOptions(
 				commerceShippingMethod.getCommerceShippingMethodId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new CommerceShippingFixedOptionPriorityComparator());
+				CommerceShippingFixedOptionPriorityComparator.getInstance(
+					false));
 	}
 
 	private CommerceShippingOption _getCommerceShippingOption(

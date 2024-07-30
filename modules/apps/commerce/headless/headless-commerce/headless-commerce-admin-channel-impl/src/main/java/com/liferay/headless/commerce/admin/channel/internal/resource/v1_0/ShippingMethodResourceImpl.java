@@ -67,7 +67,8 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 		return transformToArray(
 			_commerceShippingFixedOptionService.getCommerceShippingFixedOptions(
 				shippingMethodId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new CommerceShippingFixedOptionPriorityComparator()),
+				CommerceShippingFixedOptionPriorityComparator.getInstance(
+					false)),
 			commerceShippingFixedOption -> new ShippingOption() {
 				{
 					setDescription(

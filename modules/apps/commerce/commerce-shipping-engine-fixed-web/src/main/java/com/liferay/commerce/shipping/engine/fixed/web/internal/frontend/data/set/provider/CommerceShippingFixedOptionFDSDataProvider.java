@@ -70,7 +70,7 @@ public class CommerceShippingFixedOptionFDSDataProvider
 
 		commerceShippingFixedOptions = ListUtil.sort(
 			commerceShippingFixedOptions,
-			new CommerceShippingFixedOptionPriorityComparator(
+			CommerceShippingFixedOptionPriorityComparator.getInstance(
 				sort.isReverse()));
 
 		for (CommerceShippingFixedOption commerceShippingFixedOption :

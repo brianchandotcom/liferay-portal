@@ -30,7 +30,8 @@ public class CommerceShippingEngineFixedUtil {
 
 		if (orderByCol.equals("priority")) {
 			orderByComparator =
-				new CommerceShippingFixedOptionPriorityComparator(orderByAsc);
+				CommerceShippingFixedOptionPriorityComparator.getInstance(
+					orderByAsc);
 		}
 
 		return orderByComparator;
@@ -51,7 +52,7 @@ public class CommerceShippingEngineFixedUtil {
 
 		if (orderByCol.equals("country")) {
 			orderByComparator =
-				new CommerceShippingFixedOptionRelCountryIdComparator(
+				CommerceShippingFixedOptionRelCountryIdComparator.getInstance(
 					orderByAsc);
 		}
 

@@ -147,7 +147,8 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 			getCommerceShippingFixedOptions(
 				commerceShippingMethod.getCommerceShippingMethodId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new CommerceShippingFixedOptionPriorityComparator());
+				CommerceShippingFixedOptionPriorityComparator.getInstance(
+					false));
 	}
 
 	private List<CommerceShippingOption> _getCommerceShippingOptions(

@@ -118,7 +118,7 @@ export const NUMBER_OPERATOR_LONGHAND_LABELS_MAP = {
 
 export const STRING_OPERATOR_LABELS_MAP = {
 	[Operators.Contains]: Liferay.Language.get('contains-fragment'),
-	[Operators.NotContains]: Liferay.Language.get('not-contains-fragment'),
+	[Operators.NotContains]: Liferay.Language.get('does-not-contain-fragment'),
 	[Operators.EQ]: Liferay.Language.get('is-fragment'),
 	[Operators.NE]: Liferay.Language.get('is-not-fragment')
 };

@@ -6,9 +6,11 @@
 package com.liferay.change.tracking.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.configuration.CTCollectionEmailConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -108,6 +111,67 @@ public class InviteUsersMVCResourceCommandTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
+	@FeatureFlags("LPD-11212")
+	@Test
+	public void testGetInviteUsersWithCustomEmailSenderNameAndAddress() throws Exception {
+		String invitationEmailSenderEmailAddress = "custom@liferay.com";
+		String invitationEmailSenderName = "Custom sender name";
+
+		try (CompanyConfigurationTemporarySwapper
+				 companyConfigurationTemporarySwapper =
+				 new CompanyConfigurationTemporarySwapper(
+					 TestPropsValues.getCompanyId(),
+					 CTCollectionEmailConfiguration.class.getName(),
+					 HashMapDictionaryBuilder.<String, Object>put(
+						 "invitationEmailSenderEmailAddress",
+						 invitationEmailSenderEmailAddress
+					 ).put(
+						 "invitationEmailSenderName",
+						 invitationEmailSenderName
+					 ).build())) {
+
+			_inviteUserToPublication();
+
+			MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
+
+			String from = mailMessage.getFirstHeaderValue("From");
+
+			Assert.assertEquals(
+				from, invitationEmailSenderName + " <" + invitationEmailSenderEmailAddress + ">");
+		}
+	}
+
+	@FeatureFlags("LPD-11212")
+	@Test
+	public void testGetInviteUsersWithCustomEmailTemplates() throws Exception {
+		String invitationEmailBody = "Custom email body";
+		String invitationEmailSubject = "Custom email subject";
+
+		try (CompanyConfigurationTemporarySwapper
+				 companyConfigurationTemporarySwapper =
+				 new CompanyConfigurationTemporarySwapper(
+					 TestPropsValues.getCompanyId(),
+					 CTCollectionEmailConfiguration.class.getName(),
+					 HashMapDictionaryBuilder.<String, Object>put(
+						 "invitationEmailBody", invitationEmailBody
+					 ).put(
+						 "invitationEmailSubject", invitationEmailSubject
+					 ).build())) {
+
+			_inviteUserToPublication();
+
+			MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
+
+			Assert.assertEquals(
+				invitationEmailSubject,
+				mailMessage.getFirstHeaderValue("Subject"));
+
+			String mailMessageBody = mailMessage.getBody();
+
+			Assert.assertTrue(mailMessageBody.contains(invitationEmailBody));
+		}
+	}
+
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
 			long ctCollectionId, long userId)
 		throws Exception {
@@ -140,6 +204,30 @@ public class InviteUsersMVCResourceCommandTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
+	}
+
+	private void _inviteUserToPublication() throws Exception {
+		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), null);
+
+		User user = UserTestUtil.addUser();
+
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			_getMockLiferayResourceRequest(
+				ctCollection.getCtCollectionId(), user.getUserId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setRequest(
+			mockLiferayResourceRequest.getHttpServletRequest());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		_mvcResourceCommand.serveResource(
+			mockLiferayResourceRequest, new MockLiferayResourceResponse());
 	}
 
 	@Inject

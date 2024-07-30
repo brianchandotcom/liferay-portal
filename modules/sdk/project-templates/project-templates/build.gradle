@@ -64,7 +64,7 @@ dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "6.4.0"
 	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
 
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.api", version: "1.0.195"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.api", version: "1.0.196"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.control.menu.entry", version: "1.0.193"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.form.field", version: "1.0.196"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.fragment", version: "1.0.192"

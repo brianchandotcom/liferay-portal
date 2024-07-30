@@ -23,28 +23,28 @@ export const mockedContentWithPreview = {
 		imageURL: 'mocked/preview/url/demo.jpg',
 		url: 'mocked/vuew/url/',
 	},
-	specificFields: {
-		'extension': {
+	specificFields: [
+		{
 			title: 'Extension',
 			type: 'string',
 			value: 'jpg',
 		},
-		'latest-version-url': {
+		{
 			title: 'Latest Version URL',
 			type: 'URL',
 			value: 'http://localhost:8080/documents/d/guest/tree-png',
 		},
-		'size': {
+		{
 			title: 'Size',
 			type: 'string',
 			value: '200 KB',
 		},
-		'web-dav-url': {
+		{
 			title: 'WebDAV URL',
 			type: 'URL',
 			value: 'http://localhost:8080/webdav/guest/document_library/tree.png',
 		},
-	},
+	],
 	subType: 'Basic Document (Image)',
 	type: 'Document',
 	viewURLs: [],
@@ -59,28 +59,28 @@ export const mockedContentWithPreviewWithoutLink = {
 	preview: {
 		imageURL: 'mocked/preview/url/demo.jpg',
 	},
-	specificFields: {
-		'extension': {
+	specificFields: [
+		{
 			title: 'Extension',
 			type: 'string',
 			value: 'jpg',
 		},
-		'latest-version-url': {
+		{
 			title: 'Latest Version URL',
 			type: 'URL',
 			value: 'http://localhost:8080/documents/d/guest/tree-png',
 		},
-		'size': {
+		{
 			title: 'Size',
 			type: 'string',
 			value: '200 KB',
 		},
-		'web-dav-url': {
+		{
 			title: 'WebDAV URL',
 			type: 'URL',
 			value: 'http://localhost:8080/webdav/guest/document_library/tree.png',
 		},
-	},
+	],
 	subType: 'Basic Document',
 	type: 'Document',
 	viewURLs: [],
@@ -100,28 +100,28 @@ export const mockedFileDocumentProps = {
 		imageURL: '',
 		url: 'mocked/vuew/url/',
 	},
-	specificFields: {
-		extension: {
+	specificFields: [
+		{
 			title: 'Extension',
 			type: 'string',
 			value: 'sh',
 		},
-		latestVersionUrl: {
+		{
 			title: 'Latest Version URL',
 			type: 'URL',
 			value: 'mockedURLValue',
 		},
-		size: {
+		{
 			title: 'Size',
 			type: 'string',
 			value: '9 KB',
 		},
-		webDavUrl: {
+		{
 			title: 'WebDAV URL',
 			type: 'URL',
 			value: 'mockedURLValue2',
 		},
-	},
+	],
 	subType: 'Basic Document (Other)',
 	type: 'Document',
 	viewURLs: [],
@@ -138,18 +138,18 @@ export const mockedImageDocumentProps = {
 		imageURL: 'mocked/preview/url/demo.jpg',
 		url: 'mocked/vuew/url/',
 	},
-	specificFields: {
-		extension: {
+	specificFields: [
+		{
 			title: 'Extension',
 			type: 'string',
 			value: 'jpg',
 		},
-		size: {
+		{
 			title: 'Size',
 			type: 'string',
 			value: '200 KB',
 		},
-	},
+	],
 	subType: 'Basic Document (Image)',
 	type: 'Document',
 	viewURLs: [],
@@ -206,23 +206,23 @@ export const mockedProps = {
 	],
 	modifiedDate: '2020-07-27T10:56:56.027',
 	singlePageApplicationEnabled: false,
-	specificFields: {
-		'display-date': {
+	specificFields: [
+		{
 			title: 'Display Date',
 			type: 'Date',
 			value: '2020-07-27T10:53:00',
 		},
-		'expiration-date': {
+		{
 			title: 'Expiration Date',
 			type: 'Date',
 			value: '2020-07-28T10:00:00',
 		},
-		'review-date': {
+		{
 			title: 'Review Date',
 			type: 'Date',
 			value: '2020-07-27T14:14:30',
 		},
-	},
+	],
 	subType: 'Basic Web Content',
 	subscribe: {
 		icon: 'bell-on',
@@ -443,18 +443,18 @@ export const mockedVideoShortcutDocumentProps = {
 		imageURL: 'mocked/preview/url/demo.jpg',
 		url: 'mocked/vuew/url/',
 	},
-	specificFields: {
-		extension: {
+	specificFields: [
+		{
 			title: 'Extension',
 			type: 'string',
 			value: '',
 		},
-		size: {
+		{
 			title: 'Size',
 			type: 'string',
 			value: '0 B',
 		},
-	},
+	],
 	subType: 'External Video Shortcut',
 	type: 'Document',
 	viewURLs: [],

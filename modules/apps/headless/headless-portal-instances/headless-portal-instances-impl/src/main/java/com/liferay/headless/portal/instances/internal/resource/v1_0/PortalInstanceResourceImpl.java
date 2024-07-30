@@ -132,6 +132,8 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 						portalInstance.getSiteInitializerKey());
 				}
 
+				_portalInstancesLocalService.synchronizePortalInstances();
+
 				return null;
 			});
 
@@ -165,8 +167,6 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 				contact.getSkypeSn(), contact.getTwitterSn(),
 				contact.getJobTitle(), null, null, null, null, null, null);
 		}
-
-		_portalInstancesLocalService.synchronizePortalInstances();
 
 		return _toPortalInstance(company);
 	}

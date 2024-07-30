@@ -141,11 +141,11 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			CommerceOrder commerceOrder)
 		throws PortalException {
 
+		List<CommerceOrderStatus> nextCommerceOrderStatuses = new ArrayList<>();
+
 		CommerceOrderStatus currentCommerceOrderStatus =
 			_commerceOrderStatusRegistry.getCommerceOrderStatus(
 				commerceOrder.getOrderStatus());
-
-		List<CommerceOrderStatus> nextCommerceOrderStatuses = new ArrayList<>();
 
 		if (currentCommerceOrderStatus == null) {
 			return nextCommerceOrderStatuses;

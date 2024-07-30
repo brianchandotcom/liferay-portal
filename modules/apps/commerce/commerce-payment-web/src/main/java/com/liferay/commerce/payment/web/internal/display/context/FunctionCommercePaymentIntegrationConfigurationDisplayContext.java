@@ -52,11 +52,11 @@ public class FunctionCommercePaymentIntegrationConfigurationDisplayContext {
 	public UnicodeProperties getPaymentIntegrationUnicodeProperties()
 		throws PortalException {
 
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
-			_getCommercePaymentMethodGroupRel();
-
 		UnicodeProperties paymentIntegrationUnicodeProperties =
 			_commercePaymentMethodGroupRel.getTypeSettingsUnicodeProperties();
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			_getCommercePaymentMethodGroupRel();
 
 		if ((commercePaymentMethodGroupRel != null) &&
 			paymentIntegrationUnicodeProperties.isEmpty()) {

@@ -257,13 +257,13 @@ public class AuthorizeNetCommercePaymentMethod
 			long groupId, String cancelURL, String returnURL)
 		throws Exception {
 
-		AuthorizeNetGroupServiceConfiguration
-			authorizeNetGroupServiceConfiguration =
-				_getAuthorizeNetGroupServiceConfiguration(groupId);
-
 		ArrayOfSetting arrayOfSetting = new ArrayOfSetting();
 
 		List<SettingType> settings = arrayOfSetting.getSetting();
+
+		AuthorizeNetGroupServiceConfiguration
+			authorizeNetGroupServiceConfiguration =
+				_getAuthorizeNetGroupServiceConfiguration(groupId);
 
 		JSONObject hostedPaymentReturnOptionsJSONObject =
 			_jsonFactory.createJSONObject();

@@ -1094,58 +1094,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-129536. View the configuration settings of widget after execute Clean Up Orphaned Theme Portlet Preferences."
-	@priority = 4
-	test ViewConfigurationSettingsOfWidgetAfterCleanUpOrphanedThemePortletPreferences {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = ${randomSiteName},
-				title = "Web Content Title");
-		}
-
-		task ("Add an Asset Publisher widget to the page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addWidget(portletName = "Asset Publisher");
-		}
-
-		task ("Change the display template to Title List") {
-			Portlet.gotoPortletOptions(
-				portletName = "Asset Publisher",
-				portletOption = "Configuration");
-
-			AssetPublisherPortlet.configureDisplayTemplatePG(displayTemplate = "Title List");
-
-			IFrame.closeFrame();
-		}
-
-		task ("View web content displayed at Title List in Asset Publisher at edit mode") {
-			AssertTextEquals.assertText(
-				locator1 = "Relatedassets#ASSET_ROW_ENTRY_TITLE",
-				rowNumber = 1,
-				value1 = "Web Content Title");
-
-			PageEditor.publish();
-		}
-
-		task ("View web content displayed at Title List in Asset Publisher at view mode") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
-			AssertTextEquals.assertText(
-				locator1 = "Relatedassets#ASSET_ROW_ENTRY_TITLE",
-				rowNumber = 1,
-				value1 = "Web Content Title");
-		}
-	}
-
 	@description = "This is a test for LPS-175136. View no alert for draft when design changes on content page being published in page editor."
 	@priority = 3
 	test ViewDesignChangesSavedInDraftViaPageDesignOptions {

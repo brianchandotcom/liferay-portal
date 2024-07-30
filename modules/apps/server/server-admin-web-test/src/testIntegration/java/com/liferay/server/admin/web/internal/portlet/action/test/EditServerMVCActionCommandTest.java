@@ -205,6 +205,35 @@ public class EditServerMVCActionCommandTest {
 	}
 
 	@Test
+	public void testCleanUpOrphanedPortletPreferencesForLayoutTypeContentLayout()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		String portletId = _addJournalContentPortletToLayout(draftLayout);
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, draftLayout.getPlid(),
+				portletId);
+
+		Assert.assertNotNull(
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				portletPreferences.getPortletPreferencesId()));
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_cleanUpOrphanedPortletPreferences",
+			new Class<?>[0]);
+
+		Assert.assertNotNull(
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				portletPreferences.getPortletPreferencesId()));
+	}
+
+	@Test
 	public void testCleanUpOrphanedPortletPreferencesWithLayoutRevision()
 		throws Exception {
 

@@ -14,7 +14,7 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="" />
 
-<aui:input label="oauth2-application-name" name="oAuth2ApplicationName" required="<%= true %>" type="text" value="<%= oAuth2ApplicationName %>" />
+<aui:input label="oauth2-application-name" name="oAuth2ApplicationName" readonly="<%= Validator.isNotNull(oAuth2ApplicationName) %>" required="<%= true %>" type="text" value="<%= oAuth2ApplicationName %>" />
 
 <aui:select helpMessage="scim-matcher-field-help" label="scim-matcher-field" name="matcherField" required="<%= true %>" value="<%= request.getAttribute(ScimWebKeys.SCIM_MATCHER_FIELD) %>">
 	<aui:option label="" value="" />

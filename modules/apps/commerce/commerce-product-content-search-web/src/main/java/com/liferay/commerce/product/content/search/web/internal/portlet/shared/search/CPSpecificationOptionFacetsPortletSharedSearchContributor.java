@@ -194,10 +194,10 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 			int frequencyThreshold, int maxTerms, RenderRequest renderRequest)
 		throws Exception {
 
+		List<Facet> facets = new ArrayList<>();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		List<Facet> facets = new ArrayList<>();
 
 		AssetCategory assetCategory = (AssetCategory)renderRequest.getAttribute(
 			WebKeys.ASSET_CATEGORY);

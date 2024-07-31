@@ -52,11 +52,15 @@ export function VersionRow({
 		setVersion,
 	} = useContext(DefinitionBuilderContext);
 
-	const versionCreationDate = toLocalDateTimeFormatted(
-		dateCreated,
-		Liferay.ThemeDisplay.getBCP47LanguageId(),
-		timeZoneId
-	);
+	let versionCreationDate = '';
+
+	if (Liferay.FeatureFlags['LPD-29635']) {
+		versionCreationDate = toLocalDateTimeFormatted(
+			dateCreated,
+			Liferay.ThemeDisplay.getBCP47LanguageId(),
+			timeZoneId
+		);
+	}
 
 	const restoreSuccess = async (response: Response) => {
 		const alertMessage = lang.sub(

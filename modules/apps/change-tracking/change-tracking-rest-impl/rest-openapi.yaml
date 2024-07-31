@@ -211,7 +211,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.change.tracking.rest.client', and version '3.1.1'."
+        'com.liferay.change.tracking.rest.client', and version '3.2.0'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -587,6 +587,38 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/CTEntry"
                                 type: array
+            tags: ["CTEntry"]
+    "/ct-collections/{ctCollectionId}/ct-entries/by-model-class-name-id/{modelClassNameId}/by-model-class-pk/{modelClassPK}":
+        get:
+            operationId: getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK
+            parameters:
+                - in: path
+                  name: ctCollectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: modelClassNameId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: modelClassPK
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CTEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CTEntry"
             tags: ["CTEntry"]
     "/ct-collections/{ctCollectionId}/publish":
         post:

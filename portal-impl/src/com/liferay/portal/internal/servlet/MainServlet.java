@@ -604,36 +604,36 @@ public class MainServlet extends HttpServlet {
 			return;
 		}
 
-		try (Connection connection = DataAccess.getConnection()) {
-			if (!StartupHelperUtil.isNewRelease()) {
-				return;
-			}
+		if (!StartupHelperUtil.isNewRelease()) {
+			return;
+		}
 
-			if (_log.isWarnEnabled()) {
-				String message = releaseManager.getShortStatusMessage(true);
-
-				if (Validator.isNotNull(message)) {
-					_log.warn(message);
-
-					return;
-				}
-			}
-
-			String message = releaseManager.getShortStatusMessage(false);
+		if (_log.isWarnEnabled()) {
+			String message = releaseManager.getShortStatusMessage(true);
 
 			if (Validator.isNotNull(message)) {
-				if (_log.isInfoEnabled()) {
-					_log.info(message);
-				}
+				_log.warn(message);
 
 				return;
 			}
+		}
 
+		String message = releaseManager.getShortStatusMessage(false);
+
+		if (Validator.isNotNull(message)) {
+			if (_log.isInfoEnabled()) {
+				_log.info(message);
+			}
+
+			return;
+		}
+
+		try (Connection connection = DataAccess.getConnection()) {
 			PortalUpgradeProcess.updateBuildInfo(connection);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to check build date", exception);
+				_log.warn("Unable to update build information", exception);
 			}
 		}
 	}

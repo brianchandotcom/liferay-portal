@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -167,7 +168,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 	}
 
 	@Test
-	@TestInfo("LPS-127023,LPS-112360")
+	@TestInfo("LPS-127023,LPS-112360,LPD-32486")
 	public void testMapInfoFieldInCollectionDisplay() throws Exception {
 		Layout layout = _addDefaultDisplayPageTemplateLayout(
 			_portal.getClassNameId(JournalArticle.class.getName()),
@@ -180,11 +181,36 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 		_mapInfoFieldInCollectionDisplay(
 			layout, "JournalArticle_title", segmentsExperienceId);
 
-		_assertRenderLayoutHTML(
-			_getInfoItemAttributesMap(
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			companyGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		try {
+			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 				JournalArticle.class.getName(),
-				_journalArticle.getResourcePrimKey(), _journalArticle),
-			layout, segmentsExperienceId);
+				journalArticle.getResourcePrimKey());
+
+			_assetLinkLocalService.addLink(
+				TestPropsValues.getUserId(), assetEntry.getEntryId(),
+				_journalArticleAssetEntry.getEntryId(), 0, 1);
+
+			String html = _assertRenderLayoutHTML(
+				_getInfoItemAttributesMap(
+					JournalArticle.class.getName(),
+					_journalArticle.getResourcePrimKey(), _journalArticle),
+				layout, segmentsExperienceId);
+
+			Assert.assertTrue(
+				html,
+				StringUtil.contains(
+					html, journalArticle.getTitle(), StringPool.BLANK));
+		}
+		finally {
+			_journalArticleLocalService.deleteArticle(journalArticle);
+		}
 	}
 
 	@Test
@@ -443,12 +469,13 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 		return html;
 	}
 
-	private void _assertRenderLayoutHTML(
+	private String _assertRenderLayoutHTML(
 			Map<String, Object> attributes, Layout layout,
 			long segmentsExperienceId)
 		throws Exception {
 
-		_assertRenderLayoutHTML(attributes, 1, layout, segmentsExperienceId);
+		return _assertRenderLayoutHTML(
+			attributes, 1, layout, segmentsExperienceId);
 	}
 
 	private Map<String, Object> _getInfoItemAttributesMap(
@@ -640,6 +667,9 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

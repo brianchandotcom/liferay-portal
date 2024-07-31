@@ -73,8 +73,7 @@ export default function UndoRedo({
 		}
 	);
 
-	const handleUndo = () => {
-		const newStep = step - 1;
+	const handleUndo = (newStep) => {
 		const nextStep = history[newStep];
 
 		if (nextStep.selectedLanguageId !== selectedLanguageId) {
@@ -460,7 +459,12 @@ export default function UndoRedo({
 				<ClayDropDown.ItemList>
 					<ClayDropDown.Divider />
 
-					<ClayDropDown.Item disabled={step <= 0}>
+					<ClayDropDown.Item
+						disabled={step <= 0}
+						onClick={() => {
+							handleUndo(0);
+						}}
+					>
 						{Liferay.Language.get('undo-all')}
 					</ClayDropDown.Item>
 				</ClayDropDown.ItemList>

@@ -169,7 +169,9 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 				}
 			>
 				<ClayIcon className="mr-2" symbol="order-arrow-left" />
-				<h5 className="mt-1">{i18n.translate('back-to-apps')}</h5>
+				<span className="h5 mt-1">
+					{i18n.translate('back-to-apps')}
+				</span>
 			</ClayButton>
 
 			{status === 'Draft' && (

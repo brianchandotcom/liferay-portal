@@ -37,7 +37,7 @@ const LicenceKeyModalContent = ({Header, modalData}: LicenseKeyModalProps) => {
 
 			<div className="row">
 				<div className="col-3">
-					<h4>{i18n.translate('environment')}</h4>
+					<div className="h4">{i18n.translate('environment')}</div>
 
 					<small className="font-weight-bold">
 						{i18n.translate('environment-type')}
@@ -57,7 +57,7 @@ const LicenceKeyModalContent = ({Header, modalData}: LicenseKeyModalProps) => {
 				</div>
 
 				<div className="col-5">
-					<h4>Server</h4>
+					<div className="h4">Server</div>
 
 					<small className="font-weight-bold">
 						{i18n.translate('key-type')}
@@ -93,7 +93,10 @@ const LicenceKeyModalContent = ({Header, modalData}: LicenseKeyModalProps) => {
 				</div>
 
 				<div className="col-4">
-					<h4> {i18n.translate('activation-status')}</h4>
+					<div className="h4">
+						{' '}
+						{i18n.translate('activation-status')}
+					</div>
 
 					<small className="font-weight-bold">
 						{i18n.translate('status')}

@@ -110,7 +110,7 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 					contentList={accounts.map((account) => ({
 						...account,
 						selected: selectedAccount?.id === account?.id,
-						title: <h5>{account.title}</h5>,
+						title: <span className="h5">{account.title}</span>,
 					}))}
 					leftRadio
 					onSelect={handleSelectAccount}

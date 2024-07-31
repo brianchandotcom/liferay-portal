@@ -50,7 +50,7 @@ export function ContentReviewSupportLink({
 			<div>
 				<p className="m-0">{linkLabel}</p>
 				<a href={getPrefixHref(href)} target="_blank">
-					<h4 className="bold m-0 text-primary">{href}</h4>
+					<span className="bold h4 m-0 text-primary">{href}</span>
 				</a>
 			</div>
 		</div>

@@ -147,9 +147,9 @@ const ProjectSelection = () => {
 						title: (
 							<div className="d-flex">
 								<div>
-									<h5 className="m-0 project-selection-page-title-text">
+									<div className="h5 m-0 project-selection-page-title-text">
 										{project.rootProjectId.toUpperCase()}
-									</h5>
+									</div>
 
 									<p className="m-0 project-selection-page-description-text">
 										{getCardContent(project)}

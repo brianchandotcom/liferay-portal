@@ -39,37 +39,39 @@ const App = () => {
 					clayIcon="order-form-tag"
 				>
 					<div className="mb-2 mt-7 row">
-						<h5 className="col-6">{i18n.translate('order-id')}</h5>
+						<div className="col-6 h5">
+							{i18n.translate('order-id')}
+						</div>
 						<p className="col">{orderId}</p>
 					</div>
 					<div className="mb-2 row">
-						<h5 className="col-6">
+						<div className="col-6 h5">
 							{i18n.translate('order-date')}
-						</h5>
+						</div>
 						<p className="col">
 							{formatDate(placedOrder.createDate)}
 						</p>
 					</div>
 					<div className="mb-2 row">
-						<h5 className="col-6">
+						<div className="col-6 h5">
 							{i18n.translate('customer-account')}
-						</h5>
+						</div>
 						<p className="col">{placedOrder.account}</p>
 					</div>
 					<div className="mb-2 row">
-						<h5 className="col-6">
+						<div className="col-6 h5">
 							{i18n.translate('customer-roject')}
-						</h5>
+						</div>
 						<p className="col">{projectNameField as ReactNode}</p>
 					</div>
 					<div className="mb-2 row">
-						<h5 className="col-6">
+						<div className="col-6 h5">
 							{i18n.translate('purchased-by')}
-						</h5>
+						</div>
 						<p className="col">{placedOrder.author}</p>
 					</div>
 					<div className="row">
-						<h5 className="col-6">Purchase Order Number</h5>
+						<div className="col-6 h5">Purchase Order Number</div>
 						<p className="col">
 							{placedOrder.purchaseOrderNumber || '-'}
 						</p>
@@ -82,8 +84,12 @@ const App = () => {
 				>
 					{isPaidApp && (
 						<div className="justify-content-center mb-2 mt-4 row">
-							<h5 className="col-3">{i18n.translate('type')}</h5>
-							<h5 className="col-1">{i18n.translate('qty')}</h5>
+							<div className="col-3 h5">
+								{i18n.translate('type')}
+							</div>
+							<div className="col-1 h5">
+								{i18n.translate('qty')}
+							</div>
 						</div>
 					)}
 					<div
@@ -91,9 +97,9 @@ const App = () => {
 							'mt-6': !isPaidApp,
 						})}
 					>
-						<h5 className="col">
+						<div className="col h5">
 							{i18n.translate('license-price')}
-						</h5>
+						</div>
 						<div className="col-8">
 							{placedOrder.placedOrderItems.map(
 								(order: PlacedOrderItems) => {
@@ -137,7 +143,9 @@ const App = () => {
 						</div>
 					</div>
 					<div className="justify-content-between mb-2 row">
-						<h5 className="col">{i18n.translate('subtotal')}</h5>
+						<div className="col h5">
+							{i18n.translate('subtotal')}
+						</div>
 						<p className="col-3 text-right">
 							{formatLocaleCurrency(
 								placedOrder.summary.subtotal
@@ -145,9 +153,9 @@ const App = () => {
 						</p>
 					</div>
 					<div className="justify-content-between mb-2 row">
-						<h5 className="col">
+						<div className="col h5">
 							{i18n.translate('subtotal-discount')}
-						</h5>
+						</div>
 						<p className="col-3 text-right">
 							{formatLocaleCurrency(
 								placedOrder.summary.totalDiscountValue
@@ -155,13 +163,17 @@ const App = () => {
 						</p>
 					</div>
 					<div className="justify-content-between mb-2 row">
-						<h5 className="col">{i18n.translate('coupon-code')}</h5>
+						<div className="col h5">
+							{i18n.translate('coupon-code')}
+						</div>
 						<p className="col-3 text-right">
 							{placedOrder.couponCode || '-'}
 						</p>
 					</div>
 					<div className="justify-content-between mb-2 row">
-						<h5 className="col">{i18n.translate('tax-vat')}</h5>
+						<div className="col h5">
+							{i18n.translate('tax-vat')}
+						</div>
 						<p className="col-3 text-right">
 							{formatLocaleCurrency(
 								placedOrder.summary.taxValue
@@ -169,7 +181,7 @@ const App = () => {
 						</p>
 					</div>
 					<div className="justify-content-between row">
-						<h5 className="col">{i18n.translate('total')}</h5>
+						<div className="col h5">{i18n.translate('total')}</div>
 						<p className="col-3 text-right">
 							{formatLocaleCurrency(placedOrder.summary.total) ||
 								''}
@@ -183,9 +195,9 @@ const App = () => {
 						clayIcon="geolocation"
 					>
 						<div className="mb-2 mt-4 row">
-							<h5 className="col-6">
+							<div className="col-6 h5">
 								{i18n.translate('billing-address')}
-							</h5>
+							</div>
 							<div className="col-6">
 								<p>
 									{placedOrder.placedOrderBillingAddress

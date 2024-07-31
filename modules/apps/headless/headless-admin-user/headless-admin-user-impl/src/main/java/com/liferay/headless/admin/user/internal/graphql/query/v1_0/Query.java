@@ -1115,7 +1115,27 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {postalAddress(postalAddressId: ___){addressCountry, addressCountry_i18n, addressLocality, addressRegion, addressType, id, name, phoneNumber, postalCode, primary, streetAddressLine1, streetAddressLine2, streetAddressLine3}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {postalAddressByExternalReferenceCode(externalReferenceCode: ___){addressCountry, addressCountry_i18n, addressLocality, addressRegion, addressType, externalReferenceCode, id, name, phoneNumber, postalCode, primary, streetAddressLine1, streetAddressLine2, streetAddressLine3}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the postal address using external reference code."
+	)
+	public PostalAddress postalAddressByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource ->
+				postalAddressResource.getPostalAddressByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {postalAddress(postalAddressId: ___){addressCountry, addressCountry_i18n, addressLocality, addressRegion, addressType, externalReferenceCode, id, name, phoneNumber, postalCode, primary, streetAddressLine1, streetAddressLine2, streetAddressLine3}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the postal address.")
 	public PostalAddress postalAddress(
@@ -2895,6 +2915,34 @@ public class Query {
 					emailAddressResource.
 						getOrganizationByExternalReferenceCodeEmailAddressesPage(
 							_account.getExternalReferenceCode())));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class GetPostalAddressByExternalReferenceCodeTypeExtension {
+
+		public GetPostalAddressByExternalReferenceCodeTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the postal address using external reference code."
+		)
+		public PostalAddress postalAddressByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_postalAddressResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				postalAddressResource ->
+					postalAddressResource.
+						getPostalAddressByExternalReferenceCode(
+							_account.getExternalReferenceCode()));
 		}
 
 		private Account _account;

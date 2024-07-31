@@ -112,6 +112,20 @@ public class PostalAddressSerDes {
 			sb.append("\"");
 		}
 
+		if (postalAddress.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(postalAddress.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (postalAddress.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -279,6 +293,15 @@ public class PostalAddressSerDes {
 				"addressType", String.valueOf(postalAddress.getAddressType()));
 		}
 
+		if (postalAddress.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(postalAddress.getExternalReferenceCode()));
+		}
+
 		if (postalAddress.getId() == null) {
 			map.put("id", null);
 		}
@@ -378,6 +401,11 @@ public class PostalAddressSerDes {
 			else if (Objects.equals(jsonParserFieldName, "addressType")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -446,6 +474,14 @@ public class PostalAddressSerDes {
 			else if (Objects.equals(jsonParserFieldName, "addressType")) {
 				if (jsonParserFieldValue != null) {
 					postalAddress.setAddressType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					postalAddress.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

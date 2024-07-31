@@ -57,4 +57,4 @@ export type TMDFRequestDataFromRequest = TMDFRequest & {
 	maxDateActivity: string;
 	minDateActivity: string;
 	overallCampaignName: string;
-}
+};

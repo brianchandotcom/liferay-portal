@@ -5,8 +5,8 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {PartnerHelper} from '../../helpers/PartnerHelper';
 import {TMDFRequest} from '../../types/mdf';
+import {PARTNER_SITE_FRIENLY_URL_PATH} from '../../utils/constants';
 import {MDFRequestFormActivitiesPage} from './MDFRequestFormActivitiesPage';
 import {MDFRequestFormGoalsPage} from './MDFRequestFormGoalsPage';
 import {MDFRequestFormReviewPage} from './MDFRequestFormReviewPage';
@@ -20,21 +20,18 @@ export class MDFRequestFormPage {
 		goals: MDFRequestFormGoalsPage;
 		review: MDFRequestFormReviewPage;
 	};
+	readonly heading: Locator;
 	readonly newRequestButton: Locator;
 	readonly page: Page;
-	readonly partnerHelper: PartnerHelper;
 	readonly previousButton: Locator;
 	readonly saveAsDraftButton: Locator;
-	readonly site: Site;
 	readonly seeMDFHomeButton: Locator;
 	readonly statusDropdown: Locator;
 	readonly submitButton: Locator;
 	readonly successMessage: Locator;
 
-	constructor(partnerHelper) {
-		this.page = partnerHelper.page;
-		this.partnerHelper = partnerHelper;
-		this.site = partnerHelper.site;
+	constructor(page: Page) {
+		this.page = page;
 
 		this.backButton = this.page.getByText('← Back');
 		this.cancelButton = this.page.getByRole('button', {name: 'Cancel'});
@@ -44,6 +41,9 @@ export class MDFRequestFormPage {
 			goals: new MDFRequestFormGoalsPage(this.page),
 			review: new MDFRequestFormReviewPage(this.page),
 		};
+		this.heading = this.page.getByRole('heading', {
+			name: 'MDF Request',
+		});
 		this.previousButton = this.page.getByRole('button', {name: 'Previous'});
 		this.saveAsDraftButton = this.page.getByRole('button', {
 			name: 'Save as Draft',
@@ -81,7 +81,7 @@ export class MDFRequestFormPage {
 
 	async goto() {
 		await this.page.goto(
-			`/web${this.site.friendlyUrlPath}/marketing/mdf-requests/new`,
+			`${PARTNER_SITE_FRIENLY_URL_PATH}/marketing/mdf-requests/new`,
 			{
 				waitUntil: 'commit',
 			}

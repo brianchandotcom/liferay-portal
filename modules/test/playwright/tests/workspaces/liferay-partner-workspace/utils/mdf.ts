@@ -5,27 +5,39 @@
 
 import moment from 'moment';
 
-import { mdfRequestDataMock, mdfRequestMock } from '../mocks/mdfMock';
-import { TAccount } from '../types/account';
-import { TMDFRequest, TMDFRequestDataFromRequest } from '../types/mdf';
+import {mdfRequestDataMock, mdfRequestMock} from '../mocks/mdfMock';
+import {TAccount} from '../types/account';
+import {TMDFRequest, TMDFRequestDataFromRequest} from '../types/mdf';
 
-export function generateMDFRequestDataForm(parnterAccount: TAccount): TMDFRequest {
+export function generateMDFRequestDataForm(
+	parnterAccount: TAccount
+): TMDFRequest {
 	const mdfRequest = mdfRequestMock;
 
-	mdfRequest.activities[0].endDate = moment().add(2, 'days').format('YYYY-MM-DD');
-	mdfRequest.activities[0].startDate = moment().add(1, 'days').format('YYYY-MM-DD');
+	mdfRequest.activities[0].endDate = moment()
+		.add(2, 'days')
+		.format('YYYY-MM-DD');
+	mdfRequest.activities[0].startDate = moment()
+		.add(1, 'days')
+		.format('YYYY-MM-DD');
 	mdfRequest.goals.companyName = parnterAccount.name;
 	mdfRequest.submitDate = moment().format('YYYY-MM-DD');
-	
+
 	return mdfRequest;
 }
 
-export function generatedDataFromRequest(parnterAccount: TAccount): TMDFRequestDataFromRequest {
+export function generatedDataFromRequest(
+	parnterAccount: TAccount
+): TMDFRequestDataFromRequest {
 	const mdfRequestData = mdfRequestDataMock;
 
 	mdfRequestData.companyName = parnterAccount.name;
-	mdfRequestData.maxDateActivity = moment().add(2, 'days').format('YYYY-MM-DD');
-	mdfRequestData.minDateActivity = moment().add(1, 'days').format('YYYY-MM-DD');
+	mdfRequestData.maxDateActivity = moment()
+		.add(2, 'days')
+		.format('YYYY-MM-DD');
+	mdfRequestData.minDateActivity = moment()
+		.add(1, 'days')
+		.format('YYYY-MM-DD');
 	mdfRequestData.submitDate = new Date().toISOString();
 
 	return mdfRequestData;

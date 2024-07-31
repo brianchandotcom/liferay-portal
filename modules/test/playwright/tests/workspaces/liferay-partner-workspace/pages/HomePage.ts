@@ -3,24 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
-import {PartnerHelper} from '../helpers/PartnerHelper';
+import {PARTNER_SITE_FRIENLY_URL_PATH} from '../utils/constants';
 
 export class HomePage {
+	readonly heading: Locator;
 	readonly page: Page;
-	readonly partnerHelper: PartnerHelper;
-	readonly site: Site;
 
-	constructor(partnerHelper) {
-		this.page = partnerHelper.page;
-		this.partnerHelper = partnerHelper;
-		this.site = partnerHelper.site;
+	constructor(page: Page) {
+		this.heading = this.heading = page.getByRole('heading', {
+			name: 'Welcome to Partner Portal',
+		});
+		this.page = page;
 	}
 
 	async goto() {
-		await this.page.goto(
-			`/web${this.partnerHelper.site.friendlyUrlPath}/home`
-		);
+		await this.page.goto(`${PARTNER_SITE_FRIENLY_URL_PATH}/home`);
 	}
 }

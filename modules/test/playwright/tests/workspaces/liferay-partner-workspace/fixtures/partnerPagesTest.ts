@@ -5,25 +5,26 @@
 
 import {mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {HomePage} from '../pages/HomePage';
 import {MDFRequestFormPage} from '../pages/mdf/MDFRequestFormPage';
 import {MDFRequestListPage} from '../pages/mdf/MDFRequestListPage';
 import {partnerHelperTest} from './partnerHelperTest';
 
-const test = mergeTests(partnerHelperTest);
+const test = mergeTests(apiHelpersTest, partnerHelperTest);
 
 export const partnerPagesTest = test.extend<{
 	homePage: HomePage;
 	mdfRequestFormPage: MDFRequestFormPage;
 	mdfRequestListPage: MDFRequestListPage;
 }>({
-	homePage: async ({partnerHelper}, use) => {
-		await use(new HomePage(partnerHelper));
+	homePage: async ({page}, use) => {
+		await use(new HomePage(page));
 	},
-	mdfRequestFormPage: async ({partnerHelper}, use) => {
-		await use(new MDFRequestFormPage(partnerHelper));
+	mdfRequestFormPage: async ({page}, use) => {
+		await use(new MDFRequestFormPage(page));
 	},
-	mdfRequestListPage: async ({partnerHelper}, use) => {
-		await use(new MDFRequestListPage(partnerHelper));
+	mdfRequestListPage: async ({page}, use) => {
+		await use(new MDFRequestListPage(page));
 	},
 });

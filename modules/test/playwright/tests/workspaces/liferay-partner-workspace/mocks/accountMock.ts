@@ -10,11 +10,9 @@ const namespace = getRandomInt();
 
 export const accountPlatinumMock: TPartnerAccount = {
 	currency: 'USD',
-	externalReferenceCode: '0017000000b3ScRAAU',
 	name: 'Account Platinum ' + namespace,
-	partnerCountry: 'US',
 	type: 'business',
-}
+};
 
 export const accountGoldMock: TPartnerAccount = {
 	currency: 'USD',
@@ -23,7 +21,7 @@ export const accountGoldMock: TPartnerAccount = {
 	name: 'Account Gold ' + namespace,
 	partnerCountry: 'US',
 	type: 'business',
-}
+};
 
 export const accountSilverMock: TPartnerAccount = {
 	currency: 'USD',
@@ -32,4 +30,4 @@ export const accountSilverMock: TPartnerAccount = {
 	name: 'Account Silver ' + namespace,
 	partnerCountry: 'US',
 	type: 'business',
-}
+};

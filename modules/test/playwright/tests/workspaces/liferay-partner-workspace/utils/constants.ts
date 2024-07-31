@@ -4,7 +4,7 @@
  */
 
 export enum EAccountRoles {
-	PARTNER_MANAGER = '[Account] Partner Manager (PM)'
+	PARTNER_MANAGER = '[Account] Partner Manager (PM)',
 }
 
 export enum EMDFRequestLiferayBusinessSalesGoals {
@@ -112,5 +112,7 @@ export enum EMDFRequestActivityExpenseTypes {
 }
 
 export enum ERegularRoles {
-	CHANNEL_OPERATIONS_MANAGER = 'Channel Operations Manager (COM)'
+	CHANNEL_OPERATIONS_MANAGER = 'Channel Operations Manager (COM)',
 }
+
+export const PARTNER_SITE_FRIENLY_URL_PATH = '/web/liferay-partner';

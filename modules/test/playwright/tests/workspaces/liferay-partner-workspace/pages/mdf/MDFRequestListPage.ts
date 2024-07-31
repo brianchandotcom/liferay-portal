@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {PartnerHelper} from '../../helpers/PartnerHelper';
+import {PARTNER_SITE_FRIENLY_URL_PATH} from '../../utils/constants';
 
 export class MDFRequestListPage {
 	readonly actionButton: Locator;
@@ -20,19 +20,16 @@ export class MDFRequestListPage {
 	readonly completeMenuItem: Locator;
 	readonly exportRequestButton: Locator;
 	readonly filterButton: Locator;
+	readonly heading: Locator;
 	readonly mdfRequestHeading: Locator;
 	readonly newRequestButton: Locator;
 	readonly noEntriesFoundMessage: Locator;
 	readonly openTab: Locator;
 	readonly page: Page;
-	readonly partnerHelper: PartnerHelper;
 	readonly searchInput: Locator;
-	readonly site: Site;
 
-	constructor(partnerHelper: PartnerHelper) {
-		this.page = partnerHelper.page;
-		this.partnerHelper = partnerHelper;
-		this.site = partnerHelper.site;
+	constructor(page: Page) {
+		this.page = page;
 
 		this.actionButton = this.page
 			.getByRole('cell', {name: 'Action Button'})
@@ -69,6 +66,9 @@ export class MDFRequestListPage {
 		this.filterButton = this.page.getByRole('button', {
 			exact: true,
 			name: 'Filter',
+		});
+		this.heading = page.getByRole('heading', {
+			name: 'MDF Requests',
 		});
 		this.mdfRequestHeading = this.page.getByText('MDF Requests');
 		this.newRequestButton = this.page.getByRole('button', {
@@ -172,7 +172,7 @@ export class MDFRequestListPage {
 
 	async goto() {
 		await this.page.goto(
-			`/web${this.site.friendlyUrlPath}/marketing/mdf-requests`,
+			`${PARTNER_SITE_FRIENLY_URL_PATH}/marketing/mdf-requests`,
 			{
 				waitUntil: 'commit',
 			}

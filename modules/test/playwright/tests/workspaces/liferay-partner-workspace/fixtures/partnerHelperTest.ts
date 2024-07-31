@@ -5,22 +5,15 @@
 
 import {mergeTests} from '@playwright/test';
 
-import {PartnerHelper} from '../helpers/PartnerHelper';
-import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {PartnerHelper} from '../helpers/PartnerHelper';
 
-const test = mergeTests(
-	apiHelpersTest,
-	loginTest({screenName: 'test'})
-);
+const test = mergeTests(loginTest({screenName: 'test'}));
 
 export const partnerHelperTest = test.extend<{
 	partnerHelper: PartnerHelper;
 }>({
-	partnerHelper: async ({apiHelpers, page}, use) => {
-		const site =
-			await apiHelpers.headlessSite.getSiteByERC('LIFERAY_PARTNER');
-		
-		await use(new PartnerHelper(page, site));
+	partnerHelper: async ({page}, use) => {
+		await use(new PartnerHelper(page));
 	},
 });

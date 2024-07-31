@@ -111,6 +111,45 @@ export async function syncAnalyticsCloud({
 	};
 }
 
+export async function syncContactsData({
+	organizationName,
+	page,
+	userGroupName,
+}: {
+	organizationName?: string;
+	page: Page;
+	userGroupName?: string;
+}) {
+	const selectContactsCollapsed = page
+		.locator('[aria-expanded="false"]')
+		.getByText('Select Contacts');
+
+	if (await selectContactsCollapsed.isVisible()) {
+		await page.getByRole('button', {name: 'Select Contacts'}).click();
+	}
+
+	if (userGroupName) {
+		await page.getByText('User Groups').click();
+
+		await page
+			.locator(`[data-testid="${userGroupName}"]`)
+			.locator('[type="checkbox"]')
+			.check();
+
+		await page.getByRole('button', {name: 'Add'}).click();
+	}
+	else if (organizationName) {
+		await page.getByText('Organizations', {exact: true}).click();
+
+		await page
+			.locator(`[data-testid="${organizationName}"]`)
+			.locator('[type="checkbox"]')
+			.check();
+
+		await page.getByRole('button', {name: 'Add'}).click();
+	}
+}
+
 export async function syncSite({
 	channelName,
 	page,

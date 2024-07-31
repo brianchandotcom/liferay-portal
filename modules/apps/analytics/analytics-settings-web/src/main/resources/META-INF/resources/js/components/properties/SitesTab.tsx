@@ -56,7 +56,7 @@ const SitesTab: React.FC<ISiteTabProps> = ({
 		onItemsChange={onSitesChange}
 		property={property}
 		requestFn={fetchSites}
-		type='sites'
+		type="sites"
 	/>
 );
 

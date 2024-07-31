@@ -29,7 +29,11 @@ const Content: React.FC<IContentProps> = ({
 	const dispatch = useDispatch();
 
 	return (
-		<ClayTable className="compose-table" data-testId={type} hover={!disabled}>
+		<ClayTable
+			className="compose-table"
+			data-testId={type}
+			hover={!disabled}
+		>
 			<ClayTable.Head>
 				<ClayTable.Row>
 					{showCheckbox && <ClayTable.Cell />}

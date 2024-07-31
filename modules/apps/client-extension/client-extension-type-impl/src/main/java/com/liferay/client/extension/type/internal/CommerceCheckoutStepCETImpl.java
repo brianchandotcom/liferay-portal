@@ -66,6 +66,11 @@ public class CommerceCheckoutStepCETImpl
 	}
 
 	@Override
+	public String getPayment() {
+		return getString("payment");
+	}
+
+	@Override
 	public boolean getSennaDisabled() {
 		return getBoolean("sennaDisabled");
 	}

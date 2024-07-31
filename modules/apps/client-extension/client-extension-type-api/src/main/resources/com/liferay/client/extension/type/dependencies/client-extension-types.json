@@ -43,6 +43,11 @@
 			},
 			{
 				"default": "",
+				"name": "payment",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"default": "",
 				"name": "sennaDisabled",
 				"type": "CETProperty.Type.Boolean"
 			},

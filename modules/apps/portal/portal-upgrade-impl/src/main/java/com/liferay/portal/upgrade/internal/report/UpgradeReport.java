@@ -77,6 +77,12 @@ public class UpgradeReport {
 
 	public void generateReport(UpgradeRecorder upgradeRecorder) {
 		if (StringUtil.equals(upgradeRecorder.getType(), "no upgrade")) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Upgrade report has not been generated because no " +
+						"upgrade processes were executed");
+			}
+
 			return;
 		}
 

@@ -62,8 +62,6 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
 		super(jsonObject, portalTestClassJob);
-
-		prepareTestClassGroup(batchName);
 	}
 
 	protected PlaywrightBatchTestClassGroup(
@@ -99,7 +97,23 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
-		prepareTestClassGroup(batchName);
+		if (ignore()) {
+			return;
+		}
+
+		if (testRelevantChanges) {
+			List<JobProperty> relevantPlaywrightJobProperties =
+				getRelevantPlaywrightJobProperties();
+
+			if (!relevantPlaywrightJobProperties.isEmpty()) {
+				recordJobProperties(relevantPlaywrightJobProperties);
+			}
+		}
+		else {
+			addDefaultProjectJobProperty(batchName);
+		}
+
+		setTestClasses();
 	}
 
 	protected File getPlaywrightBaseDir() {
@@ -146,26 +160,6 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 	protected List<JSONObject> getSpecJSONObjects() {
 		return _specJSONObjects;
-	}
-
-	protected void prepareTestClassGroup(String batchName) {
-		if (ignore()) {
-			return;
-		}
-
-		if (testRelevantChanges) {
-			List<JobProperty> relevantPlaywrightJobProperties =
-				getRelevantPlaywrightJobProperties();
-
-			if (!relevantPlaywrightJobProperties.isEmpty()) {
-				recordJobProperties(relevantPlaywrightJobProperties);
-			}
-		}
-		else {
-			addDefaultProjectJobProperty(batchName);
-		}
-
-		setTestClasses();
 	}
 
 	protected void setTestClasses() {

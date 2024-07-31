@@ -92,18 +92,17 @@ public class Log4jConfigUtilTest {
 			);
 
 			_testCompanyWebIdConsoleAppender(
-				companyThreadLocalMockedStatic, portalInstancePoolMockedStatic,
-				byteArrayOutputStream, logger, 0L, new long[0],
-				"Test Log Message", "Test Log Message");
+				new long[0], byteArrayOutputStream, 0L,
+				companyThreadLocalMockedStatic, "Test Log Message", logger,
+				"Test Log Message", portalInstancePoolMockedStatic);
 			_testCompanyWebIdConsoleAppender(
-				companyThreadLocalMockedStatic, portalInstancePoolMockedStatic,
-				byteArrayOutputStream, logger, companyId, new long[0],
-				"Test Log Message", "Test Log Message");
+				new long[0], byteArrayOutputStream, companyId,
+				companyThreadLocalMockedStatic, "Test Log Message", logger,
+				"Test Log Message", portalInstancePoolMockedStatic);
 			_testCompanyWebIdConsoleAppender(
-				companyThreadLocalMockedStatic, portalInstancePoolMockedStatic,
-				byteArrayOutputStream, logger, companyId,
-				new long[] {companyId}, "Test Log Message",
-				"test.com Test Log Message");
+				new long[] {companyId}, byteArrayOutputStream, companyId,
+				companyThreadLocalMockedStatic, "test.com Test Log Message",
+				logger, "Test Log Message", portalInstancePoolMockedStatic);
 		}
 		finally {
 			System.setOut(systemOutPrintStream);
@@ -537,11 +536,11 @@ public class Log4jConfigUtilTest {
 	}
 
 	private void _testCompanyWebIdConsoleAppender(
+		long[] availableCompanyIds, ByteArrayOutputStream byteArrayOutputStream,
+		long companyId,
 		MockedStatic<CompanyThreadLocal> companyThreadLocalMockedStatic,
-		MockedStatic<PortalInstancePool> portalInstancePoolMockedStatic,
-		ByteArrayOutputStream byteArrayOutputStream, Logger logger,
-		long companyId, long[] availableCompanyIds, String logMessage,
-		String expectedLogMessage) {
+		String expectedLogMessage, Logger logger, String logMessage,
+		MockedStatic<PortalInstancePool> portalInstancePoolMockedStatic) {
 
 		companyThreadLocalMockedStatic.when(
 			CompanyThreadLocal::getCompanyId

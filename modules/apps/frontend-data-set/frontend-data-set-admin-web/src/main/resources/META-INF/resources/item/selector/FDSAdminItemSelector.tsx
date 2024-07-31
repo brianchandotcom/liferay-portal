@@ -77,9 +77,9 @@ const FDSAdminItemSelector = ({
 						<ClayButton
 							className="item-preview selector-button"
 							data-value={`{
-								"className": "${className}", 
-								"classNameId": "${classNameId}", 
-								"classPK": "${selectedItem?.id}", 
+								"className": "${className}",
+								"classNameId": "${classNameId}",
+								"classPK": "${selectedItem?.id}",
 								"externalReferenceCode": "${selectedItem?.externalReferenceCode}"}`}
 						>
 							{Liferay.Language.get('save')}

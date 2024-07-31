@@ -790,7 +790,7 @@ public class FDSAdminPortlet extends MVCPortlet {
 				LocalizedMapUtil.getLocalizedMap("Data Set"), true, "FDSView",
 				null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap("Data Sets"), false,
-				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				ObjectDefinitionConstants.SCOPE_COMPANY, "label", 1,
 				WorkflowConstants.STATUS_DRAFT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(

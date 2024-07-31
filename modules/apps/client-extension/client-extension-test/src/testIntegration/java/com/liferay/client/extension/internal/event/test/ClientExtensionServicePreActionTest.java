@@ -51,6 +51,9 @@ import java.util.Objects;
 
 import junit.framework.Assert;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -199,6 +202,12 @@ public class ClientExtensionServicePreActionTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_assertThemeCSSURLs(_layout, Collections.emptyMap(), true);
+		_assertThemeCSSURLs(
+			_layout,
+			HashMapBuilder.put(
+				"languageId", "ar"
+			).build(),
+			true);
 	}
 
 	@Test
@@ -287,7 +296,11 @@ public class ClientExtensionServicePreActionTest {
 				UnicodePropertiesBuilder.create(
 					true
 				).put(
+					"clayRTLURL", _URL_CLAY_CSS_RTL
+				).put(
 					"clayURL", _URL_CLAY_CSS
+				).put(
+					"mainRTLURL", _URL_MAIN_CSS_RTL
 				).put(
 					"mainURL", _URL_MAIN_CSS
 				).buildString());
@@ -318,18 +331,32 @@ public class ClientExtensionServicePreActionTest {
 			(ThemeDisplay)mockHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String expectedClayCSSURL = _URL_CLAY_CSS;
-		String expectedMainCSSURL = _URL_MAIN_CSS;
-
-		if (!clientExtensionApplied) {
-			expectedClayCSSURL = themeDisplay.getClayCSSURL();
-			expectedMainCSSURL = themeDisplay.getMainCSSURL();
-		}
-
 		_processServicePreAction(mockHttpServletRequest);
 
-		Assert.assertEquals(expectedClayCSSURL, themeDisplay.getClayCSSURL());
-		Assert.assertEquals(expectedMainCSSURL, themeDisplay.getMainCSSURL());
+		if (clientExtensionApplied) {
+			if (_portal.isRightToLeft(mockHttpServletRequest)) {
+				Assert.assertEquals(
+					_URL_CLAY_CSS_RTL, themeDisplay.getClayCSSURL());
+				Assert.assertEquals(
+					_URL_MAIN_CSS_RTL, themeDisplay.getMainCSSURL());
+			}
+			else {
+				Assert.assertEquals(
+					_URL_CLAY_CSS, themeDisplay.getClayCSSURL());
+				Assert.assertEquals(
+					_URL_MAIN_CSS, themeDisplay.getMainCSSURL());
+			}
+		}
+		else {
+			MatcherAssert.assertThat(
+				themeDisplay.getClayCSSURL(),
+				CoreMatchers.containsString(
+					"themeId=classic_WAR_classictheme"));
+			MatcherAssert.assertThat(
+				themeDisplay.getMainCSSURL(),
+				CoreMatchers.containsString(
+					"themeId=classic_WAR_classictheme"));
+		}
 	}
 
 	private LifecycleAction _getLifecycleAction() {
@@ -407,11 +434,17 @@ public class ClientExtensionServicePreActionTest {
 	private static final String _URL_CLAY_CSS =
 		"http://" + RandomTestUtil.randomString() + ".com/styles.css";
 
+	private static final String _URL_CLAY_CSS_RTL =
+		"http://" + RandomTestUtil.randomString() + ".com/styles_rtl.css";
+
 	private static final String _URL_FAVICON =
 		"http://" + RandomTestUtil.randomString() + ".com";
 
 	private static final String _URL_MAIN_CSS =
 		"http://" + RandomTestUtil.randomString() + ".com/main.css";
+
+	private static final String _URL_MAIN_CSS_RTL =
+		"http://" + RandomTestUtil.randomString() + ".com/main_rtl.css";
 
 	private ClientExtensionEntry _clientExtensionEntry;
 

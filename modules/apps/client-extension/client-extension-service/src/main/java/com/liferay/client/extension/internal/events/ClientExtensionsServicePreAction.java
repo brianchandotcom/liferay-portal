@@ -85,8 +85,14 @@ public class ClientExtensionsServicePreAction extends Action {
 		ThemeCSSCET themeCSSCET = _getThemeCSSCET(layout);
 
 		if (themeCSSCET != null) {
-			themeDisplay.setClayCSSURL(themeCSSCET.getClayURL());
-			themeDisplay.setMainCSSURL(themeCSSCET.getMainURL());
+			if (_portal.isRightToLeft(httpServletRequest)) {
+				themeDisplay.setClayCSSURL(themeCSSCET.getClayRTLURL());
+				themeDisplay.setMainCSSURL(themeCSSCET.getMainRTLURL());
+			}
+			else {
+				themeDisplay.setClayCSSURL(themeCSSCET.getClayURL());
+				themeDisplay.setMainCSSURL(themeCSSCET.getMainURL());
+			}
 		}
 
 		ThemeSpritemapCET themeSpritemapCET = _getThemeSpritemapCET(layout);

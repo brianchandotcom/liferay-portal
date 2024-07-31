@@ -55,10 +55,14 @@ public class ThemeCSSCETImplFactoryImpl
 		return UnicodePropertiesBuilder.create(
 			true
 		).put(
+			"clayRTLURL", ParamUtil.getString(portletRequest, "clayRTLURL")
+		).put(
 			"clayURL", ParamUtil.getString(portletRequest, "clayURL")
 		).put(
 			"frontendTokenDefinitionJSON",
 			ParamUtil.getString(portletRequest, "frontendTokenDefinitionJSON")
+		).put(
+			"mainRTLURL", ParamUtil.getString(portletRequest, "mainRTLURL")
 		).put(
 			"mainURL", ParamUtil.getString(portletRequest, "mainURL")
 		).build();

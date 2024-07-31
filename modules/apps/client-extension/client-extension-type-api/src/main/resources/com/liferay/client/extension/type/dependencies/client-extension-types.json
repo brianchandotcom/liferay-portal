@@ -405,6 +405,11 @@
 		"properties": [
 			{
 				"default": "",
+				"name": "clayRTLURL",
+				"type": "CETProperty.Type.URL"
+			},
+			{
+				"default": "",
 				"name": "clayURL",
 				"type": "CETProperty.Type.URL"
 			},
@@ -416,6 +421,11 @@
 				"default": "",
 				"name": "frontendTokenDefinitionJSON",
 				"type": "CETProperty.Type.String"
+			},
+			{
+				"default": "",
+				"name": "mainRTLURL",
+				"type": "CETProperty.Type.URL"
 			},
 			{
 				"default": "",

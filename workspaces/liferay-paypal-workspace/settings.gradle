@@ -1,0 +1,22 @@
+buildscript {
+	dependencies {
+		classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "5.3.0"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.workspace", version: "10.1.7"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url new File(rootProject.projectDir, "../../.m2-tmp")
+		}
+
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.workspace"
+
+include "poshi"

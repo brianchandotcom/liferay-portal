@@ -240,18 +240,33 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 	@Override
 	public void putProperties(String key, File propertiesFile) {
+		putProperties(key, propertiesFile, true);
+	}
+
+	@Override
+	public void putProperties(
+		String key, File propertiesFile, boolean writeFile) {
+
 		putProperties(
-			key, JenkinsResultsParserUtil.getProperties(propertiesFile));
+			key, JenkinsResultsParserUtil.getProperties(propertiesFile),
+			writeFile);
 	}
 
 	@Override
 	public void putProperties(String key, Properties properties) {
-		synchronized (_buildDatabaseFile) {
-			JSONObject propertiesJSONObject = _jsonObject.getJSONObject(
-				"properties");
+		putProperties(key, properties, true);
+	}
 
-			propertiesJSONObject.put(key, _toJSONArray(properties));
+	@Override
+	public void putProperties(
+		String key, Properties properties, boolean writeFile) {
 
+		JSONObject propertiesJSONObject = _jsonObject.getJSONObject(
+			"properties");
+
+		propertiesJSONObject.put(key, _toJSONArray(properties));
+
+		if (writeFile) {
 			_writeJSONObjectFile();
 		}
 	}
@@ -260,13 +275,19 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	public void putProperty(
 		String key, String propertyName, String propertyValue) {
 
-		synchronized (_buildDatabaseFile) {
-			Properties properties = getProperties(key);
+		putProperty(key, propertyName, propertyValue, true);
+	}
 
-			properties.setProperty(propertyName, propertyValue);
+	@Override
+	public void putProperty(
+		String key, String propertyName, String propertyValue,
+		boolean writeFile) {
 
-			putProperties(key, properties);
-		}
+		Properties properties = getProperties(key);
+
+		properties.setProperty(propertyName, propertyValue);
+
+		putProperties(key, properties, writeFile);
 	}
 
 	@Override

@@ -59,10 +59,20 @@ public interface BuildDatabase {
 
 	public void putProperties(String key, File propertiesFile);
 
+	public void putProperties(
+		String key, File propertiesFile, boolean writeFile);
+
 	public void putProperties(String key, Properties properties);
+
+	public void putProperties(
+		String key, Properties properties, boolean writeFile);
 
 	public void putProperty(
 		String key, String propertyName, String propertyValue);
+
+	public void putProperty(
+		String key, String propertyName, String propertyValue,
+		boolean writeFile);
 
 	public void putPullRequest(String key, PullRequest pullRequest);
 

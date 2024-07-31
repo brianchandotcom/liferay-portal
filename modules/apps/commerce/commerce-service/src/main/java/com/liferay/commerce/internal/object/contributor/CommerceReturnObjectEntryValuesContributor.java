@@ -6,6 +6,7 @@
 package com.liferay.commerce.internal.object.contributor;
 
 import com.liferay.commerce.constants.CommerceReturnConstants;
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceReturnThreadLocal;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -86,6 +87,12 @@ public class CommerceReturnObjectEntryValuesContributor
 
 		if (!values.containsKey("c_commerceReturnId") &&
 			!values.containsKey("externalReferenceCode")) {
+
+			CommerceCurrency commerceCurrency =
+				commerceOrder.getCommerceCurrency();
+
+			values.put("currencyCode", commerceCurrency.getCode());
+			values.put("currencySymbol", commerceCurrency.getSymbol());
 
 			return;
 		}

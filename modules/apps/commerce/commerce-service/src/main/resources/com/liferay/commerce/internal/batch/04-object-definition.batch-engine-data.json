@@ -69,6 +69,36 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "CURRENCY_CODE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Currency Code"
+					},
+					"name": "currencyCode",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "CURRENCY_SYMBOL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Currency Symbol"
+					},
+					"name": "currencySymbol",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
 					"externalReferenceCode": "NOTE",
 					"indexed": true,
 					"indexedAsKeyword": false,

@@ -32,6 +32,8 @@ public class CommerceReturn {
 		_channelId = (long)objectEntryValues.get("channelId");
 		_channelName = (String)objectEntryValues.get("channelName");
 		_createDate = objectEntry.getCreateDate();
+		_currencyCode = (String)objectEntryValues.get("currencyCode");
+		_currencySymbol = (String)objectEntryValues.get("currencySymbol");
 		_externalReferenceCode = objectEntry.getExternalReferenceCode();
 		_id = objectEntry.getPrimaryKey();
 		_note = (String)objectEntryValues.get("note");
@@ -63,6 +65,14 @@ public class CommerceReturn {
 
 	public Date getCreateDate() {
 		return _createDate;
+	}
+
+	public String getCurrencyCode() {
+		return _currencyCode;
+	}
+
+	public String getCurrencySymbol() {
+		return _currencySymbol;
 	}
 
 	public String getExternalReferenceCode() {
@@ -106,6 +116,8 @@ public class CommerceReturn {
 	private final long _channelId;
 	private final String _channelName;
 	private final Date _createDate;
+	private final String _currencyCode;
+	private final String _currencySymbol;
 	private final String _externalReferenceCode;
 	private final long _id;
 	private final String _note;

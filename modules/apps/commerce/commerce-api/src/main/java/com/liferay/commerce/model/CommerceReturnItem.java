@@ -36,6 +36,8 @@ public class CommerceReturnItem {
 		_commerceOrderItemId = (long)objectEntryValues.get(
 			"r_commerceOrderItemToCommerceReturnItems_commerceOrderItemId");
 		_createDate = objectEntry.getCreateDate();
+		_currencyCode = (String)objectEntryValues.get("currencyCode");
+		_currencySymbol = (String)objectEntryValues.get("currencySymbol");
 		_externalReferenceCode = objectEntry.getExternalReferenceCode();
 		_id = objectEntry.getPrimaryKey();
 		_quantity = new BigDecimal(
@@ -63,6 +65,14 @@ public class CommerceReturnItem {
 
 	public Date getCreateDate() {
 		return _createDate;
+	}
+
+	public String getCurrencyCode() {
+		return _currencyCode;
+	}
+
+	public String getCurrencySymbol() {
+		return _currencySymbol;
 	}
 
 	public String getExternalReferenceCode() {
@@ -110,6 +120,8 @@ public class CommerceReturnItem {
 	private final Boolean _authorizeReturnWithoutReturningProducts;
 	private final long _commerceOrderItemId;
 	private final Date _createDate;
+	private final String _currencyCode;
+	private final String _currencySymbol;
 	private final String _externalReferenceCode;
 	private final long _id;
 	private final ObjectEntry _objectEntry;

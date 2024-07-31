@@ -659,6 +659,18 @@ public class SourceFormatter {
 					_sourceFormatterArgs.getGitWorkingBranchName());
 
 			if (!deletedFileNames.isEmpty()) {
+				for (String deletedFileName : deletedFileNames) {
+					if (deletedFileName.endsWith("/test.properties")) {
+						dependentFileNames.addAll(
+							SourceFormatterUtil.filterFileNames(
+								_allFileNames, new String[0],
+								new String[] {"**/test.properties"},
+								_sourceFormatterExcludes, false));
+
+						break;
+					}
+				}
+
 				dependentFileNames.addAll(
 					SourceFormatterUtil.filterFileNames(
 						_allFileNames, new String[0],

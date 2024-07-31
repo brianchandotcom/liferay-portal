@@ -7,11 +7,13 @@ package com.liferay.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -30,6 +32,7 @@ import java.text.Format;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 
@@ -93,6 +96,21 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 				displayContext, getResourceBundle(displayContext.getLocale()),
 				themeDisplay));
 
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
+			boolean showAllData = (Boolean)httpServletRequest.getAttribute(
+				"showAllData");
+
+			if (showAllData) {
+				T model = displayContext.getModel();
+
+				_buildTableContent(
+					httpServletResponse, model.getModelAttributes());
+			}
+		}
+
 		writer.write("</table></div>");
 	}
 
@@ -152,6 +170,38 @@ public abstract class BaseCTDisplayRenderer<T extends BaseModel<T>>
 
 		public T getModel();
 
+	}
+
+	private void _buildTableContent(
+		HttpServletResponse httpServletResponse,
+		Map<String, Object> modelAttributes) {
+
+		try {
+			Writer writer = httpServletResponse.getWriter();
+
+			for (Map.Entry<String, Object> entry : modelAttributes.entrySet()) {
+				writer.write("<tr><td class=\"publications-key-td ");
+				writer.write("table-cell-expand-small\">");
+
+				writer.write(entry.getKey());
+
+				writer.write("</td><td class=\"table-cell-expand\">");
+
+				Object value = entry.getValue();
+
+				if (Objects.equals(value, StringPool.BLANK)) {
+					writer.write("null");
+				}
+				else {
+					writer.write(String.valueOf(value));
+				}
+
+				writer.write("</td></tr>");
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

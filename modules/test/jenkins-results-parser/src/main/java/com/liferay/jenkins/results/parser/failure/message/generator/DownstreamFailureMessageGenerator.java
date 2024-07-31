@@ -5,10 +5,6 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
-import com.liferay.jenkins.results.parser.Dom4JUtil;
-
-import org.dom4j.Element;
-
 /**
  * @author Kevin Yen
  */
@@ -19,17 +15,6 @@ public class DownstreamFailureMessageGenerator
 	public String getMessage(String consoleText) {
 		if (consoleText.contains("Downstream jobs FAILED.")) {
 			return "Downstream jobs FAILED.";
-		}
-
-		return null;
-	}
-
-	@Override
-	public Element getMessageElement(String consoleText) {
-		String errorMessage = getMessage(consoleText);
-
-		if (errorMessage != null) {
-			return Dom4JUtil.toCodeSnippetElement(getMessage(consoleText));
 		}
 
 		return null;

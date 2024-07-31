@@ -6,7 +6,6 @@
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Build;
-import com.liferay.jenkins.results.parser.Dom4JUtil;
 
 import org.dom4j.Element;
 
@@ -50,17 +49,6 @@ public class PlaywrightCompilationFailureMessageGenerator
 		}
 
 		return getMessageElement(build.getConsoleText());
-	}
-
-	@Override
-	public Element getMessageElement(String consoleText) {
-		String errorMessage = getMessage(consoleText);
-
-		if (errorMessage != null) {
-			return Dom4JUtil.toCodeSnippetElement(errorMessage);
-		}
-
-		return null;
 	}
 
 	private static final String _TOKEN_END_SNIPPET =

@@ -38,9 +38,9 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String errorMessage = getMessage(build);
+		Element messageElement = super.getMessageElement(build);
 
-		if (errorMessage != null) {
+		if (messageElement != null) {
 			return Dom4JUtil.getNewElement(
 				"div", null,
 				Dom4JUtil.getNewElement(
@@ -50,7 +50,7 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 					Dom4JUtil.getNewElement(
 						"strong", null,
 						getBaseBranchAnchorElement(build.getTopLevelBuild())),
-					Dom4JUtil.toCodeSnippetElement(errorMessage)));
+					messageElement));
 		}
 
 		return null;

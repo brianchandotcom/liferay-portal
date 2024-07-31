@@ -5,10 +5,6 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
-import com.liferay.jenkins.results.parser.Dom4JUtil;
-
-import org.dom4j.Element;
-
 /**
  * @author Peter Yoo
  * @author Yi-Chen Tsai
@@ -35,17 +31,6 @@ public class SourceFormatFailureMessageGenerator
 		end = consoleText.lastIndexOf("\n", end);
 
 		return getConsoleTextSnippet(consoleText, false, start, end);
-	}
-
-	@Override
-	public Element getMessageElement(String consoleText) {
-		String errorMessage = getMessage(consoleText);
-
-		if (errorMessage != null) {
-			return Dom4JUtil.toCodeSnippetElement(getMessage(consoleText));
-		}
-
-		return null;
 	}
 
 	private static final String _TOKEN_FORMATTING_ISSUES = "formatting issues:";

@@ -5,10 +5,6 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
-import com.liferay.jenkins.results.parser.Dom4JUtil;
-
-import org.dom4j.Element;
-
 /**
  * @author Kenji Heigel
  */
@@ -31,17 +27,6 @@ public class CompileFailureMessageGenerator
 			start = consoleText.lastIndexOf("\n", start);
 
 			return getConsoleTextSnippetByStart(consoleText, start);
-		}
-
-		return null;
-	}
-
-	@Override
-	public Element getMessageElement(String consoleText) {
-		String errorMessage = getMessage(consoleText);
-
-		if (errorMessage != null) {
-			return Dom4JUtil.toCodeSnippetElement(errorMessage);
 		}
 
 		return null;

@@ -190,9 +190,9 @@
 
 							<div class="toolbar">
 								<div class="toolbar-item">
-									<button 
-										class="copy-to-clipboard-button" 
-										data-copy-state="copy" 
+									<button
+										class="copy-to-clipboard-button"
+										data-copy-state="copy"
 										onclick="copyToClipboard(this)"
 										type="button"
 									>

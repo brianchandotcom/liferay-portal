@@ -93,6 +93,7 @@ public class PostalAddressResourceTest
 				addressCountry = _country.getTitle(LocaleUtil.getDefault());
 				addressLocality = RandomTestUtil.randomString();
 				addressType = "billing";
+				externalReferenceCode = RandomTestUtil.randomString();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				postalCode = RandomTestUtil.randomString();
 				primary = false;
@@ -109,6 +110,14 @@ public class PostalAddressResourceTest
 			randomPostalAddress(), AccountEntry.class.getName(),
 			_accountEntry.getAccountEntryId(),
 			AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
+	}
+
+	@Override
+	protected PostalAddress
+			testDeletePostalAddressByExternalReferenceCode_addPostalAddress()
+		throws Exception {
+
+		return testDeletePostalAddress_addPostalAddress();
 	}
 
 	@Override
@@ -206,6 +215,14 @@ public class PostalAddressResourceTest
 
 	@Override
 	protected PostalAddress
+			testGetPostalAddressByExternalReferenceCode_addPostalAddress()
+		throws Exception {
+
+		return testGetPostalAddress_addPostalAddress();
+	}
+
+	@Override
+	protected PostalAddress
 			testGetUserAccountByExternalReferenceCodePostalAddressesPage_addPostalAddress(
 				String externalReferenceCode, PostalAddress postalAddress)
 		throws Exception {
@@ -259,6 +276,14 @@ public class PostalAddressResourceTest
 	}
 
 	@Override
+	protected PostalAddress
+			testPatchPostalAddressByExternalReferenceCode_addPostalAddress()
+		throws Exception {
+
+		return testPatchPostalAddress_addPostalAddress();
+	}
+
+	@Override
 	protected PostalAddress testPutPostalAddress_addPostalAddress()
 		throws Exception {
 
@@ -268,6 +293,22 @@ public class PostalAddressResourceTest
 			AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 	}
 
+	@Override
+	protected PostalAddress
+			testPutPostalAddressByExternalReferenceCode_addPostalAddress()
+		throws Exception {
+
+		return testPutPostalAddress_addPostalAddress();
+	}
+
+	@Override
+	protected PostalAddress
+			testPutPostalAddressByExternalReferenceCode_createPostalAddress()
+		throws Exception {
+
+		return testPutPostalAddress_addPostalAddress();
+	}
+
 	private PostalAddress _addPostalAddress(
 			PostalAddress postalAddress, String className, long classPK,
 			String listTypeId)
@@ -275,13 +316,15 @@ public class PostalAddressResourceTest
 
 		return _toPostalAddress(
 			AddressLocalServiceUtil.addAddress(
-				null, _user.getUserId(), className, classPK, null, null,
+				postalAddress.getExternalReferenceCode(), _user.getUserId(),
+				className, classPK, null, null,
 				postalAddress.getStreetAddressLine1(),
 				postalAddress.getStreetAddressLine2(),
 				postalAddress.getStreetAddressLine3(),
 				postalAddress.getAddressLocality(),
-				postalAddress.getPostalCode(), 0, 0, _getListTypeId(listTypeId),
-				false, postalAddress.getPrimary(), null, new ServiceContext()));
+				postalAddress.getPostalCode(), 0, _country.getCountryId(),
+				_getListTypeId(listTypeId), false, postalAddress.getPrimary(),
+				null, new ServiceContext()));
 	}
 
 	private long _getListTypeId(String listTypeId) {
@@ -294,9 +337,15 @@ public class PostalAddressResourceTest
 	}
 
 	private PostalAddress _toPostalAddress(Address address) {
+		Country country = address.getCountry();
+		ListType listType = address.getListType();
+
 		return new PostalAddress() {
 			{
+				addressCountry = country.getTitle();
 				addressLocality = address.getCity();
+				addressType = listType.getName();
+				externalReferenceCode = address.getExternalReferenceCode();
 				id = address.getAddressId();
 				name = address.getName();
 				postalCode = address.getZip();

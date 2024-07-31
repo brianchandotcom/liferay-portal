@@ -138,4 +138,35 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 			regionId, countryId, listTypeId, mailing, primary, phoneNumber);
 	}
 
+	@Override
+	public Address updateExternalReferenceCode(
+			Address address, String externalReferenceCode)
+		throws PortalException {
+
+		String actionId = ActionKeys.UPDATE;
+
+		if (Objects.equals(
+				address.getClassName(),
+				"com.liferay.account.model.AccountEntry")) {
+
+			actionId = "MANAGE_ADDRESSES";
+		}
+
+		CommonPermissionUtil.check(
+			getPermissionChecker(), address.getClassNameId(),
+			address.getClassPK(), actionId);
+
+		return addressLocalService.updateExternalReferenceCode(
+			address, externalReferenceCode);
+	}
+
+	@Override
+	public Address updateExternalReferenceCode(
+			long addressId, String externalReferenceCode)
+		throws PortalException {
+
+		return updateExternalReferenceCode(
+			getAddress(addressId), externalReferenceCode);
+	}
+
 }

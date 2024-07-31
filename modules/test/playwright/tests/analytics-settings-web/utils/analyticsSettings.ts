@@ -72,13 +72,17 @@ export async function syncAllContacts(page: Page) {
 export async function syncAnalyticsCloud({
 	apiHelpers,
 	channelName,
+	organizationName,
 	page,
 	siteName,
+	userGroupName,
 }: {
 	apiHelpers: ApiHelpers;
 	channelName: string;
+	organizationName?: string;
 	page: Page;
 	siteName?: string;
+	userGroupName?: string;
 }) {
 	const {channel, project} = await createChannel({
 		apiHelpers,
@@ -101,7 +105,16 @@ export async function syncAnalyticsCloud({
 		siteName,
 	});
 
-	await syncAllContacts(page);
+	if (userGroupName || organizationName) {
+		await syncContactsData({
+			organizationName: organizationName,
+			userGroupName: userGroupName,
+			page,
+		});
+	}
+	else {
+		await syncAllContacts(page);
+	}
 
 	await page.getByRole('button', {name: 'Finish'}).click();
 

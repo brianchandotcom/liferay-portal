@@ -69,7 +69,7 @@ public class CPSpecificationOptionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -77,6 +77,8 @@ public class CPSpecificationOptionCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", CPSpecificationOptionId=");
 		sb.append(CPSpecificationOptionId);
 		sb.append(", companyId=");
@@ -123,6 +125,14 @@ public class CPSpecificationOptionCacheModel
 		}
 		else {
 			cpSpecificationOptionImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			cpSpecificationOptionImpl.setExternalReferenceCode("");
+		}
+		else {
+			cpSpecificationOptionImpl.setExternalReferenceCode(
+				externalReferenceCode);
 		}
 
 		cpSpecificationOptionImpl.setCPSpecificationOptionId(
@@ -198,6 +208,7 @@ public class CPSpecificationOptionCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		CPSpecificationOptionId = objectInput.readLong();
 
@@ -232,6 +243,13 @@ public class CPSpecificationOptionCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(CPSpecificationOptionId);
@@ -284,6 +302,7 @@ public class CPSpecificationOptionCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long CPSpecificationOptionId;
 	public long companyId;
 	public long userId;

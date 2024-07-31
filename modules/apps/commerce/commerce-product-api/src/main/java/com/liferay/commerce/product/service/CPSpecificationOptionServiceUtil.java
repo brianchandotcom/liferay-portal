@@ -31,16 +31,16 @@ public class CPSpecificationOptionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPSpecificationOptionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CPSpecificationOption addCPSpecificationOption(
-			long cpOptionCategoryId, long listTypeDefinitionId,
-			Map<java.util.Locale, String> titleMap,
+			String externalReferenceCode, long cpOptionCategoryId,
+			long listTypeDefinitionId, Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap, boolean facetable,
 			String key, double priority,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCPSpecificationOption(
-			cpOptionCategoryId, listTypeDefinitionId, titleMap, descriptionMap,
-			facetable, key, priority, serviceContext);
+			externalReferenceCode, cpOptionCategoryId, listTypeDefinitionId,
+			titleMap, descriptionMap, facetable, key, priority, serviceContext);
 	}
 
 	public static void deleteCPSpecificationOption(long cpSpecificationOptionId)

@@ -273,6 +273,25 @@ public abstract class CPSpecificationOptionLocalServiceBaseImpl
 			uuid, companyId, null);
 	}
 
+	@Override
+	public CPSpecificationOption
+		fetchCPSpecificationOptionByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return cpSpecificationOptionPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public CPSpecificationOption
+			getCPSpecificationOptionByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return cpSpecificationOptionPersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the cp specification option with the primary key.
 	 *

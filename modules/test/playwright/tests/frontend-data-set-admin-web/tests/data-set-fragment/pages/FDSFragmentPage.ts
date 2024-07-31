@@ -124,8 +124,11 @@ export class FDSFragmentPage {
 			.getByRole('button', {name: 'Save'})
 			.click();
 
-		const selectedDataSetView = await this.page.getByLabel('Configuration Panel').getByLabel('Data Set View', {exact: true} ).inputValue();
-		
+		const selectedDataSetView = await this.page
+			.getByLabel('Configuration Panel')
+			.getByLabel('Data Set View', {exact: true})
+			.inputValue();
+
 		await expect(selectedDataSetView).toEqual(dataSetLabel);
 
 		await this.publishPage();

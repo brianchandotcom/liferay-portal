@@ -363,7 +363,7 @@ test(
 			await fdsFragmentPage.fdsTableWrapper.click();
 
 			await page
-				.getByRole('button', {name: 'Select Data Set View'})
+				.getByRole('button', {name: 'Change Data Set View'})
 				.click();
 
 			await page
@@ -431,7 +431,7 @@ test(
 			await fdsFragmentPage.fdsTableWrapper.click();
 
 			await page
-				.getByRole('button', {name: 'Select Data Set View'})
+				.getByRole('button', {name: 'Change Data Set View'})
 				.click();
 
 			await page

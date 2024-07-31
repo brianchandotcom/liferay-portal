@@ -520,6 +520,21 @@ public class ServletDataImpl implements ServletData {
 							PostalAddressResourceImpl.class,
 							"postOrganizationPostalAddressesPageExportBatch"));
 					put(
+						"mutation#deletePostalAddressByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"deletePostalAddressByExternalReferenceCode"));
+					put(
+						"mutation#patchPostalAddressByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"patchPostalAddressByExternalReferenceCode"));
+					put(
+						"mutation#updatePostalAddressByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"putPostalAddressByExternalReferenceCode"));
+					put(
 						"mutation#deletePostalAddress",
 						new ObjectValuePair<>(
 							PostalAddressResourceImpl.class,
@@ -1057,6 +1072,11 @@ public class ServletDataImpl implements ServletData {
 							PostalAddressResourceImpl.class,
 							"getOrganizationPostalAddressesPage"));
 					put(
+						"query#postalAddressByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"getPostalAddressByExternalReferenceCode"));
+					put(
 						"query#postalAddress",
 						new ObjectValuePair<>(
 							PostalAddressResourceImpl.class,
@@ -1428,6 +1448,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							EmailAddressResourceImpl.class,
 							"getOrganizationByExternalReferenceCodeEmailAddressesPage"));
+					put(
+						"query#Account.postalAddressByExternalReferenceCode",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"getPostalAddressByExternalReferenceCode"));
 					put(
 						"query#Account.roleByExternalReferenceCode",
 						new ObjectValuePair<>(

@@ -1362,6 +1362,56 @@ public class Mutation {
 						organizationId, callbackURL, contentType, fieldNames));
 	}
 
+	@GraphQLField(
+		description = "Deletes the postal address using external reference code."
+	)
+	public boolean deletePostalAddressByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource ->
+				postalAddressResource.
+					deletePostalAddressByExternalReferenceCode(
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates the postal address using external reference code."
+	)
+	public PostalAddress patchPostalAddressByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("postalAddress") PostalAddress postalAddress)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource ->
+				postalAddressResource.patchPostalAddressByExternalReferenceCode(
+					externalReferenceCode, postalAddress));
+	}
+
+	@GraphQLField(
+		description = "Updates the postal address using external reference code."
+	)
+	public PostalAddress updatePostalAddressByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("postalAddress") PostalAddress postalAddress)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource ->
+				postalAddressResource.putPostalAddressByExternalReferenceCode(
+					externalReferenceCode, postalAddress));
+	}
+
 	@GraphQLField(description = "Deletes the postal address")
 	public boolean deletePostalAddress(
 			@GraphQLName("postalAddressId") Long postalAddressId)

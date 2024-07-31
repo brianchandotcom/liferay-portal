@@ -82,6 +82,22 @@ public interface PostalAddressResource {
 			String fieldNames)
 		throws Exception;
 
+	public void deletePostalAddressByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public PostalAddress getPostalAddressByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public PostalAddress patchPostalAddressByExternalReferenceCode(
+			String externalReferenceCode, PostalAddress postalAddress)
+		throws Exception;
+
+	public PostalAddress putPostalAddressByExternalReferenceCode(
+			String externalReferenceCode, PostalAddress postalAddress)
+		throws Exception;
+
 	public void deletePostalAddress(Long postalAddressId) throws Exception;
 
 	public Response deletePostalAddressBatch(String callbackURL, Object object)

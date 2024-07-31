@@ -24,6 +24,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.subscription.test.util.BaseSubscriptionLocalizedContentTestCase;
 
+import java.util.Locale;
+import java.util.Map;
+
 import javax.portlet.PortletPreferences;
 
 import org.junit.ClassRule;
@@ -89,19 +92,21 @@ public class JournalSubscriptionLocalizedContentTest
 
 	@Override
 	protected void setBaseModelSubscriptionBodyPreferences(
-			String bodyPreferenceName)
+			Map<Locale, String> localizedContents, String bodyPreferenceName)
 		throws Exception {
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
 				layout, getServiceName());
 
-		LocalizationUtil.setPreferencesValue(
-			portletPreferences, bodyPreferenceName,
-			LocaleUtil.toLanguageId(LocaleUtil.GERMANY), GERMAN_BODY);
-		LocalizationUtil.setPreferencesValue(
-			portletPreferences, bodyPreferenceName,
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), SPANISH_BODY);
+		for (Map.Entry<Locale, String> localizedContent :
+				localizedContents.entrySet()) {
+
+			LocalizationUtil.setPreferencesValue(
+				portletPreferences, bodyPreferenceName,
+				LocaleUtil.toLanguageId(localizedContent.getKey()),
+				localizedContent.getValue());
+		}
 
 		PortletPreferencesLocalServiceUtil.updatePreferences(
 			group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,

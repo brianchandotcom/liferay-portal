@@ -4,7 +4,10 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useCallback, useEffect, useState} from 'react';
+
+import '../css/undoRedoHistory.scss';
 
 const META_FIELD_NAMES = {
 	description: 'descriptionMapAsXML',
@@ -18,6 +21,8 @@ export default function UndoRedo({
 	languageId,
 	portletNamespace,
 }) {
+	const [active, setActive] = useState(false);
+
 	const [
 
 		// eslint-disable-next-line no-unused-vars
@@ -408,7 +413,7 @@ export default function UndoRedo({
 	}, [handleUpdateFriendlyURL]);
 
 	return (
-		<>
+		<div className="d-flex">
 			<ClayButtonWithIcon
 				aria-label={Liferay.Language.get('undo')}
 				className="btn-monospaced"
@@ -436,6 +441,38 @@ export default function UndoRedo({
 				symbol="redo"
 				title={Liferay.Language.get('redo')}
 			/>
-		</>
+
+			<ClayDropDown
+				active={active}
+				alignmentPosition={Align.BottomRight}
+				className="ml-2"
+				menuElementAttrs={{
+					className: 'journal-web__undo-redo-history',
+					containerProps: {
+						className: 'cadmin',
+					},
+				}}
+				onActiveChange={setActive}
+				trigger={
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('history')}
+						aria-pressed={active}
+						disabled={step <= 0}
+						displayType="secondary"
+						size="sm"
+						symbol="time"
+						title={Liferay.Language.get('history')}
+					/>
+				}
+			>
+				<ClayDropDown.ItemList>
+					<ClayDropDown.Divider />
+
+					<ClayDropDown.Item disabled={step <= 0}>
+						{Liferay.Language.get('undo-all')}
+					</ClayDropDown.Item>
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
+		</div>
 	);
 }

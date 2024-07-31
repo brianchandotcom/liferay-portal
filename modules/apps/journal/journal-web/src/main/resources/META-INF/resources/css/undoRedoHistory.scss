@@ -1,0 +1,22 @@
+@import 'atlas-variables';
+@import 'cadmin-variables';
+
+html#{$cadmin-selector} {
+	.cadmin {
+		.journal-web__undo-redo-history {
+			&.dropdown-menu {
+				width: 240px;
+			}
+
+			.dropdown-item {
+				padding-right: 2.25rem;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+
+				span {
+					font-size: 0.75rem;
+				}
+			}
+		}
+	}
+}

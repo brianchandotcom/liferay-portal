@@ -51,6 +51,7 @@ import {
 	viewNameNotPresentOnTableList,
 	viewNameOnTableList,
 } from './utils/utils';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -1287,6 +1288,156 @@ test(
 				criteriaRowValue: 'Individual familyName is "Smith"',
 				page,
 				parent: page.locator('.criteria-group').nth(1),
+			});
+		});
+
+		await test.step('Delete channel', async () => {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+				`[${channel.id}]`,
+				project.groupId
+			);
+		});
+	}
+);
+
+test(
+	'Add segment using an organization property "organization"',
+	{
+		tag: '@Legacy',
+	},
+	async ({apiHelpers, page}) => {
+		const channelName = 'My Property - ' + getRandomString();
+
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization();
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await test.step('Add the new user to the organization', async () => {
+			await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+				organization.id,
+				user.emailAddress
+			);
+		});
+
+		const {channel, project} = await syncAnalyticsCloud({
+			apiHelpers,
+			channelName,
+			organizationName: organization.name,
+			page,
+		});
+
+		await test.step('Interact with the user that is not part of the organization', async () => {
+			await page.goto(liferayConfig.environment.baseUrl);
+
+			await page.waitForTimeout(10000);
+		});
+
+		await test.step('Interact with the user that is part of the organization', async () => {
+			await performLogout(page);
+
+			await performLogin(page, user.alternateName);
+
+			await page.goto(liferayConfig.environment.baseUrl);
+
+			await page.waitForTimeout(10000);
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACSitesPageViaURL({
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+		});
+
+		await test.step('Create dynamic segment using the organization criteria', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Segments',
+			});
+
+			await createDynamicSegment(page);
+
+			await addSegmentField({
+				criterionName: 'Organization',
+				criterionType: 'Organization Attributes',
+				page,
+			});
+
+			await selectAsset({
+				assetName: organization.name,
+				page,
+			});
+
+			await setSegmentName({
+				page,
+				segmentName: 'Test Organization Segment',
+			});
+
+			await saveSegment(page);
+		});
+
+		await test.step('Run the Segment Nanite', async () => {
+			await runNanites({
+				apiHelpers,
+				naniteNames: [Nanites.UpdateMembershipsNanite],
+				page,
+			});
+		});
+
+		await test.step('Reload the segment page to clear the cache', async () => {
+			await waitForLoading(page);
+
+			await page.reload();
+
+			await waitForLoading(page);
+		});
+
+		await test.step('Check the segment member count in the membership', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Membership',
+			});
+
+			await expect(
+				page
+					.locator('li')
+					.filter({hasText: 'Known Members:'})
+					.locator('b')
+			).toHaveText('1');
+
+			await expect(
+				page
+					.locator('li')
+					.filter({hasText: 'Anonymous Members:'})
+					.locator('b')
+			).toHaveText('0');
+
+			await expect(
+				page
+					.locator('li')
+					.filter({hasText: 'Total Members:'})
+					.locator('b')
+			).toHaveText('1');
+		});
+
+		await test.step('Check that the user that is part of organization appears in the membership list', async () => {
+			await viewNameOnTableList({
+				itemNames: user.givenName,
+				page,
+			});
+		});
+
+		await test.step('Check that the user that is not part of the organization will not appears in the membership list', async () => {
+			await viewNameNotPresentOnTableList({
+				itemNames: 'Test',
+				page,
 			});
 		});
 

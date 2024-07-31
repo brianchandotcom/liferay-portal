@@ -36,6 +36,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -84,10 +85,21 @@ public class CompleteTaskMVCActionCommand
 				themeDisplay.getCompanyId(), workflowTaskId);
 
 			ServiceContext serviceContext = (ServiceContext)workflowContext.get(
-				"serviceContext");
+				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
-			serviceContext.setRequest(
-				_getHttpServletRequest(actionRequest, actionResponse));
+			HttpServletRequest httpServletRequest = _getHttpServletRequest(
+				actionRequest, actionResponse);
+
+			serviceContext.setRequest(httpServletRequest);
+
+			serviceContext.setAttribute(
+				"serverName", httpServletRequest.getServerName());
+			serviceContext.setAttribute(
+				"serverPort", httpServletRequest.getServerPort());
+
+			HttpSession httpSession = httpServletRequest.getSession();
+
+			serviceContext.setAttribute("sessionId", httpSession.getId());
 
 			workflowContext.put(
 				WorkflowConstants.CONTEXT_USER_ID,

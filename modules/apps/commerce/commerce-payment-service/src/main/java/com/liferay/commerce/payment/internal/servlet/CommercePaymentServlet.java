@@ -287,7 +287,18 @@ public class CommercePaymentServlet extends HttpServlet {
 						CommerceOrderPaymentConstants.STATUS_CANCELLED,
 						StringPool.BLANK, StringPool.BLANK);
 
-					httpServletResponse.sendRedirect(_redirect);
+					commercePaymentEntry.setPaymentStatus(
+						CommerceOrderPaymentConstants.STATUS_CANCELLED);
+
+					commercePaymentEntry =
+						_commercePaymentEntryLocalService.
+							updateCommercePaymentEntry(commercePaymentEntry);
+
+					if (ParamUtil.getBoolean(
+							httpServletRequest, "redirect", true)) {
+
+						httpServletResponse.sendRedirect(_redirect);
+					}
 
 					return;
 				}
@@ -337,6 +348,12 @@ public class CommercePaymentServlet extends HttpServlet {
 			if (Validator.isNull(commercePaymentEntry.getRedirectURL())) {
 				if (CommercePaymentEntryConstants.STATUS_CREATED ==
 						paymentStatus) {
+
+					if (!ParamUtil.getBoolean(
+							httpServletRequest, "redirect", true)) {
+
+						return;
+					}
 
 					commercePaymentEntry = _commercePaymentGateway.authorize(
 						httpServletRequest, commercePaymentEntry);

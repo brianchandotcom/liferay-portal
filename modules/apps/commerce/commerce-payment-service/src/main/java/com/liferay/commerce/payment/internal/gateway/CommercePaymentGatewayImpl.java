@@ -240,6 +240,8 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 				commercePaymentEntry.getCommerceChannelId(),
 				commercePaymentEntry.getPaymentIntegrationKey());
 
+		String transactionCode = commercePaymentEntry.getTransactionCode();
+
 		CommercePaymentEntry capturedCommercePaymentEntry =
 			commercePaymentIntegration.capture(
 				httpServletRequest, commercePaymentEntry);
@@ -260,7 +262,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 				commercePaymentEntry.getRedirectURL(),
 				capturedCommercePaymentEntry.getRedirectURL()) &&
 			StringUtil.equals(
-				commercePaymentEntry.getTransactionCode(),
+				transactionCode,
 				capturedCommercePaymentEntry.getTransactionCode())) {
 
 			return commercePaymentEntry;

@@ -5,7 +5,9 @@ assemble:
     - from: build/buildTheme/images
       into: static/images
 liferay-sample-theme-css-2:
+    clayRTLURL: css/clay_rtl.css
     clayURL: css/clay.css
+    mainRTLURL: css/main_rtl.css
     mainURL: css/main.css
     name: Liferay Sample Theme CSS 2
     type: themeCSS

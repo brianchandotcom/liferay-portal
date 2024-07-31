@@ -101,10 +101,10 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 		DetailAST returnVariableDefinitionDetailAST, DetailAST slistDetailAST,
 		String variableName) {
 
-		DetailAST assignDetailAST =
+		DetailAST returnVariableDefinitionAssignDetailAST =
 			returnVariableDefinitionDetailAST.findFirstToken(TokenTypes.ASSIGN);
 
-		if (assignDetailAST == null) {
+		if (returnVariableDefinitionAssignDetailAST == null) {
 			log(
 				returnVariableDefinitionDetailAST,
 				_MSG_MOVE_VARIABLE_DECLARATION, variableName,
@@ -113,7 +113,8 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
+		DetailAST firstChildDetailAST =
+			returnVariableDefinitionAssignDetailAST.getFirstChild();
 
 		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 

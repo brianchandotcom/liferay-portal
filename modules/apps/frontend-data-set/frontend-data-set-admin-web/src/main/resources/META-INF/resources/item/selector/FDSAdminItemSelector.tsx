@@ -15,6 +15,7 @@ import './FDSAdminItemSelector.scss';
 interface ISelectedItem {
 	externalReferenceCode: string;
 	id: string;
+	label: string;
 }
 
 const views = [
@@ -56,6 +57,7 @@ const FDSAdminItemSelector = ({
 							externalReferenceCode:
 								selectedItems[0].externalReferenceCode,
 							id: selectedItems[0].id,
+							label: selectedItems[0].label,
 						});
 					}}
 					selectedItemsKey="id"
@@ -80,7 +82,8 @@ const FDSAdminItemSelector = ({
 								"className": "${className}",
 								"classNameId": "${classNameId}",
 								"classPK": "${selectedItem?.id}",
-								"externalReferenceCode": "${selectedItem?.externalReferenceCode}"}`}
+								"externalReferenceCode": "${selectedItem?.externalReferenceCode}",
+								"title": "${selectedItem?.label}"}`}
 						>
 							{Liferay.Language.get('save')}
 						</ClayButton>

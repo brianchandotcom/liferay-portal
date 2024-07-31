@@ -511,6 +511,16 @@ module.framework.properties.osgi.console=11312</echo>
 						<![CDATA[
 							#!/bin/bash
 
+							function getModifiableSystemObjectDefinitionTables() {
+								mysql -u ${database.mysql.username} -p${database.mysql.password} -e 'SHOW TABLES' ${database.schema.name} | grep -E '^L_[0-9]+_'
+							}
+
+							IGNORE_TABLES="";
+
+							while IFS= read -r table; do
+								IGNORE_TABLES+=" --ignore-table=${database.schema.name}.$table"
+							done < <(getModifiableSystemObjectDefinitionTables)
+
 							mysqldump \
 								--compact \
 								--no-data \
@@ -520,6 +530,7 @@ module.framework.properties.osgi.console=11312</echo>
 								--skip-extended-insert \
 								--user=${database.mysql.username} \
 								--default-character-set=utf8 \
+								$IGNORE_TABLES \
 								--databases ${database.schema.name} > \
 								${docker.src.file.path}
 

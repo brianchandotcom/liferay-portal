@@ -7,8 +7,6 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import '../css/undoRedoHistory.scss';
-
 const META_FIELD_NAMES = {
 	description: 'descriptionMapAsXML',
 	friendlyURL: 'friendlyURL',
@@ -446,12 +444,6 @@ export default function UndoRedo({
 				active={active}
 				alignmentPosition={Align.BottomRight}
 				className="ml-2"
-				menuElementAttrs={{
-					className: 'journal-web__undo-redo-history',
-					containerProps: {
-						className: 'cadmin',
-					},
-				}}
 				onActiveChange={setActive}
 				trigger={
 					<ClayButtonWithIcon

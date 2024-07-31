@@ -12,7 +12,6 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import getAllEditables from '../../../../../app/components/fragment_content/getAllEditables';
 import {fromControlsId} from '../../../../../app/components/layout_data_items/Collection';
 import getAllPortals from '../../../../../app/components/layout_data_items/getAllPortals';
-import hasDropZoneChild from '../../../../../app/components/layout_data_items/hasDropZoneChild';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPE_LABELS} from '../../../../../app/config/constants/editableTypeLabels';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
@@ -57,7 +56,9 @@ import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import getSelectedField from '../../../../../app/utils/getSelectedField';
+import isHideable from '../../../../../app/utils/isHideable';
 import {isItemHidden} from '../../../../../app/utils/isItemHidden';
+import isRemovable from '../../../../../app/utils/isRemovable';
 import usePageContents from '../../../../../app/utils/usePageContents';
 import StructureTreeNode from './StructureTreeNode';
 import StructureTreeNodeActions from './StructureTreeNodeActions';
@@ -234,7 +235,7 @@ export default function PageStructureSidebar() {
 				onFocus={(event) => event.stopPropagation()}
 				onKeyDown={handleButtonsKeyDown}
 			>
-				{(item.hidable || item.hidden) && (
+				{(item.hideable || item.hidden) && (
 					<VisibilityButton
 						className="ml-0"
 						disabled={
@@ -614,33 +615,6 @@ function fragmentIsMapped(item, fragmentEntryLinks) {
 	return false;
 }
 
-function isHidable(item, fragmentEntryLinks, layoutData) {
-	if (!isRemovable(item, layoutData)) {
-		return false;
-	}
-
-	if (item.type !== LAYOUT_DATA_ITEM_TYPES.fragment) {
-		return true;
-	}
-
-	const fragmentEntryLink =
-		fragmentEntryLinks[item.config.fragmentEntryLinkId];
-
-	return fragmentEntryLink.fragmentEntryType !== FRAGMENT_ENTRY_TYPES.input;
-}
-
-function isRemovable(item, layoutData) {
-	if (
-		item.type === LAYOUT_DATA_ITEM_TYPES.dropZone ||
-		item.type === LAYOUT_DATA_ITEM_TYPES.column ||
-		item.type === LAYOUT_DATA_ITEM_TYPES.collectionItem
-	) {
-		return false;
-	}
-
-	return !hasDropZoneChild(item, layoutData);
-}
-
 function visit(
 	item,
 	items,
@@ -734,9 +708,9 @@ function visit(
 						: childId === activeItemIds,
 					children: [],
 					draggable: false,
-					hidable: false,
 					hidden: false,
 					hiddenAncestor: hasHiddenAncestor || hidden,
+					hideable: false,
 					hovered: childId === hoveredItemId,
 					icon: EDITABLE_TYPE_ICONS[type],
 					id: childId,
@@ -860,11 +834,11 @@ function visit(
 		config: layoutDataRef?.current?.items[item.itemId]?.config,
 		draggable: true,
 		editingName: editingNodeId === item.itemId,
-		hidable:
-			!itemInMasterLayout &&
-			isHidable(item, fragmentEntryLinks, layoutData),
 		hidden,
 		hiddenAncestor: hasHiddenAncestor,
+		hideable:
+			!itemInMasterLayout &&
+			isHideable(item, fragmentEntryLinks, layoutData),
 		hovered: item.itemId === hoveredItemId,
 		icon,
 		id: item.itemId,

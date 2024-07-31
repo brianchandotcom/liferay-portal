@@ -53,12 +53,6 @@ public class SXPBlueprintSearchRequestContributor
 			searchContext -> searchContext.getAttribute(
 				"search.experiences.blueprint.external.reference.code"));
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Search experiences blueprint external reference code " +
-					object);
-		}
-
 		if (object instanceof String) {
 			String string = (String)object;
 
@@ -74,6 +68,12 @@ public class SXPBlueprintSearchRequestContributor
 
 				if (Validator.isBlank(sxpBlueprintExternalReferenceCode)) {
 					continue;
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Search experiences blueprint external reference " +
+							"code " + string);
 				}
 
 				_enhance(
@@ -100,10 +100,6 @@ public class SXPBlueprintSearchRequestContributor
 			searchContext -> searchContext.getAttribute(
 				"search.experiences.blueprint.id"));
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Search experiences blueprint ID " + object);
-		}
-
 		long[] sxpBlueprintIds = null;
 
 		if (object instanceof Number) {
@@ -129,6 +125,10 @@ public class SXPBlueprintSearchRequestContributor
 		for (long sxpBlueprintId : sxpBlueprintIds) {
 			if (sxpBlueprintId == 0) {
 				continue;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Search experiences blueprint ID " + sxpBlueprintId);
 			}
 
 			_enhance(

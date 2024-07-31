@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
@@ -396,6 +397,13 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"autoSaveDraftEnabled",
 			FeatureFlagManagerUtil.isEnabled("LPD-11228")
+		).put(
+			"autoSaveDraftURL",
+			ResourceURLBuilder.createResourceURL(
+				_liferayPortletResponse
+			).setResourceID(
+				"/journal/auto_save_article"
+			).buildString()
 		).put(
 			"availableLocales", _getAvailableLanguageIds()
 		).put(

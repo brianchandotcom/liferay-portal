@@ -301,7 +301,9 @@ export default function ShortcutManager() {
 					selectedViewportSize,
 				}),
 			isKeyCombination: (event) =>
-				isCtrlOrMeta(event) && event.code === H_KEY_CODE,
+				isCtrlOrMeta(event) &&
+				event.altKey &&
+				event.code === H_KEY_CODE,
 		},
 		hideSidebar: {
 			action: hideSidebar,

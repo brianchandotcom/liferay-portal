@@ -56,7 +56,7 @@ export default function ShortcutModal({onCloseModal}) {
 
 				<KeyboardShorcut
 					description={Liferay.Language.get('show-hide-fragment')}
-					keyCombinations={[KEY_LABEL, 'H']}
+					keyCombinations={[KEY_LABEL, OPTION_KEY_LABEL, 'H']}
 				/>
 
 				<KeyboardShorcut

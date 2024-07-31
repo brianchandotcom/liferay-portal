@@ -175,15 +175,15 @@ public class SXPBlueprintSearchResultTest {
 					"com.liferay.journal.model.JournalFolder")));
 
 		_journalArticleBuilder.setTitle(
-			"Article coca cola"
+			"Article Coca Cola"
 		).setContent(
-			"cola"
+			"Cola"
 		).build();
 
 		_journalArticleBuilder.setTitle(
-			"Article pepsi cola"
+			"Article Pepsi Cola"
 		).setJournalFolder(
-			"Folder cola"
+			"Cola"
 		).build();
 
 		_updateElementInstancesJSON(
@@ -197,13 +197,13 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Boost Asset Type"});
 
-		_keywords = "cola";
+		_keywords = "Cola";
 
-		_assertSearch("[Article coca cola, Article pepsi cola, Folder cola]");
+		_assertSearch("[Article Coca Cola, Article Pepsi Cola, Cola]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearch("[Folder cola, Article coca cola, Article pepsi cola]");
+		_assertSearch("[Cola, Article Coca Cola, Article Pepsi Cola]");
 	}
 
 	@Test

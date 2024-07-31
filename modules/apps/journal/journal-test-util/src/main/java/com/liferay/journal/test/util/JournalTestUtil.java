@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -386,7 +387,9 @@ public class JournalTestUtil {
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			ddmGroupId, ddmStructure.getStructureId(),
-			PortalUtil.getClassNameId(JournalArticle.class));
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_FTL, "${name.getData()}",
+			LocaleUtil.getSiteDefault());
 
 		boolean neverExpire = true;
 

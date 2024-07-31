@@ -37,6 +37,7 @@ import java.util.logging.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.core.config.AppenderRef;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 
 import org.junit.Assert;
@@ -382,8 +383,7 @@ public class Log4jConfigUtilTest {
 			appenders.size());
 
 		List<String> appenderRefs = TransformUtil.unsafeTransform(
-			loggerConfig.getAppenderRefs(),
-			appenderRef -> appenderRef.getRef());
+			loggerConfig.getAppenderRefs(), AppenderRef::getRef);
 
 		Assert.assertEquals(
 			appenderRefs.toString(), appenderTypes.length, appenderRefs.size());

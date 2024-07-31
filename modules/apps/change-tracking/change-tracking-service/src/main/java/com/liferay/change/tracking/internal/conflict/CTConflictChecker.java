@@ -458,7 +458,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 					connection, dslQuery);
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
-				if (resultSet.next()) {
+				while (resultSet.next()) {
 					long modelClassPK = resultSet.getLong(1);
 
 					String tableName = resultSet.getString(2);

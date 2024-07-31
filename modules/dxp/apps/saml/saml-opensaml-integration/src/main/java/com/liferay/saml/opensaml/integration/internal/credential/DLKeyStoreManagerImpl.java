@@ -8,7 +8,6 @@ package com.liferay.saml.opensaml.integration.internal.credential;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -45,7 +44,7 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 		try (InputStream inputStream = _store.getFileAsStream(
 				getCompanyId(), CompanyConstants.SYSTEM, _SAML_KEYSTORE_PATH,
-				StringPool.BLANK)) {
+				Store.VERSION_DEFAULT)) {
 
 			String samlKeyStorePassword = getSamlKeyStorePassword();
 
@@ -119,7 +118,7 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 		updateConfigurations(properties);
 	}
 
-	private static final String _SAML_KEYSTORE_PATH = "/saml/keystore.jks";
+	private static final String _SAML_KEYSTORE_PATH = "saml/keystore.jks";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLKeyStoreManagerImpl.class);

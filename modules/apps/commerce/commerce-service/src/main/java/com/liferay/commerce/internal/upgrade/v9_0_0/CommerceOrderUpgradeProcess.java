@@ -32,6 +32,8 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 			Connection connection, long commerceOrderId)
 		throws SQLException {
 
+		List<Integer> commerceShipmentStatuses = new ArrayList<>();
+
 		PreparedStatement preparedStatement2 = connection.prepareStatement(
 			StringBundler.concat(
 				"select distinct CommerceShipment.status from ",
@@ -43,8 +45,6 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 				"CommerceOrderItem.commerceOrderId = ?"));
 
 		preparedStatement2.setLong(1, commerceOrderId);
-
-		List<Integer> commerceShipmentStatuses = new ArrayList<>();
 
 		try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {
 			while (resultSet2.next()) {

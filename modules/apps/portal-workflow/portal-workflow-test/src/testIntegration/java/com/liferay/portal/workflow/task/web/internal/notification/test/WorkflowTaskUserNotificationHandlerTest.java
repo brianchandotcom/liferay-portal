@@ -101,8 +101,8 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			_getUserNotificationEvent();
 
 		_assertLink(
-			controlPanelLayout.getPlid(), group,
-			controlPanelLayout, serviceContext, userNotificationEvent);
+			controlPanelLayout.getPlid(), group, controlPanelLayout,
+			serviceContext, userNotificationEvent);
 
 		Layout layout =
 			PersonalApplicationURLUtil.

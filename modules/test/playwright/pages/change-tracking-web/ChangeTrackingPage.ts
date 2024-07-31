@@ -10,13 +10,16 @@ import getRandomString from '../../utils/getRandomString';
 import {userData} from '../../utils/performLogin';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
+import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
 export class ChangeTrackingPage {
+	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly page: Page;
 	readonly reviewChangesButton: Locator;
 	readonly tabsContainer: Locator;
 
 	constructor(page: Page) {
+		this.instanceSettingsPage = new InstanceSettingsPage(page);
 		this.page = page;
 		this.reviewChangesButton = page.getByRole('menuitem', {
 			name: 'Review Changes',
@@ -231,6 +234,24 @@ export class ChangeTrackingPage {
 		const commentsIcon = this.page.getByLabel('Comments');
 
 		await commentsIcon.click();
+	}
+
+	async toggleShowAllDataConfiguration(check: boolean) {
+		await this.instanceSettingsPage.goToInstanceSetting(
+			'Publications',
+			'Publications View Changes'
+		);
+
+		await this.page
+			.getByLabel('Show all data when reviewing')
+			.setChecked(check);
+
+		await this.instanceSettingsPage.saveButton.click();
+
+		await waitForSuccessAlert(
+			this.page,
+			`Success:Your request completed successfully.`
+		);
 	}
 
 	async viewDisplayTab(tabLabel: string, {isHidden} = {isHidden: false}) {

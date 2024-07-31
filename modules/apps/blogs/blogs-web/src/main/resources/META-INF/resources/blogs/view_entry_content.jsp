@@ -13,24 +13,14 @@ SearchContainer<BaseModel<?>> searchContainer = (SearchContainer)request.getAttr
 BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
 
 BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortletInstanceConfigurationUtil.getBlogsPortletInstanceConfiguration(themeDisplay);
+
+BlogsViewEntryContentDisplayContext blogsViewEntryContentDisplayContext = (BlogsViewEntryContentDisplayContext)request.getAttribute(BlogsViewEntryContentDisplayContext.class.getName());
+
+String viewEntryURL = blogsViewEntryContentDisplayContext.getViewEntryURL(entry);
 %>
 
 <c:choose>
 	<c:when test="<%= entry.isVisible() || (entry.getUserId() == user.getUserId()) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="viewEntryURL">
-			<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-			<portlet:param name="redirect" value='<%= ParamUtil.getString(request, "redirect", currentURL) %>' />
-
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(entry.getUrlTitle()) %>">
-					<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
-				</c:when>
-				<c:otherwise>
-					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-				</c:otherwise>
-			</c:choose>
-		</portlet:renderURL>
-
 		<div class="widget-mode-simple-entry">
 			<clay:content-row
 				cssClass="widget-topbar"

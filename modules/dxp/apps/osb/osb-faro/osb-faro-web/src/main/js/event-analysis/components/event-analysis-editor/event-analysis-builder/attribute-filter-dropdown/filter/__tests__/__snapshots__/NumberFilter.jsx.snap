@@ -79,7 +79,7 @@ exports[`NumberFilter should render 1`] = `
         disabled=""
         type="submit"
       >
-        Done
+        Apply
       </button>
     </div>
   </form>

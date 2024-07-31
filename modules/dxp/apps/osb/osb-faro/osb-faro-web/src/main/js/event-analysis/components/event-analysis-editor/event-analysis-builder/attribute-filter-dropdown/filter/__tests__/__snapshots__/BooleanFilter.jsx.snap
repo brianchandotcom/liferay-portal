@@ -54,7 +54,7 @@ exports[`BooleanFilter should render 1`] = `
         class="button-root btn btn-block btn-primary"
         type="submit"
       >
-        Done
+        Apply
       </button>
     </div>
   </form>

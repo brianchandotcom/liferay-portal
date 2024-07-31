@@ -26,9 +26,9 @@ describe('utils', () => {
 	describe('formatDurationName', () => {
 		it.each`
 			name                       | result
-			${'6000 -12000'}           | ${'00:00:06 - 00:00:12'}
-			${'123123 - 321321'}       | ${'00:02:03 - 00:05:21'}
-			${'123123123 - 321123123'} | ${'34:12:03 - 89:12:03'}
+			${'6000 - 12000'}          | ${'Between 00:00:06 - 00:00:12'}
+			${'123123 - 321321'}       | ${'Between 00:02:03 - 00:05:21'}
+			${'123123123 - 321123123'} | ${'Between 34:12:03 - 89:12:03'}
 		`('returns $result for $name', ({name, result}) => {
 			expect(utils.formatDurationName(name)).toEqual(result);
 		});
@@ -38,7 +38,7 @@ describe('utils', () => {
 		it.each`
 			name              | breakdown                                                      | result
 			${'2020-11-22'}   | ${{dataType: DataTypes.Date, dateGrouping: DateGroupings.Day}} | ${'Nov 22, 2020'}
-			${'6000 - 12000'} | ${{dataType: DataTypes.Duration}}                              | ${'00:00:06 - 00:00:12'}
+			${'6000 - 12000'} | ${{dataType: DataTypes.Duration}}                              | ${'Between 00:00:06 - 00:00:12'}
 			${123}            | ${{dataType: DataTypes.Number}}                                | ${123}
 			${true}           | ${{dataType: DataTypes.Boolean}}                               | ${true}
 			${'undefined'}    | ${{dataType: DataTypes.Duration}}                              | ${'undefined'}
@@ -58,18 +58,18 @@ describe('utils', () => {
 			dataType              | attributeType                     | operator                 | values                          | result
 			${DataTypes.Boolean}  | ${AttributeOwnerTypes.Account}    | ${Operators.EQ}          | ${[true]}                       | ${['Account | Test', 'True']}
 			${DataTypes.Boolean}  | ${AttributeOwnerTypes.Account}    | ${Operators.EQ}          | ${[false]}                      | ${['Account | Test', 'False']}
-			${DataTypes.Date}     | ${AttributeOwnerTypes.Event}      | ${Operators.Between}     | ${['2021-01-20', '2021-01-24']} | ${['Event | Test', 'Jan 20, 2021 - Jan 24, 2021']}
-			${DataTypes.Date}     | ${AttributeOwnerTypes.Event}      | ${Operators.Between}     | ${['2021-01-20', '2021-01-24']} | ${['Event | Test', 'Jan 20, 2021 - Jan 24, 2021']}
-			${DataTypes.Date}     | ${AttributeOwnerTypes.Event}      | ${Operators.EQ}          | ${['2021-01-20']}               | ${['Event | Test', '= Jan 20, 2021']}
+			${DataTypes.Date}     | ${AttributeOwnerTypes.Event}      | ${Operators.Between}     | ${['2021-01-20', '2021-01-24']} | ${['Event | Test', 'Between Jan 20, 2021 - Jan 24, 2021']}
+			${DataTypes.Date}     | ${AttributeOwnerTypes.Event}      | ${Operators.Between}     | ${['2021-01-20', '2021-01-24']} | ${['Event | Test', 'Between Jan 20, 2021 - Jan 24, 2021']}
+			${DataTypes.Date}     | ${AttributeOwnerTypes.Event}      | ${Operators.EQ}          | ${['2021-01-20']}               | ${['Event | Test', 'is Jan 20, 2021']}
 			${DataTypes.Date}     | ${AttributeOwnerTypes.Event}      | ${Operators.GT}          | ${['2021-01-20']}               | ${['Event | Test', 'after Jan 20, 2021']}
 			${DataTypes.Date}     | ${AttributeOwnerTypes.Event}      | ${Operators.LT}          | ${['2021-01-20']}               | ${['Event | Test', 'before Jan 20, 2021']}
-			${DataTypes.Duration} | ${AttributeOwnerTypes.Session}    | ${Operators.GT}          | ${[123123]}                     | ${['Session | Test', '> 00:02:03']}
-			${DataTypes.Duration} | ${AttributeOwnerTypes.Session}    | ${Operators.LT}          | ${[123123123]}                  | ${['Session | Test', '< 34:12:03']}
+			${DataTypes.Duration} | ${AttributeOwnerTypes.Session}    | ${Operators.GT}          | ${[123123]}                     | ${['Session | Test', 'is greater than 00:02:03']}
+			${DataTypes.Duration} | ${AttributeOwnerTypes.Session}    | ${Operators.LT}          | ${[123123123]}                  | ${['Session | Test', 'is less than 34:12:03']}
 			${DataTypes.Number}   | ${AttributeOwnerTypes.Individual} | ${Operators.Between}     | ${[120, 200]}                   | ${['Individual | Test', '120 - 200']}
-			${DataTypes.Number}   | ${AttributeOwnerTypes.Individual} | ${Operators.GT}          | ${[120]}                        | ${['Individual | Test', '> 120']}
-			${DataTypes.Number}   | ${AttributeOwnerTypes.Individual} | ${Operators.LT}          | ${[120]}                        | ${['Individual | Test', '< 120']}
+			${DataTypes.Number}   | ${AttributeOwnerTypes.Individual} | ${Operators.GT}          | ${[120]}                        | ${['Individual | Test', 'is greater than 120']}
+			${DataTypes.Number}   | ${AttributeOwnerTypes.Individual} | ${Operators.LT}          | ${[120]}                        | ${['Individual | Test', 'is less than 120']}
 			${DataTypes.String}   | ${AttributeOwnerTypes.Event}      | ${Operators.Contains}    | ${['Hello World']}              | ${['Event | Test', 'contains "Hello World"']}
-			${DataTypes.String}   | ${AttributeOwnerTypes.Event}      | ${Operators.NotContains} | ${['Hello World']}              | ${['Event | Test', 'not contains "Hello World"']}
+			${DataTypes.String}   | ${AttributeOwnerTypes.Event}      | ${Operators.NotContains} | ${['Hello World']}              | ${['Event | Test', 'does not contain "Hello World"']}
 			${DataTypes.String}   | ${AttributeOwnerTypes.Event}      | ${Operators.EQ}          | ${['Hello World']}              | ${['Event | Test', 'is "Hello World"']}
 			${DataTypes.String}   | ${AttributeOwnerTypes.Event}      | ${Operators.NE}          | ${['Hello World']}              | ${['Event | Test', 'is not "Hello World"']}
 		`(

@@ -62,6 +62,22 @@ exports[`AttributeFilterDropdown render 2`] = `
               <div />
             </button>
           </li>
+          <li
+            class="card-tab"
+            data-testid="INDIVIDUAL"
+          >
+            <button
+              class="button-root btn btn-unstyled"
+              type="button"
+            >
+              <span
+                class="title"
+              >
+                Individual
+              </span>
+              <div />
+            </button>
+          </li>
         </ul>
       </div>
       <form

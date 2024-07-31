@@ -93,7 +93,7 @@ exports[`FilterOptions should render 1`] = `
                 <option
                   value="notContains"
                 >
-                  not contains
+                  does not contain
                 </option>
                 <option
                   value="eq"
@@ -168,7 +168,7 @@ exports[`FilterOptions should render 1`] = `
           disabled=""
           type="submit"
         >
-          Done
+          Apply
         </button>
       </div>
     </form>

@@ -5,7 +5,12 @@
 
 package com.liferay.portal.search.internal.spi.model.index.contributor;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
@@ -35,15 +40,62 @@ public class GroupedModelDocumentContributor
 
 		GroupedModel groupedModel = (GroupedModel)baseModel;
 
-		document.addKeyword(
-			Field.GROUP_ID,
-			GroupUtil.getSiteGroupId(
-				groupLocalService, groupedModel.getGroupId()));
+		long siteGroupId = GroupUtil.getSiteGroupId(
+			groupLocalService, groupedModel.getGroupId());
 
+		document.addKeyword(
+			"groupExternalReferenceCode", _getGroupERC(siteGroupId));
+		document.addKeyword(Field.GROUP_ID, siteGroupId);
+
+		document.addKeyword(
+			"scopeGroupExternalReferenceCode", _getScopeGroupERC(groupedModel));
 		document.addKeyword(Field.SCOPE_GROUP_ID, groupedModel.getGroupId());
 	}
 
 	@Reference
 	protected GroupLocalService groupLocalService;
+
+	private String _getGroupERC(long siteGroupId) {
+		String groupExternalReferenceCode = StringPool.BLANK;
+
+		try {
+			Group group = groupLocalService.getGroup(siteGroupId);
+
+			groupExternalReferenceCode = group.getExternalReferenceCode();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to retrieve group " + siteGroupId +
+						" while indexing document.",
+					portalException);
+			}
+		}
+
+		return groupExternalReferenceCode;
+	}
+
+	private String _getScopeGroupERC(GroupedModel groupedModel) {
+		String scopeGroupExternalReferenceCode = StringPool.BLANK;
+
+		try {
+			Group group = groupLocalService.getGroup(groupedModel.getGroupId());
+
+			scopeGroupExternalReferenceCode = group.getExternalReferenceCode();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to retrieve group " + groupedModel.getGroupId() +
+						" while indexing document.",
+					portalException);
+			}
+		}
+
+		return scopeGroupExternalReferenceCode;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GroupedModelDocumentContributor.class);
 
 }

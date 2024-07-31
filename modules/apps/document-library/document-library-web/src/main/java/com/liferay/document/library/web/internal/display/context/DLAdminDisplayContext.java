@@ -243,6 +243,10 @@ public class DLAdminDisplayContext {
 		String orderByCol = ParamUtil.getString(
 			_httpServletRequest, "orderByCol");
 
+		if (Objects.equals(orderByCol, "relevance")) {
+			return "relevance";
+		}
+
 		if (orderByCol.equals("downloads") && (getFileEntryTypeId() >= 0)) {
 			orderByCol = "modifiedDate";
 		}
@@ -269,6 +273,10 @@ public class DLAdminDisplayContext {
 
 		if (isNavigationRecent()) {
 			return "desc";
+		}
+
+		if (Objects.equals(getOrderByCol(), "relevance")) {
+			return "asc";
 		}
 
 		String orderByType = ParamUtil.getString(
@@ -1128,6 +1136,9 @@ public class DLAdminDisplayContext {
 		else if (Objects.equals(orderByCol, "modifiedDate")) {
 			fieldName = Field.MODIFIED_DATE;
 			type = Sort.LONG_TYPE;
+		}
+		else if (Objects.equals(orderByCol, "relevance")) {
+			type = Sort.SCORE_TYPE;
 		}
 		else if (Objects.equals(orderByCol, "size")) {
 			type = Sort.LONG_TYPE;

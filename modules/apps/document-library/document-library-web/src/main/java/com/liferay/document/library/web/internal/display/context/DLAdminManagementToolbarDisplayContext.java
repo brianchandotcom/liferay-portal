@@ -379,6 +379,10 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getSortingOrder() {
+		if (Objects.equals(getOrderByCol(), "relevance")) {
+			return null;
+		}
+
 		return _dlAdminDisplayContext.getOrderByType();
 	}
 
@@ -946,11 +950,18 @@ public class DLAdminManagementToolbarDisplayContext
 		).put(
 			"modifiedDate", "modified-date"
 		).put(
+			"relevance",
+			() -> {
+				if (_isSearch()) {
+					return "relevance";
+				}
+
+				return null;
+			}
+		).put(
 			"size", "size"
 		).put(
 			"title", "name"
-		).put(
-			"relevance", "relevance"
 		).build();
 
 		return new DropdownItemList() {

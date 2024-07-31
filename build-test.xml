@@ -15891,6 +15891,47 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
+		<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
+
+		<if>
+			<equals arg1="${java.jdk.bundle.version}" arg2="8" />
+			<then>
+				<if>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<then>
+						<replace
+							file="${app.server.tomcat.dir}/bin/setenv.sh"
+							token="CATALINA_OPTS=&quot;$CATALINA_OPTS"
+							value="CATALINA_OPTS=&quot;$CATALINA_OPTS -Djava.locale.providers=CLDR"
+						/>
+					</then>
+					<elseif>
+						<or>
+							<equals arg1="${app.server.type}" arg2="jboss" />
+							<equals arg1="${app.server.type}" arg2="wildfly" />
+						</or>
+						<then>
+							<replace
+								file="${app.server.bin.dir}/standalone.conf"
+								token="JAVA_OPTS=&quot;$JAVA_OPTS"
+								value="JAVA_OPTS=&quot;$JAVA_OPTS -Djava.locale.providers=CLDR"
+							/>
+						</then>
+					</elseif>
+					<elseif>
+						<equals arg1="${app.server.type}" arg2="weblogic" />
+						<then>
+							<replace
+								file="${app.server.weblogic.instance.dir}/startWebLogic.sh"
+								token="JAVA_OPTIONS=&quot;${JAVA_OPTIONS}"
+								value="JAVA_OPTIONS=&quot;${JAVA_OPTIONS} -Djava.locale.providers=CLDR"
+							/>
+						</then>
+					</elseif>
+				</if>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="portal.ssl.enabled" />
 
 		<if>

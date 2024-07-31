@@ -305,61 +305,65 @@ export default function Sidebar() {
 				style={{'--sidebar-content-width': `${sidebarWidth}px`}}
 			>
 				<div
-					aria-orientation="vertical"
 					className={classNames('page-editor__sidebar__buttons', {
-						'light': true,
 						'page-editor__sidebar__buttons--hidden': sidebarHidden,
 					})}
-					onClick={deselectItem}
-					onKeyDown={handleTabKeyDown}
-					ref={tabListRef}
-					role="tablist"
 				>
-					{sidebarPanels.map((panel) => {
-						const active =
-							sidebarOpen &&
-							panel.sidebarPanelId === sidebarPanelId;
-						const {icon, label} = panel;
+					<div
+						aria-orientation="vertical"
+						onClick={deselectItem}
+						onKeyDown={handleTabKeyDown}
+						ref={tabListRef}
+						role="tablist"
+					>
+						{sidebarPanels.map((panel) => {
+							const active =
+								sidebarOpen &&
+								panel.sidebarPanelId === sidebarPanelId;
+							const {icon, label} = panel;
 
-						return (
-							<ClayButtonWithIcon
-								aria-controls={sidebarContentId}
-								aria-label={Liferay.Language.get(panel.label)}
-								aria-selected={active}
-								className={classNames({active})}
-								data-panel-id={panel.sidebarPanelId}
-								data-tooltip-align="left"
-								displayType="unstyled"
-								id={`${sidebarId}${panel.sidebarPanelId}`}
-								key={panel.sidebarPanelId}
-								onClick={() => handleClick(panel)}
-								role="tab"
-								size="sm"
-								symbol={icon}
-								tabIndex={
-									panel.sidebarPanelId !== sidebarPanelId
-										? '-1'
-										: null
-								}
-								title={label}
-							/>
-						);
-					})}
+							return (
+								<ClayButtonWithIcon
+									aria-controls={sidebarContentId}
+									aria-label={Liferay.Language.get(
+										panel.label
+									)}
+									aria-selected={active}
+									className={classNames({active})}
+									data-panel-id={panel.sidebarPanelId}
+									data-tooltip-align="left"
+									displayType="unstyled"
+									id={`${sidebarId}${panel.sidebarPanelId}`}
+									key={panel.sidebarPanelId}
+									onClick={() => handleClick(panel)}
+									role="tab"
+									size="sm"
+									symbol={icon}
+									tabIndex={
+										panel.sidebarPanelId !== sidebarPanelId
+											? '-1'
+											: null
+									}
+									title={label}
+								/>
+							);
+						})}
+					</div>
+
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get(
+							'open-keyboard-shortcuts'
+						)}
+						className="mt-auto"
+						data-tooltip-align="left"
+						displayType="unstyled"
+						id={`${sidebarId}keyboard_shortcuts`}
+						onClick={() => toggleShortcutModalAction(true)}
+						size="sm"
+						symbol="question-circle-full"
+						title={Liferay.Language.get('open-keyboard-shortcuts')}
+					/>
 				</div>
-
-				<ClayButtonWithIcon
-					aria-label={Liferay.Language.get('keyboard-shortcuts')}
-					className="keyboard-shortcuts-button"
-					data-tooltip-align="left"
-					displayType="unstyled"
-					id={`${sidebarId}keyboard_shortcuts`}
-					key="keyboard_shortcuts"
-					onClick={() => toggleShortcutModalAction(true)}
-					size="sm"
-					symbol="question-circle-full"
-					tabIndex={0}
-					title={Liferay.Language.get('keyboard-shortcuts')}
-				/>
 
 				{openShortcutModal && (
 					<ShortcutModal

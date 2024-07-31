@@ -13,6 +13,7 @@ $zIndexContent: 0;
 
 @mixin sidebar {
 	display: flex;
+	flex-direction: column;
 	height: calc(
 		100vh -
 			(
@@ -110,6 +111,7 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		display: flex;
 		flex-direction: column;
 		font-size: 0.875rem;
+		height: 100%;
 		padding: 16px 5px;
 		transition: transform ease $defaultTransitionDuration;
 		width: $sidebarButtonWidth;
@@ -276,14 +278,5 @@ html#{$cadmin-selector} .page-editor__wrapper {
 		@include media-breakpoint-up(md) {
 			margin-right: $defaultSidebarContentWidth;
 		}
-	}
-}
-
-.page-editor__sidebar {
-	.keyboard-shortcuts-button {
-		bottom: 24px;
-		left: 4px;
-		position: fixed;
-		z-index: 1;
 	}
 }

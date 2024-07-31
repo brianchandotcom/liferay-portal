@@ -95,44 +95,40 @@ public class BaseAuthFilterTest {
 	public void testGivenBasicAuthenticationWhenUserIsActivateThenHttpSessionIsValid() {
 		_mockFilterConfig.addInitParameter("basic_auth", "true");
 
-		User testUser = _setupUser(WorkflowConstants.STATUS_APPROVED);
-
 		Assert.assertTrue(
 			!_isHttpSessionInvalidWithStaticMocks(
-				testUser, HttpAuthorizationHeader.SCHEME_BASIC));
+				_setupUser(WorkflowConstants.STATUS_APPROVED),
+				HttpAuthorizationHeader.SCHEME_BASIC));
 	}
 
 	@Test
 	public void testGivenBasicAuthenticationWhenUserIsDeactivatedThenHttpSessionInvalidated() {
 		_mockFilterConfig.addInitParameter("basic_auth", "true");
 
-		User testUser = _setupUser(WorkflowConstants.STATUS_INACTIVE);
-
 		Assert.assertTrue(
 			_isHttpSessionInvalidWithStaticMocks(
-				testUser, HttpAuthorizationHeader.SCHEME_BASIC));
+				_setupUser(WorkflowConstants.STATUS_INACTIVE),
+				HttpAuthorizationHeader.SCHEME_BASIC));
 	}
 
 	@Test
 	public void testGivenDigestAuthenticationWhenUserIsActiveThenHttpSessionIsValid() {
 		_mockFilterConfig.addInitParameter("digest_auth", "true");
 
-		User testUser = _setupUser(WorkflowConstants.STATUS_APPROVED);
-
 		Assert.assertTrue(
 			!_isHttpSessionInvalidWithStaticMocks(
-				testUser, HttpAuthorizationHeader.SCHEME_DIGEST));
+				_setupUser(WorkflowConstants.STATUS_APPROVED),
+				HttpAuthorizationHeader.SCHEME_DIGEST));
 	}
 
 	@Test
 	public void testGivenDigestAuthenticationWhenUserIsDeactivatedThenHttpSessionInvalidated() {
 		_mockFilterConfig.addInitParameter("digest_auth", "true");
 
-		User testUser = _setupUser(WorkflowConstants.STATUS_INACTIVE);
-
 		Assert.assertTrue(
 			_isHttpSessionInvalidWithStaticMocks(
-				testUser, HttpAuthorizationHeader.SCHEME_DIGEST));
+				_setupUser(WorkflowConstants.STATUS_INACTIVE),
+				HttpAuthorizationHeader.SCHEME_DIGEST));
 	}
 
 	@Test

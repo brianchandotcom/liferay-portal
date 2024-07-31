@@ -14,22 +14,27 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.journal.constants.JournalArticleConstants;
+import com.liferay.journal.exception.ArticleContentSizeException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.upload.LiferayFileItemException;
+import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -57,6 +62,26 @@ public class JournalArticleUtil {
 			Localization localization, Portal portal,
 			PortletRequest portletRequest)
 		throws Exception {
+
+		UploadException uploadException =
+			(UploadException)portletRequest.getAttribute(
+				WebKeys.UPLOAD_EXCEPTION);
+
+		if (uploadException != null) {
+			Throwable throwable = uploadException.getCause();
+
+			if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+				throw new LiferayFileItemException(throwable);
+			}
+
+			if (uploadException.isExceededFileSizeLimit() ||
+				uploadException.isExceededUploadRequestSizeLimit()) {
+
+				throw new ArticleContentSizeException(throwable);
+			}
+
+			throw new PortalException(throwable);
+		}
 
 		UploadPortletRequest uploadPortletRequest =
 			portal.getUploadPortletRequest(portletRequest);

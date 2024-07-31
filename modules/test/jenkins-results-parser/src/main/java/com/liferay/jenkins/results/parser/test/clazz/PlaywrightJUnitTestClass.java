@@ -29,8 +29,6 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 			"minimum_slave_ram", _minimumSlaveRAM
 		).put(
 			"slave_label", _slaveLabel
-		).put(
-			"spec_title", _specTitle
 		);
 
 		return jsonObject;
@@ -42,8 +40,7 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 
 	@Override
 	public String getName() {
-		return JenkinsResultsParserUtil.combine(
-			getSpecFilePath(), " > ", getSpecTitle());
+		return getSpecFilePath();
 	}
 
 	public String getSlaveLabel() {
@@ -61,17 +58,10 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 		return matcher.group("specFilePath");
 	}
 
-	public String getSpecTitle() {
-		return _specTitle;
-	}
-
 	protected PlaywrightJUnitTestClass(
-		BatchTestClassGroup batchTestClassGroup, File testClassFile,
-		String specTitle) {
+		BatchTestClassGroup batchTestClassGroup, File testClassFile) {
 
 		super(batchTestClassGroup, testClassFile);
-
-		_specTitle = specTitle;
 
 		File testPropertiesBaseDir = getTestPropertiesBaseDir(
 			getTestClassFile());
@@ -114,7 +104,6 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 
 		_minimumSlaveRAM = jsonObject.optInt("minimum_slave_ram");
 		_slaveLabel = jsonObject.optString("slave_label");
-		_specTitle = jsonObject.getString("spec_title");
 	}
 
 	private static final String _MINIMUM_SLAVE_RAM_DEFAULT = "12";
@@ -126,6 +115,5 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 
 	private final Integer _minimumSlaveRAM;
 	private final String _slaveLabel;
-	private final String _specTitle;
 
 }

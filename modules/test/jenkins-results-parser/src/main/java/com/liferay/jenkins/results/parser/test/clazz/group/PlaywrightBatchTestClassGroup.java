@@ -21,8 +21,10 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
@@ -345,6 +347,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		File rootDir = new File(configJSONObject.getString("rootDir"));
 
+		Map<File, List<String>> specFileTitlesMap = new HashMap<>();
+
 		for (JSONObject specJSONObject : getSpecJSONObjects()) {
 			JSONArray testsJSONArray = specJSONObject.optJSONArray("tests");
 
@@ -360,10 +364,32 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				continue;
 			}
 
-			testClasses.add(
-				TestClassFactory.newTestClass(
-					this, new File(rootDir, specJSONObject.getString("file")),
-					specJSONObject.getString("title")));
+			File specFile = new File(rootDir, specJSONObject.getString("file"));
+
+			List<String> specTitles = specFileTitlesMap.get(specFile);
+
+			if (specTitles == null) {
+				specTitles = new ArrayList<>();
+			}
+
+			specTitles.add(specJSONObject.getString("title"));
+
+			specFileTitlesMap.put(specFile, specTitles);
+		}
+
+		for (Map.Entry<File, List<String>> entry :
+				specFileTitlesMap.entrySet()) {
+
+			TestClass testClass = TestClassFactory.newTestClass(
+				this, entry.getKey());
+
+			for (String specTitle : entry.getValue()) {
+				testClass.addTestClassMethod(
+					TestClassFactory.newTestClassMethod(
+						false, specTitle, testClass));
+			}
+
+			testClasses.add(testClass);
 		}
 
 		return testClasses;

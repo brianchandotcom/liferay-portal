@@ -8,12 +8,15 @@ package com.liferay.asset.internal.info.collection.provider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -43,12 +46,19 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 
 		AssetEntry assetEntry = (AssetEntry)relatedItem;
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		try {
 			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-				assetEntry.getCompanyId(), assetEntry.getGroupId(),
+				assetEntry.getCompanyId(), serviceContext.getScopeGroupId(),
 				collectionQuery.getPagination(), collectionQuery.getSort(),
 				null);
 
+			assetEntryQuery.setGroupIds(
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						serviceContext.getScopeGroupId()));
 			assetEntryQuery.setLinkedAssetEntryIds(
 				new long[] {assetEntry.getEntryId()});
 
@@ -72,5 +82,8 @@ public class RelatedAssetsRelatedInfoItemCollectionProvider
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 }

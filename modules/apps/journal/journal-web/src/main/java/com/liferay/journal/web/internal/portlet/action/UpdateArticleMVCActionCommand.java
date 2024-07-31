@@ -12,7 +12,6 @@ import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.exception.ArticleContentSizeException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
@@ -24,7 +23,6 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -41,8 +39,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.upload.LiferayFileItemException;
-import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -94,26 +90,6 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
-
-		UploadException uploadException =
-			(UploadException)actionRequest.getAttribute(
-				WebKeys.UPLOAD_EXCEPTION);
-
-		if (uploadException != null) {
-			Throwable throwable = uploadException.getCause();
-
-			if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-				throw new LiferayFileItemException(throwable);
-			}
-
-			if (uploadException.isExceededFileSizeLimit() ||
-				uploadException.isExceededUploadRequestSizeLimit()) {
-
-				throw new ArticleContentSizeException(throwable);
-			}
-
-			throw new PortalException(throwable);
-		}
 
 		String actionName = ParamUtil.getString(
 			actionRequest, ActionRequest.ACTION_NAME);

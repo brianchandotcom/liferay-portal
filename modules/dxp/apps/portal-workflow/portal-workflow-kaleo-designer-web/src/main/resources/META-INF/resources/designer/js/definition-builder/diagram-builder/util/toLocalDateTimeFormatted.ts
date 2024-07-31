@@ -17,7 +17,7 @@ export default function toLocalDateTimeFormatted(
 		month: 'short',
 		timeZone: timeZoneId,
 		year: 'numeric',
-	} as const;
+	} as Intl.DateTimeFormatOptions;
 
 	const timeZone = new Intl.DateTimeFormat(language, options);
 

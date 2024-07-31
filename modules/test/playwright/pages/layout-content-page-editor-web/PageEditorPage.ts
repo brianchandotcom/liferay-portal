@@ -557,9 +557,9 @@ export class PageEditorPage {
 	 */
 
 	async getFragmentId(fragmentName: string) {
-		const topper = this.page.locator(
-			`.page-editor__topper[data-name="${fragmentName}"]`
-		);
+		const topper = this.page
+			.locator(`.page-editor__topper[data-name="${fragmentName}"]`)
+			.first();
 
 		const fragmentId = await topper.evaluate((element) =>
 			Array.from(element.classList)

@@ -230,12 +230,16 @@ export default function SaveButtons({
 						form={formId}
 						onClick={() => onClick('publish')}
 						symbolLeft="arrow-right-full"
-						type={articleId ? 'submit' : 'button'}
+						type={showPublishModal ? 'button' : 'submit'}
 					>
-						{!showPublishModal
+						{articleId
 							? workflowEnabled
 								? Liferay.Language.get('submit-for-workflow')
-								: Liferay.Language.get('publish')
+								: showPublishModal
+									? Liferay.Language.get(
+											'publish-with-permissions'
+										)
+									: Liferay.Language.get('publish')
 							: workflowEnabled
 								? Liferay.Language.get(
 										'submit-for-workflow-with-permissions'

@@ -38,10 +38,10 @@ public class CPSpecificationOptionServiceImpl
 
 	@Override
 	public CPSpecificationOption addCPSpecificationOption(
-			long cpOptionCategoryId, long listTypeDefinitionId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			boolean facetable, String key, double priority,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long cpOptionCategoryId,
+			long listTypeDefinitionId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, boolean facetable, String key,
+			double priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
@@ -53,8 +53,9 @@ public class CPSpecificationOptionServiceImpl
 			CPActionKeys.ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION);
 
 		return cpSpecificationOptionLocalService.addCPSpecificationOption(
-			getUserId(), cpOptionCategoryId, listTypeDefinitionId, titleMap,
-			descriptionMap, facetable, key, priority, serviceContext);
+			externalReferenceCode, getUserId(), cpOptionCategoryId,
+			listTypeDefinitionId, titleMap, descriptionMap, facetable, key,
+			priority, serviceContext);
 	}
 
 	@Override

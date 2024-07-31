@@ -75,13 +75,17 @@ public class CPSpecificationOptionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPSpecificationOption addCPSpecificationOption(
-			long userId, long cpOptionCategoryId, long listTypeDefinitionId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			boolean facetable, String key, double priority,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long cpOptionCategoryId,
+			long listTypeDefinitionId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, boolean facetable, String key,
+			double priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
 
 		key = StringUtil.replace(key, CharPool.UNDERLINE, CharPool.DASH);
 
@@ -94,6 +98,7 @@ public class CPSpecificationOptionLocalServiceImpl
 		CPSpecificationOption cpSpecificationOption =
 			cpSpecificationOptionPersistence.create(cpSpecificationOptionId);
 
+		cpSpecificationOption.setExternalReferenceCode(externalReferenceCode);
 		cpSpecificationOption.setCompanyId(user.getCompanyId());
 		cpSpecificationOption.setUserId(user.getUserId());
 		cpSpecificationOption.setUserName(user.getFullName());

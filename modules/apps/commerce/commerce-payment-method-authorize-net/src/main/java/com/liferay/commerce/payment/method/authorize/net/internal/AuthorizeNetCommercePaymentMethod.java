@@ -257,11 +257,11 @@ public class AuthorizeNetCommercePaymentMethod
 			long groupId, String cancelURL, String returnURL)
 		throws Exception {
 
+		ArrayOfSetting arrayOfSetting = new ArrayOfSetting();
+
 		AuthorizeNetGroupServiceConfiguration
 			authorizeNetGroupServiceConfiguration =
 				_getAuthorizeNetGroupServiceConfiguration(groupId);
-
-		ArrayOfSetting arrayOfSetting = new ArrayOfSetting();
 
 		List<SettingType> settings = arrayOfSetting.getSetting();
 

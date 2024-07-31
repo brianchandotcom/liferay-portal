@@ -98,11 +98,12 @@ public class CommerceShippingOriginLocatorImpl
 			long groupId, CommerceAddress commerceAddress, String sku)
 		throws Exception {
 
+		CommerceInventoryWarehouse closestCommerceInventoryWarehouse = null;
+
 		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
 			_commerceInventoryWarehouseLocalService.
 				getCommerceInventoryWarehouses(groupId, sku);
 
-		CommerceInventoryWarehouse closestCommerceInventoryWarehouse = null;
 		double closestDistance = Double.MAX_VALUE;
 
 		for (CommerceInventoryWarehouse commerceInventoryWarehouse :

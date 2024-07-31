@@ -597,6 +597,200 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK()
+		throws Exception {
+
+		CTEntry postCTEntry =
+			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry();
+
+		CTEntry getCTEntry =
+			ctEntryResource.
+				getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
+					testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
+						postCTEntry),
+					testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
+						postCTEntry),
+					postCTEntry.getModelClassPK());
+
+		assertEquals(postCTEntry, getCTEntry);
+		assertValid(getCTEntry);
+	}
+
+	protected Long
+			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
+				CTEntry ctEntry)
+		throws Exception {
+
+		return ctEntry.getCtCollectionId();
+	}
+
+	protected Long
+			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
+				CTEntry ctEntry)
+		throws Exception {
+
+		return ctEntry.getModelClassNameId();
+	}
+
+	protected CTEntry
+			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK()
+		throws Exception {
+
+		CTEntry ctEntry =
+			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				ctEntry,
+				CTEntrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"ctCollectionId",
+											testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
+												ctEntry));
+
+										put(
+											"modelClassNameId",
+											testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
+												ctEntry));
+
+										put(
+											"modelClassPK",
+											ctEntry.getModelClassPK());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK"))));
+
+		// Using the namespace changeTracking_v1_0
+
+		Assert.assertTrue(
+			equals(
+				ctEntry,
+				CTEntrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"changeTracking_v1_0",
+								new GraphQLField(
+									"ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"ctCollectionId",
+												testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
+													ctEntry));
+
+											put(
+												"modelClassNameId",
+												testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
+													ctEntry));
+
+											put(
+												"modelClassPK",
+												ctEntry.getModelClassPK());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/changeTracking_v1_0",
+						"Object/ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK"))));
+	}
+
+	protected Long
+			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
+				CTEntry ctEntry)
+		throws Exception {
+
+		return ctEntry.getCtCollectionId();
+	}
+
+	protected Long
+			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
+				CTEntry ctEntry)
+		throws Exception {
+
+		return ctEntry.getModelClassNameId();
+	}
+
+	@Test
+	public void testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPKNotFound()
+		throws Exception {
+
+		Long irrelevantCtCollectionId = RandomTestUtil.randomLong();
+		Long irrelevantModelClassNameId = RandomTestUtil.randomLong();
+		Long irrelevantModelClassPK = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
+						new HashMap<String, Object>() {
+							{
+								put("ctCollectionId", irrelevantCtCollectionId);
+								put(
+									"modelClassNameId",
+									irrelevantModelClassNameId);
+								put("modelClassPK", irrelevantModelClassPK);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace changeTracking_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"changeTracking_v1_0",
+						new GraphQLField(
+							"ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"ctCollectionId",
+										irrelevantCtCollectionId);
+									put(
+										"modelClassNameId",
+										irrelevantModelClassNameId);
+									put("modelClassPK", irrelevantModelClassPK);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected CTEntry
+			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry()
+		throws Exception {
+
+		return testGraphQLCTEntry_addCTEntry();
+	}
+
+	@Test
 	public void testGetCTEntry() throws Exception {
 		CTEntry postCTEntry = testGetCTEntry_addCTEntry();
 

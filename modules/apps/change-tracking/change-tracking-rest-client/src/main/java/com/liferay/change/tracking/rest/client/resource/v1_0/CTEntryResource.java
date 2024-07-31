@@ -44,6 +44,16 @@ public interface CTEntryResource {
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
+	public CTEntry
+			getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
+				Long ctCollectionId, Long modelClassNameId, Long modelClassPK)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPKHttpResponse(
+				Long ctCollectionId, Long modelClassNameId, Long modelClassPK)
+		throws Exception;
+
 	public CTEntry getCTEntry(Long ctEntryId) throws Exception;
 
 	public HttpInvoker.HttpResponse getCTEntryHttpResponse(Long ctEntryId)
@@ -284,6 +294,117 @@ public interface CTEntryResource {
 						"/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}/ct-entries");
 
 			httpInvoker.path("ctCollectionId", ctCollectionId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public CTEntry
+				getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
+					Long ctCollectionId, Long modelClassNameId,
+					Long modelClassPK)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPKHttpResponse(
+					ctCollectionId, modelClassNameId, modelClassPK);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return CTEntrySerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPKHttpResponse(
+					Long ctCollectionId, Long modelClassNameId,
+					Long modelClassPK)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}/ct-entries/by-model-class-name-id/{modelClassNameId}/by-model-class-pk/{modelClassPK}");
+
+			httpInvoker.path("ctCollectionId", ctCollectionId);
+			httpInvoker.path("modelClassNameId", modelClassNameId);
+			httpInvoker.path("modelClassPK", modelClassPK);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

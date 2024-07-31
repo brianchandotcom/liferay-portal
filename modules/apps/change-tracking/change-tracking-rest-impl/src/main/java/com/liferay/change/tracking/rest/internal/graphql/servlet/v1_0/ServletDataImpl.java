@@ -244,6 +244,11 @@ public class ServletDataImpl implements ServletData {
 							CTEntryResourceImpl.class,
 							"getCtCollectionCTEntriesPage"));
 					put(
+						"query#ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
+						new ObjectValuePair<>(
+							CTEntryResourceImpl.class,
+							"getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK"));
+					put(
 						"query#cTEntry",
 						new ObjectValuePair<>(
 							CTEntryResourceImpl.class, "getCTEntry"));
@@ -283,6 +288,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CTEntryResourceImpl.class,
 							"getCtCollectionCTEntriesPage"));
+					put(
+						"query#CTCollection.ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK",
+						new ObjectValuePair<>(
+							CTEntryResourceImpl.class,
+							"getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK"));
 				}
 			};
 

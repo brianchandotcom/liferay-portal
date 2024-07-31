@@ -52,6 +52,11 @@ public interface CTEntryResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public CTEntry
+			getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
+				Long ctCollectionId, Long modelClassNameId, Long modelClassPK)
+		throws Exception;
+
 	public CTEntry getCTEntry(Long ctEntryId) throws Exception;
 
 	public default void setContextAcceptLanguage(

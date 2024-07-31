@@ -221,6 +221,28 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(ctCollectionId: ___, modelClassNameId: ___, modelClassPK: ___){actions, changeType, ctCollectionId, dateCreated, dateModified, hideable, id, modelClassNameId, modelClassPK, ownerId, ownerName, siteId, siteName, status, title, typeName}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public CTEntry
+			ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
+				@GraphQLName("ctCollectionId") Long ctCollectionId,
+				@GraphQLName("modelClassNameId") Long modelClassNameId,
+				@GraphQLName("modelClassPK") Long modelClassPK)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctEntryResource ->
+				ctEntryResource.
+					getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
+						ctCollectionId, modelClassNameId, modelClassPK));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTEntry(ctEntryId: ___){actions, changeType, ctCollectionId, dateCreated, dateModified, hideable, id, modelClassNameId, modelClassPK, ownerId, ownerName, siteId, siteName, status, title, typeName}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -404,6 +426,37 @@ public class Query {
 						_filterBiFunction.apply(ctEntryResource, filterString),
 						Pagination.of(page, pageSize),
 						_sortsBiFunction.apply(ctEntryResource, sortsString))));
+		}
+
+		private CTCollection _cTCollection;
+
+	}
+
+	@GraphQLTypeExtension(CTCollection.class)
+	public class
+		GetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPKTypeExtension {
+
+		public GetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPKTypeExtension(
+			CTCollection cTCollection) {
+
+			_cTCollection = cTCollection;
+		}
+
+		@GraphQLField
+		public CTEntry
+				ctCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
+					@GraphQLName("modelClassNameId") Long modelClassNameId,
+					@GraphQLName("modelClassPK") Long modelClassPK)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_ctEntryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				ctEntryResource ->
+					ctEntryResource.
+						getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
+							_cTCollection.getId(), modelClassNameId,
+							modelClassPK));
 		}
 
 		private CTCollection _cTCollection;

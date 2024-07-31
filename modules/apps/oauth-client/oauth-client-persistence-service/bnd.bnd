@@ -4,6 +4,8 @@ Bundle-Version: 1.0.20
 Import-Package:\
 	!com.google.crypto.tink.*,\
 	\
+	!jakarta.servlet.*,\
+	\
 	!net.shibboleth.utilities.*,\
 	\
 	!org.bouncycastle.*,\

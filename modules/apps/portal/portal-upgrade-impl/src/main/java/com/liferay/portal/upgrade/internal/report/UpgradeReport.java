@@ -69,7 +69,10 @@ public class UpgradeReport {
 
 	public UpgradeReport() {
 		_initialBuildNumber = _getBuildNumber();
-		_initialTableCounts = _getTableCounts();
+
+		if (StartupHelperUtil.isNewRelease()) {
+			_initialTableCounts = _getTableCounts();
+		}
 	}
 
 	public void generateReport(UpgradeRecorder upgradeRecorder) {
@@ -556,10 +559,6 @@ public class UpgradeReport {
 	}
 
 	private Map<String, Integer> _getTableCounts() {
-		if (!StartupHelperUtil.isNewRelease()) {
-			return null;
-		}
-
 		try (Connection connection = DataAccess.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 

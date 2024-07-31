@@ -26,6 +26,7 @@ import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCap
 import com.liferay.layout.util.PortalPreferencesUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
@@ -443,7 +444,10 @@ public class FragmentCollectionManager {
 				  Objects.equals(
 					  fragmentEntry.getFragmentEntryKey(),
 					  "INPUTS-submit-button")) &&
-				 hideInputFragments)) {
+				 hideInputFragments) ||
+				(Objects.equals(
+					fragmentEntry.getFragmentEntryKey(), "INPUTS-stepper") &&
+				 !FeatureFlagManagerUtil.isEnabled("LPD-10727"))) {
 
 				continue;
 			}

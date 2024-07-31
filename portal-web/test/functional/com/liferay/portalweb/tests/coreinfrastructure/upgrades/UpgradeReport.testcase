@@ -464,7 +464,6 @@ definition {
 	@priority = 4
 	test ReportNotGenerated {
 		property custom.properties = "upgrade.report.enabled=false";
-		property upgrade.reports.enabled = "false";
 
 		task ("Look for the upgrade report") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");

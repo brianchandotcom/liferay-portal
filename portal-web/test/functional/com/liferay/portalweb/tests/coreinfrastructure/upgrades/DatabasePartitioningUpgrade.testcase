@@ -73,7 +73,6 @@ definition {
 		property portal.upstream = "false";
 		property portal.version = "2024.q2.3";
 		property test.assert.warning.exceptions = "false";
-		property upgrade.reports.enabled = "true";
 
 		task ("Print the upgrade execution time") {
 			UpgradeReport.printUpgradeExecutionTime(upgradeType = "client");
@@ -93,7 +92,6 @@ definition {
 		property portal.upstream = "false";
 		property portal.version = "2024.q2.3";
 		property test.assert.warning.exceptions = "false";
-		property upgrade.reports.enabled = "true";
 
 		task ("Print the upgrade execution time") {
 			UpgradeReport.printUpgradeExecutionTime(upgradeType = "client");

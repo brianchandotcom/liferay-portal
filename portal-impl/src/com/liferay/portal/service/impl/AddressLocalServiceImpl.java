@@ -52,6 +52,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -310,6 +311,21 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		}
 
 		return address;
+	}
+
+	public Address updateExternalReferenceCode(
+			Address address, String externalReferenceCode)
+		throws PortalException {
+
+		if (Objects.equals(
+				address.getExternalReferenceCode(), externalReferenceCode)) {
+
+			return address;
+		}
+
+		address.setExternalReferenceCode(externalReferenceCode);
+
+		return addressPersistence.update(address);
 	}
 
 	protected SearchContext buildSearchContext(

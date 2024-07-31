@@ -439,6 +439,8 @@ public class FragmentCollectionManager {
 					masterDropZoneLayoutStructureItem) ||
 				((fragmentEntry.isTypeInput() ||
 				  Objects.equals(
+					  fragmentEntry.getFragmentEntryKey(), "INPUTS-stepper") ||
+				  Objects.equals(
 					  fragmentEntry.getFragmentEntryKey(),
 					  "INPUTS-submit-button")) &&
 				 hideInputFragments)) {

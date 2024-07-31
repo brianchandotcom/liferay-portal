@@ -192,9 +192,9 @@ export async function syncAnalyticsCloud({
 
 	if (userGroupName || organizationName) {
 		await syncContactsData({
-			organizationName: organizationName,
-			userGroupName: userGroupName,
+			organizationName,
 			page,
+			userGroupName,
 		});
 	}
 	else {

@@ -130,7 +130,7 @@ const Component: React.FC<IModalProps> = ({
 					}
 					onItemsChange={setItems}
 					requestFn={requestFn}
-					type='attribute'
+					type="attribute"
 				/>
 			</ClayModal.Body>
 

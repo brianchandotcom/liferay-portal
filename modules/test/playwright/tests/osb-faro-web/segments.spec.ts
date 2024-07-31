@@ -12,6 +12,7 @@ import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
 import {createChannel, switchChannel} from './utils/channel';
 import {
@@ -51,7 +52,6 @@ import {
 	viewNameNotPresentOnTableList,
 	viewNameOnTableList,
 } from './utils/utils';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
 
 export const test = mergeTests(
 	apiHelpersTest,

@@ -638,6 +638,10 @@ components:
                     description:
                         The address's type.
                     type: string
+                externalReferenceCode:
+                    description:
+                        The optional external key of this address.
+                    type: string
                 id:
                     description:
                         The address's ID.
@@ -1319,7 +1323,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '4.0.64'."
+        'com.liferay.headless.admin.user.client', and version '4.0.65'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -4582,6 +4586,99 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Phone"
             tags: ["Phone"]
+    "/postal-addresses/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            description:
+                Deletes the postal address using external reference code.
+            operationId: deletePostalAddressByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["PostalAddress"]
+        get:
+            description:
+                Retrieves the postal address using external reference code.
+            operationId: getPostalAddressByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+            tags: ["PostalAddress"]
+        patch:
+            description:
+                Updates the postal address using external reference code.
+            operationId: patchPostalAddressByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PostalAddress"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PostalAddress"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+            tags: ["PostalAddress"]
+        put:
+            description:
+                Updates the postal address using external reference code.
+            operationId: putPostalAddressByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PostalAddress"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PostalAddress"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PostalAddress"
+            tags: ["PostalAddress"]
     "/postal-addresses/{postalAddressId}":
         delete:
             description:

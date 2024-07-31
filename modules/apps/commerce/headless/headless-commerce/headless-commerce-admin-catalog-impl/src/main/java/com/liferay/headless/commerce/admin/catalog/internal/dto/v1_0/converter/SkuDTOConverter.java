@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -201,29 +202,24 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 	}
 
 	private SkuUnitOfMeasure[] _toSkuUnitOfMeasures(
-			CPInstance cpInstance, DTOConverterContext dtoConverterContext)
-		throws Exception {
+		CPInstance cpInstance, DTOConverterContext dtoConverterContext) {
 
-		List<SkuUnitOfMeasure> skuUnitOfMeasures = new ArrayList<>();
+		return TransformUtil.transformToArray(
+			cpInstance.getCPInstanceUnitOfMeasures(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			cpInstanceUnitOfMeasure -> {
+				DefaultDTOConverterContext defaultDTOConverterContext =
+					new DefaultDTOConverterContext(
+						cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId(),
+						dtoConverterContext.getLocale());
 
-		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
-				cpInstance.getCPInstanceUnitOfMeasures(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+				defaultDTOConverterContext.setAttribute(
+					"id", cpInstance.getCPInstanceId());
 
-			DefaultDTOConverterContext defaultDTOConverterContext =
-				new DefaultDTOConverterContext(
-					cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId(),
-					dtoConverterContext.getLocale());
-
-			defaultDTOConverterContext.setAttribute(
-				"id", cpInstance.getCPInstanceId());
-
-			skuUnitOfMeasures.add(
-				_skuUnitOfMeasureDTOConverter.toDTO(
-					defaultDTOConverterContext));
-		}
-
-		return skuUnitOfMeasures.toArray(new SkuUnitOfMeasure[0]);
+				return _skuUnitOfMeasureDTOConverter.toDTO(
+					defaultDTOConverterContext);
+			},
+			SkuUnitOfMeasure.class);
 	}
 
 	@Reference

@@ -76,6 +76,20 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 	}
 
 	@Override
+	public CTEntry
+			getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
+				Long ctCollectionId, Long modelClassNameId, Long modelClassPK)
+		throws Exception {
+
+		com.liferay.change.tracking.model.CTEntry ctEntry =
+			_ctEntryLocalService.fetchCTEntry(
+				ctCollectionId, modelClassNameId, modelClassPK);
+
+		return _ctEntryDTOConverter.toDTO(
+			_getDTOConverterContext(ctEntry), ctEntry);
+	}
+
+	@Override
 	public CTEntry getCTEntry(Long ctEntryId) throws Exception {
 		return _toCTEntry(ctEntryId);
 	}

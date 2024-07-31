@@ -45,6 +45,12 @@ public abstract class BaseFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(String consoleText) {
+		String errorMessage = getMessage(consoleText);
+
+		if (errorMessage != null) {
+			return Dom4JUtil.toCodeSnippetElement(errorMessage);
+		}
+
 		return null;
 	}
 

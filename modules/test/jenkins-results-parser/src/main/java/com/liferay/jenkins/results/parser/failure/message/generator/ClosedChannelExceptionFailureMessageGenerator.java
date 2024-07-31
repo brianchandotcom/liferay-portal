@@ -38,9 +38,9 @@ public class ClosedChannelExceptionFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(String consoleText) {
-		String errorMessage = getMessage(consoleText);
+		Element messageElement = super.getMessageElement(consoleText);
 
-		if (errorMessage != null) {
+		if (messageElement != null) {
 			return Dom4JUtil.getNewElement(
 				"div", null,
 				Dom4JUtil.getNewElement(
@@ -48,7 +48,7 @@ public class ClosedChannelExceptionFailureMessageGenerator
 					Dom4JUtil.getNewAnchorElement(
 						"https://issues.liferay.com/browse/LRCI-1422", null,
 						"ClosedChannelException")),
-				Dom4JUtil.toCodeSnippetElement(errorMessage));
+				messageElement);
 		}
 
 		return null;

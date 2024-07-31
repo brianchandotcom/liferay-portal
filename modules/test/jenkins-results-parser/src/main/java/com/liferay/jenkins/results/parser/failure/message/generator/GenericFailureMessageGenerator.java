@@ -5,8 +5,6 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
-import com.liferay.jenkins.results.parser.Dom4JUtil;
-
 import org.dom4j.Element;
 
 /**
@@ -36,11 +34,6 @@ public class GenericFailureMessageGenerator
 		}
 
 		return getConsoleTextSnippetByEnd(consoleText, true, -1);
-	}
-
-	@Override
-	public Element getMessageElement(String consoleText) {
-		return Dom4JUtil.toCodeSnippetElement(getMessage(consoleText));
 	}
 
 	@Override

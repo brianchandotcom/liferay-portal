@@ -5,10 +5,6 @@
 
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
-import com.liferay.jenkins.results.parser.Dom4JUtil;
-
-import org.dom4j.Element;
-
 /**
  * @author Yi-Chen Tsai
  */
@@ -23,17 +19,6 @@ public class CIFailureMessageGenerator extends BaseFailureMessageGenerator {
 		}
 
 		return consoleText.substring(index, consoleText.indexOf("\n", index));
-	}
-
-	@Override
-	public Element getMessageElement(String consoleText) {
-		String errorMessage = getMessage(consoleText);
-
-		if (errorMessage != null) {
-			return Dom4JUtil.toCodeSnippetElement(getMessage(consoleText));
-		}
-
-		return null;
 	}
 
 	@Override

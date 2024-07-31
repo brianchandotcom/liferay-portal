@@ -471,6 +471,19 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 			});
 
+		registry.register(
+			"5.17.0", "5.18.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"CPSpecificationOption", "CPSpecificationOptionId"}
+					};
+				}
+
+			});
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

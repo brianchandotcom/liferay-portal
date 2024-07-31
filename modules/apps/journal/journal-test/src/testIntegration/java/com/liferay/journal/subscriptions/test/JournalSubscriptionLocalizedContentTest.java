@@ -8,12 +8,10 @@ package com.liferay.journal.subscriptions.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalConstants;
-import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -109,33 +107,19 @@ public class JournalSubscriptionLocalizedContentTest
 
 		addSubscriptionContainerModel(getDefaultContainerModelId());
 
-		ThemeDisplay themeDisplay = _getThemeDisplay(creatorUser);
+		_themeDisplay = _getThemeDisplay(creatorUser);
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), "Title"
-			).put(
-				LocaleUtil.SPAIN, "Título"
-			).build(),
-			null,
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), "Content"
-			).put(
-				LocaleUtil.SPAIN, "Contenido"
-			).build(),
-			null, LocaleUtil.getDefault(), null, true, true,
-			_getServiceContext(themeDisplay.getRequest()));
+		long journalArticlePrimaryKey = addBaseModel(
+			creatorUser.getUserId(), getDefaultContainerModelId());
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 
 		MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
 
-		themeDisplay.setUser(user);
+		_themeDisplay.setUser(user);
 
 		Assert.assertEquals(
-			_getExpectedMailBody(journalArticle, themeDisplay),
+			_getExpectedMailBody(journalArticlePrimaryKey),
 			mailMessage.getBody());
 	}
 
@@ -143,10 +127,35 @@ public class JournalSubscriptionLocalizedContentTest
 	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
-		JournalArticle article = JournalTestUtil.addArticle(
-			userId, group.getGroupId(), containerModelId);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), userId);
 
-		return article.getResourcePrimKey();
+		if (_themeDisplay != null) {
+			serviceContext.setRequest(_themeDisplay.getRequest());
+		}
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			group.getGroupId(), containerModelId,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "Title"
+			).put(
+				LocaleUtil.GERMANY, "Titel"
+			).put(
+				LocaleUtil.SPAIN, "Título"
+			).build(),
+			null,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "Content"
+			).put(
+				LocaleUtil.GERMANY, "Inhalte"
+			).put(
+				LocaleUtil.SPAIN, "Contenido"
+			).build(),
+			LocaleUtil.getDefault(), false, true, serviceContext);
+
+		return article.getPrimaryKey();
 	}
 
 	@Override
@@ -210,27 +219,20 @@ public class JournalSubscriptionLocalizedContentTest
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		JournalArticle article =
-			JournalArticleLocalServiceUtil.getLatestArticle(baseModelId);
-
-		JournalTestUtil.updateArticleWithWorkflow(userId, article, true);
+		JournalTestUtil.updateArticleWithWorkflow(
+			userId, _journalArticleLocalService.getArticle(baseModelId), true);
 	}
 
-	private String _getArticleContent(
-			JournalArticle journalArticle, ThemeDisplay themeDisplay)
+	private String _getExpectedMailBody(long journalArticlePrimaryKey)
 		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleLocalService.getArticle(
+			journalArticlePrimaryKey);
 
 		JournalArticleDisplay journalArticleDisplay =
 			_journalArticleLocalService.getArticleDisplay(
 				group.getGroupId(), journalArticle.getArticleId(),
-				Constants.VIEW, user.getLanguageId(), themeDisplay);
-
-		return journalArticleDisplay.getContent();
-	}
-
-	private String _getExpectedMailBody(
-			JournalArticle journalArticle, ThemeDisplay themeDisplay)
-		throws Exception {
+				Constants.VIEW, user.getLanguageId(), _themeDisplay);
 
 		return StringUtil.replace(
 			_EMAIL_ARTICLE_ADDED_BODY,
@@ -240,7 +242,7 @@ public class JournalSubscriptionLocalizedContentTest
 				"[$SITE_NAME$]"
 			},
 			new String[] {
-				_getArticleContent(journalArticle, themeDisplay),
+				journalArticleDisplay.getContent(),
 				_language.get(
 					user.getLocale(),
 					WorkflowConstants.getStatusLabel(
@@ -274,19 +276,6 @@ public class JournalSubscriptionLocalizedContentTest
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return httpServletRequest;
-	}
-
-	private ServiceContext _getServiceContext(
-			HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), creatorUser.getUserId());
-
-		serviceContext.setRequest(httpServletRequest);
-
-		return serviceContext;
 	}
 
 	private ThemeDisplay _getThemeDisplay(User user) throws Exception {
@@ -336,6 +325,8 @@ public class JournalSubscriptionLocalizedContentTest
 
 	@Inject
 	private Portal _portal;
+
+	private ThemeDisplay _themeDisplay;
 
 	@Inject
 	private UserLocalService _userLocalService;

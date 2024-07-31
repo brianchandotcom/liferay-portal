@@ -746,7 +746,7 @@ public class UpgradeReport {
 	private double _dlSize;
 	private final Thread _dlSizeThread = new DLSizeThread();
 	private final int _initialBuildNumber;
-	private final Map<String, Integer> _initialTableCounts;
+	private Map<String, Integer> _initialTableCounts;
 	private String _rootDir;
 
 	private class DLSizeThread extends Thread {

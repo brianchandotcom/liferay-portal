@@ -46,6 +46,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -1106,7 +1107,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntries.get(0);
 
 		assertTermValues(
-			expectedTermValues,
+			TransformUtil.transform(
+				expectedTermValues, this::parseTermValueToString),
 			Arrays.asList(
 				StringUtil.split(notificationQueueEntry.getBody(), delimiter)));
 
@@ -1178,8 +1180,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		Assert.assertTrue(
 			MailServiceTestUtil.lastMailMessageContains(
 				ListUtil.toString(
-					getTermValuesValues(getTermValues()), StringPool.BLANK,
-					StringPool.SEMICOLON)));
+					getTermValues(), StringPool.BLANK, StringPool.SEMICOLON)));
 
 		_assertNotificationQueueEntry(
 			user2.getEmailAddress() + ",bcc@liferay.com",

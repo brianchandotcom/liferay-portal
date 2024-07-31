@@ -87,7 +87,6 @@ import java.text.SimpleDateFormat;
 
 import java.time.Month;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -531,20 +530,15 @@ public class BaseNotificationTypeTest {
 	}
 
 	protected void assertTermValues(
-		List<Object> expectedObjectTermValues, List<String> actualTermValues) {
+		List<String> expectedTermValues, List<String> actualTermValues) {
 
 		Assert.assertEquals(
-			expectedObjectTermValues.toString(),
-			expectedObjectTermValues.size(), actualTermValues.size());
-
-		List<String> expectedTermValuesValues = getTermValuesValues(
-			expectedObjectTermValues);
+			expectedTermValues.toString(), expectedTermValues.size(),
+			actualTermValues.size());
 
 		for (int i = 0; i < actualTermValues.size(); i++) {
-			String expectedTermValue = expectedTermValuesValues.get(i);
-			String actualTermValue = actualTermValues.get(i);
-
-			Assert.assertEquals(expectedTermValue, actualTermValue);
+			Assert.assertEquals(
+				expectedTermValues.get(i), actualTermValues.get(i));
 		}
 	}
 
@@ -645,39 +639,32 @@ public class BaseNotificationTypeTest {
 				getTermName(true, "textObjectField")));
 	}
 
-	protected List<Object> getTermValues() {
-		return ListUtil.concat(
-			ListUtil.fromMapValues(_childAuthorTermValues),
-			ListUtil.fromMapValues(_generalTermValues),
-			ListUtil.fromMapValues(_parentAuthorTermValues),
-			ListUtil.fromMapValues(childObjectEntryValues),
-			ListUtil.fromMapValues(parentObjectEntryValues));
+	protected List<String> getTermValues() {
+		return TransformUtil.transform(
+			ListUtil.concat(
+				ListUtil.fromMapValues(_childAuthorTermValues),
+				ListUtil.fromMapValues(_generalTermValues),
+				ListUtil.fromMapValues(_parentAuthorTermValues),
+				ListUtil.fromMapValues(childObjectEntryValues),
+				ListUtil.fromMapValues(parentObjectEntryValues)),
+			this::parseTermValueToString);
 	}
 
-	protected List<String> getTermValuesValues(List<Object> termValues) {
-		List<String> termValuesValues = new ArrayList<>();
+	protected String parseTermValueToString(Object termValue) {
+		if (termValue instanceof List) {
+			List<ListEntry> listTypeEntries = (List<ListEntry>)termValue;
 
-		for (Object termValue : termValues) {
-			if (termValue instanceof List) {
-				List<ListEntry> listTypeEntries = (List<ListEntry>)termValue;
+			return StringUtil.merge(
+				TransformUtil.transform(listTypeEntries, ListEntry::getName),
+				StringPool.COMMA_AND_SPACE);
+		}
+		else if (termValue instanceof ListEntry) {
+			ListEntry listEntry = (ListEntry)termValue;
 
-				termValuesValues.add(
-					StringUtil.merge(
-						TransformUtil.transform(
-							listTypeEntries, ListEntry::getName),
-						StringPool.COMMA_AND_SPACE));
-			}
-			else if (termValue instanceof ListEntry) {
-				ListEntry listEntry = (ListEntry)termValue;
-
-				termValuesValues.add(listEntry.getName());
-			}
-			else {
-				termValuesValues.add(String.valueOf(termValue));
-			}
+			return listEntry.getName();
 		}
 
-		return termValuesValues;
+		return String.valueOf(termValue);
 	}
 
 	@DeleteAfterTestRun

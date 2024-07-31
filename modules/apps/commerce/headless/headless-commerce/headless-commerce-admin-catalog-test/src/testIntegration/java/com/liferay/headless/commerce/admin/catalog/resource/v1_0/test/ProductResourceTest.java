@@ -31,6 +31,7 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -233,6 +234,28 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		assertEquals(expectedPatchProduct, getProduct);
 
 		assertValid(getProduct);
+
+		randomPatchProduct = randomProduct();
+
+		randomPatchProduct.setExpirationDate(RandomTestUtil.nextDate());
+		randomPatchProduct.setNeverExpire(false);
+
+		postProduct = testPostProduct_addProduct(randomPatchProduct);
+
+		randomPatchProduct.setExpirationDate((Date)null);
+		randomPatchProduct.setDisplayDate((Date)null);
+
+		productResource.patchProduct(
+			postProduct.getProductId(), randomPatchProduct);
+
+		getProduct = productResource.getProduct(postProduct.getProductId());
+
+		Assert.assertNotNull(getProduct.getExpirationDate());
+		Assert.assertEquals(
+			postProduct.getExpirationDate(), getProduct.getExpirationDate());
+		Assert.assertNotNull(getProduct.getDisplayDate());
+		Assert.assertEquals(
+			postProduct.getDisplayDate(), getProduct.getDisplayDate());
 
 		_testPatchProductWithNegativeValue("cost");
 		_testPatchProductWithNegativeValue("depth");

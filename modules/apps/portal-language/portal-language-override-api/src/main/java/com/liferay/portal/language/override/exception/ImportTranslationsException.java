@@ -7,7 +7,7 @@ package com.liferay.portal.language.override.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author Thiago Buarque
@@ -26,17 +26,17 @@ public class ImportTranslationsException extends PortalException {
 	public static class InvalidTranslations
 		extends ImportTranslationsException {
 
-		public InvalidTranslations(Map<Class<?>, Exception> exceptions) {
+		public InvalidTranslations(List<Exception> exceptions) {
 			super("Unable to import translations");
 
 			_exceptions = exceptions;
 		}
 
-		public Map<Class<?>, Exception> getExceptions() {
+		public List<Exception> getExceptions() {
 			return _exceptions;
 		}
 
-		private final Map<Class<?>, Exception> _exceptions;
+		private final List<Exception> _exceptions;
 
 	}
 

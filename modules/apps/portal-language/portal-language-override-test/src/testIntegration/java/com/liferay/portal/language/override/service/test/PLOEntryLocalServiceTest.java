@@ -35,8 +35,9 @@ import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -225,16 +226,21 @@ public class PLOEntryLocalServiceTest {
 		catch (ImportTranslationsException.InvalidTranslations
 					importTranslationsException) {
 
-			Map<Class<?>, Exception> exceptions =
+			List<Exception> exceptions =
 				importTranslationsException.getExceptions();
 
 			Assert.assertEquals(exceptions.toString(), 2, exceptions.size());
 
-			Assert.assertNotNull(
-				exceptions.get(PLOEntryValueException.MustNotBeNull.class));
+			List<Class<?>> expectedClasses = Arrays.asList(
+				new Class<?>[] {
+					PLOEntryValueException.MustNotBeNull.class,
+					PLOEntryKeyException.MustNotBeNull.class
+				});
 
-			Assert.assertNotNull(
-				exceptions.get(PLOEntryKeyException.MustNotBeNull.class));
+			for (Exception exception : exceptions) {
+				Assert.assertTrue(
+					expectedClasses.contains(exception.getClass()));
+			}
 		}
 
 		Assert.assertEquals(key1, _language.get(LocaleUtil.US, key1));

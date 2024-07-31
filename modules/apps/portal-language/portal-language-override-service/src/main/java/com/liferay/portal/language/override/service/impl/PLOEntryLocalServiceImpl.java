@@ -30,7 +30,7 @@ import java.io.InputStreamReader;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -142,7 +142,7 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 			throw new ImportTranslationsException.InvalidPropertiesFile();
 		}
 
-		Map<Class<?>, Exception> exceptions = new HashMap<>();
+		List<Exception> exceptions = new ArrayList<>();
 
 		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			try {
@@ -151,7 +151,7 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 					(String)entry.getValue());
 			}
 			catch (Exception exception) {
-				exceptions.putIfAbsent(exception.getClass(), exception);
+				exceptions.add(exception);
 			}
 		}
 

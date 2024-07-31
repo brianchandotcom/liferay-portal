@@ -11,8 +11,6 @@ import com.liferay.portal.language.override.exception.ImportTranslationsExceptio
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import java.util.Map;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -38,22 +36,16 @@ public class ImportTranslationsExceptionInvalidTranslationsExceptionMapper
 	protected Problem getProblem(
 		ImportTranslationsException.InvalidTranslations invalidTranslations) {
 
-		return new Problem(
-			String.valueOf(_toJSONArray(invalidTranslations.getExceptions())),
-			Response.Status.BAD_REQUEST, invalidTranslations.getMessage(),
-			ImportTranslationsException.InvalidTranslations.class.getName());
-	}
-
-	private JSONArray _toJSONArray(Map<Class<?>, Exception> exceptions) {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (Map.Entry<Class<?>, Exception> entry : exceptions.entrySet()) {
-			Exception exception = entry.getValue();
-
+		for (Exception exception : invalidTranslations.getExceptions()) {
 			jsonArray.put(exception.getMessage());
 		}
 
-		return jsonArray;
+		return new Problem(
+			String.valueOf(jsonArray), Response.Status.BAD_REQUEST,
+			invalidTranslations.getMessage(),
+			ImportTranslationsException.InvalidTranslations.class.getName());
 	}
 
 	@Reference

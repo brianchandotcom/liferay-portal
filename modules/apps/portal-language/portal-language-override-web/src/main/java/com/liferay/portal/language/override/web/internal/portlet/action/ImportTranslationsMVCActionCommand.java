@@ -20,7 +20,6 @@ import java.io.File;
 
 import java.nio.file.Files;
 
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -92,12 +91,11 @@ public class ImportTranslationsMVCActionCommand extends BaseMVCActionCommand {
 		catch (ImportTranslationsException.InvalidTranslations
 					importTranslationsException) {
 
-			Map<Class<?>, Exception> exceptions =
-				importTranslationsException.getExceptions();
+			for (Exception exception :
+					importTranslationsException.getExceptions()) {
 
-			for (Map.Entry<Class<?>, Exception> entry : exceptions.entrySet()) {
 				SessionErrors.add(
-					actionRequest, entry.getKey(), entry.getValue());
+					actionRequest, exception.getClass(), exception);
 			}
 		}
 		catch (Exception exception) {

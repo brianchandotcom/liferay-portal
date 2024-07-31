@@ -124,6 +124,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -197,6 +198,7 @@ import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
+import com.liferay.portal.servlet.filters.threadlocal.ThreadLocalFilterThreadLocal;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -236,6 +238,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -487,6 +490,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_commerceSiteInitializerSnapshot.get());
 			_log.debug(
 				"OSB site initializer " + _osbSiteInitializerSnapshot.get());
+		}
+
+		if (ThreadLocalFilterThreadLocal.isFilterInvoked()) {
+			Set<Long> initializedGroupIds = _initializedGroupIds.get();
+
+			if (!initializedGroupIds.add(groupId)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Skip already initialized ", getKey(),
+							" for group ", groupId));
+				}
+
+				return;
+			}
 		}
 
 		long startTime = System.currentTimeMillis();
@@ -5876,6 +5894,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private static final Snapshot<CommerceSiteInitializer>
 		_commerceSiteInitializerSnapshot = new Snapshot<>(
 			BundleSiteInitializer.class, CommerceSiteInitializer.class);
+	private static final ThreadLocal<Set<Long>> _initializedGroupIds =
+		new CentralizedThreadLocal<>(
+			BundleSiteInitializer.class + "._initializedGroupIds",
+			HashSet::new);
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 	private static final Snapshot<OSBSiteInitializer>
 		_osbSiteInitializerSnapshot = new Snapshot<>(

@@ -82,7 +82,7 @@ export const DATE_GROUPING_LABELS_MAP = {
 
 export const DATE_OPERATOR_LABELS_MAP = {
 	[Operators.Between]: '-',
-	[Operators.EQ]: '=',
+	[Operators.EQ]: Liferay.Language.get('is-fragment'),
 	[Operators.GT]: Liferay.Language.get('after-fragment'),
 	[Operators.LT]: Liferay.Language.get('before-fragment')
 };
@@ -95,8 +95,8 @@ export const DATE_OPERATOR_LONGHAND_LABELS_MAP = {
 };
 
 export const DURATION_OPERATOR_LABELS_MAP = {
-	[Operators.GT]: '>',
-	[Operators.LT]: '<'
+	[Operators.GT]: Liferay.Language.get('is-greater-than-fragment'),
+	[Operators.LT]: Liferay.Language.get('is-less-than-fragment')
 };
 
 export const DURATION_OPERATOR_LONGHAND_LABELS_MAP = {
@@ -106,8 +106,8 @@ export const DURATION_OPERATOR_LONGHAND_LABELS_MAP = {
 
 export const NUMBER_OPERATOR_LABELS_MAP = {
 	[Operators.Between]: '-',
-	[Operators.GT]: '>',
-	[Operators.LT]: '<'
+	[Operators.GT]: Liferay.Language.get('is-greater-than-fragment'),
+	[Operators.LT]: Liferay.Language.get('is-less-than-fragment')
 };
 
 export const NUMBER_OPERATOR_LONGHAND_LABELS_MAP = {
@@ -141,7 +141,9 @@ const getDateDisplay = (
 
 	const breakdownValue =
 		operator === Operators.Between
-			? `${formattedStartDate} ${operatorLabel} ${formatUTCDate(
+			? `${Liferay.Language.get(
+					'between'
+			  )} ${formattedStartDate} ${operatorLabel} ${formatUTCDate(
 					endDate as string,
 					'll'
 			  )}`
@@ -339,9 +341,9 @@ export const formatDateName = (
 export const formatDurationName = (name: string): string => {
 	const [durationStart, durationEnd] = name.split('-');
 
-	return `${formatTime(Number(durationStart))} - ${formatTime(
-		Number(durationEnd)
-	)}`;
+	return `${Liferay.Language.get('between')} ${formatTime(
+		Number(durationStart)
+	)} - ${formatTime(Number(durationEnd))}`;
 };
 
 export const formatBreakdownNameByDataType = (

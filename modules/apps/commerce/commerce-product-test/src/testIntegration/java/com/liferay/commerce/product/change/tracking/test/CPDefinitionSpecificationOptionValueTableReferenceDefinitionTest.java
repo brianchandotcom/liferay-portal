@@ -76,7 +76,7 @@ public class CPDefinitionSpecificationOptionValueTableReferenceDefinitionTest
 
 		_cpSpecificationOption =
 			_cpSpecificationOptionLocalService.addCPSpecificationOption(
-				TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_cpOptionCategory.getCPOptionCategoryId(), 0,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,

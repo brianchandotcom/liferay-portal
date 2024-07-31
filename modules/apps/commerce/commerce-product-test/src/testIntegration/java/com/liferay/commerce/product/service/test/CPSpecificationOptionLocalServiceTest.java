@@ -109,7 +109,7 @@ public class CPSpecificationOptionLocalServiceTest {
 		throws Exception {
 
 		return _cpSpecificationOptionLocalService.addCPSpecificationOption(
-			serviceContext.getUserId(), 0L, 0,
+			RandomTestUtil.randomString(), serviceContext.getUserId(), 0L, 0,
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),

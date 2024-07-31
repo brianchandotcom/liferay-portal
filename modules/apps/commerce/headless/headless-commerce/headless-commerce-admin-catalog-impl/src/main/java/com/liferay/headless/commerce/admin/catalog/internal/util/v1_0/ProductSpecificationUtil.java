@@ -107,6 +107,7 @@ public class ProductSpecificationUtil {
 		if (cpSpecificationOption == null) {
 			cpSpecificationOption =
 				cpSpecificationOptionService.addCPSpecificationOption(
+					null,
 					GetterUtil.get(
 						productSpecification.getOptionCategoryId(), 0),
 					0,

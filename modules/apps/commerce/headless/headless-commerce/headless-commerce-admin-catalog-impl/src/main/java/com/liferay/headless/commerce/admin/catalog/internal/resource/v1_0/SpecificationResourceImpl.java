@@ -157,7 +157,7 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionService.addCPSpecificationOption(
-				_getCPOptionCategoryId(specification),
+				null, _getCPOptionCategoryId(specification),
 				GetterUtil.getLong(specification.getListTypeDefinitionId()),
 				LanguageUtils.getLocalizedMap(specification.getTitle()),
 				LanguageUtils.getLocalizedMap(specification.getDescription()),

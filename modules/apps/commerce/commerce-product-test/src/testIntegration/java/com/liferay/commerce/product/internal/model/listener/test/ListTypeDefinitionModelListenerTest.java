@@ -93,7 +93,7 @@ public class ListTypeDefinitionModelListenerTest {
 		);
 
 		_cpSpecificationOptionLocalService.addCPSpecificationOption(
-			TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_cpOptionCategory.getCPOptionCategoryId(),
 			_listTypeDefinition.getListTypeDefinitionId(),
 			RandomTestUtil.randomLocaleStringMap(),

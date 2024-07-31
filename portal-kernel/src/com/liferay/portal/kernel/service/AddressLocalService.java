@@ -374,6 +374,10 @@ public interface AddressLocalService
 			boolean primary, String phoneNumber)
 		throws PortalException;
 
+	public Address updateExternalReferenceCode(
+			Address address, String externalReferenceCode)
+		throws PortalException;
+
 	@Override
 	@Transactional(enabled = false)
 	public CTPersistence<Address> getCTPersistence();

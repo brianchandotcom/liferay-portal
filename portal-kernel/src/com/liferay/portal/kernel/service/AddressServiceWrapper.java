@@ -94,6 +94,15 @@ public class AddressServiceWrapper
 	}
 
 	@Override
+	public Address updateExternalReferenceCode(
+			Address address, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _addressService.updateExternalReferenceCode(
+			address, externalReferenceCode);
+	}
+
+	@Override
 	public AddressService getWrappedService() {
 		return _addressService;
 	}

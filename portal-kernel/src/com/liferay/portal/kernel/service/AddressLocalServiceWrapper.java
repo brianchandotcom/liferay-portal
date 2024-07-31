@@ -492,6 +492,15 @@ public class AddressLocalServiceWrapper
 	}
 
 	@Override
+	public Address updateExternalReferenceCode(
+			Address address, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _addressLocalService.updateExternalReferenceCode(
+			address, externalReferenceCode);
+	}
+
+	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _addressLocalService.getBasePersistence();
 	}

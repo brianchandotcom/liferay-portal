@@ -86,6 +86,14 @@ public class AddressServiceUtil {
 			regionId, countryId, listTypeId, mailing, primary, phoneNumber);
 	}
 
+	public static Address updateExternalReferenceCode(
+			Address address, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			address, externalReferenceCode);
+	}
+
 	public static AddressService getService() {
 		return _service;
 	}

@@ -79,4 +79,8 @@ public interface AddressService extends BaseService {
 			boolean primary, String phoneNumber)
 		throws PortalException;
 
+	public Address updateExternalReferenceCode(
+			Address address, String externalReferenceCode)
+		throws PortalException;
+
 }

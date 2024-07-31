@@ -34,9 +34,9 @@ public class InvalidSenderSHAFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String errorMessage = getMessage(build);
+		Element messageElement = super.getMessageElement(build);
 
-		if (errorMessage != null) {
+		if (messageElement != null) {
 			return Dom4JUtil.getNewElement(
 				"div", null,
 				Dom4JUtil.getNewElement(
@@ -47,7 +47,7 @@ public class InvalidSenderSHAFailureMessageGenerator
 					". The sender branch may have been force pushed or " +
 						"deleted ",
 					"after the pull request test was initiated."),
-				Dom4JUtil.toCodeSnippetElement(errorMessage));
+				messageElement);
 		}
 
 		return null;

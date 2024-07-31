@@ -288,7 +288,7 @@ public class BaseAuthFilterTest {
 	}
 
 	private boolean _isHttpSessionInvalidWithStaticMocks(
-		User user, String authHeaderType) {
+		User user, String scheme) {
 
 		try (MockedStatic<UserLocalServiceUtil>
 				userLocalServiceUtilMockedStatic = Mockito.mockStatic(
@@ -305,7 +305,7 @@ public class BaseAuthFilterTest {
 			httpAuthManagerUtilMockedStatic.when(
 				() -> HttpAuthManagerUtil.generateChallenge(
 					_mockHttpServletRequest, _mockHttpServletResponse,
-					new HttpAuthorizationHeader(authHeaderType))
+					new HttpAuthorizationHeader(scheme))
 			).then(
 				invocationOnMock -> null
 			);

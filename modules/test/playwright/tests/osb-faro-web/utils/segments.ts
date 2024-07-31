@@ -191,6 +191,10 @@ export async function selectAsset({
 }) {
 	await page.getByRole('button', {name: 'Select'}).nth(index).click();
 
+	await page.getByPlaceholder('Search').first().click();
+	await page.getByPlaceholder('Search').first().fill(assetName);
+	await page.getByPlaceholder('Search').first().press('Enter');
+
 	await page.locator('.table-title').getByText(assetName).click();
 
 	await page.getByRole('button', {name: 'Add'}).click();

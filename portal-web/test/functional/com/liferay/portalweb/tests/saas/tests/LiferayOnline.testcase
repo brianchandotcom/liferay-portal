@@ -88,6 +88,7 @@ definition {
 	@priority = 5
 	test AddVirtualInstanceWithDefaultInitializer {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.baker.com";
+		property database.partition.enabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -115,6 +116,7 @@ definition {
 	@priority = 5
 	test AddVirtualInstanceWithInitializer {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property database.partition.enabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

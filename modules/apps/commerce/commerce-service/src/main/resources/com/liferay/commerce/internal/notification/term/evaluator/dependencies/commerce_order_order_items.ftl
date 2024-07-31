@@ -62,9 +62,9 @@
 </style>
 
 <div>
-	<h4>
+	<div class="h4">
 		${tableLabel}
-	</h4>
+	</div>
 
 	<table class="order-items">
 		<#foreach orderItem in orderItems>

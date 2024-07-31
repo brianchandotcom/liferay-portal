@@ -461,8 +461,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getSaveAndContinueRedirect(
-		String actionName, ActionRequest actionRequest, JournalArticle article,
-		String redirect) {
+		ActionRequest actionRequest, JournalArticle article, String redirect) {
 
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
@@ -478,21 +477,6 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			"articleId", article.getArticleId()
 		).setParameter(
 			"folderId", article.getFolderId()
-		).setParameter(
-			"friendlyURL",
-			() -> {
-				if (!FeatureFlagManagerUtil.isEnabled("LPD-11228") ||
-					!Objects.equals(actionName, "/journal/add_article")) {
-
-					return null;
-				}
-
-				Map<Locale, String> friendlyURLMap =
-					article.getFriendlyURLMap();
-
-				return friendlyURLMap.get(
-					LocaleUtil.fromLanguageId(article.getDefaultLanguageId()));
-			}
 		).setParameter(
 			"groupId", article.getGroupId()
 		).setParameter(
@@ -569,7 +553,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
 			redirect = _getSaveAndContinueRedirect(
-				actionName, actionRequest, article, redirect);
+				actionRequest, article, redirect);
 		}
 		else {
 			redirect = _portal.escapeRedirect(redirect);

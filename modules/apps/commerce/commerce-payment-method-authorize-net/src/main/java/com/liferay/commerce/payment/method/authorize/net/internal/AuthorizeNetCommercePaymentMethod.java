@@ -259,11 +259,11 @@ public class AuthorizeNetCommercePaymentMethod
 
 		ArrayOfSetting arrayOfSetting = new ArrayOfSetting();
 
+		List<SettingType> settings = arrayOfSetting.getSetting();
+
 		AuthorizeNetGroupServiceConfiguration
 			authorizeNetGroupServiceConfiguration =
 				_getAuthorizeNetGroupServiceConfiguration(groupId);
-
-		List<SettingType> settings = arrayOfSetting.getSetting();
 
 		JSONObject hostedPaymentReturnOptionsJSONObject =
 			_jsonFactory.createJSONObject();

@@ -80,7 +80,10 @@ export class MDFRequestFormActivitiesPage {
 		);
 	}
 
-	async selectTypeOfActivity(index: number, option: EMDFRequestActivityTypes) {
+	async selectTypeOfActivity(
+		index: number,
+		option: EMDFRequestActivityTypes
+	) {
 		await this.typeOfActivity(index).selectOption(option);
 	}
 

@@ -4,7 +4,14 @@
  */
 
 import {getRandomInt} from '../../../../utils/getRandomInt';
-import { EMDFRequestActivityExpenseTypes, EMDFRequestActivityTactics, EMDFRequestActivityTypes, EMDFRequestLiferayBusinessSalesGoals, EMDFRequestTargetAudienceRoles, EMDFRequestTargetMarkets } from '../utils/constants';
+import {
+	EMDFRequestActivityExpenseTypes,
+	EMDFRequestActivityTactics,
+	EMDFRequestActivityTypes,
+	EMDFRequestLiferayBusinessSalesGoals,
+	EMDFRequestTargetAudienceRoles,
+	EMDFRequestTargetMarkets,
+} from '../utils/constants';
 
 const namespace = getRandomInt();
 
@@ -46,7 +53,7 @@ export const mdfRequestMock = {
 	},
 	submitDate: '2024-07-10T18:11:39.346Z',
 	totalMDFRequestAmount: 25000,
-	userId: 0
+	userId: 0,
 };
 
 export const mdfRequestDataMock = {

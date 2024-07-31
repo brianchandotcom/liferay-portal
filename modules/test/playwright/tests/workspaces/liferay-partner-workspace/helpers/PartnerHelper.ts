@@ -8,23 +8,22 @@ import {Page} from '@playwright/test';
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {TMDFRequest} from '../types/mdf';
 import {TRole} from '../types/role';
-import {TUserAccount} from '../types/user';
 
 export class PartnerHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly page: Page;
-	readonly site: Site;
 
-	constructor(page: Page, site: Site) {
+	constructor(page: Page) {
+		this.apiHelpers = new ApiHelpers(page);
 		this.page = page;
-		this.site = site;
-
-		this.apiHelpers = new ApiHelpers(this.page);
 	}
 
-	async assignUserToAccountRole(accountId: number, roleName: string, userEmailAddress: string) {
+	async assignUserToAccountRole(
+		accountId: number,
+		roleName: string,
+		userEmailAddress: string
+	) {
 		try {
-
 			const user =
 				await this.apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
 					userEmailAddress
@@ -46,7 +45,10 @@ export class PartnerHelper {
 			);
 		}
 		catch (error) {
-			console.error('Error when trying to assign user to account role', error);
+			console.error(
+				'Error when trying to assign user to account role',
+				error
+			);
 
 			throw error;
 		}
@@ -54,9 +56,12 @@ export class PartnerHelper {
 
 	async createMDFRequest(mdfRequest: TMDFRequest) {
 		try {
-			const mdfRequestData = await this.apiHelpers.post('/o/c/mdfrequests', {
-				data: mdfRequest,
-			});
+			const mdfRequestData = await this.apiHelpers.post(
+				'/o/c/mdfrequests',
+				{
+					data: mdfRequest,
+				}
+			);
 
 			return mdfRequestData;
 		}
@@ -69,22 +74,5 @@ export class PartnerHelper {
 
 	async deleteMDFRequest(mdfRequestId: number) {
 		await this.apiHelpers.delete(`/o/c/mdfrequests/${mdfRequestId}`);
-	}
-
-	async performLogin(user: TUserAccount) {
-		await this.page.goto('/c/portal/login');
-
-		const signInButton = await this.page.getByRole('button', {
-			name: 'Sign In',
-		});
-
-		await this.page.getByLabel('Email Address').fill(user.emailAddress);
-		await this.page.getByLabel('Password').fill(user.password);
-
-		await signInButton.click();
-	}
-
-	async performLogout() {
-		await this.page.goto('/c/portal/logout');
 	}
 }

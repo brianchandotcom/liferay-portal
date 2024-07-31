@@ -18,19 +18,17 @@ test.describe('MDF Request Form', () => {
 	const {emailAddress} = userAdminMock;
 	let accountPlatinum: TAccount;
 
-	test.beforeEach(async ({mdfRequestFormPage, partnerHelper}) => {
+	test.beforeEach(async ({apiHelpers, mdfRequestFormPage, partnerHelper}) => {
 		accountPlatinum =
-			await partnerHelper.apiHelpers.headlessAdminUser.postAccount(
-				accountPlatinumMock
-			);
-		
-		await partnerHelper.apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-				accountPlatinum.id,
-				[emailAddress]
-			);
+			await apiHelpers.headlessAdminUser.postAccount(accountPlatinumMock);
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			accountPlatinum.id,
+			[emailAddress]
+		);
 
 		await partnerHelper.assignUserToAccountRole(
-			Number(accountPlatinum.id),
+			accountPlatinum.id,
 			EAccountRoles.PARTNER_MANAGER,
 			emailAddress
 		);
@@ -38,22 +36,16 @@ test.describe('MDF Request Form', () => {
 		await mdfRequestFormPage.goto();
 	});
 
-	test.afterEach(async ({partnerHelper}) => {
+	test.afterEach(async ({apiHelpers}) => {
 		if (accountPlatinum) {
-			await partnerHelper.apiHelpers.headlessAdminUser.deleteAccount(
+			await apiHelpers.headlessAdminUser.deleteAccount(
 				Number(accountPlatinum.id)
 			);
 		}
 	});
 
-	test('Open MDF Request Form', async ({
-		partnerHelper,
-	}) => {
-		const heading = await partnerHelper.page.getByRole('heading', {
-			name: 'MDF Request',
-		});
-
-		await expect(heading).toBeTruthy();
+	test('Open MDF Request Form', async ({mdfRequestFormPage}) => {
+		await expect(mdfRequestFormPage.heading).toBeTruthy();
 	});
 
 	test('Create a New MDF Request', async ({mdfRequestFormPage}) => {

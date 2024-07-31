@@ -10,13 +10,9 @@ import {partnerPagesTest} from '../../../fixtures/partnerPagesTest';
 export const test = mergeTests(partnerPagesTest);
 
 test.describe('Partner Site', () => {
-	test('Open Partner Homepage', async ({homePage, partnerHelper}) => {
+	test('Open Partner Homepage', async ({homePage}) => {
 		await homePage.goto();
 
-		const heading = await partnerHelper.page.getByRole('heading', {
-			name: 'Welcome to Partner Portal',
-		});
-
-		await expect(heading).toBeTruthy();
+		await expect(homePage.heading).toBeTruthy();
 	});
 });

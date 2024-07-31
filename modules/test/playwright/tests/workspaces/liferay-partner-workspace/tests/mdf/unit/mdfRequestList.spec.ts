@@ -9,25 +9,23 @@ import {partnerPagesTest} from '../../../fixtures/partnerPagesTest';
 import {accountPlatinumMock} from '../../../mocks/accountMock';
 import {userAdminMock} from '../../../mocks/userMock';
 import {TAccount} from '../../../types/account';
-import {TMDFRequestData} from '../../../types/mdf';
+import {TMDFRequestDataFromRequest} from '../../../types/mdf';
 import {EAccountRoles} from '../../../utils/constants';
 import {customFormatDate, getDateCustomFormat} from '../../../utils/date';
-import { generatedDataFromRequest } from '../../../utils/mdf';
+import {generatedDataFromRequest} from '../../../utils/mdf';
 
 export const test = mergeTests(partnerPagesTest);
 
 test.describe('MDF Request List', () => {
 	const {emailAddress} = userAdminMock;
 	let accountPlatinum: TAccount;
-	let mdfRequest: TMDFRequestData;
+	let mdfRequest: TMDFRequestDataFromRequest;
 
-	test.beforeEach(async ({mdfRequestListPage, partnerHelper}) => {
+	test.beforeEach(async ({apiHelpers, mdfRequestListPage, partnerHelper}) => {
 		accountPlatinum =
-			await partnerHelper.apiHelpers.headlessAdminUser.postAccount(
-				accountPlatinumMock
-			);
-			
-		await partnerHelper.apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			await apiHelpers.headlessAdminUser.postAccount(accountPlatinumMock);
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
 			accountPlatinum.id,
 			[emailAddress]
 		);
@@ -45,29 +43,23 @@ test.describe('MDF Request List', () => {
 		await mdfRequestListPage.goto();
 	});
 
-	// test.afterEach(async ({partnerHelper}) => {
-	// 	if (accountPlatinum) {
-	// 		await partnerHelper.apiHelpers.headlessAdminUser.deleteAccount(
-	// 			Number(accountPlatinum.id)
-	// 		);
-	// 	}
+	test.afterEach(async ({apiHelpers, partnerHelper}) => {
+		if (accountPlatinum) {
+			await apiHelpers.headlessAdminUser.deleteAccount(
+				accountPlatinum.id
+			);
+		}
 
-	// 	if (mdfRequest) {
-	// 		await partnerHelper.deleteMDFRequest(mdfRequest.id);
-	// 	}
-	// });
+		if (mdfRequest) {
+			await partnerHelper.deleteMDFRequest(mdfRequest.id);
+		}
+	});
 
-	test('Open MDF Request List', async ({page}) => {
-
-		const heading = await page.getByRole('heading', {
-			name: 'MDF Requests',
-		});
-
-		await expect(heading).toBeTruthy();
+	test('Open MDF Request List', async ({mdfRequestListPage}) => {
+		await expect(mdfRequestListPage.heading).toBeTruthy();
 	});
 
 	test('Display MDF Resquest List', async ({mdfRequestListPage}) => {
-
 		const generatedDataFromRequest =
 			await mdfRequestListPage.getGeneratedDataFromRequest(
 				mdfRequest.overallCampaignName
@@ -104,12 +96,13 @@ test.describe('MDF Request List', () => {
 		await expect(generatedDataFromRequest.submitDate).toBeTruthy();
 	});
 
-	test('Filter data by Activity Period', async ({
-		mdfRequestListPage,
-		page,
-	}) => {
-		const filterEndDate = new Date(mdfRequest.maxDateActivity).toISOString().split('T')[0];
-		const filterStartDate = new Date(mdfRequest.minDateActivity).toISOString().split('T')[0];
+	test('Filter data by Activity Period', async ({mdfRequestListPage}) => {
+		const filterEndDate = new Date(mdfRequest.maxDateActivity)
+			.toISOString()
+			.split('T')[0];
+		const filterStartDate = new Date(mdfRequest.minDateActivity)
+			.toISOString()
+			.split('T')[0];
 		const formatEndDate = getDateCustomFormat(
 			mdfRequest.maxDateActivity,
 			customFormatDate.SHORT_MONTH
@@ -123,13 +116,12 @@ test.describe('MDF Request List', () => {
 		const startActPeriod =
 			await mdfRequestListPage.getStartActPeriod(formatStartDate);
 
-
 		await mdfRequestListPage.filterMDFRequestByPeriod(
 			filterStartDate,
 			filterEndDate
 		);
 
-		await page.getByText('MDF Requests').click();
+		await mdfRequestListPage.heading.click();
 
 		await expect(endActPeriod).toBeVisible();
 		await expect(startActPeriod).toBeVisible();
@@ -142,7 +134,7 @@ test.describe('MDF Request List', () => {
 
 		await mdfRequestListPage.applyFilterButton.click();
 
-		await page.getByText('MDF Requests').click();
+		await mdfRequestListPage.heading.click();
 
 		await expect(mdfRequestListPage.noEntriesFoundMessage).toBeVisible();
 		await expect(endActPeriod).not.toBeVisible();
@@ -173,7 +165,7 @@ test.describe('MDF Request List', () => {
 		await expect(mdfRequestListPage.noEntriesFoundMessage).toBeVisible();
 	});
 
-	test('Filter data by Partner', async ({mdfRequestListPage, page}) => {
+	test('Filter data by Partner', async ({mdfRequestListPage}) => {
 		const partnerName = await mdfRequestListPage.getPartnerName(
 			mdfRequest.companyName
 		);
@@ -182,21 +174,20 @@ test.describe('MDF Request List', () => {
 			mdfRequest.companyName
 		);
 
-		await page.getByText('MDF Requests').click();
+		await mdfRequestListPage.heading.click();
 
 		await expect(partnerName).toBeVisible();
 	});
 
 	test('Clean date filter fields when click on Clear All Filters', async ({
 		mdfRequestListPage,
-		page
 	}) => {
 		await mdfRequestListPage.filterMDFRequestByPeriod(
 			'2024-06-01',
 			'2024-06-08'
 		);
 
-		await page.getByText('MDF Requests').click();
+		await mdfRequestListPage.heading.click();
 
 		await mdfRequestListPage.clearAllFilters();
 

@@ -384,7 +384,13 @@
 					"allOf": [
 						{
 							"properties": {
+								"clayRTLURL": {
+									"type": "string"
+								},
 								"clayURL": {
+									"type": "string"
+								},
+								"mainRTLURL": {
 									"type": "string"
 								},
 								"mainURL": {

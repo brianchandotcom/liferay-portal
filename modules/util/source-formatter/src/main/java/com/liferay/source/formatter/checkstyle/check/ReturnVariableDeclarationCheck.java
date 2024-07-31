@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -101,6 +102,25 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 		DetailAST returnVariableDefinitionDetailAST, DetailAST slistDetailAST,
 		String variableName) {
 
+		if (_containsUnusedVariableName(
+				slistDetailAST,
+				returnVariableDefinitionDetailAST.getLineNo())) {
+
+			return;
+		}
+
+		List<DetailAST> childDetailASTList = getAllChildTokens(
+			slistDetailAST, true, TokenTypes.LITERAL_RETURN,
+			TokenTypes.LITERAL_THROW);
+
+		for (DetailAST childDetailAST : childDetailASTList) {
+			if (childDetailAST.getLineNo() <
+					returnVariableDefinitionDetailAST.getLineNo()) {
+
+				return;
+			}
+		}
+
 		DetailAST returnVariableDefinitionAssignDetailAST =
 			returnVariableDefinitionDetailAST.findFirstToken(TokenTypes.ASSIGN);
 
@@ -177,21 +197,62 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> childDetailASTList = getAllChildTokens(
-			slistDetailAST, true, TokenTypes.LITERAL_RETURN,
-			TokenTypes.LITERAL_THROW);
-
-		for (DetailAST childDetailAST : childDetailASTList) {
-			if (childDetailAST.getLineNo() <
-					returnVariableDefinitionDetailAST.getLineNo()) {
-
-				return;
-			}
-		}
-
 		log(
 			returnVariableDefinitionDetailAST, _MSG_MOVE_VARIABLE_DECLARATION,
 			variableName, getStartLineNumber(slistDetailAST.getFirstChild()));
+	}
+
+	private boolean _containsUnusedVariableName(
+		DetailAST slistDetailAST, int lineNumber) {
+
+		List<DetailAST> identDetailASTList = getAllChildTokens(
+			slistDetailAST, true, TokenTypes.IDENT);
+
+		List<DetailAST> exprDetailASTList = getAllChildTokens(
+			slistDetailAST, false, TokenTypes.EXPR);
+
+		exprDetailASTList = ListUtil.filter(
+			exprDetailASTList,
+			exprDetailAST -> exprDetailAST.getLineNo() < lineNumber);
+
+		if (exprDetailASTList.isEmpty()) {
+			return false;
+		}
+
+		outerLoop:
+		for (DetailAST exprDetailAST : exprDetailASTList) {
+			DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
+
+			if ((firstChildDetailAST == null) ||
+				(firstChildDetailAST.getType() != TokenTypes.ASSIGN)) {
+
+				continue;
+			}
+
+			DetailAST nameDetailAST = firstChildDetailAST.getFirstChild();
+
+			if (nameDetailAST.getType() != TokenTypes.IDENT) {
+				continue;
+			}
+
+			for (DetailAST identDetailAST : identDetailASTList) {
+				if (equals(nameDetailAST, identDetailAST) ||
+					isMethodNameDetailAST(identDetailAST)) {
+
+					continue;
+				}
+
+				if (StringUtil.equals(
+						nameDetailAST.getText(), identDetailAST.getText())) {
+
+					continue outerLoop;
+				}
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private DetailAST _getReturnIdentDetailAST(DetailAST detailAST) {

@@ -148,13 +148,13 @@ public class AvailabilityLabelInfoItemRenderer
 			long groupId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		long commerceAccountId = 0;
+
 		AccountEntry accountEntry =
 			_commerceAccountHelper.getCurrentAccountEntry(
 				_commerceChannelLocalService.
 					getCommerceChannelGroupIdBySiteGroupId(groupId),
 				httpServletRequest);
-
-		long commerceAccountId = 0;
 
 		if (accountEntry != null) {
 			commerceAccountId = accountEntry.getAccountEntryId();

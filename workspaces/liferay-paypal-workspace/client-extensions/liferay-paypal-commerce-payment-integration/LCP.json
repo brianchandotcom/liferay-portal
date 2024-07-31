@@ -1,0 +1,35 @@
+{
+	"cpu": 1,
+	"dependencies": [
+		"liferaypaypalbatch",
+		"liferaypaypalcommercecheckoutstep"
+	],
+	"env": {
+		"LIFERAY_ROUTES_CLIENT_EXTENSION": "/etc/liferay/lxc/ext-init-metadata",
+		"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata"
+	},
+	"environments": {
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "__PROJECT_ID__",
+	"kind": "Deployment",
+	"livenessProbe": {
+		"httpGet": {
+			"path": "/ready",
+			"port": 58082
+		}
+	},
+	"loadBalancer": {
+		"targetPort": 58082
+	},
+	"memory": 512,
+	"readinessProbe": {
+		"httpGet": {
+			"path": "/ready",
+			"port": 58082
+		}
+	},
+	"scale": 1
+}

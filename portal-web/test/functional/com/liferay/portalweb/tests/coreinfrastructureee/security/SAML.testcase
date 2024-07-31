@@ -3600,6 +3600,109 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPD-32196. Certificate file should be migrated when fileStore change to GCS and Keystore Manager Target is Document Library Keystore Manager"
+	@priority = 5
+	test KeystoreManagerTargetShouldWorkAfterChangeFromDefaultAndMigratedToGCSStore {
+		property app.server.bundles.size = "0";
+		property gcs.store.enabled = "true";
+		property store.migration.test = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Deploy the OSGI configuration file") {
+			SAML.deployConfigFile(osgiConfigFileName = "com.liferay.saml.runtime.configuration.SamlKeyStoreManagerConfiguration.config");
+
+			OSGiConfig.waitForOSGiConfig();
+		}
+
+		task ("When: Generate a certificate") {
+			SAML.goToSAMLAdmin();
+
+			SAMLRole.configure(
+				samlEntityId = "samlidp",
+				samlRoleType = "Identity Provider");
+
+			SAMLRole.configureCertificateAndPrivateKey(
+				certificateUsage = "SIGNING",
+				samlKeyPassword = "samlidp");
+		}
+
+		task ("Then: Verify that the certificate file should be saved to DL root folder") {
+			SAML.validateFolderExist();
+		}
+
+		task ("And the user cannot migrate data to GCS store without setting up a connection configuration") {
+			ServerAdministration.openServerAdmin();
+
+			Navigator.gotoNavItem(navItem = "Data Migration");
+
+			AssertElementNotPresent(
+				key_fieldLabel = "dl.store.impl",
+				key_value = "com.liferay.portal.store.gcs.GCSStore",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+		}
+
+		task ("When the user adds the configuration") {
+			var bucketId = PropsUtil.get("gcs.bucket.id");
+
+			AntCommands.runCommand("build-test.xml", "prepare-gcs-store-configuration -Dgcs.bucket.id=${bucketId}");
+
+			while ((IsElementNotPresent(locator1 = "Select#SELECT_VALUE_ID", option = "com.liferay.portal.store.gcs.GCSStore", selectFieldId = "dl-store-impl")) && (maxIterations = "2")) {
+				OSGiConfig.waitForOSGiConfig();
+
+				Refresh();
+			}
+		}
+
+		task ("Then the user can now migrate data over to the GCS bucket") {
+			SelectField.select(
+				selectFieldLabel = "dl.store.impl",
+				selectFieldValue = "com.liferay.portal.store.gcs.GCSStore");
+		}
+
+		task ("When the user executes the data migration") {
+			Button.click(button = "Execute");
+
+			AssertTextPresent(
+				locator1 = "//body",
+				value1 = "Executing com.liferay.document.library.internal.convert.document.library.DocumentLibraryConvertProcess");
+
+			WaitForElementNotPresent(
+				locator1 = "//body",
+				value1 = "Migrating files from saml/keystore.jks");
+
+			WaitForConsoleTextPresent(value1 = "Please set dl.store.impl in your portal-ext.properties to use com.liferay.portal.store.gcs.GCSStore");
+
+			WaitForConsoleTextPresent(value1 = "Finished conversion for com.liferay.document.library.internal.convert.document.library.DocumentLibraryConvertProcess");
+		}
+
+		task ("Then the document is migrated over from the default store to the GCS bucket") {
+			var companyId = JSONCompany.getCompanyId();
+			var folderName = "saml";
+			var groupId = 0;
+
+			AntCommands.runCommand("build-test-gcs-store.xml", "assert-document-in-bucket -Dcompany.id=${companyId} -Dfolder.name=${folderName} -Dgcs.bucket.id=${bucketId} -Dgroup.id=${groupId}");
+		}
+
+		task ("And the user can configure the portal to use GCS store without issue") {
+			Portlet.shutdownServer();
+
+			var newProperty = "dl.store.impl=com.liferay.portal.store.gcs.GCSStore";
+
+			AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=${newProperty}");
+
+			Portlet.startServer(deleteLiferayHome = "false");
+
+			User.firstLoginPG();
+		}
+
+		task ("Assert certificate is migrated.") {
+			SAML.goToSAMLAdmin();
+
+			AssertElementPresent(locator1 = "CPSAMLAdmin#DOWNLOAD_CERTIFICATE");
+		}
+	}
+
 	@description = "This is a use case for LPS-147809. TC2: Metadata source is changed after changed from XML File To URL."
 	@priority = 4
 	test MetadataSourceIsChangedAfterChangedFromXMLFileToURL {

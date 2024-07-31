@@ -95,6 +95,26 @@
 		</if>
 	</target>
 
+	<target name="assert-document-in-bucket-folder">
+		<local name="bucket.objects" />
+
+		<exec executable="gcloud" outputproperty="bucket.objects">
+			<arg line="storage ls --recursive gs://lfr-qa-poshi-test-${gcs.bucket.id}/${company.id}/${group.id}/${folder.name} --project=liferay-qa-automated-tests" />
+		</exec>
+
+		<echo>${bucket.objects}</echo>
+
+		<if>
+			<contains string="${bucket.objects}" substring="1.0" />
+			<then>
+				<echo>Document is in the bucket.</echo>
+			</then>
+			<else>
+				<fail>Document is not in the bucket.</fail>
+			</else>
+		</if>
+	</target>
+
 	<target name="assert-no-document-in-bucket">
 		<local name="bucket.objects" />
 

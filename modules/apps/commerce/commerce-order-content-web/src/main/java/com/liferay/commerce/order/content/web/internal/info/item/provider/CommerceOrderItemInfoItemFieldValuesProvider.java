@@ -75,12 +75,12 @@ public class CommerceOrderItemInfoItemFieldValuesProvider
 	private List<InfoFieldValue<Object>> _getCommerceOrderItemInfoFieldValues(
 		CommerceOrderItem commerceOrderItem) {
 
+		List<InfoFieldValue<Object>> commerceOrderItemInfoFieldValues =
+			new ArrayList<>();
+
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		Locale locale = themeDisplay.getLocale();
-
-		List<InfoFieldValue<Object>> commerceOrderItemInfoFieldValues =
-			new ArrayList<>();
 
 		commerceOrderItemInfoFieldValues.add(
 			new InfoFieldValue<>(

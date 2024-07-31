@@ -9,6 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
@@ -20,6 +22,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -35,6 +38,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -453,6 +457,75 @@ public class ObjectDefinitionGraphQLTest {
 			JSONUtil.getValueAsString(
 				jsonObject, "JSONObject/data", "JSONObject/c",
 				"JSONObject/" + key, "Object/status"));
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(true);
+
+		objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		ObjectDefinition finalObjectDefinition = objectDefinition;
+
+		ObjectField objectField = new ObjectField() {
+			{
+				businessType = BusinessType.TEXT;
+				DBType = ObjectField.DBType.STRING;
+				indexed = RandomTestUtil.randomBoolean();
+				indexedAsKeyword = RandomTestUtil.randomBoolean();
+				label = Collections.singletonMap(
+					LocaleUtil.US.toString(), RandomTestUtil.randomString());
+				localized = false;
+				name = StringUtil.randomId();
+				objectDefinitionExternalReferenceCode1 =
+					finalObjectDefinition.getExternalReferenceCode();
+				required = RandomTestUtil.randomBoolean();
+				system = RandomTestUtil.randomBoolean();
+				unique = RandomTestUtil.randomBoolean();
+			}
+		};
+
+		ObjectFieldResource.Builder builder =
+			_objectFieldResourceFactory.create();
+
+		ObjectFieldResource objectFieldResource = builder.user(
+			TestPropsValues.getUser()
+		).build();
+
+		objectFieldResource.postObjectDefinitionObjectField(
+			objectDefinition.getObjectDefinitionId(), objectField);
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), "matthew@liferay.com"
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		key = StringUtil.lowerCaseFirstLetter(objectDefinition.getShortName());
+
+		Assert.assertEquals(
+			"matthew@liferay.com",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"query",
+						new GraphQLField(
+							"c",
+							new GraphQLField(
+								key,
+								HashMapBuilder.<String, Object>put(
+									_getPKObjectFieldName(
+										finalObjectDefinition),
+									objectEntry.getObjectEntryId()
+								).build(),
+								new GraphQLField(objectField.getName()))))),
+				"JSONObject/data", "JSONObject/c", "JSONObject/" + key,
+				"Object/" + objectField.getName()));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
 	}
 
 	@Test
@@ -1075,6 +1148,12 @@ public class ObjectDefinitionGraphQLTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectFieldResource.Factory _objectFieldResourceFactory;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _parentObjectDefinition;

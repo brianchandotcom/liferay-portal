@@ -39,7 +39,7 @@ export function DashboardEmptyTable({
 				/>
 			</div>
 
-			<h4 className="dashboard-empty-state-title">{title}</h4>
+			<div className="dashboard-empty-state-title h4">{title}</div>
 
 			<div className="dashboard-empty-state-description">
 				{description1 && (

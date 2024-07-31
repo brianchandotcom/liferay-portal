@@ -40,18 +40,22 @@ export function ContentReviewImageInfo({
 						symbol={icon}
 					/>
 				)}
-				<h5 className="m-0">{imageFile.fileName}</h5>
+				<div className="h5 m-0">{imageFile.fileName}</div>
 				<p className="mb-0">{imageFile.imageDescription}</p>
 
 				{title && (
 					<>
-						<h5 className="m-0">{i18n.translate('title')}</h5>
+						<span className="h5 m-0">
+							{i18n.translate('title')}
+						</span>
 						<p>{title}</p>
 					</>
 				)}
 				{description && (
 					<>
-						<h5 className="m-0">{i18n.translate('description')}</h5>
+						<span className="h5 m-0">
+							{i18n.translate('description')}
+						</span>
 						<p>{description}</p>
 					</>
 				)}

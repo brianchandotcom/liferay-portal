@@ -48,7 +48,7 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 				>
 					<ClayIcon className="mr-2" symbol="order-arrow-left" />
 
-					<h5 className="mt-1">{backTitle}</h5>
+					<span className="h5 mt-1">{backTitle}</span>
 				</Link>
 
 				<OrderDetailsHeader

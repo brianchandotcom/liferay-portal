@@ -21,7 +21,7 @@ export function ContentReviewParagraph({
 		<div className={classNames('mb-4', className)}>
 			{title && (
 				<span className="d-flex mb-2">
-					<h5 className="mb-0">{title}</h5>
+					<span className="h5 mb-0">{title}</span>
 				</span>
 			)}
 			<div className="solution-preview-profile-description-text">

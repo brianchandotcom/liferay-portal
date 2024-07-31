@@ -40,7 +40,78 @@ public class PortalLogBatchBuildTestrayCaseResult
 	}
 
 	@Override
+	public long getDuration() {
+		TestClassResult testClassResult = _getTestClassResult();
+
+		if (testClassResult == null) {
+			return 0;
+		}
+
+		return testClassResult.getDuration();
+	}
+
+	@Override
 	public String getErrors() {
+		TestClassResult testClassResult = _getTestClassResult();
+
+		if (testClassResult == null) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (TestResult testResult : testClassResult.getTestResults()) {
+			if (!testResult.isFailing()) {
+				continue;
+			}
+
+			sb.append("PortalLogAssertorTest#");
+			sb.append(testResult.getTestName());
+			sb.append(": ");
+
+			String errorDetails = testResult.getErrorDetails();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(errorDetails)) {
+				sb.append("Failed for unknown reason | ");
+			}
+			else {
+				errorDetails = errorDetails.replace(
+					"Portal log assert failure, see above log for more " +
+						"information:",
+					"");
+
+				errorDetails = errorDetails.trim();
+
+				if (errorDetails.length() > 1000) {
+					errorDetails = errorDetails.substring(0, 1000);
+
+					errorDetails += "...";
+				}
+
+				sb.append(errorDetails);
+				sb.append(" | ");
+			}
+		}
+
+		if (sb.length() > 0) {
+			sb.setLength(sb.length() - 3);
+
+			return sb.toString();
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		return "PortalLogAssertorTest-" + getAxisName();
+	}
+
+	private TestClassResult _getTestClassResult() {
+		if (_testClassResult != null) {
+			return _testClassResult;
+		}
+
 		Build build = getBuild();
 
 		if ((build == null) || !build.isFailing()) {
@@ -62,54 +133,14 @@ public class PortalLogBatchBuildTestrayCaseResult
 				continue;
 			}
 
-			StringBuilder sb = new StringBuilder();
+			_testClassResult = testClassResult;
 
-			for (TestResult testResult : testClassResult.getTestResults()) {
-				if (!testResult.isFailing()) {
-					continue;
-				}
-
-				sb.append("PortalLogAssertorTest#");
-				sb.append(testResult.getTestName());
-				sb.append(": ");
-
-				String errorDetails = testResult.getErrorDetails();
-
-				if (JenkinsResultsParserUtil.isNullOrEmpty(errorDetails)) {
-					sb.append("Failed for unknown reason | ");
-				}
-				else {
-					errorDetails = errorDetails.replace(
-						"Portal log assert failure, see above log for more " +
-							"information:",
-						"");
-
-					errorDetails = errorDetails.trim();
-
-					if (errorDetails.length() > 1000) {
-						errorDetails = errorDetails.substring(0, 1000);
-
-						errorDetails += "...";
-					}
-
-					sb.append(errorDetails);
-					sb.append(" | ");
-				}
-			}
-
-			if (sb.length() > 0) {
-				sb.setLength(sb.length() - 3);
-
-				return sb.toString();
-			}
+			return _testClassResult;
 		}
 
 		return null;
 	}
 
-	@Override
-	public String getName() {
-		return "PortalLogAssertorTest-" + getAxisName();
-	}
+	private TestClassResult _testClassResult;
 
 }

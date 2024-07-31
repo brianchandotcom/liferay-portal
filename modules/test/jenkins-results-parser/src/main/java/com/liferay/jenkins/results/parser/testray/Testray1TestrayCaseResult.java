@@ -44,6 +44,13 @@ public class Testray1TestrayCaseResult extends TestrayCaseResult {
 	}
 
 	@Override
+	public long getDuration() {
+		JSONObject jsonObject = getJSONObject();
+
+		return jsonObject.optLong("duration");
+	}
+
+	@Override
 	public String getErrors() {
 		JSONObject jsonObject = getJSONObject();
 

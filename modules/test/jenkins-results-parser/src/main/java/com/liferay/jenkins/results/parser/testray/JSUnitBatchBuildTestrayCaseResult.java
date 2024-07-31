@@ -35,6 +35,21 @@ public class JSUnitBatchBuildTestrayCaseResult
 	}
 
 	@Override
+	public long getDuration() {
+		List<TestClassResult> testClassResults = _getTestClassResults();
+
+		long duration = 0;
+
+		if (testClassResults != null) {
+			for (TestClassResult testClassResult : testClassResults) {
+				duration += testClassResult.getDuration();
+			}
+		}
+
+		return duration;
+	}
+
+	@Override
 	public String getErrors() {
 		List<TestClassResult> testClassResults = _getTestClassResults();
 

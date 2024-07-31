@@ -63,6 +63,10 @@ public class TestrayCaseResult {
 		return testrayComponent.getName();
 	}
 
+	public long getDuration() {
+		return _jsonObject.optLong("duration");
+	}
+
 	public String getErrors() {
 		return _jsonObject.optString("errors");
 	}

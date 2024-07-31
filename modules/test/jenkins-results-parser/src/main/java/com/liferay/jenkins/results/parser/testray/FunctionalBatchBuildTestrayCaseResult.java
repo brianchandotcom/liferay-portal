@@ -46,6 +46,17 @@ public class FunctionalBatchBuildTestrayCaseResult
 	}
 
 	@Override
+	public long getDuration() {
+		TestResult testResult = getTestResult();
+
+		if (testResult == null) {
+			return 0;
+		}
+
+		return testResult.getDuration();
+	}
+
+	@Override
 	public String getErrors() {
 		TestResult testResult = getTestResult();
 

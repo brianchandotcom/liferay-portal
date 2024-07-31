@@ -45,6 +45,17 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 	}
 
 	@Override
+	public long getDuration() {
+		Build build = getBuild();
+
+		if (build == null) {
+			return 0;
+		}
+
+		return build.getDuration();
+	}
+
+	@Override
 	public Status getStatus() {
 		Build build = getBuild();
 

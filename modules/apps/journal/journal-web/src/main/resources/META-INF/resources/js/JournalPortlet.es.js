@@ -21,6 +21,7 @@ const AUTO_SAVE_DELAY = 1500;
 export default function _JournalPortlet({
 	articleId: initialArticleId,
 	autoSaveDraftEnabled,
+	autoSaveDraftURL,
 	availableLocales: initialAvailableLocales,
 	classNameId,
 	contentTitle,
@@ -361,7 +362,7 @@ export default function _JournalPortlet({
 			formDateInput.value = Date.now().toString();
 		}
 
-		return fetch(formElement.action, {
+		return fetch(autoSaveDraftURL, {
 			body: new FormData(formElement),
 			method: formElement.method,
 		})
@@ -373,47 +374,41 @@ export default function _JournalPortlet({
 							: window.location.href
 					);
 				}
-				else {
-					if (!articleId && response.url) {
-						const articleIdKey = `${namespace}articleId`;
-						const friendlyURLKey = `${namespace}friendlyURL`;
-						const url = new URL(response.url);
 
-						if (url.searchParams.has(articleIdKey)) {
-							articleId = url.searchParams.get(articleIdKey);
-							document.getElementById(
-								`${namespace}articleId`
-							).value = articleId;
-
-							Liferay.fire('asyncFormSubmission', {articleId});
-						}
-
-						if (url.searchParams.has(friendlyURLKey)) {
-							const friendlyUrlInputComponent = Liferay.component(
-								`${namespace}friendlyURL`
-							);
-
-							if (!friendlyUrlInputComponent.getValue()) {
-								const friendlyURL =
-									url.searchParams.get(friendlyURLKey);
-								friendlyUrlInputComponent.updateInputLanguage(
-									friendlyURL,
-									defaultLanguageId
-								);
-								friendlyUrlInputComponent.updateInput(
-									friendlyURL
-								);
-
-								Liferay.fire('journal:update-friendly-url', {
-									friendlyURL,
-								});
-							}
-						}
-					}
-					lockHolder.lock?.unlock();
-				}
+				return response.json();
 			})
-			.catch((error) => {
+			.then((data) => {
+				if (!articleId && data.success) {
+					articleId = data.articleId;
+					document.getElementById(
+						`${namespace}articleId`
+					).value = articleId;
+
+					Liferay.fire('asyncFormSubmission', {articleId});
+
+					const friendlyUrlInputComponent = Liferay.component(
+						`${namespace}friendlyURL`
+					);
+
+					if (!friendlyUrlInputComponent.getValue()) {
+						const friendlyURL =
+							data.friendlyURL;
+						friendlyUrlInputComponent.updateInputLanguage(
+							friendlyURL,
+							defaultLanguageId
+						);
+						friendlyUrlInputComponent.updateInput(
+							friendlyURL
+						);
+
+						Liferay.fire('journal:update-friendly-url', {
+							friendlyURL,
+						});
+					}
+
+				}
+				lockHolder.lock?.unlock();
+			}).catch((error) => {
 				console.error(error);
 				lockHolder.lock?.unlock(true);
 			});

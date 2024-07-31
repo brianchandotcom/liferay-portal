@@ -1,7 +1,47 @@
 [
 	{
 		"actionIds": [
+			"ACCESS",
+			"ADD_DOCUMENT",
+			"ADD_SUBFOLDER",
+			"DELETE",
+			"UPDATE",
 			"VIEW"
+		],
+		"primKey": "0",
+		"resource-pk": "recipes",
+		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
+		"roleName": "Recipe Approver",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ACCESS",
+			"ADD_DOCUMENT",
+			"ADD_SUBFOLDER",
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resource-pk": "recipes",
+		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
+		"roleName": "Recipe Creator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.journal",
+		"roleName": "Recipe Approver",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW",
+			"ADD_ARTICLE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.journal",
@@ -15,7 +55,47 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.portal.kernel.model.Group",
+		"roleName": "Recipe Approver",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW",
+			"VIEW_SITE_ADMINISTRATION"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.portal.kernel.model.Group",
 		"roleName": "Recipe Creator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_document_library_web_portlet_DLAdminPortlet",
+		"roleName": "Recipe Approver",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_document_library_web_portlet_DLAdminPortlet",
+		"roleName": "Recipe Creator",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_journal_web_portlet_JournalPortlet",
+		"roleName": "Recipe Approver",
 		"scope": 1
 	},
 	{

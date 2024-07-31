@@ -1113,6 +1113,10 @@ public class TestrayImporter {
 							testcasePropertiesMap.put(
 								"testray.team.name",
 								testrayCaseResult.getTeamName());
+							testcasePropertiesMap.put(
+								"testray.testcase.duration",
+								String.valueOf(
+									testrayCaseResult.getDuration()));
 
 							String testrayCaseName =
 								testrayCaseResult.getName();

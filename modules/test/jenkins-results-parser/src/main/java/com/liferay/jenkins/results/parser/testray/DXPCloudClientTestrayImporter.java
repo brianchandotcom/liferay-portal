@@ -457,6 +457,15 @@ public class DXPCloudClientTestrayImporter {
 
 		Properties properties = new Properties();
 
+		String duration = testCaseResultElement.attributeValue("duration");
+
+		if (duration == null) {
+			duration = "0";
+		}
+		else {
+			duration = duration.replaceAll("[\\.,]", "");
+		}
+
 		Matcher matcher = _pattern.matcher(
 			testCaseResultElement.attributeValue("name"));
 
@@ -485,6 +494,7 @@ public class DXPCloudClientTestrayImporter {
 		properties.setProperty(
 			"testray.main.component.name", _testrayComponentName);
 		properties.setProperty("testray.team.name", _testrayTeamName);
+		properties.setProperty("testray.testcase.duration", duration);
 		properties.setProperty("testray.testcase.name", className);
 		properties.setProperty(
 			"testray.testcase.priority", String.valueOf(_testrayCasePriority));

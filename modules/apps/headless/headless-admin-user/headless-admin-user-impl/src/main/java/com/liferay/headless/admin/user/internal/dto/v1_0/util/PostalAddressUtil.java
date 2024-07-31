@@ -92,6 +92,7 @@ public class PostalAddressUtil {
 						return region.getName();
 					});
 				setAddressType(listType::getName);
+				setExternalReferenceCode(address::getExternalReferenceCode);
 				setId(address::getAddressId);
 				setName(address::getName);
 				setPhoneNumber(address::getPhoneNumber);

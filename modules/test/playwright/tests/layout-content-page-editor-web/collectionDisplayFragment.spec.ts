@@ -636,3 +636,53 @@ test('Displays correct layout in other viewports', async ({
 		await expect(col).toHaveClass(/col-sm-6/);
 	}
 });
+
+test('Activate the first element when a fragment is added to a Collection Display and activates the Collection Display when the fragment is deleted', async ({
+	apiHelpers,
+	collectionsPage,
+	page,
+	pageEditorPage,
+	wemSite,
+}) => {
+
+	// Create a page with a Collection Display and go to edit mode
+
+	const animalsClassPK = await collectionsPage.getCollectionClassPK(
+		ANIMALS_COLLECTION_NAME,
+		wemSite.friendlyUrlPath
+	);
+
+	const collectionWithHeadings = getCollectionDefinition({
+		classPK: animalsClassPK,
+		id: getRandomString(),
+	});
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([collectionWithHeadings]),
+		siteId: wemSite.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+
+	// Check that the first item is active when a Heading is added to the Collection Display
+
+	await pageEditorPage.addFragment(
+		'Basic Components',
+		'Heading',
+		page.locator('.page-editor__collection-item.empty').last()
+	);
+
+	const headingId = await pageEditorPage.getFragmentId('Heading');
+
+	await expect(await pageEditorPage.isActive(headingId)).toBe(true);
+
+	// Check that the Collection Display is active when the Heading is removed
+
+	await page.keyboard.press('Backspace');
+
+	const collectionDisplayId =
+		await pageEditorPage.getFragmentId('Collection Display');
+
+	await expect(await pageEditorPage.isActive(collectionDisplayId)).toBe(true);
+});

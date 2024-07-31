@@ -108,9 +108,9 @@ export async function dragAndDropCriteriaItem({
 	page: Page;
 	segmentField: string;
 }) {
-	const source = page.locator(`[data-testid*="criteria-item-"]`, {
-		hasText: segmentField,
-	});
+	const source = page
+		.locator(`[data-testid*="criteria-item-"]`)
+		.getByText(segmentField, {exact: true});
 
 	let target: Locator;
 	if (nestedSegmentField) {

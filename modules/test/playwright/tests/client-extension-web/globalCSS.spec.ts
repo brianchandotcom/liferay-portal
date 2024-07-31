@@ -13,7 +13,7 @@ export const test = mergeTests(loginTest());
 const SAMPLE = {
 	erc: 'LXC:liferay-sample-global-css',
 	name: 'Liferay Sample Global CSS',
-	url: '/o/liferay-sample-global-css/global.247f8a6b5b52b23268ea.css',
+	url: '/o/liferay-sample-global-css/global.ed43ae1d215bfee1d2df.css',
 };
 
 test(`${SAMPLE.name} is registered`, async ({page}) => {

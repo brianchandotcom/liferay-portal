@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -246,8 +245,8 @@ public class FileEntryContentDashboardItemTest {
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg",
-			MimeTypesUtil.getExtensionContentType("image/jpg"),
-			new byte[0], null, null, null, _serviceContext);
+			MimeTypesUtil.getExtensionContentType("image/jpg"), new byte[0],
+			null, null, null, _serviceContext);
 
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
@@ -529,8 +528,7 @@ public class FileEntryContentDashboardItemTest {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"example.jpg",
-			MimeTypesUtil.getExtensionContentType("image/jpg"),
+			"example.jpg", MimeTypesUtil.getExtensionContentType("image/jpg"),
 			new byte[0], null, null, null, _serviceContext);
 
 		VersionableContentDashboardItem<FileEntry>
@@ -586,8 +584,7 @@ public class FileEntryContentDashboardItemTest {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"example.jpg",
-			MimeTypesUtil.getExtensionContentType("image/jpg"),
+			"example.jpg", MimeTypesUtil.getExtensionContentType("image/jpg"),
 			new byte[0], null, null, null, _serviceContext);
 
 		VersionableContentDashboardItem<FileEntry>

@@ -337,11 +337,11 @@ public class BaseAuthFilterTest {
 	private User _setupUser(int status) {
 		User testUser = new UserImpl();
 
+		testUser.setStatus(status);
+
 		_mockHttpSession.setAttribute(WebKeys.USER, testUser);
 
 		_mockHttpServletRequest.setSession(_mockHttpSession);
-
-		testUser.setStatus(status);
 
 		return testUser;
 	}

@@ -293,13 +293,13 @@ export default function ShortcutManager() {
 			canBeExecuted: () =>
 				canUpdatePageStructure &&
 				!!layoutData.items[activeItemId] &&
-				canBeHidden(
-					layoutData.items[activeItemId],
+				canBeHidden({
+					fragmentEntryLinks,
+					item: layoutData.items[activeItemId],
 					layoutData,
 					masterLayoutData,
-					fragmentEntryLinks,
-					selectedViewportSize
-				),
+					selectedViewportSize,
+				}),
 			isKeyCombination: (event) =>
 				isCtrlOrMeta(event) && event.code === H_KEY_CODE,
 		},

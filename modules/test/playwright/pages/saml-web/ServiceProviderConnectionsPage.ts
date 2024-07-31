@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {TSpConnection} from '../../helpers/SamlProviderConnectionHelper';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
@@ -61,20 +62,7 @@ export class ServiceProviderConnectionsPage {
 		);
 	}
 
-	async addServiceProviderConnection(
-		metadataURL: string,
-		name: string,
-		assertionLifetime?: string,
-		attributes = 'firstName\nlastName\nemailAddress\nscreenName\nuuid',
-		attributesEnabled = true,
-		attributesNamespaceEnabled?: boolean,
-		enabled = true,
-		entityId = name,
-		forceEncrytion?: boolean,
-		keepAliveUrl?: string,
-		nameIdentifierAttributeName = 'emailAddress',
-		nameIdentifierFormat?: string
-	) {
+	async addServiceProviderConnection(spConnection: TSpConnection) {
 		await this.goToServiceProviderConnectionsTab();
 
 		await this.page
@@ -82,18 +70,7 @@ export class ServiceProviderConnectionsPage {
 			.click();
 
 		await this.populateAndSaveServiceProviderConnectionDetails(
-			name,
-			assertionLifetime,
-			attributes,
-			attributesEnabled,
-			attributesNamespaceEnabled,
-			enabled,
-			entityId,
-			forceEncrytion,
-			keepAliveUrl,
-			metadataURL,
-			nameIdentifierAttributeName,
-			nameIdentifierFormat
+			spConnection
 		);
 	}
 
@@ -115,23 +92,12 @@ export class ServiceProviderConnectionsPage {
 		expect(await this.successMessage).toBeVisible();
 	}
 
-	async editServiceProviderConnection(
-		name: string,
-		assertionLifetime?: string,
-		attributes?: string,
-		attributesEnabled?: boolean,
-		attributesNamespaceEnabled?: boolean,
-		enabled?: boolean,
-		entityId?: string,
-		forceEncrytion?: boolean,
-		keepAliveUrl?: string,
-		metadataURL?: string,
-		nameIdentifierAttributeName?: string,
-		nameIdentifierFormat?: string
-	) {
+	async editServiceProviderConnection(spConnection: TSpConnection) {
 		await this.goToServiceProviderConnectionsTab();
 
-		const row = await this.page.getByRole('row').filter({hasText: name});
+		const row = await this.page.getByRole('row').filter({
+			hasText: spConnection.spName,
+		});
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -140,18 +106,7 @@ export class ServiceProviderConnectionsPage {
 		});
 
 		await this.populateAndSaveServiceProviderConnectionDetails(
-			name,
-			assertionLifetime,
-			attributes,
-			attributesEnabled,
-			attributesNamespaceEnabled,
-			enabled,
-			entityId,
-			forceEncrytion,
-			keepAliveUrl,
-			metadataURL,
-			nameIdentifierAttributeName,
-			nameIdentifierFormat
+			spConnection
 		);
 	}
 
@@ -166,68 +121,63 @@ export class ServiceProviderConnectionsPage {
 	}
 
 	private async populateAndSaveServiceProviderConnectionDetails(
-		name: string,
-		assertionLifetime?: string,
-		attributes?: string,
-		attributesEnabled?: boolean,
-		attributesNamespaceEnabled?: boolean,
-		enabled?: boolean,
-		entityId?: string,
-		forceEncrytion?: boolean,
-		keepAliveUrl?: string,
-		metadataURL?: string,
-		nameIdentifierAttributeName?: string,
-		nameIdentifierFormat?: string
+		spConnection: TSpConnection
 	) {
-		await this.nameField.fill(name);
+		await this.nameField.fill(spConnection.spName);
 
-		if (assertionLifetime) {
-			await this.assertionLifetimeField.fill(assertionLifetime);
+		if (spConnection.assertionLifetime) {
+			await this.assertionLifetimeField.fill(
+				spConnection.assertionLifetime
+			);
 		}
 
-		if (attributes) {
-			await this.attributesField.fill(attributes);
+		if (spConnection.attributes) {
+			await this.attributesField.fill(spConnection.attributes);
 		}
 
-		if (attributesEnabled !== undefined) {
-			await this.attributesEnabledToggle.setChecked(attributesEnabled);
+		if (spConnection.attributesEnabled !== undefined) {
+			await this.attributesEnabledToggle.setChecked(
+				spConnection.attributesEnabled
+			);
 		}
 
-		if (attributesNamespaceEnabled !== undefined) {
+		if (spConnection.attributesNamespaceEnabled !== undefined) {
 			await this.attributesNamespaceEnabledToggle.setChecked(
-				attributesNamespaceEnabled
+				spConnection.attributesNamespaceEnabled
 			);
 		}
 
-		if (enabled !== undefined) {
-			await this.enabledField.setChecked(enabled);
+		if (spConnection.enabled !== undefined) {
+			await this.enabledField.setChecked(spConnection.enabled);
 		}
 
-		if (entityId) {
-			await this.entityIdField.fill(entityId);
+		if (spConnection.entityId) {
+			await this.entityIdField.fill(spConnection.entityId);
 		}
 
-		if (forceEncrytion !== undefined) {
-			await this.forceEncryptionToggle.setChecked(forceEncrytion);
+		if (spConnection.forceEncrytion !== undefined) {
+			await this.forceEncryptionToggle.setChecked(
+				spConnection.forceEncrytion
+			);
 		}
 
-		if (keepAliveUrl) {
-			await this.keepAliveUrlField.fill(keepAliveUrl);
+		if (spConnection.keepAliveUrl) {
+			await this.keepAliveUrlField.fill(spConnection.keepAliveUrl);
 		}
 
-		if (metadataURL) {
-			await this.metadataUrlField.fill(metadataURL);
+		if (spConnection.metadataURL) {
+			await this.metadataUrlField.fill(spConnection.metadataURL);
 		}
 
-		if (nameIdentifierAttributeName) {
+		if (spConnection.nameIdentifierAttributeName) {
 			await this.nameIdentifierAttributeNameField.fill(
-				nameIdentifierAttributeName
+				spConnection.nameIdentifierAttributeName
 			);
 		}
 
-		if (nameIdentifierFormat) {
+		if (spConnection.nameIdentifierFormat) {
 			await this.nameIdentifierFormatField.selectOption(
-				nameIdentifierFormat
+				spConnection.nameIdentifierFormat
 			);
 		}
 

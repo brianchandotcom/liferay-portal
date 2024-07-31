@@ -73,10 +73,11 @@ public class CPSpecificationOptionModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"CPSpecificationOptionId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"CPOptionCategoryId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"CPSpecificationOptionId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"CPOptionCategoryId", Types.BIGINT},
 		{"listTypeDefinitionId", Types.BIGINT}, {"title", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"facetable", Types.BOOLEAN},
 		{"key_", Types.VARCHAR}, {"priority", Types.DOUBLE},
@@ -90,6 +91,7 @@ public class CPSpecificationOptionModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPSpecificationOptionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -107,7 +109,7 @@ public class CPSpecificationOptionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPSpecificationOption (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPSpecificationOptionId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionCategoryId LONG,listTypeDefinitionId LONG,title STRING null,description STRING null,facetable BOOLEAN,key_ VARCHAR(75) null,priority DOUBLE,lastPublishDate DATE null,primary key (CPSpecificationOptionId, ctCollectionId))";
+		"create table CPSpecificationOption (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPSpecificationOptionId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionCategoryId LONG,listTypeDefinitionId LONG,title STRING null,description STRING null,facetable BOOLEAN,key_ VARCHAR(75) null,priority DOUBLE,lastPublishDate DATE null,primary key (CPSpecificationOptionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPSpecificationOption";
@@ -143,26 +145,32 @@ public class CPSpecificationOptionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long KEY_COLUMN_BITMASK = 4L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LISTTYPEDEFINITIONID_COLUMN_BITMASK = 8L;
+	public static final long KEY_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long LISTTYPEDEFINITIONID_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIORITY_COLUMN_BITMASK = 32L;
+	public static final long PRIORITY_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -283,6 +291,9 @@ public class CPSpecificationOptionModelImpl
 			attributeGetterFunctions.put(
 				"uuid", CPSpecificationOption::getUuid);
 			attributeGetterFunctions.put(
+				"externalReferenceCode",
+				CPSpecificationOption::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"CPSpecificationOptionId",
 				CPSpecificationOption::getCPSpecificationOptionId);
 			attributeGetterFunctions.put(
@@ -343,6 +354,10 @@ public class CPSpecificationOptionModelImpl
 				"uuid",
 				(BiConsumer<CPSpecificationOption, String>)
 					CPSpecificationOption::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<CPSpecificationOption, String>)
+					CPSpecificationOption::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"CPSpecificationOptionId",
 				(BiConsumer<CPSpecificationOption, Long>)
@@ -463,6 +478,35 @@ public class CPSpecificationOptionModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1098,6 +1142,8 @@ public class CPSpecificationOptionModelImpl
 		cpSpecificationOptionImpl.setMvccVersion(getMvccVersion());
 		cpSpecificationOptionImpl.setCtCollectionId(getCtCollectionId());
 		cpSpecificationOptionImpl.setUuid(getUuid());
+		cpSpecificationOptionImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		cpSpecificationOptionImpl.setCPSpecificationOptionId(
 			getCPSpecificationOptionId());
 		cpSpecificationOptionImpl.setCompanyId(getCompanyId());
@@ -1132,6 +1178,8 @@ public class CPSpecificationOptionModelImpl
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		cpSpecificationOptionImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
+		cpSpecificationOptionImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		cpSpecificationOptionImpl.setCPSpecificationOptionId(
 			this.<Long>getColumnOriginalValue("CPSpecificationOptionId"));
 		cpSpecificationOptionImpl.setCompanyId(
@@ -1257,6 +1305,18 @@ public class CPSpecificationOptionModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			cpSpecificationOptionCacheModel.uuid = null;
+		}
+
+		cpSpecificationOptionCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			cpSpecificationOptionCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			cpSpecificationOptionCacheModel.externalReferenceCode = null;
 		}
 
 		cpSpecificationOptionCacheModel.CPSpecificationOptionId =
@@ -1402,6 +1462,7 @@ public class CPSpecificationOptionModelImpl
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _CPSpecificationOptionId;
 	private long _companyId;
 	private long _userId;
@@ -1454,6 +1515,8 @@ public class CPSpecificationOptionModelImpl
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
+		_columnOriginalValues.put(
 			"CPSpecificationOptionId", _CPSpecificationOptionId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -1499,33 +1562,35 @@ public class CPSpecificationOptionModelImpl
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("CPSpecificationOptionId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("CPSpecificationOptionId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("CPOptionCategoryId", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("listTypeDefinitionId", 1024L);
+		columnBitmasks.put("CPOptionCategoryId", 1024L);
 
-		columnBitmasks.put("title", 2048L);
+		columnBitmasks.put("listTypeDefinitionId", 2048L);
 
-		columnBitmasks.put("description", 4096L);
+		columnBitmasks.put("title", 4096L);
 
-		columnBitmasks.put("facetable", 8192L);
+		columnBitmasks.put("description", 8192L);
 
-		columnBitmasks.put("key_", 16384L);
+		columnBitmasks.put("facetable", 16384L);
 
-		columnBitmasks.put("priority", 32768L);
+		columnBitmasks.put("key_", 32768L);
 
-		columnBitmasks.put("lastPublishDate", 65536L);
+		columnBitmasks.put("priority", 65536L);
+
+		columnBitmasks.put("lastPublishDate", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

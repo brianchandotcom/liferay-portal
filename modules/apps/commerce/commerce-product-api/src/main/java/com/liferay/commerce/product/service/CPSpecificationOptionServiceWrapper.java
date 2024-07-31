@@ -31,7 +31,8 @@ public class CPSpecificationOptionServiceWrapper
 
 	@Override
 	public CPSpecificationOption addCPSpecificationOption(
-			long cpOptionCategoryId, long listTypeDefinitionId,
+			String externalReferenceCode, long cpOptionCategoryId,
+			long listTypeDefinitionId,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			boolean facetable, String key, double priority,
@@ -39,8 +40,8 @@ public class CPSpecificationOptionServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpSpecificationOptionService.addCPSpecificationOption(
-			cpOptionCategoryId, listTypeDefinitionId, titleMap, descriptionMap,
-			facetable, key, priority, serviceContext);
+			externalReferenceCode, cpOptionCategoryId, listTypeDefinitionId,
+			titleMap, descriptionMap, facetable, key, priority, serviceContext);
 	}
 
 	@Override

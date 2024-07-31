@@ -84,10 +84,10 @@ public interface CPSpecificationOptionLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPSpecificationOption addCPSpecificationOption(
-			long userId, long cpOptionCategoryId, long listTypeDefinitionId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			boolean facetable, String key, double priority,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long cpOptionCategoryId,
+			long listTypeDefinitionId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, boolean facetable, String key,
+			double priority, ServiceContext serviceContext)
 		throws PortalException;
 
 	public int countCPSpecificationOptionByListTypeDefinitionId(
@@ -232,6 +232,11 @@ public interface CPSpecificationOptionLocalService
 	public CPSpecificationOption fetchCPSpecificationOption(
 		long companyId, String key);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPSpecificationOption
+		fetchCPSpecificationOptionByExternalReferenceCode(
+			String externalReferenceCode, long companyId);
+
 	/**
 	 * Returns the cp specification option with the matching UUID and company.
 	 *
@@ -261,6 +266,12 @@ public interface CPSpecificationOptionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPSpecificationOption getCPSpecificationOption(
 			long companyId, String key)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPSpecificationOption
+			getCPSpecificationOptionByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

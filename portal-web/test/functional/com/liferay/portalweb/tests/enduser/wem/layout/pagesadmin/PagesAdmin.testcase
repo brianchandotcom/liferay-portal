@@ -489,8 +489,6 @@ definition {
 	@description = "This is a test for LPS-172658. The page creator could preview page template during page creation."
 	@priority = 4
 	test PreviewPageTemplateDuringPageCreation {
-		property testray.component.names = "Echo Accessibility";
-
 		task ("Given a page creator has a page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = ${randomSiteName},
@@ -831,8 +829,6 @@ definition {
 	@description = "This is a test for LPS-172658. The page creator could switch page templates on preview page template modal."
 	@priority = 4
 	test SwitchPageTemplatesOnPreviewPageTemplateModal {
-		property testray.component.names = "Echo Accessibility";
-
 		task ("Given a page creator has page templates") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = ${randomSiteName},

@@ -949,6 +949,8 @@ public class DLAdminManagementToolbarDisplayContext
 			"size", "size"
 		).put(
 			"title", "name"
+		).put(
+			"relevance", "relevance"
 		).build();
 
 		return new DropdownItemList() {

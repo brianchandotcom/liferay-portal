@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Region;
@@ -2620,6 +2621,14 @@ public class OrganizationLocalServiceImpl
 
 		if (Validator.isNull(name)) {
 			throw new OrganizationNameException();
+		}
+
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
+			Organization.class.getName(), "name");
+
+		if (name.length() > nameMaxLength) {
+			throw new OrganizationNameException.MustNotExceedMaximumLength(
+				name, nameMaxLength);
 		}
 
 		Organization organization = organizationPersistence.fetchByC_N(

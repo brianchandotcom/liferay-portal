@@ -229,7 +229,7 @@ definition {
 			while (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
 				Pause(value1 = 1000);
 
-				Refresh();
+				Refresh.refreshNoLiferayLog();
 			}
 
 			User.viewLoggedOutPG();

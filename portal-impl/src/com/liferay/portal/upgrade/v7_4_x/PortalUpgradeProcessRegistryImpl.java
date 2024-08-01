@@ -435,6 +435,19 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(31, 4, 0), new UpgradeRoleExternalReferenceCode());
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 5, 0),
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"DLFileEntryType", "fileEntryTypeId"}
+					};
+				}
+
+			});
 	}
 
 }

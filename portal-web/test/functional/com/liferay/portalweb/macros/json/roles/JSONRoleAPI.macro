@@ -10,6 +10,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/role/add-role \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode='' \
 				-d className=com.liferay.account.model.AccountRole \
 				-d classPK=0 \
 				-d name=${name} \
@@ -38,6 +39,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/role/add-role \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode='' \
 				-d className=com.liferay.portal.kernel.model.Role \
 				-d classPK=0 \
 				-d name=${name} \

@@ -10,7 +10,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalFolderServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -63,12 +63,18 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_user = UserTestUtil.addUser(TestPropsValues.getGroupId());
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+			TestPropsValues.getGroupId(), _user.getUserId());
 
 		_blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(), false,
+			_user.getUserId(), RandomTestUtil.randomString(), false,
 			_serviceContext);
+		_journalFolder = _journalFolderLocalService.addFolder(
+			null, _user.getUserId(), TestPropsValues.getGroupId(), 0,
+			RandomTestUtil.randomString(), StringPool.BLANK, _serviceContext);
+
 		_journalArticle = JournalTestUtil.addArticle(
 			TestPropsValues.getGroupId(), 0,
 			PortalUtil.getClassNameId(JournalArticle.class),
@@ -80,11 +86,6 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 				LocaleUtil.US, StringPool.BLANK
 			).build(),
 			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
-		_journalFolder = JournalFolderServiceUtil.addFolder(
-			null, TestPropsValues.getGroupId(), 0,
-			RandomTestUtil.randomString(), StringPool.BLANK, _serviceContext);
-
-		_user = UserTestUtil.addUser(TestPropsValues.getGroupId());
 	}
 
 	@Test
@@ -93,6 +94,21 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 		_testContribute(_journalArticle, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
 		_testContribute(_journalFolder, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
 		_testContribute(_user, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+	}
+
+	@Test
+	public void testContributeAuditedModelUserExternalReferenceCode()
+		throws Exception {
+
+		_testContribute(
+			_blogsEntry, _user.getExternalReferenceCode(),
+			_USER_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+		_testContribute(
+			_journalArticle, _user.getExternalReferenceCode(),
+			_USER_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+		_testContribute(
+			_journalFolder, _user.getExternalReferenceCode(),
+			_USER_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
 	}
 
 	private boolean _isSearchEngineSolr() {
@@ -157,9 +173,15 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 	private static final String _EXTERNAL_REFERENCE_CODE_FIELD_NAME =
 		"externalReferenceCode";
 
+	private static final String _USER_EXTERNAL_REFERENCE_CODE_FIELD_NAME =
+		"userExternalReferenceCode";
+
 	private BlogsEntry _blogsEntry;
 	private JournalArticle _journalArticle;
 	private JournalFolder _journalFolder;
+
+	@Inject
+	private JournalFolderLocalService _journalFolderLocalService;
 
 	@Inject
 	private Queries _queries;

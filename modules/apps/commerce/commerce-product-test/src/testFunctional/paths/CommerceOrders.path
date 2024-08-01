@@ -197,7 +197,7 @@
 </tr>
 <tr>
 	<td>PENDING_ORDERS_LIST_ORDER_TYPE</td>
-	<td>//div[@class='dnd-tr'][contains(.,'${key_entry}')]/div[@class='dnd-td'][3][contains(.,'${key_orderType}')]</td>
+	<td>//div[@class='dnd-tr'][contains(.,'${key_entry}')]/div[@class='dnd-td'][2][contains(.,'${key_orderType}')]</td>
 	<td></td>
 </tr>
 <tr>

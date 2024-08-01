@@ -1389,12 +1389,12 @@ definition {
 		CommerceNavigator.searchEntry(entryName = ${firstOrderId});
 
 		AssertElementPresent(
-			key_errorMessage = ${firstOrderId},
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+			key_entryName = ${firstOrderId},
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 
 		AssertElementNotPresent(
-			key_errorMessage = ${secondOrderId},
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+			key_entryName = ${secondOrderId},
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
 	@description = "COMMERCE-6381. As a buyer, I want to be able to search for one placed order using the search bar"

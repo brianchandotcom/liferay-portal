@@ -324,8 +324,8 @@ public class ObjectDefinitionLocalServiceImpl
 					newObjectField.getDBColumnName(),
 					objectDefinition.getDBTableName(),
 					newObjectField.getDBType(), false, false, "",
-					newObjectField.getLabelMap(), newObjectField.getName(),
-					newObjectField.getReadOnly(),
+					newObjectField.getLabelMap(), newObjectField.isLocalized(),
+					newObjectField.getName(), newObjectField.getReadOnly(),
 					newObjectField.getReadOnlyConditionExpression(),
 					newObjectField.isRequired(), newObjectField.isState(),
 					newObjectField.getObjectFieldSettings());
@@ -1467,8 +1467,8 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.getDBType(), objectField.isIndexed(),
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
-						objectField.getLabelMap(), objectField.getName(),
-						objectField.getReadOnly(),
+						objectField.getLabelMap(), objectField.isLocalized(),
+						objectField.getName(), objectField.getReadOnly(),
 						objectField.getReadOnlyConditionExpression(),
 						objectField.isRequired(), objectField.isState(),
 						objectField.getObjectFieldSettings());
@@ -1539,8 +1539,8 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(LocaleUtil.getDefault(), "author")),
-			"creator", ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
-			null);
+			false, "creator", ObjectFieldConstants.READ_ONLY_FALSE, null, false,
+			false, null);
 
 		_objectFieldLocalService.addSystemObjectField(
 			null, userId, 0, objectDefinition.getObjectDefinitionId(),
@@ -1549,8 +1549,8 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectFieldConstants.DB_TYPE_DATE, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(LocaleUtil.getDefault(), "create-date")),
-			"createDate", ObjectFieldConstants.READ_ONLY_FALSE, null, false,
-			false, null);
+			false, "createDate", ObjectFieldConstants.READ_ONLY_FALSE, null,
+			false, false, null);
 
 		_objectFieldLocalService.addSystemObjectField(
 			null, userId, 0, objectDefinition.getObjectDefinitionId(),
@@ -1561,8 +1561,8 @@ public class ObjectDefinitionLocalServiceImpl
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(
 					LocaleUtil.getDefault(), "external-reference-code")),
-			"externalReferenceCode", ObjectFieldConstants.READ_ONLY_FALSE, null,
-			false, false, null);
+			false, "externalReferenceCode",
+			ObjectFieldConstants.READ_ONLY_FALSE, null, false, false, null);
 
 		String dbColumnName = ObjectEntryTable.INSTANCE.objectEntryId.getName();
 
@@ -1576,8 +1576,8 @@ public class ObjectDefinitionLocalServiceImpl
 			dbTableName, ObjectFieldConstants.DB_TYPE_LONG, true, true, null,
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(LocaleUtil.getDefault(), "id")),
-			"id", ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
-			null);
+			false, "id", ObjectFieldConstants.READ_ONLY_FALSE, null, false,
+			false, null);
 
 		_objectFieldLocalService.addSystemObjectField(
 			null, userId, 0, objectDefinition.getObjectDefinitionId(),
@@ -1586,8 +1586,8 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectFieldConstants.DB_TYPE_DATE, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(LocaleUtil.getDefault(), "modified-date")),
-			"modifiedDate", ObjectFieldConstants.READ_ONLY_FALSE, null, false,
-			false, null);
+			false, "modifiedDate", ObjectFieldConstants.READ_ONLY_FALSE, null,
+			false, false, null);
 
 		_objectFieldLocalService.addSystemObjectField(
 			null, userId, 0, objectDefinition.getObjectDefinitionId(),
@@ -1596,8 +1596,8 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectFieldConstants.DB_TYPE_INTEGER, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(LocaleUtil.getDefault(), "status")),
-			"status", ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
-			null);
+			false, "status", ObjectFieldConstants.READ_ONLY_FALSE, null, false,
+			false, null);
 	}
 
 	private void _createLocalizationTable(

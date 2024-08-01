@@ -6,12 +6,9 @@
 package com.liferay.dynamic.data.mapping.upgrade.v5_1_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
-import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
-import com.liferay.portal.test.rule.Inject;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.upgrade.BaseDDMStructureVersionCTUpgradeProcessTestCase;
+import com.liferay.dynamic.data.mapping.upgrade.v5_1_1.test.util.DDMValidationUpgradeProcessTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -20,35 +17,16 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class DDMStructureVersionDDMValidationUpgradeProcessTest
-	extends DDMStructureDDMValidationUpgradeProcessTest {
+	extends BaseDDMStructureVersionCTUpgradeProcessTestCase {
 
 	@Override
-	protected CTModel<?> addCTModel() throws Exception {
-		DDMStructure ddmStructure = (DDMStructure)super.addCTModel();
-
-		return ddmStructure.getStructureVersion();
+	protected String getClassName() {
+		return DDMValidationUpgradeProcessTestUtil.getClassName();
 	}
 
 	@Override
-	protected CTService<?> getCTService() {
-		return _ddmStructureVersionLocalService;
+	protected DDMForm getDDMForm() {
+		return DDMValidationUpgradeProcessTestUtil.getDDMForm();
 	}
-
-	@Override
-	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
-		DDMStructureVersion ddmStructureVersion = (DDMStructureVersion)ctModel;
-
-		DDMStructure ddmStructure = ddmStructureVersion.getStructure();
-
-		setDefinition(ddmStructure);
-
-		ddmStructureVersion.setDefinition(ddmStructure.getDefinition());
-
-		return _ddmStructureVersionLocalService.updateDDMStructureVersion(
-			ddmStructureVersion);
-	}
-
-	@Inject
-	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
 }

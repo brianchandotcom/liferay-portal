@@ -5,6 +5,8 @@
 
 package com.liferay.adyen;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

@@ -102,46 +102,19 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_logContextAppender.start();
 
+		_updatePortalRelease(
+			new Version(1, 0, 0), new Date(0),
+			ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
+
 		_upgradeReportLogger = (Logger)LogManager.getLogger(
 			"com.liferay.portal.upgrade.internal.report.UpgradeReport");
 
 		_upgradeReportLogger.addAppender(_logContextAppender);
-
-		try (Connection connection = DataAccess.getConnection()) {
-			_initialBuildDate = PortalUpgradeProcess.getCurrentBuildDate(
-				connection);
-			_initialBuildNumber = PortalUpgradeProcess.getCurrentBuildNumber(
-				connection);
-			_initialSchemaVersion =
-				PortalUpgradeProcess.getCurrentSchemaVersion(connection);
-		}
-
-		if (!StringUtil.equals(testName.getMethodName(), "testNoNewRelease")) {
-			Date date = new Date(0);
-
-			_updatePortalRelease(
-				new Version(1, 0, 0), date,
-				ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
-
-			if (StringUtil.equals(
-					testName.getMethodName(), "testDatabaseTablesCounts")) {
-
-				_db.runSQL("insert into UpgradeReportTable2 (id_) values (1)");
-			}
-
-			_appender.start();
-
-			_updatePortalRelease(
-				_initialSchemaVersion, date, _initialBuildNumber);
-		}
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		_appender.stop();
-
-		_updatePortalRelease(
-			_initialSchemaVersion, _initialBuildDate, _initialBuildNumber);
 
 		File reportsDir = null;
 
@@ -167,6 +140,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			reportsDir.delete();
 		}
+
+		_updatePortalRelease(
+			PortalUpgradeProcess.getLatestSchemaVersion(),
+			ReleaseInfo.getBuildDate(), ReleaseInfo.getBuildNumber());
 
 		_upgradeReportLogger.removeAppender(_logContextAppender);
 
@@ -232,6 +209,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testDatabaseTablesAreSorted() throws Exception {
+		_appender.start();
+
 		_appender.stop();
 
 		if (_reportContent == null) {
@@ -247,6 +226,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testDatabaseTablesCounts() throws Exception {
+		_db.runSQL("insert into UpgradeReportTable2 (id_) values (1)");
+
+		_appender.start();
+
 		_db.runSQL("insert into UpgradeReportTable1 (id_) values (1)");
 
 		_db.runSQL("delete from UpgradeReportTable2 where id_ = 1");
@@ -300,6 +283,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testGetDLStorageSizeAfterTimeout() throws Exception {
+		_appender.start();
+
 		try (SafeCloseable safeCloseable =
 				_setUpgradeReportDLStorageSizeTimeout(1)) {
 
@@ -352,6 +337,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testGetDLStorageSizeInGb() throws Exception {
+		_appender.start();
+
 		Object upgradeReport = ReflectionTestUtil.getFieldValue(
 			_appender, "_upgradeReport");
 
@@ -378,6 +365,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testGetDLStorageSizeInMb() throws Exception {
+		_appender.start();
+
 		Object upgradeReport = ReflectionTestUtil.getFieldValue(
 			_appender, "_upgradeReport");
 
@@ -404,6 +393,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testInfoEventsInOrder() throws Exception {
+		_appender.start();
+
 		Log log = LogFactoryUtil.getLog(UpgradeProcess.class);
 
 		String fasterUpgradeProcessName =
@@ -438,6 +429,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testLogEvents() throws Exception {
+		_appender.start();
+
 		LogEvent logEvent = Log4jLogEvent.newBuilder(
 		).setLoggerName(
 			"Warn"
@@ -479,6 +472,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_releaseLocalService.updateRelease(release);
 
+		_appender.start();
+
 		_appender.stop();
 
 		release = _releaseLocalService.fetchRelease(bundleSymbolicName);
@@ -500,6 +495,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testNoLogEvents() throws Exception {
+		_appender.start();
+
 		_appender.stop();
 
 		_assertLogContextContains("upgrade.report.errors", "[]");
@@ -513,6 +510,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testNoNewRelease() throws Exception {
+		_updatePortalRelease(
+			PortalUpgradeProcess.getLatestSchemaVersion(),
+			ReleaseInfo.getBuildDate(), ReleaseInfo.getBuildNumber());
+
 		_appender.start();
 
 		_appender.stop();
@@ -525,6 +526,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testProperties() throws Exception {
+		_appender.start();
+
 		_appender.stop();
 
 		_assertLogContextContains(
@@ -552,6 +555,12 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testSchemaVersion() throws Exception {
+		_appender.start();
+
+		_updatePortalRelease(
+			PortalUpgradeProcess.getLatestSchemaVersion(),
+			ReleaseInfo.getBuildDate(), ReleaseInfo.getBuildNumber());
+
 		_appender.stop();
 
 		_assertLogContextContains(
@@ -596,6 +605,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		try {
 			_upgradeReportDir = PropsValues.UPGRADE_REPORT_DIR;
 
+			_appender.start();
+
 			LogEvent logEvent = Log4jLogEvent.newBuilder(
 			).setLoggerName(
 				"Warn"
@@ -618,9 +629,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				originalUpgradeReportDir);
 		}
 	}
-
-	@Rule
-	public TestName testName = new TestName();
 
 	protected static void setUpClass(boolean upgradeClient) throws Exception {
 		_db = DBManagerUtil.getDB();
@@ -775,9 +783,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	private static DB _db;
-	private static Date _initialBuildDate;
-	private static int _initialBuildNumber;
-	private static Version _initialSchemaVersion;
 	private static Appender _logContextAppender;
 	private static final Pattern _logContextTablesInitialFinalRowsPattern =
 		Pattern.compile("(\\w+_?):(\\d+|-):(\\d+|-)");

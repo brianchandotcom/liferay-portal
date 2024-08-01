@@ -7,6 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import {TItem} from '@clayui/form/lib/SelectBox';
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
@@ -90,6 +91,9 @@ function ApiRestApplication({
 		string | null
 	>(null);
 	const [sourceItems, setSourceItems] = useState<TItem[]>([]);
+
+	const itemKeyFormElementId = `${namespace}ItemKey`;
+	const itemLabelFormElementId = `${namespace}ItemLabel`;
 
 	const isPathValid = (
 		path: string,
@@ -681,10 +685,19 @@ function ApiRestApplication({
 						})}
 					>
 						<div className="form-group-item">
-							<label>
+							<label htmlFor={itemKeyFormElementId}>
 								{Liferay.Language.get('item-key')}
 
 								<RequiredMark />
+
+								<span
+									className="label-icon lfr-portal-tooltip ml-2"
+									title={Liferay.Language.get(
+										'this-field-provides-the-values-to-filter-elements'
+									)}
+								>
+									<ClayIcon symbol="question-circle-full" />
+								</span>
 							</label>
 
 							<ClayDropDown
@@ -696,6 +709,7 @@ function ApiRestApplication({
 									<ClayButton
 										className="form-control form-control-select form-control-select-secondary"
 										displayType="secondary"
+										name={itemKeyFormElementId}
 									>
 										{selectedItemKey ? (
 											<RESTApplicationDropdownItem
@@ -750,10 +764,19 @@ function ApiRestApplication({
 						</div>
 
 						<div className="form-group-item">
-							<label>
+							<label htmlFor={itemLabelFormElementId}>
 								{Liferay.Language.get('item-label')}
 
 								<RequiredMark />
+
+								<span
+									className="label-icon lfr-portal-tooltip ml-2"
+									title={Liferay.Language.get(
+										'this-field-provides-the-labels-to-show-in-the-filter'
+									)}
+								>
+									<ClayIcon symbol="question-circle-full" />
+								</span>
 							</label>
 
 							<ClayDropDown
@@ -765,6 +788,7 @@ function ApiRestApplication({
 									<ClayButton
 										className="form-control form-control-select form-control-select-secondary"
 										displayType="secondary"
+										name={itemLabelFormElementId}
 									>
 										{selectedItemLabel ? (
 											<RESTApplicationDropdownItem

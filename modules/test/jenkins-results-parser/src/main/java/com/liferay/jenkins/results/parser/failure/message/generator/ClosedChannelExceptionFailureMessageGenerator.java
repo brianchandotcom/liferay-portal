@@ -40,18 +40,18 @@ public class ClosedChannelExceptionFailureMessageGenerator
 	public Element getMessageElement(String consoleText) {
 		Element messageElement = super.getMessageElement(consoleText);
 
-		if (messageElement != null) {
-			return Dom4JUtil.getNewElement(
-				"div", null,
-				Dom4JUtil.getNewElement(
-					"p", null, "Irrecoverable Jenkins Error: ",
-					Dom4JUtil.getNewAnchorElement(
-						"https://issues.liferay.com/browse/LRCI-1422", null,
-						"ClosedChannelException")),
-				messageElement);
+		if (messageElement == null) {
+			return null;
 		}
 
-		return null;
+		return Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewElement(
+				"p", null, "Irrecoverable Jenkins Error: ",
+				Dom4JUtil.getNewAnchorElement(
+					"https://issues.liferay.com/browse/LRCI-1422", null,
+					"ClosedChannelException")),
+			messageElement);
 	}
 
 	private static final String _TOKEN_CLOSED_CHANNEL_EXCEPTION =

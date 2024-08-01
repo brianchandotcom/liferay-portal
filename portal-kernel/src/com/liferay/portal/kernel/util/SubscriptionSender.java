@@ -346,9 +346,10 @@ public class SubscriptionSender implements Serializable {
 		}
 
 		if (groupId > 0) {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			setContextAttribute("[$SITE_NAME$]", group.getDescriptiveName());
+			setLocalizedContextAttribute(
+				"[$SITE_NAME$]",
+				new EscapableLocalizableFunction(
+					locale -> _getGroupDescriptiveName(groupId, locale)));
 		}
 
 		if ((creatorUserId > 0) &&
@@ -1109,6 +1110,21 @@ public class SubscriptionSender implements Serializable {
 
 		return StringBundler.concat(
 			key.substring(0, i), StringPool.PIPE, escapeMode, "$]");
+	}
+
+	private String _getGroupDescriptiveName(long groupId, Locale locale) {
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			return group.getDescriptiveName(locale);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private <T> List<Hook<T>> _getHooks(Hook.Event<T> event) {

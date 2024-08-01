@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -63,7 +64,6 @@ import java.text.DateFormat;
 import java.text.Format;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -268,16 +268,15 @@ public class CommerceReturnEditDisplayContext {
 		HttpServletRequest httpServletRequest =
 			_commerceReturnRequestHelper.getRequest();
 
-		List<String> returnStatues = Arrays.asList(
-			CommerceReturnConstants.RETURN_STATUSES_LATEST);
-
 		Map<String, Integer> returnItemStatusMap = _toReturnItemStatusMap(
 			_getCommerceReturnItemObjectEntries());
 
 		int processedCount = GetterUtil.getInteger(
 			returnItemStatusMap.get("processedCount"));
 
-		if (returnStatues.contains(commerceReturn.getReturnStatus()) ||
+		if (ArrayUtil.contains(
+				CommerceReturnConstants.RETURN_STATUSES_LATEST,
+				commerceReturn.getReturnStatus()) ||
 			(processedCount > 0)) {
 
 			return ListUtil.fromArray(

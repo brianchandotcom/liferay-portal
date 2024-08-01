@@ -24,6 +24,7 @@ import {
 import {LayoutKeyboardContextProvider} from '../contexts/LayoutKeyboardContext';
 import {LocalConfigContextProvider} from '../contexts/LocalConfigContext';
 import {PortletContentContextProvider} from '../contexts/PortletContentContext';
+import {ShortcutContextProvider} from '../contexts/ShortcutContext';
 import {StoreContextProvider} from '../contexts/StoreContext';
 import AppHooks from '../hooks/app_hooks/index';
 import {reducer} from '../reducers/index';
@@ -71,31 +72,33 @@ export default function App({state}) {
 										<Toolbar />
 
 										<KeyboardMovementContextProvider>
-											<KeyboardManager />
+											<ShortcutContextProvider>
+												<KeyboardManager />
 
-											<KeyboardMovementPreview />
+												<KeyboardMovementPreview />
 
-											<KeyboardMovementText />
+												<KeyboardMovementText />
 
-											<PortletContentContextProvider>
-												<LocalConfigContextProvider>
-													<GlobalContextProvider>
-														<CommonStylesManager />
+												<PortletContentContextProvider>
+													<LocalConfigContextProvider>
+														<GlobalContextProvider>
+															<CommonStylesManager />
 
-														<StyleBookContextProvider>
-															<Sidebar />
+															<StyleBookContextProvider>
+																<Sidebar />
 
-															<LayoutKeyboardContextProvider>
-																<LayoutViewport />
-															</LayoutKeyboardContextProvider>
+																<LayoutKeyboardContextProvider>
+																	<LayoutViewport />
+																</LayoutKeyboardContextProvider>
 
-															<LayoutBreadcrumbs />
+																<LayoutBreadcrumbs />
 
-															<ItemConfigurationSidebar />
-														</StyleBookContextProvider>
-													</GlobalContextProvider>
-												</LocalConfigContextProvider>
-											</PortletContentContextProvider>
+																<ItemConfigurationSidebar />
+															</StyleBookContextProvider>
+														</GlobalContextProvider>
+													</LocalConfigContextProvider>
+												</PortletContentContextProvider>
+											</ShortcutContextProvider>
 										</KeyboardMovementContextProvider>
 									</FormValidationContextProvider>
 								</DisplayPagePreviewItemContextProvider>

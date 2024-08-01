@@ -64,6 +64,14 @@ public class TemplateEntryStagedModelDataHandlerTest
 
 	@Test
 	@TestInfo("LPD-32929")
+	public void testExportImportTemplateEntryWithoutVariation()
+		throws Exception {
+
+		_asserExportImportTemplateEntry(StringPool.BLANK, StringPool.BLANK);
+	}
+
+	@Test
+	@TestInfo("LPD-32929")
 	public void testExportImportTemplateEntryWithSiteTiedVariation()
 		throws Exception {
 
@@ -89,6 +97,33 @@ public class TemplateEntryStagedModelDataHandlerTest
 		_asserExportImportTemplateEntry(
 			String.valueOf(liveGroupDDMStructure.getStructureId()),
 			String.valueOf(stagingGroupDDMStructure.getStructureId()));
+	}
+
+	@Test
+	@TestInfo("LPD-32929")
+	public void testExportImportTemplateEntryWithUnpublishedSiteTiedVariation()
+		throws Exception {
+
+		DDMStructure stagingGroupDDMStructure =
+			DDMStructureTestUtil.addStructure(
+				stagingGroup.getGroupId(), JournalArticle.class.getName());
+
+		_asserExportImportTemplateEntry(
+			StringPool.BLANK,
+			String.valueOf(stagingGroupDDMStructure.getStructureId()));
+	}
+
+	@Test
+	@TestInfo("LPD-32929")
+	public void testExportImportTemplateEntryWithVariation() throws Exception {
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			stagingGroup.getGroupId(),
+			_portal.getClassNameId(JournalArticle.class), "BASIC-WEB-CONTENT",
+			true);
+
+		_asserExportImportTemplateEntry(
+			String.valueOf(ddmStructure.getStructureId()),
+			String.valueOf(ddmStructure.getStructureId()));
 	}
 
 	@Override

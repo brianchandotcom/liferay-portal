@@ -89,7 +89,7 @@ public class JUnitBatchBuildTestrayCaseResult
 			return "Failed prior to running test";
 		}
 
-		if(_isTestClassResultsSkipped()){
+		if (_isTestClassResultsSkipped()) {
 			return "Failed prior to running test";
 		}
 
@@ -305,9 +305,9 @@ public class JUnitBatchBuildTestrayCaseResult
 		return testResults;
 	}
 
-	private boolean _isTestClassResultsSkipped() {
+	private boolean _isTestClassResultsFailing() {
 		for (TestClassResult testClassResult : _getTestClassResults()) {
-			if (testClassResult.isSkipped()) {
+			if (testClassResult.isFailing()) {
 				return true;
 			}
 		}
@@ -315,9 +315,9 @@ public class JUnitBatchBuildTestrayCaseResult
 		return false;
 	}
 
-	private boolean _isTestClassResultsFailing() {
+	private boolean _isTestClassResultsSkipped() {
 		for (TestClassResult testClassResult : _getTestClassResults()) {
-			if (testClassResult.isFailing()) {
+			if (testClassResult.isSkipped()) {
 				return true;
 			}
 		}

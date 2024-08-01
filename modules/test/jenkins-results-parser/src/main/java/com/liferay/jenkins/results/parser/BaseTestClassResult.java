@@ -250,18 +250,6 @@ public abstract class BaseTestClassResult implements TestClassResult {
 	}
 
 	@Override
-	public boolean isSkipped() {
-		Status status = Status.valueOf(getStatus());
-
-		if (status == Status.SKIPPED) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isFailing() {
 		Status status = Status.valueOf(getStatus());
 
@@ -272,6 +260,17 @@ public abstract class BaseTestClassResult implements TestClassResult {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean isSkipped() {
+		Status status = Status.valueOf(getStatus());
+
+		if (status == Status.SKIPPED) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected BaseTestClassResult(Build build, JSONObject suiteJSONObject) {

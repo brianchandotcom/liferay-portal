@@ -172,6 +172,10 @@ public class JUnitBatchBuildTestrayCaseResult
 			return Status.FAILED;
 		}
 
+		if (_isTestClassResultsSkipped()) {
+			return Status.UNTESTED;
+		}
+
 		if (_isTestClassResultsFailing()) {
 			return Status.FAILED;
 		}
@@ -295,6 +299,16 @@ public class JUnitBatchBuildTestrayCaseResult
 		}
 
 		return testResults;
+	}
+
+	private boolean _isTestClassResultsSkipped() {
+		for (TestClassResult testClassResult : _getTestClassResults()) {
+			if (testClassResult.isSkipped()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isTestClassResultsFailing() {

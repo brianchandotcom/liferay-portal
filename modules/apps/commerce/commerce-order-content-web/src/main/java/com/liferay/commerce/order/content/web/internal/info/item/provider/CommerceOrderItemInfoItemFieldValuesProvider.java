@@ -78,10 +78,6 @@ public class CommerceOrderItemInfoItemFieldValuesProvider
 		List<InfoFieldValue<Object>> commerceOrderItemInfoFieldValues =
 			new ArrayList<>();
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
-		Locale locale = themeDisplay.getLocale();
-
 		commerceOrderItemInfoFieldValues.add(
 			new InfoFieldValue<>(
 				CommerceOrderItemInfoItemFields.companyIdInfoField,
@@ -158,6 +154,10 @@ public class CommerceOrderItemInfoItemFieldValuesProvider
 		String url = StringPool.BLANK;
 
 		try {
+			ThemeDisplay themeDisplay = _getThemeDisplay();
+
+			Locale locale = themeDisplay.getLocale();
+
 			if (commerceOrderItem.getParentCommerceOrderItemId() == 0) {
 				options = CommerceOrderItemUtil.getOptions(
 					commerceOrderItem, _cpInstanceHelper, locale);

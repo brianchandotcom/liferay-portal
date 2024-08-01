@@ -13,7 +13,6 @@ import layoutDataReducer from './layoutDataReducer';
 import mappingFieldsReducer from './mappingFieldsReducer';
 import masterLayoutReducer from './masterLayoutReducer';
 import networkReducer from './networkReducer';
-import openKeyboardShortcutsModalReducer from './openKeyboardShortcutsModalReducer';
 import permissionsReducer from './permissionsReducer';
 import restrictedItemIdsReducer from './restrictedItemIdsReducer';
 import selectFragmentForNameEditingReducer from './selectFragmentForNameEditingReducer';
@@ -38,7 +37,6 @@ const REDUCER_MAP = {
 	mappingFields: mappingFieldsReducer,
 	masterLayout: masterLayoutReducer,
 	network: networkReducer,
-	openKeyboardShortcutsModal: openKeyboardShortcutsModalReducer,
 	permissions: permissionsReducer,
 	reducers: baseReducer,
 	restrictedItemIds: restrictedItemIdsReducer,

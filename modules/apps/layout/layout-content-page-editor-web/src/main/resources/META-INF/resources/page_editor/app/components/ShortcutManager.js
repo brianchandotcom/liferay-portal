@@ -5,10 +5,7 @@
 
 import React, {useEffect, useRef, useState} from 'react';
 
-import {
-	openKeyboardShortcutsModal,
-	selectFragmentForNameEditing,
-} from '../actions';
+import {selectFragmentForNameEditing} from '../actions';
 import {CONTENT_DISPLAY_OPTIONS} from '../config/constants/contentDisplayOptions';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
@@ -32,6 +29,10 @@ import {
 	useActiveItemType,
 	useSelectItem,
 } from '../contexts/ControlsContext';
+import {
+	useOpenShorcutModal,
+	useSetOpenShorcutModal,
+} from '../contexts/ShortcutContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import deleteItem from '../thunks/deleteItem';
@@ -77,11 +78,9 @@ export default function ShortcutManager() {
 	const dispatch = useDispatch();
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const [openSaveModal, setOpenSaveModal] = useState(false);
-	const [openShortcutModal, setOpenShortcutModal] = useState(false);
-	const isShortcutModalOpen = useSelector(
-		(state) => state.openKeyboardShortcutsModal?.isOpen
-	);
+	const openShortcutModal = useOpenShorcutModal();
 	const selectItem = useSelectItem();
+	const setOpenShorcutModal = useSetOpenShorcutModal();
 	const state = useSelector((state) => state);
 	const sidebarHidden = state.sidebar.hidden;
 	const {widgets} = state;
@@ -181,26 +180,6 @@ export default function ShortcutManager() {
 				itemId,
 				parentItemId: parentId,
 				position,
-			})
-		);
-	};
-
-	const openShortcutModalAction = () => {
-		if (!isShortcutModalOpen) {
-			setOpenShortcutModal(true);
-			dispatch(
-				openKeyboardShortcutsModal({
-					isOpen: true,
-				})
-			);
-		}
-	};
-
-	const closeShortcutModalAction = () => {
-		setOpenShortcutModal(false);
-		dispatch(
-			openKeyboardShortcutsModal({
-				isOpen: false,
 			})
 		);
 	};
@@ -340,7 +319,7 @@ export default function ShortcutManager() {
 			},
 		},
 		openShortcutModal: {
-			action: openShortcutModalAction,
+			action: () => setOpenShorcutModal(true),
 			canBeExecuted: (event) =>
 				!isInteractiveElement(event.target) &&
 				!isWithinIframe() &&
@@ -430,7 +409,7 @@ export default function ShortcutManager() {
 
 			{openShortcutModal && (
 				<ShortcutModal
-					onCloseModal={() => closeShortcutModalAction()}
+					onCloseModal={() => setOpenShorcutModal(false)}
 				/>
 			)}
 		</>

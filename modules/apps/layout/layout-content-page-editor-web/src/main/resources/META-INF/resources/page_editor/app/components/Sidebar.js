@@ -12,7 +12,7 @@ import {
 import classNames from 'classnames';
 import {useId, useSessionState} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 
 import BrowserSidebar from '../../plugins/browser/components/BrowserSidebar';
 import CommentsSidebar from '../../plugins/comments/components/CommentsSidebar';
@@ -21,9 +21,9 @@ import MappingSidebar from '../../plugins/mapping/components/MappingSidebar';
 import ContentsSidebar from '../../plugins/page_content/components/ContentsSidebar';
 import PageDesignOptionsSidebar from '../../plugins/page_design_options/components/PageDesignOptionsSidebar';
 import RulesSidebar from '../../plugins/page_rules/components/RulesSidebar';
-import {openKeyboardShortcutsModal} from '../actions';
 import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
+import {useSetOpenShorcutModal} from '../contexts/ShortcutContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectAvailablePanels from '../selectors/selectAvailablePanels';
 import selectItemConfigurationOpen from '../selectors/selectItemConfigurationOpen';
@@ -31,7 +31,6 @@ import selectSidebarIsOpened from '../selectors/selectSidebarIsOpened';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import {useDropClear} from '../utils/drag_and_drop/useDragAndDrop';
 import isSmallResolution from '../utils/isSmallResolution';
-import ShortcutModal from './ShortcutModal';
 
 const {useEffect} = React;
 
@@ -73,6 +72,7 @@ export default function Sidebar() {
 	const [resizing, setResizing] = useStateSafe(false);
 	const selectItem = useSelectItem();
 	const separatorRef = useRef();
+	const setOpenShorcutModal = useSetOpenShorcutModal();
 	const shortcutButtonTitleId = useId();
 	const sidebarContentId = useId();
 	const sidebarId = useId();
@@ -101,17 +101,6 @@ export default function Sidebar() {
 		sidebarPanels,
 		sidebarPanelsMap: config.sidebarPanelsMap,
 	});
-
-	const [openShortcutModal, setOpenShorcutModal] = useState(false);
-
-	const toggleShortcutModalAction = (isOpen = false) => {
-		setOpenShorcutModal(isOpen);
-		dispatch(
-			openKeyboardShortcutsModal({
-				isOpen,
-			})
-		);
-	};
 
 	useEffect(() => {
 		const wrapper = document.getElementById('wrapper');
@@ -381,17 +370,11 @@ export default function Sidebar() {
 						data-tooltip-align="left"
 						displayType="unstyled"
 						id={`${sidebarId}keyboard_shortcuts`}
-						onClick={() => toggleShortcutModalAction(true)}
+						onClick={() => setOpenShorcutModal(true)}
 						size="sm"
 						symbol="question-circle-full"
 					/>
 				</div>
-
-				{openShortcutModal && (
-					<ShortcutModal
-						onCloseModal={() => toggleShortcutModalAction(false)}
-					/>
-				)}
 
 				<div className="sr-only" id={shortcutButtonTitleId}>
 					{shortcutButtonTitle}

@@ -1,0 +1,11 @@
+ext.clientExtensionBuildDir = "liferay-client-extension-build_test.virtualinstance.me"
+ext.expectedFilePath = "with-virtual-instance-id-client-extension.client-extension-config.json"
+ext.expectedContentStrings = [
+	'"com.liferay.client.extension.type.configuration.CETConfiguration~with-virtual-instance-id-client-extension/test.virtualinstance.me"',
+	'"baseURL" : "${portalURL}/o/with-virtual-instance-id-client-extension_test.virtualinstance.me"',
+	'"dxp.lxc.liferay.com.virtualInstanceId" : "test.virtualinstance.me"',
+	'"webContextPath" : "/with-virtual-instance-id-client-extension_test.virtualinstance.me"'
+]
+ext.taskPath = ":with-virtual-instance-id-client-extension:createClientExtensionConfig"
+
+apply from: project.property("commonScript.testClientExtensionBuildFileContentsTestCase.gradle")

@@ -43,6 +43,12 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 
 		_objectSQLProvider = new ObjectSQLProvider(db, companyId);
 
+		if (companyId != PortalInstancePool.getDefaultCompanyId()) {
+			_partitionPrefix =
+				_DATABASE_PARTITION_SCHEMA_NAME_PREFIX + _companyId +
+					StringPool.PERIOD;
+		}
+
 		if ((_partitionIndexesSQL == null) || (_partitionTablesSQL == null)) {
 			_partitionTablesSQL = _getPartitionTablesSQL();
 			_partitionIndexesSQL = _getPartitionIndexesSQL();
@@ -57,8 +63,8 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 		}
 
 		return StringBundler.concat(
-			_partitionIndexesSQL, StringPool.NEW_LINE,
-			_objectSQLProvider.getIndexesSQL());
+			_addIndexesPartition(_partitionIndexesSQL), StringPool.NEW_LINE,
+			_addIndexesPartition(_objectSQLProvider.getIndexesSQL()));
 	}
 
 	@Override
@@ -69,9 +75,18 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 		}
 
 		return StringBundler.concat(
-			_getCreatePartitionSQL(), _partitionTablesSQL, StringPool.NEW_LINE,
-			_getViewsSQL(), StringPool.NEW_LINE,
-			_objectSQLProvider.getTablesSQL());
+			_getCreatePartitionSQL(), _addTablesPartition(_partitionTablesSQL),
+			StringPool.NEW_LINE, _getViewsSQL(), StringPool.NEW_LINE,
+			_addTablesPartition(_objectSQLProvider.getTablesSQL()));
+	}
+
+	private String _addIndexesPartition(String sql) {
+		return StringUtil.replace(sql, " on ", " on " + _partitionPrefix);
+	}
+
+	private String _addTablesPartition(String sql) {
+		return StringUtil.replace(
+			sql, "create table ", "create table " + _partitionPrefix);
 	}
 
 	private String _getCreatePartitionSQL() {
@@ -189,5 +204,6 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 
 	private final long _companyId;
 	private final ObjectSQLProvider _objectSQLProvider;
+	private String _partitionPrefix = StringPool.BLANK;
 
 }

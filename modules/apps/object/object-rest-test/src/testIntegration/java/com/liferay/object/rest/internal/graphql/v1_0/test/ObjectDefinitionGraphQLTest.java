@@ -471,17 +471,10 @@ public class ObjectDefinitionGraphQLTest {
 			{
 				businessType = BusinessType.TEXT;
 				DBType = ObjectField.DBType.STRING;
-				indexed = RandomTestUtil.randomBoolean();
-				indexedAsKeyword = RandomTestUtil.randomBoolean();
 				label = Collections.singletonMap(
 					LocaleUtil.US.toString(), RandomTestUtil.randomString());
-				localized = false;
 				name = StringUtil.randomId();
-				objectDefinitionExternalReferenceCode1 =
-					finalObjectDefinition.getExternalReferenceCode();
 				required = RandomTestUtil.randomBoolean();
-				system = RandomTestUtil.randomBoolean();
-				unique = RandomTestUtil.randomBoolean();
 			}
 		};
 

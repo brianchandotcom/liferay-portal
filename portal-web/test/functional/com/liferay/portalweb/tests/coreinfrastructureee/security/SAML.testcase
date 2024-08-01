@@ -3667,10 +3667,6 @@ definition {
 				locator1 = "//body",
 				value1 = "Executing com.liferay.document.library.internal.convert.document.library.DocumentLibraryConvertProcess");
 
-			WaitForElementNotPresent(
-				locator1 = "//body",
-				value1 = "Migrating files from saml/keystore.jks");
-
 			WaitForConsoleTextPresent(value1 = "Please set dl.store.impl in your portal-ext.properties to use com.liferay.portal.store.gcs.GCSStore");
 
 			WaitForConsoleTextPresent(value1 = "Finished conversion for com.liferay.document.library.internal.convert.document.library.DocumentLibraryConvertProcess");
@@ -3678,10 +3674,10 @@ definition {
 
 		task ("Then the document is migrated over from the default store to the GCS bucket") {
 			var companyId = JSONCompany.getCompanyId();
-			var folderName = "saml";
+			var folderName = "saml/keystore.jks";
 			var groupId = 0;
 
-			AntCommands.runCommand("build-test-gcs-store.xml", "assert-document-in-bucket -Dcompany.id=${companyId} -Dfolder.name=${folderName} -Dgcs.bucket.id=${bucketId} -Dgroup.id=${groupId}");
+			AntCommands.runCommand("build-test-gcs-store.xml", "assert-document-in-bucket-folder -Dcompany.id=${companyId} -Dfolder.name=${folderName} -Dgcs.bucket.id=${bucketId} -Dgroup.id=${groupId}");
 		}
 
 		task ("And the user can configure the portal to use GCS store without issue") {
@@ -3699,7 +3695,9 @@ definition {
 		task ("Assert certificate is migrated.") {
 			SAML.goToSAMLAdmin();
 
-			AssertElementPresent(locator1 = "CPSAMLAdmin#DOWNLOAD_CERTIFICATE");
+			AssertElementPresent(
+				key_certificateUsage = "SIGNING",
+				locator1 = "CPSAMLAdmin#DOWNLOAD_CERTIFICATE");
 		}
 	}
 

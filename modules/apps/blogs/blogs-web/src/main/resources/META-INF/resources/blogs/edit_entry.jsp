@@ -222,16 +222,16 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 								</div>
 
 								<react:component
-									module="{AssetCategoriesFriendlyUrlSelector} from blogs-web"
+									module="{AssetCategoriesSelectionBox} from blogs-web"
 									props='<%=
 										HashMapBuilder.<String, Object>put(
-											"automaticURL", automaticURL
+											"disabled", automaticURL
 										).put(
 											"inputAddon", StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping()) + StringPool.SLASH
 										).put(
 											"selectCategoryURL", blogsEditEntryDisplayContext.getFriendlyURLAssetCategorySelectorURL()
 										).put(
-											"selectedCategories", blogsEditEntryDisplayContext.getFriendlyURLAssetCategoriesJSONArray()
+											"currentCategories", blogsEditEntryDisplayContext.getFriendlyURLAssetCategoriesJSONArray()
 										).build()
 									%>'
 								/>

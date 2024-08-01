@@ -79,11 +79,11 @@ public class FileAspectRatioContentDashboardItemFilterProviderTest {
 	@Test
 	public void testGetContentDashboardItemFilter() throws Exception {
 		FileEntry squareAspectRatioFileEntry = _addDLFileEntry(
-			"dependencies/225x225.jpeg");
+			"dependencies/225x225.jpg");
 		FileEntry tallAspectRatioFileEntry = _addDLFileEntry(
-			"dependencies/183x275.jpeg");
+			"dependencies/183x275.jpg");
 		FileEntry wideAspectRatioFileEntry = _addDLFileEntry(
-			"dependencies/277x182.jpeg");
+			"dependencies/277x182.jpg");
 
 		List<Document> documents = _getDocuments(_getMockHttpServletRequest());
 

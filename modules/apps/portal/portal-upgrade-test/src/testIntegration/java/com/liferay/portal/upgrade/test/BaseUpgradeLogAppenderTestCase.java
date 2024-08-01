@@ -477,12 +477,12 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.stop();
 
-			String logEntries = String.valueOf(logCapture.getLogEntries());
-
 			Assert.assertTrue(
-				logEntries.contains(
+				StringUtil.contains(
+					String.valueOf(logCapture.getLogEntries()),
 					"Upgrade report has not been generated because no " +
-						"upgrade processes were executed"));
+						"upgrade processes were executed",
+					StringPool.BLANK));
 		}
 
 		File file = new File(

@@ -304,10 +304,19 @@ public class BaseAuthFilterTest {
 
 			httpAuthManagerUtilMockedStatic.when(
 				() -> HttpAuthManagerUtil.generateChallenge(
-					_mockHttpServletRequest, _mockHttpServletResponse,
-					new HttpAuthorizationHeader(scheme))
+					Mockito.any(), Mockito.any(), Mockito.any())
 			).then(
-				invocationOnMock -> null
+				invocationOnMock -> {
+					HttpAuthorizationHeader httpAuthorizationHeader =
+						invocationOnMock.getArgument(
+							2, HttpAuthorizationHeader.class);
+
+					Assert.assertEquals(
+						"Incorrect challenge generated.", scheme,
+						httpAuthorizationHeader.getScheme());
+
+					return null;
+				}
 			);
 
 			_processFilter();

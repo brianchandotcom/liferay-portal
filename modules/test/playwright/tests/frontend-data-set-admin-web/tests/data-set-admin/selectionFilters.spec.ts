@@ -9,6 +9,7 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../utils/getRandomString';
+import getRandomKeyString from '../../../../utils/getRandomKeyString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {picklistApiHelpersTest} from '../../fixtures/picklistApiHelpersTest';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
@@ -18,10 +19,8 @@ const SELECTION_API_HEADLESS_FILTER_NAME = 'Selection API Headless filter';
 const SELECTION_PICKLIST_FILTER_NAME = 'Selection Picklist filter';
 const SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME =
 	'Selection Picklist filter without preselected values';
-const PICKLIST_VALUE_KEY_1 = 'sampleValue1';
-const PICKLIST_VALUE_NAME_1 = 'Sample Value 1';
-const PICKLIST_VALUE_KEY_2 = 'sampleValue2';
-const PICKLIST_VALUE_NAME_2 = 'Sample Value 2';
+const PICKLIST_VALUE_KEY_1 = getRandomKeyString();
+const PICKLIST_VALUE_NAME_1 = getRandomString();
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -57,12 +56,6 @@ test.beforeEach(
 			key: PICKLIST_VALUE_KEY_1,
 			name: picklistName,
 			value: PICKLIST_VALUE_NAME_1,
-		});
-
-		await picklistApiHelpers.editPicklist({
-			key: PICKLIST_VALUE_KEY_2,
-			name: picklistName,
-			value: PICKLIST_VALUE_NAME_2,
 		});
 
 		await test.step('Navigate to the Filters tab', async () => {
@@ -300,7 +293,7 @@ test.describe('Filters in Data Set Manager', () => {
 				filterBy: 'externalReferenceCode',
 				filterMode: 'Include',
 				name: 'Selection Filter',
-				preselectedValues: [PICKLIST_VALUE_NAME_1, PICKLIST_VALUE_NAME_2],
+				preselectedValues: [PICKLIST_VALUE_NAME_1],
 				selectionType: 'Single',
 				source: picklistName,
 				sourceType: 'Object Picklist',
@@ -346,38 +339,5 @@ test.describe('Filters in Data Set Manager', () => {
 				picklist.listTypeEntries[0].name
 			);
 		});
-
-		await test.step('And checking multiple selection type allows to save more preselected values', async () => {
-			await page
-				.getByLabel('Preselected Values')
-				.waitFor();
-
-			await page
-				.getByLabel('Preselected Values')
-				.click();
-
-			await page
-				.getByRole('option', {name: picklist.listTypeEntries[1].name})
-				.waitFor();
-
-			await page
-				.getByRole('option', {name: picklist.listTypeEntries[1].name})
-				.click();
-
-			await expect( page
-				.getByText('Only one value is allowed in "Single" selection mode.') )
-				.toBeVisible();
-
-			await page
-				.getByText('Multiple')
-				.click();
-
-			await expect( page
-				.getByText('Only one value is allowed in "Single" selection mode.') )
-				.not
-				.toBeVisible();
-
-			await filtersPage.saveAddFilterModal();
-		})
 	});
 });

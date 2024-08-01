@@ -94,6 +94,8 @@ public class WorkspaceExtension {
 			settings, "node.package.manager", _NODE_PACKAGE_MANAGER);
 		_targetPlatformVersion = _getProperty(
 			settings, "target.platform.version");
+		_virtualInstanceId = GradleUtil.getProperty(
+			settings, "liferay.virtual.instance.id", "default");
 
 		_gradle.projectsEvaluated(
 			new Closure<Void>(_gradle) {
@@ -303,6 +305,10 @@ public class WorkspaceExtension {
 		return GradleUtil.toString(_targetPlatformVersion);
 	}
 
+	public String getVirtualInstanceId() {
+		return GradleUtil.toString(_virtualInstanceId);
+	}
+
 	public boolean isBundleDistIncludeMetadata() {
 		return GradleUtil.toBoolean(_bundleDistIncludeMetadata);
 	}
@@ -475,5 +481,6 @@ public class WorkspaceExtension {
 		new LinkedHashSet<>();
 	private final Plugin<Project> _rootProjectConfigurator;
 	private Object _targetPlatformVersion;
+	private final Object _virtualInstanceId;
 
 }

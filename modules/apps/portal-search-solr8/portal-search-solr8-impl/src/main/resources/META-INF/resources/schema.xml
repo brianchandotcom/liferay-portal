@@ -773,6 +773,7 @@
 		<field docValues="true" indexed="true" name="type" stored="true" type="string" />
 		<field indexed="true" name="uid" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="urlParts" stored="true" type="text" />
+		<field indexed="true" name="userExternalReferenceCode" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="userGroupId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="userGroupIds" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="userGroupRoleIds" stored="true" type="string" />

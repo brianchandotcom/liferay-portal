@@ -125,9 +125,9 @@ public class ObjectRelatedModelsProviderTest {
 			ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
-			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
+			_objectDefinition1, Collections.emptyMap());
 		ObjectEntry objectEntry2 = _addObjectEntry(
-			_objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
+			_objectDefinition2, Collections.emptyMap());
 
 		ObjectRelationshipTestUtil.assertGetRelatedModels(
 			0, _objectRelatedModelsProvider,
@@ -135,7 +135,7 @@ public class ObjectRelatedModelsProviderTest {
 			objectEntry1.getObjectEntryId());
 
 		ObjectEntry objectEntry3 = _addObjectEntry(
-			_objectDefinition2.getObjectDefinitionId(),
+			_objectDefinition2,
 			HashMapBuilder.<String, Serializable>put(
 				_relationshipObjectField.getName(),
 				objectEntry1.getObjectEntryId()
@@ -154,7 +154,7 @@ public class ObjectRelatedModelsProviderTest {
 				_relationshipObjectField.getDBColumnName(),
 				objectEntry1.getObjectEntryId()),
 			() -> _addObjectEntry(
-				_objectDefinition2.getObjectDefinitionId(),
+				_objectDefinition2,
 				HashMapBuilder.<String, Serializable>put(
 					_relationshipObjectField.getName(),
 					objectEntry1.getObjectEntryId()
@@ -212,9 +212,9 @@ public class ObjectRelatedModelsProviderTest {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
-			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
+			_objectDefinition1, Collections.emptyMap());
 		ObjectEntry objectEntry2 = _addObjectEntry(
-			_objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
+			_objectDefinition2, Collections.emptyMap());
 
 		ObjectRelationshipTestUtil.assertGetRelatedModels(
 			0, _objectRelatedModelsProvider,
@@ -222,7 +222,7 @@ public class ObjectRelatedModelsProviderTest {
 			objectEntry1.getObjectEntryId());
 
 		ObjectEntry objectEntry3 = _addObjectEntry(
-			_objectDefinition2.getObjectDefinitionId(),
+			_objectDefinition2,
 			HashMapBuilder.<String, Serializable>put(
 				"able", "First Entry"
 			).put(
@@ -236,7 +236,7 @@ public class ObjectRelatedModelsProviderTest {
 			objectEntry1.getObjectEntryId());
 
 		_addObjectEntry(
-			_objectDefinition2.getObjectDefinitionId(),
+			_objectDefinition2,
 			HashMapBuilder.<String, Serializable>put(
 				"able", "Second Entry"
 			).put(
@@ -338,7 +338,7 @@ public class ObjectRelatedModelsProviderTest {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		ObjectEntry objectEntry4 = _addObjectEntry(
-			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
+			_objectDefinition1, Collections.emptyMap());
 
 		ObjectRelationshipTestUtil.assertGetRelatedModels(
 			0, _objectRelatedModelsProvider,
@@ -375,7 +375,7 @@ public class ObjectRelatedModelsProviderTest {
 			_objectRelationship.getLabelMap());
 
 		ObjectEntry objectEntry6 = _addObjectEntry(
-			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
+			_objectDefinition1, Collections.emptyMap());
 
 		ObjectEntry objectEntry7 = ObjectEntryTestUtil.addObjectEntry(
 			group.getGroupId(),
@@ -410,7 +410,7 @@ public class ObjectRelatedModelsProviderTest {
 			_objectRelationship.getLabelMap());
 
 		ObjectEntry objectEntry8 = _addObjectEntry(
-			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
+			_objectDefinition1, Collections.emptyMap());
 
 		_updateObjectEntry(
 			objectEntry7.getObjectEntryId(),
@@ -463,12 +463,86 @@ public class ObjectRelatedModelsProviderTest {
 	public void testObjectEntryMtoMObjectRelatedModelsProviderImpl()
 		throws Exception {
 
-		// Get related models with database
+		// Get related models
 
 		_testObjectEntryMtoMObjectRelatedModelsProviderImpl(
 			_objectDefinition1, _objectDefinition1);
 		_testObjectEntryMtoMObjectRelatedModelsProviderImpl(
 			_objectDefinition1, _objectDefinition2);
+
+		_objectDefinition3 =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, false, true, false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				com.liferay.object.test.util.ObjectDefinitionTestUtil.
+					getRandomName(),
+				null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_SITE,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList());
+
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
+			null, TestPropsValues.getUserId(), 0,
+			_objectDefinition3.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
+			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", null, null,
+			false, false, Collections.emptyList());
+
+		_objectDefinition3.setTitleObjectFieldId(
+			objectField.getObjectFieldId());
+
+		_objectDefinition3 =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition3);
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			_objectDefinition3.getObjectDefinitionId());
+
+		_testObjectEntryMtoMObjectRelatedModelsProviderImpl(
+			_objectDefinition1, _objectDefinition3);
+
+		// Get unrelated models
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				_objectDefinition3.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, null);
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			_objectDefinition3, Collections.emptyMap());
+
+		int objectEntriesCount = _objectEntryLocalService.getObjectEntriesCount(
+			0, _objectDefinition1.getObjectDefinitionId());
+
+		List<ObjectEntry> unrelatedObjectEntries =
+			_objectRelatedModelsProvider.getUnrelatedModels(
+				0, 0, _objectDefinition1, objectEntry1.getObjectEntryId(),
+				objectRelationship.getObjectRelationshipId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			unrelatedObjectEntries.toString(), objectEntriesCount,
+			unrelatedObjectEntries.size());
+
+		ObjectEntry objectEntry2 = unrelatedObjectEntries.get(0);
+
+		ObjectRelationshipTestUtil.addObjectRelationshipMappingTableValues(
+			objectRelationship.getObjectRelationshipId(),
+			objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId());
+
+		Assert.assertEquals(
+			objectEntriesCount - 1,
+			_objectRelatedModelsProvider.getUnrelatedModelsCount(
+				0, 0, _objectDefinition1, objectEntry1.getObjectEntryId(),
+				objectRelationship.getObjectRelationshipId()));
 	}
 
 	private AccountEntry _addAccountEntry(long userId) throws Exception {
@@ -482,11 +556,19 @@ public class ObjectRelatedModelsProviderTest {
 	}
 
 	private ObjectEntry _addObjectEntry(
-			long objectDefinitionId, Map<String, Serializable> values)
+			ObjectDefinition objectDefinition, Map<String, Serializable> values)
 		throws Exception {
 
+		long groupId = 0;
+
+		if (ObjectDefinitionConstants.SCOPE_SITE.equals(
+				objectDefinition.getScope())) {
+
+			groupId = TestPropsValues.getGroupId();
+		}
+
 		return ObjectEntryTestUtil.addObjectEntry(
-			0, objectDefinitionId, values);
+			groupId, objectDefinition.getObjectDefinitionId(), values);
 	}
 
 	private void _addObjectRelationship(
@@ -673,9 +755,9 @@ public class ObjectRelatedModelsProviderTest {
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
-			objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
+			objectDefinition1, Collections.emptyMap());
 		ObjectEntry objectEntry2 = _addObjectEntry(
-			objectDefinition2.getObjectDefinitionId(),
+			objectDefinition2,
 			HashMapBuilder.<String, Serializable>put(
 				"able", "First Entry"
 			).build());
@@ -695,7 +777,7 @@ public class ObjectRelatedModelsProviderTest {
 			objectEntry1.getObjectEntryId());
 
 		ObjectEntry objectEntry3 = _addObjectEntry(
-			objectDefinition2.getObjectDefinitionId(),
+			objectDefinition2,
 			HashMapBuilder.<String, Serializable>put(
 				"able", "Second Entry"
 			).build());
@@ -712,20 +794,20 @@ public class ObjectRelatedModelsProviderTest {
 		// Get related models with search
 
 		ObjectRelationshipTestUtil.assertSearchRelatedModels(
-			0, _objectRelatedModelsProvider,
+			0, objectEntry2.getGroupId(), _objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), StringUtil.randomString());
 		ObjectRelationshipTestUtil.assertSearchRelatedModels(
-			1, _objectRelatedModelsProvider,
+			1, objectEntry2.getGroupId(), _objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(),
 			String.valueOf(objectEntry2.getObjectEntryId()));
 		ObjectRelationshipTestUtil.assertSearchRelatedModels(
-			1, _objectRelatedModelsProvider,
+			1, objectEntry2.getGroupId(), _objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), "First ");
 		ObjectRelationshipTestUtil.assertSearchRelatedModels(
-			2, _objectRelatedModelsProvider,
+			2, objectEntry2.getGroupId(), _objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
 			objectEntry1.getObjectEntryId(), " Entry");
 
@@ -778,11 +860,11 @@ public class ObjectRelatedModelsProviderTest {
 			_objectRelationship.getLabelMap());
 
 		ObjectEntry objectEntry4 = _addObjectEntry(
-			objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
+			objectDefinition1, Collections.emptyMap());
 		ObjectEntry objectEntry5 = _addObjectEntry(
-			objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
+			objectDefinition2, Collections.emptyMap());
 		ObjectEntry objectEntry6 = _addObjectEntry(
-			objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
+			objectDefinition2, Collections.emptyMap());
 
 		ObjectRelationshipTestUtil.addObjectRelationshipMappingTableValues(
 			_objectRelationship.getObjectRelationshipId(),
@@ -812,7 +894,7 @@ public class ObjectRelatedModelsProviderTest {
 			_objectRelationship.getLabelMap());
 
 		ObjectEntry objectEntry7 = _addObjectEntry(
-			objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
+			objectDefinition1, Collections.emptyMap());
 
 		ObjectRelationshipTestUtil.addObjectRelationshipMappingTableValues(
 			_objectRelationship.getObjectRelationshipId(),
@@ -888,6 +970,9 @@ public class ObjectRelatedModelsProviderTest {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition3;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

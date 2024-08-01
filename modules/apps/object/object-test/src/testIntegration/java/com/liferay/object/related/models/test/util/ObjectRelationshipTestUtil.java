@@ -50,18 +50,29 @@ public class ObjectRelationshipTestUtil {
 	}
 
 	public static void assertSearchRelatedModels(
-			int expectedSize,
+			int expectedSize, long groupId,
 			ObjectRelatedModelsProvider objectRelatedModelsProvider,
 			long objectRelationshipId, long primaryKey, String search)
 		throws Exception {
 
 		List<ObjectEntry> objectEntries =
 			objectRelatedModelsProvider.getRelatedModels(
-				0, objectRelationshipId, primaryKey, search, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				groupId, objectRelationshipId, primaryKey, search,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
 			objectEntries.toString(), expectedSize, objectEntries.size());
+	}
+
+	public static void assertSearchRelatedModels(
+			int expectedSize,
+			ObjectRelatedModelsProvider objectRelatedModelsProvider,
+			long objectRelationshipId, long primaryKey, String search)
+		throws Exception {
+
+		assertSearchRelatedModels(
+			expectedSize, 0, objectRelatedModelsProvider, objectRelationshipId,
+			primaryKey, search);
 	}
 
 	public static ObjectRelationship updateObjectRelationship(

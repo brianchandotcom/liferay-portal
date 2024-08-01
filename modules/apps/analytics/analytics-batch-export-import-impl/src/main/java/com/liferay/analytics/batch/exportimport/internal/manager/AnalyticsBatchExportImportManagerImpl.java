@@ -77,9 +77,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.zip.ZipEntry;
+import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -114,10 +113,8 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		File tempFile = FileUtil.createTempFile();
 
-		ZipOutputStream zipOutputStream = new ZipOutputStream(
+		GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
 			new FileOutputStream(tempFile));
-
-		zipOutputStream.putNextEntry(new ZipEntry("export.jsonl"));
 
 		List<BatchEngineExportTask> batchEngineExportTasks = new ArrayList<>();
 		boolean skipUpload = true;
@@ -172,7 +169,8 @@ public class AnalyticsBatchExportImportManagerImpl
 
 					zipInputStream.getNextEntry();
 
-					StreamUtil.transfer(zipInputStream, zipOutputStream, false);
+					StreamUtil.transfer(
+						zipInputStream, gzipOutputStream, false);
 				}
 			}
 			else {
@@ -182,7 +180,7 @@ public class AnalyticsBatchExportImportManagerImpl
 			}
 		}
 
-		StreamUtil.cleanUp(zipOutputStream);
+		StreamUtil.cleanUp(gzipOutputStream);
 
 		if (!skipUpload) {
 			_notify(
@@ -193,8 +191,8 @@ public class AnalyticsBatchExportImportManagerImpl
 					tempFile)) {
 
 				_upload(
-					companyId, fileInputStream, resourceLastModifiedDate,
-					resourceName);
+					companyId, "gzip", fileInputStream,
+					resourceLastModifiedDate, resourceName);
 			}
 
 			_notify(
@@ -302,7 +300,7 @@ public class AnalyticsBatchExportImportManagerImpl
 					batchEngineExportTask.getBatchEngineExportTaskId());
 
 			_upload(
-				companyId, contentInputStream, resourceLastModifiedDate,
+				companyId, "zip", contentInputStream, resourceLastModifiedDate,
 				resourceName);
 
 			contentInputStream.close();
@@ -811,13 +809,14 @@ public class AnalyticsBatchExportImportManagerImpl
 	}
 
 	private void _upload(
-		long companyId, InputStream resourceInputStream,
+		long companyId, String contentEncoding, InputStream resourceInputStream,
 		Date resourceLastModifiedDate, String resourceName) {
 
 		_checkCompany(companyId);
 
 		Http.Options options = _getOptions(companyId);
 
+		options.addHeader(HttpHeaders.CONTENT_ENCODING, contentEncoding);
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE,
 			ContentTypes.MULTIPART_FORM_DATA +

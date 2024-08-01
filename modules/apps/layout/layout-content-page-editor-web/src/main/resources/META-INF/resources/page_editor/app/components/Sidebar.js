@@ -4,7 +4,11 @@
  */
 
 import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
-import {ReactPortal, useStateSafe} from '@liferay/frontend-js-react-web';
+import {
+	ReactDOMServer,
+	ReactPortal,
+	useStateSafe,
+} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {useId, useSessionState} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
@@ -49,6 +53,19 @@ function getActiveSidebarPanel({
 	return {sidebarPanel: panel, sidebarPanelId: panel.sidebarPanelId};
 }
 
+const getOpenShortcutModalTooltip = () => (
+	<>
+		<div>{Liferay.Language.get('open-keyboard-shortcuts')}</div>
+		<kbd className="c-kbd c-kbd-dark mt-1">
+			<kbd className="c-kbd">⇧</kbd>
+
+			<span className="c-kbd-separator">+</span>
+
+			<kbd className="c-kbd">?</kbd>
+		</kbd>
+	</>
+);
+
 export default function Sidebar() {
 	const dropClearRef = useDropClear();
 	const [hasError, setHasError] = useStateSafe(false);
@@ -56,6 +73,7 @@ export default function Sidebar() {
 	const [resizing, setResizing] = useStateSafe(false);
 	const selectItem = useSelectItem();
 	const separatorRef = useRef();
+	const shortcutButtonTitleId = useId();
 	const sidebarContentId = useId();
 	const sidebarId = useId();
 	const sidebar = useSelector((state) => state.sidebar);
@@ -297,6 +315,8 @@ export default function Sidebar() {
 		}
 	};
 
+	const shortcutButtonTitle = getOpenShortcutModalTooltip();
+
 	return (
 		<ReactPortal className="cadmin">
 			<div
@@ -351,17 +371,19 @@ export default function Sidebar() {
 					</div>
 
 					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get(
-							'open-keyboard-shortcuts'
-						)}
+						aria-haspopup="dialog"
+						aria-labelledby={shortcutButtonTitleId}
 						className="mt-auto"
+						data-title={ReactDOMServer.renderToString(
+							shortcutButtonTitle
+						)}
+						data-title-set-as-html
 						data-tooltip-align="left"
 						displayType="unstyled"
 						id={`${sidebarId}keyboard_shortcuts`}
 						onClick={() => toggleShortcutModalAction(true)}
 						size="sm"
 						symbol="question-circle-full"
-						title={Liferay.Language.get('open-keyboard-shortcuts')}
 					/>
 				</div>
 
@@ -370,6 +392,10 @@ export default function Sidebar() {
 						onCloseModal={() => toggleShortcutModalAction(false)}
 					/>
 				)}
+
+				<div className="sr-only" id={shortcutButtonTitleId}>
+					{shortcutButtonTitle}
+				</div>
 
 				<div
 					aria-label={sub(

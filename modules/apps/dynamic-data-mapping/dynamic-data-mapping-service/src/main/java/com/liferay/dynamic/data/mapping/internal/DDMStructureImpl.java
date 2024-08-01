@@ -330,10 +330,10 @@ public class DDMStructureImpl implements DDMStructure {
 
 	@Override
 	public List<DDMTemplate> getTemplates() throws PortalException {
+		List<DDMTemplate> templates = new ArrayList<>();
+
 		List<com.liferay.dynamic.data.mapping.model.DDMTemplate> ddmTemplates =
 			_ddmStructure.getTemplates();
-
-		List<DDMTemplate> templates = new ArrayList<>();
 
 		for (com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate :
 				ddmTemplates) {

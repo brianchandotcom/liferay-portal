@@ -1039,13 +1039,14 @@ public class DDMFormPagesTemplateContextFactoryTest {
 	}
 
 	private DDMFormEvaluator _getDDMFormEvaluator() {
+		DDMFormEvaluator ddmFormEvaluator = new DDMFormEvaluatorImpl();
+
 		DDMExpressionFactoryImpl ddmExpressionFactoryImpl =
 			new DDMExpressionFactoryImpl();
 
-		DDMFormEvaluator ddmFormEvaluator = new DDMFormEvaluatorImpl();
-
 		ReflectionTestUtil.setFieldValue(
 			ddmFormEvaluator, "ddmExpressionFactory", ddmExpressionFactoryImpl);
+
 		ReflectionTestUtil.setFieldValue(
 			ddmFormEvaluator, "ddmFormFieldTypeServicesRegistry",
 			_ddmFormFieldTypeServicesRegistry);

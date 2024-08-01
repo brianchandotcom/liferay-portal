@@ -471,10 +471,10 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 	}
 
 	private Set<String> _getDDMFormFieldsNames(DDMForm ddmForm) {
+		Set<String> ddmFormFieldsNames = new HashSet<>();
+
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
-
-		Set<String> ddmFormFieldsNames = new HashSet<>();
 
 		for (String ddmFormFieldName : ddmFormFieldsMap.keySet()) {
 			ddmFormFieldsNames.add(StringUtil.toLowerCase(ddmFormFieldName));
@@ -1884,10 +1884,10 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 		protected Set<Locale> getAvailableLocales(
 			Element dynamicElementElement) {
 
+			Set<Locale> availableLocales = new LinkedHashSet<>();
+
 			List<Element> dynamicContentElements =
 				dynamicElementElement.elements("dynamic-content");
-
-			Set<Locale> availableLocales = new LinkedHashSet<>();
 
 			for (Element dynamicContentElement : dynamicContentElements) {
 				String languageId = dynamicContentElement.attributeValue(

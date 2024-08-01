@@ -32,9 +32,9 @@ public class DDMFormValuesFactoryUtil {
 		Map<String, DDMFormFieldValue> ddmFormFieldValuesMap,
 		List<DDMFormField> ddmFormFields) {
 
-		int index = 0;
-
 		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
+
+		int index = 0;
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			for (String entryKey :

@@ -13,8 +13,12 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.info.item.InfoItemFormVariation;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.template.model.TemplateEntry;
 
@@ -132,6 +136,8 @@ public class TemplateEntryStagedModelDataHandler
 			(TemplateEntry)templateEntry.clone();
 
 		importedTemplateEntry.setGroupId(portletDataContext.getScopeGroupId());
+		importedTemplateEntry.setInfoItemFormVariationKey(
+			_getInfoItemFormVariationKey(importedTemplateEntry, templateEntry));
 
 		TemplateEntry existingTemplateEntry =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
@@ -157,8 +163,49 @@ public class TemplateEntryStagedModelDataHandler
 			templateEntry, importedTemplateEntry);
 	}
 
+	private String _getInfoItemFormVariationKey(
+		TemplateEntry importedTemplateEntry, TemplateEntry templateEntry) {
+
+		if (Validator.isNull(templateEntry.getInfoItemFormVariationKey())) {
+			return null;
+		}
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				importedTemplateEntry.getInfoItemClassName());
+
+		if (infoItemFormVariationsProvider == null) {
+			return null;
+		}
+
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				templateEntry.getGroupId(),
+				importedTemplateEntry.getInfoItemFormVariationKey());
+
+		if (infoItemFormVariation == null) {
+			return null;
+		}
+
+		InfoItemFormVariation scopeGroupIdInfoItemFormVariation =
+			infoItemFormVariationsProvider.
+				getInfoItemFormVariationByExternalReferenceCode(
+					infoItemFormVariation.getExternalReferenceCode(),
+					importedTemplateEntry.getGroupId());
+
+		if (scopeGroupIdInfoItemFormVariation == null) {
+			return null;
+		}
+
+		return scopeGroupIdInfoItemFormVariation.getKey();
+	}
+
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.template.model.TemplateEntry)"

@@ -9,6 +9,7 @@ import com.adyen.model.notification.NotificationRequest;
 import com.adyen.model.notification.NotificationRequestItem;
 import com.adyen.util.HMACValidator;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
 
 import java.nio.charset.StandardCharsets;
@@ -62,12 +63,13 @@ public class NotificationsRestController extends BaseRestController {
 			String externalReferenceCode = _getExternalReferenceCode(
 				notificationRequestItem);
 
-			JSONObject n1a0AdyenWebhookJSONObject = get(
-				_liferayOAuth2AccessTokenManager.getAuthorization(
-					"liferay-adyen-commerce-payment-integration-oauth-" +
-						"application-headless-server"),
-				"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
-					externalReferenceCode);
+			JSONObject n1a0AdyenWebhookJSONObject = new JSONObject(
+				get(
+					_liferayOAuth2AccessTokenManager.getAuthorization(
+						"liferay-adyen-payment-integration-oauth-application-" +
+							"headless-server"),
+					"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
+						externalReferenceCode));
 
 			if (!_hasAuthentication(
 					headers.get("authorization"), n1a0AdyenWebhookJSONObject)) {
@@ -130,6 +132,7 @@ public class NotificationsRestController extends BaseRestController {
 					_liferayOAuth2AccessTokenManager.getAuthorization(
 						"liferay-adyen-commerce-payment-integration-oauth-" +
 							"application-headless-server"),
+					null,
 					"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
 						externalReferenceCode);
 			}
@@ -168,13 +171,15 @@ public class NotificationsRestController extends BaseRestController {
 	private String _getPaymentId(
 		NotificationRequestItem notificationRequestItem) {
 
-		JSONObject paymentsJSONObject = get(
+		String response = get(
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				"liferay-adyen-commerce-payment-integration-oauth-" +
 					"application-headless-server"),
 			"/o/headless-commerce-admin-payment/v1.0/payments/?filter=" +
 				"relatedItemId eq " +
 					notificationRequestItem.getMerchantReference());
+
+		JSONObject paymentsJSONObject = new JSONObject(response);
 
 		JSONArray itemsJSONArray = paymentsJSONObject.getJSONArray("items");
 

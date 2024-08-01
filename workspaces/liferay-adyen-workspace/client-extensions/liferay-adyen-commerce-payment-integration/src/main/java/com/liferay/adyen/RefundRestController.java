@@ -14,6 +14,8 @@ import com.adyen.model.notification.NotificationRequest;
 import com.adyen.model.notification.NotificationRequestItem;
 import com.adyen.service.checkout.ModificationsApi;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
+
 import java.math.BigDecimal;
 
 import java.util.List;

@@ -13,6 +13,8 @@ import com.adyen.model.notification.NotificationRequest;
 import com.adyen.model.notification.NotificationRequestItem;
 import com.adyen.service.checkout.ModificationsApi;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
+
 import java.util.List;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;

@@ -10,6 +10,8 @@ import com.adyen.enums.Environment;
 import com.adyen.model.checkout.SessionResultResponse;
 import com.adyen.service.checkout.PaymentsApi;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -75,7 +77,7 @@ public class AuthorizeRestController extends BaseRestController {
 					commercePaymentEntryJSONObject.getString("payload"));
 
 				delete(
-					"Bearer " + jwt.getTokenValue(),
+					"Bearer " + jwt.getTokenValue(), null,
 					"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
 						payloadJSONObject.getString("id"));
 

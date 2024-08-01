@@ -1,0 +1,13 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":with-virtual-instance-id-client-extension:buildClientExtensionZip"
+
+	doLast {
+		Project withVirtualInstanceIdClientExtensionProject = project(":with-virtual-instance-id-client-extension")
+
+		File withVirtualInstanceIdClientExtensionZipFile = withVirtualInstanceIdClientExtensionProject.file("dist/with-virtual-instance-id-client-extension_test.virtualinstance.me.zip")
+
+		assert withVirtualInstanceIdClientExtensionZipFile.exists()
+	}
+}

@@ -36,21 +36,20 @@ public class InvalidSenderSHAFailureMessageGenerator
 	public Element getMessageElement(Build build) {
 		Element messageElement = super.getMessageElement(build);
 
-		if (messageElement != null) {
-			return Dom4JUtil.getNewElement(
-				"div", null,
-				Dom4JUtil.getNewElement(
-					"p", null, "The sender branch SHA could not be found on ",
-					Dom4JUtil.getNewElement(
-						"strong", null,
-						getBaseBranchAnchorElement(build.getTopLevelBuild())),
-					". The sender branch may have been force pushed or " +
-						"deleted ",
-					"after the pull request test was initiated."),
-				messageElement);
+		if (messageElement == null) {
+			return null;
 		}
 
-		return null;
+		return Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewElement(
+				"p", null, "The sender branch SHA could not be found on ",
+				Dom4JUtil.getNewElement(
+					"strong", null,
+					getBaseBranchAnchorElement(build.getTopLevelBuild())),
+				". The sender branch may have been force pushed or deleted ",
+				"after the pull request test was initiated."),
+			messageElement);
 	}
 
 	private static final String _TOKEN_FATAL_NOT_A_VALID_BRANCH_POINT =

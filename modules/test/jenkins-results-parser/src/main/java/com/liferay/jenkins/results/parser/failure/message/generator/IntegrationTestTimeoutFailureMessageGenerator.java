@@ -48,8 +48,7 @@ public class IntegrationTestTimeoutFailureMessageGenerator
 			"div", null,
 			Dom4JUtil.getNewElement(
 				"p", null,
-				Dom4JUtil.getNewElement(
-					"strong", null, getMessage(consoleText))));
+				Dom4JUtil.getNewElement("strong", null, errorMessage)));
 
 		String snippet = matcher.group(0);
 

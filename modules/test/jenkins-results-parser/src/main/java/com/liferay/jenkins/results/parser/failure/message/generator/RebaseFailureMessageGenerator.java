@@ -40,20 +40,20 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 	public Element getMessageElement(Build build) {
 		Element messageElement = super.getMessageElement(build);
 
-		if (messageElement != null) {
-			return Dom4JUtil.getNewElement(
-				"div", null,
-				Dom4JUtil.getNewElement(
-					"p", null, "Please fix ",
-					Dom4JUtil.getNewElement("strong", null, "rebase errors"),
-					" on ",
-					Dom4JUtil.getNewElement(
-						"strong", null,
-						getBaseBranchAnchorElement(build.getTopLevelBuild())),
-					messageElement));
+		if (messageElement == null) {
+			return null;
 		}
 
-		return null;
+		return Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewElement(
+				"p", null, "Please fix ",
+				Dom4JUtil.getNewElement("strong", null, "rebase errors"),
+				" on ",
+				Dom4JUtil.getNewElement(
+					"strong", null,
+					getBaseBranchAnchorElement(build.getTopLevelBuild())),
+				messageElement));
 	}
 
 	private static final String _TOKEN_COULD_NOT_APPLY = "Could not apply";

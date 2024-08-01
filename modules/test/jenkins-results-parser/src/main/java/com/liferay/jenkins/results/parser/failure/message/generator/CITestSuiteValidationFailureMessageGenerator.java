@@ -32,15 +32,14 @@ public class CITestSuiteValidationFailureMessageGenerator
 	public Element getMessageElement(String consoleText) {
 		String errorMessage = getMessage(consoleText);
 
-		if (errorMessage != null) {
-			return Dom4JUtil.getNewElement(
-				"div", null,
-				Dom4JUtil.getNewElement("p", null, getMessage(consoleText)),
-				Dom4JUtil.getNewElement(
-					"p", null, _TOKEN_IS_NOT_A_VALID_TEST_SUITE));
+		if (errorMessage == null) {
+			return null;
 		}
 
-		return null;
+		return Dom4JUtil.getNewElement(
+			"div", null, Dom4JUtil.getNewElement("p", null, errorMessage),
+			Dom4JUtil.getNewElement(
+				"p", null, _TOKEN_IS_NOT_A_VALID_TEST_SUITE));
 	}
 
 	private static final String _TOKEN_IS_NOT_A_VALID_TEST_SUITE =

@@ -5,35 +5,21 @@
 
 package com.liferay.fragment.internal.exportimport.content.processor;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
-import com.liferay.info.search.InfoSearchClassMapperRegistry;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
 
@@ -242,72 +228,9 @@ public class EditableValuesMappingExportImportContentProcessor
 
 		editableJSONObject.put("className", className);
 
-		className = _infoSearchClassMapperRegistry.getSearchClassName(
-			className);
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			className, classPK);
-
-		if (assetEntry == null) {
-			return;
-		}
-
-		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
-
-		if (assetRenderer == null) {
-			return;
-		}
-
-		AssetRendererFactory<?> assetRendererFactory =
-			assetRenderer.getAssetRendererFactory();
-
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if (ExportImportThreadLocal.isStagingInProcess() &&
-			!stagingGroupHelper.isStagedPortlet(
-				portletDataContext.getScopeGroupId(),
-				assetRendererFactory.getPortletId())) {
-
-			return;
-		}
-
-		if (exportReferencedContent) {
-			try {
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, stagedModel,
-					(StagedModel)assetRenderer.getAssetObject(),
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					String errorMessage = StringBundler.concat(
-						"Staged model with class name ",
-						stagedModel.getModelClassName(), " and primary key ",
-						stagedModel.getPrimaryKeyObj(),
-						" references asset entry with class primary key ",
-						classPK, " and class name ",
-						_portal.getClassName(classNameId),
-						" that could not be exported due to ", exception);
-
-					if (Validator.isNotNull(exception.getMessage())) {
-						errorMessage = StringBundler.concat(
-							errorMessage, ": ", exception.getMessage());
-					}
-
-					_log.debug(errorMessage, exception);
-				}
-			}
-		}
-		else {
-			Element entityElement = portletDataContext.getExportDataElement(
-				stagedModel);
-
-			portletDataContext.addReferenceElement(
-				stagedModel, entityElement,
-				(ClassedModel)assetRenderer.getAssetObject(),
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-		}
+		_exportImportContentProcessorHelper.exportContentReference(
+			className, classPK, exportReferencedContent, portletDataContext,
+			stagedModel);
 	}
 
 	private void _replaceMappedFieldImportContentReferences(
@@ -369,46 +292,12 @@ public class EditableValuesMappingExportImportContentProcessor
 			}
 		}
 
-		String className = editableJSONObject.getString("className");
-
-		if (Validator.isNull(className)) {
-			return;
-		}
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_infoSearchClassMapperRegistry.getSearchClassName(className));
-
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if ((assetRendererFactory == null) ||
-			(ExportImportThreadLocal.isStagingInProcess() &&
-			 !stagingGroupHelper.isStagedPortlet(
-				 portletDataContext.getScopeGroupId(),
-				 assetRendererFactory.getPortletId()))) {
-
-			return;
-		}
-
-		long classPK = editableJSONObject.getLong("classPK");
-
-		if (classPK == 0) {
-			return;
-		}
-
-		editableJSONObject.put(
-			"classNameId", _portal.getClassNameId(className));
-
-		Map<Long, Long> primaryKeys =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(className);
-
-		classPK = MapUtil.getLong(primaryKeys, classPK, classPK);
-
-		editableJSONObject.put("classPK", classPK);
+		_exportImportContentProcessorHelper.replaceImportContentReferences(
+			editableJSONObject, portletDataContext);
 
 		if (editableJSONObject.has("fileEntryId")) {
-			editableJSONObject.put("fileEntryId", classPK);
+			editableJSONObject.put(
+				"fileEntryId", editableJSONObject.getLong("classPK"));
 		}
 	}
 
@@ -416,17 +305,12 @@ public class EditableValuesMappingExportImportContentProcessor
 		PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + StringPool.UNDERLINE +
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX;
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditableValuesMappingExportImportContentProcessor.class);
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
-	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
+	private ExportImportContentProcessorHelper
+		_exportImportContentProcessorHelper;
 
 	@Reference
 	private Portal _portal;

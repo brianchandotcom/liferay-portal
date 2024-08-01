@@ -13,6 +13,10 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -119,6 +123,26 @@ public class ExportImportContentProcessorHelper {
 			"classPK", MapUtil.getLong(primaryKeys, classPK, classPK));
 	}
 
+	private Object _getInfoItem(String className, long classPK) {
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className);
+
+		if (infoItemObjectProvider != null) {
+			try {
+				return infoItemObjectProvider.getInfoItem(
+					new ClassPKInfoItemIdentifier(classPK));
+			}
+			catch (NoSuchInfoItemException noSuchInfoItemException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchInfoItemException);
+				}
+			}
+		}
+
+		return null;
+	}
+
 	private Object _getReferenceObject(
 		String className, long classPK, PortletDataContext portletDataContext) {
 
@@ -127,7 +151,7 @@ public class ExportImportContentProcessorHelper {
 			classPK);
 
 		if (assetEntry == null) {
-			return null;
+			return _getInfoItem(className, classPK);
 		}
 
 		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
@@ -158,6 +182,9 @@ public class ExportImportContentProcessorHelper {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;

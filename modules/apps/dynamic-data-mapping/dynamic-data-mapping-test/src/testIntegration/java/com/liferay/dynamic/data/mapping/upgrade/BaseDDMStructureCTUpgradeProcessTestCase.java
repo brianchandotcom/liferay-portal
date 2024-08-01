@@ -3,16 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.upgrade.v5_1_1.test;
+package com.liferay.dynamic.data.mapping.upgrade;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
-import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -36,13 +31,11 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.runner.RunWith;
 
 /**
- * @author Paulo Albuquerque
+ * @author Carolina Barbosa
  */
-@RunWith(Arquillian.class)
-public class DDMStructureDDMValidationUpgradeProcessTest
+public abstract class BaseDDMStructureCTUpgradeProcessTestCase
 	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
@@ -63,63 +56,36 @@ public class DDMStructureDDMValidationUpgradeProcessTest
 			_group.getGroupId(), DDMFormInstance.class.getName(),
 			DDMFormTestUtil.createDDMForm(RandomTestUtil.randomString()));
 
-		setDefinition(_ddmStructure);
-
-		return _ddmStructureLocalService.updateDDMStructure(_ddmStructure);
+		return _ddmStructure;
 	}
+
+	protected abstract String getClassName();
 
 	@Override
 	protected CTService<?> getCTService() {
 		return _ddmStructureLocalService;
 	}
 
+	protected abstract DDMForm getDDMForm();
+
 	@Override
 	protected void runUpgrade() throws Exception {
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator, _CLASS_NAME);
+			_upgradeStepRegistrator, getClassName());
 
 		upgradeProcess.upgrade();
 	}
 
-	protected void setDefinition(DDMStructure ddmStructure) {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
-
-		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			DDMFormFieldTypeConstants.DATE, DDMFormFieldTypeConstants.DATE,
-			false, false, false);
-
-		DDMFormFieldValidation ddmFormFieldValidation =
-			new DDMFormFieldValidation();
-
-		ddmFormFieldValidation.setDDMFormFieldValidationExpression(
-			new DDMFormFieldValidationExpression() {
-				{
-					setName("dateRange");
-					setValue("dateRange({parameter} AND {parameter})");
-				}
-			});
-
-		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		ddmStructure.setDefinition(
-			DDMFormSerializeUtil.serialize(ddmForm, _jsonDDMFormSerializer));
-	}
-
 	@Override
 	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
-		_ddmStructure = (DDMStructure)ctModel;
+		DDMStructure ddmStructure = (DDMStructure)ctModel;
 
-		setDefinition(_ddmStructure);
+		ddmStructure.setDefinition(
+			DDMFormSerializeUtil.serialize(
+				getDDMForm(), _jsonDDMFormSerializer));
 
-		return _ddmStructureLocalService.updateDDMStructure(_ddmStructure);
+		return _ddmStructureLocalService.updateDDMStructure(ddmStructure);
 	}
-
-	private static final String _CLASS_NAME =
-		"com.liferay.dynamic.data.mapping.internal.upgrade.v5_1_1." +
-			"DDMValidationUpgradeProcess";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"

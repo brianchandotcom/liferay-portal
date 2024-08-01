@@ -658,6 +658,12 @@ export class PageEditorPage {
 				'iframe[title="Manage Form Fields"]'
 			);
 
+			await fieldsModal
+				.getByRole('row')
+				.getByRole('checkbox')
+				.first()
+				.waitFor();
+
 			for (const field of fields) {
 				await fieldsModal
 					.getByRole('row', {name: field})

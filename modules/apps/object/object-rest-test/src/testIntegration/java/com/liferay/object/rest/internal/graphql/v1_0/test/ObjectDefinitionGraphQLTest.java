@@ -47,6 +47,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -55,11 +56,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -80,6 +83,30 @@ public class ObjectDefinitionGraphQLTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_objectFieldResource.setContextAcceptLanguage(
+			new AcceptLanguage() {
+
+				@Override
+				public List<Locale> getLocales() {
+					return Arrays.asList(LocaleUtil.getDefault());
+				}
+
+				@Override
+				public String getPreferredLanguageId() {
+					return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+				}
+
+				@Override
+				public Locale getPreferredLocale() {
+					return LocaleUtil.getDefault();
+				}
+
+			});
+		_objectFieldResource.setContextUser(TestPropsValues.getUser());
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -458,26 +485,20 @@ public class ObjectDefinitionGraphQLTest {
 				jsonObject, "JSONObject/data", "JSONObject/c",
 				"JSONObject/" + key, "Object/status"));
 
-		ObjectField objectField = new ObjectField() {
-			{
-				businessType = BusinessType.TEXT;
-				DBType = ObjectField.DBType.STRING;
-				label = Collections.singletonMap(
-					LocaleUtil.US.toString(), RandomTestUtil.randomString());
-				name = StringUtil.randomId();
-				required = RandomTestUtil.randomBoolean();
-			}
-		};
-
-		ObjectFieldResource.Builder builder =
-			_objectFieldResourceFactory.create();
-
-		ObjectFieldResource objectFieldResource = builder.user(
-			TestPropsValues.getUser()
-		).build();
-
-		objectFieldResource.postObjectDefinitionObjectField(
-			_parentObjectDefinition.getObjectDefinitionId(), objectField);
+		ObjectField objectField =
+			_objectFieldResource.postObjectDefinitionObjectField(
+				_parentObjectDefinition.getObjectDefinitionId(),
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.STRING;
+						label = Collections.singletonMap(
+							LocaleUtil.US.toString(),
+							RandomTestUtil.randomString());
+						name = StringUtil.randomId();
+						required = RandomTestUtil.randomBoolean();
+					}
+				});
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
@@ -1118,6 +1139,9 @@ public class ObjectDefinitionGraphQLTest {
 
 	private static final String _RELATIONSHIP_NAME = "parent";
 
+	@Inject
+	private static ObjectFieldResource _objectFieldResource;
+
 	private String _childObjectDefinitionName;
 	private ObjectEntry _childObjectEntry;
 
@@ -1131,9 +1155,6 @@ public class ObjectDefinitionGraphQLTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Inject
-	private ObjectFieldResource.Factory _objectFieldResourceFactory;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _parentObjectDefinition;

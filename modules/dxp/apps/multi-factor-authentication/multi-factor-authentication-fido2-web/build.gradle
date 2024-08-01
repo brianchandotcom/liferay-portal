@@ -8,8 +8,8 @@ dependencies {
 	compileInclude group: "com.yubico", name: "webauthn-server-core-minimal", version: "1.12.2"
 	compileInclude group: "com.yubico", name: "yubico-util", version: "1.12.2"
 	compileInclude group: "net.i2p.crypto", name: "eddsa", version: "0.3.0"
-	compileInclude group: "org.bouncycastle", name: "bcprov-jdk18on", version: "1.76"
-	compileInclude group: "org.bouncycastle", name: "bcutil-jdk18on", version: "1.76"
+	compileInclude group: "org.bouncycastle", name: "bcprov-jdk18on", version: "1.78"
+	compileInclude group: "org.bouncycastle", name: "bcutil-jdk18on", version: "1.78"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.16.1"

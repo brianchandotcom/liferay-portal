@@ -25,93 +25,13 @@ const test = mergeTests(
 	wemSiteTest
 );
 
-test('Allow selecting fields from main object and relationships in fields modal', async ({
-	apiHelpers,
-	pageEditorPage,
-	wemSite,
-}) => {
-
-	// Create a page with a Form fragment
-
-	const formId = getRandomString();
-
-	const formDefinition = getFormContainerDefinition({
-		id: formId,
-	});
-
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([formDefinition]),
-		siteId: wemSite.id,
-		title: getRandomString(),
-	});
-
-	// Go to edit mode
-
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
-
-	// Map the form to Lemon object and select fields
-
-	await pageEditorPage.mapFormFragment(formId, 'Lemon', [
-		'Lemon Size',
-		'Lemon Basket Color',
-	]);
-
-	const form = pageEditorPage.getFragment(formId);
-
-	await expect(form.getByText('Lemon Size')).toBeVisible();
-	await expect(form.getByText('Lemon Basket Color')).toBeVisible();
-});
-
-test('Shows correct options in picklist field selected as title in related object', async ({
-	apiHelpers,
-	page,
-	pageEditorPage,
-	wemSite,
-}) => {
-
-	// Create a page with a Form fragment
-
-	const formId = getRandomString();
-
-	const formDefinition = getFormContainerDefinition({
-		id: formId,
-	});
-
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([formDefinition]),
-		siteId: wemSite.id,
-		title: getRandomString(),
-	});
-
-	// Go to edit mode
-
-	await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
-
-	// Map the form to Lemon Basket object, select fields and publish
-
-	await pageEditorPage.mapFormFragment(formId, 'Lemon', [
-		'Lemon Size',
-		'Lemon Basket to Lemons',
-	]);
-
-	await pageEditorPage.publishPage();
-
-	// Go to view mode and check picklist values
-
-	await page.goto(`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`);
-
-	await page.getByLabel('Lemon Basket to Lemons').click();
-
-	await expect(page.getByText('Plastic', {exact: true})).toBeVisible();
-	await expect(page.getByText('Carton', {exact: true})).toBeVisible();
-});
-
-test(
-	'Checks changing the option when one default is selected set the value correctly',
-	{
-		tag: '@LPD-31856',
-	},
-	async ({apiHelpers, page, pageEditorPage, wemSite}) => {
+test.describe('Picklist input field', () => {
+	test('Shows correct options in picklist field selected as title in related object', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		wemSite,
+	}) => {
 
 		// Create a page with a Form fragment
 
@@ -127,29 +47,115 @@ test(
 			title: getRandomString(),
 		});
 
-		// Go to edit mode and map it to the object
+		// Go to edit mode
 
 		await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
 
-		await pageEditorPage.mapFormFragment(formId, 'Lemon Basket', [
-			'Lemon Dimensions',
-			'Material',
+		// Map the form to Lemon Basket object, select fields and publish
+
+		await pageEditorPage.mapFormFragment(formId, 'Lemon', [
+			'Lemon Size',
+			'Lemon Basket to Lemons',
 		]);
 
-		// Publish and go to view mode
-
 		await pageEditorPage.publishPage();
+
+		// Go to view mode and check picklist values
 
 		await page.goto(
 			`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		// Check that the value after selecting the item is correct
+		await page.getByLabel('Lemon Basket to Lemons').click();
 
-		await page.getByLabel('Material').click();
+		await expect(page.getByText('Plastic', {exact: true})).toBeVisible();
+		await expect(page.getByText('Carton', {exact: true})).toBeVisible();
+	});
 
-		await page.getByText('carton').click();
+	test(
+		'Checks changing the option when one default is selected set the value correctly',
+		{
+			tag: '@LPD-31856',
+		},
+		async ({apiHelpers, page, pageEditorPage, wemSite}) => {
 
-		expect(page.getByLabel('Material')).toHaveValue('Carton');
-	}
-);
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: wemSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode and map it to the object
+
+			await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+
+			await pageEditorPage.mapFormFragment(formId, 'Lemon Basket', [
+				'Lemon Dimensions',
+				'Material',
+			]);
+
+			// Publish and go to view mode
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${wemSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Check that the value after selecting the item is correct
+
+			await page.getByLabel('Material').click();
+
+			await page.getByText('carton').click();
+
+			expect(page.getByLabel('Material')).toHaveValue('Carton');
+		}
+	);
+});
+
+test.describe('Relationships', () => {
+	test('Allow selecting fields from main object and relationships in fields modal', async ({
+		apiHelpers,
+		pageEditorPage,
+		wemSite,
+	}) => {
+
+		// Create a page with a Form fragment
+
+		const formId = getRandomString();
+
+		const formDefinition = getFormContainerDefinition({
+			id: formId,
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([formDefinition]),
+			siteId: wemSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode
+
+		await pageEditorPage.goto(layout, wemSite.friendlyUrlPath);
+
+		// Map the form to Lemon object and select fields
+
+		await pageEditorPage.mapFormFragment(formId, 'Lemon', [
+			'Lemon Size',
+			'Lemon Basket Color',
+		]);
+
+		const form = pageEditorPage.getFragment(formId);
+
+		await expect(form.getByText('Lemon Size')).toBeVisible();
+		await expect(form.getByText('Lemon Basket Color')).toBeVisible();
+	});
+});

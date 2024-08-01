@@ -107,7 +107,7 @@
 				<execution-type>onAssignment</execution-type>
 			</action>
 			<notification>
-				<name>Creator modification notification</name>
+				<name>Creator Modification Notification</name>
 				<template>
 					<![CDATA[Hi, your recipe article has been rejected by ${userName}, with the following comment: ${taskComments}. You may update and re-submit the recipe by logging into <a href="https://learn.liferay.com">Learn</a>.]]>
 				</template>
@@ -156,7 +156,7 @@
 		</metadata>
 		<actions>
 			<notification>
-				<name>Review notification</name>
+				<name>Review Notification</name>
 				<template>
 					<![CDATA[${userName} submitted a recipe article for review in the workflow. Please login to <a href="https://learn.liferay.com">Learn</a> to review and take action.]]>
 				</template>

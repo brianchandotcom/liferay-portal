@@ -72,7 +72,7 @@
 		</metadata>
 		<actions>
 			<notification>
-				<name>notification 1</name>
+				<name>Notification 1</name>
 				<description>
 					<![CDATA[]]>
 				</description>
@@ -88,7 +88,7 @@
 				<execution-type>onAssignment</execution-type>
 			</notification>
 			<notification>
-				<name>notification 2</name>
+				<name>Notification 2</name>
 				<description>
 					<![CDATA[]]>
 				</description>
@@ -108,7 +108,7 @@
 				<execution-type>onAssignment</execution-type>
 			</notification>
 			<notification>
-				<name>notification 3</name>
+				<name>Notification 3</name>
 				<description>
 					<![CDATA[]]>
 				</description>
@@ -130,7 +130,7 @@
 				<execution-type>onAssignment</execution-type>
 			</notification>
 			<notification>
-				<name>notification 4</name>
+				<name>Notification 4</name>
 				<description>
 					<![CDATA[]]>
 				</description>
@@ -146,7 +146,7 @@
 				<execution-type>onAssignment</execution-type>
 			</notification>
 			<notification>
-				<name>notification 5</name>
+				<name>Notification 5</name>
 				<description>
 					<![CDATA[]]>
 				</description>
@@ -164,7 +164,7 @@
 				<execution-type>onAssignment</execution-type>
 			</notification>
 			<notification>
-				<name>notification 6</name>
+				<name>Notification 6</name>
 				<description>
 					<![CDATA[]]>
 				</description>

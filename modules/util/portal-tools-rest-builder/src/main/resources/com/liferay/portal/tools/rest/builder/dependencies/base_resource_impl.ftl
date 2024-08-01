@@ -420,10 +420,18 @@ public abstract class Base${schemaName}ResourceImpl
 
 					, existing${schemaName}
 				);
-			<#elseif schema.discriminator?has_content && javaMethodSignature.returnType?ends_with(schemaName)>
-				return null;
 			<#else>
-				return new ${javaMethodSignature.returnType}();
+				<#assign
+					lastDotIndexOfReturnType = javaMethodSignature.returnType?last_index_of('.')
+					returnTypeClassName = javaMethodSignature.returnType?substring(lastDotIndexOfReturnType + 1)
+					returnTypeSchema = allSchemas[returnTypeClassName]!
+				/>
+
+				<#if returnTypeSchema.discriminator?has_content>
+			   		return null;
+				<#else>
+					return new ${javaMethodSignature.returnType}();
+				</#if>
 			</#if>
 		}
 	</#list>

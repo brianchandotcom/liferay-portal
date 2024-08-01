@@ -2299,8 +2299,9 @@ public class SXPBlueprintSearchResultTest {
 			Map<String, Field> fields = document.getFields();
 
 			message = StringBundler.concat(
-				message, "\" Score: ", searchHit.getScore(), "Title: \"",
-				fields.get("title_en_US"), StringPool.NEW_LINE);
+				message, "Score: ", searchHit.getScore(), " Title: \"",
+				fields.get("title_en_US"), StringPool.QUOTE,
+				StringPool.NEW_LINE);
 		}
 
 		return message;

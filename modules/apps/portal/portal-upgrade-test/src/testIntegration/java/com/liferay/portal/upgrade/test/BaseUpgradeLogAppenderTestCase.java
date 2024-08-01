@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -31,6 +32,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
@@ -45,6 +49,7 @@ import java.sql.PreparedStatement;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -66,7 +71,6 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestName;
 
 /**
  * @author Sam Ziemer
@@ -509,14 +513,28 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
-	public void testNoNewRelease() throws Exception {
+	public void testNoUpgrade() throws Exception {
 		_updatePortalRelease(
 			PortalUpgradeProcess.getLatestSchemaVersion(),
 			ReleaseInfo.getBuildDate(), ReleaseInfo.getBuildNumber());
 
 		_appender.start();
 
-		_appender.stop();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.upgrade.internal.report.UpgradeReport",
+				LoggerTestUtil.INFO)) {
+
+			_appender.stop();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			String logEntriesString = logEntries.toString();
+
+			Assert.assertTrue(
+				logEntriesString.contains(
+					"Upgrade report has not been generated because no " +
+						"upgrade processes were executed"));
+		}
 
 		File file = new File(
 			new File(getFilePath(), "reports"), "upgrade_report.info");

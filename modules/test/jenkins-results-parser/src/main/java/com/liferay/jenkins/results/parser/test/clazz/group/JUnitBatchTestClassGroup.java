@@ -68,6 +68,11 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			List<JobProperty> testBatchJobProperties =
 				getTestSelectorExcludesJobProperties();
 
+			testBatchJobProperties.add(
+				getJobProperty(
+					"test.batch.class.names.excludes",
+					JobProperty.Type.EXCLUDE_GLOB));
+
 			recordJobProperties(testBatchJobProperties);
 
 			return testBatchJobProperties;
@@ -764,6 +769,11 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		List<JobProperty> excludesJobProperties =
 			jUnitTestSelector.getExcludesJobProperties();
+
+		excludesJobProperties.add(
+			getJobProperty(
+				"test.batch.class.names.excludes",
+				JobProperty.Type.EXCLUDE_GLOB));
 
 		List<PathMatcher> excludesPathMatchers = getPathMatchers(
 			excludesJobProperties);

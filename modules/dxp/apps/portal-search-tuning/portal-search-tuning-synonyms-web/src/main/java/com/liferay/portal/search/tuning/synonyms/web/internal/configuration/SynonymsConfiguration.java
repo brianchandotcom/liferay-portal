@@ -20,7 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SynonymsConfiguration {
 
 	@Meta.AD(
-		deflt = "liferay_filter_synonym_de|liferay_filter_synonym_en|liferay_filter_synonym_es|liferay_filter_synonym_hu|liferay_filter_synonym_nl|liferay_filter_synonym_pt_BR",
+		deflt = "liferay_filter_synonym_de|liferay_filter_synonym_en|liferay_filter_synonym_es|liferay_filter_synonym_fr|liferay_filter_synonym_hu|liferay_filter_synonym_nl|liferay_filter_synonym_pt_BR",
 		description = "synonym-filter-names-help",
 		name = "synonym-filter-names", required = false
 	)

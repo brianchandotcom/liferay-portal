@@ -8,6 +8,7 @@ import React from 'react';
 
 import {SWITCH_SIDEBAR_PANEL} from '../../../../src/main/resources/META-INF/resources/page_editor/app/actions/types';
 import ShortcutManager from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/ShortcutManager';
+import {ShortcutContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
 const DEFAULT_STATE = {
@@ -20,7 +21,9 @@ const DEFAULT_STATE = {
 const renderComponent = ({dispatch = () => {}, state = DEFAULT_STATE} = {}) =>
 	render(
 		<StoreMother.Component dispatch={dispatch} getState={() => state}>
-			<ShortcutManager />
+			<ShortcutContextProvider>
+				<ShortcutManager />
+			</ShortcutContextProvider>
 		</StoreMother.Component>
 	);
 
@@ -98,7 +101,6 @@ describe('ShortcutManager', () => {
 			document.body.dispatchEvent(
 				new KeyboardEvent('keydown', {
 					key: '?',
-					metaKey: false,
 					shiftKey: true,
 				})
 			);

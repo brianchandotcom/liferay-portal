@@ -16,6 +16,7 @@ import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../../../../../../../../src/main/res
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {ControlsProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
+import {ShortcutContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext';
 import {StoreAPIContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateItemConfig from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
 import {pageContentsAtom} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/usePageContents';
@@ -252,7 +253,9 @@ const renderComponent = ({
 						selectedViewportSize: viewportSize,
 					})}
 				>
-					<PageStructureSidebar />
+					<ShortcutContextProvider>
+						<PageStructureSidebar />
+					</ShortcutContextProvider>
 				</StoreAPIContextProvider>
 			</ControlsProvider>
 		</DndProvider>

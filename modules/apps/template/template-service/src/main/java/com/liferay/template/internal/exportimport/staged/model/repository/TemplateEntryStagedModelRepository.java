@@ -143,8 +143,15 @@ public class TemplateEntryStagedModelRepository
 			PortletDataContext portletDataContext, TemplateEntry templateEntry)
 		throws PortalException {
 
+		TemplateEntry existingTemplateEntry =
+			_templateEntryLocalService.getTemplateEntry(
+				templateEntry.getTemplateEntryId());
+
+		existingTemplateEntry.setInfoItemFormVariationKey(
+			templateEntry.getInfoItemFormVariationKey());
+
 		return _templateEntryLocalService.updateTemplateEntry(
-			templateEntry.getTemplateEntryId());
+			existingTemplateEntry);
 	}
 
 	@Reference

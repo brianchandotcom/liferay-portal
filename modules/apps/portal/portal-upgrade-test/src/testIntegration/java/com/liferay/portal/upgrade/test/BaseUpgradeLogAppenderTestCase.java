@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -49,7 +47,6 @@ import java.sql.PreparedStatement;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -526,12 +523,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.stop();
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			String logEntriesString = logEntries.toString();
+			String logEntries = String.valueOf(logCapture.getLogEntries());
 
 			Assert.assertTrue(
-				logEntriesString.contains(
+				logEntries.contains(
 					"Upgrade report has not been generated because no " +
 						"upgrade processes were executed"));
 		}

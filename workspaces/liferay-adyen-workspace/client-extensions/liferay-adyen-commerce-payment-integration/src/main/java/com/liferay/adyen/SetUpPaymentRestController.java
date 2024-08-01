@@ -12,6 +12,8 @@ import com.adyen.model.checkout.CreateCheckoutSessionRequest;
 import com.adyen.model.checkout.CreateCheckoutSessionResponse;
 import com.adyen.service.checkout.PaymentsApi;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
+
 import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;

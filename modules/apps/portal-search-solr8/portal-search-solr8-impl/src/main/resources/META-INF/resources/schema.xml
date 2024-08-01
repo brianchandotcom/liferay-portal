@@ -713,6 +713,7 @@
 		<field docValues="true" indexed="true" name="entryClassPK" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="expirationDate" stored="true" type="string" />
 		<field indexed="true" name="extension" stored="true" type="string" />
+		<field indexed="true" name="externalReferenceCode" stored="true" type="string" />
 		<field indexed="true" name="fileEntryTypeId" stored="true" type="string" />
 		<field indexed="true" name="firstName" stored="true" type="text_lowercase" />
 		<field docValues="true" indexed="true" name="folderId" stored="true" type="string" />

@@ -5,6 +5,7 @@
 
 package com.liferay.evp;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.petra.string.StringBundler;
 
 import java.util.Objects;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * @author Elvison Victor
@@ -38,16 +40,20 @@ public class ObjectActionOrganizationStatusRestController
 		JSONObject objectEntryDTOEVPOrganizationJSONObject =
 			jsonObject.getJSONObject("objectEntryDTOEVPOrganization");
 
-		JSONObject responseJSONObject = get(
-			jwt,
-			uriBuilder -> uriBuilder.path(
+		String response = get(
+			jwt.toString(),
+			_defaultUriBuilderFactory.builder(
+			).path(
 				"/o/c/evprequests"
 			).queryParam(
 				"filter",
 				StringBundler.concat(
 					"r_organization_c_evpOrganizationId eq '",
 					objectEntryDTOEVPOrganizationJSONObject.getLong("id"), "'")
-			).build());
+			).build(
+			).toString());
+
+		JSONObject responseJSONObject = new JSONObject(response);
 
 		if (responseJSONObject.getInt("totalCount") == 0) {
 			return new ResponseEntity<>(json, HttpStatus.OK);
@@ -104,12 +110,17 @@ public class ObjectActionOrganizationStatusRestController
 		}
 
 		put(
-			itemsJSONArray, jwt,
-			uriBuilder -> uriBuilder.path(
+			jwt.toString(), itemsJSONArray.toString(),
+			_defaultUriBuilderFactory.builder(
+			).path(
 				"/o/c/evprequests/batch"
-			).build());
+			).build(
+			).toString());
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
+
+	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+		new DefaultUriBuilderFactory();
 
 }

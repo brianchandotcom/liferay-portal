@@ -78,6 +78,11 @@ public interface RoleService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Role fetchRole(long companyId, String name) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role fetchRoleByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException;
+
 	/**
 	 * Returns all the roles associated with the group.
 	 *

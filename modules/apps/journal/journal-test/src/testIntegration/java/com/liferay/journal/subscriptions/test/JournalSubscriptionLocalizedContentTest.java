@@ -6,6 +6,7 @@
 package com.liferay.journal.subscriptions.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.diff.DiffHtml;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -14,6 +15,7 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.journal.util.JournalHelper;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -119,7 +121,42 @@ public class JournalSubscriptionLocalizedContentTest
 		_themeDisplay.setUser(user);
 
 		Assert.assertEquals(
-			_getExpectedMailBody(journalArticlePrimaryKey),
+			_getExpectedMailBody(
+				_EMAIL_ARTICLE_ADDED_BODY, journalArticlePrimaryKey),
+			mailMessage.getBody());
+	}
+
+	@Test
+	public void testSubscriptionLocalizedContentWithMacrosWhenUpdatingBaseModel()
+		throws Exception {
+
+		user = _userLocalService.updateLanguageId(
+			user.getUserId(), _language.getLanguageId(LocaleUtil.SPAIN));
+
+		setBaseModelSubscriptionBodyPreferences(
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, _EMAIL_ARTICLE_UPDATED_BODY
+			).build(),
+			getSubscriptionUpdatedBodyPreferenceName());
+
+		_themeDisplay = _getThemeDisplay(creatorUser);
+
+		long journalArticlePrimaryKey = addBaseModel(
+			creatorUser.getUserId(), getDefaultContainerModelId());
+
+		addSubscriptionContainerModel(getDefaultContainerModelId());
+
+		updateBaseModel(creatorUser.getUserId(), journalArticlePrimaryKey);
+
+		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+
+		MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
+
+		_themeDisplay.setUser(user);
+
+		Assert.assertEquals(
+			_getExpectedMailBody(
+				_EMAIL_ARTICLE_UPDATED_BODY, journalArticlePrimaryKey),
 			mailMessage.getBody());
 	}
 
@@ -141,15 +178,11 @@ public class JournalSubscriptionLocalizedContentTest
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "Title"
 			).put(
-				LocaleUtil.GERMANY, "Titel"
-			).put(
 				LocaleUtil.SPAIN, "Título"
 			).build(),
 			null,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "Content"
-			).put(
-				LocaleUtil.GERMANY, "Inhalte"
 			).put(
 				LocaleUtil.SPAIN, "Contenido"
 			).build(),
@@ -219,15 +252,50 @@ public class JournalSubscriptionLocalizedContentTest
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		JournalTestUtil.updateArticleWithWorkflow(
-			userId, _journalArticleLocalService.getArticle(baseModelId), true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), userId);
+
+		if (_themeDisplay != null) {
+			serviceContext.setRequest(_themeDisplay.getRequest());
+		}
+
+		JournalTestUtil.updateArticle(
+			userId, _journalArticleLocalService.getArticle(baseModelId),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "New Title"
+			).put(
+				LocaleUtil.SPAIN, "Título Nuevo"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "New Content"
+			).put(
+				LocaleUtil.SPAIN, "Contenido Nuevo"
+			).build(),
+			LocaleUtil.getDefault(), false, true, serviceContext);
 	}
 
-	private String _getExpectedMailBody(long journalArticlePrimaryKey)
+	private String _getExpectedMailBody(
+			String emailArticleBody, long journalArticlePrimaryKey)
 		throws Exception {
 
 		JournalArticle journalArticle = _journalArticleLocalService.getArticle(
 			journalArticlePrimaryKey);
+
+		String journalArticleDiffs = "";
+
+		if (_EMAIL_ARTICLE_UPDATED_BODY.equals(emailArticleBody)) {
+			double previousJournalArticleVersion = journalArticle.getVersion();
+
+			journalArticle = _journalArticleLocalService.getLatestArticle(
+				journalArticle.getResourcePrimKey());
+
+			journalArticleDiffs = _diffHtml.replaceStyles(
+				_journalHelper.diffHtml(
+					journalArticle.getGroupId(), journalArticle.getArticleId(),
+					previousJournalArticleVersion, journalArticle.getVersion(),
+					user.getLanguageId(), null, _themeDisplay));
+		}
 
 		JournalArticleDisplay journalArticleDisplay =
 			_journalArticleLocalService.getArticleDisplay(
@@ -235,14 +303,14 @@ public class JournalSubscriptionLocalizedContentTest
 				Constants.VIEW, user.getLanguageId(), _themeDisplay);
 
 		return StringUtil.replace(
-			_EMAIL_ARTICLE_ADDED_BODY,
+			emailArticleBody,
 			new String[] {
-				"[$ARTICLE_CONTENT$]", "[$ARTICLE_STATUS$]",
-				"[$ARTICLE_TITLE$]", "[$FOLDER_NAME$]", "[$PORTLET_TITLE$]",
-				"[$SITE_NAME$]"
+				"[$ARTICLE_CONTENT$]", "[$ARTICLE_DIFFS$]",
+				"[$ARTICLE_STATUS$]", "[$ARTICLE_TITLE$]", "[$FOLDER_NAME$]",
+				"[$PORTLET_TITLE$]", "[$SITE_NAME$]"
 			},
 			new String[] {
-				journalArticleDisplay.getContent(),
+				journalArticleDisplay.getContent(), journalArticleDiffs,
 				_language.get(
 					user.getLocale(),
 					WorkflowConstants.getStatusLabel(
@@ -311,14 +379,24 @@ public class JournalSubscriptionLocalizedContentTest
 		"[$PORTLET_TITLE$]: [$SITE_NAME$]: [$FOLDER_NAME$]: " +
 			"[$ARTICLE_TITLE$]: [$ARTICLE_STATUS$]: [$ARTICLE_CONTENT$]";
 
+	private static final String _EMAIL_ARTICLE_UPDATED_BODY =
+		"[$PORTLET_TITLE$]: [$SITE_NAME$]: [$FOLDER_NAME$]: " +
+			"[$ARTICLE_TITLE$]: [$ARTICLE_STATUS$]: [$ARTICLE_DIFFS$]";
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DiffHtml _diffHtml;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private JournalHelper _journalHelper;
 
 	@Inject
 	private Language _language;

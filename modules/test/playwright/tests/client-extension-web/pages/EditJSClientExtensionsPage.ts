@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {EditClientExtensionsPage} from './EditClientExtensionsPage';
 
 export class EditJSClientExtensionsPage extends EditClientExtensionsPage {
@@ -39,7 +40,9 @@ export class EditJSClientExtensionsPage extends EditClientExtensionsPage {
 			.locator(`#${this.portletName}_type_${this.currentAttributeIndex}`)
 			.click();
 
-		await this.page.getByRole('option', {name: type}).click();
+		const option = this.page.getByRole('option', {name: type});
+
+		await clickAndExpectToBeHidden({target: option, trigger: option});
 
 		const attributeValueField = this.page.locator(
 			`#${this.portletName}_value_${this.currentAttributeIndex}`

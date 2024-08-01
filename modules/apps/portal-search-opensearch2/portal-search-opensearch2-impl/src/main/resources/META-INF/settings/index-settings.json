@@ -51,6 +51,16 @@
 				"tokenizer": "standard",
 				"type": "custom"
 			},
+			"liferay_analyzer_hu": {
+				"filter": [
+					"lowercase",
+					"hungarian_stop",
+					"liferay_filter_synonym_hu",
+					"hungarian_stemmer"
+				],
+				"tokenizer": "standard",
+				"type": "custom"
+			},
 			"liferay_analyzer_nl": {
 				"filter": [
 					"lowercase",
@@ -137,6 +147,14 @@
 				"stopwords": "_german_",
 				"type": "stop"
 			},
+			"hungarian_stemmer": {
+				"language": "hungarian",
+				"type": "stemmer"
+			},
+			"hungarian_stop": {
+				"stopwords": "_hungarian_",
+				"type": "stop"
+			},
 			"liferay_filter_synonym_de": {
 				"lenient": true,
 				"synonyms": [
@@ -150,6 +168,12 @@
 				"type": "synonym_graph"
 			},
 			"liferay_filter_synonym_es": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_hu": {
 				"lenient": true,
 				"synonyms": [
 				],

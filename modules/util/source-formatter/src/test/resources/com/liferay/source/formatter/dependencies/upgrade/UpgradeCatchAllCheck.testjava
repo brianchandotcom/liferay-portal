@@ -202,6 +202,8 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new CommerceShipmentIdComparator();
 		new CommerceShipmentItemCreateDateComparator();
 		new CommerceShipmentShippingDateComparator();
+		new CommerceShippingFixedOptionPriorityComparator();
+		new CommerceShippingFixedOptionRelCountryIdComparator();
 		new CommerceShippingMethodPriorityComparator();
 		new CommerceSubscriptionEntryCreateDateComparatorOrganizationIdComparator();
 		new CommerceTaxFixedRateAddressRelCreateDateComparator();
@@ -329,6 +331,8 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new RoleTypeComparator();
 		new SAPEntryNameComparator();
 		new SXPBlueprintModifiedDateComparator();
+		new SavedContentEntryClassNameIdComparator();
+		new SharingEntryModifiedDateComparator();
 		new SiteNavigationMenuCreateDateComparator();
 		new SiteNavigationMenuItemOrderComparator();
 		new SiteNavigationMenuModifiedDateComparator();
@@ -485,6 +489,8 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new CommerceShipmentIdComparator(showHiddenPages);
 		new CommerceShipmentItemCreateDateComparator(showHiddenPages);
 		new CommerceShipmentShippingDateComparator(showHiddenPages);
+		new CommerceShippingFixedOptionPriorityComparator(showHiddenPages);
+		new CommerceShippingFixedOptionRelCountryIdComparator(showHiddenPages);
 		new CommerceShippingMethodPriorityComparator(showHiddenPages);
 		new CommerceSubscriptionEntryCreateDateComparatorOrganizationIdComparator(showHiddenPages);
 		new CommerceTaxFixedRateAddressRelCreateDateComparator(showHiddenPages);
@@ -612,6 +618,8 @@ public class UpgradeCatchAllCheck implements ConfigurationBeanDeclaration {
 		new RoleTypeComparator(showHiddenPages);
 		new SAPEntryNameComparator(showHiddenPages);
 		new SXPBlueprintModifiedDateComparator(showHiddenPages);
+		new SavedContentEntryClassNameIdComparator(showHiddenPages);
+		new SharingEntryModifiedDateComparator(showHiddenPages);
 		new SiteNavigationMenuCreateDateComparator(showHiddenPages);
 		new SiteNavigationMenuItemOrderComparator(showHiddenPages);
 		new SiteNavigationMenuModifiedDateComparator(showHiddenPages);

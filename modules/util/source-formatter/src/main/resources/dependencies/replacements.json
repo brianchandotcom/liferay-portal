@@ -379,6 +379,54 @@
 		"to": "StyleBookEntryNameComparator.getInstance(param#0#)"
 	},
 	{
+		"from": "new CommerceShippingFixedOptionPriorityComparator()",
+		"issueKey": "LPD-25985",
+		"skipParametersValidation": true,
+		"to": "CommerceShippingFixedOptionPriorityComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceShippingFixedOptionPriorityComparator(boolean paramName)",
+		"issueKey": "LPD-25985",
+		"skipParametersValidation": true,
+		"to": "CommerceShippingFixedOptionPriorityComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new CommerceShippingFixedOptionRelCountryIdComparator()",
+		"issueKey": "LPD-25985",
+		"skipParametersValidation": true,
+		"to": "CommerceShippingFixedOptionRelCountryIdComparator.getInstance(false)"
+	},
+	{
+		"from": "new CommerceShippingFixedOptionRelCountryIdComparator(boolean paramName)",
+		"issueKey": "LPD-25985",
+		"skipParametersValidation": true,
+		"to": "CommerceShippingFixedOptionRelCountryIdComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new SavedContentEntryClassNameIdComparator()",
+		"issueKey": "LPD-25985",
+		"skipParametersValidation": true,
+		"to": "SavedContentEntryClassNameIdComparator.getInstance(false)"
+	},
+	{
+		"from": "new SavedContentEntryClassNameIdComparator(boolean paramName)",
+		"issueKey": "LPD-25985",
+		"skipParametersValidation": true,
+		"to": "SavedContentEntryClassNameIdComparator.getInstance(param#0#)"
+	},
+	{
+		"from": "new SharingEntryModifiedDateComparator()",
+		"issueKey": "LPD-25985",
+		"skipParametersValidation": true,
+		"to": "SharingEntryModifiedDateComparator.getInstance(false)"
+	},
+	{
+		"from": "new SharingEntryModifiedDateComparator(boolean paramName)",
+		"issueKey": "LPD-25985",
+		"skipParametersValidation": true,
+		"to": "SharingEntryModifiedDateComparator.getInstance(param#0#)"
+	},
+	{
 		"from": "new AssetListEntryCreateDateComparator()",
 		"issueKey": "LPD-26157",
 		"skipParametersValidation": true,

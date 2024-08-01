@@ -48,8 +48,6 @@ definition {
 
 		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH");
 
-		Click(locator1 = "Button#SUBMIT");
-
 		Alert.viewErrorMessage(errorMessage = "Staging is enabled for at least one site or asset library in the current virtual instance. Publications and staging cannot be used together.");
 
 		User.logoutPG();
@@ -65,8 +63,6 @@ definition {
 			portlet = "Publications");
 
 		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH");
-
-		Click(locator1 = "Button#SUBMIT");
 
 		Alert.viewErrorMessage(errorMessage = "Staging is enabled for at least one site or asset library in the current virtual instance. Publications and staging cannot be used together.");
 	}
@@ -89,8 +85,6 @@ definition {
 
 		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH");
 
-		Click(locator1 = "Button#SUBMIT");
-
 		WaitForElementPresent(locator1 = "Message#ERROR");
 
 		Alert.viewErrorMessage(errorMessage = "Staging is enabled for at least one site or asset library in the current virtual instance. Publications and staging cannot be used together.");
@@ -108,6 +102,8 @@ definition {
 		property test.run.type = "single";
 
 		Publications.enablePublications();
+
+		PublicationsNavigator.openPublicationsAdmin();
 
 		AssertTextEquals(
 			locator1 = "Publications#MANAGE_PUBLICATIONS_PAGE_TITLE",
@@ -212,6 +208,8 @@ definition {
 	@priority = 5
 	test EnablePublicationsAndGoToOverview {
 		Publications.enablePublications();
+
+		PublicationsNavigator.openPublicationsAdmin();
 
 		AssertTextEquals(
 			locator1 = "Publications#MANAGE_PUBLICATIONS_PAGE_TITLE",

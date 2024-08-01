@@ -133,8 +133,6 @@ definition {
 		PublicationsNavigator.openPublicationsSettings();
 
 		Uncheck.uncheckToggleSwitch(locator1 = "Publications#ENABLE_MANAGE_REMOTELY");
-
-		Click(locator1 = "Button#SAVE");
 	}
 
 	@summary = "Default summary"
@@ -169,8 +167,6 @@ definition {
 			MenuItem.click(menuItem = "Settings");
 
 			Uncheck.uncheckToggleSwitch(locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH");
-
-			Click(locator1 = "Button#SAVE");
 		}
 	}
 
@@ -186,8 +182,6 @@ definition {
 		PublicationsNavigator.openPublicationsSettings();
 
 		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_ALLOW_UNAPPROVED_CHANGES");
-
-		Click(locator1 = "Button#SAVE");
 	}
 
 	@summary = "Default summary"
@@ -195,8 +189,6 @@ definition {
 		PublicationsNavigator.openPublicationsSettings();
 
 		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_MANAGE_REMOTELY");
-
-		Click(locator1 = "Button#SAVE");
 	}
 
 	@summary = "Default summary"
@@ -218,25 +210,27 @@ definition {
 				FormFields.enableCheckbox(fieldName = "Sandbox Enabled");
 			}
 
-			AssertClick(
-				locator1 = "Button#SAVE",
-				value1 = "Save");
+			if (IsElementPresent(locator1 = "Button#SAVE")) {
+				AssertClick(
+					locator1 = "Button#SAVE",
+					value1 = "Save");
+			}
+			else {
+				AssertClick(
+					locator1 = "Button#UPDATE",
+					value1 = "Update");
+			}
 
 			Alert.viewSuccessMessage();
 		}
 		else {
-			ApplicationsMenu.gotoPortlet(
-				category = "Publications",
-				panel = "Applications",
-				portlet = "Publications");
+			PublicationsNavigator.openPublicationsSettings();
 
 			Check.checkToggleSwitch(locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH");
 
 			if (${enableSandboxOnly} == "true") {
 				Check.checkToggleSwitch(locator1 = "Publications#ENABLE_SANDBOX_ONLY_TOGGLE_SWITCH");
 			}
-
-			Click(locator1 = "Button#SAVE");
 		}
 	}
 
@@ -254,8 +248,6 @@ definition {
 		PublicationsNavigator.openPublicationsSettings();
 
 		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_SANDBOX_ONLY_TOGGLE_SWITCH");
-
-		Click(locator1 = "Button#SAVE");
 	}
 
 	@summary = "Default summary"

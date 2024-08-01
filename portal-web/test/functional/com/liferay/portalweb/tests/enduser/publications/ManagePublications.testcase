@@ -420,12 +420,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"false\"";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		PortletEntry.save();
+		PublicationsNavigator.openPublicationsSettings();
 
 		AssertNotChecked(
 			locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH",

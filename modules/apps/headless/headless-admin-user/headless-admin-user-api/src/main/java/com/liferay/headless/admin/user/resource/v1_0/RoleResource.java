@@ -65,6 +65,10 @@ public interface RoleResource {
 	public Role getRoleByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
 
+	public Role patchRoleByExternalReferenceCode(
+			String externalReferenceCode, Role role)
+		throws Exception;
+
 	public Role putRoleByExternalReferenceCode(
 			String externalReferenceCode, Role role)
 		throws Exception;
@@ -75,6 +79,26 @@ public interface RoleResource {
 
 	public void postRoleByExternalReferenceCodeUserAccountAssociation(
 			String externalReferenceCode, Long userAccountId)
+		throws Exception;
+
+	public void
+			deleteOrganizationRoleByExternalReferenceCodeUserAccountAssociation(
+				String externalReferenceCode, Long userAccountId,
+				Long organizationId)
+		throws Exception;
+
+	public void
+			postOrganizationRoleByExternalReferenceCodeUserAccountAssociation(
+				String externalReferenceCode, Long userAccountId,
+				Long organizationId)
+		throws Exception;
+
+	public void deleteSiteRoleByExternalReferenceCodeUserAccountAssociation(
+			String externalReferenceCode, Long userAccountId, Long siteId)
+		throws Exception;
+
+	public void postSiteRoleByExternalReferenceCodeUserAccountAssociation(
+			String externalReferenceCode, Long userAccountId, Long siteId)
 		throws Exception;
 
 	public Role getRole(Long roleId) throws Exception;

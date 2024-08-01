@@ -19,6 +19,14 @@
 		"actions": [
 		],
 		"description": "",
+		"name": "Liferay Staff",
+		"subtype": "",
+		"type": 1
+	},
+	{
+		"actions": [
+		],
+		"description": "",
 		"name": "Partner Manager",
 		"subtype": "",
 		"type": 6

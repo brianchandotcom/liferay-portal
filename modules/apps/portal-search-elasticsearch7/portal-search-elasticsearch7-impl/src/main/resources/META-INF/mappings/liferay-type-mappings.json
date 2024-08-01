@@ -1137,6 +1137,7 @@
 			"template_hu": {
 				"mapping": {
 					"analyzer": "hungarian",
+					"search_analyzer": "liferay_analyzer_hu",
 					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"

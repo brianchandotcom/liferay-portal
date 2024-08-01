@@ -12,7 +12,9 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.User;
@@ -87,10 +89,10 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 
 	@Test
 	public void testContribute() throws Exception {
-		_testContribute(_blogsEntry);
-		_testContribute(_journalArticle);
-		_testContribute(_journalFolder);
-		_testContribute(_user);
+		_testContribute(_blogsEntry, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+		_testContribute(_journalArticle, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+		_testContribute(_journalFolder, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+		_testContribute(_user, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
 	}
 
 	private boolean _isSearchEngineSolr() {
@@ -100,7 +102,18 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 	}
 
 	private void _testContribute(
-			ExternalReferenceCodeModel externalReferenceCodeModel)
+			ExternalReferenceCodeModel externalReferenceCodeModel,
+			String fieldName)
+		throws Exception {
+
+		_testContribute(
+			externalReferenceCodeModel,
+			externalReferenceCodeModel.getExternalReferenceCode(), fieldName);
+	}
+
+	private void _testContribute(
+			ExternalReferenceCodeModel externalReferenceCodeModel,
+			String externalReferenceCode, String fieldName)
 		throws Exception {
 
 		CountSearchRequest countSearchRequest = new CountSearchRequest();
@@ -115,11 +128,13 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
+		ClassedModel classedModel = (ClassedModel)externalReferenceCodeModel;
+
 		booleanQuery.addMustQueryClauses(
 			_queries.term(Field.COMPANY_ID, TestPropsValues.getCompanyId()),
 			_queries.term(
-				"externalReferenceCode",
-				externalReferenceCodeModel.getExternalReferenceCode()));
+				Field.ENTRY_CLASS_NAME, classedModel.getModelClassName()),
+			_queries.term(fieldName, externalReferenceCode));
 
 		if (externalReferenceCodeModel instanceof GroupedModel) {
 			booleanQuery.addMustQueryClauses(
@@ -131,8 +146,16 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(
 			countSearchRequest);
 
-		Assert.assertTrue(countSearchResponse.getCount() == 1);
+		Assert.assertTrue(
+			StringBundler.concat(
+				"Expected to find 1 document containing field ", fieldName,
+				" with value ", externalReferenceCode, ". Instead found ",
+				countSearchResponse.getCount(), "."),
+			countSearchResponse.getCount() == 1);
 	}
+
+	private static final String _EXTERNAL_REFERENCE_CODE_FIELD_NAME =
+		"externalReferenceCode";
 
 	private BlogsEntry _blogsEntry;
 	private JournalArticle _journalArticle;

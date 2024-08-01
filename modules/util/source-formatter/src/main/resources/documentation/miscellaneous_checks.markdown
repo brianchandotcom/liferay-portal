@@ -6,6 +6,7 @@ Check | File Extensions | Description
 [BNDSuiteCheck](check/bnd_suite_check.markdown#bndsuitecheck) | .bnd | Checks that deprecated apps are moved to the `archived` folder. |
 [CreationMenuBuilderCheck](check/builder_check.markdown#buildercheck) | .java | Checks that `CreationMenuBuilder` is used when possible. |
 FullyQualifiedNameCheck | .java | Finds cases where a Fully Qualified Name is used instead of importing a class. |
+GoogleFontsCheck | | Checks that we do not use Google fonts. |
 [ItemBuilderCheck](check/builder_check.markdown#buildercheck) | .java | Checks that `DropdownItemBuilder`, `LabelItemBuilder` or `NavigationItemBuilder` is used when possible. |
 [ItemListBuilderCheck](check/builder_check.markdown#buildercheck) | .java | Checks that `DropdownItemListBuilder`, `LabelItemListBuilder` or `NavigationItemListBuilder` is used when possible. |
 [JSPModuleIllegalImportsCheck](check/jsp_module_illegal_imports_check.markdown#jspmoduleillegalimportscheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds incorrect use of `com.liferay.registry.Registry` or `com.liferay.util.ContentUtil`. |

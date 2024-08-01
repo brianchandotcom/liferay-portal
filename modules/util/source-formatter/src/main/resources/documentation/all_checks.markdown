@@ -91,6 +91,7 @@ FilterStringWhitespaceCheck | [Bug Prevention](bug_prevention_checks.markdown#bu
 FullyQualifiedNameCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | .java | Finds cases where a Fully Qualified Name is used instead of importing a class. |
 [GenericTypeCheck](check/generic_type_check.markdown#generictypecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that generics are always specified to provide compile-time checking and removing the risk of `ClassCastException` during runtime. |
 [GetterUtilCheck](check/getter_util_check.markdown#getterutilcheck) | [Styling](styling_checks.markdown#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where the default value is passed to `GetterUtil.get*` or `ParamUtil.get*`. |
+GoogleFontsCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | | Checks that we do not use Google fonts. |
 GradleBlockOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .gradle | Sorts logic in gradle build files. |
 GradleBodyCheck | [Styling](styling_checks.markdown#styling-checks) | .gradle | Applies rules to enforce consistency in the body of gradle build files. |
 GradleCommerceDependenciesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .gradle | Checks the modules that are outside of Commerce are not allowed to depend on Commerce modules. |

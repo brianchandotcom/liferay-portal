@@ -9,7 +9,6 @@ import {Liferay} from '../../../common/services/liferay';
 import {
 	addAccountFlag,
 	getAccountSubscriptionGroups,
-	getAccountUserAccountsByExternalReferenceCode,
 	getAnalyticsCloudWorkspace,
 	getDXPCloudEnvironment,
 	getKoroneikiAccounts,
@@ -25,8 +24,6 @@ import reducer, {actionTypes} from './reducer';
 
 const AppContext = createContext();
 
-const MAX_PAGE_SIZE = 9999;
-
 const AppContextProvider = ({children}) => {
 	const {client, oktaSessionAPI} = useAppPropertiesContext();
 	const [state, dispatch] = useReducer(reducer, {
@@ -38,7 +35,6 @@ const AppContextProvider = ({children}) => {
 		sessionId: '',
 		step: ONBOARDING_STEP_TYPES.welcome,
 		subscriptionGroups: undefined,
-		totalAdministratorAccounts: 0,
 		userAccount: undefined,
 	});
 
@@ -95,49 +91,6 @@ const AppContextProvider = ({children}) => {
 			}
 		};
 
-		const getTotalAdministratorAccounts = async (
-			projectExternalReferenceCode
-		) => {
-			const {data} = await client.query({
-				query: getAccountUserAccountsByExternalReferenceCode,
-				variables: {
-					externalReferenceCode: projectExternalReferenceCode,
-					pageSize: MAX_PAGE_SIZE,
-				},
-			});
-
-			if (data) {
-				const totalAdministratorAccounts = data.accountUserAccountsByExternalReferenceCode?.items?.reduce(
-					(totalAdministrators, userAccount) => {
-						const currentAccountBrief = userAccount.accountBriefs?.find(
-							(accountBrief) =>
-								accountBrief.externalReferenceCode ===
-								projectExternalReferenceCode
-						);
-						if (currentAccountBrief) {
-							const isAccountAdmin = currentAccountBrief?.roleBriefs?.some(
-								(role) => role.name === ROLE_TYPES.admin.key
-							);
-							const isRequester = currentAccountBrief?.roleBriefs?.some(
-								(role) => role.name === ROLE_TYPES.requester.key
-							);
-
-							if (isAccountAdmin || isRequester) {
-								return ++totalAdministrators;
-							}
-						}
-
-						return totalAdministrators;
-					},
-					0
-				);
-
-				dispatch({
-					payload: totalAdministratorAccounts,
-					type: actionTypes.UPDATE_CURRENT_TOTAL_ADMINISTRATORS,
-				});
-			}
-		};
 		const getProject = async (externalReferenceCode, accountBrief) => {
 			const {data: projects} = await client.query({
 				query: getKoroneikiAccounts,
@@ -286,7 +239,6 @@ const AppContextProvider = ({children}) => {
 						projectExternalReferenceCode
 					);
 					getSessionId();
-					getTotalAdministratorAccounts(projectExternalReferenceCode);
 
 					client.mutate({
 						context: {

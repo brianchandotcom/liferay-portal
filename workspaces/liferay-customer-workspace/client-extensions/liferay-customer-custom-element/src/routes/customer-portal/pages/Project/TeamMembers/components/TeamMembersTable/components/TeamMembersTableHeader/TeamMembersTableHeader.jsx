@@ -35,7 +35,7 @@ const TeamMembersTableHeader = ({
 			{open && (
 				<ClayModal center observer={observer}>
 					<InviteTeamMembersForm
-						availableAdministratorAssets={
+						availableSupportSeatsCount={
 							availableSupportSeatsCount
 						}
 						handlePage={() => onOpenChange(false)}

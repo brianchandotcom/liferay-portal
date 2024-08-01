@@ -5,16 +5,16 @@
 
 type Props = {
 	id: string;
-	objectId?: string;
+	objectDefinitionId?: string;
 	pageElements?: PageElement[];
 };
 
 export default function getFormContainerDefinition({
 	id,
-	objectId,
+	objectDefinitionId,
 	pageElements,
 }: Props): PageElement {
-	if (!objectId) {
+	if (!objectDefinitionId) {
 		return {
 			definition: {},
 			id,
@@ -26,7 +26,7 @@ export default function getFormContainerDefinition({
 		definition: {
 			formConfig: {
 				formReference: {
-					className: `com.liferay.object.model.ObjectDefinition#${objectId}`,
+					className: `com.liferay.object.model.ObjectDefinition#${objectDefinitionId}`,
 					classType: 0,
 				},
 			},

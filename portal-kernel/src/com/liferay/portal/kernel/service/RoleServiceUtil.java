@@ -75,6 +75,14 @@ public class RoleServiceUtil {
 		return getService().fetchRole(companyId, name);
 	}
 
+	public static Role fetchRoleByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().fetchRoleByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
 	/**
 	 * Returns all the roles associated with the group.
 	 *

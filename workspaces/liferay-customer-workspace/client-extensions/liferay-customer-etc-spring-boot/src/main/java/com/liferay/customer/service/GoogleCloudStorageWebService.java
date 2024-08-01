@@ -13,6 +13,7 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.petra.string.StringBundler;
 
 import java.io.ByteArrayInputStream;
@@ -36,26 +37,15 @@ import org.springframework.web.reactive.function.client.WebClient;
  * @author Amos Fong
  */
 @Component
-public class GoogleCloudStorageWebService {
+public class GoogleCloudStorageWebService extends BaseRestController {
 
 	public void deleteObject(String bucketName, String objectName)
 		throws Exception {
 
-		WebClient.create(
-			"https://storage.googleapis.com"
-		).delete(
-		).uri(
-			uriBuilder -> uriBuilder.path(
-				"/storage/v1/b/{bucketName}/o/{objectName}"
-			).build(
-				bucketName, objectName
-			)
-		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + _getAccessToken()
-		).retrieve(
-		).bodyToMono(
-			Void.class
-		).block();
+		delete(
+			"Bearer " + _getAccessToken(), null,
+			StringBundler.concat(
+				"/storage/v1/b/", bucketName, "/o/", objectName));
 	}
 
 	public String getDownloadURL(String bucketName, String objectName)
@@ -89,17 +79,12 @@ public class GoogleCloudStorageWebService {
 	public String getUploadSessionURL(String bucketName, String objectName)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("https://storage.googleapis.com/upload/storage/v1/b/");
-		sb.append(bucketName);
-		sb.append("/o?uploadType=resumable&name=");
-		sb.append(objectName);
-
 		ResponseEntity<String> responseEntity = WebClient.create(
 		).post(
 		).uri(
-			sb.toString()
+			StringBundler.concat(
+				"/upload/storage/v1/b/", bucketName,
+				"/o?uploadType=resumable&name=", objectName)
 		).accept(
 			MediaType.APPLICATION_JSON
 		).header(
@@ -114,6 +99,11 @@ public class GoogleCloudStorageWebService {
 		URI uri = httpHeaders.getLocation();
 
 		return uri.toString();
+	}
+
+	@Override
+	protected String getLXCDXPURL() {
+		return "https://storage.googleapis.com";
 	}
 
 	private String _getAccessToken() throws Exception {

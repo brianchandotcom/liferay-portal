@@ -5,6 +5,7 @@
 
 package com.liferay.customer.service;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.customer.model.TicketAttachment;
 import com.liferay.petra.string.StringBundler;
 
@@ -15,18 +16,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Amos Fong
  */
 @Component
-public class TicketAttachmentWebService {
+public class TicketAttachmentWebService extends BaseRestController {
 
 	public TicketAttachment addTicketAttachment(
 			Jwt jwt, String accountKey, String externalReferenceCode,
@@ -67,23 +64,9 @@ public class TicketAttachmentWebService {
 		requestJSONObject.put("status", statusJSONObject);
 
 		JSONObject jsonObject = new JSONObject(
-			WebClient.create(
-				_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
-			).post(
-			).uri(
-				"/o/c/ticketattachments"
-			).accept(
-				MediaType.APPLICATION_JSON
-			).contentType(
-				MediaType.APPLICATION_JSON
-			).header(
-				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-			).body(
-				BodyInserters.fromValue(requestJSONObject.toString())
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block());
+			post(
+				"Bearer " + jwt.getTokenValue(), requestJSONObject.toString(),
+				"/o/c/ticketattachments"));
 
 		return new TicketAttachment(jsonObject);
 	}
@@ -101,23 +84,9 @@ public class TicketAttachmentWebService {
 		requestJSONObject.put("status", statusJSONObject);
 
 		JSONObject jsonObject = new JSONObject(
-			WebClient.create(
-				_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
-			).patch(
-			).uri(
-				"/o/c/ticketattachments/" + ticketAttachmentId
-			).accept(
-				MediaType.APPLICATION_JSON
-			).contentType(
-				MediaType.APPLICATION_JSON
-			).header(
-				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-			).body(
-				BodyInserters.fromValue(requestJSONObject.toString())
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block());
+			patch(
+				"Bearer " + jwt.getTokenValue(), requestJSONObject.toString(),
+				"/o/c/ticketattachments/" + ticketAttachmentId));
 
 		return new TicketAttachment(jsonObject);
 	}
@@ -125,17 +94,9 @@ public class TicketAttachmentWebService {
 	public void deleteTicketAttachment(Jwt jwt, long ticketAttachmentId)
 		throws Exception {
 
-		WebClient.create(
-			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
-		).delete(
-		).uri(
-			"/o/c/ticketattachments/" + ticketAttachmentId
-		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-		).retrieve(
-		).bodyToMono(
-			Void.class
-		).block();
+		delete(
+			"Bearer " + jwt.getTokenValue(), null,
+			"/o/c/ticketattachments/" + ticketAttachmentId);
 	}
 
 	public TicketAttachment fetchTicketAttachment(
@@ -143,19 +104,9 @@ public class TicketAttachmentWebService {
 
 		try {
 			JSONObject jsonObject = new JSONObject(
-				WebClient.create(
-					_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
-				).get(
-				).uri(
-					"/o/c/ticketattachments/" + ticketAttachmentId
-				).accept(
-					MediaType.APPLICATION_JSON
-				).header(
-					HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-				).retrieve(
-				).bodyToMono(
-					String.class
-				).block());
+				get(
+					"Bearer " + jwt.getTokenValue(),
+					"/o/c/ticketattachments/" + ticketAttachmentId));
 
 			return new TicketAttachment(jsonObject);
 		}
@@ -185,19 +136,7 @@ public class TicketAttachmentWebService {
 		sb.append(zendeskTicketId);
 
 		JSONObject jsonObject = new JSONObject(
-			WebClient.create(
-				_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
-			).get(
-			).uri(
-				sb.toString()
-			).accept(
-				MediaType.APPLICATION_JSON
-			).header(
-				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block());
+			get("Bearer " + jwt.getTokenValue(), sb.toString()));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 

@@ -5,6 +5,7 @@
 
 package com.liferay.customer;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
 import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
 import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
@@ -25,17 +26,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * @author Amos Fong
  */
 @Component
 @ComponentScan(basePackages = "com.liferay.osb")
-public class CustomerCommandLineRunner implements CommandLineRunner {
+public class CustomerCommandLineRunner
+	extends BaseRestController implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -83,20 +83,15 @@ public class CustomerCommandLineRunner implements CommandLineRunner {
 		throws Exception {
 
 		JSONObject jsonObject = new JSONObject(
-			WebClient.create(
-				_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
-			).get(
-			).uri(
-				"/o/c/ticketattachments?filter=zendeskTicketId eq " +
-					zendeskTicketId
-			).accept(
-				MediaType.APPLICATION_JSON
-			).header(
-				HttpHeaders.AUTHORIZATION, _getAuthorization()
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block());
+			get(
+				_getAuthorization(),
+				_defaultUriBuilderFactory.builder(
+				).path(
+					"/o/c/ticketattachments"
+				).queryParam(
+					"filter=zendeskTicketId eq " + zendeskTicketId
+				).build(
+				).toString()));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
@@ -109,19 +104,10 @@ public class CustomerCommandLineRunner implements CommandLineRunner {
 						ticketAttachmentJSONObject.getString("id"));
 			}
 
-			WebClient.create(
-				_etcSpringBootClientExtensionURL
-			).delete(
-			).uri(
-				"/ticket-attachments/" + ticketAttachmentJSONObject.getInt("id")
-			).accept(
-				MediaType.APPLICATION_JSON
-			).header(
-				HttpHeaders.AUTHORIZATION, _getAuthorization()
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block();
+			delete(
+				_getAuthorization(), null,
+				"/ticket-attachments/" +
+					ticketAttachmentJSONObject.getInt("id"));
 		}
 	}
 
@@ -133,6 +119,9 @@ public class CustomerCommandLineRunner implements CommandLineRunner {
 
 	private static final Log _log = LogFactory.getLog(
 		CustomerCommandLineRunner.class);
+
+	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+		new DefaultUriBuilderFactory();
 
 	@Value("${liferay.customer.etc.spring.boot.client.extension.url}")
 	private String _etcSpringBootClientExtensionURL;

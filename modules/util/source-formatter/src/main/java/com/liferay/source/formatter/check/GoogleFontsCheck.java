@@ -17,7 +17,8 @@ public class GoogleFontsCheck extends BaseFileCheck {
 		int x = content.indexOf("fonts.googleapis.com");
 
 		if (x != -1) {
-			addMessage(fileName, "Do not use Google fonts");
+			addMessage(
+				fileName, "Do not use Google fonts", getLineNumber(content, x));
 		}
 
 		return content;

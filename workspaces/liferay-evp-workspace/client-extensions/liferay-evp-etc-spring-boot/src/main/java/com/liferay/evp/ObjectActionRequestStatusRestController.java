@@ -5,6 +5,7 @@
 
 package com.liferay.evp;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * @author Elvison Victor
@@ -43,11 +45,15 @@ public class ObjectActionRequestStatusRestController
 		long evpOrganizationId = propertiesJSONObject.getLong(
 			"r_organization_c_evpOrganizationId");
 
-		JSONObject evpOrganizationJSONObject = get(
-			jwt,
-			uriBuilder -> uriBuilder.path(
+		String response = get(
+			jwt.toString(),
+			_defaultUriBuilderFactory.builder(
+			).path(
 				"/o/c/evporganizations/" + evpOrganizationId
-			).build());
+			).build(
+			).toString());
+
+		JSONObject evpOrganizationJSONObject = new JSONObject(response);
 
 		String organizationStatus = evpOrganizationJSONObject.getJSONObject(
 			"organizationStatus"
@@ -57,6 +63,7 @@ public class ObjectActionRequestStatusRestController
 
 		if (organizationStatus.equals("awaitingApprovalOnEVP")) {
 			put(
+				jwt.toString(),
 				new JSONObject(
 					HashMapBuilder.<String, HashMap<String, String>>put(
 						"requestStatus",
@@ -65,15 +72,20 @@ public class ObjectActionRequestStatusRestController
 						).put(
 							"name", "Awaiting Organization Review"
 						).build()
-					).build()),
-				jwt,
-				uriBuilder -> uriBuilder.path(
+					).build()
+				).toString(),
+				_defaultUriBuilderFactory.builder(
+				).path(
 					"/o/c/evprequests/" +
 						objectEntryDTOEVPRequestJSONObject.getLong("id")
-				).build());
+				).build(
+				).toString());
 		}
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
+
+	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+		new DefaultUriBuilderFactory();
 
 }

@@ -22,11 +22,12 @@ class StubScreen extends Screen {}
 StubScreen.prototype.activate = jest.fn();
 StubScreen.prototype.beforeDeactivate = jest.fn();
 StubScreen.prototype.deactivate = jest.fn();
+StubScreen.prototype.disposeInternal = jest.fn();
+StubScreen.prototype.evaluateScripts = jest.fn();
+StubScreen.prototype.evaluateStyles = jest.fn();
 StubScreen.prototype.flip = jest.fn();
 StubScreen.prototype.load = jest.fn(() => Promise.resolve());
-StubScreen.prototype.disposeInternal = jest.fn();
-StubScreen.prototype.evaluateStyles = jest.fn();
-StubScreen.prototype.evaluateScripts = jest.fn();
+StubScreen.prototype.preloadStyles = jest.fn();
 
 describe('App', function () {
 	beforeAll(() => {
@@ -422,8 +423,10 @@ describe('App', function () {
 			}
 
 			flip(surfaces) {
-				super.flip(surfaces);
+				const promises = super.flip(surfaces);
 				event.emit('flip');
+
+				return promises;
 			}
 		}
 
@@ -1723,12 +1726,13 @@ describe('App', function () {
 		StubScreen2.prototype.activate = jest.fn();
 		StubScreen2.prototype.beforeDeactivate = jest.fn();
 		StubScreen2.prototype.deactivate = jest.fn();
+		StubScreen2.prototype.evaluateScripts = jest.fn();
+		StubScreen2.prototype.evaluateStyles = jest.fn();
 		StubScreen2.prototype.flip = jest.fn();
 		StubScreen2.prototype.load = jest
 			.fn()
 			.mockImplementation(() => Promise.resolve());
-		StubScreen2.prototype.evaluateStyles = jest.fn();
-		StubScreen2.prototype.evaluateScripts = jest.fn();
+
 		this.app = new App();
 
 		jest.spyOn(this.app, 'updateHistory_').mockImplementation(() => {});
@@ -1757,6 +1761,66 @@ describe('App', function () {
 					StubScreen.prototype.deactivate,
 					StubScreen2.prototype.flip,
 					StubScreen2.prototype.evaluateStyles,
+					StubScreen2.prototype.evaluateScripts,
+					StubScreen2.prototype.activate,
+					StubScreen.prototype.disposeInternal,
+				];
+				for (let i = 1; i < lifecycleOrder.length - 1; i++) {
+					expect(
+						lifecycleOrder[i - 1].mock.invocationCallOrder[0]
+					).toBeLessThan(
+						lifecycleOrder[i].mock.invocationCallOrder[0]
+					);
+				}
+
+				done();
+			});
+		});
+	});
+
+	it('respects screen lifecycle on navigate, preload styles', (done) => {
+		class StubScreen2 extends Screen {}
+		StubScreen2.prototype.activate = jest.fn();
+		StubScreen2.prototype.beforeDeactivate = jest.fn();
+		StubScreen2.prototype.deactivate = jest.fn();
+		StubScreen2.prototype.evaluateScripts = jest.fn();
+		StubScreen2.prototype.evaluateStyles = jest.fn();
+		StubScreen2.prototype.flip = jest.fn();
+		StubScreen2.prototype.load = jest
+			.fn()
+			.mockImplementation(() => Promise.resolve());
+		StubScreen2.prototype.preloadStyles = jest.fn();
+
+		this.app = new App({preloadCSS: true});
+
+		jest.spyOn(this.app, 'updateHistory_').mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'maybeUpdateScrollPositionState_'
+		).mockImplementation(() => {});
+		jest.spyOn(
+			this.app,
+			'syncScrollPositionSyncThenAsync_'
+		).mockImplementation(() => {});
+
+		this.app.addRoutes(new Route('/path1', StubScreen));
+		this.app.addRoutes(new Route('/path2', StubScreen2));
+
+		this.app.navigate('/path1').then(() => {
+			this.app.navigate('/path2').then(() => {
+				const lifecycleOrder = [
+					StubScreen.prototype.load,
+					StubScreen.prototype.preloadStyles,
+					StubScreen.prototype.evaluateStyles,
+					StubScreen.prototype.flip,
+					StubScreen.prototype.evaluateScripts,
+					StubScreen.prototype.activate,
+					StubScreen.prototype.beforeDeactivate,
+					StubScreen2.prototype.load,
+					StubScreen.prototype.deactivate,
+					StubScreen2.prototype.preloadStyles,
+					StubScreen2.prototype.evaluateStyles,
+					StubScreen2.prototype.flip,
 					StubScreen2.prototype.evaluateScripts,
 					StubScreen2.prototype.activate,
 					StubScreen.prototype.disposeInternal,

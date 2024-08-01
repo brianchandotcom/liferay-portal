@@ -1062,11 +1062,11 @@ public class DefaultExportImportContentProcessorTest {
 	}
 
 	private List<String> _getURLs(String content) {
+		List<String> urls = new ArrayList<>();
+
 		Matcher matcher = _pattern.matcher(StringPool.BLANK);
 
 		String[] lines = StringUtil.split(content, StringPool.NEW_LINE);
-
-		List<String> urls = new ArrayList<>();
 
 		for (String line : lines) {
 			matcher.reset(line);

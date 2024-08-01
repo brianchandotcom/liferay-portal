@@ -56,6 +56,8 @@ public class ActionUtil {
 	public static Group getGroup(HttpServletRequest httpServletRequest)
 		throws Exception {
 
+		Group group = null;
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -63,8 +65,6 @@ public class ActionUtil {
 		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
-
-		Group group = null;
 
 		if (groupId > 0) {
 			group = GroupLocalServiceUtil.getGroup(groupId);

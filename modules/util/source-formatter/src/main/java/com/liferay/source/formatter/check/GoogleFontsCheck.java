@@ -14,14 +14,18 @@ public class GoogleFontsCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		int x = content.indexOf("fonts.googleapis.com");
+		int x = -1;
 
-		if (x != -1) {
+		while (true) {
+			x = content.indexOf("fonts.googleapis.com", x + 1);
+
+			if (x == -1) {
+				return content;
+			}
+
 			addMessage(
 				fileName, "Do not use Google fonts", getLineNumber(content, x));
 		}
-
-		return content;
 	}
 
 }

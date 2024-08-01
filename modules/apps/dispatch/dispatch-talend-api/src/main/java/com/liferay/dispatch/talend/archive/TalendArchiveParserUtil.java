@@ -314,12 +314,12 @@ public class TalendArchiveParserUtil {
 			File jobDirectory, String jobName)
 		throws IOException {
 
+		List<String> jvmOptionsList = new ArrayList<>();
+
 		Path path = jobDirectory.toPath();
 
 		List<String> jobScriptPathStrings = _getJobScriptPathStrings(
 			path.resolve(jobName));
-
-		List<String> jvmOptionsList = new ArrayList<>();
 
 		for (String jobScriptPathString : jobScriptPathStrings) {
 			try (BufferedReader bufferedReader = new BufferedReader(

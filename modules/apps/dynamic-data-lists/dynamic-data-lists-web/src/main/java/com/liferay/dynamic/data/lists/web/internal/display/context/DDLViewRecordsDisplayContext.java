@@ -192,13 +192,13 @@ public class DDLViewRecordsDisplayContext {
 			DDLRecordVersion recordVersion)
 		throws StorageException {
 
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			new LinkedHashMap<>();
+
 		DDMFormValues ddmFormValues = recordVersion.getDDMFormValues();
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
-
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-			new LinkedHashMap<>();
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			_putDDMFormFieldValue(ddmFormFieldValuesMap, ddmFormFieldValue);

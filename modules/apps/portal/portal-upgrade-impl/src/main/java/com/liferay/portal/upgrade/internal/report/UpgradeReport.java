@@ -619,9 +619,13 @@ public class UpgradeReport {
 
 		try {
 			for (Map.Entry<String, Object> entry1 : reportData.entrySet()) {
-				String key = "upgrade.report." + entry1.getKey();
-
 				Object value = entry1.getValue();
+
+				if (value == null) {
+					continue;
+				}
+
+				String key = "upgrade.report." + entry1.getKey();
 
 				if (value instanceof Map<?, ?>) {
 					Map<?, ?> map = (Map<?, ?>)value;
@@ -646,8 +650,13 @@ public class UpgradeReport {
 		StringBundler sb = new StringBundler();
 
 		for (Map.Entry<String, Object> entry1 : reportData.entrySet()) {
-			String key = entry1.getKey();
 			Object value = entry1.getValue();
+
+			if (value == null) {
+				continue;
+			}
+
+			String key = entry1.getKey();
 
 			if (value instanceof List<?>) {
 				String reportHeader = _getReportHeader(key);

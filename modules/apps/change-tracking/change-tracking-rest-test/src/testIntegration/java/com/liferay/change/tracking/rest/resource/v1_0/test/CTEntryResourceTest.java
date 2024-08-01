@@ -203,6 +203,14 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 	}
 
 	@Override
+	protected CTEntry
+			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry()
+		throws Exception {
+
+		return _addCTEntry(_getCTCollectionId(), RandomTestUtil.randomString());
+	}
+
+	@Override
 	protected CTEntry testGetCTEntry_addCTEntry() throws Exception {
 		return _addCTEntry(_getCTCollectionId(), RandomTestUtil.randomString());
 	}

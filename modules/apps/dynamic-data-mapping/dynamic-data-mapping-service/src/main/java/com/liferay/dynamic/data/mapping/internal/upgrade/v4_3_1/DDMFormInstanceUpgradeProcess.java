@@ -38,21 +38,21 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 		sb.append("[\\\\\\\\\"%@%\\\\\\\\\"]\\\"%'");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select formInstanceId, settings_ from DDMFormInstance " +
-					sb.toString());
+				"select ctCollectionId, formInstanceId, settings_ from " +
+					"DDMFormInstance " + sb.toString());
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMFormInstance set settings_ = ? where " +
-						"formInstanceId = ?");
+						"ctCollectionId = ? and formInstanceId = ?");
 			PreparedStatement preparedStatement3 = connection.prepareStatement(
-				"select formInstanceVersionId, settings_ from " +
-					"DDMFormInstanceVersion " + sb.toString());
+				"select ctCollectionId, formInstanceVersionId, settings_ " +
+					"from DDMFormInstanceVersion " + sb.toString());
 			PreparedStatement preparedStatement4 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMFormInstanceVersion set settings_ = ? where " +
-						"formInstanceVersionId = ?")) {
+						"ctCollectionId = ? and formInstanceVersionId = ?")) {
 
 			_executePreparedStatements(
 				"formInstanceId", preparedStatement1, preparedStatement2);
@@ -77,7 +77,9 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 					updatePreparedStatement.setString(
 						1, settingsJSONObject.toString());
 					updatePreparedStatement.setLong(
-						2, resultSet.getLong(idColumnName));
+						2, resultSet.getLong("ctCollectionId"));
+					updatePreparedStatement.setLong(
+						3, resultSet.getLong(idColumnName));
 
 					updatePreparedStatement.addBatch();
 				}

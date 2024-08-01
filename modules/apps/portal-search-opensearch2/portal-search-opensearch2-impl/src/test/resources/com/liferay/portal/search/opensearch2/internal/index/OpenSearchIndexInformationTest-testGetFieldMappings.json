@@ -1933,6 +1933,10 @@
 					"store": true,
 					"type": "keyword"
 				},
+				"userExternalReferenceCode": {
+					"store": true,
+					"type": "keyword"
+				},
 				"userGroupId": {
 					"store": true,
 					"type": "keyword"

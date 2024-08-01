@@ -283,6 +283,21 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
+	public void testDatabaseTablesEmpty() throws Exception {
+		_updatePortalRelease(
+			new Version(1, 0, 0), ReleaseInfo.getBuildDate(),
+			ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
+
+		_appender.start();
+
+		_appender.stop();
+
+		Assert.assertFalse(
+			StringUtil.contains(
+				_getReportContent(), "Table Name", StringPool.BLANK));
+	}
+
+	@Test
 	public void testGetDLStorageSizeAfterTimeout() throws Exception {
 		_appender.start();
 

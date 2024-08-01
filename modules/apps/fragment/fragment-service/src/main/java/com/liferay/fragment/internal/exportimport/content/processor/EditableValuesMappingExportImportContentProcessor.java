@@ -382,10 +382,11 @@ public class EditableValuesMappingExportImportContentProcessor
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		if (ExportImportThreadLocal.isStagingInProcess() &&
-			!stagingGroupHelper.isStagedPortlet(
-				portletDataContext.getScopeGroupId(),
-				assetRendererFactory.getPortletId())) {
+		if ((assetRendererFactory == null) ||
+			(ExportImportThreadLocal.isStagingInProcess() &&
+			 !stagingGroupHelper.isStagedPortlet(
+				 portletDataContext.getScopeGroupId(),
+				 assetRendererFactory.getPortletId()))) {
 
 			return;
 		}

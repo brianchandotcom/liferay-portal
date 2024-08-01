@@ -113,6 +113,8 @@ public class AudioDLPreviewRendererProvider
 			FileVersion fileVersion, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		List<String> previewFileURLs = new ArrayList<>();
+
 		int status = ParamUtil.getInteger(
 			httpServletRequest, "status", WorkflowConstants.STATUS_ANY);
 
@@ -125,8 +127,6 @@ public class AudioDLPreviewRendererProvider
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		List<String> previewFileURLs = new ArrayList<>();
 
 		try {
 			AudioProcessor audioProcessor = (AudioProcessor)_dlProcessor;

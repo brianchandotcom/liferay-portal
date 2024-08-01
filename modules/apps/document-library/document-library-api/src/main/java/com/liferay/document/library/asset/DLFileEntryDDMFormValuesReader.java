@@ -44,12 +44,12 @@ public class DLFileEntryDDMFormValuesReader extends BaseDDMFormValuesReader {
 	}
 
 	protected DLFileEntryMetadata getDLFileEntryMetadata() {
+		DLFileEntryMetadata dlFileEntryMetadata = null;
+
 		List<DDMStructure> ddmStructures =
 			DDMStructureLocalServiceUtil.getClassStructures(
 				_fileEntry.getCompanyId(),
 				PortalUtil.getClassNameId(DLFileEntryMetadata.class));
-
-		DLFileEntryMetadata dlFileEntryMetadata = null;
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			dlFileEntryMetadata =

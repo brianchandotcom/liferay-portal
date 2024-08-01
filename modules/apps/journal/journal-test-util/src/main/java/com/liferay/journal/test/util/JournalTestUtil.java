@@ -987,6 +987,21 @@ public class JournalTestUtil {
 
 	public static JournalArticle updateArticle(
 			long userId, JournalArticle article, Map<Locale, String> titleMap,
+			Map<Locale, String> contentMap, Locale defaultLocale,
+			boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+			contentMap, LocaleUtil.toLanguageId(defaultLocale));
+
+		return updateArticle(
+			userId, article, titleMap, content, null, workflowEnabled, approved,
+			serviceContext);
+	}
+
+	public static JournalArticle updateArticle(
+			long userId, JournalArticle article, Map<Locale, String> titleMap,
 			String content, boolean workflowEnabled, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {

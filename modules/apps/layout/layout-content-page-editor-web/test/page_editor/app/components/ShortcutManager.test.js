@@ -8,22 +8,59 @@ import React from 'react';
 
 import {SWITCH_SIDEBAR_PANEL} from '../../../../src/main/resources/META-INF/resources/page_editor/app/actions/types';
 import ShortcutManager from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/ShortcutManager';
-import {ShortcutContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
+import {ControlsProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
+import {
+	ShortcutContextProvider,
+	useSetEditedNodeId,
+} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext',
+	() => {
+		const setEditedNodeId = jest.fn();
+
+		return {
+			...jest.requireActual(
+				'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext'
+			),
+			useSetEditedNodeId: () => setEditedNodeId,
+		};
+	}
+);
+
 const DEFAULT_STATE = {
+	layoutData: {
+		items: {
+			fragment01: {
+				itemId: 'fragment01',
+				type: LAYOUT_DATA_ITEM_TYPES.fragment,
+			},
+		},
+	},
 	permissions: {
 		UPDATE: true,
 	},
 	sidebar: {},
 };
 
-const renderComponent = ({dispatch = () => {}, state = DEFAULT_STATE} = {}) =>
+const renderComponent = ({
+	activeItemIds,
+	dispatch = () => {},
+	state = DEFAULT_STATE,
+} = {}) =>
 	render(
 		<StoreMother.Component dispatch={dispatch} getState={() => state}>
-			<ShortcutContextProvider>
-				<ShortcutManager />
-			</ShortcutContextProvider>
+			<ControlsProvider
+				activeInitialState={{
+					activeItemIds,
+				}}
+			>
+				<ShortcutContextProvider>
+					<ShortcutManager />
+				</ShortcutContextProvider>
+			</ControlsProvider>
 		</StoreMother.Component>
 	);
 
@@ -111,5 +148,23 @@ describe('ShortcutManager', () => {
 		});
 
 		screen.getByText('keyboard-shortcuts');
+	});
+
+	it('sets the node id to be renamed when pressing ctrl + alt + R', () => {
+		const setEditedNodeId = useSetEditedNodeId();
+
+		renderComponent({
+			activeItemIds: 'fragment01',
+		});
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				altKey: true,
+				code: 'KeyR',
+				ctrlKey: true,
+			})
+		);
+
+		expect(setEditedNodeId).toBeCalledWith('fragment01');
 	});
 });

@@ -127,10 +127,6 @@ public class SynonymSearchTest {
 		doAssertSearch("feliz", Field.TITLE, LocaleUtil.BRAZIL, 2);
 		doAssertSearch("effectief", Field.TITLE, LocaleUtil.NETHERLANDS, 2);
 		doAssertSearch("hatékony", Field.TITLE, LocaleUtil.HUNGARY, 2);
-	}
-
-	@Test
-	public void testSearchOnLocaleWithCustomSynonymFilter() throws Exception {
 		doAssertSearch("maison", Field.TITLE, LocaleUtil.FRANCE, 2);
 	}
 
@@ -265,9 +261,9 @@ public class SynonymSearchTest {
 			"filterNames",
 			new String[] {
 				"liferay_filter_synonym_de", "liferay_filter_synonym_en",
-				"liferay_filter_synonym_es", "liferay_filter_synonym_hu",
-				"liferay_filter_synonym_nl", "liferay_filter_synonym_pt_BR",
-				"custom-synonym-filter-fr"
+				"liferay_filter_synonym_es", "liferay_filter_synonym_fr",
+				"liferay_filter_synonym_hu", "liferay_filter_synonym_nl",
+				"liferay_filter_synonym_pt_BR"
 			}
 		).build();
 	}

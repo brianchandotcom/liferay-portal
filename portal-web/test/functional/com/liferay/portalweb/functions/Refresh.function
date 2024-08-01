@@ -27,6 +27,16 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function refreshNoLiferayLog() {
+		WaitForSPARefresh();
+
+		selenium.refresh();
+
+		selenium.assertJavaScriptErrors("true");
+
+		selenium.assertLiferayErrors();
+	}
+
 	function refreshNoSPARefresh() {
 		selenium.refresh();
 

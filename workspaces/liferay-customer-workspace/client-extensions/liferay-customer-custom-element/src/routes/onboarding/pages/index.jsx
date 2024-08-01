@@ -103,16 +103,16 @@ const Pages = () => {
 		pageHandle();
 	};
 
-	let availableAdministratorAssets =
+	let availableSupportSeatsCount =
 		project && project.maxRequestors - supportSeatsCount;
-	availableAdministratorAssets =
-		availableAdministratorAssets < 0 ? 0 : availableAdministratorAssets;
+	availableSupportSeatsCount =
+		availableSupportSeatsCount < 0 ? 0 : availableSupportSeatsCount;
 
 	const StepsLayout = {
 		[ONBOARDING_STEP_TYPES.invites]: {
 			Component: (
 				<InviteTeamMembersForm
-					availableAdministratorAssets={availableAdministratorAssets}
+					availableSupportSeatsCount={availableSupportSeatsCount}
 					handlePage={invitesPageHandle}
 					leftButton={i18n.translate('skip-for-now')}
 					project={project}

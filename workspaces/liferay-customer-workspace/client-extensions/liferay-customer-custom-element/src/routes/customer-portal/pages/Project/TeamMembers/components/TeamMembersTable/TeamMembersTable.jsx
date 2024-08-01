@@ -31,8 +31,8 @@ import useUserAccountsByAccountExternalReferenceCode from './hooks/useUserAccoun
 import {getColumns} from './utils/getColumns';
 import getFilteredRoleBriefsByName from './utils/getFilteredRoleBriefsByName';
 
-const MAXIMUM_REQUESTORS_DEFAULT = -1;
-const UNLIMITED_RESQUESTORS = 9999;
+const MAXIMUM_SUPPORT_SEATS_DEFAULT = -1;
+const UNLIMITED_SUPPORT_SEATS = 9999;
 
 const TeamMembersTable = ({
 	koroneikiAccount,
@@ -81,8 +81,8 @@ const TeamMembersTable = ({
 
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
 
-	const unlimitedRequestersAccount =
-	koroneikiAccount?.maxRequestors === MAXIMUM_REQUESTORS_DEFAULT;
+	const isUnlimitedSupportSeats =
+		koroneikiAccount?.maxRequestors === MAXIMUM_SUPPORT_SEATS_DEFAULT;
 
 	const [
 		supportSeatsCount,
@@ -106,16 +106,16 @@ const TeamMembersTable = ({
 	] = useState(1);
 
 	useEffect(() => {
-		let remainingAdmins =
+		let availableSupportSeats =
 			koroneikiAccount?.maxRequestors - supportSeatsCount;
-		remainingAdmins = remainingAdmins < 0 ? 0 : remainingAdmins;
+		availableSupportSeats = availableSupportSeats < 0 ? 0 : availableSupportSeats;
 
 		setAvailableSupportSeatsCount(
-			unlimitedRequestersAccount 
-				? UNLIMITED_RESQUESTORS 
-				: remainingAdmins
+			isUnlimitedSupportSeats 
+				? UNLIMITED_SUPPORT_SEATS 
+				: availableSupportSeats
 		);
-	}, [koroneikiAccount, supportSeatsCount, unlimitedRequestersAccount]);
+	}, [koroneikiAccount, supportSeatsCount, isUnlimitedSupportSeats]);
 
 	const userAccounts =
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.items;
@@ -291,7 +291,7 @@ const TeamMembersTable = ({
 			return true;
 		}
 	
-		if (unlimitedRequestersAccount) {
+		if (isUnlimitedSupportSeats) {
 			return false;
 		}
 	

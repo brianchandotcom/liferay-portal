@@ -5,15 +5,20 @@
 
 package com.liferay.partner;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
+import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * @author Felipe França
@@ -83,8 +88,10 @@ public class ObjectActionMDFRequestStatusManagementRestController
 			return new ResponseEntity<>(json, HttpStatus.OK);
 		}
 
-		JSONObject responseJSONObject = get(
-			uriBuilder -> uriBuilder.path(
+		String response = get(
+			getAuthorization(),
+			_defaultUriBuilderFactory.builder(
+			).path(
 				"/o/c/activities"
 			).queryParam(
 				"filter",
@@ -94,7 +101,10 @@ public class ObjectActionMDFRequestStatusManagementRestController
 				"page", "1"
 			).queryParam(
 				"pageSize", "-1"
-			).build());
+			).build(
+			).toString());
+
+		JSONObject responseJSONObject = new JSONObject(response);
 
 		JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
 
@@ -111,9 +121,23 @@ public class ObjectActionMDFRequestStatusManagementRestController
 			);
 		}
 
-		put(itemsJSONArray.toString(), "/o/c/activities/batch");
+		put(
+			getAuthorization(), itemsJSONArray.toString(),
+			"/o/c/activities/batch");
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
+
+	protected String getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-partner-etc-spring-boot-oauth-application-headless-" +
+				"server");
+	}
+
+	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+		new DefaultUriBuilderFactory();
+
+	@Autowired
+	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
 }

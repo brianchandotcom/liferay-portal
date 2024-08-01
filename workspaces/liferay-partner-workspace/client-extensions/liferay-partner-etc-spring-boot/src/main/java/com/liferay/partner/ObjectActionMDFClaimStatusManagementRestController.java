@@ -5,14 +5,19 @@
 
 package com.liferay.partner;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
+import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
+
 import org.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * @author Elias Santos
@@ -49,11 +54,16 @@ public class ObjectActionMDFClaimStatusManagementRestController
 				_completeMDFRequestStatus(mdfRequestExternalReferenceCode);
 			}
 			else {
-				JSONObject responseJSONObject = get(
-					uriBuilder -> uriBuilder.path(
+				String response = get(
+					getAuthorization(),
+					_defaultUriBuilderFactory.builder(
+					).path(
 						"/o/c/mdfrequests/by-external-reference-code/" +
 							mdfRequestExternalReferenceCode
-					).build());
+					).build(
+					).toString());
+
+				JSONObject responseJSONObject = new JSONObject(response);
 
 				if (responseJSONObject.getDouble("totalPaidAmount") >=
 						responseJSONObject.getDouble("totalMDFRequestAmount")) {
@@ -64,6 +74,12 @@ public class ObjectActionMDFClaimStatusManagementRestController
 		}
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
+	}
+
+	protected String getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-partner-etc-spring-boot-oauth-application-headless-" +
+				"server");
 	}
 
 	private void _completeMDFRequestStatus(
@@ -82,9 +98,15 @@ public class ObjectActionMDFClaimStatusManagementRestController
 		jsonObject.put("mdfRequestStatus", mdfRequestStatusJSONObject);
 
 		patch(
-			jsonObject.toString(),
+			getAuthorization(), jsonObject.toString(),
 			"/o/c/mdfrequests/by-external-reference-code/" +
 				mdfRequestExternalReferenceCode);
 	}
+
+	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+		new DefaultUriBuilderFactory();
+
+	@Autowired
+	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
 }

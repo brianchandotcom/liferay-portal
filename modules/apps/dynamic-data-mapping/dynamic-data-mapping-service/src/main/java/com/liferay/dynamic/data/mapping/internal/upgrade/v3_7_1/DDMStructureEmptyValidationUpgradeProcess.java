@@ -39,21 +39,22 @@ public class DDMStructureEmptyValidationUpgradeProcess extends UpgradeProcess {
 	@Override
 	public void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select structureId, definition from DDMStructure where " +
-					"classNameId = ? and definition like '%validation%'");
+				"select ctCollectionId, structureId, definition from " +
+					"DDMStructure where classNameId = ? and definition like " +
+						"'%validation%'");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStructure set definition = ? where " +
-						"structureId = ?");
+						"ctCollectionId = ? and structureId = ?");
 			PreparedStatement preparedStatement3 = connection.prepareStatement(
-				"select structureVersionId, definition from " +
+				"select ctCollectionId, structureVersionId, definition from " +
 					"DDMStructureVersion where structureId = ?");
 			PreparedStatement preparedStatement4 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStructureVersion set definition = ? where " +
-						"structureVersionId = ?")) {
+						"ctCollectionId = ? and structureVersionId = ?")) {
 
 			preparedStatement1.setLong(
 				1,
@@ -73,7 +74,9 @@ public class DDMStructureEmptyValidationUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement2.setString(1, newDefinition);
 					preparedStatement2.setLong(
-						2, resultSet.getLong("structureId"));
+						2, resultSet.getLong("ctCollectionId"));
+					preparedStatement2.setLong(
+						3, resultSet.getLong("structureId"));
 
 					preparedStatement2.addBatch();
 
@@ -95,7 +98,9 @@ public class DDMStructureEmptyValidationUpgradeProcess extends UpgradeProcess {
 
 							preparedStatement4.setString(1, newDefinition);
 							preparedStatement4.setLong(
-								2, resultSet2.getLong("structureVersionId"));
+								2, resultSet2.getLong("ctCollectionId"));
+							preparedStatement4.setLong(
+								3, resultSet2.getLong("structureVersionId"));
 
 							preparedStatement4.addBatch();
 						}

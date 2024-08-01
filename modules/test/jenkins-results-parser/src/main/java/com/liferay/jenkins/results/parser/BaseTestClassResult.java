@@ -250,6 +250,18 @@ public abstract class BaseTestClassResult implements TestClassResult {
 	}
 
 	@Override
+	public boolean isSkipped() {
+		Status status = Status.valueOf(getStatus());
+
+		if (status == Status.SKIPPED) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isFailing() {
 		Status status = Status.valueOf(getStatus());
 

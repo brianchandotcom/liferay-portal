@@ -89,6 +89,10 @@ public class JUnitBatchBuildTestrayCaseResult
 			return "Failed prior to running test";
 		}
 
+		if(_isTestClassResultsSkipped()){
+			return "Failed prior to running test";
+		}
+
 		if (!_isTestClassResultsFailing()) {
 			return null;
 		}

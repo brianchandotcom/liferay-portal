@@ -12,7 +12,6 @@ import {openToast} from 'frontend-js-web';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
 
-import {selectFragmentForNameEditing} from '../../../../../app/actions';
 import SaveFragmentCompositionModal from '../../../../../app/components/SaveFragmentCompositionModal';
 import hasDropZoneChild from '../../../../../app/components/layout_data_items/hasDropZoneChild';
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragmentEntryTypes';
@@ -20,6 +19,7 @@ import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemA
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {useSelectItem} from '../../../../../app/contexts/ControlsContext';
 import {useSetMovementText} from '../../../../../app/contexts/KeyboardMovementContext';
+import {useSetEditedNodeId} from '../../../../../app/contexts/ShortcutContext';
 import {
 	useDispatch,
 	useSelector,
@@ -121,6 +121,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.id);
 	const selectItem = useSelectItem();
+	const setEditedNodeId = useSetEditedNodeId();
 	const setText = useSetMovementText();
 	const widgets = useSelector((state) => state.widgets);
 
@@ -215,11 +216,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		if (canBeRenamed(item)) {
 			items.push({
 				action: () => {
-					dispatch(
-						selectFragmentForNameEditing({
-							itemId: item.id,
-						})
-					);
+					setEditedNodeId(item.id);
 				},
 				label: Liferay.Language.get('rename'),
 			});
@@ -257,6 +254,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		selectedViewportSize,
 		selectItem,
 		widgets,
+		setEditedNodeId,
 		setOpenSaveModal,
 		setText,
 		isHidden,

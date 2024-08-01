@@ -5,7 +5,6 @@
 
 import React, {useEffect, useRef, useState} from 'react';
 
-import {selectFragmentForNameEditing} from '../actions';
 import {CONTENT_DISPLAY_OPTIONS} from '../config/constants/contentDisplayOptions';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
@@ -31,6 +30,7 @@ import {
 } from '../contexts/ControlsContext';
 import {
 	useOpenShorcutModal,
+	useSetEditedNodeId,
 	useSetOpenShorcutModal,
 } from '../contexts/ShortcutContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
@@ -80,6 +80,7 @@ export default function ShortcutManager() {
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 	const openShortcutModal = useOpenShorcutModal();
 	const selectItem = useSelectItem();
+	const setEditedNodeId = useSetEditedNodeId();
 	const setOpenShorcutModal = useSetOpenShorcutModal();
 	const state = useSelector((state) => state);
 	const sidebarHidden = state.sidebar.hidden;
@@ -129,14 +130,6 @@ export default function ShortcutManager() {
 					? 'block'
 					: 'none',
 		});
-	};
-
-	const rename = () => {
-		dispatch(
-			selectFragmentForNameEditing({
-				itemId: activeItemId,
-			})
-		);
 	};
 
 	const hideSidebar = () => {
@@ -336,7 +329,9 @@ export default function ShortcutManager() {
 			isKeyCombination: (event) => event.code === BACKSPACE_KEY_CODE,
 		},
 		rename: {
-			action: rename,
+			action: () => {
+				setEditedNodeId(activeItemId);
+			},
 			canBeExecuted: () =>
 				canUpdatePageStructure &&
 				!!layoutData.items[activeItemId] &&

@@ -37,6 +37,7 @@ import {
 	useSelectItem,
 } from '../../../../../app/contexts/ControlsContext';
 import {useMovementTarget} from '../../../../../app/contexts/KeyboardMovementContext';
+import {useEditedNodeId} from '../../../../../app/contexts/ShortcutContext';
 import {
 	useDispatch,
 	useSelector,
@@ -114,10 +115,6 @@ export default function PageStructureSidebar() {
 	const [dragAndDropHoveredItemId, setDragAndDropHoveredItemId] =
 		useState(null);
 
-	const editingNodeId = useSelector(
-		(state) => state.selectFragmentForNameEditing?.itemId
-	);
-
 	const [expandedKeys, setExpandedKeys] = useState([]);
 
 	const isMasterPage = config.layoutType === LAYOUT_TYPES.master;
@@ -136,7 +133,6 @@ export default function PageStructureSidebar() {
 				activeItemIds,
 				canUpdateEditables,
 				canUpdateItemConfiguration,
-				editingNodeId,
 				fragmentEntryLinks,
 				hoveredItemId,
 				isMasterPage,
@@ -156,7 +152,6 @@ export default function PageStructureSidebar() {
 			canUpdateItemConfiguration,
 			data.items,
 			data.rootItems.main,
-			editingNodeId,
 			fragmentEntryLinks,
 			hoveredItemId,
 			isMasterPage,
@@ -204,6 +199,7 @@ export default function PageStructureSidebar() {
 
 	const ItemActions = ({item}) => {
 		const activeItemIds = useActiveItemIds();
+		const editedNodeId = useEditedNodeId();
 		const dispatch = useDispatch();
 		const hoveredItemId = useHoveredItemId();
 		const isMultiSelect =
@@ -222,7 +218,7 @@ export default function PageStructureSidebar() {
 			item.activable &&
 			!item.isMasterItem;
 
-		if (item.editingName) {
+		if (editedNodeId) {
 			return null;
 		}
 
@@ -833,7 +829,6 @@ function visit(
 		children,
 		config: layoutDataRef?.current?.items[item.itemId]?.config,
 		draggable: true,
-		editingName: editingNodeId === item.itemId,
 		hidden,
 		hiddenAncestor: hasHiddenAncestor,
 		hideable:

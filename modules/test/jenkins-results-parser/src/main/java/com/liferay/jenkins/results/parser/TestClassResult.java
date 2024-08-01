@@ -42,6 +42,8 @@ public interface TestClassResult {
 
 	public List<TestResult> getTestResults();
 
+	public boolean isSkipped();
+
 	public boolean isFailing();
 
 }

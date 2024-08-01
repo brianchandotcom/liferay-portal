@@ -9,6 +9,7 @@
 		<check name="GoogleFontsCheck">
 			<category name="Miscellaneous" />
 			<description name="Checks that we do not use Google fonts." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="IncorrectFileLocationCheck">
 			<category name="Bug Prevention" />

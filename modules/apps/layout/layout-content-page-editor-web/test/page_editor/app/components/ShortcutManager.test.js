@@ -14,6 +14,7 @@ import {
 	ShortcutContextProvider,
 	useSetEditedNodeId,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext';
+import updateItemStyle from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/updateItemStyle';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
 jest.mock(
@@ -30,7 +31,15 @@ jest.mock(
 	}
 );
 
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/utils/updateItemStyle',
+	() => jest.fn(() => () => Promise.resolve())
+);
+
 const DEFAULT_STATE = {
+	fragmentEntryLinks: {
+		fragmentEntryLinkId: {},
+	},
 	layoutData: {
 		items: {
 			fragment01: {
@@ -166,5 +175,40 @@ describe('ShortcutManager', () => {
 		);
 
 		expect(setEditedNodeId).toBeCalledWith('fragment01');
+	});
+
+	it('calls updateItemStyle when pressing ctrl + H', () => {
+		const newState = {...DEFAULT_STATE};
+
+		newState.layoutData.items.fragment01 = {
+			children: [],
+			config: {
+				fragmentEntryLinkId: 'fragmenEntryLinkId',
+				styles: {diplay: 'none'},
+			},
+			itemId: 'fragment01',
+		};
+
+		renderComponent({
+			activeItemIds: 'fragment01',
+			state: newState,
+		});
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				altKey: true,
+				code: 'KeyH',
+				ctrlKey: true,
+			})
+		);
+
+		expect(updateItemStyle).toBeCalledWith(
+			expect.objectContaining({
+				itemId: 'fragment01',
+				selectedViewportSize: 'desktop',
+				styleName: 'display',
+				styleValue: 'none',
+			})
+		);
 	});
 });

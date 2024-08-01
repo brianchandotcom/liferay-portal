@@ -1,0 +1,42 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import '@testing-library/jest-dom/extend-expect';
+import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+
+import updateItemStyle from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/updateItemStyle';
+import VisibilityButton from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page_structure/components/VisibilityButton';
+
+jest.mock(
+	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/updateItemStyle',
+	() => jest.fn(() => () => Promise.resolve())
+);
+
+const renderComponent = () =>
+	render(
+		<VisibilityButton
+			node={{hidden: true, id: 'fragment01'}}
+			selectedViewportSize="tablet"
+		/>
+	);
+
+describe('VisibilityButton', () => {
+	it('calls updateItemStyle when the visibility button is pressed', () => {
+		renderComponent();
+
+		userEvent.click(screen.getByLabelText('show-x'));
+
+		expect(updateItemStyle).toBeCalledWith(
+			expect.objectContaining({
+				itemId: 'fragment01',
+				selectedViewportSize: 'tablet',
+				styleName: 'display',
+				styleValue: 'block',
+			})
+		);
+	});
+});

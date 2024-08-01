@@ -589,7 +589,7 @@ test.describe('Tags Fragment', () => {
 
 		// Get the id of Lemon object from the site initializer
 
-		const {id: objectId} =
+		const {id: objectDefinitionId} =
 			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
 				LEMON_OBJECT_ERC
 			);
@@ -626,7 +626,7 @@ test.describe('Tags Fragment', () => {
 
 		const formDefinition = getFormContainerDefinition({
 			id: getRandomString(),
-			objectId,
+			objectDefinitionId,
 			pageElements: [
 				firstTagsFragmentDefinition,
 				secondTagsFragmentDefinition,
@@ -683,7 +683,7 @@ test.describe('Tags Fragment', () => {
 		// Go to the object definition page and check the Tags fragment
 
 		await page.goto(
-			`/group${wemSite.friendlyUrlPath}${PORTLET_URLS.objects}_${objectId}`
+			`/group${wemSite.friendlyUrlPath}${PORTLET_URLS.objects}_${objectDefinitionId}`
 		);
 
 		await page
@@ -715,7 +715,7 @@ test.describe('Tags Fragment', () => {
 
 		// Get Lemon Basket object id from the site initializer
 
-		const {id: objectId} =
+		const {id: objectDefinitionId} =
 			await apiHelpers.objectAdmin.getObjectDefinitionByExternalReferenceCode(
 				LEMON_BASKET_OBJECT_ERC
 			);
@@ -733,7 +733,7 @@ test.describe('Tags Fragment', () => {
 
 		const formDefinition = getFormContainerDefinition({
 			id: getRandomString(),
-			objectId,
+			objectDefinitionId,
 			pageElements: [
 				getFragmentDefinition({
 					id: getRandomString(),

@@ -67,11 +67,11 @@ public class FlagsTagUtil {
 			long companyId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		Map<String, String> reasons = new HashMap<>();
+
 		FlagsGroupServiceConfiguration flagsGroupServiceConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				FlagsGroupServiceConfiguration.class, companyId);
-
-		Map<String, String> reasons = new HashMap<>();
 
 		for (String reason : flagsGroupServiceConfiguration.reasons()) {
 			reasons.put(reason, LanguageUtil.get(httpServletRequest, reason));

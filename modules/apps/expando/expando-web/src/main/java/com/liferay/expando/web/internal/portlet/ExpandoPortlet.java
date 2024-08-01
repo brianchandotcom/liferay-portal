@@ -289,9 +289,9 @@ public class ExpandoPortlet extends MVCPortlet {
 			PortletRequest portletRequest, String name, int type)
 		throws Exception {
 
-		String delimiter = StringPool.COMMA;
-
 		Serializable value = null;
+
+		String delimiter = StringPool.COMMA;
 
 		if (type == ExpandoColumnConstants.BOOLEAN) {
 			value = ParamUtil.getBoolean(portletRequest, name);

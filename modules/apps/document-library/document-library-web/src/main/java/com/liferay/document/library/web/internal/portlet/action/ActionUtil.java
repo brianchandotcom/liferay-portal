@@ -134,10 +134,10 @@ public class ActionUtil {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		List<FileShortcut> fileShortcuts = new ArrayList<>();
+
 		long[] fileShortcutIds = ParamUtil.getLongValues(
 			httpServletRequest, "rowIdsDLFileShortcut");
-
-		List<FileShortcut> fileShortcuts = new ArrayList<>();
 
 		for (long fileShortcutId : fileShortcutIds) {
 			try {
@@ -273,10 +273,10 @@ public class ActionUtil {
 	public static List<Folder> getFolders(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		List<Folder> folders = new ArrayList<>();
+
 		long[] folderIds = ParamUtil.getLongValues(
 			httpServletRequest, "rowIdsFolder");
-
-		List<Folder> folders = new ArrayList<>();
 
 		for (long folderId : folderIds) {
 			try {

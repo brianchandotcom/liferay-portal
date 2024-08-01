@@ -686,12 +686,12 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 	public List<Long> getSubfolderIds(long folderId, boolean recurse)
 		throws PortalException {
 
+		List<Long> subfolderIds = new ArrayList<>();
+
 		String extRepositoryFolderKey = getExtRepositoryObjectKey(folderId);
 
 		List<String> extRepositorySubfolderKeys =
 			_extRepository.getSubfolderKeys(extRepositoryFolderKey, recurse);
-
-		List<Long> subfolderIds = new ArrayList<>();
 
 		for (String extRepositorySubfolderKey : extRepositorySubfolderKeys) {
 			RepositoryEntry repositoryEntry = getRepositoryEntry(

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -88,8 +87,8 @@ public class JournalSubscriptionLocalizedContentTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		group.setName("Test Site", LocaleUtil.getDefault());
-		group.setName("Sitio de Pruebas", LocaleUtil.SPAIN);
+		group.setName("Test Site in English", LocaleUtil.getDefault());
+		group.setName("Sitio de Pruebas en español", LocaleUtil.SPAIN);
 
 		group = _groupLocalService.updateGroup(group);
 	}
@@ -182,9 +181,9 @@ public class JournalSubscriptionLocalizedContentTest
 			).build(),
 			null,
 			HashMapBuilder.put(
-				LocaleUtil.getDefault(), "Content"
+				LocaleUtil.getDefault(), "Content in English"
 			).put(
-				LocaleUtil.SPAIN, "Contenido"
+				LocaleUtil.SPAIN, "Contenido en español"
 			).build(),
 			LocaleUtil.getDefault(), false, true, serviceContext);
 
@@ -268,9 +267,9 @@ public class JournalSubscriptionLocalizedContentTest
 				LocaleUtil.SPAIN, "Título Nuevo"
 			).build(),
 			HashMapBuilder.put(
-				LocaleUtil.getDefault(), "New Content"
+				LocaleUtil.getDefault(), "New content in English"
 			).put(
-				LocaleUtil.SPAIN, "Contenido Nuevo"
+				LocaleUtil.SPAIN, "Contenido nuevo en español"
 			).build(),
 			LocaleUtil.getDefault(), false, true, serviceContext);
 	}
@@ -315,7 +314,7 @@ public class JournalSubscriptionLocalizedContentTest
 					user.getLocale(),
 					WorkflowConstants.getStatusLabel(
 						journalArticle.getStatus())),
-				HtmlUtil.escape(journalArticle.getTitle(user.getLanguageId())),
+				journalArticle.getTitle(user.getLanguageId()),
 				_language.get(user.getLocale(), "home"),
 				_portal.getPortletTitle(
 					JournalPortletKeys.JOURNAL, user.getLanguageId()),

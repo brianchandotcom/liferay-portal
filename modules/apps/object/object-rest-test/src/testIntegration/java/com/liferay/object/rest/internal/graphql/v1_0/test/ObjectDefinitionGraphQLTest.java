@@ -458,15 +458,6 @@ public class ObjectDefinitionGraphQLTest {
 				jsonObject, "JSONObject/data", "JSONObject/c",
 				"JSONObject/" + key, "Object/status"));
 
-		ObjectDefinition objectDefinition = _addObjectDefinition(true);
-
-		objectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				objectDefinition.getObjectDefinitionId());
-
-		ObjectDefinition finalObjectDefinition = objectDefinition;
-
 		ObjectField objectField = new ObjectField() {
 			{
 				businessType = BusinessType.TEXT;
@@ -486,17 +477,17 @@ public class ObjectDefinitionGraphQLTest {
 		).build();
 
 		objectFieldResource.postObjectDefinitionObjectField(
-			objectDefinition.getObjectDefinitionId(), objectField);
+			_parentObjectDefinition.getObjectDefinitionId(), objectField);
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
+			_parentObjectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
+				_LIST_FIELD_NAME, _LIST_FIELD_VALUE_KEY
+			).put(
 				objectField.getName(), "matthew@liferay.com"
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
-
-		key = StringUtil.lowerCaseFirstLetter(objectDefinition.getShortName());
 
 		Assert.assertEquals(
 			"matthew@liferay.com",
@@ -509,16 +500,12 @@ public class ObjectDefinitionGraphQLTest {
 							new GraphQLField(
 								key,
 								HashMapBuilder.<String, Object>put(
-									_getPKObjectFieldName(
-										finalObjectDefinition),
+									primaryKeyName,
 									objectEntry.getObjectEntryId()
 								).build(),
 								new GraphQLField(objectField.getName()))))),
 				"JSONObject/data", "JSONObject/c", "JSONObject/" + key,
 				"Object/" + objectField.getName()));
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
 	}
 
 	@Test

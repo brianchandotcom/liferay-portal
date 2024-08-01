@@ -305,6 +305,7 @@ pre[class*='language-'] {
 	font-family: var(--font-family-sans-serif);
 	max-width: var(--container-max-xl);
 	padding: var(--spacer-4);
+	padding-top: 0;
 	position: relative;
 
 	.container-fluid-max-xl,
@@ -366,6 +367,10 @@ pre[class*='language-'] {
 				content: '/';
 				padding: 0 4px;
 			}
+		}
+
+		.learn-article-breadcrumbs-content {
+			width: 100%;
 		}
 
 		.submit-feedback > a {

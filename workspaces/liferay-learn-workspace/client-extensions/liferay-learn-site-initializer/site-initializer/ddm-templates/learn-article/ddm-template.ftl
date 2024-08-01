@@ -43,7 +43,7 @@
 <article class="learn-article">
 	<div class="d-flex flex-column">
 		<div class="learn-article-breadcrumbs">
-			<div>
+			<div class="learn-article-breadcrumbs-content">
 				<div class="align-items-baseline d-flex justify-content-between mb-3">
 					<ul
 						aria-label="breadcrumb navigation"

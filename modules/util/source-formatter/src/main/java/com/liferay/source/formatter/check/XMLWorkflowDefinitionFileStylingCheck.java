@@ -26,6 +26,7 @@ public class XMLWorkflowDefinitionFileStylingCheck extends BaseFileCheck {
 		}
 
 		content = _formatLabelTags(content);
+		content = _formatNotificationTags(content);
 
 		return _formatTemplateTags(content);
 	}
@@ -41,6 +42,37 @@ public class XMLWorkflowDefinitionFileStylingCheck extends BaseFileCheck {
 			if (!label.equals(titleCaseLabel)) {
 				return StringUtil.replaceFirst(
 					content, label, titleCaseLabel, matcher.start(1));
+			}
+		}
+
+		return content;
+	}
+
+	private String _formatNotificationTags(String content) {
+		Matcher matcher = _notificationTagPattern.matcher(content);
+
+		while (matcher.find()) {
+			String notification = matcher.group();
+
+			int x = notification.indexOf(matcher.group(1) + "\t<name>");
+
+			if (x == -1) {
+				continue;
+			}
+
+			int y = notification.indexOf("</name>", x);
+
+			if (y == -1) {
+				continue;
+			}
+
+			String name = notification.substring(x + 10, y);
+
+			String titleCaseName = StringUtil.getTitleCase(name, false);
+
+			if (!name.equals(titleCaseName)) {
+				return StringUtil.replaceFirst(
+					content, name, titleCaseName, matcher.start());
 			}
 		}
 
@@ -93,6 +125,8 @@ public class XMLWorkflowDefinitionFileStylingCheck extends BaseFileCheck {
 
 	private static final Pattern _labelTagPattern = Pattern.compile(
 		"\t<label [^>]*?>\n\t*(.+)\n\t*</label>");
+	private static final Pattern _notificationTagPattern = Pattern.compile(
+		"(\\t+)<notification>[\\s\\S]+?</notification>");
 	private static final Pattern _templateTagPattern = Pattern.compile(
 		"(\\t+)<template>([\\s\\S]+?)</template>");
 

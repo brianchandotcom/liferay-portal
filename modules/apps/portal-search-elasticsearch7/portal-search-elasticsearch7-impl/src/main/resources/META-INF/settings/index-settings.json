@@ -46,6 +46,16 @@
 				],
 				"tokenizer": "standard"
 			},
+			"liferay_analyzer_fr": {
+				"filter": [
+					"french_elision",
+					"lowercase",
+					"french_stop",
+					"liferay_filter_synonym_fr",
+					"french_stemmer"
+				],
+				"tokenizer": "standard"
+			},
 			"liferay_analyzer_hu": {
 				"filter": [
 					"lowercase",
@@ -130,6 +140,33 @@
 				"stopwords": "_english_",
 				"type": "stop"
 			},
+			"french_elision": {
+				"articles": [
+					"l",
+					"m",
+					"t",
+					"qu",
+					"n",
+					"s",
+					"j",
+					"d",
+					"c",
+					"jusqu",
+					"quoiqu",
+					"lorsqu",
+					"puisqu"
+				],
+				"articles_case": true,
+				"type": "elision"
+			},
+			"french_stemmer": {
+				"language": "light_french",
+				"type": "stemmer"
+			},
+			"french_stop": {
+				"stopwords": "_french_",
+				"type": "stop"
+			},
 			"german_stemmer": {
 				"language": "light_german",
 				"type": "stemmer"
@@ -159,6 +196,12 @@
 				"type": "synonym_graph"
 			},
 			"liferay_filter_synonym_es": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_fr": {
 				"lenient": true,
 				"synonyms": [
 				],

@@ -1710,6 +1710,10 @@
 					"store": true,
 					"type": "keyword"
 				},
+				"externalReferenceCode": {
+					"store": true,
+					"type": "keyword"
+				},
 				"fileEntryTypeId": {
 					"store": true,
 					"type": "keyword"

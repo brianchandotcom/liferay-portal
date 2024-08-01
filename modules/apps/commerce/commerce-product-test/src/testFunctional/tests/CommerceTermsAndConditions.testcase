@@ -817,6 +817,7 @@ definition {
 		for (var termType : list "Payment,Delivery") {
 			CommerceOrders.editOrdersEntryTerms(
 				newTerm = "${termType} Term 2",
+				selectOuterButton = "true",
 				type = ${termType});
 		}
 

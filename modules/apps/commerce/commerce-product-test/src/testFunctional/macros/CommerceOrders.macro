@@ -757,7 +757,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editOrdersEntryTerms(newTerm = null, type = null) {
+	macro editOrdersEntryTerms(newTerm = null, type = null, selectOuterButton = null) {
 		if (${type} == "Payment") {
 			Click(
 				key_buttonName = "Edit",
@@ -771,9 +771,9 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${newTerm});
 
-			AssertClickNoError(
-				locator1 = "Button#SUBMIT",
-				value1 = "Submit");
+			if (isSet(selectOuterButton) && (${selectOuterButton} == "true")) {
+				SelectFrameTop();
+			}
 		}
 		else if (${type} == "Delivery") {
 			Click(
@@ -788,10 +788,14 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${newTerm});
 
-			AssertClickNoError(
-				locator1 = "Button#SUBMIT",
-				value1 = "Submit");
+			if (isSet(selectOuterButton) && (${selectOuterButton} == "true")) {
+				SelectFrameTop();
+			}
 		}
+
+		Button.click(button = "Submit");
+
+		Alert.viewSuccessMessage();
 	}
 
 	@summary = "Default summary"

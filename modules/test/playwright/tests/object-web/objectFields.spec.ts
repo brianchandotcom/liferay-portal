@@ -94,15 +94,24 @@ test.describe('Manage object fields through Model Builder', () => {
 	}) => {
 		const {listTypeDefinitionIds, objectDefinition} = createdEntities;
 
-		const listTypeDefinitions = await Promise.all(
-			Array(22)
-				.fill(null)
-				.map(() =>
-					apiHelpers.listTypeAdmin.postRandomListTypeDefinition()
-				)
+		const existingListTypeDefinitions = (
+			await apiHelpers.listTypeAdmin.getListTypeDefinitions()
+		).items;
+
+		const allListTypeDefinitions = existingListTypeDefinitions.concat(
+			await Promise.all(
+				Array(22)
+					.fill(null)
+					.map(
+						async () =>
+							await apiHelpers.listTypeAdmin.postRandomListTypeDefinition()
+					)
+			)
 		);
 
-		listTypeDefinitions.forEach(({id}) => listTypeDefinitionIds.push(id));
+		allListTypeDefinitions.forEach(({id}) =>
+			listTypeDefinitionIds.push(id)
+		);
 
 		await modelBuilderPage.goto({objectFolderName: 'Default'});
 
@@ -123,7 +132,9 @@ test.describe('Manage object fields through Model Builder', () => {
 
 		await expect(listTypeDefinitionBox).toBeVisible();
 
-		await expect(listTypeDefinitionBox.getByRole('option')).toHaveCount(22);
+		await expect(listTypeDefinitionBox.getByRole('option')).toHaveCount(
+			allListTypeDefinitions.length
+		);
 	});
 
 	test('can show and hide object fields in the object definition node', async ({

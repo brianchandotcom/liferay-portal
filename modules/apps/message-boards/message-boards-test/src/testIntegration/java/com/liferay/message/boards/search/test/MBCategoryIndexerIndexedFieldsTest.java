@@ -149,6 +149,8 @@ public class MBCategoryIndexerIndexedFieldsTest {
 			Field.USER_NAME, StringUtil.lowerCase(mbCategory.getUserName())
 		).put(
 			"statusByUserId", String.valueOf(mbCategory.getStatusByUserId())
+		).put(
+			"userExternalReferenceCode", _user.getExternalReferenceCode()
 		).build();
 
 		indexedFieldsFixture.populateUID(

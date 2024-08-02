@@ -300,15 +300,11 @@ pre[class*='language-'] {
 	padding: 1.5rem 0;
 }
 
-.learn-article {
-	padding-top: 0 !important;
-}
-
 .learn-article,
 .learn-recipe-container {
 	font-family: var(--font-family-sans-serif);
 	max-width: var(--container-max-xl);
-	padding: var(--spacer-4);
+	padding: 0 var(--spacer-4) var(--spacer-4);
 	position: relative;
 
 	.container-fluid-max-xl,
@@ -1203,6 +1199,8 @@ pre[class*='language-'] {
 }
 
 .learn-recipe-container {
+	padding: var(--spacer-4);
+
 	button.copy-to-clipboard-button {
 		&[data-copy-state='copy-success'] {
 		  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Cpath%20class='lexicon-icon-outline'%20d='M192.9%20429.5c-8.3%200-16.4-3.3-22.3-9.2L44.5%20294.1C15%20263.2%2062.7%20222%2089.1%20249.5L191.5%20352l230-258.9c27.2-30.5%2074.3%2011.5%2047.1%2041.9L216.4%20418.9c-5.8%206.5-14%2010.3-22.6%2010.6h-.9z'%20fill='%234aab3b'/%3E%3C/svg%3E");

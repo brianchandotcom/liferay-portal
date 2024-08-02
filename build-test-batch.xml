@@ -7208,6 +7208,21 @@ information. Make sure to commit in all format-javadoc results.
 		</antcall>
 	</target>
 
+	<target name="modules-integration-project-templates-jdk17_zulu">
+		<get-java-jdk-home type="zulu" version="17" />
+
+		<echo append="true" file="build.${user.name}.properties">
+			junit.jvm.override=${java.jdk.home}/bin/java
+			junit.jvm.override.version=17</echo>
+
+		<antcall target="modules-unit-jdk8">
+			<param name="junit.jvm.override" value="${java.jdk.home}/bin/java" />
+			<param name="junit.jvm.override.version" value="17" />
+			<param name="project.templates.test" value="true" />
+			<param name="project.templates.test.builds" value="true" />
+		</antcall>
+	</target>
+
 	<target name="modules-integration-project-templates-jdk21_zulu">
 		<get-java-jdk-home type="zulu" version="21" />
 
@@ -7445,6 +7460,21 @@ junit.jvm.override.version=21</echo>
 
 	<target name="modules-unit-project-templates-jdk8">
 		<antcall target="modules-unit-jdk8">
+			<param name="project.templates.test" value="true" />
+			<param name="project.templates.test.builds" value="false" />
+		</antcall>
+	</target>
+
+	<target name="modules-unit-project-templates-jdk17_zulu">
+		<get-java-jdk-home type="zulu" version="17" />
+
+		<echo append="true" file="build.${user.name}.properties">
+			junit.jvm.override=${java.jdk.home}/bin/java
+			junit.jvm.override.version=17</echo>
+
+		<antcall target="modules-unit-jdk8">
+			<param name="junit.jvm.override" value="${java.jdk.home}/bin/java" />
+			<param name="junit.jvm.override.version" value="17" />
 			<param name="project.templates.test" value="true" />
 			<param name="project.templates.test.builds" value="false" />
 		</antcall>

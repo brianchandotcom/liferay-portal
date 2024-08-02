@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>LDAP_CONNECTION_CREDENTIAL_FIELD</td>
-	<td>//input[contains(@name,'securityCredential')]</td>
+	<td>//input[@type='password' and contains(@name, 'securityCredential')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -294,12 +294,6 @@ public class BaseAuthFilterTest {
 				userLocalServiceUtilMockedStatic = Mockito.mockStatic(
 					UserLocalServiceUtil.class)) {
 
-			userLocalServiceUtilMockedStatic.when(
-				() -> UserLocalServiceUtil.getUser(ArgumentMatchers.anyLong())
-			).thenReturn(
-				user
-			);
-
 			httpAuthManagerUtilMockedStatic.when(
 				() -> HttpAuthManagerUtil.generateChallenge(
 					Mockito.any(), Mockito.any(), Mockito.any())
@@ -315,6 +309,12 @@ public class BaseAuthFilterTest {
 
 					return null;
 				}
+			);
+
+			userLocalServiceUtilMockedStatic.when(
+				() -> UserLocalServiceUtil.getUser(ArgumentMatchers.anyLong())
+			).thenReturn(
+				user
 			);
 
 			_processFilter();

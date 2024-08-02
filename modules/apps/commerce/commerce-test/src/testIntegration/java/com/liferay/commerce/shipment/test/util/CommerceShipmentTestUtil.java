@@ -81,7 +81,9 @@ public class CommerceShipmentTestUtil {
 
 		return CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
 			null, commerceShipmentId,
+			commerceOrderItem.getExternalReferenceCode(),
 			commerceOrderItem.getCommerceOrderItemId(),
+			commerceInventoryWarehouse.getExternalReferenceCode(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			BigDecimal.valueOf(addQuantity), null, true, serviceContext);
 	}
@@ -113,7 +115,8 @@ public class CommerceShipmentTestUtil {
 
 			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
 				null, commerceShipment.getCommerceShipmentId(),
-				commerceOrderItem.getCommerceOrderItemId(), warehouseId,
+				commerceOrderItem.getExternalReferenceCode(),
+				commerceOrderItem.getCommerceOrderItemId(), null, warehouseId,
 				commerceOrderItem.getQuantity(), null, true, serviceContext);
 		}
 	}
@@ -137,8 +140,10 @@ public class CommerceShipmentTestUtil {
 
 			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
 				null, commerceShipment.getCommerceShipmentId(),
-				commerceOrderItem.getCommerceOrderItemId(), commerceWarehouseId,
-				commerceOrderItem.getQuantity(), null, true, serviceContext);
+				commerceOrderItem.getExternalReferenceCode(),
+				commerceOrderItem.getCommerceOrderItemId(), null,
+				commerceWarehouseId, commerceOrderItem.getQuantity(), null,
+				true, serviceContext);
 		}
 
 		return commerceShipment;

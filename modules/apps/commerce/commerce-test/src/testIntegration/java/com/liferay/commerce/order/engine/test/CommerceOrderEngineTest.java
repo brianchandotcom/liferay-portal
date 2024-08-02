@@ -207,7 +207,9 @@ public class CommerceOrderEngineTest {
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
 			null, _commerceShipment1.getCommerceShipmentId(),
+			commerceOrderItem.getExternalReferenceCode(),
 			commerceOrderItem.getCommerceOrderItemId(),
+			commerceInventoryWarehouse.getExternalReferenceCode(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getQuantity(), null, true, _serviceContext);
 
@@ -288,7 +290,9 @@ public class CommerceOrderEngineTest {
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
 			null, _commerceShipment1.getCommerceShipmentId(),
+			commerceOrderItem.getExternalReferenceCode(),
 			commerceOrderItem.getCommerceOrderItemId(),
+			commerceInventoryWarehouse.getExternalReferenceCode(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			quantity.divide(BigDecimal.valueOf(2)), null, true,
 			_serviceContext);
@@ -354,7 +358,9 @@ public class CommerceOrderEngineTest {
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
 			null, _commerceShipment1.getCommerceShipmentId(),
+			commerceOrderItem.getExternalReferenceCode(),
 			commerceOrderItem.getCommerceOrderItemId(),
+			commerceInventoryWarehouse.getExternalReferenceCode(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getQuantity(), null, true, _serviceContext);
 
@@ -808,7 +814,9 @@ public class CommerceOrderEngineTest {
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
 			null, _commerceShipment1.getCommerceShipmentId(),
+			commerceOrderItem.getExternalReferenceCode(),
 			commerceOrderItem.getCommerceOrderItemId(),
+			commerceInventoryWarehouse.getExternalReferenceCode(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			quantity.divide(BigDecimal.valueOf(2)), null, true,
 			_serviceContext);
@@ -826,7 +834,9 @@ public class CommerceOrderEngineTest {
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
 			null, _commerceShipment2.getCommerceShipmentId(),
+			commerceOrderItem.getExternalReferenceCode(),
 			commerceOrderItem.getCommerceOrderItemId(),
+			commerceInventoryWarehouse.getExternalReferenceCode(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			quantity.subtract(commerceOrderItem.getShippedQuantity()), null,
 			true, _serviceContext);
@@ -918,7 +928,9 @@ public class CommerceOrderEngineTest {
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
 			null, _commerceShipment1.getCommerceShipmentId(),
+			commerceOrderItem.getExternalReferenceCode(),
 			commerceOrderItem.getCommerceOrderItemId(),
+			commerceInventoryWarehouse.getExternalReferenceCode(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			quantity.divide(BigDecimal.valueOf(2)), null, true,
 			_serviceContext);
@@ -936,7 +948,9 @@ public class CommerceOrderEngineTest {
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
 			null, _commerceShipment2.getCommerceShipmentId(),
+			commerceOrderItem.getExternalReferenceCode(),
 			commerceOrderItem.getCommerceOrderItemId(),
+			commerceInventoryWarehouse.getExternalReferenceCode(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			quantity.subtract(commerceOrderItem.getShippedQuantity()), null,
 			true, _serviceContext);

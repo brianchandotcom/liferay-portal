@@ -244,6 +244,9 @@ public class EditCommerceShipmentItemMVCActionCommand
 		for (CommerceInventoryWarehouse commerceInventoryWarehouse :
 				commerceInventoryWarehouses) {
 
+			String commerceInventoryWarehouseExternalReferenceCode =
+				commerceInventoryWarehouse.getExternalReferenceCode();
+
 			long commerceInventoryWarehouseId =
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId();
 
@@ -261,6 +264,7 @@ public class EditCommerceShipmentItemMVCActionCommand
 				commerceShipmentItem =
 					_commerceShipmentItemService.updateCommerceShipmentItem(
 						initialCommerceShipmentItem.getCommerceShipmentItemId(),
+						commerceInventoryWarehouseExternalReferenceCode,
 						commerceInventoryWarehouseId, quantity, true);
 
 				initialCommerceShipmentItem = null;
@@ -270,7 +274,10 @@ public class EditCommerceShipmentItemMVCActionCommand
 
 				commerceShipmentItem =
 					_commerceShipmentItemService.addCommerceShipmentItem(
-						null, commerceShipmentId, commerceOrderItemId,
+						null, commerceShipmentId,
+						commerceOrderItem.getExternalReferenceCode(),
+						commerceOrderItemId,
+						commerceInventoryWarehouseExternalReferenceCode,
 						commerceInventoryWarehouseId, quantity, null, true,
 						serviceContext);
 			}
@@ -280,13 +287,14 @@ public class EditCommerceShipmentItemMVCActionCommand
 				commerceShipmentItem =
 					_commerceShipmentItemService.updateCommerceShipmentItem(
 						commerceShipmentItem.getCommerceShipmentItemId(),
+						commerceInventoryWarehouseExternalReferenceCode,
 						commerceInventoryWarehouseId, quantity, true);
 
 				if (BigDecimalUtil.eq(quantity, BigDecimal.ZERO)) {
 					commerceShipmentItem =
 						_commerceShipmentItemService.updateCommerceShipmentItem(
-							commerceShipmentItem.getCommerceShipmentItemId(), 0,
-							quantity, true);
+							commerceShipmentItem.getCommerceShipmentItemId(),
+							null, 0, quantity, true);
 				}
 			}
 		}

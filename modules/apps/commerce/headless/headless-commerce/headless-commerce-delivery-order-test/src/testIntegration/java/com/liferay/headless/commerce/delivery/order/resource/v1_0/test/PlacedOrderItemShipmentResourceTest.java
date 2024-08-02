@@ -242,7 +242,8 @@ public class PlacedOrderItemShipmentResourceTest
 			_commerceShipmentItemLocalService.addCommerceShipmentItem(
 				RandomTestUtil.randomString(),
 				commerceShipment.getCommerceShipmentId(),
-				_commerceOrderItem.getCommerceOrderItemId(), 0,
+				_commerceOrderItem.getExternalReferenceCode(),
+				_commerceOrderItem.getCommerceOrderItemId(), null, 0,
 				placedOrderItemShipment.getQuantity(), null, false,
 				_serviceContext);
 

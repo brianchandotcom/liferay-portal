@@ -17,6 +17,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceShipmentLocalServiceUtil;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
 
@@ -238,7 +240,9 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
 				RandomTestUtil.randomString(),
 				_commerceShipment.getCommerceShipmentId(),
+				commerceOrderItem.getExternalReferenceCode(),
 				commerceOrderItem.getCommerceOrderItemId(),
+				_commerceInventoryWarehouse.getExternalReferenceCode(),
 				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				BigDecimal.ZERO, null, true, _serviceContext);
 
@@ -254,6 +258,15 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 
 		return _addShipmentItem(
 			shipmentItem.getExternalReferenceCode(), shipmentItem);
+	}
+
+	@Override
+	protected ShipmentItem
+			testPostShipmentItemByExternalReferenceCode_addShipmentItem(
+				ShipmentItem shipmentItem)
+		throws Exception {
+
+		return testPostShipmentItem_addShipmentItem(shipmentItem);
 	}
 
 	@Override
@@ -283,9 +296,16 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 			long commerceOrderItemId)
 		throws Exception {
 
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemLocalService.fetchCommerceOrderItem(
+				commerceOrderItemId);
+
 		_commerceShipmentItem =
 			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
-				externalReferenceCode, commerceShipmentId, commerceOrderItemId,
+				externalReferenceCode, commerceShipmentId,
+				commerceOrderItem.getExternalReferenceCode(),
+				commerceOrderItemId,
+				_commerceInventoryWarehouse.getExternalReferenceCode(),
 				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				BigDecimal.valueOf(5), null, true, _serviceContext);
 
@@ -311,7 +331,9 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 		_commerceShipmentItem =
 			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
 				externalReferenceCode, shipmentItem.getShipmentId(),
+				shipmentItem.getOrderItemExternalReferenceCode(),
 				shipmentItem.getOrderItemId(),
+				_commerceInventoryWarehouse.getExternalReferenceCode(),
 				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				quantity, null, true, _serviceContext);
 
@@ -365,6 +387,9 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 
 	@DeleteAfterTestRun
 	private CommerceOrder _commerceOrder;
+
+	@Inject
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@DeleteAfterTestRun
 	private List<CommerceOrderItem> _commerceOrderItems = new ArrayList<>();

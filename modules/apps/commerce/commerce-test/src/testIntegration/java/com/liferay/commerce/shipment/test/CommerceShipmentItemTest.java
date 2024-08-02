@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
@@ -363,6 +364,7 @@ public class CommerceShipmentItemTest {
 		CommerceShipmentItem newCommerceShipmentItem =
 			_commerceShipmentItemLocalService.updateCommerceShipmentItem(
 				_commerceShipmentItem.getCommerceShipmentItemId(),
+				RandomTestUtil.randomString(),
 				_commerceShipmentItem.getCommerceInventoryWarehouseId(),
 				BigDecimal.valueOf(2), true);
 

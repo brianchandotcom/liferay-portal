@@ -10,7 +10,9 @@ import com.liferay.commerce.exception.CommerceShipmentInactiveWarehouseException
 import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
 import com.liferay.commerce.exception.CommerceShipmentStatusException;
 import com.liferay.commerce.exception.DuplicateCommerceShipmentItemException;
+import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
+import com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
@@ -66,14 +68,15 @@ public class CommerceShipmentItemLocalServiceImpl
 	@Override
 	public CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
-			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			BigDecimal quantity, String unitOfMeasureKey,
-			boolean validateInventory, ServiceContext serviceContext)
+			String commerceOrderItemExternalReferenceCode,
+			long commerceOrderItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			String unitOfMeasureKey, boolean validateInventory,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce shipment item
-
-		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
@@ -82,15 +85,34 @@ public class CommerceShipmentItemLocalServiceImpl
 		_validateExternalReferenceCode(
 			0, serviceContext.getCompanyId(), externalReferenceCode);
 
-		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemLocalService.getCommerceOrderItem(
-				commerceOrderItemId);
+		CommerceOrderItem commerceOrderItem = null;
+
+		if (commerceOrderItemId > 0) {
+			commerceOrderItem =
+				_commerceOrderItemLocalService.getCommerceOrderItem(
+					commerceOrderItemId);
+		}
+		else {
+			commerceOrderItem =
+				_commerceOrderItemLocalService.
+					fetchCommerceOrderItemByExternalReferenceCode(
+						externalReferenceCode, serviceContext.getCompanyId());
+
+			if (commerceOrderItem == null) {
+				throw new NoSuchOrderItemException(
+					"Unable to find order item with external reference code " +
+						externalReferenceCode);
+			}
+		}
+
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		if (validateInventory) {
 			_validate(
 				commerceOrderItem,
 				_commerceShipmentPersistence.findByPrimaryKey(
 					commerceShipmentId),
+				commerceInventoryWarehouseExternalReferenceCode,
 				commerceInventoryWarehouseId, quantity, quantity);
 		}
 
@@ -175,9 +197,12 @@ public class CommerceShipmentItemLocalServiceImpl
 	@Override
 	public CommerceShipmentItem addOrUpdateCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
-			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			BigDecimal quantity, String unitOfMeasureKey,
-			boolean validateInventory, ServiceContext serviceContext)
+			String commerceOrderItemExternalReferenceCode,
+			long commerceOrderItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			String unitOfMeasureKey, boolean validateInventory,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -193,13 +218,16 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		if (commerceShipmentItem == null) {
 			return commerceShipmentItemLocalService.addCommerceShipmentItem(
-				externalReferenceCode, commerceShipmentId, commerceOrderItemId,
+				externalReferenceCode, commerceShipmentId,
+				commerceOrderItemExternalReferenceCode, commerceOrderItemId,
+				commerceInventoryWarehouseExternalReferenceCode,
 				commerceInventoryWarehouseId, quantity, unitOfMeasureKey,
 				validateInventory, serviceContext);
 		}
 
 		return commerceShipmentItemLocalService.updateCommerceShipmentItem(
 			commerceShipmentItem.getCommerceShipmentItemId(),
+			commerceInventoryWarehouseExternalReferenceCode,
 			commerceInventoryWarehouseId, quantity, validateInventory);
 	}
 
@@ -360,8 +388,10 @@ public class CommerceShipmentItemLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceShipmentItem updateCommerceShipmentItem(
-			long commerceShipmentItemId, long commerceInventoryWarehouseId,
-			BigDecimal quantity, boolean validateInventory)
+			long commerceShipmentItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			boolean validateInventory)
 		throws PortalException {
 
 		// Commerce shipment item
@@ -379,6 +409,7 @@ public class CommerceShipmentItemLocalServiceImpl
 		if (validateInventory) {
 			_validate(
 				commerceOrderItem, commerceShipmentItem.getCommerceShipment(),
+				commerceInventoryWarehouseExternalReferenceCode,
 				commerceInventoryWarehouseId, originalQuantity, quantity);
 		}
 
@@ -546,6 +577,7 @@ public class CommerceShipmentItemLocalServiceImpl
 	private void _validate(
 			CommerceOrderItem commerceOrderItem,
 			CommerceShipment commerceShipment,
+			String commerceInventoryWarehouseExternalReferenceCode,
 			long commerceInventoryWarehouseId, BigDecimal quantity,
 			BigDecimal newQuantity)
 		throws PortalException {
@@ -557,13 +589,25 @@ public class CommerceShipmentItemLocalServiceImpl
 			throw new CommerceShipmentStatusException();
 		}
 
-		if (commerceInventoryWarehouseId <= 0) {
-			return;
-		}
+		CommerceInventoryWarehouse commerceInventoryWarehouse = null;
 
-		CommerceInventoryWarehouse commerceInventoryWarehouse =
+		if (commerceInventoryWarehouseId > 0) {
+			commerceInventoryWarehouse =
+				_commerceInventoryWarehouseLocalService.
+					getCommerceInventoryWarehouse(commerceInventoryWarehouseId);
+		}
+		else {
 			_commerceInventoryWarehouseLocalService.
-				getCommerceInventoryWarehouse(commerceInventoryWarehouseId);
+				fetchCommerceInventoryWarehouseByExternalReferenceCode(
+					commerceInventoryWarehouseExternalReferenceCode,
+					commerceShipment.getCompanyId());
+
+			if (commerceInventoryWarehouse == null) {
+				throw new NoSuchInventoryWarehouseException(
+					"Unable to find warehouse with external reference code " +
+						commerceInventoryWarehouseExternalReferenceCode);
+			}
+		}
 
 		if (!commerceInventoryWarehouse.isActive()) {
 			throw new CommerceShipmentInactiveWarehouseException();

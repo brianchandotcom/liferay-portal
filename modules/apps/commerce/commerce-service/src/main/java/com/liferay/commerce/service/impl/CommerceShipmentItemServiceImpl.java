@@ -43,9 +43,12 @@ public class CommerceShipmentItemServiceImpl
 	@Override
 	public CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
-			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			BigDecimal quantity, String unitOfMeasureKey,
-			boolean validateInventory, ServiceContext serviceContext)
+			String commerceOrderItemExternalReferenceCode,
+			long commerceOrderItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			String unitOfMeasureKey, boolean validateInventory,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.contains(
@@ -53,7 +56,9 @@ public class CommerceShipmentItemServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentItemLocalService.addCommerceShipmentItem(
-			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
+			externalReferenceCode, commerceShipmentId,
+			commerceOrderItemExternalReferenceCode, commerceOrderItemId,
+			commerceInventoryWarehouseExternalReferenceCode,
 			commerceInventoryWarehouseId, quantity, unitOfMeasureKey,
 			validateInventory, serviceContext);
 	}
@@ -61,9 +66,12 @@ public class CommerceShipmentItemServiceImpl
 	@Override
 	public CommerceShipmentItem addOrUpdateCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
-			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			BigDecimal quantity, String unitOfMeasureKey,
-			boolean validateInventory, ServiceContext serviceContext)
+			String commerceOrderItemExternalReferenceCode,
+			long commerceOrderItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			String unitOfMeasureKey, boolean validateInventory,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.contains(
@@ -71,7 +79,9 @@ public class CommerceShipmentItemServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentItemLocalService.addOrUpdateCommerceShipmentItem(
-			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
+			externalReferenceCode, commerceShipmentId,
+			commerceOrderItemExternalReferenceCode, commerceOrderItemId,
+			commerceInventoryWarehouseExternalReferenceCode,
 			commerceInventoryWarehouseId, quantity, unitOfMeasureKey,
 			validateInventory, serviceContext);
 	}
@@ -247,8 +257,10 @@ public class CommerceShipmentItemServiceImpl
 
 	@Override
 	public CommerceShipmentItem updateCommerceShipmentItem(
-			long commerceShipmentItemId, long commerceInventoryWarehouseId,
-			BigDecimal quantity, boolean validateInventory)
+			long commerceShipmentItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			boolean validateInventory)
 		throws PortalException {
 
 		_portletResourcePermission.contains(
@@ -256,8 +268,9 @@ public class CommerceShipmentItemServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentItemLocalService.updateCommerceShipmentItem(
-			commerceShipmentItemId, commerceInventoryWarehouseId, quantity,
-			validateInventory);
+			commerceShipmentItemId,
+			commerceInventoryWarehouseExternalReferenceCode,
+			commerceInventoryWarehouseId, quantity, validateInventory);
 	}
 
 	@Override

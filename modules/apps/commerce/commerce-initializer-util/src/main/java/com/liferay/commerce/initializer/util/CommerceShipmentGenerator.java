@@ -172,7 +172,9 @@ public class CommerceShipmentGenerator {
 
 			_commerceShipmentItemLocalService.addCommerceShipmentItem(
 				null, commerceShipmentId,
+				commerceOrderItem.getExternalReferenceCode(),
 				commerceOrderItem.getCommerceOrderItemId(),
+				commerceInventoryWarehouse.getExternalReferenceCode(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				commerceInventoryWarehouseItemQuantity, null, true,
 				serviceContext);

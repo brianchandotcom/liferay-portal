@@ -7,8 +7,11 @@ package com.liferay.headless.commerce.admin.shipment.internal.resource.v1_0;
 
 import com.liferay.commerce.exception.NoSuchShipmentException;
 import com.liferay.commerce.exception.NoSuchShipmentItemException;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
@@ -149,8 +152,15 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 			_commerceShipmentItemService.getCommerceShipmentItem(
 				shipmentItemId);
 
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			_commerceInventoryWarehouseService.getCommerceInventoryWarehouse(
+				commerceShipmentItem.getCommerceInventoryWarehouseId());
+
 		_commerceShipmentItemService.updateCommerceShipmentItem(
 			shipmentItemId,
+			GetterUtil.getString(
+				shipmentItem.getWarehouseExternalReferenceCode(),
+				commerceInventoryWarehouse.getExternalReferenceCode()),
 			GetterUtil.get(
 				shipmentItem.getWarehouseId(),
 				commerceShipmentItem.getCommerceInventoryWarehouseId()),
@@ -183,8 +193,15 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 					externalReferenceCode);
 		}
 
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			_commerceInventoryWarehouseService.getCommerceInventoryWarehouse(
+				commerceShipmentItem.getCommerceInventoryWarehouseId());
+
 		_commerceShipmentItemService.updateCommerceShipmentItem(
 			commerceShipmentItem.getCommerceShipmentItemId(),
+			GetterUtil.getString(
+				shipmentItem.getWarehouseExternalReferenceCode(),
+				commerceInventoryWarehouse.getExternalReferenceCode()),
 			GetterUtil.get(
 				shipmentItem.getWarehouseId(),
 				commerceShipmentItem.getCommerceInventoryWarehouseId()),
@@ -203,13 +220,35 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 		CommerceShipmentItem commerceShipmentItem =
 			_commerceShipmentItemService.addCommerceShipmentItem(
 				shipmentItem.getExternalReferenceCode(), shipmentId,
-				shipmentItem.getOrderItemId(), shipmentItem.getWarehouseId(),
-				shipmentItem.getQuantity(), null,
+				shipmentItem.getOrderItemExternalReferenceCode(),
+				GetterUtil.getLong(shipmentItem.getOrderItemId()),
+				shipmentItem.getWarehouseExternalReferenceCode(),
+				shipmentItem.getWarehouseId(), shipmentItem.getQuantity(), null,
 				GetterUtil.getBoolean(
 					shipmentItem.getValidateInventory(), true),
 				_serviceContextHelper.getServiceContext(contextUser));
 
 		return _toShipmentItem(commerceShipmentItem);
+	}
+
+	@Override
+	public ShipmentItem postShipmentItemByExternalReferenceCode(
+			String externalReferenceCode, ShipmentItem shipmentItem)
+		throws Exception {
+
+		CommerceShipmentItem commerceShipmentItem =
+			_commerceShipmentItemService.
+				fetchCommerceShipmentItemByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipmentItem == null) {
+			throw new NoSuchShipmentItemException(
+				"Unable to find shipment item with external reference code " +
+					externalReferenceCode);
+		}
+
+		return postShipmentItem(
+			commerceShipmentItem.getCommerceShipmentId(), shipmentItem);
 	}
 
 	@Override
@@ -230,6 +269,7 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 		return _toShipmentItem(
 			ShipmentItemUtil.addOrUpdateShipmentItem(
 				shipmentItem.getExternalReferenceCode(), commerceShipment,
+				_commerceInventoryWarehouseService, _commerceOrderItemService,
 				_commerceShipmentItemService, shipmentItem,
 				_serviceContextHelper));
 	}
@@ -279,6 +319,13 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 			_commerceShipmentItemService.getCommerceShipmentItem(
 				shipmentItemId));
 	}
+
+	@Reference
+	private CommerceInventoryWarehouseService
+		_commerceInventoryWarehouseService;
+
+	@Reference
+	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;

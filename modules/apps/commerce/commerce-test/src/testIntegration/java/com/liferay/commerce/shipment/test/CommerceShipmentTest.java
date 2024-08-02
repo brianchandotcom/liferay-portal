@@ -536,7 +536,9 @@ public class CommerceShipmentTest {
 		CommerceShipmentItem commerceShipmentItem1 =
 			_commerceShipmentItemLocalService.addCommerceShipmentItem(
 				null, commerceShipment1.getCommerceShipmentId(),
+				commerceOrderItem1.getExternalReferenceCode(),
 				commerceOrderItem1.getCommerceOrderItemId(),
+				commerceInventoryWarehouse.getExternalReferenceCode(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				commerceOrderItem1Quantity, null, true,
 				ServiceContextTestUtil.getServiceContext(
@@ -548,7 +550,9 @@ public class CommerceShipmentTest {
 		CommerceShipmentItem commerceShipmentItem2 =
 			_commerceShipmentItemLocalService.addCommerceShipmentItem(
 				null, commerceShipment2.getCommerceShipmentId(),
+				commerceOrderItem2.getExternalReferenceCode(),
 				commerceOrderItem2.getCommerceOrderItemId(),
+				commerceInventoryWarehouse.getExternalReferenceCode(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				commerceOrderItem2Quantity, null, true,
 				ServiceContextTestUtil.getServiceContext(
@@ -756,7 +760,9 @@ public class CommerceShipmentTest {
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
 			null, commerceShipment.getCommerceShipmentId(),
+			commerceOrderItem.getExternalReferenceCode(),
 			commerceOrderItem.getCommerceOrderItemId(),
+			commerceInventoryWarehouse.getExternalReferenceCode(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			orderedQuantity, null, true,
 			ServiceContextTestUtil.getServiceContext(
@@ -1032,6 +1038,7 @@ public class CommerceShipmentTest {
 
 		_commerceShipmentItemLocalService.updateCommerceShipmentItem(
 			commerceShipmentItem.getCommerceShipmentItemId(),
+			commerceInventoryWarehouse.getExternalReferenceCode(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			newOrderedQuantity, true);
 	}
@@ -1074,7 +1081,8 @@ public class CommerceShipmentTest {
 		_commerceOrders.add(commerceOrder);
 
 		_commerceShipmentItemLocalService.updateCommerceShipmentItem(
-			0, commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			0, commerceInventoryWarehouse.getExternalReferenceCode(),
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			orderedQuantity, true);
 	}
 

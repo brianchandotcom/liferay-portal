@@ -27,9 +27,9 @@ interface LiferaySession {
 }
 
 interface LiferayUtil {
-	fetch: typeof fetch;
 	LocalStorage: LiferayStorage;
 	SessionStorage: LiferayStorage;
+	fetch: typeof fetch;
 	openToast: (options?: {
 		message: string;
 		onClick?: ({event}: {event: any}) => void;

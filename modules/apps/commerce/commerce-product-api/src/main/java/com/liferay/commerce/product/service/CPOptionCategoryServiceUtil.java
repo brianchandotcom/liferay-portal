@@ -43,6 +43,19 @@ public class CPOptionCategoryServiceUtil {
 			serviceContext);
 	}
 
+	public static CPOptionCategory addOrUpdateCPOptionCategory(
+			String externalReferenceCode, long cpOptionCategoryId,
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap, double priority,
+			String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCPOptionCategory(
+			externalReferenceCode, cpOptionCategoryId, titleMap, descriptionMap,
+			priority, key, serviceContext);
+	}
+
 	public static void deleteCPOptionCategory(long cpOptionCategoryId)
 		throws PortalException {
 
@@ -60,6 +73,14 @@ public class CPOptionCategoryServiceUtil {
 		throws PortalException {
 
 		return getService().getCPOptionCategory(cpOptionCategoryId);
+	}
+
+	public static CPOptionCategory getCPOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getCPOptionCategoryByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**

@@ -89,6 +89,12 @@ public interface CPOptionCategoryLocalService
 			double priority, String key, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CPOptionCategory addOrUpdateCPOptionCategory(
+			String externalReferenceCode, long userId, long cpOptionCategoryId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			double priority, String key, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new cp option category with the primary key. Does not add the cp option category to the database.
 	 *

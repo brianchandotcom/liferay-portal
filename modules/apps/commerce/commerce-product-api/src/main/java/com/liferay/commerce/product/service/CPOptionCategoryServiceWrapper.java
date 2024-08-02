@@ -44,6 +44,20 @@ public class CPOptionCategoryServiceWrapper
 	}
 
 	@Override
+	public CPOptionCategory addOrUpdateCPOptionCategory(
+			String externalReferenceCode, long cpOptionCategoryId,
+			java.util.Map<java.util.Locale, String> titleMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			double priority, String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpOptionCategoryService.addOrUpdateCPOptionCategory(
+			externalReferenceCode, cpOptionCategoryId, titleMap, descriptionMap,
+			priority, key, serviceContext);
+	}
+
+	@Override
 	public void deleteCPOptionCategory(long cpOptionCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -63,6 +77,16 @@ public class CPOptionCategoryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionCategoryService.getCPOptionCategory(cpOptionCategoryId);
+	}
+
+	@Override
+	public CPOptionCategory getCPOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpOptionCategoryService.
+			getCPOptionCategoryByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	/**

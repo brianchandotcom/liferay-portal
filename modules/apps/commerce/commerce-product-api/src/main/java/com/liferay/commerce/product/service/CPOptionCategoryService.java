@@ -54,6 +54,12 @@ public interface CPOptionCategoryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CPOptionCategory addOrUpdateCPOptionCategory(
+			String externalReferenceCode, long cpOptionCategoryId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			double priority, String key, ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteCPOptionCategory(long cpOptionCategoryId)
 		throws PortalException;
 
@@ -63,6 +69,11 @@ public interface CPOptionCategoryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionCategory getCPOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

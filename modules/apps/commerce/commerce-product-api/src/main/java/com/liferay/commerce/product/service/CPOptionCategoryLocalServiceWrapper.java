@@ -64,6 +64,20 @@ public class CPOptionCategoryLocalServiceWrapper
 			key, serviceContext);
 	}
 
+	@Override
+	public CPOptionCategory addOrUpdateCPOptionCategory(
+			String externalReferenceCode, long userId, long cpOptionCategoryId,
+			java.util.Map<java.util.Locale, String> titleMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			double priority, String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpOptionCategoryLocalService.addOrUpdateCPOptionCategory(
+			externalReferenceCode, userId, cpOptionCategoryId, titleMap,
+			descriptionMap, priority, key, serviceContext);
+	}
+
 	/**
 	 * Creates a new cp option category with the primary key. Does not add the cp option category to the database.
 	 *

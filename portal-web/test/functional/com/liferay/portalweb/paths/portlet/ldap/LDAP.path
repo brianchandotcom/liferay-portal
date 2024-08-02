@@ -15,6 +15,16 @@
 	<td>//input[@type='password' and contains(@name, 'securityCredential')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LDAP_CONNECTION_ID_FIELD</td>
+	<td>//input[contains(@name,'ldapServerId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_CONNECTION_SERVER_ID</td>
+	<td>//td[contains(@class, 'lfr-ldap-server-id-column')]//a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

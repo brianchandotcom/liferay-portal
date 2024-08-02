@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.language.override.model.PLOEntry;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
@@ -266,6 +268,11 @@ public interface PLOEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PLOEntry getPLOEntry(long ploEntryId) throws PortalException;
+
+	public void importPLOEntries(
+			long companyId, InputStream inputStream, String languageId,
+			long userId)
+		throws IOException, PortalException;
 
 	public void setPLOEntries(
 			long companyId, long userId, String key,

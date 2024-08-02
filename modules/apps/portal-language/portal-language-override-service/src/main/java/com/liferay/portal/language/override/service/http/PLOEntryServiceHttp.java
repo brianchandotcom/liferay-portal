@@ -242,6 +242,48 @@ public class PLOEntryServiceHttp {
 		}
 	}
 
+	public static void importPLOEntries(
+			HttpPrincipal httpPrincipal, java.io.InputStream inputStream,
+			String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   java.io.IOException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				PLOEntryServiceUtil.class, "importPLOEntries",
+				_importPLOEntriesParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, inputStream, languageId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof java.io.IOException) {
+					throw (java.io.IOException)exception;
+				}
+
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void setPLOEntries(
 			HttpPrincipal httpPrincipal, String key,
 			java.util.Map<java.util.Locale, String> localizationMap)
@@ -250,7 +292,7 @@ public class PLOEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PLOEntryServiceUtil.class, "setPLOEntries",
-				_setPLOEntriesParameterTypes5);
+				_setPLOEntriesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, key, localizationMap);
@@ -291,7 +333,9 @@ public class PLOEntryServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getPLOEntriesCountParameterTypes4 =
 		new Class[] {long.class};
-	private static final Class<?>[] _setPLOEntriesParameterTypes5 =
+	private static final Class<?>[] _importPLOEntriesParameterTypes5 =
+		new Class[] {java.io.InputStream.class, String.class};
+	private static final Class<?>[] _setPLOEntriesParameterTypes6 =
 		new Class[] {String.class, java.util.Map.class};
 
 }

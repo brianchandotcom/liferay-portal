@@ -74,6 +74,15 @@ public class PLOEntryServiceWrapper
 	}
 
 	@Override
+	public void importPLOEntries(
+			java.io.InputStream inputStream, String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   java.io.IOException {
+
+		_ploEntryService.importPLOEntries(inputStream, languageId);
+	}
+
+	@Override
 	public void setPLOEntries(
 			String key, java.util.Map<java.util.Locale, String> localizationMap)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -97,8 +97,8 @@ public class BaseAuthFilterTest {
 
 		Assert.assertTrue(
 			!_isHttpSessionInvalid(
-				_setUpUser(WorkflowConstants.STATUS_APPROVED),
-				HttpAuthorizationHeader.SCHEME_BASIC));
+				HttpAuthorizationHeader.SCHEME_BASIC,
+				_setUpUser(WorkflowConstants.STATUS_APPROVED)));
 	}
 
 	@Test
@@ -107,8 +107,8 @@ public class BaseAuthFilterTest {
 
 		Assert.assertTrue(
 			_isHttpSessionInvalid(
-				_setUpUser(WorkflowConstants.STATUS_INACTIVE),
-				HttpAuthorizationHeader.SCHEME_BASIC));
+				HttpAuthorizationHeader.SCHEME_BASIC,
+				_setUpUser(WorkflowConstants.STATUS_INACTIVE)));
 	}
 
 	@Test
@@ -117,8 +117,8 @@ public class BaseAuthFilterTest {
 
 		Assert.assertTrue(
 			!_isHttpSessionInvalid(
-				_setUpUser(WorkflowConstants.STATUS_APPROVED),
-				HttpAuthorizationHeader.SCHEME_DIGEST));
+				HttpAuthorizationHeader.SCHEME_DIGEST,
+				_setUpUser(WorkflowConstants.STATUS_APPROVED)));
 	}
 
 	@Test
@@ -127,8 +127,8 @@ public class BaseAuthFilterTest {
 
 		Assert.assertTrue(
 			_isHttpSessionInvalid(
-				_setUpUser(WorkflowConstants.STATUS_INACTIVE),
-				HttpAuthorizationHeader.SCHEME_DIGEST));
+				HttpAuthorizationHeader.SCHEME_DIGEST,
+				_setUpUser(WorkflowConstants.STATUS_INACTIVE)));
 	}
 
 	@Test
@@ -287,9 +287,7 @@ public class BaseAuthFilterTest {
 		Assert.assertNull(redirectURL);
 	}
 
-	private boolean _isHttpSessionInvalid(
-		User user, String scheme) {
-
+	private boolean _isHttpSessionInvalid(String scheme, User user) {
 		try (MockedStatic<UserLocalServiceUtil>
 				userLocalServiceUtilMockedStatic = Mockito.mockStatic(
 					UserLocalServiceUtil.class);

@@ -3,7 +3,7 @@ import groovy.json.JsonSlurper
 task runGradleTest
 
 runGradleTest {
-	dependsOn ":theme-css-with-empty-frontend-token-definition-json:createClientExtensionConfig", ":theme-css-with-frontend-token-definition-json:createClientExtensionConfig", ":theme-css-without-frontend-token-definition-json:createClientExtensionConfig", ":theme-css-with-rtl-css-properties:createClientExtensionConfig"
+	dependsOn ":theme-css-with-empty-frontend-token-definition-json:createClientExtensionConfig", ":theme-css-with-frontend-token-definition-json:createClientExtensionConfig", ":theme-css-with-rtl-css-properties:createClientExtensionConfig", ":theme-css-without-frontend-token-definition-json:createClientExtensionConfig"
 
 	doLast {
 		_testClientExtensionConfigJSON("theme-css-with-empty-frontend-token-definition-json") {
@@ -22,16 +22,6 @@ runGradleTest {
 			assert value.get("typeSettings") == ["frontendTokenDefinitionJSON={\"frontendTokenCategories\":[{\"frontendTokenSets\":[{\"frontendTokens\":[{\"defaultValue\":\"#0b5fff\",\"editorType\":\"ColorPicker\",\"label\":\"brand-color-1\",\"mappings\":[{\"type\":\"cssVariable\",\"value\":\"brand-color-1\"}],\"name\":\"brandColor1\",\"type\":\"String\"}]}]}]}"]
 		}
 
-		_testClientExtensionConfigJSON("theme-css-without-frontend-token-definition-json") {
-			value ->
-
-			assert value instanceof Map
-
-			String typeSettings = String.valueOf(value.get("typeSettings"))
-
-			assert !typeSettings.contains("frontendTokenDefinitionJSON")
-		}
-
 		_testClientExtensionConfigJSON("theme-css-with-rtl-css-properties") {
 			value ->
 
@@ -43,6 +33,16 @@ runGradleTest {
 			assert typeSettings.contains("mainURL=css/main.css")
 			assert typeSettings.contains("clayRTLURL=css/clay_rtl.css")
 			assert typeSettings.contains("mainRTLURL=css/main_rtl.css")
+		}
+
+		_testClientExtensionConfigJSON("theme-css-without-frontend-token-definition-json") {
+			value ->
+
+			assert value instanceof Map
+
+			String typeSettings = String.valueOf(value.get("typeSettings"))
+
+			assert !typeSettings.contains("frontendTokenDefinitionJSON")
 		}
 	}
 }

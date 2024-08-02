@@ -147,7 +147,8 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 
 		User user3 = testDeleteV2User_addUser();
 
-		_assertListResponse(userResource.getV2Users(5, 3), 3, 1, user3);
+		_assertListResponse(
+			userResource.getV2Users(5, 3), 3, 1, user1, user2, user3);
 	}
 
 	@Override
@@ -324,7 +325,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		JSONArray resourcesJSONArray = listResponseJSONObject.getJSONArray(
 			"Resources");
 
-		Assert.assertEquals(expectedUsers.length, resourcesJSONArray.length());
+		Assert.assertEquals(expectedItemsPerPage, resourcesJSONArray.length());
 
 		for (int i = 0; i < resourcesJSONArray.length(); i++) {
 			JSONObject userJSONObject = resourcesJSONArray.getJSONObject(i);

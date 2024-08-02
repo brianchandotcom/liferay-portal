@@ -296,11 +296,11 @@ public class ClientExtensionServicePreActionTest {
 				UnicodePropertiesBuilder.create(
 					true
 				).put(
-					"clayRTLURL", _URL_CLAY_CSS_RTL
+					"clayRTLURL", _URL_CLAY_RTL_CSS
 				).put(
 					"clayURL", _URL_CLAY_CSS
 				).put(
-					"mainRTLURL", _URL_MAIN_CSS_RTL
+					"mainRTLURL", _URL_MAIN_RTL_CSS
 				).put(
 					"mainURL", _URL_MAIN_CSS
 				).buildString());
@@ -336,9 +336,9 @@ public class ClientExtensionServicePreActionTest {
 		if (clientExtensionApplied) {
 			if (_portal.isRightToLeft(mockHttpServletRequest)) {
 				Assert.assertEquals(
-					_URL_CLAY_CSS_RTL, themeDisplay.getClayCSSURL());
+					_URL_CLAY_RTL_CSS, themeDisplay.getClayCSSURL());
 				Assert.assertEquals(
-					_URL_MAIN_CSS_RTL, themeDisplay.getMainCSSURL());
+					_URL_MAIN_RTL_CSS, themeDisplay.getMainCSSURL());
 			}
 			else {
 				Assert.assertEquals(
@@ -434,7 +434,7 @@ public class ClientExtensionServicePreActionTest {
 	private static final String _URL_CLAY_CSS =
 		"http://" + RandomTestUtil.randomString() + ".com/styles.css";
 
-	private static final String _URL_CLAY_CSS_RTL =
+	private static final String _URL_CLAY_RTL_CSS =
 		"http://" + RandomTestUtil.randomString() + ".com/styles_rtl.css";
 
 	private static final String _URL_FAVICON =
@@ -443,7 +443,7 @@ public class ClientExtensionServicePreActionTest {
 	private static final String _URL_MAIN_CSS =
 		"http://" + RandomTestUtil.randomString() + ".com/main.css";
 
-	private static final String _URL_MAIN_CSS_RTL =
+	private static final String _URL_MAIN_RTL_CSS =
 		"http://" + RandomTestUtil.randomString() + ".com/main_rtl.css";
 
 	private ClientExtensionEntry _clientExtensionEntry;

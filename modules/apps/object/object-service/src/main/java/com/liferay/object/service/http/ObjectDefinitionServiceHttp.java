@@ -139,7 +139,7 @@ public class ObjectDefinitionServiceHttp {
 			addSystemObjectDefinition(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long userId, long objectFolderId, boolean enableComments,
-				boolean enableIndexSearch,
+				boolean enableIndexSearch, boolean enableLocalization,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				String panelAppOrder, String panelCategoryKey,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
@@ -155,9 +155,9 @@ public class ObjectDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, userId, objectFolderId,
-				enableComments, enableIndexSearch, labelMap, name,
-				panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
-				objectFields);
+				enableComments, enableIndexSearch, enableLocalization, labelMap,
+				name, panelAppOrder, panelCategoryKey, pluralLabelMap, portlet,
+				scope, objectFields);
 
 			Object returnObj = null;
 
@@ -831,8 +831,8 @@ public class ObjectDefinitionServiceHttp {
 	private static final Class<?>[] _addSystemObjectDefinitionParameterTypes2 =
 		new Class[] {
 			String.class, long.class, long.class, boolean.class, boolean.class,
-			java.util.Map.class, String.class, String.class, String.class,
-			java.util.Map.class, boolean.class, String.class,
+			boolean.class, java.util.Map.class, String.class, String.class,
+			String.class, java.util.Map.class, boolean.class, String.class,
 			java.util.List.class
 		};
 	private static final Class<?>[] _deleteObjectDefinitionParameterTypes3 =

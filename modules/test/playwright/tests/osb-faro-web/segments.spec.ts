@@ -8,11 +8,13 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {instanceSettingsPagesTest} from '../../fixtures/instanceSettingsPagesTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analyticsSettings';
 import {createChannel, switchChannel} from './utils/channel';
 import {
@@ -45,6 +47,7 @@ import {
 	selectOperator,
 	setSegmentName,
 	viewSegmentCriteriaCard,
+	viewSegmentMembershipCount,
 } from './utils/segments';
 import {SegmentConditions} from './utils/selectors';
 import {
@@ -59,6 +62,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
+	instanceSettingsPagesTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
@@ -1421,6 +1425,154 @@ test(
 		});
 
 		await test.step('Check that the user that is not part of the organization will not appears in the membership list', async () => {
+			await viewNameNotPresentOnTableList({
+				itemNames: 'Test',
+				page,
+			});
+		});
+
+		await test.step('Delete channel', async () => {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+				`[${channel.id}]`,
+				project.groupId
+			);
+		});
+	}
+);
+
+test(
+	'Add segment using an individual property "user group"',
+	{
+		tag: '@Legacy',
+	},
+	async ({
+		apiHelpers,
+		defaultUserAssociationsPage,
+		instanceSettingsPage,
+		page,
+	}) => {
+		const channelName = 'My Property - ' + getRandomString();
+
+		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
+
+		await test.step('Enable to assign new users to the created user group', async () => {
+			await instanceSettingsPage.goToInstanceSetting(
+				'Users',
+				'Default User Associations'
+			);
+
+			await defaultUserAssociationsPage.userGroupsInput.fill(
+				userGroup.name
+			);
+			await defaultUserAssociationsPage.saveButton.click();
+
+			await waitForSuccessAlert(page);
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		const {channel, project} = await syncAnalyticsCloud({
+			apiHelpers,
+			channelName,
+			page,
+			userGroupName: userGroup.name,
+		});
+
+		await test.step('Interact with the user that is not part of the user group', async () => {
+			await page.goto(liferayConfig.environment.baseUrl);
+
+			await page.waitForTimeout(10000);
+		});
+
+		await test.step('Interact with the user that is part of the user group', async () => {
+			await performLogout(page);
+
+			await performLogin(page, user.alternateName);
+
+			await page.goto(liferayConfig.environment.baseUrl);
+
+			await page.waitForTimeout(10000);
+		});
+
+		await test.step('Go to Analytics Cloud and Switch the property', async () => {
+			await navigateToACSitesPageViaURL({
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+		});
+
+		await test.step('Create dynamic segment using the user group criteria', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Segments',
+			});
+
+			await createDynamicSegment(page);
+
+			await addSegmentField({
+				criterionName: 'User Group',
+				criterionType: 'Individual Attributes',
+				page,
+			});
+
+			await selectAsset({
+				assetName: userGroup.name,
+				page,
+			});
+
+			await setSegmentName({
+				page,
+				segmentName: 'Test User Group Segment',
+			});
+
+			await saveSegment(page);
+		});
+
+		await test.step('Run the Segment Nanite', async () => {
+			await runNanites({
+				apiHelpers,
+				naniteNames: [Nanites.UpdateMembershipsNanite],
+				page,
+			});
+		});
+
+		await test.step('Reload the segment page to clear the cache', async () => {
+			await waitForLoading(page);
+
+			await page.reload();
+
+			await waitForLoading(page);
+		});
+
+		await test.step('Check the segment member count in the membership', async () => {
+			await navigateTo({
+				page,
+				pageName: 'Membership',
+			});
+
+			await viewSegmentMembershipCount({
+				anonymousMemberCount: '0',
+				knownMemberCount: '1',
+				page,
+				totalMemberCount: '1',
+			});
+		});
+
+		await test.step('Check that the user that is part of user group appears in the membership list', async () => {
+			await viewNameOnTableList({
+				itemNames: user.givenName,
+				page,
+			});
+		});
+
+		await test.step('Check that the user that is not part of the user group will not appears in the membership list', async () => {
 			await viewNameNotPresentOnTableList({
 				itemNames: 'Test',
 				page,

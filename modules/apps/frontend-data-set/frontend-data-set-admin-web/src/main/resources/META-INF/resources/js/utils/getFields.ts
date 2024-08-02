@@ -74,7 +74,7 @@ function getValidFields({
 			const propertyValue = properties[propertyKey];
 
 			const type = propertyValue.type;
-
+			contextPath = contextPath.replace(/\*/g, '');
 			const field: IField = {
 				format: propertyValue.format,
 				label: propertyKey,

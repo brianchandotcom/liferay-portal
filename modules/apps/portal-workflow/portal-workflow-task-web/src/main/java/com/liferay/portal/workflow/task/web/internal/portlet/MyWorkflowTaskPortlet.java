@@ -170,10 +170,10 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 			WorkflowTask workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(
 				themeDisplay.getCompanyId(), workflowTaskId);
 
-			renderRequest.setAttribute(WebKeys.WORKFLOW_TASK, workflowTask);
 			renderRequest.setAttribute(
-				WebKeys.WORKFLOW_TASK_READ_ONLY,
+				WebKeys.WORKFLOW_READ_ONLY,
 				!_hasWorkflowTaskViewPermission(themeDisplay, workflowTask));
+			renderRequest.setAttribute(WebKeys.WORKFLOW_TASK, workflowTask);
 		}
 	}
 

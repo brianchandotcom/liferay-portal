@@ -1,0 +1,18 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":client-extension:assembleClientExtension"
+
+	doLast {
+		Project clientExtensionProject = project ":client-extension"
+
+		File clientExtensionBuildDir = new File(clientExtensionProject.buildDir, "liferay-client-extension-build")
+
+		FileTree fileTree = project.fileTree(clientExtensionBuildDir)
+
+		Set<File> files = fileTree.files
+
+		assert !files.contains(project.file("${clientExtensionBuildDir}/dummy.js"));
+		assert files.contains(project.file("${clientExtensionBuildDir}/foo.txt"))
+	}
+}

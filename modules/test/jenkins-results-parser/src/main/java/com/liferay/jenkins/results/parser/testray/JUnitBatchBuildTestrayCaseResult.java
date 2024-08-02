@@ -63,9 +63,9 @@ public class JUnitBatchBuildTestrayCaseResult
 
 	@Override
 	public String getErrors() {
-		List<TestClassResult> testClassResults = _getTestClassResults();
-
 		Build build = getBuild();
+
+		List<TestClassResult> testClassResults = _getTestClassResults();
 
 		if ((testClassResults == null) || testClassResults.isEmpty()) {
 			if (build == null) {

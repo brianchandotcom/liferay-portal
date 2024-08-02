@@ -19,6 +19,18 @@
 				"tokenizer": "keyword",
 				"type": "custom"
 			},
+			"liferay_analyzer_ar": {
+				"filter": [
+					"lowercase",
+					"decimal_digit",
+					"arabic_stop",
+					"arabic_normalization",
+					"liferay_filter_synonym_ar",
+					"arabic_stemmer"
+				],
+				"tokenizer": "standard",
+				"type": "custom"
+			},
 			"liferay_analyzer_de": {
 				"filter": [
 					"lowercase",
@@ -133,6 +145,14 @@
 				"min_gram": 1,
 				"type": "ngram"
 			},
+			"arabic_stemmer": {
+				"language": "arabic",
+				"type": "stemmer"
+			},
+			"arabic_stop": {
+				"stopwords": "_arabic_",
+				"type": "stop"
+			},
 			"brazilian_stemmer": {
 				"language": "brazilian",
 				"type": "stemmer"
@@ -220,6 +240,12 @@
 			"hungarian_stop": {
 				"stopwords": "_hungarian_",
 				"type": "stop"
+			},
+			"liferay_filter_synonym_ar": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
 			},
 			"liferay_filter_synonym_de": {
 				"lenient": true,

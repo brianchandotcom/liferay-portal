@@ -233,6 +233,14 @@ public class FragmentEntryFragmentRendererTest {
 
 			Assert.assertFalse(curContent.contains(updatedText));
 			Assert.assertEquals(content, curContent);
+
+			_fragmentEntryLinkCache.removeFragmentEntryLinkCache(
+				fragmentEntryLink.getFragmentEntryLinkId());
+
+			Assert.assertEquals(
+				content,
+				_fragmentEntryLinkCache.getFragmentEntryLinkContent(
+					fragmentEntryLink, _locale));
 		}
 
 		Assert.assertEquals(

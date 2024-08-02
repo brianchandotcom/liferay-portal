@@ -222,6 +222,8 @@ components:
                     format: date
                     readOnly: true
                     type: string
+                orderItemExternalReferenceCode:
+                    type: string
                 orderItemId:
                     example: 30130
                     format: int64
@@ -250,15 +252,15 @@ components:
                 validateInventory:
                     example: true
                     type: boolean
+                warehouseExternalReferenceCode:
+                    type: string
                 warehouseId:
                     example: 30130
                     format: int64
                     minimum: 0
                     type: integer
             required:
-                - orderItemId
                 - quantity
-                - warehouseId
             type: object
         ShippingAddress:
             properties:
@@ -1192,6 +1194,87 @@ paths:
                 - OAuth2:
                       - CommerceOpenApiAdmin.read
             summary: Gets a list of Shipment Items related to a Shipment.
+            tags:
+                - ShipmentItem
+        post:
+            operationId: postShipmentItemByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          Shipment item external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ShipmentItem"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ShipmentItem"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ShipmentItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ShipmentItem"
+                    description:
+                        Created
+                202:
+                    description:
+                        Async
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: Creates a Shipment Item.
             tags:
                 - ShipmentItem
         put:

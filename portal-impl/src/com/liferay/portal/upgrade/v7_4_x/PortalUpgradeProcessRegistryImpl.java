@@ -425,7 +425,10 @@ public class PortalUpgradeProcessRegistryImpl
 				"User_", "password_", "VARCHAR(255) null"));
 
 		upgradeVersionTreeMap.put(
-			new Version(31, 1, 1), new UpgradePortletPreferencesCompanyId());
+			new Version(31, 1, 1), new DummyUpgradeProcess());
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 1, 2), new UpgradePortletPreferencesCompanyId());
 
 		upgradeVersionTreeMap.put(
 			new Version(31, 2, 0), new UpgradeLayoutExternalReferenceCode());

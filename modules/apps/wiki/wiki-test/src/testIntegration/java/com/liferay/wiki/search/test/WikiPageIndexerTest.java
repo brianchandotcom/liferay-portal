@@ -55,9 +55,9 @@ public class WikiPageIndexerTest {
 
 	@Test
 	public void testWikiHeadVersionIsTheOnlySearchable() throws Exception {
+		String title = RandomTestUtil.randomString();
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_group.getGroupId());
-		String title = RandomTestUtil.randomString();
 
 		searchContext.setKeywords(title);
 

@@ -344,15 +344,15 @@ public class BaseAuthFilterTest {
 	}
 
 	private User _setUpUser(int status) {
-		User testUser = new UserImpl();
+		User user = new UserImpl();
 
-		testUser.setStatus(status);
+		user.setStatus(status);
 
-		_mockHttpSession.setAttribute(WebKeys.USER, testUser);
+		_mockHttpSession.setAttribute(WebKeys.USER, user);
 
 		_mockHttpServletRequest.setSession(_mockHttpSession);
 
-		return testUser;
+		return user;
 	}
 
 	private static final PortalUtil _portalUtil = new PortalUtil();

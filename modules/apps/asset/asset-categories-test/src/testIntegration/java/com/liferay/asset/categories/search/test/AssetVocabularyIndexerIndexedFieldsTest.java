@@ -199,6 +199,8 @@ public class AssetVocabularyIndexerIndexedFieldsTest {
 			Field.VISIBILITY_TYPE,
 			String.valueOf(assetVocabulary.getVisibilityType())
 		).put(
+			"externalReferenceCode", assetVocabulary.getExternalReferenceCode()
+		).put(
 			"name_sortable", StringUtil.lowerCase(assetVocabulary.getName())
 		).put(
 			"title_ja_JP", assetVocabulary.getName()

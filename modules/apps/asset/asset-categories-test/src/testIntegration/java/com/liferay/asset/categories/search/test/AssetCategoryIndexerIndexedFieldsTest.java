@@ -207,6 +207,8 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 			"assetCategoryTitle_ja_JP",
 			StringUtil.lowerCase(assetCategory.getName())
 		).put(
+			"externalReferenceCode", assetCategory.getExternalReferenceCode()
+		).put(
 			"name_sortable", StringUtil.lowerCase(assetCategory.getName())
 		).put(
 			"parentCategoryId",

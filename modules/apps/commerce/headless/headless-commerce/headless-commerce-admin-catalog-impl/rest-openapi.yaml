@@ -2164,6 +2164,9 @@ components:
                         hu_HU: Horvatorszag
                         hr_HR: Hrvatska
                         en_US: Croatia
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
                 facetable:
                     example: true
                     type: boolean
@@ -15459,6 +15462,189 @@ paths:
                       - HeadlessCommerceAdminCatalog.write
             summary: Creates or updates a specification.
             tags: ["Specification"]
+    "/specifications/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteSpecificationByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Deletes a specification by external reference code.
+            tags: ["Specification"]
+        get:
+            operationId: getSpecificationByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Specification"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Specification"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.read
+            summary: Gets a specification by external reference code.
+            tags: ["Specification"]
+        patch:
+            operationId: patchSpecificationByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Specification"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Specification"
+                required: true
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Specification"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Specification"
+                    description:
+                        Updated
+                400:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.write
+            summary: Updates a specification by external reference code.
+            tags: ["Specification"]
     "/specifications/{id}":
         delete:
             operationId: deleteSpecification
@@ -15477,8 +15663,9 @@ paths:
                   style: simple
             responses:
                 204:
-                    description:
-                        No content
+                    content:
+                        application/json: {}
+                        application/xml: {}
                 401:
                     content:
                         application/json:
@@ -15587,13 +15774,24 @@ paths:
                             $ref: "#/components/schemas/Specification"
                 required: true
             responses:
-                202:
-                    description:
-                        Async
-                204:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Specification"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Specification"
                     description:
                         Updated
                 400:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
                     description:
                         Invalid input
                 401:

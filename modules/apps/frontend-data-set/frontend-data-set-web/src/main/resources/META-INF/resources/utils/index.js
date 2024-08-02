@@ -7,6 +7,7 @@ import {fetch} from 'frontend-js-web';
 
 import getValueFromItem from './getValueFromItem';
 import createOdataFilter from './odata';
+import {DEFAULT_FETCH_HEADERS} from '../constants';
 
 export function getData(apiURL, query) {
 	const url = new URL(apiURL);
@@ -16,6 +17,7 @@ export function getData(apiURL, query) {
 	}
 
 	return fetch(url, {
+		headers: DEFAULT_FETCH_HEADERS,
 		method: 'GET',
 	}).then((data) => data.json());
 }
@@ -155,11 +157,7 @@ export async function loadData(
 	}
 
 	const response = await fetch(url, {
-		headers: {
-			'Accept': 'application/json',
-			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-			'Content-Type': 'application/json',
-		},
+		headers: DEFAULT_FETCH_HEADERS,
 		method: 'GET',
 	});
 	const responseJSON = await response.json();

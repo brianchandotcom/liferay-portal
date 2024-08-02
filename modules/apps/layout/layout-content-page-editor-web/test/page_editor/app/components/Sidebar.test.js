@@ -4,6 +4,7 @@
  */
 
 import {act, fireEvent, render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {sessionStorage} from 'frontend-js-web';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
@@ -14,8 +15,23 @@ import Sidebar, {
 	MIN_SIDEBAR_WIDTH,
 	SIDEBAR_WIDTH_RESIZE_STEP,
 } from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/Sidebar';
+import {useSetOpenShorcutModal} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext';
 import {DragAndDropContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/drag_and_drop/useDragAndDrop';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext',
+	() => {
+		const setOpenShorcutModal = jest.fn();
+
+		return {
+			...jest.requireActual(
+				'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ShortcutContext'
+			),
+			useSetOpenShorcutModal: () => setOpenShorcutModal,
+		};
+	}
+);
 
 const renderSidebar = () =>
 	render(
@@ -126,6 +142,18 @@ describe('Sidebar', () => {
 			expect(handler.getAttribute('aria-valuenow')).toBe(
 				MIN_SIDEBAR_WIDTH.toString()
 			);
+		});
+
+		it('opens the shortcut modal when the button is pressed', () => {
+			const setOpenShorcutModal = useSetOpenShorcutModal();
+
+			renderSidebar();
+
+			userEvent.click(
+				screen.getByLabelText('open-keyboard-shortcuts⇧+?')
+			);
+
+			expect(setOpenShorcutModal).toBeCalledWith(true);
 		});
 	});
 });

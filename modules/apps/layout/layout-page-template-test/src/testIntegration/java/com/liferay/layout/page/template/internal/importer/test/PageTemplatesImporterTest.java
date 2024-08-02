@@ -1384,9 +1384,9 @@ public class PageTemplatesImporterTest {
 			String testCaseName, Map<String, String> valuesMap)
 		throws Exception {
 
-		File file = _generateZipFile(testCaseName, valuesMap);
-
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
+
+		File file = _generateZipFile(testCaseName, valuesMap);
 
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

@@ -300,9 +300,9 @@ public class MasterLayoutsImporterTest {
 			String testCaseName)
 		throws Exception {
 
-		File file = _generateZipFile(testCaseName);
-
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
+
+		File file = _generateZipFile(testCaseName);
 
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

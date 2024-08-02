@@ -107,7 +107,6 @@ public class ActionUtil {
 
 		String actionName = ParamUtil.getString(
 			httpServletRequest, ActionRequest.ACTION_NAME);
-
 		String articleId = ParamUtil.getString(httpServletRequest, "articleId");
 		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
 		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");

@@ -31,6 +31,17 @@
 				"tokenizer": "standard",
 				"type": "custom"
 			},
+			"liferay_analyzer_ca": {
+				"filter": [
+					"catalan_elision",
+					"lowercase",
+					"catalan_stop",
+					"liferay_filter_synonym_ca",
+					"catalan_stemmer"
+				],
+				"tokenizer": "standard",
+				"type": "custom"
+			},
 			"liferay_analyzer_de": {
 				"filter": [
 					"lowercase",
@@ -161,6 +172,26 @@
 				"stopwords": "_brazilian_",
 				"type": "stop"
 			},
+			"catalan_elision": {
+				"articles": [
+					"d",
+					"l",
+					"m",
+					"n",
+					"s",
+					"t"
+				],
+				"articles_case": true,
+				"type": "elision"
+			},
+			"catalan_stemmer": {
+				"language": "catalan",
+				"type": "stemmer"
+			},
+			"catalan_stop": {
+				"stopwords": "_catalan_",
+				"type": "stop"
+			},
 			"dutch_override": {
 				"rules": [
 					"fiets=>fiets",
@@ -242,6 +273,12 @@
 				"type": "stop"
 			},
 			"liferay_filter_synonym_ar": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_ca": {
 				"lenient": true,
 				"synonyms": [
 				],

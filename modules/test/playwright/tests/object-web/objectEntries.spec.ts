@@ -224,8 +224,6 @@ test.describe('Manage object entries through Page Templates', () => {
 
 			await page.getByText('Heading Example', {exact: true}).click();
 
-			await page.getByLabel('Select element-text').click();
-
 			await pageEditorPage.setMappingConfiguration({
 				mapping: {
 					entity: objectDefinitionLabel,

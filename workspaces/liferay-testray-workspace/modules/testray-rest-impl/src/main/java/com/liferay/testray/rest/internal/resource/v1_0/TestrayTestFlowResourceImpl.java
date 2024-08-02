@@ -203,10 +203,12 @@ public class TestrayTestFlowResourceImpl
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
 
-		sql += " limit ? offset ?";
+		if (pagination != null) {
+			sql += " limit ? offset ?";
 
-		params.add(pagination.getPageSize());
-		params.add(pagination.getStartPosition());
+			params.add(pagination.getPageSize());
+			params.add(pagination.getStartPosition());
+		}
 
 		List<Map<String, Object>> values = TestrayUtil.executeQuery(
 			sql, params);

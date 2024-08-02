@@ -71,6 +71,20 @@ public class PostgreSQLDB extends BaseDB {
 			columnName, " = old.", columnName, StringPool.SEMICOLON);
 	}
 
+	public static String[] getRuleTableColumn(String ruleSQL) {
+		Matcher matcher = _rulePattern.matcher(ruleSQL);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String ruleName = matcher.group(1);
+
+		String[] parts = ruleName.split(StringPool.UNDERLINE, 3);
+
+		return new String[] {parts[1], parts[2]};
+	}
+
 	public PostgreSQLDB(int majorVersion, int minorVersion) {
 		super(DBType.POSTGRESQL, majorVersion, minorVersion);
 
@@ -506,6 +520,8 @@ public class PostgreSQLDB extends BaseDB {
 
 	private static final Pattern _oidPattern = Pattern.compile(
 		" oid(\\W|$)", Pattern.CASE_INSENSITIVE);
+	private static final Pattern _rulePattern = Pattern.compile(
+		"create or replace rule (.*?) as");
 
 	private final boolean _supportsNewUuidFunction;
 

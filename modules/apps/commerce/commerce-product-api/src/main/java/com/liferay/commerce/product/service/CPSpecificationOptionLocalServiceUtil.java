@@ -418,16 +418,18 @@ public class CPSpecificationOptionLocalServiceUtil {
 	}
 
 	public static CPSpecificationOption updateCPSpecificationOption(
-			long cpSpecificationOptionId, long cpOptionCategoryId,
-			long listTypeDefinitionId, Map<java.util.Locale, String> titleMap,
+			String externalReferenceCode, long cpSpecificationOptionId,
+			long cpOptionCategoryId, long listTypeDefinitionId,
+			Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap, boolean facetable,
 			String key, double priority,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCPSpecificationOption(
-			cpSpecificationOptionId, cpOptionCategoryId, listTypeDefinitionId,
-			titleMap, descriptionMap, facetable, key, priority, serviceContext);
+			externalReferenceCode, cpSpecificationOptionId, cpOptionCategoryId,
+			listTypeDefinitionId, titleMap, descriptionMap, facetable, key,
+			priority, serviceContext);
 	}
 
 	public static CPSpecificationOptionLocalService getService() {

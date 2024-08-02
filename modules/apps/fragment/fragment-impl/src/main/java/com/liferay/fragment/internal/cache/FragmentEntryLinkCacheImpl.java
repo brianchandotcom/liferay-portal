@@ -19,6 +19,7 @@ import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -65,6 +66,11 @@ public class FragmentEntryLinkCacheImpl implements FragmentEntryLinkCache {
 	protected void activate() {
 		_portalCache = (PortalCache<String, String>)_multiVMPool.getPortalCache(
 			FragmentEntryLink.class.getName());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_multiVMPool.removePortalCache(FragmentEntryLink.class.getName());
 	}
 
 	private String _getPortalCacheKey(

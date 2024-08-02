@@ -33,12 +33,7 @@ CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getComm
 		).put(
 			"commerceReturnItemId", commerceReturnEditDisplayContext.getCommerceReturnItemId()
 		).put(
-			"readOnly",
-			Arrays.asList(
-				CommerceReturnConstants.RETURN_STATUSES_LATEST
-			).contains(
-				commerceReturn.getReturnStatus()
-			) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus())
+			"readOnly", ArrayUtil.contains(CommerceReturnConstants.RETURN_STATUSES_LATEST, commerceReturn.getReturnStatus()) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus())
 		).build()
 	%>'
 	module="{editCommerceReturnItem} from commerce-order-web"

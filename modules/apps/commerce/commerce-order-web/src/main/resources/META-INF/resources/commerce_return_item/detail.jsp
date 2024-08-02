@@ -10,11 +10,8 @@
 <%
 CommerceReturnEditDisplayContext commerceReturnEditDisplayContext = (CommerceReturnEditDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceReturn commerceReturn = commerceReturnEditDisplayContext.getCommerceReturn();
-
-String returnStatus = commerceReturn.getReturnStatus();
-
 CommerceOrderItem commerceOrderItem = commerceReturnEditDisplayContext.getCommerceReturnItemCommerceOrderItem();
+CommerceReturn commerceReturn = commerceReturnEditDisplayContext.getCommerceReturn();
 CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getCommerceReturnItem();
 %>
 
@@ -62,8 +59,8 @@ CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getComm
 
 			<div class="row">
 				<div class="col">
-					<aui:input name="authorized" readonly="<%= Arrays.asList(CommerceReturnConstants.RETURN_STATUSES_LATEST).contains(returnStatus) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus()) %>" required="<%= true %>" type="text" value="<%= commerceReturnItem.getAuthorized() %>" />
-					<aui:input disabled="<%= Arrays.asList(CommerceReturnConstants.RETURN_STATUSES_LATEST).contains(returnStatus) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus()) %>" inlineLabel="right" label="authorize-return-without-returning-products" name="authorizeReturnWithoutReturningProducts" type="checkbox" value="<%= commerceReturnItem.isAuthorizeReturnWithoutReturningProducts() %>" />
+					<aui:input name="authorized" readonly="<%= ArrayUtil.contains(CommerceReturnConstants.RETURN_STATUSES_LATEST, commerceReturn.getReturnStatus()) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus()) %>" required="<%= true %>" type="text" value="<%= commerceReturnItem.getAuthorized() %>" />
+					<aui:input disabled="<%= ArrayUtil.contains(CommerceReturnConstants.RETURN_STATUSES_LATEST, commerceReturn.getReturnStatus()) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus()) %>" inlineLabel="right" label="authorize-return-without-returning-products" name="authorizeReturnWithoutReturningProducts" type="checkbox" value="<%= commerceReturnItem.isAuthorizeReturnWithoutReturningProducts() %>" />
 				</div>
 			</div>
 
@@ -71,7 +68,7 @@ CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getComm
 
 			<div class="row">
 				<div class="col">
-					<aui:input name="received" readonly="<%= Arrays.asList(CommerceReturnConstants.RETURN_STATUSES_LATEST).contains(returnStatus) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus()) %>" required="<%= true %>" type="text" value="<%= commerceReturnItem.getReceived() %>" />
+					<aui:input name="received" readonly="<%= ArrayUtil.contains(CommerceReturnConstants.RETURN_STATUSES_LATEST, commerceReturn.getReturnStatus()) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus()) %>" required="<%= true %>" type="text" value="<%= commerceReturnItem.getReceived() %>" />
 				</div>
 			</div>
 
@@ -104,7 +101,7 @@ CommerceReturnItem commerceReturnItem = commerceReturnEditDisplayContext.getComm
 	</commerce-ui:panel>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" disabled="<%= Arrays.asList(CommerceReturnConstants.RETURN_STATUSES_LATEST).contains(returnStatus) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus()) %>" type="submit" value="save" />
+		<aui:button cssClass="btn-lg" disabled="<%= ArrayUtil.contains(CommerceReturnConstants.RETURN_STATUSES_LATEST, commerceReturn.getReturnStatus()) || StringUtil.equals(CommerceReturnConstants.RETURN_ITEM_STATUS_PROCESSED, commerceReturnItem.getReturnItemStatus()) %>" type="submit" value="save" />
 
 		<aui:button cssClass="btn-lg" type="cancel" />
 	</aui:button-row>

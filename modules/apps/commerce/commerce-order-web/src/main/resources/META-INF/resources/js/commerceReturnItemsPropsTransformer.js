@@ -10,6 +10,7 @@ import {CommerceReturnItemPicklistDataRenderer} from './CommerceReturnItemPickli
 import {CommerceReturnItemReceivedDataRenderer} from './CommerceReturnItemReceivedDataRenderer';
 import {CommerceReturnItemStatusDataRenderer} from './CommerceReturnItemStatusDataRenderer';
 import CommerceStatusDataRenderer from './CommerceStatusDataRenderer';
+
 const CommerceReturnItemResource = CommerceServiceProvider.ReturnItemAPI();
 
 export default function propsTransformer({...otherProps}) {

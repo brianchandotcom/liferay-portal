@@ -5,6 +5,7 @@
 
 package com.liferay.stripe;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.petra.string.StringBundler;
 
 import com.stripe.Stripe;
@@ -28,9 +29,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -38,7 +37,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Crescenzo Rega
@@ -110,23 +108,12 @@ public class AuthorizeRestController extends BaseRestController {
 
 			JSONObject orderJSONObject = new JSONObject(
 				Objects.requireNonNull(
-					WebClient.create(
-					).get(
-					).uri(
+					get(
+						"Bearer " + jwt.getTokenValue(),
 						StringBundler.concat(
-							lxcDXPServerProtocol, "://", lxcDXPMainDomain,
 							"/o/headless-commerce-admin-order/v1.0/orders/",
 							commercePaymentEntryJSONObject.getLong("classPK"),
-							"?nestedFields=orderItems")
-					).accept(
-						MediaType.APPLICATION_JSON
-					).header(
-						HttpHeaders.AUTHORIZATION,
-						"Bearer " + jwt.getTokenValue()
-					).retrieve(
-					).bodyToMono(
-						String.class
-					).block()));
+							"?nestedFields=orderItems"))));
 
 			sessionCreateParams = SessionCreateParams.builder(
 			).addAllLineItem(

@@ -130,6 +130,8 @@ public class KBAdminManagementToolbarDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
+		CreationMenu creationMenu = new CreationMenu();
+
 		long kbFolderClassNameId = PortalUtil.getClassNameId(
 			KBFolderConstants.getClassName());
 
@@ -141,10 +143,7 @@ public class KBAdminManagementToolbarDisplayContext {
 			_httpServletRequest, "parentResourcePrimKey",
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		boolean hasAddKBArticlePermission = _hasAddKBArticlePermission();
 		boolean hasAddKBFolderPermission = _hasAddKBFolderPermission();
-
-		CreationMenu creationMenu = new CreationMenu();
 
 		if (hasAddKBFolderPermission) {
 			creationMenu.addDropdownItem(
@@ -168,6 +167,8 @@ public class KBAdminManagementToolbarDisplayContext {
 						LanguageUtil.get(_httpServletRequest, "folder"));
 				});
 		}
+
+		boolean hasAddKBArticlePermission = _hasAddKBArticlePermission();
 
 		if (hasAddKBArticlePermission) {
 			creationMenu.addDropdownItem(

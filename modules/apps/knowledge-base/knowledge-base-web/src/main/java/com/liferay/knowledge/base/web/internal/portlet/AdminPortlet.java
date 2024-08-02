@@ -237,10 +237,10 @@ public class AdminPortlet extends BaseKBPortlet {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		List<KBArticle> kbArticles = new ArrayList<>();
+
 		long[] kbArticleResourcePrimKeys = ParamUtil.getLongValues(
 			httpServletRequest, "rowIdsKBArticle");
-
-		List<KBArticle> kbArticles = new ArrayList<>();
 
 		for (long kbArticleResourcePrimKey : kbArticleResourcePrimKeys) {
 			KBArticle kbArticle = kbArticleService.getLatestKBArticle(
@@ -269,10 +269,10 @@ public class AdminPortlet extends BaseKBPortlet {
 	private List<KBFolder> _getKBFolders(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		List<KBFolder> kbFolders = new ArrayList<>();
+
 		long[] kbFolderIds = ParamUtil.getLongValues(
 			httpServletRequest, "rowIdsKBFolder");
-
-		List<KBFolder> kbFolders = new ArrayList<>();
 
 		for (long kbFolderId : kbFolderIds) {
 			kbFolders.add(kbFolderService.getKBFolder(kbFolderId));

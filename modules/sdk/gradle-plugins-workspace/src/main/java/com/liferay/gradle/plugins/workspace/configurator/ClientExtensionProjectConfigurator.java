@@ -676,6 +676,8 @@ public class ClientExtensionProjectConfigurator
 
 		assembleClientExtensionTaskProvider.configure(
 			copy -> {
+				copy.dependsOn(_CLEAN_ASSEMBLE_CLIENT_EXTENSION_TASK_NAME);
+
 				TaskInputs taskInputs = copy.getInputs();
 
 				taskInputs.file(clientExtensionYamlFile);
@@ -1196,6 +1198,9 @@ public class ClientExtensionProjectConfigurator
 				StringUtil.quote(typeSettingsKey),
 				StringUtil.join(StringUtil.COMMA_AND_SPACE, validValues)));
 	}
+
+	private static final String _CLEAN_ASSEMBLE_CLIENT_EXTENSION_TASK_NAME =
+		"cleanAssembleClientExtension";
 
 	private static final String _CLIENT_EXTENSION_YAML =
 		"client-extension.yaml";

@@ -5,6 +5,7 @@
 
 package com.liferay.ticket;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.portal.search.rest.client.dto.v1_0.Suggestion;
 import com.liferay.portal.search.rest.client.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.rest.client.dto.v1_0.SuggestionsContributorResults;
@@ -27,7 +28,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Raymond Augé
@@ -67,24 +67,10 @@ public class ObjectActionTicketRestController extends BaseRestController {
 			_log.info("Properties: " + propertiesJSONObject.toString(4));
 		}
 
-		WebClient.create(
-			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
-		).patch(
-		).uri(
+		patch(
+			"Bearer " + jwt.getTokenValue(), propertiesJSONObject.toString(),
 			"/o/c/j3y7tickets/" +
-				objectEntryDTOJ3Y7TicketJSONObject.getString("id")
-		).accept(
-			MediaType.APPLICATION_JSON
-		).contentType(
-			MediaType.APPLICATION_JSON
-		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-		).bodyValue(
-			propertiesJSONObject.toString()
-		).retrieve(
-		).bodyToMono(
-			Void.class
-		).subscribe();
+				objectEntryDTOJ3Y7TicketJSONObject.getString("id"));
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}

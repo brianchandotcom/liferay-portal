@@ -23,14 +23,16 @@ import SidebarItem from './SidebarItem';
 import TaskSidebar from './TasksSidebar';
 
 const Sidebar = () => {
-	const {pathname} = useLocation();
 	const [expanded, setExpanded] = useStorage(STORAGE_KEYS.SIDEBAR, {
 		consentType: CONSENT_TYPE.PERSONALIZATION,
 		initialValue: true,
 		storageType: 'persisted',
 	});
-	const [visible, setVisible] = useState(false);
 	const [type, setType] = useState<'autofill' | 'compareRuns'>('compareRuns');
+	const [visible, setVisible] = useState(false);
+	const {pathname} = useLocation();
+
+	const relevantPaths = ['project', 'case-result'];
 
 	const CompareRunsContent = (
 		<div
@@ -168,8 +170,11 @@ const Sidebar = () => {
 										return (
 											<SidebarItem
 												active={
-													pathname.includes(
-														'project'
+													relevantPaths.some(
+														(relevantPath) =>
+															pathname.includes(
+																relevantPath
+															)
 													) &&
 													!path.includes('testflow')
 												}

@@ -4,39 +4,23 @@
  */
 
 import {useEffect} from 'react';
-import {
-	Outlet,
-	useLocation,
-	useOutletContext,
-	useParams,
-} from 'react-router-dom';
+import {Outlet, useLocation, useParams} from 'react-router-dom';
 import PageRenderer from '~/components/PageRenderer';
 
 import {useFetch} from '../../../../../../hooks/useFetch';
 import useHeader from '../../../../../../hooks/useHeader';
 import i18n from '../../../../../../i18n';
 import {
-	TestrayBuild,
 	TestrayCaseResult,
-	TestrayProject,
-	TestrayRoutine,
 	liferayMessageBoardImpl,
 	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
 import useCaseResultActions from './useCaseResultActions';
 
-type OutletContext = {
-	testrayBuild: TestrayBuild;
-	testrayProject: TestrayProject;
-	testrayRoutine: TestrayRoutine;
-};
-
 const CaseResultOutlet = () => {
 	const {actions} = useCaseResultActions();
 	const {pathname} = useLocation();
-	const {buildId, caseResultId, projectId, routineId} = useParams();
-	const {testrayBuild, testrayProject, testrayRoutine}: OutletContext =
-		useOutletContext();
+	const {caseResultId} = useParams();
 
 	const isEditCase = pathname.includes('edit');
 
@@ -61,7 +45,11 @@ const CaseResultOutlet = () => {
 			: null
 	);
 
-	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultId}`;
+	const testrayBuild = testrayCaseResult?.build;
+	const testrayProject = testrayCaseResult?.build?.project;
+	const testrayRoutine = testrayCaseResult?.build?.routine;
+
+	const basePath = `/project/${testrayProject?.id}/routines/${testrayRoutine?.id}/build/${testrayBuild?.id}/case-result/${caseResultId}`;
 
 	const {setHeaderActions, setHeading, setTabs} = useHeader({
 		timeout: 100,
@@ -80,18 +68,18 @@ const CaseResultOutlet = () => {
 			setHeading([
 				{
 					category: i18n.translate('project').toUpperCase(),
-					path: `/project/${testrayProject.id}/routines`,
-					title: testrayProject?.name,
+					path: `/project/${testrayProject?.id}/routines`,
+					title: String(testrayProject?.name),
 				},
 				{
 					category: i18n.translate('routine').toUpperCase(),
-					path: `/project/${testrayProject.id}/routines/${testrayRoutine.id}`,
-					title: testrayRoutine?.name,
+					path: `/project/${testrayProject?.id}/routines/${testrayRoutine?.id}`,
+					title: String(testrayRoutine?.name),
 				},
 				{
 					category: i18n.translate('build').toUpperCase(),
-					path: `/project/${testrayProject.id}/routines/${testrayRoutine.id}/build/${testrayBuild.id}`,
-					title: testrayBuild?.name,
+					path: `/project/${testrayProject?.id}/routines/${testrayRoutine?.id}/build/${testrayBuild?.id}`,
+					title: String(testrayBuild?.name),
 				},
 				{
 					category: i18n.translate('case-result'),
@@ -113,15 +101,15 @@ const CaseResultOutlet = () => {
 				? []
 				: [
 						{
-							active: pathname === basePath,
+							active: !pathname.includes('history'),
 							path: basePath,
 							title: i18n.translate('result'),
 						},
 						{
-							active: pathname !== basePath,
+							active: pathname.includes('history'),
 							path: `${basePath}/history?${new URLSearchParams({
 								filter: JSON.stringify({
-									testrayRoutineIds: [testrayRoutine.id],
+									testrayRoutineIds: [testrayRoutine?.id],
 								}),
 								filterSchema: 'buildResultsHistory',
 							})}`,
@@ -129,7 +117,7 @@ const CaseResultOutlet = () => {
 						},
 					]
 		);
-	}, [basePath, isEditCase, pathname, setTabs, testrayRoutine.id]);
+	}, [basePath, isEditCase, pathname, setTabs, testrayRoutine?.id]);
 
 	return (
 		<PageRenderer error={error} loading={loading}>
@@ -139,7 +127,7 @@ const CaseResultOutlet = () => {
 					caseResult: testrayCaseResult,
 					mbMessage,
 					mutateCaseResult,
-					projectId,
+					projectId: testrayProject?.id,
 				}}
 			/>
 		</PageRenderer>

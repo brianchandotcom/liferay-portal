@@ -358,6 +358,9 @@ public interface ContactsEngineClient {
 		String query, List<String> fields, boolean includeAnonymousUsers,
 		int cur, int delta, List<OrderByField> orderByFields);
 
+	public long getIndividualsCreatedBetweenCount(
+		FaroProject faroProject, Date endDate, Date startDate);
+
 	public long getIndividualsCreatedSinceCount(
 		FaroProject faroProject, Date startDate);
 

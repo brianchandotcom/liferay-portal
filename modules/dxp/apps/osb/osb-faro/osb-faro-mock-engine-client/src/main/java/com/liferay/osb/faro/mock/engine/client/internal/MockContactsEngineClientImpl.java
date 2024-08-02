@@ -112,6 +112,14 @@ public class MockContactsEngineClientImpl
 	}
 
 	@Override
+	public long getIndividualsCreatedBetweenCount(
+		FaroProject faroProject, Date endDate, Date startDate) {
+
+		return contactsEngineClient.getIndividualsCreatedBetweenCount(
+			faroProject, endDate, startDate);
+	}
+
+	@Override
 	public long getIndividualsCreatedSinceCount(
 		FaroProject faroProject, Date startDate) {
 

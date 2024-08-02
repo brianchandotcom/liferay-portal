@@ -78,6 +78,7 @@ export function FreeMarkerTemplateEditor({
 			CustomSidebarContent={
 				<SingleSelect
 					disabled={values.system}
+					id="freeMarkerEntity"
 					items={objectDefinitionItems ?? []}
 					label={Liferay.Language.get('entity')}
 					onSelectionChange={(value) => {

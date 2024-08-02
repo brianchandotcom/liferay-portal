@@ -83,6 +83,7 @@ export default function ContentContainer({
 				<>
 					<SingleSelect<LabelValueObject<EditorTypeOptions>>
 						disabled={values.system}
+						id="editorType"
 						items={EDITOR_TYPES}
 						label={Liferay.Language.get('editor-type')}
 						onSelectionChange={(value) => {

@@ -218,6 +218,8 @@ public class MBMessageIndexerIndexedFieldsTest {
 		).put(
 			"discussion", "false"
 		).put(
+			"externalReferenceCode", mbMessage.getExternalReferenceCode()
+		).put(
 			"parentMessageId", String.valueOf(mbMessage.getParentMessageId())
 		).put(
 			"question", "false"

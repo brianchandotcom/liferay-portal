@@ -6,24 +6,32 @@
 package com.liferay.fragment.internal.upgrade.v1_1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -47,7 +55,8 @@ import org.junit.runner.RunWith;
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
-public class PortletPreferencesUpgradeProcessTest {
+public class PortletPreferencesUpgradeProcessTest
+	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -59,14 +68,18 @@ public class PortletPreferencesUpgradeProcessTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
 	}
 
 	@Test
 	public void testUpgrade() throws Exception {
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
 		PortletPreferences portletPreferences = _getPortletPreferences(
-			layout, _addPortletFragmentEntryLink(layout));
+			_addPortletFragmentEntryLink());
 
 		Layout controlPanelLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -87,7 +100,7 @@ public class PortletPreferencesUpgradeProcessTest {
 					"PortletPreferencesUpgradeProcess",
 				LoggerTestUtil.ALL)) {
 
-			_runUpgrade();
+			runUpgrade();
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -101,15 +114,50 @@ public class PortletPreferencesUpgradeProcessTest {
 			_portletPreferencesLocalService.fetchPortletPreferences(
 				portletPreferences.getPortletPreferencesId());
 
-		Assert.assertEquals(layout.getPlid(), portletPreferences.getPlid());
+		Assert.assertEquals(_layout.getPlid(), portletPreferences.getPlid());
 	}
 
-	private String _addPortletFragmentEntryLink(Layout layout)
-		throws Exception {
+	@Override
+	protected CTModel<?> addCTModel() throws Exception {
+		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			"{}", _layout.fetchDraftLayout(), _segmentsExperienceId);
+	}
 
+	@Override
+	protected CTService<?> getCTService() {
+		return _fragmentEntryLinkLocalService;
+	}
+
+	protected void runUpgrade() throws Exception {
+		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+			_upgradeStepRegistrator, _CLASS_NAME);
+
+		upgradeProcess.upgrade();
+
+		_entityCache.clearCache();
+		_multiVMPool.clear();
+	}
+
+	@Override
+	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
+		FragmentEntryLink fragmentEntryLink = (FragmentEntryLink)ctModel;
+
+		return _fragmentEntryLinkLocalService.updateFragmentEntryLink(
+			TestPropsValues.getUserId(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString())
+			).toString());
+	}
+
+	private String _addPortletFragmentEntryLink() throws Exception {
 		JSONObject processAddPortletJSONObject =
 			ContentLayoutTestUtil.addPortletToLayout(
-				layout, JournalContentPortletKeys.JOURNAL_CONTENT);
+				_layout, JournalContentPortletKeys.JOURNAL_CONTENT);
 
 		JSONObject fragmentEntryLinkJSONObject =
 			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
@@ -122,13 +170,12 @@ public class PortletPreferencesUpgradeProcessTest {
 			editableValuesJSONObject.getString("instanceId"));
 	}
 
-	private PortletPreferences _getPortletPreferences(
-			Layout layout, String portletId)
+	private PortletPreferences _getPortletPreferences(String portletId)
 		throws Exception {
 
 		List<PortletPreferences> portletPreferences =
 			_portletPreferencesLocalService.getPortletPreferences(
-				layout.getPlid(), portletId);
+				_layout.getPlid(), portletId);
 
 		Assert.assertEquals(
 			portletPreferences.toString(), 1, portletPreferences.size());
@@ -136,17 +183,9 @@ public class PortletPreferencesUpgradeProcessTest {
 		return portletPreferences.get(0);
 	}
 
-	private void _runUpgrade() throws Exception {
-		UpgradeProcess[] upgradeProcesses = UpgradeTestUtil.getUpgradeSteps(
-			_upgradeStepRegistrator, new Version(1, 1, 0));
-
-		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
-			upgradeProcess.upgrade();
-		}
-
-		_entityCache.clearCache();
-		_multiVMPool.clear();
-	}
+	private static final String _CLASS_NAME =
+		"com.liferay.fragment.internal.upgrade.v1_1_0." +
+			"PortletPreferencesUpgradeProcess";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
@@ -156,8 +195,13 @@ public class PortletPreferencesUpgradeProcessTest {
 	@Inject
 	private EntityCache _entityCache;
 
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private Layout _layout;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
@@ -167,6 +211,8 @@ public class PortletPreferencesUpgradeProcessTest {
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	private long _segmentsExperienceId;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

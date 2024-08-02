@@ -77,9 +77,12 @@ public interface CommerceShipmentItemLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
-			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			BigDecimal quantity, String unitOfMeasureKey,
-			boolean validateInventory, ServiceContext serviceContext)
+			String commerceOrderItemExternalReferenceCode,
+			long commerceOrderItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			String unitOfMeasureKey, boolean validateInventory,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -90,9 +93,12 @@ public interface CommerceShipmentItemLocalService
 
 	public CommerceShipmentItem addOrUpdateCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
-			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			BigDecimal quantity, String unitOfMeasureKey,
-			boolean validateInventory, ServiceContext serviceContext)
+			String commerceOrderItemExternalReferenceCode,
+			long commerceOrderItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			String unitOfMeasureKey, boolean validateInventory,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -414,8 +420,10 @@ public interface CommerceShipmentItemLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceShipmentItem updateCommerceShipmentItem(
-			long commerceShipmentItemId, long commerceInventoryWarehouseId,
-			BigDecimal quantity, boolean validateInventory)
+			long commerceShipmentItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			boolean validateInventory)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

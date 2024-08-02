@@ -33,28 +33,36 @@ public class CommerceShipmentItemServiceUtil {
 	 */
 	public static CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
-			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			java.math.BigDecimal quantity, String unitOfMeasureKey,
-			boolean validateInventory,
+			String commerceOrderItemExternalReferenceCode,
+			long commerceOrderItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, java.math.BigDecimal quantity,
+			String unitOfMeasureKey, boolean validateInventory,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceShipmentItem(
-			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
+			externalReferenceCode, commerceShipmentId,
+			commerceOrderItemExternalReferenceCode, commerceOrderItemId,
+			commerceInventoryWarehouseExternalReferenceCode,
 			commerceInventoryWarehouseId, quantity, unitOfMeasureKey,
 			validateInventory, serviceContext);
 	}
 
 	public static CommerceShipmentItem addOrUpdateCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
-			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			java.math.BigDecimal quantity, String unitOfMeasureKey,
-			boolean validateInventory,
+			String commerceOrderItemExternalReferenceCode,
+			long commerceOrderItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, java.math.BigDecimal quantity,
+			String unitOfMeasureKey, boolean validateInventory,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrUpdateCommerceShipmentItem(
-			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
+			externalReferenceCode, commerceShipmentId,
+			commerceOrderItemExternalReferenceCode, commerceOrderItemId,
+			commerceInventoryWarehouseExternalReferenceCode,
 			commerceInventoryWarehouseId, quantity, unitOfMeasureKey,
 			validateInventory, serviceContext);
 	}
@@ -172,13 +180,16 @@ public class CommerceShipmentItemServiceUtil {
 	}
 
 	public static CommerceShipmentItem updateCommerceShipmentItem(
-			long commerceShipmentItemId, long commerceInventoryWarehouseId,
-			java.math.BigDecimal quantity, boolean validateInventory)
+			long commerceShipmentItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, java.math.BigDecimal quantity,
+			boolean validateInventory)
 		throws PortalException {
 
 		return getService().updateCommerceShipmentItem(
-			commerceShipmentItemId, commerceInventoryWarehouseId, quantity,
-			validateInventory);
+			commerceShipmentItemId,
+			commerceInventoryWarehouseExternalReferenceCode,
+			commerceInventoryWarehouseId, quantity, validateInventory);
 	}
 
 	public static CommerceShipmentItem updateExternalReferenceCode(

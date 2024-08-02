@@ -48,16 +48,22 @@ public interface CommerceShipmentItemService extends BaseService {
 	 */
 	public CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
-			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			BigDecimal quantity, String unitOfMeasureKey,
-			boolean validateInventory, ServiceContext serviceContext)
+			String commerceOrderItemExternalReferenceCode,
+			long commerceOrderItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			String unitOfMeasureKey, boolean validateInventory,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceShipmentItem addOrUpdateCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
-			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			BigDecimal quantity, String unitOfMeasureKey,
-			boolean validateInventory, ServiceContext serviceContext)
+			String commerceOrderItemExternalReferenceCode,
+			long commerceOrderItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			String unitOfMeasureKey, boolean validateInventory,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -135,8 +141,10 @@ public interface CommerceShipmentItemService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public CommerceShipmentItem updateCommerceShipmentItem(
-			long commerceShipmentItemId, long commerceInventoryWarehouseId,
-			BigDecimal quantity, boolean validateInventory)
+			long commerceShipmentItemId,
+			String commerceInventoryWarehouseExternalReferenceCode,
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			boolean validateInventory)
 		throws PortalException;
 
 	public CommerceShipmentItem updateExternalReferenceCode(

@@ -10,6 +10,7 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -91,6 +92,7 @@ public class PortletPreferencesUpgradeProcessTest {
 			upgradeProcess.upgrade();
 		}
 
+		_entityCache.clearCache();
 		_multiVMPool.clear();
 	}
 
@@ -98,6 +100,9 @@ public class PortletPreferencesUpgradeProcessTest {
 		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	@Inject
+	private EntityCache _entityCache;
 
 	@DeleteAfterTestRun
 	private Group _group;

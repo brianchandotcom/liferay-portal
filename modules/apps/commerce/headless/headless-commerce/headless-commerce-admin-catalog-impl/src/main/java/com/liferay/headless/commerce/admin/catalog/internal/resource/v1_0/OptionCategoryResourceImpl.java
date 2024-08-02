@@ -27,6 +27,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -51,9 +52,22 @@ public class OptionCategoryResourceImpl extends BaseOptionCategoryResourceImpl {
 	public Response deleteOptionCategory(Long id) throws Exception {
 		_cpOptionCategoryService.deleteCPOptionCategory(id);
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+		Response.ResponseBuilder responseBuilder = Response.noContent();
 
 		return responseBuilder.build();
+	}
+
+	@Override
+	public void deleteOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CPOptionCategory cpOptionCategory =
+			_cpOptionCategoryService.getCPOptionCategoryByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		_cpOptionCategoryService.deleteCPOptionCategory(
+			cpOptionCategory.getCPOptionCategoryId());
 	}
 
 	@Override
@@ -87,6 +101,18 @@ public class OptionCategoryResourceImpl extends BaseOptionCategoryResourceImpl {
 	}
 
 	@Override
+	public OptionCategory getOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CPOptionCategory cpOptionCategory =
+			_cpOptionCategoryService.getCPOptionCategoryByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		return getOptionCategory(cpOptionCategory.getCPOptionCategoryId());
+	}
+
+	@Override
 	public Response patchOptionCategory(Long id, OptionCategory optionCategory)
 		throws Exception {
 
@@ -98,36 +124,39 @@ public class OptionCategoryResourceImpl extends BaseOptionCategoryResourceImpl {
 	}
 
 	@Override
-	public OptionCategory postOptionCategory(OptionCategory optionCategory)
+	public OptionCategory patchOptionCategoryByExternalReferenceCode(
+			String externalReferenceCode, OptionCategory optionCategory)
 		throws Exception {
 
-		CPOptionCategory cpOptionCategory = null;
+		CPOptionCategory cpOptionCategory =
+			_cpOptionCategoryService.getCPOptionCategoryByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
 
-		if (optionCategory.getId() != null) {
-			cpOptionCategory = _cpOptionCategoryService.fetchCPOptionCategory(
-				optionCategory.getId());
-		}
-
-		if (cpOptionCategory == null) {
-			cpOptionCategory = _addOptionCategory(optionCategory);
-		}
-		else {
-			cpOptionCategory = _updateOptionCategory(
-				optionCategory.getId(), optionCategory);
-		}
+		_updateOptionCategory(
+			cpOptionCategory.getCPOptionCategoryId(), optionCategory);
 
 		return _toOptionCategory(cpOptionCategory.getCPOptionCategoryId());
 	}
 
-	private CPOptionCategory _addOptionCategory(OptionCategory optionCategory)
+	@Override
+	public OptionCategory postOptionCategory(OptionCategory optionCategory)
 		throws Exception {
 
-		return _cpOptionCategoryService.addCPOptionCategory(
-			null, LanguageUtils.getLocalizedMap(optionCategory.getTitle()),
-			LanguageUtils.getLocalizedMap(optionCategory.getDescription()),
-			GetterUtil.get(optionCategory.getPriority(), 0D),
-			optionCategory.getKey(),
-			_serviceContextHelper.getServiceContext(contextUser));
+		return _toOptionCategory(
+			_cpOptionCategoryService.addOrUpdateCPOptionCategory(
+				GetterUtil.getString(optionCategory.getExternalReferenceCode()),
+				GetterUtil.getLong(optionCategory.getId()),
+				LanguageUtils.getLocalizedMap(optionCategory.getTitle()),
+				LanguageUtils.getLocalizedMap(optionCategory.getDescription()),
+				GetterUtil.getLong(optionCategory.getPriority()),
+				optionCategory.getKey(),
+				_serviceContextHelper.getServiceContext(contextUser)));
+	}
+
+	private OptionCategory _toOptionCategory(CPOptionCategory cpOptionCategory)
+		throws Exception {
+
+		return _toOptionCategory(cpOptionCategory.getCPOptionCategoryId());
 	}
 
 	private OptionCategory _toOptionCategory(Long cpOptionCategoryId)
@@ -146,10 +175,27 @@ public class OptionCategoryResourceImpl extends BaseOptionCategoryResourceImpl {
 		CPOptionCategory cpOptionCategory =
 			_cpOptionCategoryService.getCPOptionCategory(id);
 
+		Map<String, String> titleMap = optionCategory.getTitle();
+
+		if (titleMap == null) {
+			titleMap = LanguageUtils.getLanguageIdMap(
+				cpOptionCategory.getTitleMap());
+		}
+
+		Map<String, String> descriptionMap = optionCategory.getDescription();
+
+		if (descriptionMap == null) {
+			descriptionMap = LanguageUtils.getLanguageIdMap(
+				cpOptionCategory.getDescriptionMap());
+		}
+
 		return _cpOptionCategoryService.updateCPOptionCategory(
-			null, cpOptionCategory.getCPOptionCategoryId(),
-			LanguageUtils.getLocalizedMap(optionCategory.getTitle()),
-			LanguageUtils.getLocalizedMap(optionCategory.getDescription()),
+			GetterUtil.getString(
+				optionCategory.getExternalReferenceCode(),
+				cpOptionCategory.getExternalReferenceCode()),
+			cpOptionCategory.getCPOptionCategoryId(),
+			LanguageUtils.getLocalizedMap(titleMap),
+			LanguageUtils.getLocalizedMap(descriptionMap),
 			GetterUtil.get(
 				optionCategory.getPriority(), cpOptionCategory.getPriority()),
 			optionCategory.getKey());

@@ -81,11 +81,11 @@ public class CPSpecificationOptionLocalServiceImpl
 			double priority, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
 		}
+
+		User user = _userLocalService.getUser(userId);
 
 		key = StringUtil.replace(key, CharPool.UNDERLINE, CharPool.DASH);
 

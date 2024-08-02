@@ -70,6 +70,9 @@ public class JournalArticleDDMTemplateInfoItemTemplatedRenderer
 	public List<InfoItemRendererTemplate> getInfoItemRendererTemplates(
 		String className, String classTypeKey, Locale locale) {
 
+		List<InfoItemRendererTemplate> infoItemRendererTemplates =
+			new ArrayList<>();
+
 		List<DDMStructure> ddmStructures =
 			_ddmStructureLocalService.getClassStructures(
 				CompanyThreadLocal.getCompanyId(),
@@ -82,9 +85,6 @@ public class JournalArticleDDMTemplateInfoItemTemplatedRenderer
 					ddmStructure.getStructureId(),
 					GetterUtil.getLong(classTypeKey)));
 		}
-
-		List<InfoItemRendererTemplate> infoItemRendererTemplates =
-			new ArrayList<>();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			for (DDMTemplate ddmTemplate : ddmStructure.getTemplates()) {

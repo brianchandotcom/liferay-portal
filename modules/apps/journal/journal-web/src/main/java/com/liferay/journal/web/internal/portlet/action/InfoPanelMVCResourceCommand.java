@@ -52,15 +52,15 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 	private List<JournalArticle> _getArticles(ResourceRequest request)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(request, "groupId");
+		List<JournalArticle> articles = new ArrayList<>();
 
 		String[] articleIds = ParamUtil.getStringValues(
 			request, "rowIdsJournalArticle");
 
-		List<JournalArticle> articles = new ArrayList<>();
-
 		for (String articleId : articleIds) {
-			articles.add(_journalArticleService.getArticle(groupId, articleId));
+			articles.add(
+				_journalArticleService.getArticle(
+					ParamUtil.getLong(request, "groupId"), articleId));
 		}
 
 		return articles;
@@ -69,10 +69,10 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 	private List<JournalFolder> _getFolders(ResourceRequest request)
 		throws Exception {
 
+		List<JournalFolder> folders = new ArrayList<>();
+
 		long[] folderIds = ParamUtil.getLongValues(
 			request, "rowIdsJournalFolder");
-
-		List<JournalFolder> folders = new ArrayList<>();
 
 		for (long folderId : folderIds) {
 			folders.add(_journalFolderService.getFolder(folderId));

@@ -273,9 +273,9 @@ public class JournalHelperImpl implements JournalHelper {
 	}
 
 	private List<String> _getAttributeValues(String content, Pattern pattern) {
-		Matcher matcher = pattern.matcher(content);
-
 		List<String> attributeValues = new ArrayList<>();
+
+		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
 			attributeValues.add(matcher.group(1));

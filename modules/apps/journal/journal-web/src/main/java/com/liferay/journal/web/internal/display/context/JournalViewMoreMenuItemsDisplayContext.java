@@ -210,11 +210,11 @@ public class JournalViewMoreMenuItemsDisplayContext {
 	private OrderByComparator<DDMStructure> _getOrderByComparator() {
 		boolean orderByAsc = false;
 
+		OrderByComparator<DDMStructure> orderByComparator = null;
+
 		if (Objects.equals(getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
-
-		OrderByComparator<DDMStructure> orderByComparator = null;
 
 		if (_orderByCol.equals("modified-date")) {
 			orderByComparator = new StructureModifiedDateComparator(orderByAsc);

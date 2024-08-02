@@ -97,7 +97,7 @@ public class BaseAuthFilterTest {
 
 		Assert.assertTrue(
 			!_isHttpSessionInvalidWithStaticMocks(
-				_setupUser(WorkflowConstants.STATUS_APPROVED),
+				_setUpUser(WorkflowConstants.STATUS_APPROVED),
 				HttpAuthorizationHeader.SCHEME_BASIC));
 	}
 
@@ -107,7 +107,7 @@ public class BaseAuthFilterTest {
 
 		Assert.assertTrue(
 			_isHttpSessionInvalidWithStaticMocks(
-				_setupUser(WorkflowConstants.STATUS_INACTIVE),
+				_setUpUser(WorkflowConstants.STATUS_INACTIVE),
 				HttpAuthorizationHeader.SCHEME_BASIC));
 	}
 
@@ -117,7 +117,7 @@ public class BaseAuthFilterTest {
 
 		Assert.assertTrue(
 			!_isHttpSessionInvalidWithStaticMocks(
-				_setupUser(WorkflowConstants.STATUS_APPROVED),
+				_setUpUser(WorkflowConstants.STATUS_APPROVED),
 				HttpAuthorizationHeader.SCHEME_DIGEST));
 	}
 
@@ -127,7 +127,7 @@ public class BaseAuthFilterTest {
 
 		Assert.assertTrue(
 			_isHttpSessionInvalidWithStaticMocks(
-				_setupUser(WorkflowConstants.STATUS_INACTIVE),
+				_setUpUser(WorkflowConstants.STATUS_INACTIVE),
 				HttpAuthorizationHeader.SCHEME_DIGEST));
 	}
 
@@ -343,7 +343,7 @@ public class BaseAuthFilterTest {
 			PropsValues.class, propertyName, value);
 	}
 
-	private User _setupUser(int status) {
+	private User _setUpUser(int status) {
 		User testUser = new UserImpl();
 
 		testUser.setStatus(status);

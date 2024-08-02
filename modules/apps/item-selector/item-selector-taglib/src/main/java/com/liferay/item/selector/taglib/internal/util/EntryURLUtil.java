@@ -38,6 +38,8 @@ public class EntryURLUtil {
 			PortletURL portletURL)
 		throws PortalException, PortletException {
 
+		PortletURL folderPortletURL = null;
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -47,8 +49,6 @@ public class EntryURLUtil {
 		if (folder.getGroupId() != group.getGroupId()) {
 			group = GroupServiceUtil.getGroup(folder.getGroupId());
 		}
-
-		PortletURL folderPortletURL = null;
 
 		String scope = ParamUtil.getString(liferayPortletRequest, "scope");
 

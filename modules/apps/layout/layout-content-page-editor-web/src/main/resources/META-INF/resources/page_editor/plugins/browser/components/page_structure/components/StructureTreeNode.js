@@ -308,7 +308,7 @@ function StructureTreeNodeContent({
 	useEffect(() => {
 		if (
 			item.itemId === keyboardMovementTargetId ||
-			(activationOrigin === ITEM_ACTIVATION_ORIGINS.pageEditor &&
+			(activationOrigin === ITEM_ACTIVATION_ORIGINS.layout &&
 				nodeRef.current &&
 				isActive)
 		) {

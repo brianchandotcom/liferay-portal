@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
@@ -199,6 +200,13 @@ public class UserGroupIndexerIndexedFieldsTest {
 			"externalReferenceCode", userGroup.getExternalReferenceCode()
 		).put(
 			"name_sortable", StringUtil.lowerCase(userGroup.getName())
+		).put(
+			"userExternalReferenceCode",
+			() -> {
+				User user = TestPropsValues.getUser();
+
+				return user.getExternalReferenceCode();
+			}
 		).build();
 
 		indexedFieldsFixture.populateUID(userGroup, map);

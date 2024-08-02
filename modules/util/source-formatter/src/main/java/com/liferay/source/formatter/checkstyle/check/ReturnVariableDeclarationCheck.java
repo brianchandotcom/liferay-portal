@@ -139,11 +139,11 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
 		if ((firstChildDetailAST.getType() == TokenTypes.LITERAL_NULL) ||
-			(firstChildDetailAST.getType() == TokenTypes.STRING_LITERAL) ||
 			(firstChildDetailAST.getType() == TokenTypes.NUM_DOUBLE) ||
 			(firstChildDetailAST.getType() == TokenTypes.NUM_FLOAT) ||
 			(firstChildDetailAST.getType() == TokenTypes.NUM_INT) ||
-			(firstChildDetailAST.getType() == TokenTypes.NUM_LONG)) {
+			(firstChildDetailAST.getType() == TokenTypes.NUM_LONG) ||
+			(firstChildDetailAST.getType() == TokenTypes.STRING_LITERAL)) {
 
 			log(
 				returnVariableDefinitionDetailAST,

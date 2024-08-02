@@ -6,6 +6,10 @@
 package com.liferay.layout.admin.web.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
@@ -14,13 +18,26 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -28,7 +45,9 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -46,6 +65,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DateTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -59,6 +79,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -67,8 +88,13 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalService;
+import com.liferay.template.test.util.TemplateTestUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -196,6 +222,102 @@ public class LayoutStagedModelDataHandlerTest
 		finally {
 			serviceRegistration.unregister();
 		}
+	}
+
+	@Test
+	@TestInfo("LPD-32929")
+	public void testExportImportContentReferenceWithoutAssetEntry()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			stagingGroup.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			stagingGroup.getGroupId(), assetVocabulary.getVocabularyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(stagingGroup.getGroupId());
+
+		TemplateEntry templateEntry = TemplateTestUtil.addTemplateEntry(
+			AssetCategory.class.getName(), StringPool.BLANK,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			TemplateTestUtil.getSampleScriptFTL("name"), serviceContext);
+
+		InfoField infoField = _getTemplateEntryInfoField(
+			templateEntry.getTemplateEntryId(), serviceContext);
+
+		long classNameId = _portal.getClassNameId(
+			AssetCategory.class.getName());
+
+		FragmentEntryLink draftLayoutFragmentEntryLink =
+			_addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"className", AssetCategory.class.getName()
+					).put(
+						"classNameId", String.valueOf(classNameId)
+					).put(
+						"classPK", String.valueOf(assetCategory.getCategoryId())
+					).put(
+						"classTypeId", "0"
+					).put(
+						"fieldId", infoField.getUniqueId()
+					)),
+				layout, serviceContext);
+
+		FragmentEntryLink publishedLayoutFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				stagingGroup.getGroupId(),
+				draftLayoutFragmentEntryLink.getFragmentEntryLinkId(),
+				layout.getPlid());
+
+		Assert.assertNotNull(publishedLayoutFragmentEntryLink);
+
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			exportImportStagedModel(layout);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+
+		AssetCategory importedAssetCategory =
+			_assetCategoryLocalService.getAssetCategoryByUuidAndGroupId(
+				assetCategory.getUuid(), liveGroup.getGroupId());
+
+		TemplateEntry importedTemplateEntry =
+			_templateEntryLocalService.getTemplateEntryByUuidAndGroupId(
+				templateEntry.getUuid(), liveGroup.getGroupId());
+
+		infoField = _getTemplateEntryInfoField(
+			importedTemplateEntry.getTemplateEntryId(),
+			ServiceContextTestUtil.getServiceContext(liveGroup.getGroupId()));
+
+		JSONObject expectedEditableJSONObject = JSONUtil.put(
+			"element-text",
+			JSONUtil.put(
+				"className", AssetCategory.class.getName()
+			).put(
+				"classNameId", String.valueOf(classNameId)
+			).put(
+				"classPK", String.valueOf(importedAssetCategory.getCategoryId())
+			).put(
+				"classTypeId", "0"
+			).put(
+				"fieldId", infoField.getUniqueId()
+			));
+
+		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
+
+		_assertLayoutContentReferences(
+			expectedEditableJSONObject, importedLayout);
+		_assertLayoutContentReferences(
+			expectedEditableJSONObject, importedLayout.fetchDraftLayout());
 	}
 
 	@Test
@@ -733,6 +855,50 @@ public class LayoutStagedModelDataHandlerTest
 		}
 	}
 
+	private FragmentEntryLink _addFragmentEntryLinkToLayout(
+			JSONObject editableJSONObject, Layout layout,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(), StringUtil.randomString(),
+				StringPool.BLANK, serviceContext);
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK,
+				"<h1 data-lfr-editable-id=\"element-text\" " +
+					"data-lfr-editable-type=\"text\">Heading Example</h1>",
+				StringPool.BLANK, false, StringPool.BLANK, null, 0, false,
+				FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		FragmentEntryLink fragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					editableJSONObject
+				).toString(),
+				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), layout.fetchDraftLayout(),
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				null, 0,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(layout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		return fragmentEntryLink;
+	}
+
 	private String _addPortletToLayout(Layout layout) throws Exception {
 		JSONObject processAddPortletJSONObject =
 			ContentLayoutTestUtil.addPortletToLayout(
@@ -749,6 +915,31 @@ public class LayoutStagedModelDataHandlerTest
 			editableValuesJSONObject.getString("instanceId"));
 	}
 
+	private void _assertLayoutContentReferences(
+			JSONObject expectedEditableJSONObject, Layout layout)
+		throws Exception {
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				liveGroup.getGroupId(), layout.getPlid());
+
+		Assert.assertEquals(
+			fragmentEntryLinks.toString(), 1, fragmentEntryLinks.size());
+
+		FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(0);
+
+		JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		JSONObject editableJSONObject = editableValuesJSONObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		Assert.assertTrue(
+			editableJSONObject.toString(),
+			JSONUtil.equals(expectedEditableJSONObject, editableJSONObject));
+	}
+
 	private List<FriendlyURLEntry> _getFriendlyURLEntries(Layout layout) {
 		return _friendlyURLEntryLocalService.getFriendlyURLEntries(
 			layout.getGroupId(),
@@ -757,6 +948,29 @@ public class LayoutStagedModelDataHandlerTest
 					Layout.class.getName(),
 					String.valueOf(layout.isPrivateLayout()))),
 			layout.getPlid());
+	}
+
+	private InfoField _getTemplateEntryInfoField(
+			long templateEntryId, ServiceContext serviceContext)
+		throws Exception {
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			(InfoItemFormProvider<?>)
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemFormProvider.class, AssetCategory.class.getName());
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			InfoForm infoForm = infoItemFormProvider.getInfoForm(
+				StringPool.BLANK, serviceContext.getScopeGroupId());
+
+			return infoForm.getInfoField(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + templateEntryId);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	private ServiceRegistration<Portlet> _registerTestPortlet() {
@@ -896,6 +1110,9 @@ public class LayoutStagedModelDataHandlerTest
 		"com_liferay_test_portlet_TestPortlet";
 
 	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
 	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
 
 	@Inject
@@ -912,7 +1129,22 @@ public class LayoutStagedModelDataHandlerTest
 	private DLURLHelper _dlURLHelper;
 
 	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Inject
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
@@ -937,6 +1169,12 @@ public class LayoutStagedModelDataHandlerTest
 	private ResourceActions _resourceActions;
 
 	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@Inject
+	private TemplateEntryLocalService _templateEntryLocalService;
 
 }

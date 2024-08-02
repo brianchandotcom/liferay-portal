@@ -61,6 +61,7 @@ public class ObjectDefinitionServiceWrapper
 	public com.liferay.object.model.ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
 			boolean enableComments, boolean enableIndexSearch,
+			boolean enableLocalization,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
 			java.util.Map<java.util.Locale, String> pluralLabelMap,
@@ -70,8 +71,9 @@ public class ObjectDefinitionServiceWrapper
 
 		return _objectDefinitionService.addSystemObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, enableComments,
-			enableIndexSearch, labelMap, name, panelAppOrder, panelCategoryKey,
-			pluralLabelMap, portlet, scope, objectFields);
+			enableIndexSearch, enableLocalization, labelMap, name,
+			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
+			objectFields);
 	}
 
 	@Override

@@ -94,10 +94,10 @@ public class ObjectDefinitionLocalServiceUtil {
 	public static ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, String dbTableName, boolean enableComments,
-			boolean enableIndexSearch, Map<java.util.Locale, String> labelMap,
-			boolean modifiable, String name, String panelAppOrder,
-			String panelCategoryKey, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName,
+			boolean enableIndexSearch, boolean enableLocalization,
+			Map<java.util.Locale, String> labelMap, boolean modifiable,
+			String name, String panelAppOrder, String panelCategoryKey,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
 			Map<java.util.Locale, String> pluralLabelMap, boolean portlet,
 			String scope, String titleObjectFieldName, int version, int status,
 			List<com.liferay.object.model.ObjectField> objectFields)
@@ -105,8 +105,8 @@ public class ObjectDefinitionLocalServiceUtil {
 
 		return getService().addSystemObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, className,
-			dbTableName, enableComments, enableIndexSearch, labelMap,
-			modifiable, name, panelAppOrder, panelCategoryKey,
+			dbTableName, enableComments, enableIndexSearch, enableLocalization,
+			labelMap, modifiable, name, panelAppOrder, panelCategoryKey,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap,
 			portlet, scope, titleObjectFieldName, version, status,
 			objectFields);

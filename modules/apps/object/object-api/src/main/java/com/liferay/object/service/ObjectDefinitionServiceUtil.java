@@ -61,8 +61,8 @@ public class ObjectDefinitionServiceUtil {
 	public static ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
 			boolean enableComments, boolean enableIndexSearch,
-			Map<java.util.Locale, String> labelMap, String name,
-			String panelAppOrder, String panelCategoryKey,
+			boolean enableLocalization, Map<java.util.Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
 			Map<java.util.Locale, String> pluralLabelMap, boolean portlet,
 			String scope,
 			List<com.liferay.object.model.ObjectField> objectFields)
@@ -70,8 +70,9 @@ public class ObjectDefinitionServiceUtil {
 
 		return getService().addSystemObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, enableComments,
-			enableIndexSearch, labelMap, name, panelAppOrder, panelCategoryKey,
-			pluralLabelMap, portlet, scope, objectFields);
+			enableIndexSearch, enableLocalization, labelMap, name,
+			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
+			objectFields);
 	}
 
 	public static ObjectDefinition deleteObjectDefinition(

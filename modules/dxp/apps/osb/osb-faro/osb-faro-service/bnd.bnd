@@ -29,6 +29,7 @@ Import-Package:\
 	com.liferay.portal.kernel.transaction;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.upgrade;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.util;version="[59.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.util.comparator;version="[3.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.uuid;version="[6.0.0,9999.0.0)",\
 	\
 	*

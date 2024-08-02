@@ -9,6 +9,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.language.override.model.PLOEntry;
 
+import java.io.InputStream;
+
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +69,13 @@ public class PLOEntryServiceUtil {
 		throws PortalException {
 
 		return getService().getPLOEntriesCount(companyId);
+	}
+
+	public static void importPLOEntries(
+			InputStream inputStream, String languageId)
+		throws java.io.IOException, PortalException {
+
+		getService().importPLOEntries(inputStream, languageId);
 	}
 
 	public static void setPLOEntries(

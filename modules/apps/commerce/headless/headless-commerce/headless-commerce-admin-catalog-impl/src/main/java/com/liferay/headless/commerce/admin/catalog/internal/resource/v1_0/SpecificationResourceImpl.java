@@ -34,7 +34,6 @@ import java.util.Collections;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,12 +51,25 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 
 	@Override
-	public Response deleteSpecification(Long id) throws Exception {
+	public void deleteSpecification(Long id) throws Exception {
 		_cpSpecificationOptionService.deleteCPSpecificationOption(id);
+	}
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+	@Override
+	public void deleteSpecificationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
 
-		return responseBuilder.build();
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionService.
+				fetchCPSpecificationOptionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		if (cpSpecificationOption == null) {
+			throw new NoSuchCPSpecificationOptionException();
+		}
+
+		deleteSpecification(cpSpecificationOption.getCPSpecificationOptionId());
 	}
 
 	@Override
@@ -70,6 +82,24 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 	@Override
 	public Specification getSpecification(Long id) throws Exception {
 		return _toSpecification(GetterUtil.getLong(id));
+	}
+
+	@Override
+	public Specification getSpecificationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionService.
+				fetchCPSpecificationOptionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		if (cpSpecificationOption == null) {
+			throw new NoSuchCPSpecificationOptionException();
+		}
+
+		return getSpecification(
+			cpSpecificationOption.getCPSpecificationOptionId());
 	}
 
 	@Override
@@ -91,14 +121,33 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 	}
 
 	@Override
-	public Response patchSpecification(Long id, Specification specification)
+	public Specification patchSpecification(
+			Long id, Specification specification)
 		throws Exception {
 
-		_updateSpecification(id, specification);
+		CPSpecificationOption cpSpecificationOption = _updateSpecification(
+			id, specification);
 
-		Response.ResponseBuilder responseBuilder = Response.noContent();
+		return _toSpecification(
+			cpSpecificationOption.getCPSpecificationOptionId());
+	}
 
-		return responseBuilder.build();
+	@Override
+	public Specification patchSpecificationByExternalReferenceCode(
+			String externalReferenceCode, Specification specification)
+		throws Exception {
+
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionService.
+				fetchCPSpecificationOptionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+
+		if (cpSpecificationOption == null) {
+			throw new NoSuchCPSpecificationOptionException();
+		}
+
+		return patchSpecification(
+			cpSpecificationOption.getCPSpecificationOptionId(), specification);
 	}
 
 	@Override
@@ -157,7 +206,8 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionService.addCPSpecificationOption(
-				null, _getCPOptionCategoryId(specification),
+				specification.getExternalReferenceCode(),
+				_getCPOptionCategoryId(specification),
 				GetterUtil.getLong(specification.getListTypeDefinitionId()),
 				LanguageUtils.getLocalizedMap(specification.getTitle()),
 				LanguageUtils.getLocalizedMap(specification.getDescription()),
@@ -211,6 +261,9 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 		}
 
 		return _cpSpecificationOptionService.updateCPSpecificationOption(
+			GetterUtil.getString(
+				specification.getExternalReferenceCode(),
+				cpSpecificationOption.getExternalReferenceCode()),
 			cpSpecificationOption.getCPSpecificationOptionId(),
 			GetterUtil.getLong(
 				cpSpecificationOption.getCPOptionCategoryId(),
@@ -257,6 +310,9 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 		}
 
 		return _cpSpecificationOptionService.updateCPSpecificationOption(
+			GetterUtil.getString(
+				specification.getExternalReferenceCode(),
+				cpSpecificationOption.getExternalReferenceCode()),
 			cpSpecificationOption.getCPSpecificationOptionId(),
 			_getCPOptionCategoryId(specification),
 			GetterUtil.getLong(

@@ -155,7 +155,6 @@ public class DisplayPageDisplayContextTest {
 
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
 		mockLiferayPortletRenderRequest.setParameter("mvcPath", path);
 
 		mvcPortlet.render(

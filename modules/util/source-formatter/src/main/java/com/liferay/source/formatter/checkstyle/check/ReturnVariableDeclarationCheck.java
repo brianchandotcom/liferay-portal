@@ -102,11 +102,14 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 		DetailAST returnVariableDefinitionDetailAST, DetailAST slistDetailAST,
 		String variableName) {
 
+		List<DetailAST> exprDetailASTList = getAllChildTokens(
+			slistDetailAST, false, TokenTypes.EXPR);
+
 		if (_containsMethodCalls(
-				slistDetailAST,
+				exprDetailASTList,
 				returnVariableDefinitionDetailAST.getLineNo()) ||
 			_containsUnusedVariableNames(
-				slistDetailAST,
+				exprDetailASTList, slistDetailAST,
 				returnVariableDefinitionDetailAST.getLineNo())) {
 
 			return;
@@ -206,10 +209,7 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 	}
 
 	private boolean _containsMethodCalls(
-		DetailAST slistDetailAST, int lineNumber) {
-
-		List<DetailAST> exprDetailASTList = getAllChildTokens(
-			slistDetailAST, false, TokenTypes.EXPR);
+		List<DetailAST> exprDetailASTList, int lineNumber) {
 
 		List<DetailAST> methodCallDetailASTList = ListUtil.filter(
 			exprDetailASTList,
@@ -237,31 +237,35 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 	}
 
 	private boolean _containsUnusedVariableNames(
-		DetailAST slistDetailAST, int lineNumber) {
+		List<DetailAST> exprDetailASTList, DetailAST slistDetailAST,
+		int lineNumber) {
+
+		List<DetailAST> assignDetailASTList = ListUtil.filter(
+			exprDetailASTList,
+			exprDetailAST -> {
+				DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
+
+				if (firstChildDetailAST.getType() != TokenTypes.ASSIGN) {
+					return false;
+				}
+
+				if (exprDetailAST.getLineNo() < lineNumber) {
+					return true;
+				}
+
+				return false;
+			});
+
+		if (assignDetailASTList.isEmpty()) {
+			return false;
+		}
 
 		List<DetailAST> identDetailASTList = getAllChildTokens(
 			slistDetailAST, true, TokenTypes.IDENT);
 
-		List<DetailAST> exprDetailASTList = getAllChildTokens(
-			slistDetailAST, false, TokenTypes.EXPR);
-
-		exprDetailASTList = ListUtil.filter(
-			exprDetailASTList,
-			exprDetailAST -> exprDetailAST.getLineNo() < lineNumber);
-
-		if (exprDetailASTList.isEmpty()) {
-			return false;
-		}
-
 		outerLoop:
-		for (DetailAST exprDetailAST : exprDetailASTList) {
-			DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
-
-			if ((firstChildDetailAST == null) ||
-				(firstChildDetailAST.getType() != TokenTypes.ASSIGN)) {
-
-				continue;
-			}
+		for (DetailAST assignDetailAST : assignDetailASTList) {
+			DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
 
 			DetailAST nameDetailAST = firstChildDetailAST.getFirstChild();
 

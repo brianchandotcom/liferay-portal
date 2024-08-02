@@ -669,7 +669,7 @@ public class WorkflowTaskDisplayContext {
 
 	public boolean isReadOnly() {
 		return (boolean)_liferayPortletRequest.getAttribute(
-			WebKeys.WORKFLOW_TASK_READ_ONLY);
+			WebKeys.WORKFLOW_READ_ONLY);
 	}
 
 	public boolean isShowEditURL(WorkflowTask workflowTask) {

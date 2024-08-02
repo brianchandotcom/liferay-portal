@@ -73,6 +73,7 @@ public class ListTypeDefinitionResourceImpl
 			_cpSpecificationOptionService.getCPSpecificationOption(id);
 
 		_cpSpecificationOptionService.updateCPSpecificationOption(
+			cpSpecificationOption.getExternalReferenceCode(),
 			cpSpecificationOption.getCPSpecificationOptionId(),
 			cpSpecificationOption.getCPOptionCategoryId(),
 			serviceBuilderListTypeDefinition.getListTypeDefinitionId(),

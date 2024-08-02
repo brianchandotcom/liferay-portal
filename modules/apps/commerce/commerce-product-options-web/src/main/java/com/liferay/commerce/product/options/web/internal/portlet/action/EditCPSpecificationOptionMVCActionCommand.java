@@ -148,7 +148,7 @@ public class EditCPSpecificationOptionMVCActionCommand
 
 			cpSpecificationOption =
 				_cpSpecificationOptionService.updateCPSpecificationOption(
-					cpSpecificationOptionId, cpOptionCategoryId,
+					null, cpSpecificationOptionId, cpOptionCategoryId,
 					listTypeDefinitionId, titleMap, descriptionMap, facetable,
 					key, priority, serviceContext);
 		}

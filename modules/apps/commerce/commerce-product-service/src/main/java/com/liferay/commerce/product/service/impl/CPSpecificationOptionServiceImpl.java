@@ -87,6 +87,27 @@ public class CPSpecificationOptionServiceImpl
 	}
 
 	@Override
+	public CPSpecificationOption
+			fetchCPSpecificationOptionByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		CPSpecificationOption cpSpecificationOption =
+			cpSpecificationOptionLocalService.
+				fetchCPSpecificationOptionByExternalReferenceCode(
+					externalReferenceCode, companyId);
+
+		if (cpSpecificationOption != null) {
+			_cpSpecificationOptionModelResourcePermission.check(
+				getPermissionChecker(),
+				cpSpecificationOption.getCPSpecificationOptionId(),
+				ActionKeys.VIEW);
+		}
+
+		return cpSpecificationOption;
+	}
+
+	@Override
 	public CPSpecificationOption getCPSpecificationOption(
 			long cpSpecificationOptionId)
 		throws PortalException {
@@ -126,18 +147,20 @@ public class CPSpecificationOptionServiceImpl
 
 	@Override
 	public CPSpecificationOption updateCPSpecificationOption(
-			long cpSpecificationOptionId, long cpOptionCategoryId,
-			long listTypeDefinitionId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, boolean facetable, String key,
-			double priority, ServiceContext serviceContext)
+			String externalReferenceCode, long cpSpecificationOptionId,
+			long cpOptionCategoryId, long listTypeDefinitionId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			boolean facetable, String key, double priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_cpSpecificationOptionModelResourcePermission.check(
 			getPermissionChecker(), cpSpecificationOptionId, ActionKeys.UPDATE);
 
 		return cpSpecificationOptionLocalService.updateCPSpecificationOption(
-			cpSpecificationOptionId, cpOptionCategoryId, listTypeDefinitionId,
-			titleMap, descriptionMap, facetable, key, priority, serviceContext);
+			externalReferenceCode, cpSpecificationOptionId, cpOptionCategoryId,
+			listTypeDefinitionId, titleMap, descriptionMap, facetable, key,
+			priority, serviceContext);
 	}
 
 	@Reference(

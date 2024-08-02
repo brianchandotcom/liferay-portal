@@ -40,6 +40,7 @@ dependencies {
 	compileOnly group: "commons-codec", name: "commons-codec", version: "1.15"
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	compileOnly group: "joda-time", name: "joda-time", version: "2.12.1"
+	compileOnly group: "org.apache.commons", name: "commons-csv", version: "1.9.0"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileOnly group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"

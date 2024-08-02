@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
@@ -46,6 +47,10 @@ public class FragmentEntryLinkCacheImpl implements FragmentEntryLinkCache {
 	@Override
 	public void removeFragmentEntryLinkCache(
 		FragmentEntryLink fragmentEntryLink) {
+
+		if (!CTCollectionThreadLocal.isProductionMode()) {
+			return;
+		}
 
 		Set<Locale> availableLocales = _language.getAvailableLocales(
 			fragmentEntryLink.getGroupId());

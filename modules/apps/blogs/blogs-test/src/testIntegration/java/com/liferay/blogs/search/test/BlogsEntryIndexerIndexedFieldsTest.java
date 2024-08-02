@@ -180,6 +180,8 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 			"assetEntryId_sortable",
 			String.valueOf(_getAssetEntryId(blogsEntry))
 		).put(
+			"externalReferenceCode", blogsEntry.getExternalReferenceCode()
+		).put(
 			"localized_title", StringUtil.lowerCase(blogsEntry.getTitle())
 		).put(
 			"statusByUserId", String.valueOf(blogsEntry.getStatusByUserId())

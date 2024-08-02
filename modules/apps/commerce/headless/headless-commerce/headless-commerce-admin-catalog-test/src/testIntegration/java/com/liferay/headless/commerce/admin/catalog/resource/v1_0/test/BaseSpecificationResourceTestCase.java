@@ -174,6 +174,7 @@ public abstract class BaseSpecificationResourceTestCase {
 
 		Specification specification = randomSpecification();
 
+		specification.setExternalReferenceCode(regex);
 		specification.setKey(regex);
 
 		String json = SpecificationSerDes.toJSON(specification);
@@ -182,6 +183,7 @@ public abstract class BaseSpecificationResourceTestCase {
 
 		specification = SpecificationSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, specification.getExternalReferenceCode());
 		Assert.assertEquals(regex, specification.getKey());
 	}
 
@@ -645,6 +647,212 @@ public abstract class BaseSpecificationResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSpecificationByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Specification specification =
+			testDeleteSpecificationByExternalReferenceCode_addSpecification();
+
+		assertHttpResponseStatusCode(
+			204,
+			specificationResource.
+				deleteSpecificationByExternalReferenceCodeHttpResponse(
+					specification.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			specificationResource.
+				getSpecificationByExternalReferenceCodeHttpResponse(
+					specification.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			specificationResource.
+				getSpecificationByExternalReferenceCodeHttpResponse(
+					specification.getExternalReferenceCode()));
+	}
+
+	protected Specification
+			testDeleteSpecificationByExternalReferenceCode_addSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetSpecificationByExternalReferenceCode() throws Exception {
+		Specification postSpecification =
+			testGetSpecificationByExternalReferenceCode_addSpecification();
+
+		Specification getSpecification =
+			specificationResource.getSpecificationByExternalReferenceCode(
+				postSpecification.getExternalReferenceCode());
+
+		assertEquals(postSpecification, getSpecification);
+		assertValid(getSpecification);
+	}
+
+	protected Specification
+			testGetSpecificationByExternalReferenceCode_addSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSpecificationByExternalReferenceCode()
+		throws Exception {
+
+		Specification specification =
+			testGraphQLGetSpecificationByExternalReferenceCode_addSpecification();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				specification,
+				SpecificationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"specificationByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												specification.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/specificationByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				specification,
+				SpecificationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"specificationByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													specification.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/specificationByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetSpecificationByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"specificationByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"specificationByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Specification
+			testGraphQLGetSpecificationByExternalReferenceCode_addSpecification()
+		throws Exception {
+
+		return testGraphQLSpecification_addSpecification();
+	}
+
+	@Test
+	public void testPatchSpecificationByExternalReferenceCode()
+		throws Exception {
+
+		Specification postSpecification =
+			testPatchSpecificationByExternalReferenceCode_addSpecification();
+
+		Specification randomPatchSpecification = randomPatchSpecification();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Specification patchSpecification =
+			specificationResource.patchSpecificationByExternalReferenceCode(
+				postSpecification.getExternalReferenceCode(),
+				randomPatchSpecification);
+
+		Specification expectedPatchSpecification = postSpecification.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchSpecification, expectedPatchSpecification);
+
+		Specification getSpecification =
+			specificationResource.getSpecificationByExternalReferenceCode(
+				patchSpecification.getExternalReferenceCode());
+
+		assertEquals(expectedPatchSpecification, getSpecification);
+		assertValid(getSpecification);
+	}
+
+	protected Specification
+			testPatchSpecificationByExternalReferenceCode_addSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteSpecification() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Specification specification =
@@ -865,7 +1073,33 @@ public abstract class BaseSpecificationResourceTestCase {
 
 	@Test
 	public void testPatchSpecification() throws Exception {
-		Assert.assertTrue(false);
+		Specification postSpecification =
+			testPatchSpecification_addSpecification();
+
+		Specification randomPatchSpecification = randomPatchSpecification();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Specification patchSpecification =
+			specificationResource.patchSpecification(
+				postSpecification.getId(), randomPatchSpecification);
+
+		Specification expectedPatchSpecification = postSpecification.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchSpecification, expectedPatchSpecification);
+
+		Specification getSpecification = specificationResource.getSpecification(
+			patchSpecification.getId());
+
+		assertEquals(expectedPatchSpecification, getSpecification);
+		assertValid(getSpecification);
+	}
+
+	protected Specification testPatchSpecification_addSpecification()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule
@@ -960,6 +1194,16 @@ public abstract class BaseSpecificationResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (specification.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (specification.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -1139,6 +1383,19 @@ public abstract class BaseSpecificationResourceTestCase {
 				if (!equals(
 						(Map)specification1.getDescription(),
 						(Map)specification2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						specification1.getExternalReferenceCode(),
+						specification2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1335,6 +1592,52 @@ public abstract class BaseSpecificationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = specification.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("facetable")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1457,6 +1760,8 @@ public abstract class BaseSpecificationResourceTestCase {
 	protected Specification randomSpecification() throws Exception {
 		return new Specification() {
 			{
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				facetable = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());

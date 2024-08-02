@@ -11,7 +11,7 @@ const getYearlyTerms = ({endDate, startDate}) => {
 	const startDateYear = startDate.getFullYear();
 	const yearlyTerms = [];
 
-	if (startDateYear + 1 >= endDateYear) {
+	if (startDateYear + 1 > endDateYear) {
 		return [{endDate, startDate}];
 	}
 

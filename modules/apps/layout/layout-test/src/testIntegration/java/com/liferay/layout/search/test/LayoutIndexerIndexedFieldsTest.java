@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -190,6 +191,13 @@ public class LayoutIndexerIndexedFieldsTest {
 			"statusByUserId", String.valueOf(layout.getStatusByUserId())
 		).put(
 			"title_ja_JP", layout.getName(LocaleUtil.JAPAN)
+		).put(
+			"userExternalReferenceCode",
+			() -> {
+				User user = TestPropsValues.getUser();
+
+				return user.getExternalReferenceCode();
+			}
 		).build();
 
 		indexedFieldsFixture.populateUID(layout, map);

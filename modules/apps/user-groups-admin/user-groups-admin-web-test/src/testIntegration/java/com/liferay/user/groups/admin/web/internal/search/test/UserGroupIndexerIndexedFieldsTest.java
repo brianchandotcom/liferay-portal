@@ -196,6 +196,8 @@ public class UserGroupIndexerIndexedFieldsTest {
 		).put(
 			Field.USER_NAME, StringUtil.lowerCase(userGroup.getUserName())
 		).put(
+			"externalReferenceCode", userGroup.getExternalReferenceCode()
+		).put(
 			"name_sortable", StringUtil.lowerCase(userGroup.getName())
 		).build();
 

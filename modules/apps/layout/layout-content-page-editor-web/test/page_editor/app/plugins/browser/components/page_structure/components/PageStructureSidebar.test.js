@@ -72,7 +72,7 @@ const renderComponent = ({
 		<DndProvider backend={HTML5Backend}>
 			<ControlsProvider
 				activeInitialState={{
-					activationOrigin: null,
+					activationOrigin: 'layout',
 					activeItemIds,
 					activeItemType: null,
 				}}
@@ -268,6 +268,8 @@ describe('PageStructureSidebar', () => {
 			data: [],
 			status: 'saved',
 		});
+
+		window.HTMLElement.prototype.scrollIntoView = jest.fn;
 	});
 
 	it('has a warning message when there is no content', () => {

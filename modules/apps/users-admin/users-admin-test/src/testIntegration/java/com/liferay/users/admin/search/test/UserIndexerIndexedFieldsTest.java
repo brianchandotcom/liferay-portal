@@ -322,6 +322,8 @@ public class UserIndexerIndexedFieldsTest {
 		).put(
 			"emailAddressDomain", _getEmailAddressDomain(user.getEmailAddress())
 		).put(
+			"externalReferenceCode", user.getExternalReferenceCode()
+		).put(
 			"firstName", user.getFirstName()
 		).put(
 			"firstName_sortable", StringUtil.toLowerCase(user.getFirstName())

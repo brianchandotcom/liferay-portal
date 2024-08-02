@@ -106,14 +106,7 @@ public class FragmentEntryFragmentRendererTest {
 				StringPool.BLANK, 0, null, fragmentEntry.getType(),
 				_serviceContext);
 
-		DefaultFragmentRendererContext defaultFragmentRendererContext =
-			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		defaultFragmentRendererContext.setLocale(_locale);
-
-		_fragmentRenderer.render(
-			defaultFragmentRendererContext, _getMockHttpServletRequest(),
-			new MockHttpServletResponse());
+		_renderFragmentEntryLink(fragmentEntryLink);
 
 		String content = _fragmentEntryLinkCache.getFragmentEntryLinkContent(
 			fragmentEntryLink, _locale);
@@ -135,14 +128,7 @@ public class FragmentEntryFragmentRendererTest {
 				StringPool.BLANK, 0, null, fragmentEntry.getType(),
 				_serviceContext);
 
-		DefaultFragmentRendererContext defaultFragmentRendererContext =
-			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		defaultFragmentRendererContext.setLocale(_locale);
-
-		_fragmentRenderer.render(
-			defaultFragmentRendererContext, _getMockHttpServletRequest(),
-			new MockHttpServletResponse());
+		_renderFragmentEntryLink(fragmentEntryLink);
 
 		Assert.assertNull(
 			_fragmentEntryLinkCache.getFragmentEntryLinkContent(
@@ -210,14 +196,7 @@ public class FragmentEntryFragmentRendererTest {
 				StringPool.BLANK, 0, null, fragmentEntry.getType(),
 				_serviceContext);
 
-		DefaultFragmentRendererContext defaultFragmentRendererContext =
-			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		defaultFragmentRendererContext.setLocale(_locale);
-
-		_fragmentRenderer.render(
-			defaultFragmentRendererContext, _getMockHttpServletRequest(),
-			new MockHttpServletResponse());
+		_renderFragmentEntryLink(fragmentEntryLink);
 
 		fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntry.getUserId(), fragmentEntry.getFragmentEntryId(),
@@ -230,15 +209,9 @@ public class FragmentEntryFragmentRendererTest {
 		_fragmentEntryLinkLocalService.updateLatestChanges(
 			fragmentEntryLink.getFragmentEntryLinkId());
 
-		defaultFragmentRendererContext = new DefaultFragmentRendererContext(
+		_renderFragmentEntryLink(
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId()));
-
-		defaultFragmentRendererContext.setLocale(_locale);
-
-		_fragmentRenderer.render(
-			defaultFragmentRendererContext, _getMockHttpServletRequest(),
-			new MockHttpServletResponse());
 
 		String content = _fragmentEntryLinkCache.getFragmentEntryLinkContent(
 			fragmentEntryLink, _locale);
@@ -259,19 +232,6 @@ public class FragmentEntryFragmentRendererTest {
 			"Fragment Entry HTML", StringPool.BLANK, cacheable, null, null, 0,
 			false, FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
-	}
-
-	private HttpServletRequest _getMockHttpServletRequest() throws Exception {
-		HttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			TilesUtil.DEFINITION,
-			new Definition(StringPool.BLANK, new HashMap<>()));
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
-
-		return mockHttpServletRequest;
 	}
 
 	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)
@@ -309,6 +269,28 @@ public class FragmentEntryFragmentRendererTest {
 				FragmentEntryLink.class, FragmentRendererContext.class
 			},
 			fragmentEntryLink, defaultFragmentRendererContext);
+	}
+
+	private void _renderFragmentEntryLink(FragmentEntryLink fragmentEntryLink)
+		throws Exception {
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		defaultFragmentRendererContext.setLocale(_locale);
+
+		HttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			TilesUtil.DEFINITION,
+			new Definition(StringPool.BLANK, new HashMap<>()));
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
+
+		_fragmentRenderer.render(
+			defaultFragmentRendererContext, mockHttpServletRequest,
+			new MockHttpServletResponse());
 	}
 
 	@Inject

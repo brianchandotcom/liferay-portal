@@ -554,6 +554,16 @@ public class ServletDataImpl implements ServletData {
 							OptionCategoryResourceImpl.class,
 							"postOptionCategoryBatch"));
 					put(
+						"mutation#deleteOptionCategoryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OptionCategoryResourceImpl.class,
+							"deleteOptionCategoryByExternalReferenceCode"));
+					put(
+						"mutation#patchOptionCategoryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OptionCategoryResourceImpl.class,
+							"patchOptionCategoryByExternalReferenceCode"));
+					put(
 						"mutation#deleteOptionCategory",
 						new ObjectValuePair<>(
 							OptionCategoryResourceImpl.class,
@@ -1144,6 +1154,11 @@ public class ServletDataImpl implements ServletData {
 							OptionCategoryResourceImpl.class,
 							"getOptionCategoriesPage"));
 					put(
+						"query#optionCategoryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OptionCategoryResourceImpl.class,
+							"getOptionCategoryByExternalReferenceCode"));
+					put(
 						"query#optionCategory",
 						new ObjectValuePair<>(
 							OptionCategoryResourceImpl.class,
@@ -1578,6 +1593,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ProductVirtualSettingsResourceImpl.class,
 							"getProductByExternalReferenceCodeProductVirtualSettings"));
+					put(
+						"query#Catalog.optionCategoryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OptionCategoryResourceImpl.class,
+							"getOptionCategoryByExternalReferenceCode"));
 				}
 			};
 

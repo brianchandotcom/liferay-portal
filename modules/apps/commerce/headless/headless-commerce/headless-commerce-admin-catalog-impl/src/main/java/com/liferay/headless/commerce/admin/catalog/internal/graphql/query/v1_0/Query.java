@@ -917,7 +917,25 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {optionCategory(id: ___){description, id, key, priority, title}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {optionCategoryByExternalReferenceCode(externalReferenceCode: ___){description, externalReferenceCode, id, key, priority, title}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public OptionCategory optionCategoryByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_optionCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			optionCategoryResource ->
+				optionCategoryResource.getOptionCategoryByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {optionCategory(id: ___){description, externalReferenceCode, id, key, priority, title}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public OptionCategory optionCategory(@GraphQLName("id") Long id)
@@ -2898,6 +2916,32 @@ public class Query {
 				productVirtualSettingsResource ->
 					productVirtualSettingsResource.
 						getProductByExternalReferenceCodeProductVirtualSettings(
+							_catalog.getExternalReferenceCode()));
+		}
+
+		private Catalog _catalog;
+
+	}
+
+	@GraphQLTypeExtension(Catalog.class)
+	public class GetOptionCategoryByExternalReferenceCodeTypeExtension {
+
+		public GetOptionCategoryByExternalReferenceCodeTypeExtension(
+			Catalog catalog) {
+
+			_catalog = catalog;
+		}
+
+		@GraphQLField
+		public OptionCategory optionCategoryByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_optionCategoryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				optionCategoryResource ->
+					optionCategoryResource.
+						getOptionCategoryByExternalReferenceCode(
 							_catalog.getExternalReferenceCode()));
 		}
 

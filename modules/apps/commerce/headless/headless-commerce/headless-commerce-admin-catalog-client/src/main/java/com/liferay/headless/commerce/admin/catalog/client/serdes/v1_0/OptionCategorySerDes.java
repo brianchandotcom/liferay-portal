@@ -56,6 +56,20 @@ public class OptionCategorySerDes {
 			sb.append(_toJSON(optionCategory.getDescription()));
 		}
 
+		if (optionCategory.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(optionCategory.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (optionCategory.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -127,6 +141,15 @@ public class OptionCategorySerDes {
 				"description", String.valueOf(optionCategory.getDescription()));
 		}
 
+		if (optionCategory.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(optionCategory.getExternalReferenceCode()));
+		}
+
 		if (optionCategory.getId() == null) {
 			map.put("id", null);
 		}
@@ -176,6 +199,11 @@ public class OptionCategorySerDes {
 			if (Objects.equals(jsonParserFieldName, "description")) {
 				return true;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -201,6 +229,14 @@ public class OptionCategorySerDes {
 				if (jsonParserFieldValue != null) {
 					optionCategory.setDescription(
 						(Map<String, String>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					optionCategory.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

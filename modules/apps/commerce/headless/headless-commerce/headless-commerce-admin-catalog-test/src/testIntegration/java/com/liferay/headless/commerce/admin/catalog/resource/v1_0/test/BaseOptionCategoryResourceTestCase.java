@@ -175,6 +175,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 
 		OptionCategory optionCategory = randomOptionCategory();
 
+		optionCategory.setExternalReferenceCode(regex);
 		optionCategory.setKey(regex);
 
 		String json = OptionCategorySerDes.toJSON(optionCategory);
@@ -183,6 +184,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 
 		optionCategory = OptionCategorySerDes.toDTO(json);
 
+		Assert.assertEquals(regex, optionCategory.getExternalReferenceCode());
 		Assert.assertEquals(regex, optionCategory.getKey());
 	}
 
@@ -653,6 +655,214 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteOptionCategoryByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OptionCategory optionCategory =
+			testDeleteOptionCategoryByExternalReferenceCode_addOptionCategory();
+
+		assertHttpResponseStatusCode(
+			204,
+			optionCategoryResource.
+				deleteOptionCategoryByExternalReferenceCodeHttpResponse(
+					optionCategory.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.
+				getOptionCategoryByExternalReferenceCodeHttpResponse(
+					optionCategory.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.
+				getOptionCategoryByExternalReferenceCodeHttpResponse(
+					optionCategory.getExternalReferenceCode()));
+	}
+
+	protected OptionCategory
+			testDeleteOptionCategoryByExternalReferenceCode_addOptionCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetOptionCategoryByExternalReferenceCode()
+		throws Exception {
+
+		OptionCategory postOptionCategory =
+			testGetOptionCategoryByExternalReferenceCode_addOptionCategory();
+
+		OptionCategory getOptionCategory =
+			optionCategoryResource.getOptionCategoryByExternalReferenceCode(
+				postOptionCategory.getExternalReferenceCode());
+
+		assertEquals(postOptionCategory, getOptionCategory);
+		assertValid(getOptionCategory);
+	}
+
+	protected OptionCategory
+			testGetOptionCategoryByExternalReferenceCode_addOptionCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOptionCategoryByExternalReferenceCode()
+		throws Exception {
+
+		OptionCategory optionCategory =
+			testGraphQLGetOptionCategoryByExternalReferenceCode_addOptionCategory();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				optionCategory,
+				OptionCategorySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"optionCategoryByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												optionCategory.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/optionCategoryByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				optionCategory,
+				OptionCategorySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"optionCategoryByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													optionCategory.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/optionCategoryByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetOptionCategoryByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"optionCategoryByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"optionCategoryByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected OptionCategory
+			testGraphQLGetOptionCategoryByExternalReferenceCode_addOptionCategory()
+		throws Exception {
+
+		return testGraphQLOptionCategory_addOptionCategory();
+	}
+
+	@Test
+	public void testPatchOptionCategoryByExternalReferenceCode()
+		throws Exception {
+
+		OptionCategory postOptionCategory =
+			testPatchOptionCategoryByExternalReferenceCode_addOptionCategory();
+
+		OptionCategory randomPatchOptionCategory = randomPatchOptionCategory();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OptionCategory patchOptionCategory =
+			optionCategoryResource.patchOptionCategoryByExternalReferenceCode(
+				postOptionCategory.getExternalReferenceCode(),
+				randomPatchOptionCategory);
+
+		OptionCategory expectedPatchOptionCategory = postOptionCategory.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchOptionCategory, expectedPatchOptionCategory);
+
+		OptionCategory getOptionCategory =
+			optionCategoryResource.getOptionCategoryByExternalReferenceCode(
+				patchOptionCategory.getExternalReferenceCode());
+
+		assertEquals(expectedPatchOptionCategory, getOptionCategory);
+		assertValid(getOptionCategory);
+	}
+
+	protected OptionCategory
+			testPatchOptionCategoryByExternalReferenceCode_addOptionCategory()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteOptionCategory() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OptionCategory optionCategory =
@@ -975,6 +1185,16 @@ public abstract class BaseOptionCategoryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (optionCategory.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (optionCategory.getKey() == null) {
 					valid = false;
@@ -1122,6 +1342,19 @@ public abstract class BaseOptionCategoryResourceTestCase {
 				if (!equals(
 						(Map)optionCategory1.getDescription(),
 						(Map)optionCategory2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						optionCategory1.getExternalReferenceCode(),
+						optionCategory2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1284,6 +1517,52 @@ public abstract class BaseOptionCategoryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = optionCategory.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1391,6 +1670,8 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	protected OptionCategory randomOptionCategory() throws Exception {
 		return new OptionCategory() {
 			{
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				priority = RandomTestUtil.randomDouble();

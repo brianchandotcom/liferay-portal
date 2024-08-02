@@ -1169,6 +1169,37 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteOptionCategoryByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_optionCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			optionCategoryResource ->
+				optionCategoryResource.
+					deleteOptionCategoryByExternalReferenceCode(
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public OptionCategory patchOptionCategoryByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("optionCategory") OptionCategory optionCategory)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_optionCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			optionCategoryResource ->
+				optionCategoryResource.
+					patchOptionCategoryByExternalReferenceCode(
+						externalReferenceCode, optionCategory));
+	}
+
+	@GraphQLField
 	public Response deleteOptionCategory(@GraphQLName("id") Long id)
 		throws Exception {
 

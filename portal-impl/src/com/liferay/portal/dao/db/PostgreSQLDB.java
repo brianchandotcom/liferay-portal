@@ -40,22 +40,35 @@ public class PostgreSQLDB extends BaseDB {
 	public static String getCreateRulesSQL(
 		String tableName, String columnName) {
 
+		return getCreateRulesSQL(StringPool.BLANK, tableName, columnName);
+	}
+
+	public static String getCreateRulesSQL(
+		String schemaName, String tableName, String columnName) {
+
+		String scopePrefix = StringPool.BLANK;
+
+		if (Validator.isNotNull(schemaName)) {
+			scopePrefix = schemaName + StringPool.PERIOD;
+		}
+
 		return StringBundler.concat(
 			"create or replace rule delete_", tableName, StringPool.UNDERLINE,
-			columnName, " as on delete to ", tableName,
+			columnName, " as on delete to ", scopePrefix, tableName,
 			" do also select case when exists(select 1 from ",
 			"pg_catalog.pg_largeobject_metadata where (oid = old.", columnName,
-			")) then lo_unlink(old.", columnName, ") end from ", tableName,
-			" where ", tableName, StringPool.PERIOD, columnName, " = old.",
-			columnName, ";\ncreate or replace rule update_", tableName,
-			StringPool.UNDERLINE, columnName, " as on update to ", tableName,
-			" where old.", columnName, " is distinct from new.", columnName,
-			" and old.", columnName,
+			")) then lo_unlink(old.", columnName, ") end from ", scopePrefix,
+			tableName, " where ", scopePrefix, tableName, StringPool.PERIOD,
+			columnName, " = old.", columnName,
+			";\ncreate or replace rule update_", tableName,
+			StringPool.UNDERLINE, columnName, " as on update to ", scopePrefix,
+			tableName, " where old.", columnName, " is distinct from new.",
+			columnName, " and old.", columnName,
 			" is not null do also select case when exists(select 1 from ",
 			"pg_catalog.pg_largeobject_metadata where (oid = old.", columnName,
-			")) then lo_unlink(old.", columnName, ") end from ", tableName,
-			" where ", tableName, StringPool.PERIOD, columnName, " = old.",
-			columnName, StringPool.SEMICOLON);
+			")) then lo_unlink(old.", columnName, ") end from ", scopePrefix,
+			tableName, " where ", scopePrefix, tableName, StringPool.PERIOD,
+			columnName, " = old.", columnName, StringPool.SEMICOLON);
 	}
 
 	public PostgreSQLDB(int majorVersion, int minorVersion) {

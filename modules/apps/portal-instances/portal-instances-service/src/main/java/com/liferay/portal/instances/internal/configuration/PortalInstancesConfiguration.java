@@ -40,6 +40,9 @@ public interface PortalInstancesConfiguration {
 	@Meta.AD(required = false, type = Meta.Type.String)
 	public String adminScreenName();
 
+	@Meta.AD(deflt = "true", required = false, type = Meta.Type.Boolean)
+	public boolean createDefaultAdmin();
+
 	@Meta.AD(required = false, type = Meta.Type.Integer)
 	public int maxUsers();
 

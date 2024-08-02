@@ -115,6 +115,26 @@ public class PortalInstancesConfigurationFactoryTest {
 			).build());
 	}
 
+	@Test
+	public void testCreateCompanyWithoutDefaultAdmin() throws Exception {
+		ConfigurationTestUtil.saveConfiguration(
+			_configuration,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"createDefaultAdmin", "false"
+			).put(
+				"mx", _domain
+			).put(
+				"virtualHostname", _domain
+			).build());
+
+		_company = _companyLocalService.getCompanyByWebId(_webId);
+
+		Assert.assertNotNull(_company);
+
+		Assert.assertEquals(
+			0, _userLocalService.getCompanyUsersCount(_company.getCompanyId()));
+	}
+
 	private void _testAddCompany(Dictionary<String, Object> properties)
 		throws Exception {
 

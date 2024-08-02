@@ -2046,7 +2046,25 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {specification(id: ___){description, facetable, id, key, listTypeDefinitionId, optionCategory, priority, title}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {specificationByExternalReferenceCode(externalReferenceCode: ___){description, externalReferenceCode, facetable, id, key, listTypeDefinitionId, optionCategory, priority, title}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Specification specificationByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_specificationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			specificationResource ->
+				specificationResource.getSpecificationByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {specification(id: ___){description, externalReferenceCode, facetable, id, key, listTypeDefinitionId, optionCategory, priority, title}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Specification specification(@GraphQLName("id") Long id)
@@ -2295,6 +2313,32 @@ public class Query {
 		}
 
 		private Option _option;
+
+	}
+
+	@GraphQLTypeExtension(Catalog.class)
+	public class GetSpecificationByExternalReferenceCodeTypeExtension {
+
+		public GetSpecificationByExternalReferenceCodeTypeExtension(
+			Catalog catalog) {
+
+			_catalog = catalog;
+		}
+
+		@GraphQLField
+		public Specification specificationByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_specificationResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				specificationResource ->
+					specificationResource.
+						getSpecificationByExternalReferenceCode(
+							_catalog.getExternalReferenceCode()));
+		}
+
+		private Catalog _catalog;
 
 	}
 

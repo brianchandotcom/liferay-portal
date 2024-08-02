@@ -2472,14 +2472,46 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteSpecification(@GraphQLName("id") Long id)
+	public boolean deleteSpecificationByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_specificationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			specificationResource ->
+				specificationResource.
+					deleteSpecificationByExternalReferenceCode(
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Specification patchSpecificationByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("specification") Specification specification)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_specificationResourceComponentServiceObjects,
 			this::_populateResourceContext,
+			specificationResource ->
+				specificationResource.patchSpecificationByExternalReferenceCode(
+					externalReferenceCode, specification));
+	}
+
+	@GraphQLField
+	public boolean deleteSpecification(@GraphQLName("id") Long id)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_specificationResourceComponentServiceObjects,
+			this::_populateResourceContext,
 			specificationResource -> specificationResource.deleteSpecification(
 				id));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -2497,7 +2529,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response patchSpecification(
+	public Specification patchSpecification(
 			@GraphQLName("id") Long id,
 			@GraphQLName("specification") Specification specification)
 		throws Exception {

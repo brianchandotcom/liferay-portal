@@ -63,14 +63,27 @@ public interface SpecificationResource {
 	public Response postSpecificationBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Response deleteSpecification(Long id) throws Exception;
+	public void deleteSpecificationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Specification getSpecificationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Specification patchSpecificationByExternalReferenceCode(
+			String externalReferenceCode, Specification specification)
+		throws Exception;
+
+	public void deleteSpecification(Long id) throws Exception;
 
 	public Response deleteSpecificationBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Specification getSpecification(Long id) throws Exception;
 
-	public Response patchSpecification(Long id, Specification specification)
+	public Specification patchSpecification(
+			Long id, Specification specification)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

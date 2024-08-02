@@ -1006,6 +1006,16 @@ public class ServletDataImpl implements ServletData {
 							SpecificationResourceImpl.class,
 							"postSpecificationBatch"));
 					put(
+						"mutation#deleteSpecificationByExternalReferenceCode",
+						new ObjectValuePair<>(
+							SpecificationResourceImpl.class,
+							"deleteSpecificationByExternalReferenceCode"));
+					put(
+						"mutation#patchSpecificationByExternalReferenceCode",
+						new ObjectValuePair<>(
+							SpecificationResourceImpl.class,
+							"patchSpecificationByExternalReferenceCode"));
+					put(
 						"mutation#deleteSpecification",
 						new ObjectValuePair<>(
 							SpecificationResourceImpl.class,
@@ -1433,6 +1443,11 @@ public class ServletDataImpl implements ServletData {
 							SpecificationResourceImpl.class,
 							"getSpecificationsPage"));
 					put(
+						"query#specificationByExternalReferenceCode",
+						new ObjectValuePair<>(
+							SpecificationResourceImpl.class,
+							"getSpecificationByExternalReferenceCode"));
+					put(
 						"query#specification",
 						new ObjectValuePair<>(
 							SpecificationResourceImpl.class,
@@ -1483,6 +1498,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CatalogResourceImpl.class,
 							"getCatalogByExternalReferenceCode"));
+					put(
+						"query#Catalog.specificationByExternalReferenceCode",
+						new ObjectValuePair<>(
+							SpecificationResourceImpl.class,
+							"getSpecificationByExternalReferenceCode"));
 					put(
 						"query#Catalog.productByExternalReferenceCodeMappedProducts",
 						new ObjectValuePair<>(

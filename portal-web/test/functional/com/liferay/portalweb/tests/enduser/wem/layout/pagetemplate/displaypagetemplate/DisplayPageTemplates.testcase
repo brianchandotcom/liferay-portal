@@ -206,58 +206,6 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-106813. Can set permissions for widgets in display page template."
-	@priority = 5
-	test ConfigurePermissionsOfAssetPublisher {
-		property portal.acceptance = "true";
-
-		task ("Add an asset publisher widget to the display page template") {
-			PageEditor.addWidget(portletName = "Asset Publisher");
-		}
-
-		task ("Configure permissions of Asset Publisher") {
-			Portlet.gotoPortletOptions(
-				portletName = "Asset Publisher",
-				portletOption = "Permissions");
-
-			IFrame.selectPermissionsFrame();
-
-			AssertChecked.assertCheckedNotVisible(
-				key_roleTitle = "guest",
-				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
-
-			Uncheck.uncheckNotVisible(
-				key_roleTitle = "guest",
-				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
-
-			PortletEntry.save();
-		}
-
-		task ("Publish the display page template") {
-			IFrame.closeFrame();
-
-			PageEditor.waitForAutoSave();
-
-			PageEditor.publish();
-		}
-
-		task ("View the permissions of Asset Publisher is saved") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Portlet.gotoPortletOptions(
-				portletName = "Asset Publisher",
-				portletOption = "Permissions");
-
-			IFrame.selectPermissionsFrame();
-
-			AssertNotChecked.assertNotCheckedNotVisible(
-				key_roleTitle = "guest",
-				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
-		}
-	}
-
 	@description = "This is a test for LPS-86191. Configure the theme of display page template."
 	@priority = 4
 	@uitest

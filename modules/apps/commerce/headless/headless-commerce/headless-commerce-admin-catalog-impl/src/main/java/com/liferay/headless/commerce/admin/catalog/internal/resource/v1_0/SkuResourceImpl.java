@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -473,9 +474,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 		// Unit of Measure
 
-		if ((sku.getSkuUnitOfMeasures() == null) ||
-			(sku.getSkuUnitOfMeasures().length == 0)) {
-
+		if (ArrayUtil.isEmpty(sku.getSkuUnitOfMeasures())) {
 			SkuUtil.updateCommercePriceEntries(
 				_commercePriceEntryLocalService, _commercePriceListLocalService,
 				_configurationProvider, cpInstance,

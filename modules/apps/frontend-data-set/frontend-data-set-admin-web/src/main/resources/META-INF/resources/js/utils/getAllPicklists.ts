@@ -16,7 +16,7 @@ export default async function getAllPicklists(
 	const response = await fetch(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions?pageSize=100&page=${page}`,
 		{
-			headers: DEFAULT_FETCH_HEADERS
+			headers: DEFAULT_FETCH_HEADERS,
 		}
 	);
 

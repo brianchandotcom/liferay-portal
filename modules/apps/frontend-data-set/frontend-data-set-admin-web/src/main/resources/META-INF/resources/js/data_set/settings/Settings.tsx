@@ -55,7 +55,7 @@ const Settings = ({
 		const response = await fetch(
 			`${API_URL.DATA_SETS}/by-external-reference-code/${dataSet.externalReferenceCode}?fields=${fields}&nestedFields=${fields}`,
 			{
-				headers: DEFAULT_FETCH_HEADERS
+				headers: DEFAULT_FETCH_HEADERS,
 			}
 		);
 

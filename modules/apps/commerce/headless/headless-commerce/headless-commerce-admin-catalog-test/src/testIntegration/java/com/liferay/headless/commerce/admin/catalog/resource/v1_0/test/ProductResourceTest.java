@@ -256,9 +256,9 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 		Product randomProduct = randomProduct();
 
-		randomProduct.setCatalogId((Long)null);
 		randomProduct.setCatalogExternalReferenceCode(
 			_commerceCatalog.getExternalReferenceCode());
+		randomProduct.setCatalogId((Long)null);
 
 		Product postProduct = testPostProduct_addProduct(randomProduct);
 

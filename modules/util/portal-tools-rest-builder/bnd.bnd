@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Tools REST Builder
 Bundle-SymbolicName: com.liferay.portal.tools.rest.builder
-Bundle-Version: 1.0.357
+Bundle-Version: 1.0.358
 Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\

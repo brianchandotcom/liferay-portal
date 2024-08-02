@@ -59,7 +59,9 @@ public class PortletTitleTest {
 				!resourceBundle.containsKey(
 					"javax.portlet.title.".concat(rootPortletId)) &&
 				!StringUtil.startsWith(
-					rootPortletId, _OBJECT_DEFINITIONS_PORTLET_ID)) {
+					rootPortletId,
+					"com_liferay_object_web_internal_object_definitions_" +
+						"portlet_ObjectDefinitionsPortlet")) {
 
 				portletIdsWithMissingTitles.add(rootPortletId);
 			}
@@ -71,9 +73,5 @@ public class PortletTitleTest {
 				"following portlets: ", portletIdsWithMissingTitles),
 			portletIdsWithMissingTitles.isEmpty());
 	}
-
-	private static final String _OBJECT_DEFINITIONS_PORTLET_ID =
-		"com_liferay_object_web_internal_object_definitions_portlet_" +
-			"ObjectDefinitionsPortlet";
 
 }

@@ -725,6 +725,8 @@ public class FriendlyURLServlet extends HttpServlet {
 	private SiteFriendlyURL _getAlternativeSiteFriendlyURL(
 		String friendlyURL, long companyId, Group group, Locale locale) {
 
+		SiteFriendlyURL alternativeSiteFriendlyURL = null;
+
 		SiteFriendlyURL siteFriendlyURL =
 			siteFriendlyURLLocalService.fetchSiteFriendlyURL(
 				companyId, group.getGroupId(), LocaleUtil.toLanguageId(locale));
@@ -734,8 +736,6 @@ public class FriendlyURLServlet extends HttpServlet {
 				siteFriendlyURLLocalService.fetchSiteFriendlyURLByFriendlyURL(
 					companyId, friendlyURL);
 		}
-
-		SiteFriendlyURL alternativeSiteFriendlyURL = null;
 
 		if ((siteFriendlyURL != null) &&
 			!StringUtil.equalsIgnoreCase(

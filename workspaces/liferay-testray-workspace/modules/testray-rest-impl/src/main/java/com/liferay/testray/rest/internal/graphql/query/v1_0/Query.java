@@ -28,6 +28,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -149,6 +150,24 @@ public class Query {
 					testrayCaseTypeIds, testrayComponentIds, testrayRunId,
 					testrayRunName, testraySubtaskId, testrayTeamIds, userId,
 					Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayExportCaseResultTestrayBuild(testrayBuildId: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Response testrayExportCaseResultTestrayBuild(
+			@GraphQLName("testrayBuildId") Long testrayBuildId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testrayCaseResultResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testrayCaseResultResource ->
+				testrayCaseResultResource.
+					getTestrayExportCaseResultTestrayBuild(testrayBuildId));
 	}
 
 	/**

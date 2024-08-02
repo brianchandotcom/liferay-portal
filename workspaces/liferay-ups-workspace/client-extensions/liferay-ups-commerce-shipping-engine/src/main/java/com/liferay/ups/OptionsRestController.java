@@ -5,6 +5,7 @@
 
 package com.liferay.ups;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.ups.constants.UPSServiceCodeConstants;
@@ -108,19 +109,7 @@ public class OptionsRestController extends BaseRestController {
 	}
 
 	private JSONObject _get(String authorization, String path) {
-		return new JSONObject(
-			_getWebClient(
-			).get(
-			).uri(
-				uriBuilder -> uriBuilder.path(
-					path
-				).build()
-			).header(
-				HttpHeaders.AUTHORIZATION, authorization
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block());
+		return new JSONObject(get(authorization, path));
 	}
 
 	private String _getAccessToken(
@@ -163,17 +152,6 @@ public class OptionsRestController extends BaseRestController {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private WebClient _getWebClient() {
-		return WebClient.builder(
-		).baseUrl(
-			lxcDXPServerProtocol + "://" + lxcDXPMainDomain
-		).defaultHeader(
-			HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
-		).defaultHeader(
-			HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-		).build();
 	}
 
 	private JSONObject _postRate(

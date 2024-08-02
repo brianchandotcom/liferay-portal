@@ -456,20 +456,6 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			return cpInstance;
 		}
 
-		SkuVirtualSettings skuVirtualSettings = sku.getSkuVirtualSettings();
-
-		if (skuVirtualSettings != null) {
-			if (!VirtualCPTypeConstants.NAME.equals(cpType.getName())) {
-				throw new CPDefinitionProductTypeNameException();
-			}
-
-			SkuVirtualSettingsUtil.addOrUpdateSkuVirtualSettings(
-				cpInstance, skuVirtualSettings,
-				_cpDefinitionVirtualSettingService,
-				_cpdVirtualSettingFileEntryService, _uniqueFileNameProvider,
-				serviceContext);
-		}
-
 		if (ArrayUtil.isEmpty(sku.getSkuUnitOfMeasures())) {
 			SkuUtil.updateCommercePriceEntries(
 				_commercePriceEntryLocalService, _commercePriceListLocalService,
@@ -489,6 +475,20 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 					_commercePriceListLocalService, cpInstance,
 					skuUnitOfMeasure, serviceContext);
 			}
+		}
+
+		SkuVirtualSettings skuVirtualSettings = sku.getSkuVirtualSettings();
+
+		if (skuVirtualSettings != null) {
+			if (!VirtualCPTypeConstants.NAME.equals(cpType.getName())) {
+				throw new CPDefinitionProductTypeNameException();
+			}
+
+			SkuVirtualSettingsUtil.addOrUpdateSkuVirtualSettings(
+				cpInstance, skuVirtualSettings,
+				_cpDefinitionVirtualSettingService,
+				_cpdVirtualSettingFileEntryService, _uniqueFileNameProvider,
+				serviceContext);
 		}
 
 		return cpInstance;

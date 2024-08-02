@@ -15,13 +15,15 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
  * may be used as an alternative.
  */
 export default function getFirstControlsId({item, layoutData}) {
+	const itemId = item.id || item.itemId;
+
 	const collectionItems = getCollectionItems(
-		item.itemType === ITEM_TYPES.editable ? item.parentId : item.id,
+		item.itemType === ITEM_TYPES.editable ? item.parentId : itemId,
 		layoutData
 	);
 
 	if (!collectionItems.length) {
-		return item.id;
+		return itemId;
 	}
 
 	const toControlsId = collectionItems.reduce(
@@ -30,7 +32,7 @@ export default function getFirstControlsId({item, layoutData}) {
 			// If the item.id correspond to a collectionId ignore it,
 			// that id is only applied to the children not to the collection itself.
 
-			if (collectionItemId === item.id) {
+			if (collectionItemId === itemId) {
 				return acc;
 			}
 
@@ -39,7 +41,7 @@ export default function getFirstControlsId({item, layoutData}) {
 		(itemId) => itemId
 	);
 
-	return toControlsId(item.id);
+	return toControlsId(itemId);
 }
 
 function getCollectionItems(itemId, layoutData, collectionItems = []) {

@@ -416,10 +416,10 @@ public class EditorTag extends BaseValidatorTagSupport {
 	private String _getCssClasses() {
 		HttpServletRequest httpServletRequest = getRequest();
 
+		String cssClasses = "portlet ";
+
 		Portlet portlet = (Portlet)httpServletRequest.getAttribute(
 			WebKeys.RENDER_PORTLET);
-
-		String cssClasses = "portlet ";
 
 		if (portlet != null) {
 			cssClasses += portlet.getCssClassWrapper();

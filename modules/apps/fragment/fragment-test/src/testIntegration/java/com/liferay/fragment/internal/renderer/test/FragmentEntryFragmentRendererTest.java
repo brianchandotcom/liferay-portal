@@ -82,6 +82,8 @@ public class FragmentEntryFragmentRendererTest {
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		_locale = _portal.getSiteDefaultLocale(_group);
+
 		_defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid());
@@ -107,14 +109,14 @@ public class FragmentEntryFragmentRendererTest {
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		defaultFragmentRendererContext.setLocale(LocaleUtil.US);
+		defaultFragmentRendererContext.setLocale(_locale);
 
 		_fragmentRenderer.render(
 			defaultFragmentRendererContext, _getMockHttpServletRequest(),
 			new MockHttpServletResponse());
 
 		String content = _fragmentEntryLinkCache.getFragmentEntryLinkContent(
-			fragmentEntryLink, LocaleUtil.US);
+			fragmentEntryLink, _locale);
 
 		Assert.assertTrue(content.contains(fragmentEntry.getHtml()));
 	}
@@ -136,7 +138,7 @@ public class FragmentEntryFragmentRendererTest {
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		defaultFragmentRendererContext.setLocale(LocaleUtil.US);
+		defaultFragmentRendererContext.setLocale(_locale);
 
 		_fragmentRenderer.render(
 			defaultFragmentRendererContext, _getMockHttpServletRequest(),
@@ -144,7 +146,7 @@ public class FragmentEntryFragmentRendererTest {
 
 		Assert.assertNull(
 			_fragmentEntryLinkCache.getFragmentEntryLinkContent(
-				fragmentEntryLink, LocaleUtil.US));
+				fragmentEntryLink, _locale));
 	}
 
 	@Test
@@ -171,7 +173,7 @@ public class FragmentEntryFragmentRendererTest {
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		defaultFragmentRendererContext.setLocale(LocaleUtil.US);
+		defaultFragmentRendererContext.setLocale(_locale);
 
 		Assert.assertTrue(
 			_isFragmentEntryLinkCacheable(
@@ -211,7 +213,7 @@ public class FragmentEntryFragmentRendererTest {
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		defaultFragmentRendererContext.setLocale(LocaleUtil.US);
+		defaultFragmentRendererContext.setLocale(_locale);
 
 		_fragmentRenderer.render(
 			defaultFragmentRendererContext, _getMockHttpServletRequest(),
@@ -232,14 +234,14 @@ public class FragmentEntryFragmentRendererTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId()));
 
-		defaultFragmentRendererContext.setLocale(LocaleUtil.US);
+		defaultFragmentRendererContext.setLocale(_locale);
 
 		_fragmentRenderer.render(
 			defaultFragmentRendererContext, _getMockHttpServletRequest(),
 			new MockHttpServletResponse());
 
 		String content = _fragmentEntryLinkCache.getFragmentEntryLinkContent(
-			fragmentEntryLink, LocaleUtil.US);
+			fragmentEntryLink, _locale);
 
 		Assert.assertTrue(content.contains(fragmentEntry.getHtml()));
 	}
@@ -285,7 +287,7 @@ public class FragmentEntryFragmentRendererTest {
 		themeDisplay.setLookAndFeel(
 			layoutSet.getTheme(), layoutSet.getColorScheme());
 
-		themeDisplay.setLocale(LocaleUtil.US);
+		themeDisplay.setLocale(_locale);
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 		themeDisplay.setRealUser(TestPropsValues.getUser());

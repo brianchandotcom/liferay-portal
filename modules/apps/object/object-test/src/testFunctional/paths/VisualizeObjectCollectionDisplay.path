@@ -57,7 +57,7 @@
 	</tr>
 	<tr>
 		<td>HEADING_COLLECTION_DISPLAY</td>
-		<td>//h1[@class='component-heading mb-0 text-break page-editor__editable']</td>
+		<td>//h1[contains(@class,'component-heading mb-0 text-break page-editor__editable')]</td>
 		<td></td>
 	</tr>
 	<tr>

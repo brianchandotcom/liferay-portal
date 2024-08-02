@@ -24,11 +24,9 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriBuilder;
 
 /**
  * @author Michael Hashimoto
@@ -144,23 +142,9 @@ public abstract class BaseEntityDALO<T extends Entity>
 					String response;
 
 					try {
-						response = WebClient.create(
-							StringUtil.combine(
-								_liferayPortalURL, _getEntityURLPath())
-						).post(
-						).accept(
-							MediaType.APPLICATION_JSON
-						).contentType(
-							MediaType.APPLICATION_JSON
-						).header(
-							"Authorization", getAuthorization()
-						).body(
-							BodyInserters.fromValue(
-								requestJSONObject.toString())
-						).retrieve(
-						).bodyToMono(
-							String.class
-						).block();
+						response = post(
+							getAuthorization(), _getEntityURLPath(),
+							requestJSONObject.toString());
 					}
 					catch (Exception exception) {
 						refresh();
@@ -216,19 +200,9 @@ public abstract class BaseEntityDALO<T extends Entity>
 				},
 				() -> {
 					try {
-						WebClient.create(
-							StringUtil.combine(
-								_liferayPortalURL,
-								_getEntityURLPath(objectEntryId))
-						).delete(
-						).accept(
-							MediaType.APPLICATION_JSON
-						).header(
-							"Authorization", getAuthorization()
-						).retrieve(
-						).bodyToMono(
-							Void.class
-						).block();
+						delete(
+							getAuthorization(), null,
+							_getEntityURLPath(objectEntryId));
 					}
 					catch (Exception exception) {
 						refresh();
@@ -265,18 +239,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 					String response = null;
 
 					try {
-						response = WebClient.create(
-							StringUtil.combine(
-								_liferayPortalURL, _getEntityURLPath(), "/", id)
-						).get(
-						).accept(
-							MediaType.APPLICATION_JSON
-						).header(
-							"Authorization", getAuthorization()
-						).retrieve(
-						).bodyToMono(
-							String.class
-						).block();
+						response = get(
+							getAuthorization(), _getEntityURLPath() + "/" + id);
 					}
 					catch (Exception exception) {
 						refresh();
@@ -326,39 +290,31 @@ public abstract class BaseEntityDALO<T extends Entity>
 						String response;
 
 						try {
-							response = WebClient.create(
-								StringUtil.combine(
-									_liferayPortalURL, _getEntityURLPath())
-							).get(
-							).uri(
-								uriBuilder -> {
-									uriBuilder = uriBuilder.queryParam(
-										"page",
-										String.valueOf(finalCurrentPage));
+							UriBuilder uriBuilder =
+								_defaultUriBuilderFactory.builder();
 
-									if (filterString != null) {
-										uriBuilder.queryParam(
-											"filter", filterString);
-									}
+							uriBuilder.path(
+								_getEntityURLPath()
+							).queryParam(
+								"page", String.valueOf(finalCurrentPage)
+							);
 
-									if (search != null) {
-										uriBuilder.queryParam("search", search);
-									}
+							if (filterString != null) {
+								uriBuilder.queryParam("filter", filterString);
+							}
 
-									if (sort != null) {
-										uriBuilder.queryParam("sort", sort);
-									}
+							if (search != null) {
+								uriBuilder.queryParam("search", search);
+							}
 
-									return uriBuilder.build();
-								}
-							).accept(
-								MediaType.APPLICATION_JSON
-							).header(
-								"Authorization", getAuthorization()
-							).retrieve(
-							).bodyToMono(
-								String.class
-							).block();
+							if (sort != null) {
+								uriBuilder.queryParam("sort", sort);
+							}
+
+							response = get(
+								getAuthorization(),
+								uriBuilder.build(
+								).toString());
 						}
 						catch (Exception exception) {
 							refresh();
@@ -466,24 +422,9 @@ public abstract class BaseEntityDALO<T extends Entity>
 					String response;
 
 					try {
-						response = WebClient.create(
-							StringUtil.combine(
-								_liferayPortalURL,
-								_getEntityURLPath(requestObjectEntryId))
-						).put(
-						).accept(
-							MediaType.APPLICATION_JSON
-						).contentType(
-							MediaType.APPLICATION_JSON
-						).header(
-							"Authorization", getAuthorization()
-						).body(
-							BodyInserters.fromValue(
-								requestJSONObject.toString())
-						).retrieve(
-						).bodyToMono(
-							String.class
-						).block();
+						response = put(
+							getAuthorization(), requestJSONObject.toString(),
+							_getEntityURLPath(requestObjectEntryId));
 					}
 					catch (Exception exception) {
 						refresh();
@@ -524,9 +465,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 	private static final Log _log = LogFactory.getLog(BaseDALO.class);
 
-	@Value(
-		"${com.liferay.lxc.dxp.server.protocol}://${com.liferay.lxc.dxp.main.domain}"
-	)
-	private String _liferayPortalURL;
+	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+		new DefaultUriBuilderFactory();
 
 }

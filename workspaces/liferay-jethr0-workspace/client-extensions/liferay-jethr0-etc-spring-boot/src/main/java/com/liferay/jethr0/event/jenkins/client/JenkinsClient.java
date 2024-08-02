@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.jenkins.client;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
 import com.liferay.jethr0.git.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
@@ -25,15 +26,12 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Michael Hashimoto
  */
 @Configuration
-public class JenkinsClient {
+public class JenkinsClient extends BaseRestController {
 
 	public String requestGet(URL jenkinsURL) {
 		String remoteJenkinsURL = _getRemoteJenkinsURL(jenkinsURL);
@@ -51,17 +49,8 @@ public class JenkinsClient {
 				},
 				() -> {
 					try {
-						String response = WebClient.create(
-							remoteJenkinsURL
-						).get(
-						).accept(
-							MediaType.APPLICATION_JSON
-						).header(
-							"Authorization", _getAuthorization()
-						).retrieve(
-						).bodyToMono(
-							String.class
-						).block();
+						String response = get(
+							_getAuthorization(), remoteJenkinsURL);
 
 						if (response == null) {
 							throw new RuntimeException(
@@ -96,22 +85,9 @@ public class JenkinsClient {
 				},
 				() -> {
 					try {
-						String response = WebClient.create(
-							remoteJenkinsURL
-						).patch(
-						).accept(
-							MediaType.APPLICATION_JSON
-						).contentType(
-							MediaType.APPLICATION_JSON
-						).header(
-							"Authorization", _getAuthorization()
-						).body(
-							BodyInserters.fromValue(
-								requestJSONObject.toString())
-						).retrieve(
-						).bodyToMono(
-							String.class
-						).block();
+						String response = patch(
+							_getAuthorization(), requestJSONObject.toString(),
+							remoteJenkinsURL);
 
 						if (response == null) {
 							throw new RuntimeException("No response");
@@ -149,22 +125,9 @@ public class JenkinsClient {
 				},
 				() -> {
 					try {
-						String response = WebClient.create(
-							remoteJenkinsURL
-						).post(
-						).accept(
-							MediaType.APPLICATION_JSON
-						).contentType(
-							MediaType.APPLICATION_JSON
-						).header(
-							"Authorization", _getAuthorization()
-						).body(
-							BodyInserters.fromValue(
-								requestJSONObject.toString())
-						).retrieve(
-						).bodyToMono(
-							String.class
-						).block();
+						String response = post(
+							_getAuthorization(), requestJSONObject.toString(),
+							remoteJenkinsURL);
 
 						if (response == null) {
 							throw new RuntimeException("No response");
@@ -198,22 +161,9 @@ public class JenkinsClient {
 				},
 				() -> {
 					try {
-						String response = WebClient.create(
-							remoteJenkinsURL
-						).put(
-						).accept(
-							MediaType.APPLICATION_JSON
-						).contentType(
-							MediaType.APPLICATION_JSON
-						).header(
-							"Authorization", _getAuthorization()
-						).body(
-							BodyInserters.fromValue(
-								requestJSONObject.toString())
-						).retrieve(
-						).bodyToMono(
-							String.class
-						).block();
+						String response = put(
+							_getAuthorization(), requestJSONObject.toString(),
+							remoteJenkinsURL);
 
 						if (response == null) {
 							throw new RuntimeException("No response");
@@ -229,6 +179,11 @@ public class JenkinsClient {
 				});
 
 		return unsafeSupplier.get();
+	}
+
+	@Override
+	protected String getLXCDXPURL() {
+		return "";
 	}
 
 	private String _getAuthorization() throws IOException {

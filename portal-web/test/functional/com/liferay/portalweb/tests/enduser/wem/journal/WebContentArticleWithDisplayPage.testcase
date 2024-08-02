@@ -1,0 +1,186 @@
+@component-name = "portal-content-management"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+	}
+
+	@description = "This is a test for LPS-168698. Expired Web Content Display Pages are not accessible"
+	@priority = 4
+	test ViewNotFoundWhenAccessToAssociatedDisplayPageOfExpiredWebContent {
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
+
+		task ("Given a site administrator has an associated display page for web content") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("When expire the created web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Expire",
+				rowEntry = "Webcontent Title");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the site administrator should see not found when access to the associated display page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = 404);
+
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "Page Not Found");
+		}
+	}
+
+	@description = "This is a test for LPS-140197. Draft version can only be accessed by author."
+	@priority = 4
+	test ViewPreviewDraftViaURLFromNonAuthor {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Add a user and assign it to the created site") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a role and assign view web content permissions to the user") {
+			JSONRole.addSiteRole(
+				roleKey = "Web Content Viewer",
+				roleTitle = "Web Content Viewer");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Web Content Viewer",
+				roleType = "site");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+				roleTitle = "Web Content Viewer",
+				roleType = "site");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+				roleTitle = "Web Content Viewer",
+				roleType = "site");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Web Content Viewer",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a Display Page Content fragment and publish") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.publish();
+		}
+
+		task ("Mark the display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Save web content as draft") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editCP(
+				saveAsDraft = "true",
+				webContentContentEdit = "WC WebContent Content Draft",
+				webContentTitle = "WC WebContent Title",
+				webContentTitleEdit = "WC WebContent Title Draft");
+		}
+
+		task ("Preview draft and get its URL") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "WC WebContent Title Draft",
+				menuItem = "Preview Draft");
+
+			AssertElementPresent(locator1 = "IFrame#MODAL_BODY");
+
+			var url = selenium.getAttribute("//iframe@src");
+
+			User.logoutPG();
+
+			User.firstLoginUI(
+				password = PropsUtil.get("default.admin.password"),
+				specificURL = ${url},
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("View the content is in published version") {
+			AssertTextEquals(
+				locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content");
+		}
+	}
+
+}

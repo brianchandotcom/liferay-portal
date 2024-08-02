@@ -17,6 +17,8 @@ import performLogin, {
 	performLogout,
 	userData,
 } from '../../../utils/performLogin';
+import {getTempDir} from '../../../utils/temp';
+import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -631,4 +633,130 @@ test('LPD-18710 Price is correctly calculated for bundle product with options no
 	await productDetailsPage.selectOption('Choose an Option', 'Color');
 
 	await expect(await productDetailsPage.priceField('$ 0.00')).toBeVisible();
+});
+
+test(`LPD-29993 Users can view and download a product's attachments`, async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminChannelsPage,
+	commerceLayoutsPage,
+	page,
+	productDetailsPage,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'admin',
+		type: 'business',
+	});
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
+		account.id
+	);
+	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+		return role.name === 'Buyer';
+	});
+
+	await apiHelpers.headlessAdminUser.assignAccountRoles(
+		account.externalReferenceCode,
+		accountRoleBuyer[0].id,
+		user.emailAddress
+	);
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
+			'Site Member'
+		);
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		site.id,
+		user.id
+	);
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		[user.emailAddress]
+	);
+
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: getRandomString(),
+		siteGroupId: site.id,
+	});
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+		name: getRandomString(),
+	});
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: getRandomString()},
+	});
+
+	const document1 = await apiHelpers.headlessDelivery.postDocument(
+		site.id,
+		createReadStream(path.join(__dirname, '/dependencies/attachment.txt')),
+		{
+			fileName: 'attachment.txt',
+			title: 'attachmentFile',
+		}
+	);
+
+	apiHelpers.data.push({id: document1.id, type: 'document'});
+
+	const attachment1 =
+		await apiHelpers.headlessCommerceAdminCatalog.postAttachment(
+			product.productId,
+			document1.id,
+			document1.title
+		);
+
+	apiHelpers.data.push({id: attachment1.id, type: 'attachment'});
+
+	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+		channel.name,
+		'B2B'
+	);
+
+	await waitForSuccessAlert(page);
+
+	await applicationsMenuPage.goToSite(site.name);
+	await commerceLayoutsPage.goToPages(false);
+	await commerceLayoutsPage.createWidgetPage('View product details');
+
+	await page.goto(`/web/${site.name}`);
+
+	await productDetailsPage.addProductDetailsWidget();
+
+	await performLogout(page);
+
+	await performLogin(page, 'demo.unprivileged');
+
+	await page.goto(`/web/${site.name}/p/` + product.name['en_US']);
+
+	await expect(
+		await productDetailsPage.nameField(product.name['en_US'])
+	).toBeVisible();
+	await expect(productDetailsPage.attachments).toBeVisible();
+	await expect(
+		await productDetailsPage.attachmentItem(attachment1.title['en_US'])
+	).toBeVisible();
+	await expect(productDetailsPage.attachmentItems).toHaveCount(1);
+
+	const downloadPromise = page.waitForEvent('download');
+
+	await productDetailsPage.downloadAttachmentLink.click();
+
+	const download = await downloadPromise;
+
+	const filePath = getTempDir() + download.suggestedFilename();
+
+	await download.saveAs(filePath);
+
+	expect(filePath).toBeTruthy();
 });

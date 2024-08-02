@@ -18,6 +18,7 @@ export class ProductDetailsPage {
 	readonly closeEditFrame: Locator;
 	readonly createNewSpecificationProduct: Locator;
 	readonly createNewValueSpecificationProduct: Locator;
+	readonly downloadAttachmentLink: Locator;
 	readonly downloadSampleField: (
 		downloadSampleText: string
 	) => Promise<Locator>;
@@ -100,6 +101,10 @@ export class ProductDetailsPage {
 		this.createNewValueSpecificationProduct = this.addSpecificationFrame
 			.getByRole('textbox')
 			.nth(1);
+		this.downloadAttachmentLink = page.getByRole('link', {
+			exact: true,
+			name: 'Download',
+		});
 		this.ellipsisProductSpecification = page.getByRole('button', {
 			name: 'Actions',
 		});

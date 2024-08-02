@@ -43,6 +43,8 @@ public class OptionCategoryDTOConverter
 				setDescription(
 					() -> LanguageUtils.getLanguageIdMap(
 						cpOptionCategory.getDescriptionMap()));
+				setExternalReferenceCode(
+					cpOptionCategory::getExternalReferenceCode);
 				setId(cpOptionCategory::getCPOptionCategoryId);
 				setKey(cpOptionCategory::getKey);
 				setPriority(cpOptionCategory::getPriority);

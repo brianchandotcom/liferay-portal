@@ -107,6 +107,40 @@ public class CPOptionCategoryLocalServiceImpl
 	}
 
 	@Override
+	public CPOptionCategory addOrUpdateCPOptionCategory(
+			String externalReferenceCode, long userId, long cpOptionCategoryId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			double priority, String key, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+		else {
+			CPOptionCategory cpOptionCategory =
+				cpOptionCategoryPersistence.fetchByERC_C(
+					externalReferenceCode, serviceContext.getCompanyId());
+
+			if ((cpOptionCategory == null) && (cpOptionCategoryId > 0)) {
+				cpOptionCategory =
+					cpOptionCategoryPersistence.fetchByPrimaryKey(
+						cpOptionCategoryId);
+			}
+
+			if (cpOptionCategory != null) {
+				return cpOptionCategoryLocalService.updateCPOptionCategory(
+					externalReferenceCode,
+					cpOptionCategory.getCPOptionCategoryId(), titleMap,
+					descriptionMap, priority, key);
+			}
+		}
+
+		return cpOptionCategoryLocalService.addCPOptionCategory(
+			externalReferenceCode, userId, titleMap, descriptionMap, priority,
+			key, serviceContext);
+	}
+
+	@Override
 	public void deleteCPOptionCategories(long companyId)
 		throws PortalException {
 

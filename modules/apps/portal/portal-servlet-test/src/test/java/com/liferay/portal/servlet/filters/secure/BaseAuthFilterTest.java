@@ -288,11 +288,11 @@ public class BaseAuthFilterTest {
 	}
 
 	private boolean _isHttpSessionInvalid(String scheme, User user) {
-		try (MockedStatic<UserLocalServiceUtil>
+		try (MockedStatic<HttpAuthManagerUtil> httpAuthManagerUtilMockedStatic =
+				Mockito.mockStatic(HttpAuthManagerUtil.class);
+			MockedStatic<UserLocalServiceUtil>
 				userLocalServiceUtilMockedStatic = Mockito.mockStatic(
-					UserLocalServiceUtil.class);
-			MockedStatic<HttpAuthManagerUtil> httpAuthManagerUtilMockedStatic =
-				Mockito.mockStatic(HttpAuthManagerUtil.class)) {
+					UserLocalServiceUtil.class)) {
 
 			userLocalServiceUtilMockedStatic.when(
 				() -> UserLocalServiceUtil.getUser(ArgumentMatchers.anyLong())

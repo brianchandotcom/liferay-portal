@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -19,12 +18,22 @@ import com.liferay.testray.rest.dto.v1_0.TestrayCaseResult;
 import com.liferay.testray.rest.internal.util.TestrayUtil;
 import com.liferay.testray.rest.resource.v1_0.TestrayCaseResultResource;
 
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+
+import java.net.URI;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -152,10 +161,12 @@ public class TestrayCaseResultResourceImpl
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
 
-		sql += " limit ? offset ?";
+		if (pagination != null) {
+			sql += " limit ? offset ?";
 
-		params.add(pagination.getPageSize());
-		params.add(pagination.getStartPosition());
+			params.add(pagination.getPageSize());
+			params.add(pagination.getStartPosition());
+		}
 
 		List<Map<String, Object>> values = TestrayUtil.executeQuery(
 			sql, params);
@@ -337,10 +348,12 @@ public class TestrayCaseResultResourceImpl
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
 
-		sql += " limit ? offset ?";
+		if (pagination != null) {
+			sql += " limit ? offset ?";
 
-		params.add(pagination.getPageSize());
-		params.add(pagination.getStartPosition());
+			params.add(pagination.getPageSize());
+			params.add(pagination.getStartPosition());
+		}
 
 		List<Map<String, Object>> values = TestrayUtil.executeQuery(
 			sql, params);
@@ -403,7 +416,63 @@ public class TestrayCaseResultResourceImpl
 			pagination, totalCount);
 	}
 
-	@Reference
-	private RoleLocalService _roleLocalService;
+	@Override
+	public Response getTestrayExportCaseResultTestrayBuild(
+		Long testrayBuildId) {
+
+		StreamingOutput streamingOutput = outputStream -> {
+			CSVFormat csvFormat = CSVFormat.DEFAULT.builder(
+			).setHeader(
+				"Case Name", "Case Type", "Priority", "Team", "Component",
+				"Run Number", "Run Name", "Assignee", "Status", "Issues",
+				"Errors", "Comments", "Case Result URL"
+			).build();
+
+			try (CSVPrinter csvPrinter = new CSVPrinter(
+					new BufferedWriter(new OutputStreamWriter(outputStream)),
+					csvFormat)) {
+
+				Page<TestrayCaseResult> page =
+					getTestrayCaseResultsTestrayBuildPage(
+						testrayBuildId, null, null, null, null, null, null,
+						null, null, null, null, null, null, null, null, null,
+						null, null, null);
+
+				for (TestrayCaseResult testrayCaseResult : page.getItems()) {
+					URI baseURI = contextUriInfo.getBaseUri();
+
+					String caseResultUrl =
+						baseURI.getScheme() + "://" + baseURI.getAuthority() +
+							"/#/case-result/" +
+								testrayCaseResult.getTestrayCaseResultId();
+
+					csvPrinter.printRecord(
+						testrayCaseResult.getTestrayCaseName(),
+						testrayCaseResult.getTestrayCaseTypeName(),
+						testrayCaseResult.getPriority(),
+						testrayCaseResult.getTestrayTeamName(),
+						testrayCaseResult.getTestrayComponentName(),
+						testrayCaseResult.getTestrayRunNumber(),
+						testrayCaseResult.getTestrayRunName(),
+						testrayCaseResult.getUserName(),
+						testrayCaseResult.getStatus(),
+						testrayCaseResult.getIssues(),
+						testrayCaseResult.getError(),
+						testrayCaseResult.getComment(), caseResultUrl);
+				}
+
+				csvPrinter.flush();
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+
+		return Response.ok(
+			streamingOutput
+		).header(
+			"Content-Disposition", "attachment; filename=\"case_results.csv\""
+		).build();
+	}
 
 }

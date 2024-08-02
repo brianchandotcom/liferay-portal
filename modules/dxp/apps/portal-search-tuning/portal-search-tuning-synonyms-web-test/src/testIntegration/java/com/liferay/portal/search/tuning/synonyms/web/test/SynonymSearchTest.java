@@ -106,6 +106,7 @@ public class SynonymSearchTest {
 			addSynonymSet("hatékony,produktív");
 			addSynonymSet("lycklig,nöjd");
 			addSynonymSet("maison,logement");
+			addSynonymSet("tehokas,tuottava");
 		}
 
 		addJournalArticles();
@@ -130,6 +131,7 @@ public class SynonymSearchTest {
 		doAssertSearch("hatékony", Field.TITLE, LocaleUtil.HUNGARY, 2);
 		doAssertSearch("lycklig", Field.TITLE, _SWEDISHLOCALE, 2);
 		doAssertSearch("maison", Field.TITLE, LocaleUtil.FRANCE, 2);
+		doAssertSearch("tehokas", Field.TITLE, _FINNISHLOCALE, 2);
 	}
 
 	protected static void addJournalArticle(Map<Locale, String> localeStringMap)
@@ -154,6 +156,8 @@ public class SynonymSearchTest {
 
 		addJournalArticle(
 			HashMapBuilder.put(
+				_FINNISHLOCALE, "tehokas"
+			).put(
 				_SWEDISHLOCALE, "lycklig"
 			).put(
 				LocaleUtil.BRAZIL, "feliz"
@@ -172,6 +176,8 @@ public class SynonymSearchTest {
 			).build());
 		addJournalArticle(
 			HashMapBuilder.put(
+				_FINNISHLOCALE, "tuottava"
+			).put(
 				_SWEDISHLOCALE, "nöjd"
 			).put(
 				LocaleUtil.BRAZIL, "alegre"
@@ -264,9 +270,10 @@ public class SynonymSearchTest {
 			"filterNames",
 			new String[] {
 				"liferay_filter_synonym_de", "liferay_filter_synonym_en",
-				"liferay_filter_synonym_es", "liferay_filter_synonym_fr",
-				"liferay_filter_synonym_hu", "liferay_filter_synonym_nl",
-				"liferay_filter_synonym_pt_BR", "liferay_filter_synonym_sv"
+				"liferay_filter_synonym_es", "liferay_filter_synonym_fi",
+				"liferay_filter_synonym_fr", "liferay_filter_synonym_hu",
+				"liferay_filter_synonym_nl", "liferay_filter_synonym_pt_BR",
+				"liferay_filter_synonym_sv"
 			}
 		).build();
 	}
@@ -320,6 +327,8 @@ public class SynonymSearchTest {
 	private static final String _CONFIGURATION_PID_SYNONYMS =
 		"com.liferay.portal.search.tuning.synonyms.web.internal." +
 			"configuration.SynonymsConfiguration";
+
+	private static final Locale _FINNISHLOCALE = new Locale("fi", "FI");
 
 	private static final Locale _SWEDISHLOCALE = new Locale("sv", "SE");
 

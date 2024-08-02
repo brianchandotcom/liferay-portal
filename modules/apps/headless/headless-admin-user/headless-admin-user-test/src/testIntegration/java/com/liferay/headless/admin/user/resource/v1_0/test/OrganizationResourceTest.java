@@ -298,6 +298,19 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				_accountEntry.getAccountEntryId(), "-"));
 	}
 
+	@Test
+	public void testPostOrganizationWithNameOverMaximumLength()
+		throws Exception{
+
+		String name = RandomTestUtil.randomString(101);
+
+		assertHttpResponseStatusCode(
+			400,
+			organizationResource.postOrganizationHttpResponse(
+				randomOrganization(name))
+		);
+	}
+
 	@Override
 	@Test
 	public void testPostUserAccountByEmailAddress() throws Exception {
@@ -355,6 +368,14 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		Organization organization = super.randomOrganization();
 
 		organization.setImageId(0L);
+
+		return organization;
+	}
+
+	protected Organization randomOrganization(String name) throws Exception {
+		Organization organization = super.randomOrganization();
+
+		organization.setName(name);
 
 		return organization;
 	}

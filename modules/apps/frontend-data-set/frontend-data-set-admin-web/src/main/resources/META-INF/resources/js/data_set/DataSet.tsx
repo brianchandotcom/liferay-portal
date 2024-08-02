@@ -12,7 +12,11 @@ import React, {useEffect, useState} from 'react';
 
 import {IDataSet} from '../DataSets';
 import {FDSViewType} from '../FDSViews';
-import {API_URL, DEFAULT_FETCH_HEADERS, OBJECT_RELATIONSHIP} from '../utils/constants';
+import {
+	API_URL,
+	DEFAULT_FETCH_HEADERS,
+	OBJECT_RELATIONSHIP,
+} from '../utils/constants';
 import getFields from '../utils/getFields';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import {IFieldTreeItem} from '../utils/types';

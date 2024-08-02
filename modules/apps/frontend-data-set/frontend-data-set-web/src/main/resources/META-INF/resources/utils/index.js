@@ -5,9 +5,9 @@
 
 import {fetch} from 'frontend-js-web';
 
+import {DEFAULT_FETCH_HEADERS} from '../constants';
 import getValueFromItem from './getValueFromItem';
 import createOdataFilter from './odata';
-import {DEFAULT_FETCH_HEADERS} from '../constants';
 
 export function getData(apiURL, query) {
 	const url = new URL(apiURL);

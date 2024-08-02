@@ -10,7 +10,11 @@ import {fetch, openModal, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import OrderableTable from '../../components/OrderableTable';
-import {API_URL, DEFAULT_FETCH_HEADERS, OBJECT_RELATIONSHIP} from '../../utils/constants';
+import {
+	API_URL,
+	DEFAULT_FETCH_HEADERS,
+	OBJECT_RELATIONSHIP,
+} from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {
@@ -169,10 +173,11 @@ function Filters({
 					dataSet.id
 				}?nestedFields=${Object.values(FILTER_TYPES)
 					.map((filter) => filter.fdsViewRelationship)
-					.join(',')}`
-			, {
-				headers: DEFAULT_FETCH_HEADERS
-			});
+					.join(',')}`,
+				{
+					headers: DEFAULT_FETCH_HEADERS,
+				}
+			);
 
 			const responseJSON = await response.json();
 

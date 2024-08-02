@@ -201,11 +201,9 @@ const AddFDSEntryModalContent = ({
 			return;
 		}
 
-		const response = await fetch(`/o${restApplication}/openapi.json`,
-			{
-				headers: DEFAULT_FETCH_HEADERS
-			}
-		);
+		const response = await fetch(`/o${restApplication}/openapi.json`, {
+			headers: DEFAULT_FETCH_HEADERS,
+		});
 
 		if (!response.ok) {
 			openDefaultFailureToast();

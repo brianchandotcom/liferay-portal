@@ -137,6 +137,11 @@ public class ServletDataImpl implements ServletData {
 							TestrayCaseResultResourceImpl.class,
 							"getTestrayCaseResultsTestrayBuildPage"));
 					put(
+						"query#testrayExportCaseResultTestrayBuild",
+						new ObjectValuePair<>(
+							TestrayCaseResultResourceImpl.class,
+							"getTestrayExportCaseResultTestrayBuild"));
+					put(
 						"query#testrayRunComparisonByTestrayRoutineIdTestrayRoutine",
 						new ObjectValuePair<>(
 							TestrayRunComparisonResourceImpl.class,

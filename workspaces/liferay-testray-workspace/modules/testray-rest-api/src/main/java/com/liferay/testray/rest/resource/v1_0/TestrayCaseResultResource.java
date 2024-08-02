@@ -26,6 +26,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -58,6 +59,9 @@ public interface TestrayCaseResultResource {
 			String testrayCaseTypeIds, String testrayComponentIds,
 			String testrayRunId, String testrayRunName, String testraySubtaskId,
 			String testrayTeamIds, String userId, Pagination pagination)
+		throws Exception;
+
+	public Response getTestrayExportCaseResultTestrayBuild(Long testrayBuildId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

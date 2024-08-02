@@ -86,6 +86,7 @@
 			"template_ar": {
 				"mapping": {
 					"analyzer": "arabic",
+					"search_analyzer": "liferay_analyzer_ar",
 					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"

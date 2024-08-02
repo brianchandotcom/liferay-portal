@@ -13,7 +13,11 @@ import {TestrayRole} from '~/util/constants';
 import useFormModal from '../../../../hooks/useFormModal';
 import useMutate from '../../../../hooks/useMutate';
 import i18n from '../../../../i18n';
-import {TestrayBuild, testrayBuildImpl} from '../../../../services/rest';
+import {
+	TestrayBuild,
+	testrayBuildImpl,
+	testrayCaseResultImpl,
+} from '../../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../../types';
 
 const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
@@ -30,7 +34,10 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 
 	const actionsRef = useRef([
 		{
-			action: () => alert('Archive'),
+			action: (build) =>
+				testrayCaseResultImpl.exportCaseResults(
+					build.id ? build.id : Number(build?.testrayBuildId)
+				),
 			icon: 'download',
 			name: i18n.translate('export-csv'),
 		},

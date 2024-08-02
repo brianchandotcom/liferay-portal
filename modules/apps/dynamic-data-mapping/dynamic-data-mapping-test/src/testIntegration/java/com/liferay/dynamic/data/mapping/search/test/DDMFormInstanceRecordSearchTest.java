@@ -46,7 +46,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -173,6 +172,33 @@ public class DDMFormInstanceRecordSearchTest {
 	}
 
 	@Test
+	public void testSearchLocalizedDDMFormInstanceRecord() throws Exception {
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+
+		keyValuePairs.add(new KeyValuePair("name", "keyword"));
+		keyValuePairs.add(new KeyValuePair("description", "keyword"));
+
+		DDMFormInstance ddmFormInstance =
+			DDMFormInstanceTestUtil.addDDMFormInstance(
+				createDDMForm(keyValuePairs, LocaleUtil.US, LocaleUtil.BRAZIL),
+				_group, _user.getUserId());
+
+		_searchContext = getSearchContext(_group, _user, ddmFormInstance);
+
+		String randomDescription = RandomTestUtil.randomString();
+
+		_addDDMFormInstanceRecord(
+			ddmFormInstance, randomDescription, "United States", LocaleUtil.US);
+		_addDDMFormInstanceRecord(
+			ddmFormInstance, randomDescription, "Brasil", LocaleUtil.BRAZIL);
+
+		assertSearch("Brasil", 1);
+		assertSearch(randomDescription, 2);
+
+		DDMFormInstanceTestUtil.deleteFormInstance(ddmFormInstance);
+	}
+
+	@Test
 	public void testStopwords() throws Exception {
 		addDDMFormInstanceRecord(
 			_ddmFormInstance, "Simple text", RandomTestUtil.randomString());
@@ -205,36 +231,8 @@ public class DDMFormInstanceRecordSearchTest {
 			DDMFormInstance ddmFormInstance, String description, String name)
 		throws Exception {
 
-		Map<Locale, String> nameMap = HashMapBuilder.put(
-			LocaleUtil.US, name
-		).build();
-
-		Set<Locale> localesKeySet = nameMap.keySet();
-
-		Locale[] locales = new Locale[nameMap.size()];
-
-		localesKeySet.toArray(locales);
-
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmFormInstance.getDDMForm(),
-			DDMFormValuesTestUtil.createAvailableLocales(locales), locales[0]);
-
-		DDMFormFieldValue nameDDMFormFieldValue =
-			createLocalizedDDMFormFieldValue("name", nameMap);
-
-		ddmFormValues.addDDMFormFieldValue(nameDDMFormFieldValue);
-
-		DDMFormFieldValue descriptionDDMFormFieldValue =
-			createLocalizedDDMFormFieldValue(
-				"description",
-				HashMapBuilder.put(
-					LocaleUtil.US, description
-				).build());
-
-		ddmFormValues.addDDMFormFieldValue(descriptionDDMFormFieldValue);
-
-		DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecord(
-			ddmFormInstance, ddmFormValues, _group, _user.getUserId());
+		_addDDMFormInstanceRecord(
+			ddmFormInstance, description, name, LocaleUtil.US);
 	}
 
 	protected void assertSearch(String keywords, int length) throws Exception {
@@ -255,7 +253,7 @@ public class DDMFormInstanceRecordSearchTest {
 
 		keyValuePairs.forEach(
 			keyValuePair -> ddmForm.addDDMFormField(
-				_createDDMFormFieldWithCustomIndexType(keyValuePair)));
+				_createDDMFormFieldWithCustomIndexType(keyValuePair, locales)));
 
 		return ddmForm;
 	}
@@ -273,11 +271,40 @@ public class DDMFormInstanceRecordSearchTest {
 			name, localizedValue);
 	}
 
-	private DDMFormField _createDDMFormFieldWithCustomIndexType(
-		KeyValuePair keyValuePair) {
+	private void _addDDMFormInstanceRecord(
+			DDMFormInstance ddmFormInstance, String description, String name,
+			Locale locale)
+		throws Exception {
 
-		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
-			keyValuePair.getKey(), true, false, false);
+		DDMForm ddmForm = ddmFormInstance.getDDMForm();
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm, DDMFormValuesTestUtil.createAvailableLocales(locale),
+			ddmForm.getDefaultLocale());
+
+		ddmFormValues.addDDMFormFieldValue(
+			createLocalizedDDMFormFieldValue(
+				"description",
+				HashMapBuilder.put(
+					locale, description
+				).build()));
+		ddmFormValues.addDDMFormFieldValue(
+			createLocalizedDDMFormFieldValue(
+				"name",
+				HashMapBuilder.put(
+					locale, name
+				).build()));
+
+		DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecord(
+			ddmFormInstance, ddmFormValues, _group, _user.getUserId());
+	}
+
+	private DDMFormField _createDDMFormFieldWithCustomIndexType(
+		KeyValuePair keyValuePair, Locale... locales) {
+
+		DDMFormField ddmFormField =
+			DDMFormTestUtil.createLocalizedTextDDMFormField(
+				keyValuePair.getKey(), false, false, locales);
 
 		ddmFormField.setIndexType(keyValuePair.getValue());
 

@@ -120,7 +120,7 @@ public class AddContentLayoutMVCActionCommandCopyFaviconTest {
 	}
 
 	private byte[] _getBytes(String favicon) throws Exception {
-		byte[] bytes;
+		byte[] bytes = null;
 
 		URL url = new URL(_getPortalURL() + favicon);
 

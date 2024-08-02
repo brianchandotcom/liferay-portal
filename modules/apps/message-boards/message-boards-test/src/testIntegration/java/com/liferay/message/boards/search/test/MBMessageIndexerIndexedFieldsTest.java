@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -233,6 +234,13 @@ public class MBMessageIndexerIndexedFieldsTest {
 		).put(
 			"urlSubject_String_sortable",
 			HttpComponentsUtil.decodePath(mbMessage.getUrlSubject())
+		).put(
+			"userExternalReferenceCode",
+			() -> {
+				User user = TestPropsValues.getUser();
+
+				return user.getExternalReferenceCode();
+			}
 		).put(
 			"visible", "true"
 		).build();

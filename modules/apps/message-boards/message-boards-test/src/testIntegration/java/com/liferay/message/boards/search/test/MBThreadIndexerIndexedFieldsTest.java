@@ -172,6 +172,8 @@ public class MBThreadIndexerIndexedFieldsTest {
 			String.valueOf(_getValues(mbThread.getParticipantUserIds()))
 		).put(
 			"statusByUserId", String.valueOf(mbThread.getStatusByUserId())
+		).put(
+			"userExternalReferenceCode", _user.getExternalReferenceCode()
 		).build();
 
 		indexedFieldsFixture.populateUID(

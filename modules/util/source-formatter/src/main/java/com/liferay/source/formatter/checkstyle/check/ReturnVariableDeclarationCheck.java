@@ -102,7 +102,7 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 		DetailAST returnVariableDefinitionDetailAST, DetailAST slistDetailAST,
 		String variableName) {
 
-		if (_containsUnusedVariableName(
+		if (_containsUnusedVariableNames(
 				slistDetailAST,
 				returnVariableDefinitionDetailAST.getLineNo())) {
 
@@ -202,7 +202,7 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 			variableName, getStartLineNumber(slistDetailAST.getFirstChild()));
 	}
 
-	private boolean _containsUnusedVariableName(
+	private boolean _containsUnusedVariableNames(
 		DetailAST slistDetailAST, int lineNumber) {
 
 		List<DetailAST> identDetailASTList = getAllChildTokens(

@@ -75,6 +75,10 @@ public interface ShipmentItemResource {
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
+	public ShipmentItem postShipmentItemByExternalReferenceCode(
+			String externalReferenceCode, ShipmentItem shipmentItem)
+		throws Exception;
+
 	public ShipmentItem putShipmentByExternalReferenceCodeItem(
 			String externalReferenceCode, ShipmentItem shipmentItem)
 		throws Exception;

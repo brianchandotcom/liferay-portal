@@ -118,6 +118,21 @@ public class ShipmentItemSerDes {
 			sb.append("\"");
 		}
 
+		if (shipmentItem.getOrderItemExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"orderItemExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(shipmentItem.getOrderItemExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (shipmentItem.getOrderItemId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -200,6 +215,21 @@ public class ShipmentItemSerDes {
 			sb.append(shipmentItem.getValidateInventory());
 		}
 
+		if (shipmentItem.getWarehouseExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"warehouseExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(shipmentItem.getWarehouseExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (shipmentItem.getWarehouseId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -273,6 +303,16 @@ public class ShipmentItemSerDes {
 				liferayToJSONDateFormat.format(shipmentItem.getModifiedDate()));
 		}
 
+		if (shipmentItem.getOrderItemExternalReferenceCode() == null) {
+			map.put("orderItemExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"orderItemExternalReferenceCode",
+				String.valueOf(
+					shipmentItem.getOrderItemExternalReferenceCode()));
+		}
+
 		if (shipmentItem.getOrderItemId() == null) {
 			map.put("orderItemId", null);
 		}
@@ -330,6 +370,16 @@ public class ShipmentItemSerDes {
 				String.valueOf(shipmentItem.getValidateInventory()));
 		}
 
+		if (shipmentItem.getWarehouseExternalReferenceCode() == null) {
+			map.put("warehouseExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"warehouseExternalReferenceCode",
+				String.valueOf(
+					shipmentItem.getWarehouseExternalReferenceCode()));
+		}
+
 		if (shipmentItem.getWarehouseId() == null) {
 			map.put("warehouseId", null);
 		}
@@ -373,6 +423,12 @@ public class ShipmentItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"orderItemExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "orderItemId")) {
 				return false;
 			}
@@ -394,6 +450,12 @@ public class ShipmentItemSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "validateInventory")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"warehouseExternalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "warehouseId")) {
@@ -440,6 +502,15 @@ public class ShipmentItemSerDes {
 						toDate((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"orderItemExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					shipmentItem.setOrderItemExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "orderItemId")) {
 				if (jsonParserFieldValue != null) {
 					shipmentItem.setOrderItemId(
@@ -481,6 +552,15 @@ public class ShipmentItemSerDes {
 				if (jsonParserFieldValue != null) {
 					shipmentItem.setValidateInventory(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"warehouseExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					shipmentItem.setWarehouseExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "warehouseId")) {

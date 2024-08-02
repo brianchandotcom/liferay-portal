@@ -339,6 +339,20 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public ShipmentItem createShipmentItemByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("shipmentItem") ShipmentItem shipmentItem)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_shipmentItemResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			shipmentItemResource ->
+				shipmentItemResource.postShipmentItemByExternalReferenceCode(
+					externalReferenceCode, shipmentItem));
+	}
+
+	@GraphQLField
 	public ShipmentItem updateShipmentByExternalReferenceCodeItem(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("shipmentItem") ShipmentItem shipmentItem)

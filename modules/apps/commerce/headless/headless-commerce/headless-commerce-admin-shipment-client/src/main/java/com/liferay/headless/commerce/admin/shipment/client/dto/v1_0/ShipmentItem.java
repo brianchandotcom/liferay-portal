@@ -133,6 +133,31 @@ public class ShipmentItem implements Cloneable, Serializable {
 
 	protected Date modifiedDate;
 
+	public String getOrderItemExternalReferenceCode() {
+		return orderItemExternalReferenceCode;
+	}
+
+	public void setOrderItemExternalReferenceCode(
+		String orderItemExternalReferenceCode) {
+
+		this.orderItemExternalReferenceCode = orderItemExternalReferenceCode;
+	}
+
+	public void setOrderItemExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			orderItemExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			orderItemExternalReferenceCode =
+				orderItemExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String orderItemExternalReferenceCode;
+
 	public Long getOrderItemId() {
 		return orderItemId;
 	}
@@ -283,6 +308,31 @@ public class ShipmentItem implements Cloneable, Serializable {
 	}
 
 	protected Boolean validateInventory;
+
+	public String getWarehouseExternalReferenceCode() {
+		return warehouseExternalReferenceCode;
+	}
+
+	public void setWarehouseExternalReferenceCode(
+		String warehouseExternalReferenceCode) {
+
+		this.warehouseExternalReferenceCode = warehouseExternalReferenceCode;
+	}
+
+	public void setWarehouseExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			warehouseExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			warehouseExternalReferenceCode =
+				warehouseExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String warehouseExternalReferenceCode;
 
 	public Long getWarehouseId() {
 		return warehouseId;

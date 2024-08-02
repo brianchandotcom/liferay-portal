@@ -134,7 +134,7 @@ public abstract class BaseShipmentItemResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/by-externalReferenceCode/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/by-externalReferenceCode/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "orderItemExternalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseExternalReferenceCode": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -270,7 +270,7 @@ public abstract class BaseShipmentItemResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/{shipmentItemId}' -d $'{"externalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipment-items/{shipmentItemId}' -d $'{"externalReferenceCode": ___, "orderItemExternalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseExternalReferenceCode": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -343,7 +343,41 @@ public abstract class BaseShipmentItemResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/by-externalReferenceCode/{externalReferenceCode}/items' -d $'{"externalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/by-externalReferenceCode/{externalReferenceCode}/items' -d $'{"externalReferenceCode": ___, "orderItemExternalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseExternalReferenceCode": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ShipmentItem")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/shipments/by-externalReferenceCode/{externalReferenceCode}/items"
+	)
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ShipmentItem postShipmentItemByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ShipmentItem shipmentItem)
+		throws Exception {
+
+		return new ShipmentItem();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/by-externalReferenceCode/{externalReferenceCode}/items' -d $'{"externalReferenceCode": ___, "orderItemExternalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseExternalReferenceCode": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -416,7 +450,7 @@ public abstract class BaseShipmentItemResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/items' -d $'{"externalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/items' -d $'{"externalReferenceCode": ___, "orderItemExternalReferenceCode": ___, "orderItemId": ___, "quantity": ___, "shipmentExternalReferenceCode": ___, "unitOfMeasureKey": ___, "validateInventory": ___, "warehouseExternalReferenceCode": ___, "warehouseId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

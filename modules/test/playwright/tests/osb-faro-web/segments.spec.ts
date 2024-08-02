@@ -1405,26 +1405,12 @@ test(
 				pageName: 'Membership',
 			});
 
-			await expect(
-				page
-					.locator('li')
-					.filter({hasText: 'Known Members:'})
-					.locator('b')
-			).toHaveText('1');
-
-			await expect(
-				page
-					.locator('li')
-					.filter({hasText: 'Anonymous Members:'})
-					.locator('b')
-			).toHaveText('0');
-
-			await expect(
-				page
-					.locator('li')
-					.filter({hasText: 'Total Members:'})
-					.locator('b')
-			).toHaveText('1');
+			await viewSegmentMembershipCount({
+				anonymousMemberCount: '0',
+				knownMemberCount: '1',
+				page,
+				totalMemberCount: '1',
+			});
 		});
 
 		await test.step('Check that the user that is part of organization appears in the membership list', async () => {

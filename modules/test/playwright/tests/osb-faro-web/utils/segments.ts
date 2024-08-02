@@ -258,3 +258,27 @@ export async function viewSegmentCriteriaCard({
 
 	expect(criteriaRowText).toEqual(criteriaRowValue);
 }
+
+export async function viewSegmentMembershipCount({
+	anonymousMemberCount,
+	knownMemberCount,
+	page,
+	totalMemberCount,
+}: {
+	anonymousMemberCount: string;
+	knownMemberCount: string;
+	page: Page;
+	totalMemberCount: string;
+}) {
+	await expect(
+		page.locator('li').filter({hasText: 'Known Members:'}).locator('b')
+	).toHaveText(knownMemberCount);
+
+	await expect(
+		page.locator('li').filter({hasText: 'Anonymous Members:'}).locator('b')
+	).toHaveText(anonymousMemberCount);
+
+	await expect(
+		page.locator('li').filter({hasText: 'Total Members:'}).locator('b')
+	).toHaveText(totalMemberCount);
+}

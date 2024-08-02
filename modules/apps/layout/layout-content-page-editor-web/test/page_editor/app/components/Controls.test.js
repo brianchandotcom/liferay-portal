@@ -12,12 +12,12 @@ import '@testing-library/jest-dom/extend-expect';
 const ACTION = {
 	itemId: null,
 	itemType: null,
-	origin: 'pageEditor',
+	origin: 'layout',
 };
 const HOVER_ITEM = 'HOVER_ITEM';
 const SELECT_ITEM = 'SELECT_ITEM';
 const STATE = {
-	activationOrigin: 'pageEditor',
+	activationOrigin: 'layout',
 	activeItemIds: null,
 	activeItemType: null,
 	hoveredItemId: null,

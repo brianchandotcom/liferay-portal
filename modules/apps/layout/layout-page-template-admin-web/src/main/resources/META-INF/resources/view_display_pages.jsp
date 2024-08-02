@@ -8,7 +8,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+DisplayPageDisplayContext displayPageDisplayContext = (DisplayPageDisplayContext)request.getAttribute(DisplayPageDisplayContext.class.getName());
+
+if (displayPageDisplayContext == null) {
+	displayPageDisplayContext = new DisplayPageDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+}
 %>
 
 <clay:navigation-bar

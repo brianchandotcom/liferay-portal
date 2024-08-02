@@ -14,6 +14,7 @@ import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminP
 import com.liferay.layout.page.template.admin.web.internal.configuration.LayoutPageTemplateAdminWebConfiguration;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.display.context.AssetDisplayPageUsagesDisplayContext;
+import com.liferay.layout.page.template.admin.web.internal.display.context.DisplayPageDisplayContext;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -133,6 +134,12 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 			}
 		}
 
+		renderRequest.setAttribute(
+			DisplayPageDisplayContext.class.getName(),
+			new DisplayPageDisplayContext(
+				_portal.getHttpServletRequest(renderRequest),
+				_portal.getLiferayPortletRequest(renderRequest),
+				_portal.getLiferayPortletResponse(renderResponse)));
 		renderRequest.setAttribute(
 			InfoItemServiceRegistry.class.getName(), _infoItemServiceRegistry);
 		renderRequest.setAttribute(

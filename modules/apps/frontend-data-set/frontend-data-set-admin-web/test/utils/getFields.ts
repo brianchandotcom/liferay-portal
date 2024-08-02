@@ -195,17 +195,17 @@ describe('getValidFields', () => {
 				name: "a_b.*",
 				children:[
 					{
-						name: "a_b.*b_c.*",
+						name: "a_b.b_c.*",
 						children:[
 							{
-								name: "a_b.*b_c.*c_a[]*",
+								name: "a_b.b_c.c_a[]*",
 								children:[
 									{
-										name: "a_b.*b_c.*c_a[]*a_b.*",
+										name: "a_b.b_c.c_a[]a_b.*",
 										// no children, B schema already visited!
 									},
 									{
-										name: "a_b.*b_c.*c_a[]*c.*",
+										name: "a_b.b_c.c_a[]c.*",
 										// no children, C schema already visited!
 									}
 								]
@@ -220,17 +220,17 @@ describe('getValidFields', () => {
 		expect(a_b?.name).toEqual('a_b.*');
 
 		if (a_b) {
-			assertChildren(a_b, ['a_b.*b_c.*']);
+			assertChildren(a_b, ['a_b.b_c.*']);
 
 			const b_c = a_b.children && a_b?.children[0];
 			if (b_c) {
-				assertChildren(b_c, ['a_b.*b_c.*c_a[]*']);
+				assertChildren(b_c, ['a_b.b_c.c_a[]*']);
 
 				const c_a = b_c.children && b_c.children[0];
 				if (c_a) {
 					assertChildren(c_a, [
-						'a_b.*b_c.*c_a[]*a_b.*',
-						'a_b.*b_c.*c_a[]*c.*',
+						'a_b.b_c.c_a[]a_b.*',
+						'a_b.b_c.c_a[]c.*',
 					]);
 
 					// no loops
@@ -257,19 +257,19 @@ describe('getValidFields', () => {
 				name: "c.*",
 				children: [
 					{
-						name: "c.*c_a[]*",
+						name: "c.c_a[]*",
 						children:[
 							{
-								name: "c.*c_a[]*a_b.*",
+								name: "c.c_a[]a_b.*",
 								children:[
 									{
-										name: "c.*c_a[]*a_b.*b_c.*",
+										name: "c.c_a[]a_b.b_c.*",
 										// no children, C schema already visited!
 									}
 								]
 							},
 							{
-								name: "c.*c_a[]*c.*",
+								name: "c.c_a[]c.*",
 								// no children, C schema already visited!
 							}
 						]
@@ -280,14 +280,14 @@ describe('getValidFields', () => {
 
 		const c = result.find((item) => item.label === 'c');
 		expect(c?.name).toEqual('c.*');
-		c && assertChildren(c, ['c.*c_a[]*']);
+		c && assertChildren(c, ['c.c_a[]*']);
 
 		if (c) {
 			const c_a = c.children && c.children[0];
-			assertChildren(c_a, ['c.*c_a[]*a_b.*', 'c.*c_a[]*c.*']);
+			assertChildren(c_a, ['c.c_a[]a_b.*', 'c.c_a[]c.*']);
 			if (c_a) {
 				const a_b = c_a.children && c_a.children[0];
-				assertChildren(a_b, ['c.*c_a[]*a_b.*b_c.*']);
+				assertChildren(a_b, ['c.c_a[]a_b.b_c.*']);
 
 				// no loops
 

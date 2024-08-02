@@ -50,6 +50,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
+
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
@@ -401,11 +403,15 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		for (Map.Entry<String, Object> entry : typeSettings.entrySet()) {
 			Object currentValue = entry.getValue();
 
-			if ((currentValue instanceof String) &&
-				_isWildcardValue((String)currentValue)) {
+			if (currentValue instanceof String) {
+				String currentValueString = (String)currentValue;
 
-				entry.setValue(
-					_getMatchingPaths(staticDirPath, (String)currentValue));
+				if (StringUtils.containsIgnoreCase(entry.getKey(), "url") &&
+					_isWildcardValue(currentValueString)) {
+
+					entry.setValue(
+						_getMatchingPaths(staticDirPath, (String)currentValue));
+				}
 			}
 
 			if (currentValue instanceof List) {

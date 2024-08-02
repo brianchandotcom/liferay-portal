@@ -228,7 +228,7 @@ export default function ShortcutManager() {
 		if (selectableParent) {
 			selectItem(selectableParent.itemId, {
 				itemType: ITEM_TYPES.layoutDataItem,
-				origin: ITEM_ACTIVATION_ORIGINS.pageEditor,
+				origin: ITEM_ACTIVATION_ORIGINS.layout,
 			});
 		}
 	};

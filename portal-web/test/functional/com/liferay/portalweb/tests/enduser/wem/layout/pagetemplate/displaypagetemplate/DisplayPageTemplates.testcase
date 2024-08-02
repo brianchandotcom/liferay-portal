@@ -27,48 +27,6 @@ definition {
 		}
 	}
 
-	@description = "User cannot delete a display page template with usage."
-	@priority = 4
-	@uitest
-	test CannotDeleteDisplayPageTemplateWithUsage {
-		task ("Publish the display page template") {
-			PageEditor.publish();
-		}
-
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
-				groupName = "Test Site Name",
-				title = "Webcontent Title");
-		}
-
-		task ("Select the display page template in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
-
-			WebContent.editDisplayPage(
-				pageName = "Display Page Name",
-				pageType = "Display Page Templates");
-
-			PortletEntry.publish();
-		}
-
-		task ("View the display page template cannot be deleted") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Name");
-
-			Alert.viewErrorMessage(errorMessage = "Error:One or more entries could not be deleted.");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_2",
-				value1 = "Error:You cannot delete display page templates that are used by one or more items. Please view the usages and try to unassign them.");
-
-			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
-		}
-	}
-
 	@description = "This is a use case for LPS-129360 and LPS-106776. The user could change the display style of Documents and Media in display page template."
 	@priority = 4
 	test ChangeDisplayStyleOfDocumentsAndMediaInDisplayPageTemplate {

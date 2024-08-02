@@ -167,7 +167,9 @@ function TopperContent({
 			onDragEnd,
 			() => {
 				if (!isActive) {
-					selectItem(item.itemId);
+					selectItem(item.itemId, {
+						origin: ITEM_ACTIVATION_ORIGINS.layout,
+					});
 				}
 			}
 		);
@@ -177,7 +179,9 @@ function TopperContent({
 		isDraggingSource: topperIsDraggingSource,
 	} = useDragItem({...item, fragmentEntryType, name}, onDragEnd, () => {
 		if (!isActive) {
-			selectItem(item.itemId);
+			selectItem(item.itemId, {
+				origin: ITEM_ACTIVATION_ORIGINS.layout,
+			});
 		}
 	});
 
@@ -224,7 +228,9 @@ function TopperContent({
 					return;
 				}
 
-				selectItem(item.itemId);
+				selectItem(item.itemId, {
+					origin: ITEM_ACTIVATION_ORIGINS.layout,
+				});
 			}}
 			onMouseLeave={(event) => {
 				event.stopPropagation();
@@ -234,7 +240,9 @@ function TopperContent({
 				}
 
 				if (isHovered) {
-					hoverItem(null);
+					hoverItem(null, {
+						origin: ITEM_ACTIVATION_ORIGINS.layout,
+					});
 				}
 			}}
 			onMouseOver={(event) => {
@@ -244,7 +252,9 @@ function TopperContent({
 					return;
 				}
 
-				hoverItem(item.itemId);
+				hoverItem(item.itemId, {
+					origin: ITEM_ACTIVATION_ORIGINS.layout,
+				});
 			}}
 			ref={(element) => {
 				if (canBeDragged) {

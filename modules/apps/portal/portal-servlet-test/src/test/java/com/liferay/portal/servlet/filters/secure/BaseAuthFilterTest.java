@@ -96,7 +96,7 @@ public class BaseAuthFilterTest {
 		_mockFilterConfig.addInitParameter("basic_auth", "true");
 
 		Assert.assertTrue(
-			!_isHttpSessionInvalidWithStaticMocks(
+			!_isHttpSessionInvalid(
 				_setUpUser(WorkflowConstants.STATUS_APPROVED),
 				HttpAuthorizationHeader.SCHEME_BASIC));
 	}
@@ -106,7 +106,7 @@ public class BaseAuthFilterTest {
 		_mockFilterConfig.addInitParameter("basic_auth", "true");
 
 		Assert.assertTrue(
-			_isHttpSessionInvalidWithStaticMocks(
+			_isHttpSessionInvalid(
 				_setUpUser(WorkflowConstants.STATUS_INACTIVE),
 				HttpAuthorizationHeader.SCHEME_BASIC));
 	}
@@ -116,7 +116,7 @@ public class BaseAuthFilterTest {
 		_mockFilterConfig.addInitParameter("digest_auth", "true");
 
 		Assert.assertTrue(
-			!_isHttpSessionInvalidWithStaticMocks(
+			!_isHttpSessionInvalid(
 				_setUpUser(WorkflowConstants.STATUS_APPROVED),
 				HttpAuthorizationHeader.SCHEME_DIGEST));
 	}
@@ -126,7 +126,7 @@ public class BaseAuthFilterTest {
 		_mockFilterConfig.addInitParameter("digest_auth", "true");
 
 		Assert.assertTrue(
-			_isHttpSessionInvalidWithStaticMocks(
+			_isHttpSessionInvalid(
 				_setUpUser(WorkflowConstants.STATUS_INACTIVE),
 				HttpAuthorizationHeader.SCHEME_DIGEST));
 	}
@@ -287,7 +287,7 @@ public class BaseAuthFilterTest {
 		Assert.assertNull(redirectURL);
 	}
 
-	private boolean _isHttpSessionInvalidWithStaticMocks(
+	private boolean _isHttpSessionInvalid(
 		User user, String scheme) {
 
 		try (MockedStatic<UserLocalServiceUtil>

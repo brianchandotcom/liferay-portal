@@ -22,6 +22,7 @@ import RESTSchemaDropdownMenu from './components/rest/RESTSchemaDropdownMenu';
 import {
 	ALLOWED_ENDPOINTS_PARAMETERS,
 	API_URL,
+	DEFAULT_FETCH_HEADERS,
 	FDS_DEFAULT_PROPS,
 } from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
@@ -145,10 +146,7 @@ const NewDataSetModalContent = ({
 
 		const response = await fetch(API_URL.DATA_SETS, {
 			body: JSON.stringify(body),
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
+			headers: DEFAULT_FETCH_HEADERS,
 			method: 'POST',
 		});
 
@@ -195,7 +193,11 @@ const NewDataSetModalContent = ({
 			return;
 		}
 
-		const response = await fetch(`/o${restApplication}/openapi.json`);
+		const response = await fetch(`/o${restApplication}/openapi.json`,
+			{
+				headers: DEFAULT_FETCH_HEADERS
+			}
+		);
 
 		if (!response.ok) {
 			openDefaultFailureToast();
@@ -601,6 +603,7 @@ const DataSets = ({
 						processClose();
 
 						fetch(itemData.actions.delete.href, {
+							headers: DEFAULT_FETCH_HEADERS,
 							method: itemData.actions.delete.method,
 						})
 							.then(() => {

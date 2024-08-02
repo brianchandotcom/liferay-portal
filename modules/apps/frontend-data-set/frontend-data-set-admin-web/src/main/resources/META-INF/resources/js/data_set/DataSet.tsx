@@ -12,7 +12,7 @@ import React, {useEffect, useState} from 'react';
 
 import {IDataSet} from '../DataSets';
 import {FDSViewType} from '../FDSViews';
-import {API_URL, OBJECT_RELATIONSHIP} from '../utils/constants';
+import {API_URL, DEFAULT_FETCH_HEADERS, OBJECT_RELATIONSHIP} from '../utils/constants';
 import getFields from '../utils/getFields';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import {IFieldTreeItem} from '../utils/types';
@@ -107,9 +107,7 @@ const DataSet = ({
 				: `${API_URL.DATA_SETS}/${fdsViewId}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`;
 
 			const response = await fetch(url, {
-				headers: {
-					Accept: 'application/json',
-				},
+				headers: DEFAULT_FETCH_HEADERS,
 			});
 
 			const responseJSON = await response.json();

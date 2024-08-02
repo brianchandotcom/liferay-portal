@@ -24,6 +24,7 @@ import RESTSchemaDropdownMenu from './components/rest/RESTSchemaDropdownMenu';
 import {
 	ALLOWED_ENDPOINTS_PARAMETERS,
 	API_URL,
+	DEFAULT_FETCH_HEADERS,
 	FDS_DEFAULT_PROPS,
 	OBJECT_RELATIONSHIP,
 } from './utils/constants';
@@ -153,10 +154,7 @@ const AddFDSEntryModalContent = ({
 
 		const response = await fetch(API_URL.FDS_ENTRIES, {
 			body: JSON.stringify(body),
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
+			headers: DEFAULT_FETCH_HEADERS,
 			method: 'POST',
 		});
 
@@ -203,7 +201,11 @@ const AddFDSEntryModalContent = ({
 			return;
 		}
 
-		const response = await fetch(`/o${restApplication}/openapi.json`);
+		const response = await fetch(`/o${restApplication}/openapi.json`,
+			{
+				headers: DEFAULT_FETCH_HEADERS
+			}
+		);
 
 		if (!response.ok) {
 			openDefaultFailureToast();
@@ -608,6 +610,7 @@ const FDSEntries = ({
 						processClose();
 
 						fetch(itemData.actions.delete.href, {
+							headers: DEFAULT_FETCH_HEADERS,
 							method: itemData.actions.delete.method,
 						})
 							.then(() => {

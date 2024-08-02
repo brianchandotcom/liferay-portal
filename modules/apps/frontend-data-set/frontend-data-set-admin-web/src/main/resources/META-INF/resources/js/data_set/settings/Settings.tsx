@@ -15,6 +15,7 @@ import React, {useEffect, useState} from 'react';
 
 import {
 	API_URL,
+	DEFAULT_FETCH_HEADERS,
 	DEFAULT_VISUALIZATION_MODES,
 	OBJECT_RELATIONSHIP,
 } from '../../utils/constants';
@@ -52,7 +53,10 @@ const Settings = ({
 		].join(',');
 
 		const response = await fetch(
-			`${API_URL.DATA_SETS}/by-external-reference-code/${dataSet.externalReferenceCode}?fields=${fields}&nestedFields=${fields}`
+			`${API_URL.DATA_SETS}/by-external-reference-code/${dataSet.externalReferenceCode}?fields=${fields}&nestedFields=${fields}`,
+			{
+				headers: DEFAULT_FETCH_HEADERS
+			}
 		);
 
 		if (!response.ok) {
@@ -119,10 +123,7 @@ const Settings = ({
 			`${API_URL.DATA_SETS}/by-external-reference-code/${dataSet.externalReferenceCode}`,
 			{
 				body: JSON.stringify(body),
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				},
+				headers: DEFAULT_FETCH_HEADERS,
 				method: 'PATCH',
 			}
 		);

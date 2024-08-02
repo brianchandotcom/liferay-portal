@@ -15,7 +15,7 @@ import React, {useRef, useState} from 'react';
 import {IDataSet} from '../../DataSets';
 import {FDSViewType} from '../../FDSViews';
 import RequiredMark from '../../components/RequiredMark';
-import {API_URL, OBJECT_RELATIONSHIP} from '../../utils/constants';
+import {API_URL, DEFAULT_FETCH_HEADERS, OBJECT_RELATIONSHIP} from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {IDataSetSectionProps} from '../DataSet';
@@ -41,10 +41,7 @@ const Details = ({
 			`${API_URL.DATA_SETS}/by-external-reference-code/${dataSet.externalReferenceCode}`,
 			{
 				body: JSON.stringify(body),
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				},
+				headers: DEFAULT_FETCH_HEADERS,
 				method: 'PATCH',
 			}
 		);

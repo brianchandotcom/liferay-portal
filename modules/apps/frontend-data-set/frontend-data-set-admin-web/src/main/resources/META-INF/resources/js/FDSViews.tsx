@@ -19,6 +19,7 @@ import {FDSEntryType} from './FDSEntries';
 import RequiredMark from './components/RequiredMark';
 import {
 	API_URL,
+	DEFAULT_FETCH_HEADERS,
 	FDS_DEFAULT_PROPS,
 	OBJECT_RELATIONSHIP,
 } from './utils/constants';
@@ -72,10 +73,7 @@ const AddFDSViewModalContent = ({
 
 		const response = await fetch(API_URL.DATA_SETS, {
 			body: JSON.stringify(body),
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
+			headers: DEFAULT_FETCH_HEADERS,
 			method: 'POST',
 		});
 
@@ -248,6 +246,7 @@ const FDSViews = ({
 						processClose();
 
 						fetch(`${API_URL.DATA_SETS}/${itemData.id}`, {
+							headers: DEFAULT_FETCH_HEADERS,
 							method: 'DELETE',
 						})
 							.then(() => {

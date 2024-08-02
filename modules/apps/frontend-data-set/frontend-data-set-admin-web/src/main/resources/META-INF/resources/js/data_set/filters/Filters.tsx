@@ -10,7 +10,7 @@ import {fetch, openModal, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import OrderableTable from '../../components/OrderableTable';
-import {API_URL, OBJECT_RELATIONSHIP} from '../../utils/constants';
+import {API_URL, DEFAULT_FETCH_HEADERS, OBJECT_RELATIONSHIP} from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {
@@ -112,10 +112,7 @@ function AddFDSFilterModalContent({
 
 		const response = await fetch(url, {
 			body: JSON.stringify(formData),
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
+			headers: DEFAULT_FETCH_HEADERS,
 			method,
 		});
 
@@ -173,7 +170,9 @@ function Filters({
 				}?nestedFields=${Object.values(FILTER_TYPES)
 					.map((filter) => filter.fdsViewRelationship)
 					.join(',')}`
-			);
+			, {
+				headers: DEFAULT_FETCH_HEADERS
+			});
 
 			const responseJSON = await response.json();
 
@@ -225,10 +224,7 @@ function Filters({
 				body: JSON.stringify({
 					fdsFiltersOrder,
 				}),
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				},
+				headers: DEFAULT_FETCH_HEADERS,
 				method: 'PATCH',
 			}
 		);
@@ -377,6 +373,7 @@ function Filters({
 						}/${item.id}`;
 
 						fetch(url, {
+							headers: DEFAULT_FETCH_HEADERS,
 							method: 'DELETE',
 						})
 							.then(() => {

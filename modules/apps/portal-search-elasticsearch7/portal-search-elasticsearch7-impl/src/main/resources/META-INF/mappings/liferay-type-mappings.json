@@ -1085,6 +1085,7 @@
 			"template_fi": {
 				"mapping": {
 					"analyzer": "finnish",
+					"search_analyzer": "liferay_analyzer_fi",
 					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"

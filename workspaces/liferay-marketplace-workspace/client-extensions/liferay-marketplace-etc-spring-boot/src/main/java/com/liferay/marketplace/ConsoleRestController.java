@@ -5,18 +5,18 @@
 
 package com.liferay.marketplace;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.marketplace.service.ConsoleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * @author Keven Leone
@@ -41,22 +41,20 @@ public class ConsoleRestController extends BaseRestController {
 
 		String finalEmailAddress = emailAddress;
 
-		return WebClient.create(
-			_consoleAuthURL
-		).get(
-		).uri(
-			uriBuilder -> uriBuilder.path(
+		return get(
+			"Bearer " + _consoleService.getAccessToken(),
+			_defaultUriBuilderFactory.builder(
+			).path(
 				"/admin/user-projects-plan-usage"
 			).queryParam(
 				"userEmail", finalEmailAddress
-			).build()
-		).header(
-			HttpHeaders.AUTHORIZATION,
-			"Bearer " + _consoleService.getAccessToken()
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
+			).build(
+			).toString());
+	}
+
+	@Override
+	protected String getLXCDXPURL() {
+		return _consoleAuthURL;
 	}
 
 	@Value("${liferay.marketplace.console.auth.url}")
@@ -64,5 +62,8 @@ public class ConsoleRestController extends BaseRestController {
 
 	@Autowired
 	private ConsoleService _consoleService;
+
+	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+		new DefaultUriBuilderFactory();
 
 }

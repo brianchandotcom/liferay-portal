@@ -5,6 +5,7 @@
 
 package com.liferay.marketplace;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
@@ -27,16 +28,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Keven Leone
  * @author Wellington Barbosa
  */
 @Component
-public class MarketplaceCommandLineRunner implements CommandLineRunner {
+public class MarketplaceCommandLineRunner
+	extends BaseRestController implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
 		_processInProgressTrials();
@@ -44,16 +44,17 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 		_processOnHoldTrials();
 	}
 
+	@Override
+	protected String getLXCDXPURL() {
+		return _liferayMarketplaceEtcSpringBootURL.toString();
+	}
+
 	private JSONObject _getAvailabilityJSONObject() throws Exception {
 		return new JSONObject(
-			_getWebClient(
-			).get(
-			).uri(
-				"/trial/availability"
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block());
+			get(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					_liferayOAuthApplicationExternalReferenceCodes),
+				"/trial/availability"));
 	}
 
 	private Page<Order> _getOrdersPage(int orderStatus) throws Exception {
@@ -73,49 +74,24 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 			Pagination.of(-1, -1), "");
 	}
 
-	private WebClient _getWebClient() throws Exception {
-		return WebClient.builder(
-		).baseUrl(
-			_liferayMarketplaceEtcSpringBootURL.toString()
-		).defaultHeader(
-			HttpHeaders.AUTHORIZATION,
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				_liferayOAuthApplicationExternalReferenceCodes)
-		).build();
-	}
-
 	private void _postTrialExpire(long orderId) throws Exception {
-		_getWebClient(
-		).post(
-		).uri(
-			"/trial/expire/" + orderId
-		).retrieve(
-		).bodyToMono(
-			Void.class
-		).block();
+		post(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes),
+			null, "/trial/expire/" + orderId);
 	}
 
 	private void _postTrialNotifyEnd(long orderId) throws Exception {
-		_getWebClient(
-		).post(
-		).uri(
-			"/trial/notify-end/" + orderId
-		).retrieve(
-		).bodyToMono(
-			Void.class
-		).block();
+		post(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes),
+			null, "/trial/notify-end/" + orderId);
 	}
 
 	private void _postTrialProvisioning(Order order) throws Exception {
-		_getWebClient(
-		).post(
-		).uri(
-			"/trial/provisioning"
-		).accept(
-			MediaType.APPLICATION_JSON
-		).contentType(
-			MediaType.APPLICATION_JSON
-		).bodyValue(
+		post(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes),
 			new JSONObject(
 			).put(
 				"classPK", order.getId()
@@ -125,11 +101,8 @@ public class MarketplaceCommandLineRunner implements CommandLineRunner {
 				).put(
 					"accountId", String.valueOf(order.getAccountId())
 				)
-			).toString()
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
+			).toString(),
+			"/trial/provisioning");
 	}
 
 	private void _processInProgressTrials() throws Exception {

@@ -5,13 +5,14 @@
 
 package com.liferay.marketplace;
 
+import com.liferay.client.extension.util.spring.boot.BaseRestController;
+
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * @author Wellington Barbosa
@@ -31,11 +32,10 @@ public class AnalyticsRestController extends BaseRestController {
 			@RequestParam(defaultValue = "", required = false) String sortOrder)
 		throws Exception {
 
-		return WebClient.create(
-			_analyticsAuthUrl
-		).get(
-		).uri(
-			uriBuilder -> uriBuilder.path(
+		return get(
+			"Bearer " + _analyticsAuthToken,
+			_defaultUriBuilderFactory.builder(
+			).path(
 				"/api/reports/pages"
 			).queryParam(
 				"channelId", channelId
@@ -49,13 +49,13 @@ public class AnalyticsRestController extends BaseRestController {
 				"sortMetric", sortMetric
 			).queryParam(
 				"sortOrder", sortOrder
-			).build()
-		).header(
-			HttpHeaders.AUTHORIZATION, "Bearer " + _analyticsAuthToken
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
+			).build(
+			).toString());
+	}
+
+	@Override
+	protected String getLXCDXPURL() {
+		return _analyticsAuthUrl;
 	}
 
 	@Value("${liferay.marketplace.analytics.auth.token}")
@@ -63,5 +63,8 @@ public class AnalyticsRestController extends BaseRestController {
 
 	@Value("${liferay.marketplace.analytics.auth.url}")
 	private String _analyticsAuthUrl;
+
+	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
+		new DefaultUriBuilderFactory();
 
 }

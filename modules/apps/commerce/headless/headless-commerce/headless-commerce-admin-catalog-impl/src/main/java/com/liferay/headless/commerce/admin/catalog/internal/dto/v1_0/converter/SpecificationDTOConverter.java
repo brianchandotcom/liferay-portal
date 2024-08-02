@@ -47,6 +47,8 @@ public class SpecificationDTOConverter
 				setDescription(
 					() -> LanguageUtils.getLanguageIdMap(
 						cpSpecificationOption.getDescriptionMap()));
+				setExternalReferenceCode(
+					cpSpecificationOption::getExternalReferenceCode);
 				setFacetable(cpSpecificationOption::isFacetable);
 				setId(cpSpecificationOption::getCPSpecificationOptionId);
 				setKey(cpSpecificationOption::getKey);

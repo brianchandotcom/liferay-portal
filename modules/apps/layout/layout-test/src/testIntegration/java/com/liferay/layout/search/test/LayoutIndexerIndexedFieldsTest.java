@@ -183,6 +183,8 @@ public class LayoutIndexerIndexedFieldsTest {
 		).put(
 			Field.USER_NAME, StringUtil.toLowerCase(layout.getUserName())
 		).put(
+			"externalReferenceCode", layout.getExternalReferenceCode()
+		).put(
 			"privateLayout", "false"
 		).put(
 			"statusByUserId", String.valueOf(layout.getStatusByUserId())

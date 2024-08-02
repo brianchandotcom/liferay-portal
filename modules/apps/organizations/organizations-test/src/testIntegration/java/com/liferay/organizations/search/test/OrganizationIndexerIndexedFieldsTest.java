@@ -244,6 +244,8 @@ public class OrganizationIndexerIndexedFieldsTest {
 		).put(
 			"country", _organizationFixture.getCountryNames(organization)
 		).put(
+			"externalReferenceCode", organization.getExternalReferenceCode()
+		).put(
 			"nameTreePath", organization.getName()
 		).put(
 			"nameTreePath_String_sortable",

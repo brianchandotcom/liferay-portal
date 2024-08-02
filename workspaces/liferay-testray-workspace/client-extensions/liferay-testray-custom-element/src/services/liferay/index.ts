@@ -27,6 +27,7 @@ interface LiferaySession {
 }
 
 interface LiferayUtil {
+	fetch: typeof fetch;
 	LocalStorage: LiferayStorage;
 	SessionStorage: LiferayStorage;
 	openToast: (options?: {

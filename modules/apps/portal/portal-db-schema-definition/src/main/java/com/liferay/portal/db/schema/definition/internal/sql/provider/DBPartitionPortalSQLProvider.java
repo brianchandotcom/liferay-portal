@@ -8,6 +8,7 @@ package com.liferay.portal.db.schema.definition.internal.sql.provider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.db.PostgreSQLDB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
@@ -19,7 +20,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.sql.Connection;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.sql.DataSource;
 
@@ -32,6 +36,7 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 		_controlTableNames = null;
 		_partitionIndexesSQL = null;
 		_partitionTablesSQL = null;
+		_rulesTableColumn = null;
 	}
 
 	public DBPartitionPortalSQLProvider(DBType dbType, long companyId)
@@ -74,10 +79,17 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 				_objectSQLProvider.getTablesSQL();
 		}
 
+		Supplier<String> rulesSQLSupplier = () -> StringPool.BLANK;
+
+		if (db.getDBType() == DBType.POSTGRESQL) {
+			rulesSQLSupplier = this::_getRules;
+		}
+
 		return StringBundler.concat(
 			_getCreatePartitionSQL(), _addTablesPartition(_partitionTablesSQL),
 			StringPool.NEW_LINE, _getViewsSQL(), StringPool.NEW_LINE,
-			_addTablesPartition(_objectSQLProvider.getTablesSQL()));
+			_addTablesPartition(_objectSQLProvider.getTablesSQL()),
+			rulesSQLSupplier.get());
 	}
 
 	private String _addIndexesPartition(String sql) {
@@ -146,6 +158,7 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 			super.getTablesSQL(), CharPool.SEMICOLON);
 
 		_controlTableNames = new ArrayList<>();
+		_rulesTableColumn = new HashSet<>();
 
 		StringBundler sb = new StringBundler();
 
@@ -156,6 +169,15 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 
 			for (String createTableSQL : createTableSQLs) {
 				createTableSQL = StringUtil.trim(createTableSQL);
+
+				if (StringUtil.startsWith(
+						createTableSQL, "create or replace rule")) {
+
+					_rulesTableColumn.add(
+						PostgreSQLDB.getRuleTableColumn(createTableSQL));
+
+					continue;
+				}
 
 				if (StringUtil.startsWith(createTableSQL, "create table")) {
 					String[] parts = createTableSQL.split(StringPool.SPACE);
@@ -171,6 +193,19 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 					createTableSQL + StringPool.SEMICOLON +
 						StringPool.NEW_LINE);
 			}
+		}
+
+		return sb.toString();
+	}
+
+	private String _getRules() {
+		StringBundler sb = new StringBundler();
+
+		for (String[] ruleTableColumn : _rulesTableColumn) {
+			sb.append(
+				PostgreSQLDB.getCreateRulesSQL(
+					_DATABASE_PARTITION_SCHEMA_NAME_PREFIX + _companyId,
+					ruleTableColumn[0], ruleTableColumn[1]));
 		}
 
 		return sb.toString();
@@ -201,6 +236,7 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 	private static List<String> _controlTableNames;
 	private static String _partitionIndexesSQL;
 	private static String _partitionTablesSQL;
+	private static Set<String[]> _rulesTableColumn;
 
 	private final long _companyId;
 	private final ObjectSQLProvider _objectSQLProvider;

@@ -34,6 +34,13 @@ public class JUnitTestSelector extends BaseTestSelector {
 	}
 
 	public List<JobProperty> getExcludesJobProperties() {
+		JobProperty jobProperty = getGlobalJobProperty(
+			"test.batch.class.names.excludes", JobProperty.Type.EXCLUDE_GLOB);
+
+		if (!_excludesJobProperties.contains(jobProperty)) {
+			_excludesJobProperties.add(jobProperty);
+		}
+
 		return _excludesJobProperties;
 	}
 

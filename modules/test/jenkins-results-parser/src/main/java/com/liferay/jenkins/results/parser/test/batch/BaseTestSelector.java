@@ -53,6 +53,14 @@ public abstract class BaseTestSelector implements TestSelector {
 			true);
 	}
 
+	public JobProperty getGlobalJobProperty(
+		String basePropertyName, JobProperty.Type type) {
+
+		return JobPropertyFactory.newJobProperty(
+			basePropertyName, _testSuiteName, _batchName, _job, _baseDir, type,
+			true);
+	}
+
 	public Job getJob() {
 		return _job;
 	}

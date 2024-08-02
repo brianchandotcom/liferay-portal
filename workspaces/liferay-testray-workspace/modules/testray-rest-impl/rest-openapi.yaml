@@ -487,6 +487,24 @@ paths:
                                     $ref: "#/components/schemas/TestrayCaseResult"
                                 type: array
             tags: ["TestrayCaseResult"]
+    "/testray-export-case-result/{testrayBuildId}":
+        get:
+            operationId: getTestrayExportCaseResultTestrayBuild
+            parameters:
+                - in: path
+                  name: testrayBuildId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/octet-stream:
+                            schema:
+                                format: binary
+                                type: string
+            tags: ["TestrayCaseResult"]
     "/testray-run-comparisons/by-testray-routineId/{testrayRoutineId}":
         get:
             operationId: getTestrayRunComparisonByTestrayRoutineIdTestrayRoutine

@@ -204,10 +204,11 @@ public class UpgradeJournalArticles extends BasePortletIdUpgradeProcess {
 		}
 
 		String assetLinkBehavior = "showFullContent";
-		String pageUrl = oldPortletPreferences.getValue(
-			"pageUrl", StringPool.BLANK);
 
-		if (pageUrl.equals("viewInContext")) {
+		if (StringUtil.equals(
+				oldPortletPreferences.getValue("pageUrl", StringPool.BLANK),
+				"viewInContext")) {
+
 			assetLinkBehavior = "viewInPortlet";
 		}
 

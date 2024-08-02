@@ -8,8 +8,11 @@ package com.liferay.fragment.internal.renderer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -23,6 +26,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -39,6 +43,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.struts.Definition;
@@ -49,6 +54,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -183,6 +189,77 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	@Test
+	@TestInfo("LPD-32929")
+	public void testShouldRemoveCacheFragmentEntryLinkOnPublishPublication()
+		throws Exception {
+
+		String originalText = RandomTestUtil.randomString();
+
+		FragmentEntryLink fragmentEntryLink = _addHeadingFragmentEntryLink(
+			originalText);
+
+		_renderFragmentEntryLink(fragmentEntryLink);
+
+		String content = _fragmentEntryLinkCache.getFragmentEntryLinkContent(
+			fragmentEntryLink, _locale);
+
+		Assert.assertTrue(content.contains(originalText));
+
+		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, FragmentEntryFragmentRendererTest.class.getSimpleName(), null);
+		String updatedText = RandomTestUtil.randomString();
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			_renderFragmentEntryLink(
+				_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+					TestPropsValues.getUserId(),
+					fragmentEntryLink.getFragmentEntryLinkId(),
+					JSONUtil.put(
+						FragmentEntryProcessorConstants.
+							KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+						JSONUtil.put(
+							"element-text",
+							JSONUtil.put(
+								LocaleUtil.toLanguageId(_locale), updatedText))
+					).toString()));
+
+			String curContent =
+				_fragmentEntryLinkCache.getFragmentEntryLinkContent(
+					fragmentEntryLink, _locale);
+
+			Assert.assertFalse(curContent.contains(updatedText));
+			Assert.assertEquals(content, curContent);
+		}
+
+		Assert.assertEquals(
+			content,
+			_fragmentEntryLinkCache.getFragmentEntryLinkContent(
+				fragmentEntryLink, _locale));
+
+		_ctCollectionService.publishCTCollection(
+			TestPropsValues.getUserId(), ctCollection.getCtCollectionId());
+
+		Assert.assertNull(
+			_fragmentEntryLinkCache.getFragmentEntryLinkContent(
+				fragmentEntryLink, _locale));
+
+		_renderFragmentEntryLink(
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId()));
+
+		String updatedContent =
+			_fragmentEntryLinkCache.getFragmentEntryLinkContent(
+				fragmentEntryLink, _locale);
+
+		Assert.assertTrue(updatedContent.contains(updatedText));
+		Assert.assertNotEquals(content, updatedContent);
+	}
+
+	@Test
 	public void testUpdateCacheableFragmentEntryLink() throws Exception {
 		FragmentEntry fragmentEntry = _getFragmentEntry(true);
 
@@ -217,6 +294,29 @@ public class FragmentEntryFragmentRendererTest {
 			fragmentEntryLink, _locale);
 
 		Assert.assertTrue(content.contains(fragmentEntry.getHtml()));
+	}
+
+	private FragmentEntryLink _addHeadingFragmentEntryLink(String text)
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
+		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			fragmentEntry.getFragmentEntryId(), _defaultSegmentsExperienceId,
+			_layout.getPlid(), fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(LocaleUtil.toLanguageId(_locale), text))
+			).toString(),
+			StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getType(), _serviceContext);
 	}
 
 	private FragmentEntry _getFragmentEntry(boolean cacheable)
@@ -299,7 +399,14 @@ public class FragmentEntryFragmentRendererTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@Inject
+	private CTCollectionService _ctCollectionService;
+
 	private long _defaultSegmentsExperienceId;
+
+	@Inject
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Inject
 	private FragmentEntryLinkCache _fragmentEntryLinkCache;
@@ -319,6 +426,10 @@ public class FragmentEntryFragmentRendererTest {
 	private Group _group;
 
 	private Layout _layout;
+	private Locale _locale;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

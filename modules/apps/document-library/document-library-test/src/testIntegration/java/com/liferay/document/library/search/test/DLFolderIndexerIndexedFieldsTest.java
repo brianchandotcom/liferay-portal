@@ -14,8 +14,10 @@ import com.liferay.document.library.test.util.search.DLFolderSearchFixture;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -156,6 +158,11 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			String.valueOf(_getAssetEntryId(dlFolder)));
 		map.put("externalReferenceCode", dlFolder.getExternalReferenceCode());
 		map.put("statusByUserId", String.valueOf(dlFolder.getStatusByUserId()));
+
+		User user = _userLocalService.getUser(dlFixture.getUserId());
+
+		map.put("userExternalReferenceCode", user.getExternalReferenceCode());
+
 		map.put("visible", "true");
 
 		populateDates(dlFolder, map);
@@ -223,5 +230,8 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

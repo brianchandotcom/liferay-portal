@@ -22,8 +22,10 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -271,6 +273,11 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put("size", String.valueOf(fileEntry.getSize()));
 		map.put("size_sortable", String.valueOf(fileEntry.getSize()));
 		map.put("title_ja_JP", fileEntry.getTitle());
+
+		User user = _userLocalService.getUser(dlFixture.getUserId());
+
+		map.put("userExternalReferenceCode", user.getExternalReferenceCode());
+
 		map.put("versionCount", String.valueOf(fileEntry.getVersion()));
 		map.put(
 			"versionCount_sortable", String.valueOf(fileEntry.getVersion()));
@@ -415,5 +422,8 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 	@Inject
 	private TextExtractor _textExtractor;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

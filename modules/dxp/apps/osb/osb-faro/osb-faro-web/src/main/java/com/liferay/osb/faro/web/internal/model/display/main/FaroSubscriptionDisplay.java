@@ -16,12 +16,17 @@ import com.liferay.osb.faro.web.internal.constants.FaroSubscriptionConstants;
 import com.liferay.osb.faro.web.internal.subscription.FaroSubscriptionPlan;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -102,6 +107,10 @@ public class FaroSubscriptionDisplay {
 		}
 	}
 
+	public String getIndividualsCounts() {
+		return _individualsCounts;
+	}
+
 	public long getIndividualsCountSinceLastAnniversary() {
 		return _individualsCountSinceLastAnniversary;
 	}
@@ -120,6 +129,10 @@ public class FaroSubscriptionDisplay {
 
 	public String getName() {
 		return _name;
+	}
+
+	public String getPageViewsCounts() {
+		return _pageViewsCounts;
 	}
 
 	public long getPageViewsCountSinceLastAnniversary() {
@@ -158,6 +171,23 @@ public class FaroSubscriptionDisplay {
 			return;
 		}
 
+		JSONObject subscriptionJSONObject = JSONFactoryUtil.createJSONObject(
+			faroProject.getSubscription());
+
+		JSONObject individualsCountsJSONObject =
+			subscriptionJSONObject.getJSONObject("individualsCounts");
+
+		if (individualsCountsJSONObject != null) {
+			_individualsCounts = individualsCountsJSONObject.toString();
+		}
+
+		JSONObject pageViewsCountsJSONObject =
+			subscriptionJSONObject.getJSONObject("pageViewsCounts");
+
+		if (pageViewsCountsJSONObject != null) {
+			_pageViewsCounts = pageViewsCountsJSONObject.toString();
+		}
+
 		_syncedIndividualsCount =
 			contactsEngineClient.getSyncedIndividualsCount(faroProject);
 
@@ -178,6 +208,7 @@ public class FaroSubscriptionDisplay {
 		_individualsCountSinceLastAnniversary =
 			contactsEngineClient.getIndividualsCreatedSinceCount(
 				faroProject, _lastAnniversaryDate);
+
 		_pageViewsCountSinceLastAnniversary = GetterUtil.getInteger(
 			cerebroEngineClient.getPageViews(
 				faroProject, _lastAnniversaryDate, new Date()));
@@ -186,6 +217,61 @@ public class FaroSubscriptionDisplay {
 			_individualsCountSinceLastAnniversary, _individualsLimit);
 		_pageViewsStatus = getStatus(
 			_pageViewsCountSinceLastAnniversary, _pageViewsLimit);
+	}
+
+	public void setUsageCounts(
+			CerebroEngineClient cerebroEngineClient,
+			ContactsEngineClient contactsEngineClient, Date date,
+			FaroProject faroProject)
+		throws Exception {
+
+		if ((faroProject == null) ||
+			!StringUtil.equals(
+				faroProject.getState(), FaroProjectConstants.STATE_READY)) {
+
+			return;
+		}
+
+		if (_lastAnniversaryDate == null) {
+			if (_isBasicSubscription(faroProject.getSubscription())) {
+				if (_startDate == null) {
+					_startDate = new Date(faroProject.getCreateTime());
+				}
+
+				_lastAnniversaryDate = new Date(
+					_startDate.getTime() / Time.DAY * Time.DAY);
+			}
+			else {
+				_startDate = new Date(
+					faroProject.getSubscriptionModifiedTime());
+
+				_lastAnniversaryDate = getLastAnniversaryDate(_startDate);
+			}
+		}
+
+		JSONObject subscriptionJSONObject = JSONFactoryUtil.createJSONObject(
+			faroProject.getSubscription());
+
+		Date endDate = new Date(date.getTime() / Time.DAY * Time.DAY);
+
+		date = _addToDate(date, Calendar.DATE, -1);
+
+		Date startDate = new Date(date.getTime() / Time.DAY * Time.DAY);
+
+		_individualsCounts = _setCounts(
+			contactsEngineClient.getIndividualsCreatedBetweenCount(
+				faroProject, endDate, startDate),
+			endDate, faroProject,
+			JSONFactoryUtil.createJSONObject(
+				subscriptionJSONObject.getString("individualsCounts")),
+			startDate);
+
+		_pageViewsCounts = _setCounts(
+			cerebroEngineClient.getPageViews(faroProject, endDate, startDate),
+			endDate, faroProject,
+			JSONFactoryUtil.createJSONObject(
+				subscriptionJSONObject.getString("pageViewsCounts")),
+			startDate);
 	}
 
 	public static class AddOn {
@@ -235,6 +321,16 @@ public class FaroSubscriptionDisplay {
 		}
 
 		return FaroSubscriptionConstants.STATUS_OK;
+	}
+
+	private Date _addToDate(Date date, int field, int increment) {
+		Calendar cal = Calendar.getInstance();
+
+		cal.setTime(date);
+
+		cal.add(field, increment);
+
+		return cal.getTime();
 	}
 
 	private long _computeLimit(
@@ -317,14 +413,92 @@ public class FaroSubscriptionDisplay {
 		return false;
 	}
 
+	private String _setCounts(
+			long count, Date endDate, FaroProject faroProject,
+			JSONObject jsonObject, Date startDate)
+		throws Exception {
+
+		if (jsonObject == null) {
+			jsonObject = JSONFactoryUtil.createJSONObject();
+		}
+
+		jsonObject.put("total", jsonObject.getLong("total", 0L) + count);
+
+		if (!_isBasicSubscription(faroProject.getSubscription()) &&
+			(DateUtil.compareTo(endDate, _lastAnniversaryDate) == 0)) {
+
+			jsonObject.put(
+				"monthlyValues", JSONFactoryUtil.createJSONObject()
+			).put(
+				"totalSinceLastAnniversary", 0L
+			);
+
+			return jsonObject.toString();
+		}
+
+		jsonObject.put(
+			"totalSinceLastAnniversary",
+			jsonObject.getLong("totalSinceLastAnniversary", 0L) + count);
+
+		JSONObject monthlyValuesJSONObject = jsonObject.getJSONObject(
+			"monthlyValues");
+
+		if (monthlyValuesJSONObject == null) {
+			monthlyValuesJSONObject = JSONFactoryUtil.createJSONObject();
+		}
+
+		DateFormat dateFormat = new SimpleDateFormat("MMM yyyy");
+
+		String formattedStartDate = dateFormat.format(startDate);
+
+		JSONObject monthlyValueJSONObject =
+			monthlyValuesJSONObject.getJSONObject(formattedStartDate);
+
+		if (monthlyValueJSONObject == null) {
+			long countSinceLastAnniversary = 0;
+
+			JSONObject previousMonthlyValueJSONObject =
+				monthlyValuesJSONObject.getJSONObject(
+					dateFormat.format(
+						_addToDate(startDate, Calendar.MONTH, -1)));
+
+			if (previousMonthlyValueJSONObject != null) {
+				countSinceLastAnniversary =
+					previousMonthlyValueJSONObject.getLong(
+						"countSinceLastAnniversary");
+			}
+
+			monthlyValueJSONObject = JSONUtil.put(
+				"count", 0
+			).put(
+				"countSinceLastAnniversary", countSinceLastAnniversary
+			);
+		}
+
+		monthlyValueJSONObject.put(
+			"count", monthlyValueJSONObject.getLong("count") + 0
+		).put(
+			"countSinceLastAnniversary",
+			monthlyValueJSONObject.getLong("countSinceLastAnniversary") + count
+		);
+
+		monthlyValuesJSONObject.put(formattedStartDate, monthlyValueJSONObject);
+
+		jsonObject.put("monthlyValues", monthlyValuesJSONObject);
+
+		return jsonObject.toString();
+	}
+
 	private boolean _active;
 	private final List<AddOn> _addOns = new ArrayList<>();
 	private Date _endDate;
+	private String _individualsCounts;
 	private long _individualsCountSinceLastAnniversary;
 	private long _individualsLimit;
 	private int _individualsStatus;
 	private Date _lastAnniversaryDate;
 	private String _name;
+	private String _pageViewsCounts;
 	private long _pageViewsCountSinceLastAnniversary;
 	private long _pageViewsLimit;
 	private int _pageViewsStatus;

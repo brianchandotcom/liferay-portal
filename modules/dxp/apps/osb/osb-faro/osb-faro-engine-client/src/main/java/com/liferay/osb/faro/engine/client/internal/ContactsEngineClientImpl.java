@@ -1920,6 +1920,29 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
+	public long getIndividualsCreatedBetweenCount(
+		FaroProject faroProject, Date endDate, Date startDate) {
+
+		Map<String, Object> uriVariables = getUriVariables(faroProject);
+
+		uriVariables.put("endDate", endDate);
+		uriVariables.put("startDate", startDate);
+
+		RestTemplate restTemplate = getRestTemplate(faroProject);
+
+		ResponseEntity<Long> responseEntity = restTemplate.exchange(
+			getTemplatedURL(
+				faroProject, Rels.INDIVIDUALS_CREATED_BETWEEN_COUNT),
+			HttpMethod.GET, HttpEntity.EMPTY, Long.class, uriVariables);
+
+		if (responseEntity.getBody() == null) {
+			return 0L;
+		}
+
+		return responseEntity.getBody();
+	}
+
+	@Override
 	public long getIndividualsCreatedSinceCount(
 		FaroProject faroProject, Date startDate) {
 

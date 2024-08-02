@@ -168,7 +168,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 	}
 
 	@Test
-	@TestInfo("LPS-127023,LPS-112360,LPD-32486")
+	@TestInfo("LPD-32486,LPS-112360,LPS-127023")
 	public void testMapInfoFieldInCollectionDisplay() throws Exception {
 		Layout layout = _addDefaultDisplayPageTemplateLayout(
 			_portal.getClassNameId(JournalArticle.class.getName()),

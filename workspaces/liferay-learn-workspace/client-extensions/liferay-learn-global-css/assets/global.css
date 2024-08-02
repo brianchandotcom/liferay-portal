@@ -300,12 +300,15 @@ pre[class*='language-'] {
 	padding: 1.5rem 0;
 }
 
+.learn-article {
+	padding-top: 0 !important;
+}
+
 .learn-article,
 .learn-recipe-container {
 	font-family: var(--font-family-sans-serif);
 	max-width: var(--container-max-xl);
 	padding: var(--spacer-4);
-	padding-top: 0;
 	position: relative;
 
 	.container-fluid-max-xl,

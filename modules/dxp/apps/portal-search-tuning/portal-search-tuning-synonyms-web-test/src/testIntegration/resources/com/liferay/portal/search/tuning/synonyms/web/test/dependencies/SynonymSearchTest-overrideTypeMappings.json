@@ -430,6 +430,7 @@
 			"template_sv": {
 				"mapping": {
 					"analyzer": "swedish",
+					"search_analyzer": "liferay_analyzer_sv",
 					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"

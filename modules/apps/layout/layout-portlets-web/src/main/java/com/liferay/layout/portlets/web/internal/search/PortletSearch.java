@@ -63,13 +63,13 @@ public class PortletSearch extends SearchContainer<Portlet> {
 	private OrderByComparator<Portlet> _getOrderByComparator(
 		String orderByCol, String orderByType) {
 
+		OrderByComparator<Portlet> orderByComparator = null;
+
 		boolean orderByAsc = false;
 
 		if (orderByType.equals("asc")) {
 			orderByAsc = true;
 		}
-
-		OrderByComparator<Portlet> orderByComparator = null;
 
 		if (orderByCol.equals("name")) {
 			orderByComparator = new PortletDisplayNameComparator(orderByAsc);

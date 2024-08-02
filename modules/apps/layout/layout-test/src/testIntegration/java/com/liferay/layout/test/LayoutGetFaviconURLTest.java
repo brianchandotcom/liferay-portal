@@ -228,11 +228,11 @@ public class LayoutGetFaviconURLTest {
 	}
 
 	private byte[] _getBytes(String favicon) throws Exception {
+		byte[] bytes;
+
 		URL url = new URL(_getPortalURL() + favicon);
 
 		URLConnection urlConnection = url.openConnection();
-
-		byte[] bytes;
 
 		try (InputStream inputStream = urlConnection.getInputStream()) {
 			bytes = FileUtil.getBytes(inputStream);

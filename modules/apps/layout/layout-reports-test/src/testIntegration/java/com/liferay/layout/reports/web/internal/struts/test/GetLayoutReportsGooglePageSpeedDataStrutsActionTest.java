@@ -375,13 +375,13 @@ public class GetLayoutReportsGooglePageSpeedDataStrutsActionTest {
 	private MockHttpServletRequest _getMockHttpServletRequest(Layout layout)
 		throws Exception {
 
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
 
 		serviceContext.setRequest(mockHttpServletRequest);
 

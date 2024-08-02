@@ -88,9 +88,9 @@ public class AlternateURLMapperProvider {
 				Set<Locale> locales)
 			throws PortalException {
 
-			String portalURL = _getPortalURL(themeDisplay);
-
 			Map<Locale, String> alternateURLs = new HashMap<>();
+
+			String portalURL = _getPortalURL(themeDisplay);
 
 			for (Locale locale : locales) {
 				alternateURLs.put(

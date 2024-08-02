@@ -8,6 +8,6 @@ export const ITEM_ACTIVATION_ORIGINS = {
 	contents: 'contents',
 	itemActions: 'itemActions',
 	keyboard: 'keyboard',
-	pageEditor: 'pageEditor',
+	layout: 'layout',
 	sidebar: 'sidebar',
 };

@@ -6,7 +6,6 @@
 import React, {useCallback, useContext, useReducer} from 'react';
 
 import {fromControlsId} from '../components/layout_data_items/Collection';
-import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {useToControlsId} from './CollectionItemContext';
 
@@ -136,10 +135,7 @@ const useHoverItem = () => {
 	return useCallback(
 		(
 			itemId,
-			{
-				itemType = ITEM_TYPES.layoutDataItem,
-				origin = ITEM_ACTIVATION_ORIGINS.pageEditor,
-			} = {
+			{itemType = ITEM_TYPES.layoutDataItem, origin = null} = {
 				itemType: ITEM_TYPES.layoutDataItem,
 			}
 		) =>
@@ -183,10 +179,7 @@ const useSelectItem = () => {
 	return useCallback(
 		(
 			itemId,
-			{
-				itemType = ITEM_TYPES.layoutDataItem,
-				origin = ITEM_ACTIVATION_ORIGINS.pageEditor,
-			} = {
+			{itemType = ITEM_TYPES.layoutDataItem, origin = null} = {
 				itemType: ITEM_TYPES.layoutDataItem,
 			}
 		) => {

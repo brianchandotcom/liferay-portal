@@ -102,7 +102,10 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 		DetailAST returnVariableDefinitionDetailAST, DetailAST slistDetailAST,
 		String variableName) {
 
-		if (_containsUnusedVariableNames(
+		if (_containsMethodCalls(
+				slistDetailAST,
+				returnVariableDefinitionDetailAST.getLineNo()) ||
+			_containsUnusedVariableNames(
 				slistDetailAST,
 				returnVariableDefinitionDetailAST.getLineNo())) {
 
@@ -200,6 +203,37 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 		log(
 			returnVariableDefinitionDetailAST, _MSG_MOVE_VARIABLE_DECLARATION,
 			variableName, getStartLineNumber(slistDetailAST.getFirstChild()));
+	}
+
+	private boolean _containsMethodCalls(
+		DetailAST slistDetailAST, int lineNumber) {
+
+		List<DetailAST> exprDetailASTList = getAllChildTokens(
+			slistDetailAST, false, TokenTypes.EXPR);
+
+		List<DetailAST> methodCallDetailASTList = ListUtil.filter(
+			exprDetailASTList,
+			exprDetailAST -> {
+				DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
+
+				if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
+					return false;
+				}
+
+				firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+				if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+					return false;
+				}
+
+				if (exprDetailAST.getLineNo() < lineNumber) {
+					return true;
+				}
+
+				return false;
+			});
+
+		return !methodCallDetailASTList.isEmpty();
 	}
 
 	private boolean _containsUnusedVariableNames(

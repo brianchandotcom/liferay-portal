@@ -230,6 +230,8 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableIndexSearch()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableLocalization()),
 					LocalizedMapUtil.getLocalizedMap(
 						objectDefinition.getLabel()),
 					objectDefinition.getName(),

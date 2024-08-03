@@ -77,10 +77,10 @@ public class OAuth2AdminPortletDisplayContext
 	public List<GrantType> getGrantTypes(
 		PortletPreferences portletPreferences) {
 
+		List<GrantType> grantTypes = new ArrayList<>();
+
 		String[] oAuth2Grants = StringUtil.split(
 			portletPreferences.getValue("oAuth2Grants", StringPool.BLANK));
-
-		List<GrantType> grantTypes = new ArrayList<>();
 
 		for (String oAuth2Grant : oAuth2Grants) {
 			grantTypes.add(GrantType.valueOf(oAuth2Grant));

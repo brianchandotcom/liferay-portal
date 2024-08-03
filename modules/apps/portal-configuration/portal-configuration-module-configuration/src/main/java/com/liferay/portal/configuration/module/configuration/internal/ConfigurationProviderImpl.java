@@ -313,10 +313,10 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 	}
 
 	private <T> String _getSettingsId(Class<T> clazz) {
+		String settingsId = null;
+
 		ExtendedObjectClassDefinition eocd = clazz.getAnnotation(
 			ExtendedObjectClassDefinition.class);
-
-		String settingsId = null;
 
 		if (eocd != null) {
 			settingsId = eocd.settingsId();

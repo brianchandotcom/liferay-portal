@@ -5204,7 +5204,7 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="functional-bundle-wildfly180-mysql57-jdk8">
+	<target name="functional-bundle-wildfly180-mysql57-jdk21_zulu">
 		<set-app-server-version-number app.server.type="wildfly" app.server.version="18.0.0" />
 
 		<run-functional-test
@@ -5228,7 +5228,7 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="functional-bundle-wildfly230-mysql57-jdk8">
+	<target name="functional-bundle-wildfly230-mysql57-jdk21_zulu">
 		<set-app-server-version-number app.server.type="wildfly" app.server.version="23.0.0" />
 
 		<run-functional-test
@@ -5252,7 +5252,7 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="functional-bundle-wildfly261-mysql57-jdk8">
+	<target name="functional-bundle-wildfly261-mysql57-jdk21_zulu">
 		<set-app-server-version-number app.server.type="wildfly" app.server.version="26.1.0" />
 
 		<run-functional-test
@@ -5521,16 +5521,16 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="functional-smoke-bundle-wildfly180-mysql57-jdk8">
-		<antcall target="functional-bundle-wildfly180-mysql57-jdk8" />
+	<target name="functional-smoke-bundle-wildfly180-mysql57-jdk21_zulu">
+		<antcall target="functional-bundle-wildfly180-mysql57-jdk21_zulu" />
 	</target>
 
-	<target name="functional-smoke-bundle-wildfly230-mysql57-jdk8">
-		<antcall target="functional-bundle-wildfly230-mysql57-jdk8" />
+	<target name="functional-smoke-bundle-wildfly230-mysql57-jdk21_zulu">
+		<antcall target="functional-bundle-wildfly230-mysql57-jdk21_zulu" />
 	</target>
 
-	<target name="functional-smoke-bundle-wildfly261-mysql57-jdk8">
-		<antcall target="functional-bundle-wildfly261-mysql57-jdk8" />
+	<target name="functional-smoke-bundle-wildfly261-mysql57-jdk21_zulu">
+		<antcall target="functional-bundle-wildfly261-mysql57-jdk21_zulu" />
 	</target>
 
 	<target name="functional-smoke-jboss73-mysql57-jdk8">

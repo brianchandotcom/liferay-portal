@@ -103,4 +103,8 @@ export class VirtualInstancesPage {
 
 		await this.page.getByRole('button', {name: 'Delete'}).click();
 	}
+
+	async goto() {
+		await this.applicationsMenuPage.goToVirtualInstances();
+	}
 }

@@ -127,6 +127,7 @@ test('Create two virtual instances, one IdP and one SP, connect them, perform SP
 
 test('Create, edit, and delete a new virtual instance', async ({
 	editVirtualInstancePage,
+	searchAdminPage,
 	virtualInstancesPage,
 }) => {
 	const name = getRandomString();
@@ -142,6 +143,16 @@ test('Create, edit, and delete a new virtual instance', async ({
 		'100',
 		newName
 	);
+
+	// Reindex users so the correct number is present
+
+	await searchAdminPage.goto();
+
+	await searchAdminPage.goToIndexActionsTab();
+
+	await searchAdminPage.reindexIndexActionsItem('User');
+
+	await virtualInstancesPage.goto();
 
 	expect(
 		await virtualInstancesPage.page

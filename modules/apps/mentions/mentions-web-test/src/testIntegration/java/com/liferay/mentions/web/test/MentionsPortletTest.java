@@ -179,10 +179,10 @@ public class MentionsPortletTest {
 			String query)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);

@@ -110,9 +110,9 @@ public class MapDisplayTag extends IncludeTag {
 	}
 
 	private MapProvider _getMapProvider() {
-		String mapProviderKey = _getMapProviderKey();
-
 		MapProvider mapProvider = null;
+
+		String mapProviderKey = _getMapProviderKey();
 
 		if (Validator.isNotNull(mapProviderKey)) {
 			mapProvider = ServletContextUtil.getMapProvider(mapProviderKey);

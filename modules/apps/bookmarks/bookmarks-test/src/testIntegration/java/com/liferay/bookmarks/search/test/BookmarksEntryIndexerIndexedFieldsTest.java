@@ -207,6 +207,13 @@ public class BookmarksEntryIndexerIndexedFieldsTest {
 		).put(
 			"title_sortable", StringUtil.lowerCase(bookmarksEntry.getName())
 		).put(
+			"userExternalReferenceCode",
+			() -> {
+				User user = _users.get(0);
+
+				return user.getExternalReferenceCode();
+			}
+		).put(
 			"visible", "true"
 		).build();
 

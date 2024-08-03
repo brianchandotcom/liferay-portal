@@ -285,15 +285,15 @@ public class LDAPServerConfigurationProviderImpl
 	public List<Dictionary<String, Object>> getConfigurationsProperties(
 		long companyId, boolean useDefault) {
 
+		List<Dictionary<String, Object>> configurationsProperties =
+			new ArrayList<>();
+
 		Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
 			objectValuePairs = _configurations.get(companyId);
 
 		if (MapUtil.isEmpty(objectValuePairs) && useDefault) {
 			objectValuePairs = _configurations.get(CompanyConstants.SYSTEM);
 		}
-
-		List<Dictionary<String, Object>> configurationsProperties =
-			new ArrayList<>();
 
 		if (MapUtil.isEmpty(objectValuePairs) && useDefault) {
 			configurationsProperties.add(

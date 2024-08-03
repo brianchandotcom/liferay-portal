@@ -984,11 +984,11 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			String[] attributeIds)
 		throws Exception {
 
+		Attributes attributes = null;
+
 		Name name = new CompositeName();
 
 		Name fullDN = name.add(fullDistinguishedName);
-
-		Attributes attributes = null;
 
 		String[] auditAttributeIds = {
 			"creatorsName", "createTimestamp", "modifiersName",

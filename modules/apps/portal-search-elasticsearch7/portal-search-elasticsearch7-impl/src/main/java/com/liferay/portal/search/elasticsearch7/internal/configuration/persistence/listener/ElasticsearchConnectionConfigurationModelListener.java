@@ -79,12 +79,12 @@ public class ElasticsearchConnectionConfigurationModelListener
 	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
 
 	private String _getConnectionId(String pid) throws Exception {
+		String connectionId = null;
+
 		Configuration configuration = configurationAdmin.getConfiguration(
 			pid, StringPool.QUESTION);
 
 		Dictionary<String, Object> properties = configuration.getProperties();
-
-		String connectionId = null;
 
 		if (properties != null) {
 			connectionId = StringUtil.unquote(

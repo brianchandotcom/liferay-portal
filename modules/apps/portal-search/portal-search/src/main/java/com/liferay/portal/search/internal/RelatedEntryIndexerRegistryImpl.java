@@ -28,10 +28,10 @@ public class RelatedEntryIndexerRegistryImpl
 
 	@Override
 	public List<RelatedEntryIndexer> getRelatedEntryIndexers() {
+		List<RelatedEntryIndexer> relatedEntryIndexers = new ArrayList<>();
+
 		Collection<List<RelatedEntryIndexer>> relatedEntryIndexersLists =
 			serviceTrackerMap.values();
-
-		List<RelatedEntryIndexer> relatedEntryIndexers = new ArrayList<>();
 
 		for (List<RelatedEntryIndexer> relatedEntryIndexersList :
 				relatedEntryIndexersLists) {

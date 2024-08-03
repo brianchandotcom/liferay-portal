@@ -82,10 +82,10 @@ public abstract class BaseDateRangeFacetPortletSharedSearchContributor {
 		PortletSharedSearchSettings portletSharedSearchSettings,
 		JSONArray rangesJSONArray) {
 
+		List<String> selectedRangeStrings = new ArrayList<>();
+
 		String[] selectedRanges =
 			portletSharedSearchSettings.getParameterValues(parameterName);
-
-		List<String> selectedRangeStrings = new ArrayList<>();
 
 		if (ArrayUtil.isEmpty(selectedRanges)) {
 			return selectedRangeStrings;

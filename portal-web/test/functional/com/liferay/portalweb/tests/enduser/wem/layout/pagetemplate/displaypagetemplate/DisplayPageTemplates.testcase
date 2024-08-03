@@ -743,33 +743,6 @@ definition {
 		}
 	}
 
-	@description = "User can rename a display page."
-	@priority = 3
-	@uitest
-	test RenameDisplayPageTemplate {
-		task ("Rename the display page") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.renameDisplayPage(
-				displayPageName = "Display Page Name",
-				newDisplayPageName = "Display Page Name New");
-		}
-
-		task ("Assert the display page was renamed") {
-			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name New");
-		}
-
-		task ("Publish the display page template") {
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.publish();
-		}
-
-		task ("View the display page") {
-			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name New");
-		}
-	}
-
 	@description = "This is a test for LPS-189857. View the display page info in folder."
 	@priority = 3
 	test ViewInfoPanelOfDisplayPageTemplateInsideFolder {

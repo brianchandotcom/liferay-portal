@@ -313,6 +313,37 @@ test(
 	}
 );
 
+test('User can rename a display page', async ({
+	displayPageTemplatesPage,
+	page,
+	site,
+}) => {
+
+	// Create a display page template for Blogs Entry
+
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+	const displayPageTemplateName = getRandomString();
+
+	await displayPageTemplatesPage.createTemplate({
+		contentType: 'Blogs Entry',
+		name: displayPageTemplateName,
+	});
+
+	// Rename display page template
+
+	const newDisplayPageTemplateName = getRandomString();
+
+	await displayPageTemplatesPage.rename(
+		newDisplayPageTemplateName,
+		displayPageTemplateName
+	);
+
+	await expect(
+		page.getByText(newDisplayPageTemplateName, {exact: true})
+	).toBeVisible();
+});
+
 test(
 	'View usages for blogs entry',
 	{

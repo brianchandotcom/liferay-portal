@@ -94,6 +94,23 @@ export class DisplayPageTemplatesPage {
 		await waitForSuccessAlert(this.page);
 	}
 
+	async rename(newName: string, oldName: string) {
+		await this.clickMoreActions(oldName);
+
+		await this.page
+			.getByRole('menuitem', {
+				exact: true,
+				name: 'Rename',
+			})
+			.click();
+
+		await this.page.getByLabel('Name', {exact: true}).fill(newName);
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForSuccessAlert(this.page);
+	}
+
 	async createTemplate({
 		contentSubtype,
 		contentType,

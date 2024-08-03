@@ -478,6 +478,21 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		localRepository.deleteFileEntry(fileEntryId);
 	}
 
+	@Override
+	public void deleteFileEntry(String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		LocalRepository localRepository = getLocalRepository(groupId);
+
+		FileEntry fileEntry =
+			localRepository.getFileEntryByExternalReferenceCode(
+				externalReferenceCode);
+
+		_dlAppHelperLocalService.deleteFileEntry(fileEntry);
+
+		localRepository.deleteFileEntry(fileEntry.getFileEntryId());
+	}
+
 	/**
 	 * Deletes the file shortcut. This method is only supported by the Liferay
 	 * repository.

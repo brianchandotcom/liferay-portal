@@ -855,6 +855,20 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		repository.deleteFileEntry(fileEntryId);
 	}
 
+	@Override
+	public void deleteFileEntry(String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		Repository repository = getRepository(groupId);
+
+		FileEntry fileEntry = repository.getFileEntryByExternalReferenceCode(
+			externalReferenceCode);
+
+		_dlAppHelperLocalService.deleteFileEntry(fileEntry);
+
+		repository.deleteFileEntry(fileEntry.getFileEntryId());
+	}
+
 	/**
 	 * Deletes the file entry with the title in the folder.
 	 *

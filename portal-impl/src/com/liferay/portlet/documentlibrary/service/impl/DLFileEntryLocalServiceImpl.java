@@ -863,6 +863,18 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public DLFileEntry deleteFileEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = getFileEntryByExternalReferenceCode(
+			groupId, externalReferenceCode);
+
+		return dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DLFileEntry deleteFileVersion(

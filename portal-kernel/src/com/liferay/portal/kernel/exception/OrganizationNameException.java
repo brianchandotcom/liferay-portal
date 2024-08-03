@@ -26,7 +26,7 @@ public class OrganizationNameException extends PortalException {
 		public MustNotExceedMaximumLength(String name, int nameMaxLength) {
 			super(
 				StringBundler.concat(
-					"Organization ", name, " must have fewer than ",
+					"Organization name", name, " must have fewer than ",
 					nameMaxLength, " characters"));
 		}
 
@@ -34,10 +34,6 @@ public class OrganizationNameException extends PortalException {
 
 	private OrganizationNameException(String msg) {
 		super(msg);
-	}
-
-	private OrganizationNameException(String msg, Throwable throwable) {
-		super(msg, throwable);
 	}
 
 }

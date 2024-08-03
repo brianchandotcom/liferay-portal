@@ -300,15 +300,14 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 	@Test
 	public void testPostOrganizationWithNameOverMaximumLength()
-		throws Exception{
+		throws Exception {
 
 		String name = RandomTestUtil.randomString(101);
 
 		assertHttpResponseStatusCode(
 			400,
 			organizationResource.postOrganizationHttpResponse(
-				randomOrganization(name))
-		);
+				randomOrganization(name)));
 	}
 
 	@Override

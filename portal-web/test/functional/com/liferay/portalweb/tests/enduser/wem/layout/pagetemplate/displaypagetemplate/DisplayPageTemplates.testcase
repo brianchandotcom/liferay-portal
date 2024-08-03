@@ -507,52 +507,6 @@ definition {
 		}
 	}
 
-	@description = "User can delete default display page template."
-	@priority = 5
-	@uitest
-	test DeleteDefaultDisplayPageTemplate {
-		property portal.acceptance = "true";
-
-		task ("Publish the display page template") {
-			PageEditor.publish();
-		}
-
-		task ("Mark the display page template as default") {
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
-		}
-
-		task ("Add a web content") {
-			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
-				groupName = "Test Site Name",
-				title = "Webcontent Title");
-		}
-
-		task ("View the default page template is selected in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
-
-			WebContent.viewSelectedDisplayPageTemplateCP(
-				displayPageTemplateName = "Display Page Name",
-				displayPageTemplateType = "Default");
-		}
-
-		task ("Delete the default display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.deleteDisplayPage(
-				defaultDisplayPageTemplate = "true",
-				displayPageName = "Display Page Name");
-
-			Alert.viewSuccessMessageText(successMessage = "You successfully deleted 1 display page template(s).");
-		}
-
-		task ("View the default display page template not shown") {
-			DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "Display Page Name");
-		}
-	}
-
 	@description = "This is a test for LPS-86191 and LPS-96438. Disable Show Header and Show Footer of display page template."
 	@priority = 4
 	@uitest

@@ -36,6 +36,24 @@ export class DisplayPageTemplatesPage {
 			.click();
 	}
 
+	async delete(name: string) {
+		await this.clickMoreActions(name);
+
+		await this.page
+			.getByRole('menuitem', {
+				exact: true,
+				name: 'Delete',
+			})
+			.click();
+
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForSuccessAlert(
+			this.page,
+			'Success:You successfully deleted 1 display page template(s).'
+		);
+	}
+
 	async deleteAllDisplayPageTemplates() {
 		await this.page
 			.getByLabel('Select All Items on the Page')

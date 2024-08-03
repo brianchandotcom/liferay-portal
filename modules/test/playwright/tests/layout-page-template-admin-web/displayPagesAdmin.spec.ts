@@ -313,6 +313,35 @@ test(
 	}
 );
 
+test('User can delete default display page template', async ({
+	displayPageTemplatesPage,
+	page,
+	site,
+}) => {
+
+	// Create a display page template for Basic Web Content and mark as default
+
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+	const displayPageTemplateName = getRandomString();
+
+	await displayPageTemplatesPage.createTemplate({
+		contentSubtype: 'Basic Web Content',
+		contentType: 'Web Content Article',
+		name: displayPageTemplateName,
+	});
+
+	await displayPageTemplatesPage.markAsDefault(displayPageTemplateName);
+
+	// Delete default display page template
+
+	await displayPageTemplatesPage.delete(displayPageTemplateName);
+
+	await expect(
+		page.getByText(displayPageTemplateName, {exact: true})
+	).not.toBeVisible();
+});
+
 test('User can rename a display page', async ({
 	displayPageTemplatesPage,
 	page,

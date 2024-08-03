@@ -224,13 +224,24 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 					return false;
 				}
 
-				firstChildDetailAST = firstChildDetailAST.getFirstChild();
+				String variableName = getVariableName(firstChildDetailAST);
 
-				if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+				if (variableName == null) {
+					return true;
+				}
+
+				if (Character.isUpperCase(variableName.charAt(0))) {
 					return false;
 				}
 
-				return true;
+				DetailAST typeDetailAST = getVariableTypeDetailAST(
+					firstChildDetailAST, variableName, false);
+
+				if (typeDetailAST == null) {
+					return true;
+				}
+
+				return false;
 			});
 
 		return !methodCallDetailASTList.isEmpty();

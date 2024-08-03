@@ -87,8 +87,8 @@ public class DisplayPageTemplateInfoPanelDisplayContext {
 	public List<String> getLayoutPageTemplateCollectionPath() {
 		DisplayPageDisplayContext displayPageDisplayContext =
 			new DisplayPageDisplayContext(
-				_httpServletRequest, _liferayPortletRequest,
-				_liferayPortletResponse);
+				_httpServletRequest, _infoItemServiceRegistry,
+				_liferayPortletRequest, _liferayPortletResponse);
 
 		return TransformUtil.transform(
 			displayPageDisplayContext.getLayoutPageTemplateBreadcrumbEntries(),

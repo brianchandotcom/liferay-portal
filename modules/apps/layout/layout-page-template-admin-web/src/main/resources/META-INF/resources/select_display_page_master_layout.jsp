@@ -10,7 +10,14 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+DisplayPageDisplayContext displayPageDisplayContext = (DisplayPageDisplayContext)request.getAttribute(DisplayPageDisplayContext.class.getName());
+
+if (displayPageDisplayContext == null) {
+	InfoItemServiceRegistry infoItemServiceRegistry = (InfoItemServiceRegistry)request.getAttribute(InfoItemServiceRegistry.class.getName());
+
+	displayPageDisplayContext = new DisplayPageDisplayContext(request, infoItemServiceRegistry, liferayPortletRequest, liferayPortletResponse);
+}
+
 SelectDisplayPageMasterLayoutDisplayContext selectDisplayPageMasterLayoutDisplayContext = new SelectDisplayPageMasterLayoutDisplayContext(request);
 
 portletDisplay.setShowBackIcon(true);

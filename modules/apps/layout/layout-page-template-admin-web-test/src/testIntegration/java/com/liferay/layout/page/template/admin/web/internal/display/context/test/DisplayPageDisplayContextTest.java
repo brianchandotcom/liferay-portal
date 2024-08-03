@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
-import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -143,9 +142,6 @@ public class DisplayPageDisplayContextTest {
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			new MockLiferayPortletRenderRequest();
 
-		mockLiferayPortletRenderRequest.setAttribute(
-			InfoItemServiceRegistry.class.getName(), _infoItemServiceRegistry);
-
 		String path = "/view.jsp";
 
 		mockLiferayPortletRenderRequest.setAttribute(
@@ -208,9 +204,6 @@ public class DisplayPageDisplayContextTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Inject
 	private Portal _portal;

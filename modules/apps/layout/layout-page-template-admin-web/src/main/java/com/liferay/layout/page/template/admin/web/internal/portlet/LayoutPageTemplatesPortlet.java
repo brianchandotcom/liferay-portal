@@ -138,6 +138,7 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 			DisplayPageDisplayContext.class.getName(),
 			new DisplayPageDisplayContext(
 				_portal.getHttpServletRequest(renderRequest),
+				_infoItemServiceRegistry,
 				_portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse)));
 		renderRequest.setAttribute(

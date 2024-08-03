@@ -68,16 +68,15 @@ public class DisplayPageDisplayContext {
 
 	public DisplayPageDisplayContext(
 		HttpServletRequest httpServletRequest,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_infoItemServiceRegistry =
-			(InfoItemServiceRegistry)httpServletRequest.getAttribute(
-				InfoItemServiceRegistry.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

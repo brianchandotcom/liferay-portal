@@ -11,7 +11,9 @@
 DisplayPageDisplayContext displayPageDisplayContext = (DisplayPageDisplayContext)request.getAttribute(DisplayPageDisplayContext.class.getName());
 
 if (displayPageDisplayContext == null) {
-	displayPageDisplayContext = new DisplayPageDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+	InfoItemServiceRegistry infoItemServiceRegistry = (InfoItemServiceRegistry)request.getAttribute(InfoItemServiceRegistry.class.getName());
+
+	displayPageDisplayContext = new DisplayPageDisplayContext(request, infoItemServiceRegistry, liferayPortletRequest, liferayPortletResponse);
 }
 %>
 

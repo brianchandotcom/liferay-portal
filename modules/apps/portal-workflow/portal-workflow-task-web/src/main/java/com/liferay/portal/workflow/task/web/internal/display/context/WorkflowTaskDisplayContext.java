@@ -746,9 +746,9 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	private String _getCurParam(boolean searchByUserRoles) {
-		Boolean completedTasks = _getCompleted();
-
 		String curParam;
+
+		Boolean completedTasks = _getCompleted();
 
 		if (!searchByUserRoles && (completedTasks == null)) {
 			curParam = SearchContainer.DEFAULT_CUR_PARAM;

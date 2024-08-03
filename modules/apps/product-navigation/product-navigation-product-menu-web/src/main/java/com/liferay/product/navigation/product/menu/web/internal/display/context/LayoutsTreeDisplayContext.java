@@ -619,11 +619,11 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	private List<Long> _getSelectedLayoutPath() throws Exception {
-		long selPlid = _getSelPlid();
-
 		List<Long> selectedLayoutPath = new ArrayList<>();
 
 		selectedLayoutPath.add(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		long selPlid = _getSelPlid();
 
 		Layout layout = _layoutLocalService.fetchLayout(selPlid);
 

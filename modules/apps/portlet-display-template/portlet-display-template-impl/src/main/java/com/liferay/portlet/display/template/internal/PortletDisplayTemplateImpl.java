@@ -223,11 +223,11 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 	@Override
 	public List<TemplateHandler> getPortletDisplayTemplateHandlers() {
-		List<TemplateHandler> templateHandlers =
-			TemplateHandlerRegistryUtil.getTemplateHandlers();
-
 		List<TemplateHandler> portletDisplayTemplateHandlers =
 			new ArrayList<>();
+
+		List<TemplateHandler> templateHandlers =
+			TemplateHandlerRegistryUtil.getTemplateHandlers();
 
 		for (TemplateHandler templateHandler : templateHandlers) {
 			if (templateHandler instanceof BasePortletDisplayTemplateHandler) {

@@ -98,6 +98,7 @@ JavaStylingCheck | .java | Applies rules to enforce consistency in code style. |
 JavaTermDividersCheck | .java | Finds missing or unnecessary empty lines between javaterms. |
 JavaTermOrderCheck | .java | Checks the order of javaterms. |
 JavaTermStylingCheck | .java | Applies rules to enforce consistency in code style. |
+JavaTestInfoAnnotationCheck | .java | Sorts the values in `@TestInfo` annotation. |
 JavaUpgradeAlterColumnCallsOrderCheck | .java | Sorts method calls for altering table columns. |
 JavaUpgradeEmptyLinesCheck | .java | Finds missing and unnecessary empty lines in upgrade classes. |
 LDIFEntryOrderCheck | .ldif | Checks the order of entries and attributes in `.ldif` file. |

@@ -291,6 +291,7 @@ JavaTaglibMethodCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prev
 JavaTermDividersCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Finds missing or unnecessary empty lines between javaterms. |
 JavaTermOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Checks the order of javaterms. |
 JavaTermStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Applies rules to enforce consistency in code style. |
+JavaTestInfoAnnotationCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Sorts the values in `@TestInfo` annotation. |
 [JavaTestMethodAnnotationsCheck](check/java_test_method_annotations_check.markdown#javatestmethodannotationscheck) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | .java | Checks if methods with test annotations follow the naming conventions. |
 JavaTransactionBoundaryCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds direct `add*` or `get*` calls in `*ServiceImpl` (those should use the `*service` global variable instead). |
 [JavaUnsafeCastingCheck](check/java_unsafe_casting_check.markdown#javaunsafecastingcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Checks for potential ClassCastException. |

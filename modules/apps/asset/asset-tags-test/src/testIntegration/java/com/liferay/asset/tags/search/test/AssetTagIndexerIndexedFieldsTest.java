@@ -204,6 +204,13 @@ public class AssetTagIndexerIndexedFieldsTest {
 			"name_String_sortable", StringUtil.toLowerCase(assetTag.getName())
 		).put(
 			"subscribed", "false"
+		).put(
+			"userExternalReferenceCode",
+			() -> {
+				User user = _users.get(0);
+
+				return user.getExternalReferenceCode();
+			}
 		).build();
 
 		_indexedFieldsFixture.populateUID(assetTag, map);

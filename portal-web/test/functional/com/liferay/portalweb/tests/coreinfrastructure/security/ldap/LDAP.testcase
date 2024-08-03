@@ -598,7 +598,6 @@ definition {
 	@description = "This is a use case for LPS-73381. LDAP security credentials are obscured when entered."
 	@priority = 3
 	test LDAPSecurityCredentialsAreHidden {
-		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

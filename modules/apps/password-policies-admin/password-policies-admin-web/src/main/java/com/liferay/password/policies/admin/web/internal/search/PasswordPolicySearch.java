@@ -85,13 +85,13 @@ public class PasswordPolicySearch extends SearchContainer<PasswordPolicy> {
 	private OrderByComparator<PasswordPolicy> _getOrderByComparator(
 		String orderByCol, String orderByType) {
 
+		OrderByComparator<PasswordPolicy> orderByComparator = null;
+
 		boolean orderByAsc = false;
 
 		if (orderByType.equals("asc")) {
 			orderByAsc = true;
 		}
-
-		OrderByComparator<PasswordPolicy> orderByComparator = null;
 
 		if (orderByCol.equals("name")) {
 			orderByComparator = PasswordPolicyNameComparator.getInstance(

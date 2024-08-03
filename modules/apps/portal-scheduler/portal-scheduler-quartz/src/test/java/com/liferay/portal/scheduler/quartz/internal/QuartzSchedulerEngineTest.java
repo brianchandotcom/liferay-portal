@@ -642,9 +642,9 @@ public class QuartzSchedulerEngineTest {
 
 		@Override
 		public Set<JobKey> getJobKeys(GroupMatcher<JobKey> groupMatcher) {
-			String groupName = groupMatcher.getCompareToValue();
-
 			Set<JobKey> jobKeys = new HashSet<>();
+
+			String groupName = groupMatcher.getCompareToValue();
 
 			for (JobKey jobKey : _jobs.keySet()) {
 				if (Objects.equals(jobKey.getGroup(), groupName)) {

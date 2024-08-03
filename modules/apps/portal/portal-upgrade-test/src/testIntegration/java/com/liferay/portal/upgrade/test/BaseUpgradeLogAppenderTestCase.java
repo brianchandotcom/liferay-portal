@@ -480,8 +480,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			Assert.assertTrue(
 				StringUtil.contains(
 					String.valueOf(logCapture.getLogEntries()),
-					"Upgrade report has not been generated because no " +
-						"upgrade processes were executed",
+					"Upgrade report was not generated because no upgrade " +
+						"processes were executed",
 					StringPool.BLANK));
 		}
 

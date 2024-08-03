@@ -14,18 +14,23 @@ import org.junit.runner.RunWith;
  * @author Joshua Cords
  */
 @RunWith(Arquillian.class)
-public class ExternalReferenceCodeModelDocumentContributorTest
+public class AuditedModelDocumentContributorTest
 	extends BaseModelDocumentContributorTest {
 
 	@Test
 	public void testContribute() throws Exception {
-		testContribute(blogsEntry, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
-		testContribute(journalArticle, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
-		testContribute(journalFolder, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
-		testContribute(user, _EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+		testContribute(
+			blogsEntry, user.getExternalReferenceCode(),
+			_USER_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+		testContribute(
+			journalArticle, user.getExternalReferenceCode(),
+			_USER_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
+		testContribute(
+			journalFolder, user.getExternalReferenceCode(),
+			_USER_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
 	}
 
-	private static final String _EXTERNAL_REFERENCE_CODE_FIELD_NAME =
-		"externalReferenceCode";
+	private static final String _USER_EXTERNAL_REFERENCE_CODE_FIELD_NAME =
+		"userExternalReferenceCode";
 
 }

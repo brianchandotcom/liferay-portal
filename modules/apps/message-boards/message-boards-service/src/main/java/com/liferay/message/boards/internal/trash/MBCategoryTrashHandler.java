@@ -86,13 +86,13 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException {
 
+		List<ContainerModel> containerModels = new ArrayList<>();
+
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		List<MBCategory> categories = _mbCategoryLocalService.getCategories(
 			category.getGroupId(), parentContainerModelId,
 			WorkflowConstants.STATUS_APPROVED, start, end);
-
-		List<ContainerModel> containerModels = new ArrayList<>();
 
 		for (MBCategory curCategory : categories) {
 			containerModels.add(curCategory);

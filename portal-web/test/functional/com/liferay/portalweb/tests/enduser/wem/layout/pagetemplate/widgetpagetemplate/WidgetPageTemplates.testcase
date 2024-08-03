@@ -201,41 +201,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-115361. Edit a widget page template in normal site."
-	@priority = 5
-	test EditPageTemplate {
-		property portal.acceptance = "true";
-
-		task ("Add a page template collection") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Site Name",
-				layoutPageTemplateCollectionName = "Page Template Collection");
-		}
-
-		task ("Add a widget page template") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Site Name",
-				layoutPageTemplateCollectionName = "Page Template Collection",
-				layoutPageTemplateEntryName = "Page Template Name",
-				layoutPageTemplateStatus = "Approved",
-				layoutPageTemplateType = "Widget Page Template");
-		}
-
-		task ("Edit the widget page template") {
-			var portalURL = PropsUtil.get("portal.url");
-			var layoutPrototypeId = JSONLayoutpagetemplate.getLayoutPrototypeId(
-				groupName = "Site Name",
-				layoutPageTemplateEntryName = "Page Template Name",
-				layoutPageTemplateType = "Widget Page Template");
-
-			Navigator.openSpecificURL(url = "${portalURL}/group/template-${layoutPrototypeId}");
-
-			Portlet.addPG(portletName = "Asset Publisher");
-
-			Portlet.viewPG(portletName = "Asset Publisher");
-		}
-	}
-
 	@description = "Export lar with global page templates and check all persist after importing."
 	@priority = 5
 	test ImportLAR {

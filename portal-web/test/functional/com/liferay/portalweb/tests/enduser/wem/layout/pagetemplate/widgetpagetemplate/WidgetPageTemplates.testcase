@@ -29,31 +29,6 @@ definition {
 		}
 	}
 
-	@description = "Add a page template in global site."
-	@priority = 4
-	@uitest
-	test AddGlobalPageTemplate {
-		task ("Go to page template admin in global site") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-		}
-
-		task ("Add an active page template") {
-			LexiconEntry.gotoAdd();
-
-			PortletEntry.inputName(name = "Page Template Name");
-
-			PortletEntry.inputDescriptionTextInput(description = "This is a page template description");
-
-			PortletEntry.save();
-
-			LexiconCard.viewCardTitle(card = "Page Template Name");
-
-			LexiconCard.viewCardLabel(
-				card = "Page Template Name",
-				cardLabel = "Active");
-		}
-	}
-
 	@description = "This is a test for LPS-154130. Add a page using gloabl page template, disable inherit changes and check it works. The portlet is named Widget Page Templates on the global site."
 	@priority = 5
 	test AddPageBasedOnGlobalPageTemplate {
@@ -216,32 +191,6 @@ definition {
 			Navigator.gotoNavNested(navNested = "Global Templates");
 
 			PagesAdmin.viewPageTemplateTypePresent(pageTemplateName = "Page Template Name");
-		}
-	}
-
-	@description = "Delete a page template in global site."
-	@priority = 5
-	test DeleteGlobalPageTemplate {
-		property portal.acceptance = "true";
-
-		task ("Add an active page template") {
-			JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
-				pageTemplateEntryActive = "true",
-				pageTemplateEntryName = "Page Template Name");
-		}
-
-		task ("Delete the created page template") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-			PageTemplatesAdminGlobalSite.deleteCP(pageTemplateName = "Page Template Name");
-		}
-
-		task ("View no new page template") {
-			LexiconCard.viewCardTitle(card = "Search");
-
-			AssertElementNotPresent(
-				index = 2,
-				locator1 = "PageTemplates#PAGE_TEMPLATE_CARD_ITEM");
 		}
 	}
 
@@ -513,42 +462,6 @@ definition {
 			for (var widgetName : list "Blogs,Asset Publisher") {
 				Portlet.viewSpecificPG(portletName = ${widgetName});
 			}
-		}
-	}
-
-	@description = "Rename page template in global site."
-	@priority = 4
-	test RenameGlobalPageTemplate {
-		task ("Add an active page template") {
-			JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
-				pageTemplateEntryActive = "true",
-				pageTemplateEntryName = "Page Template Name");
-		}
-
-		task ("Rename page template and view change") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-			PageTemplatesAdminGlobalSite.gotoPageTemplateEllipsisItem(
-				item = "Configure",
-				pageTemplateName = "Page Template Name");
-
-			PortletEntry.inputName(name = "Page Template Name Edit");
-
-			PortletEntry.inputDescriptionTextInput(description = "This is a page template description edit");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-
-			LexiconCard.viewCardTitle(card = "Page Template Name Edit");
-
-			PageTemplatesAdminGlobalSite.gotoPageTemplateEllipsisItem(
-				item = "Configure",
-				pageTemplateName = "Page Template Name Edit");
-
-			AssertTextEquals.assertValue(
-				locator1 = "TextInput#DESCRIPTION",
-				value1 = "This is a page template description edit");
 		}
 	}
 

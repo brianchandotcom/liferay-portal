@@ -1,0 +1,60 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {expect, mergeTests} from '@playwright/test';
+
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../fixtures/loginTest';
+import getRandomString from '../../utils/getRandomString';
+import {widgetPageTemplatesPagesTest} from './fixtures/widgetPageTemplatesPagesTest';
+
+export const test = mergeTests(
+	isolatedSiteTest,
+	loginTest(),
+	widgetPageTemplatesPagesTest
+);
+
+test('Add, rename and delete a page template in global site', async ({
+	page,
+	widgetPageTemplatesPage,
+}) => {
+
+	// Go to page template administration in global site
+
+	await widgetPageTemplatesPage.goto('/global');
+
+	// Create global page template
+
+	const widgetPageTemplateName = getRandomString();
+
+	await widgetPageTemplatesPage.addGlobalWidgetPageTemplate(
+		widgetPageTemplateName
+	);
+
+	await expect(
+		page.getByText(widgetPageTemplateName, {exact: true})
+	).toBeVisible();
+
+	// Rename global page template
+
+	const newWidgetPageTemplateName = getRandomString();
+
+	await widgetPageTemplatesPage.renameGlobalWidgetPageTemplate(
+		newWidgetPageTemplateName,
+		widgetPageTemplateName
+	);
+
+	await expect(
+		page.getByText(newWidgetPageTemplateName, {exact: true})
+	).toBeVisible();
+
+	// Delete global page template
+
+	await widgetPageTemplatesPage.delete(newWidgetPageTemplateName);
+
+	await expect(
+		page.getByText(newWidgetPageTemplateName, {exact: true})
+	).not.toBeVisible();
+});

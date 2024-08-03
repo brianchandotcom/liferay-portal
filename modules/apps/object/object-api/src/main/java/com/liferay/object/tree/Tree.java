@@ -45,9 +45,9 @@ public class Tree {
 	}
 
 	public Node getNode(long primaryKey) {
-		Iterator<Node> iterator = iterator();
-
 		Node node = null;
+
+		Iterator<Node> iterator = iterator();
 
 		while (iterator.hasNext()) {
 			node = iterator.next();

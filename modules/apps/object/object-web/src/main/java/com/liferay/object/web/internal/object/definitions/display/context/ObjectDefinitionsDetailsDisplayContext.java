@@ -77,12 +77,12 @@ public class ObjectDefinitionsDetailsDisplayContext
 	}
 
 	public List<Map<String, Object>> getNonrelationshipObjectFieldsInfo() {
+		List<Map<String, Object>> nonrelationshipObjectFieldsInfo =
+			new ArrayList<>();
+
 		List<ObjectField> objectFields = ListUtil.filter(
 			getObjectFields(),
 			objectField -> Validator.isNull(objectField.getRelationshipType()));
-
-		List<Map<String, Object>> nonrelationshipObjectFieldsInfo =
-			new ArrayList<>();
 
 		for (ObjectField objectField : objectFields) {
 			nonrelationshipObjectFieldsInfo.add(

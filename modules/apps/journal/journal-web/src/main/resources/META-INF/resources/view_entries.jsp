@@ -239,6 +239,14 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							</div>
 						</liferay-ui:search-container-column-text>
 
+						<c:if test="<%= !journalDisplayContext.hasHighlightedDDMStructure() %>">
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand table-cell-minw-200 text-truncate"
+								name="description"
+								value="<%= StringUtil.shorten(HtmlUtil.stripHtml(curArticle.getDescription(locale)), 200) %>"
+							/>
+						</c:if>
+
 						<c:if test="<%= journalDisplayContext.isSearch() && ((curArticle.getFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curArticle.getFolder(), ActionKeys.VIEW)) %>">
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand-smallest table-cell-minw-200"

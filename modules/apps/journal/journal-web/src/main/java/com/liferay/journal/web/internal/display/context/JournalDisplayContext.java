@@ -112,6 +112,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -1203,6 +1204,11 @@ public class JournalDisplayContext {
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(journalArticle.getResourcePrimKey()),
 			_guestRole.getRoleId(), ActionKeys.VIEW);
+	}
+
+	public boolean hasHighlightedDDMStructure() {
+		return ListUtil.isNotEmpty(
+			DDMStructureUtil.getHighlightedDDMStructures(_themeDisplay));
 	}
 
 	public boolean hasResults() throws PortalException {

@@ -746,30 +746,25 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	private String _getCurParam(boolean searchByUserRoles) {
-		String curParam;
-
 		Boolean completedTasks = _getCompleted();
 
 		if (!searchByUserRoles && (completedTasks == null)) {
-			curParam = SearchContainer.DEFAULT_CUR_PARAM;
+			return SearchContainer.DEFAULT_CUR_PARAM;
 		}
 		else if (!searchByUserRoles && completedTasks) {
-			curParam = "cur1";
+			return "cur1";
 		}
 		else if (!searchByUserRoles && !completedTasks) {
-			curParam = "cur2";
+			return "cur2";
 		}
 		else if (searchByUserRoles && (completedTasks == null)) {
-			curParam = "cur3";
+			return "cur3";
 		}
 		else if (searchByUserRoles && completedTasks) {
-			curParam = "cur4";
-		}
-		else {
-			curParam = "cur5";
+			return "cur4";
 		}
 
-		return curParam;
+		return "cur5";
 	}
 
 	private PortletURL _getEditPortletURL(WorkflowTask workflowTask)

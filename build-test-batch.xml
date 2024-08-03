@@ -3708,6 +3708,10 @@ information. Make sure to commit in all build-lib-versions results.
 		<run-empty-osgi-core-dir-test />
 	</target>
 
+	<target name="empty-osgi-core-dir-mysql57-jdk21_zulu">
+		<run-empty-osgi-core-dir-test />
+	</target>
+
 	<target name="format-javadoc-jdk8">
 		<run-batch-test>
 			<test-action>

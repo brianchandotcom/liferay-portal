@@ -2620,7 +2620,7 @@ public class OrganizationLocalServiceImpl
 		}
 
 		if (Validator.isNull(name)) {
-			throw new OrganizationNameException();
+			throw new OrganizationNameException.MustNotBeNull();
 		}
 
 		int nameMaxLength = ModelHintsUtil.getMaxLength(

@@ -12,23 +12,17 @@ import com.liferay.petra.string.StringBundler;
  */
 public class OrganizationNameException extends PortalException {
 
-	public OrganizationNameException() {
-	}
+	public static class MustNotBeNull extends OrganizationNameException {
 
-	public OrganizationNameException(String msg) {
-		super(msg);
-	}
+		public MustNotBeNull() {
+			super("Organization name must not be null.");
+		}
 
-	public OrganizationNameException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public OrganizationNameException(Throwable throwable) {
-		super(throwable);
 	}
 
 	public static class MustNotExceedMaximumLength
 		extends OrganizationNameException {
+
 		public MustNotExceedMaximumLength(String name, int nameMaxLength) {
 			super(
 				StringBundler.concat(
@@ -36,6 +30,14 @@ public class OrganizationNameException extends PortalException {
 					nameMaxLength, " characters"));
 		}
 
+	}
+
+	private OrganizationNameException(String msg) {
+		super(msg);
+	}
+
+	private OrganizationNameException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
 }

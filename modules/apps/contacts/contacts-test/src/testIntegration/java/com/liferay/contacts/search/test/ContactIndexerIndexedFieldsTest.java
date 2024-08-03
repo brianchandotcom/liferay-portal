@@ -119,6 +119,7 @@ public class ContactIndexerIndexedFieldsTest {
 		map.put(
 			"lastName_sortable", StringUtil.toLowerCase(contact.getLastName()));
 		map.put("middleName", contact.getMiddleName());
+		map.put("userExternalReferenceCode", user.getExternalReferenceCode());
 
 		return map;
 	}

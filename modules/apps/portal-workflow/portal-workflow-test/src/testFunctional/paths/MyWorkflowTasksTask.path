@@ -48,7 +48,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_CONTENT</td>
-	<td>//*[contains(@class, 'web-content') or contains(@class, 'dynamic') or contains(@class, 'blogs') or contains(@class, 'kaleo-process') or contains(@class, 'comments')]/../../../following-sibling::div | //*[contains(@class, 'documents-and-media')]/../following-sibling::span[contains(@class, 'taglib-text')] | //*[contains(@class, 'asset-summary')]</td>
+	<td>//*[contains(@class, 'web-content') or contains(@class, 'dynamic') or contains(@class, 'blogs') or contains(@class, 'kaleo-process') or contains(@class, 'comments')]/../../following-sibling::div | //*[contains(@class, 'documents-and-media')]/following-sibling::span[contains(@class, 'taglib-text')] | //*[contains(@class, 'asset-summary')]</td>
 	<td></td>
 </tr>
 <tr>

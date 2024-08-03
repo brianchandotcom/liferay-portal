@@ -243,7 +243,7 @@
 </tr>
 <tr>
 	<td>MESSAGE_BOARD_SUBJECT_TITLE</td>
-	<td>//span[contains(@class, 'taglib-text ') and contains(., 'Thread Message Subject')]</td>
+	<td>//span[contains(@class, 'taglib-text') and contains(., 'Thread Message Subject')]</td>
 	<td></td>
 </tr>
 <tr>

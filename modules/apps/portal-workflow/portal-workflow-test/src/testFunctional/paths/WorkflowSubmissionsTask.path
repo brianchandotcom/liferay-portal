@@ -48,12 +48,12 @@
 </tr>
 <tr>
 	<td>PREVIEW_VIEW</td>
-	<td>//a[contains(@data-title,'View')]</td>
+	<td>//*[contains(@id, 'view')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_EDIT</td>
-	<td>//*[@data-qa-id='editButton'] | //span/*[name()='svg'][contains(@class,'icon-pencil')]</td>
+	<td>//*[@data-qa-id='editButton'] | //*[contains(@id, 'edit')]</td>
 	<td></td>
 </tr>
 <tr>

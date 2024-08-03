@@ -214,6 +214,10 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 		List<DetailAST> methodCallDetailASTList = ListUtil.filter(
 			exprDetailASTList,
 			exprDetailAST -> {
+				if (exprDetailAST.getLineNo() > lineNumber) {
+					return false;
+				}
+
 				DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
 
 				if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
@@ -226,11 +230,7 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 					return false;
 				}
 
-				if (exprDetailAST.getLineNo() < lineNumber) {
-					return true;
-				}
-
-				return false;
+				return true;
 			});
 
 		return !methodCallDetailASTList.isEmpty();
@@ -243,17 +243,17 @@ public class ReturnVariableDeclarationCheck extends BaseCheck {
 		List<DetailAST> assignDetailASTList = ListUtil.filter(
 			exprDetailASTList,
 			exprDetailAST -> {
+				if (exprDetailAST.getLineNo() > lineNumber) {
+					return false;
+				}
+
 				DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
 
 				if (firstChildDetailAST.getType() != TokenTypes.ASSIGN) {
 					return false;
 				}
 
-				if (exprDetailAST.getLineNo() < lineNumber) {
-					return true;
-				}
-
-				return false;
+				return true;
 			});
 
 		if (assignDetailASTList.isEmpty()) {

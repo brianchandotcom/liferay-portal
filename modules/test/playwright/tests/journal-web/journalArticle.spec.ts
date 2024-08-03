@@ -409,6 +409,57 @@ baseTest(
 );
 
 baseTest(
+	'LPD-32979: Ensure the presence of the Description column when needed',
+	async ({journalEditArticlePage, journalPage, page, site}) => {
+		page.on('dialog', (dialog) => dialog.accept());
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		await page.getByText('Content', {exact: true}).waitFor();
+
+		await journalEditArticlePage.fillTitle(getRandomString());
+
+		await page.getByRole('button', {name: 'Publish'}).click();
+
+		await page.getByLabel('Select View, Currently').click();
+
+		await page.getByRole('menuitem', {name: 'Table'}).click();
+
+		await expect(
+			page.getByRole('cell', {name: 'Description'})
+		).toBeVisible();
+
+		await page
+			.getByTestId('headerOptions')
+			.getByLabel('Options')
+			.and(page.locator('[aria-haspopup]'))
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Configuration'}).click();
+
+		await page.getByLabel('Select Highlighted Structures').click();
+
+		const dialogFrame = page.frameLocator(
+			'iframe[title="Select Structures"]'
+		);
+
+		await dialogFrame.getByLabel('Basic Web Content Global').click();
+
+		await page.getByRole('button', {name: 'Add'}).click();
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await page.getByText('Success:You have successfully').waitFor();
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await expect(page.getByRole('cell', {name: 'Description'})).toHaveCount(
+			0
+		);
+	}
+);
+
+baseTest(
 	'LPD-15248 Move folder to another folder via management toolbar',
 	async ({apiHelpers, journalPage, page, site}) => {
 		const childFolder = await apiHelpers.jsonWebServicesJournal.addFolder({

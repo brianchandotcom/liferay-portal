@@ -9,7 +9,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -17,7 +17,7 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.search.InfoSearchClassMapperRegistry;
+import com.liferay.info.search.InfoSearchClassMapperRegistryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.staging.StagingGroupHelper;
@@ -33,21 +33,18 @@ import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(service = ExportImportContentProcessorHelper.class)
-public class ExportImportContentProcessorHelper {
+public class ExportImportContentProcessorUtil {
 
-	public void exportContentReference(
+	public static void exportContentReference(
 		String className, long classPK, boolean exportReferencedContent,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		PortletDataContext portletDataContext, StagedModel stagedModel) {
 
 		Object object = _getReferenceObject(
-			className, classPK, portletDataContext);
+			className, classPK, infoItemServiceRegistry, portletDataContext);
 
 		if (object == null) {
 			return;
@@ -88,7 +85,7 @@ public class ExportImportContentProcessorHelper {
 		}
 	}
 
-	public void replaceImportContentReferences(
+	public static void replaceImportContentReferences(
 		JSONObject jsonObject, PortletDataContext portletDataContext) {
 
 		String className = jsonObject.getString("className");
@@ -100,7 +97,8 @@ public class ExportImportContentProcessorHelper {
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_infoSearchClassMapperRegistry.getSearchClassName(className));
+				InfoSearchClassMapperRegistryUtil.getSearchClassName(
+					className));
 
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
@@ -114,7 +112,7 @@ public class ExportImportContentProcessorHelper {
 			return;
 		}
 
-		jsonObject.put("classNameId", _portal.getClassNameId(className));
+		jsonObject.put("classNameId", PortalUtil.getClassNameId(className));
 
 		Map<Long, Long> primaryKeys =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(className);
@@ -123,9 +121,12 @@ public class ExportImportContentProcessorHelper {
 			"classPK", MapUtil.getLong(primaryKeys, classPK, classPK));
 	}
 
-	private Object _getInfoItem(String className, long classPK) {
+	private static Object _getInfoItem(
+		String className, long classPK,
+		InfoItemServiceRegistry infoItemServiceRegistry) {
+
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
+			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className);
 
 		if (infoItemObjectProvider != null) {
@@ -143,15 +144,17 @@ public class ExportImportContentProcessorHelper {
 		return null;
 	}
 
-	private Object _getReferenceObject(
-		String className, long classPK, PortletDataContext portletDataContext) {
+	private static Object _getReferenceObject(
+		String className, long classPK,
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		PortletDataContext portletDataContext) {
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			_infoSearchClassMapperRegistry.getSearchClassName(className),
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			InfoSearchClassMapperRegistryUtil.getSearchClassName(className),
 			classPK);
 
 		if (assetEntry == null) {
-			return _getInfoItem(className, classPK);
+			return _getInfoItem(className, classPK, infoItemServiceRegistry);
 		}
 
 		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
@@ -178,18 +181,6 @@ public class ExportImportContentProcessorHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ExportImportContentProcessorHelper.class);
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
-
-	@Reference
-	private Portal _portal;
+		ExportImportContentProcessorUtil.class);
 
 }

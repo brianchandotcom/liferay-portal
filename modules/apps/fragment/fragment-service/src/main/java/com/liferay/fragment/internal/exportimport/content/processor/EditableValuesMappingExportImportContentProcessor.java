@@ -12,6 +12,7 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -228,9 +229,9 @@ public class EditableValuesMappingExportImportContentProcessor
 
 		editableJSONObject.put("className", className);
 
-		_exportImportContentProcessorHelper.exportContentReference(
-			className, classPK, exportReferencedContent, portletDataContext,
-			stagedModel);
+		ExportImportContentProcessorUtil.exportContentReference(
+			className, classPK, exportReferencedContent,
+			_infoItemServiceRegistry, portletDataContext, stagedModel);
 	}
 
 	private void _replaceMappedFieldImportContentReferences(
@@ -292,7 +293,7 @@ public class EditableValuesMappingExportImportContentProcessor
 			}
 		}
 
-		_exportImportContentProcessorHelper.replaceImportContentReferences(
+		ExportImportContentProcessorUtil.replaceImportContentReferences(
 			editableJSONObject, portletDataContext);
 
 		if (editableJSONObject.has("fileEntryId")) {
@@ -309,8 +310,7 @@ public class EditableValuesMappingExportImportContentProcessor
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
-	private ExportImportContentProcessorHelper
-		_exportImportContentProcessorHelper;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Portal _portal;

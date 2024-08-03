@@ -12,6 +12,7 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -66,9 +67,9 @@ public class ItemSelectorEditableValuesConfigurationExportImportContentProcessor
 
 		configurationValueJSONObject.put("className", className);
 
-		_exportImportContentProcessorHelper.exportContentReference(
-			className, classPK, exportReferencedContent, portletDataContext,
-			stagedModel);
+		ExportImportContentProcessorUtil.exportContentReference(
+			className, classPK, exportReferencedContent,
+			_infoItemServiceRegistry, portletDataContext, stagedModel);
 	}
 
 	@Override
@@ -102,7 +103,7 @@ public class ItemSelectorEditableValuesConfigurationExportImportContentProcessor
 			templateJSONObject.put("templateKey", importedDDMTemplateKey);
 		}
 
-		_exportImportContentProcessorHelper.replaceImportContentReferences(
+		ExportImportContentProcessorUtil.replaceImportContentReferences(
 			configurationValueJSONObject, portletDataContext);
 	}
 
@@ -139,11 +140,10 @@ public class ItemSelectorEditableValuesConfigurationExportImportContentProcessor
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
-	private ExportImportContentProcessorHelper
-		_exportImportContentProcessorHelper;
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Portal _portal;

@@ -77,8 +77,9 @@ public class PermissionUtil {
 			String[] roleNames)
 		throws PortalException {
 
-		List<String> invalidRoleNames = new ArrayList<>();
 		List<Role> roles = new ArrayList<>();
+
+		List<String> invalidRoleNames = new ArrayList<>();
 
 		for (String roleName : roleNames) {
 			try {

@@ -563,11 +563,10 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	}
 
 	private DTOProperty _getDTOProperty(PropertyDefinition propertyDefinition) {
-		PropertyDefinition.PropertyType propertyType =
-			propertyDefinition.getPropertyType();
-
 		DTOProperty dtoProperty;
 
+		PropertyDefinition.PropertyType propertyType =
+			propertyDefinition.getPropertyType();
 		String type = null;
 
 		if ((propertyType ==

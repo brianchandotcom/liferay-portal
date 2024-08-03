@@ -33,6 +33,23 @@ export class WidgetPageTemplatesPage {
 		await waitForSuccessAlert(this.page);
 	}
 
+	async deactivateGlobalWidgetPageTemplate(name: string) {
+		await this.clickMoreActions(name);
+
+		await this.page
+			.getByRole('menuitem', {
+				exact: true,
+				name: 'Configure',
+			})
+			.click();
+
+		await this.page.getByLabel('Active').click();
+
+		await this.page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForSuccessAlert(this.page);
+	}
+
 	async clickMoreActions(name: string) {
 		await this.page
 			.locator('.card-page-item')

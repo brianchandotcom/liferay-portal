@@ -258,6 +258,20 @@ export class PagesAdminPage {
 		});
 	}
 
+	async gotoSelectGlobalTemplates() {
+		await this.newButton.click();
+
+		await this.page
+			.getByRole('menuitem')
+			.getByText('Page', {exact: true})
+			.click();
+
+		await this.page
+			.getByRole('menuitem')
+			.getByText('Global Templates', {exact: true})
+			.click();
+	}
+
 	async selectJavaScriptClientExtension(clientExtensionName: string) {
 		await this.gotoPagesConfiguration();
 

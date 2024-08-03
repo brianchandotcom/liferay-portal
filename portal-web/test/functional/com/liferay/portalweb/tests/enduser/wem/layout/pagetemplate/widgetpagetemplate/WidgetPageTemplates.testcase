@@ -140,60 +140,6 @@ definition {
 		}
 	}
 
-	@description = "Add a active page template in global site, deactive and active it."
-	@priority = 4
-	test DeactivateAndActivateGlobalPageTemplate {
-		task ("Add an active page template") {
-			JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
-				pageTemplateEntryActive = "true",
-				pageTemplateEntryName = "Page Template Name");
-		}
-
-		task ("Deactive the created page template and view status") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-			PageTemplatesAdminGlobalSite.deactivateAndActivate(
-				pageTemplateName = "Page Template Name",
-				pageTemplateStatus = "Not Active");
-
-			LexiconCard.viewCardLabel(
-				card = "Page Template Name",
-				cardLabel = "Not Active");
-		}
-
-		task ("View inactive page template doesn't display") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
-
-			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
-
-			Navigator.gotoNavNested(navNested = "Global Templates");
-
-			PagesAdmin.viewPageTemplateTypeNotPresent(pageTemplateName = "Page Template Name");
-		}
-
-		task ("Active the created page template and view status") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-			PageTemplatesAdminGlobalSite.deactivateAndActivate(
-				pageTemplateName = "Page Template Name",
-				pageTemplateStatus = "Active");
-
-			LexiconCard.viewCardLabel(
-				card = "Page Template Name",
-				cardLabel = "Active");
-		}
-
-		task ("View active page template displays") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
-
-			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
-
-			Navigator.gotoNavNested(navNested = "Global Templates");
-
-			PagesAdmin.viewPageTemplateTypePresent(pageTemplateName = "Page Template Name");
-		}
-	}
-
 	@description = "This is a use case for LPS-115361. Delete a widget page template in normal site."
 	@priority = 5
 	test DeletePageTemplate {

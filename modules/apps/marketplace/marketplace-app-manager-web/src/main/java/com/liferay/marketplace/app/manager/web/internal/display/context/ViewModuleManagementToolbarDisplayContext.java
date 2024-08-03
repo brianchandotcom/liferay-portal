@@ -51,9 +51,9 @@ public class ViewModuleManagementToolbarDisplayContext
 	}
 
 	public AppDisplay getAppDisplay() {
-		String app = ParamUtil.getString(httpServletRequest, "app");
-
 		AppDisplay appDisplay = null;
+
+		String app = ParamUtil.getString(httpServletRequest, "app");
 
 		if (Validator.isNumber(app)) {
 			appDisplay = AppDisplayFactoryUtil.getAppDisplay(

@@ -204,10 +204,10 @@ public class ViewObjectEntriesDisplayContext {
 	}
 
 	public FDSSortItemList getFDSSortItemList() {
+		FDSSortItemList fdsSortItemList = new FDSSortItemList();
+
 		ObjectView objectView = _objectViewLocalService.fetchDefaultObjectView(
 			_objectDefinition.getObjectDefinitionId());
-
-		FDSSortItemList fdsSortItemList = new FDSSortItemList();
 
 		if (objectView == null) {
 			return fdsSortItemList;

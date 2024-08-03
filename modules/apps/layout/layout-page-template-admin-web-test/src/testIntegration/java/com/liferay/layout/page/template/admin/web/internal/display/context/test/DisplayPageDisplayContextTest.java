@@ -8,7 +8,6 @@ package com.liferay.layout.page.template.admin.web.internal.display.context.test
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
@@ -81,7 +80,7 @@ public class DisplayPageDisplayContextTest {
 		serviceContext.setAddGroupPermissions(false);
 		serviceContext.setAddGuestPermissions(false);
 
-		_ddmStructure = _ddmStructureLocalService.addStructure(
+		_ddmStructureLocalService.addStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			_portal.getClassNameId(JournalArticle.class), null,
 			HashMapBuilder.put(
@@ -196,8 +195,6 @@ public class DisplayPageDisplayContextTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	private DDMStructure _ddmStructure;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

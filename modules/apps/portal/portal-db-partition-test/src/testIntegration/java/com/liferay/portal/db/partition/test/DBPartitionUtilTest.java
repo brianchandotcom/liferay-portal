@@ -541,10 +541,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	private List<String> _getObjectNames(String objectType, long companyId)
 		throws Exception {
 
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
-
 		List<String> objectNames = new ArrayList<>();
 
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
 		String partitionName = getPartitionName(companyId);
 
 		try (ResultSet resultSet = databaseMetaData.getTables(

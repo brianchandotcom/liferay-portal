@@ -159,10 +159,11 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	}
 
 	protected String getMasterClusterNodeId(boolean notify) {
+		String masterClusterNodeId = null;
+
 		ClusterExecutorImpl clusterExecutorImpl =
 			(ClusterExecutorImpl)_clusterExecutor;
 		boolean master = false;
-		String masterClusterNodeId = null;
 
 		while (true) {
 			ClusterChannel clusterChannel =

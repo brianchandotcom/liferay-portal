@@ -80,21 +80,19 @@ public class ReleaseGraphManager {
 	public List<List<UpgradeInfo>> getUpgradeInfosList(
 		String fromVersionString) {
 
+		List<List<UpgradeInfo>> upgradeInfosList = new ArrayList<>();
+
 		List<String> endVertices = getEndVertices();
 
 		endVertices.remove(fromVersionString);
-
-		List<List<UpgradeInfo>> upgradeInfosList = new ArrayList<>();
 
 		for (String endVertex : endVertices) {
 			List<UpgradeInfo> upgradeInfos = getUpgradeInfos(
 				fromVersionString, endVertex);
 
-			if (upgradeInfos.isEmpty()) {
-				continue;
+			if (!upgradeInfos.isEmpty()) {
+				upgradeInfosList.add(upgradeInfos);
 			}
-
-			upgradeInfosList.add(upgradeInfos);
 		}
 
 		return upgradeInfosList;

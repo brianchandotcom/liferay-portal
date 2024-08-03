@@ -339,6 +339,13 @@ public class DLAppLocalServiceWrapper
 		_dlAppLocalService.deleteFileEntry(fileEntryId);
 	}
 
+	@Override
+	public void deleteFileEntry(String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dlAppLocalService.deleteFileEntry(externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Deletes the file shortcut. This method is only supported by the Liferay
 	 * repository.

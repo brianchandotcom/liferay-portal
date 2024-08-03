@@ -122,6 +122,13 @@ public class DLFileEntryServiceUtil {
 		getService().deleteFileEntry(groupId, folderId, title);
 	}
 
+	public static void deleteFileEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		getService().deleteFileEntry(externalReferenceCode, groupId);
+	}
+
 	public static void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException {
 

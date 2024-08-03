@@ -274,6 +274,15 @@ public class DLFileEntryLocalServiceWrapper
 	}
 
 	@Override
+	public DLFileEntry deleteFileEntry(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileEntryLocalService.deleteFileEntry(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
 	public DLFileEntry deleteFileVersion(
 			long userId, long fileEntryId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {

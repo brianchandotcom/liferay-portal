@@ -336,6 +336,13 @@ public class DLAppLocalServiceUtil {
 		getService().deleteFileEntry(fileEntryId);
 	}
 
+	public static void deleteFileEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		getService().deleteFileEntry(externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Deletes the file shortcut. This method is only supported by the Liferay
 	 * repository.

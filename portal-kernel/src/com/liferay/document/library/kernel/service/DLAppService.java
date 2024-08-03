@@ -506,6 +506,9 @@ public interface DLAppService extends BaseService {
 	 */
 	public void deleteFileEntry(long fileEntryId) throws PortalException;
 
+	public void deleteFileEntry(String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	/**
 	 * Deletes the file entry with the title in the folder.
 	 *

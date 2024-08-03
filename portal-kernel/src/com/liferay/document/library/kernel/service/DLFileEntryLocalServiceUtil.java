@@ -256,6 +256,13 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().deleteFileEntry(userId, fileEntryId);
 	}
 
+	public static DLFileEntry deleteFileEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().deleteFileEntry(externalReferenceCode, groupId);
+	}
+
 	public static DLFileEntry deleteFileVersion(
 			long userId, long fileEntryId, String version)
 		throws PortalException {

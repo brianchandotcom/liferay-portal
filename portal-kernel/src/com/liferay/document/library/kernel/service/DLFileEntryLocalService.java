@@ -219,6 +219,11 @@ public interface DLFileEntryLocalService
 	public DLFileEntry deleteFileEntry(long userId, long fileEntryId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.DELETE)
+	public DLFileEntry deleteFileEntry(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntry deleteFileVersion(
 			long userId, long fileEntryId, String version)

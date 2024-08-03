@@ -75,19 +75,16 @@ public class OpenSearchConnectionConfigurationModelListener
 	protected ConfigurationAdmin configurationAdmin;
 
 	private String _getConnectionId(String pid) throws Exception {
-		String connectionId = null;
-
 		Configuration configuration = configurationAdmin.getConfiguration(
 			pid, StringPool.QUESTION);
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
 		if (properties != null) {
-			connectionId = StringUtil.unquote(
-				(String)properties.get("connectionId"));
+			return StringUtil.unquote((String)properties.get("connectionId"));
 		}
 
-		return connectionId;
+		return null;
 	}
 
 	private String _getMessage(String key, Object... arguments) {

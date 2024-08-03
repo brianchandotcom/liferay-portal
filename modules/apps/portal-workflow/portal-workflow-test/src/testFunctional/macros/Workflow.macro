@@ -704,6 +704,8 @@ definition {
 
 		Click(locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
 
+		WaitForElementPresent(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
+
 		Workflow.gotoPreviewView();
 	}
 

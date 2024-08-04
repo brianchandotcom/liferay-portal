@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -382,6 +383,64 @@ public class LayoutModelDocumentContributorTest {
 		_setUpLayout(elementText, false, null);
 
 		_assertReindexDraftLayout(elementText, _layout);
+	}
+
+	@Test
+	@TestInfo("LPS-152949")
+	public void testSearchEmbeddedLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeEmbeddedLayout(
+			_group.getGroupId());
+
+		Document document = _layoutIndexerFixture.searchOnlyOne(
+			layout.getName(_locale), _locale);
+
+		Assert.assertNotNull(document);
+	}
+
+	@Test
+	@TestInfo("LPS-152949")
+	public void testSearchFullPageApplicationLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeFullPageApplicationLayout(
+			_group.getGroupId());
+
+		Document document = _layoutIndexerFixture.searchOnlyOne(
+			layout.getName(_locale), _locale);
+
+		Assert.assertNotNull(document);
+	}
+
+	@Test
+	@TestInfo("LPS-152949")
+	public void testSearchLinkToURLLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeLinkToURLLayout(
+			_group.getGroupId(), "https://www.liferay.com");
+
+		Document document = _layoutIndexerFixture.searchOnlyOne(
+			layout.getName(_locale), _locale);
+
+		Assert.assertNotNull(document);
+	}
+
+	@Test
+	@TestInfo("LPS-152949")
+	public void testSearchPanelLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addTypePanelLayout(_group.getGroupId());
+
+		Document document = _layoutIndexerFixture.searchOnlyOne(
+			layout.getName(_locale), _locale);
+
+		Assert.assertNotNull(document);
+	}
+
+	@Test
+	@TestInfo("LPS-152949")
+	public void testSearchPortletLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		Document document = _layoutIndexerFixture.searchOnlyOne(
+			layout.getName(_locale), _locale);
+
+		Assert.assertNotNull(document);
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(

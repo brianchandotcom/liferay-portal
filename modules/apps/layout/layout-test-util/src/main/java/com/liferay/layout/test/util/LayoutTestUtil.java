@@ -270,6 +270,24 @@ public class LayoutTestUtil {
 			layout.getUserId(), layout.getPlid(), status, serviceContext);
 	}
 
+	public static Layout addTypeEmbeddedLayout(long groupId) throws Exception {
+		Layout layout = addTypePortletLayout(groupId, false);
+
+		layout.setType(LayoutConstants.TYPE_EMBEDDED);
+
+		return LayoutLocalServiceUtil.updateLayout(layout);
+	}
+
+	public static Layout addTypeFullPageApplicationLayout(long groupId)
+		throws Exception {
+
+		Layout layout = addTypePortletLayout(groupId, false);
+
+		layout.setType(LayoutConstants.TYPE_FULL_PAGE_APPLICATION);
+
+		return LayoutLocalServiceUtil.updateLayout(layout);
+	}
+
 	public static Layout addTypeLinkToLayoutLayout(
 			long groupId, long linkedToLayoutId)
 		throws Exception {
@@ -298,6 +316,14 @@ public class LayoutTestUtil {
 		typeSettingsUnicodeProperties.setProperty("url", url);
 
 		layout.setType(LayoutConstants.TYPE_URL);
+
+		return LayoutLocalServiceUtil.updateLayout(layout);
+	}
+
+	public static Layout addTypePanelLayout(long groupId) throws Exception {
+		Layout layout = addTypePortletLayout(groupId, false);
+
+		layout.setType(LayoutConstants.TYPE_PANEL);
 
 		return LayoutLocalServiceUtil.updateLayout(layout);
 	}

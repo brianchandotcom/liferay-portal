@@ -63,13 +63,12 @@ test('Can configure an embedded page', async ({
 
 	await pagesAdminPage.goto(site.friendlyUrlPath);
 
-	await pageConfigurationPage.goToSection('Embedded', 'General');
-
-	await expect(page.getByLabel('URL').first()).toHaveValue('');
-
-	await pageConfigurationPage.fillURL('https://www.google.com');
-
-	await pageConfigurationPage.save();
+	await pageConfigurationPage.setInputValueAndSave(
+		page.getByLabel('URL').first(),
+		'Embedded',
+		'General',
+		'https://www.google.com'
+	);
 
 	// Check URL was updated
 

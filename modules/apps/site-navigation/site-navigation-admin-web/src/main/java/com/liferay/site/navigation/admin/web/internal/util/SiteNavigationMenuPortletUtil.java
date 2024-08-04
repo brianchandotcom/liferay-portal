@@ -31,13 +31,13 @@ public class SiteNavigationMenuPortletUtil {
 	public static OrderByComparator<SiteNavigationMenu> getOrderByComparator(
 		String orderByCol, String orderByType) {
 
+		OrderByComparator<SiteNavigationMenu> orderByComparator = null;
+
 		boolean orderByAsc = false;
 
 		if (orderByType.equals("asc")) {
 			orderByAsc = true;
 		}
-
-		OrderByComparator<SiteNavigationMenu> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
 			orderByComparator = new SiteNavigationMenuCreateDateComparator(

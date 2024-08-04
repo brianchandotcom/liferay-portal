@@ -128,13 +128,13 @@ public class SiteNavigationMenuItemSelectorViewDescriptor
 	private OrderByComparator<SiteNavigationMenu> _getOrderByComparator(
 		String orderByCol, String orderByType) {
 
+		OrderByComparator<SiteNavigationMenu> orderByComparator = null;
+
 		boolean orderByAsc = false;
 
 		if (orderByType.equals("asc")) {
 			orderByAsc = true;
 		}
-
-		OrderByComparator<SiteNavigationMenu> orderByComparator = null;
 
 		if (orderByCol.equals("modified-date")) {
 			orderByComparator = new SiteNavigationMenuModifiedDateComparator(

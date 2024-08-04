@@ -6,15 +6,19 @@
 package com.liferay.fragment.internal.upgrade.v1_1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -61,13 +65,22 @@ public class PortletPreferencesUpgradeProcessTest {
 	public void testUpgrade() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			StringPool.BLANK, layout,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
+		PortletPreferences portletPreferences = _getPortletPreferences(
+			layout, _addPortletFragmentEntryLink(layout));
+
+		Layout controlPanelLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_layoutLocalService.updateType(
-			layout.getPlid(), LayoutConstants.TYPE_CONTROL_PANEL);
+			controlPanelLayout.getPlid(), LayoutConstants.TYPE_CONTROL_PANEL);
+
+		portletPreferences.setPlid(controlPanelLayout.getPlid());
+
+		portletPreferences =
+			_portletPreferencesLocalService.updatePortletPreferences(
+				portletPreferences);
+
+		Assert.assertEquals(
+			controlPanelLayout.getPlid(), portletPreferences.getPlid());
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.fragment.internal.upgrade.v1_1_0." +
@@ -81,7 +94,46 @@ public class PortletPreferencesUpgradeProcessTest {
 			Assert.assertTrue(logEntries.isEmpty());
 		}
 
-		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
+		Assert.assertNull(
+			_layoutLocalService.fetchLayout(controlPanelLayout.getPlid()));
+
+		portletPreferences =
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				portletPreferences.getPortletPreferencesId());
+
+		Assert.assertEquals(layout.getPlid(), portletPreferences.getPlid());
+	}
+
+	private String _addPortletFragmentEntryLink(Layout layout)
+		throws Exception {
+
+		JSONObject processAddPortletJSONObject =
+			ContentLayoutTestUtil.addPortletToLayout(
+				layout, JournalContentPortletKeys.JOURNAL_CONTENT);
+
+		JSONObject fragmentEntryLinkJSONObject =
+			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLinkJSONObject.getJSONObject("editableValues");
+
+		return PortletIdCodec.encode(
+			editableValuesJSONObject.getString("portletId"),
+			editableValuesJSONObject.getString("instanceId"));
+	}
+
+	private PortletPreferences _getPortletPreferences(
+			Layout layout, String portletId)
+		throws Exception {
+
+		List<PortletPreferences> portletPreferences =
+			_portletPreferencesLocalService.getPortletPreferences(
+				layout.getPlid(), portletId);
+
+		Assert.assertEquals(
+			portletPreferences.toString(), 1, portletPreferences.size());
+
+		return portletPreferences.get(0);
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -112,6 +164,9 @@ public class PortletPreferencesUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

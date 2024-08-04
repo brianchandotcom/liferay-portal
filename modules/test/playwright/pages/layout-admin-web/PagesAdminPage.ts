@@ -29,6 +29,8 @@ export class PagesAdminPage {
 	readonly oneColumnButton: Locator;
 	readonly pageEditorPage: PageEditorPage;
 	readonly pageTitleBox: Locator;
+	readonly searchButton: Locator;
+	readonly searchInput: Locator;
 	readonly uiElementsPage: UIElementsPage;
 	readonly widgetPageButton: Locator;
 
@@ -61,6 +63,8 @@ export class PagesAdminPage {
 		this.pageTitleBox = this.addPageIFrame.locator(
 			'input[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_name"]'
 		);
+		this.searchButton = this.page.getByLabel('Search for', {exact: true});
+		this.searchInput = this.page.getByPlaceholder('Search for');
 		this.uiElementsPage = new UIElementsPage(page);
 		this.widgetPageButton = page.getByRole('button', {name: 'Widget Page'});
 	}
@@ -270,6 +274,16 @@ export class PagesAdminPage {
 			.getByRole('menuitem')
 			.getByText('Global Templates', {exact: true})
 			.click();
+	}
+
+	async searchPage(keywords: string) {
+		await this.searchInput.click();
+		await this.searchInput.clear();
+		await this.searchInput.fill(keywords);
+
+		await this.searchButton.click();
+
+		await this.page.getByText('Search Results').waitFor();
 	}
 
 	async selectJavaScriptClientExtension(clientExtensionName: string) {

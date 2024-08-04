@@ -191,6 +191,88 @@ test('Can add and delete a child page', async ({
 });
 
 test(
+	'Can search a child page',
+	{tag: ['@LPS-154130', '@LPS-149161', '@LPS-76825']},
+	async ({apiHelpers, page, pagesAdminPage, site}) => {
+
+		// Add a child page
+
+		const layoutTitle = 'Parent Layout';
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: layoutTitle,
+		});
+
+		const childLayoutTitle = 'Child Layout';
+
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			parentLayoutId: layout.layoutId,
+			title: childLayoutTitle,
+		});
+
+		// Go to admin page
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+
+		// Search for parent page
+
+		await pagesAdminPage.searchPage('Parent');
+
+		await expect(
+			page
+				.locator('.lfr-title-column')
+				.getByRole('link', {name: childLayoutTitle})
+		).not.toBeVisible();
+
+		await expect(
+			page
+				.locator('.lfr-title-column')
+				.getByRole('link', {name: layoutTitle})
+		).toBeVisible();
+
+		// Search for child page
+
+		await pagesAdminPage.searchPage('Child');
+
+		await expect(
+			page
+				.locator('.lfr-title-column')
+				.getByRole('link', {name: childLayoutTitle})
+		).toBeVisible();
+
+		await expect(
+			page
+				.locator('.lfr-title-column')
+				.getByRole('link', {name: layoutTitle})
+		).not.toBeVisible();
+
+		// Order by create date
+
+		await pagesAdminPage.searchPage('Layout');
+
+		const listItem = await page.locator('.lfr-title-column');
+
+		await expect(listItem.nth(1)).toHaveText(layoutTitle);
+		await expect(listItem.nth(2)).toHaveText(childLayoutTitle);
+
+		// Navigate to page via relative path
+
+		await page
+			.locator('.breadcrumb-item')
+			.getByRole('link', {name: layoutTitle})
+			.click();
+
+		await expect(page.getByText('Search Results')).not.toBeVisible();
+
+		await expect(page.locator('.breadcrumb-item.active')).toHaveText(
+			layoutTitle
+		);
+	}
+);
+
+test(
 	'View the XSS is escaped when store it in widget page name',
 	{
 		tag: '@LPS-178476',

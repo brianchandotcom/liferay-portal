@@ -448,44 +448,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-154130. Given I'm in Page Administration When I search for a page Then relative path is clickable."
-	@priority = 3
-	test NavigateToPageItemViaRelativePathFromSearchResults {
-		task ("Given a page creator has a page hierary") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Home");
-
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Product Details",
-				parentLayoutName = "Home");
-
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Release Information",
-				parentLayoutName = "Product Details");
-		}
-
-		task ("When the page creator searchs pages in Page admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			Search.searchCP(searchTerm = "Release");
-		}
-
-		task ("Then the page creator could navigate to the page item via relative path") {
-			Click(
-				key_breadcrumbName = "Product Details",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
-
-			AssertVisible(
-				key_itemName = "Product Details",
-				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
-
-			Breadcrumb.viewActiveEntry(breadcrumbName = "Product Details");
-		}
-	}
-
 	@description = "This is a test for LPS-172658. The page creator could preview page template during page creation."
 	@priority = 4
 	test PreviewPageTemplateDuringPageCreation {
@@ -630,93 +592,6 @@ definition {
 
 		task ("Then the user could save changes") {
 			PortletEntry.save();
-		}
-	}
-
-	@description = "This is a test for LPS-76825 and LPS-149161. A user can search for a page from pages admin."
-	@priority = 5
-	test SearchPages {
-		property portal.acceptance = "true";
-
-		task ("Add two pages to root and add one child page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.addPage(pageName = "Page One");
-
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.addPage(pageName = "Page Two");
-
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.addChildPage(
-				childPageName = "Page Three",
-				parentPageName = "Page One");
-		}
-
-		task ("Navigate to pages administration") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-		}
-
-		task ("Search for page one and assert only that page appears") {
-			Search.searchCP(searchTerm = "one");
-
-			AssertElementPresent(
-				index = 1,
-				key_tableEntry = "Page One",
-				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
-
-			for (var pageName : list "Page Two,Page Three") {
-				AssertElementNotPresent(
-					index = 2,
-					key_tableEntry = ${pageName},
-					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
-			}
-		}
-
-		task ("Search for child page and assert that page appears") {
-			Search.searchCP(searchTerm = "three");
-
-			AssertElementPresent(
-				index = 1,
-				key_tableEntry = "Page Three",
-				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
-
-			for (var pageName : list "Page One,Page Two") {
-				AssertElementNotPresent(
-					index = 2,
-					key_tableEntry = ${pageName},
-					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
-			}
-		}
-
-		task ("Search for all three pages and order by Create Date") {
-			Search.searchCP(searchTerm = "page");
-
-			ManagementBar.setFilterAndOrder(orderBy = "Create Date");
-
-			var i = 1;
-
-			for (var pageName : list "Page One,Page Two,Page Three") {
-				AssertElementPresent(
-					index = ${i},
-					key_tableEntry = ${pageName},
-					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
-
-				var i = ${i} + 1;
-			}
-		}
-
-		task ("Order by Relevance") {
-			ManagementBar.setFilterAndOrder(orderBy = "Relevance");
-		}
-
-		task ("View redirect to Pages admin after clear search results") {
-			Search.clearSearchResult();
-
-			for (var pageName : list "Page One,Page Two") {
-				PagesAdmin.viewPageItemPresent(pageName = ${pageName});
-			}
 		}
 	}
 

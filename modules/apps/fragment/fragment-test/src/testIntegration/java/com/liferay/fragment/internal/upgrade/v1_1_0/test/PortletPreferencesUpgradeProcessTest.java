@@ -79,6 +79,8 @@ public class PortletPreferencesUpgradeProcessTest {
 
 			Assert.assertTrue(logEntries.isEmpty());
 		}
+
+		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
 	}
 
 	private void _runUpgrade() throws Exception {

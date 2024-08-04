@@ -41,6 +41,41 @@ export const testFeatureFlagsEnabled = mergeTests(
 export const testUploadMultipleFieldsWithCustomDocumentType =
 	mergeTests(baseTest);
 
+baseTest(
+	'Check order by Relevance in Search of DL',
+	{
+		tag: '@LPD-32481',
+	},
+	async ({documentLibraryEditFilePage, documentLibraryPage, page, site}) => {
+		await documentLibraryEditFilePage.publishNewBasicFileEntry(
+			'test',
+			site.friendlyUrlPath
+		);
+		await documentLibraryEditFilePage.publishNewBasicFileEntry(
+			getRandomString(),
+			site.friendlyUrlPath
+		);
+		await documentLibraryEditFilePage.publishNewBasicFileEntry(
+			getRandomString(),
+			site.friendlyUrlPath
+		);
+		await documentLibraryPage.orderMenu.click();
+		await expect(
+			page.getByRole('menuitem', {name: 'Relevance'})
+		).not.toBeVisible();
+
+		await page.reload();
+
+		await documentLibraryPage.searchInDL('test');
+
+		await documentLibraryPage.orderBy('relevance');
+
+		await expect(
+			page.locator('dd.list-group-item[data-title="test"]')
+		).toHaveAttribute('id', /_entries_1$/);
+	}
+);
+
 testFeatureFlagsEnabled(
 	'LPD-16658 Show a success message after scheduling a new file',
 	async ({documentLibraryEditFilePage, documentLibraryPage, page}) => {

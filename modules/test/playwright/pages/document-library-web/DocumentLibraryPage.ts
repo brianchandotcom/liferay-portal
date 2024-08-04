@@ -9,9 +9,12 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
 export class DocumentLibraryPage {
-	readonly optionsMenu: Locator;
-	readonly page: Page;
 	readonly exportImportOptionsMenuItem: Locator;
+	readonly optionsMenu: Locator;
+	readonly orderMenu: Locator;
+	readonly page: Page;
+	readonly searchButton: Locator;
+	readonly searchInput: Locator;
 
 	constructor(page: Page) {
 		this.exportImportOptionsMenuItem = page.getByRole('menuitem', {
@@ -20,7 +23,14 @@ export class DocumentLibraryPage {
 		this.optionsMenu = page
 			.getByTestId('headerOptions')
 			.getByLabel('Options');
+		this.orderMenu = page.getByLabel('Order');
 		this.page = page;
+		this.searchButton = page.getByRole('button', {
+			name: 'Search for',
+		});
+		this.searchInput = page.getByRole('searchbox', {
+			name: 'Search for:',
+		});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -138,5 +148,16 @@ export class DocumentLibraryPage {
 		await this.optionsMenu
 			.and(this.page.locator('[aria-haspopup]'))
 			.click();
+	}
+	async orderBy(name: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name}),
+			trigger: this.orderMenu,
+		});
+	}
+	async searchInDL(query: string) {
+		await this.searchInput.fill(query);
+		await this.searchButton.click();
 	}
 }

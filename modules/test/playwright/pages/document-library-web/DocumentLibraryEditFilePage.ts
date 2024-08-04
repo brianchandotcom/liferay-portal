@@ -87,8 +87,11 @@ export class DocumentLibraryEditFilePage {
 		await waitForSuccessAlert(this.page);
 	}
 
-	async publishNewBasicFileEntry(title: string) {
-		await this.goto();
+	async publishNewBasicFileEntry(
+		title: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
+		await this.goto(siteUrl);
 
 		await this.titleSelector.fill(title);
 

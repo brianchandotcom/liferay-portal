@@ -295,6 +295,8 @@ public class UserSegmentsCriteriaContributorTest {
 	}
 
 	private MockPortletRequest _getMockPortletRequest() throws Exception {
+		MockPortletRequest mockPortletRequest = new MockPortletRequest();
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
@@ -317,8 +319,6 @@ public class UserSegmentsCriteriaContributorTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		MockPortletRequest mockPortletRequest = new MockPortletRequest();
 
 		mockPortletRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);

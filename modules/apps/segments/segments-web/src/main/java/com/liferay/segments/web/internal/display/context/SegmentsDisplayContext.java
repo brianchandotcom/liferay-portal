@@ -504,6 +504,8 @@ public class SegmentsDisplayContext {
 	}
 
 	private OrderByComparator<SegmentsEntry> _getOrderByComparator() {
+		OrderByComparator<SegmentsEntry> orderByComparator = null;
+
 		boolean orderByAsc = false;
 
 		if (Objects.equals(getOrderByType(), "asc")) {
@@ -511,8 +513,6 @@ public class SegmentsDisplayContext {
 		}
 
 		String orderByCol = _getOrderByCol();
-
-		OrderByComparator<SegmentsEntry> orderByComparator = null;
 
 		if (orderByCol.equals("modified-date")) {
 			orderByComparator = new SegmentsEntryModifiedDateComparator(
@@ -550,13 +550,13 @@ public class SegmentsDisplayContext {
 	}
 
 	private Sort _getSort() {
+		Sort sort = null;
+
 		boolean orderByAsc = false;
 
 		if (Objects.equals(getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
-
-		Sort sort = null;
 
 		if (Objects.equals(_getOrderByCol(), "name")) {
 			sort = new Sort(

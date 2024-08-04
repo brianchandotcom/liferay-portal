@@ -504,8 +504,6 @@ public class SegmentsDisplayContext {
 	}
 
 	private OrderByComparator<SegmentsEntry> _getOrderByComparator() {
-		OrderByComparator<SegmentsEntry> orderByComparator = null;
-
 		boolean orderByAsc = false;
 
 		if (Objects.equals(getOrderByType(), "asc")) {
@@ -515,14 +513,13 @@ public class SegmentsDisplayContext {
 		String orderByCol = _getOrderByCol();
 
 		if (orderByCol.equals("modified-date")) {
-			orderByComparator = new SegmentsEntryModifiedDateComparator(
-				orderByAsc);
+			return new SegmentsEntryModifiedDateComparator(orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new SegmentsEntryNameComparator(orderByAsc);
+			return new SegmentsEntryNameComparator(orderByAsc);
 		}
 
-		return orderByComparator;
+		return null;
 	}
 
 	private PortletURL _getPortletURL() {
@@ -550,8 +547,6 @@ public class SegmentsDisplayContext {
 	}
 
 	private Sort _getSort() {
-		Sort sort = null;
-
 		boolean orderByAsc = false;
 
 		if (Objects.equals(getOrderByType(), "asc")) {
@@ -559,16 +554,13 @@ public class SegmentsDisplayContext {
 		}
 
 		if (Objects.equals(_getOrderByCol(), "name")) {
-			sort = new Sort(
+			return new Sort(
 				Field.getSortableFieldName(
 					"localized_name_".concat(_themeDisplay.getLanguageId())),
 				Sort.STRING_TYPE, !orderByAsc);
 		}
-		else {
-			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
-		}
 
-		return sort;
+		return new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
 	}
 
 	private boolean _hasResults() throws PortalException {

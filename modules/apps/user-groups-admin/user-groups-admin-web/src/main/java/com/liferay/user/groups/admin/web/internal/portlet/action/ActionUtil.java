@@ -22,15 +22,13 @@ public class ActionUtil {
 	public static UserGroup getUserGroup(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		UserGroup userGroup = null;
-
 		long userGroupId = ParamUtil.getLong(httpServletRequest, "userGroupId");
 
 		if (userGroupId > 0) {
-			userGroup = UserGroupServiceUtil.fetchUserGroup(userGroupId);
+			return UserGroupServiceUtil.fetchUserGroup(userGroupId);
 		}
 
-		return userGroup;
+		return null;
 	}
 
 	public static UserGroup getUserGroup(PortletRequest portletRequest)

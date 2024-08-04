@@ -132,8 +132,6 @@ public class SegmentsEntryDisplayContext {
 	}
 
 	private Sort _getSort() {
-		Sort sort = null;
-
 		boolean orderByAsc = false;
 
 		if (Objects.equals(_getOrderByType(), "asc")) {
@@ -141,16 +139,13 @@ public class SegmentsEntryDisplayContext {
 		}
 
 		if (Objects.equals(_getOrderByCol(), "name")) {
-			sort = new Sort(
+			return new Sort(
 				Field.getSortableFieldName(
 					"localized_name_".concat(_themeDisplay.getLanguageId())),
 				Sort.STRING_TYPE, !orderByAsc);
 		}
-		else {
-			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
-		}
 
-		return sort;
+		return new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
 	}
 
 	private long _groupId;

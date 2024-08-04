@@ -128,8 +128,6 @@ public class SiteNavigationMenuItemSelectorViewDescriptor
 	private OrderByComparator<SiteNavigationMenu> _getOrderByComparator(
 		String orderByCol, String orderByType) {
 
-		OrderByComparator<SiteNavigationMenu> orderByComparator = null;
-
 		boolean orderByAsc = false;
 
 		if (orderByType.equals("asc")) {
@@ -137,15 +135,13 @@ public class SiteNavigationMenuItemSelectorViewDescriptor
 		}
 
 		if (orderByCol.equals("modified-date")) {
-			orderByComparator = new SiteNavigationMenuModifiedDateComparator(
-				orderByAsc);
+			return new SiteNavigationMenuModifiedDateComparator(orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new SiteNavigationMenuNameComparator(
-				orderByAsc);
+			return new SiteNavigationMenuNameComparator(orderByAsc);
 		}
 
-		return orderByComparator;
+		return null;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

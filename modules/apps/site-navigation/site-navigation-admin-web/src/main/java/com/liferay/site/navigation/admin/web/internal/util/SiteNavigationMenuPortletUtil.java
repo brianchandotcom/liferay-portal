@@ -38,8 +38,7 @@ public class SiteNavigationMenuPortletUtil {
 		}
 
 		if (orderByCol.equals("create-date")) {
-			oreturn
-			new SiteNavigationMenuCreateDateComparator(orderByAsc);
+			return new SiteNavigationMenuCreateDateComparator(orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
 			return new SiteNavigationMenuNameComparator(orderByAsc);

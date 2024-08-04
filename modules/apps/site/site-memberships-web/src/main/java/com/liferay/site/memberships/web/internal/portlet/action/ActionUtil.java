@@ -24,9 +24,9 @@ public class ActionUtil {
 	public static List<Organization> getOrganizations(ResourceRequest request)
 		throws Exception {
 
-		long[] organizationIds = ParamUtil.getLongValues(request, "rowIds");
-
 		List<Organization> organizations = new ArrayList<>();
+
+		long[] organizationIds = ParamUtil.getLongValues(request, "rowIds");
 
 		for (long organizationId : organizationIds) {
 			organizations.add(
@@ -39,9 +39,9 @@ public class ActionUtil {
 	public static List<User> getUsers(ResourceRequest request)
 		throws Exception {
 
-		long[] userIds = ParamUtil.getLongValues(request, "rowIds");
-
 		List<User> users = new ArrayList<>();
+
+		long[] userIds = ParamUtil.getLongValues(request, "rowIds");
 
 		for (long userId : userIds) {
 			users.add(UserLocalServiceUtil.getUser(userId));

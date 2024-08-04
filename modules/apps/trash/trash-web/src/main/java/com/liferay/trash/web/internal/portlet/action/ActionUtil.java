@@ -25,9 +25,9 @@ public class ActionUtil {
 	public static List<TrashEntry> getTrashEntries(ResourceRequest request)
 		throws Exception {
 
-		long[] trashEntryIds = ParamUtil.getLongValues(request, "rowIds");
-
 		List<TrashEntry> trashEntries = new ArrayList<>();
+
+		long[] trashEntryIds = ParamUtil.getLongValues(request, "rowIds");
 
 		for (long trashEntryId : trashEntryIds) {
 			TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(

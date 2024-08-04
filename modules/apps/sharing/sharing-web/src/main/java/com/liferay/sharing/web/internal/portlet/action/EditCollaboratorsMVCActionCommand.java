@@ -172,10 +172,10 @@ public class EditCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private Set<Long> _getSharingEntryIdsToDelete(ActionRequest actionRequest) {
+		Set<Long> sharingEntryIdsToDelete = new HashSet<>();
+
 		long[] deleteSharingEntryIds = ParamUtil.getLongValues(
 			actionRequest, "deleteSharingEntryIds");
-
-		Set<Long> sharingEntryIdsToDelete = new HashSet<>();
 
 		for (Long sharingEntryId : deleteSharingEntryIds) {
 			sharingEntryIdsToDelete.add(sharingEntryId);

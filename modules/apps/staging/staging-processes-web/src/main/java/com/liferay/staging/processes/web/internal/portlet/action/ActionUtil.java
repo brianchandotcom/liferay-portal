@@ -47,18 +47,17 @@ public class ActionUtil {
 
 		Group group = null;
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
-
 		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 		if (groupId > 0) {
 			group = GroupLocalServiceUtil.getGroup(groupId);
 		}
 		else if (!cmd.equals(Constants.ADD)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			group = themeDisplay.getSiteGroup();
 		}
 

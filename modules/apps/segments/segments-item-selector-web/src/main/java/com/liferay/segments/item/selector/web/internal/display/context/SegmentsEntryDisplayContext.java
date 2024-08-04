@@ -132,13 +132,13 @@ public class SegmentsEntryDisplayContext {
 	}
 
 	private Sort _getSort() {
+		Sort sort = null;
+
 		boolean orderByAsc = false;
 
 		if (Objects.equals(_getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
-
-		Sort sort = null;
 
 		if (Objects.equals(_getOrderByCol(), "name")) {
 			sort = new Sort(

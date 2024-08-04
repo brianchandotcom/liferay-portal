@@ -96,10 +96,10 @@ public class EntityModelFieldMapper {
 	public List<Field> getFields(
 		EntityModel entityModel, PortletRequest portletRequest) {
 
+		List<Field> fields = new ArrayList<>();
+
 		Map<String, EntityField> entityFieldsMap =
 			entityModel.getEntityFieldsMap();
-
-		List<Field> fields = new ArrayList<>();
 
 		entityFieldsMap.forEach(
 			(entityFieldName, entityField) -> fields.addAll(

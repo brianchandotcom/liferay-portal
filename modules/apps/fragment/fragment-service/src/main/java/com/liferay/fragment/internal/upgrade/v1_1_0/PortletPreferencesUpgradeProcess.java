@@ -221,11 +221,8 @@ public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesUpgradeProcess.class);
 
-	private static final Map<Long, Long> _companyControlPanelPlids =
-		new HashMap<>();
-	private static final Map<Long, Long> _groupControlPanelPlids =
-		new HashMap<>();
-
+	private final Map<Long, Long> _companyControlPanelPlids = new HashMap<>();
+	private final Map<Long, Long> _groupControlPanelPlids = new HashMap<>();
 	private final LayoutLocalService _layoutLocalService;
 
 }

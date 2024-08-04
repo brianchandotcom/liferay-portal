@@ -100,4 +100,19 @@ export class PageConfigurationPage {
 
 		await this.save();
 	}
+
+	async setInputValueAndSave(
+		element: Locator,
+		layoutTitle: string,
+		section: string,
+		value: string
+	) {
+		await this.goToSection(layoutTitle, section);
+
+		await element.waitFor();
+
+		await fillAndClickOutside(this.page, element, value);
+
+		await this.save();
+	}
 }

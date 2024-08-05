@@ -18,6 +18,8 @@ test('smoke: test SCIM configuration options', async ({page}) => {
 
 	await scimConfigurationPage.goTo();
 
+	await page.waitForTimeout(1000);
+
 	await scimConfigurationPage.configureSCIM('test', 'email');
 
 	await scimConfigurationPage.generateToken();
@@ -34,6 +36,8 @@ test('LPD-23255 AC1 TC1: Reset SCIM Client provisioning data button is present',
 
 	await scimConfigurationPage.goTo();
 
+	await page.waitForTimeout(1000);
+
 	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
 
 	await scimConfigurationPage.resetClientData();
@@ -45,6 +49,8 @@ test('LPD-23255 AC2 TC2: Reset SCIM Client provisioning data button description 
 	const scimConfigurationPage = new SCIMConfigurationPage(page);
 
 	await scimConfigurationPage.goTo();
+
+	await page.waitForTimeout(1000);
 
 	await scimConfigurationPage.configureSCIM('Test SCIM Client', 'email');
 

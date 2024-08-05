@@ -41,8 +41,6 @@ export class SCIMConfigurationPage {
 
 	async goTo() {
 		await this.instanceSettingsPage.goToInstanceSetting('SCIM', 'SCIM');
-
-		await this.page.waitForTimeout(1000);
 	}
 
 	async configureSCIM(oAuth2ApplicationName: string, matcherField: string) {

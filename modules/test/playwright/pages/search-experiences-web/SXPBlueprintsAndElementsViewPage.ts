@@ -20,7 +20,7 @@ export class SXPBlueprintsAndElementsViewPage {
 
 	constructor(page: Page) {
 		this.addBlueprintButton = page.getByRole('button', {
-			name: 'Add Blueprint',
+			name: 'New Search Blueprint',
 		});
 		this.addBlueprintElementModal = page.locator('.modal-dialog');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);

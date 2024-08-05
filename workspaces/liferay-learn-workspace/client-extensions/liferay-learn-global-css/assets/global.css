@@ -1459,7 +1459,7 @@ pre[class*='language-'] {
 	}
 
 	.lexicon-icon-sites {
-		color: white;
+		color: var(--color-neutral-0, #ffffff);
 		width: var(--spacer-3);
 	}
 }

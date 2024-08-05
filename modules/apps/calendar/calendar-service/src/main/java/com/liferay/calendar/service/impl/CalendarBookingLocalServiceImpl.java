@@ -83,7 +83,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -114,6 +113,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -163,8 +164,7 @@ public class CalendarBookingLocalServiceImpl
 					entry.getValue(), null);
 			}
 			else {
-				description = _htmlParser.extractText(
-					HtmlUtil.escape(entry.getValue()));
+				description = _sanitizeHTMLEntry(entry.getValue());
 			}
 
 			descriptionMap.put(entry.getKey(), description);
@@ -1225,8 +1225,7 @@ public class CalendarBookingLocalServiceImpl
 					entry.getValue(), null);
 			}
 			else {
-				description = _htmlParser.extractText(
-					HtmlUtil.escape(entry.getValue()));
+				description = _sanitizeHTMLEntry(entry.getValue());
 			}
 
 			descriptionMap.put(entry.getKey(), description);
@@ -2323,6 +2322,40 @@ public class CalendarBookingLocalServiceImpl
 		}
 	}
 
+	private String _sanitizeHTMLEntry(String htmlEntry) {
+		if ((htmlEntry == null) || htmlEntry.isEmpty()) {
+			return htmlEntry;
+		}
+
+		Matcher matcher = _htmlTagWithOnAttributePattern.matcher(htmlEntry);
+		StringBuffer sb = new StringBuffer();
+
+		while (matcher.find()) {
+			String replacement = matcher.group(
+			).replaceAll(
+				_onAttributePattern.pattern(), ""
+			);
+
+			matcher.appendReplacement(sb, replacement);
+		}
+
+		matcher.appendTail(sb);
+
+		String sanitizedHtml = sb.toString();
+
+		return sanitizedHtml.replaceAll(
+			_allertPattern.pattern(), ""
+		).replaceAll(
+			_innerHtmlPattern.pattern(), ""
+		).replaceAll(
+			_phpCodePattern.pattern(), ""
+		).replaceAll(
+			_aspCodePattern.pattern(), ""
+		).replaceAll(
+			_aspNetCodePattern.pattern(), ""
+		);
+	}
+
 	private void _sendChildrenNotifications(
 		CalendarBooking calendarBooking,
 		NotificationTemplateType notificationTemplateType,
@@ -2740,6 +2773,25 @@ public class CalendarBookingLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingLocalServiceImpl.class);
+
+	private static final Pattern _allertPattern = Pattern.compile(
+		"alert\\((.*?)\\)", Pattern.CASE_INSENSITIVE);
+	private static final Pattern _aspCodePattern = Pattern.compile(
+		"<%[\\s\\S]*?%>", Pattern.CASE_INSENSITIVE);
+	private static final Pattern _aspNetCodePattern = Pattern.compile(
+		"<asp:[^>]+>.*?</asp:[^>]+>", Pattern.CASE_INSENSITIVE);
+	private static final Pattern _htmlTagWithOnAttributePattern =
+		Pattern.compile(
+			"<[^>]+?(\\s+\\bon\\w+=" +
+				"(?:'[^']*'|\"[^\"]*\"|[^'\"\\s>]+))*\\s*/?>",
+			Pattern.CASE_INSENSITIVE);
+	private static final Pattern _innerHtmlPattern = Pattern.compile(
+		"innerHTML\\s*=\\s*.*?", Pattern.CASE_INSENSITIVE);
+	private static final Pattern _onAttributePattern = Pattern.compile(
+		"(\\s+\\bon\\w+=(?:'[^']*'|\"[^\"]*\"|[^'\"\\s>]+))",
+		Pattern.CASE_INSENSITIVE);
+	private static final Pattern _phpCodePattern = Pattern.compile(
+		"<\\?[\\s\\S]*?\\?>", Pattern.CASE_INSENSITIVE);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

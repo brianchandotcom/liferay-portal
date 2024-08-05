@@ -42,21 +42,21 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "Test Component to test the generation of getValue method on DTOs when one or multiple JSON Maps are present.",
-	value = "JSONMapAttributeTestObject"
+	description = "Test Component to test the generation of getValue method on Entities when one or multiple JSON Maps are present.",
+	value = "JSONMapAttributeTestEntity"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "JSONMapAttributeTestObject")
-public class JSONMapAttributeTestObject implements Serializable {
+@XmlRootElement(name = "JSONMapAttributeTestEntity")
+public class JSONMapAttributeTestEntity implements Serializable {
 
-	public static JSONMapAttributeTestObject toDTO(String json) {
+	public static JSONMapAttributeTestEntity toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			JSONMapAttributeTestObject.class, json);
+			JSONMapAttributeTestEntity.class, json);
 	}
 
-	public static JSONMapAttributeTestObject unsafeToDTO(String json) {
+	public static JSONMapAttributeTestEntity unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			JSONMapAttributeTestObject.class, json);
+			JSONMapAttributeTestEntity.class, json);
 	}
 
 	@Schema
@@ -299,15 +299,15 @@ public class JSONMapAttributeTestObject implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof JSONMapAttributeTestObject)) {
+		if (!(object instanceof JSONMapAttributeTestEntity)) {
 			return false;
 		}
 
-		JSONMapAttributeTestObject jsonMapAttributeTestObject =
-			(JSONMapAttributeTestObject)object;
+		JSONMapAttributeTestEntity jsonMapAttributeTestEntity =
+			(JSONMapAttributeTestEntity)object;
 
 		return Objects.equals(
-			toString(), jsonMapAttributeTestObject.toString());
+			toString(), jsonMapAttributeTestEntity.toString());
 	}
 
 	public Object getPropertyValue(String propertyName) {
@@ -460,7 +460,7 @@ public class JSONMapAttributeTestObject implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.JSONMapAttributeTestObject",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.JSONMapAttributeTestEntity",
 		name = "x-class-name"
 	)
 	public String xClassName;

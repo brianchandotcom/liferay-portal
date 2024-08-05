@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.NestedTestObjectSerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.NestedTestEntitySerDes;
 
 import java.io.Serializable;
 
@@ -20,10 +20,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class NestedTestObject implements Cloneable, Serializable {
+public class NestedTestEntity implements Cloneable, Serializable {
 
-	public static NestedTestObject toDTO(String json) {
-		return NestedTestObjectSerDes.toDTO(json);
+	public static NestedTestEntity toDTO(String json) {
+		return NestedTestEntitySerDes.toDTO(json);
 	}
 
 	public Date getDateCreated() {
@@ -127,30 +127,30 @@ public class NestedTestObject implements Cloneable, Serializable {
 
 	protected String name;
 
-	public TestObject getTestObject() {
-		return testObject;
+	public TestEntity getTestEntity() {
+		return testEntity;
 	}
 
-	public void setTestObject(TestObject testObject) {
-		this.testObject = testObject;
+	public void setTestEntity(TestEntity testEntity) {
+		this.testEntity = testEntity;
 	}
 
-	public void setTestObject(
-		UnsafeSupplier<TestObject, Exception> testObjectUnsafeSupplier) {
+	public void setTestEntity(
+		UnsafeSupplier<TestEntity, Exception> testEntityUnsafeSupplier) {
 
 		try {
-			testObject = testObjectUnsafeSupplier.get();
+			testEntity = testEntityUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected TestObject testObject;
+	protected TestEntity testEntity;
 
 	@Override
-	public NestedTestObject clone() throws CloneNotSupportedException {
-		return (NestedTestObject)super.clone();
+	public NestedTestEntity clone() throws CloneNotSupportedException {
+		return (NestedTestEntity)super.clone();
 	}
 
 	@Override
@@ -159,13 +159,13 @@ public class NestedTestObject implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof NestedTestObject)) {
+		if (!(object instanceof NestedTestEntity)) {
 			return false;
 		}
 
-		NestedTestObject nestedTestObject = (NestedTestObject)object;
+		NestedTestEntity nestedTestEntity = (NestedTestEntity)object;
 
-		return Objects.equals(toString(), nestedTestObject.toString());
+		return Objects.equals(toString(), nestedTestEntity.toString());
 	}
 
 	@Override
@@ -176,7 +176,7 @@ public class NestedTestObject implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return NestedTestObjectSerDes.toJSON(this);
+		return NestedTestEntitySerDes.toJSON(this);
 	}
 
 }

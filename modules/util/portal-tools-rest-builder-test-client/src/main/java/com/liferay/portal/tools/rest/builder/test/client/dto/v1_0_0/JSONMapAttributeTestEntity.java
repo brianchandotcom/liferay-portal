@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.JSONMapAttributeTestObjectSerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.JSONMapAttributeTestEntitySerDes;
 
 import java.io.Serializable;
 
@@ -20,10 +20,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class JSONMapAttributeTestObject implements Cloneable, Serializable {
+public class JSONMapAttributeTestEntity implements Cloneable, Serializable {
 
-	public static JSONMapAttributeTestObject toDTO(String json) {
-		return JSONMapAttributeTestObjectSerDes.toDTO(json);
+	public static JSONMapAttributeTestEntity toDTO(String json) {
+		return JSONMapAttributeTestEntitySerDes.toDTO(json);
 	}
 
 	public String getDescription() {
@@ -111,10 +111,10 @@ public class JSONMapAttributeTestObject implements Cloneable, Serializable {
 	protected Map<String, Object> properties2;
 
 	@Override
-	public JSONMapAttributeTestObject clone()
+	public JSONMapAttributeTestEntity clone()
 		throws CloneNotSupportedException {
 
-		return (JSONMapAttributeTestObject)super.clone();
+		return (JSONMapAttributeTestEntity)super.clone();
 	}
 
 	@Override
@@ -123,15 +123,15 @@ public class JSONMapAttributeTestObject implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof JSONMapAttributeTestObject)) {
+		if (!(object instanceof JSONMapAttributeTestEntity)) {
 			return false;
 		}
 
-		JSONMapAttributeTestObject jsonMapAttributeTestObject =
-			(JSONMapAttributeTestObject)object;
+		JSONMapAttributeTestEntity jsonMapAttributeTestEntity =
+			(JSONMapAttributeTestEntity)object;
 
 		return Objects.equals(
-			toString(), jsonMapAttributeTestObject.toString());
+			toString(), jsonMapAttributeTestEntity.toString());
 	}
 
 	@Override
@@ -142,7 +142,7 @@ public class JSONMapAttributeTestObject implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return JSONMapAttributeTestObjectSerDes.toJSON(this);
+		return JSONMapAttributeTestEntitySerDes.toJSON(this);
 	}
 
 }

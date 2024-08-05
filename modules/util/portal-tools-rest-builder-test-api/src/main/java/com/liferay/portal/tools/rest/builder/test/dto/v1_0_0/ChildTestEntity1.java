@@ -34,17 +34,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ChildTestObject1")
+@GraphQLName("ChildTestEntity1")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ChildTestObject1")
-public class ChildTestObject1 extends TestObject implements Serializable {
+@XmlRootElement(name = "ChildTestEntity1")
+public class ChildTestEntity1 extends TestEntity implements Serializable {
 
-	public static ChildTestObject1 toDTO(String json) {
-		return ObjectMapperUtil.readValue(ChildTestObject1.class, json);
+	public static ChildTestEntity1 toDTO(String json) {
+		return ObjectMapperUtil.readValue(ChildTestEntity1.class, json);
 	}
 
-	public static ChildTestObject1 unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(ChildTestObject1.class, json);
+	public static ChildTestEntity1 unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(ChildTestEntity1.class, json);
 	}
 
 	@Override
@@ -53,13 +53,13 @@ public class ChildTestObject1 extends TestObject implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ChildTestObject1)) {
+		if (!(object instanceof ChildTestEntity1)) {
 			return false;
 		}
 
-		ChildTestObject1 childTestObject1 = (ChildTestObject1)object;
+		ChildTestEntity1 childTestEntity1 = (ChildTestEntity1)object;
 
-		return Objects.equals(toString(), childTestObject1.toString());
+		return Objects.equals(toString(), childTestEntity1.toString());
 	}
 
 	@Override
@@ -169,16 +169,16 @@ public class ChildTestObject1 extends TestObject implements Serializable {
 			sb.append("\"");
 		}
 
-		NestedTestObject nestedTestObject = getNestedTestObject();
+		NestedTestEntity nestedTestEntity = getNestedTestEntity();
 
-		if (nestedTestObject != null) {
+		if (nestedTestEntity != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"nestedTestObject\": ");
+			sb.append("\"nestedTestEntity\": ");
 
-			sb.append(String.valueOf(nestedTestObject));
+			sb.append(String.valueOf(nestedTestEntity));
 		}
 
 		String self = getSelf();
@@ -197,16 +197,16 @@ public class ChildTestObject1 extends TestObject implements Serializable {
 			sb.append("\"");
 		}
 
-		TestObject testObjects = getTestObjects();
+		TestEntity testEntities = getTestEntities();
 
-		if (testObjects != null) {
+		if (testEntities != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"testObjects\": ");
+			sb.append("\"testEntities\": ");
 
-			sb.append(String.valueOf(testObjects));
+			sb.append(String.valueOf(testEntities));
 		}
 
 		Type type = getType();
@@ -232,7 +232,7 @@ public class ChildTestObject1 extends TestObject implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.ChildTestObject1",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.ChildTestEntity1",
 		name = "x-class-name"
 	)
 	public String xClassName;

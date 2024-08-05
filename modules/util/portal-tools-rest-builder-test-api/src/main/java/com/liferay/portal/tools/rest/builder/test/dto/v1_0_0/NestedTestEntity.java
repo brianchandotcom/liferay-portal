@@ -5,14 +5,9 @@
 
 package com.liferay.portal.tools.rest.builder.test.dto.v1_0_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -39,7 +34,6 @@ import javax.annotation.Generated;
 
 import javax.validation.Valid;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -48,32 +42,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "https://www.schema.org/Document", value = "TestObject"
+	description = "https://www.schema.org/Folder", value = "NestedTestEntity"
 )
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "ChildTestObject1", value = ChildTestObject1.class
-		),
-		@JsonSubTypes.Type(
-			name = "ChildTestObject2", value = ChildTestObject2.class
-		)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "TestObject")
-public abstract class TestObject implements Serializable {
+@XmlRootElement(name = "NestedTestEntity")
+public class NestedTestEntity implements Serializable {
 
-	public static TestObject toDTO(String json) {
-		return ObjectMapperUtil.readValue(TestObject.class, json);
+	public static NestedTestEntity toDTO(String json) {
+		return ObjectMapperUtil.readValue(NestedTestEntity.class, json);
 	}
 
-	public static TestObject unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(TestObject.class, json);
+	public static NestedTestEntity unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(NestedTestEntity.class, json);
 	}
 
 	@Schema
@@ -200,29 +180,27 @@ public abstract class TestObject implements Serializable {
 	private Supplier<String> _descriptionSupplier;
 
 	@Schema
-	public Long getDocumentId() {
-		if (_documentIdSupplier != null) {
-			documentId = _documentIdSupplier.get();
+	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
 
-			_documentIdSupplier = null;
+			_idSupplier = null;
 		}
 
-		return documentId;
+		return id;
 	}
 
-	public void setDocumentId(Long documentId) {
-		this.documentId = documentId;
+	public void setId(Long id) {
+		this.id = id;
 
-		_documentIdSupplier = null;
+		_idSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setDocumentId(
-		UnsafeSupplier<Long, Exception> documentIdUnsafeSupplier) {
-
-		_documentIdSupplier = () -> {
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		_idSupplier = () -> {
 			try {
-				return documentIdUnsafeSupplier.get();
+				return idUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -235,52 +213,10 @@ public abstract class TestObject implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long documentId;
+	protected Long id;
 
 	@JsonIgnore
-	private Supplier<Long> _documentIdSupplier;
-
-	@Schema
-	public String getJsonProperty() {
-		if (_jsonPropertySupplier != null) {
-			jsonProperty = _jsonPropertySupplier.get();
-
-			_jsonPropertySupplier = null;
-		}
-
-		return jsonProperty;
-	}
-
-	public void setJsonProperty(String jsonProperty) {
-		this.jsonProperty = jsonProperty;
-
-		_jsonPropertySupplier = null;
-	}
-
-	@JsonIgnore
-	public void setJsonProperty(
-		UnsafeSupplier<String, Exception> jsonPropertyUnsafeSupplier) {
-
-		_jsonPropertySupplier = () -> {
-			try {
-				return jsonPropertyUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@XmlElement(name = "xmlProperty")
-	protected String jsonProperty;
-
-	@JsonIgnore
-	private Supplier<String> _jsonPropertySupplier;
+	private Supplier<Long> _idSupplier;
 
 	@Schema
 	public String getName() {
@@ -323,30 +259,29 @@ public abstract class TestObject implements Serializable {
 
 	@Schema
 	@Valid
-	public NestedTestObject getNestedTestObject() {
-		if (_nestedTestObjectSupplier != null) {
-			nestedTestObject = _nestedTestObjectSupplier.get();
+	public TestEntity getTestEntity() {
+		if (_testEntitySupplier != null) {
+			testEntity = _testEntitySupplier.get();
 
-			_nestedTestObjectSupplier = null;
+			_testEntitySupplier = null;
 		}
 
-		return nestedTestObject;
+		return testEntity;
 	}
 
-	public void setNestedTestObject(NestedTestObject nestedTestObject) {
-		this.nestedTestObject = nestedTestObject;
+	public void setTestEntity(TestEntity testEntity) {
+		this.testEntity = testEntity;
 
-		_nestedTestObjectSupplier = null;
+		_testEntitySupplier = null;
 	}
 
 	@JsonIgnore
-	public void setNestedTestObject(
-		UnsafeSupplier<NestedTestObject, Exception>
-			nestedTestObjectUnsafeSupplier) {
+	public void setTestEntity(
+		UnsafeSupplier<TestEntity, Exception> testEntityUnsafeSupplier) {
 
-		_nestedTestObjectSupplier = () -> {
+		_testEntitySupplier = () -> {
 			try {
-				return nestedTestObjectUnsafeSupplier.get();
+				return testEntityUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -359,143 +294,10 @@ public abstract class TestObject implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected NestedTestObject nestedTestObject;
+	protected TestEntity testEntity;
 
 	@JsonIgnore
-	private Supplier<NestedTestObject> _nestedTestObjectSupplier;
-
-	@Schema
-	public String getSelf() {
-		if (_selfSupplier != null) {
-			self = _selfSupplier.get();
-
-			_selfSupplier = null;
-		}
-
-		return self;
-	}
-
-	public void setSelf(String self) {
-		this.self = self;
-
-		_selfSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setSelf(UnsafeSupplier<String, Exception> selfUnsafeSupplier) {
-		_selfSupplier = () -> {
-			try {
-				return selfUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String self;
-
-	@JsonIgnore
-	private Supplier<String> _selfSupplier;
-
-	@Schema
-	@Valid
-	public TestObject getTestObjects() {
-		if (_testObjectsSupplier != null) {
-			testObjects = _testObjectsSupplier.get();
-
-			_testObjectsSupplier = null;
-		}
-
-		return testObjects;
-	}
-
-	public void setTestObjects(TestObject testObjects) {
-		this.testObjects = testObjects;
-
-		_testObjectsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setTestObjects(
-		UnsafeSupplier<TestObject, Exception> testObjectsUnsafeSupplier) {
-
-		_testObjectsSupplier = () -> {
-			try {
-				return testObjectsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected TestObject testObjects;
-
-	@JsonIgnore
-	private Supplier<TestObject> _testObjectsSupplier;
-
-	@JsonGetter("type")
-	@Schema
-	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
-
-			_typeSupplier = null;
-		}
-
-		return type;
-	}
-
-	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
-
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-
-		_typeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
-			try {
-				return typeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
-
-	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
+	private Supplier<TestEntity> _testEntitySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -503,13 +305,13 @@ public abstract class TestObject implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof TestObject)) {
+		if (!(object instanceof NestedTestEntity)) {
 			return false;
 		}
 
-		TestObject testObject = (TestObject)object;
+		NestedTestEntity nestedTestEntity = (NestedTestEntity)object;
 
-		return Objects.equals(toString(), testObject.toString());
+		return Objects.equals(toString(), nestedTestEntity.toString());
 	}
 
 	@Override
@@ -575,32 +377,16 @@ public abstract class TestObject implements Serializable {
 			sb.append("\"");
 		}
 
-		Long documentId = getDocumentId();
+		Long id = getId();
 
-		if (documentId != null) {
+		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"documentId\": ");
+			sb.append("\"id\": ");
 
-			sb.append(documentId);
-		}
-
-		String jsonProperty = getJsonProperty();
-
-		if (jsonProperty != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"jsonProperty\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(jsonProperty));
-
-			sb.append("\"");
+			sb.append(id);
 		}
 
 		String name = getName();
@@ -619,60 +405,16 @@ public abstract class TestObject implements Serializable {
 			sb.append("\"");
 		}
 
-		NestedTestObject nestedTestObject = getNestedTestObject();
+		TestEntity testEntity = getTestEntity();
 
-		if (nestedTestObject != null) {
+		if (testEntity != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"nestedTestObject\": ");
+			sb.append("\"testEntity\": ");
 
-			sb.append(String.valueOf(nestedTestObject));
-		}
-
-		String self = getSelf();
-
-		if (self != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"self\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(self));
-
-			sb.append("\"");
-		}
-
-		TestObject testObjects = getTestObjects();
-
-		if (testObjects != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"testObjects\": ");
-
-			sb.append(String.valueOf(testObjects));
-		}
-
-		Type type = getType();
-
-		if (type != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
-
-			sb.append("\"");
-
-			sb.append(type);
-
-			sb.append("\"");
+			sb.append(String.valueOf(testEntity));
 		}
 
 		sb.append("}");
@@ -682,49 +424,10 @@ public abstract class TestObject implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.TestObject",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.NestedTestEntity",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		CHILD_TEST_OBJECT1("ChildTestObject1"),
-		CHILD_TEST_OBJECT2("ChildTestObject2");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

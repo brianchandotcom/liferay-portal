@@ -5,7 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.NestedArrayItemsTestObject;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.NestedArrayItemsTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -21,28 +21,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class NestedArrayItemsTestObjectSerDes {
+public class NestedArrayItemsTestEntitySerDes {
 
-	public static NestedArrayItemsTestObject toDTO(String json) {
-		NestedArrayItemsTestObjectJSONParser
-			nestedArrayItemsTestObjectJSONParser =
-				new NestedArrayItemsTestObjectJSONParser();
+	public static NestedArrayItemsTestEntity toDTO(String json) {
+		NestedArrayItemsTestEntityJSONParser
+			nestedArrayItemsTestEntityJSONParser =
+				new NestedArrayItemsTestEntityJSONParser();
 
-		return nestedArrayItemsTestObjectJSONParser.parseToDTO(json);
+		return nestedArrayItemsTestEntityJSONParser.parseToDTO(json);
 	}
 
-	public static NestedArrayItemsTestObject[] toDTOs(String json) {
-		NestedArrayItemsTestObjectJSONParser
-			nestedArrayItemsTestObjectJSONParser =
-				new NestedArrayItemsTestObjectJSONParser();
+	public static NestedArrayItemsTestEntity[] toDTOs(String json) {
+		NestedArrayItemsTestEntityJSONParser
+			nestedArrayItemsTestEntityJSONParser =
+				new NestedArrayItemsTestEntityJSONParser();
 
-		return nestedArrayItemsTestObjectJSONParser.parseToDTOs(json);
+		return nestedArrayItemsTestEntityJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		NestedArrayItemsTestObject nestedArrayItemsTestObject) {
+		NestedArrayItemsTestEntity nestedArrayItemsTestEntity) {
 
-		if (nestedArrayItemsTestObject == null) {
+		if (nestedArrayItemsTestEntity == null) {
 			return "null";
 		}
 
@@ -50,7 +50,7 @@ public class NestedArrayItemsTestObjectSerDes {
 
 		sb.append("{");
 
-		if (nestedArrayItemsTestObject.getName() != null) {
+		if (nestedArrayItemsTestEntity.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -59,12 +59,12 @@ public class NestedArrayItemsTestObjectSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(nestedArrayItemsTestObject.getName()));
+			sb.append(_escape(nestedArrayItemsTestEntity.getName()));
 
 			sb.append("\"");
 		}
 
-		if (nestedArrayItemsTestObject.getValues() != null) {
+		if (nestedArrayItemsTestEntity.getValues() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -73,12 +73,12 @@ public class NestedArrayItemsTestObjectSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < nestedArrayItemsTestObject.getValues().length;
+			for (int i = 0; i < nestedArrayItemsTestEntity.getValues().length;
 				 i++) {
 
-				sb.append(nestedArrayItemsTestObject.getValues()[i]);
+				sb.append(nestedArrayItemsTestEntity.getValues()[i]);
 
-				if ((i + 1) < nestedArrayItemsTestObject.getValues().length) {
+				if ((i + 1) < nestedArrayItemsTestEntity.getValues().length) {
 					sb.append(", ");
 				}
 			}
@@ -92,53 +92,53 @@ public class NestedArrayItemsTestObjectSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		NestedArrayItemsTestObjectJSONParser
-			nestedArrayItemsTestObjectJSONParser =
-				new NestedArrayItemsTestObjectJSONParser();
+		NestedArrayItemsTestEntityJSONParser
+			nestedArrayItemsTestEntityJSONParser =
+				new NestedArrayItemsTestEntityJSONParser();
 
-		return nestedArrayItemsTestObjectJSONParser.parseToMap(json);
+		return nestedArrayItemsTestEntityJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		NestedArrayItemsTestObject nestedArrayItemsTestObject) {
+		NestedArrayItemsTestEntity nestedArrayItemsTestEntity) {
 
-		if (nestedArrayItemsTestObject == null) {
+		if (nestedArrayItemsTestEntity == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (nestedArrayItemsTestObject.getName() == null) {
+		if (nestedArrayItemsTestEntity.getName() == null) {
 			map.put("name", null);
 		}
 		else {
 			map.put(
-				"name", String.valueOf(nestedArrayItemsTestObject.getName()));
+				"name", String.valueOf(nestedArrayItemsTestEntity.getName()));
 		}
 
-		if (nestedArrayItemsTestObject.getValues() == null) {
+		if (nestedArrayItemsTestEntity.getValues() == null) {
 			map.put("values", null);
 		}
 		else {
 			map.put(
 				"values",
-				String.valueOf(nestedArrayItemsTestObject.getValues()));
+				String.valueOf(nestedArrayItemsTestEntity.getValues()));
 		}
 
 		return map;
 	}
 
-	public static class NestedArrayItemsTestObjectJSONParser
-		extends BaseJSONParser<NestedArrayItemsTestObject> {
+	public static class NestedArrayItemsTestEntityJSONParser
+		extends BaseJSONParser<NestedArrayItemsTestEntity> {
 
 		@Override
-		protected NestedArrayItemsTestObject createDTO() {
-			return new NestedArrayItemsTestObject();
+		protected NestedArrayItemsTestEntity createDTO() {
+			return new NestedArrayItemsTestEntity();
 		}
 
 		@Override
-		protected NestedArrayItemsTestObject[] createDTOArray(int size) {
-			return new NestedArrayItemsTestObject[size];
+		protected NestedArrayItemsTestEntity[] createDTOArray(int size) {
+			return new NestedArrayItemsTestEntity[size];
 		}
 
 		@Override
@@ -155,18 +155,18 @@ public class NestedArrayItemsTestObjectSerDes {
 
 		@Override
 		protected void setField(
-			NestedArrayItemsTestObject nestedArrayItemsTestObject,
+			NestedArrayItemsTestEntity nestedArrayItemsTestEntity,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					nestedArrayItemsTestObject.setName(
+					nestedArrayItemsTestEntity.setName(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "values")) {
 				if (jsonParserFieldValue != null) {
-					nestedArrayItemsTestObject.setValues(
+					nestedArrayItemsTestEntity.setValues(
 						(String[][])jsonParserFieldValue);
 				}
 			}

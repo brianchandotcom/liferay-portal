@@ -1,19 +1,19 @@
 components:
     schemas:
-        ChildTestObject1:
+        ChildTestEntity1:
             allOf:
-                - $ref: "#/components/schemas/TestObject"
+                - $ref: "#/components/schemas/TestEntity"
             type: object
-        ChildTestObject2:
+        ChildTestEntity2:
             allOf:
-                - $ref: "#/components/schemas/TestObject"
+                - $ref: "#/components/schemas/TestEntity"
                 - properties:
                       text:
                           type: string
             type: object
-        JSONMapAttributeTestObject:
+        JSONMapAttributeTestEntity:
             description:
-                Test Component to test the generation of getValue method on DTOs when one or multiple JSON Maps are
+                Test Component to test the generation of getValue method on Entities when one or multiple JSON Maps are
                 present.
             properties:
                 description:
@@ -30,9 +30,9 @@ components:
                         type: object
                     type: object
                     x-json-map: true
-            title: JSONMapAttributeTestObject
+            title: JSONMapAttributeTestEntity
             type: object
-        NestedArrayItemsTestObject:
+        NestedArrayItemsTestEntity:
             description:
                 Test Component to test the REST Builder support for nested array items
             properties:
@@ -44,9 +44,9 @@ components:
                             type: string
                         type: array
                     type: array
-            title: NestedArrayItemsTestObject
+            title: NestedArrayItemsTestEntity
             type: object
-        NestedTestObject:
+        NestedTestEntity:
             description:
                 "https://www.schema.org/Folder"
             properties:
@@ -63,16 +63,16 @@ components:
                     type: integer
                 name:
                     type: string
-                testObject:
-                    $ref: "#/components/schemas/TestObject"
+                testEntity:
+                    $ref: "#/components/schemas/TestEntity"
             type: object
-        TestObject:
+        TestEntity:
             description:
                 "https://www.schema.org/Document"
             discriminator:
                 mapping:
-                    ChildTestObject1: "#/components/schemas/ChildTestObject1"
-                    ChildTestObject2: "#/components/schemas/ChildTestObject2"
+                    ChildTestEntity1: "#/components/schemas/ChildTestEntity1"
+                    ChildTestEntity2: "#/components/schemas/ChildTestEntity2"
                 propertyName: type
             properties:
                 dateCreated:
@@ -92,19 +92,19 @@ components:
                         name: xmlProperty
                 name:
                     type: string
-                nestedTestObject:
-                    $ref: "#/components/schemas/NestedTestObject"
+                nestedTestEntity:
+                    $ref: "#/components/schemas/NestedTestEntity"
                 self:
                     type: string
-                testObjects:
-                    $ref: "#/components/schemas/TestObject"
+                testEntities:
+                    $ref: "#/components/schemas/TestEntity"
                 type:
                     enum:
-                        - ChildTestObject1
-                        - ChildTestObject2
+                        - ChildTestEntity1
+                        - ChildTestEntity2
                     type: string
             type: object
-        UnreferencedTestObject:
+        UnreferencedTestEntity:
             properties:
                 description:
                     type: string
@@ -137,51 +137,51 @@ paths:
                 "200":
                     description:
                         "OK"
-            tags: ["TestObject"]
-    /test-objects:
+            tags: ["TestEntity"]
+    /test-entities:
         get:
-            operationId: getTestObjectsPage
+            operationId: getTestEntitiesPage
             responses:
                 200:
                     content:
                         "application/json":
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/TestObject"
+                                    $ref: "#/components/schemas/TestEntity"
                                 type: array
                         "application/xml":
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/TestObject"
+                                    $ref: "#/components/schemas/TestEntity"
                                 type: array
                     description:
                         "OK"
-            tags: ["TestObject"]
+            tags: ["TestEntity"]
         post:
-            operationId: postTestObject
+            operationId: postTestEntity
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/TestObject"
+                            $ref: "#/components/schemas/TestEntity"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/TestObject"
+                            $ref: "#/components/schemas/TestEntity"
             responses:
                 "200":
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/TestObject"
+                                $ref: "#/components/schemas/TestEntity"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/TestObject"
-            tags: ["TestObject"]
-    /test-objects/count:
+                                $ref: "#/components/schemas/TestEntity"
+            tags: ["TestEntity"]
+    /test-entities/count:
         get:
             description:
                 Retrieves the count.
-            operationId: getTestObjectCount
+            operationId: getTestEntityCount
             responses:
                 200:
                     content:
@@ -192,13 +192,13 @@ paths:
                                 type: integer
                     description:
                         "OK"
-            tags: ["TestObject"]
-    /test-objects/{testObjectId}:
+            tags: ["TestEntity"]
+    /test-entities/{testEntityId}:
         get:
-            operationId: getTestObject
+            operationId: getTestEntity
             parameters:
                 - in: path
-                  name: testObjectId
+                  name: testEntityId
                   required: true
                   schema:
                       format: int64
@@ -208,10 +208,10 @@ paths:
                     content:
                         "application/json":
                             schema:
-                                $ref: "#/components/schemas/TestObject"
+                                $ref: "#/components/schemas/TestEntity"
                         "application/xml":
                             schema:
-                                $ref: "#/components/schemas/TestObject"
+                                $ref: "#/components/schemas/TestEntity"
                     description:
                         "OK"
-            tags: ["TestObject"]
+            tags: ["TestEntity"]

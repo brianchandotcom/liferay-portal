@@ -184,7 +184,11 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		).put(
 			"externalReferenceCode", blogsEntry.getExternalReferenceCode()
 		).put(
+			"groupExternalReferenceCode", _group.getExternalReferenceCode()
+		).put(
 			"localized_title", StringUtil.lowerCase(blogsEntry.getTitle())
+		).put(
+			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
 			"statusByUserId", String.valueOf(blogsEntry.getStatusByUserId())
 		).put(

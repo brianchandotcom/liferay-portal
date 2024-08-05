@@ -273,7 +273,8 @@ public abstract class TestEntity implements Cloneable, Serializable {
 	public static enum Type {
 
 		CHILD_TEST_ENTITY1("ChildTestEntity1"),
-		CHILD_TEST_ENTITY2("ChildTestEntity2");
+		CHILD_TEST_ENTITY2("ChildTestEntity2"),
+		CHILD_TEST_ENTITY3("ChildTestEntity3");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

@@ -12,7 +12,6 @@ import com.liferay.portal.dao.db.PostgreSQLDB;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -43,15 +42,9 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 
 		super(dbType);
 
-		_companyId = companyId;
-
 		_dbPartitionName = DBPartitionUtil.getPartitionName(companyId);
 
 		_objectSQLProvider = new ObjectSQLProvider(db, companyId);
-
-		if (companyId != PortalInstancePool.getDefaultCompanyId()) {
-			_partitionPrefix = _dbPartitionName + StringPool.PERIOD;
-		}
 
 		if ((_partitionIndexesSQL == null) || (_partitionTablesSQL == null)) {
 			_partitionTablesSQL = _getPartitionTablesSQL();
@@ -61,23 +54,16 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 
 	@Override
 	public String getIndexesSQL() {
-		if (_companyId == PortalInstancePool.getDefaultCompanyId()) {
-			return super.getIndexesSQL() + StringPool.NEW_LINE +
-				_objectSQLProvider.getIndexesSQL();
-		}
-
-		return StringBundler.concat(
-			_addIndexesPartition(_partitionIndexesSQL), StringPool.NEW_LINE,
-			_addIndexesPartition(_objectSQLProvider.getIndexesSQL()));
+		return StringUtil.replace(
+			StringBundler.concat(
+				_partitionIndexesSQL, StringPool.NEW_LINE,
+				_objectSQLProvider.getIndexesSQL()),
+			" on ",
+			StringBundler.concat(" on ", _dbPartitionName, StringPool.PERIOD));
 	}
 
 	@Override
 	public String getTablesSQL() {
-		if (_companyId == PortalInstancePool.getDefaultCompanyId()) {
-			return super.getTablesSQL() + StringPool.NEW_LINE +
-				_objectSQLProvider.getTablesSQL();
-		}
-
 		Supplier<String> rulesSQLSupplier = () -> StringPool.BLANK;
 
 		if (db.getDBType() == DBType.POSTGRESQL) {
@@ -85,26 +71,18 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 		}
 
 		return StringBundler.concat(
-			_getCreatePartitionSQL(), _addTablesPartition(_partitionTablesSQL),
-			StringPool.NEW_LINE, _getViewsSQL(), StringPool.NEW_LINE,
-			_addTablesPartition(_objectSQLProvider.getTablesSQL()),
-			rulesSQLSupplier.get());
-	}
-
-	private String _addIndexesPartition(String sql) {
-		return StringUtil.replace(sql, " on ", " on " + _partitionPrefix);
-	}
-
-	private String _addTablesPartition(String sql) {
-		return StringUtil.replace(
-			sql, "create table ", "create table " + _partitionPrefix);
+			_getCreatePartitionSQL(),
+			StringUtil.replace(
+				StringBundler.concat(
+					_partitionTablesSQL, StringPool.NEW_LINE,
+					_objectSQLProvider.getTablesSQL()),
+				"create table ",
+				StringBundler.concat(
+					"create table ", _dbPartitionName, StringPool.PERIOD)),
+			_getViewsSQL(), StringPool.NEW_LINE, rulesSQLSupplier.get());
 	}
 
 	private String _getCreatePartitionSQL() {
-		if (_companyId == PortalInstancePool.getDefaultCompanyId()) {
-			return StringPool.NEW_LINE;
-		}
-
 		if (db.getDBType() == DBType.MYSQL) {
 			return StringBundler.concat(
 				"create schema if not exists ", _dbPartitionName,
@@ -227,9 +205,7 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 	private static String _partitionTablesSQL;
 	private static Set<String[]> _rulesTableColumn;
 
-	private final long _companyId;
 	private final String _dbPartitionName;
 	private final ObjectSQLProvider _objectSQLProvider;
-	private String _partitionPrefix = StringPool.BLANK;
 
 }

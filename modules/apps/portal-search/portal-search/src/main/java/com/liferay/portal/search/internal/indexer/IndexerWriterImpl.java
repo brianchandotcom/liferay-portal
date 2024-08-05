@@ -183,8 +183,17 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 			for (Map.Entry<IndexerWriterMode, List<T>> entry2 :
 					baseModelListMap.entrySet()) {
 
-				Set<Document> documents = new HashSet<>();
 				IndexerWriterMode indexerWriterMode = entry2.getKey();
+
+				if (indexerWriterMode == IndexerWriterMode.SKIP) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Skipping models");
+					}
+
+					continue;
+				}
+
+				Set<Document> documents = new HashSet<>();
 				Set<String> uids = new HashSet<>();
 
 				List<T> baseModelList = entry2.getValue();
@@ -220,11 +229,6 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 					}
 					catch (SearchException searchException) {
 						throw new RuntimeException(searchException);
-					}
-				}
-				else if (indexerWriterMode == IndexerWriterMode.SKIP) {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Skipping models");
 					}
 				}
 			}

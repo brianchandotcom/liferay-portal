@@ -1,1 +1,4285 @@
-[{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Search with Query String Syntax"},"fallbackTitle":"search-with-query-string-syntax","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"SEARCH-WITH-QUERY-STRING-SYNTAX","description_i18n":{"en-US":"Use Query String query syntax to match one or more fields with a single operator (OR or AND)."},"fallbackDescription":"search-with-query-string-syntax-description","modifiedDate":"2024-07-09T17:30:29Z","id":36,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"fields","typeOptions":{"boost":true},"label":"Fields","fieldMappings":[{"field":"localized_title","boost":"2","locale":"${context.language_id}"},{"field":"content","boost":"2","locale":"${context.language_id}"}],"type":"fieldMappingList"},{"name":"operator","typeOptions":{"options":[{"label":"OR","value":"or"},{"label":"AND","value":"and"}]},"label":"Operator","type":"select"},{"defaultValue":1,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"must","query":{"simple_query_string":{"default_operator":"${configuration.operator}","query":"${keywords}","boost":"${configuration.boost}","fields":"${configuration.fields}"}},"context":"query"}]}]}},"icon":"picture","category":"match"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"must","query":{"simple_query_string":{"default_operator":"or","query":"${keywords}","boost":1,"fields":["localized_title_${context.language_id}^2","content_${context.language_id}^2"]}},"context":"query"}]}]}},"uiConfigurationValues":{"boost":1,"fields":[{"field":"localized_title","boost":"2","locale":"${context.language_id}"},{"field":"content","boost":"2","locale":"${context.language_id}"}],"operator":"or"}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Text Match Over Multiple Fields"},"fallbackTitle":"text-match-over-multiple-fields","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"TEXT-MATCH-OVER-MULTIPLE-FIELDS","description_i18n":{"en-US":"Search for a text match over multiple text fields."},"fallbackDescription":"text-match-over-multiple-fields-description","modifiedDate":"2024-07-09T17:30:29Z","id":38,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"fields","typeOptions":{"boost":true},"label":"Fields","fieldMappings":[{"field":"localized_title","boost":"2","locale":"${context.language_id}"},{"field":"content","boost":"1","locale":"${context.language_id}"}],"type":"fieldMappingList"},{"defaultValue":"or","name":"operator","typeOptions":{"options":[{"label":"OR","value":"or"},{"label":"AND","value":"and"}]},"label":"Operator","type":"select"},{"defaultValue":"best_fields","name":"type","typeOptions":{"options":[{"label":"Best Fields","value":"best_fields"},{"label":"Most Fields","value":"most_fields"},{"label":"Cross Fields","value":"cross_fields"},{"label":"Phrase","value":"phrase"},{"label":"Phrase Prefix","value":"phrase_prefix"},{"label":"Boolean Prefix","value":"bool_prefix"}]},"label":"Match Type","type":"select"},{"helpText":"Only use fuzziness with the following match types: most fields, best fields, bool prefix.","defaultValue":"AUTO","name":"fuzziness","typeOptions":{"nullable":true,"options":[{"label":"Auto","value":"AUTO"},{"label":"0","value":"0"},{"label":"1","value":"1"},{"label":"2","value":"2"}]},"label":"Fuzziness","type":"select"},{"defaultValue":"0","name":"minimum_should_match","typeOptions":{"nullable":true},"label":"Minimum Should Match","type":"text"},{"helpText":"Only use slop with the following match types: phrase, phrase prefix.","defaultValue":"","name":"slop","typeOptions":{"min":0,"nullable":true,"step":1},"label":"Slop","type":"number"},{"defaultValue":1,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"},{"helpText":"If this is set, the search terms entered in the search bar will be replaced by this value.","name":"keywords","typeOptions":{"required":false},"label":"Text to Match","type":"keywords"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"must","query":{"multi_match":{"fuzziness":"${configuration.fuzziness}","query":"${configuration.keywords}","minimum_should_match":"${configuration.minimum_should_match}","boost":"${configuration.boost}","fields":"${configuration.fields}","type":"${configuration.type}","operator":"${configuration.operator}","slop":"${configuration.slop}"}},"context":"query"}]}]}},"icon":"picture","category":"match"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"must","query":{"multi_match":{"fuzziness":"AUTO","query":"${keywords}","minimum_should_match":"0","boost":1,"fields":["localized_title_${context.language_id}^2","content_${context.language_id}^1"],"type":"best_fields","operator":"or"}},"context":"query"}]}]}},"uiConfigurationValues":{"fuzziness":"AUTO","keywords":"","minimum_should_match":"0","boost":1,"fields":[{"field":"localized_title","boost":"2","locale":"${context.language_id}"},{"field":"content","boost":"1","locale":"${context.language_id}"}],"type":"best_fields","operator":"or","slop":""}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Hide by Exact Term Match"},"fallbackTitle":"hide-by-exact-term-match","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"HIDE-BY-EXACT-TERM-MATCH","description_i18n":{"en-US":"Hide contents with an exact term match on the given field."},"fallbackDescription":"hide-by-exact-term-match-description","modifiedDate":"2024-07-09T17:30:29Z","id":20,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"field","label":"Field","type":"fieldMapping"},{"name":"value","label":"Value","type":"text"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"must_not":[{"term":{"${configuration.field}":{"value":"${configuration.value}"}}}]}},"context":"query"}]}]}},"icon":"hidden","category":"hide"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"must_not":[{"term":{"accountEntryId":{"value":"test"}}}]}},"context":"query"}]}]}},"uiConfigurationValues":{"field":{"languageIdPosition":-1,"field":"accountEntryId","locale":""},"value":"test"}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Hide Comments"},"fallbackTitle":"hide-comments","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"HIDE-COMMENTS","description_i18n":{"en-US":"Do not search for comments."},"fallbackDescription":"hide-comments-description","modifiedDate":"2024-07-09T17:30:29Z","id":21,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"should":[{"bool":{"must_not":[{"exists":{"field":"discussion"}}]}},{"bool":{"must":[{"term":{"discussion":false}}]}}]}},"context":"query"}]}]}},"icon":"hidden","category":"hide"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"should":[{"bool":{"must_not":[{"exists":{"field":"discussion"}}]}},{"bool":{"must":[{"term":{"discussion":false}}]}}]}},"context":"query"}]}]}},"uiConfigurationValues":{}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Hide Contents in a Category"},"fallbackTitle":"hide-contents-in-a-category","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"HIDE-CONTENTS-IN-A-CATEGORY","description_i18n":{"en-US":"Hide contents in the given category."},"fallbackDescription":"hide-contents-in-a-category-description","modifiedDate":"2024-07-09T17:30:29Z","id":22,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"asset_category_id","label":"Asset Category ID","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"must_not":[{"term":{"assetCategoryIds":{"value":"${configuration.asset_category_id}"}}}]}},"context":"query"}]}]}},"icon":"hidden","category":"hide"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"must_not":[{"term":{"assetCategoryIds":{"value":1234}}}]}},"context":"query"}]}]}},"uiConfigurationValues":{"asset_category_id":1234}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Hide Hidden Contents"},"fallbackTitle":"hide-hidden-contents","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"HIDE-HIDDEN-CONTENTS","description_i18n":{"en-US":"Hide assets which are marked not searchable. This Element duplicates the functionality of a Liferay Search Framework query clause."},"fallbackDescription":"hide-hidden-contents-description","modifiedDate":"2024-07-09T17:30:29Z","id":24,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"should":[{"bool":{"must_not":[{"exists":{"field":"hidden"}}]}},{"bool":{"must":[{"term":{"hidden":false}}]}}]}},"context":"query"}]}]}},"icon":"hidden","category":"hide"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"should":[{"bool":{"must_not":[{"exists":{"field":"hidden"}}]}},{"bool":{"must":[{"term":{"hidden":false}}]}}]}},"context":"query"}]}]}},"uiConfigurationValues":{}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Hide Tagged Contents"},"fallbackTitle":"hide-tagged-contents","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"HIDE-TAGGED-CONTENTS","description_i18n":{"en-US":"Hide contents with a given tag."},"fallbackDescription":"hide-tagged-contents-description","modifiedDate":"2024-07-09T17:30:29Z","id":25,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"helpText":"Add asset tag value","name":"asset_tag","label":"Asset Tag","type":"text"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"must_not":[{"term":{"assetTagNames.raw":{"value":"${configuration.asset_tag}"}}}]}},"context":"query"}],"enabled":false}]}},"icon":"hidden","category":"hide"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"must_not":[{"term":{"assetTagNames.raw":{"value":""}}}]}},"context":"query"}],"enabled":false}]}},"uiConfigurationValues":{"asset_tag":""}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Filter by Exact Terms Match"},"fallbackTitle":"filter-by-exact-terms-match","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"FILTER-BY-EXACT-TERMS-MATCH","description_i18n":{"en-US":"Filter results by one or multiple terms. At least one must match."},"fallbackDescription":"filter-by-exact-terms-match-description","modifiedDate":"2024-07-09T17:30:29Z","id":19,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"field","label":"Field","type":"fieldMapping"},{"name":"values","label":"Values","type":"multiselect"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"terms":{"${configuration.field}":"${configuration.values}"}},"context":"query"}]}]}},"icon":"filter","category":"filter"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"terms":{"accountEntryId":["1234"]}},"context":"query"}]}]}},"uiConfigurationValues":{"field":{"languageIdPosition":-1,"field":"accountEntryId","locale":""},"values":[{"label":"1234","value":"1234"}]}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Limit Search to Contents Created Within a Period of Time"},"fallbackTitle":"limit-search-to-contents-created-within-a-period-of-time","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"LIMIT-SEARCH-TO-CONTENTS-CREATED-WITHIN-A-PERIOD-OF-TIME","description_i18n":{"en-US":"Limit search to contents created within the given time range."},"fallbackDescription":"limit-search-to-contents-created-within-a-period-of-time-description","modifiedDate":"2024-07-09T17:30:29Z","id":26,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"start_date","label":"Create Date: From","type":"date"},{"name":"end_date","label":"Create Date: To","type":"date"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"range":{"createDate":{"include_lower":true,"include_upper":true,"from":"${configuration.start_date}","to":"${configuration.end_date}"}}},"context":"query"}]}]}},"icon":"filter","category":"filter"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"range":{"createDate":{"include_lower":true,"include_upper":true,"from":20240709000700,"to":20240712000700}}},"context":"query"}]}]}},"uiConfigurationValues":{"end_date":1720753200,"start_date":1720494000}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Limit Search to HEAD Version"},"fallbackTitle":"limit-search-to-head-version","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"LIMIT-SEARCH-TO-HEAD-VERSION","description_i18n":{"en-US":"Limit the search to return only the HEAD version of Web Content articles. This Element duplicates the functionality of a Liferay Search Framework query clause."},"fallbackDescription":"limit-search-to-head-version-description","modifiedDate":"2024-07-09T17:30:29Z","id":27,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"should":[{"bool":{"must_not":[{"term":{"entryClassName":{"value":"com.liferay.journal.model.JournalArticle"}}}]}},{"bool":{"must":[{"term":{"entryClassName":{"value":"com.liferay.journal.model.JournalArticle"}}},{"term":{"head":{"value":true}}}]}}]}},"context":"query"}]}]}},"icon":"filter","category":"filter"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"should":[{"bool":{"must_not":[{"term":{"entryClassName":{"value":"com.liferay.journal.model.JournalArticle"}}}]}},{"bool":{"must":[{"term":{"entryClassName":{"value":"com.liferay.journal.model.JournalArticle"}}},{"term":{"head":{"value":true}}}]}}]}},"context":"query"}]}]}},"uiConfigurationValues":{}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Limit Search to My Contents"},"fallbackTitle":"limit-search-to-my-contents","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"LIMIT-SEARCH-TO-MY-CONTENTS","description_i18n":{"en-US":"Limit the search to contents the user is an owner of."},"fallbackDescription":"limit-search-to-my-contents-description","modifiedDate":"2024-07-09T17:30:29Z","id":28,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"term":{"userId":"${user.id}"}},"context":"query"}]}]}},"icon":"filter","category":"filter"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"term":{"userId":"${user.id}"}},"context":"query"}]}]}},"uiConfigurationValues":{}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Limit Search to My Sites"},"fallbackTitle":"limit-search-to-my-sites","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"LIMIT-SEARCH-TO-MY-SITES","description_i18n":{"en-US":"Limit the search scope to the sites that the user is a member of."},"fallbackDescription":"limit-search-to-my-sites-description","modifiedDate":"2024-07-09T17:30:29Z","id":29,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"terms":{"scopeGroupId":"${user.group_ids}"}},"context":"query"}]}]}},"icon":"filter","category":"filter"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"terms":{"scopeGroupId":"${user.group_ids}"}},"context":"query"}]}]}},"uiConfigurationValues":{}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Limit Search to PDF files"},"fallbackTitle":"limit-search-to-pdf-files","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"LIMIT-SEARCH-TO-PDF-FILES","description_i18n":{"en-US":"Limit the search to PDF files, as recorded in the mimeType field."},"fallbackDescription":"limit-search-to-pdf-files-description","modifiedDate":"2024-07-09T17:30:29Z","id":30,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"term":{"mimeType":"application_pdf"}},"context":"query"}]}]}},"icon":"filter","category":"filter"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"term":{"mimeType":"application_pdf"}},"context":"query"}]}]}},"uiConfigurationValues":{}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Limit Search to Published Contents"},"fallbackTitle":"limit-search-to-published-contents","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"LIMIT-SEARCH-TO-PUBLISHED-CONTENTS","description_i18n":{"en-US":"Limit the search to contents that are published."},"fallbackDescription":"limit-search-to-published-contents-description","modifiedDate":"2024-07-09T17:30:29Z","id":31,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"term":{"status":0}},"context":"query"}]}]}},"icon":"filter","category":"filter"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"term":{"status":0}},"context":"query"}]}]}},"uiConfigurationValues":{}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Limit Search to the Current Site"},"fallbackTitle":"limit-search-to-the-current-site","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"LIMIT-SEARCH-TO-THE-CURRENT-SITE","description_i18n":{"en-US":"Limit the search to the current site."},"fallbackDescription":"limit-search-to-the-current-site-description","modifiedDate":"2024-07-09T17:30:29Z","id":32,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"term":{"scopeGroupId":"${context.scope_group_id}"}},"context":"query"}]}]}},"icon":"filter","category":"filter"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"term":{"scopeGroupId":"${context.scope_group_id}"}},"context":"query"}]}]}},"uiConfigurationValues":{}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Limit Search to These Sites"},"fallbackTitle":"limit-search-to-these-sites","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"LIMIT-SEARCH-TO-THESE-SITES","description_i18n":{"en-US":"Limit the search scope to the given sites."},"fallbackDescription":"limit-search-to-these-sites-description","modifiedDate":"2024-07-09T17:30:29Z","id":33,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"scope_group_ids","label":"Group IDs","type":"multiselect"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"terms":{"scopeGroupId":"${configuration.scope_group_ids}"}},"context":"query"}]}]}},"icon":"filter","category":"filter"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"terms":{"scopeGroupId":["1234"]}},"context":"query"}]}]}},"uiConfigurationValues":{"scope_group_ids":[{"label":"1234","value":"1234"}]}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Scheduling Aware"},"fallbackTitle":"scheduling-aware","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"SCHEDULING-AWARE","description_i18n":{"en-US":"Show only contents with a display date that's not in the future. This Element duplicates the functionality of a Liferay Search Framework query clause."},"fallbackDescription":"scheduling-aware-description","modifiedDate":"2024-07-09T17:30:29Z","id":35,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"should":[{"bool":{"must_not":[{"exists":{"field":"displayDate"}}]}},{"bool":{"must_not":[{"exists":{"field":"expirationDate"}}],"must":[{"range":{"displayDate_sortable":{"include_lower":true,"include_upper":true,"from":"-9223372036854775808","to":"${time.current_date|date_format=timestamp}"}}}]}},{"bool":{"must":[{"range":{"displayDate_sortable":{"include_lower":true,"include_upper":true,"from":"-9223372036854775808","to":"${time.current_date|date_format=timestamp}"}}},{"range":{"expirationDate_sortable":{"include_lower":true,"include_upper":true,"from":"${time.current_date|date_format=timestamp}","to":"9223372036854775807"}}}]}}]}},"context":"query"}]}]}},"icon":"filter","category":"filter"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"filter","query":{"bool":{"should":[{"bool":{"must_not":[{"exists":{"field":"displayDate"}}]}},{"bool":{"must_not":[{"exists":{"field":"expirationDate"}}],"must":[{"range":{"displayDate_sortable":{"include_lower":true,"include_upper":true,"from":"-9223372036854775808","to":"${time.current_date|date_format=timestamp}"}}}]}},{"bool":{"must":[{"range":{"displayDate_sortable":{"include_lower":true,"include_upper":true,"from":"-9223372036854775808","to":"${time.current_date|date_format=timestamp}"}}},{"range":{"expirationDate_sortable":{"include_lower":true,"include_upper":true,"from":"${time.current_date|date_format=timestamp}","to":"9223372036854775807"}}}]}}]}},"context":"query"}]}]}},"uiConfigurationValues":{}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Staging Aware"},"fallbackTitle":"staging-aware","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"STAGING-AWARE","description_i18n":{"en-US":"Show only published contents on live sites. Show only published and staged contents on staging sites. This Element duplicates the functionality of a Liferay Search Framework query clause."},"fallbackDescription":"staging-aware-description","modifiedDate":"2024-07-09T17:30:29Z","id":37,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{},"configuration":{"queryConfiguration":{"queryEntries":[{"condition":{"equals":{"parameterName":"context.is_staging_group","value":false}},"clauses":[{"occur":"filter","query":{"bool":{"should":[{"bool":{"must_not":[{"exists":{"field":"stagingGroup"}}]}},{"bool":{"must":[{"term":{"stagingGroup":false}}]}}]}},"context":"query"}]}]}},"icon":"filter","category":"filter"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"condition":{"equals":{"parameterName":"context.is_staging_group","value":false}},"clauses":[{"occur":"filter","query":{"bool":{"should":[{"bool":{"must_not":[{"exists":{"field":"stagingGroup"}}]}},{"bool":{"must":[{"term":{"stagingGroup":false}}]}}]}},"context":"query"}]}]}},"uiConfigurationValues":{}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Contents in a Category by Keyword Match"},"fallbackTitle":"boost-contents-in-a-category-by-keyword-match","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-CONTENTS-IN-A-CATEGORY-BY-KEYWORD-MATCH","description_i18n":{"en-US":"Boost contents in a category if the user's search keywords contain any of the given keywords."},"fallbackDescription":"boost-contents-in-a-category-by-keyword-match-description","modifiedDate":"2024-07-09T17:30:28Z","id":5,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"asset_category_id","label":"Asset Category ID","type":"number"},{"name":"keywords","label":"Keywords","type":"multiselect"},{"defaultValue":10,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"condition":{"contains":{"parameterName":"keywords","value":"${configuration.keywords}"}},"clauses":[{"occur":"should","query":{"term":{"assetCategoryIds":{"boost":"${configuration.boost}","value":"${configuration.asset_category_id}"}}},"context":"query"}]}]}},"icon":"thumbs-up","category":"conditional"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"condition":{"contains":{"parameterName":"keywords","value":["test"]}},"clauses":[{"occur":"should","query":{"term":{"assetCategoryIds":{"boost":10,"value":1234}}},"context":"query"}]}]}},"uiConfigurationValues":{"asset_category_id":1234,"keywords":[{"label":"test","value":"test"}],"boost":10}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Contents in a Category for a Period of Time"},"fallbackTitle":"boost-contents-in-a-category-for-a-period-of-time","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-CONTENTS-IN-A-CATEGORY-FOR-A-PERIOD-OF-TIME","description_i18n":{"en-US":"Boost contents in a category for the given period of time."},"fallbackDescription":"boost-contents-in-a-category-for-a-period-of-time-description","modifiedDate":"2024-07-09T17:30:28Z","id":6,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"asset_category_id","label":"Asset Category ID","type":"number"},{"name":"start_date","typeOptions":{"format":"YYYYMMDD"},"label":"Create Date: From","type":"date"},{"name":"end_date","typeOptions":{"format":"YYYYMMDD"},"label":"Create Date: To","type":"date"},{"defaultValue":10,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"condition":{"range":{"format":"yyyyMMdd","gte":"${configuration.start_date}","parameterName":"time.current_date","lte":"${configuration.end_date}"}},"clauses":[{"occur":"should","query":{"term":{"assetCategoryIds":{"boost":"${configuration.boost}","value":"${configuration.asset_category_id}"}}},"context":"query"}]}]}},"icon":"thumbs-up","category":"conditional"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"condition":{"range":{"format":"yyyyMMdd","gte":20240709,"parameterName":"time.current_date","lte":20240712}},"clauses":[{"occur":"should","query":{"term":{"assetCategoryIds":{"boost":10,"value":1234}}},"context":"query"}]}]}},"uiConfigurationValues":{"end_date":1720753200,"asset_category_id":1234,"boost":10,"start_date":1720494000}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Contents in a Category for User Segments"},"fallbackTitle":"boost-contents-in-a-category-for-user-segments","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-CONTENTS-IN-A-CATEGORY-FOR-USER-SEGMENTS","description_i18n":{"en-US":"Boost contents in a category for users belonging to the given user segments."},"fallbackDescription":"boost-contents-in-a-category-for-user-segments-description","modifiedDate":"2024-07-09T17:30:28Z","id":7,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"asset_category_id","label":"Asset Category ID","type":"number"},{"name":"user_segment_ids","label":"User Segment IDs","type":"multiselect"},{"defaultValue":20,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"condition":{"contains":{"parameterName":"user.active_segment_entry_ids","value":"${configuration.user_segment_ids}"}},"clauses":[{"occur":"should","query":{"term":{"assetCategoryIds":{"boost":"${configuration.boost}","value":"${configuration.asset_category_id}"}}},"context":"query"}]}]}},"icon":"thumbs-up","category":"conditional"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"condition":{"contains":{"parameterName":"user.active_segment_entry_ids","value":["1234"]}},"clauses":[{"occur":"should","query":{"term":{"assetCategoryIds":{"boost":20,"value":1234}}},"context":"query"}]}]}},"uiConfigurationValues":{"user_segment_ids":[{"label":"1234","value":"1234"}],"asset_category_id":1234,"boost":20}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Contents in a Category for Guest Users"},"fallbackTitle":"boost-contents-in-a-category-for-guest-users","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-CONTENTS-IN-A-CATEGORY-FOR-GUEST-USERS","description_i18n":{"en-US":"Boost contents in a category if a user is not logged in."},"fallbackDescription":"boost-contents-in-a-category-for-guest-users-description","modifiedDate":"2024-07-09T17:30:28Z","id":8,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"asset_category_id","label":"Asset Category ID","type":"number"},{"defaultValue":20,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"condition":{"equals":{"parameterName":"user.is_signed_in","value":false}},"clauses":[{"occur":"should","query":{"term":{"assetCategoryIds":{"boost":"${configuration.boost}","value":"${configuration.asset_category_id}"}}},"context":"query"}]}]}},"icon":"thumbs-up","category":"conditional"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"condition":{"equals":{"parameterName":"user.is_signed_in","value":false}},"clauses":[{"occur":"should","query":{"term":{"assetCategoryIds":{"boost":20,"value":1234}}},"context":"query"}]}]}},"uiConfigurationValues":{"asset_category_id":1234,"boost":20}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Contents in a Category for New User Accounts"},"fallbackTitle":"boost-contents-in-a-category-for-new-user-accounts","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-CONTENTS-IN-A-CATEGORY-FOR-NEW-USER-ACCOUNTS","description_i18n":{"en-US":"Boost contents in a category for user accounts created within the given time."},"fallbackDescription":"boost-contents-in-a-category-for-new-user-accounts-description","modifiedDate":"2024-07-09T17:30:28Z","id":9,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"asset_category_id","label":"Asset Category ID","type":"number"},{"defaultValue":30,"name":"time_range","typeOptions":{"unit":"days","unitSuffix":"d"},"label":"Time range","type":"number"},{"defaultValue":20,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"condition":{"range":{"format":"yyyyMMdd","gte":"${time.current_date|modifier=-${configuration.time_range},date_format=yyyyMMdd}","parameterName":"user.create_date","lte":"${time.current_date|modifier=+1d,date_format=yyyyMMdd}"}},"clauses":[{"occur":"should","query":{"term":{"assetCategoryIds":{"boost":"${configuration.boost}","value":"${configuration.asset_category_id}"}}},"context":"query"}]}]}},"icon":"thumbs-up","category":"conditional"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"condition":{"range":{"format":"yyyyMMdd","gte":"${time.current_date|modifier=-30d,date_format=yyyyMMdd}","parameterName":"user.create_date","lte":"${time.current_date|modifier=+1d,date_format=yyyyMMdd}"}},"clauses":[{"occur":"should","query":{"term":{"assetCategoryIds":{"boost":20,"value":1234}}},"context":"query"}]}]}},"uiConfigurationValues":{"asset_category_id":1234,"time_range":30,"boost":20}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Contents in a Category for the Time of Day"},"fallbackTitle":"boost-contents-in-a-category-for-the-time-of-day","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-CONTENTS-IN-A-CATEGORY-FOR-THE-TIME-OF-DAY","description_i18n":{"en-US":"Boost contents in a category based on the time of day."},"fallbackDescription":"boost-contents-in-a-category-for-the-time-of-day-description","modifiedDate":"2024-07-09T17:30:28Z","id":10,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"asset_category_id","label":"Asset Category ID","type":"number"},{"name":"time_of_day","typeOptions":{"options":[{"label":"Morning (4am - 12am)","value":"morning"},{"label":"Afternoon (12pm - 5pm)","value":"afternoon"},{"label":"Evening (5pm - 8pm)","value":"evening"},{"label":"Night (8pm - 4am)","value":"night"}]},"label":"Time of Day","type":"select"},{"defaultValue":20,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"condition":{"equals":{"parameterName":"time.time_of_day","value":"${configuration.time_of_day}"}},"clauses":[{"occur":"should","query":{"term":{"assetCategoryIds":{"boost":"${configuration.boost}","value":"${configuration.asset_category_id}"}}},"context":"query"}]}]}},"icon":"thumbs-up","category":"conditional"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"condition":{"equals":{"parameterName":"time.time_of_day","value":"morning"}},"clauses":[{"occur":"should","query":{"term":{"assetCategoryIds":{"boost":20,"value":1234}}},"context":"query"}]}]}},"uiConfigurationValues":{"asset_category_id":1234,"time_of_day":"morning","boost":20}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Web Contents by Keyword Match"},"fallbackTitle":"boost-web-contents-by-keyword-match","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-WEB-CONTENTS-BY-KEYWORD-MATCH","description_i18n":{"en-US":"Boost certain Web Content if the user's search keywords contain the given keywords."},"fallbackDescription":"boost-web-contents-by-keyword-match-description","modifiedDate":"2024-07-09T17:30:29Z","id":18,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"article_ids","label":"Article IDs","type":"multiselect"},{"name":"values","label":"Keywords","type":"multiselect"},{"defaultValue":20,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"condition":{"contains":{"parameterName":"keywords","value":"${configuration.values}"}},"clauses":[{"occur":"should","query":{"terms":{"articleId_String_sortable":"${configuration.article_ids}","boost":"${configuration.boost}"}},"context":"query"}]}]}},"icon":"thumbs-up","category":"conditional"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"condition":{"contains":{"parameterName":"keywords","value":["test"]}},"clauses":[{"occur":"should","query":{"terms":{"articleId_String_sortable":["1234"],"boost":20}},"context":"query"}]}]}},"uiConfigurationValues":{"article_ids":[{"label":"1234","value":"1234"}],"values":[{"label":"test","value":"test"}],"boost":20}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Hide Contents in a Category for Guest Users"},"fallbackTitle":"hide-contents-in-a-category-for-guest-users","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"HIDE-CONTENTS-IN-A-CATEGORY-FOR-GUEST-USERS","description_i18n":{"en-US":"Hide contents in a category if the user is not logged in."},"fallbackDescription":"hide-contents-in-a-category-for-guest-users-description","modifiedDate":"2024-07-09T17:30:29Z","id":23,"createDate":"2024-07-09T17:30:29Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"asset_category_id","label":"Asset Category ID","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"condition":{"equals":{"parameterName":"user.is_signed_in","value":false}},"clauses":[{"occur":"filter","query":{"bool":{"must_not":[{"term":{"assetCategoryIds":{"value":"${configuration.asset_category_id}"}}}]}},"context":"query"}]}]}},"icon":"hidden","category":"conditional"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"condition":{"equals":{"parameterName":"user.is_signed_in","value":false}},"clauses":[{"occur":"filter","query":{"bool":{"must_not":[{"term":{"assetCategoryIds":{"value":1234}}}]}},"context":"query"}]}]}},"uiConfigurationValues":{"asset_category_id":1234}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost All Keywords Match"},"fallbackTitle":"boost-all-keywords-match","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-ALL-KEYWORDS-MATCH","description_i18n":{"en-US":"Boost contents if the search keywords match in the given fields."},"fallbackDescription":"boost-all-keywords-match-description","modifiedDate":"2024-07-09T17:30:27Z","id":1,"createDate":"2024-07-09T17:30:27Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"fields","typeOptions":{"boost":true},"label":"Field","fieldMappings":[{"field":"localized_title","boost":2,"locale":"${context.language_id}"},{"field":"content","boost":1,"locale":"${context.language_id}"}],"type":"fieldMappingList"},{"defaultValue":"best_fields","name":"type","typeOptions":{"options":[{"label":"Best Fields","value":"best_fields"},{"label":"Most Fields","value":"most_fields"},{"label":"Cross Fields","value":"cross_fields"},{"label":"Phrase","value":"phrase"},{"label":"Phrase Prefix","value":"phrase_prefix"},{"label":"Boolean Prefix","value":"bool_prefix"}]},"label":"Match Type","type":"select"},{"defaultValue":10,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"},{"helpText":"If this is set, the search terms entered in the search bar will be replaced by this value.","name":"keywords","typeOptions":{"required":false},"label":"Text to Match","type":"keywords"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"multi_match":{"query":"${configuration.keywords}","boost":"${configuration.boost}","fields":"${configuration.fields}","type":"${configuration.type}","operator":"and"}},"context":"query"}]}]}},"icon":"thumbs-up","category":"boost"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"multi_match":{"query":"${keywords}","boost":10,"fields":["localized_title_${context.language_id}^2","content_${context.language_id}^1"],"type":"best_fields","operator":"and"}},"context":"query"}]}]}},"uiConfigurationValues":{"keywords":"","boost":10,"fields":[{"field":"localized_title","boost":2,"locale":"${context.language_id}"},{"field":"content","boost":1,"locale":"${context.language_id}"}],"type":"best_fields"}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Asset Type"},"fallbackTitle":"boost-asset-type","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-ASSET-TYPE","description_i18n":{"en-US":"Boost the given asset type."},"fallbackDescription":"boost-asset-type-description","modifiedDate":"2024-07-09T17:30:28Z","id":2,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"entry_class_name","label":"Asset Type","type":"searchableType"},{"defaultValue":10,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"term":{"entryClassName":{"boost":"${configuration.boost}","value":"${configuration.entry_class_name}"}}},"context":"query"}]}]}},"icon":"thumbs-up","category":"boost"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"term":{"entryClassName":{"boost":10,"value":"com.liferay.journal.model.JournalArticle"}}},"context":"query"}]}]}},"uiConfigurationValues":{"boost":10,"entry_class_name":"com.liferay.journal.model.JournalArticle"}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Contents for the Current Language"},"fallbackTitle":"boost-contents-for-the-current-language","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-CONTENTS-FOR-THE-CURRENT-LANGUAGE","description_i18n":{"en-US":"Boost contents having a default language matching the current session language."},"fallbackDescription":"boost-contents-for-the-current-language-description","modifiedDate":"2024-07-09T17:30:28Z","id":3,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"defaultValue":20,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"bool":{"must":[{"terms":{"entryClassName":["com.liferay.portal.kernel.model.Layout","com.liferay.journal.model.JournalArticle"]}},{"term":{"defaultLanguageId":{"boost":"${configuration.boost}","value":"${context.language_id}"}}}]}},"context":"query"}]}]}},"icon":"thumbs-up","category":"boost"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"bool":{"must":[{"terms":{"entryClassName":["com.liferay.portal.kernel.model.Layout","com.liferay.journal.model.JournalArticle"]}},{"term":{"defaultLanguageId":{"boost":20,"value":"${context.language_id}"}}}]}},"context":"query"}]}]}},"uiConfigurationValues":{"boost":20}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Contents in a Category"},"fallbackTitle":"boost-contents-in-a-category","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-CONTENTS-IN-A-CATEGORY","description_i18n":{"en-US":"Boost and promote contents in a given category."},"fallbackDescription":"boost-contents-in-a-category-description","modifiedDate":"2024-07-09T17:30:28Z","id":4,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"asset_category_ids","label":"Asset Category IDs","type":"multiselect"},{"defaultValue":10,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"terms":{"assetCategoryIds":"${configuration.asset_category_ids}","boost":"${configuration.boost}"}},"context":"query"}]}]}},"icon":"thumbs-up","category":"boost"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"terms":{"assetCategoryIds":["1234"],"boost":10}},"context":"query"}]}]}},"uiConfigurationValues":{"boost":10,"asset_category_ids":[{"label":"1234","value":"1234"}]}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Contents on My Sites"},"fallbackTitle":"boost-contents-on-my-sites","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-CONTENTS-ON-MY-SITES","description_i18n":{"en-US":"Boost contents on sites the user is a member of."},"fallbackDescription":"boost-contents-on-my-sites-description","modifiedDate":"2024-07-09T17:30:28Z","id":11,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"defaultValue":10,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"terms":{"groupId":"${user.group_ids}","boost":"${configuration.boost}"}},"context":"query"}]}]}},"icon":"thumbs-up","category":"boost"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"terms":{"groupId":"${user.group_ids}","boost":10}},"context":"query"}]}]}},"uiConfigurationValues":{"boost":10}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Contents With More Versions"},"fallbackTitle":"boost-contents-with-more-versions","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-CONTENTS-WITH-MORE-VERSIONS","description_i18n":{"en-US":"Boost contents edited more often."},"fallbackDescription":"boost-contents-with-more-versions-description","modifiedDate":"2024-07-09T17:30:28Z","id":12,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"defaultValue":10,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"},{"defaultValue":1.2,"name":"factor","typeOptions":{"min":0},"label":"Factor","type":"number"},{"defaultValue":"sqrt","name":"modifier","typeOptions":{"options":[{"label":"None","value":"none"},{"label":"log","value":"log"},{"label":"log1p","value":"log1p"},{"label":"log2p","value":"log2p"},{"label":"ln","value":"ln"},{"label":"ln1p","value":"ln1p"},{"label":"ln2p","value":"ln2p"},{"label":"Square","value":"square"},{"label":"Square Root","value":"sqrt"},{"label":"Reciprocal","value":"reciprocal"}]},"label":"Modifier","type":"select"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"function_score":{"field_value_factor":{"field":"versionCount_sortable","modifier":"${configuration.modifier}","missing":1,"factor":"${configuration.factor}"},"boost":"${configuration.boost}"}},"context":"query"}]}]}},"icon":"thumbs-up","category":"boost"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"function_score":{"field_value_factor":{"field":"versionCount_sortable","modifier":"sqrt","missing":1,"factor":1.2},"boost":10}},"context":"query"}]}]}},"uiConfigurationValues":{"modifier":"sqrt","boost":10,"factor":1.2}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Freshness"},"fallbackTitle":"boost-freshness","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-FRESHNESS","description_i18n":{"en-US":"Boost contents modified recently using a Gaussian function."},"fallbackDescription":"boost-freshness-description","modifiedDate":"2024-07-09T17:30:28Z","id":13,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"defaultValue":0.5,"name":"decay","typeOptions":{"min":0.01,"max":0.99,"step":0.01},"label":"Decay","type":"slider"},{"defaultValue":0,"name":"offset","typeOptions":{"unit":"days","min":0,"unitSuffix":"d"},"label":"Offset","type":"number"},{"defaultValue":10,"name":"scale","typeOptions":{"unit":"days","min":0,"unitSuffix":"d"},"label":"Scale","type":"number"},{"defaultValue":2,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"function_score":{"gauss":{"modified":{"offset":"${configuration.offset}","origin":"${time.current_date|date_format=yyyyMMddHHmmss}","scale":"${configuration.scale}","decay":"${configuration.decay}"}},"boost":"${configuration.boost}"}},"context":"query"}]}]}},"icon":"thumbs-up","category":"boost"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"function_score":{"gauss":{"modified":{"offset":"0d","origin":"${time.current_date|date_format=yyyyMMddHHmmss}","scale":"10d","decay":0.5}},"boost":2}},"context":"query"}]}]}},"uiConfigurationValues":{"offset":0,"scale":10,"boost":2,"decay":0.5}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Longer Contents"},"fallbackTitle":"boost-longer-contents","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-LONGER-CONTENTS","description_i18n":{"en-US":"Boost contents with longer content in the user's current language."},"fallbackDescription":"boost-longer-contents-description","modifiedDate":"2024-07-09T17:30:28Z","id":14,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"defaultValue":30,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"},{"defaultValue":1.5,"name":"factor","typeOptions":{"min":0},"label":"Factor","type":"number"},{"defaultValue":"ln","name":"modifier","typeOptions":{"options":[{"label":"None","value":"none"},{"label":"log","value":"log"},{"label":"log1p","value":"log1p"},{"label":"log2p","value":"log2p"},{"label":"ln","value":"ln"},{"label":"ln1p","value":"ln1p"},{"label":"ln2p","value":"ln2p"},{"label":"Square","value":"square"},{"label":"sqrt","value":"sqrt"},{"label":"Reciprocal","value":"reciprocal"}]},"label":"Modifier","type":"select"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"function_score":{"field_value_factor":{"field":"contentLength_${context.language_id}_sortable","modifier":"${configuration.modifier}","missing":1,"factor":"${configuration.factor}"},"boost":"${configuration.boost}"}},"context":"query"}],"enabled":true}]}},"icon":"thumbs-up","category":"boost"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"function_score":{"field_value_factor":{"field":"contentLength_${context.language_id}_sortable","modifier":"ln","missing":1,"factor":1.5},"boost":30}},"context":"query"}],"enabled":true}]}},"uiConfigurationValues":{"modifier":"ln","boost":30,"factor":1.5}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Proximity"},"fallbackTitle":"boost-proximity","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-PROXIMITY","description_i18n":{"en-US":"Boost contents in closer proximity to the search user with a Gaussian function. Additional setup is required."},"fallbackDescription":"boost-proximity-description","modifiedDate":"2024-07-09T17:30:28Z","id":15,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"helpText":"A geopoint field","name":"field","label":"Field","fieldMappings":[{"field":"expando__keyword__custom_fields__location_geolocation","locale":""}],"type":"fieldMapping"},{"defaultValue":0.3,"name":"decay","typeOptions":{"min":0.01,"max":0.99,"step":0.1},"label":"Decay","type":"slider"},{"defaultValue":100,"name":"scale","typeOptions":{"unit":"km","min":0,"unitSuffix":"km"},"label":"Scale","type":"number"},{"defaultValue":2,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"function_score":{"gauss":{"${configuration.field}":{"offset":0,"origin":{"lon":"${ipstack.longitude}","lat":"${ipstack.latitude}"},"scale":"${configuration.scale}","decay":"${configuration.decay}"}},"boost":"${configuration.boost}"}},"context":"query"}]}]}},"icon":"thumbs-up","category":"boost"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"function_score":{"gauss":{"firstName":{"offset":0,"origin":{"lon":"${ipstack.longitude}","lat":"${ipstack.latitude}"},"scale":"100km","decay":0.3}},"boost":2}},"context":"query"}]}]}},"uiConfigurationValues":{"field":{"languageIdPosition":-1,"field":"firstName","locale":""},"scale":100,"boost":2,"decay":0.3}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Tagged Contents"},"fallbackTitle":"boost-tagged-contents","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-TAGGED-CONTENTS","description_i18n":{"en-US":"Boost contents having at least one of the given tags."},"fallbackDescription":"boost-tagged-contents-description","modifiedDate":"2024-07-09T17:30:28Z","id":16,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"name":"asset_tags","label":"Asset Tags","type":"multiselect"},{"defaultValue":5,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"terms":{"assetTagNames.raw":"${configuration.asset_tags}","boost":"${configuration.boost}"}},"context":"query"}]}]}},"icon":"thumbs-up","category":"boost"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"terms":{"assetTagNames.raw":["test"],"boost":5}},"context":"query"}]}]}},"uiConfigurationValues":{"asset_tags":[{"label":"test","value":"test"}],"boost":5}},{"sxpElement":{"schemaVersion":"1.0","title_i18n":{"en-US":"Boost Tags Match"},"fallbackTitle":"boost-tags-match","readOnly":true,"type":0,"userName":"","version":"1.0","externalReferenceCode":"BOOST-TAGS-MATCH","description_i18n":{"en-US":"Boost contents with an exact keyword match to a tag."},"fallbackDescription":"boost-tags-match-description","modifiedDate":"2024-07-09T17:30:28Z","id":17,"createDate":"2024-07-09T17:30:28Z","elementDefinition":{"uiConfiguration":{"fieldSets":[{"fields":[{"defaultValue":40,"name":"boost","typeOptions":{"min":0},"label":"Boost","type":"number"}]}]},"configuration":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"term":{"assetTagNames.raw":{"boost":"${configuration.boost}","value":"${keywords}"}}},"context":"query"}]}]}},"icon":"thumbs-up","category":"boost"}},"configurationEntry":{"queryConfiguration":{"queryEntries":[{"clauses":[{"occur":"should","query":{"term":{"assetTagNames.raw":{"boost":50,"value":"${keywords}"}}},"context":"query"}]}]}},"uiConfigurationValues":{"boost":50}}]
+[
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "must",
+								"query": {
+									"simple_query_string": {
+										"boost": 1,
+										"default_operator": "or",
+										"fields": [
+											"localized_title_${context.language_id}^2",
+											"content_${context.language_id}^2"
+										],
+										"query": "${keywords}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Use Query String query syntax to match one or more fields with a single operator (OR or AND)."
+			},
+			"elementDefinition": {
+				"category": "match",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "must",
+										"query": {
+											"simple_query_string": {
+												"boost": "${configuration.boost}",
+												"default_operator": "${configuration.operator}",
+												"fields": "${configuration.fields}",
+												"query": "${keywords}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "picture",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"fieldMappings": [
+										{
+											"boost": "2",
+											"field": "localized_title",
+											"locale": "${context.language_id}"
+										},
+										{
+											"boost": "2",
+											"field": "content",
+											"locale": "${context.language_id}"
+										}
+									],
+									"label": "Fields",
+									"name": "fields",
+									"type": "fieldMappingList",
+									"typeOptions": {
+										"boost": true
+									}
+								},
+								{
+									"label": "Operator",
+									"name": "operator",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "OR",
+												"value": "or"
+											},
+											{
+												"label": "AND",
+												"value": "and"
+											}
+										]
+									}
+								},
+								{
+									"defaultValue": 1,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "SEARCH-WITH-QUERY-STRING-SYNTAX",
+			"fallbackDescription": "search-with-query-string-syntax-description",
+			"fallbackTitle": "search-with-query-string-syntax",
+			"id": 36,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Search with Query String Syntax"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"boost": 1,
+			"fields": [
+				{
+					"boost": "2",
+					"field": "localized_title",
+					"locale": "${context.language_id}"
+				},
+				{
+					"boost": "2",
+					"field": "content",
+					"locale": "${context.language_id}"
+				}
+			],
+			"operator": "or"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "must",
+								"query": {
+									"multi_match": {
+										"boost": 1,
+										"fields": [
+											"localized_title_${context.language_id}^2",
+											"content_${context.language_id}^1"
+										],
+										"fuzziness": "AUTO",
+										"minimum_should_match": "0",
+										"operator": "or",
+										"query": "${keywords}",
+										"type": "best_fields"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Search for a text match over multiple text fields."
+			},
+			"elementDefinition": {
+				"category": "match",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "must",
+										"query": {
+											"multi_match": {
+												"boost": "${configuration.boost}",
+												"fields": "${configuration.fields}",
+												"fuzziness": "${configuration.fuzziness}",
+												"minimum_should_match": "${configuration.minimum_should_match}",
+												"operator": "${configuration.operator}",
+												"query": "${configuration.keywords}",
+												"slop": "${configuration.slop}",
+												"type": "${configuration.type}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "picture",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"fieldMappings": [
+										{
+											"boost": "2",
+											"field": "localized_title",
+											"locale": "${context.language_id}"
+										},
+										{
+											"boost": "1",
+											"field": "content",
+											"locale": "${context.language_id}"
+										}
+									],
+									"label": "Fields",
+									"name": "fields",
+									"type": "fieldMappingList",
+									"typeOptions": {
+										"boost": true
+									}
+								},
+								{
+									"defaultValue": "or",
+									"label": "Operator",
+									"name": "operator",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "OR",
+												"value": "or"
+											},
+											{
+												"label": "AND",
+												"value": "and"
+											}
+										]
+									}
+								},
+								{
+									"defaultValue": "best_fields",
+									"label": "Match Type",
+									"name": "type",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "Best Fields",
+												"value": "best_fields"
+											},
+											{
+												"label": "Most Fields",
+												"value": "most_fields"
+											},
+											{
+												"label": "Cross Fields",
+												"value": "cross_fields"
+											},
+											{
+												"label": "Phrase",
+												"value": "phrase"
+											},
+											{
+												"label": "Phrase Prefix",
+												"value": "phrase_prefix"
+											},
+											{
+												"label": "Boolean Prefix",
+												"value": "bool_prefix"
+											}
+										]
+									}
+								},
+								{
+									"defaultValue": "AUTO",
+									"helpText": "Only use fuzziness with the following match types: most fields, best fields, bool prefix.",
+									"label": "Fuzziness",
+									"name": "fuzziness",
+									"type": "select",
+									"typeOptions": {
+										"nullable": true,
+										"options": [
+											{
+												"label": "Auto",
+												"value": "AUTO"
+											},
+											{
+												"label": "0",
+												"value": "0"
+											},
+											{
+												"label": "1",
+												"value": "1"
+											},
+											{
+												"label": "2",
+												"value": "2"
+											}
+										]
+									}
+								},
+								{
+									"defaultValue": "0",
+									"label": "Minimum Should Match",
+									"name": "minimum_should_match",
+									"type": "text",
+									"typeOptions": {
+										"nullable": true
+									}
+								},
+								{
+									"defaultValue": "",
+									"helpText": "Only use slop with the following match types: phrase, phrase prefix.",
+									"label": "Slop",
+									"name": "slop",
+									"type": "number",
+									"typeOptions": {
+										"min": 0,
+										"nullable": true,
+										"step": 1
+									}
+								},
+								{
+									"defaultValue": 1,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								},
+								{
+									"helpText": "If this is set, the search terms entered in the search bar will be replaced by this value.",
+									"label": "Text to Match",
+									"name": "keywords",
+									"type": "keywords",
+									"typeOptions": {
+										"required": false
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "TEXT-MATCH-OVER-MULTIPLE-FIELDS",
+			"fallbackDescription": "text-match-over-multiple-fields-description",
+			"fallbackTitle": "text-match-over-multiple-fields",
+			"id": 38,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Text Match Over Multiple Fields"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"boost": 1,
+			"fields": [
+				{
+					"boost": "2",
+					"field": "localized_title",
+					"locale": "${context.language_id}"
+				},
+				{
+					"boost": "1",
+					"field": "content",
+					"locale": "${context.language_id}"
+				}
+			],
+			"fuzziness": "AUTO",
+			"keywords": "",
+			"minimum_should_match": "0",
+			"operator": "or",
+			"slop": "",
+			"type": "best_fields"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"must_not": [
+											{
+												"term": {
+													"accountEntryId": {
+														"value": "test"
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Hide contents with an exact term match on the given field."
+			},
+			"elementDefinition": {
+				"category": "hide",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"must_not": [
+													{
+														"term": {
+															"${configuration.field}": {
+																"value": "${configuration.value}"
+															}
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Field",
+									"name": "field",
+									"type": "fieldMapping"
+								},
+								{
+									"label": "Value",
+									"name": "value",
+									"type": "text"
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "HIDE-BY-EXACT-TERM-MATCH",
+			"fallbackDescription": "hide-by-exact-term-match-description",
+			"fallbackTitle": "hide-by-exact-term-match",
+			"id": 20,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Hide by Exact Term Match"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"field": {
+				"field": "accountEntryId",
+				"languageIdPosition": -1,
+				"locale": ""
+			},
+			"value": "test"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"exists": {
+																"field": "discussion"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"discussion": false
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Do not search for comments."
+			},
+			"elementDefinition": {
+				"category": "hide",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must_not": [
+																{
+																	"exists": {
+																		"field": "discussion"
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"term": {
+																		"discussion": false
+																	}
+																}
+															]
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+				}
+			},
+			"externalReferenceCode": "HIDE-COMMENTS",
+			"fallbackDescription": "hide-comments-description",
+			"fallbackTitle": "hide-comments",
+			"id": 21,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Hide Comments"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"must_not": [
+											{
+												"term": {
+													"assetCategoryIds": {
+														"value": 1234
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Hide contents in the given category."
+			},
+			"elementDefinition": {
+				"category": "hide",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"must_not": [
+													{
+														"term": {
+															"assetCategoryIds": {
+																"value": "${configuration.asset_category_id}"
+															}
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "HIDE-CONTENTS-IN-A-CATEGORY",
+			"fallbackDescription": "hide-contents-in-a-category-description",
+			"fallbackTitle": "hide-contents-in-a-category",
+			"id": 22,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Hide Contents in a Category"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"exists": {
+																"field": "hidden"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"hidden": false
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Hide assets which are marked not searchable. This Element duplicates the functionality of a Liferay Search Framework query clause."
+			},
+			"elementDefinition": {
+				"category": "hide",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must_not": [
+																{
+																	"exists": {
+																		"field": "hidden"
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"term": {
+																		"hidden": false
+																	}
+																}
+															]
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+				}
+			},
+			"externalReferenceCode": "HIDE-HIDDEN-CONTENTS",
+			"fallbackDescription": "hide-hidden-contents-description",
+			"fallbackTitle": "hide-hidden-contents",
+			"id": 24,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Hide Hidden Contents"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"must_not": [
+											{
+												"term": {
+													"assetTagNames.raw": {
+														"value": ""
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						],
+						"enabled": false
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Hide contents with a given tag."
+			},
+			"elementDefinition": {
+				"category": "hide",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"must_not": [
+													{
+														"term": {
+															"assetTagNames.raw": {
+																"value": "${configuration.asset_tag}"
+															}
+														}
+													}
+												]
+											}
+										}
+									}
+								],
+								"enabled": false
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"helpText": "Add asset tag value",
+									"label": "Asset Tag",
+									"name": "asset_tag",
+									"type": "text"
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "HIDE-TAGGED-CONTENTS",
+			"fallbackDescription": "hide-tagged-contents-description",
+			"fallbackTitle": "hide-tagged-contents",
+			"id": 25,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Hide Tagged Contents"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_tag": ""
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"terms": {
+										"accountEntryId": [
+											"1234"
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Filter results by one or multiple terms. At least one must match."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"terms": {
+												"${configuration.field}": "${configuration.values}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Field",
+									"name": "field",
+									"type": "fieldMapping"
+								},
+								{
+									"label": "Values",
+									"name": "values",
+									"type": "multiselect"
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "FILTER-BY-EXACT-TERMS-MATCH",
+			"fallbackDescription": "filter-by-exact-terms-match-description",
+			"fallbackTitle": "filter-by-exact-terms-match",
+			"id": 19,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Filter by Exact Terms Match"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"field": {
+				"field": "accountEntryId",
+				"languageIdPosition": -1,
+				"locale": ""
+			},
+			"values": [
+				{
+					"label": "1234",
+					"value": "1234"
+				}
+			]
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"range": {
+										"createDate": {
+											"from": 20240709000700,
+											"include_lower": true,
+											"include_upper": true,
+											"to": 20240712000700
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit search to contents created within the given time range."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"range": {
+												"createDate": {
+													"from": "${configuration.start_date}",
+													"include_lower": true,
+													"include_upper": true,
+													"to": "${configuration.end_date}"
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Create Date: From",
+									"name": "start_date",
+									"type": "date"
+								},
+								{
+									"label": "Create Date: To",
+									"name": "end_date",
+									"type": "date"
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "LIMIT-SEARCH-TO-CONTENTS-CREATED-WITHIN-A-PERIOD-OF-TIME",
+			"fallbackDescription": "limit-search-to-contents-created-within-a-period-of-time-description",
+			"fallbackTitle": "limit-search-to-contents-created-within-a-period-of-time",
+			"id": 26,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to Contents Created Within a Period of Time"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"end_date": 1720753200,
+			"start_date": 1720494000
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"term": {
+																"entryClassName": {
+																	"value": "com.liferay.journal.model.JournalArticle"
+																}
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"entryClassName": {
+																	"value": "com.liferay.journal.model.JournalArticle"
+																}
+															}
+														},
+														{
+															"term": {
+																"head": {
+																	"value": true
+																}
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search to return only the HEAD version of Web Content articles. This Element duplicates the functionality of a Liferay Search Framework query clause."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must_not": [
+																{
+																	"term": {
+																		"entryClassName": {
+																			"value": "com.liferay.journal.model.JournalArticle"
+																		}
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"term": {
+																		"entryClassName": {
+																			"value": "com.liferay.journal.model.JournalArticle"
+																		}
+																	}
+																},
+																{
+																	"term": {
+																		"head": {
+																			"value": true
+																		}
+																	}
+																}
+															]
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"externalReferenceCode": "LIMIT-SEARCH-TO-HEAD-VERSION",
+			"fallbackDescription": "limit-search-to-head-version-description",
+			"fallbackTitle": "limit-search-to-head-version",
+			"id": 27,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to HEAD Version"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"term": {
+										"userId": "${user.id}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search to contents the user is an owner of."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"term": {
+												"userId": "${user.id}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"externalReferenceCode": "LIMIT-SEARCH-TO-MY-CONTENTS",
+			"fallbackDescription": "limit-search-to-my-contents-description",
+			"fallbackTitle": "limit-search-to-my-contents",
+			"id": 28,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to My Contents"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"terms": {
+										"scopeGroupId": "${user.group_ids}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search scope to the sites that the user is a member of."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"terms": {
+												"scopeGroupId": "${user.group_ids}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"externalReferenceCode": "LIMIT-SEARCH-TO-MY-SITES",
+			"fallbackDescription": "limit-search-to-my-sites-description",
+			"fallbackTitle": "limit-search-to-my-sites",
+			"id": 29,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to My Sites"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"term": {
+										"mimeType": "application_pdf"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search to PDF files, as recorded in the mimeType field."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"term": {
+												"mimeType": "application_pdf"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"externalReferenceCode": "LIMIT-SEARCH-TO-PDF-FILES",
+			"fallbackDescription": "limit-search-to-pdf-files-description",
+			"fallbackTitle": "limit-search-to-pdf-files",
+			"id": 30,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to PDF files"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"term": {
+										"status": 0
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search to contents that are published."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"term": {
+												"status": 0
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"externalReferenceCode": "LIMIT-SEARCH-TO-PUBLISHED-CONTENTS",
+			"fallbackDescription": "limit-search-to-published-contents-description",
+			"fallbackTitle": "limit-search-to-published-contents",
+			"id": 31,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to Published Contents"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"term": {
+										"scopeGroupId": "${context.scope_group_id}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search to the current site."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"term": {
+												"scopeGroupId": "${context.scope_group_id}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"externalReferenceCode": "LIMIT-SEARCH-TO-THE-CURRENT-SITE",
+			"fallbackDescription": "limit-search-to-the-current-site-description",
+			"fallbackTitle": "limit-search-to-the-current-site",
+			"id": 32,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to the Current Site"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"terms": {
+										"scopeGroupId": [
+											"1234"
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Limit the search scope to the given sites."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"terms": {
+												"scopeGroupId": "${configuration.scope_group_ids}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Group IDs",
+									"name": "scope_group_ids",
+									"type": "multiselect"
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "LIMIT-SEARCH-TO-THESE-SITES",
+			"fallbackDescription": "limit-search-to-these-sites-description",
+			"fallbackTitle": "limit-search-to-these-sites",
+			"id": 33,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Limit Search to These Sites"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"scope_group_ids": [
+				{
+					"label": "1234",
+					"value": "1234"
+				}
+			]
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"exists": {
+																"field": "displayDate"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"range": {
+																"displayDate_sortable": {
+																	"from": "-9223372036854775808",
+																	"include_lower": true,
+																	"include_upper": true,
+																	"to": "${time.current_date|date_format=timestamp}"
+																}
+															}
+														}
+													],
+													"must_not": [
+														{
+															"exists": {
+																"field": "expirationDate"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"range": {
+																"displayDate_sortable": {
+																	"from": "-9223372036854775808",
+																	"include_lower": true,
+																	"include_upper": true,
+																	"to": "${time.current_date|date_format=timestamp}"
+																}
+															}
+														},
+														{
+															"range": {
+																"expirationDate_sortable": {
+																	"from": "${time.current_date|date_format=timestamp}",
+																	"include_lower": true,
+																	"include_upper": true,
+																	"to": "9223372036854775807"
+																}
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Show only contents with a display date that's not in the future. This Element duplicates the functionality of a Liferay Search Framework query clause."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must_not": [
+																{
+																	"exists": {
+																		"field": "displayDate"
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"range": {
+																		"displayDate_sortable": {
+																			"from": "-9223372036854775808",
+																			"include_lower": true,
+																			"include_upper": true,
+																			"to": "${time.current_date|date_format=timestamp}"
+																		}
+																	}
+																}
+															],
+															"must_not": [
+																{
+																	"exists": {
+																		"field": "expirationDate"
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"range": {
+																		"displayDate_sortable": {
+																			"from": "-9223372036854775808",
+																			"include_lower": true,
+																			"include_upper": true,
+																			"to": "${time.current_date|date_format=timestamp}"
+																		}
+																	}
+																},
+																{
+																	"range": {
+																		"expirationDate_sortable": {
+																			"from": "${time.current_date|date_format=timestamp}",
+																			"include_lower": true,
+																			"include_upper": true,
+																			"to": "9223372036854775807"
+																		}
+																	}
+																}
+															]
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"externalReferenceCode": "SCHEDULING-AWARE",
+			"fallbackDescription": "scheduling-aware-description",
+			"fallbackTitle": "scheduling-aware",
+			"id": 35,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Scheduling Aware"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"should": [
+											{
+												"bool": {
+													"must_not": [
+														{
+															"exists": {
+																"field": "stagingGroup"
+															}
+														}
+													]
+												}
+											},
+											{
+												"bool": {
+													"must": [
+														{
+															"term": {
+																"stagingGroup": false
+															}
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "context.is_staging_group",
+								"value": false
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Show only published contents on live sites. Show only published and staged contents on staging sites. This Element duplicates the functionality of a Liferay Search Framework query clause."
+			},
+			"elementDefinition": {
+				"category": "filter",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"should": [
+													{
+														"bool": {
+															"must_not": [
+																{
+																	"exists": {
+																		"field": "stagingGroup"
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"must": [
+																{
+																	"term": {
+																		"stagingGroup": false
+																	}
+																}
+															]
+														}
+													}
+												]
+											}
+										}
+									}
+								],
+								"condition": {
+									"equals": {
+										"parameterName": "context.is_staging_group",
+										"value": false
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "filter",
+				"uiConfiguration": {
+				}
+			},
+			"externalReferenceCode": "STAGING-AWARE",
+			"fallbackDescription": "staging-aware-description",
+			"fallbackTitle": "staging-aware",
+			"id": 37,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Staging Aware"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 10,
+											"value": 1234
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"contains": {
+								"parameterName": "keywords",
+								"value": [
+									"test"
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in a category if the user's search keywords contain any of the given keywords."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"contains": {
+										"parameterName": "keywords",
+										"value": "${configuration.keywords}"
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"label": "Keywords",
+									"name": "keywords",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-CONTENTS-IN-A-CATEGORY-BY-KEYWORD-MATCH",
+			"fallbackDescription": "boost-contents-in-a-category-by-keyword-match-description",
+			"fallbackTitle": "boost-contents-in-a-category-by-keyword-match",
+			"id": 5,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category by Keyword Match"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234,
+			"boost": 10,
+			"keywords": [
+				{
+					"label": "test",
+					"value": "test"
+				}
+			]
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 10,
+											"value": 1234
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"range": {
+								"format": "yyyyMMdd",
+								"gte": 20240709,
+								"lte": 20240712,
+								"parameterName": "time.current_date"
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in a category for the given period of time."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"range": {
+										"format": "yyyyMMdd",
+										"gte": "${configuration.start_date}",
+										"lte": "${configuration.end_date}",
+										"parameterName": "time.current_date"
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"label": "Create Date: From",
+									"name": "start_date",
+									"type": "date",
+									"typeOptions": {
+										"format": "YYYYMMDD"
+									}
+								},
+								{
+									"label": "Create Date: To",
+									"name": "end_date",
+									"type": "date",
+									"typeOptions": {
+										"format": "YYYYMMDD"
+									}
+								},
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-CONTENTS-IN-A-CATEGORY-FOR-A-PERIOD-OF-TIME",
+			"fallbackDescription": "boost-contents-in-a-category-for-a-period-of-time-description",
+			"fallbackTitle": "boost-contents-in-a-category-for-a-period-of-time",
+			"id": 6,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category for a Period of Time"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234,
+			"boost": 10,
+			"end_date": 1720753200,
+			"start_date": 1720494000
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 20,
+											"value": 1234
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"contains": {
+								"parameterName": "user.active_segment_entry_ids",
+								"value": [
+									"1234"
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in a category for users belonging to the given user segments."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"contains": {
+										"parameterName": "user.active_segment_entry_ids",
+										"value": "${configuration.user_segment_ids}"
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"label": "User Segment IDs",
+									"name": "user_segment_ids",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 20,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-CONTENTS-IN-A-CATEGORY-FOR-USER-SEGMENTS",
+			"fallbackDescription": "boost-contents-in-a-category-for-user-segments-description",
+			"fallbackTitle": "boost-contents-in-a-category-for-user-segments",
+			"id": 7,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category for User Segments"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234,
+			"boost": 20,
+			"user_segment_ids": [
+				{
+					"label": "1234",
+					"value": "1234"
+				}
+			]
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 20,
+											"value": 1234
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "user.is_signed_in",
+								"value": false
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in a category if a user is not logged in."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"equals": {
+										"parameterName": "user.is_signed_in",
+										"value": false
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"defaultValue": 20,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-CONTENTS-IN-A-CATEGORY-FOR-GUEST-USERS",
+			"fallbackDescription": "boost-contents-in-a-category-for-guest-users-description",
+			"fallbackTitle": "boost-contents-in-a-category-for-guest-users",
+			"id": 8,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category for Guest Users"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234,
+			"boost": 20
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 20,
+											"value": 1234
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"range": {
+								"format": "yyyyMMdd",
+								"gte": "${time.current_date|modifier=-30d,date_format=yyyyMMdd}",
+								"lte": "${time.current_date|modifier=+1d,date_format=yyyyMMdd}",
+								"parameterName": "user.create_date"
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in a category for user accounts created within the given time."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"range": {
+										"format": "yyyyMMdd",
+										"gte": "${time.current_date|modifier=-${configuration.time_range},date_format=yyyyMMdd}",
+										"lte": "${time.current_date|modifier=+1d,date_format=yyyyMMdd}",
+										"parameterName": "user.create_date"
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"defaultValue": 30,
+									"label": "Time range",
+									"name": "time_range",
+									"type": "number",
+									"typeOptions": {
+										"unit": "days",
+										"unitSuffix": "d"
+									}
+								},
+								{
+									"defaultValue": 20,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-CONTENTS-IN-A-CATEGORY-FOR-NEW-USER-ACCOUNTS",
+			"fallbackDescription": "boost-contents-in-a-category-for-new-user-accounts-description",
+			"fallbackTitle": "boost-contents-in-a-category-for-new-user-accounts",
+			"id": 9,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category for New User Accounts"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234,
+			"boost": 20,
+			"time_range": 30
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetCategoryIds": {
+											"boost": 20,
+											"value": 1234
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "time.time_of_day",
+								"value": "morning"
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in a category based on the time of day."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetCategoryIds": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.asset_category_id}"
+												}
+											}
+										}
+									}
+								],
+								"condition": {
+									"equals": {
+										"parameterName": "time.time_of_day",
+										"value": "${configuration.time_of_day}"
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								},
+								{
+									"label": "Time of Day",
+									"name": "time_of_day",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "Morning (4am - 12am)",
+												"value": "morning"
+											},
+											{
+												"label": "Afternoon (12pm - 5pm)",
+												"value": "afternoon"
+											},
+											{
+												"label": "Evening (5pm - 8pm)",
+												"value": "evening"
+											},
+											{
+												"label": "Night (8pm - 4am)",
+												"value": "night"
+											}
+										]
+									}
+								},
+								{
+									"defaultValue": 20,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-CONTENTS-IN-A-CATEGORY-FOR-THE-TIME-OF-DAY",
+			"fallbackDescription": "boost-contents-in-a-category-for-the-time-of-day-description",
+			"fallbackTitle": "boost-contents-in-a-category-for-the-time-of-day",
+			"id": 10,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category for the Time of Day"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234,
+			"boost": 20,
+			"time_of_day": "morning"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"terms": {
+										"articleId_String_sortable": [
+											"1234"
+										],
+										"boost": 20
+									}
+								}
+							}
+						],
+						"condition": {
+							"contains": {
+								"parameterName": "keywords",
+								"value": [
+									"test"
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Boost certain Web Content if the user's search keywords contain the given keywords."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"terms": {
+												"articleId_String_sortable": "${configuration.article_ids}",
+												"boost": "${configuration.boost}"
+											}
+										}
+									}
+								],
+								"condition": {
+									"contains": {
+										"parameterName": "keywords",
+										"value": "${configuration.values}"
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Article IDs",
+									"name": "article_ids",
+									"type": "multiselect"
+								},
+								{
+									"label": "Keywords",
+									"name": "values",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 20,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-WEB-CONTENTS-BY-KEYWORD-MATCH",
+			"fallbackDescription": "boost-web-contents-by-keyword-match-description",
+			"fallbackTitle": "boost-web-contents-by-keyword-match",
+			"id": 18,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Web Contents by Keyword Match"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"article_ids": [
+				{
+					"label": "1234",
+					"value": "1234"
+				}
+			],
+			"boost": 20,
+			"values": [
+				{
+					"label": "test",
+					"value": "test"
+				}
+			]
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"bool": {
+										"must_not": [
+											{
+												"term": {
+													"assetCategoryIds": {
+														"value": 1234
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						],
+						"condition": {
+							"equals": {
+								"parameterName": "user.is_signed_in",
+								"value": false
+							}
+						}
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:29Z",
+			"description_i18n": {
+				"en-US": "Hide contents in a category if the user is not logged in."
+			},
+			"elementDefinition": {
+				"category": "conditional",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "filter",
+										"query": {
+											"bool": {
+												"must_not": [
+													{
+														"term": {
+															"assetCategoryIds": {
+																"value": "${configuration.asset_category_id}"
+															}
+														}
+													}
+												]
+											}
+										}
+									}
+								],
+								"condition": {
+									"equals": {
+										"parameterName": "user.is_signed_in",
+										"value": false
+									}
+								}
+							}
+						]
+					}
+				},
+				"icon": "hidden",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category ID",
+									"name": "asset_category_id",
+									"type": "number"
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "HIDE-CONTENTS-IN-A-CATEGORY-FOR-GUEST-USERS",
+			"fallbackDescription": "hide-contents-in-a-category-for-guest-users-description",
+			"fallbackTitle": "hide-contents-in-a-category-for-guest-users",
+			"id": 23,
+			"modifiedDate": "2024-07-09T17:30:29Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Hide Contents in a Category for Guest Users"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_id": 1234
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"multi_match": {
+										"boost": 10,
+										"fields": [
+											"localized_title_${context.language_id}^2",
+											"content_${context.language_id}^1"
+										],
+										"operator": "and",
+										"query": "${keywords}",
+										"type": "best_fields"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:27Z",
+			"description_i18n": {
+				"en-US": "Boost contents if the search keywords match in the given fields."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"multi_match": {
+												"boost": "${configuration.boost}",
+												"fields": "${configuration.fields}",
+												"operator": "and",
+												"query": "${configuration.keywords}",
+												"type": "${configuration.type}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"fieldMappings": [
+										{
+											"boost": 2,
+											"field": "localized_title",
+											"locale": "${context.language_id}"
+										},
+										{
+											"boost": 1,
+											"field": "content",
+											"locale": "${context.language_id}"
+										}
+									],
+									"label": "Field",
+									"name": "fields",
+									"type": "fieldMappingList",
+									"typeOptions": {
+										"boost": true
+									}
+								},
+								{
+									"defaultValue": "best_fields",
+									"label": "Match Type",
+									"name": "type",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "Best Fields",
+												"value": "best_fields"
+											},
+											{
+												"label": "Most Fields",
+												"value": "most_fields"
+											},
+											{
+												"label": "Cross Fields",
+												"value": "cross_fields"
+											},
+											{
+												"label": "Phrase",
+												"value": "phrase"
+											},
+											{
+												"label": "Phrase Prefix",
+												"value": "phrase_prefix"
+											},
+											{
+												"label": "Boolean Prefix",
+												"value": "bool_prefix"
+											}
+										]
+									}
+								},
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								},
+								{
+									"helpText": "If this is set, the search terms entered in the search bar will be replaced by this value.",
+									"label": "Text to Match",
+									"name": "keywords",
+									"type": "keywords",
+									"typeOptions": {
+										"required": false
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-ALL-KEYWORDS-MATCH",
+			"fallbackDescription": "boost-all-keywords-match-description",
+			"fallbackTitle": "boost-all-keywords-match",
+			"id": 1,
+			"modifiedDate": "2024-07-09T17:30:27Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost All Keywords Match"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"boost": 10,
+			"fields": [
+				{
+					"boost": 2,
+					"field": "localized_title",
+					"locale": "${context.language_id}"
+				},
+				{
+					"boost": 1,
+					"field": "content",
+					"locale": "${context.language_id}"
+				}
+			],
+			"keywords": "",
+			"type": "best_fields"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"entryClassName": {
+											"boost": 10,
+											"value": "com.liferay.journal.model.JournalArticle"
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost the given asset type."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"entryClassName": {
+													"boost": "${configuration.boost}",
+													"value": "${configuration.entry_class_name}"
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Type",
+									"name": "entry_class_name",
+									"type": "searchableType"
+								},
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-ASSET-TYPE",
+			"fallbackDescription": "boost-asset-type-description",
+			"fallbackTitle": "boost-asset-type",
+			"id": 2,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Asset Type"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"boost": 10,
+			"entry_class_name": "com.liferay.journal.model.JournalArticle"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"bool": {
+										"must": [
+											{
+												"terms": {
+													"entryClassName": [
+														"com.liferay.portal.kernel.model.Layout",
+														"com.liferay.journal.model.JournalArticle"
+													]
+												}
+											},
+											{
+												"term": {
+													"defaultLanguageId": {
+														"boost": 20,
+														"value": "${context.language_id}"
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents having a default language matching the current session language."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"bool": {
+												"must": [
+													{
+														"terms": {
+															"entryClassName": [
+																"com.liferay.portal.kernel.model.Layout",
+																"com.liferay.journal.model.JournalArticle"
+															]
+														}
+													},
+													{
+														"term": {
+															"defaultLanguageId": {
+																"boost": "${configuration.boost}",
+																"value": "${context.language_id}"
+															}
+														}
+													}
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": 20,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-CONTENTS-FOR-THE-CURRENT-LANGUAGE",
+			"fallbackDescription": "boost-contents-for-the-current-language-description",
+			"fallbackTitle": "boost-contents-for-the-current-language",
+			"id": 3,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents for the Current Language"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"boost": 20
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"terms": {
+										"assetCategoryIds": [
+											"1234"
+										],
+										"boost": 10
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost and promote contents in a given category."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"terms": {
+												"assetCategoryIds": "${configuration.asset_category_ids}",
+												"boost": "${configuration.boost}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Category IDs",
+									"name": "asset_category_ids",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-CONTENTS-IN-A-CATEGORY",
+			"fallbackDescription": "boost-contents-in-a-category-description",
+			"fallbackTitle": "boost-contents-in-a-category",
+			"id": 4,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents in a Category"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_category_ids": [
+				{
+					"label": "1234",
+					"value": "1234"
+				}
+			],
+			"boost": 10
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"terms": {
+										"boost": 10,
+										"groupId": "${user.group_ids}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents on sites the user is a member of."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"terms": {
+												"boost": "${configuration.boost}",
+												"groupId": "${user.group_ids}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-CONTENTS-ON-MY-SITES",
+			"fallbackDescription": "boost-contents-on-my-sites-description",
+			"fallbackTitle": "boost-contents-on-my-sites",
+			"id": 11,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents on My Sites"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"boost": 10
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"function_score": {
+										"boost": 10,
+										"field_value_factor": {
+											"factor": 1.2,
+											"field": "versionCount_sortable",
+											"missing": 1,
+											"modifier": "sqrt"
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents edited more often."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"function_score": {
+												"boost": "${configuration.boost}",
+												"field_value_factor": {
+													"factor": "${configuration.factor}",
+													"field": "versionCount_sortable",
+													"missing": 1,
+													"modifier": "${configuration.modifier}"
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": 10,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								},
+								{
+									"defaultValue": 1.2,
+									"label": "Factor",
+									"name": "factor",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								},
+								{
+									"defaultValue": "sqrt",
+									"label": "Modifier",
+									"name": "modifier",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "None",
+												"value": "none"
+											},
+											{
+												"label": "log",
+												"value": "log"
+											},
+											{
+												"label": "log1p",
+												"value": "log1p"
+											},
+											{
+												"label": "log2p",
+												"value": "log2p"
+											},
+											{
+												"label": "ln",
+												"value": "ln"
+											},
+											{
+												"label": "ln1p",
+												"value": "ln1p"
+											},
+											{
+												"label": "ln2p",
+												"value": "ln2p"
+											},
+											{
+												"label": "Square",
+												"value": "square"
+											},
+											{
+												"label": "Square Root",
+												"value": "sqrt"
+											},
+											{
+												"label": "Reciprocal",
+												"value": "reciprocal"
+											}
+										]
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-CONTENTS-WITH-MORE-VERSIONS",
+			"fallbackDescription": "boost-contents-with-more-versions-description",
+			"fallbackTitle": "boost-contents-with-more-versions",
+			"id": 12,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Contents With More Versions"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"boost": 10,
+			"factor": 1.2,
+			"modifier": "sqrt"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"function_score": {
+										"boost": 2,
+										"gauss": {
+											"modified": {
+												"decay": 0.5,
+												"offset": "0d",
+												"origin": "${time.current_date|date_format=yyyyMMddHHmmss}",
+												"scale": "10d"
+											}
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents modified recently using a Gaussian function."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"function_score": {
+												"boost": "${configuration.boost}",
+												"gauss": {
+													"modified": {
+														"decay": "${configuration.decay}",
+														"offset": "${configuration.offset}",
+														"origin": "${time.current_date|date_format=yyyyMMddHHmmss}",
+														"scale": "${configuration.scale}"
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": 0.5,
+									"label": "Decay",
+									"name": "decay",
+									"type": "slider",
+									"typeOptions": {
+										"max": 0.99,
+										"min": 0.01,
+										"step": 0.01
+									}
+								},
+								{
+									"defaultValue": 0,
+									"label": "Offset",
+									"name": "offset",
+									"type": "number",
+									"typeOptions": {
+										"min": 0,
+										"unit": "days",
+										"unitSuffix": "d"
+									}
+								},
+								{
+									"defaultValue": 10,
+									"label": "Scale",
+									"name": "scale",
+									"type": "number",
+									"typeOptions": {
+										"min": 0,
+										"unit": "days",
+										"unitSuffix": "d"
+									}
+								},
+								{
+									"defaultValue": 2,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-FRESHNESS",
+			"fallbackDescription": "boost-freshness-description",
+			"fallbackTitle": "boost-freshness",
+			"id": 13,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Freshness"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"boost": 2,
+			"decay": 0.5,
+			"offset": 0,
+			"scale": 10
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"function_score": {
+										"boost": 30,
+										"field_value_factor": {
+											"factor": 1.5,
+											"field": "contentLength_${context.language_id}_sortable",
+											"missing": 1,
+											"modifier": "ln"
+										}
+									}
+								}
+							}
+						],
+						"enabled": true
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents with longer content in the user's current language."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"function_score": {
+												"boost": "${configuration.boost}",
+												"field_value_factor": {
+													"factor": "${configuration.factor}",
+													"field": "contentLength_${context.language_id}_sortable",
+													"missing": 1,
+													"modifier": "${configuration.modifier}"
+												}
+											}
+										}
+									}
+								],
+								"enabled": true
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": 30,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								},
+								{
+									"defaultValue": 1.5,
+									"label": "Factor",
+									"name": "factor",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								},
+								{
+									"defaultValue": "ln",
+									"label": "Modifier",
+									"name": "modifier",
+									"type": "select",
+									"typeOptions": {
+										"options": [
+											{
+												"label": "None",
+												"value": "none"
+											},
+											{
+												"label": "log",
+												"value": "log"
+											},
+											{
+												"label": "log1p",
+												"value": "log1p"
+											},
+											{
+												"label": "log2p",
+												"value": "log2p"
+											},
+											{
+												"label": "ln",
+												"value": "ln"
+											},
+											{
+												"label": "ln1p",
+												"value": "ln1p"
+											},
+											{
+												"label": "ln2p",
+												"value": "ln2p"
+											},
+											{
+												"label": "Square",
+												"value": "square"
+											},
+											{
+												"label": "sqrt",
+												"value": "sqrt"
+											},
+											{
+												"label": "Reciprocal",
+												"value": "reciprocal"
+											}
+										]
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-LONGER-CONTENTS",
+			"fallbackDescription": "boost-longer-contents-description",
+			"fallbackTitle": "boost-longer-contents",
+			"id": 14,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Longer Contents"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"boost": 30,
+			"factor": 1.5,
+			"modifier": "ln"
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"function_score": {
+										"boost": 2,
+										"gauss": {
+											"firstName": {
+												"decay": 0.3,
+												"offset": 0,
+												"origin": {
+													"lat": "${ipstack.latitude}",
+													"lon": "${ipstack.longitude}"
+												},
+												"scale": "100km"
+											}
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents in closer proximity to the search user with a Gaussian function. Additional setup is required."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"function_score": {
+												"boost": "${configuration.boost}",
+												"gauss": {
+													"${configuration.field}": {
+														"decay": "${configuration.decay}",
+														"offset": 0,
+														"origin": {
+															"lat": "${ipstack.latitude}",
+															"lon": "${ipstack.longitude}"
+														},
+														"scale": "${configuration.scale}"
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"fieldMappings": [
+										{
+											"field": "expando__keyword__custom_fields__location_geolocation",
+											"locale": ""
+										}
+									],
+									"helpText": "A geopoint field",
+									"label": "Field",
+									"name": "field",
+									"type": "fieldMapping"
+								},
+								{
+									"defaultValue": 0.3,
+									"label": "Decay",
+									"name": "decay",
+									"type": "slider",
+									"typeOptions": {
+										"max": 0.99,
+										"min": 0.01,
+										"step": 0.1
+									}
+								},
+								{
+									"defaultValue": 100,
+									"label": "Scale",
+									"name": "scale",
+									"type": "number",
+									"typeOptions": {
+										"min": 0,
+										"unit": "km",
+										"unitSuffix": "km"
+									}
+								},
+								{
+									"defaultValue": 2,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-PROXIMITY",
+			"fallbackDescription": "boost-proximity-description",
+			"fallbackTitle": "boost-proximity",
+			"id": 15,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Proximity"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"boost": 2,
+			"decay": 0.3,
+			"field": {
+				"field": "firstName",
+				"languageIdPosition": -1,
+				"locale": ""
+			},
+			"scale": 100
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"terms": {
+										"assetTagNames.raw": [
+											"test"
+										],
+										"boost": 5
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents having at least one of the given tags."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"terms": {
+												"assetTagNames.raw": "${configuration.asset_tags}",
+												"boost": "${configuration.boost}"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"label": "Asset Tags",
+									"name": "asset_tags",
+									"type": "multiselect"
+								},
+								{
+									"defaultValue": 5,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-TAGGED-CONTENTS",
+			"fallbackDescription": "boost-tagged-contents-description",
+			"fallbackTitle": "boost-tagged-contents",
+			"id": 16,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Tagged Contents"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"asset_tags": [
+				{
+					"label": "test",
+					"value": "test"
+				}
+			],
+			"boost": 5
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"term": {
+										"assetTagNames.raw": {
+											"boost": 50,
+											"value": "${keywords}"
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"sxpElement": {
+			"createDate": "2024-07-09T17:30:28Z",
+			"description_i18n": {
+				"en-US": "Boost contents with an exact keyword match to a tag."
+			},
+			"elementDefinition": {
+				"category": "boost",
+				"configuration": {
+					"queryConfiguration": {
+						"queryEntries": [
+							{
+								"clauses": [
+									{
+										"context": "query",
+										"occur": "should",
+										"query": {
+											"term": {
+												"assetTagNames.raw": {
+													"boost": "${configuration.boost}",
+													"value": "${keywords}"
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				},
+				"icon": "thumbs-up",
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"defaultValue": 40,
+									"label": "Boost",
+									"name": "boost",
+									"type": "number",
+									"typeOptions": {
+										"min": 0
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "BOOST-TAGS-MATCH",
+			"fallbackDescription": "boost-tags-match-description",
+			"fallbackTitle": "boost-tags-match",
+			"id": 17,
+			"modifiedDate": "2024-07-09T17:30:28Z",
+			"readOnly": true,
+			"schemaVersion": "1.0",
+			"title_i18n": {
+				"en-US": "Boost Tags Match"
+			},
+			"type": 0,
+			"userName": "",
+			"version": "1.0"
+		},
+		"uiConfigurationValues": {
+			"boost": 50
+		}
+	}
+]

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -59,6 +60,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Almir Ferreira
@@ -382,9 +386,18 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			sxpBlueprintId);
 
 		Assert.assertNotNull(sxpBlueprint);
-		Assert.assertEquals(
-			expectedElementInstancesJSON,
-			sxpBlueprint.getElementInstancesJSON());
+
+		if (Validator.isBlank(expectedElementInstancesJSON)) {
+			Assert.assertTrue(
+				Validator.isBlank(sxpBlueprint.getElementInstancesJSON()));
+		}
+		else {
+			JSONAssert.assertEquals(
+				expectedElementInstancesJSON,
+				sxpBlueprint.getElementInstancesJSON(),
+				JSONCompareMode.NON_EXTENSIBLE);
+		}
+
 		_assertSearch(
 			sxpBlueprint.getTitle(LocaleUtil.US), _sxpBlueprintIndexerFixture);
 	}
@@ -397,9 +410,18 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 			sxpElementId);
 
 		Assert.assertNotNull(sxpElement);
-		Assert.assertEquals(
-			expectedElementDefinitionJSON,
-			sxpElement.getElementDefinitionJSON());
+
+		if (Validator.isBlank(expectedElementDefinitionJSON)) {
+			Assert.assertTrue(
+				Validator.isBlank(sxpElement.getElementDefinitionJSON()));
+		}
+		else {
+			JSONAssert.assertEquals(
+				expectedElementDefinitionJSON,
+				sxpElement.getElementDefinitionJSON(),
+				JSONCompareMode.NON_EXTENSIBLE);
+		}
+
 		_assertSearch(
 			sxpElement.getTitle(LocaleUtil.US), _sxpElementIndexerFixture);
 	}

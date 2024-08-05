@@ -15,6 +15,8 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
@@ -57,7 +59,8 @@ public class ObjectEntryItemSelectorViewDescriptor
 		ObjectDefinition objectDefinition,
 		ObjectEntryManager objectEntryManager,
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
-		Portal portal, PortletURL portletURL) {
+		ObjectScopeProviderRegistry objectScopeProviderRegistry, Portal portal,
+		PortletURL portletURL) {
 
 		_httpServletRequest = httpServletRequest;
 		_infoItemItemSelectorCriterion = infoItemItemSelectorCriterion;
@@ -65,6 +68,7 @@ public class ObjectEntryItemSelectorViewDescriptor
 		_objectEntryManager = objectEntryManager;
 		_objectRelatedModelsProviderRegistry =
 			objectRelatedModelsProviderRegistry;
+		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_portal = portal;
 		_portletURL = portletURL;
 
@@ -119,10 +123,19 @@ public class ObjectEntryItemSelectorViewDescriptor
 							CompanyThreadLocal.getCompanyId(),
 							objectRelationshipType);
 
+				ObjectScopeProvider objectScopeProvider =
+					_objectScopeProviderRegistry.getObjectScopeProvider(
+						_objectDefinition.getScope());
+
+				long groupId = ParamUtil.getLong(_portletRequest, "groupId");
+
+				if (!objectScopeProvider.isValidGroupId(groupId)) {
+					groupId = 0;
+				}
+
 				List<ObjectEntry> baseModels =
 					objectRelatedModelsProvider.getUnrelatedModels(
-						_objectDefinition.getCompanyId(),
-						ParamUtil.getLong(_portletRequest, "groupId"),
+						_objectDefinition.getCompanyId(), groupId,
 						_objectDefinition,
 						ParamUtil.getLong(_portletRequest, "objectEntryId"),
 						ParamUtil.getLong(
@@ -132,8 +145,7 @@ public class ObjectEntryItemSelectorViewDescriptor
 				searchContainer.setResultsAndTotal(
 					() -> baseModels,
 					objectRelatedModelsProvider.getUnrelatedModelsCount(
-						_objectDefinition.getCompanyId(),
-						ParamUtil.getLong(_portletRequest, "groupId"),
+						_objectDefinition.getCompanyId(), groupId,
 						_objectDefinition,
 						ParamUtil.getLong(_portletRequest, "objectEntryId"),
 						ParamUtil.getLong(
@@ -207,6 +219,7 @@ public class ObjectEntryItemSelectorViewDescriptor
 	private final ObjectEntryManager _objectEntryManager;
 	private final ObjectRelatedModelsProviderRegistry
 		_objectRelatedModelsProviderRegistry;
+	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final Portal _portal;
 	private final PortletRequest _portletRequest;
 	private final PortletURL _portletURL;

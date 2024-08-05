@@ -480,6 +480,8 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.GroupedProduct",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.LinkedProduct",
+		"com.liferay.headless.commerce.admin.catalog.dto.v1_0." +
+			"ListTypeDefinition",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.LowStockAction",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option",
@@ -504,11 +506,15 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
 			"AccountAddressChannel",
+		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
+			"CategoryDisplayPage",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0.ChannelAccount",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
 			"PaymentMethodGroupRelOrderType",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
 			"PaymentMethodGroupRelTerm",
+		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
+			"ProductDisplayPage",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
 			"ShippingFixedOptionOrderType",
 		"com.liferay.headless.commerce.admin.channel.dto.v1_0." +
@@ -628,6 +634,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.delivery.dto.v1_0.ContentTemplate",
 		"com.liferay.headless.delivery.dto.v1_0.Document",
 		"com.liferay.headless.delivery.dto.v1_0.DocumentFolder",
+		"com.liferay.headless.delivery.dto.v1_0.DocumentShortcut",
 		"com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle",
 		"com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment",
 		"com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder",
@@ -656,6 +663,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship",
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule",
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectView",
+		"com.liferay.portal.language.rest.dto.v1_0.Message",
 		"com.liferay.portal.search.rest.dto.v1_0.SearchResult",
 		"com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee",
 		"com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetric",

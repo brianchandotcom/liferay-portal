@@ -6,7 +6,6 @@
 package com.liferay.portal.tools.rest.builder.test.resource.v1_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.TestObject;
 
 import org.junit.Assert;
@@ -22,15 +21,24 @@ public class TestObjectResourceTest extends BaseTestObjectResourceTestCase {
 	@Override
 	@Test
 	public void testGetTestObject() throws Exception {
-		Assert.assertNotNull(
-			testObjectResource.getTestObject(RandomTestUtil.nextLong()));
+		int initialCount = testObjectResource.getTestObjectCount();
+		TestObject testObject = testObjectResource.postTestObject(
+			randomTestObject());
+
+		Assert.assertEquals(
+			testObject, testObjectResource.getTestObject((long)initialCount));
 	}
 
 	@Override
 	@Test
 	public void testGetTestObjectCount() throws Exception {
+		int initialCount = testObjectResource.getTestObjectCount();
+
+		testObjectResource.postTestObject(randomTestObject());
+
 		Assert.assertEquals(
-			Integer.valueOf(0), testObjectResource.getTestObjectCount());
+			Integer.valueOf(initialCount + 1),
+			testObjectResource.getTestObjectCount());
 	}
 
 	@Override

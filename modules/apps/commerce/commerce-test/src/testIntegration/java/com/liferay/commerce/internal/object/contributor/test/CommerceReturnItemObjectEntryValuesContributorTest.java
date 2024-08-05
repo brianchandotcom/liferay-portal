@@ -189,7 +189,6 @@ public class CommerceReturnItemObjectEntryValuesContributorTest {
 
 		Assert.assertEquals(
 			commerceCurrency.getCode(), objectEntryValues.get("currencyCode"));
-
 		Assert.assertEquals(
 			commerceCurrency.getSymbol(),
 			objectEntryValues.get("currencySymbol"));

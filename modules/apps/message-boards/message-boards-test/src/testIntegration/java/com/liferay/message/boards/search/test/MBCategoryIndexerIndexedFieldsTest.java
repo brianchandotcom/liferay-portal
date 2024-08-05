@@ -148,6 +148,10 @@ public class MBCategoryIndexerIndexedFieldsTest {
 		).put(
 			Field.USER_NAME, StringUtil.lowerCase(mbCategory.getUserName())
 		).put(
+			"groupExternalReferenceCode", _group.getExternalReferenceCode()
+		).put(
+			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
+		).put(
 			"statusByUserId", String.valueOf(mbCategory.getStatusByUserId())
 		).put(
 			"userExternalReferenceCode", _user.getExternalReferenceCode()

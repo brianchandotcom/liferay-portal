@@ -221,9 +221,13 @@ public class MBMessageIndexerIndexedFieldsTest {
 		).put(
 			"externalReferenceCode", mbMessage.getExternalReferenceCode()
 		).put(
+			"groupExternalReferenceCode", _group.getExternalReferenceCode()
+		).put(
 			"parentMessageId", String.valueOf(mbMessage.getParentMessageId())
 		).put(
 			"question", "false"
+		).put(
+			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
 			"statusByUserId", String.valueOf(mbMessage.getStatusByUserId())
 		).put(

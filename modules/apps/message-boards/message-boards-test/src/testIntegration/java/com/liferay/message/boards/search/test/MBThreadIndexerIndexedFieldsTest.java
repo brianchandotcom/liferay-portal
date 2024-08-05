@@ -161,6 +161,8 @@ public class MBThreadIndexerIndexedFieldsTest {
 		).put(
 			"discussion", "false"
 		).put(
+			"groupExternalReferenceCode", _group.getExternalReferenceCode()
+		).put(
 			"lastPostDate",
 			() -> {
 				Date lastPostDate = mbThread.getLastPostDate();
@@ -170,6 +172,8 @@ public class MBThreadIndexerIndexedFieldsTest {
 		).put(
 			"participantUserIds",
 			String.valueOf(_getValues(mbThread.getParticipantUserIds()))
+		).put(
+			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
 			"statusByUserId", String.valueOf(mbThread.getStatusByUserId())
 		).put(

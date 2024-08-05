@@ -87,15 +87,13 @@ public class FragmentEntryFragmentRendererTest {
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0);
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
-
 		_locale = _portal.getSiteDefaultLocale(_group);
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
 
 		_defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid());
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId());
 	}
 
 	@Test

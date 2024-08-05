@@ -1,0 +1,32 @@
+{
+	"label": {
+		"en_US": "Exam Entry"
+	},
+	"name": "ExamEntry",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "External Key"
+			},
+			"name": "externalKey",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Exam Entries"
+	},
+	"scope": "site"
+}

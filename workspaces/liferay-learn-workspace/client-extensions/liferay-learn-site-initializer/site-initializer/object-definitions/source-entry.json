@@ -1,0 +1,32 @@
+{
+	"label": {
+		"en_US": "Source Entry"
+	},
+	"name": "SourceEntry",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Sync Date"
+			},
+			"name": "syncDate",
+			"required": false
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Source Entries"
+	},
+	"scope": "site"
+}

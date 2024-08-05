@@ -1,0 +1,52 @@
+{
+	"label": {
+		"en_US": "Certificate Entry"
+	},
+	"name": "CertificateEntry",
+	"objectFields": [
+		{
+			"DBType": "Date",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Completed Date"
+			},
+			"name": "completedDate",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Expiration Date"
+			},
+			"name": "expirationDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Key"
+			},
+			"name": "key",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Certificate Entries"
+	},
+	"scope": "site"
+}

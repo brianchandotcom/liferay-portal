@@ -1,0 +1,52 @@
+{
+	"label": {
+		"en_US": "Person Entry"
+	},
+	"name": "PersonEntry",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Email Address"
+			},
+			"name": "emailAddress",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "External Key"
+			},
+			"name": "externalKey",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "First Name"
+			},
+			"name": "firstName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Last Name"
+			},
+			"name": "lastName",
+			"required": false
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Person Entries"
+	},
+	"scope": "site"
+}

@@ -7,15 +7,33 @@ package com.liferay.portal.db.partition.db;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.db.PostgreSQLDB;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+import java.util.List;
 
 /**
  * @author Alberto Chaparro
  */
 public class DBPartitionPostgreSQLDB implements DBPartitionDB {
+
+	@Override
+	public void copyRules(Connection connection, String toPartitionName)
+		throws SQLException {
+
+		List<String> createRulesSQL = PostgreSQLDB.getCreateRulesSQL(
+			toPartitionName);
+
+		try (Statement statement = connection.createStatement()) {
+			for (String createRuleSQL : createRulesSQL) {
+				statement.executeUpdate(createRuleSQL);
+			}
+		}
+	}
 
 	@Override
 	public String getCreatePartitionSQL(

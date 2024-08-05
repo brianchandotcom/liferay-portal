@@ -1676,8 +1676,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			ServiceContext serviceContext, int status, User user)
 		throws Exception {
 
-		return _userService.updateStatus(
-			user.getUserId(), status, serviceContext);
+		return _userService.updateStatus(user, status, serviceContext);
 	}
 
 	private User _updateStatus(

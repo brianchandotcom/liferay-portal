@@ -1910,7 +1910,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 
 		if (user.getStatus() != ldapUser.getStatus()) {
 			user = _userLocalService.updateStatus(
-				user.getUserId(), ldapUser.getStatus(), serviceContext);
+				user, ldapUser.getStatus(), serviceContext);
 		}
 
 		if (_log.isDebugEnabled()) {

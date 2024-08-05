@@ -246,11 +246,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds,
 				userGroupIds, sendEmail, serviceContext);
 
-			_userLocalService.updateStatus(
-				user.getUserId(), WorkflowConstants.STATUS_INACTIVE,
-				new ServiceContext());
-
-			return user;
+			return _userLocalService.updateStatus(
+				user, WorkflowConstants.STATUS_INACTIVE, new ServiceContext());
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

@@ -53,8 +53,8 @@ public class ErasePersonalDataMVCActionCommand
 			_userGroupLocalService.clearUserUserGroups(
 				selectedUser.getUserId());
 
-			_userLocalService.updateStatus(
-				selectedUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
+			selectedUser = _userLocalService.updateStatus(
+				selectedUser, WorkflowConstants.STATUS_INACTIVE,
 				new ServiceContext());
 
 			Group group = selectedUser.getGroup();

@@ -2522,12 +2522,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			User user, boolean privateLayout, boolean includeUserGroups)
 		throws PortalException {
 
-		Group group = _groupPersistence.findByC_C_C(
-			user.getCompanyId(),
-			_classNameLocalService.getClassNameId(User.class),
-			user.getUserId());
-
-		return hasLayouts(group, privateLayout, includeUserGroups);
+		return hasLayouts(user.getGroup(), privateLayout, includeUserGroups);
 	}
 
 	@Override

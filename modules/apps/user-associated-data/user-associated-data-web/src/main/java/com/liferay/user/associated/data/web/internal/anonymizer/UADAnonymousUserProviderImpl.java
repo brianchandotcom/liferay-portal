@@ -200,7 +200,7 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 
 	private User _updateStatus(User anonymousUser) throws Exception {
 		return _userLocalService.updateStatus(
-			anonymousUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
+			anonymousUser, WorkflowConstants.STATUS_INACTIVE,
 			new ServiceContext());
 	}
 

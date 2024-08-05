@@ -63,8 +63,7 @@ public class AccountRoleAssigneesRoleLocalServiceWrapperTest {
 			1, _roleLocalService.getAssigneesTotal(accountRole.getRoleId()));
 
 		_userLocalService.updateStatus(
-			user.getUserId(), WorkflowConstants.STATUS_INACTIVE,
-			new ServiceContext());
+			user, WorkflowConstants.STATUS_INACTIVE, new ServiceContext());
 
 		Assert.assertEquals(
 			0, _roleLocalService.getAssigneesTotal(accountRole.getRoleId()));

@@ -554,8 +554,7 @@ public class PublishLayoutMVCActionCommandTest {
 		throws PortalException {
 
 		_userLocalService.updateStatus(
-			user.getUserId(), WorkflowConstants.STATUS_INACTIVE,
-			serviceContext);
+			user, WorkflowConstants.STATUS_INACTIVE, serviceContext);
 
 		_userLocalService.deleteUser(user.getUserId());
 

@@ -308,8 +308,7 @@ public class CreateAnonymousAccountMVCActionCommand
 			roleIds, userGroupIds, sendEmail, serviceContext);
 
 		_userLocalService.updateStatus(
-			user.getUserId(), WorkflowConstants.STATUS_INCOMPLETE,
-			new ServiceContext());
+			user, WorkflowConstants.STATUS_INCOMPLETE, new ServiceContext());
 
 		// Session messages
 

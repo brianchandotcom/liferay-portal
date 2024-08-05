@@ -189,7 +189,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		// Provision an existing inactive user with no SCIM client ID set
 
 		updatedPortalUser2 = _userLocalService.updateStatus(
-			updatedPortalUser2.getUserId(), WorkflowConstants.STATUS_INACTIVE,
+			updatedPortalUser2, WorkflowConstants.STATUS_INACTIVE,
 			new ServiceContext());
 
 		Assert.assertFalse(updatedPortalUser2.isActive());

@@ -944,7 +944,7 @@ public class UserManagerImpl implements UserManager {
 
 		if (!portalUser.isActive()) {
 			portalUser = _userLocalService.updateStatus(
-				portalUser.getUserId(), WorkflowConstants.STATUS_APPROVED,
+				portalUser, WorkflowConstants.STATUS_APPROVED,
 				new ServiceContext());
 		}
 

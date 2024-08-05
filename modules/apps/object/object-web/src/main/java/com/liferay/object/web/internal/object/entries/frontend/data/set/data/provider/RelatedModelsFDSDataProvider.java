@@ -67,14 +67,19 @@ public class RelatedModelsFDSDataProvider
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
 
+		long groupId = objectScopeProvider.getGroupId(httpServletRequest);
+
+		if (!objectScopeProvider.isValidGroupId(groupId)) {
+			groupId = 0;
+		}
+
 		long objectEntryId = ParamUtil.getLong(
 			httpServletRequest, "objectEntryId");
 
 		return TransformUtil.transform(
 			(List<ObjectEntry>)objectRelatedModelsProvider.getRelatedModels(
-				objectScopeProvider.getGroupId(httpServletRequest),
-				objectRelationshipId, objectEntryId, fdsKeywords.getKeywords(),
-				fdsPagination.getStartPosition(),
+				groupId, objectRelationshipId, objectEntryId,
+				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition()),
 			objectEntry -> new RelatedModel(
 				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),

@@ -444,7 +444,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					objectDefinition,
 					_objectEntryManagerRegistry.getObjectEntryManager(
 						objectDefinition.getStorageType()),
-					_objectRelatedModelsProviderRegistry, _portal),
+					_objectRelatedModelsProviderRegistry,
+					_objectScopeProviderRegistry, _portal),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.selector.view.order", 500
 				).build()),

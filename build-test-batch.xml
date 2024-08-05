@@ -4840,7 +4840,7 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="functional-bundle-tomcat-sqlserver2022-jdk8">
+	<target name="functional-bundle-tomcat-sqlserver2022-jdk21_zulu">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-functional-test

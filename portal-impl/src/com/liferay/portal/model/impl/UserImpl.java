@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.Website;
+import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.security.auth.EmailAddressGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
@@ -381,8 +382,17 @@ public class UserImpl extends UserBaseImpl {
 	@Override
 	public Group getGroup() {
 		if (_group == null) {
-			_group = GroupLocalServiceUtil.fetchUserGroup(
-				getCompanyId(), getUserId());
+			if (_groupId == -1) {
+				_group = GroupLocalServiceUtil.fetchUserGroup(
+					getCompanyId(), getUserId());
+
+				if (_group != null) {
+					_groupId = _group.getGroupId();
+				}
+			}
+			else {
+				_group = GroupLocalServiceUtil.fetchGroup(_groupId);
+			}
 		}
 
 		return _group;
@@ -390,9 +400,16 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public long getGroupId() {
-		Group group = getGroup();
+		if (_groupId == -1) {
+			_group = GroupLocalServiceUtil.fetchUserGroup(
+				getCompanyId(), getUserId());
 
-		return group.getGroupId();
+			if (_group != null) {
+				_groupId = _group.getGroupId();
+			}
+		}
+
+		return _groupId;
 	}
 
 	@Override
@@ -1018,6 +1035,11 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	@Override
 	public void setGroupIds(long[] groupIds) {
 		_groupIds = groupIds;
 	}
@@ -1145,6 +1167,10 @@ public class UserImpl extends UserBaseImpl {
 
 	private Contact _contact;
 	private Group _group;
+
+	@CacheField(permanent = true, propagateToInterface = true)
+	private long _groupId = -1;
+
 	private long[] _groupIds;
 	private Locale _locale;
 	private long[] _organizationIds;

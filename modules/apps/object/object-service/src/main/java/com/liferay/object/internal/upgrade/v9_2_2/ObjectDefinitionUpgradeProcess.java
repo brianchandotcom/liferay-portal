@@ -38,9 +38,8 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 					1,
 					ObjectDefinitionUtil.
 						getUnmodifiableSystemObjectDefinitionExternalReferenceCode(
-							resultSet.getString("name")));
-				preparedStatement2.setLong(
-					2, resultSet.getLong("objectDefinitionId"));
+							resultSet.getString(2)));
+				preparedStatement2.setLong(2, resultSet.getLong(1));
 
 				preparedStatement2.addBatch();
 			}

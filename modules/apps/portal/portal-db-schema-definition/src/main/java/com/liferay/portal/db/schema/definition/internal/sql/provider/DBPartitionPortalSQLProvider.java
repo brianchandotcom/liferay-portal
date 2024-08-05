@@ -9,12 +9,11 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.db.PostgreSQLDB;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
@@ -46,12 +45,12 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 
 		_companyId = companyId;
 
+		_dbPartitionName = DBPartitionUtil.getPartitionName(companyId);
+
 		_objectSQLProvider = new ObjectSQLProvider(db, companyId);
 
 		if (companyId != PortalInstancePool.getDefaultCompanyId()) {
-			_partitionPrefix =
-				_DATABASE_PARTITION_SCHEMA_NAME_PREFIX + _companyId +
-					StringPool.PERIOD;
+			_partitionPrefix = _dbPartitionName + StringPool.PERIOD;
 		}
 
 		if ((_partitionIndexesSQL == null) || (_partitionTablesSQL == null)) {
@@ -108,14 +107,12 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 
 		if (db.getDBType() == DBType.MYSQL) {
 			return StringBundler.concat(
-				"create schema if not exists ",
-				_DATABASE_PARTITION_SCHEMA_NAME_PREFIX, _companyId,
+				"create schema if not exists ", _dbPartitionName,
 				" character set utf8;", StringPool.NEW_LINE);
 		}
 
 		return StringBundler.concat(
-			"create schema if not exists ",
-			_DATABASE_PARTITION_SCHEMA_NAME_PREFIX, _companyId,
+			"create schema if not exists ", _dbPartitionName,
 			StringPool.SEMICOLON, StringPool.NEW_LINE);
 	}
 
@@ -204,8 +201,7 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 		for (String[] ruleTableColumn : _rulesTableColumn) {
 			sb.append(
 				PostgreSQLDB.getCreateRulesSQL(
-					_DATABASE_PARTITION_SCHEMA_NAME_PREFIX + _companyId,
-					ruleTableColumn[0], ruleTableColumn[1]));
+					_dbPartitionName, ruleTableColumn[0], ruleTableColumn[1]));
 		}
 
 		return sb.toString();
@@ -214,24 +210,17 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 	private String _getViewsSQL() {
 		StringBundler sb = new StringBundler(_controlTableNames.size());
 
-		String partitionName =
-			_DATABASE_PARTITION_SCHEMA_NAME_PREFIX + _companyId;
-
 		for (String controlTableName : _controlTableNames) {
 			sb.append(
 				StringBundler.concat(
-					"create or replace view ", partitionName, StringPool.PERIOD,
-					controlTableName, " as select * from ", controlTableName,
-					StringPool.SEMICOLON, StringPool.NEW_LINE));
+					"create or replace view ", _dbPartitionName,
+					StringPool.PERIOD, controlTableName, " as select * from ",
+					controlTableName, StringPool.SEMICOLON,
+					StringPool.NEW_LINE));
 		}
 
 		return sb.toString();
 	}
-
-	private static final String _DATABASE_PARTITION_SCHEMA_NAME_PREFIX =
-		GetterUtil.get(
-			PropsUtil.get("database.partition.schema.name.prefix"),
-			"lpartition_");
 
 	private static List<String> _controlTableNames;
 	private static String _partitionIndexesSQL;
@@ -239,6 +228,7 @@ public class DBPartitionPortalSQLProvider extends BaseSQLProvider {
 	private static Set<String[]> _rulesTableColumn;
 
 	private final long _companyId;
+	private final String _dbPartitionName;
 	private final ObjectSQLProvider _objectSQLProvider;
 	private String _partitionPrefix = StringPool.BLANK;
 

@@ -175,8 +175,6 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 		for (Map.Entry<Long, Map<IndexerWriterMode, List<T>>> entry1 :
 				indexerWriterModeBaseModelListMap.entrySet()) {
 
-			long companyId = entry1.getKey();
-
 			Map<IndexerWriterMode, List<T>> baseModelListMap =
 				entry1.getValue();
 
@@ -193,47 +191,8 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 					continue;
 				}
 
-				List<T> baseModelList = entry2.getValue();
-
-				if ((indexerWriterMode == IndexerWriterMode.UPDATE) ||
-					(indexerWriterMode ==
-					 IndexerWriterMode.PARTIAL_UPDATE)) {
-
-					Set<Document> documents = new HashSet<>();
-
-					for (T baseModel : baseModelList) {
-						documents.add(
-							_indexerDocumentBuilder.getDocument(baseModel));
-					}
-
-					if (indexerWriterMode == IndexerWriterMode.UPDATE) {
-						_updateDocumentIndexWriter.updateDocuments(
-							companyId, documents, false);
-					}
-					else {
-						_updateDocumentIndexWriter.updateDocumentsPartially(
-							companyId, documents, false);
-					}
-
-					continue;
-				}
-
-				if (indexerWriterMode == IndexerWriterMode.DELETE) {
-					Set<String> uids = new HashSet<>();
-
-					for (T baseModel : baseModelList) {
-						uids.add(
-							_indexerDocumentBuilder.getDocumentUID(baseModel));
-					}
-
-					try {
-						_indexWriterHelper.deleteDocuments(
-							companyId, uids, false);
-					}
-					catch (SearchException searchException) {
-						throw new RuntimeException(searchException);
-					}
-				}
+				_processBaseModels(
+					entry1.getKey(), entry2.getValue(), indexerWriterMode);
 			}
 		}
 
@@ -376,6 +335,44 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 		}
 
 		return IndexerWriterMode.UPDATE;
+	}
+
+	private void _processBaseModels(
+		long companyId, List<T> baseModels,
+		IndexerWriterMode indexerWriterMode) {
+
+		if ((indexerWriterMode == IndexerWriterMode.UPDATE) ||
+			(indexerWriterMode == IndexerWriterMode.PARTIAL_UPDATE)) {
+
+			Set<Document> documents = new HashSet<>();
+
+			for (T baseModel : baseModels) {
+				documents.add(_indexerDocumentBuilder.getDocument(baseModel));
+			}
+
+			if (indexerWriterMode == IndexerWriterMode.UPDATE) {
+				_updateDocumentIndexWriter.updateDocuments(
+					companyId, documents, false);
+			}
+			else {
+				_updateDocumentIndexWriter.updateDocumentsPartially(
+					companyId, documents, false);
+			}
+		}
+		else if (indexerWriterMode == IndexerWriterMode.DELETE) {
+			Set<String> uids = new HashSet<>();
+
+			for (T baseModel : baseModels) {
+				uids.add(_indexerDocumentBuilder.getDocumentUID(baseModel));
+			}
+
+			try {
+				_indexWriterHelper.deleteDocuments(companyId, uids, false);
+			}
+			catch (SearchException searchException) {
+				throw new RuntimeException(searchException);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

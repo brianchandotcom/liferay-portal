@@ -30,13 +30,6 @@ public class ObjectDefinitionUtil {
 		return _allowedModifiableSystemObjectDefinitionNames.get(name);
 	}
 
-	public static String
-		getUnmodifiableSystemObjectDefinitionExternalReferenceCode(
-			String name) {
-
-		return _allowedUnmodifiableSystemObjectDefinitionNames.get(name);
-	}
-
 	public static boolean isAllowedModifiableSystemObjectDefinitionName(
 		String name) {
 

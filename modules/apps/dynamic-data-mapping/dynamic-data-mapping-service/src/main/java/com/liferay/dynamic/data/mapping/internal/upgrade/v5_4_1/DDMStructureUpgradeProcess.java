@@ -80,13 +80,13 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 	private void _upgradeDDMStructure() throws Exception {
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
-					"select structureId, definition from DDMStructure where " +
-						"classNameId = ?");
+					"select ctCollectionId, structureId, definition from " +
+						"DDMStructure where classNameId = ?");
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStructure set definition = ? where " +
-						"structureId = ?")) {
+						"ctCollectionId = ? and structureId = ?")) {
 
 			_upgradeDDMStructureDefinition(
 				"structureId", selectPreparedStatement,
@@ -118,7 +118,10 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 						ddmForm, _ddmFormSerializer));
 
 				updatePreparedStatement.setLong(
-					2, resultSet.getLong(idColumnName));
+					2, resultSet.getLong("ctCollectionId"));
+
+				updatePreparedStatement.setLong(
+					3, resultSet.getLong(idColumnName));
 
 				updatePreparedStatement.addBatch();
 			}
@@ -131,7 +134,8 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
 					StringBundler.concat(
-						"select DDMStructureVersion.structureVersionId, ",
+						"select DDMStructureVersion.ctCollectionId, ",
+						"DDMStructureVersion.structureVersionId, ",
 						"DDMStructureVersion.definition from ",
 						"DDMStructureVersion inner join DDMStructure on ",
 						"DDMStructure.structureId = ",
@@ -141,7 +145,7 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStructureVersion set definition = ? where " +
-						"structureVersionId = ?")) {
+						"ctCollectionId = ? and structureVersionId = ?")) {
 
 			_upgradeDDMStructureDefinition(
 				"structureVersionId", selectPreparedStatement,

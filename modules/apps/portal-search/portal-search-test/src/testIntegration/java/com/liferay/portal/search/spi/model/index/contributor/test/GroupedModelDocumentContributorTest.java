@@ -6,10 +6,6 @@
 package com.liferay.portal.search.spi.model.index.contributor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,8 +19,6 @@ public class GroupedModelDocumentContributorTest
 
 	@Test
 	public void testContributeGroupExternalReferenceCode() throws Exception {
-		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
-
 		testContribute(
 			blogsEntry, group.getExternalReferenceCode(),
 			_GROUP_EXTERNAL_REFERENCE_CODE_FIELD_NAME);
@@ -39,8 +33,6 @@ public class GroupedModelDocumentContributorTest
 	@Test
 	public void testContributeScopeGroupExternalReferenceCode()
 		throws Exception {
-
-		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
 
 		testContribute(
 			blogsEntry, group.getExternalReferenceCode(),
@@ -59,8 +51,5 @@ public class GroupedModelDocumentContributorTest
 	private static final String
 		_SCOPE_GROUP_EXTERNAL_REFERENCE_CODE_FIELD_NAME =
 			"scopeGroupExternalReferenceCode";
-
-	@Inject
-	private GroupLocalService _groupLocalService;
 
 }

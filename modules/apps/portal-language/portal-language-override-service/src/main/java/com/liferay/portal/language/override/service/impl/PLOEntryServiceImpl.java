@@ -14,11 +14,11 @@ import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.base.PLOEntryServiceBaseImpl;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -90,7 +90,7 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void importPLOEntries(InputStream inputStream, String languageId)
+	public void importPLOEntries(String languageId, Properties properties)
 		throws IOException, PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -99,8 +99,8 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 			permissionChecker, PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
 
 		ploEntryLocalService.importPLOEntries(
-			permissionChecker.getCompanyId(), inputStream, languageId,
-			permissionChecker.getUserId());
+			permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+			languageId, properties);
 	}
 
 	@Override

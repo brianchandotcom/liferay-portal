@@ -27,13 +27,18 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.Serializable;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javax.ws.rs.BadRequestException;
@@ -113,8 +118,15 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 				"File name must have a \"properties\" file extension");
 		}
 
-		try (InputStream inputStream = binaryFile.getInputStream()) {
-			_ploEntryService.importPLOEntries(inputStream, languageId);
+		try (InputStream inputStream = binaryFile.getInputStream();
+			Reader reader = new InputStreamReader(
+				inputStream, StandardCharsets.UTF_8)) {
+
+			Properties properties = new Properties();
+
+			properties.load(reader);
+
+			_ploEntryService.importPLOEntries(languageId, properties);
 		}
 	}
 

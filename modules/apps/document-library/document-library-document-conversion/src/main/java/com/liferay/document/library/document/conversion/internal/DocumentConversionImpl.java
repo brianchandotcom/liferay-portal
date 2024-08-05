@@ -16,6 +16,7 @@ import com.artofsolving.jodconverter.openoffice.converter.StreamOpenOfficeDocume
 import com.liferay.document.library.document.conversion.internal.background.task.OpenOfficeConversionPreviewBackgroundTaskExecutor;
 import com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -51,6 +52,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -130,20 +137,75 @@ public class DocumentConversionImpl implements DocumentConversion {
 			inputStream = documentHTMLProcessor.process(inputStream);
 		}
 
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
+		long start = System.currentTimeMillis();
 
-		DocumentConverter documentConverter = _getDocumentConverter();
+		long timeout = Math.max(
+			PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_GHOSTSCRIPT,
+			PropsValues.DL_FILE_ENTRY_PREVIEW_GENERATION_TIMEOUT_PDFBOX);
 
-		documentConverter.convert(
-			inputStream, inputDocumentFormat, unsyncByteArrayOutputStream,
-			outputDocumentFormat);
+		_noticeableExecutorService = _portalExecutorManager.getPortalExecutor(
+			DocumentConversionImpl.class.getName());
 
-		FileUtil.write(
-			file, unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
-			unsyncByteArrayOutputStream.size());
+		InputStream finalInputStream = inputStream;
 
-		inputStream.close();
+		Future<?> future = _noticeableExecutorService.submit(
+			() -> {
+				try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+						new UnsyncByteArrayOutputStream()) {
+
+					DocumentConverter documentConverter =
+						_getDocumentConverter();
+
+					documentConverter.convert(
+						finalInputStream, inputDocumentFormat,
+						unsyncByteArrayOutputStream, outputDocumentFormat);
+
+					FileUtil.write(
+						file, unsyncByteArrayOutputStream.unsafeGetByteArray(),
+						0, unsyncByteArrayOutputStream.size());
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							StringBundler.concat(
+								"Conversion from ",
+								inputDocumentFormat.getName(), " to ",
+								outputDocumentFormat.getName(), " in ",
+								System.currentTimeMillis() - start, " ms"));
+					}
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+				finally {
+					try {
+						finalInputStream.close();
+					}
+					catch (IOException ioException) {
+						_log.error("Unable to close input stream", ioException);
+					}
+				}
+			});
+
+		try {
+			future.get(timeout, TimeUnit.SECONDS);
+		}
+		catch (TimeoutException timeoutException) {
+			String errorMessage =
+				"Timeout when converting for " + file.getPath();
+
+			if (future.cancel(true)) {
+				errorMessage += " resulted in a canceled timeout for " + future;
+			}
+
+			_log.error(errorMessage);
+
+			throw new IOException(timeoutException);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			throw new IOException(exception);
+		}
 
 		return file;
 	}
@@ -353,8 +415,12 @@ public class DocumentConversionImpl implements DocumentConversion {
 	private CompanyLocalService _companyLocalService;
 
 	private DocumentConverter _documentConverter;
+	private ExecutorService _noticeableExecutorService;
 	private volatile OpenOfficeConfiguration _openOfficeConfiguration;
 	private OpenOfficeConnection _openOfficeConnection;
+
+	@Reference
+	private PortalExecutorManager _portalExecutorManager;
 
 	private static class ConversionsHolder {
 

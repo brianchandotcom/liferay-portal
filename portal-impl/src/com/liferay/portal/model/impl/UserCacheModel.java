@@ -384,11 +384,15 @@ public class UserCacheModel
 
 		userImpl.resetOriginalValues();
 
+		userImpl.setGroupId(_groupId);
+
 		return userImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
@@ -449,6 +453,8 @@ public class UserCacheModel
 		type = objectInput.readInt();
 
 		status = objectInput.readInt();
+
+		_groupId = (long)objectInput.readObject();
 	}
 
 	@Override
@@ -636,6 +642,8 @@ public class UserCacheModel
 		objectOutput.writeInt(type);
 
 		objectOutput.writeInt(status);
+
+		objectOutput.writeObject(_groupId);
 	}
 
 	public long mvccVersion;
@@ -682,5 +690,6 @@ public class UserCacheModel
 	public boolean emailAddressVerified;
 	public int type;
 	public int status;
+	public long _groupId;
 
 }

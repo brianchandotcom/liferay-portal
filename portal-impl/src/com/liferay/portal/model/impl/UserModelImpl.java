@@ -1569,6 +1569,13 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 			this.<Integer>getColumnOriginalValue("status"));
 	}
 
+	public long getGroupId() {
+		return 0;
+	}
+
+	public void setGroupId(long groupId) {
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -2093,6 +2100,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		userCacheModel.type = getType();
 
 		userCacheModel.status = getStatus();
+
+		userCacheModel._groupId = getGroupId();
 
 		return userCacheModel;
 	}

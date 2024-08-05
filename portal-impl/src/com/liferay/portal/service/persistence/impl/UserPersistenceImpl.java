@@ -8483,10 +8483,18 @@ public class UserPersistenceImpl
 					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 						user.getCtCollectionId())) {
 
-				if (EntityCacheUtil.getResult(
-						UserImpl.class, user.getPrimaryKey()) == null) {
+				User cachedUser = (User)EntityCacheUtil.getResult(
+					UserImpl.class, user.getPrimaryKey());
 
+				if (cachedUser == null) {
 					cacheResult(user);
+				}
+				else {
+					UserModelImpl userModelImpl = (UserModelImpl)user;
+					UserModelImpl cachedUserModelImpl =
+						(UserModelImpl)cachedUser;
+
+					userModelImpl.setGroupId(cachedUserModelImpl.getGroupId());
 				}
 			}
 		}

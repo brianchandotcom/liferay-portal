@@ -14,10 +14,7 @@ interface DefinitionOfTermsContainerProps {
 	baseResourceURL: string;
 	objectDefinitions: ObjectDefinition[];
 }
-export interface Item {
-	termLabel: string;
-	termName: string;
-}
+
 export default function DefinitionOfTermsContainer({
 	baseResourceURL,
 	objectDefinitions,

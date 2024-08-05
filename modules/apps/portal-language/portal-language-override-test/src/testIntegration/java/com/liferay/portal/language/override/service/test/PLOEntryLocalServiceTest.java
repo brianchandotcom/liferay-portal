@@ -219,10 +219,10 @@ public class PLOEntryLocalServiceTest {
 		catch (PLOEntryImportException.InvalidTranslations
 					ploEntryImportException) {
 
-			List<Exception> exceptions =
-				ploEntryImportException.getExceptions();
+			Throwable[] throwables = ploEntryImportException.getSuppressed();
 
-			Assert.assertEquals(exceptions.toString(), 2, exceptions.size());
+			Assert.assertEquals(
+				Arrays.toString(throwables), 2, throwables.length);
 
 			List<Class<?>> expectedClasses = Arrays.asList(
 				new Class<?>[] {
@@ -230,9 +230,9 @@ public class PLOEntryLocalServiceTest {
 					PLOEntryKeyException.MustNotBeNull.class
 				});
 
-			for (Exception exception : exceptions) {
+			for (Throwable throwable : throwables) {
 				Assert.assertTrue(
-					expectedClasses.contains(exception.getClass()));
+					expectedClasses.contains(throwable.getClass()));
 			}
 		}
 

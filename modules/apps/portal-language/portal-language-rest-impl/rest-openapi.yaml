@@ -109,7 +109,7 @@ paths:
             parameters:
                 - in: query
                   name: languageId
-                  required: false
+                  required: true
                   schema:
                       type: string
             requestBody:

@@ -108,6 +108,14 @@ public class CommercePaymentEntryServiceUtil {
 			companyId, classNameId, classPK, start, end, orderByComparator);
 	}
 
+	public static int getCommercePaymentEntriesCount(
+			long companyId, long classNameId, long classPK, int type)
+		throws PortalException {
+
+		return getService().getCommercePaymentEntriesCount(
+			companyId, classNameId, classPK, type);
+	}
+
 	public static CommercePaymentEntry getCommercePaymentEntry(
 			long commercePaymentEntryId)
 		throws PortalException {

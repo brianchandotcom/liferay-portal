@@ -129,6 +129,15 @@ public class CommercePaymentEntryServiceWrapper
 	}
 
 	@Override
+	public int getCommercePaymentEntriesCount(
+			long companyId, long classNameId, long classPK, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePaymentEntryService.getCommercePaymentEntriesCount(
+			companyId, classNameId, classPK, type);
+	}
+
+	@Override
 	public com.liferay.commerce.payment.model.CommercePaymentEntry
 			getCommercePaymentEntry(long commercePaymentEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

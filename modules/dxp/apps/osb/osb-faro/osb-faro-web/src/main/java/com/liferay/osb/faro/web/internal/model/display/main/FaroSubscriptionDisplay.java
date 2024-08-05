@@ -262,6 +262,8 @@ public class FaroSubscriptionDisplay {
 		_individualsCounts = _setCounts(
 			contactsEngineClient.getIndividualsCreatedBetweenCount(
 				faroProject, endDate, startDate),
+			subscriptionJSONObject.getLong(
+				"individualsCountSinceLastAnniversary"),
 			endDate, faroProject,
 			JSONFactoryUtil.createJSONObject(
 				subscriptionJSONObject.getString("individualsCounts")),
@@ -269,6 +271,8 @@ public class FaroSubscriptionDisplay {
 
 		_pageViewsCounts = _setCounts(
 			cerebroEngineClient.getPageViews(faroProject, endDate, startDate),
+			subscriptionJSONObject.getLong(
+				"pageViewsCountSinceLastAnniversary"),
 			endDate, faroProject,
 			JSONFactoryUtil.createJSONObject(
 				subscriptionJSONObject.getString("pageViewsCounts")),
@@ -415,12 +419,16 @@ public class FaroSubscriptionDisplay {
 	}
 
 	private String _setCounts(
-			long count, Date endDate, FaroProject faroProject,
-			JSONObject jsonObject, Date startDate)
+			long count, long defaultValue, Date endDate,
+			FaroProject faroProject, JSONObject jsonObject, Date startDate)
 		throws Exception {
 
-		if (jsonObject == null) {
-			jsonObject = JSONFactoryUtil.createJSONObject();
+		if (jsonObject.length() == 0) {
+			jsonObject = JSONUtil.put(
+				"total", defaultValue
+			).put(
+				"totalSinceLastAnniversary", defaultValue
+			);
 		}
 
 		jsonObject.put("total", jsonObject.getLong("total", 0L) + count);

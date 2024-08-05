@@ -141,6 +141,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 		const response = await Liferay.Util.fetch(
 			`/o/testray-rest/v1.0/testray-export-case-result/${buildId}`
 		);
+
 		const responseHeaders = response.headers.get('Content-Disposition');
 
 		if (response.ok && responseHeaders?.includes('attachment')) {

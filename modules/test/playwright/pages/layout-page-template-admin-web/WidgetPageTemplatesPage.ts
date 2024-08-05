@@ -19,10 +19,8 @@ export class WidgetPageTemplatesPage {
 		this.newButton = page.getByText('New', {exact: true});
 	}
 
-	async goto(siteUrl?: Site['friendlyUrlPath']) {
-		await this.page.goto(
-			`/group${siteUrl || '/guest'}${PORTLET_URLS.pageTemplates}`
-		);
+	async goto() {
+		await this.page.goto(PORTLET_URLS.widgetPageTemplates);
 	}
 
 	async addGlobalWidgetPageTemplate(name: string) {

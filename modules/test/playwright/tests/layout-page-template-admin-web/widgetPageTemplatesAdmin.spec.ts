@@ -25,7 +25,7 @@ test('Add, rename and delete a page template in global site', async ({
 
 	// Go to page template administration in global site
 
-	await widgetPageTemplatesPage.goto('/global');
+	await widgetPageTemplatesPage.goto();
 
 	// Create global page template
 
@@ -70,7 +70,7 @@ test('Add an active page template in global site and deactivate it', async ({
 
 	// Go to page template administration in global site
 
-	await widgetPageTemplatesPage.goto('/global');
+	await widgetPageTemplatesPage.goto();
 
 	// Create global page template
 
@@ -92,7 +92,7 @@ test('Add an active page template in global site and deactivate it', async ({
 
 	// Disable global page template
 
-	await widgetPageTemplatesPage.goto('/global');
+	await widgetPageTemplatesPage.goto();
 
 	await widgetPageTemplatesPage.deactivateGlobalWidgetPageTemplate(
 		widgetPageTemplateName

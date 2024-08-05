@@ -149,7 +149,6 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 
 			downloadElement.download =
 				responseHeaders.match(/filename="([^"]+)"/)![1];
-
 			downloadElement.href = URL.createObjectURL(await response.blob());
 
 			document.body.appendChild(downloadElement);

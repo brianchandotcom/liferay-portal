@@ -1710,7 +1710,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static long getCurrentTimeMillis() {
-		if (!isCINode()) {
+		if (!isCINode() || isJenkinsMaster()) {
 			return System.currentTimeMillis();
 		}
 
@@ -3607,6 +3607,32 @@ public class JenkinsResultsParserUtil {
 	public static boolean isInteger(String string) {
 		if ((string != null) && string.matches("\\d+")) {
 			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isJenkinsMaster() {
+		String hostName = getHostName("");
+
+		String hostNameSuffix = ".lax.liferay.com";
+
+		if (hostName.endsWith(hostNameSuffix)) {
+			hostName = hostName.substring(
+				0, hostName.length() - hostNameSuffix.length());
+		}
+
+		JenkinsCohort jenkinsCohort = getJenkinsCohort();
+
+		List<JenkinsMaster> jenkinsMasterList =
+			jenkinsCohort.getJenkinsMasters();
+
+		for (JenkinsMaster jenkinsMaster : jenkinsMasterList) {
+			String jenkinsMastersName = jenkinsMaster.getName();
+
+			if (jenkinsMastersName.equals(hostName)) {
+				return true;
+			}
 		}
 
 		return false;

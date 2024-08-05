@@ -17,8 +17,8 @@ import com.liferay.portal.language.override.service.PLOEntryService;
 import com.liferay.portal.language.override.web.internal.constants.PLOPortletKeys;
 
 import java.io.File;
-
-import java.nio.file.Files;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 import java.util.Objects;
 
@@ -78,9 +78,8 @@ public class ImportTranslationsMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		try {
-			_ploEntryService.importPLOEntries(
-				Files.newInputStream(file.toPath()), languageId);
+		try (InputStream inputStream = new FileInputStream(file)) {
+			_ploEntryService.importPLOEntries(inputStream, languageId);
 		}
 		catch (PLOEntryImportException.InvalidPropertiesFile
 					ploEntryImportException) {

@@ -442,6 +442,9 @@ public interface PropsKeys {
 	public static final String COMMUNITIES_CONTROL_PANEL_MEMBERS_VISIBLE =
 		"communities.control.panel.members.visible";
 
+	public static final String COMPANY_DEFAULT_CREATE_DEFAULT_ADMIN =
+		"company.default.create.default.admin";
+
 	public static final String COMPANY_DEFAULT_HOME_URL =
 		"company.default.home.url";
 

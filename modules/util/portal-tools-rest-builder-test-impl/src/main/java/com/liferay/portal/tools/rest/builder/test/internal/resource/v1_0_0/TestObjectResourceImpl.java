@@ -26,6 +26,16 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class TestObjectResourceImpl extends BaseTestObjectResourceImpl {
 
 	@Override
+	public TestObject getTestObject(Long testObjectId) {
+		return _testObjects.get(Math.toIntExact(testObjectId));
+	}
+
+	@Override
+	public Integer getTestObjectCount() throws Exception {
+		return _testObjects.size();
+	}
+
+	@Override
 	public Page<TestObject> getTestObjectsPage() {
 		return Page.of(_testObjects);
 	}

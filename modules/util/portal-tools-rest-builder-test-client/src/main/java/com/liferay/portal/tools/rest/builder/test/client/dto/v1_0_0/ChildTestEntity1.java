@@ -5,7 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.ChildTestObject1SerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.ChildTestEntity1SerDes;
 
 import java.io.Serializable;
 
@@ -18,16 +18,16 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ChildTestObject1
-	extends TestObject implements Cloneable, Serializable {
+public class ChildTestEntity1
+	extends TestEntity implements Cloneable, Serializable {
 
-	public static ChildTestObject1 toDTO(String json) {
-		return ChildTestObject1SerDes.toDTO(json);
+	public static ChildTestEntity1 toDTO(String json) {
+		return ChildTestEntity1SerDes.toDTO(json);
 	}
 
 	@Override
-	public ChildTestObject1 clone() throws CloneNotSupportedException {
-		return (ChildTestObject1)super.clone();
+	public ChildTestEntity1 clone() throws CloneNotSupportedException {
+		return (ChildTestEntity1)super.clone();
 	}
 
 	@Override
@@ -36,13 +36,13 @@ public class ChildTestObject1
 			return true;
 		}
 
-		if (!(object instanceof ChildTestObject1)) {
+		if (!(object instanceof ChildTestEntity1)) {
 			return false;
 		}
 
-		ChildTestObject1 childTestObject1 = (ChildTestObject1)object;
+		ChildTestEntity1 childTestEntity1 = (ChildTestEntity1)object;
 
-		return Objects.equals(toString(), childTestObject1.toString());
+		return Objects.equals(toString(), childTestEntity1.toString());
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class ChildTestObject1
 	}
 
 	public String toString() {
-		return ChildTestObject1SerDes.toJSON(this);
+		return ChildTestEntity1SerDes.toJSON(this);
 	}
 
 }

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.JSONMapAttributeTestObject;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.JSONMapAttributeTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -21,28 +21,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class JSONMapAttributeTestObjectSerDes {
+public class JSONMapAttributeTestEntitySerDes {
 
-	public static JSONMapAttributeTestObject toDTO(String json) {
-		JSONMapAttributeTestObjectJSONParser
-			jsonMapAttributeTestObjectJSONParser =
-				new JSONMapAttributeTestObjectJSONParser();
+	public static JSONMapAttributeTestEntity toDTO(String json) {
+		JSONMapAttributeTestEntityJSONParser
+			jsonMapAttributeTestEntityJSONParser =
+				new JSONMapAttributeTestEntityJSONParser();
 
-		return jsonMapAttributeTestObjectJSONParser.parseToDTO(json);
+		return jsonMapAttributeTestEntityJSONParser.parseToDTO(json);
 	}
 
-	public static JSONMapAttributeTestObject[] toDTOs(String json) {
-		JSONMapAttributeTestObjectJSONParser
-			jsonMapAttributeTestObjectJSONParser =
-				new JSONMapAttributeTestObjectJSONParser();
+	public static JSONMapAttributeTestEntity[] toDTOs(String json) {
+		JSONMapAttributeTestEntityJSONParser
+			jsonMapAttributeTestEntityJSONParser =
+				new JSONMapAttributeTestEntityJSONParser();
 
-		return jsonMapAttributeTestObjectJSONParser.parseToDTOs(json);
+		return jsonMapAttributeTestEntityJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		JSONMapAttributeTestObject jsonMapAttributeTestObject) {
+		JSONMapAttributeTestEntity jsonMapAttributeTestEntity) {
 
-		if (jsonMapAttributeTestObject == null) {
+		if (jsonMapAttributeTestEntity == null) {
 			return "null";
 		}
 
@@ -50,7 +50,7 @@ public class JSONMapAttributeTestObjectSerDes {
 
 		sb.append("{");
 
-		if (jsonMapAttributeTestObject.getDescription() != null) {
+		if (jsonMapAttributeTestEntity.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -59,12 +59,12 @@ public class JSONMapAttributeTestObjectSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(jsonMapAttributeTestObject.getDescription()));
+			sb.append(_escape(jsonMapAttributeTestEntity.getDescription()));
 
 			sb.append("\"");
 		}
 
-		if (jsonMapAttributeTestObject.getName() != null) {
+		if (jsonMapAttributeTestEntity.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -73,29 +73,29 @@ public class JSONMapAttributeTestObjectSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(jsonMapAttributeTestObject.getName()));
+			sb.append(_escape(jsonMapAttributeTestEntity.getName()));
 
 			sb.append("\"");
 		}
 
-		if (jsonMapAttributeTestObject.getProperties1() != null) {
+		if (jsonMapAttributeTestEntity.getProperties1() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"properties1\": ");
 
-			sb.append(_toJSON(jsonMapAttributeTestObject.getProperties1()));
+			sb.append(_toJSON(jsonMapAttributeTestEntity.getProperties1()));
 		}
 
-		if (jsonMapAttributeTestObject.getProperties2() != null) {
+		if (jsonMapAttributeTestEntity.getProperties2() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"properties2\": ");
 
-			sb.append(_toJSON(jsonMapAttributeTestObject.getProperties2()));
+			sb.append(_toJSON(jsonMapAttributeTestEntity.getProperties2()));
 		}
 
 		sb.append("}");
@@ -104,71 +104,71 @@ public class JSONMapAttributeTestObjectSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		JSONMapAttributeTestObjectJSONParser
-			jsonMapAttributeTestObjectJSONParser =
-				new JSONMapAttributeTestObjectJSONParser();
+		JSONMapAttributeTestEntityJSONParser
+			jsonMapAttributeTestEntityJSONParser =
+				new JSONMapAttributeTestEntityJSONParser();
 
-		return jsonMapAttributeTestObjectJSONParser.parseToMap(json);
+		return jsonMapAttributeTestEntityJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		JSONMapAttributeTestObject jsonMapAttributeTestObject) {
+		JSONMapAttributeTestEntity jsonMapAttributeTestEntity) {
 
-		if (jsonMapAttributeTestObject == null) {
+		if (jsonMapAttributeTestEntity == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (jsonMapAttributeTestObject.getDescription() == null) {
+		if (jsonMapAttributeTestEntity.getDescription() == null) {
 			map.put("description", null);
 		}
 		else {
 			map.put(
 				"description",
-				String.valueOf(jsonMapAttributeTestObject.getDescription()));
+				String.valueOf(jsonMapAttributeTestEntity.getDescription()));
 		}
 
-		if (jsonMapAttributeTestObject.getName() == null) {
+		if (jsonMapAttributeTestEntity.getName() == null) {
 			map.put("name", null);
 		}
 		else {
 			map.put(
-				"name", String.valueOf(jsonMapAttributeTestObject.getName()));
+				"name", String.valueOf(jsonMapAttributeTestEntity.getName()));
 		}
 
-		if (jsonMapAttributeTestObject.getProperties1() == null) {
+		if (jsonMapAttributeTestEntity.getProperties1() == null) {
 			map.put("properties1", null);
 		}
 		else {
 			map.put(
 				"properties1",
-				String.valueOf(jsonMapAttributeTestObject.getProperties1()));
+				String.valueOf(jsonMapAttributeTestEntity.getProperties1()));
 		}
 
-		if (jsonMapAttributeTestObject.getProperties2() == null) {
+		if (jsonMapAttributeTestEntity.getProperties2() == null) {
 			map.put("properties2", null);
 		}
 		else {
 			map.put(
 				"properties2",
-				String.valueOf(jsonMapAttributeTestObject.getProperties2()));
+				String.valueOf(jsonMapAttributeTestEntity.getProperties2()));
 		}
 
 		return map;
 	}
 
-	public static class JSONMapAttributeTestObjectJSONParser
-		extends BaseJSONParser<JSONMapAttributeTestObject> {
+	public static class JSONMapAttributeTestEntityJSONParser
+		extends BaseJSONParser<JSONMapAttributeTestEntity> {
 
 		@Override
-		protected JSONMapAttributeTestObject createDTO() {
-			return new JSONMapAttributeTestObject();
+		protected JSONMapAttributeTestEntity createDTO() {
+			return new JSONMapAttributeTestEntity();
 		}
 
 		@Override
-		protected JSONMapAttributeTestObject[] createDTOArray(int size) {
-			return new JSONMapAttributeTestObject[size];
+		protected JSONMapAttributeTestEntity[] createDTOArray(int size) {
+			return new JSONMapAttributeTestEntity[size];
 		}
 
 		@Override
@@ -191,30 +191,30 @@ public class JSONMapAttributeTestObjectSerDes {
 
 		@Override
 		protected void setField(
-			JSONMapAttributeTestObject jsonMapAttributeTestObject,
+			JSONMapAttributeTestEntity jsonMapAttributeTestEntity,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
-					jsonMapAttributeTestObject.setDescription(
+					jsonMapAttributeTestEntity.setDescription(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					jsonMapAttributeTestObject.setName(
+					jsonMapAttributeTestEntity.setName(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "properties1")) {
 				if (jsonParserFieldValue != null) {
-					jsonMapAttributeTestObject.setProperties1(
+					jsonMapAttributeTestEntity.setProperties1(
 						(Map<String, Object>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "properties2")) {
 				if (jsonParserFieldValue != null) {
-					jsonMapAttributeTestObject.setProperties2(
+					jsonMapAttributeTestEntity.setProperties2(
 						(Map<String, Object>)jsonParserFieldValue);
 				}
 			}

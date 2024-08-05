@@ -27,5 +27,6 @@ services:
         image: liferay/dxp:2024.q2.6
         ports:
             - 8080:8080
+            - 8000:8000
         volumes:
             - ../build/docker/client-extensions:/opt/liferay/osgi/client-extensions

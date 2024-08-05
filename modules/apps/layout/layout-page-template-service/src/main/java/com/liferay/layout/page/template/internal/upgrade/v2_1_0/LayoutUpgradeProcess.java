@@ -16,10 +16,12 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -30,10 +32,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author Pavel Savinov
@@ -54,6 +56,13 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		_upgradeSchema();
 		_upgradeLayout();
+	}
+
+	private String _generateFriendlyURLUUID() {
+		UUID uuid = new UUID(
+			SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
+
+		return StringPool.SLASH + uuid;
 	}
 
 	private long _getPlid(
@@ -93,7 +102,11 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 			UnicodePropertiesBuilder.put(
 				LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
 			).buildString(),
-			true, true, new HashMap<>(), serviceContext);
+			true, true,
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), _generateFriendlyURLUUID()
+			).build(),
+			serviceContext);
 
 		return layout.getPlid();
 	}

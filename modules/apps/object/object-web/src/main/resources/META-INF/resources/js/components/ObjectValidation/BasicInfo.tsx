@@ -68,6 +68,15 @@ export function BasicInfo({
 		);
 	}, [creationLanguageId, customObjectFields]);
 
+	let disabledActiveValidationToggle = disabled;
+
+	values.objectValidationRuleSettings?.find((element) => {
+		if (element.name === 'allowActiveStatusUpdate') {
+			disabledActiveValidationToggle =
+				element.value === 'true' ? false : true;
+		}
+	});
+
 	return (
 		<>
 			{disabledGroovyValidation && (
@@ -97,7 +106,10 @@ export function BasicInfo({
 
 				{values.engine !== 'compositeKey' && (
 					<Toggle
-						disabled={disabled || disabledGroovyValidation}
+						disabled={
+							disabledActiveValidationToggle ||
+							disabledGroovyValidation
+						}
 						label={Liferay.Language.get('active-validation')}
 						onToggle={(active) => setValues({active})}
 						toggled={values.active}

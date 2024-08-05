@@ -102,6 +102,7 @@ public class CompanyLocalServiceDBPartitionTest
 	@Test
 	public void testAddCompany() throws Exception {
 		int dbPartitionsCount = _getDBPartitionsCount();
+		int rulesCount = _getRulesCount(defaultPartitionName);
 
 		_company1 = CompanyTestUtil.addCompany();
 
@@ -110,6 +111,9 @@ public class CompanyLocalServiceDBPartitionTest
 				_getCompanyIdsBySQL(), _company1.getCompanyId()));
 
 		Assert.assertEquals(dbPartitionsCount + 1, _getDBPartitionsCount());
+		Assert.assertEquals(
+			rulesCount,
+			_getRulesCount(getPartitionName(_company1.getCompanyId())));
 	}
 
 	@Test
@@ -343,7 +347,13 @@ public class CompanyLocalServiceDBPartitionTest
 
 	@Test
 	public void testCopyDBPartitionCompany() throws Exception {
+		int rulesCount = _getRulesCount(defaultPartitionName);
+
 		Company company = CompanyTestUtil.addCompany();
+
+		Assert.assertEquals(
+			"Partition must have defined rules", rulesCount,
+			_getRulesCount(getPartitionName(company.getCompanyId())));
 
 		Configuration configuration = _createFactoryConfiguration(
 			company.getCompanyId());
@@ -376,6 +386,10 @@ public class CompanyLocalServiceDBPartitionTest
 
 			_assertCopyDBPartitionCompany(
 				copiedCompany, name, virtualHostname, webId);
+
+			Assert.assertEquals(
+				rulesCount,
+				_getRulesCount(getPartitionName(copiedCompany.getCompanyId())));
 
 			SafeCloseable safeCloseable =
 				PortalInstances.setCopyInProcessCompanyId(copiedCompanyId);
@@ -778,6 +792,28 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 
 		return objectNames;
+	}
+
+	private int _getRulesCount(String partitionName) throws SQLException {
+		if (db.getDBType() != DBType.POSTGRESQL) {
+			return 0;
+		}
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select count(pg_catalog.pg_rewrite.rulename) total from ",
+					"pg_catalog.pg_rewrite join pg_catalog.pg_class on ",
+					"pg_catalog.pg_rewrite.ev_class = pg_catalog.pg_class.oid ",
+					"where pg_catalog.pg_class.relnamespace = '", partitionName,
+					"'::regnamespace and (pg_catalog.pg_rewrite.rulename like ",
+					"'update_%' or pg_catalog.pg_rewrite.rulename like ",
+					"'delete_%')"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			resultSet.next();
+
+			return resultSet.getInt("total");
+		}
 	}
 
 	private int _getTablesCount(long companyId) throws Exception {

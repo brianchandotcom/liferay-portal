@@ -1680,6 +1680,14 @@ public class UserServiceWrapper
 		return _userService.updateStatus(userId, status, serviceContext);
 	}
 
+	@Override
+	public User updateStatus(
+			User user, int status, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userService.updateStatus(user, status, serviceContext);
+	}
+
 	/**
 	 * Updates the user with additional parameters.
 	 *

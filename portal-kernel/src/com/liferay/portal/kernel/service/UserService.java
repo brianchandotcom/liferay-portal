@@ -1326,6 +1326,10 @@ public interface UserService extends BaseService {
 			long userId, int status, ServiceContext serviceContext)
 		throws PortalException;
 
+	public User updateStatus(
+			User user, int status, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Updates the user with additional parameters.
 	 *

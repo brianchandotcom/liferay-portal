@@ -4943,7 +4943,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User updateLastLogin(long userId, String loginIP)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		return updateLastLogin(
+			userPersistence.findByPrimaryKey(userId), loginIP);
+	}
+
+	@CTAware(onProduction = true)
+	@Indexable(
+		callbackKey = "com.liferay.portal.kernel.model.User#lastLoginDate",
+		type = IndexableType.REINDEX
+	)
+	@Override
+	public User updateLastLogin(User user, String loginIP)
+		throws PortalException {
 
 		Date lastLoginDate = user.getLoginDate();
 
@@ -4957,16 +4968,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			lastLoginIP = loginIP;
 		}
 
-		user = _updateLastLogin(
+		User updatedUser = _updateLastLogin(
 			user, new Date(), loginIP, lastLoginDate, lastLoginIP, 0);
 
-		if (user == null) {
-			return userPersistence.findByPrimaryKey(userId);
+		if (updatedUser == null) {
+			return userPersistence.findByPrimaryKey(user.getUserId());
 		}
 
-		EntityCacheUtil.putResult(UserImpl.class, user, false, false);
+		EntityCacheUtil.putResult(UserImpl.class, updatedUser, false, false);
 
-		return user;
+		return updatedUser;
 	}
 
 	/**
@@ -5413,7 +5424,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long userId, int status, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		return updateStatus(
+			userPersistence.findByPrimaryKey(userId), status, serviceContext);
+	}
+
+	@Override
+	public User updateStatus(
+			User user, int status, ServiceContext serviceContext)
+		throws PortalException {
 
 		String passwordUnencrypted = (String)serviceContext.getAttribute(
 			"passwordUnencrypted");

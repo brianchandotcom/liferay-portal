@@ -2470,6 +2470,17 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			long userId, int status, ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateStatus(
+			userPersistence.findByPrimaryKey(userId), status, serviceContext);
+	}
+
+	@Override
+	public User updateStatus(
+			User user, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		long userId = user.getUserId();
+
 		if ((getUserId() == userId) &&
 			(status != WorkflowConstants.STATUS_APPROVED)) {
 
@@ -2505,7 +2516,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				getPermissionChecker(), userId, ActionKeys.DELETE);
 		}
 
-		return userLocalService.updateStatus(userId, status, serviceContext);
+		return userLocalService.updateStatus(user, status, serviceContext);
 	}
 
 	/**

@@ -1590,6 +1590,13 @@ public class UserServiceUtil {
 		return getService().updateStatus(userId, status, serviceContext);
 	}
 
+	public static User updateStatus(
+			User user, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateStatus(user, status, serviceContext);
+	}
+
 	/**
 	 * Updates the user with additional parameters.
 	 *

@@ -3118,6 +3118,13 @@ public class UserLocalServiceWrapper
 		return _userLocalService.updateLastLogin(userId, loginIP);
 	}
 
+	@Override
+	public User updateLastLogin(User user, String loginIP)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userLocalService.updateLastLogin(user, loginIP);
+	}
+
 	/**
 	 * Updates whether the user is locked out from logging in.
 	 *
@@ -3370,6 +3377,14 @@ public class UserLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userLocalService.updateStatus(userId, status, serviceContext);
+	}
+
+	@Override
+	public User updateStatus(
+			User user, int status, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userLocalService.updateStatus(user, status, serviceContext);
 	}
 
 	/**

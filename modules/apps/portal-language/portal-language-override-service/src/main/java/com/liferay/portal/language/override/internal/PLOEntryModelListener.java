@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.language.override.model.PLOEntry;
@@ -44,18 +45,19 @@ public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 			return;
 		}
 
-		MethodHandler methodHandler = new MethodHandler(_clearCacheMethodKey);
-
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
-			methodHandler, true);
+			_clearCacheMethodHandle, true);
 
 		clusterRequest.setFireAndForget(true);
 
-		_clusterExecutor.execute(clusterRequest);
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> _clusterExecutor.execute(clusterRequest));
 	}
 
-	private static final MethodKey _clearCacheMethodKey = new MethodKey(
-		PLOOverrideResourceBundleManager.class, "clearCache");
+	private static final MethodHandler _clearCacheMethodHandle =
+		new MethodHandler(
+			new MethodKey(
+				PLOOverrideResourceBundleManager.class, "clearCache"));
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;

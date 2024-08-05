@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -36,6 +37,61 @@ import java.util.regex.Pattern;
  * @author Ganesh Ram
  */
 public class PostgreSQLDB extends BaseDB {
+
+	public static List<String> getCreateRulesSQL(String targetSchema)
+		throws SQLException {
+
+		List<String> rules = new ArrayList<>();
+
+		try (Connection connection = DataAccess.getConnection()) {
+			String sql = StringBundler.concat(
+				"select pg_catalog.pg_rewrite.rulename rulename, ",
+				"pg_catalog.pg_get_ruledef(pg_catalog.pg_rewrite.oid, true) ",
+				"ruledefinition from pg_catalog.pg_rewrite join pg_catalog.",
+				"pg_class on pg_catalog.pg_rewrite.ev_class = ",
+				"pg_catalog.pg_class.oid where ",
+				"pg_catalog.pg_class.relnamespace ='", connection.getSchema(),
+				"'::regnamespace and (pg_catalog.pg_rewrite.rulename like ",
+				"'delete_%' or pg_catalog.pg_rewrite.rulename like ",
+				"'update_%')");
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(sql);
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				while (resultSet.next()) {
+					String ruleDefinition = StringUtil.toLowerCase(
+						resultSet.getString("ruledefinition"));
+
+					String ruleName = resultSet.getString("rulename");
+
+					String[] ruleTableColumn = getRuleTableColumn(
+						ruleDefinition);
+
+					if (!StringUtil.equals(
+							ruleName,
+							StringBundler.concat(
+								"delete_", ruleTableColumn[0],
+								StringPool.UNDERLINE, ruleTableColumn[1])) &&
+						!StringUtil.equals(
+							ruleName,
+							StringBundler.concat(
+								"update_", ruleTableColumn[0],
+								StringPool.UNDERLINE, ruleTableColumn[1]))) {
+
+						continue;
+					}
+
+					rules.add(
+						getCreateRulesSQL(
+							targetSchema, ruleTableColumn[0],
+							ruleTableColumn[1]));
+				}
+			}
+		}
+
+		return rules;
+	}
 
 	public static String getCreateRulesSQL(
 		String tableName, String columnName) {
@@ -521,7 +577,7 @@ public class PostgreSQLDB extends BaseDB {
 	private static final Pattern _oidPattern = Pattern.compile(
 		" oid(\\W|$)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _rulePattern = Pattern.compile(
-		"create or replace rule (.*?) as");
+		"create * rule (.*?) as");
 
 	private final boolean _supportsNewUuidFunction;
 

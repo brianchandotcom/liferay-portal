@@ -380,8 +380,12 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public Group getGroup() {
-		return GroupLocalServiceUtil.fetchUserGroup(
-			getCompanyId(), getUserId());
+		if (_group == null) {
+			_group = GroupLocalServiceUtil.fetchUserGroup(
+				getCompanyId(), getUserId());
+		}
+
+		return _group;
 	}
 
 	@Override
@@ -1009,6 +1013,11 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public void setGroup(Group group) {
+		_group = group;
+	}
+
+	@Override
 	public void setGroupIds(long[] groupIds) {
 		_groupIds = groupIds;
 	}
@@ -1135,6 +1144,7 @@ public class UserImpl extends UserBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(UserImpl.class);
 
 	private Contact _contact;
+	private Group _group;
 	private long[] _groupIds;
 	private Locale _locale;
 	private long[] _organizationIds;

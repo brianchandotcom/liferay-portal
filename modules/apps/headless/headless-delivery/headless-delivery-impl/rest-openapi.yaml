@@ -1732,6 +1732,10 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    description:
+                        The document shortcut's external reference code.
+                    type: string
                 folderId:
                     description:
                         The document shortcut's folder ID.
@@ -13004,6 +13008,89 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentShortcut"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentShortcut"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentShortcut"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentShortcut"
+            tags: ["DocumentShortcut"]
+    "/sites/{siteId}/document-shortcuts/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the site's document shortcut by external reference code returns a 204 if the operation succeeds.
+            operationId: deleteSiteDocumentShortcutsByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["DocumentShortcut"]
+        get:
+            # @review
+            description:
+                Retrieves the site's document shortcut by external reference code.
+            operationId: getSiteDocumentShortcutsByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentShortcut"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentShortcut"
+            tags: ["DocumentShortcut"]
+        put:
+            operationId: putSiteDocumentShortcutsByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

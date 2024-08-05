@@ -51,33 +51,7 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 
 		languageId = _normalizeLanguageId(languageId);
 
-		_validate(key, languageId, value);
-
-		PLOEntry ploEntry = fetchPLOEntry(companyId, key, languageId);
-
-		if (ploEntry == null) {
-			ploEntry = createPLOEntry(counterLocalService.increment());
-
-			ploEntry.setCompanyId(companyId);
-
-			User user = _userLocalService.getUser(userId);
-
-			ploEntry.setUserId(user.getUserId());
-
-			ploEntry.setKey(key);
-			ploEntry.setLanguageId(languageId);
-			ploEntry.setValue(value);
-
-			return addPLOEntry(ploEntry);
-		}
-
-		if (Objects.equals(ploEntry.getValue(), value)) {
-			return ploEntry;
-		}
-
-		ploEntry.setValue(value);
-
-		return updatePLOEntry(ploEntry);
+		return _addOrUpdatePLOEntry(companyId, userId, key, languageId, value);
 	}
 
 	@Override
@@ -126,11 +100,13 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 			Properties properties)
 		throws PortalException {
 
+		languageId = _normalizeLanguageId(languageId);
+
 		PLOEntryImportException.InvalidTranslations invalidTranslations = null;
 
 		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			try {
-				addOrUpdatePLOEntry(
+				_addOrUpdatePLOEntry(
 					companyId, userId, (String)entry.getKey(), languageId,
 					(String)entry.getValue());
 			}
@@ -166,6 +142,40 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 				addOrUpdatePLOEntry(companyId, userId, key, languageId, value);
 			}
 		}
+	}
+
+	private PLOEntry _addOrUpdatePLOEntry(
+			long companyId, long userId, String key, String languageId,
+			String value)
+		throws PortalException {
+
+		_validate(key, languageId, value);
+
+		PLOEntry ploEntry = fetchPLOEntry(companyId, key, languageId);
+
+		if (ploEntry == null) {
+			ploEntry = createPLOEntry(counterLocalService.increment());
+
+			ploEntry.setCompanyId(companyId);
+
+			User user = _userLocalService.getUser(userId);
+
+			ploEntry.setUserId(user.getUserId());
+
+			ploEntry.setKey(key);
+			ploEntry.setLanguageId(languageId);
+			ploEntry.setValue(value);
+
+			return addPLOEntry(ploEntry);
+		}
+
+		if (Objects.equals(ploEntry.getValue(), value)) {
+			return ploEntry;
+		}
+
+		ploEntry.setValue(value);
+
+		return updatePLOEntry(ploEntry);
 	}
 
 	private String _normalizeLanguageId(String languageId) {

@@ -151,6 +151,8 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 				return false;
 			}
 		).put(
+			"isMultiStep", _multiStep
+		).put(
 			"justify",
 			() -> {
 				if (Validator.isBlank(_justify)) {
@@ -159,6 +161,8 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 
 				return _justify;
 			}
+		).put(
+			"numberOfSteps", _numberOfSteps
 		).put(
 			"successMessage", _successMessageJSONObject
 		).put(
@@ -182,6 +186,10 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		return _justify;
 	}
 
+	public int getNumberOfSteps() {
+		return _numberOfSteps;
+	}
+
 	public JSONObject getSuccessMessageJSONObject() {
 		return _successMessageJSONObject;
 	}
@@ -197,6 +205,10 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 
 	public boolean isIndexed() {
 		return _indexed;
+	}
+
+	public boolean isMultiStep() {
+		return _multiStep;
 	}
 
 	public void setAlign(String align) {
@@ -229,6 +241,14 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 
 	public void setJustify(String justify) {
 		_justify = justify;
+	}
+
+	public void setMultiStep(boolean multiStep) {
+		_multiStep = multiStep;
+	}
+
+	public void setNumberOfSteps(int numberOfSteps) {
+		_numberOfSteps = numberOfSteps;
 	}
 
 	public void setSuccessMessageJSONObject(
@@ -277,6 +297,14 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			setIndexed(itemConfigJSONObject.getBoolean("indexed"));
 		}
 
+		if (itemConfigJSONObject.has("isMultiStep")) {
+			setMultiStep(itemConfigJSONObject.getBoolean("isMultiStep"));
+		}
+
+		if (itemConfigJSONObject.has("numberOfSteps")) {
+			setNumberOfSteps(itemConfigJSONObject.getInt("numberOfSteps"));
+		}
+
 		if (itemConfigJSONObject.has("successMessage")) {
 			setSuccessMessageJSONObject(
 				itemConfigJSONObject.getJSONObject("successMessage"));
@@ -298,6 +326,8 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 	private int _formConfig;
 	private boolean _indexed = true;
 	private String _justify = "";
+	private boolean _multiStep;
+	private int _numberOfSteps;
 	private JSONObject _successMessageJSONObject;
 	private String _widthType = StyledLayoutStructureConstants.WIDTH_TYPE;
 

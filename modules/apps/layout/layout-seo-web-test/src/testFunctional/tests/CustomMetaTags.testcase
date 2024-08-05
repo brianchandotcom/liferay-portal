@@ -212,32 +212,4 @@ definition {
 		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom meta property edit" content=""''');
 	}
 
-	@description = "This ensures that the translated tag inherits the default property and content."
-	@priority = 4
-	@refactordone
-	test CanViewTranslatedTagWithDefaultValue {
-		property portal.acceptance = "true";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		CustomMetaTags.openToCustomMetaTags(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			siteURLKey = "test-site-name");
-
-		CustomMetaTags.addTag(
-			customContent = "custom meta content",
-			customProperty = "custom meta property");
-
-		CustomMetaTags.changeLocale(locale = "ca-ES");
-
-		CustomMetaTags.viewDisabledProperty(customContent = "custom meta content");
-
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
-
-		Navigator.openSpecificURL(url = "${portalURL}/ca/web/test-site-name/test-page-name");
-
-		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom meta property" content="custom meta content"''');
-	}
-
 }

@@ -21,8 +21,8 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		String sql = SQLTransformer.transform(
-			"select objectDefinitionId, name from ObjectDefinition where " +
-				"modifiable = [$FALSE$] and system_ = [$TRUE$]");
+			"select name, objectDefinitionId from ObjectDefinition where " +
+				"system_ = [$TRUE$] and modifiable = [$FALSE$]");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				sql);
@@ -38,8 +38,8 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 					1,
 					ObjectDefinitionUtil.
 						getUnmodifiableSystemObjectDefinitionExternalReferenceCode(
-							resultSet.getString(2)));
-				preparedStatement2.setLong(2, resultSet.getLong(1));
+							resultSet.getString(1)));
+				preparedStatement2.setLong(2, resultSet.getLong(2));
 
 				preparedStatement2.addBatch();
 			}

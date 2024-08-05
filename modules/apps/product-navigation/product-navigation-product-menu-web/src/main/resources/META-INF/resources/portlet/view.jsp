@@ -34,7 +34,7 @@ ApplicationsMenuInstanceConfiguration applicationsMenuInstanceConfiguration = Co
 
 				<clay:content-col>
 					<clay:button
-						cssClass="d-md-none sidenav-close text-white"
+						cssClass="sidenav-close text-white"
 						displayType="unstyled"
 						icon="times"
 					/>

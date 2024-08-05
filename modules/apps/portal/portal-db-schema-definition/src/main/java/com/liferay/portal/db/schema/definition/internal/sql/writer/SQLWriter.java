@@ -5,7 +5,6 @@
 
 package com.liferay.portal.db.schema.definition.internal.sql.writer;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.schema.definition.internal.sql.provider.DBPartitionPortalSQLProvider;
 import com.liferay.portal.db.schema.definition.internal.sql.provider.PortalSQLProvider;
 import com.liferay.portal.db.schema.definition.internal.sql.provider.SQLProvider;
@@ -40,20 +39,20 @@ public class SQLWriter {
 
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {
+				if (companyId == PortalInstancePool.getDefaultCompanyId()) {
+					_writeFiles(directory);
+
+					return;
+				}
+
 				SQLProvider sqlProvider = new DBPartitionPortalSQLProvider(
 					_dbType, companyId);
 
-				String prefix = StringPool.BLANK;
-
-				if (companyId != PortalInstancePool.getDefaultCompanyId()) {
-					prefix = companyId + StringPool.UNDERLINE;
-				}
-
 				FileUtil.write(
-					new File(directory, prefix + "indexes.sql"),
+					new File(directory, companyId + "_indexes.sql"),
 					sqlProvider.getIndexesSQL());
 				FileUtil.write(
-					new File(directory, prefix + "tables.sql"),
+					new File(directory, companyId + "_tables.sql"),
 					sqlProvider.getTablesSQL());
 			});
 	}

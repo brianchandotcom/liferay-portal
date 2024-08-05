@@ -6,10 +6,10 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
-import {onActionDropdownItemClick} from '@liferay/object-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import copyTerm from '../../util/copyTerm';
 import {Item, RelationshipSections} from './DefinitionOfTerms';
 
 interface RelationshipSectionProps {
@@ -96,13 +96,13 @@ export default function RelationshipSection({
 					items={relationshipSection.terms ?? []}
 					itemsActions={[
 						{
-							href: 'copyObjectFieldTerm',
-							id: 'copyObjectFieldTerm',
+							href: 'copyTerm',
+							id: 'copyTerm',
 							label: Liferay.Language.get('copy'),
+							onClick: copyTerm,
 							target: 'event',
 						},
 					]}
-					onActionDropdownItemClick={onActionDropdownItemClick}
 					selectedItemsKey="id"
 					showManagementBar={false}
 					showPagination={false}

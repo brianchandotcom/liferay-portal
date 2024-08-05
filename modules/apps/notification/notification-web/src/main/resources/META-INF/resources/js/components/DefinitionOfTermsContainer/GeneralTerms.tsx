@@ -5,13 +5,10 @@
 
 import ClayPanel from '@clayui/panel';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
-import {
-	onActionDropdownItemClick,
-	openToast,
-} from '@liferay/object-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import copyTerm from '../../util/copyTerm';
 import {Item} from './DefinitionOfTerms';
 
 interface GeneralTermsProps {
@@ -20,23 +17,6 @@ interface GeneralTermsProps {
 
 export function GeneralTerms({baseResourceURL}: GeneralTermsProps) {
 	const [generalTermsItems, setGeneralTermsItems] = useState<Item[]>([]);
-
-	const copyGeneralTerm = ({itemData}: {itemData: Item}) => {
-		navigator.clipboard.writeText(itemData.termName);
-
-		openToast({
-			message: Liferay.Language.get('term-copied-successfully'),
-			type: 'success',
-		});
-	};
-
-	useEffect(() => {
-		Liferay.on('copyGeneralTerm', copyGeneralTerm);
-
-		return () => {
-			Liferay.detach('copyGeneralTerm');
-		};
-	}, []);
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -69,13 +49,13 @@ export function GeneralTerms({baseResourceURL}: GeneralTermsProps) {
 					items={generalTermsItems ?? []}
 					itemsActions={[
 						{
-							href: 'copyGeneralTerm',
-							id: 'copyGeneralTerm',
+							href: 'copyTerm',
+							id: 'copyTerm',
 							label: Liferay.Language.get('copy'),
+							onClick: copyTerm,
 							target: 'event',
 						},
 					]}
-					onActionDropdownItemClick={onActionDropdownItemClick}
 					selectedItemsKey="termName"
 					showManagementBar={false}
 					showPagination={false}

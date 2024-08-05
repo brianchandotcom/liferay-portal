@@ -9,9 +9,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -176,6 +178,13 @@ public class CalendarIndexerIndexedFieldsTest
 			Field.USER_NAME, StringUtil.toLowerCase(calendar.getUserName()));
 		map.put("calendarId", String.valueOf(calendar.getCalendarId()));
 
+		Group group = _groupLocalService.getGroup(calendar.getGroupId());
+
+		map.put("groupExternalReferenceCode", group.getExternalReferenceCode());
+		map.put(
+			"scopeGroupExternalReferenceCode",
+			group.getExternalReferenceCode());
+
 		User user = TestPropsValues.getUser();
 
 		map.put("userExternalReferenceCode", user.getExternalReferenceCode());
@@ -197,6 +206,9 @@ public class CalendarIndexerIndexedFieldsTest
 		indexedFieldsFixture.populateUID(
 			calendar.getModelClassName(), calendar.getCalendarId(), map);
 	}
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

@@ -22,6 +22,10 @@ public class LayoutDataItemTypeConstants {
 
 	public static final String TYPE_FORM = "form";
 
+	public static final String TYPE_FORM_STEP = "form-step";
+
+	public static final String TYPE_FORM_STEP_CONTAINER = "form-step-container";
+
 	public static final String TYPE_FRAGMENT = "fragment";
 
 	public static final String TYPE_FRAGMENT_DROP_ZONE = "fragment-drop-zone";

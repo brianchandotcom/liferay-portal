@@ -52,6 +52,19 @@ public class LayoutStructureItemUtil {
 		}
 
 		if (Objects.equals(
+				itemType, LayoutDataItemTypeConstants.TYPE_FORM_STEP)) {
+
+			return new FormStepLayoutStructureItem(parentItemId);
+		}
+
+		if (Objects.equals(
+				itemType,
+				LayoutDataItemTypeConstants.TYPE_FORM_STEP_CONTAINER)) {
+
+			return new FormStepContainerStyledLayoutStructureItem(parentItemId);
+		}
+
+		if (Objects.equals(
 				itemType, LayoutDataItemTypeConstants.TYPE_FRAGMENT)) {
 
 			return new FragmentStyledLayoutStructureItem(parentItemId);

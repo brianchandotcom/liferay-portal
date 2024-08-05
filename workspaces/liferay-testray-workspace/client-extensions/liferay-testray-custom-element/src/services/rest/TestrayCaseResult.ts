@@ -145,13 +145,12 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 		const responseHeaders = response.headers.get('Content-Disposition');
 
 		if (response.ok && responseHeaders?.includes('attachment')) {
-			const responseBlob = await response.blob();
 			const downloadElement = document.createElement('a');
 
 			downloadElement.download =
 				responseHeaders.match(/filename="([^"]+)"/)![1];
 
-			downloadElement.href = URL.createObjectURL(responseBlob);
+			downloadElement.href = URL.createObjectURL(await response.blob());
 
 			document.body.appendChild(downloadElement);
 			downloadElement.click();

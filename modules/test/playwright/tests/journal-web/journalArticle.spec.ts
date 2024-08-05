@@ -1354,8 +1354,11 @@ baseTest(
 	}
 );
 
-scheduleTest(
+autoSaveAsDraftTest(
 	'Create a web content selecting permissions in the modal',
+	{
+		tag: '@LPD-32949',
+	},
 	async ({journalEditArticlePage, journalPage, page, site}) => {
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
@@ -1378,6 +1381,10 @@ scheduleTest(
 		const title = getRandomString();
 
 		await journalEditArticlePage.fillTitle(title);
+
+		await expect(
+			journalEditArticlePage.changesSavedIndicator
+		).toBeVisible();
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,

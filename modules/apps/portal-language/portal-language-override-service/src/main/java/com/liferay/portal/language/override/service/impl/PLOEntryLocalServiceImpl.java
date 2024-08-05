@@ -11,8 +11,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -157,11 +155,7 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 			ploEntry = createPLOEntry(counterLocalService.increment());
 
 			ploEntry.setCompanyId(companyId);
-
-			User user = _userLocalService.getUser(userId);
-
-			ploEntry.setUserId(user.getUserId());
-
+			ploEntry.setUserId(userId);
 			ploEntry.setKey(key);
 			ploEntry.setLanguageId(languageId);
 			ploEntry.setValue(value);
@@ -224,8 +218,5 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

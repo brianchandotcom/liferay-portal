@@ -3,13 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	escapeHTML,
-	fetch,
-	openConfirmModal,
-	openModal,
-	sub,
-} from 'frontend-js-web';
+import {fetch, openConfirmModal, openModal, sub} from 'frontend-js-web';
 
 const RECENTLY_REMOVED_ATTACHMENTS = {
 	multiple: Liferay.Language.get('x-recently-removed-attachments'),
@@ -225,8 +219,6 @@ class MBPortlet {
 		document.getElementById(`${namespace}${this._constants.CMD}`).value =
 			this._currentAction;
 
-		this._updateMultipleMBMessageAttachments();
-
 		const bodyInput = document.getElementById(`${namespace}body`);
 
 		if (replyToMessageId) {
@@ -243,42 +235,6 @@ class MBPortlet {
 			bodyInput.value = window[`${namespace}bodyEditor`].getHTML();
 
 			submitForm(document[`${namespace}fm`]);
-		}
-	}
-
-	/**
-	 * Updates the attachments to include the checked attachments.
-	 *
-	 */
-
-	_updateMultipleMBMessageAttachments() {
-		const namespace = this._namespace;
-
-		const selectedFileNameContainer = document.getElementById(
-			`${namespace}selectedFileNameContainer`
-		);
-
-		if (selectedFileNameContainer) {
-			const inputName = `${namespace}selectUploadedFile`;
-
-			const input = [].slice.call(
-				this.rootNode.querySelectorAll(
-					`input[name=${inputName}]:checked`
-				)
-			);
-
-			const data = input
-				.map((item, index) => {
-					const id = index;
-					const value = item.value;
-
-					return `<input id="${namespace}selectedFileName${id}" name="${namespace}selectedFileName" type="hidden" value="${escapeHTML(
-						value
-					)}" />`;
-				})
-				.join('');
-
-			selectedFileNameContainer.innerHTML = data;
 		}
 	}
 

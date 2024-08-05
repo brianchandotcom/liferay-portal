@@ -413,7 +413,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		String[] selectedFileNames = ParamUtil.getParameterValues(
-			actionRequest, "selectedFileName");
+			actionRequest, "selectUploadedFile");
 
 		List<FileEntry> tempFileEntries = new ArrayList<>(
 			selectedFileNames.length);

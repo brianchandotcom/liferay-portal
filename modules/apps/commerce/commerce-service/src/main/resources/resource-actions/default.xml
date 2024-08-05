@@ -175,6 +175,24 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
+		<model-name>com.liferay.commerce.return</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_order_web_internal_portlet_CommerceReturnPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>MANAGE_RETURNS</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>MANAGE_RETURNS</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.commerce.shipment</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet</portlet-name>

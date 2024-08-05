@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0;
 
+import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
 import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.ChildTestEntity1SerDes;
 
 import java.io.Serializable;
@@ -24,6 +25,27 @@ public class ChildTestEntity1
 	public static ChildTestEntity1 toDTO(String json) {
 		return ChildTestEntity1SerDes.toDTO(json);
 	}
+
+	public String getProperty1() {
+		return property1;
+	}
+
+	public void setProperty1(String property1) {
+		this.property1 = property1;
+	}
+
+	public void setProperty1(
+		UnsafeSupplier<String, Exception> property1UnsafeSupplier) {
+
+		try {
+			property1 = property1UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String property1;
 
 	@Override
 	public ChildTestEntity1 clone() throws CloneNotSupportedException {

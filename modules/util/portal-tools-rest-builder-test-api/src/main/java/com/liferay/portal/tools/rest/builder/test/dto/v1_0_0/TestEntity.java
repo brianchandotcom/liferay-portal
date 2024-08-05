@@ -58,6 +58,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 		),
 		@JsonSubTypes.Type(
 			name = "ChildTestEntity2", value = ChildTestEntity2.class
+		),
+		@JsonSubTypes.Type(
+			name = "ChildTestEntity3", value = ChildTestEntity3.class
 		)
 	}
 )
@@ -691,7 +694,8 @@ public abstract class TestEntity implements Serializable {
 	public static enum Type {
 
 		CHILD_TEST_ENTITY1("ChildTestEntity1"),
-		CHILD_TEST_ENTITY2("ChildTestEntity2");
+		CHILD_TEST_ENTITY2("ChildTestEntity2"),
+		CHILD_TEST_ENTITY3("ChildTestEntity3");
 
 		@JsonCreator
 		public static Type create(String value) {

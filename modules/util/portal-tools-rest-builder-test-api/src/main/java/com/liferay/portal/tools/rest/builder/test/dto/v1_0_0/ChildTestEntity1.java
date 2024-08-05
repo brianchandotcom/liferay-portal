@@ -6,9 +6,13 @@
 package com.liferay.portal.tools.rest.builder.test.dto.v1_0_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
@@ -24,6 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -46,6 +51,47 @@ public class ChildTestEntity1 extends TestEntity implements Serializable {
 	public static ChildTestEntity1 unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(ChildTestEntity1.class, json);
 	}
+
+	@Schema
+	public String getProperty1() {
+		if (_property1Supplier != null) {
+			property1 = _property1Supplier.get();
+
+			_property1Supplier = null;
+		}
+
+		return property1;
+	}
+
+	public void setProperty1(String property1) {
+		this.property1 = property1;
+
+		_property1Supplier = null;
+	}
+
+	@JsonIgnore
+	public void setProperty1(
+		UnsafeSupplier<String, Exception> property1UnsafeSupplier) {
+
+		_property1Supplier = () -> {
+			try {
+				return property1UnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String property1;
+
+	@JsonIgnore
+	private Supplier<String> _property1Supplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -76,6 +122,22 @@ public class ChildTestEntity1 extends TestEntity implements Serializable {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		String property1 = getProperty1();
+
+		if (property1 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"property1\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(property1));
+
+			sb.append("\"");
+		}
 
 		Date dateCreated = getDateCreated();
 

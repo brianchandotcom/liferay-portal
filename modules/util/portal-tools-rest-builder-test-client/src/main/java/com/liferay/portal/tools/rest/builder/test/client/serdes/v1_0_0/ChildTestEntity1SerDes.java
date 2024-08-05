@@ -52,6 +52,20 @@ public class ChildTestEntity1SerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (childTestEntity1.getProperty1() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"property1\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(childTestEntity1.getProperty1()));
+
+			sb.append("\"");
+		}
+
 		if (childTestEntity1.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -206,6 +220,14 @@ public class ChildTestEntity1SerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (childTestEntity1.getProperty1() == null) {
+			map.put("property1", null);
+		}
+		else {
+			map.put(
+				"property1", String.valueOf(childTestEntity1.getProperty1()));
+		}
+
 		if (childTestEntity1.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -309,7 +331,10 @@ public class ChildTestEntity1SerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "property1")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
@@ -348,7 +373,12 @@ public class ChildTestEntity1SerDes {
 			ChildTestEntity1 childTestEntity1, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "property1")) {
+				if (jsonParserFieldValue != null) {
+					childTestEntity1.setProperty1((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
 					childTestEntity1.setDateCreated(
 						toDate((String)jsonParserFieldValue));

@@ -26,24 +26,26 @@ public class ChildTestEntity2
 		return ChildTestEntity2SerDes.toDTO(json);
 	}
 
-	public String getText() {
-		return text;
+	public String getProperty2() {
+		return property2;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setProperty2(String property2) {
+		this.property2 = property2;
 	}
 
-	public void setText(UnsafeSupplier<String, Exception> textUnsafeSupplier) {
+	public void setProperty2(
+		UnsafeSupplier<String, Exception> property2UnsafeSupplier) {
+
 		try {
-			text = textUnsafeSupplier.get();
+			property2 = property2UnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String text;
+	protected String property2;
 
 	@Override
 	public ChildTestEntity2 clone() throws CloneNotSupportedException {

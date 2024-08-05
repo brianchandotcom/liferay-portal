@@ -26,6 +26,7 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -112,8 +113,9 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 				"File name must have a \"properties\" file extension");
 		}
 
-		_ploEntryService.importPLOEntries(
-			binaryFile.getInputStream(), languageId);
+		try (InputStream inputStream = binaryFile.getInputStream()) {
+			_ploEntryService.importPLOEntries(inputStream, languageId);
+		}
 	}
 
 	@Override

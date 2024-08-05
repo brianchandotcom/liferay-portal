@@ -7,7 +7,6 @@ package com.liferay.portal.language.override.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -30,14 +29,12 @@ import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
-import java.nio.charset.StandardCharsets;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -185,16 +182,14 @@ public class PLOEntryLocalServiceTest {
 		String value1 = RandomTestUtil.randomString();
 		String value2 = RandomTestUtil.randomString();
 
-		String propertiesString = StringBundler.concat(
-			key1, StringPool.EQUAL, value1, StringPool.NEW_LINE, key2,
-			StringPool.EQUAL, value2);
+		Properties properties = new Properties();
+
+		properties.setProperty(key1, value1);
+		properties.setProperty(key2, value2);
 
 		_ploEntryLocalService.importPLOEntries(
-			TestPropsValues.getCompanyId(),
-			new ByteArrayInputStream(
-				propertiesString.getBytes(StandardCharsets.UTF_8)),
-			LanguageUtil.getLanguageId(LocaleUtil.US),
-			TestPropsValues.getUserId());
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			LanguageUtil.getLanguageId(LocaleUtil.US), properties);
 
 		Assert.assertEquals(value1, _language.get(LocaleUtil.US, key1));
 
@@ -208,18 +203,16 @@ public class PLOEntryLocalServiceTest {
 		String key1 = "good-key";
 		String key2 = "key-with-empty-value";
 
-		String propertiesString = StringBundler.concat(
-			key1, StringPool.EQUAL, RandomTestUtil.randomString(),
-			StringPool.NEW_LINE, key2, StringPool.EQUAL, StringPool.NEW_LINE,
-			StringPool.EQUAL, RandomTestUtil.randomString());
+		Properties properties = new Properties();
+
+		properties.setProperty(key1, RandomTestUtil.randomString());
+		properties.setProperty(key2, StringPool.BLANK);
+		properties.setProperty(StringPool.BLANK, RandomTestUtil.randomString());
 
 		try {
 			_ploEntryLocalService.importPLOEntries(
-				TestPropsValues.getCompanyId(),
-				new ByteArrayInputStream(
-					propertiesString.getBytes(StandardCharsets.UTF_8)),
-				LanguageUtil.getLanguageId(LocaleUtil.US),
-				TestPropsValues.getUserId());
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				LanguageUtil.getLanguageId(LocaleUtil.US), properties);
 
 			Assert.fail();
 		}

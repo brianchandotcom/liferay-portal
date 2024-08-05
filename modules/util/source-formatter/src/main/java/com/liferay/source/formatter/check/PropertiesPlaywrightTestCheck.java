@@ -136,22 +136,38 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 
 			properties.load(new StringReader(content));
 
-			List<String> playwrightTestProjectList = ListUtil.fromString(
-				properties.getProperty(_PLAYWRIGHT_TEST_PROJECT_NAME),
-				StringPool.COMMA);
+			List<String> relevantRuleNamesList = ListUtil.fromString(
+				properties.getProperty(_RELEVANT_RULE_NAMES), StringPool.COMMA);
 
-			if (ListUtil.isEmpty(playwrightTestProjectList)) {
+			if (ListUtil.isEmpty(relevantRuleNamesList)) {
 				addMessage(
 					fileName,
-					"Missing property '" + _PLAYWRIGHT_TEST_PROJECT_NAME +
-						"' in test.properties");
+					"Missing property '" + _RELEVANT_RULE_NAMES +
+						"' in test.properties for Playwright tests");
 			}
-			else if (!playwrightTestProjectList.contains(moduleName)) {
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Missing property value '", moduleName, "' in '",
-						_PLAYWRIGHT_TEST_PROJECT_NAME, "'"));
+
+			for (String relevantRuleName : relevantRuleNamesList) {
+				String playwrightTestProjectPropertyName = StringBundler.concat(
+					_PLAYWRIGHT_TEST_PROJECT_NAME, "[", relevantRuleName, "]");
+
+				List<String> playwrightTestProjectList = ListUtil.fromString(
+					properties.getProperty(playwrightTestProjectPropertyName),
+					StringPool.COMMA);
+
+				if (ListUtil.isEmpty(playwrightTestProjectList)) {
+					addMessage(
+						fileName,
+						"Missing property '" +
+							playwrightTestProjectPropertyName +
+								"' in test.properties");
+				}
+				else if (!playwrightTestProjectList.contains(moduleName)) {
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Missing property value '", moduleName, "' in '",
+							_PLAYWRIGHT_TEST_PROJECT_NAME, "'"));
+				}
 			}
 		}
 
@@ -233,6 +249,8 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 	private static final String _PLAYWRIGHT_TEST_PROJECT_NAME =
 		"playwright.test.project[playwright-js-tomcat90-mysql57-jdk8]" +
 			"[relevant]";
+
+	private static final String _RELEVANT_RULE_NAMES = "relevant.rule.names";
 
 	private static final String _TESTRAY_MAIN_COMPONENT_NAME =
 		"testray.main.component.name";

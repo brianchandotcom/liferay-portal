@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.user.resource.v1_0.test;
 
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.exception.DuplicateAccountEntryExternalReferenceCodeException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.model.AccountGroup;
@@ -922,9 +921,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals(
-				DuplicateAccountEntryExternalReferenceCodeException.class.
-					getSimpleName(),
-				problem.getType());
+				problem.getTitle(),
+				"An account already exists with the same external reference " +
+					"code");
 		}
 	}
 

@@ -32,7 +32,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaException;
-import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -80,6 +79,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
@@ -687,7 +687,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_setUpTestUserAccountResource();
 
 		_assertProblem(
-			UserPasswordException.MustMatchCurrentPassword.class,
+			"The user account password is invalid",
 			() -> _regularUserAccountResource.patchUserAccountHttpResponse(
 				_regularUserAccount.getId(),
 				new UserAccount() {
@@ -913,9 +913,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			String exceptionClassName = CaptchaException.class.getName();
-
-			Assert.assertTrue(exceptionClassName.contains(problem.getType()));
+			Assert.assertEquals(
+				"The captcha value is invalid", problem.getTitle());
 		}
 
 		_sapEntryLocalService.deleteSAPEntry(sapEntry);
@@ -968,7 +967,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_regularUserAccount.setPassword(newPassword);
 
 		_assertProblem(
-			UserPasswordException.MustMatchCurrentPassword.class,
+			"The user account password is invalid",
 			() -> _regularUserAccountResource.putUserAccountHttpResponse(
 				_regularUserAccount.getId(), _regularUserAccount));
 
@@ -1024,7 +1023,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_regularUserAccount.setPassword(newPassword);
 
 		_assertProblem(
-			UserPasswordException.MustMatchCurrentPassword.class,
+			"The user account password is invalid",
 			() ->
 				_regularUserAccountResource.
 					putUserAccountByExternalReferenceCodeHttpResponse(
@@ -1540,7 +1539,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	private <T extends Exception> void _assertProblem(
-			Class<T> exceptionClass,
+			String errorMessage,
 			UnsafeSupplier<HttpInvoker.HttpResponse, Exception>
 				httpResponseUnsafeSupplier)
 		throws Exception {
@@ -1555,14 +1554,13 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				Response.Status.BAD_REQUEST.getStatusCode(),
 				httpResponse.getStatusCode());
 
-			if (exceptionClass != null) {
+			if (Validator.isNotNull(errorMessage)) {
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					httpResponse.getContent());
 
-				String type = jsonObject.getString("type");
+				String title = jsonObject.getString("title");
 
-				Assert.assertTrue(
-					type.contains(exceptionClass.getSimpleName()));
+				Assert.assertEquals(errorMessage, title);
 			}
 		}
 	}

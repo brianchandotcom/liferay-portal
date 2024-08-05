@@ -14,8 +14,10 @@ import com.liferay.document.library.test.util.search.DLFolderSearchFixture;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -157,6 +159,14 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			"assetEntryId_sortable",
 			String.valueOf(_getAssetEntryId(dlFolder)));
 		map.put("externalReferenceCode", dlFolder.getExternalReferenceCode());
+
+		Group group = _groupLocalService.getGroup(dlFixture.getGroupId());
+
+		map.put("groupExternalReferenceCode", group.getExternalReferenceCode());
+		map.put(
+			"scopeGroupExternalReferenceCode",
+			group.getExternalReferenceCode());
+
 		map.put("statusByUserId", String.valueOf(dlFolder.getStatusByUserId()));
 
 		User user = _userLocalService.getUser(dlFixture.getUserId());
@@ -230,6 +240,9 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

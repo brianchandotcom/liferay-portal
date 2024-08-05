@@ -3,13 +3,20 @@ components:
         ChildTestEntity1:
             allOf:
                 - $ref: "#/components/schemas/TestEntity"
+                - properties:
+                      property1:
+                          type: string
             type: object
         ChildTestEntity2:
             allOf:
                 - $ref: "#/components/schemas/TestEntity"
                 - properties:
-                      text:
+                      property2:
                           type: string
+            type: object
+        ChildTestEntity3:
+            allOf:
+                - $ref: "#/components/schemas/TestEntity"
             type: object
         JSONMapAttributeTestEntity:
             description:
@@ -73,6 +80,7 @@ components:
                 mapping:
                     ChildTestEntity1: "#/components/schemas/ChildTestEntity1"
                     ChildTestEntity2: "#/components/schemas/ChildTestEntity2"
+                    ChildTestEntity3: "#/components/schemas/ChildTestEntity3"
                 propertyName: type
             properties:
                 dateCreated:
@@ -102,6 +110,7 @@ components:
                     enum:
                         - ChildTestEntity1
                         - ChildTestEntity2
+                        - ChildTestEntity3
                     type: string
             type: object
         UnreferencedTestEntity:

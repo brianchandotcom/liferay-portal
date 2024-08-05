@@ -127,7 +127,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 	}
 
 	@Test
-	@TestInfo("LPS-127023,LPS-112360")
+	@TestInfo("LPS-112360,LPS-127023")
 	public void testCollectionDisplayWithInfoListRenderer() throws Exception {
 		Layout layout = _addDefaultDisplayPageTemplateLayout(
 			_portal.getClassNameId(FileEntry.class.getName()),
@@ -148,7 +148,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 	}
 
 	@Test
-	@TestInfo("LPS-127023,LPS-112360")
+	@TestInfo("LPS-112360,LPS-127023")
 	public void testMapContentDisplayInCollectionDisplay() throws Exception {
 		Layout layout = _addDefaultDisplayPageTemplateLayout(
 			_portal.getClassNameId(BlogsEntry.class.getName()), 0);

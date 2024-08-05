@@ -34,6 +34,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestEntity1;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestEntity2;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestEntity3;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.TestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
@@ -240,6 +241,67 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		assertEquals(randomTestEntity, postTestEntity);
 		assertValid(postTestEntity);
+
+		ChildTestEntity1 childTestEntity1 = new ChildTestEntity1() {
+			{
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				documentId = RandomTestUtil.randomLong();
+				jsonProperty = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				property1 = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				type = Type.create("ChildTestEntity1");
+			}
+		};
+
+		assertEquals(
+			childTestEntity1,
+			testPostTestEntity_addTestEntity(childTestEntity1));
+
+		ChildTestEntity2 childTestEntity2 = new ChildTestEntity2() {
+			{
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				documentId = RandomTestUtil.randomLong();
+				jsonProperty = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				property2 = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				type = Type.create("ChildTestEntity2");
+			}
+		};
+
+		assertEquals(
+			childTestEntity2,
+			testPostTestEntity_addTestEntity(childTestEntity2));
+
+		ChildTestEntity3 childTestEntity3 = new ChildTestEntity3() {
+			{
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				documentId = RandomTestUtil.randomLong();
+				jsonProperty = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				self = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				type = Type.create("ChildTestEntity3");
+			}
+		};
+
+		assertEquals(
+			childTestEntity3,
+			testPostTestEntity_addTestEntity(childTestEntity3));
 	}
 
 	protected TestEntity testPostTestEntity_addTestEntity(TestEntity testEntity)
@@ -398,6 +460,30 @@ public abstract class BaseTestEntityResourceTestCase {
 
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (testEntity.getType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("property1", additionalAssertFieldName)) {
+				if (!(testEntity instanceof ChildTestEntity1)) {
+					continue;
+				}
+
+				if (((ChildTestEntity1)testEntity).getProperty1() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("property2", additionalAssertFieldName)) {
+				if (!(testEntity instanceof ChildTestEntity2)) {
+					continue;
+				}
+
+				if (((ChildTestEntity2)testEntity).getProperty2() == null) {
 					valid = false;
 				}
 
@@ -621,6 +707,40 @@ public abstract class BaseTestEntityResourceTestCase {
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						testEntity1.getType(), testEntity2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("property1", additionalAssertFieldName)) {
+				if (!(testEntity1 instanceof ChildTestEntity1) ||
+					!(testEntity2 instanceof ChildTestEntity1)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((ChildTestEntity1)testEntity1).getProperty1(),
+						((ChildTestEntity1)testEntity2).getProperty1())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("property2", additionalAssertFieldName)) {
+				if (!(testEntity1 instanceof ChildTestEntity2) ||
+					!(testEntity2 instanceof ChildTestEntity2)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((ChildTestEntity2)testEntity1).getProperty2(),
+						((ChildTestEntity2)testEntity2).getProperty2())) {
 
 					return false;
 				}
@@ -1044,7 +1164,7 @@ public abstract class BaseTestEntityResourceTestCase {
 	}
 
 	protected TestEntity randomTestEntity() throws Exception {
-		switch (RandomTestUtil.randomInt(0, 1)) {
+		switch (RandomTestUtil.randomInt(0, 2)) {
 			case 0:
 				return new ChildTestEntity1() {
 					{
@@ -1058,6 +1178,8 @@ public abstract class BaseTestEntityResourceTestCase {
 						name = StringUtil.toLowerCase(
 							RandomTestUtil.randomString());
 						self = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						property1 = StringUtil.toLowerCase(
 							RandomTestUtil.randomString());
 						type = Type.create("ChildTestEntity1");
 					}
@@ -1077,7 +1199,27 @@ public abstract class BaseTestEntityResourceTestCase {
 							RandomTestUtil.randomString());
 						self = StringUtil.toLowerCase(
 							RandomTestUtil.randomString());
+						property2 = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
 						type = Type.create("ChildTestEntity2");
+					}
+				};
+
+			case 2:
+				return new ChildTestEntity3() {
+					{
+						dateCreated = RandomTestUtil.nextDate();
+						dateModified = RandomTestUtil.nextDate();
+						description = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						documentId = RandomTestUtil.randomLong();
+						jsonProperty = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						name = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						self = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						type = Type.create("ChildTestEntity3");
 					}
 				};
 		}

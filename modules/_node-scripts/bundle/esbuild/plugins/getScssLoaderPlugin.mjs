@@ -39,6 +39,9 @@ link.setAttribute(
 	'href', 
 	Liferay.ThemeDisplay.getPathContext() + '/o${projectWebContextPath}/${cssPath}'
 );
+if (Liferay.CSP) {
+	link.setAttribute('nonce', Liferay.CSP.nonce);
+}
 document.querySelector('head').appendChild(link);
 `;
 

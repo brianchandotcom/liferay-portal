@@ -97,28 +97,32 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				originalObjectEntry.getObjectDefinitionId());
 
-		if (StringUtil.equals(
+		if (!StringUtil.equals(
 				objectDefinition.getName(), "CommerceReturnItem")) {
 
-			Map<String, Serializable> values = originalObjectEntry.getValues();
+			return;
+		}
 
-			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-				GetterUtil.getLong(
-					values.get(
-						"r_commerceReturnToCommerceReturnItems_c_" +
-							"commerceReturnId")));
+		Map<String, Serializable> values = originalObjectEntry.getValues();
 
-			if (objectEntry != null) {
-				try {
-					_objectEntryLocalService.updateObjectEntry(
-						objectEntry.getUserId(), objectEntry.getObjectEntryId(),
-						objectEntry.getValues(), new ServiceContext());
-				}
-				catch (PortalException portalException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(portalException);
-					}
-				}
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			GetterUtil.getLong(
+				values.get(
+					"r_commerceReturnToCommerceReturnItems_c_" +
+						"commerceReturnId")));
+
+		if (objectEntry == null) {
+			return;
+		}
+
+		try {
+			_objectEntryLocalService.updateObjectEntry(
+				objectEntry.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getValues(), new ServiceContext());
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
 			}
 		}
 	}

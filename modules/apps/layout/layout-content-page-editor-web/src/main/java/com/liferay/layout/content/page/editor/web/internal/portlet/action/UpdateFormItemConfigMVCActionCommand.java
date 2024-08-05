@@ -146,6 +146,10 @@ public class UpdateFormItemConfigMVCActionCommand
 			previousFormStyledLayoutStructureItem.getClassNameId();
 		long previousClassTypeId =
 			previousFormStyledLayoutStructureItem.getClassTypeId();
+		boolean previousIsMultiStep =
+			previousFormStyledLayoutStructureItem.isMultiStep();
+		int previousNumberOfSteps =
+			previousFormStyledLayoutStructureItem.getNumberOfSteps();
 
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)layoutStructure.updateItemConfig(
@@ -158,6 +162,19 @@ public class UpdateFormItemConfigMVCActionCommand
 			actionRequest);
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
+
+		if (!Objects.equals(
+				formStyledLayoutStructureItem.isMultiStep(),
+				previousIsMultiStep) ||
+			!Objects.equals(
+				formStyledLayoutStructureItem.getNumberOfSteps(),
+				previousNumberOfSteps)) {
+
+			layoutStructure.updateFormStyledLayoutStructureItemMultiStep(
+				formStyledLayoutStructureItem.getItemId(),
+				formStyledLayoutStructureItem.isMultiStep(),
+				formStyledLayoutStructureItem.getNumberOfSteps());
+		}
 
 		if (!Objects.equals(
 				formStyledLayoutStructureItem.getClassNameId(),

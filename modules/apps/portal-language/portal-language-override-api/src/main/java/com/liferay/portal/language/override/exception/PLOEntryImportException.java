@@ -7,8 +7,6 @@ package com.liferay.portal.language.override.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.List;
-
 /**
  * @author Thiago Buarque
  */
@@ -24,17 +22,9 @@ public class PLOEntryImportException extends PortalException {
 
 	public static class InvalidTranslations extends PLOEntryImportException {
 
-		public InvalidTranslations(List<Exception> exceptions) {
+		public InvalidTranslations() {
 			super("Unable to import translations");
-
-			_exceptions = exceptions;
 		}
-
-		public List<Exception> getExceptions() {
-			return _exceptions;
-		}
-
-		private final List<Exception> _exceptions;
 
 	}
 

@@ -24,7 +24,6 @@ import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.base.PLOEntryLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -127,7 +126,7 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 			Properties properties)
 		throws PortalException {
 
-		List<Exception> exceptions = new ArrayList<>();
+		PLOEntryImportException.InvalidTranslations invalidTranslations = null;
 
 		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			try {
@@ -136,12 +135,17 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 					(String)entry.getValue());
 			}
 			catch (Exception exception) {
-				exceptions.add(exception);
+				if (invalidTranslations == null) {
+					invalidTranslations =
+						new PLOEntryImportException.InvalidTranslations();
+				}
+
+				invalidTranslations.addSuppressed(exception);
 			}
 		}
 
-		if (!exceptions.isEmpty()) {
-			throw new PLOEntryImportException.InvalidTranslations(exceptions);
+		if (invalidTranslations != null) {
+			throw invalidTranslations;
 		}
 	}
 

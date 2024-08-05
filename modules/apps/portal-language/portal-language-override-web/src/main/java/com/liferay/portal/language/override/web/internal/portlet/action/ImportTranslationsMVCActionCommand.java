@@ -102,11 +102,11 @@ public class ImportTranslationsMVCActionCommand extends BaseMVCActionCommand {
 		catch (PLOEntryImportException.InvalidTranslations
 					ploEntryImportException) {
 
-			for (Exception exception :
-					ploEntryImportException.getExceptions()) {
+			for (Throwable throwable :
+					ploEntryImportException.getSuppressed()) {
 
 				SessionErrors.add(
-					actionRequest, exception.getClass(), exception);
+					actionRequest, throwable.getClass(), throwable);
 			}
 		}
 		catch (Exception exception) {

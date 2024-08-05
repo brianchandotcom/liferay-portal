@@ -11,8 +11,6 @@ import com.liferay.portal.language.override.exception.PLOEntryImportException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import java.util.List;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -37,12 +35,10 @@ public class PLOEntryImportExceptionInvalidTranslationsExceptionMapper
 	protected Problem getProblem(
 		PLOEntryImportException.InvalidTranslations invalidTranslations) {
 
-		List<Exception> exceptions = invalidTranslations.getExceptions();
-
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (Exception exception : exceptions) {
-			jsonArray.put(exception.getMessage());
+		for (Throwable throwable : invalidTranslations.getSuppressed()) {
+			jsonArray.put(throwable.getMessage());
 		}
 
 		return new Problem(

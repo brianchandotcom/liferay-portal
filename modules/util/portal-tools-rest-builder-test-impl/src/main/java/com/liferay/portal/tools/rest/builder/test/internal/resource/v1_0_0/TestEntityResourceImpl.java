@@ -36,7 +36,7 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 	}
 
 	@Override
-	public Integer getTestEntityCount() throws Exception {
+	public Integer getTestEntityCount() {
 		return _testEntities.size();
 	}
 

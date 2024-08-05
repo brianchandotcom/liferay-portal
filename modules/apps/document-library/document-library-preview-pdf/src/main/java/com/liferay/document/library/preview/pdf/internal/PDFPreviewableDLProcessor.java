@@ -473,11 +473,29 @@ public class PDFPreviewableDLProcessor
 						FileUtil.delete(file);
 					}
 
-					File file = _documentConversion.convert(
-						tempFileId, inputStream, extension, "pdf");
+					try {
+						File file = _documentConversion.convert(
+							tempFileId, inputStream, extension, "pdf");
 
-					_generateImages(
-						destinationFileVersion, file, maxNumberOfPages);
+						_generateImages(
+							destinationFileVersion, file, maxNumberOfPages);
+					}
+					catch (IOException ioException) {
+						_fileVersionPreviewEventListener.onFailure(
+							destinationFileVersion);
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringBundler.concat(
+									"Unable to process ",
+									destinationFileVersion.getFileVersionId(),
+									" ", destinationFileVersion.getTitle()));
+						}
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(ioException);
+						}
+					}
 				}
 			}
 		}

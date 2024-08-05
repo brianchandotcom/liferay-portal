@@ -49,6 +49,8 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 
 		languageId = _normalizeLanguageId(languageId);
 
+		_validate(key, languageId, value);
+
 		return _addOrUpdatePLOEntry(companyId, userId, key, languageId, value);
 	}
 
@@ -104,8 +106,8 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 
 		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			try {
-				_addOrUpdatePLOEntry(
-					companyId, userId, (String)entry.getKey(), languageId,
+				_validate(
+					(String)entry.getKey(), languageId,
 					(String)entry.getValue());
 			}
 			catch (Exception exception) {
@@ -120,6 +122,12 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 
 		if (invalidTranslations != null) {
 			throw invalidTranslations;
+		}
+
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			_addOrUpdatePLOEntry(
+				companyId, userId, (String)entry.getKey(), languageId,
+				(String)entry.getValue());
 		}
 	}
 
@@ -143,11 +151,8 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 	}
 
 	private PLOEntry _addOrUpdatePLOEntry(
-			long companyId, long userId, String key, String languageId,
-			String value)
-		throws PortalException {
-
-		_validate(key, languageId, value);
+		long companyId, long userId, String key, String languageId,
+		String value) {
 
 		PLOEntry ploEntry = fetchPLOEntry(companyId, key, languageId);
 

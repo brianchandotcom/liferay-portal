@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.cluster;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 
 /**
  * @author Shuyang Zhou
@@ -20,7 +21,11 @@ public class ClusterInvokeThreadLocal {
 		_enabled.set(enabled);
 	}
 
-	private static final ThreadLocal<Boolean> _enabled =
+	public static SafeCloseable setWithSafeCloseable(boolean enabled) {
+		return _enabled.setWithSafeCloseable(enabled);
+	}
+
+	private static final CentralizedThreadLocal<Boolean> _enabled =
 		new CentralizedThreadLocal<>(
 			ClusterInvokeThreadLocal.class + "._enabled", () -> Boolean.TRUE);
 

@@ -6,6 +6,7 @@
 package com.liferay.portal.language.override.internal;
 
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -23,25 +24,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ModelListener.class)
 public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 
-	@Override
-	public void onAfterCreate(PLOEntry ploEntry) {
-		_clearCache();
-	}
-
-	@Override
-	public void onAfterRemove(PLOEntry ploEntry) {
-		_clearCache();
-	}
-
-	@Override
-	public void onAfterUpdate(PLOEntry originalPLOEntry, PLOEntry ploEntry) {
-		_clearCache();
-	}
-
-	private void _clearCache() {
+	public static void clearCache(ClusterExecutor clusterExecutor) {
 		PLOOverrideResourceBundleManager.clearCache();
 
-		if (!_clusterExecutor.isEnabled()) {
+		if (!clusterExecutor.isEnabled() ||
+			!ClusterInvokeThreadLocal.isEnabled()) {
+
 			return;
 		}
 
@@ -51,7 +39,22 @@ public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 		clusterRequest.setFireAndForget(true);
 
 		TransactionCommitCallbackUtil.registerCallback(
-			() -> _clusterExecutor.execute(clusterRequest));
+			() -> clusterExecutor.execute(clusterRequest));
+	}
+
+	@Override
+	public void onAfterCreate(PLOEntry ploEntry) {
+		clearCache(_clusterExecutor);
+	}
+
+	@Override
+	public void onAfterRemove(PLOEntry ploEntry) {
+		clearCache(_clusterExecutor);
+	}
+
+	@Override
+	public void onAfterUpdate(PLOEntry originalPLOEntry, PLOEntry ploEntry) {
+		clearCache(_clusterExecutor);
 	}
 
 	private static final MethodHandler _clearCacheMethodHandle =

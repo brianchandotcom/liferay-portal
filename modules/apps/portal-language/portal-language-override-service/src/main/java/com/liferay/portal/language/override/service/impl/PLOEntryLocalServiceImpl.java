@@ -5,9 +5,12 @@
 
 package com.liferay.portal.language.override.service.impl;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -18,6 +21,7 @@ import com.liferay.portal.language.override.exception.PLOEntryImportException;
 import com.liferay.portal.language.override.exception.PLOEntryKeyException;
 import com.liferay.portal.language.override.exception.PLOEntryLanguageIdException;
 import com.liferay.portal.language.override.exception.PLOEntryValueException;
+import com.liferay.portal.language.override.internal.PLOEntryModelListener;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.base.PLOEntryLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
@@ -124,11 +128,17 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 			throw invalidTranslations;
 		}
 
-		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-			_addOrUpdatePLOEntry(
-				companyId, userId, (String)entry.getKey(), languageId,
-				(String)entry.getValue());
+		try (SafeCloseable safeCloseable =
+				ClusterInvokeThreadLocal.setWithSafeCloseable(false)) {
+
+			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+				_addOrUpdatePLOEntry(
+					companyId, userId, (String)entry.getKey(), languageId,
+					(String)entry.getValue());
+			}
 		}
+
+		PLOEntryModelListener.clearCache(_clusterExecutor);
 	}
 
 	@Override
@@ -220,6 +230,9 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 			throw new PLOEntryValueException.MustNotBeNull();
 		}
 	}
+
+	@Reference
+	private ClusterExecutor _clusterExecutor;
 
 	@Reference
 	private Language _language;

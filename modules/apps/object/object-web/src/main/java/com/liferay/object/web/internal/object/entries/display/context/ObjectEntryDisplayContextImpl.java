@@ -71,6 +71,10 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.tree.Edge;
+import com.liferay.object.tree.Node;
+import com.liferay.object.tree.Tree;
+import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.object.web.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
@@ -145,7 +149,8 @@ public class ObjectEntryDisplayContextImpl
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectLayoutLocalService objectLayoutLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
-		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
+		ObjectScopeProviderRegistry objectScopeProviderRegistry,
+		TreeFactory treeFactory) {
 
 		_ddmExpressionFactory = ddmExpressionFactory;
 		_ddmFormRenderer = ddmFormRenderer;
@@ -159,6 +164,7 @@ public class ObjectEntryDisplayContextImpl
 		_objectLayoutLocalService = objectLayoutLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
+		_treeFactory = treeFactory;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 		_readOnly = (Boolean)httpServletRequest.getAttribute(
@@ -168,7 +174,9 @@ public class ObjectEntryDisplayContextImpl
 	}
 
 	@Override
-	public String getBackURL() {
+	public String getBackURL() throws PortalException {
+		ObjectEntry objectEntry = _getObjectEntry();
+
 		String redirect = ParamUtil.getString(
 			_objectRequestHelper.getRequest(), "redirect");
 
@@ -179,10 +187,75 @@ public class ObjectEntryDisplayContextImpl
 			LiferayPortletResponse liferayPortletResponse =
 				_objectRequestHelper.getLiferayPortletResponse();
 
-			return String.valueOf(liferayPortletResponse.createRenderURL());
+			backURL = String.valueOf(liferayPortletResponse.createRenderURL());
 		}
 
-		return backURL;
+		if (objectEntry == null) {
+			return backURL;
+		}
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				serviceBuilderObjectEntry.getObjectDefinitionId());
+
+		if (!objectDefinition.isRootDescendantNode()) {
+			return backURL;
+		}
+
+		Tree tree = _treeFactory.createObjectEntryTree(
+			serviceBuilderObjectEntry.getRootObjectEntryId());
+
+		Node node = tree.getNode(serviceBuilderObjectEntry.getObjectEntryId());
+
+		Node parentNode = node.getParentNode();
+
+		com.liferay.object.model.ObjectEntry parentObjectEntry =
+			_objectEntryLocalService.getObjectEntry(parentNode.getPrimaryKey());
+
+		ObjectDefinition parentObjectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				parentObjectEntry.getObjectDefinitionId());
+
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_objectRequestHelper.getRequest(),
+				parentObjectDefinition.getPortletId(),
+				PortletRequest.ACTION_PHASE)
+		).setMVCRenderCommandName(
+			"/object_entries/edit_object_entry"
+		).setParameter(
+			"externalReferenceCode",
+			parentObjectEntry.getExternalReferenceCode()
+		).setParameter(
+			"screenNavigationCategoryKey",
+			() -> {
+				ObjectLayout objectLayout =
+					_objectLayoutLocalService.fetchDefaultObjectLayout(
+						parentObjectDefinition.getObjectDefinitionId());
+
+				Edge edge = node.getEdge();
+
+				if (objectLayout == null) {
+					return edge.getObjectRelationshipId();
+				}
+
+				List<ObjectLayoutTab> objectLayoutTabs =
+					objectLayout.getObjectLayoutTabs();
+
+				for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
+					if (objectLayoutTab.getObjectRelationshipId() ==
+							edge.getObjectRelationshipId()) {
+
+						return objectLayoutTab.getObjectLayoutTabId();
+					}
+				}
+
+				return edge.getObjectRelationshipId();
+			}
+		).buildString();
 	}
 
 	@Override
@@ -1406,5 +1479,6 @@ public class ObjectEntryDisplayContextImpl
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final boolean _readOnly;
 	private final ThemeDisplay _themeDisplay;
+	private final TreeFactory _treeFactory;
 
 }

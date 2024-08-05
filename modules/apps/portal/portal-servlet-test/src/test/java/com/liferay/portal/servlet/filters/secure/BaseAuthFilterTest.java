@@ -92,41 +92,29 @@ public class BaseAuthFilterTest {
 	}
 
 	@Test
-	public void testGivenBasicAuthenticationWhenUserIsActivateThenHttpSessionIsValid() {
+	public void testHttpSessionIsInvalid() {
 		_mockFilterConfig.addInitParameter("basic_auth", "true");
 
-		Assert.assertTrue(
-			!_isHttpSessionInvalid(
+		Assert.assertFalse(
+			_testHttpSessionIsInvalid(
 				HttpAuthorizationHeader.SCHEME_BASIC,
 				_setUpUser(WorkflowConstants.STATUS_APPROVED)));
-	}
-
-	@Test
-	public void testGivenBasicAuthenticationWhenUserIsDeactivatedThenHttpSessionInvalidated() {
-		_mockFilterConfig.addInitParameter("basic_auth", "true");
 
 		Assert.assertTrue(
-			_isHttpSessionInvalid(
+			_testHttpSessionIsInvalid(
 				HttpAuthorizationHeader.SCHEME_BASIC,
 				_setUpUser(WorkflowConstants.STATUS_INACTIVE)));
-	}
 
-	@Test
-	public void testGivenDigestAuthenticationWhenUserIsActiveThenHttpSessionIsValid() {
+		setUp();
 		_mockFilterConfig.addInitParameter("digest_auth", "true");
 
-		Assert.assertTrue(
-			!_isHttpSessionInvalid(
+		Assert.assertFalse(
+			_testHttpSessionIsInvalid(
 				HttpAuthorizationHeader.SCHEME_DIGEST,
 				_setUpUser(WorkflowConstants.STATUS_APPROVED)));
-	}
-
-	@Test
-	public void testGivenDigestAuthenticationWhenUserIsDeactivatedThenHttpSessionInvalidated() {
-		_mockFilterConfig.addInitParameter("digest_auth", "true");
 
 		Assert.assertTrue(
-			_isHttpSessionInvalid(
+			_testHttpSessionIsInvalid(
 				HttpAuthorizationHeader.SCHEME_DIGEST,
 				_setUpUser(WorkflowConstants.STATUS_INACTIVE)));
 	}
@@ -287,7 +275,37 @@ public class BaseAuthFilterTest {
 		Assert.assertNull(redirectURL);
 	}
 
-	private boolean _isHttpSessionInvalid(String scheme, User user) {
+	private void _processFilter() {
+		_authFilter.init(_mockFilterConfig);
+
+		ReflectionTestUtil.invoke(
+			_authFilter, "processFilter",
+			new Class<?>[] {
+				HttpServletRequest.class, HttpServletResponse.class,
+				FilterChain.class
+			},
+			_mockHttpServletRequest, _mockHttpServletResponse,
+			_mockFilterChain);
+	}
+
+	private void _setPortalProperty(String propertyName, Object value) {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, propertyName, value);
+	}
+
+	private User _setUpUser(int status) {
+		User user = new UserImpl();
+
+		user.setStatus(status);
+
+		_mockHttpSession.setAttribute(WebKeys.USER, user);
+
+		_mockHttpServletRequest.setSession(_mockHttpSession);
+
+		return user;
+	}
+
+	private boolean _testHttpSessionIsInvalid(String scheme, User user) {
 		try (MockedStatic<HttpAuthManagerUtil> httpAuthManagerUtilMockedStatic =
 				Mockito.mockStatic(HttpAuthManagerUtil.class);
 			MockedStatic<UserLocalServiceUtil>
@@ -321,36 +339,6 @@ public class BaseAuthFilterTest {
 
 			return _mockHttpSession.isInvalid();
 		}
-	}
-
-	private void _processFilter() {
-		_authFilter.init(_mockFilterConfig);
-
-		ReflectionTestUtil.invoke(
-			_authFilter, "processFilter",
-			new Class<?>[] {
-				HttpServletRequest.class, HttpServletResponse.class,
-				FilterChain.class
-			},
-			_mockHttpServletRequest, _mockHttpServletResponse,
-			_mockFilterChain);
-	}
-
-	private void _setPortalProperty(String propertyName, Object value) {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, propertyName, value);
-	}
-
-	private User _setUpUser(int status) {
-		User user = new UserImpl();
-
-		user.setStatus(status);
-
-		_mockHttpSession.setAttribute(WebKeys.USER, user);
-
-		_mockHttpServletRequest.setSession(_mockHttpSession);
-
-		return user;
 	}
 
 	private static final PortalUtil _portalUtil = new PortalUtil();

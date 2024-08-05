@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.TestObjectSerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.TestEntitySerDes;
 
 import java.io.Serializable;
 
@@ -20,10 +20,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public abstract class TestObject implements Cloneable, Serializable {
+public abstract class TestEntity implements Cloneable, Serializable {
 
-	public static TestObject toDTO(String json) {
-		return TestObjectSerDes.toDTO(json);
+	public static TestEntity toDTO(String json) {
+		return TestEntitySerDes.toDTO(json);
 	}
 
 	public Date getDateCreated() {
@@ -150,27 +150,27 @@ public abstract class TestObject implements Cloneable, Serializable {
 
 	protected String name;
 
-	public NestedTestObject getNestedTestObject() {
-		return nestedTestObject;
+	public NestedTestEntity getNestedTestEntity() {
+		return nestedTestEntity;
 	}
 
-	public void setNestedTestObject(NestedTestObject nestedTestObject) {
-		this.nestedTestObject = nestedTestObject;
+	public void setNestedTestEntity(NestedTestEntity nestedTestEntity) {
+		this.nestedTestEntity = nestedTestEntity;
 	}
 
-	public void setNestedTestObject(
-		UnsafeSupplier<NestedTestObject, Exception>
-			nestedTestObjectUnsafeSupplier) {
+	public void setNestedTestEntity(
+		UnsafeSupplier<NestedTestEntity, Exception>
+			nestedTestEntityUnsafeSupplier) {
 
 		try {
-			nestedTestObject = nestedTestObjectUnsafeSupplier.get();
+			nestedTestEntity = nestedTestEntityUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected NestedTestObject nestedTestObject;
+	protected NestedTestEntity nestedTestEntity;
 
 	public String getSelf() {
 		return self;
@@ -191,26 +191,26 @@ public abstract class TestObject implements Cloneable, Serializable {
 
 	protected String self;
 
-	public TestObject getTestObjects() {
-		return testObjects;
+	public TestEntity getTestEntities() {
+		return testEntities;
 	}
 
-	public void setTestObjects(TestObject testObjects) {
-		this.testObjects = testObjects;
+	public void setTestEntities(TestEntity testEntities) {
+		this.testEntities = testEntities;
 	}
 
-	public void setTestObjects(
-		UnsafeSupplier<TestObject, Exception> testObjectsUnsafeSupplier) {
+	public void setTestEntities(
+		UnsafeSupplier<TestEntity, Exception> testEntitiesUnsafeSupplier) {
 
 		try {
-			testObjects = testObjectsUnsafeSupplier.get();
+			testEntities = testEntitiesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected TestObject testObjects;
+	protected TestEntity testEntities;
 
 	public Type getType() {
 		return type;
@@ -240,8 +240,8 @@ public abstract class TestObject implements Cloneable, Serializable {
 	protected Type type;
 
 	@Override
-	public TestObject clone() throws CloneNotSupportedException {
-		return (TestObject)super.clone();
+	public TestEntity clone() throws CloneNotSupportedException {
+		return (TestEntity)super.clone();
 	}
 
 	@Override
@@ -250,13 +250,13 @@ public abstract class TestObject implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof TestObject)) {
+		if (!(object instanceof TestEntity)) {
 			return false;
 		}
 
-		TestObject testObject = (TestObject)object;
+		TestEntity testEntity = (TestEntity)object;
 
-		return Objects.equals(toString(), testObject.toString());
+		return Objects.equals(toString(), testEntity.toString());
 	}
 
 	@Override
@@ -267,13 +267,13 @@ public abstract class TestObject implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return TestObjectSerDes.toJSON(this);
+		return TestEntitySerDes.toJSON(this);
 	}
 
 	public static enum Type {
 
-		CHILD_TEST_OBJECT1("ChildTestObject1"),
-		CHILD_TEST_OBJECT2("ChildTestObject2");
+		CHILD_TEST_ENTITY1("ChildTestEntity1"),
+		CHILD_TEST_ENTITY2("ChildTestEntity2");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

@@ -5,11 +5,11 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.resource.v1_0_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.TestObject;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.TestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
 import com.liferay.portal.tools.rest.builder.test.client.problem.Problem;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.TestObjectSerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.TestEntitySerDes;
 
 import java.net.URL;
 
@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface TestObjectResource {
+public interface TestEntityResource {
 
 	public static Builder builder() {
 		return new Builder();
@@ -39,40 +39,40 @@ public interface TestObjectResource {
 			Boolean booleanValue)
 		throws Exception;
 
-	public Page<TestObject> getTestObjectsPage() throws Exception;
+	public Page<TestEntity> getTestEntitiesPage() throws Exception;
 
-	public HttpInvoker.HttpResponse getTestObjectsPageHttpResponse()
+	public HttpInvoker.HttpResponse getTestEntitiesPageHttpResponse()
 		throws Exception;
 
-	public void postTestObjectsPageExportBatch(
+	public void postTestEntitiesPageExportBatch(
 			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postTestObjectsPageExportBatchHttpResponse(
+	public HttpInvoker.HttpResponse postTestEntitiesPageExportBatchHttpResponse(
 			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
-	public TestObject postTestObject(TestObject testObject) throws Exception;
+	public TestEntity postTestEntity(TestEntity testEntity) throws Exception;
 
-	public HttpInvoker.HttpResponse postTestObjectHttpResponse(
-			TestObject testObject)
+	public HttpInvoker.HttpResponse postTestEntityHttpResponse(
+			TestEntity testEntity)
 		throws Exception;
 
-	public void postTestObjectBatch(String callbackURL, Object object)
+	public void postTestEntityBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postTestObjectBatchHttpResponse(
+	public HttpInvoker.HttpResponse postTestEntityBatchHttpResponse(
 			String callbackURL, Object object)
 		throws Exception;
 
-	public Integer getTestObjectCount() throws Exception;
+	public Integer getTestEntityCount() throws Exception;
 
-	public HttpInvoker.HttpResponse getTestObjectCountHttpResponse()
+	public HttpInvoker.HttpResponse getTestEntityCountHttpResponse()
 		throws Exception;
 
-	public TestObject getTestObject(Long testObjectId) throws Exception;
+	public TestEntity getTestEntity(Long testEntityId) throws Exception;
 
-	public HttpInvoker.HttpResponse getTestObjectHttpResponse(Long testObjectId)
+	public HttpInvoker.HttpResponse getTestEntityHttpResponse(Long testEntityId)
 		throws Exception;
 
 	public static class Builder {
@@ -88,8 +88,8 @@ public interface TestObjectResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public TestObjectResource build() {
-			return new TestObjectResourceImpl(this);
+		public TestEntityResource build() {
+			return new TestEntityResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -181,7 +181,7 @@ public interface TestObjectResource {
 
 	}
 
-	public static class TestObjectResourceImpl implements TestObjectResource {
+	public static class TestEntityResourceImpl implements TestEntityResource {
 
 		public void postReservedWord(Boolean booleanValue) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
@@ -273,9 +273,9 @@ public interface TestObjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<TestObject> getTestObjectsPage() throws Exception {
+		public Page<TestEntity> getTestEntitiesPage() throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
-				getTestObjectsPageHttpResponse();
+				getTestEntitiesPageHttpResponse();
 
 			String content = httpResponse.getContent();
 
@@ -325,7 +325,7 @@ public interface TestObjectResource {
 			}
 
 			try {
-				return Page.of(content, TestObjectSerDes::toDTO);
+				return Page.of(content, TestEntitySerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -336,7 +336,7 @@ public interface TestObjectResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getTestObjectsPageHttpResponse()
+		public HttpInvoker.HttpResponse getTestEntitiesPageHttpResponse()
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -363,7 +363,7 @@ public interface TestObjectResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/1.0.0/test-objects");
+						"/o/test/1.0.0/test-entities");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -371,12 +371,12 @@ public interface TestObjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postTestObjectsPageExportBatch(
+		public void postTestEntitiesPageExportBatch(
 				String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postTestObjectsPageExportBatchHttpResponse(
+				postTestEntitiesPageExportBatchHttpResponse(
 					callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
@@ -428,7 +428,7 @@ public interface TestObjectResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postTestObjectsPageExportBatchHttpResponse(
+				postTestEntitiesPageExportBatchHttpResponse(
 					String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
@@ -472,7 +472,7 @@ public interface TestObjectResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/1.0.0/test-objects/export-batch");
+						"/o/test/1.0.0/test-entities/export-batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -480,11 +480,11 @@ public interface TestObjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public TestObject postTestObject(TestObject testObject)
+		public TestEntity postTestEntity(TestEntity testEntity)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = postTestObjectHttpResponse(
-				testObject);
+			HttpInvoker.HttpResponse httpResponse = postTestEntityHttpResponse(
+				testEntity);
 
 			String content = httpResponse.getContent();
 
@@ -534,7 +534,7 @@ public interface TestObjectResource {
 			}
 
 			try {
-				return TestObjectSerDes.toDTO(content);
+				return TestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -545,13 +545,13 @@ public interface TestObjectResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postTestObjectHttpResponse(
-				TestObject testObject)
+		public HttpInvoker.HttpResponse postTestEntityHttpResponse(
+				TestEntity testEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(testObject.toString(), "application/json");
+			httpInvoker.body(testEntity.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -575,7 +575,7 @@ public interface TestObjectResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/1.0.0/test-objects");
+						"/o/test/1.0.0/test-entities");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -583,11 +583,11 @@ public interface TestObjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postTestObjectBatch(String callbackURL, Object object)
+		public void postTestEntityBatch(String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postTestObjectBatchHttpResponse(callbackURL, object);
+				postTestEntityBatchHttpResponse(callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -637,7 +637,7 @@ public interface TestObjectResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postTestObjectBatchHttpResponse(
+		public HttpInvoker.HttpResponse postTestEntityBatchHttpResponse(
 				String callbackURL, Object object)
 			throws Exception {
 
@@ -672,7 +672,7 @@ public interface TestObjectResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/1.0.0/test-objects/batch");
+						"/o/test/1.0.0/test-entities/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -680,9 +680,9 @@ public interface TestObjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public Integer getTestObjectCount() throws Exception {
+		public Integer getTestEntityCount() throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
-				getTestObjectCountHttpResponse();
+				getTestEntityCountHttpResponse();
 
 			String content = httpResponse.getContent();
 
@@ -743,7 +743,7 @@ public interface TestObjectResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getTestObjectCountHttpResponse()
+		public HttpInvoker.HttpResponse getTestEntityCountHttpResponse()
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -770,7 +770,7 @@ public interface TestObjectResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/1.0.0/test-objects/count");
+						"/o/test/1.0.0/test-entities/count");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -778,9 +778,9 @@ public interface TestObjectResource {
 			return httpInvoker.invoke();
 		}
 
-		public TestObject getTestObject(Long testObjectId) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = getTestObjectHttpResponse(
-				testObjectId);
+		public TestEntity getTestEntity(Long testEntityId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getTestEntityHttpResponse(
+				testEntityId);
 
 			String content = httpResponse.getContent();
 
@@ -830,7 +830,7 @@ public interface TestObjectResource {
 			}
 
 			try {
-				return TestObjectSerDes.toDTO(content);
+				return TestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -841,8 +841,8 @@ public interface TestObjectResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getTestObjectHttpResponse(
-				Long testObjectId)
+		public HttpInvoker.HttpResponse getTestEntityHttpResponse(
+				Long testEntityId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -869,9 +869,9 @@ public interface TestObjectResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/1.0.0/test-objects/{testObjectId}");
+						"/o/test/1.0.0/test-entities/{testEntityId}");
 
-			httpInvoker.path("testObjectId", testObjectId);
+			httpInvoker.path("testEntityId", testEntityId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -879,12 +879,12 @@ public interface TestObjectResource {
 			return httpInvoker.invoke();
 		}
 
-		private TestObjectResourceImpl(Builder builder) {
+		private TestEntityResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			TestObjectResource.class.getName());
+			TestEntityResource.class.getName());
 
 		private Builder _builder;
 

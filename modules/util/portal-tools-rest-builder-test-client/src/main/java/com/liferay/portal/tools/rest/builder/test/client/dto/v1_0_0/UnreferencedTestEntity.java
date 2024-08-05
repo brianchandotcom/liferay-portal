@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.UnreferencedTestObjectSerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.UnreferencedTestEntitySerDes;
 
 import java.io.Serializable;
 
@@ -19,10 +19,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class UnreferencedTestObject implements Cloneable, Serializable {
+public class UnreferencedTestEntity implements Cloneable, Serializable {
 
-	public static UnreferencedTestObject toDTO(String json) {
-		return UnreferencedTestObjectSerDes.toDTO(json);
+	public static UnreferencedTestEntity toDTO(String json) {
+		return UnreferencedTestEntitySerDes.toDTO(json);
 	}
 
 	public String getDescription() {
@@ -87,8 +87,8 @@ public class UnreferencedTestObject implements Cloneable, Serializable {
 	protected String propertyWithHyphens;
 
 	@Override
-	public UnreferencedTestObject clone() throws CloneNotSupportedException {
-		return (UnreferencedTestObject)super.clone();
+	public UnreferencedTestEntity clone() throws CloneNotSupportedException {
+		return (UnreferencedTestEntity)super.clone();
 	}
 
 	@Override
@@ -97,14 +97,14 @@ public class UnreferencedTestObject implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof UnreferencedTestObject)) {
+		if (!(object instanceof UnreferencedTestEntity)) {
 			return false;
 		}
 
-		UnreferencedTestObject unreferencedTestObject =
-			(UnreferencedTestObject)object;
+		UnreferencedTestEntity unreferencedTestEntity =
+			(UnreferencedTestEntity)object;
 
-		return Objects.equals(toString(), unreferencedTestObject.toString());
+		return Objects.equals(toString(), unreferencedTestEntity.toString());
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class UnreferencedTestObject implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return UnreferencedTestObjectSerDes.toJSON(this);
+		return UnreferencedTestEntitySerDes.toJSON(this);
 	}
 
 }

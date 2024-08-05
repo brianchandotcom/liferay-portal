@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.ChildTestObject2SerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.ChildTestEntity2SerDes;
 
 import java.io.Serializable;
 
@@ -19,11 +19,11 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ChildTestObject2
-	extends TestObject implements Cloneable, Serializable {
+public class ChildTestEntity2
+	extends TestEntity implements Cloneable, Serializable {
 
-	public static ChildTestObject2 toDTO(String json) {
-		return ChildTestObject2SerDes.toDTO(json);
+	public static ChildTestEntity2 toDTO(String json) {
+		return ChildTestEntity2SerDes.toDTO(json);
 	}
 
 	public String getText() {
@@ -46,8 +46,8 @@ public class ChildTestObject2
 	protected String text;
 
 	@Override
-	public ChildTestObject2 clone() throws CloneNotSupportedException {
-		return (ChildTestObject2)super.clone();
+	public ChildTestEntity2 clone() throws CloneNotSupportedException {
+		return (ChildTestEntity2)super.clone();
 	}
 
 	@Override
@@ -56,13 +56,13 @@ public class ChildTestObject2
 			return true;
 		}
 
-		if (!(object instanceof ChildTestObject2)) {
+		if (!(object instanceof ChildTestEntity2)) {
 			return false;
 		}
 
-		ChildTestObject2 childTestObject2 = (ChildTestObject2)object;
+		ChildTestEntity2 childTestEntity2 = (ChildTestEntity2)object;
 
-		return Objects.equals(toString(), childTestObject2.toString());
+		return Objects.equals(toString(), childTestEntity2.toString());
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class ChildTestObject2
 	}
 
 	public String toString() {
-		return ChildTestObject2SerDes.toJSON(this);
+		return ChildTestEntity2SerDes.toJSON(this);
 	}
 
 }

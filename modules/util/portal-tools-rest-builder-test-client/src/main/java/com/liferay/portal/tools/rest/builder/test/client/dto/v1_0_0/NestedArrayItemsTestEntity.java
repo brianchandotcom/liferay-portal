@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.NestedArrayItemsTestObjectSerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0.NestedArrayItemsTestEntitySerDes;
 
 import java.io.Serializable;
 
@@ -19,10 +19,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class NestedArrayItemsTestObject implements Cloneable, Serializable {
+public class NestedArrayItemsTestEntity implements Cloneable, Serializable {
 
-	public static NestedArrayItemsTestObject toDTO(String json) {
-		return NestedArrayItemsTestObjectSerDes.toDTO(json);
+	public static NestedArrayItemsTestEntity toDTO(String json) {
+		return NestedArrayItemsTestEntitySerDes.toDTO(json);
 	}
 
 	public String getName() {
@@ -66,10 +66,10 @@ public class NestedArrayItemsTestObject implements Cloneable, Serializable {
 	protected String[][] values;
 
 	@Override
-	public NestedArrayItemsTestObject clone()
+	public NestedArrayItemsTestEntity clone()
 		throws CloneNotSupportedException {
 
-		return (NestedArrayItemsTestObject)super.clone();
+		return (NestedArrayItemsTestEntity)super.clone();
 	}
 
 	@Override
@@ -78,15 +78,15 @@ public class NestedArrayItemsTestObject implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof NestedArrayItemsTestObject)) {
+		if (!(object instanceof NestedArrayItemsTestEntity)) {
 			return false;
 		}
 
-		NestedArrayItemsTestObject nestedArrayItemsTestObject =
-			(NestedArrayItemsTestObject)object;
+		NestedArrayItemsTestEntity nestedArrayItemsTestEntity =
+			(NestedArrayItemsTestEntity)object;
 
 		return Objects.equals(
-			toString(), nestedArrayItemsTestObject.toString());
+			toString(), nestedArrayItemsTestEntity.toString());
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class NestedArrayItemsTestObject implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return NestedArrayItemsTestObjectSerDes.toJSON(this);
+		return NestedArrayItemsTestEntitySerDes.toJSON(this);
 	}
 
 }

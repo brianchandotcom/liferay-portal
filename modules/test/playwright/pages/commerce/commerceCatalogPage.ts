@@ -13,6 +13,10 @@ export class CommerceCatalogPage {
 	readonly globalSearchBarCommerceItemLink: (
 		text: string
 	) => Promise<Locator>;
+	readonly globalSearchBarCommerceOrderLink: (
+		orderId: string,
+		accountName: string
+	) => Promise<Locator>;
 	readonly page: Page;
 	readonly productLink: (productName: string) => Promise<Locator>;
 
@@ -29,6 +33,14 @@ export class CommerceCatalogPage {
 			.getByPlaceholder('Search');
 		this.globalSearchBarCommerceItemLink = async (text) => {
 			return this.page.getByRole('link', {name: text});
+		};
+		this.globalSearchBarCommerceOrderLink = async (
+			orderId: string,
+			accountName: string
+		) => {
+			return this.page
+				.getByRole('link', {name: orderId})
+				.filter({hasText: accountName});
 		};
 		this.page = page;
 		this.productLink = async (productName: string) => {

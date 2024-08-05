@@ -9,6 +9,7 @@ import {DataApiHelpers} from '../../helpers/ApiHelpers';
 import {liferayConfig} from '../../liferay.config';
 
 export class CommerceLayoutsPage {
+	readonly addOrderButton: Locator;
 	readonly addPageButton: Locator;
 	readonly addPageModalSubmitButton: Locator;
 	readonly addPageNameInput: Locator;
@@ -16,6 +17,7 @@ export class CommerceLayoutsPage {
 	readonly addWidgetLabel: (widgetName: string) => Locator;
 	readonly availableThemesFrame: FrameLocator;
 	readonly backLink: Locator;
+	readonly catalogLink: Locator;
 	readonly changeCurrentThemeButton: Locator;
 	readonly closeProductMenuButton: Locator;
 	readonly configureMenuItem: Locator;
@@ -44,6 +46,10 @@ export class CommerceLayoutsPage {
 	readonly widgetPageTemplateButton: Locator;
 
 	constructor(page: Page) {
+		this.addOrderButton = page.getByRole('button', {
+			exact: true,
+			name: 'Add Order',
+		});
 		this.addPageButton = page
 			.getByTestId('creationMenuNewButton')
 			.locator('visible=true');
@@ -66,6 +72,10 @@ export class CommerceLayoutsPage {
 		);
 
 		this.backLink = page.getByRole('link', {exact: true, name: 'Back'});
+		this.catalogLink = page.getByRole('link', {
+			exact: true,
+			name: 'Catalog',
+		});
 		this.changeCurrentThemeButton = page.getByRole('button', {
 			exact: true,
 			name: 'Change Current Theme',

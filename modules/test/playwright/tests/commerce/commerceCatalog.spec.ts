@@ -11,6 +11,7 @@ import {commercePagesTest} from '../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
+import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout} from '../../utils/performLogin';
 import {miniumSetUp} from './utils/commerce';
 
@@ -45,7 +46,7 @@ test('LPD-3185 Search a catalog entry using global search, click on a suggested 
 	await commerceCatalogPage.focusGlobalSearchBarInput();
 	await commerceCatalogPage.search('A');
 
-	expect(
+	await expect(
 		await commerceCatalogPage.globalSearchBarCommerceItemLink(
 			'A Product designed'
 		)
@@ -58,12 +59,12 @@ test('LPD-3185 Search a catalog entry using global search, click on a suggested 
 		)
 	).waitFor({state: 'visible'});
 
-	expect(
+	await expect(
 		await commerceCatalogPage.globalSearchBarCommerceItemLink(
 			'ABS Sensor Product designed'
 		)
 	).toBeVisible();
-	expect(
+	await expect(
 		await commerceCatalogPage.globalSearchBarCommerceItemLink(
 			'Wear Sensors Product designed'
 		)
@@ -77,7 +78,7 @@ test('LPD-3185 Search a catalog entry using global search, click on a suggested 
 		)
 	).waitFor({state: 'visible'});
 
-	expect(
+	await expect(
 		await commerceCatalogPage.globalSearchBarCommerceItemLink(
 			'ABS Sensor Product designed'
 		)
@@ -89,7 +90,7 @@ test('LPD-3185 Search a catalog entry using global search, click on a suggested 
 		)
 	).click();
 
-	expect(
+	await expect(
 		await productDetailsPage.productNameHeading('ABS Sensor')
 	).toBeVisible();
 });
@@ -97,19 +98,47 @@ test('LPD-3185 Search a catalog entry using global search, click on a suggested 
 test('COMMERCE-6322. As a buyer, I want to be able to search an entry in Catalog using Global Search and I want the results to be visible in Search Results widget', async ({
 	apiHelpers,
 	commerceCatalogPage,
-	editUserPage,
 	page,
-	usersAndOrganizationsPage,
 }) => {
 	const {site} = await miniumSetUp(apiHelpers);
 
-	await usersAndOrganizationsPage.goToUsers();
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
 
-	await (
-		await usersAndOrganizationsPage.usersTableRowLink('demo.unprivileged')
-	).click();
+	apiHelpers.data.push({id: account.id, type: 'account'});
 
-	await editUserPage.selectUserMembershipSite(site.name);
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
+		account.id
+	);
+
+	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+		return role.name === 'Buyer';
+	});
+
+	await apiHelpers.headlessAdminUser.assignAccountRoles(
+		account.externalReferenceCode,
+		accountRoleBuyer[0].id,
+		user.emailAddress
+	);
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['demo.unprivileged@liferay.com']
+	);
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
+			'Site Member'
+		);
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		site.id,
+		user.id
+	);
 
 	await performLogout(page);
 	await performLogin(page, 'demo.unprivileged');
@@ -120,27 +149,59 @@ test('COMMERCE-6322. As a buyer, I want to be able to search an entry in Catalog
 	await commerceCatalogPage.catalogSearch.fill('U-Joint');
 	await commerceCatalogPage.catalogSearch.press('Enter');
 
-	expect(await commerceCatalogPage.productLink('U-Joint')).toBeVisible();
+	await expect(
+		await commerceCatalogPage.productLink('U-Joint')
+	).toBeVisible();
 
-	expect(await commerceCatalogPage.productLink('Ball Joints')).toBeVisible();
+	await expect(
+		await commerceCatalogPage.productLink('Ball Joints')
+	).toBeVisible();
 });
 
 test('COMMERCE-6326. As a buyer, I want to be able to search an entry in All Content using Global Search and the results should be visible on Search page', async ({
 	apiHelpers,
 	commerceCatalogPage,
-	editUserPage,
 	page,
-	usersAndOrganizationsPage,
 }) => {
 	const {site} = await miniumSetUp(apiHelpers);
 
-	await usersAndOrganizationsPage.goToUsers();
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
 
-	await (
-		await usersAndOrganizationsPage.usersTableRowLink('demo.unprivileged')
-	).click();
+	apiHelpers.data.push({id: account.id, type: 'account'});
 
-	await editUserPage.selectUserMembershipSite(site.name);
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
+		account.id
+	);
+
+	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+		return role.name === 'Buyer';
+	});
+
+	await apiHelpers.headlessAdminUser.assignAccountRoles(
+		account.externalReferenceCode,
+		accountRoleBuyer[0].id,
+		user.emailAddress
+	);
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['demo.unprivileged@liferay.com']
+	);
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
+			'Site Member'
+		);
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		site.id,
+		user.id
+	);
 
 	await performLogout(page);
 	await performLogin(page, 'demo.unprivileged');
@@ -155,7 +216,7 @@ test('COMMERCE-6326. As a buyer, I want to be able to search an entry in All Con
 		)
 	).waitFor({state: 'visible'});
 
-	expect(
+	await expect(
 		await commerceCatalogPage.globalSearchBarCommerceItemLink(
 			'Search U-Joint in All Content'
 		)
@@ -167,7 +228,115 @@ test('COMMERCE-6326. As a buyer, I want to be able to search an entry in All Con
 		)
 	).click();
 
-	expect(await commerceCatalogPage.productLink('U-Joint')).toBeVisible();
+	await expect(
+		await commerceCatalogPage.productLink('U-Joint')
+	).toBeVisible();
 
-	expect(await commerceCatalogPage.productLink('Ball Joints')).toBeVisible();
+	await expect(
+		await commerceCatalogPage.productLink('Ball Joints')
+	).toBeVisible();
+});
+
+test('COMMERCE-6321. As a buyer, I want to be able to search an Orders entry using Global Search and I want to be able to click on a suggested entry and get redirected to that order details page', async ({
+	apiHelpers,
+	commerceCatalogPage,
+	commerceLayoutsPage,
+	page,
+}) => {
+	const {site} = await miniumSetUp(apiHelpers);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
+		account.id
+	);
+
+	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+		return role.name === 'Buyer';
+	});
+
+	await apiHelpers.headlessAdminUser.assignAccountRoles(
+		account.externalReferenceCode,
+		accountRoleBuyer[0].id,
+		user.emailAddress
+	);
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		['demo.unprivileged@liferay.com']
+	);
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
+			'Site Member'
+		);
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		site.id,
+		user.id
+	);
+
+	await performLogout(page);
+	await performLogin(page, 'demo.unprivileged');
+
+	await page.goto(`/web/${site.name}`);
+
+	await commerceLayoutsPage.pendingOrdersLink.click();
+	await commerceLayoutsPage.addOrderButton.click();
+	await commerceLayoutsPage.catalogLink.click();
+	await page.mouse.move(100, 0);
+
+	const orders = await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+	apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+
+	await commerceCatalogPage.focusGlobalSearchBarInput();
+	await commerceCatalogPage.search(`${orders.items[0].id}`);
+	await (
+		await commerceCatalogPage.globalSearchBarCommerceOrderLink(
+			`${orders.items[0].id}`,
+			`${account.name}`
+		)
+	).waitFor({state: 'visible'});
+
+	await expect(
+		await commerceCatalogPage.globalSearchBarCommerceOrderLink(
+			`${orders.items[0].id}`,
+			`${account.name}`
+		)
+	).toBeVisible();
+
+	await commerceCatalogPage.clearSearchButton.click();
+	await commerceCatalogPage.search(`${user.emailAddress}`);
+	await (
+		await commerceCatalogPage.globalSearchBarCommerceOrderLink(
+			`${orders.items[0].id}`,
+			`${account.name}`
+		)
+	).waitFor({state: 'visible'});
+
+	await expect(
+		await commerceCatalogPage.globalSearchBarCommerceOrderLink(
+			`${orders.items[0].id}`,
+			`${account.name}`
+		)
+	).toBeVisible();
+
+	await (
+		await commerceCatalogPage.globalSearchBarCommerceOrderLink(
+			`${orders.items[0].id}`,
+			`${account.name}`
+		)
+	).click();
+
+	await expect(
+		page.getByText(`Order Id ${orders.items[0].id}`)
+	).toBeVisible();
 });

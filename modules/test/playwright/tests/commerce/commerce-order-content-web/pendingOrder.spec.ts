@@ -388,10 +388,8 @@ test('LPD-28683 When clicking on order item without visibility the user is not r
 	commerceLayoutsPage,
 	commerceMiniCartPage,
 	commerceThemeMiniumPage,
-	editUserPage,
 	page,
 	pendingOrdersPage,
-	usersAndOrganizationsPage,
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
 		name: 'Minium',
@@ -469,13 +467,16 @@ test('LPD-28683 When clicking on order item without visibility the user is not r
 			product.items[0].productId
 		);
 
-	await usersAndOrganizationsPage.goToUsers();
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
+			'Site Member'
+		);
 
-	await (
-		await usersAndOrganizationsPage.usersTableRowLink('demo.unprivileged')
-	).click();
-
-	await editUserPage.selectUserMembershipSite('Minium');
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		site.id,
+		user.id
+	);
 
 	await performLogout(page);
 

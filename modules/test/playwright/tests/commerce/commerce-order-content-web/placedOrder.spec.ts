@@ -153,9 +153,7 @@ test('LPD-26643 Reorder from placed orders details page', async ({
 	checkoutPage,
 	commerceAdminOrderDetailsPage,
 	commerceMiniCartPage,
-	editUserPage,
 	page,
-	usersAndOrganizationsPage,
 }) => {
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: 'admin',
@@ -222,13 +220,16 @@ test('LPD-26643 Reorder from placed orders details page', async ({
 		channel.id
 	);
 
-	await usersAndOrganizationsPage.goToUsers();
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
+			'Site Member'
+		);
 
-	await (
-		await usersAndOrganizationsPage.usersTableRowLink('demo.unprivileged')
-	).click();
-
-	await editUserPage.selectUserMembershipSite(site.name);
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		site.id,
+		user.id
+	);
 
 	await performLogout(page);
 

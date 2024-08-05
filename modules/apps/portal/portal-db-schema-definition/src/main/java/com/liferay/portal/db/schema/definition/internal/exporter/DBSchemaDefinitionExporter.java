@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.schema.definition.internal.configuration.DBSchemaDefinitionExporterConfiguration;
-import com.liferay.portal.db.schema.definition.internal.partition.DBSchemaPartitionUtil;
 import com.liferay.portal.db.schema.definition.internal.sql.writer.SQLWriter;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -20,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.patcher.PatcherValues;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -186,11 +186,11 @@ public class DBSchemaDefinitionExporter {
 					StringPool.NEW_LINE));
 		}
 
-		private Set<String> _getDBTableNames(long companyId) throws Exception {
-			return _getDBTableNamesByType(companyId, "TABLE");
+		private Set<String> _getDBTableNames() throws Exception {
+			return _getDBTableNamesByType("TABLE");
 		}
 
-		private Set<String> _getDBTableNamesByType(long companyId, String type)
+		private Set<String> _getDBTableNamesByType(String type)
 			throws Exception {
 
 			Set<String> tableNames = new HashSet<>();
@@ -198,8 +198,6 @@ public class DBSchemaDefinitionExporter {
 			DataSource dataSource = InfrastructureUtil.getDataSource();
 
 			try (Connection connection = dataSource.getConnection()) {
-				DBSchemaPartitionUtil.setPartition(connection, companyId);
-
 				DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 				try (ResultSet resultSet = databaseMetaData.getTables(
@@ -217,29 +215,29 @@ public class DBSchemaDefinitionExporter {
 			return tableNames;
 		}
 
-		private Set<String> _getDBViewNames(long companyId) throws Exception {
-			return _getDBTableNamesByType(companyId, "VIEW");
+		private Set<String> _getDBViewNames() throws Exception {
+			return _getDBTableNamesByType("VIEW");
 		}
 
-		private Set<String> _getExportTableNames(long companyId)
-			throws Exception {
-
+		private Set<String> _getExportTableNames() throws Exception {
 			return _getExportTableNames(
-				companyId, "create table",
-				line -> line.split(StringPool.SPACE)[2]);
+				"create table", line -> line.split(StringPool.SPACE)[2]);
 		}
 
 		private Set<String> _getExportTableNames(
-				long companyId, String filter,
-				Function<String, String> function)
+				String filter, Function<String, String> function)
 			throws Exception {
 
 			Set<String> tableNames = new HashSet<>();
 
 			String prefix = StringPool.BLANK;
 
-			if (PortalInstancePool.getDefaultCompanyId() != companyId) {
-				prefix = companyId + StringPool.UNDERLINE;
+			if (PortalInstancePool.getDefaultCompanyId() !=
+					CompanyThreadLocal.getNonsystemCompanyId()) {
+
+				prefix =
+					CompanyThreadLocal.getNonsystemCompanyId() +
+						StringPool.UNDERLINE;
 			}
 
 			String fileContent = StringUtil.toLowerCase(
@@ -256,11 +254,9 @@ public class DBSchemaDefinitionExporter {
 			return tableNames;
 		}
 
-		private Set<String> _getExportViewNames(long companyId)
-			throws Exception {
-
+		private Set<String> _getExportViewNames() throws Exception {
 			return _getExportTableNames(
-				companyId, "create or replace view",
+				"create or replace view",
 				line -> {
 					String[] parts = line.split(StringPool.SPACE);
 
@@ -283,23 +279,20 @@ public class DBSchemaDefinitionExporter {
 						return;
 					}
 
-					sb.append(_printCompanyTablesInfo(companyId, "tables"));
-					sb.append(_printCompanyTablesInfo(companyId, "views"));
+					sb.append(_printCompanyTablesInfo("tables"));
+					sb.append(_printCompanyTablesInfo("views"));
 				});
 
 			return sb.toString();
 		}
 
-		private String _printCompanyTablesInfo(long companyId, String type)
-			throws Exception {
-
+		private String _printCompanyTablesInfo(String type) throws Exception {
 			Set<String> dbTableNames =
-				StringUtil.equals(type, "views") ? _getDBViewNames(companyId) :
-					_getDBTableNames(companyId);
+				StringUtil.equals(type, "views") ? _getDBViewNames() :
+					_getDBTableNames();
 			Set<String> exportTableNames =
-				StringUtil.equals(type, "views") ?
-					_getExportViewNames(companyId) :
-						_getExportTableNames(companyId);
+				StringUtil.equals(type, "views") ? _getExportViewNames() :
+					_getExportTableNames();
 
 			String missingTableNames = StringUtil.merge(
 				SetUtil.asymmetricDifference(dbTableNames, exportTableNames),
@@ -309,23 +302,24 @@ public class DBSchemaDefinitionExporter {
 				new Object[] {
 					StringPool.NEW_LINE, StringPool.NEW_LINE,
 					StringBundler.concat(
-						"Virtual instance ", companyId, " database ", type,
-						": ", dbTableNames.size()),
+						"Virtual instance ",
+						CompanyThreadLocal.getNonsystemCompanyId(),
+						" database ", type, ": ", dbTableNames.size()),
 					StringBundler.concat(
-						"Virtual instance ", companyId, " export ", type, ": ",
-						exportTableNames.size()),
+						"Virtual instance ",
+						CompanyThreadLocal.getNonsystemCompanyId(), " export ",
+						type, ": ", exportTableNames.size()),
 					StringBundler.concat(
-						"Virtual instance ", companyId, " missing ", type, ": ",
-						missingTableNames)
+						"Virtual instance ",
+						CompanyThreadLocal.getNonsystemCompanyId(), " missing ",
+						type, ": ", missingTableNames)
 				},
 				StringPool.NEW_LINE);
 		}
 
 		private String _printDefaultCompanyTablesInfo() throws Exception {
-			Set<String> dbTableNames = _getDBTableNames(
-				PortalInstancePool.getDefaultCompanyId());
-			Set<String> exportTableNames = _getExportTableNames(
-				PortalInstancePool.getDefaultCompanyId());
+			Set<String> dbTableNames = _getDBTableNames();
+			Set<String> exportTableNames = _getExportTableNames();
 
 			String missingTableNames = StringUtil.merge(
 				SetUtil.asymmetricDifference(dbTableNames, exportTableNames),

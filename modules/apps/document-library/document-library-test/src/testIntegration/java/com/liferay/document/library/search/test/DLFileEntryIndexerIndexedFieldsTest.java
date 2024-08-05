@@ -22,9 +22,11 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -237,6 +239,14 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put(
 			Field.ENTRY_CLASS_PK, String.valueOf(fileEntry.getFileEntryId()));
 		map.put(Field.FOLDER_ID, String.valueOf(fileEntry.getFolderId()));
+
+		Group group = _groupLocalService.getGroup(dlFixture.getGroupId());
+
+		map.put("groupExternalReferenceCode", group.getExternalReferenceCode());
+		map.put(
+			"scopeGroupExternalReferenceCode",
+			group.getExternalReferenceCode());
+
 		map.put(Field.GROUP_ID, String.valueOf(fileEntry.getGroupId()));
 		map.put(Field.SCOPE_GROUP_ID, String.valueOf(fileEntry.getGroupId()));
 		map.put(Field.STAGING_GROUP, "false");
@@ -260,6 +270,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put("fileExtension", fileEntry.getExtension());
 		map.put("fileExtension_String_sortable", fileEntry.getExtension());
 		map.put("fileName", fileEntry.getFileName());
+		map.put("groupExternalReferenceCode", group.getExternalReferenceCode());
 		map.put("hidden", "false");
 		map.put(
 			"mimeType",
@@ -419,6 +430,9 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	private FileEntrySearchFixture _fileEntrySearchFixture;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private TextExtractor _textExtractor;

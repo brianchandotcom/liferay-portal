@@ -23,10 +23,10 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the custom meta tag can be cleared."
+	@description = "This ensures that the custom meta tag can be edited and cleared."
 	@priority = 5
 	@refactordone
-	test CanClearCustomTag {
+	test CanClearAndEditCustomTag {
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -46,25 +46,7 @@ definition {
 			newCustomContent = "",
 			newCustomProperty = "");
 
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
-
-		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom meta property" content="custom meta content",property="" content=""''');
-	}
-
-	@description = "This ensures that the custom meta tag can be edited."
-	@priority = 5
-	@refactordone
-	test CanEditTag {
-		property portal.acceptance = "true";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		CustomMetaTags.openToCustomMetaTags(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			siteURLKey = "test-site-name");
+		Alert.viewSuccessMessage();
 
 		CustomMetaTags.addTag(
 			customContent = "custom meta content",

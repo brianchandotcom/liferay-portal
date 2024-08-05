@@ -350,6 +350,11 @@ public class PropsValues {
 	public static final int COMBO_MAX_FILES = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.COMBO_MAX_FILES), -1);
 
+	public static final boolean COMPANY_DEFAULT_CREATE_DEFAULT_ADMIN =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_CREATE_DEFAULT_ADMIN),
+			true);
+
 	public static final String COMPANY_DEFAULT_HOME_URL = PropsUtil.get(
 		PropsKeys.COMPANY_DEFAULT_HOME_URL);
 

@@ -10,6 +10,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.fragment.cache.FragmentEntryLinkCache;
+import com.liferay.fragment.configuration.FragmentJavascriptConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
@@ -25,6 +26,9 @@ import com.liferay.fragment.test.util.FragmentTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -42,6 +46,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -64,6 +69,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -116,6 +124,65 @@ public class FragmentEntryFragmentRendererTest {
 			fragmentEntryLink, _locale);
 
 		Assert.assertTrue(content.contains(fragmentEntry.getHtml()));
+	}
+
+	@Test
+	public void testJavascriptModuleConfiguration() throws Exception {
+		FragmentEntry fragmentEntry = _getFragmentEntry(false);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_defaultSegmentsExperienceId, _layout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				_serviceContext);
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		defaultFragmentRendererContext.setLocale(LocaleUtil.US);
+
+		HttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_fragmentRenderer.render(
+			defaultFragmentRendererContext, mockHttpServletRequest,
+			mockHttpServletResponse);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertTrue(content.contains("type=\"module\""));
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						FragmentJavascriptConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"javascriptModuleEnabled", false
+						).build())) {
+
+			mockHttpServletResponse = new MockHttpServletResponse();
+
+			_fragmentRenderer.render(
+				defaultFragmentRendererContext, mockHttpServletRequest,
+				mockHttpServletResponse);
+
+			_safeJavascriptConfig(true);
+
+			content = mockHttpServletResponse.getContentAsString();
+
+			Assert.assertFalse(content.contains("type=\"module\""));
+		}
 	}
 
 	@Test
@@ -335,8 +402,8 @@ public class FragmentEntryFragmentRendererTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), null,
 			RandomTestUtil.randomString(), StringPool.BLANK,
-			"Fragment Entry HTML", StringPool.BLANK, cacheable, null, null, 0,
-			false, FragmentConstants.TYPE_COMPONENT, null,
+			"Fragment Entry HTML", "console.log('test');", cacheable, null,
+			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
@@ -399,11 +466,37 @@ public class FragmentEntryFragmentRendererTest {
 			new MockHttpServletResponse());
 	}
 
+	private void _safeJavascriptConfig(boolean enabled) throws Exception {
+		ConfigurationTestUtil.updateConfiguration(
+			FragmentJavascriptConfiguration.class.getName(),
+			() -> {
+				_configurationProvider.saveCompanyConfiguration(
+					FragmentJavascriptConfiguration.class,
+					TestPropsValues.getCompanyId(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"javascriptModuleEnabled", enabled
+					).build());
+
+				Configuration configuration =
+					_configurationAdmin.getConfiguration(
+						FragmentJavascriptConfiguration.class.getName(),
+						StringPool.QUESTION);
+
+				configuration.update();
+			});
+	}
+
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
 
 	@Inject
 	private CTCollectionService _ctCollectionService;

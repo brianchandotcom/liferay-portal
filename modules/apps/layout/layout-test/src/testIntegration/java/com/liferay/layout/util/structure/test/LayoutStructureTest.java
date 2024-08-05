@@ -12,6 +12,10 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStepLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
@@ -32,7 +36,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.io.IOException;
+
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -86,6 +93,73 @@ public class LayoutStructureTest {
 				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(), null,
 				StringPool.BLANK, 0, null, _fragmentEntry.getType(),
 				serviceContext);
+	}
+
+	@Test
+	public void testChangeFormTypeMultiStep() throws IOException {
+		LayoutStructure layoutStructure = LayoutStructure.of(_readLayoutData());
+
+		layoutStructure.updateFormStyledLayoutStructureItemMultiStep(
+			"formId", true, 3);
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItem("formId");
+
+		List<String> childrenItemIds =
+			formStyledLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 1, childrenItemIds.size());
+
+		FormStepContainerStyledLayoutStructureItem
+			formStepContainerStyledLayoutStructureItem =
+				(FormStepContainerStyledLayoutStructureItem)
+					layoutStructure.getLayoutStructureItem(
+						childrenItemIds.get(0));
+
+		childrenItemIds =
+			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 3, childrenItemIds.size());
+
+		FormStepLayoutStructureItem formStepLayoutStructureItem =
+			(FormStepLayoutStructureItem)layoutStructure.getLayoutStructureItem(
+				childrenItemIds.get(0));
+
+		childrenItemIds = formStepLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals("containerId", childrenItemIds.get(0));
+	}
+
+	@Test
+	public void testChangeFormTypeNoMultiStep() throws IOException {
+		LayoutStructure layoutStructure = LayoutStructure.of(_readLayoutData());
+
+		layoutStructure.updateFormStyledLayoutStructureItemMultiStep(
+			"formId", true, 3);
+
+		layoutStructure.updateFormStyledLayoutStructureItemMultiStep(
+			"formId", false, 3);
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItem("formId");
+
+		List<String> childrenItemIds =
+			formStyledLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 1, childrenItemIds.size());
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(childrenItemIds.get(0));
+
+		Assert.assertTrue(
+			layoutStructureItem instanceof ContainerStyledLayoutStructureItem);
+
+		Assert.assertEquals("containerId", layoutStructureItem.getItemId());
 	}
 
 	@Test
@@ -257,6 +331,12 @@ public class LayoutStructureTest {
 			_fragmentEntryLinkLocalService.
 				getAllFragmentEntryLinksCountByFragmentEntryId(
 					_group.getGroupId(), _fragmentEntry.getFragmentEntryId()));
+	}
+
+	private String _readLayoutData() throws IOException {
+		return StringUtil.read(
+			LayoutStructureTest.class.getResourceAsStream(
+				"dependencies/layout_data_with_form.json"));
 	}
 
 	private FragmentEntry _fragmentEntry;

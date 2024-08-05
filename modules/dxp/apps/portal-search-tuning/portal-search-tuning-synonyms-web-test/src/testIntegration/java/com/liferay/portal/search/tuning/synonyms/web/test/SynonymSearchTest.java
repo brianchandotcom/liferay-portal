@@ -248,9 +248,6 @@ public class SynonymSearchTest {
 			properties = new HashMapDictionary<>();
 		}
 
-		properties.put(
-			"additionalIndexConfigurations",
-			loadAdditionalIndexConfigurations());
 		properties.put("overrideTypeMappings", loadOverrideTypeMappings());
 
 		return properties;

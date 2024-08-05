@@ -23,6 +23,8 @@ import javax.servlet.jsp.PageContext;
  */
 public interface ObjectEntryDisplayContext {
 
+	public String getBackURL();
+
 	public ObjectDefinition getObjectDefinition1();
 
 	public ObjectDefinition getObjectDefinition2() throws PortalException;

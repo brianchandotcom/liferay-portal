@@ -168,6 +168,24 @@ public class ObjectEntryDisplayContextImpl
 	}
 
 	@Override
+	public String getBackURL() {
+		String redirect = ParamUtil.getString(
+			_objectRequestHelper.getRequest(), "redirect");
+
+		String backURL = ParamUtil.getString(
+			_objectRequestHelper.getRequest(), "backURL", redirect);
+
+		if (Validator.isNull(backURL)) {
+			LiferayPortletResponse liferayPortletResponse =
+				_objectRequestHelper.getLiferayPortletResponse();
+
+			return String.valueOf(liferayPortletResponse.createRenderURL());
+		}
+
+		return backURL;
+	}
+
+	@Override
 	public ObjectDefinition getObjectDefinition1() {
 		HttpServletRequest httpServletRequest =
 			_objectRequestHelper.getRequest();

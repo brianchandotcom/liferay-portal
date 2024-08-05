@@ -11,6 +11,8 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout} from '../../utils/performLogin';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -638,4 +640,95 @@ test('COMMERCE-12805 As a buyer, I want to be able to verify the included and ex
 	finally {
 		await commerceInstanceSettingsPage.toggleShowUnselectableOptions(false);
 	}
+});
+
+test('LPD-33075 Verify buyers can view the SKU of a product on the product card if it set.', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	commerceAdminChannelsPage,
+	commerceLayoutsPage,
+	page,
+	productPublisherPage,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: getRandomString(),
+		type: 'business',
+	});
+	apiHelpers.data.push({id: account.id, type: 'account'});
+
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			'demo.unprivileged@liferay.com'
+		);
+	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
+		account.id
+	);
+
+	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+		return role.name === 'Buyer';
+	});
+
+	await apiHelpers.headlessAdminUser.assignAccountRoles(
+		account.externalReferenceCode,
+		accountRoleBuyer[0].id,
+		user.emailAddress
+	);
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByExternalReferenceCode(
+			'Site Member'
+		);
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		site.id,
+		user.id
+	);
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		[user.emailAddress]
+	);
+
+	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
+		name: getRandomString(),
+		siteGroupId: site.id,
+	});
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+		name: getRandomString(),
+	});
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {en_US: getRandomString()},
+	});
+
+	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+		channel.name,
+		'B2B'
+	);
+
+	await waitForSuccessAlert(page);
+
+	await applicationsMenuPage.goToSite(site.name);
+
+	await commerceLayoutsPage.goToPages(false);
+	await commerceLayoutsPage.createWidgetPage('View product Sku');
+
+	await page.goto(`/web/${site.name}`);
+
+	await productPublisherPage.addProductPublisherWidget();
+
+	await performLogout(page);
+
+	await performLogin(page, 'demo.unprivileged');
+
+	await page.goto(`/web/${site.name}/` + 'view-product-sku');
+
+	await expect(
+		await productPublisherPage.productSku(product.skus[0].sku)
+	).toBeVisible();
 });

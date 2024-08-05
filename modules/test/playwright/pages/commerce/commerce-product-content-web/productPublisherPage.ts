@@ -18,6 +18,7 @@ export class ProductPublisherPage {
 	readonly optionsButton: Locator;
 	readonly page: Page;
 	readonly productLink: (productName: string) => Promise<Locator>;
+	readonly productSku: (productSku: string) => Promise<Locator>;
 	readonly removeTagNameButton: (tagName: string) => Promise<Locator>;
 	readonly tagsInput: Locator;
 
@@ -50,6 +51,9 @@ export class ProductPublisherPage {
 		this.page = page;
 		this.productLink = async (productName: string) => {
 			return page.getByRole('link', {exact: true, name: productName});
+		};
+		this.productSku = async (productSku: string) => {
+			return page.getByText(productSku);
 		};
 		this.removeTagNameButton = async (tagName: string) => {
 			return this.configurationFrame.getByLabel(`Remove ${tagName}`);

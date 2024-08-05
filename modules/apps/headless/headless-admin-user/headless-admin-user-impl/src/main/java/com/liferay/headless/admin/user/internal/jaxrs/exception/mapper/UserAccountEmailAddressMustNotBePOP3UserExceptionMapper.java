@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +32,9 @@ public class UserAccountEmailAddressMustNotBePOP3UserExceptionMapper
 	protected Problem getProblem(
 		UserEmailAddressException.MustNotBePOP3User mustNotBePOP3User) {
 
-		return new Problem(mustNotBePOP3User);
+		return new Problem(
+			Response.Status.BAD_REQUEST,
+			"The user account email address is invalid");
 	}
 
 }

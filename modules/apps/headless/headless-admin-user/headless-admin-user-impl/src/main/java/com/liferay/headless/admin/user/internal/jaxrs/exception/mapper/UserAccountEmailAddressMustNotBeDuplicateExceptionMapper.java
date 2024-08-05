@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +32,9 @@ public class UserAccountEmailAddressMustNotBeDuplicateExceptionMapper
 	protected Problem getProblem(
 		UserEmailAddressException.MustNotBeDuplicate mustNotBeDuplicate) {
 
-		return new Problem(mustNotBeDuplicate);
+		return new Problem(
+			Response.Status.CONFLICT,
+			"A user account already exists with the same email address");
 	}
 
 }

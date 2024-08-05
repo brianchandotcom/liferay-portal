@@ -33,7 +33,8 @@ public class UserAccountBirthdayExceptionMapper
 		ContactBirthdayException contactBirthdayException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST, "Birthday cannot be in the future");
+			Response.Status.BAD_REQUEST,
+			"The user account birthday is invalid");
 	}
 
 }

@@ -31,7 +31,7 @@ public class PostalAddressCityExceptionMapper
 	@Override
 	protected Problem getProblem(AddressCityException addressCityException) {
 		return new Problem(
-			Response.Status.BAD_REQUEST, "A city is required for an address");
+			Response.Status.BAD_REQUEST, "The address city is invalid");
 	}
 
 }

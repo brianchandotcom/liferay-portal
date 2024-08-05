@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +32,9 @@ public class UserAccountScreenNameMustNotBeReservedExceptionMapper
 	protected Problem getProblem(
 		UserScreenNameException.MustNotBeReserved mustNotBeReserved) {
 
-		return new Problem(mustNotBeReserved);
+		return new Problem(
+			Response.Status.BAD_REQUEST,
+			"The user account alternate name is invalid");
 	}
 
 }

@@ -33,8 +33,7 @@ public class OrganizationNameExceptionMapper
 		OrganizationNameException organizationNameException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST,
-			"A name is required to create an organization");
+			Response.Status.BAD_REQUEST, "The organization name is invalid");
 	}
 
 }

@@ -33,7 +33,8 @@ public class UserAccountEmailAddressExceptionMapper
 		UserEmailAddressException userEmailAddressException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST, "Email address is invalid");
+			Response.Status.BAD_REQUEST,
+			"The user account email address is invalid");
 	}
 
 }

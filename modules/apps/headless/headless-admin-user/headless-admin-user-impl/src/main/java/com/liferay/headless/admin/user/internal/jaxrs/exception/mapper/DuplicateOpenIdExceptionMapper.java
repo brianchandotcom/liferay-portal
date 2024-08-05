@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.exception.DuplicateOpenIdException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +32,9 @@ public class DuplicateOpenIdExceptionMapper
 	protected Problem getProblem(
 		DuplicateOpenIdException duplicateOpenIdException) {
 
-		return new Problem(duplicateOpenIdException);
+		return new Problem(
+			Response.Status.CONFLICT,
+			"A user account already exists with the same OpenID");
 	}
 
 }

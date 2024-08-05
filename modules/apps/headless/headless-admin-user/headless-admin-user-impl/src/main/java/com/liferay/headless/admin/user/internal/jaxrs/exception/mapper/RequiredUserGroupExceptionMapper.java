@@ -33,7 +33,7 @@ public class RequiredUserGroupExceptionMapper
 		RequiredUserGroupException requiredUserGroupException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST,
+			Response.Status.FORBIDDEN,
 			"Remove all users before deleting this user group");
 	}
 

@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +32,8 @@ public class UserAccountValidFullNameExceptionMapper
 	protected Problem getProblem(
 		ContactNameException.MustHaveValidFullName mustHaveValidFullName) {
 
-		return new Problem(mustHaveValidFullName);
+		return new Problem(
+			Response.Status.BAD_REQUEST, "The user account name is invalid");
 	}
 
 }

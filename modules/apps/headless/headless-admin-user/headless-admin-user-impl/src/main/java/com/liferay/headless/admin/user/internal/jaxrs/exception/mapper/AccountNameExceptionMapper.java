@@ -9,6 +9,7 @@ import com.liferay.account.exception.AccountEntryNameException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +32,8 @@ public class AccountNameExceptionMapper
 	protected Problem getProblem(
 		AccountEntryNameException accountEntryNameException) {
 
-		return new Problem(accountEntryNameException);
+		return new Problem(
+			Response.Status.BAD_REQUEST, "The account name is invalid");
 	}
 
 }

@@ -31,8 +31,7 @@ public class PostalAddressZipExceptionMapper
 	@Override
 	protected Problem getProblem(AddressZipException addressZipException) {
 		return new Problem(
-			Response.Status.BAD_REQUEST,
-			"A zip code is required for an address");
+			Response.Status.BAD_REQUEST, "The address zip code is invalid");
 	}
 
 }

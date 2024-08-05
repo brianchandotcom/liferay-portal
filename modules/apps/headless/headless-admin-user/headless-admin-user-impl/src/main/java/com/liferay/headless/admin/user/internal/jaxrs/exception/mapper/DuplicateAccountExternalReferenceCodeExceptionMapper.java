@@ -9,6 +9,7 @@ import com.liferay.account.exception.DuplicateAccountEntryExternalReferenceCodeE
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,7 +34,9 @@ public class DuplicateAccountExternalReferenceCodeExceptionMapper
 		DuplicateAccountEntryExternalReferenceCodeException
 			duplicateAccountEntryExternalReferenceCodeException) {
 
-		return new Problem(duplicateAccountEntryExternalReferenceCodeException);
+		return new Problem(
+			Response.Status.CONFLICT,
+			"An account already exists with the same external reference code");
 	}
 
 }

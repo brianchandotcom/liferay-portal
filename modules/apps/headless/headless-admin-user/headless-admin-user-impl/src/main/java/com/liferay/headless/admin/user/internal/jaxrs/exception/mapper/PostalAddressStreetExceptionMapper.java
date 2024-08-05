@@ -33,8 +33,7 @@ public class PostalAddressStreetExceptionMapper
 		AddressStreetException addressStreetException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST,
-			"A street name is required for an address");
+			Response.Status.BAD_REQUEST, "The address street name is invalid");
 	}
 
 }

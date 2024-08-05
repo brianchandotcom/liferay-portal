@@ -698,22 +698,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		);
 	}
 
-	private Version _getElasticsearchVersion() {
-		ConnectionInformation connectionInformation =
-			_searchEngineInformation.getConnectionInformationList(
-			).get(
-				0
-			);
-
-		NodeInformation nodeInformation =
-			connectionInformation.getNodeInformationList(
-			).get(
-				0
-			);
-
-		return Version.parseVersion(nodeInformation.getVersion());
-	}
-
 	private String _getEndpoint(
 			String entryClassNames, String filterString, String keywords,
 			String nestedFields, String scope)
@@ -750,6 +734,21 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		return endpoint;
 	}
 
+	private Version _getSearchEngineVersion() {
+		List<ConnectionInformation> connectionInformationList =
+			_searchEngineInformation.getConnectionInformationList();
+
+		ConnectionInformation connectionInformation =
+			connectionInformationList.get(0);
+
+		List<NodeInformation> nodeInformationList =
+			connectionInformation.getNodeInformationList();
+
+		NodeInformation nodeInformation = nodeInformationList.get(0);
+
+		return Version.parseVersion(nodeInformation.getVersion());
+	}
+
 	private Map<String, JSONArray> _getSearchFacets(JSONObject jsonObject) {
 		JSONObject searchFacetsJSONObject = jsonObject.getJSONObject(
 			"searchFacets");
@@ -772,10 +771,10 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	}
 
 	private String _getUserHighlightedFullName() {
-		if (Objects.equals(
-				_searchEngineInformation.getVendorString(), "Elasticsearch") &&
-			(_getElasticsearchVersion().compareTo(
-				Version.parseVersion("8.10.2")) >= 0)) {
+		Version version = _getSearchEngineVersion();
+
+		if (_isSearchEngineElasticsearch() &&
+			(version.compareTo(Version.parseVersion("8.10.2")) >= 0)) {
 
 			return StringBundler.concat(
 				HighlightUtil.HIGHLIGHT_TAG_OPEN, _user.getFirstName(),
@@ -788,6 +787,11 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE,
 			HighlightUtil.HIGHLIGHT_TAG_OPEN, _user.getLastName(),
 			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
+	}
+
+	private boolean _isSearchEngineElasticsearch() {
+		return Objects.equals(
+			_searchEngineInformation.getVendorString(), "Elasticsearch");
 	}
 
 	private SearchPage<SearchResult> _postSearchPage(String keywords)

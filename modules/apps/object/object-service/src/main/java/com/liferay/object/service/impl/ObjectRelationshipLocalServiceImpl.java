@@ -207,7 +207,9 @@ public class ObjectRelationshipLocalServiceImpl
 		else {
 			_objectEntryLocalService.updateObjectEntry(
 				userId, primaryKey2,
-				HashMapBuilder.<String, Serializable>put(
+				HashMapBuilder.<String, Serializable>putAll(
+					_objectEntryLocalService.getValues(primaryKey2)
+				).put(
 					objectField2.getName(), primaryKey1
 				).build(),
 				serviceContext);

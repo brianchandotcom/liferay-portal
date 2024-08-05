@@ -348,8 +348,6 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 		httpServletRequest = new ProtectedServletRequest(
 			httpServletRequest, String.valueOf(user.getUserId()), authType);
 
-		httpSession.setAttribute(WebKeys.USER, user);
-
 		PrincipalThreadLocal.setPassword(
 			PortalUtil.getUserPassword(httpServletRequest));
 

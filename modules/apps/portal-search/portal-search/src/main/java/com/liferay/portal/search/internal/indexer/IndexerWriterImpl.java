@@ -193,36 +193,39 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 					continue;
 				}
 
-				Set<Document> documents = new HashSet<>();
-				Set<String> uids = new HashSet<>();
-
 				List<T> baseModelList = entry2.getValue();
 
-				for (T baseModel : baseModelList) {
-					if ((indexerWriterMode == IndexerWriterMode.UPDATE) ||
-						(indexerWriterMode ==
-							IndexerWriterMode.PARTIAL_UPDATE)) {
+				if ((indexerWriterMode == IndexerWriterMode.UPDATE) ||
+					(indexerWriterMode ==
+					 IndexerWriterMode.PARTIAL_UPDATE)) {
 
+					Set<Document> documents = new HashSet<>();
+
+					for (T baseModel : baseModelList) {
 						documents.add(
 							_indexerDocumentBuilder.getDocument(baseModel));
 					}
-					else if (indexerWriterMode == IndexerWriterMode.DELETE) {
+
+					if (indexerWriterMode == IndexerWriterMode.UPDATE) {
+						_updateDocumentIndexWriter.updateDocuments(
+							companyId, documents, false);
+					}
+					else {
+						_updateDocumentIndexWriter.updateDocumentsPartially(
+							companyId, documents, false);
+					}
+
+					continue;
+				}
+
+				if (indexerWriterMode == IndexerWriterMode.DELETE) {
+					Set<String> uids = new HashSet<>();
+
+					for (T baseModel : baseModelList) {
 						uids.add(
 							_indexerDocumentBuilder.getDocumentUID(baseModel));
 					}
-				}
 
-				if (indexerWriterMode == IndexerWriterMode.UPDATE) {
-					_updateDocumentIndexWriter.updateDocuments(
-						companyId, documents, false);
-				}
-				else if (indexerWriterMode ==
-							IndexerWriterMode.PARTIAL_UPDATE) {
-
-					_updateDocumentIndexWriter.updateDocumentsPartially(
-						companyId, documents, false);
-				}
-				else if (indexerWriterMode == IndexerWriterMode.DELETE) {
 					try {
 						_indexWriterHelper.deleteDocuments(
 							companyId, uids, false);

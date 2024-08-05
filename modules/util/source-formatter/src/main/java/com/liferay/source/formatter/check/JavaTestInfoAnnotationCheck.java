@@ -46,15 +46,15 @@ public class JavaTestInfoAnnotationCheck extends BaseFileCheck {
 
 			String testInfo = content.substring(x + 13, y);
 
-			String[] testInfoArray = testInfo.split(",");
+			String[] array = testInfo.split(",");
 
-			if (testInfoArray.length < 2) {
+			if (array.length < 2) {
 				return content;
 			}
 
-			Arrays.sort(testInfoArray, new NaturalOrderStringComparator());
+			Arrays.sort(array, new NaturalOrderStringComparator());
 
-			String newTestInfo = StringUtil.merge(testInfoArray);
+			String newTestInfo = StringUtil.merge(array);
 
 			if (!testInfo.equals(newTestInfo)) {
 				return StringUtil.replaceFirst(

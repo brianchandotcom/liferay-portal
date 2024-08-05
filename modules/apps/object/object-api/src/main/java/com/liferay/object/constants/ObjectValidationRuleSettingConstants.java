@@ -10,6 +10,9 @@ package com.liferay.object.constants;
  */
 public class ObjectValidationRuleSettingConstants {
 
+	public static final String NAME_ALLOW_ACTIVE_STATUS_UPDATE =
+		"allowActiveStatusUpdate";
+
 	public static final String
 		NAME_COMPOSITE_KEY_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE =
 			"compositeKeyObjectFieldExternalReferenceCode";

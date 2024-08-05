@@ -719,6 +719,7 @@
 		<field docValues="true" indexed="true" name="folderId" stored="true" type="string" />
 		<field indexed="true" name="fullName" stored="true" termPositions="true" termVectors="true" type="text" />
 		<field indexed="true" name="geoLocation" stored="true" type="location" />
+		<field indexed="true" name="groupExternalReferenceCode" stored="true" type="string" />
 		<field docValues="true" indexed="true" multiValued="true" name="groupId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="groupIds" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="groupRoleId" stored="true" type="string" />
@@ -755,6 +756,7 @@
 		<field indexed="true" multiValued="true" name="roleNames" stored="true" type="string_keyword_lowercase" />
 		<field docValues="true" indexed="true" name="rootEntryClassName" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="rootEntryClassPK" stored="true" type="string" />
+		<field indexed="true" name="scopeGroupExternalReferenceCode" stored="true" type="string" />
 		<field docValues="true" indexed="true" multiValued="true" name="scopeGroupId" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="screenName" stored="true" type="string" />
 		<field indexed="true" name="screenName.text" stored="false" type="text_lowercase" />

@@ -386,6 +386,8 @@ public class DBPartitionUtil {
 				}
 			}
 
+			_dbPartitionDB.copyRules(connection, partitionName);
+
 			connection.commit();
 		}
 		catch (Exception exception) {
@@ -509,6 +511,8 @@ public class DBPartitionUtil {
 					}
 				}
 			}
+
+			_dbPartitionDB.copyRules(connection, toPartitionName);
 
 			connection.commit();
 

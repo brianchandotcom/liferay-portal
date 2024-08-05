@@ -1777,12 +1777,14 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#list>
 
 		<#list cacheFields as cacheField>
-			<#assign
-				variableName = serviceBuilder.getVariableName(cacheField)
-				methodName = serviceBuilder.getCacheFieldMethodName(cacheField)
-			/>
+			<#if !serviceBuilder.isCacheFieldPermanent(cacheField)>
+				<#assign
+					variableName = serviceBuilder.getVariableName(cacheField)
+					methodName = serviceBuilder.getCacheFieldMethodName(cacheField)
+				/>
 
-			set${methodName}(null);
+				set${methodName}(null);
+			</#if>
 		</#list>
 
 		<#if columnBitmaskEnabled>
@@ -1836,7 +1838,9 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		<#list cacheFields as cacheField>
 			<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField) />
 
-			set${methodName}(null);
+			<#if !serviceBuilder.isCacheFieldPermanent(cacheField)>
+				set${methodName}(null);
+			</#if>
 
 			${entity.variableName}CacheModel.${cacheField.name} = get${methodName}();
 		</#list>

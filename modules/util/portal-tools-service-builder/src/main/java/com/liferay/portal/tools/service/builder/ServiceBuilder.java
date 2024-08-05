@@ -1783,6 +1783,32 @@ public class ServiceBuilder {
 		return false;
 	}
 
+	public boolean isCacheFieldPermanent(JavaField javaField) {
+		if (isVersionLTE_7_3_0()) {
+			return false;
+		}
+
+		List<JavaAnnotation> javaAnnotations = javaField.getAnnotations();
+
+		for (JavaAnnotation javaAnnotation : javaAnnotations) {
+			JavaClass type = javaAnnotation.getType();
+
+			String className = type.getFullyQualifiedName();
+
+			if (className.equals(CacheField.class.getName())) {
+				if (GetterUtil.getBoolean(
+						javaAnnotation.getNamedParameter("permanent"))) {
+
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		throw new IllegalArgumentException(javaField + " is not a cache field");
+	}
+
 	public boolean isCustomMethod(JavaMethod method) {
 		String methodName = method.getName();
 

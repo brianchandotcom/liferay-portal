@@ -21,6 +21,8 @@ public @interface CacheField {
 
 	public String methodName() default "";
 
+	public boolean permanent() default false;
+
 	public boolean propagateToInterface() default false;
 
 }

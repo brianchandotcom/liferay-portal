@@ -203,7 +203,11 @@ public class AssetVocabularyIndexerIndexedFieldsTest {
 		).put(
 			"externalReferenceCode", assetVocabulary.getExternalReferenceCode()
 		).put(
+			"groupExternalReferenceCode", _group.getExternalReferenceCode()
+		).put(
 			"name_sortable", StringUtil.lowerCase(assetVocabulary.getName())
+		).put(
+			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
 			"title_ja_JP", assetVocabulary.getName()
 		).put(

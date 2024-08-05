@@ -211,10 +211,14 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 		).put(
 			"externalReferenceCode", assetCategory.getExternalReferenceCode()
 		).put(
+			"groupExternalReferenceCode", _group.getExternalReferenceCode()
+		).put(
 			"name_sortable", StringUtil.lowerCase(assetCategory.getName())
 		).put(
 			"parentCategoryId",
 			String.valueOf(assetCategory.getParentCategoryId())
+		).put(
+			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
 			"title_ja_JP", assetCategory.getName()
 		).put(

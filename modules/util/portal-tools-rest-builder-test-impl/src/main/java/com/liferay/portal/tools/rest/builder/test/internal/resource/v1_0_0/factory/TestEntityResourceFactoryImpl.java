@@ -25,7 +25,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.tools.rest.builder.test.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.portal.tools.rest.builder.test.resource.v1_0_0.TestObjectResource;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0_0.TestEntityResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.Constructor;
@@ -55,29 +55,29 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/test/1.0.0/TestObject",
-	service = TestObjectResource.Factory.class
+	property = "resource.locator.key=/test/1.0.0/TestEntity",
+	service = TestEntityResource.Factory.class
 )
 @Generated("")
-public class TestObjectResourceFactoryImpl
-	implements TestObjectResource.Factory {
+public class TestEntityResourceFactoryImpl
+	implements TestEntityResource.Factory {
 
 	@Override
-	public TestObjectResource.Builder create() {
-		return new TestObjectResource.Builder() {
+	public TestEntityResource.Builder create() {
+		return new TestEntityResource.Builder() {
 
 			@Override
-			public TestObjectResource build() {
+			public TestEntityResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				Function<InvocationHandler, TestObjectResource>
-					testObjectResourceProxyProviderFunction =
+				Function<InvocationHandler, TestEntityResource>
+					testEntityResourceProxyProviderFunction =
 						ResourceProxyProviderFunctionHolder.
-							_testObjectResourceProxyProviderFunction;
+							_testEntityResourceProxyProviderFunction;
 
-				return testObjectResourceProxyProviderFunction.apply(
+				return testEntityResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -85,7 +85,7 @@ public class TestObjectResourceFactoryImpl
 			}
 
 			@Override
-			public TestObjectResource.Builder checkPermissions(
+			public TestEntityResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -94,7 +94,7 @@ public class TestObjectResourceFactoryImpl
 			}
 
 			@Override
-			public TestObjectResource.Builder httpServletRequest(
+			public TestEntityResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -103,7 +103,7 @@ public class TestObjectResourceFactoryImpl
 			}
 
 			@Override
-			public TestObjectResource.Builder httpServletResponse(
+			public TestEntityResource.Builder httpServletResponse(
 				HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -112,7 +112,7 @@ public class TestObjectResourceFactoryImpl
 			}
 
 			@Override
-			public TestObjectResource.Builder preferredLocale(
+			public TestEntityResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -121,14 +121,14 @@ public class TestObjectResourceFactoryImpl
 			}
 
 			@Override
-			public TestObjectResource.Builder uriInfo(UriInfo uriInfo) {
+			public TestEntityResource.Builder uriInfo(UriInfo uriInfo) {
 				_uriInfo = uriInfo;
 
 				return this;
 			}
 
 			@Override
-			public TestObjectResource.Builder user(User user) {
+			public TestEntityResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -144,16 +144,16 @@ public class TestObjectResourceFactoryImpl
 		};
 	}
 
-	private static Function<InvocationHandler, TestObjectResource>
+	private static Function<InvocationHandler, TestEntityResource>
 		_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			TestObjectResource.class.getClassLoader(),
-			TestObjectResource.class);
+			TestEntityResource.class.getClassLoader(),
+			TestEntityResource.class);
 
 		try {
-			Constructor<TestObjectResource> constructor =
-				(Constructor<TestObjectResource>)proxyClass.getConstructor(
+			Constructor<TestEntityResource> constructor =
+				(Constructor<TestEntityResource>)proxyClass.getConstructor(
 					InvocationHandler.class);
 
 			return invocationHandler -> {
@@ -195,38 +195,38 @@ public class TestObjectResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		TestObjectResource testObjectResource =
+		TestEntityResource testEntityResource =
 			_componentServiceObjects.getService();
 
-		testObjectResource.setContextAcceptLanguage(
+		testEntityResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		testObjectResource.setContextCompany(company);
+		testEntityResource.setContextCompany(company);
 
-		testObjectResource.setContextHttpServletRequest(httpServletRequest);
-		testObjectResource.setContextHttpServletResponse(httpServletResponse);
-		testObjectResource.setContextUriInfo(uriInfo);
-		testObjectResource.setContextUser(user);
-		testObjectResource.setExpressionConvert(_expressionConvert);
-		testObjectResource.setFilterParserProvider(_filterParserProvider);
-		testObjectResource.setGroupLocalService(_groupLocalService);
-		testObjectResource.setResourceActionLocalService(
+		testEntityResource.setContextHttpServletRequest(httpServletRequest);
+		testEntityResource.setContextHttpServletResponse(httpServletResponse);
+		testEntityResource.setContextUriInfo(uriInfo);
+		testEntityResource.setContextUser(user);
+		testEntityResource.setExpressionConvert(_expressionConvert);
+		testEntityResource.setFilterParserProvider(_filterParserProvider);
+		testEntityResource.setGroupLocalService(_groupLocalService);
+		testEntityResource.setResourceActionLocalService(
 			_resourceActionLocalService);
-		testObjectResource.setResourcePermissionLocalService(
+		testEntityResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		testObjectResource.setRoleLocalService(_roleLocalService);
-		testObjectResource.setSortParserProvider(_sortParserProvider);
+		testEntityResource.setRoleLocalService(_roleLocalService);
+		testEntityResource.setSortParserProvider(_sortParserProvider);
 
 		try {
-			return method.invoke(testObjectResource, arguments);
+			return method.invoke(testEntityResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(testObjectResource);
+			_componentServiceObjects.ungetService(testEntityResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -238,7 +238,7 @@ public class TestObjectResourceFactoryImpl
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<TestObjectResource>
+	private ComponentServiceObjects<TestEntityResource>
 		_componentServiceObjects;
 
 	@Reference
@@ -272,8 +272,8 @@ public class TestObjectResourceFactoryImpl
 
 	private static class ResourceProxyProviderFunctionHolder {
 
-		private static final Function<InvocationHandler, TestObjectResource>
-			_testObjectResourceProxyProviderFunction =
+		private static final Function<InvocationHandler, TestEntityResource>
+			_testEntityResourceProxyProviderFunction =
 				_getProxyProviderFunction();
 
 	}

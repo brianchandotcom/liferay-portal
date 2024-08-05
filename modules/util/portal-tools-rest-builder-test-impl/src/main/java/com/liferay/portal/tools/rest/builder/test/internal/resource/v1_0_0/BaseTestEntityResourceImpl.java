@@ -28,8 +28,8 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortField;
 import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.TestObject;
-import com.liferay.portal.tools.rest.builder.test.resource.v1_0_0.TestObjectResource;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.TestEntity;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0_0.TestEntityResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
@@ -65,9 +65,9 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/1.0.0")
-public abstract class BaseTestObjectResourceImpl
-	implements EntityModelResource, TestObjectResource,
-			   VulcanBatchEngineTaskItemDelegate<TestObject> {
+public abstract class BaseTestEntityResourceImpl
+	implements EntityModelResource, TestEntityResource,
+			   VulcanBatchEngineTaskItemDelegate<TestEntity> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -75,7 +75,7 @@ public abstract class BaseTestObjectResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/test/1.0.0/reserved-word'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestObject")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/reserved-word")
@@ -90,23 +90,23 @@ public abstract class BaseTestObjectResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/1.0.0/test-objects'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/test/1.0.0/test-entities'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestObject")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/test-objects")
+	@javax.ws.rs.Path("/test-entities")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<TestObject> getTestObjectsPage() throws Exception {
+	public Page<TestEntity> getTestEntitiesPage() throws Exception {
 		return Page.of(Collections.emptyList());
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/1.0.0/test-objects/export-batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/test/1.0.0/test-entities/export-batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -125,14 +125,14 @@ public abstract class BaseTestObjectResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestObject")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/test-objects/export-batch")
+	@javax.ws.rs.Path("/test-entities/export-batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response postTestObjectsPageExportBatch(
+	public Response postTestEntitiesPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -159,7 +159,7 @@ public abstract class BaseTestObjectResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineExportTaskResource.postExportTask(
-				TestObject.class.getName(), callbackURL, contentType,
+				TestEntity.class.getName(), callbackURL, contentType,
 				fieldNames)
 		).build();
 	}
@@ -167,24 +167,24 @@ public abstract class BaseTestObjectResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/1.0.0/test-objects' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "documentId": ___, "jsonProperty": ___, "name": ___, "nestedTestObject": ___, "self": ___, "testObjects": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/test/1.0.0/test-entities' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "documentId": ___, "jsonProperty": ___, "name": ___, "nestedTestEntity": ___, "self": ___, "testEntities": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestObject")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/test-objects")
+	@javax.ws.rs.Path("/test-entities")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public TestObject postTestObject(TestObject testObject) throws Exception {
+	public TestEntity postTestEntity(TestEntity testEntity) throws Exception {
 		return null;
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/1.0.0/test-objects/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/test/1.0.0/test-entities/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -195,14 +195,14 @@ public abstract class BaseTestObjectResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestObject")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/test-objects/batch")
+	@javax.ws.rs.Path("/test-entities/batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response postTestObjectBatch(
+	public Response postTestEntityBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -221,54 +221,54 @@ public abstract class BaseTestObjectResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.postImportTask(
-				TestObject.class.getName(), callbackURL, null, object)
+				TestEntity.class.getName(), callbackURL, null, object)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/1.0.0/test-objects/count'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/test/1.0.0/test-entities/count'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Retrieves the count."
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestObject")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/test-objects/count")
+	@javax.ws.rs.Path("/test-entities/count")
 	@javax.ws.rs.Produces("text/plain")
 	@Override
-	public Integer getTestObjectCount() throws Exception {
+	public Integer getTestEntityCount() throws Exception {
 		return 0;
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/1.0.0/test-objects/{testObjectId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/test/1.0.0/test-entities/{testEntityId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "testObjectId"
+				name = "testEntityId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestObject")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/test-objects/{testObjectId}")
+	@javax.ws.rs.Path("/test-entities/{testEntityId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public TestObject getTestObject(
+	public TestEntity getTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("testObjectId")
-			Long testObjectId)
+			@javax.ws.rs.PathParam("testEntityId")
+			Long testEntityId)
 		throws Exception {
 
 		return null;
@@ -277,44 +277,44 @@ public abstract class BaseTestObjectResourceImpl
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<TestObject> testObjects,
+			Collection<TestEntity> testEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<TestObject, TestObject, Exception>
-			testObjectUnsafeFunction = null;
+		UnsafeFunction<TestEntity, TestEntity, Exception>
+			testEntityUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			testObjectUnsafeFunction = testObject -> postTestObject(testObject);
+			testEntityUnsafeFunction = testEntity -> postTestEntity(testEntity);
 		}
 
-		if (testObjectUnsafeFunction == null) {
+		if (testEntityUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
-					"\" is not supported for TestObject");
+					"\" is not supported for TestEntity");
 		}
 
 		if (contextBatchUnsafeBiConsumer != null) {
 			contextBatchUnsafeBiConsumer.accept(
-				testObjects, testObjectUnsafeFunction);
+				testEntities, testEntityUnsafeFunction);
 		}
 		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				testObjects, testObjectUnsafeFunction::apply);
+				testEntities, testEntityUnsafeFunction::apply);
 		}
 		else {
-			for (TestObject testObject : testObjects) {
-				testObjectUnsafeFunction.apply(testObject);
+			for (TestEntity testEntity : testEntities) {
+				testEntityUnsafeFunction.apply(testEntity);
 			}
 		}
 	}
 
 	@Override
 	public void delete(
-			Collection<TestObject> testObjects,
+			Collection<TestEntity> testEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -346,7 +346,7 @@ public abstract class BaseTestObjectResourceImpl
 	}
 
 	public String getResourceName() {
-		return "TestObject";
+		return "TestEntity";
 	}
 
 	public String getVersion() {
@@ -354,12 +354,12 @@ public abstract class BaseTestObjectResourceImpl
 	}
 
 	@Override
-	public Page<TestObject> read(
+	public Page<TestEntity> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getTestObjectsPage();
+		return getTestEntitiesPage();
 	}
 
 	@Override
@@ -386,7 +386,7 @@ public abstract class BaseTestObjectResourceImpl
 
 	@Override
 	public void update(
-			Collection<TestObject> testObjects,
+			Collection<TestEntity> testEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -400,8 +400,8 @@ public abstract class BaseTestObjectResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<TestObject>,
-			 UnsafeFunction<TestObject, TestObject, Exception>, Exception>
+			<Collection<TestEntity>,
+			 UnsafeFunction<TestEntity, TestEntity, Exception>, Exception>
 				contextBatchUnsafeBiConsumer) {
 
 		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
@@ -409,7 +409,7 @@ public abstract class BaseTestObjectResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<TestObject>, UnsafeConsumer<TestObject, Exception>,
+			<Collection<TestEntity>, UnsafeConsumer<TestEntity, Exception>,
 			 Exception> contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
@@ -670,11 +670,11 @@ public abstract class BaseTestObjectResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<TestObject>,
-		 UnsafeFunction<TestObject, TestObject, Exception>, Exception>
+		<Collection<TestEntity>,
+		 UnsafeFunction<TestEntity, TestEntity, Exception>, Exception>
 			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<TestObject>, UnsafeConsumer<TestObject, Exception>,
+		<Collection<TestEntity>, UnsafeConsumer<TestEntity, Exception>,
 		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
@@ -695,6 +695,6 @@ public abstract class BaseTestObjectResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseTestObjectResourceImpl.class);
+		LogFactoryUtil.getLog(BaseTestEntityResourceImpl.class);
 
 }

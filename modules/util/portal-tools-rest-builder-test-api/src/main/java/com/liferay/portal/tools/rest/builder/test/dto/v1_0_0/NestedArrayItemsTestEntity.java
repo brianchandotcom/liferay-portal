@@ -39,20 +39,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName(
 	description = "Test Component to test the REST Builder support for nested array items",
-	value = "NestedArrayItemsTestObject"
+	value = "NestedArrayItemsTestEntity"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "NestedArrayItemsTestObject")
-public class NestedArrayItemsTestObject implements Serializable {
+@XmlRootElement(name = "NestedArrayItemsTestEntity")
+public class NestedArrayItemsTestEntity implements Serializable {
 
-	public static NestedArrayItemsTestObject toDTO(String json) {
+	public static NestedArrayItemsTestEntity toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			NestedArrayItemsTestObject.class, json);
+			NestedArrayItemsTestEntity.class, json);
 	}
 
-	public static NestedArrayItemsTestObject unsafeToDTO(String json) {
+	public static NestedArrayItemsTestEntity unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			NestedArrayItemsTestObject.class, json);
+			NestedArrayItemsTestEntity.class, json);
 	}
 
 	@Schema
@@ -142,15 +142,15 @@ public class NestedArrayItemsTestObject implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof NestedArrayItemsTestObject)) {
+		if (!(object instanceof NestedArrayItemsTestEntity)) {
 			return false;
 		}
 
-		NestedArrayItemsTestObject nestedArrayItemsTestObject =
-			(NestedArrayItemsTestObject)object;
+		NestedArrayItemsTestEntity nestedArrayItemsTestEntity =
+			(NestedArrayItemsTestEntity)object;
 
 		return Objects.equals(
-			toString(), nestedArrayItemsTestObject.toString());
+			toString(), nestedArrayItemsTestEntity.toString());
 	}
 
 	@Override
@@ -210,7 +210,7 @@ public class NestedArrayItemsTestObject implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.NestedArrayItemsTestObject",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.NestedArrayItemsTestEntity",
 		name = "x-class-name"
 	)
 	public String xClassName;

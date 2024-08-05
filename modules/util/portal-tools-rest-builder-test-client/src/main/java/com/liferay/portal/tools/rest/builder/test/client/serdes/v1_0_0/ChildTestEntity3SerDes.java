@@ -5,7 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestEntity2;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestEntity3;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -24,24 +24,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ChildTestEntity2SerDes {
+public class ChildTestEntity3SerDes {
 
-	public static ChildTestEntity2 toDTO(String json) {
-		ChildTestEntity2JSONParser childTestEntity2JSONParser =
-			new ChildTestEntity2JSONParser();
+	public static ChildTestEntity3 toDTO(String json) {
+		ChildTestEntity3JSONParser childTestEntity3JSONParser =
+			new ChildTestEntity3JSONParser();
 
-		return childTestEntity2JSONParser.parseToDTO(json);
+		return childTestEntity3JSONParser.parseToDTO(json);
 	}
 
-	public static ChildTestEntity2[] toDTOs(String json) {
-		ChildTestEntity2JSONParser childTestEntity2JSONParser =
-			new ChildTestEntity2JSONParser();
+	public static ChildTestEntity3[] toDTOs(String json) {
+		ChildTestEntity3JSONParser childTestEntity3JSONParser =
+			new ChildTestEntity3JSONParser();
 
-		return childTestEntity2JSONParser.parseToDTOs(json);
+		return childTestEntity3JSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ChildTestEntity2 childTestEntity2) {
-		if (childTestEntity2 == null) {
+	public static String toJSON(ChildTestEntity3 childTestEntity3) {
+		if (childTestEntity3 == null) {
 			return "null";
 		}
 
@@ -52,21 +52,7 @@ public class ChildTestEntity2SerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
-		if (childTestEntity2.getProperty2() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"property2\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(childTestEntity2.getProperty2()));
-
-			sb.append("\"");
-		}
-
-		if (childTestEntity2.getDateCreated() != null) {
+		if (childTestEntity3.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -77,12 +63,12 @@ public class ChildTestEntity2SerDes {
 
 			sb.append(
 				liferayToJSONDateFormat.format(
-					childTestEntity2.getDateCreated()));
+					childTestEntity3.getDateCreated()));
 
 			sb.append("\"");
 		}
 
-		if (childTestEntity2.getDateModified() != null) {
+		if (childTestEntity3.getDateModified() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -93,12 +79,12 @@ public class ChildTestEntity2SerDes {
 
 			sb.append(
 				liferayToJSONDateFormat.format(
-					childTestEntity2.getDateModified()));
+					childTestEntity3.getDateModified()));
 
 			sb.append("\"");
 		}
 
-		if (childTestEntity2.getDescription() != null) {
+		if (childTestEntity3.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -107,22 +93,22 @@ public class ChildTestEntity2SerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(childTestEntity2.getDescription()));
+			sb.append(_escape(childTestEntity3.getDescription()));
 
 			sb.append("\"");
 		}
 
-		if (childTestEntity2.getDocumentId() != null) {
+		if (childTestEntity3.getDocumentId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"documentId\": ");
 
-			sb.append(childTestEntity2.getDocumentId());
+			sb.append(childTestEntity3.getDocumentId());
 		}
 
-		if (childTestEntity2.getJsonProperty() != null) {
+		if (childTestEntity3.getJsonProperty() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -131,12 +117,12 @@ public class ChildTestEntity2SerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(childTestEntity2.getJsonProperty()));
+			sb.append(_escape(childTestEntity3.getJsonProperty()));
 
 			sb.append("\"");
 		}
 
-		if (childTestEntity2.getName() != null) {
+		if (childTestEntity3.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -145,22 +131,22 @@ public class ChildTestEntity2SerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(childTestEntity2.getName()));
+			sb.append(_escape(childTestEntity3.getName()));
 
 			sb.append("\"");
 		}
 
-		if (childTestEntity2.getNestedTestEntity() != null) {
+		if (childTestEntity3.getNestedTestEntity() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"nestedTestEntity\": ");
 
-			sb.append(String.valueOf(childTestEntity2.getNestedTestEntity()));
+			sb.append(String.valueOf(childTestEntity3.getNestedTestEntity()));
 		}
 
-		if (childTestEntity2.getSelf() != null) {
+		if (childTestEntity3.getSelf() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -169,22 +155,22 @@ public class ChildTestEntity2SerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(childTestEntity2.getSelf()));
+			sb.append(_escape(childTestEntity3.getSelf()));
 
 			sb.append("\"");
 		}
 
-		if (childTestEntity2.getTestEntities() != null) {
+		if (childTestEntity3.getTestEntities() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"testEntities\": ");
 
-			sb.append(String.valueOf(childTestEntity2.getTestEntities()));
+			sb.append(String.valueOf(childTestEntity3.getTestEntities()));
 		}
 
-		if (childTestEntity2.getType() != null) {
+		if (childTestEntity3.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -193,7 +179,7 @@ public class ChildTestEntity2SerDes {
 
 			sb.append("\"");
 
-			sb.append(childTestEntity2.getType());
+			sb.append(childTestEntity3.getType());
 
 			sb.append("\"");
 		}
@@ -204,14 +190,14 @@ public class ChildTestEntity2SerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ChildTestEntity2JSONParser childTestEntity2JSONParser =
-			new ChildTestEntity2JSONParser();
+		ChildTestEntity3JSONParser childTestEntity3JSONParser =
+			new ChildTestEntity3JSONParser();
 
-		return childTestEntity2JSONParser.parseToMap(json);
+		return childTestEntity3JSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(ChildTestEntity2 childTestEntity2) {
-		if (childTestEntity2 == null) {
+	public static Map<String, String> toMap(ChildTestEntity3 childTestEntity3) {
+		if (childTestEntity3 == null) {
 			return null;
 		}
 
@@ -220,121 +206,110 @@ public class ChildTestEntity2SerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
-		if (childTestEntity2.getProperty2() == null) {
-			map.put("property2", null);
-		}
-		else {
-			map.put(
-				"property2", String.valueOf(childTestEntity2.getProperty2()));
-		}
-
-		if (childTestEntity2.getDateCreated() == null) {
+		if (childTestEntity3.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
 		else {
 			map.put(
 				"dateCreated",
 				liferayToJSONDateFormat.format(
-					childTestEntity2.getDateCreated()));
+					childTestEntity3.getDateCreated()));
 		}
 
-		if (childTestEntity2.getDateModified() == null) {
+		if (childTestEntity3.getDateModified() == null) {
 			map.put("dateModified", null);
 		}
 		else {
 			map.put(
 				"dateModified",
 				liferayToJSONDateFormat.format(
-					childTestEntity2.getDateModified()));
+					childTestEntity3.getDateModified()));
 		}
 
-		if (childTestEntity2.getDescription() == null) {
+		if (childTestEntity3.getDescription() == null) {
 			map.put("description", null);
 		}
 		else {
 			map.put(
 				"description",
-				String.valueOf(childTestEntity2.getDescription()));
+				String.valueOf(childTestEntity3.getDescription()));
 		}
 
-		if (childTestEntity2.getDocumentId() == null) {
+		if (childTestEntity3.getDocumentId() == null) {
 			map.put("documentId", null);
 		}
 		else {
 			map.put(
-				"documentId", String.valueOf(childTestEntity2.getDocumentId()));
+				"documentId", String.valueOf(childTestEntity3.getDocumentId()));
 		}
 
-		if (childTestEntity2.getJsonProperty() == null) {
+		if (childTestEntity3.getJsonProperty() == null) {
 			map.put("jsonProperty", null);
 		}
 		else {
 			map.put(
 				"jsonProperty",
-				String.valueOf(childTestEntity2.getJsonProperty()));
+				String.valueOf(childTestEntity3.getJsonProperty()));
 		}
 
-		if (childTestEntity2.getName() == null) {
+		if (childTestEntity3.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(childTestEntity2.getName()));
+			map.put("name", String.valueOf(childTestEntity3.getName()));
 		}
 
-		if (childTestEntity2.getNestedTestEntity() == null) {
+		if (childTestEntity3.getNestedTestEntity() == null) {
 			map.put("nestedTestEntity", null);
 		}
 		else {
 			map.put(
 				"nestedTestEntity",
-				String.valueOf(childTestEntity2.getNestedTestEntity()));
+				String.valueOf(childTestEntity3.getNestedTestEntity()));
 		}
 
-		if (childTestEntity2.getSelf() == null) {
+		if (childTestEntity3.getSelf() == null) {
 			map.put("self", null);
 		}
 		else {
-			map.put("self", String.valueOf(childTestEntity2.getSelf()));
+			map.put("self", String.valueOf(childTestEntity3.getSelf()));
 		}
 
-		if (childTestEntity2.getTestEntities() == null) {
+		if (childTestEntity3.getTestEntities() == null) {
 			map.put("testEntities", null);
 		}
 		else {
 			map.put(
 				"testEntities",
-				String.valueOf(childTestEntity2.getTestEntities()));
+				String.valueOf(childTestEntity3.getTestEntities()));
 		}
 
-		if (childTestEntity2.getType() == null) {
+		if (childTestEntity3.getType() == null) {
 			map.put("type", null);
 		}
 		else {
-			map.put("type", String.valueOf(childTestEntity2.getType()));
+			map.put("type", String.valueOf(childTestEntity3.getType()));
 		}
 
 		return map;
 	}
 
-	public static class ChildTestEntity2JSONParser
-		extends BaseJSONParser<ChildTestEntity2> {
+	public static class ChildTestEntity3JSONParser
+		extends BaseJSONParser<ChildTestEntity3> {
 
 		@Override
-		protected ChildTestEntity2 createDTO() {
-			return new ChildTestEntity2();
+		protected ChildTestEntity3 createDTO() {
+			return new ChildTestEntity3();
 		}
 
 		@Override
-		protected ChildTestEntity2[] createDTOArray(int size) {
-			return new ChildTestEntity2[size];
+		protected ChildTestEntity3[] createDTOArray(int size) {
+			return new ChildTestEntity3[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "property2")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
@@ -370,71 +345,66 @@ public class ChildTestEntity2SerDes {
 
 		@Override
 		protected void setField(
-			ChildTestEntity2 childTestEntity2, String jsonParserFieldName,
+			ChildTestEntity3 childTestEntity3, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "property2")) {
+			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
-					childTestEntity2.setProperty2((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
-				if (jsonParserFieldValue != null) {
-					childTestEntity2.setDateCreated(
+					childTestEntity3.setDateCreated(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				if (jsonParserFieldValue != null) {
-					childTestEntity2.setDateModified(
+					childTestEntity3.setDateModified(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
-					childTestEntity2.setDescription(
+					childTestEntity3.setDescription(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "documentId")) {
 				if (jsonParserFieldValue != null) {
-					childTestEntity2.setDocumentId(
+					childTestEntity3.setDocumentId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "jsonProperty")) {
 				if (jsonParserFieldValue != null) {
-					childTestEntity2.setJsonProperty(
+					childTestEntity3.setJsonProperty(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					childTestEntity2.setName((String)jsonParserFieldValue);
+					childTestEntity3.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "nestedTestEntity")) {
 				if (jsonParserFieldValue != null) {
-					childTestEntity2.setNestedTestEntity(
+					childTestEntity3.setNestedTestEntity(
 						NestedTestEntitySerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "self")) {
 				if (jsonParserFieldValue != null) {
-					childTestEntity2.setSelf((String)jsonParserFieldValue);
+					childTestEntity3.setSelf((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "testEntities")) {
 				if (jsonParserFieldValue != null) {
-					childTestEntity2.setTestEntities(
+					childTestEntity3.setTestEntities(
 						TestEntitySerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					childTestEntity2.setType(
-						ChildTestEntity2.Type.create(
+					childTestEntity3.setType(
+						ChildTestEntity3.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

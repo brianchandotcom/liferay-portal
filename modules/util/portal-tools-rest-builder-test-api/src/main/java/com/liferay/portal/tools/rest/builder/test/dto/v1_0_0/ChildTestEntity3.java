@@ -6,13 +6,9 @@
 package com.liferay.portal.tools.rest.builder.test.dto.v1_0_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
@@ -28,7 +24,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
@@ -39,59 +34,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ChildTestEntity2")
+@GraphQLName("ChildTestEntity3")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ChildTestEntity2")
-public class ChildTestEntity2 extends TestEntity implements Serializable {
+@XmlRootElement(name = "ChildTestEntity3")
+public class ChildTestEntity3 extends TestEntity implements Serializable {
 
-	public static ChildTestEntity2 toDTO(String json) {
-		return ObjectMapperUtil.readValue(ChildTestEntity2.class, json);
+	public static ChildTestEntity3 toDTO(String json) {
+		return ObjectMapperUtil.readValue(ChildTestEntity3.class, json);
 	}
 
-	public static ChildTestEntity2 unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(ChildTestEntity2.class, json);
+	public static ChildTestEntity3 unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(ChildTestEntity3.class, json);
 	}
-
-	@Schema
-	public String getProperty2() {
-		if (_property2Supplier != null) {
-			property2 = _property2Supplier.get();
-
-			_property2Supplier = null;
-		}
-
-		return property2;
-	}
-
-	public void setProperty2(String property2) {
-		this.property2 = property2;
-
-		_property2Supplier = null;
-	}
-
-	@JsonIgnore
-	public void setProperty2(
-		UnsafeSupplier<String, Exception> property2UnsafeSupplier) {
-
-		_property2Supplier = () -> {
-			try {
-				return property2UnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String property2;
-
-	@JsonIgnore
-	private Supplier<String> _property2Supplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -99,13 +53,13 @@ public class ChildTestEntity2 extends TestEntity implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ChildTestEntity2)) {
+		if (!(object instanceof ChildTestEntity3)) {
 			return false;
 		}
 
-		ChildTestEntity2 childTestEntity2 = (ChildTestEntity2)object;
+		ChildTestEntity3 childTestEntity3 = (ChildTestEntity3)object;
 
-		return Objects.equals(toString(), childTestEntity2.toString());
+		return Objects.equals(toString(), childTestEntity3.toString());
 	}
 
 	@Override
@@ -122,22 +76,6 @@ public class ChildTestEntity2 extends TestEntity implements Serializable {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		String property2 = getProperty2();
-
-		if (property2 != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"property2\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(property2));
-
-			sb.append("\"");
-		}
 
 		Date dateCreated = getDateCreated();
 
@@ -294,7 +232,7 @@ public class ChildTestEntity2 extends TestEntity implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.ChildTestEntity2",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.ChildTestEntity3",
 		name = "x-class-name"
 	)
 	public String xClassName;

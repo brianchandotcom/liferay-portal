@@ -46,8 +46,9 @@ const CaseResultOutlet = () => {
 	);
 
 	const testrayBuild = testrayCaseResult?.build;
-	const testrayProject = testrayCaseResult?.build?.project;
-	const testrayRoutine = testrayCaseResult?.build?.routine;
+
+	const testrayProject = testrayBuild?.project;
+	const testrayRoutine = testrayBuild?.routine;
 
 	const basePath = `/project/${testrayProject?.id}/routines/${testrayRoutine?.id}/build/${testrayBuild?.id}/case-result/${caseResultId}`;
 

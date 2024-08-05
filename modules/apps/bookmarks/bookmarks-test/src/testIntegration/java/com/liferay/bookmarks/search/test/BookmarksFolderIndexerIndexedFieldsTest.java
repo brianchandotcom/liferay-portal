@@ -204,6 +204,10 @@ public class BookmarksFolderIndexerIndexedFieldsTest {
 			"assetEntryId_sortable",
 			String.valueOf(_getAssetEntryId(bookmarksFolder))
 		).put(
+			"groupExternalReferenceCode", _group.getExternalReferenceCode()
+		).put(
+			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
+		).put(
 			"statusByUserId",
 			String.valueOf(bookmarksFolder.getStatusByUserId())
 		).put(

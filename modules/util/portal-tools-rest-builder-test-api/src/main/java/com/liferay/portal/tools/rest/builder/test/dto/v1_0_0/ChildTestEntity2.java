@@ -20,6 +20,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -35,44 +39,41 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("UnreferencedTestObject")
+@GraphQLName("ChildTestEntity2")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "UnreferencedTestObject")
-public class UnreferencedTestObject implements Serializable {
+@XmlRootElement(name = "ChildTestEntity2")
+public class ChildTestEntity2 extends TestEntity implements Serializable {
 
-	public static UnreferencedTestObject toDTO(String json) {
-		return ObjectMapperUtil.readValue(UnreferencedTestObject.class, json);
+	public static ChildTestEntity2 toDTO(String json) {
+		return ObjectMapperUtil.readValue(ChildTestEntity2.class, json);
 	}
 
-	public static UnreferencedTestObject unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			UnreferencedTestObject.class, json);
+	public static ChildTestEntity2 unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(ChildTestEntity2.class, json);
 	}
 
 	@Schema
-	public String getDescription() {
-		if (_descriptionSupplier != null) {
-			description = _descriptionSupplier.get();
+	public String getText() {
+		if (_textSupplier != null) {
+			text = _textSupplier.get();
 
-			_descriptionSupplier = null;
+			_textSupplier = null;
 		}
 
-		return description;
+		return text;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setText(String text) {
+		this.text = text;
 
-		_descriptionSupplier = null;
+		_textSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
-
-		_descriptionSupplier = () -> {
+	public void setText(UnsafeSupplier<String, Exception> textUnsafeSupplier) {
+		_textSupplier = () -> {
 			try {
-				return descriptionUnsafeSupplier.get();
+				return textUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -85,92 +86,10 @@ public class UnreferencedTestObject implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
+	protected String text;
 
 	@JsonIgnore
-	private Supplier<String> _descriptionSupplier;
-
-	@Schema
-	public Long getId() {
-		if (_idSupplier != null) {
-			id = _idSupplier.get();
-
-			_idSupplier = null;
-		}
-
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-
-		_idSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		_idSupplier = () -> {
-			try {
-				return idUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
-
-	@JsonIgnore
-	private Supplier<Long> _idSupplier;
-
-	@Schema
-	public String getPropertyWithHyphens() {
-		if (_propertyWithHyphensSupplier != null) {
-			propertyWithHyphens = _propertyWithHyphensSupplier.get();
-
-			_propertyWithHyphensSupplier = null;
-		}
-
-		return propertyWithHyphens;
-	}
-
-	public void setPropertyWithHyphens(String propertyWithHyphens) {
-		this.propertyWithHyphens = propertyWithHyphens;
-
-		_propertyWithHyphensSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setPropertyWithHyphens(
-		UnsafeSupplier<String, Exception> propertyWithHyphensUnsafeSupplier) {
-
-		_propertyWithHyphensSupplier = () -> {
-			try {
-				return propertyWithHyphensUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(
-		access = JsonProperty.Access.READ_WRITE, value = "property-with-hyphens"
-	)
-	protected String propertyWithHyphens;
-
-	@JsonIgnore
-	private Supplier<String> _propertyWithHyphensSupplier;
+	private Supplier<String> _textSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -178,14 +97,13 @@ public class UnreferencedTestObject implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof UnreferencedTestObject)) {
+		if (!(object instanceof ChildTestEntity2)) {
 			return false;
 		}
 
-		UnreferencedTestObject unreferencedTestObject =
-			(UnreferencedTestObject)object;
+		ChildTestEntity2 childTestEntity2 = (ChildTestEntity2)object;
 
-		return Objects.equals(toString(), unreferencedTestObject.toString());
+		return Objects.equals(toString(), childTestEntity2.toString());
 	}
 
 	@Override
@@ -199,6 +117,57 @@ public class UnreferencedTestObject implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		String text = getText();
+
+		if (text != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"text\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(text));
+
+			sb.append("\"");
+		}
+
+		Date dateCreated = getDateCreated();
+
+		if (dateCreated != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCreated\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateCreated));
+
+			sb.append("\"");
+		}
+
+		Date dateModified = getDateModified();
+
+		if (dateModified != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateModified));
+
+			sb.append("\"");
+		}
 
 		String description = getDescription();
 
@@ -216,30 +185,102 @@ public class UnreferencedTestObject implements Serializable {
 			sb.append("\"");
 		}
 
-		Long id = getId();
+		Long documentId = getDocumentId();
 
-		if (id != null) {
+		if (documentId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"documentId\": ");
 
-			sb.append(id);
+			sb.append(documentId);
 		}
 
-		String propertyWithHyphens = getPropertyWithHyphens();
+		String jsonProperty = getJsonProperty();
 
-		if (propertyWithHyphens != null) {
+		if (jsonProperty != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"property-with-hyphens\": ");
+			sb.append("\"jsonProperty\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(propertyWithHyphens));
+			sb.append(_escape(jsonProperty));
+
+			sb.append("\"");
+		}
+
+		String name = getName();
+
+		if (name != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		NestedTestEntity nestedTestEntity = getNestedTestEntity();
+
+		if (nestedTestEntity != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"nestedTestEntity\": ");
+
+			sb.append(String.valueOf(nestedTestEntity));
+		}
+
+		String self = getSelf();
+
+		if (self != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"self\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(self));
+
+			sb.append("\"");
+		}
+
+		TestEntity testEntities = getTestEntities();
+
+		if (testEntities != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"testEntities\": ");
+
+			sb.append(String.valueOf(testEntities));
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(type);
 
 			sb.append("\"");
 		}
@@ -251,7 +292,7 @@ public class UnreferencedTestObject implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.UnreferencedTestObject",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.ChildTestEntity2",
 		name = "x-class-name"
 	)
 	public String xClassName;

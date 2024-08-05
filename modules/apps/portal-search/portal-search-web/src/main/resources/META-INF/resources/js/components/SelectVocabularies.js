@@ -232,7 +232,7 @@ function SelectVocabularies({
 		setVocabularyTreeLoading(true);
 
 		fetch(
-			'/o/headless-admin-user/v1.0/my-user-account/sites',
+			'/o/headless-admin-user/v1.0/my-user-account/sites?page=0&pageSize=0',
 			CONFIGURATION
 		)
 			.then((response) => response.json())

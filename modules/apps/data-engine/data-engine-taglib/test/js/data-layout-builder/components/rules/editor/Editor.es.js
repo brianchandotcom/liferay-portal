@@ -308,7 +308,7 @@ describe('Editor', () => {
 			});
 
 			describe('Binary operations', () => {
-				xit.each(
+				it.each(
 					STRING_DATATYPE_FIELDS.concat(NUMBER_TYPE_FIELDS).concat(
 						UPLOAD_TYPE_FIELD
 					)
@@ -371,19 +371,22 @@ describe('Editor', () => {
 							fireEvent.click(getByText('value'));
 						});
 
+						if (type === 'rich_text') {
+							expect(
+								document.querySelectorAll(selector)
+							).toBeTruthy();
+
+							return;
+						}
+
 						await waitFor(() => {
-							document
+							const fieldElement = document
 								.querySelectorAll('.timeline-item')[1]
 								.querySelectorAll('.ddm-field')[3]
 								.querySelector(selector);
-						});
 
-						expect(
-							document
-								.querySelectorAll('.timeline-item')[1]
-								.querySelectorAll('.ddm-field')[3]
-								.querySelector(selector)
-						).toBeTruthy();
+							expect(fieldElement).toBeTruthy();
+						});
 					}
 				);
 

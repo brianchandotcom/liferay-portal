@@ -116,7 +116,7 @@ export const FIELDS = [
 		name: 'rich_text',
 		options: [],
 		repeatable: false,
-		selector: '#undefinedContainer',
+		selector: 'iframe',
 		settingsContext: {
 			pages: [],
 		},

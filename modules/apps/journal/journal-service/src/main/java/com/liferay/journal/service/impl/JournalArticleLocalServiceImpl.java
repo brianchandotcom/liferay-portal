@@ -4950,6 +4950,19 @@ public class JournalArticleLocalServiceImpl
 
 		updateFriendlyURLs(article, urlTitleMap, serviceContext);
 
+		// Resources
+
+		if (serviceContext.isAddGroupPermissions() ||
+			serviceContext.isAddGuestPermissions()) {
+
+			addArticleResources(
+				article, serviceContext.isAddGroupPermissions(),
+				serviceContext.isAddGuestPermissions());
+		}
+		else {
+			addArticleResources(article, serviceContext.getModelPermissions());
+		}
+
 		// Asset
 
 		if (hasModifiedLatestApprovedVersion(groupId, articleId, version)) {

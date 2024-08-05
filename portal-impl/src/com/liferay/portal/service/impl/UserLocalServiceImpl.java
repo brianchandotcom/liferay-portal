@@ -1286,8 +1286,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setScreenName(screenName);
 		user.setEmailAddress(emailAddress);
 
-		user.setDigest(user.getDigest(password1));
-
 		Long ldapServerId = null;
 
 		if (serviceContext != null) {

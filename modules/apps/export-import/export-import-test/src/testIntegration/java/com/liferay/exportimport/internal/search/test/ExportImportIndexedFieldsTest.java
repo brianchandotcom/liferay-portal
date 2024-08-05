@@ -173,8 +173,12 @@ public class ExportImportIndexedFieldsTest {
 			String.valueOf(
 				exportImportConfiguration.getExportImportConfigurationId())
 		).put(
+			"groupExternalReferenceCode", _group.getExternalReferenceCode()
+		).put(
 			"name_sortable",
 			StringUtil.lowerCase(exportImportConfiguration.getName())
+		).put(
+			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
 			"setting_locale", String.valueOf(setttingMap.get("locale"))
 		).put(

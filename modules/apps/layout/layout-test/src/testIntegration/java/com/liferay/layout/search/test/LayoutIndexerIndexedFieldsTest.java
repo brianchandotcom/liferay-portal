@@ -186,7 +186,11 @@ public class LayoutIndexerIndexedFieldsTest {
 		).put(
 			"externalReferenceCode", layout.getExternalReferenceCode()
 		).put(
+			"groupExternalReferenceCode", _group.getExternalReferenceCode()
+		).put(
 			"privateLayout", "false"
+		).put(
+			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
 			"statusByUserId", String.valueOf(layout.getStatusByUserId())
 		).put(

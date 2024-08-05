@@ -465,9 +465,10 @@ interface ObjectValidation {
 
 interface ObjectValidationRuleSetting {
 	name:
+		| 'allowActiveStatusUpdate'
 		| 'compositeKeyObjectFieldExternalReferenceCode'
 		| 'outputObjectFieldExternalReferenceCode';
-	value: string;
+	value: string | boolean;
 }
 
 interface PickListItem {

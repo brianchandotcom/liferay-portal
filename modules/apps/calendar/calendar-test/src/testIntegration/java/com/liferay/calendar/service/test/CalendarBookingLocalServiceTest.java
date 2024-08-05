@@ -516,33 +516,37 @@ public class CalendarBookingLocalServiceTest {
 
 		long startTime = System.currentTimeMillis();
 
-		Map<Locale, String> descriptionMap = HashMapBuilder.put(
-			LocaleUtil.getDefault(),
-			StringBundler.concat(
-				"<div class=\"embed-responsive embed-responsive-16by9\" ",
-				"data-embed-id=",
-				"\"https://www.youtube.com/embed/6LjQ7Z99N74?rel=0\" ",
-				"data-styles=\"{&quot;width&quot;:&quot;81%&quot;}",
-				"\" style=\"width:81%\"><iframe allow=\"autoplay; ",
-				"encrypted-media\" allowfullscreen=\"\" frameborder=\"0\" ",
-				"height=\"315\" src=",
-				"\"https://www.youtube.com/embed/6LjQ7Z99N74?rel=0\" width=\"",
-				"560\"></iframe></div><p>&nbsp;</p>")
-		).build();
+		String youtubeIframe = StringBundler.concat(
+			"<div class=\"embed-responsive embed-responsive-16by9\" ",
+			"data-embed-id=",
+			"\"https://www.youtube.com/embed/6LjQ7Z99N74?rel=0\" ",
+			"data-styles=\"{&quot;width&quot;:&quot;81%&quot;}",
+			"\" style=\"width:81%\"><iframe allow=\"autoplay; ",
+			"encrypted-media\" allowfullscreen=\"\" frameborder=\"0\" ",
+			"height=\"315\" src=",
+			"\"https://www.youtube.com/embed/6LjQ7Z99N74?rel=0\" width=\"",
+			"560\"></iframe></div><p>&nbsp;</p>");
 
 		CalendarBooking calendarBooking =
 			CalendarBookingTestUtil.addCalendarBooking(
 				_user, calendar, new long[0],
 				RandomTestUtil.randomLocaleStringMap(),
 				HashMapBuilder.create(
-					descriptionMap
+					HashMapBuilder.put(
+						LocaleUtil.getDefault(),
+						youtubeIframe + "<script type=\"text/javascript\">" +
+							"alert('xss vulnerability test');</script>"
+					).build()
 				).build(),
 				startTime, startTime + (Time.HOUR * 10), null, (int)startTime,
 				NotificationType.EMAIL, 0, NotificationType.EMAIL,
 				serviceContext);
 
+		String sanitizedVulnerability =
+			"<script type=\"text/javascript\">;</script>";
+
 		Assert.assertEquals(
-			descriptionMap.get(LocaleUtil.getDefault()),
+			youtubeIframe + sanitizedVulnerability,
 			calendarBooking.getDescription(LocaleUtil.getDefault()));
 	}
 

@@ -34,7 +34,6 @@ import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.TermQuery;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -70,10 +69,6 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(), false,
 			_serviceContext);
 
-		_journalFolder = JournalFolderServiceUtil.addFolder(
-			null, TestPropsValues.getGroupId(), 0,
-			RandomTestUtil.randomString(), StringPool.BLANK, _serviceContext);
-
 		_journalArticle = JournalTestUtil.addArticle(
 			TestPropsValues.getGroupId(), 0,
 			PortalUtil.getClassNameId(JournalArticle.class),
@@ -82,15 +77,19 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 			).build(),
 			null,
 			HashMapBuilder.put(
-				LocaleUtil.US, ""
+				LocaleUtil.US, StringPool.BLANK
 			).build(),
 			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
+
+		_journalFolder = JournalFolderServiceUtil.addFolder(
+			null, TestPropsValues.getGroupId(), 0,
+			RandomTestUtil.randomString(), StringPool.BLANK, _serviceContext);
 
 		_user = UserTestUtil.addUser(TestPropsValues.getGroupId());
 	}
 
 	@Test
-	public void testExternalReferenceCodeContributed() throws Exception {
+	public void testContributeExternalReferenceCode() throws Exception {
 		_assertERCSearch(_blogsEntry);
 		_assertERCSearch(_journalArticle);
 		_assertERCSearch(_journalFolder);
@@ -101,23 +100,17 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 			ExternalReferenceCodeModel externalReferenceCodeModel)
 		throws Exception {
 
-		TermQuery companyTermQuery = _queries.term(
-			Field.COMPANY_ID, TestPropsValues.getCompanyId());
-
-		TermQuery externalReferenceCodeQuery = _queries.term(
-			"externalReferenceCode",
-			externalReferenceCodeModel.getExternalReferenceCode());
-
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustQueryClauses(
-			companyTermQuery, externalReferenceCodeQuery);
+			_queries.term(Field.COMPANY_ID, TestPropsValues.getCompanyId()),
+			_queries.term(
+				"externalReferenceCode",
+				externalReferenceCodeModel.getExternalReferenceCode()));
 
 		if (externalReferenceCodeModel instanceof GroupedModel) {
-			TermQuery groupIdTermQuery = _queries.term(
-				Field.GROUP_ID, TestPropsValues.getGroupId());
-
-			booleanQuery.addMustQueryClauses(groupIdTermQuery);
+			booleanQuery.addMustQueryClauses(
+				_queries.term(Field.GROUP_ID, TestPropsValues.getGroupId()));
 		}
 
 		_assertSearch(
@@ -131,7 +124,7 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 
 		CountSearchRequest countSearchRequest = new CountSearchRequest();
 
-		if (_isSearchEngine("Solr")) {
+		if (_isSearchEngineSolr()) {
 			countSearchRequest.setIndexNames("liferay");
 		}
 		else {
@@ -151,10 +144,10 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 			countSearchResponse.getCount() == 1);
 	}
 
-	private boolean _isSearchEngine(String vendor) {
+	private boolean _isSearchEngineSolr() {
 		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
-		return Objects.equals(searchEngine.getVendor(), vendor);
+		return Objects.equals(searchEngine.getVendor(), "Solr");
 	}
 
 	private BlogsEntry _blogsEntry;

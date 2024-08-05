@@ -347,6 +347,7 @@ public abstract class BaseMessageResourceImpl
 	@Override
 	public void postMessageImport(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
 			@javax.ws.rs.QueryParam("languageId")
 			String languageId,
 			MultipartBody multipartBody)

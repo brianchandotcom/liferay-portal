@@ -16,6 +16,8 @@ import {useSelectItem} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
 import Layout from './Layout';
 import FragmentContent from './fragment_content/FragmentContent';
+import {FormStep} from './layout_data_items/FormStep';
+import {FormStepContainer} from './layout_data_items/FormStepContainer';
 import hasDropZoneChild from './layout_data_items/hasDropZoneChild';
 import {
 	Collection,
@@ -31,6 +33,8 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.column]: MasterColumn,
 	[LAYOUT_DATA_ITEM_TYPES.container]: Container,
 	[LAYOUT_DATA_ITEM_TYPES.form]: Form,
+	[LAYOUT_DATA_ITEM_TYPES.formStep]: FormStep,
+	[LAYOUT_DATA_ITEM_TYPES.formStepContainer]: FormStepContainer,
 	[LAYOUT_DATA_ITEM_TYPES.dropZone]: DropZoneContainer,
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: Fragment,
 	[LAYOUT_DATA_ITEM_TYPES.fragmentDropZone]: Root,

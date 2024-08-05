@@ -7,6 +7,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.select;
 
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFactory;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -16,6 +17,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldOptionsTestUtil;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -36,7 +38,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -88,47 +89,15 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
-	public void testGetMultiple1() {
-		String fieldName = "field";
-
-		DDMFormField ddmFormField = new DDMFormField(fieldName, "select");
-
-		ddmFormField.setProperty("multiple", "true");
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setProperty("changedProperties", null);
-
+	public void testGetMultiple() {
+		Assert.assertFalse(
+			_selectDDMFormFieldTemplateContextContributor.getMultiple(
+				_createDDMFormField(false), new DDMFormFieldRenderingContext(),
+				null));
 		Assert.assertTrue(
 			_selectDDMFormFieldTemplateContextContributor.getMultiple(
-				ddmFormField, ddmFormFieldRenderingContext));
-	}
-
-	@Test
-	public void testGetMultiple2() {
-		DDMFormField ddmFormField = new DDMFormField("field", "select");
-
-		ddmFormField.setProperty("multiple", "true");
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		Map<String, Object> changedProperties = new HashMap<>();
-
-		ddmFormFieldRenderingContext.setProperty(
-			"changedProperties", changedProperties);
-
-		Assert.assertTrue(
-			_selectDDMFormFieldTemplateContextContributor.getMultiple(
-				ddmFormField, ddmFormFieldRenderingContext));
-	}
-
-	@Test
-	public void testGetMultiple3() {
-		DDMFormField ddmFormField = new DDMFormField("field", "select");
-
-		ddmFormField.setProperty("multiple", "false");
+				_createDDMFormField(true), new DDMFormFieldRenderingContext(),
+				null));
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
@@ -141,7 +110,34 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 
 		Assert.assertTrue(
 			_selectDDMFormFieldTemplateContextContributor.getMultiple(
-				ddmFormField, ddmFormFieldRenderingContext));
+				_createDDMFormField(false), ddmFormFieldRenderingContext,
+				null));
+
+		ObjectField objectField = Mockito.mock(ObjectField.class);
+
+		Mockito.when(
+			objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)
+		).thenReturn(
+			false
+		);
+
+		Assert.assertFalse(
+			_selectDDMFormFieldTemplateContextContributor.getMultiple(
+				_createDDMFormField(true), new DDMFormFieldRenderingContext(),
+				objectField));
+
+		Mockito.when(
+			objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			_selectDDMFormFieldTemplateContextContributor.getMultiple(
+				_createDDMFormField(false), new DDMFormFieldRenderingContext(),
+				objectField));
 	}
 
 	@Test
@@ -242,8 +238,7 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 					"value", "ListTypeEntry2"
 				).build()),
 			_selectDDMFormFieldTemplateContextContributor.getObjectFieldOptions(
-				ddmFormField, ddmFormFieldOptions,
-				ddmFormFieldRenderingContext));
+				ddmFormField, ddmFormFieldOptions, objectField));
 	}
 
 	@Test
@@ -456,6 +451,15 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		Assert.assertTrue(values.toString(), values.contains("value"));
 	}
 
+	private DDMFormField _createDDMFormField(boolean multiple) {
+		DDMFormField ddmFormField = new DDMFormField(
+			RandomTestUtil.randomString(), DDMFormFieldTypeConstants.SELECT);
+
+		ddmFormField.setProperty("multiple", multiple);
+
+		return ddmFormField;
+	}
+
 	private SelectDDMFormFieldTemplateContextContributor _createSpy() {
 		SelectDDMFormFieldTemplateContextContributor
 			selectDDMFormFieldTemplateContextContributor = Mockito.spy(
@@ -477,8 +481,7 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		Locale locale) {
 
 		return _selectDDMFormFieldTemplateContextContributor.getOptions(
-			ddmFormField, ddmFormFieldOptions, locale,
-			new DDMFormFieldRenderingContext());
+			ddmFormField, ddmFormFieldOptions, locale, null);
 	}
 
 	private ListTypeEntry _getListTypeEntry(String name) {

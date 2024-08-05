@@ -7,6 +7,7 @@ package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestEntity1;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestEntity2;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.ChildTestEntity3;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.TestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
@@ -45,146 +46,31 @@ public class TestEntitySerDes {
 			return "null";
 		}
 
-		StringBuilder sb = new StringBuilder();
+		TestEntity.Type type = testEntity.getType();
 
-		sb.append("{");
+		if (type != null) {
+			String typeString = type.toString();
 
-		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ssXX");
-
-		if (testEntity.getDateCreated() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+			if (typeString.equals("ChildTestEntity1")) {
+				return ChildTestEntity1SerDes.toJSON(
+					(ChildTestEntity1)testEntity);
 			}
-
-			sb.append("\"dateCreated\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				liferayToJSONDateFormat.format(testEntity.getDateCreated()));
-
-			sb.append("\"");
-		}
-
-		if (testEntity.getDateModified() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+			else if (typeString.equals("ChildTestEntity2")) {
+				return ChildTestEntity2SerDes.toJSON(
+					(ChildTestEntity2)testEntity);
 			}
-
-			sb.append("\"dateModified\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				liferayToJSONDateFormat.format(testEntity.getDateModified()));
-
-			sb.append("\"");
-		}
-
-		if (testEntity.getDescription() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+			else if (typeString.equals("ChildTestEntity3")) {
+				return ChildTestEntity3SerDes.toJSON(
+					(ChildTestEntity3)testEntity);
 			}
-
-			sb.append("\"description\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(testEntity.getDescription()));
-
-			sb.append("\"");
-		}
-
-		if (testEntity.getDocumentId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+			else {
+				throw new IllegalArgumentException(
+					"Unknown type '" + typeString + "'");
 			}
-
-			sb.append("\"documentId\": ");
-
-			sb.append(testEntity.getDocumentId());
 		}
-
-		if (testEntity.getJsonProperty() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"jsonProperty\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(testEntity.getJsonProperty()));
-
-			sb.append("\"");
+		else {
+			throw new IllegalArgumentException("Missing type parameter");
 		}
-
-		if (testEntity.getName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(testEntity.getName()));
-
-			sb.append("\"");
-		}
-
-		if (testEntity.getNestedTestEntity() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"nestedTestEntity\": ");
-
-			sb.append(String.valueOf(testEntity.getNestedTestEntity()));
-		}
-
-		if (testEntity.getSelf() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"self\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(testEntity.getSelf()));
-
-			sb.append("\"");
-		}
-
-		if (testEntity.getTestEntities() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"testEntities\": ");
-
-			sb.append(String.valueOf(testEntity.getTestEntities()));
-		}
-
-		if (testEntity.getType() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
-
-			sb.append("\"");
-
-			sb.append(testEntity.getType());
-
-			sb.append("\"");
-		}
-
-		sb.append("}");
-
-		return sb.toString();
 	}
 
 	public static Map<String, Object> toMap(String json) {
@@ -346,6 +232,9 @@ public class TestEntitySerDes {
 				}
 				else if (typeString.equals("ChildTestEntity2")) {
 					return ChildTestEntity2.toDTO(json);
+				}
+				else if (typeString.equals("ChildTestEntity3")) {
+					return ChildTestEntity3.toDTO(json);
 				}
 				else {
 					throw new IllegalArgumentException(

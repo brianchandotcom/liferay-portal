@@ -113,6 +113,7 @@
 			"template_ca": {
 				"mapping": {
 					"analyzer": "catalan",
+					"search_analyzer": "liferay_analyzer_ca",
 					"store": true,
 					"term_vector": "with_positions_offsets",
 					"type": "text"

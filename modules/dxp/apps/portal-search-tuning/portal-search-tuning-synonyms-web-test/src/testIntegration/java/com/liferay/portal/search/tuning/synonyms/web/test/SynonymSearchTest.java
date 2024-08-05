@@ -102,6 +102,7 @@ public class SynonymSearchTest {
 			addSynonymSet("efectivo,productivo");
 			addSynonymSet("effectief,productief");
 			addSynonymSet("feliz,alegre");
+			addSynonymSet("feliç,satisfet");
 			addSynonymSet("glücklich,heiter");
 			addSynonymSet("hatékony,produktív");
 			addSynonymSet("lycklig,nöjd");
@@ -128,6 +129,7 @@ public class SynonymSearchTest {
 		doAssertSearch("efectivo", Field.TITLE, LocaleUtil.SPAIN, 2);
 		doAssertSearch("effectief", Field.TITLE, LocaleUtil.NETHERLANDS, 2);
 		doAssertSearch("feliz", Field.TITLE, LocaleUtil.BRAZIL, 2);
+		doAssertSearch("feliç", Field.TITLE, _CATALANLOCALE, 2);
 		doAssertSearch("glücklich", Field.TITLE, LocaleUtil.GERMANY, 2);
 		doAssertSearch("hatékony", Field.TITLE, LocaleUtil.HUNGARY, 2);
 		doAssertSearch("lycklig", Field.TITLE, _SWEDISHLOCALE, 2);
@@ -160,6 +162,8 @@ public class SynonymSearchTest {
 			HashMapBuilder.put(
 				_ARABICLOCALE, "فعال"
 			).put(
+				_CATALANLOCALE, "feliç"
+			).put(
 				_FINNISHLOCALE, "tehokas"
 			).put(
 				_SWEDISHLOCALE, "lycklig"
@@ -181,6 +185,8 @@ public class SynonymSearchTest {
 		addJournalArticle(
 			HashMapBuilder.put(
 				_ARABICLOCALE, "منتج"
+			).put(
+				_CATALANLOCALE, "satisfet"
 			).put(
 				_FINNISHLOCALE, "tuottava"
 			).put(
@@ -275,11 +281,12 @@ public class SynonymSearchTest {
 		return HashMapDictionaryBuilder.<String, Object>put(
 			"filterNames",
 			new String[] {
-				"liferay_filter_synonym_ar", "liferay_filter_synonym_de",
-				"liferay_filter_synonym_en", "liferay_filter_synonym_es",
-				"liferay_filter_synonym_fi", "liferay_filter_synonym_fr",
-				"liferay_filter_synonym_hu", "liferay_filter_synonym_nl",
-				"liferay_filter_synonym_pt_BR", "liferay_filter_synonym_sv"
+				"liferay_filter_synonym_ar", "liferay_filter_synonym_ca",
+				"liferay_filter_synonym_de", "liferay_filter_synonym_en",
+				"liferay_filter_synonym_es", "liferay_filter_synonym_fi",
+				"liferay_filter_synonym_fr", "liferay_filter_synonym_hu",
+				"liferay_filter_synonym_nl", "liferay_filter_synonym_pt_BR",
+				"liferay_filter_synonym_sv"
 			}
 		).build();
 	}
@@ -323,6 +330,8 @@ public class SynonymSearchTest {
 	}
 
 	private static final Locale _ARABICLOCALE = new Locale("ar", "SA");
+
+	private static final Locale _CATALANLOCALE = new Locale("ca", "ES");
 
 	private static final String _CONFIGURATION_PID_ELASTICSEARCH =
 		"com.liferay.portal.search.elasticsearch7.configuration." +

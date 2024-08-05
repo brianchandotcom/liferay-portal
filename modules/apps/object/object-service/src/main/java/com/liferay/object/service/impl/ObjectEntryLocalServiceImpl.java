@@ -2802,11 +2802,16 @@ public class ObjectEntryLocalServiceImpl
 			dynamicObjectRelationshipMappingTable,
 			primaryKeyColumn2.eq(dynamicObjectDefinitionTablePrimaryKeyColumn)
 		).where(
-			ObjectEntryTable.INSTANCE.groupId.eq(
-				groupId
+			ObjectEntryTable.INSTANCE.companyId.eq(
+				objectRelationship.getCompanyId()
 			).and(
-				ObjectEntryTable.INSTANCE.companyId.eq(
-					objectRelationship.getCompanyId())
+				() -> {
+					if (groupId == 0) {
+						return null;
+					}
+
+					return ObjectEntryTable.INSTANCE.groupId.eq(groupId);
+				}
 			).and(
 				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
 					objectDefinitionId2)

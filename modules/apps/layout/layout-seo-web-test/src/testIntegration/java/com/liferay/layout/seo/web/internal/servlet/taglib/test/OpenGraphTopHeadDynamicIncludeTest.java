@@ -276,6 +276,41 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
+	public void testIncludeCustomMetaTagsWithEmptyValues() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute(
+			_getDDMStructureId() + "ddmFormValues",
+			new String(
+				FileUtil.getBytes(
+					getClass(),
+					"dependencies" +
+						"/custom_meta_tags_ddm_form_values_with_empty_values." +
+							"json"),
+				StandardCharsets.UTF_8));
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			_layout.getUserId(), _layout.getGroupId(),
+			_layout.isPrivateLayout(), _layout.getLayoutId(), false,
+			Collections.emptyMap(), false, Collections.emptyMap(),
+			Collections.emptyMap(), 0, false, Collections.emptyMap(),
+			serviceContext);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_dynamicInclude.include(
+			_getHttpServletRequest(LocaleUtil.SPAIN), mockHttpServletResponse,
+			RandomTestUtil.randomString());
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertFalse(content.contains("custom content"));
+		Assert.assertFalse(content.contains("custom property"));
+	}
+
+	@Test
 	public void testIncludeCustomMetaTagsWithSpecialCharacters()
 		throws Exception {
 

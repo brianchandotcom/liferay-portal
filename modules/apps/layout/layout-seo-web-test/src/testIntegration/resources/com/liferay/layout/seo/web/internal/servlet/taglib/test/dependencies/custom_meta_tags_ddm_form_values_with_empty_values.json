@@ -1,0 +1,36 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fieldValues": [
+		{
+			"instanceId": "wxey",
+			"name": "property",
+			"nestedFieldValues": [
+				{
+					"instanceId": "ozcs",
+					"name": "content",
+					"value": {
+						"en_US": "custom content"
+					}
+				}
+			],
+			"value": ""
+		},
+		{
+			"instanceId": "axyj",
+			"name": "property",
+			"nestedFieldValues": [
+				{
+					"instanceId": "jrvx",
+					"name": "content",
+					"value": {
+						"en_US": ""
+					}
+				}
+			],
+			"value": "custom property"
+		}
+	]
+}

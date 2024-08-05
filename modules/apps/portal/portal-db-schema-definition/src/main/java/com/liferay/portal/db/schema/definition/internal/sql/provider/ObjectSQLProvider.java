@@ -19,7 +19,6 @@ import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.db.schema.definition.internal.partition.DBSchemaPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
@@ -66,8 +65,6 @@ public class ObjectSQLProvider implements SQLProvider {
 		DB sourceDB = DBManagerUtil.getDB();
 
 		try (Connection connection = dataSource.getConnection()) {
-			DBSchemaPartitionUtil.setPartition(connection, _companyId);
-
 			for (String tableName : _tableNames) {
 				for (IndexMetadata indexMetadata :
 						sourceDB.getIndexes(

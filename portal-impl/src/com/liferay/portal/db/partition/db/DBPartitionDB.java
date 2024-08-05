@@ -17,6 +17,10 @@ import java.sql.SQLException;
  */
 public interface DBPartitionDB {
 
+	public default void copyRules(Connection connection, String toPartitionName)
+		throws SQLException {
+	}
+
 	public default String getCatalog(
 			Connection connection, String partitionName)
 		throws SQLException {

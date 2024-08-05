@@ -672,6 +672,71 @@ public class FaroSubscriptionDisplayTest {
 				faroSubscriptionDisplay.getPageViewsCounts()));
 	}
 
+	@Test
+	public void testSetUsageCounts7() throws Exception {
+		LocalDate localDate = LocalDate.now();
+
+		LocalDateTime localDateTime1 = LocalDateTime.of(
+			localDate.minusYears(1), LocalTime.MIN);
+
+		FaroSubscriptionDisplay faroSubscriptionDisplay =
+			_createFaroSubscriptionDisplay(
+				ProductConstants.BUSINESS_PRODUCT_ENTRY_ID,
+				_toDate(localDateTime1));
+
+		Instant instant = localDateTime1.toInstant(ZoneOffset.UTC);
+
+		FaroProject faroProject = _mockFaroProject(
+			ProductConstants.BUSINESS_PRODUCT_NAME,
+			JSONUtil.put(
+				"individualsCountSinceLastAnniversary", 10
+			).put(
+				"pageViewsCountSinceLastAnniversary", 500
+			),
+			instant.toEpochMilli());
+
+		LocalDateTime localDateTime2 = localDateTime1.plusDays(5);
+
+		faroSubscriptionDisplay.setUsageCounts(
+			_cerebroEngineClient, _contactsEngineClient,
+			_toDate(localDateTime2), faroProject);
+
+		_assertCounts(
+			JSONUtil.put(
+				"monthlyValues",
+				JSONUtil.put(
+					_formatLocalDateTime(localDateTime2),
+					JSONUtil.put(
+						"count", 11
+					).put(
+						"countSinceLastAnniversary", 11
+					))
+			).put(
+				"total", 11
+			).put(
+				"totalSinceLastAnniversary", 11
+			),
+			JSONFactoryUtil.createJSONObject(
+				faroSubscriptionDisplay.getIndividualsCounts()));
+		_assertCounts(
+			JSONUtil.put(
+				"monthlyValues",
+				JSONUtil.put(
+					_formatLocalDateTime(localDateTime2),
+					JSONUtil.put(
+						"count", 501
+					).put(
+						"countSinceLastAnniversary", 501
+					))
+			).put(
+				"total", 501
+			).put(
+				"totalSinceLastAnniversary", 501
+			),
+			JSONFactoryUtil.createJSONObject(
+				faroSubscriptionDisplay.getPageViewsCounts()));
+	}
+
 	private void _assertCounts(
 		JSONObject actualCountsJSONObject,
 		JSONObject expectedCountsJSONObject) {

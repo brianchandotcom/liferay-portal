@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.TestObject;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.TestEntity;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
@@ -47,24 +47,24 @@ import org.osgi.annotation.versioning.ProviderType;
 @CTAware
 @Generated("")
 @ProviderType
-public interface TestObjectResource {
+public interface TestEntityResource {
 
 	public Response postReservedWord(Boolean booleanValue) throws Exception;
 
-	public Page<TestObject> getTestObjectsPage() throws Exception;
+	public Page<TestEntity> getTestEntitiesPage() throws Exception;
 
-	public Response postTestObjectsPageExportBatch(
+	public Response postTestEntitiesPageExportBatch(
 			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
-	public TestObject postTestObject(TestObject testObject) throws Exception;
+	public TestEntity postTestEntity(TestEntity testEntity) throws Exception;
 
-	public Response postTestObjectBatch(String callbackURL, Object object)
+	public Response postTestEntityBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Integer getTestObjectCount() throws Exception;
+	public Integer getTestEntityCount() throws Exception;
 
-	public TestObject getTestObject(Long testObjectId) throws Exception;
+	public TestEntity getTestEntity(Long testEntityId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -131,7 +131,7 @@ public interface TestObjectResource {
 	@ProviderType
 	public interface Builder {
 
-		public TestObjectResource build();
+		public TestEntityResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

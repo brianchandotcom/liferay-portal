@@ -20,10 +20,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -32,8 +28,6 @@ import java.util.function.Supplier;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -41,102 +35,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName(
-	description = "https://www.schema.org/Folder", value = "NestedTestObject"
-)
+@GraphQLName("UnreferencedTestEntity")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "NestedTestObject")
-public class NestedTestObject implements Serializable {
+@XmlRootElement(name = "UnreferencedTestEntity")
+public class UnreferencedTestEntity implements Serializable {
 
-	public static NestedTestObject toDTO(String json) {
-		return ObjectMapperUtil.readValue(NestedTestObject.class, json);
+	public static UnreferencedTestEntity toDTO(String json) {
+		return ObjectMapperUtil.readValue(UnreferencedTestEntity.class, json);
 	}
 
-	public static NestedTestObject unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(NestedTestObject.class, json);
+	public static UnreferencedTestEntity unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			UnreferencedTestEntity.class, json);
 	}
-
-	@Schema
-	public Date getDateCreated() {
-		if (_dateCreatedSupplier != null) {
-			dateCreated = _dateCreatedSupplier.get();
-
-			_dateCreatedSupplier = null;
-		}
-
-		return dateCreated;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-
-		_dateCreatedSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setDateCreated(
-		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
-
-		_dateCreatedSupplier = () -> {
-			try {
-				return dateCreatedUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Date dateCreated;
-
-	@JsonIgnore
-	private Supplier<Date> _dateCreatedSupplier;
-
-	@Schema
-	public Date getDateModified() {
-		if (_dateModifiedSupplier != null) {
-			dateModified = _dateModifiedSupplier.get();
-
-			_dateModifiedSupplier = null;
-		}
-
-		return dateModified;
-	}
-
-	public void setDateModified(Date dateModified) {
-		this.dateModified = dateModified;
-
-		_dateModifiedSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setDateModified(
-		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
-
-		_dateModifiedSupplier = () -> {
-			try {
-				return dateModifiedUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Date dateModified;
-
-	@JsonIgnore
-	private Supplier<Date> _dateModifiedSupplier;
 
 	@Schema
 	public String getDescription() {
@@ -219,27 +130,29 @@ public class NestedTestObject implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@Schema
-	public String getName() {
-		if (_nameSupplier != null) {
-			name = _nameSupplier.get();
+	public String getPropertyWithHyphens() {
+		if (_propertyWithHyphensSupplier != null) {
+			propertyWithHyphens = _propertyWithHyphensSupplier.get();
 
-			_nameSupplier = null;
+			_propertyWithHyphensSupplier = null;
 		}
 
-		return name;
+		return propertyWithHyphens;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPropertyWithHyphens(String propertyWithHyphens) {
+		this.propertyWithHyphens = propertyWithHyphens;
 
-		_nameSupplier = null;
+		_propertyWithHyphensSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		_nameSupplier = () -> {
+	public void setPropertyWithHyphens(
+		UnsafeSupplier<String, Exception> propertyWithHyphensUnsafeSupplier) {
+
+		_propertyWithHyphensSupplier = () -> {
 			try {
-				return nameUnsafeSupplier.get();
+				return propertyWithHyphensUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -251,53 +164,13 @@ public class NestedTestObject implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	@JsonProperty(
+		access = JsonProperty.Access.READ_WRITE, value = "property-with-hyphens"
+	)
+	protected String propertyWithHyphens;
 
 	@JsonIgnore
-	private Supplier<String> _nameSupplier;
-
-	@Schema
-	@Valid
-	public TestObject getTestObject() {
-		if (_testObjectSupplier != null) {
-			testObject = _testObjectSupplier.get();
-
-			_testObjectSupplier = null;
-		}
-
-		return testObject;
-	}
-
-	public void setTestObject(TestObject testObject) {
-		this.testObject = testObject;
-
-		_testObjectSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setTestObject(
-		UnsafeSupplier<TestObject, Exception> testObjectUnsafeSupplier) {
-
-		_testObjectSupplier = () -> {
-			try {
-				return testObjectUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected TestObject testObject;
-
-	@JsonIgnore
-	private Supplier<TestObject> _testObjectSupplier;
+	private Supplier<String> _propertyWithHyphensSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -305,13 +178,14 @@ public class NestedTestObject implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof NestedTestObject)) {
+		if (!(object instanceof UnreferencedTestEntity)) {
 			return false;
 		}
 
-		NestedTestObject nestedTestObject = (NestedTestObject)object;
+		UnreferencedTestEntity unreferencedTestEntity =
+			(UnreferencedTestEntity)object;
 
-		return Objects.equals(toString(), nestedTestObject.toString());
+		return Objects.equals(toString(), unreferencedTestEntity.toString());
 	}
 
 	@Override
@@ -325,41 +199,6 @@ public class NestedTestObject implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		Date dateCreated = getDateCreated();
-
-		if (dateCreated != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dateCreated\": ");
-
-			sb.append("\"");
-
-			sb.append(liferayToJSONDateFormat.format(dateCreated));
-
-			sb.append("\"");
-		}
-
-		Date dateModified = getDateModified();
-
-		if (dateModified != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dateModified\": ");
-
-			sb.append("\"");
-
-			sb.append(liferayToJSONDateFormat.format(dateModified));
-
-			sb.append("\"");
-		}
 
 		String description = getDescription();
 
@@ -389,32 +228,20 @@ public class NestedTestObject implements Serializable {
 			sb.append(id);
 		}
 
-		String name = getName();
+		String propertyWithHyphens = getPropertyWithHyphens();
 
-		if (name != null) {
+		if (propertyWithHyphens != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"property-with-hyphens\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(name));
+			sb.append(_escape(propertyWithHyphens));
 
 			sb.append("\"");
-		}
-
-		TestObject testObject = getTestObject();
-
-		if (testObject != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"testObject\": ");
-
-			sb.append(String.valueOf(testObject));
 		}
 
 		sb.append("}");
@@ -424,7 +251,7 @@ public class NestedTestObject implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.NestedTestObject",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0_0.UnreferencedTestEntity",
 		name = "x-class-name"
 	)
 	public String xClassName;

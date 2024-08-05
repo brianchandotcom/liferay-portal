@@ -5,7 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.UnreferencedTestObject;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0_0.UnreferencedTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -21,24 +21,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class UnreferencedTestObjectSerDes {
+public class UnreferencedTestEntitySerDes {
 
-	public static UnreferencedTestObject toDTO(String json) {
-		UnreferencedTestObjectJSONParser unreferencedTestObjectJSONParser =
-			new UnreferencedTestObjectJSONParser();
+	public static UnreferencedTestEntity toDTO(String json) {
+		UnreferencedTestEntityJSONParser unreferencedTestEntityJSONParser =
+			new UnreferencedTestEntityJSONParser();
 
-		return unreferencedTestObjectJSONParser.parseToDTO(json);
+		return unreferencedTestEntityJSONParser.parseToDTO(json);
 	}
 
-	public static UnreferencedTestObject[] toDTOs(String json) {
-		UnreferencedTestObjectJSONParser unreferencedTestObjectJSONParser =
-			new UnreferencedTestObjectJSONParser();
+	public static UnreferencedTestEntity[] toDTOs(String json) {
+		UnreferencedTestEntityJSONParser unreferencedTestEntityJSONParser =
+			new UnreferencedTestEntityJSONParser();
 
-		return unreferencedTestObjectJSONParser.parseToDTOs(json);
+		return unreferencedTestEntityJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(UnreferencedTestObject unreferencedTestObject) {
-		if (unreferencedTestObject == null) {
+	public static String toJSON(UnreferencedTestEntity unreferencedTestEntity) {
+		if (unreferencedTestEntity == null) {
 			return "null";
 		}
 
@@ -46,7 +46,7 @@ public class UnreferencedTestObjectSerDes {
 
 		sb.append("{");
 
-		if (unreferencedTestObject.getDescription() != null) {
+		if (unreferencedTestEntity.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -55,22 +55,22 @@ public class UnreferencedTestObjectSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(unreferencedTestObject.getDescription()));
+			sb.append(_escape(unreferencedTestEntity.getDescription()));
 
 			sb.append("\"");
 		}
 
-		if (unreferencedTestObject.getId() != null) {
+		if (unreferencedTestEntity.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(unreferencedTestObject.getId());
+			sb.append(unreferencedTestEntity.getId());
 		}
 
-		if (unreferencedTestObject.getPropertyWithHyphens() != null) {
+		if (unreferencedTestEntity.getPropertyWithHyphens() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -79,7 +79,7 @@ public class UnreferencedTestObjectSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(unreferencedTestObject.getPropertyWithHyphens()));
+			sb.append(_escape(unreferencedTestEntity.getPropertyWithHyphens()));
 
 			sb.append("\"");
 		}
@@ -90,61 +90,61 @@ public class UnreferencedTestObjectSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		UnreferencedTestObjectJSONParser unreferencedTestObjectJSONParser =
-			new UnreferencedTestObjectJSONParser();
+		UnreferencedTestEntityJSONParser unreferencedTestEntityJSONParser =
+			new UnreferencedTestEntityJSONParser();
 
-		return unreferencedTestObjectJSONParser.parseToMap(json);
+		return unreferencedTestEntityJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		UnreferencedTestObject unreferencedTestObject) {
+		UnreferencedTestEntity unreferencedTestEntity) {
 
-		if (unreferencedTestObject == null) {
+		if (unreferencedTestEntity == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (unreferencedTestObject.getDescription() == null) {
+		if (unreferencedTestEntity.getDescription() == null) {
 			map.put("description", null);
 		}
 		else {
 			map.put(
 				"description",
-				String.valueOf(unreferencedTestObject.getDescription()));
+				String.valueOf(unreferencedTestEntity.getDescription()));
 		}
 
-		if (unreferencedTestObject.getId() == null) {
+		if (unreferencedTestEntity.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(unreferencedTestObject.getId()));
+			map.put("id", String.valueOf(unreferencedTestEntity.getId()));
 		}
 
-		if (unreferencedTestObject.getPropertyWithHyphens() == null) {
+		if (unreferencedTestEntity.getPropertyWithHyphens() == null) {
 			map.put("property-with-hyphens", null);
 		}
 		else {
 			map.put(
 				"property-with-hyphens",
 				String.valueOf(
-					unreferencedTestObject.getPropertyWithHyphens()));
+					unreferencedTestEntity.getPropertyWithHyphens()));
 		}
 
 		return map;
 	}
 
-	public static class UnreferencedTestObjectJSONParser
-		extends BaseJSONParser<UnreferencedTestObject> {
+	public static class UnreferencedTestEntityJSONParser
+		extends BaseJSONParser<UnreferencedTestEntity> {
 
 		@Override
-		protected UnreferencedTestObject createDTO() {
-			return new UnreferencedTestObject();
+		protected UnreferencedTestEntity createDTO() {
+			return new UnreferencedTestEntity();
 		}
 
 		@Override
-		protected UnreferencedTestObject[] createDTOArray(int size) {
-			return new UnreferencedTestObject[size];
+		protected UnreferencedTestEntity[] createDTOArray(int size) {
+			return new UnreferencedTestEntity[size];
 		}
 
 		@Override
@@ -166,18 +166,18 @@ public class UnreferencedTestObjectSerDes {
 
 		@Override
 		protected void setField(
-			UnreferencedTestObject unreferencedTestObject,
+			UnreferencedTestEntity unreferencedTestEntity,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
-					unreferencedTestObject.setDescription(
+					unreferencedTestEntity.setDescription(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					unreferencedTestObject.setId(
+					unreferencedTestEntity.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
@@ -185,7 +185,7 @@ public class UnreferencedTestObjectSerDes {
 						jsonParserFieldName, "property-with-hyphens")) {
 
 				if (jsonParserFieldValue != null) {
-					unreferencedTestObject.setPropertyWithHyphens(
+					unreferencedTestEntity.setPropertyWithHyphens(
 						(String)jsonParserFieldValue);
 				}
 			}

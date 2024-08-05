@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -395,7 +396,18 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 					ddmFormField, value.getDefaultLocale(), objectField,
 					value.getString(value.getDefaultLocale()));
 
-				if (objectField.getListTypeDefinitionId() > 0) {
+				if (objectField.compareBusinessType(
+						ObjectFieldConstants.
+							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+					properties.put(
+						objectField.getName(),
+						ListUtil.fromString(
+							valueString, StringPool.COMMA_AND_SPACE));
+				}
+				else if (objectField.compareBusinessType(
+							ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
 					properties.put(
 						objectField.getName(),
 						HashMapBuilder.put(

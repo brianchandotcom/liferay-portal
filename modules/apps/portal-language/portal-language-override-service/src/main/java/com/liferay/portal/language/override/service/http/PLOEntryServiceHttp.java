@@ -243,8 +243,8 @@ public class PLOEntryServiceHttp {
 	}
 
 	public static void importPLOEntries(
-			HttpPrincipal httpPrincipal, java.io.InputStream inputStream,
-			String languageId)
+			HttpPrincipal httpPrincipal, String languageId,
+			java.util.Properties properties)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   java.io.IOException {
 
@@ -254,7 +254,7 @@ public class PLOEntryServiceHttp {
 				_importPLOEntriesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, inputStream, languageId);
+				methodKey, languageId, properties);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -334,7 +334,7 @@ public class PLOEntryServiceHttp {
 	private static final Class<?>[] _getPLOEntriesCountParameterTypes4 =
 		new Class[] {long.class};
 	private static final Class<?>[] _importPLOEntriesParameterTypes5 =
-		new Class[] {java.io.InputStream.class, String.class};
+		new Class[] {String.class, java.util.Properties.class};
 	private static final Class<?>[] _setPLOEntriesParameterTypes6 =
 		new Class[] {String.class, java.util.Map.class};
 

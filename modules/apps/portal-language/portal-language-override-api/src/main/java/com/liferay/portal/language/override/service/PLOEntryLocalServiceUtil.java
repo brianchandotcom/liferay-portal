@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.language.override.model.PLOEntry;
 
-import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
@@ -308,12 +307,12 @@ public class PLOEntryLocalServiceUtil {
 	}
 
 	public static void importPLOEntries(
-			long companyId, InputStream inputStream, String languageId,
-			long userId)
-		throws java.io.IOException, PortalException {
+			long companyId, long userId, String languageId,
+			java.util.Properties properties)
+		throws PortalException {
 
 		getService().importPLOEntries(
-			companyId, inputStream, languageId, userId);
+			companyId, userId, languageId, properties);
 	}
 
 	public static void setPLOEntries(

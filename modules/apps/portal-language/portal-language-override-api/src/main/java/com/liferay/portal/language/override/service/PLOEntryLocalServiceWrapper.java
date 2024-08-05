@@ -354,13 +354,12 @@ public class PLOEntryLocalServiceWrapper
 
 	@Override
 	public void importPLOEntries(
-			long companyId, java.io.InputStream inputStream, String languageId,
-			long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			   java.io.IOException {
+			long companyId, long userId, String languageId,
+			java.util.Properties properties)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_ploEntryLocalService.importPLOEntries(
-			companyId, inputStream, languageId, userId);
+			companyId, userId, languageId, properties);
 	}
 
 	@Override

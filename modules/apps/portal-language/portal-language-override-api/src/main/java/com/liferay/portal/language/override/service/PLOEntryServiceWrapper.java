@@ -75,11 +75,11 @@ public class PLOEntryServiceWrapper
 
 	@Override
 	public void importPLOEntries(
-			java.io.InputStream inputStream, String languageId)
+			String languageId, java.util.Properties properties)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   java.io.IOException {
 
-		_ploEntryService.importPLOEntries(inputStream, languageId);
+		_ploEntryService.importPLOEntries(languageId, properties);
 	}
 
 	@Override

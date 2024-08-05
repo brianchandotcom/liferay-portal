@@ -37,6 +37,7 @@ import {LayoutSelector} from '../../../../../../common/components/LayoutSelector
 import {CommonStyles} from './CommonStyles';
 import ContainerDisplayOptions from './ContainerDisplayOptions';
 import FormMappingOptions from './FormMappingOptions';
+import FormMultiStepOptions from './FormMultiStepOptions';
 
 export function FormGeneralPanel({item}) {
 	const isMounted = useIsMounted();
@@ -167,6 +168,13 @@ function FormOptions({item, onValueSelect}) {
 						item={item}
 						onValueSelect={onValueSelect}
 					/>
+
+					{formIsMapped(item) && Liferay.FeatureFlags['LPD-10727'] ? (
+						<FormMultiStepOptions
+							item={item}
+							onValueSelect={onValueSelect}
+						/>
+					) : null}
 				</ClayPanel.Body>
 			</ClayPanel>
 		</div>

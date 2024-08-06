@@ -866,55 +866,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-117818. Map manual URL to text fragment."
-	@priority = 5
-	test MapManualURLToTextFragment {
-		property portal.acceptance = "true";
-
-		task ("Add a Heading fragment to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
-				siteName = ${randomSiteName});
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-		}
-
-		task ("Map manual URL to editable field of Heading") {
-			PageEditorEditableLink.gotoEditableFieldLink(
-				fragmentName = "Heading",
-				id = "element-text");
-
-			PageEditorEditableLink.updateURL(url = "https://liferay.com");
-
-			AssertVisible(
-				key_append = "[normalize-space(text())='Heading Example']",
-				key_url = "https://liferay.com",
-				locator1 = "Fragment#FRAGMENT_LINK");
-
-			PageEditor.publish();
-		}
-
-		task ("Assert mapped URL work in view mode") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page Name",
-				siteName = ${randomSiteName});
-
-			AssertVisible(
-				key_append = "[normalize-space(text())='Heading Example']",
-				key_url = "https://liferay.com",
-				locator1 = "Fragment#FRAGMENT_LINK");
-
-			Click(
-				key_append = "[normalize-space(text())='Heading Example']",
-				key_url = "https://liferay.com",
-				locator1 = "Fragment#FRAGMENT_LINK");
-
-			AssertLocation.assertPartialLocation(value1 = "liferay.com");
-		}
-	}
-
 	@description = "This is a use case for LPS-120198. Link public and private pages to fragments."
 	@priority = 4
 	test MapPageToImageFragment {

@@ -104,6 +104,36 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	@Test
+	public void testAddMappedFragmentEntryLinkWithURL() throws Exception {
+		JSONObject jsonObject = JSONUtil.put(
+			"element-text",
+			JSONUtil.put(
+				"config",
+				JSONUtil.put(
+					"href",
+					JSONUtil.put(
+						LocaleUtil.getSiteDefault(
+						).toString(),
+						"https://liferay.com")
+				).put(
+					"mapperType", "link"
+				)
+			).put(
+				"defaultValue", "Heading Example"
+			));
+
+		FragmentEntryLink fragmentEntryLink = _addHeadingFragmentEntryLink(
+			jsonObject);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			_renderFragmentEntryLink(fragmentEntryLink);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertTrue(content.contains("https://liferay.com"));
+	}
+
+	@Test
 	public void testCacheableFragmentEntryLink() throws Exception {
 		FragmentEntry fragmentEntry = _getFragmentEntry(true);
 

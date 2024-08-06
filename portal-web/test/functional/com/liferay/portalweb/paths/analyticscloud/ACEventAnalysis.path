@@ -50,13 +50,13 @@
 <!-- EDIT_ATTRIBUTE -->
 
 <tr>
-	<td>FILTER_BUTTON</td>
-	<td>//*[text()='${key_attributeName}']/..//button[contains(@class,'options-button')]//*</td>
+	<td>FILTER_APPLY_BUTTON</td>
+	<td>//*[contains(@class,'show-overflow')]//*[contains(@class,'button-root')and text()='Apply']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_DONE_BUTTON</td>
-	<td>//*[contains(@class,'show-overflow')]//*[contains(@class,'button-root')and text()='Done']</td>
+	<td>FILTER_BUTTON</td>
+	<td>//*[text()='${key_attributeName}']/..//button[contains(@class,'options-button')]//*</td>
 	<td></td>
 </tr>
 <tr>

@@ -386,7 +386,13 @@ public class DBPartitionUtil {
 				}
 			}
 
-			_dbPartitionDB.copyRules(connection, partitionName);
+			try (Statement statement = connection.createStatement()) {
+				for (String createRuleSQL :
+						_dbPartitionDB.getCreateRulesSQL(partitionName)) {
+
+					statement.executeUpdate(createRuleSQL);
+				}
+			}
 
 			connection.commit();
 		}
@@ -512,7 +518,13 @@ public class DBPartitionUtil {
 				}
 			}
 
-			_dbPartitionDB.copyRules(connection, toPartitionName);
+			try (Statement statement = connection.createStatement()) {
+				for (String createRuleSQL :
+						_dbPartitionDB.getCreateRulesSQL(toPartitionName)) {
+
+					statement.executeUpdate(createRuleSQL);
+				}
+			}
 
 			connection.commit();
 

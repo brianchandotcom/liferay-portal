@@ -15,7 +15,7 @@ public class OrganizationNameException extends PortalException {
 	public static class MustNotBeNull extends OrganizationNameException {
 
 		public MustNotBeNull() {
-			super("Organization name must not be null.");
+			super("Name must not be null");
 		}
 
 	}
@@ -26,8 +26,8 @@ public class OrganizationNameException extends PortalException {
 		public MustNotExceedMaximumLength(String name, int nameMaxLength) {
 			super(
 				StringBundler.concat(
-					"Organization name", name, " must have fewer than ",
-					nameMaxLength, " characters"));
+					"Name ", name, " must have fewer than ", nameMaxLength,
+					" characters"));
 		}
 
 	}

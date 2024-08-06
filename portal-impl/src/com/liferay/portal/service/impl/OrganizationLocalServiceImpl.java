@@ -2623,12 +2623,12 @@ public class OrganizationLocalServiceImpl
 			throw new OrganizationNameException.MustNotBeNull();
 		}
 
-		int nameMaxLength = ModelHintsUtil.getMaxLength(
+		int maxLength = ModelHintsUtil.getMaxLength(
 			Organization.class.getName(), "name");
 
-		if (name.length() > nameMaxLength) {
+		if (name.length() > maxLength) {
 			throw new OrganizationNameException.MustNotExceedMaximumLength(
-				name, nameMaxLength);
+				name, maxLength);
 		}
 
 		Organization organization = organizationPersistence.fetchByC_N(

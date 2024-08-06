@@ -214,11 +214,11 @@ public class OpenAPIUtil {
 					if (allOfSchemas != null) {
 						for (Schema allOfSchema : allOfSchemas) {
 							if (allOfSchema.getReference() != null) {
-								Schema processedAllOfSchema = allSchemas.get(
+								Schema referenceSchema = allSchemas.get(
 									OpenAPIParserUtil.getReferenceName(
 										allOfSchema.getReference()));
 
-								if (processedAllOfSchema.getDiscriminator() !=
+								if (referenceSchema.getDiscriminator() !=
 										null) {
 
 									polymorphicChild = true;

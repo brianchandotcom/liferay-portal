@@ -51,6 +51,7 @@ async function addServiceProviderConnection(page, spConnection: TSpConnection) {
 }
 
 export async function connectSpAndIdp(
+	browser,
 	idpName: string,
 	page,
 	spName: string,
@@ -66,7 +67,17 @@ export async function connectSpAndIdp(
 		...DEFAULT_SP_CONNECTION_VALUES,
 	};
 
-	await addServiceProviderConnection(page, spConnection);
+	const defaultBaseUrl = liferayConfig.environment.baseUrl;
+
+	liferayConfig.environment.baseUrl = `http://${idpName}:8080`;
+
+	let newPage = await performSamlSafeAdminLogin(browser, idpName);
+
+	await addServiceProviderConnection(newPage, spConnection);
+
+	liferayConfig.environment.baseUrl = `http://${spName}:8080`;
+
+	newPage = await performSamlSafeAdminLogin(browser, spName);
 
 	const idpConnection: TIdpConnection = {
 		entityId: idpEntityId,
@@ -77,5 +88,7 @@ export async function connectSpAndIdp(
 		...DEFAULT_IDP_CONNECTION_VALUES,
 	};
 
-	await addIdentityProviderConnection(idpConnection, page);
+	await addIdentityProviderConnection(idpConnection, newPage);
+
+	liferayConfig.environment.baseUrl = defaultBaseUrl;
 }

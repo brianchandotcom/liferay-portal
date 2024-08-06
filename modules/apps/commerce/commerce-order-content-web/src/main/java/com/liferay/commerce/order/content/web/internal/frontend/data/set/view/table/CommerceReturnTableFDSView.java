@@ -39,7 +39,9 @@ public class CommerceReturnTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"totalAmount", "amount"
+			"totalAmount", "amount",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"commerceCurrencyDataRenderer")
 		).add(
 			"requestedItems", "number-of-items"
 		).add(

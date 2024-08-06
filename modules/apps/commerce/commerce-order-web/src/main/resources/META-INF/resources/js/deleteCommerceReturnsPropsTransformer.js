@@ -5,6 +5,7 @@
 
 import {fetch, openConfirmModal, openToast, sub} from 'frontend-js-web';
 
+import CommerceCurrencyDataRenderer from './CommerceCurrencyDataRenderer';
 import {CommerceReturnStatusDataRenderer} from './CommerceReturnStatusDataRenderer';
 import CommerceStatusDataRenderer from './CommerceStatusDataRenderer';
 
@@ -42,6 +43,7 @@ export default function propsTransformer({...otherProps}) {
 	return {
 		...otherProps,
 		customDataRenderers: {
+			commerceCurrencyDataRenderer: CommerceCurrencyDataRenderer,
 			commerceReturnStatusDataRenderer: CommerceReturnStatusDataRenderer,
 			commerceStatusDataRenderer: CommerceStatusDataRenderer,
 		},

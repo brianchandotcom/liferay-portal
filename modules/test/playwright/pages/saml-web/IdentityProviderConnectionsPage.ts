@@ -9,7 +9,17 @@ import {TIdpConnection} from '../../helpers/SamlProviderConnectionHelper';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
+export interface AttributeMapping {
+	attributeMappingType:
+		| 'Basic User Fields'
+		| 'User Custom Fields'
+		| 'User Memberships';
+	samlAttribute: string;
+	userFieldExpression: string;
+}
+
 export class IdentityProviderConnectionsPage {
+	readonly basicUserFields: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly clockSkewField: Locator;
 	readonly enabledField: Locator;
@@ -23,9 +33,12 @@ export class IdentityProviderConnectionsPage {
 	readonly saveButton: Locator;
 	readonly successMessage: Locator;
 	readonly unknownUsersAreStrangersToggle: Locator;
+	readonly userCustomFields: Locator;
+	readonly userMembershipsFields: Locator;
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.basicUserFields = page.getByText('Basic User Fields');
 		this.clockSkewField = page.getByLabel('Clock Skew');
 		this.enabledField = page.getByText('Enabled', {exact: true});
 		this.entityIdField = page.getByLabel('Entity ID');
@@ -48,6 +61,8 @@ export class IdentityProviderConnectionsPage {
 		this.unknownUsersAreStrangersToggle = page.getByText(
 			'Unknown Users Are Strangers'
 		);
+		this.userCustomFields = page.getByText('User Custom Fields');
+		this.userMembershipsFields = page.getByText('User Memberships');
 	}
 
 	async addIdentityProviderConnection(idpConnection: TIdpConnection) {
@@ -112,6 +127,31 @@ export class IdentityProviderConnectionsPage {
 		idpConnection: TIdpConnection
 	) {
 		await this.nameField.fill(idpConnection.idpName);
+
+		if (idpConnection.attributeMappings) {
+			for (const attributeMapping of idpConnection.attributeMappings) {
+				const attributeMappingLocator = this.page.getByText(
+					`${attributeMapping.attributeMappingType} Undo`
+				);
+
+				// Always add a new row so we don't overwrite existing entries
+
+				await attributeMappingLocator
+					.getByRole('button', {name: 'Add'})
+					.last()
+					.click();
+
+				await attributeMappingLocator
+					.getByText('SAML Attribute')
+					.last()
+					.fill(attributeMapping.samlAttribute);
+
+				await attributeMappingLocator
+					.getByText('User Field Expression')
+					.last()
+					.selectOption(attributeMapping.userFieldExpression);
+			}
+		}
 
 		if (idpConnection.clockSkew) {
 			await this.clockSkewField.fill(idpConnection.clockSkew);

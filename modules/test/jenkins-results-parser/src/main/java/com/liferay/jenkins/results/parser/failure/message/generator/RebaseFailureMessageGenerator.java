@@ -54,7 +54,7 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 				messageElement));
 	}
 
-	private static final String _TOKEN_COULD_NOT_APPLY = "Could not apply";
+	private static final String _TOKEN_COULD_NOT_APPLY = "could not apply";
 
 	private static final String _TOKEN_UNABLE_TO_REBASE = "Unable to rebase";
 

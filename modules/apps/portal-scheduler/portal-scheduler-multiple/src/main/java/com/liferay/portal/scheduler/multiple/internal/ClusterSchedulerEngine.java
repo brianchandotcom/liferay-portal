@@ -238,13 +238,37 @@ public class ClusterSchedulerEngine
 		setClusterableThreadLocal(storageType);
 	}
 
+	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
 	@Override
 	public void run(
 			long companyId, String jobName, String groupName,
 			StorageType storageType)
 		throws SchedulerException {
 
-		_schedulerEngine.run(companyId, jobName, groupName, storageType);
+		if (_clusterMasterExecutor.isEnabled() &&
+			!_clusterMasterExecutor.isMaster() &&
+			(storageType == StorageType.MEMORY_CLUSTERED)) {
+
+			MethodHandler methodHandler = new MethodHandler(
+				_runMethodKey, companyId, jobName, groupName, storageType);
+
+			Future<Void> future = _clusterMasterExecutor.executeOnMaster(
+				methodHandler);
+
+			try {
+				future.get();
+			}
+			catch (Exception exception) {
+				_log.error(
+					StringBundler.concat(
+						"Unable to run memory clustered job ",
+						_getFullName(jobName, groupName), " on master"),
+					exception);
+			}
+		}
+		else {
+			_schedulerEngine.run(companyId, jobName, groupName, storageType);
+		}
 	}
 
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
@@ -662,6 +686,9 @@ public class ClusterSchedulerEngine
 		new MethodKey(
 			ClusterSchedulerEngine.class, "_reloadMemoryClusteredJobs",
 			String.class);
+	private static final MethodKey _runMethodKey = new MethodKey(
+		SchedulerEngineHelperUtil.class, "run", long.class, String.class,
+		String.class, StorageType.class);
 
 	private long _callMasterTimeout;
 	private ClusterExecutor _clusterExecutor;

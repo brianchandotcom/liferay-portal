@@ -135,44 +135,8 @@ public abstract class BaseJob implements Job {
 				return batchTestClassGroups;
 			}
 
-			Properties buildProperties;
-
-			try {
-				buildProperties = JenkinsResultsParserUtil.getBuildProperties(
-					false);
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(
-					"Unable to get build properties", ioException);
-			}
-
-			boolean relevantEngineEnabled = Boolean.parseBoolean(
-				buildProperties.getProperty("relevant.engine.enabled"));
-
-			if (this instanceof PortalAcceptancePullRequestJob) {
-				PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
-					(PortalAcceptancePullRequestJob)this;
-
-				String upstreamBranchName =
-					portalAcceptancePullRequestJob.getUpstreamBranchName();
-
-				if (!upstreamBranchName.equals("master")) {
-					relevantEngineEnabled = false;
-				}
-			}
-
-			if (relevantEngineEnabled &&
-				Objects.equals(getTestSuiteName(), "relevant")) {
-
-				System.out.println("Relevant engine is enabled");
-
-				batchTestClassGroups.addAll(
-					getBatchTestClassGroups(getTestBatches()));
-			}
-			else {
-				batchTestClassGroups.addAll(
-					getBatchTestClassGroups(getRawBatchNames()));
-			}
+			batchTestClassGroups.addAll(
+				getBatchTestClassGroups(getRawBatchNames()));
 
 			return batchTestClassGroups;
 		}

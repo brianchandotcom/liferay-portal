@@ -6,26 +6,20 @@
 package com.liferay.calendar.upgrade.v4_2_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
-import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
 import com.liferay.calendar.test.util.UpgradeDatabaseTestHelper;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import java.util.Calendar;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -48,17 +42,11 @@ public class UpgradeCalendarBookingTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		_calendar = CalendarTestUtil.addCalendar(_group);
-
 		_upgradeDatabaseTestHelper =
 			CalendarUpgradeTestUtil.getUpgradeDatabaseTestHelper();
 		_upgradeProcess = CalendarUpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator,
-			"com.liferay.calendar.internal.upgrade.v4_2_1." +
-				"CalendarBookingUpgradeProcess");
-		_user = UserTestUtil.addUser();
+			CalendarBookingTestUtil.getUpgradeStepClassName("v4_2_1"));
 	}
 
 	@After
@@ -70,22 +58,15 @@ public class UpgradeCalendarBookingTest {
 	public void testUpgradeAllDayCalendarBookingStartAndEndTime()
 		throws Exception {
 
-		setUserTimeZoneId("Europe/Paris");
-
-		java.util.Calendar expectedStartTimeJCalendar =
-			CalendarFactoryUtil.getCalendar(
-				2022, java.util.Calendar.JANUARY, 1, 0, 0);
-
-		java.util.Calendar expectedEndTimeJCalendar =
-			CalendarFactoryUtil.getCalendar(
-				2022, java.util.Calendar.JANUARY, 1, 23, 59);
-
-		ServiceContext serviceContext = createServiceContext();
-
 		CalendarBooking calendarBooking =
 			CalendarBookingTestUtil.addAllDayCalendarBooking(
-				_user, _calendar, expectedStartTimeJCalendar.getTimeInMillis(),
-				expectedEndTimeJCalendar.getTimeInMillis(), serviceContext);
+				_userLocalService, "Europe/Paris");
+
+		Calendar expectedStartTimeJCalendar = JCalendarUtil.getJCalendar(
+			calendarBooking.getStartTime());
+
+		Calendar expectedEndTimeJCalendar = JCalendarUtil.getJCalendar(
+			calendarBooking.getEndTime());
 
 		_upgradeProcess.upgrade();
 
@@ -94,52 +75,33 @@ public class UpgradeCalendarBookingTest {
 		calendarBooking = _calendarBookingLocalService.getCalendarBooking(
 			calendarBooking.getCalendarBookingId());
 
-		java.util.Calendar actualStartTimeJCalendar =
-			JCalendarUtil.getJCalendar(calendarBooking.getStartTime());
+		Calendar actualStartTimeJCalendar = JCalendarUtil.getJCalendar(
+			calendarBooking.getStartTime());
 
 		assertSameTime(expectedStartTimeJCalendar, actualStartTimeJCalendar);
 
-		java.util.Calendar actualEndTimeJCalendar = JCalendarUtil.getJCalendar(
+		Calendar actualEndTimeJCalendar = JCalendarUtil.getJCalendar(
 			calendarBooking.getEndTime());
 
 		assertSameTime(expectedEndTimeJCalendar, actualEndTimeJCalendar);
 	}
 
 	protected void assertSameTime(
-		java.util.Calendar expectedJCalendar,
-		java.util.Calendar actualJCalendar) {
+		Calendar expectedJCalendar, Calendar actualJCalendar) {
 
 		Assert.assertNotNull(expectedJCalendar);
 		Assert.assertNotNull(actualJCalendar);
 		Assert.assertEquals(
-			expectedJCalendar.get(java.util.Calendar.HOUR),
-			actualJCalendar.get(java.util.Calendar.HOUR));
+			expectedJCalendar.get(Calendar.HOUR),
+			actualJCalendar.get(Calendar.HOUR));
 		Assert.assertEquals(
-			expectedJCalendar.get(java.util.Calendar.MINUTE),
-			actualJCalendar.get(java.util.Calendar.MINUTE));
+			expectedJCalendar.get(Calendar.MINUTE),
+			actualJCalendar.get(Calendar.MINUTE));
 	}
-
-	protected ServiceContext createServiceContext() {
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(_user.getCompanyId());
-		serviceContext.setUserId(_user.getUserId());
-
-		return serviceContext;
-	}
-
-	protected void setUserTimeZoneId(String timeZoneId) {
-		_user.setTimeZoneId(timeZoneId);
-
-		_userLocalService.updateUser(_user);
-	}
-
-	private Calendar _calendar;
 
 	@Inject
 	private CalendarBookingLocalService _calendarBookingLocalService;
 
-	private Group _group;
 	private UpgradeDatabaseTestHelper _upgradeDatabaseTestHelper;
 	private UpgradeProcess _upgradeProcess;
 
@@ -147,8 +109,6 @@ public class UpgradeCalendarBookingTest {
 		filter = "component.name=com.liferay.calendar.internal.upgrade.registry.CalendarServiceUpgradeStepRegistrator"
 	)
 	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	private User _user;
 
 	@Inject
 	private UserLocalService _userLocalService;

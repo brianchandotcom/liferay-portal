@@ -15,10 +15,16 @@ import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -41,6 +47,32 @@ public class CalendarBookingTestUtil {
 			user, calendar, new long[0], RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), startTime, endTime, true,
 			null, 0, null, 0, null, serviceContext);
+	}
+
+	public static CalendarBooking addAllDayCalendarBooking(
+			UserLocalService userLocalService, String timeZoneId)
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		User user = UserTestUtil.addUser(group.getGroupId());
+
+		user.setTimeZoneId(timeZoneId);
+
+		user = userLocalService.updateUser(user);
+
+		java.util.Calendar startTimeCalendar = CalendarFactoryUtil.getCalendar(
+			2022, java.util.Calendar.JANUARY, 1, 0, 0);
+
+		java.util.Calendar endTimeCalendar = CalendarFactoryUtil.getCalendar(
+			2022, java.util.Calendar.JANUARY, 1, 23, 59);
+
+		return addAllDayCalendarBooking(
+			user, CalendarTestUtil.addCalendar(group),
+			startTimeCalendar.getTimeInMillis(),
+			endTimeCalendar.getTimeInMillis(),
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId()));
 	}
 
 	public static CalendarBooking addCalendarBooking(
@@ -431,6 +463,11 @@ public class CalendarBookingTestUtil {
 		}
 
 		return childCalendarBooking;
+	}
+
+	public static String getUpgradeStepClassName(String schemaVersion) {
+		return "com.liferay.calendar.internal.upgrade." + schemaVersion +
+			".CalendarBookingUpgradeProcess";
 	}
 
 	public static CalendarBooking updateCalendarBooking(

@@ -3613,29 +3613,14 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static boolean isJenkinsMaster() {
-		String hostName = getHostName("");
-
-		String hostNameSuffix = ".lax.liferay.com";
-
-		if (hostName.endsWith(hostNameSuffix)) {
-			hostName = hostName.substring(
-				0, hostName.length() - hostNameSuffix.length());
+		try {
+			JenkinsMaster.getInstance(getHostName(null));
+		}
+		catch (Exception exception) {
+			return false;
 		}
 
-		JenkinsCohort jenkinsCohort = getJenkinsCohort();
-
-		List<JenkinsMaster> jenkinsMasterList =
-			jenkinsCohort.getJenkinsMasters();
-
-		for (JenkinsMaster jenkinsMaster : jenkinsMasterList) {
-			String jenkinsMastersName = jenkinsMaster.getName();
-
-			if (jenkinsMastersName.equals(hostName)) {
-				return true;
-			}
-		}
-
-		return false;
+		return true;
 	}
 
 	public static boolean isJenkinsSlaveInNetwork(

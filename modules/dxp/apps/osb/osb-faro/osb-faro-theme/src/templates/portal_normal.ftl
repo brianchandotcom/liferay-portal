@@ -9,7 +9,7 @@
 
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
-	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Serif+Pro" rel="stylesheet">
+	<link href="/o/osb-faro-theme/css/source-sans-pro-fonts.css" rel="stylesheet" type = "text/css" />
 
 	<#if is_signed_in>
 		<link href="${htmlUtil.escape(portalUtil.getStaticResourceURL(request, "/o/osb-faro-web/dist/main.css"))}" rel="stylesheet" type = "text/css" />

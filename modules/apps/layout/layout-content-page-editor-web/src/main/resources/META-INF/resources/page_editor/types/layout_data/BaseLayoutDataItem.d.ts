@@ -27,7 +27,7 @@ interface BaseCommonStyles {
 	paddingTop?: string;
 	styles?: {
 		backgroundImage?: {classPK?: string};
-		display?: 'none';
+		display?: 'none' | 'block';
 		height?: string;
 		maxHeight?: string;
 		maxWidth?: string;
@@ -43,7 +43,7 @@ export type CommonStyles = ResponsiveConfig<BaseCommonStyles>;
 
 export interface BaseLayoutDataItem<
 	ItemType extends LayoutDataItemType,
-	Config
+	Config,
 > {
 	children: string[];
 	config: Config & {name?: string};

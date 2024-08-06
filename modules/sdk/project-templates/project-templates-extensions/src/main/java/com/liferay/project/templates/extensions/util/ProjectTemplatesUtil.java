@@ -122,10 +122,10 @@ public class ProjectTemplatesUtil {
 	}
 
 	public static List<String> getArchetypeJarNames() throws IOException {
+		List<String> archetypeJarNames = new ArrayList<>();
+
 		Properties projectTemplateJarVersionsProperties =
 			getProjectTemplateJarVersionsProperties();
-
-		List<String> archetypeJarNames = new ArrayList<>();
 
 		Set<String> artifactIds =
 			projectTemplateJarVersionsProperties.stringPropertyNames();

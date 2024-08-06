@@ -448,14 +448,14 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	protected Set<String> getTaglibURIs(String originalContent) {
+		Set<String> taglibURis = new HashSet<String>();
+
 		String noCommentsContent = _removeComments(originalContent);
 
 		String content = noCommentsContent;
 
 		int contentX = -1;
 		int contentY = content.length();
-
-		Set<String> taglibURis = new HashSet<String>();
 
 		while (true) {
 			contentX = content.lastIndexOf("<%@", contentY);

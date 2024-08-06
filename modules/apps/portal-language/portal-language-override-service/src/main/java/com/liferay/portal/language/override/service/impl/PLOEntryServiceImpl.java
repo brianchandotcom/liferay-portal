@@ -99,8 +99,8 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 			permissionChecker, PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
 
 		ploEntryLocalService.importPLOEntries(
-			permissionChecker.getCompanyId(), permissionChecker.getUserId(),
-			languageId, properties);
+			permissionChecker.getCompanyId(), languageId, properties,
+			permissionChecker.getUserId());
 	}
 
 	@Override

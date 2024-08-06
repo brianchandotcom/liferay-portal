@@ -192,8 +192,9 @@ public class PLOEntryLocalServiceTest {
 		properties.setProperty(key2, value2);
 
 		_ploEntryLocalService.importPLOEntries(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			LanguageUtil.getLanguageId(LocaleUtil.US), properties);
+			TestPropsValues.getCompanyId(),
+			LanguageUtil.getLanguageId(LocaleUtil.US), properties,
+			TestPropsValues.getUserId());
 
 		Assert.assertEquals(value1, _language.get(LocaleUtil.US, key1));
 		Assert.assertEquals(value2, _language.get(LocaleUtil.US, key2));
@@ -214,8 +215,9 @@ public class PLOEntryLocalServiceTest {
 
 		try {
 			_ploEntryLocalService.importPLOEntries(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				LanguageUtil.getLanguageId(LocaleUtil.US), properties);
+				TestPropsValues.getCompanyId(),
+				LanguageUtil.getLanguageId(LocaleUtil.US), properties,
+				TestPropsValues.getUserId());
 
 			Assert.fail();
 		}

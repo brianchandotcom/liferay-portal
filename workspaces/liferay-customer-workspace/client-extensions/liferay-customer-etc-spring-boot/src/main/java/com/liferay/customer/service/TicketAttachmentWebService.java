@@ -47,8 +47,6 @@ public class TicketAttachmentWebService {
 		).put(
 			"gcsBucketName", _gcsBucketName
 		).put(
-			"md5Checksum", md5Checksum
-		).put(
 			"r_accountEntryToTicketAttachment_accountEntryERC", accountKey
 		).put(
 			"storageProvider", TicketAttachment.STORAGE_PROVIDER_GCS
@@ -57,6 +55,10 @@ public class TicketAttachmentWebService {
 		).put(
 			"zendeskTicketId", zendeskTicketId
 		);
+
+		if (!md5Checksum.equals("")) {
+			requestJSONObject.put("md5Checksum", md5Checksum);
+		}
 
 		JSONObject statusJSONObject = new JSONObject();
 

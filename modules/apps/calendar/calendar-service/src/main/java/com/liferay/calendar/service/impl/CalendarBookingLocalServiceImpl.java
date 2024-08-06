@@ -2344,7 +2344,7 @@ public class CalendarBookingLocalServiceImpl
 		String sanitizedHtml = sb.toString();
 
 		return sanitizedHtml.replaceAll(
-			_allertPattern.pattern(), ""
+			_alertPattern.pattern(), ""
 		).replaceAll(
 			_innerHtmlPattern.pattern(), ""
 		).replaceAll(
@@ -2774,7 +2774,7 @@ public class CalendarBookingLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingLocalServiceImpl.class);
 
-	private static final Pattern _allertPattern = Pattern.compile(
+	private static final Pattern _alertPattern = Pattern.compile(
 		"alert\\((.*?)\\)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _aspCodePattern = Pattern.compile(
 		"<%[\\s\\S]*?%>", Pattern.CASE_INSENSITIVE);

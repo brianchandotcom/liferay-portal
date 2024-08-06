@@ -8,7 +8,6 @@ package com.liferay.blogs.web.internal.display.context;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
@@ -27,9 +26,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,8 +34,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -53,7 +48,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -107,8 +101,7 @@ public class BlogsEditEntryDisplayContext {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			PortalUtil.getClassNameId(BlogsEntry.class),
-			getEntryId());
+			PortalUtil.getClassNameId(BlogsEntry.class), getEntryId());
 
 		if (assetEntry == null) {
 			return jsonArray;
@@ -255,38 +248,6 @@ public class BlogsEditEntryDisplayContext {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	public String getFriendlyURLAssetCategorySelectorURL() {
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
-
-		InfoItemItemSelectorCriterion itemSelectorCriterion =
-			new InfoItemItemSelectorCriterion();
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new InfoItemItemSelectorReturnType());
-		itemSelectorCriterion.setItemType(AssetCategory.class.getName());
-		itemSelectorCriterion.setMultiSelection(true);
-
-		return PortletURLBuilder.create(
-			_itemSelector.getItemSelectorURL(
-				requestBackedPortletURLFactory, _themeDisplay.getScopeGroup(),
-				_themeDisplay.getScopeGroupId(),
-				_liferayPortletResponse.getNamespace() +
-					"selectedAssetCategory",
-				itemSelectorCriterion)
-		).setParameter(
-			"selectedCategoryIds",
-			StringUtil.merge(
-				_getFriendlyURLAssetCategoryIds(), StringPool.COMMA)
-		).setParameter(
-			"vocabularyIds",
-			() -> ListUtil.toString(
-				_assetVocabularyLocalService.getGroupsVocabularies(
-					_getGroupIds()),
-				AssetVocabulary.VOCABULARY_ID_ACCESSOR)
-		).buildString();
 	}
 
 	public String getFriendlyURLSeparatorCompanyConfigurationURL()
@@ -632,26 +593,6 @@ public class BlogsEditEntryDisplayContext {
 			getEntryId());
 	}
 
-	private long[] _getGroupIds() {
-		if (_groupIds != null) {
-			return _groupIds;
-		}
-
-		try {
-			_groupIds =
-				_siteConnectedGroupGroupProvider.
-					getCurrentAndAncestorSiteAndDepotGroupIds(
-						_themeDisplay.getScopeGroupId());
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		return _groupIds;
-	}
-
 	private String _getItemSelectorURL(
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String itemSelectedEventName) {
@@ -691,9 +632,6 @@ public class BlogsEditEntryDisplayContext {
 			));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsEditEntryDisplayContext.class);
-
 	private static final Snapshot<ItemSelector> _itemSelectorSnapshot =
 		new Snapshot<>(
 			BlogsEditEntryDisplayContext.class, ItemSelector.class, null, true);
@@ -713,7 +651,6 @@ public class BlogsEditEntryDisplayContext {
 	private String _description;
 	private Boolean _emailEntryUpdatedEnabled;
 	private Long _entryId;
-	private long[] _groupIds;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private final LiferayPortletResponse _liferayPortletResponse;

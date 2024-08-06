@@ -62,6 +62,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -118,6 +119,7 @@ public class SiteInitializerExtension {
 		BlogPostingResource.Factory blogPostingResourceFactory, Bundle bundle,
 		CETManager cetManager,
 		ClientExtensionEntryLocalService clientExtensionEntryLocalService,
+		CompanyLocalService companyLocalService,
 		ConfigurationProvider configurationProvider,
 		DataDefinitionResource.Factory dataDefinitionResourceFactory,
 		DDMStructureLocalService ddmStructureLocalService,
@@ -204,11 +206,11 @@ public class SiteInitializerExtension {
 			accountRoleResourceFactory, assetCategoryLocalService,
 			assetEntryLocalService, assetLinkLocalService,
 			assetListEntryLocalService, blogPostingResourceFactory, bundle,
-			cetManager, clientExtensionEntryLocalService, configurationProvider,
-			dataDefinitionResourceFactory, ddmStructureLocalService,
-			ddmTemplateLocalService, defaultDDMStructureHelper,
-			depotEntryGroupRelLocalService, depotEntryLocalService,
-			dlFileEntryTypeLocalService, dlURLHelper,
+			cetManager, clientExtensionEntryLocalService, companyLocalService,
+			configurationProvider, dataDefinitionResourceFactory,
+			ddmStructureLocalService, ddmTemplateLocalService,
+			defaultDDMStructureHelper, depotEntryGroupRelLocalService,
+			depotEntryLocalService, dlFileEntryTypeLocalService, dlURLHelper,
 			documentFolderResourceFactory, documentResourceFactory,
 			expandoValueLocalService, fragmentsImporter, groupLocalService,
 			journalArticleLocalService, jsonFactory, keywordResourceFactory,

@@ -62,6 +62,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -133,10 +134,11 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_assetEntryLocalService, _assetLinkLocalService,
 			_assetListEntryLocalService, _blogPostingResourceFactory, bundle,
 			_cetManager, _clientExtensionEntryLocalService,
-			_configurationProvider, _dataDefinitionResourceFactory,
-			_ddmStructureLocalService, _ddmTemplateLocalService,
-			_defaultDDMStructureHelper, _depotEntryGroupRelLocalService,
-			_depotEntryLocalService, _dlFileEntryTypeLocalService, _dlURLHelper,
+			_companyLocalService, _configurationProvider,
+			_dataDefinitionResourceFactory, _ddmStructureLocalService,
+			_ddmTemplateLocalService, _defaultDDMStructureHelper,
+			_depotEntryGroupRelLocalService, _depotEntryLocalService,
+			_dlFileEntryTypeLocalService, _dlURLHelper,
 			_documentFolderResourceFactory, _documentResourceFactory,
 			_expandoValueLocalService, _fragmentsImporter, _groupLocalService,
 			_journalArticleLocalService, _jsonFactory, _keywordResourceFactory,
@@ -232,6 +234,9 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 
 	@Reference
 	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

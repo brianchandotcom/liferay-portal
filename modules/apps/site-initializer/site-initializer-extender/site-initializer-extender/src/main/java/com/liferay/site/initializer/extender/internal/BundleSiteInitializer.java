@@ -155,6 +155,7 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -273,6 +274,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		BlogPostingResource.Factory blogPostingResourceFactory, Bundle bundle,
 		CETManager cetManager,
 		ClientExtensionEntryLocalService clientExtensionEntryLocalService,
+		CompanyLocalService companyLocalService,
 		ConfigurationProvider configurationProvider,
 		DataDefinitionResource.Factory dataDefinitionResourceFactory,
 		DDMStructureLocalService ddmStructureLocalService,
@@ -362,6 +364,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_bundle = bundle;
 		_cetManager = cetManager;
 		_clientExtensionEntryLocalService = clientExtensionEntryLocalService;
+		_companyLocalService = companyLocalService;
 		_configurationProvider = configurationProvider;
 		_dataDefinitionResourceFactory = dataDefinitionResourceFactory;
 		_ddmStructureLocalService = ddmStructureLocalService;
@@ -5547,6 +5550,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setCompanyId(user.getCompanyId());
+		serviceContext.setPortalURL(
+			_companyLocalService.getCompany(
+				serviceContext.getCompanyId()
+			).getPortalURL(
+				serviceContext.getScopeGroupId()
+			));
 		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setTimeZone(user.getTimeZone());
 		serviceContext.setUserId(user.getUserId());
@@ -5927,6 +5936,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final Map<String, String> _classNameIdStringUtilReplaceValues;
 	private final ClientExtensionEntryLocalService
 		_clientExtensionEntryLocalService;
+	private final CompanyLocalService _companyLocalService;
 	private final ConfigurationProvider _configurationProvider;
 	private final DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 	private final DDMStructureLocalService _ddmStructureLocalService;

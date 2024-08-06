@@ -54,11 +54,13 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 				/>
 			</c:when>
 			<c:otherwise>
-				<clay:alert
-					dismissible="<%= true %>"
-					displayType="warning"
-					message="please-review-the-details-of-the-returning-items-before-submitting-the-request"
-				/>
+				<c:if test='<%= Objects.equals(commerceReturn.getReturnStatus(), "draft") %>'>
+					<clay:alert
+						dismissible="<%= true %>"
+						displayType="warning"
+						message="please-review-the-details-of-the-returning-items-before-submitting-the-request"
+					/>
+				</c:if>
 			</c:otherwise>
 		</c:choose>
 

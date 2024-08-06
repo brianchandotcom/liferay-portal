@@ -288,13 +288,13 @@ public class FreeMarkerTool {
 			if (allOfSchemas != null) {
 				for (Schema allOfSchema : allOfSchemas) {
 					if (allOfSchema.getReference() != null) {
-						String allOfSchemaReferenceName = getReferenceName(
+						String referenceName = getReferenceName(
 							allOfSchema.getReference());
 
-						allOfSchema = schemas.get(allOfSchemaReferenceName);
+						allOfSchema = schemas.get(referenceName);
 
 						if (allOfSchema.getDiscriminator() != null) {
-							return allOfSchemaReferenceName;
+							return referenceName;
 						}
 					}
 				}

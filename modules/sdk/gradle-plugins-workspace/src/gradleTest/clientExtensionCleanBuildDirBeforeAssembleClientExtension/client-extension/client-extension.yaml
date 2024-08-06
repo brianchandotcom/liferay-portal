@@ -1,4 +1,6 @@
 assemble:
-    - fromTask: fooTask
+    - from: foo
+      include: foo.txt
+      into: static
 client-extension:
     type: customElement

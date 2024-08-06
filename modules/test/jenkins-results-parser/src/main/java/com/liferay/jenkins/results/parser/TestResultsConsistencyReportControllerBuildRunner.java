@@ -252,6 +252,9 @@ public class TestResultsConsistencyReportControllerBuildRunner
 	}
 
 	private Map<Pair<String, String>, Long> _getLatestTestSuiteStartTimes() {
+		Map<Pair<String, String>, Long> latestTestSuiteStartTimes =
+			new LinkedHashMap<>();
+
 		List<Build> builds = _getBuildHistory();
 
 		BuildData buildData = getBuildData();
@@ -260,9 +263,6 @@ public class TestResultsConsistencyReportControllerBuildRunner
 			buildData.getBuildURL(), null);
 
 		builds.remove(currentBuild);
-
-		Map<Pair<String, String>, Long> latestTestSuiteStartTimes =
-			new LinkedHashMap<>();
 
 		for (Pair<String, String> testSuiteBranchNamePair :
 				_getTestSuiteBranchNamePairs()) {

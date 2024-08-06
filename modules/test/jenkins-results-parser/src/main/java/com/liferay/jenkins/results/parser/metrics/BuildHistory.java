@@ -166,6 +166,8 @@ public class BuildHistory {
 	protected class Table {
 
 		public JSONArray getJSONArray(int intervalDays) {
+			JSONArray jsonArray = new JSONArray();
+
 			String[][] dateStringsArray = _split(
 				JenkinsResultsParserUtil.getDateStrings(
 					getStartTime(), getDuration()),
@@ -242,8 +244,6 @@ public class BuildHistory {
 						addAll(Arrays.asList(totalServerDurations));
 					}
 				});
-
-			JSONArray jsonArray = new JSONArray();
 
 			for (List<Object> row : rows) {
 				jsonArray.put(new JSONArray(row));

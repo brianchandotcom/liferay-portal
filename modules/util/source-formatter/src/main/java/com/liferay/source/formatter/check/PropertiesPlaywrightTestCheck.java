@@ -150,7 +150,8 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 
 			for (String relevantRuleName : relevantRuleNames) {
 				String playwrightTestProjectPropertyName = StringBundler.concat(
-					_PLAYWRIGHT_TEST_PROJECT_NAME, "[", relevantRuleName, "]");
+					"playwright.test.project[playwright-js-tomcat90-mysql57-",
+					"jdk8][relevant][", relevantRuleName, "]");
 
 				List<String> playwrightTestProjectList = ListUtil.fromString(
 					properties.getProperty(playwrightTestProjectPropertyName),
@@ -168,7 +169,7 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 						fileName,
 						StringBundler.concat(
 							"Missing property value '", moduleName, "' in '",
-							_PLAYWRIGHT_TEST_PROJECT_NAME, "'"));
+							playwrightTestProjectPropertyName, "'"));
 				}
 			}
 		}
@@ -247,10 +248,6 @@ public class PropertiesPlaywrightTestCheck extends BaseFileCheck {
 
 		return _testrayAllTeamsComponentNames;
 	}
-
-	private static final String _PLAYWRIGHT_TEST_PROJECT_NAME =
-		"playwright.test.project[playwright-js-tomcat90-mysql57-jdk8]" +
-			"[relevant]";
 
 	private static final String _RELEVANT_RULE_NAMES = "relevant.rule.names";
 

@@ -20,11 +20,18 @@ export const DEFAULT_SP_NAME = 'www.baker.com';
 export const DEFAULT_SP_URL = `http://${DEFAULT_SP_NAME}:8080`;
 
 export async function createIdentityProviderVirtualInstance(
+	browser,
 	page,
 	name = DEFAULT_IDP_NAME,
 	entityId = name
 ) {
-	await createSamlVirtualInstance(entityId, name, page, 'Identity Provider');
+	await createSamlVirtualInstance(
+		browser,
+		entityId,
+		name,
+		page,
+		'Identity Provider'
+	);
 }
 
 export async function createIdpUser(
@@ -38,16 +45,10 @@ export async function createIdpUser(
 
 	// Create new page and apiHelper implementation for IdP virtual instance
 
-    const idpVirtualInstancePage = await browser.newPage({
-        baseURL: liferayConfig.environment.baseUrl,
-    });
-
-    await performLogin(
-        idpVirtualInstancePage,
-        'test',
-        undefined,
-        `@${idpInstanceName}.com`
-    );
+	const idpVirtualInstancePage = await performSamlSafeAdminLogin(
+		browser,
+		idpInstanceName
+	);
 
 	const idpApiHelpers = new ApiHelpers(idpVirtualInstancePage);
 
@@ -68,6 +69,7 @@ export async function createIdpUser(
 }
 
 async function createSamlVirtualInstance(
+	browser,
 	entityId: string,
 	name: string,
 	page,
@@ -81,14 +83,9 @@ async function createSamlVirtualInstance(
 
 	liferayConfig.environment.baseUrl = `http://${name}:8080`;
 
-	await performLogin(
-		page,
-		'test',
-		liferayConfig.environment.baseUrl,
-		`@${name}.com`
-	);
+	const newPage = await performSamlSafeAdminLogin(browser, name);
 
-	const samlAdminPage = new SamlAdminPage(page);
+	const samlAdminPage = new SamlAdminPage(newPage);
 
 	await samlAdminPage.configureSAML(true, entityId, samlRole);
 
@@ -96,11 +93,18 @@ async function createSamlVirtualInstance(
 }
 
 export async function createServiceProviderVirtualInstance(
+	browser,
 	entityId: string,
 	name: string,
 	page
 ) {
-	await createSamlVirtualInstance(entityId, name, page, 'Service Provider');
+	await createSamlVirtualInstance(
+		browser,
+		entityId,
+		name,
+		page,
+		'Service Provider'
+	);
 }
 
 export async function deleteVirtualInstance(name: string, page) {
@@ -149,6 +153,7 @@ export async function resetSamlKeystoreManagerTarget(page) {
 }
 
 export async function setupSamlInstances(
+	browser,
 	page,
 	idpInstanceName = DEFAULT_IDP_NAME,
 	idpEntityId = idpInstanceName,
@@ -156,6 +161,7 @@ export async function setupSamlInstances(
 	spEntityId = spInstanceName
 ) {
 	await createIdentityProviderVirtualInstance(
+		browser,
 		page,
 		idpInstanceName,
 		idpEntityId
@@ -163,9 +169,8 @@ export async function setupSamlInstances(
 
 	// Create new sp virtual instance
 
-	await page.goto('/');
-
 	await createServiceProviderVirtualInstance(
+		browser,
 		spEntityId,
 		spInstanceName,
 		page
@@ -174,6 +179,7 @@ export async function setupSamlInstances(
 	// Add a new connection for each provider, of the opposite provider
 
 	await connectSpAndIdp(
+		browser,
 		idpInstanceName,
 		page,
 		spInstanceName,

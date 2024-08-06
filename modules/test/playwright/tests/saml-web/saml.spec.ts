@@ -41,7 +41,7 @@ test('Create two virtual instances, one IdP and one SP, connect them, perform SP
 		'Document Library Keystore Manager'
 	);
 
-	await setupSamlInstances(page);
+	await setupSamlInstances(browser, page);
 
 	// Create a user with identical credentials on each instance
 

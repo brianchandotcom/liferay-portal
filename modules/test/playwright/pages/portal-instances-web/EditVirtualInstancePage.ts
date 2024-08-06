@@ -11,6 +11,7 @@ import {ApplicationsMenuPage} from '../product-navigation-applications-menu/Appl
 export class EditVirtualInstancePage {
 	readonly activeToggle: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly idField: Locator;
 	readonly mailDomainField: Locator;
 	readonly maxUsersField: Locator;
 	readonly page: Page;
@@ -21,6 +22,7 @@ export class EditVirtualInstancePage {
 	constructor(page: Page) {
 		this.activeToggle = page.getByText('Active');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.idField = page.getByLabel('ID', {exact: true});
 		this.mailDomainField = page.getByLabel('Mail Domain');
 		this.maxUsersField = page.getByLabel('Max Users');
 		this.page = page;
@@ -40,9 +42,10 @@ export class EditVirtualInstancePage {
 	) {
 		await this.goto(webId);
 
-		// add little timeout in order to select "active" text from toggle and not from search container located in prior page
+		// ID field only exists when editing a virtual instance, use it to
+		// verify the page has properly rendered and is ready for editing
 
-		await this.page.waitForTimeout(500);
+		await this.idField.waitFor();
 
 		await this.activeToggle.setChecked(active);
 

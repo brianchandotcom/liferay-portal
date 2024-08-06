@@ -149,7 +149,7 @@ export async function resetSamlKeystoreManagerTarget(page) {
 		}),
 	});
 
-	systemSettingsPage.page
+	await systemSettingsPage.page
 		.getByRole('link', {name: 'Reset Default Values'})
 		.click();
 

@@ -232,7 +232,6 @@ export class ServiceProviderConnectionsPage {
 		}
 
 		await this.saveButton.click();
-
-		expect(await this.successMessage).toBeVisible();
+		await expect(await this.successMessage).toBeVisible();
 	}
 }

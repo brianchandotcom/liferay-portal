@@ -132,7 +132,8 @@ public class LayoutsImporterTest {
 		try {
 			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group1.getGroupId(), 0,
-				_getFile(), LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+				_getFile(_DISPLAY_PAGE_TEMPLATES_RESOURCES_PATH),
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -255,6 +256,113 @@ public class LayoutsImporterTest {
 
 			ServiceContextThreadLocal.popServiceContext();
 		}
+	}
+
+	@Test
+	public void testValidateFile() throws Exception {
+		Assert.assertTrue(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getFile(_DISPLAY_PAGE_TEMPLATES_RESOURCES_PATH)));
+
+		Assert.assertTrue(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getFile(_MASTER_PAGES_RESOURCES_PATH)));
+
+		Assert.assertTrue(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getFile(_PAGE_TEMPLATES_RESOURCES_PATH)));
+	}
+
+	@Test
+	public void testValidateFileWithDuplicatedBasicLayoutPageTemplateCollection()
+		throws Exception {
+
+		_layoutPageTemplateCollectionLocalService.
+			addLayoutPageTemplateCollection(
+				null, TestPropsValues.getUserId(), _group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				"Page Template Set", StringPool.BLANK,
+				LayoutPageTemplateEntryTypeConstants.BASIC,
+				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+
+		Assert.assertFalse(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getFile(_PAGE_TEMPLATES_RESOURCES_PATH)));
+	}
+
+	@Test
+	public void testValidateFileWithDuplicatedBasicLayoutPageTemplateEntry()
+		throws Exception {
+
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), _group1.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			"Page Template", LayoutPageTemplateEntryTypeConstants.BASIC, 0,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+
+		Assert.assertFalse(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getFile(_PAGE_TEMPLATES_RESOURCES_PATH)));
+	}
+
+	@Test
+	public void testValidateFileWithDuplicatedDisplayPageLayoutPageTemplateEntry()
+		throws Exception {
+
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), _group1.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			"Basic Web Content Display Page Template",
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+
+		Assert.assertFalse(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getFile(_DISPLAY_PAGE_TEMPLATES_RESOURCES_PATH)));
+	}
+
+	@Test
+	public void testValidateFileWithDuplicatedMasterLayoutLayoutPageTemplateEntry()
+		throws Exception {
+
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			null, TestPropsValues.getUserId(), _group1.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			"Default Master Page",
+			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
+
+		Assert.assertFalse(
+			_layoutsImporter.validateFile(
+				_group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getFile(_MASTER_PAGES_RESOURCES_PATH)));
 	}
 
 	private FragmentEntry _addFragmentEntry(
@@ -637,11 +745,11 @@ public class LayoutsImporterTest {
 		return (ContainerStyledLayoutStructureItem)layoutStructureItem;
 	}
 
-	private File _getFile() throws Exception {
+	private File _getFile(String resourcePath) throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		Enumeration<URL> enumeration = bundle.findEntries(
-			_RESOURCES_PATH, "*", true);
+			resourcePath, "*", true);
 
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
@@ -653,8 +761,7 @@ public class LayoutsImporterTest {
 			if (!path.endsWith(StringPool.SLASH)) {
 				try (InputStream inputStream = url.openStream()) {
 					zipWriter.addEntry(
-						StringUtil.removeSubstring(
-							url.getPath(), _RESOURCES_PATH),
+						StringUtil.removeSubstring(url.getPath(), resourcePath),
 						inputStream);
 				}
 			}
@@ -874,9 +981,17 @@ public class LayoutsImporterTest {
 			"product-display-page-template"
 		};
 
-	private static final String _RESOURCES_PATH =
+	private static final String _DISPLAY_PAGE_TEMPLATES_RESOURCES_PATH =
 		"com/liferay/layout/page/template/admin/web/internal/importer/test" +
 			"/dependencies/display-page-templates";
+
+	private static final String _MASTER_PAGES_RESOURCES_PATH =
+		"com/liferay/layout/page/template/admin/web/internal/importer/test" +
+			"/dependencies/master-pages";
+
+	private static final String _PAGE_TEMPLATES_RESOURCES_PATH =
+		"com/liferay/layout/page/template/admin/web/internal/importer/test" +
+			"/dependencies/page-templates";
 
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;

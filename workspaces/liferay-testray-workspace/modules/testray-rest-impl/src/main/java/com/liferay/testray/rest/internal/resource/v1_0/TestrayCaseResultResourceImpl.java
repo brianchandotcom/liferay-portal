@@ -432,16 +432,14 @@ public class TestrayCaseResultResourceImpl
 	}
 
 	private void _generateCSV(OutputStream outputStream, long testrayBuildId) {
-		CSVFormat csvFormat = CSVFormat.DEFAULT.builder(
-		).setHeader(
-			"Case Name", "Case Type", "Priority", "Team", "Component",
-			"Run Number", "Run Name", "Assignee", "Status", "Issues", "Errors",
-			"Comments", "Case Result URL"
-		).build();
-
 		try (CSVPrinter csvPrinter = new CSVPrinter(
 				new BufferedWriter(new OutputStreamWriter(outputStream)),
-				csvFormat)) {
+				CSVFormat.DEFAULT.builder(
+				).setHeader(
+					"Case Name", "Case Type", "Priority", "Team", "Component",
+					"Run Number", "Run Name", "Assignee", "Status", "Issues",
+					"Errors", "Comments", "Case Result URL"
+				).build())) {
 
 			Page<TestrayCaseResult> page =
 				getTestrayCaseResultsTestrayBuildPage(
@@ -450,12 +448,7 @@ public class TestrayCaseResultResourceImpl
 					null);
 
 			for (TestrayCaseResult testrayCaseResult : page.getItems()) {
-				URI baseURI = contextUriInfo.getBaseUri();
-
-				String caseResultUrl =
-					baseURI.getScheme() + "://" + baseURI.getAuthority() +
-						"/#/case-result/" +
-							testrayCaseResult.getTestrayCaseResultId();
+				URI uri = contextUriInfo.getBaseUri();
 
 				csvPrinter.printRecord(
 					testrayCaseResult.getTestrayCaseName(),
@@ -468,7 +461,10 @@ public class TestrayCaseResultResourceImpl
 					testrayCaseResult.getUserName(),
 					testrayCaseResult.getStatus(),
 					testrayCaseResult.getIssues(), testrayCaseResult.getError(),
-					testrayCaseResult.getComment(), caseResultUrl);
+					testrayCaseResult.getComment(),
+					uri.getScheme() + "://" + uri.getAuthority() +
+						"/#/case-result/" +
+							testrayCaseResult.getTestrayCaseResultId());
 			}
 
 			csvPrinter.flush();

@@ -41,11 +41,7 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
 			List<TestBatch> testBatches = relevantTestSuite.getTestBatches();
 
-			if (testBatches.isEmpty()) {
-				return true;
-			}
-
-			return false;
+			return testBatches.isEmpty();
 		}
 
 		String ciTestRelevantBypassFilePathPatterns =

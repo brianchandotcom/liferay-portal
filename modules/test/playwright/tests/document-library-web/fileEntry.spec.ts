@@ -69,7 +69,7 @@ baseTest(
 			page,
 			'Success:Your request completed successfully.'
 		);
-		await page.reload();
+		await page.getByRole('link', {name: 'Back'}).click();
 
 		await documentLibraryPage.orderBy('Modified Date');
 		await documentLibraryPage.orderBy('Descending');

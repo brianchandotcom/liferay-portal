@@ -94,17 +94,15 @@ export class DocumentLibraryPage {
 	}
 
 	async editFileEntry(entryTitle: string) {
+		await this.page
+			.getByRole('link', {exact: true, name: entryTitle})
+			.click();
+
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: 'Edit'}),
-			trigger: this.page
-				.locator(`.card-body:has-text('${entryTitle}')`)
-				.getByLabel('Actions'),
+			trigger: this.page.getByRole('button', {name: 'Show Actions'}),
 		});
-
-		this.page
-			.locator('.control-menu-nav-item', {hasText: entryTitle})
-			.waitFor();
 	}
 
 	async goToCreateNewFile() {

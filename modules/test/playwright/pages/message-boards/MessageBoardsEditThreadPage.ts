@@ -8,8 +8,11 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 import {MessageBoardsPage} from './MessageBoardsPage';
 
 export class MessageBoardsEditThreadPage {
+	readonly allFilesReadyToBeSavedMessage: Locator;
+	readonly attachmentCollapse: Locator;
 	readonly bodyFrameLocator: FrameLocator;
 	readonly bodyTextBox: Locator;
+	readonly fileSelector: Locator;
 	readonly messageBoardsPage: MessageBoardsPage;
 	readonly page: Page;
 	readonly publishButton: Locator;
@@ -17,8 +20,15 @@ export class MessageBoardsEditThreadPage {
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
+		this.allFilesReadyToBeSavedMessage = page.getByText(
+			'All files ready to be saved.'
+		);
+		this.attachmentCollapse = page.getByRole('button', {
+			name: 'Attachments',
+		});
 		this.bodyFrameLocator = page.frameLocator('iframe');
 		this.bodyTextBox = this.bodyFrameLocator.getByRole('textbox');
+		this.fileSelector = page.getByRole('button', {name: 'Select File'});
 		this.messageBoardsPage = new MessageBoardsPage(page);
 		this.page = page;
 		this.publishButton = page.getByRole('button', {
@@ -37,13 +47,32 @@ export class MessageBoardsEditThreadPage {
 	async publishNewBasicTread(
 		subject: string,
 		body: string,
-		siteUrl?: Site['friendlyUrlPath']
+		siteUrl?: Site['friendlyUrlPath'],
+		filePath?: string
 	) {
 		await this.goto(siteUrl);
 
 		await this.subjectSelector.fill(subject);
 		await this.bodyTextBox.fill(body);
 
+		if (filePath) {
+			await this.selectFile(filePath);
+		}
+
 		await this.publishButton.click();
+	}
+
+	async selectFile(filePath: string) {
+		const isExpanded = await this.attachmentCollapse.evaluate(
+			(element) => element.getAttribute('aria-expanded') === 'true'
+		);
+		if (!isExpanded) {
+			await this.attachmentCollapse.click();
+		}
+		const fileChooserPromise = this.page.waitForEvent('filechooser');
+		await this.fileSelector.click();
+		const fileChooser = await fileChooserPromise;
+		await fileChooser.setFiles(filePath);
+		await this.allFilesReadyToBeSavedMessage.waitFor();
 	}
 }

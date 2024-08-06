@@ -322,7 +322,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			if (_isPageTemplateFile(entry) &&
 				!_isValidBasicLayoutPageTemplateEntry(
-					content, entry, groupId)) {
+					content, entry, groupId, layoutPageTemplateCollectionId)) {
 
 				return false;
 			}
@@ -1279,7 +1279,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private boolean _isValidBasicLayoutPageTemplateEntry(
-		String content, String fileName, long groupId) {
+		String content, String fileName, long groupId,
+		long layoutPageTemplateCollectionId) {
 
 		try {
 			PageTemplateValidator.validatePageTemplate(content);
@@ -1290,9 +1291,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.
 					fetchLayoutPageTemplateEntry(
-						groupId,
-						LayoutPageTemplateConstants.
-							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+						groupId, layoutPageTemplateCollectionId,
 						pageTemplate.getName(),
 						LayoutPageTemplateEntryTypeConstants.BASIC);
 

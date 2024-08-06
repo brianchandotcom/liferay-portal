@@ -7,7 +7,7 @@ import ClayDatePicker from '@clayui/date-picker';
 import {ClayCheckbox, ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import useProvisioningLicenseKeys from '~/common/hooks/useProvisioningLicenseKeys';
 import {putSubscriptionInKey} from '~/common/services/liferay/rest/raysource/LicenseKeys';
@@ -15,6 +15,7 @@ import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
 import useGetPurposeComplimentaryKeyList from './hooks/useGetPurposeComplimentaryKeyList';
+import {getRenewKeySubtitle} from '../utils/renewKeySubtitle';
 
 const now = new Date();
 const NAVIGATION_YEARS_RANGE = 2;
@@ -28,6 +29,7 @@ const ComplimentaryDate = ({
 	setPurposeDescription,
 	setSelectedKeyData,
 	setStep,
+	state,
 	urlPreviousPage,
 }) => {
 	const {provisioningServerAPI} = useAppPropertiesContext();
@@ -54,7 +56,6 @@ const ComplimentaryDate = ({
 	);
 
 	const navigate = useNavigate();
-	const {state} = useLocation();
 
 	const {endDate, startDate} = useMemo(() => {
 		const inputStartDate = new Date(selectedStartDate);
@@ -92,6 +93,10 @@ const ComplimentaryDate = ({
 
 		return startDate < startDateLimit;
 	}, [startDate]);
+
+	const isRenew = state?.id === 'renew';
+	const keyCount = state?.activationKeys?.length;	
+	const renewKeySubtitle = getRenewKeySubtitle(state);
 
 	const isComplimentaryKeys = state.activationKeys?.map((item) => {
 		return item.complimentary;
@@ -165,7 +170,7 @@ const ComplimentaryDate = ({
 				setIsLoadingGenerateKey(false);
 
 				navigate(urlPreviousPage, {
-					state: {isMultipleKeys: state.activationKeys.length > 1, newKeyGeneratedAlert: true},
+					state: {isMultipleKeys: keyCount > 1, newKeyGeneratedAlert: true},
 				});
 
 				return true;
@@ -181,7 +186,7 @@ const ComplimentaryDate = ({
 				setIsLoadingGenerateKey(false);
 
 				navigate(urlPreviousPage, {
-					state: {isMultipleKeys: state.activationKeys.length > 1, newKeyGeneratedAlert: true},
+					state: {isMultipleKeys: keyCount > 1, newKeyGeneratedAlert: true},
 				});
 
 				return true;
@@ -258,7 +263,7 @@ const ComplimentaryDate = ({
 								displayType="primary"
 								isLoading={isLoadingGenerateKey}
 								onClick={() => {
-									if (state.activationKeys.length > 1 && state.id === 'renew') {
+									if (isRenew && keyCount > 1) {
 										submitKey();
 									} else {
 										setSelectedKeyData(
@@ -272,10 +277,10 @@ const ComplimentaryDate = ({
 									}
 								}}
 							>
-								{state.activationKeys.length > 1 && state.id === 'renew'
+								{isRenew && keyCount > 1
 									? i18n.sub(
-										'generate-x-keys',
-											[state.activationKeys.length]
+										'renew-x-keys',
+											[keyCount]
 									  )
 									: i18n.translate('next')}
 							</Button>
@@ -284,10 +289,8 @@ const ComplimentaryDate = ({
 				}}
 				headerProps={{
 					headerClass: 'ml-5 mt-4 mb-3',
-					helper: i18n.translate(
-						'select-the-subscription-and-key-type-you-would-like-to-generate'
-					),
-					title: i18n.translate('generate-activation-keys'),
+					helper: isRenew ? renewKeySubtitle : i18n.translate('select-the-subscription-and-key-type-you-would-like-to-generate'),
+					title: i18n.translate(isRenew ? 'renew-activation-keys' : 'generate-activation-keys'),
 				}}
 				layoutType="cp-generateKey"
 			>

@@ -115,6 +115,7 @@ const GenerateNewKey = ({
 				setPurposeDescription={setPurposeDescription}
 				setSelectedKeyData={setSelectedKeyData}
 				setStep={setStep}
+				state={state}
 				urlPreviousPage={urlPreviousPage}
 			/>
 		),

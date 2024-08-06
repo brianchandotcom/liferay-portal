@@ -24,6 +24,7 @@ import KeyInputs from '../KeyInputs';
 import KeySelect from '../KeySelect';
 import {getLicenseEntryTypeSelected} from '../utils/licenseEntryType';
 import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDate';
+import {getRenewKeySubtitle} from '../utils/renewKeySubtitle';
 
 const RequiredInformation = ({
 	accountKey,
@@ -64,6 +65,7 @@ const RequiredInformation = ({
 
 	const isRenew = state?.id === 'renew';
 	const renewKey = state?.activationKeys[0];
+	const renewKeySubtitle = getRenewKeySubtitle(state);
 
 	const avaliableKeysMaximumCount =
 		selectedKeyData?.selectedSubscription?.quantity;
@@ -423,10 +425,10 @@ const RequiredInformation = ({
 				}}
 				headerProps={{
 					headerClass: 'ml-5 my-4',
-					helper: i18n.translate(
+					helper: isRenew ? renewKeySubtitle : i18n.translate(
 						'fill-out-the-information-required-to-generate-the-activation-key'
 					),
-					title: i18n.translate('generate-activation-keys'),
+					title: i18n.translate(isRenew ? 'renew-activation-keys' : 'generate-activation-keys'),
 				}}
 				layoutType="cp-required-info"
 			>

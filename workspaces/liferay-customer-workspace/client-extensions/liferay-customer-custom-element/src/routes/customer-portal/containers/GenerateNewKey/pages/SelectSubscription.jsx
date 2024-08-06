@@ -25,6 +25,7 @@ import {useCustomerPortal} from '../../../context';
 import {has100YearsDifference} from '../../ActivationKeysTable/utils';
 import GenerateNewKeySkeleton from '../Skeleton';
 import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDate';
+import {getRenewKeySubtitle} from '../utils/renewKeySubtitle';
 
 const SelectSubscription = ({
 	accountKey,
@@ -109,7 +110,10 @@ const SelectSubscription = ({
 		return filteredTypes?.productKey;
 	}, [typesProduct, productGroupName, selectedKeyType]);
 
-	const isSingleComplimentaryKey = hasComplimentaryKey && state?.activationKeys.length === 1;
+	const isRenew = state?.id === 'renew';
+	const keyCount = state?.activationKeys?.length;	
+	const renewKeySubtitle = getRenewKeySubtitle(state);
+	const isSingleComplimentaryKey = hasComplimentaryKey && keyCount === 1;
 
 	const mockedValuesForComplimentaryKeys = useMemo(() => {
 		return {
@@ -277,14 +281,14 @@ const SelectSubscription = ({
 	const subscriptionTerms = useMemo(
 		() =>
 			generateFormValues?.subscriptionTerms?.filter((key) =>
-				state.id === 'renew'
+				isRenew
 					? matchingProductKeys.includes(key.productKey)
 					: key.productKey === selectedProductKey
 			),
 		[
 			generateFormValues?.subscriptionTerms,
 			selectedProductKey,
-			state.id,
+			isRenew,
 			matchingProductKeys,
 		]
 	);
@@ -552,7 +556,7 @@ const SelectSubscription = ({
 					<Button
 						aria-label={i18n.translate('next')}
 						disabled={
-							(state.activationKeys?.length >
+							(keyCount >
 								availableActivationKeysTotal &&
 								!hasComplimentaryKey) ||
 							!selectedSubscription ||
@@ -568,8 +572,8 @@ const SelectSubscription = ({
 								selectedSubscription: {...selectedSubscription},
 							};
 
-							if (!hasComplimentaryKey && state.id === 'renew') {
-								if (state.activationKeys?.length === 1) {
+							if (!hasComplimentaryKey && isRenew) {
+								if (keyCount === 1) {
 									setStep(2);
 									setSubmitKeyAction({submitKey});
 								} else {
@@ -585,20 +589,20 @@ const SelectSubscription = ({
 							}));
 						}}
 					>
-						{!hasComplimentaryKey && state.id === 'renew' && state.activationKeys?.length > 1
-							? i18n.sub('generate-x-keys', [
-									state.activationKeys?.length,
-							  ])
+						{!hasComplimentaryKey && isRenew && keyCount > 1
+							? i18n.sub('renew-x-keys', [
+								keyCount,
+							])
 							: i18n.translate('next')}
 					</Button>
 				),
 			}}
 			headerProps={{
 				headerClass: 'mb-3 ml-5 mt-4',
-				helper: i18n.translate(
+				helper: isRenew ? renewKeySubtitle : i18n.translate(
 					'select-the-subscription-and-key-type-you-would-like-to-generate'
 				),
-				title: i18n.translate('generate-activation-keys'),
+				title: i18n.translate(isRenew ? 'renew-activation-keys' : 'generate-activation-keys'),
 			}}
 			layoutType="cp-generateKey"
 		>
@@ -638,7 +642,7 @@ const SelectSubscription = ({
 						<div className="position-relative">
 							<ClaySelect
 								className="cp-select-card mr-2"
-								disabled={state.id === 'renew' ? true : false}
+								disabled={isRenew}
 								onChange={({target}) => {
 									setSelectedKeyData({
 										licenseEntryType: selectedKeyType,
@@ -649,7 +653,7 @@ const SelectSubscription = ({
 								}}
 								value={selectedVersion}
 							>
-								{state.id === 'renew' ? (
+								{isRenew ? (
 									<ClaySelect.Option
 										key={uniqueVersionOfTheSelectedKey}
 										label={uniqueVersionOfTheSelectedKey}
@@ -681,7 +685,7 @@ const SelectSubscription = ({
 					<div className="position-relative">
 						<ClaySelect
 							className="cp-select-card mr-2 pr-6 w-100"
-							disabled={state.id === 'renew' ? true : false}
+							disabled={isRenew}
 							onChange={({target}) => {
 								setSelectedKeyType(target.value);
 								setSelectedSubscription({});
@@ -689,7 +693,7 @@ const SelectSubscription = ({
 							}}
 							value={selectedKeyType}
 						>
-							{state.id === 'renew' ? (
+							{isRenew ? (
 								<ClaySelect.Option
 									key={productNames}
 									label={productNames}
@@ -855,12 +859,12 @@ const SelectSubscription = ({
 
 								setSelectedKeyData({
 									licenseEntryType:
-										state.id === 'renew'
+										isRenew
 											? productName
 											: selectedKeyType,
 									productType: productGroupName,
 									productVersion:
-										state.id === 'renew'
+										isRenew
 											? uniqueVersionOfTheSelectedKey
 											: selectedVersion,
 								});
@@ -870,7 +874,7 @@ const SelectSubscription = ({
 								'choose-this-option-if-you-want-an-activation-key-for-30-days'
 							)}
 							value={
-								!isSingleComplimentaryKey && state.id === 'renew'
+								isRenew && !isSingleComplimentaryKey
 									? mockedValuesForComplimentaryKeysOfTheSelectedKeys
 									: mockedValuesForComplimentaryKeys
 							}

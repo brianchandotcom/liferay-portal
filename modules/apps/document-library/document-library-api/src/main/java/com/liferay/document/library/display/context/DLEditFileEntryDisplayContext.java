@@ -71,6 +71,8 @@ public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
 
 	public boolean isFolderSelectionVisible() throws PortalException;
 
+	public boolean isFriendlyURLWithExtensionEnabled() throws PortalException;
+
 	public default boolean isNeverExpire() throws PortalException {
 		return true;
 	}

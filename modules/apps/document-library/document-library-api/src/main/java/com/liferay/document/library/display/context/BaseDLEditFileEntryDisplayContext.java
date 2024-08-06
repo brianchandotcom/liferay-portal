@@ -165,6 +165,11 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public boolean isFriendlyURLWithExtensionEnabled() throws PortalException {
+		return parentDisplayContext.isFriendlyURLWithExtensionEnabled();
+	}
+
+	@Override
 	public boolean isPermissionsVisible() throws PortalException {
 		return parentDisplayContext.isPermissionsVisible();
 	}

@@ -779,7 +779,14 @@ renderResponse.setTitle(headerTitle);
 			}
 
 			if (urlTitleElement && !urlTitleElement.value) {
-				urlTitleElement.value = fileFileName.replace(/\.[^.]*$/, '');
+				<c:choose>
+					<c:when test="<%= dlEditFileEntryDisplayContext.isFriendlyURLWithExtensionEnabled() %>">
+						urlTitleElement.value = fileFileName;
+					</c:when>
+					<c:otherwise>
+						urlTitleElement.value = fileFileName.replace(/\.[^.]*$/, '');
+					</c:otherwise>
+				</c:choose>
 			}
 		}
 

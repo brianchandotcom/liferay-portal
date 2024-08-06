@@ -5,6 +5,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.document.library.configuration.DLFileEntryFriendlyURLConfiguration;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.document.library.display.context.DLFilePicker;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
@@ -27,6 +28,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -262,6 +264,12 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public boolean isFriendlyURLWithExtensionEnabled() throws PortalException {
+		return _dlFileEntryFriendlyURLConfiguration.
+			enableFriendlyURLWithExtension();
+	}
+
+	@Override
 	public boolean isNeverExpire() throws PortalException {
 		if (_neverExpire != null) {
 			return _neverExpire;
@@ -365,11 +373,16 @@ public class DefaultDLEditFileEntryDisplayContext
 			_ddmFormValuesFactory = ddmFormValuesFactory;
 			_ddmStorageEngineManager = ddmStorageEngineManager;
 
-			_dlRequestHelper = new DLRequestHelper(httpServletRequest);
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
+
+			_dlFileEntryFriendlyURLConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					DLFileEntryFriendlyURLConfiguration.class,
+					themeDisplay.getCompanyId());
+
+			_dlRequestHelper = new DLRequestHelper(httpServletRequest);
 
 			_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
 				themeDisplay.getPermissionChecker(), _fileEntry);
@@ -487,6 +500,8 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMStorageEngineManager _ddmStorageEngineManager;
+	private final DLFileEntryFriendlyURLConfiguration
+		_dlFileEntryFriendlyURLConfiguration;
 	private final DLFileEntryType _dlFileEntryType;
 	private final DLRequestHelper _dlRequestHelper;
 	private final DLValidator _dlValidator;

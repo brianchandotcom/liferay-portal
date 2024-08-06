@@ -2327,23 +2327,24 @@ public class CalendarBookingLocalServiceImpl
 			return htmlEntry;
 		}
 
-		Matcher matcher = _htmlTagWithOnAttributePattern.matcher(htmlEntry);
 		StringBuffer sb = new StringBuffer();
 
-		while (matcher.find()) {
-			String replacement = matcher.group(
-			).replaceAll(
-				_onAttributePattern.pattern(), ""
-			);
+		Matcher matcher = _htmlTagWithOnAttributePattern.matcher(htmlEntry);
 
-			matcher.appendReplacement(sb, replacement);
+		while (matcher.find()) {
+			matcher.appendReplacement(
+				sb,
+				matcher.group(
+				).replaceAll(
+					_onAttributePattern.pattern(), ""
+				));
 		}
 
 		matcher.appendTail(sb);
 
-		String sanitizedHtml = sb.toString();
+		String string = sb.toString();
 
-		return sanitizedHtml.replaceAll(
+		return string.replaceAll(
 			_alertPattern.pattern(), ""
 		).replaceAll(
 			_innerHtmlPattern.pattern(), ""

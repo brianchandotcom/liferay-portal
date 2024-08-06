@@ -516,7 +516,7 @@ public class CalendarBookingLocalServiceTest {
 
 		long startTime = System.currentTimeMillis();
 
-		String youtubeIframe = StringBundler.concat(
+		String html = StringBundler.concat(
 			"<div class=\"embed-responsive embed-responsive-16by9\" ",
 			"data-embed-id=",
 			"\"https://www.youtube.com/embed/6LjQ7Z99N74?rel=0\" ",
@@ -534,7 +534,7 @@ public class CalendarBookingLocalServiceTest {
 				HashMapBuilder.create(
 					HashMapBuilder.put(
 						LocaleUtil.getDefault(),
-						youtubeIframe + "<script type=\"text/javascript\">" +
+						html + "<script type=\"text/javascript\">" +
 							"alert('xss vulnerability test');</script>"
 					).build()
 				).build(),
@@ -546,7 +546,7 @@ public class CalendarBookingLocalServiceTest {
 			"<script type=\"text/javascript\">;</script>";
 
 		Assert.assertEquals(
-			youtubeIframe + sanitizedVulnerability,
+			html + sanitizedVulnerability,
 			calendarBooking.getDescription(LocaleUtil.getDefault()));
 	}
 

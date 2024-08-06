@@ -40,7 +40,9 @@ public class CommerceReturnItemTableFDSView extends BaseTableFDSView {
 		).add(
 			"commerceOrderItemToCommerceReturnItems.unitOfMeasureKey", "uom"
 		).add(
-			"amount", "purchase-price"
+			"amount", "purchase-price",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"commerceCurrencyDataRenderer")
 		).add(
 			"quantity", "quantity"
 		).add(

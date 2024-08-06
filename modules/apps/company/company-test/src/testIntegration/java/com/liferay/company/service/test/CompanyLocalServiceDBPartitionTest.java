@@ -801,7 +801,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(pg_catalog.pg_rewrite.rulename) total from ",
+					"select count(pg_catalog.pg_rewrite.rulename) from ",
 					"pg_catalog.pg_rewrite join pg_catalog.pg_class on ",
 					"pg_catalog.pg_rewrite.ev_class = pg_catalog.pg_class.oid ",
 					"where pg_catalog.pg_class.relnamespace = '", partitionName,
@@ -812,7 +812,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 			resultSet.next();
 
-			return resultSet.getInt("total");
+			return resultSet.getInt(1);
 		}
 	}
 

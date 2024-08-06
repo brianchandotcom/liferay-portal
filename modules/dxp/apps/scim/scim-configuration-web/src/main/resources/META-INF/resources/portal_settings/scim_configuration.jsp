@@ -29,43 +29,47 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 		String oAuth2AccessTokenInputId = liferayPortletResponse.getNamespace() + "oAuth2AccessToken";
 		%>
 
-		<div class="form-group">
-			<label for="<%= oAuth2AccessTokenInputId %>">
-				<liferay-ui:message key="access-token" />
-			</label>
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(oAuth2ApplicationName) %>">
+				<div class="form-group">
+					<label for="<%= oAuth2AccessTokenInputId %>">
+						<liferay-ui:message key="access-token" />
+					</label>
 
-			<div class="input-group input-group-sm">
-				<div class="input-group-item input-group-prepend">
-					<input class="form-control" id="<%= oAuth2AccessTokenInputId %>" readonly value="<%= oAuth2AccessToken %>" />
+					<div class="input-group input-group-sm">
+						<div class="input-group-item input-group-prepend">
+							<input class="form-control" id="<%= oAuth2AccessTokenInputId %>" readonly value="<%= oAuth2AccessToken %>" />
+						</div>
+
+						<span class="input-group-append input-group-item input-group-item-shrink">
+							<clay:button
+								cssClass="lfr-portal-tooltip scim-infopanel-copy-clipboard"
+								data-clipboard-target='<%= "#" + oAuth2AccessTokenInputId %>'
+								displayType="secondary"
+								icon="paste"
+								id="copyAccessToken"
+								name="copyAccessToken"
+								title="copy-link"
+							/>
+						</span>
+					</div>
 				</div>
 
-				<span class="input-group-append input-group-item input-group-item-shrink">
-					<clay:button
-						cssClass="lfr-portal-tooltip scim-infopanel-copy-clipboard"
-						data-clipboard-target='<%= "#" + oAuth2AccessTokenInputId %>'
-						displayType="secondary"
-						icon="paste"
-						id="copyAccessToken"
-						name="copyAccessToken"
-						title="copy-link"
-					/>
-				</span>
-			</div>
-		</div>
+				<label for="<portlet:namespace />genetareAccessToken">
+					<liferay-ui:message key="scim-generate-access-token" />
 
-		<label for="<portlet:namespace />genetareAccessToken">
-			<liferay-ui:message key="scim-generate-access-token" />
+					<span aria-label="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>">
+						<clay:icon
+							symbol="question-circle-full"
+						/>
+					</span>
+				</label>
 
-			<span aria-label="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>">
-				<clay:icon
-					symbol="question-circle-full"
-				/>
-			</span>
-		</label>
-
-		<div class="input-group input-group-sm">
-			<aui:button id="genetareAccessToken" label="discard-changes" name="genetareAccessToken" small="<%= true %>" value="generate" />
-		</div>
+				<div class="input-group input-group-sm">
+					<aui:button id="genetareAccessToken" label="discard-changes" name="genetareAccessToken" small="<%= true %>" value="generate" />
+				</div>
+			</c:when>
+		</c:choose>
 
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(oAuth2ApplicationName) %>">

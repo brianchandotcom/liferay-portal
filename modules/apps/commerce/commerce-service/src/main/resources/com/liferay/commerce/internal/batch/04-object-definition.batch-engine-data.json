@@ -289,6 +289,21 @@
 				},
 				{
 					"active": true,
+					"engine": "javaDelegate#CommerceReturn#permission",
+					"engineLabel": "Commerce Return Check Permission",
+					"errorLabel": {
+						"en_US": "You do not have permission to edit this item."
+					},
+					"externalReferenceCode": "COMMERCE_RETURN_PERMISSION",
+					"name": {
+						"en_US": "Check Permission"
+					},
+					"objectDefinitionExternalReferenceCode": "L_COMMERCE_RETURN",
+					"outputType": "fullValidation",
+					"system": true
+				},
+				{
+					"active": true,
 					"engine": "javaDelegate#CommerceReturn#returnStatus",
 					"engineLabel": "Commerce Return Return Status",
 					"errorLabel": {

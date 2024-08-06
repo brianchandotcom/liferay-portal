@@ -111,15 +111,6 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 				_queries.term(Field.GROUP_ID, TestPropsValues.getGroupId()));
 		}
 
-		_assertSearch(
-			booleanQuery,
-			externalReferenceCodeModel.getExternalReferenceCode());
-	}
-
-	private void _assertSearch(
-			BooleanQuery booleanQuery, String externalReferenceCode)
-		throws Exception {
-
 		CountSearchRequest countSearchRequest = new CountSearchRequest();
 
 		if (_isSearchEngineSolr()) {
@@ -135,11 +126,7 @@ public class ExternalReferenceCodeModelDocumentContributorTest {
 		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(
 			countSearchRequest);
 
-		Assert.assertTrue(
-			StringBundler.concat(
-				"Expected to find document with externalReferenceCode ",
-				externalReferenceCode, "."),
-			countSearchResponse.getCount() == 1);
+		Assert.assertTrue(countSearchResponse.getCount() == 1);
 	}
 
 	private boolean _isSearchEngineSolr() {

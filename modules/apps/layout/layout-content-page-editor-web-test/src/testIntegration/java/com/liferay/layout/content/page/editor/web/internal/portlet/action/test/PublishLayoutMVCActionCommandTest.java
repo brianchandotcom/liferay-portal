@@ -138,7 +138,8 @@ public class PublishLayoutMVCActionCommandTest {
 				fragmentEntryLink.getFragmentEntryLinkId());
 
 		layoutStructure.markLayoutStructureItemForDeletion(
-			portletLayoutStructureItem.getItemId(), Collections.emptyList());
+			Collections.singletonList(portletLayoutStructureItem.getItemId()),
+			Collections.emptyList());
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
@@ -177,10 +178,12 @@ public class PublishLayoutMVCActionCommandTest {
 				layoutStructure.getMainItemId(), 0, 3);
 
 		layoutStructure.markLayoutStructureItemForDeletion(
-			layoutStructureItem1.getItemId(), Collections.emptyList());
+			Collections.singletonList(layoutStructureItem1.getItemId()),
+			Collections.emptyList());
 
 		layoutStructure.markLayoutStructureItemForDeletion(
-			layoutStructureItem2.getItemId(), Collections.emptyList());
+			Collections.singletonList(layoutStructureItem2.getItemId()),
+			Collections.emptyList());
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(

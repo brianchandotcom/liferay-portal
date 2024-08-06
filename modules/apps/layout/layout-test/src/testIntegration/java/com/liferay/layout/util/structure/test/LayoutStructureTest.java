@@ -187,7 +187,8 @@ public class LayoutStructureTest {
 				columnLayoutStructureItem.getItemId(), 0);
 
 		layoutStructure.markLayoutStructureItemForDeletion(
-			fragmentStyledLayoutStructureItem.getItemId(),
+			Collections.singletonList(
+				fragmentStyledLayoutStructureItem.getItemId()),
 			Collections.emptyList());
 
 		Assert.assertEquals(
@@ -230,7 +231,8 @@ public class LayoutStructureTest {
 			columnLayoutStructureItem.getItemId(), 0);
 
 		layoutStructure.markLayoutStructureItemForDeletion(
-			columnLayoutStructureItem.getItemId(), Collections.emptyList());
+			Collections.singletonList(columnLayoutStructureItem.getItemId()),
+			Collections.emptyList());
 
 		Assert.assertEquals(
 			0,
@@ -272,7 +274,8 @@ public class LayoutStructureTest {
 			columnLayoutStructureItem.getItemId(), 0);
 
 		layoutStructure.markLayoutStructureItemForDeletion(
-			rowStyledLayoutStructureItem.getItemId(), Collections.emptyList());
+			Collections.singletonList(rowStyledLayoutStructureItem.getItemId()),
+			Collections.emptyList());
 
 		Assert.assertEquals(
 			0,
@@ -314,7 +317,8 @@ public class LayoutStructureTest {
 			columnLayoutStructureItem.getItemId(), 0);
 
 		layoutStructure.markLayoutStructureItemForDeletion(
-			containerStyledLayoutStructureItem.getItemId(),
+			Collections.singletonList(
+				containerStyledLayoutStructureItem.getItemId()),
 			Collections.emptyList());
 
 		Assert.assertEquals(

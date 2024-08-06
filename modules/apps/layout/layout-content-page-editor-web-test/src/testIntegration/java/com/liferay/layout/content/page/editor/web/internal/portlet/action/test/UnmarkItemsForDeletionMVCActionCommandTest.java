@@ -93,7 +93,8 @@ public class UnmarkItemsForDeletionMVCActionCommandTest {
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
 
 		layoutStructure.markLayoutStructureItemForDeletion(
-			containerItemId, Collections.emptyList());
+			Collections.singletonList(containerItemId),
+			Collections.emptyList());
 
 		layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.

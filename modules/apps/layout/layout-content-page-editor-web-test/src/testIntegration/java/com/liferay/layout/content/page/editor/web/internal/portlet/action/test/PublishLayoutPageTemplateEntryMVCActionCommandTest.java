@@ -133,10 +133,12 @@ public class PublishLayoutPageTemplateEntryMVCActionCommandTest {
 				layoutStructure.getMainItemId(), 1, 3);
 
 		layoutStructure.markLayoutStructureItemForDeletion(
-			layoutStructureItem1.getItemId(), Collections.emptyList());
+			Collections.singletonList(layoutStructureItem1.getItemId()),
+			Collections.emptyList());
 
 		layoutStructure.markLayoutStructureItemForDeletion(
-			layoutStructureItem2.getItemId(), Collections.emptyList());
+			Collections.singletonList(layoutStructureItem2.getItemId()),
+			Collections.emptyList());
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(

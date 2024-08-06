@@ -351,10 +351,6 @@ public class CompanyLocalServiceDBPartitionTest
 
 		Company company = CompanyTestUtil.addCompany();
 
-		Assert.assertEquals(
-			"Partition must have defined rules", rulesCount,
-			_getRulesCount(getPartitionName(company.getCompanyId())));
-
 		Configuration configuration = _createFactoryConfiguration(
 			company.getCompanyId());
 

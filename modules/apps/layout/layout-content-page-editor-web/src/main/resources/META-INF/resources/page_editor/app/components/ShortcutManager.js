@@ -5,14 +5,9 @@
 
 import React, {useEffect, useRef, useState} from 'react';
 
-import {CONTENT_DISPLAY_OPTIONS} from '../config/constants/contentDisplayOptions';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {
-	ARROW_DOWN_KEY_CODE,
-	ARROW_LEFT_KEY_CODE,
-	ARROW_RIGHT_KEY_CODE,
-	ARROW_UP_KEY_CODE,
 	BACKSPACE_KEY_CODE,
 	D_KEY_CODE,
 	H_KEY_CODE,
@@ -22,7 +17,6 @@ import {
 	Z_KEY_CODE,
 } from '../config/constants/keyboardCodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {MOVE_ITEM_DIRECTIONS} from '../config/constants/moveItemDirections';
 import {
 	useActiveItemIds,
 	useActiveItemType,
@@ -37,7 +31,6 @@ import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
-import moveItem from '../thunks/moveItem';
 import redoThunk from '../thunks/redo';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import undoThunk from '../thunks/undo';
@@ -92,8 +85,6 @@ export default function ShortcutManager() {
 
 	if (Liferay.FeatureFlags['LPD-18221']) {
 
-		// todo: adapt shortcuts for multiselect
-
 		[activeItemId] = activeItemIds;
 	}
 
@@ -134,47 +125,6 @@ export default function ShortcutManager() {
 
 	const hideSidebar = () => {
 		dispatch(switchSidebarPanel({hidden: !sidebarHidden}));
-	};
-
-	const move = (event) => {
-		const {itemId, parentId} = activeLayoutDataItem;
-
-		const parentItem = layoutData.items[parentId];
-
-		const numChildren = parentItem.children.length;
-
-		const currentPosition = parentItem.children.indexOf(itemId);
-
-		const direction =
-			event.code === ARROW_UP_KEY_CODE ||
-			event.code === ARROW_LEFT_KEY_CODE
-				? MOVE_ITEM_DIRECTIONS.UP
-				: MOVE_ITEM_DIRECTIONS.DOWN;
-
-		if (
-			(direction === MOVE_ITEM_DIRECTIONS.UP && currentPosition === 0) ||
-			(direction === MOVE_ITEM_DIRECTIONS.DOWN &&
-				currentPosition === numChildren - 1)
-		) {
-			return;
-		}
-
-		let position;
-
-		if (direction === MOVE_ITEM_DIRECTIONS.UP) {
-			position = currentPosition - 1;
-		}
-		else if (direction === MOVE_ITEM_DIRECTIONS.DOWN) {
-			position = currentPosition + 1;
-		}
-
-		dispatch(
-			moveItem({
-				itemId,
-				parentItemId: parentId,
-				position,
-			})
-		);
 	};
 
 	const remove = () => {
@@ -278,38 +228,6 @@ export default function ShortcutManager() {
 				isCtrlOrMeta(event) &&
 				event.shiftKey &&
 				event.code === PERIOD_KEY_CODE,
-		},
-		move: {
-			action: move,
-			canBeExecuted: (event) =>
-				canUpdatePageStructure &&
-				!!layoutData.items[activeItemId] &&
-				!isEditableField(event.target) &&
-				!isInteractiveElement(event.target),
-			isKeyCombination: (event) => {
-				if (!activeLayoutDataItem || !event.altKey || !event.shiftKey) {
-					return false;
-				}
-
-				const {parentId} = activeLayoutDataItem;
-
-				const parentItem = layoutData.items[parentId];
-
-				if (
-					parentItem.config.contentDisplay ===
-					CONTENT_DISPLAY_OPTIONS.flexRow
-				) {
-					return (
-						event.code === ARROW_RIGHT_KEY_CODE ||
-						event.code === ARROW_LEFT_KEY_CODE
-					);
-				}
-
-				return (
-					event.code === ARROW_UP_KEY_CODE ||
-					event.code === ARROW_DOWN_KEY_CODE
-				);
-			},
 		},
 		openShortcutModal: {
 			action: () => setOpenShorcutModal(true),

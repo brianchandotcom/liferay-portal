@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
  */
 public class PostgreSQLDB extends BaseDB {
 
-	public static List<String> getCreateRulesSQL(String targetSchema)
+	public static List<String> getCreateRulesSQL(String schemaName)
 		throws SQLException {
 
 		List<String> rules = new ArrayList<>();
@@ -84,7 +84,7 @@ public class PostgreSQLDB extends BaseDB {
 
 					rules.add(
 						getCreateRulesSQL(
-							targetSchema, ruleTableColumn[0],
+							schemaName, ruleTableColumn[0],
 							ruleTableColumn[1]));
 				}
 			}
@@ -102,29 +102,30 @@ public class PostgreSQLDB extends BaseDB {
 	public static String getCreateRulesSQL(
 		String schemaName, String tableName, String columnName) {
 
-		String scopePrefix = StringPool.BLANK;
+		String schemaNamePrefix = StringPool.BLANK;
 
 		if (Validator.isNotNull(schemaName)) {
-			scopePrefix = schemaName + StringPool.PERIOD;
+			schemaNamePrefix = schemaName + StringPool.PERIOD;
 		}
 
 		return StringBundler.concat(
 			"create or replace rule delete_", tableName, StringPool.UNDERLINE,
-			columnName, " as on delete to ", scopePrefix, tableName,
+			columnName, " as on delete to ", schemaNamePrefix, tableName,
 			" do also select case when exists(select 1 from ",
 			"pg_catalog.pg_largeobject_metadata where (oid = old.", columnName,
-			")) then lo_unlink(old.", columnName, ") end from ", scopePrefix,
-			tableName, " where ", scopePrefix, tableName, StringPool.PERIOD,
-			columnName, " = old.", columnName,
+			")) then lo_unlink(old.", columnName, ") end from ",
+			schemaNamePrefix, tableName, " where ", schemaNamePrefix, tableName,
+			StringPool.PERIOD, columnName, " = old.", columnName,
 			";\ncreate or replace rule update_", tableName,
-			StringPool.UNDERLINE, columnName, " as on update to ", scopePrefix,
-			tableName, " where old.", columnName, " is distinct from new.",
-			columnName, " and old.", columnName,
+			StringPool.UNDERLINE, columnName, " as on update to ",
+			schemaNamePrefix, tableName, " where old.", columnName,
+			" is distinct from new.", columnName, " and old.", columnName,
 			" is not null do also select case when exists(select 1 from ",
 			"pg_catalog.pg_largeobject_metadata where (oid = old.", columnName,
-			")) then lo_unlink(old.", columnName, ") end from ", scopePrefix,
-			tableName, " where ", scopePrefix, tableName, StringPool.PERIOD,
-			columnName, " = old.", columnName, StringPool.SEMICOLON);
+			")) then lo_unlink(old.", columnName, ") end from ",
+			schemaNamePrefix, tableName, " where ", schemaNamePrefix, tableName,
+			StringPool.PERIOD, columnName, " = old.", columnName,
+			StringPool.SEMICOLON);
 	}
 
 	public PostgreSQLDB(int majorVersion, int minorVersion) {

@@ -59,6 +59,26 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteDLFileEntryType(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		ModelResourcePermission<DLFileEntryType>
+			dlFileEntryTypeModelResourcePermission =
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					DLFileEntryType.class.getName());
+
+		DLFileEntryType dlFileEntryType =
+			dlFileEntryTypePersistence.findByERC_G(
+				externalReferenceCode, groupId);
+
+		dlFileEntryTypeModelResourcePermission.check(
+			getPermissionChecker(), dlFileEntryType, ActionKeys.DELETE);
+
+		dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
+	}
+
+	@Override
 	public void deleteFileEntryType(long fileEntryTypeId)
 		throws PortalException {
 
@@ -71,6 +91,36 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 			getPermissionChecker(), fileEntryTypeId, ActionKeys.DELETE);
 
 		dlFileEntryTypeLocalService.deleteFileEntryType(fileEntryTypeId);
+	}
+
+	@Override
+	public DLFileEntryType fetchFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		DLFileEntryType dlFileEntryType =
+			dlFileEntryTypePersistence.fetchByERC_G(
+				externalReferenceCode, groupId);
+
+		if (dlFileEntryType == null) {
+			return null;
+		}
+
+		if (dlFileEntryType.getFileEntryTypeId() ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+			return dlFileEntryType;
+		}
+
+		ModelResourcePermission<DLFileEntryType>
+			dlFileEntryTypeModelResourcePermission =
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					DLFileEntryType.class.getName());
+
+		dlFileEntryTypeModelResourcePermission.check(
+			getPermissionChecker(), dlFileEntryType, ActionKeys.VIEW);
+
+		return dlFileEntryType;
 	}
 
 	@Override
@@ -91,6 +141,32 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 		}
 
 		return dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
+	}
+
+	@Override
+	public DLFileEntryType getFileEntryTypeByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		DLFileEntryType dlFileEntryType =
+			dlFileEntryTypePersistence.findByERC_G(
+				externalReferenceCode, groupId);
+
+		if (dlFileEntryType.getFileEntryTypeId() ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+			return dlFileEntryType;
+		}
+
+		ModelResourcePermission<DLFileEntryType>
+			dlFileEntryTypeModelResourcePermission =
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					DLFileEntryType.class.getName());
+
+		dlFileEntryTypeModelResourcePermission.check(
+			getPermissionChecker(), dlFileEntryType, ActionKeys.VIEW);
+
+		return dlFileEntryType;
 	}
 
 	@Override

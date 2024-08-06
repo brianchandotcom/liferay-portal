@@ -313,7 +313,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				return false;
 			}
 
-			if (_isPageTemplateCollectionFile(entry) &&
+			if ((layoutPageTemplateCollectionId <= 0) &&
+				_isPageTemplateCollectionFile(entry) &&
 				!_isValidBasicLayoutPageTemplateCollection(
 					content, entry, groupId)) {
 

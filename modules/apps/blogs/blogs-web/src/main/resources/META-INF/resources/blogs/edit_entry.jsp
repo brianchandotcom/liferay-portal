@@ -225,13 +225,13 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 									module="{AssetCategoriesSelectionBox} from blogs-web"
 									props='<%=
 										HashMapBuilder.<String, Object>put(
+											"availableCategories", blogsEditEntryDisplayContext.getAvailableFriendlyURLAssetCategoriesJSONArray()
+										).put(
+											"currentCategories", blogsEditEntryDisplayContext.getCurrentFriendlyURLAssetCategoriesJSONArray()
+										).put(
 											"disabled", automaticURL
 										).put(
 											"inputAddon", StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping()) + StringPool.SLASH
-										).put(
-											"selectCategoryURL", blogsEditEntryDisplayContext.getFriendlyURLAssetCategorySelectorURL()
-										).put(
-											"currentCategories", blogsEditEntryDisplayContext.getFriendlyURLAssetCategoriesJSONArray()
 										).build()
 									%>'
 								/>

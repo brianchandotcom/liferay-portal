@@ -27,6 +27,46 @@ export async function createIdentityProviderVirtualInstance(
 	await createSamlVirtualInstance(entityId, name, page, 'Identity Provider');
 }
 
+export async function createIdpUser(
+	browser,
+	idpInstanceName = DEFAULT_IDP_NAME,
+	userId = getRandomInt()
+) {
+	const defaultBaseUrl = liferayConfig.environment.baseUrl;
+
+	liferayConfig.environment.baseUrl = `http://${idpInstanceName}:8080`;
+
+	// Create new page and apiHelper implementation for IdP virtual instance
+
+    const idpVirtualInstancePage = await browser.newPage({
+        baseURL: liferayConfig.environment.baseUrl,
+    });
+
+    await performLogin(
+        idpVirtualInstancePage,
+        'test',
+        undefined,
+        `@${idpInstanceName}.com`
+    );
+
+	const idpApiHelpers = new ApiHelpers(idpVirtualInstancePage);
+
+	liferayConfig.environment.baseUrl = defaultBaseUrl;
+
+	// Create user in IdP instance
+
+	const userAccount = await idpApiHelpers.headlessAdminUser.postUserAccount(
+		undefined,
+		userId
+	);
+
+	await performLogout(idpVirtualInstancePage);
+
+	liferayConfig.environment.baseUrl = defaultBaseUrl;
+
+	return userAccount;
+}
+
 async function createSamlVirtualInstance(
 	entityId: string,
 	name: string,
@@ -61,70 +101,6 @@ export async function createServiceProviderVirtualInstance(
 	page
 ) {
 	await createSamlVirtualInstance(entityId, name, page, 'Service Provider');
-}
-
-export async function createSpAndIdpUser(
-	browser,
-	idpInstanceName = DEFAULT_IDP_NAME,
-	spInstanceName = DEFAULT_SP_NAME,
-	userId = getRandomInt()
-) {
-	const defaultBaseUrl = liferayConfig.environment.baseUrl;
-
-	liferayConfig.environment.baseUrl = `http://${idpInstanceName}:8080`;
-
-	// Create new page and apiHelper implementation based off IdP virtual instance
-
-	const idpVirtualInstancePage = await browser.newPage({
-		baseURL: liferayConfig.environment.baseUrl,
-	});
-
-	await performLogin(
-		idpVirtualInstancePage,
-		'test',
-		undefined,
-		`@${idpInstanceName}.com`
-	);
-
-	const idpApiHelpers = new ApiHelpers(idpVirtualInstancePage);
-
-	liferayConfig.environment.baseUrl = defaultBaseUrl;
-
-	// Create user in IdP instance
-
-	const userAccount = await idpApiHelpers.headlessAdminUser.postUserAccount(
-		undefined,
-		userId
-	);
-
-	await performLogout(idpVirtualInstancePage);
-
-	liferayConfig.environment.baseUrl = `http://${spInstanceName}:8080`;
-
-	// Create new page and apiHelper implementation based off IdP virtual instance
-
-	const spVirtualInstancePage = await browser.newPage({
-		baseURL: `http://${spInstanceName}:8080`,
-	});
-
-	await performLogin(
-		spVirtualInstancePage,
-		'test',
-		'?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_state=maximized',
-		`@${spInstanceName}.com`
-	);
-
-	const spApiHelpers = new ApiHelpers(spVirtualInstancePage);
-
-	liferayConfig.environment.baseUrl = defaultBaseUrl;
-
-	// Create user in SP instance, using the same information as IdP user
-
-	await spApiHelpers.headlessAdminUser.postUserAccount(undefined, userId);
-
-	await performLogout(spVirtualInstancePage);
-
-	return userAccount;
 }
 
 export async function deleteVirtualInstance(name: string, page) {

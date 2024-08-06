@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationStatistics;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -41,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.antivirus.async.store.configuration.AntivirusAsyncConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	property = {
-		"destination.target=(destination.name=" + AntivirusAsyncDestinationNames.ANTIVIRUS + ")",
 		"jmx.objectname=com.liferay.antivirus:classification=antivirus_async,name=AntivirusAsyncStatistics",
 		"jmx.objectname.cache.key=AntivirusAsyncStatistics"
 	},
@@ -51,19 +51,18 @@ public class AntivirusAsyncStatisticsManager
 	extends StandardMBean implements AntivirusAsyncStatisticsManagerMBean {
 
 	@Activate
-	public AntivirusAsyncStatisticsManager(
-			@Reference(name = "destination") Destination destination)
-		throws NotCompliantMBeanException {
-
+	public AntivirusAsyncStatisticsManager() throws NotCompliantMBeanException {
 		super(AntivirusAsyncStatisticsManagerMBean.class);
-
-		_destination = destination;
 	}
 
 	@Override
 	public int getActiveScanCount() {
 		if (_autoRefresh || (_destinationStatistics == null)) {
 			refresh();
+		}
+
+		if (_destinationStatistics == null) {
+			return 0;
 		}
 
 		return _destinationStatistics.getActiveThreadCount();
@@ -80,7 +79,11 @@ public class AntivirusAsyncStatisticsManager
 			refresh();
 		}
 
-		long pendingScanCount = _destinationStatistics.getPendingMessageCount();
+		long pendingScanCount = 0;
+
+		if (_destinationStatistics != null) {
+			pendingScanCount = _destinationStatistics.getPendingMessageCount();
+		}
 
 		try {
 			List<SchedulerResponse> scheduledJobs =
@@ -126,7 +129,13 @@ public class AntivirusAsyncStatisticsManager
 	@Override
 	public void refresh() {
 		if (System.currentTimeMillis() > _lastRefresh) {
-			_destinationStatistics = _destination.getDestinationStatistics();
+			Destination destination = _messageBus.getDestination(
+				AntivirusAsyncDestinationNames.ANTIVIRUS);
+
+			if (destination != null) {
+				_destinationStatistics = destination.getDestinationStatistics();
+			}
+
 			_lastRefresh = System.currentTimeMillis();
 
 			_processingErrorCounter.set(0);
@@ -181,9 +190,12 @@ public class AntivirusAsyncStatisticsManager
 		AntivirusAsyncStatisticsManager.class);
 
 	private boolean _autoRefresh;
-	private final Destination _destination;
-	private DestinationStatistics _destinationStatistics;
+	private volatile DestinationStatistics _destinationStatistics;
 	private long _lastRefresh;
+
+	@Reference
+	private MessageBus _messageBus;
+
 	private final AtomicLong _processingErrorCounter = new AtomicLong();
 
 	@Reference

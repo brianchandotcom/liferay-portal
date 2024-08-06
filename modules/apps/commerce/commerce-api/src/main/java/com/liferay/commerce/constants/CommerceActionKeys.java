@@ -34,4 +34,6 @@ public class CommerceActionKeys {
 	public static final String MANAGE_COMMERCE_SUBSCRIPTIONS =
 		"MANAGE_COMMERCE_SUBSCRIPTIONS";
 
+	public static final String MANAGE_RETURNS = "MANAGE_RETURNS";
+
 }

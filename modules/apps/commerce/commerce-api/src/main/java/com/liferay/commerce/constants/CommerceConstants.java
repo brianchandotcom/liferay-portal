@@ -27,6 +27,9 @@ public class CommerceConstants {
 	public static final String RESOURCE_NAME_COMMERCE_ORDER_TYPE =
 		"com.liferay.commerce.order.type";
 
+	public static final String RESOURCE_NAME_COMMERCE_RETURN =
+		"com.liferay.commerce.return";
+
 	public static final String RESOURCE_NAME_COMMERCE_SHIPMENT =
 		"com.liferay.commerce.shipment";
 

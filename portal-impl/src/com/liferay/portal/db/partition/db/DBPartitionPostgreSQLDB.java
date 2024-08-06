@@ -81,7 +81,9 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 
 					rules.add(
 						PostgreSQLDB.getCreateRulesSQL(
-							schemaName, ruleTableColumn[0],
+							StringBundler.concat(
+								schemaName, StringPool.PERIOD,
+								ruleTableColumn[0]),
 							ruleTableColumn[1]));
 				}
 			}

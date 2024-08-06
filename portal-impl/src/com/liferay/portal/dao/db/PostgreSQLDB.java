@@ -40,36 +40,24 @@ public class PostgreSQLDB extends BaseDB {
 	public static String getCreateRulesSQL(
 		String tableName, String columnName) {
 
-		return getCreateRulesSQL(StringPool.BLANK, tableName, columnName);
-	}
-
-	public static String getCreateRulesSQL(
-		String schemaName, String tableName, String columnName) {
-
-		String schemaNamePrefix = StringPool.BLANK;
-
-		if (Validator.isNotNull(schemaName)) {
-			schemaNamePrefix = schemaName + StringPool.PERIOD;
-		}
-
 		return StringBundler.concat(
-			"create or replace rule delete_", tableName, StringPool.UNDERLINE,
-			columnName, " as on delete to ", schemaNamePrefix, tableName,
+			"create or replace rule delete_",
+			StringUtil.replace(tableName, '.', '_'), StringPool.UNDERLINE,
+			columnName, " as on delete to ", tableName,
 			" do also select case when exists(select 1 from ",
 			"pg_catalog.pg_largeobject_metadata where (oid = old.", columnName,
-			")) then lo_unlink(old.", columnName, ") end from ",
-			schemaNamePrefix, tableName, " where ", schemaNamePrefix, tableName,
-			StringPool.PERIOD, columnName, " = old.", columnName,
-			";\ncreate or replace rule update_", tableName,
-			StringPool.UNDERLINE, columnName, " as on update to ",
-			schemaNamePrefix, tableName, " where old.", columnName,
-			" is distinct from new.", columnName, " and old.", columnName,
+			")) then lo_unlink(old.", columnName, ") end from ", tableName,
+			" where ", tableName, StringPool.PERIOD, columnName, " = old.",
+			columnName, ";\ncreate or replace rule update_",
+			StringUtil.replace(tableName, '.', '_'), StringPool.UNDERLINE,
+			columnName, " as on update to ", tableName, " where old.",
+			columnName, " is distinct from new.", columnName, " and old.",
+			columnName,
 			" is not null do also select case when exists(select 1 from ",
 			"pg_catalog.pg_largeobject_metadata where (oid = old.", columnName,
-			")) then lo_unlink(old.", columnName, ") end from ",
-			schemaNamePrefix, tableName, " where ", schemaNamePrefix, tableName,
-			StringPool.PERIOD, columnName, " = old.", columnName,
-			StringPool.SEMICOLON);
+			")) then lo_unlink(old.", columnName, ") end from ", tableName,
+			" where ", tableName, StringPool.PERIOD, columnName, " = old.",
+			columnName, StringPool.SEMICOLON);
 	}
 
 	public PostgreSQLDB(int majorVersion, int minorVersion) {
